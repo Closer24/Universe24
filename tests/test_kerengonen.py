@@ -307,10 +307,8 @@ def test_double_slit_probe_composes_and_closes():
     assert parse_initial_state(probe.document(4, headings, phase_b=4, screen_half=1))
 
 
-def lottery_document(steps, advance, absorber, seed=7, phase_b=0):
+def single_quanta_document(steps, advance, absorber, phase_b=0):
     raw = two_lamps(steps, advance, absorber=absorber, phase_b=phase_b, ticks=12)
-    raw["sampling_profile"] = "historical-autonomous-v1"
-    raw["spatial_fields"][0]["kerengonen"].update({"capture": "lottery", "capture_seed": seed})
     for rule in raw["emissions"]:
         rule["amount"] = 2  # one quantum per ray, each way
     return raw
@@ -325,58 +323,38 @@ def absorber_of(world):
     )
 
 
-def test_lottery_capture_takes_whole_rays_with_the_coherent_probability():
-    from event_universe.core.spatial_state import TICKET_MODULUS, next_ticket
+def test_the_ticket_rule_is_bounded_and_no_absorber_draws_from_it():
+    from event_universe.core.spatial_state import TICKET_MODULUS, next_ticket, ticket_draw
 
+    # The bounded local draw stays for the Detector mark; an absorber never uses it.
     assert next_ticket(0, 0) == 1 and next_ticket(1, 5) == 48277
+    assert ticket_draw(3) == 9 and 0 <= ticket_draw(TICKET_MODULUS - 1) < TICKET_MODULUS
     with pytest.raises(ValueError, match="ticket state"):
         next_ticket(TICKET_MODULUS, 0)
-    # In phase (x = 0) every ray is taken: the lottery equals the share rule at
-    # probability one. Opposite (x = 1 with four steps) nothing is taken once both
-    # lamps' rays meet, as before.
-    bright = Simulation(parse_initial_state(lottery_document(4, 1, 0)))
-    dark = Simulation(parse_initial_state(lottery_document(4, 1, 1)))
-    for world in (bright, dark):
-        for _ in range(12):
-            world.step()
-        assert world.conservation_report()["status"] == "passed"
-    assert absorber_of(bright)["quanta"] == (18,)
-    assert absorber_of(dark)["quanta"] == (2,)
-    # A quarter turn (x = 1 with eight steps): each single-quantum ray is taken whole
-    # or left whole with probability one half; the share rule would truncate one
-    # quantum times one half to nothing. Two seeds give two different click sequences
-    # with a plausible count, and every quantum stays accounted for.
-    counts = []
-    for seed in (7, 8):
-        world = Simulation(parse_initial_state(lottery_document(8, 1, 1, seed=seed)))
-        for _ in range(12):
-            world.step()
-        report = world.conservation_report()
-        assert report["status"] == "passed"
-        assert world.totals()["quanta"][0] + report["escaped"]["energy"] == 800
-        taken = absorber_of(world)["quanta"][0]
-        counts.append(taken)
-        assert 2 <= taken <= 16
-    raw = two_lamps(8, 1, absorber=1, ticks=12)
-    for rule in raw["emissions"]:
-        rule["amount"] = 2
-    share = Simulation(parse_initial_state(raw))
+    # Single quanta at a quarter turn (x = 1 with eight steps): the share rule
+    # truncates one quantum times one half to nothing, so only the two quanta
+    # absorbed before the second lamp's rays arrive are taken, deterministically.
+    share = Simulation(parse_initial_state(single_quanta_document(8, 1, 1)))
     for _ in range(12):
         share.step()
+    report = share.conservation_report()
+    assert report["status"] == "passed"
+    assert share.totals()["quanta"][0] + report["escaped"]["energy"] == 800
     assert absorber_of(share)["quanta"] == (2,)
 
 
-def test_lottery_capture_is_validated():
-    raw = lottery_document(4, 1, 0)
+def test_the_capture_is_share_or_threshold_and_never_a_lottery():
+    raw = single_quanta_document(4, 1, 0)
     raw["spatial_fields"][0]["kerengonen"]["capture"] = "dice"
-    with pytest.raises(ValueError, match="share, lottery or threshold"):
+    with pytest.raises(ValueError, match="share or threshold"):
         parse_initial_state(raw)
-    raw = lottery_document(4, 1, 0)
-    raw["spatial_fields"][0]["kerengonen"]["capture"] = "share"
-    with pytest.raises(ValueError, match="capture_seed requires"):
+    raw = single_quanta_document(4, 1, 0)
+    raw["spatial_fields"][0]["kerengonen"]["capture"] = "lottery"
+    with pytest.raises(ValueError, match="lottery capture was deleted"):
         parse_initial_state(raw)
-    raw = lottery_document(4, 1, 0, seed=1073741789)
-    with pytest.raises(ValueError, match="ticket modulus"):
+    raw = single_quanta_document(4, 1, 0)
+    raw["spatial_fields"][0]["kerengonen"]["capture_seed"] = 7
+    with pytest.raises(ValueError, match="unknown keys"):
         parse_initial_state(raw)
 
 

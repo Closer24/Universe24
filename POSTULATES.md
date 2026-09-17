@@ -27,9 +27,10 @@ Distinguish three categories:
 
 The canonical [Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md)
 allows draws only at an actual external Detector encounter. Ordinary evolution
-is deterministic. Earlier autonomous lottery, bond and contact descriptions
-below apply only to the explicitly selected `historical-autonomous-v1` research
-profile; they do not establish canonical Detector compliance.
+is deterministic. The earlier autonomous lottery, bond and contact descriptions
+below are historical: the `historical-autonomous-v1` research profile, the
+lottery capture and the bond registry were deleted on 2026-09-17 (issue #164,
+bucket B.5), and the text is kept with that date, not renumbered.
 
 The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
 finite integer state while representing fractional quantities in explicitly
@@ -211,15 +212,15 @@ Adopted direction (model owner, 2026-09-17): the bound has no exception. The
 joint outcome of a pair travels on the returning ray itself, one Link per
 step, back to the birth event and on to the partner ray
 ([section 23](#23-the-ray-event-model)). The registry exception described in
-the next paragraph is withdrawn as a model law and retained only as the
-historical `bonded-ray-field-v1` profile; its measurements stand as evidence
-about that profile, not for the current model. Highlights section 3.18,
-which described the shared resource, was deleted on 2026-09-17.
+the next paragraph is withdrawn as a model law; the `bonded-ray-field-v1`
+profile that implemented it was deleted on 2026-09-17 (issue #164, bucket
+B.5), and its measurements stand in the validation log as evidence about that
+profile, not for the current model. Highlights section 3.18, which described
+the shared resource, was deleted on 2026-09-17.
 
 Historical (withdrawn as a model law on 2026-09-17; the shared quantum resource
-of Highlights section 3.18 was deleted the same day, and the bond registry
-described here stays only as the historical `bonded-ray-field-v1` profile until
-its own deletion step): the bound was split in two, as the experiments split it. Energy, momentum,
+of Highlights section 3.18 and the bond registry described here were deleted
+the same day, issue #164 buckets B.1 and B.5): the bound was split in two, as the experiments split it. Energy, momentum,
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
@@ -233,8 +234,8 @@ of the answer carrying no energy. It is the correlation Bell's test measures
 beyond the local bound, and nothing else. In Bell's terms the registry is a
 deterministic, measurement-independent, parameter-dependent model: the end
 that answers second reads the first end's setting, which the
-[causal probe](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks)
-measures as an outcome that moves with the other end's setting at fixed
+causal probe (`examples/bell-chsh/`, deleted on 2026-09-17)
+measured as an outcome that moves with the other end's setting at fixed
 hidden variable. It is a nonlocal resource, not a local explanation of the
 Bell value, and the unmoved plus rates are no-signalling, not locality. The
 registry keeps a bounded bank of
@@ -389,7 +390,10 @@ fringe follows Manhattan path difference on the links metric and Euclidean
 path difference on the Euclidean pace: the metric is a configured choice
 under test, with every quantum still counted whole.
 
-The whole landing was then built by the second route, claim and gather: a
+Historical (the claim-and-gather rule was deleted on 2026-09-17, issue #164
+bucket B.5; under Highlights 3.20 the return travels on the ray itself and no
+Node keeps a register): the whole landing was then built by the second route,
+claim and gather: a
 matter wave slower than link speed, and a claim that spreads from the
 capturing Node at link speed, Node to Node, each Node remembering the port it
 came from. Rays of the claimed train that meet the claim turn homeward along
@@ -415,10 +419,13 @@ of Highlights 3.19 and the returning ray of 3.20 replace it.
 A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
 
-The ray was put to Bell's test. Two rays from one Node share a hidden phase,
+Historical (measured on 2026-09-14; the Bell probe, the lottery capture and
+the bonded ray field were deleted on 2026-09-17, issue #164 bucket B.5, and
+the numbers stay in the validation log): the ray was put to Bell's test. Two
+rays from one Node share a hidden phase,
 each side's detector takes its ray with the coherence of that phase against a
 local reference (Malus's law on the Kerengonen coherence), and the
-[CHSH probe](examples/bell-chsh/README.md) measures the correlations. The
+CHSH probe (`examples/bell-chsh/`) measured the correlations. The
 result is what a local model must give: S near the value the two independent
 lotteries predict, below the local bound 2, and far from the quantum 2 sqrt 2.
 The ray explains the shared origin, the no-signaling and the collapse's
@@ -439,7 +446,8 @@ to whoever catches a ray of it does focus the pull, but into the momentum of
 the part of the train the flood can reach: it falls slowly while the catch
 is partial and cancels when the catch is complete, and a rotation curve from
 it would rise, not stay flat. The plain ray gravity stays inverse square. The
-[gathered gravity probe](examples/gathered-gravity/README.md) records it: the
+gathered gravity probe (`examples/gathered-gravity/`, deleted on 2026-09-17
+with claim-gather) recorded it: the
 lattice has no focusing that mimics unseen mass.
 
 Until these requirements have been tested for the proposed laws, do not claim that
@@ -712,7 +720,9 @@ For two Detectors at equal distance from the birth the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below
 describes the historical candidates, including the shared registry, and their
-measurements.
+measurements; the lottery capture, the bond registry, the Bell probes and the
+`historical-autonomous-v1` profile were deleted on 2026-09-17 (issue #164,
+bucket B.5), and the measurements stay in the validation log.
 
 Every interaction whose outcome is not certain consumes exactly one bounded
 integer from a configured sequence, and nothing else decides it: the record's
@@ -735,8 +745,8 @@ Bell's sense, local for a lottery capture, where it lives in the detector's
 record row and `S` stays at or below 2, and shared for a bonded pair, where
 one number answers both ends and `S` reaches the quantum value. The
 [bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
-implements the pair's single number; the [Bell probe](examples/bell-chsh/README.md)
-measures it. What the sequence is, beyond a configured seed, is the open
+implemented the pair's single number; the Bell probe (`examples/bell-chsh/`,
+deleted on 2026-09-17) measured it. What the sequence is, beyond a configured seed, is the open
 question of postulate 12 in another form.
 
 Three things follow from this postulate without a further assumption. The

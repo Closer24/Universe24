@@ -153,10 +153,11 @@ are not compliant active-engine implementations, even if their GIFs look useful.
 
 Q-ORACLE-1, the explicitly scoped opt-in quantum exception, was deleted on
 2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2). No
-path in the package answers at a distance. The source-envelope, event-ledger
-and bond-registry modules that stay until buckets B.3 to B.6 are scope limits
-to report, not evidence that every repository path already satisfies the
-active local integer contract.
+path in the package answers at a distance; the bond registry, claim-gather and
+the lottery capture went with bucket B.5 on the same day. The source-envelope
+and event-ledger modules that stay until buckets B.3, B.4 and B.6 are scope
+limits to report, not evidence that every repository path already satisfies
+the active local integer contract.
 
 ## Generated output ownership
 
@@ -472,7 +473,7 @@ final-departure cause. The ledger stays until issue #164 bucket B.4
 pure transition results through the host `NodeExecution` service with bounded
 per-simulation caches. Full input equality is required; laws cannot read cache
 state. Local commits, guards, model charges and timing remain Node-owned.
-Mutable bond planners and event resolvers bypass reuse. `PortTable` indexes only
+Event resolvers bypass reuse. `PortTable` indexes only
 active transport banks and retains stable creation order; schedulers refresh
 changed banks without adding callbacks or world references to PortBank.
 The detailed limits, metrics and supercell boundary are in the Focus contract.
@@ -482,9 +483,9 @@ physical history or a new per-Node state type. Nodes certify dormancy from fixed
 local state; actual delivery wakes them. The spatial active index remains shared
 by both scheduling modes. Frozen field definitions own bounded immutable phase
 and pace tables prepared before any tick; no lazy pace cache grows across runs.
-New retained-ray and claim owners pass the same trusted pre-commit/receipt
-validation boundary as outgoing payloads. The global bond reference is excluded
-from ordinary initialization and planner composition.
+Retained-ray owners pass the same trusted pre-commit/receipt validation
+boundary as outgoing payloads. No global reference enters initialization or
+planner composition; the bond registry was deleted on 2026-09-17.
 
 ## Sampling admission ownership
 

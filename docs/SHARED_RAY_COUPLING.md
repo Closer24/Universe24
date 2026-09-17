@@ -61,7 +61,7 @@ Changing heading starts a new lattice line: reset its DDA accumulators only
 when the heading changes. The initial coupling sector uses unit axial headings
 and unpaced Link transport, so the existing pace remainder is zero. Heading
 changes must not silently discard a nonzero remainder in a later extension.
-Fields with claims, bonds, attenuation, self-exclusion, or other consumers that
+Fields with attenuation, self-exclusion, or other consumers that
 cannot preserve the full interaction/ownership contract must be rejected for
 this coupling at initialization until their composition is separately supported.
 
@@ -105,15 +105,13 @@ The initial implementation uses the existing fixed Link clock with `H = 1`.
 The selected main tree has no six-output-clock implementation to compose here;
 this work does not silently import one from an unmerged historical branch.
 It does not enable composition with that six-output-clock profile,
-shared computation delays, Node execution, claims or bonded-ray sampling.
+shared computation delays or Node execution.
 Unsupported compositions fail initialization. A later extension must specify
 the additional phase intervals and complete-owner readiness explicitly.
-For this first interface, `ray_interactions` requires `detector-only-v1` and
-rejects claim, bond and lottery owners anywhere in the shared spatial law,
-including fields not selected as ray participants. An unselected historical
-sampler cannot supply an implicit exception to the zero-draw contract or add
-mutable registry effects outside the complete proposal. Historical experiments
-remain available separately without this new composition.
+For this first interface, `ray_interactions` requires `detector-only-v1`, the
+only sampling profile. The claim, bond and lottery owners that this rule once
+had to exclude, selected or not, were deleted on 2026-09-17, so no field can
+supply a draw or a mutable registry effect outside the complete proposal.
 
 ## Numerical fixture and independent expectations
 

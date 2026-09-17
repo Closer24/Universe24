@@ -383,28 +383,18 @@ never changed by phase: the audit measures amounts, not coherence.
 How an absorber takes a ray is a run-time choice, `"capture"`. The default
 `"share"` takes the coherent share of each ray's amount, truncated toward
 zero, and forwards the rest: a single quantum at a half-coherent Node is never
-taken. `"lottery"` takes the whole ray or nothing: the record advances a local
-ticket, seeded by `"capture_seed"` and salted by the ray it meets, and takes
-the ray when the ticket falls below the coherent share. At full coherence the
-two are identical when the complete amount can be funded; at partial coherence the lottery builds the fringe click
-by click, one whole quantum at a time, with the coherent share as its rate.
-The ticket state is a record row (`absorb_tickets`), never a global number,
-and the same seed with the same rays repeats the same clicks.
-Each absorption row uses its own field's configured seed. In lottery mode a
-winning negative ray is left whole when the absorber cannot pay its complete
-amount; only the share mode may take a smaller stock-limited amount.
-the ray when the ticket's draw (its square modulo the ticket modulus, so
-that two records that met the same rays do not draw a fixed distance apart)
-falls below the coherent share. At full coherence the two are identical; at
-partial coherence the lottery builds the fringe click by click, one whole
-quantum at a time, with the coherent share as its rate. The ticket state is a
-record row (`absorb_tickets`), never a global number, and the same seed with
-the same rays repeats the same clicks. An absorb rule may add
-`"capture_salt": k` to start its ticket at the seed plus `k`, so two
-detectors on one field draw their own sequences, two devices with two dice.
-The third choice, `"threshold"`, is the deterministic hidden-variable rule:
-the whole ray is taken when its coherent share reaches one half and left
-otherwise, so the outcome is fixed by the phases alone, with no ticket.
+taken. The other choice, `"threshold"`, is the deterministic hidden-variable
+rule: the whole ray is taken when its coherent share reaches one half and left
+otherwise, so the outcome is fixed by the phases alone. A threshold capture of
+a negative ray is left whole when the absorber cannot pay its complete amount;
+only the share mode may take a smaller stock-limited amount. Neither capture
+draws: an ordinary absorber has no ticket and no seed. The whole-or-nothing
+`"lottery"` capture, its `capture_seed`, the absorb rule's `capture_salt` and
+the record row `absorb_tickets` were deleted on 2026-09-17 (issue #164, bucket
+B.5) under [Highlights](HIGHLIGHTS.md) 3.19: the only draw in the model is at
+a Node whose Detector bit is set. The bounded ticket sequence
+(`TICKET_MODULUS`, `next_ticket`, `ticket_draw`) stays in
+`core/spatial_state.py` as the local draw that mark will own.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because
@@ -514,104 +504,51 @@ mirror, which chooses its heading from what it absorbed.
 
 ### Claim and gather (`claim-gather-ray-field-v1`)
 
-A wave that is captured at one Node lands there whole, later. A ray field with
-`"claim": {"ticks": T, "slots": N}` (identity `claim-gather-ray-field-v1` in
-the run metadata) lets every ray carry a train: an emission with
-`"train_field": "<owned scalar>"` stamps its rays with the emitter's value of
-that field (a particle's label), and `"train_field": "carried"` stamps them
-with the train of the largest share the emitter last absorbed (a Huygens
-slit; it requires an absorb rule on the field and the record row
-`absorbed_trains`). Zero is no train: such rays are never gathered.
-
-An absorb rule with `"claim": true` opens a claim when the record takes any
-share of a train's ray: the Node keeps `Claim(train, parent, since, sent,
-origin)` with parent -1, the root. On its next cycle the Node passes the claim
-to every port but its parent, and a Node that receives one it does not hold
-adopts it with the arrival port as parent and passes it on in turn: a flood
-at link speed, one cycle per Node, that expires `T` ticks after `since`. A
-Node holds at most `N` claims; a claim it cannot hold is unknown there. Where
-two claims for one train meet, the earlier `since` wins, then the lower
-origin address, and the later root yields: it points at the winner and passes
-the winner's claim on, keeping the share it already took.
-
-Every free ray of a claimed train that a claiming Node meets, on arrival or
-after the claim arrives, becomes homing: it keeps its amount, heading, phase
-and train, is skipped by every ordinary absorb rule (an absorber between it
-and home does not stop it), and moves one link per tick along the claim's
-parent ports back to the root, ahead of any wave on a slower pace. At the
-root a record with a claiming rule takes every homing ray of its trains
-whole, amount to its field and amount x heading to its momentum field, with
-no coherence and no lottery: the claim owns the train. Rays merge only within
-one train and one direction of travel. Homing rays at a root without such a
-record, or of a train no claim here knows, wait where they are. The ledger
-counts homing rays like any other, the audit measures their amounts and
-headings, and nothing is created or lost at any step: the capture takes what
-the ray carried, and the rest arrives over the ticks the flood and the return
-take. The [claim and gather probe](../examples/claim-gather/README.md)
-measures an isotropic wave gathered by one screen and contested by two, and
-the double slit landing a whole particle at one screen Node with the
-probability of its wave.
+Deleted on 2026-09-17 (issue #164, bucket B.5). The ray-field key `claim`, the
+emission keys `train_field` and `"train_field": "carried"`, the absorb rule's
+`claim`, the ray fields `train` and `homing`, the `Claim` record with its
+flood, adoption and expiry, the record row `absorbed_trains` and the runner
+identity `claim-gather-ray-field-v1` are gone. Under
+[Highlights](HIGHLIGHTS.md) 3.20 and 5.4 a wave is not gathered by a claim
+that floods the board: what a Detector returns walks back on the ray itself,
+one Link per interval, to the event it came from, and no Node keeps a register
+of any kind. The recorded measurements of the deleted rule (the isotropic
+gather, the contested gather, the double-slit landing and the gathered-gravity
+probe) stay in [validation](VALIDATION.md) as evidence about that rule, not
+about the current model.
 
 ### Bonded rays (`bonded-ray-field-v1`)
 
-The one declared exception to the causal bound, split off in postulate 4. A
-Kerengonen ray field may add `"bond": {"seed": s}` (identity
-`bonded-ray-field-v1` in the run metadata); an emission with
-`"bond_field": "origin"` then bonds every ray it emits to its birth: the Node
-that emits it stamps the ray with the code of its own address and the tick,
-and the ray carries that origin, unchanged, until its next interaction, so
-everything born at one Node on one tick is one pair. (`"bond_field":
-"<owned scalar>"` bonds by the emitter's label instead.) An absorb rule with
-`"bond_setting": "<owned scalar>"` is a detector whose setting is that field's
-value in phase steps. When such a record meets a bonded ray it does not draw a
-ticket or read the coherence: it asks the bond registry, one object for the
-whole world seeded by `s`.
-
-The pair's one number is a fixed function of the seed and the bond, two salted
-ticket steps with a square between them. The first question on a bond is
-answered by the number's upper half, an even coin, and the registry keeps the
-asking end's salt, its setting and its answer; the second question, from the
-other end at its own setting, draws nothing and is answered by the lower half
-of the same number so that the two ends agree with probability
-`(1 - cos(difference)) / 2` from the fixed cosine table, the singlet's law
-([postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates)).
-An answer of +1 takes the whole ray, -1 leaves it to walk on. The registry's
-second answer knows the first at once, at any distance; it moves no energy, no
-momentum and no message, and the [Bell probe](../examples/bell-chsh/README.md)
-measures each end's plus rate unmoved by the other end's setting. That is
-no-signalling, not locality: the second answer reads the first end's setting,
-so the registry breaks parameter independence and is a nonlocal resource in
-Bell's sense.
-
-`"bond": {"seed": s, "stream": [n, ...]}` replaces the registry's own numbers
-by an external stream, one number per pair in the order pairs first ask, at
-most 4096 numbers below the ticket modulus, exhausted with an explicit error.
-The stream is the door of postulate 22 for a source outside the world's
-state: the model uses its numbers exactly as its own, so a uniform stream
-gives the same physics, and a biased stream moves one end's plus rate with
-the other end's setting, which the [Bell probe](../examples/bell-chsh/README.md)
-measures with `--source uniform` and `--source biased`.
-
-The registry is bounded and idempotent. It holds at most 4096 open pairs, those
-whose first end has answered and whose second has not, and rejects a further
-first question while the bank is full; it releases a pair at its second
-answer; and a question repeated by the same end with the same setting gets the
-same answer, so a proposal prepared twice does not move it. A pair's identity
-is its birth code, the Node address and tick modulo the ticket modulus, unique
-within any run shorter than that modulus. A pair whose second answer released
-it and is asked again is treated as a new pair; that is the registry's stated
-limit. Rays merge only within one bond. The registry lives in one process:
-bonded worlds run on a single Node worker. The Bell probe with `--capture bond`
-measures the quantum value of S with it.
+Deleted on 2026-09-17 (issue #164, bucket B.5), with the shared quantum
+resource of Highlights 3.18 that it followed. The ray-field key `bond`
+(`seed`, `stream`), the emission key `bond_field` (`"origin"` or an owned
+scalar), the absorb rule's `bond_setting`, the ray field `bond`, the birth code
+`origin_bond`, the world's `BondRegistry` (`fields/bonds.py`), the sampling
+profile `historical-autonomous-v1` and the runner identity
+`bonded-ray-field-v1` are gone. Under [Highlights](HIGHLIGHTS.md) 5.4 no
+registry answers at a distance and pair identity is the trajectory: the first
+Detector's bit travels on the returning ray through the birth event to the
+partner's line, and the second Detector draws its own bit on that arrival. The
+accepted price is that two Detectors at equal distance from the birth draw
+independently (CHSH at most 2 for spacelike settings). The recorded CHSH
+measurements of the deleted registry stay in [validation](VALIDATION.md) as
+evidence about that profile, not about the current model.
 
 ## Integrated ray ownership boundaries
 
-Load-delayed rays remain visible to absorption and gathering. Surviving residents,
-fresh emissions, owned carrier stock and retained pace state commit together,
-before observers see the result. Every retained ray and every incoming claim is
-validated before filtering or adoption. Expired claims release their local slots
-before new claims are admitted; a full live capacity remains the declared local
-admission limit.
+Load-delayed rays remain visible to absorption. Surviving residents, fresh
+emissions, owned carrier stock and retained pace state commit together, before
+observers see the result. Every retained ray and every incoming ray bundle is
+validated before it is merged, and the field's `ray_slots` is the only bound on
+residency. There is no occupied channel and no capacity rule
+([Highlights](HIGHLIGHTS.md) 5.1): rays leaving a Node on one Link in one
+interval travel together in one packet, and nothing is pushed back or made to
+wait for room. The former refusal to begin a field cycle while a Node's
+outgoing Links still held packets was deleted on 2026-09-17; what remains is a
+host integrity check at commit, `SpatialNode.require_free_links`, which rejects
+a departure that would overwrite a packet still in transit. Delivery clears
+every Link before the next field cycle, so that check names a scheduling
+error, never a physical rule.
 
 Euclidean pace tables are immutable configuration data prepared before stepping.
 Ratios are reduced before physical-register bounds are checked; irreducible terms
@@ -621,7 +558,7 @@ negative whole-ray capture is rejected rather than partially paid.
 
 One-Link self-exclusion reconstructs swept or fixed directed emissions and matches
 all ray metadata except amount. Its current departure record does not prove
-coarrival for paced, load-delayed, mirrored, claimed or bonded rays; these
+coarrival for paced, load-delayed or mirrored rays; these
 combinations fail preflight. This is still a scoped candidate and cannot identify
 otherwise identical waves by an absent source label.
 

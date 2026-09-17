@@ -1,44 +1,42 @@
-# Detector-owned sampling and historical research profiles
+# Detector-owned sampling
 
-The canonical contract is `detector-only-v1`. Only an actual external Detector
-encounter may authorize a recorded random decision. Creation, propagation,
-ordinary contacts, phase changes, field emission, strong/weak coupling and
-quantum preparation do not authorize a draw. An entity name, diagnostic observer,
-seed or supplied ticket does not establish an external Detector.
+The canonical contract is `detector-only-v1`, the only sampling profile. Only a
+Node whose Detector bit is set may draw ([Highlights](HIGHLIGHTS.md) 3.19):
+creation, propagation, ordinary contacts, phase changes, field emission,
+strong/weak coupling and absorption do not authorize a draw. An entity name,
+diagnostic observer, seed or supplied ticket does not establish a Detector.
 
 This supersedes autonomous sampling as a universal interpretation of
 [postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates).
-Its earlier local-lottery and bond laws remain historical research candidates;
-the native-contact laws were deleted on 2026-09-17 with the shared quantum
-resource. Their mathematical results do not establish compliance with the
-canonical Detector contract.
+The earlier local-lottery and bond laws and the `historical-autonomous-v1`
+research profile that selected them were deleted on 2026-09-17 (issue #164,
+bucket B.5), after the native-contact laws and the shared quantum resource
+(buckets B.1 and B.2). Their dated measurements stay in
+[validation](VALIDATION.md) and do not establish compliance with this contract.
 
 ## Configuration and admission
 
-`sampling_profile` is immutable initialization metadata, with two accepted values:
+`sampling_profile` is immutable initialization metadata with one accepted
+value, `detector-only-v1` (the default). Any other value, including
+`historical-autonomous-v1`, fails admission before a world is constructed or a
+ticket is consumed. The keys of the deleted samplers (`"capture": "lottery"`,
+`capture_seed`, `capture_salt`, `bond`, `bond_field`, `bond_setting`) are
+unknown to the parser, and a typed `SpatialFieldDefinition` whose `capture` is
+`"lottery"` is rejected by `validate_spatial_sampling` at `InitialState` and
+`SpatialLaw` construction. The deterministic `share` and `threshold` captures
+remain and draw nothing. Preflight and run metadata record the profile. No
+model ID, entity label or observation callback changes admission.
 
-| Value | Admission behavior |
-| --- | --- |
-| `detector-only-v1` (default) | Reject currently unbound ray lotteries and bonded rays before constructing a world or consuming a ticket. Deterministic ordinary evolution remains available. |
-| `historical-autonomous-v1` | Explicitly select the earlier autonomous-sampling research laws. Preserve their model identities, numerical rules, seeded results and accounting; never report them as Detector-only compliant. |
-
-The historical profile is a research model choice, not a Detector permission or
-an implementation of the canonical rule. Existing sampling examples declare it
-explicitly; old inputs without the field fail closed when they request an
-unsupported sampler. Preflight and run metadata record the selected profile.
-No model ID, entity label or observation callback changes admission.
-
-Validate both the parsed immutable initial state and the responsible local law.
-Direct typed construction must not bypass the same boundary. A bare
-`BondRegistry` remains an explicitly historical/mathematical primitive outside
-the canonical physical adapters; its standalone calls do not establish a
-Detector or canonical acceptance. The gates cover `InitialState` and
-`SpatialLaw` (including an injected bond registry). The native program
-admission, resolver construction and resolver ticket gates were deleted on
-2026-09-17 with the integration layer.
+Validate both the parsed immutable initial state and the responsible local law;
+direct typed construction must not bypass the same boundary. The bounded ticket
+sequence (`TICKET_MODULUS`, `next_ticket`, `ticket_draw` and the phase tables
+in `core/spatial_state.py`) stays as the local draw a marked Node will own; no
+ordinary owner calls it. The native program admission, resolver construction
+and resolver ticket gates were deleted on 2026-09-17 with the integration
+layer, and the bond-registry gate with the registry itself.
 
 No physical probability, transport, conserved quantity, ownership layout, phase
-rule or timing law is changed by this admission correction. The full external
+rule or timing law is changed by this admission boundary. The full external
 Detector exchange remains unimplemented.
 
 ## External exchange implementation boundary
@@ -70,14 +68,15 @@ physical support.
 
 ## Required evidence
 
-1. The previous ordinary two-lamp lottery is rejected by default before any draw;
-   adding an observer or naming its absorber Detector cannot authorize it.
-2. Direct immutable-state/local-law construction rejects the same sampler.
+1. The lottery capture, the bond-registry and claim-gather keys and any
+   sampling profile other than `detector-only-v1` are rejected before any
+   draw; adding an observer or naming an absorber Detector cannot authorize
+   them.
+2. Direct immutable-state/local-law construction rejects the same samplers.
 3. Deterministic ordinary controls consume zero tickets and preserve their
    exact traces. Every actual simulation run retains its canonical HTML.
-4. Explicit historical candidates retain their numerical contracts and advertise
-   their historical sampling profile in saved metadata. Their results are not
-   canonical acceptance results.
+4. The dated results of the deleted samplers stay in the validation log under
+   their historical profile; they are not canonical acceptance results.
 5. PASS/RETURN, causal branch cancellation, real Detector authorization
    and output-clock composition remain separately blocked until their contracts
    and implementation meet the table above.

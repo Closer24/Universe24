@@ -35,20 +35,6 @@ def test_ray_candidate_resources_select_their_direct_consumers(name, consumer):
     assert "tests/test_spatial_engine.py" not in selected
 
 
-@pytest.mark.parametrize(
-    "path",
-    [
-        "examples/research/ray-gallery/worlds.py",
-        "examples/research/ray-gallery/configs/4-bonded-pair.json",
-        "examples/research/ray-gallery/configs/8-lottery-detector.json",
-        "examples/research/bell-postulate-22/common.py",
-    ],
-)
-def test_historical_research_resources_select_sampling_admission(path):
-    selected, _ = CHECK.select([path], {})
-    assert "tests/test_research_sampling_admission.py" in selected
-
-
 def test_local_field_example_selects_state_and_physical_contract_consumers():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_node_state_contract.py" in selected

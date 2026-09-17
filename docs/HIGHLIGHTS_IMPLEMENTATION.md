@@ -110,7 +110,7 @@ model choices whose consequences can be tested.
 | Connection demonstrated | Recorded evidence | Necessary qualification |
 | --- | --- | --- |
 | Optical wave behavior from local ray transport | [Kerengonen double slit](../examples/kerengonen-double-slit/README.md): one lamp illuminates two absorbing/re-emitting slits; phase changes the screen pattern, while the plain field gives the sum of the two single-slit controls | Carried phase, coherent capture and the slit re-emission rule are configured |
-| Where the classical wave stops and the quantum owner begins | [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md): the same CHSH settings give 1.40 on the classical candidate and 2 on the plain field, against 14/5 from the finite quantum owner | The phase is the only hidden variable and local absorption the only instrument; the classical value is the model's prediction, not a loss of visibility |
+| Where the classical wave stops and the quantum owner begins | Bell test on the phased-ray field (`examples/kerengonen-bell/`, deleted on 2026-09-17): the same CHSH settings give 1.40 on the classical candidate and 2 on the plain field, against 14/5 from the finite quantum owner | The phase is the only hidden variable and local absorption the only instrument; the classical value is the model's prediction, not a loss of visibility |
 | Whole detections and a classical mean flux | Counting probe (`examples/quantum-classical/README.md`, deleted on 2026-09-17): one-quantum arrivals are 0 or 1; their average approaches the measured inverse-square profile in the tested geometry | Integer quanta and the heading distribution are supplied; this does not identify physical photons |
 | Radiation and mechanical exchange | [Local conservation contract](LOCAL_CONSERVATION.md) and [runner validation](VALIDATION.md#kerengonen-guards-reconciled-with-current-main---2026-09-14): funded emission, recoil, absorption and escaped rays close the declared energy/momentum accounting | The quantity definitions and exchange laws are explicit; this is not complete electromagnetic dynamics |
 | Coherent evolution and classical probability | Quantum-to-classical probes (`examples/quantum-classical/README.md`, deleted on 2026-09-17) and claim check (`examples/quantum/quantum_classical_check.md`, deleted on 2026-09-17): configured dephasing removes interference and reproduces the finite classical probability control | Classical probability evolution does not by itself derive a Newtonian trajectory or explain a unique measurement outcome |
@@ -216,7 +216,7 @@ a schedule (`dissolve`: a particle becoming its own wave train).
 | 10.3.2 | Straight rays: isotropic inverse square, shell conservation, a small stock sweeping the heading sequence in turn. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1) |
 | 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), [gravity probe](../examples/gravity-probe/README.md) |
 | 1.2, 4.7 | Kerengonen phased rays: coherence-gated sampling and absorption, share or lottery capture, Huygens slits, mirrors, per-ray de Broglie advance, dissolution. Identity `kerengonen-ray-field-v1`. | [Kerengonen contract](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1) |
-| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [Euclidean pace](../examples/euclidean-pace/README.md), [claim and gather](../examples/claim-gather/README.md), [validation](VALIDATION.md) |
+| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [Euclidean pace](../examples/euclidean-pace/README.md), claim and gather (`examples/claim-gather/`, deleted on 2026-09-17), [validation](VALIDATION.md) |
 | 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | Quantum-to-classical probes (`examples/quantum-classical/README.md`, deleted on 2026-09-17) |
 
 What the ray is not, recorded rather than claimed: a single particle's matter
@@ -233,14 +233,14 @@ difference on the [Euclidean pace](SPATIAL_FIELDS.md#euclidean-pace-metric-eucli
 faster, than one link per tick; the lottery ticket is a configured local
 sequence, not physical randomness; the event audit re-measures every owner per
 event, so audited worlds stay small; and the ray is a local model, so
-[Bell's test](../examples/bell-chsh/README.md) on it stays below the CHSH
+Bell's test (`examples/bell-chsh/`, deleted on 2026-09-17) on it stays below the CHSH
 bound 2, where the quantum value is 2 sqrt 2: shared origin and no-signaling
 it gives in the stated probes, and the excess correlation it cannot derive,
 unless the field is bonded (`bonded-ray-field-v1`, the split of postulate 4:
 a bounded registry answers the pair's joint outcome for both ends from one
 number, with nothing physical in it, and S reaches the quantum value);
 gathering a gravity train to
-its catcher ([gathered gravity](../examples/gathered-gravity/README.md))
+its catcher (gathered gravity, `examples/gathered-gravity/`, deleted on 2026-09-17)
 focuses quanta, not a force law, so no flat rotation curve comes from it.
 The `|p| / D` rule and every mixer are configured laws, measured to hold, not
 derived. Exact sources and completed checks are in

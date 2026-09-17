@@ -11,7 +11,7 @@ deleted on 2026-09-17.
 Spatial transport already maintains an active-Node index without this option.
 Local Focus adds a carrier index; it does not replace the ordinary baseline
 with an artificial full-world scan. It never jumps a ray across several Links.
-Pace, computation delay, phase, decay, absorption and claim propagation still
+Pace, computation delay, phase, decay and absorption still
 execute at their existing local boundaries.
 
 ## Eligibility and wake contract
@@ -33,8 +33,7 @@ in the first implementation's active set.
 ## Repeated local behavior
 
 `core/plan_reuse.py` holds a bounded host cache for each certified pure planner.
-The canonical Simulation enables carrier reuse and, when no mutable bond registry
-is present, spatial reuse. Low-level custom
+The canonical Simulation enables carrier reuse and spatial reuse. Low-level custom
 DisturbanceEngine planners are not assumed pure; their reuse flags default off.
 The empty-carrier scheduler fallback and planner reuse are separate decisions:
 shared field clocks keep the ordinary carrier schedule but can reuse pure plans.
@@ -44,7 +43,7 @@ only its execution service receives the reuse adapter.
 Equality means the complete immutable planning input, not equal output on the
 previous tick. Carrier keys include every record field (including residuals and
 phase), coupling remainders, arrival count and directional loads. Spatial keys
-also include field state, rays, claims, local computation cost, the tick and
+also include field state, rays, local computation cost, the tick and
 ray-hold mode. Each cache belongs to one law/configuration in one simulation;
 results cannot leak across configurations. Hash matches still require full key
 equality. Exceptions are never cached. Pending proposals are immutable.

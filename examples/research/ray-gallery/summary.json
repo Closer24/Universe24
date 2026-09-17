@@ -24,11 +24,11 @@
   "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/wt-quantum/exploration-rays/record_ticks.py",
   "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/wt-quantum/exploration-rays/render_rays.py"
  ],
- "validator": "python -m event_universe.configuration_validation --kind initialization <config> reported VALID for all eight",
+ "validator": "python -m event_universe.configuration_validation --kind initialization <config> reported VALID for all five",
  "notes": [
   "panel 7 was first run with normal_budget 100 and emission 2400 and failed at tick 7 with 'funded ray emission or absorption does not support a delayed carrier cycle' (the load reaching the held lamp/screen plus their cycle cost exceeded the budget); the recorded panel uses budget 1000 and emission 28000 as tests/test_ray_delay.py's scale does",
   "conserved_at_every_completed_tick is False wherever quanta escape or are injected by design (open boundary, source: true); accounting_balanced_at_every_completed_tick (final = initial + sources - escaped) is True for every panel",
-  "the bond registry (panel 4) and the lottery ticket (panel 8) have no drawing: only their recorded consequences on the board are shown"
+  "panels 4, 5 and 8 of the 2026-09-16 recording were deleted on 2026-09-17 with the bond registry, claim-gather and the lottery capture (issue #164, bucket B.5); the five remaining panels and their recorded results are unchanged"
  ],
  "panels": [
   {
@@ -47,8 +47,6 @@
     "conserved_at_every_completed_tick": false,
     "spatial_policy": "conservative-outward-v1",
     "spatial_transport": "outward-octants",
-    "spatial_claims": "none",
-    "spatial_bonds": "none",
     "spatial_metric": "links",
     "spatial_allocation": "carried-straight-phase-v1",
     "ray_delay": null,
@@ -124,8 +122,6 @@
     "conserved_at_every_completed_tick": false,
     "spatial_policy": "isotropic-ray-field-v1",
     "spatial_transport": "straight-rays",
-    "spatial_claims": "none",
-    "spatial_bonds": "none",
     "spatial_metric": "links",
     "spatial_allocation": "carried-straight-phase-v1",
     "ray_delay": null,
@@ -211,8 +207,6 @@
     "conserved_at_every_completed_tick": false,
     "spatial_policy": "kerengonen-ray-field-v1",
     "spatial_transport": "straight-rays",
-    "spatial_claims": "none",
-    "spatial_bonds": "none",
     "spatial_metric": "links",
     "spatial_allocation": "carried-straight-phase-v1",
     "ray_delay": null,
@@ -295,212 +289,6 @@
    ]
   },
   {
-   "key": "4-bonded-pair",
-   "title": "4. Bonded rays",
-   "contract_label": "bonded-ray-field-v1 (bond_field origin, bond_setting)",
-   "config": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/rays-out/configs/4-bonded-pair.json",
-   "run_dir": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/rays-out/runs/4-bonded-pair",
-   "ticks": 12,
-   "run": {
-    "status": "completed",
-    "error": null,
-    "completed_ticks": 12,
-    "requested_ticks": 12,
-    "accounting_balanced_at_every_completed_tick": true,
-    "conserved_at_every_completed_tick": true,
-    "spatial_policy": "kerengonen-ray-field-v1",
-    "spatial_transport": "straight-rays",
-    "spatial_claims": "none",
-    "spatial_bonds": "bonded-ray-field-v1",
-    "spatial_metric": "links",
-    "spatial_allocation": "carried-straight-phase-v1",
-    "ray_delay": null,
-    "ray_phase": null,
-    "local_delay": null,
-    "computation_field": null,
-    "initial_totals": {
-     "quanta": [
-      8
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "final_totals": {
-     "quanta": [
-      8
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "escaped_totals": {
-     "quanta": [
-      0
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "source_totals": {
-     "quanta": [
-      0
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
-    "initialization_sha256": "94a9166b392a2695845784c8488361279fb454fa625ed9861b4056fa5a628fdc",
-    "model": "rays-panel-bonded-pair-v1"
-   },
-   "verify": {
-    "frames_recorded": 13,
-    "frames_compared": 13,
-    "mismatches": 0,
-    "checked": [
-     "record types and values per Node",
-     "field value, directions, populations, ray_count per Node",
-     "escaped totals"
-    ]
-   },
-   "derived": {
-    "taken_final": {
-     "alice": 2,
-     "bob": 3
-    },
-    "passed_final": {
-     "alice": 2,
-     "bob": 1
-    },
-    "pair_outcomes": {
-     "211811747": {
-      "alice": "-",
-      "bob": "+"
-     },
-     "211811748": {
-      "alice": "-",
-      "bob": "+"
-     },
-     "211811749": {
-      "alice": "+",
-      "bob": "+"
-     },
-     "211811750": {
-      "alice": "+",
-      "bob": "-"
-     }
-    }
-   },
-   "shows": "pairs born at one Node on one tick carrying the same bond code (dashed link), plus detectors with settings, the registry's answers as captures",
-   "does_not_show": "the registry is not on the board and has no drawing: the dashed link marks equal bond codes, it is not a ray or a signal; four pairs are not a statistic",
-   "records_in_panel": [
-    "minus_alice",
-    "minus_bob",
-    "plus_alice",
-    "plus_bob",
-    "source_alice",
-    "source_bob"
-   ]
-  },
-  {
-   "key": "5-claim-gather",
-   "title": "5. Claim and gather",
-   "contract_label": "claim-gather-ray-field-v1 (pace 1/4, dissolve)",
-   "config": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/rays-out/configs/5-claim-gather.json",
-   "run_dir": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/rays-out/runs/5-claim-gather",
-   "ticks": 40,
-   "run": {
-    "status": "completed",
-    "error": null,
-    "completed_ticks": 40,
-    "requested_ticks": 40,
-    "accounting_balanced_at_every_completed_tick": true,
-    "conserved_at_every_completed_tick": true,
-    "spatial_policy": "isotropic-ray-field-v1",
-    "spatial_transport": "straight-rays",
-    "spatial_claims": "claim-gather-ray-field-v1",
-    "spatial_bonds": "none",
-    "spatial_metric": "links",
-    "spatial_allocation": "carried-straight-phase-v1",
-    "ray_delay": null,
-    "ray_phase": null,
-    "local_delay": null,
-    "computation_field": null,
-    "initial_totals": {
-     "matter": [
-      64
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "final_totals": {
-     "matter": [
-      64
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "escaped_totals": {
-     "matter": [
-      0
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "source_totals": {
-     "matter": [
-      0
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
-    "initialization_sha256": "bf1b3d63b3c2b5d2865cb760597e0c9ff8e184e3ef909384348c41c049f17d01",
-    "model": "rays-panel-claim-gather-v1"
-   },
-   "verify": {
-    "frames_recorded": 41,
-    "frames_compared": 41,
-    "mismatches": 0,
-    "checked": [
-     "record types and values per Node",
-     "field value, directions, populations, ray_count per Node",
-     "escaped totals"
-    ]
-   },
-   "derived": {
-    "first_claim_tick": 11,
-    "gathered_tick": 21
-   },
-   "shows": "a slow wave (pace 1/4), a screen click opening a claim, the claim flooding every Node with its parent port, free rays turning homing and walking home, gathered whole",
-   "does_not_show": "no lottery here (share capture of a single train); the flood is knowledge at Nodes, not stock",
-   "records_in_panel": [
-    "particle",
-    "screen"
-   ]
-  },
-  {
    "key": "6-mirror-cavity",
    "title": "6. Mirror reflection",
    "contract_label": "kerengonen-ray-field-v1 (kerengonen_mirror x, carried phase)",
@@ -516,8 +304,6 @@
     "conserved_at_every_completed_tick": true,
     "spatial_policy": "kerengonen-ray-field-v1",
     "spatial_transport": "straight-rays",
-    "spatial_claims": "none",
-    "spatial_bonds": "none",
     "spatial_metric": "links",
     "spatial_allocation": "carried-straight-phase-v1",
     "ray_delay": null,
@@ -637,8 +423,6 @@
     "conserved_at_every_completed_tick": false,
     "spatial_policy": "kerengonen-ray-field-v1",
     "spatial_transport": "straight-rays",
-    "spatial_claims": "none",
-    "spatial_bonds": "none",
     "spatial_metric": "links",
     "spatial_allocation": "carried-straight-phase-v1",
     "ray_delay": true,
@@ -745,107 +529,6 @@
     "lamp",
     "mass body",
     "screen"
-   ]
-  },
-  {
-   "key": "8-lottery-detector",
-   "title": "8. Lottery capture at a detector",
-   "contract_label": "kerengonen-ray-field-v1 (capture lottery, capture_salt)",
-   "config": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/rays-out/configs/8-lottery-detector.json",
-   "run_dir": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/rays-out/runs/8-lottery-detector",
-   "ticks": 16,
-   "run": {
-    "status": "completed",
-    "error": null,
-    "completed_ticks": 16,
-    "requested_ticks": 16,
-    "accounting_balanced_at_every_completed_tick": true,
-    "conserved_at_every_completed_tick": false,
-    "spatial_policy": "kerengonen-ray-field-v1",
-    "spatial_transport": "straight-rays",
-    "spatial_claims": "none",
-    "spatial_bonds": "none",
-    "spatial_metric": "links",
-    "spatial_allocation": "carried-straight-phase-v1",
-    "ray_delay": null,
-    "ray_phase": null,
-    "local_delay": null,
-    "computation_field": null,
-    "initial_totals": {
-     "quanta": [
-      48
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "final_totals": {
-     "quanta": [
-      42
-     ],
-     "momentum": [
-      0,
-      6,
-      0
-     ]
-    },
-    "escaped_totals": {
-     "quanta": [
-      6
-     ],
-     "momentum": [
-      0,
-      -6,
-      0
-     ]
-    },
-    "source_totals": {
-     "quanta": [
-      0
-     ],
-     "momentum": [
-      0,
-      0,
-      0
-     ]
-    },
-    "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
-    "initialization_sha256": "5ada4b0ee1963cbf5cc6e6c8fe28ec922a21220d577458558ce651468ed68874",
-    "model": "rays-panel-lottery-detector-v1"
-   },
-   "verify": {
-    "frames_recorded": 17,
-    "frames_compared": 17,
-    "mismatches": 0,
-    "checked": [
-     "record types and values per Node",
-     "field value, directions, populations, ray_count per Node",
-     "escaped totals"
-    ]
-   },
-   "derived": {
-    "taken_final": {
-     "alice": 5,
-     "bob": 6
-    },
-    "passed_final": {
-     "alice": 3,
-     "bob": 2
-    }
-   },
-   "shows": "single quanta meeting a reference lamp's quantum at a plus detector with coherence one half; the lottery taking or passing each whole ray; the minus detector taking what passed",
-   "does_not_show": "plus detector stock includes the reference quanta it absorbs; reference quanta not taken walk on along -y and escape; eight quanta per side are not a rate measurement",
-   "records_in_panel": [
-    "minus_alice",
-    "minus_bob",
-    "plus_alice",
-    "plus_bob",
-    "reference_alice",
-    "reference_bob",
-    "source_alice",
-    "source_bob"
    ]
   }
  ]

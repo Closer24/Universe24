@@ -64,9 +64,15 @@ escaped.
 
 ### Single quanta, whole or nothing: the fringe built click by click
 
-The same lamps fire one quantum per ray for 96 ticks, and the field selects
-`"capture": "lottery"`: a screen Node takes each whole quantum or leaves it,
-by a local ticket drawn against the coherent share. Two seeds are run, and
+*Historical (2026-09-14). The lottery capture was deleted on 2026-09-17 under
+[Highlights](../../docs/HIGHLIGHTS.md) 3.19: an ordinary absorber does not draw,
+and the only draw is at a Node whose Detector bit is set. `run_experiments.py`
+now runs only the share-rule column of this table (`share_single_quanta`); the
+two lottery columns are kept as the recorded measurement of the deleted rule.*
+
+The same lamps fire one quantum per ray for 96 ticks, and the field selected
+`"capture": "lottery"`: a screen Node took each whole quantum or left it,
+by a local ticket drawn against the coherent share. Two seeds were run, and
 the share rule on the same single quanta for comparison.
 
 | Screen y | Path difference | Lottery, seed 1 | Lottery, seed 2 | Share rule |

@@ -28,7 +28,6 @@ from .disturbance_state import (
     validate_codes,
 )
 from .integer import checked_work, reduced_ratio
-from .sampling_contract import DETECTOR_ONLY
 
 SpatialPopulations = tuple[Payload, ...]
 SpatialOutgoing = tuple[SpatialPopulations, ...]
@@ -84,13 +83,6 @@ class Ray:
     # Euclidean pace only: how far the ray is toward its next link, below its
     # heading's pace denominator.
     wait: int = 0
-    # Claim and gather only: the train (particle) this ray belongs to, zero for
-    # a ray no claim can gather, and whether a claim has turned it homeward.
-    train: int = 0
-    homing: int = 0
-    # Bonded pairs only: the bond this ray shares with the ray emitted with it,
-    # zero for an unbonded ray.
-    bond: int = 0
     # Generic local coupling residence; independent of the pacing remainder.
     interaction_delay: int = 0
 
@@ -160,24 +152,12 @@ def validate_ray_participants(
             or any(unpack(definition.baseline))
             or definition.euclidean
             or definition.pace_numerator != definition.pace_denominator
-            or definition.claims
-            or definition.bonded
             or definition.self_exclusion
             or definition.decay is not None
             or any(sum(abs(component) for component in heading) != 1 for heading in definition.headings)
         ):
             raise ValueError("ray coupling requires positive unit-axial unpaced ray fields")
     return frozenset(selected)
-
-
-def validate_ray_coupling_scope(
-    definitions: tuple[SpatialFieldDefinition, ...], sampling_profile: str
-) -> None:
-    if sampling_profile != DETECTOR_ONLY or any(
-        definition.claims or definition.bonded or definition.capture == "lottery"
-        for definition in definitions
-    ):
-        raise ValueError("ray interactions require Detector-only fields without claims or bonds")
 
 
 def validate_ray_coupling(initial: InitialState) -> None:
@@ -197,7 +177,6 @@ def validate_ray_coupling(initial: InitialState) -> None:
         or initial.spatial_interactions
     ):
         raise ValueError("ray interactions require the default fixed H=1 spatial clock")
-    validate_ray_coupling_scope(initial.spatial_fields, initial.sampling_profile)
     selected = validate_ray_participants(
         initial.spatial_fields, initial.fields, initial.ray_interactions
     )
@@ -207,33 +186,6 @@ def validate_ray_coupling(initial: InitialState) -> None:
         for rule in initial.spatial_couplings
     ):
         raise ValueError("ray interactions do not support coupled responses or absorption")
-
-
-@dataclass(frozen=True, slots=True)
-class Claim:
-    """One Node's knowledge that a train has been captured: gather it homeward.
-
-    The parent port leads one link toward the capturing Node (-1 at that Node
-    itself); since is the tick the claim was opened; sent records that this
-    Node has already passed the claim to its neighbors.
-    """
-
-    train: int
-    parent: int
-    since: int
-    sent: int = 0
-    # The Node that opened the claim, stamped by that Node when it commits; the
-    # earlier opening tick wins where two claims for one train meet, then the
-    # lower address, so every Node ends up pointing at one root.
-    origin: Address3 = (-1, -1, -1)
-
-    @property
-    def priority(self) -> tuple[int, Address3]:
-        return (self.since, self.origin)
-
-
-Claims = tuple[Claim, ...]
-MAX_CLAIM_SLOTS = 64
 
 
 @dataclass(frozen=True, slots=True)
@@ -257,10 +209,10 @@ class SpatialFieldDefinition:
     phase_steps: int = 0
     phase_advance: int = 0
     # Kerengonen only: how an absorber takes a ray. "share" takes the coherent
-    # share of its amount; "lottery" takes the whole ray or nothing, decided by a
-    # local ticket whose probability is that share.
+    # share of its amount; "threshold" takes the whole ray when that share reaches
+    # one half and leaves it otherwise. Neither draws: the only draw in the model
+    # is at a Node whose Detector bit is set.
     capture: str = "share"
-    capture_seed: int = 0
     # Declared carrier-vector association for read-only ray inventory accounting.
     momentum_field: int | None = None
     # Ray transport only: "links" moves every ray one link per tick; "euclidean"
@@ -268,20 +220,10 @@ class SpatialFieldDefinition:
     # per tick, the slowest lattice direction setting the speed.
     metric: str = "links"
     # Ray transport only: the fastest heading hops pace_numerator links every
-    # pace_denominator ticks (1 / 1 is link speed); a slower matter wave lets a
-    # claim, traveling at link speed, overtake it.
+    # pace_denominator ticks (1 / 1 is link speed); a slower matter wave is
+    # never faster than the signals that chase it.
     pace_numerator: int = 1
     pace_denominator: int = 1
-    # Claim and gather only: a Node keeps a claim for claim_ticks ticks after it
-    # was opened, at most claim_slots claims at once. Zero ticks disables claims.
-    claim_ticks: int = 0
-    claim_slots: int = 0
-    # Bonded pairs only: the seed of the world's bond registry, -1 for none.
-    bond_seed: int = -1
-    # Bonded pairs only: an external number stream, one bounded integer per pair
-    # in the order pairs first ask, in place of the registry's own sequence. Empty
-    # for the world's sequence; at most MAX_BOND_STREAM numbers.
-    bond_stream: tuple[int, ...] = ()
     # Scalar response readout: last-hop Port channels or complete resident ray headings.
     flux_projection: str = "ports"
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
@@ -293,14 +235,6 @@ class SpatialFieldDefinition:
             raise ValueError("flux_projection must be ports or carried_heading")
         if self.flux_projection == "carried_heading" and not self.rays:
             raise ValueError("carried_heading flux_projection requires ray transport")
-        if self.bond_stream:
-            if not self.bonded:
-                raise ValueError("a bond stream requires a bonded field")
-            if type(self.bond_stream) is not tuple or len(self.bond_stream) > MAX_BOND_STREAM:
-                raise ValueError("a bond stream holds at most 4096 numbers")
-            for number in self.bond_stream:
-                if type(number) is not int or not 0 <= number < TICKET_MODULUS:
-                    raise ValueError("bond stream numbers must be below the ticket modulus")
         if self.rays:
             object.__setattr__(self, "pace_table", prepare_heading_paces(self))
         if self.phase_steps:
@@ -313,16 +247,8 @@ class SpatialFieldDefinition:
         return self.transport == "ray"
 
     @property
-    def bonded(self) -> bool:
-        return self.bond_seed >= 0
-
-    @property
     def euclidean(self) -> bool:
         return self.metric == "euclidean"
-
-    @property
-    def claims(self) -> bool:
-        return self.claim_ticks > 0
 
     @property
     def kerengonen(self) -> bool:
@@ -414,19 +340,9 @@ class EmissionDefinition:
     # is left. Zero dissolve_over means no dissolution.
     dissolve_after: int = 0
     dissolve_over: int = 0
-    # Claim and gather (ray fields with claims only): the owned scalar field whose
-    # value stamps every emitted ray with its train, so a claim can gather it; or,
-    # when carried, the train of what the record last absorbed (a Huygens slit).
-    train_field: int | None = None
-    train_carried: bool = False
     # Ray fields only: emit every ray on this one heading of the sequence instead
     # of sweeping the sequence (a directed emitter). None sweeps.
     heading: int | None = None
-    # Bonded fields only: the owned scalar whose value bonds every emitted ray,
-    # or, with bond_origin, the birth Node and tick themselves: the origin
-    # travels with the ray until its next interaction.
-    bond_field: int | None = None
-    bond_origin: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -447,15 +363,6 @@ class SpatialCouplingDefinition:
     # the ray is forwarded. None absorbs whole rays.
     fraction: Expression | None = None
     fraction_denominator: int = 1
-    # Absorb mode on a claim field only: taking any share of a train's ray opens
-    # a claim at this Node, and the record gathers that train's homing rays whole.
-    claim: bool = False
-    # Absorb mode with the lottery only: added to the field's capture seed for
-    # this rule's ticket, so two detectors draw their own sequences.
-    capture_salt: int = 0
-    # Absorb mode on a bonded field only: the owned scalar holding this
-    # detector's setting; a bonded ray is taken or left by the bond registry.
-    bond_setting: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -539,9 +446,6 @@ class SpatialNodeState:
     # Resident rays per spatial field (empty for non-ray fields). They arrived on
     # the previous link and leave on the next cycle along their own lines.
     rays: tuple[Rays, ...] = ()
-    # Claims held per spatial field (empty for fields without claims): which
-    # trains are gathered through this Node and toward which port.
-    claims: tuple[Claims, ...] = ()
     incoming: tuple[SpatialState, ...] = ()
     incoming_count: int = 0
     incoming_decay_cost: int = 0
@@ -568,10 +472,6 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
-    # Claim and gather: the Node's claims after this cycle, one tuple per field,
-    # and the claims passed to each port, one tuple per field per port.
-    claims: tuple[Claims, ...] = ()
-    outgoing_claims: tuple[tuple[Claims, ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -583,7 +483,6 @@ class SpatialPacket:
     cause_id: int | None = None
     rays: tuple[Rays, ...] = ()
     phases: SpatialBundle = ()
-    claims: tuple[Claims, ...] = ()
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -637,46 +536,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         pace = heading_pace(definition, ray.heading)
         if type(ray.wait) is not int or not 0 <= bounded(ray.wait) < pace[1]:
             raise ValueError("ray wait must stay below its heading's pace denominator")
-        if type(ray.train) is not int or bounded(ray.train) < 0:
-            raise ValueError("ray train must be a nonnegative bounded integer")
-        if type(ray.homing) is not int or ray.homing not in (0, 1):
-            raise ValueError("ray homing must be 0 or 1")
-        if ray.homing and not (definition.claims and ray.train):
-            raise ValueError("a homing ray requires a claim field and a train")
-        if type(ray.bond) is not int or bounded(ray.bond) < 0:
-            raise ValueError("ray bond must be a nonnegative bounded integer")
-        if ray.bond and not definition.bonded:
-            raise ValueError("a bonded ray requires a bonded field")
         if bounded(ray.interaction_delay) < 0:
             raise ValueError("ray interaction delay must be nonnegative")
-
-
-def validate_claims(claims: Claims, definition: SpatialFieldDefinition) -> None:
-    if type(claims) is not tuple or len(claims) > definition.claim_slots:
-        raise ValueError("claim slot budget exceeded")
-    if claims and not definition.claims:
-        raise ValueError("claims require a claim field")
-    trains = set()
-    for claim in claims:
-        if type(claim) is not Claim:
-            raise ValueError("claims require immutable Claim entries")
-        if type(claim.train) is not int or bounded(claim.train) < 1:
-            raise ValueError("a claim requires a positive bounded train")
-        if type(claim.parent) is not int or not -1 <= claim.parent < 6:
-            raise ValueError("a claim's parent must be -1 or a port")
-        if type(claim.since) is not int or bounded(claim.since) < 0:
-            raise ValueError("a claim's opening tick must be nonnegative")
-        if type(claim.sent) is not int or claim.sent not in (0, 1):
-            raise ValueError("a claim's sent flag must be 0 or 1")
-        if (
-            type(claim.origin) is not tuple
-            or len(claim.origin) != 3
-            or any(type(c) is not int or bounded(c) < -1 for c in claim.origin)
-        ):
-            raise ValueError("a claim's origin must be a lattice address")
-        if claim.train in trains:
-            raise ValueError("a Node holds one claim per train")
-        trains.add(claim.train)
 
 
 def advance_ray(
@@ -700,7 +561,7 @@ def advance_ray(
 
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int, int, int, int], int] = {}
+    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int], int] = {}
     for ray in rays:
         key = (
             ray.heading,
@@ -708,17 +569,12 @@ def merge_rays(rays: Rays) -> Rays:
             ray.phase,
             ray.advance,
             ray.wait,
-            ray.train,
-            ray.homing,
-            ray.bond,
             ray.interaction_delay,
         )
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase, advance, wait, train, homing, bond, delay)
-        for (heading, accumulators, phase, advance, wait, train, homing, bond, delay), amount in sorted(
-            combined.items()
-        )
+        Ray(heading, accumulators, bounded(amount), phase, advance, wait, delay)
+        for (heading, accumulators, phase, advance, wait, delay), amount in sorted(combined.items())
         if amount
     )
 
@@ -873,49 +729,29 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
     return (min(max(numerator, 0), denominator), denominator)
 
 
-CAPTURE_MODES = ("share", "lottery", "threshold")
+# The two captures are deterministic. The ordinary lottery capture and the bond
+# registry were deleted on 2026-09-17 (Highlights 3.18 deleted, 3.19, 3.20, 5.4):
+# an absorber never draws. The ticket sequence below stays as the bounded local
+# draw that a Node whose Detector bit is set will own.
+CAPTURE_MODES = ("share", "threshold")
 TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
-MAX_BOND_STREAM = 4096
 
 
 def next_ticket(state: int, salt: int) -> int:
-    """Advance a local ticket state: a multiplicative congruence salted by the ray met."""
+    """Advance a local ticket state: a multiplicative congruence salted by the arrival."""
     if not 0 <= state < TICKET_MODULUS:
         raise ValueError("absorb ticket state must stay below the ticket modulus")
     return (state * 48271 + salt + 1) % TICKET_MODULUS
 
 
-# A ray bonded to its origin leaves the planner with this mark; the Node that
-# emits it replaces the mark with the code of its own address and the tick.
-BOND_ORIGIN_MARK = TICKET_MODULUS
-
-
-def origin_bond(position: Address3, shape: Address3, tick: int) -> int:
-    """The bond of everything born at one Node on one tick: a positive bounded code."""
-    index = (position[0] * shape[1] + position[1]) * shape[2] + position[2]
-    return checked_work(index * 1048573 + bounded(tick)) % TICKET_MODULUS + 1
-
-
 def ticket_draw(state: int) -> int:
     """The number a ticket state draws: its square modulo the ticket modulus.
 
-    The state itself is affine in its salts, so two records that met the same
-    rays would draw numbers a fixed distance apart; the square breaks that, so
-    two detectors with their own seeds draw independently for every ray.
+    The state itself is affine in its salts, so two marks that met the same
+    arrivals would draw numbers a fixed distance apart; the square breaks that,
+    so two Detectors with their own seeds draw independently for every arrival.
     """
     return checked_work(state * state) % TICKET_MODULUS
-
-
-def ray_salt(ray: Ray) -> int:
-    """A bounded integer that differs between rays of different line, phase or amount."""
-    return (
-        ray.heading * 7919
-        + ray.accumulators[0] * 104729
-        + ray.accumulators[1] * 1299709
-        + ray.accumulators[2] * 15485863
-        + ray.phase * 32452843
-        + abs(ray.amount)
-    ) % TICKET_MODULUS
 
 
 def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:

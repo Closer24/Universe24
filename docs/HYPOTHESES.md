@@ -37,15 +37,18 @@ leaves the quantum value (the Popescu-Rohrlich box at `S = 4`), so
 no-signalling bounds the coin and not the correlation; the size of the signal is a
 measurement. The hypothesis is therefore sharp: outside influence enters only
 through the number, and is visible exactly when it is biased. Measured: the
-[Bell probe](../examples/bell-chsh/README.md) with `--source uniform` gives
-S = 2.7911 and rate shifts below 0.1, and with `--source biased` keeps
+Bell probe (`examples/bell-chsh/`, deleted on 2026-09-17 with the bond
+registry) with `--source uniform` gave
+S = 2.7911 and rate shifts below 0.1, and with `--source biased` kept
 S = 2.7792 while Bob's plus rate moves by 0.6866 with Alice's
 setting. The derivation holds in the model; whether any real source is outside
 the world in this sense stays a hypothesis.
 
 **Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
-[Bell and postulate 22 study](../examples/research/bell-postulate-22/README.md)
-finds that replacing one pair's registry number alters no Node outside the
+Bell and postulate 22 study (`examples/research/bell-postulate-22/`, deleted
+on 2026-09-17 with the bond registry; its numbers stay in the
+[validation log](VALIDATION.md))
+found that replacing one pair's registry number alters no Node outside the
 forward cone of the end whose answer changed (144 world pairs, 0 violations,
 the front exactly on the cone edge), that the product of the two outcomes is
 the same whichever end asks first (4,096 of 4,096 pairs) and depends only on
@@ -128,8 +131,10 @@ A size sweep of the slab (period 3, 9 and beyond, radii to the lattice edge)
 shows how far the flat part reaches on each lattice; the radius where the
 measured curve stops following the hypothesis is the size at which a larger
 lattice is needed, and that number belongs in the report.
-The [gathered gravity probe](../examples/gathered-gravity/README.md) closes
-the other route: gathering a gravity train focuses quanta, not a force law.
+The gathered gravity probe (`examples/gathered-gravity/`, deleted on
+2026-09-17 with claim-gather; its numbers stay in the
+[validation log](VALIDATION.md)) closed
+the other route: gathering a gravity train focused quanta, not a force law.
 
 **Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
 [anomalies study](../examples/research/anomalies/README.md#e3-the-force-law-exponent-with-a-short-closed-dimension)
@@ -207,6 +212,13 @@ Which of the three outcomes named in section 8 this is, is left to the
 owner; the README lists the pre-fixed conditions and their outcomes.
 
 ## 8. Everything that moves is a ray; records only hold
+
+*Superseded on 2026-09-17: the bound-ray-pair candidate stated at the end of
+this section is superseded by [Highlights](HIGHLIGHTS.md) 3.4, where matter is
+rays bound in one Node by a declared binding coupling (issue #169, feature 8),
+and the claims and bond registry that the ray-form inventory below lists among
+the non-ray forms were deleted the same day (issue #164, bucket B.5). The text
+is kept as stated.*
 
 A Node starts no new cycle until its delayed departure has arrived, so a
 moving record that waits under a computation load stalls the clock of every
