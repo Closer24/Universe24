@@ -164,7 +164,8 @@ def main():
     results = [run(name, raw) for name, raw in configs.items()]
     assert source_fingerprint() == fingerprint
     assert not any(
-        name in sys.modules for name in ["PIL", "matplotlib", "event_universe.diagnostics.render"]
+        name in sys.modules
+        for name in ["PIL", "matplotlib", "event_universe.diagnostics.disturbance_render"]
     )
     report = {
         "source_sha256": fingerprint,

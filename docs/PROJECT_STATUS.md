@@ -323,19 +323,12 @@ records are temporary, while their recorded conclusions remain in the repository
 | Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
 | Formula-free state diagnostic | [node_contract.py](../src/event_universe/diagnostics/node_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |
 | Standalone vector laboratory | [laboratory guide](../tools/generic_vector_lab/README.md) | Separate research/reference process, not the active generic Simulation |
-| Historical particle APIs | [particle_api.py](../src/event_universe/particle_api.py) | Explicit `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`, `CausalStreamSimulation` |
 | Application and output | [runner.py](../src/event_universe/runner.py), [ui.py](../src/event_universe/ui.py) | Headless runs by default; optional read-only recording and workspace playback |
 
-The active package lives only in `src/event_universe/`. The
-[persistent-source facade](../src/persistent_source_field.py) re-exports historical
-notebook names; it contains no second engine. `tests/reference/` preserves source
-history, not an active implementation or a compatibility acceptance gate.
-
-The historical scalar scheduler is `core/scalar_engine.py` (`ScalarEngine`), and
-its selected scalar policy is `models/scalar_field.py` (`ScalarFieldModel`).
-The active `Simulation` still resolves to `disturbance_api.py`. See
-[migration](MIGRATION.md#explicit-historical-component-names) for renamed internal
-imports and commands. Public named simulation classes keep their identities.
+The active package lives only in `src/event_universe/`, and the active
+`Simulation` resolves to `disturbance_api.py`. The historical scalar scheduler,
+its named research APIs, notebook facade and frozen archive were deleted on
+2026-09-17; see [migration](MIGRATION.md#historical-particle-candidates-deleted-on-2026-09-17).
 
 The unequal-mass collision configuration has one canonical file:
 [04-unequal-mass-collision.json](../examples/04-unequal-mass-collision.json).

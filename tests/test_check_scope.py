@@ -32,7 +32,7 @@ SPEC.loader.exec_module(CHECK)
 def test_ray_candidate_resources_select_their_direct_consumers(name, consumer):
     selected, _ = CHECK.select(["examples/generic-ray-coupling/" + name], {})
     assert consumer in selected
-    assert "tests/test_collisions.py" not in selected
+    assert "tests/test_spatial_engine.py" not in selected
 
 
 @pytest.mark.parametrize(
@@ -98,13 +98,13 @@ def test_spatial_graph_example_selects_its_causal_contract():
 def test_many_contacts_selects_its_experiment_contract():
     selected, _ = CHECK.select(["examples/quantum/many_contacts.json"], {})
     assert "tests/test_many_contacts.py" in selected
-    assert "tests/test_collisions.py" not in selected
+    assert "tests/test_spatial_engine.py" not in selected
 
 
 def test_repeated_contacts_selects_its_runtime_input_consumer():
     selected, _ = CHECK.select(["examples/quantum/repeated_contacts.json"], {})
     assert "tests/test_recurrent_quantum_contact.py" in selected
-    assert "tests/test_collisions.py" not in selected
+    assert "tests/test_spatial_engine.py" not in selected
 
 
 @pytest.mark.parametrize(
@@ -122,7 +122,7 @@ def test_repeated_contacts_selects_its_runtime_input_consumer():
 def test_quantum_classical_resources_select_the_bounded_experiment(name):
     selected, _ = CHECK.select(["examples/quantum/" + name], {})
     assert "tests/test_quantum_classical_experiment.py" in selected
-    assert "tests/test_collisions.py" not in selected
+    assert "tests/test_spatial_engine.py" not in selected
 
 
 @pytest.mark.parametrize(
@@ -144,14 +144,14 @@ def test_causal_interference_harness_selects_its_acceptance_contract():
     for path in ("examples/quantum/causal_interference.py", "examples/quantum/causal_charge.json"):
         selected, _ = CHECK.select([path], {})
         assert "tests/test_causal_interference.py" in selected
-        assert "tests/test_collisions.py" not in selected
+        assert "tests/test_spatial_engine.py" not in selected
 
 
 def test_causal_charge_example_selects_its_field_contract_without_unrelated_worlds():
     selected, typed = CHECK.select(["examples/quantum/causal_charge.json"], {})
     assert "tests/test_causal_contact_fields.py" in selected
     assert "tests/test_configuration_validation.py" in selected
-    assert "tests/test_collisions.py" not in selected
+    assert "tests/test_spatial_engine.py" not in selected
     assert "tests/test_native_wave_origins.py" not in selected
     assert not typed
 
@@ -168,22 +168,22 @@ def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
         "src/domain/math.py": "def calculate(): pass",
         "src/domain/engine.py": "from .math import calculate",
         "tests/helper.py": "from domain.engine import calculate",
-        "tests/test_scalar_engine.py": "from .helper import calculate",
+        "tests/test_engine.py": "from .helper import calculate",
         "tests/test_unrelated.py": "def test_other(): pass",
     }
     tests, typed = CHECK.select(["src/domain/math.py"], sources)
-    assert "tests/test_scalar_engine.py" in tests
+    assert "tests/test_engine.py" in tests
     assert "tests/test_unrelated.py" not in tests
     assert typed == ["src/domain/engine.py", "src/domain/math.py"]
 
 
 def test_named_lazy_exports_do_not_pull_in_unrelated_physics():
     sources = {
-        "src/event_universe/__init__.py": 'from .generic import Simulation\nmodules = {"ScalarSimulation": ".historical"}',
+        "src/event_universe/__init__.py": 'from .generic import Simulation\nmodules = {"ResearchSimulation": ".historical"}',
         "src/event_universe/generic.py": "class Simulation: pass",
-        "src/event_universe/historical.py": "class ScalarSimulation: pass",
+        "src/event_universe/historical.py": "class ResearchSimulation: pass",
         "tests/test_generic.py": "from event_universe import Simulation",
-        "tests/test_history.py": "from event_universe import ScalarSimulation",
+        "tests/test_history.py": "from event_universe import ResearchSimulation",
     }
     tests, _ = CHECK.select(["src/event_universe/generic.py"], sources)
     assert "tests/test_generic.py" in tests
@@ -217,12 +217,12 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
 def test_example_selects_its_consumers_and_not_other_collision_candidates():
     sources = {
         "tests/test_atomic_interactions.py": 'EXAMPLE = "04-unequal-mass-collision.json"',
-        "tests/test_collisions.py": "def test_old_candidate(): pass",
+        "tests/test_historical.py": "def test_old_candidate(): pass",
     }
     tests, _ = CHECK.select(["examples/04-unequal-mass-collision.json"], sources)
     assert "tests/test_atomic_interactions.py" in tests
     assert "tests/test_workspace.py" in tests
-    assert "tests/test_collisions.py" not in tests
+    assert "tests/test_historical.py" not in tests
 
 
 def test_shared_fixture_includes_all_its_consumers():
@@ -237,21 +237,21 @@ def test_shared_fixture_includes_all_its_consumers():
 def test_dynamic_example_paths_retain_identity_checks_without_unrelated_physics(example):
     sources = {
         "tests/test_generic_identity.py": 'filename = f"{name}.json"',
-        "tests/test_collisions.py": "def test_historical(): pass",
+        "tests/test_historical.py": "def test_historical(): pass",
     }
     tests, _ = CHECK.select([f"examples/{example}.json"], sources)
     assert "tests/test_generic_identity.py" in tests
-    assert "tests/test_collisions.py" not in tests
+    assert "tests/test_historical.py" not in tests
 
 
-def test_runpy_acceptance_tool_retains_application_consumer():
+def test_reference_script_retains_its_dynamically_loading_consumer():
     sources = {
-        "tests/test_legacy_application.py": 'runpy.run_path(root / "tools/check_diagonal_motion.py")',
-        "tests/test_collisions.py": "def test_historical(): pass",
+        "tests/test_reference_examples.py": 'spec_from_file_location("reference_examples", SCRIPT)',
+        "tests/test_historical.py": "def test_historical(): pass",
     }
-    tests, _ = CHECK.select(["tools/check_diagonal_motion.py"], sources)
-    assert "tests/test_legacy_application.py" in tests
-    assert "tests/test_collisions.py" not in tests
+    tests, _ = CHECK.select(["examples/known-entities/run_reference_checks.py"], sources)
+    assert "tests/test_reference_examples.py" in tests
+    assert "tests/test_historical.py" not in tests
 
 
 @pytest.mark.parametrize(
@@ -268,7 +268,7 @@ def test_directional_field_resources_select_the_candidate_consumer(filename):
 def test_particle_resources_select_the_dynamic_contract_consumer(resource):
     tests, _ = CHECK.select(["examples/particle-contracts/" + resource], {})
     assert "tests/test_rational_particles.py" in tests
-    assert "tests/test_collisions.py" not in tests
+    assert "tests/test_spatial_engine.py" not in tests
 
 
 def no_change_main(monkeypatch, tmp_path, *arguments):
@@ -424,7 +424,7 @@ def test_quantum_profile_and_experiment_resources_select_consumers():
 def test_configuration_inventory_selects_preflight_without_unrelated_worlds(path):
     tests, _ = CHECK.select([path], {})
     assert "tests/test_configuration_validation.py" in tests
-    assert "tests/test_collisions.py" not in tests
+    assert "tests/test_spatial_engine.py" not in tests
 
 
 @pytest.mark.parametrize("name", ["catalog.json", "representation-probes.json"])

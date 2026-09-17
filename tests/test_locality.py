@@ -1,34 +1,12 @@
-"""Fixed neighborhood access and explicit rejection of shadow-world dependencies."""
+"""Explicit rejection of shadow-world dependencies in generic field code."""
 
 from pathlib import Path
-from types import SimpleNamespace
 
 import pytest
-
-from event_universe.core.lattice import PeriodicLattice
-from event_universe.core.scalar_engine import ScalarEngine
 
 from .architecture_rules import violations
 
 
-@pytest.mark.parametrize("extent", [8, 1_000_000])
-def test_particle_neighborhood_reads_exactly_six_nodes_independent_of_world_extent(extent):
-    # This is a read spy, not a simulated world or an evolution run.
-    position = (3, 3, 3)
-    expected = ((4, 3, 3), (2, 3, 3), (3, 4, 3), (3, 2, 3), (3, 3, 4), (3, 3, 2))
-    reads = []
-
-    def read(address):
-        assert address in expected, "A remote node was read"
-        reads.append(address)
-        return expected.index(address) + 1
-
-    reader = SimpleNamespace(_lattice=PeriodicLattice((extent,) * 3), phi=read)
-    assert ScalarEngine._particle_neighbors(reader, position) == (1, 2, 3, 4, 5, 6)
-    assert tuple(reads) == expected
-
-
-@pytest.mark.parametrize("layer", ["fields", "dynamics", "models"])
 @pytest.mark.parametrize(
     "source",
     [
@@ -40,8 +18,8 @@ def test_particle_neighborhood_reads_exactly_six_nodes_independent_of_world_exte
         "def estimate(state):\n    return state.occupancy",
     ],
 )
-def test_local_calculation_gate_rejects_world_reads_and_shadow_replay(layer, source):
-    assert violations(source, f"event_universe.{layer}.self_field")
+def test_local_calculation_gate_rejects_world_reads_and_shadow_replay(source):
+    assert violations(source, "event_universe.fields.self_field")
 
 
 def test_locality_rule_covers_self_field_dependencies_and_quantum_exception():

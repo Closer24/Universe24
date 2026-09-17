@@ -10,7 +10,7 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    code in their documented modules. Reuse the generic arithmetic; choose and
    select active laws in initialization data. Use `fields/disturbances.py` for
    initialization-defined expression evaluation; shared bounded arithmetic belongs
-   in `core/integer.py`; historical models keep their named owners. Read
+   in `core/integer.py`. Read
    [the disturbance contract](docs/DISTURBANCES.md) for the active API.
    Apply the [local integer operation contract](docs/ARCHITECTURE.md#local-integer-operation-contract)
    when reviewing operations, numeric bounds and input provenance; do not promote
@@ -26,12 +26,10 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
 6. Run `python tools/check.py` for changed code and affected consumers only.
    Inspect metadata and traces for affected runs.
    Capture and inspect HTML only when visualization was explicitly requested.
-   Test reusable calculations in `test_scalar_field.py` and `test_turning.py`,
-   current choices in `test_scalar_field_model.py`, and public component replacement
-   in `test_field_composition.py`.
+   Test shared arithmetic in `test_integer_arithmetic.py` and each configured
+   law through its focused suite listed in `docs/TEST_EXPECTATIONS.md`.
    Specify input, expected output and a boundary case for each calculation;
-   maintain `docs/TEST_EXPECTATIONS.md`. Movement, lattice geometry, field
-   policies and diagnostic projections have their own focused test modules.
+   maintain `docs/TEST_EXPECTATIONS.md`.
    Assembly modules must contain no independent arithmetic; the architecture
    gate also checks absolute and relative dependencies.
 7. Commit code and documentation together. Keep generated outputs outside source

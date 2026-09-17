@@ -6,6 +6,35 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Historical particle candidates deleted on 2026-09-17
+
+The model owner's instruction of 2026-09-17, recorded in
+[HIGHLIGHTS.md](HIGHLIGHTS.md) sections 3.3, 3.4, 3.5, 3.19, 3.20, 5.1 and 5.4
+and in [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 6, is that everything
+not used is deleted. Issue #164, bucket A, removed the unused historical
+particle candidates from the package, tests, tools and documents:
+
+- `core/scalar_engine.py`, `core/linked_engine.py`, `core/streaming_engine.py`,
+  `core/streams.py`, `core/links.py`, `core/lattice.py`, `core/contracts.py`,
+  the `models/` and `dynamics/` packages, `fields/scalar.py`, `fields/policies.py`,
+  `fields/halo.py`, `fields/geometry.py`, `fields/streaming.py`, `particle_api.py`,
+  `particle_scenarios.py`, `legacy_runner.py`, `compat.py`, `diagnostics/render.py`,
+  `diagnostics/live.py`, `diagnostics/frames.py`, `diagnostics/measurements.py`,
+  `diagnostics/recorder.py` and `diagnostics/invariants.py`;
+- the notebook facade `src/persistent_source_field.py`, the diagonal-motion tool
+  `tools/check_diagonal_motion.py` and the frozen archive `tests/reference/`;
+- the public names `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`,
+  `CausalStreamSimulation`, `Config`, `NodeState`, `ParticleState`, `LinkConfig`
+  and `CausalStreamConfig` from the `event_universe` package;
+- their tests, the historical run-capture, live-display and renderer tests, and
+  the documents `SCALAR_FIELDS.md`, `BALANCED_MOTION.md` and `CAUSAL_STREAM_FIELD.md`.
+
+There is no replacement API: the active `Simulation` is initialization-defined
+([DISTURBANCES.md](DISTURBANCES.md)), shared bounded arithmetic is
+`core/integer.py`, and `pytest --visualize-runs` now only enables the
+visualization-marked tests. `core/state.py` remains until its quantum consumers
+are removed in the next step. Dated validation records keep their original scope.
+
 ## Primary initialization-based API
 
 The quantum event storage migration removes the separate local predecessor list
@@ -34,93 +63,23 @@ produce animation reports. `pytest --visualize-runs` explicitly enables them.
 The active runner requires an empty output directory and preserves the original
 initialization, events, final state and metadata.
 
-For the old scalar engine, change `Simulation(...)` calls and imports to the
-explicit name `ScalarSimulation(...)`. `LinkedSimulation`, `BalancedSimulation`
-and `CausalStreamSimulation` remain named research APIs. Historical scenarios
-run through `python -m event_universe.legacy_runner --scenario ...`; the primary
-CLI does not accept `--scenario`. The old runner function is
-`event_universe.legacy_runner.run_scenario`, headless unless `visualize=True`.
-The following notebook/component notes concern only those historical APIs.
-
-## Existing notebook imports
-
-`from persistent_source_field import IntegerO1Field3D, Config, PX` still works.
-`IntegerO1Field` remains an alias. The compatibility facade keeps `paths`,
-`force_records`, `collisions`, momentum methods, `audit()`, `report()`,
-`xy_slice(z)` and `particles_on_xy_slice(z)`. This facade opts into in-memory
-recording. The modern `ScalarSimulation` has no retained history by default.
-
-| Old usage | New usage or behavior |
-| --- | --- |
-| `world.particles[pid][PX]` | Still supported for reading; prefer `.px` |
-| `world.particles[pid][PX] = value` | State is immutable; supply momentum in initial conditions |
-| `world._node(address)[PHI] = value` | `world.seed_field(address, value)` before the first tick |
-| `world.config = other_config` | Create a new world; configuration is immutable |
-| `self_tests()` | `python -m pytest` or `python tools/check.py` |
-| `regression_two_particle_plane()` | `test_original_180_tick_two_particle_regression` |
-| `report()["bounded_core_integers"]` | `report()["checks"]["bounded_integer_state"]` |
-| `make_v7_run_html.render_xy_run(...)` | Application runner, or `diagnostics.render.render_run(...)` |
-
-Private engine mutation helpers are no longer a supported initialization API.
-Negative particle IDs are rejected because `-1` is the empty-slot sentinel.
-`audit()` validates state with exceptions, also under optimized Python.
-
-The physical source is now one package. The saved `persistent_source_field.py`
-is a small import facade and requires this package to be installed; downloading
-that facade alone is insufficient. The delivered ZIP contains all required
-source, tests, documentation and the preserved reference.
-
-## Field and turning components
-
-Existing `ScalarSimulation(config, observer=...)` calls retain the same defaults.
-Optional `field=` and `turning=` keywords replace the respective component
-without changing scheduling. The compatibility `IntegerO1Field3D` facade
-continues to use the historical scalar defaults; use `ScalarSimulation` for component injection.
-See `SCALAR_FIELDS.md` for the scalar protocol and an example.
-
-Imports of `update_field`, `update_particle`, `gradient`, `transverse_gradient`,
-`choose_axis` and `MODEL_ID` from `models.local_field` remain supported through
-re-exports. New code uses `fields.scalar`, `dynamics.turning`, `dynamics.movement`
-and `models.scalar_field` directly. Tests specific to the historical scalar law moved
-from `test_local_laws.py` to `test_scalar_field_model.py`.
-
-Activity decisions are now injected into `ScalarEngine` with the optional
-`field_activity=` keyword. `ScalarSimulation()` explicitly keeps legacy activity;
-`ScalarSimulation(field=...)` tracks both value and remainder changes by default.
-This fixes prematurely stopped remainder-only evolution for replacement fields.
-Explicit `ScalarSimulation(field_activity=...)` accepts a predicate over two scalar
-samples and a source count. Direct `ScalarEngine` predicates receive two node records
-and a source count; omitting one retains visited nodes conservatively.
-Periodic geometry is shared by all engine operations in `core/lattice.py`.
-
 ## Version history
 
-Use Git commits and tags for source versions. The v10 reference is retained under
-`tests/reference/` only; application code must never import it. Each run records
+Use Git commits and tags for source versions. Each run records
 a SHA-256 fingerprint of the active package files, so source identity survives
 installation from a ZIP or wheel without a Git checkout.
 
 
 ## Explicit historical component names
 
-The 2026-09-12 consistency cleanup makes the active generic engine distinct from
-historical particle models. These are source/import/command renames, not new
-physical laws. Public `event_universe.Simulation`, `ScalarSimulation`,
-`LinkedSimulation`, `BalancedSimulation` and `CausalStreamSimulation` keep the same
-implementations. Internal imports in downstream scripts must use the new paths.
-No second implementation or duplicate compatibility module was added for these names.
+The 2026-09-12 consistency cleanup made the active generic engine distinct from
+historical particle models. These were source/import/command renames, not new
+physical laws. The rows whose renamed target was deleted on 2026-09-17 (the
+historical API, engine, model, scenario and test modules and the scalar-field
+document) are omitted; the remaining rows still locate a current owner.
 
 | Previous internal path or name | Canonical replacement |
 | --- | --- |
-| `event_universe.api` | `event_universe.particle_api` |
-| `event_universe.core.engine.Engine` | `event_universe.core.scalar_engine.ScalarEngine` |
-| `event_universe.models.current_field.CurrentFieldModel` | `event_universe.models.scalar_field.ScalarFieldModel` |
-| `CURRENT_MODEL` in the historical field module | `SCALAR_MODEL` |
-| `event_universe.scenarios` | `event_universe.particle_scenarios` |
-| `tests/test_engine.py` | `tests/test_scalar_engine.py` |
-| `tests/test_current_field.py` | `tests/test_scalar_field_model.py` |
-| `tests/test_application.py` | `tests/test_legacy_application.py` |
-| `docs/FIELDS.md` | `docs/SCALAR_FIELDS.md` |
 | `examples/known-entities/run.py` | `examples/known-entities/run_reference_checks.py` |
 | `examples/known-entities/run.ps1` | `examples/known-entities/run_reference_checks.ps1` |
 | `examples/known-entities/collision.json` | `examples/04-unequal-mass-collision.json` |
@@ -131,8 +90,8 @@ No second implementation or duplicate compatibility module was added for these n
 The removed collision file was byte-identical to the canonical workspace example.
 The reference command resolves its logical `collision` experiment to that file;
 other reference inputs retain their separate configuration and expectations.
-Archived files under `tests/reference/` are unchanged. Earlier validation records
-retain their original paths and hashes; use this table to locate the current owner.
+Earlier validation records retain their original paths and hashes; use this
+table to locate the current owner.
 
 
 ## Duration-only reference configuration

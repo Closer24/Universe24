@@ -52,7 +52,6 @@ import event_universe.runner
 assert event_universe.Simulation.__module__ == 'event_universe.disturbance_api'
 for name in sys.modules:
     assert not name.startswith(('matplotlib', 'PIL', 'numpy',
-        'event_universe.models', 'event_universe.particle_api', 'event_universe.particle_scenarios',
         'event_universe.core.state', 'event_universe.diagnostics')), name
 """
     result = subprocess.run(

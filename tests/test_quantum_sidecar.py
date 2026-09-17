@@ -47,36 +47,3 @@ def test_backward_time_link_is_rejected_at_bridge():
     start = bridge.prepare(1, (0, 0, 0), 5, 1)
     with pytest.raises(ValueError, match="precede"):
         bridge.phase(start, (1, 0, 0), 4, 0)
-
-
-def test_sidecar_query_cannot_change_simulator_state():
-    from event_universe import Config
-    from event_universe import ScalarSimulation as Simulation
-
-    def make_world():
-        world = Simulation(Config(nx=32, ny=32, nz=32))
-        world.add_particle(1, 10, 10, 10, 1, 0, 0)
-        world.add_particle(2, 14, 12, 10, -1, 0, 0)
-        return world
-
-    baseline = make_world()
-    integrated = make_world()
-    q = DeferredQuantum()
-    bridge = QuantumBridge(q)
-
-    for _ in range(8):
-        baseline.step()
-        integrated.step()
-
-    source = bridge.prepare(100, (10, 10, 10), 0, 1)
-    left = bridge.phase(source, (11, 10, 10), 1, 0)
-    right = bridge.phase(source, (10, 11, 10), 1, 2)
-    root = bridge.interfere(left, right, (11, 11, 10), integrated.tick)
-    result = bridge.measure(101, root)
-    assert result.weight == 0
-
-    assert integrated.tick == baseline.tick
-    assert dict(integrated.nodes) == dict(baseline.nodes)
-    assert dict(integrated.particles) == dict(baseline.particles)
-    assert dict(integrated.occupancy) == dict(baseline.occupancy)
-    assert integrated.active == baseline.active

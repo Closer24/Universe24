@@ -3,9 +3,9 @@
 import ast
 from importlib.util import resolve_name
 
-GENERIC_LAYERS = {"core", "fields", "dynamics"}
-COMPOSITION_MODULES = {"particle_api", "compat", "disturbance_api"}
-FORBIDDEN_GENERIC_TYPES = {"Config", "NodeState", "ParticleState", "ScalarEngine", "Simulation"}
+GENERIC_LAYERS = {"core", "fields"}
+COMPOSITION_MODULES = {"disturbance_api"}
+FORBIDDEN_GENERIC_TYPES = {"Config", "NodeState", "ParticleState", "Simulation"}
 
 
 def import_targets(tree, module):
@@ -57,12 +57,12 @@ class RuntimeArithmetic(ast.NodeVisitor):
 
 
 def violations(source, module):
-    """Check absolute/relative imports and formula-free model assembly."""
+    """Check absolute/relative imports and formula-free API assembly."""
     tree = ast.parse(source)
     relative = module.removeprefix("event_universe.")
     layer = relative.split(".")[0]
     found = []
-    if layer in {"fields", "dynamics", "models"}:
+    if layer == "fields":
         forbidden_world_members = {
             "nodes",
             "particles",
@@ -84,7 +84,7 @@ def violations(source, module):
             target_layer = dependency.split(".")[0]
             if layer == "core" and target_layer != "core":
                 found.append((line, "core imports another layer"))
-            if layer in {"fields", "dynamics"}:
+            if layer == "fields":
                 if not (
                     dependency == "core.state"
                     or dependency.startswith("core.state.")
@@ -111,17 +111,7 @@ def violations(source, module):
                     found.append((line, "generic calculation imports another layer"))
                 if dependency.rsplit(".", 1)[-1] in FORBIDDEN_GENERIC_TYPES:
                     found.append((line, "generic calculation imports model state"))
-            if layer == "models" and (
-                target_layer not in GENERIC_LAYERS | {"models"}
-                or dependency == "core.scalar_engine"
-                or dependency.startswith("core.scalar_engine.")
-                or dependency == "core.linked_engine"
-                or dependency.startswith("core.linked_engine.")
-                or dependency == "core.disturbance_engine"
-                or dependency.startswith("core.disturbance_engine.")
-            ):
-                found.append((line, "model imports world or application code"))
-        elif layer in GENERIC_LAYERS | {"models"} and target.split(".")[0] in {
+        elif layer in GENERIC_LAYERS and target.split(".")[0] in {
             "matplotlib",
             "PIL",
             "json",
@@ -130,7 +120,7 @@ def violations(source, module):
             "subprocess",
         }:
             found.append((line, "physical code imports output or storage"))
-    if relative in COMPOSITION_MODULES or layer == "models":
+    if relative in COMPOSITION_MODULES:
         arithmetic = RuntimeArithmetic()
         arithmetic.visit(tree)
         found.extend(

@@ -19,24 +19,21 @@ Merge requires successful CI and explicit approval.
 | Derived values | Weight is real squared plus imaginary squared; output choice is derived from two weights and the ticket |
 | Outputs | Fixed-size immutable query or terminal reply; a successful call has model cost 1 and world time cost 0 under Q-ORACLE-1 |
 | Consistency | Parent edges are same-node or six-neighbor causal hops in an unwrapped chart; failed readout cannot commit; repeated readout reuses one record |
-| Tests | Four phases yield weights (4,0), (2,2), (0,4), (2,2); enumerate all tickets, test invalid inputs, bounds, repeated calls and independent engine baseline |
+| Tests | Four phases yield weights (4,0), (2,2), (0,4), (2,2); enumerate all tickets, test invalid inputs, bounds and repeated calls; the independent scalar-engine baseline comparison was deleted with that engine on 2026-09-17 |
 
 The authoritative model postulate is in POSTULATES.md, exact contracts in
 SIMULATOR_DEFINITIONS.md and ownership rules in docs/ARCHITECTURE.md.
 No existing engine, field, movement or renderer implementation is replaced.
 
 Run `python -m pytest tests/test_quantum_detector_trial.py -q` for the trial.
-Trial execution is headless by default. The existing pytest HTML visualization
-path is enabled only when visual checks are explicitly requested with
-`--visualize-runs`.
+Trial execution is headless.
 Full gate: `python tools/check.py`. Missing checks must not be marked PASS.
 
 ## Limits
 
 This is a prescribed finite 3D interferometer circuit and a terminal single-
-excitation detector mock, not spontaneous detector physics. The test harness
-stores a single physical-side record but Engine has no detector commit API.
-The background classical particle is not a duplicate quantum excitation.
+excitation detector mock, not spontaneous detector physics. The Engine has no
+detector commit API.
 There is no automatic polling, quantum-field feedback, general post-measurement
 evolution, energy or momentum proof, no-signalling or Bell validation. Tickets
 are exhaustively controlled inputs, not a tested randomness source. Fixed graph

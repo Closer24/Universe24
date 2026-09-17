@@ -10,19 +10,13 @@ import event_universe
 from .architecture_rules import import_targets
 
 FORBIDDEN_QUANTUM_DEPENDENCIES = (
-    "event_universe.core.scalar_engine",
-    "event_universe.core.linked_engine",
-    "event_universe.particle_api",
-    "event_universe.compat",
+    "event_universe.core.disturbance_engine",
+    "event_universe.core.spatial_engine",
     "event_universe.runner",
-    "event_universe.particle_scenarios",
     "event_universe.fields",
-    "event_universe.dynamics",
-    "event_universe.models",
     "event_universe.diagnostics",
     "event_universe.integration",
     "event_universe.Simulation",
-    "event_universe.LinkedSimulation",
 )
 
 
@@ -57,18 +51,18 @@ def test_all_production_modules_respect_quantum_ownership():
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("quantum.deferred", "from ..core.scalar_engine import ScalarEngine"),
-        ("quantum.deferred", "from event_universe.core import scalar_engine"),
-        ("quantum.deferred", "from ..core import linked_engine as engine"),
+        ("quantum.deferred", "from ..core.disturbance_engine import DisturbanceEngine"),
+        ("quantum.deferred", "from event_universe.core import spatial_engine"),
+        ("quantum.deferred", "from ..core import disturbance_engine as engine"),
         ("quantum.deferred", "from .. import Simulation"),
-        ("quantum.deferred", "from event_universe import LinkedSimulation"),
-        ("quantum.deferred", "from ..fields import scalar"),
+        ("quantum.deferred", "from event_universe import Simulation"),
+        ("quantum.deferred", "from ..fields import rays"),
         ("quantum.deferred", "from ..integration import quantum_bridge"),
-        ("quantum.deferred", "import event_universe.diagnostics.frames as frames"),
-        ("diagnostics.frames", "from ..quantum import DeferredQuantum"),
-        ("core.scalar_engine", "from .. import quantum"),
-        ("models.scalar_field", "import event_universe.quantum as quantum"),
-        ("particle_api", "from .quantum import DeferredQuantum"),
+        ("quantum.deferred", "import event_universe.diagnostics.local_observer as observer"),
+        ("diagnostics.local_observer", "from ..quantum import DeferredQuantum"),
+        ("core.disturbance_engine", "from .. import quantum"),
+        ("fields.rays", "import event_universe.quantum as quantum"),
+        ("disturbance_api", "from .quantum import DeferredQuantum"),
     ],
 )
 def test_gate_rejects_relative_member_and_aliased_imports(module, source):
@@ -79,10 +73,11 @@ def test_gate_rejects_relative_member_and_aliased_imports(module, source):
     "module,source",
     [
         ("quantum.deferred", "from ..core.state import Address, checked, checked_work"),
+        ("quantum.deferred", "from ..core.integer import bounded_gcd"),
         ("quantum.deferred", "from .state import Amplitude"),
         ("quantum.__init__", "from .deferred import DeferredQuantum"),
         ("integration.quantum_bridge", "from ..quantum import DeferredQuantum"),
-        ("diagnostics.frames", "from ..core.scalar_engine import ScalarEngine"),
+        ("diagnostics.local_observer", "from ..core.disturbance_engine import DisturbanceEngine"),
     ],
 )
 def test_gate_allows_legal_dependencies(module, source):

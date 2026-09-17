@@ -29,7 +29,7 @@ instead of maintaining conflicting representations of the same quantity.
 
 ## 2. Separate responsibilities
 
-- `fields/` and `dynamics/`: shared calculations as functions or components with
+- `fields/`: shared calculations as functions or components with
   immutable parameters. Inputs and outputs are explicit. No world, entire Config,
   scenario identity or mutable globals. Evolving state, including remainders,
   enters as input and leaves as output; it is not hidden inside a law object.
@@ -39,38 +39,34 @@ instead of maintaining conflicting representations of the same quantity.
 - Initialization data selects active disturbance fields, types and expressions.
   Extend the validated generic expression/transport primitives only when needed;
   never use field-name branches or arbitrary Python loading as configuration.
-- Historical `models/` select laws and policies, extract values from records and
-  pass them to components. Do not recompute formulas in new or nested models.
 - Configuration and API: parameter values and assembly. Reuse existing configuration
   when suitable. A generic component receives only required parameters or a small
   generic parameter record. A value that changes during a run is state or input,
   not a hidden constant.
-- `scenarios/runner`: initial conditions and execution. `diagnostics/`: measurements
+- `runner`: initial conditions and execution. `diagnostics/`: measurements
   and display only. Measurement results must not feed back to repair the world.
 
 Separation does not require a separate function for every scalar. Keep operations
 sharing an atomic contract together, such as particle impulse and opposite field impulse.
 
-## 3. Existing example: link stretching
+## 3. Existing example: shared integer arithmetic
 
-This is an explicitly named historical candidate. The active disturbance engine
-uses fixed link transit and computation-dependent local node delay instead.
+`core/integer.py` owns generic calculations such as `signed_divrem`, `ceil_div`
+and `reduced_ratio`. A call takes bounded integer inputs and returns bounded
+integer results with explicit errors; it does not read a world, a configuration
+or a field name. Configured laws in initialization data select which
+calculations run and with which parameters. The law can be checked without
+running a world:
 
-`fields/geometry.py:MeanStretch` stores fixed base, numerator and denominator
-parameters. A call takes the local field value and a value delivered from the
-neighbor, then returns a proposed integer length. It does not find neighbors,
-mutate links or schedule messages.
-
-The model selects parameters. Link components transport and commit changes at the
-correct time. The law can be checked without running a world:
-
-| Parameters: base, numerator, denominator | Local and received input | Expected length |
+| Calculation | Input | Expected result |
 | --- | --- | --- |
-| 100, 1, 1 | 0, 0 | 100 |
-| 100, 1, 1 | 10, 10 | 110 |
-| 100, 1, 2 | 10, 10 | 105 |
+| `signed_divrem` | 7, 3 | quotient 2, remainder 1 |
+| `signed_divrem` | -7, 3 | quotient -2, remainder -1 |
+| `ceil_div` | 15, 7 | 3 |
+| `reduced_ratio` | 6, 4 | 3, 2 |
 
-This demonstrates structure in an experimental model, not a proven law of nature.
+This demonstrates the separation of a reusable calculation from its selection,
+not a proven law of nature.
 
 ## 4. Test the separation
 
@@ -81,7 +77,7 @@ This demonstrates structure in an experimental model, not a proven law of nature
 3. Integration: replace a law through the interface without rewriting the engine
    or copying formulas; verify timing, locality and momentum exchange as contracted.
 4. Regression: preserve the baseline model. Different physical behavior needs an
-   explicit model identity and separate results. Never alter the frozen reference to pass a test.
+   explicit model identity and separate results. Never alter a recorded baseline to pass a test.
 
 Follow the AGENTS.md quality gates with the project Python 3.14 runtime.
 Standard runs and tests are headless. Only an explicit visualization request
@@ -94,7 +90,6 @@ in English under the repository language rule in AGENTS.md.
 
 The active generic schema supports its bounded scalar/vector fields and
 configured local rules; it does not allow unbounded state or arbitrary code.
-Historical scalar replacement callables retain their own narrower schema.
 Before adding a new value kind, coupling primitive or quantum integration,
 check the state and scheduling contract and its capacity/error behavior. Postulate and schema changes must be explicit,
 documented and tested within user authorization. Static checks enforce some

@@ -237,56 +237,14 @@ python -m event_universe.retention --root artifacts --root runs --watch
 Use `--dry-run` to inspect candidates without deletion. A stopped watcher or an
 offline computer catches up on the next cleanup; see [retention](docs/RETENTION.md).
 
-## Optional historical live display
-
-The historical scalar/particle renderer supports an explicitly requested live
-preview. This is separate from the active initialization-based runner's generic
-disturbance view. Install the `render` extra before requesting historical output:
-
-```bash
-python -m pip install -e '.[render]'
-python -m event_universe.legacy_runner --scenario contact --visualize --live --output artifacts/contact-live
-```
-
-This command prints the absolute `live.html` path at startup. Open that file in
-a browser while the command is running; the page updates automatically each
-second. It shows copied simulation snapshots as computation proceeds, then
-updates from the frames being rendered for the recorded replay. At completion,
-the page redirects to the standalone `run.html` animation. The final historical
-output also includes `run.gif`. No web server or browser extension is required.
-
-The live preview may skip intermediate snapshots and adjust its framing and color
-scale as new data arrives. The final replay retains every frame selected by
-`--frame-stride`, with the same fixed scale, quality and physics as before.
-For short simulations, the first image may appear during replay export because
-the physical calculation can finish before preview startup.
-
-Omit `--live` for final visualization without a live preview; omit visualization
-options for a headless run. Both features default off. Python callers opt in with
-`legacy_runner.run_scenario(scenario, output, visualize=True, live=True)`.
-Requesting `--live` or `live=True` also enables the recorded visualization.
-Scripts that start live runs must call them inside an `if __name__ == "__main__":`
-guard so the preview process can start safely on Windows. A preview fault is
-reported and does not cancel the physical calculation or its recorded output.
-
 ## Run performance
 
 Reuse the installed environment for later runs; dependency installation is a
-one-time setup step. Ordinary runs capture no animation frames. When historical
-visualization is explicitly requested, stride 1 captures every tick and the 3D
-renderer exports enhanced 1500x1275 HTML and GIF. It draws each default frame once
-and encodes the stopped GIF once; the runner captures only the selected view.
-
-For a quicker, explicitly sampled preview of a long run, use the existing option:
-
-```bash
-python -m event_universe.legacy_runner --scenario contact --visualize --frame-stride 4 --output artifacts/contact-preview
-```
-
-This still computes and checks every physical tick and records every event.
-It saves fewer display frames, so intermediate movement is visible in the event
-trace rather than in the animation. Use stride 1 for consecutive-tick inspection.
-See [performance measurements](docs/PERFORMANCE.md) for the measured case and limits.
+one-time setup step. Ordinary runs capture no animation frames. Only an explicit
+`--visualize` request records the generic disturbance view, and `--frame-stride`
+samples the recorded frames without changing the physical update interval or
+the event trace. See [performance measurements](docs/PERFORMANCE.md) for the
+measured cases and their limits.
 
 ## Check the project with one command
 
@@ -302,8 +260,7 @@ unless visual checks are explicitly requested:
 python -m pytest --visualize-runs
 ```
 
-That option enables frame capture, the historical HTML renderer and relevant
-presentation checks. Do not enable it merely because a simulation test runs.
+That option enables the presentation-only checks that render run reports. Do not enable it merely because a simulation test runs.
 On Windows, `PYTHONUTF8=1` provides consistent UTF-8 handling for the check tools.
 Current results belong in identified validation evidence, not an assumed pass
 from this README.
@@ -322,24 +279,18 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
-| `src/event_universe/particle_api.py` | Explicitly named historical research APIs |
-| `src/event_universe/core/scalar_engine.py` | Historical scalar-engine scheduling and occupancy |
-| `src/event_universe/fields/`, `dynamics/`, `models/` | Generic arithmetic and retained candidate implementations |
-| `src/event_universe/diagnostics/` | Read-only measurements, recording and optional output |
-| `src/event_universe/particle_scenarios.py` | Explicit historical research scenarios |
+| `src/event_universe/fields/` | Generic field arithmetic, rays, spatial couplings and local rules |
+| `src/event_universe/diagnostics/` | Read-only observers, conservation audits and the optional disturbance renderer |
 | `src/event_universe/runner.py` | Initialization-based execution and optional visualization |
 | `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
-| `src/event_universe/legacy_runner.py` | Explicit historical scenarios and optional recorded/live visualization |
 | `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
 | `examples/basic.json` | Complete example initialization; physical names occur only as data |
 | `examples/finite_fields.json` | Schema 2 finite emission, completed-link decay and explicit background |
-| `tests/` | Generic contracts, schema checks and retained research regressions |
-| `tests/reference/` | Historical source archive, not an active engine |
+| `tests/` | Generic contracts, schema checks and explicit research regressions |
 | `docs/DISTURBANCES.md` | Authoritative generic schema, laws, timing and failure contract |
 | `docs/LOCAL_FIELD_RULES.md` | Local retained/output rules, component groups and joint field/carrier transactions |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |
-| `docs/SCALAR_FIELDS.md` | Historical scalar field composition and turning |
 | `docs/PHYSICAL_FEATURES.md` | Procedure for a new physical hypothesis |
 | `docs/TEST_EXPECTATIONS.md` | Independent test inputs and expected outcomes |
 | `docs/MIGRATION.md` | Transition from implicit scalar defaults |
@@ -368,35 +319,6 @@ fixed, and no computation debt accumulates between cycles.
 - Read-only measurements and visualization.
 - Named hypotheses and independent tests; no claim that a successful run proves
   gravity, waves, energy conservation or other emergent physics.
-
-## Local stretched-link candidate
-
-`LinkedSimulation` is a historical research API with variable link lengths.
-It does not supply the active disturbance engine's timing law.
-An explicitly selected historical CLI example is:
-
-```bash
-python -m event_universe.legacy_runner --scenario links --output artifacts/local-links
-```
-
-This remains headless unless visualization is requested. Its model laws are
-scoped in [definitions](SIMULATOR_DEFINITIONS.md) and the architecture guide.
-
-## Particle mass and elastic collisions
-
-Hardcoded mass and elastic-contact behavior belongs to `ScalarSimulation`,
-not the generic `Simulation`:
-
-```python
-from event_universe import Config, ScalarSimulation
-
-world = ScalarSimulation(Config(source_strength=0), collisions=True)
-world.add_particle(0, 14, 6, 6, px=6, mass=1)
-world.add_particle(1, 18, 6, 6, px=-6, mass=2)
-```
-
-`BalancedSimulation` and `CausalStreamSimulation` likewise select explicit
-research laws. See [migration](docs/MIGRATION.md) and their candidate contracts.
 
 ## Standalone generic vector lab
 
