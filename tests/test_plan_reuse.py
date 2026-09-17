@@ -5,6 +5,7 @@ from dataclasses import replace
 import pytest
 
 from event_universe import Simulation
+from event_universe.core import disturbance_engine, spatial_node
 from event_universe.core.disturbance_state import LocalPlan, pack
 from event_universe.core.node_execution import NodeExecution
 from event_universe.core.plan_reuse import PlanReuse
@@ -12,6 +13,8 @@ from event_universe.core.spatial_state import Ray, SpatialPlan, zero_spatial_sta
 from event_universe.initialization import parse_initial_state
 
 from .support.disturbances import document, kind
+from .test_external_body import SINK_BODY
+from .test_external_body import document as body_document
 from .test_local_focus import assert_same_world
 
 
@@ -259,3 +262,70 @@ def test_different_configurations_do_not_share_a_cache():
         assert a.snapshot() != b.snapshot()
         assert a.execution_report()["carrier_plan_reuse"]["evaluations"] == 1
         assert b.execution_report()["carrier_plan_reuse"]["evaluations"] == 1
+
+
+def test_a_reuse_hit_is_served_a_validated_plan_and_a_miss_validates(monkeypatch):
+    """The plan is validated when it is made, once per evaluation, and a hit is
+    served that plan without a second check; the Node validates only what it
+    changes after planning, an external body's part. On the lamp line of the
+    test above, eight ticks with Focus on: 13 validations at the execution (one
+    per evaluation), none at the Node; with Focus off the law itself serves the
+    Nodes and each validates its own plan, 33 at the Node, none at the
+    execution; the two worlds agree at every tick. A sink body alone for four
+    ticks: the body's Node validates after each of its four cycles, and the
+    execution once per evaluation."""
+    validated = []
+
+    def validator(request, plan):
+        validated.append(request)
+
+    def planner(*args):
+        return SpatialPlan((), (), (), (), 1)
+
+    def carrier(*args, **kwargs):
+        raise AssertionError("spatial reuse cannot invoke a carrier law")
+
+    state = zero_spatial_state(1)
+    execution = NodeExecution(1, carrier, planner, reuse_fields=True, spatial_validator=validator)
+    execution.spatial((state,), (None,), 0)
+    execution.spatial((state,), (None,), 0)
+    execution.spatial((state,), (None,), 1)
+    assert [request.received for request in validated] == [0, 1]
+    assert execution.report()["spatial_plan_reuse"]["hits"] == 1
+
+    checks = {"execution": 0, "node": 0}
+    boundary = disturbance_engine.validate_spatial_plan
+
+    def at_execution(*args):
+        checks["execution"] += 1
+        boundary(*args)
+
+    def at_node(*args):
+        checks["node"] += 1
+        boundary(*args)
+
+    monkeypatch.setattr(disturbance_engine, "validate_spatial_plan", at_execution)
+    monkeypatch.setattr(spatial_node, "validate_spatial_plan", at_node)
+    initial = parse_initial_state(lamp_line(12, 8))
+    with (
+        Simulation(initial) as reused,
+        Simulation(replace(initial, focus=False)) as plain,
+    ):
+        for _ in range(8):
+            at_node_before = checks["node"]
+            reused.step()
+            assert checks["node"] == at_node_before
+            at_execution_before = checks["execution"]
+            plain.step()
+            assert checks["execution"] == at_execution_before
+            assert_same_world(reused, plain)
+        report = reused.execution_report()["spatial_plan_reuse"]
+        assert (report["requests"], report["evaluations"], report["hits"]) == (33, 13, 20)
+        assert checks == {"execution": 13, "node": 33}
+    checks.update(execution=0, node=0)
+    with Simulation(parse_initial_state(body_document((SINK_BODY,), release=(1, 2048)))) as world:
+        for _ in range(4):
+            world.step()
+        report = world.execution_report()["spatial_plan_reuse"]
+        assert checks == {"execution": report["evaluations"], "node": 4}
+        assert report["hits"] > 0

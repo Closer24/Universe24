@@ -247,6 +247,48 @@ records as described, reading the counters from `run.json`; then build
 `Simulation(initial).step()` over N ticks seven times per world, taking the
 median.
 
+## Ray-event engine: no validation on a plan-reuse hit (2026-09-17)
+
+The second of the two levers scheduled above, measured like the first: the
+same host, worlds, records and timing method, before on the first lever
+(source fingerprint
+`27061f2926566afa58fae56cb30f826a56fd06b11d2b19430fc967a5ba7586f3`) and
+after on the change (source fingerprint
+`ebb8abf38b06c07b50c275f922436f78309b32db06b4474b08a7a172d0b44da3`). The
+Node boundary's `validate_spatial_plan` now runs once per evaluated plan, at
+the execution (`NodeExecution`'s `spatial_validator`), before the plan is
+returned or retained, so a hit is served a plan validated at its miss and the
+Node checks only what it changes after planning: an external body's part,
+whose registers are outside the key, is validated on every cycle, and the
+completion of a pending cycle (`node_execution`) still validates the plan it
+merges with the live states. The serial engine without reuse hands the Nodes
+the law itself and they validate each plan as before; parallel execution
+validates its batches, which serve every request.
+
+| Input | Ticks | Requests -> evaluations | Hit rate | Step wall, before | After | Change | Records identical |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| One electron, released G | 48 | 543 -> 290 | 46.6% | 0.256 s | 0.234 s | 8.9% shorter | yes |
+| Two electrons, released G | 24 | 723 -> 383 | 47.0% | 0.369 s | 0.331 s | 10.3% shorter | yes |
+| Two electrons, released G | 96 | 869 -> 385 | 55.7% | 0.396 s | 0.346 s | 12.5% shorter | yes |
+| Screen loop | 48 | 10477 -> 4942 | 52.8% | 4.758 s | 4.205 s | 11.6% shorter | yes |
+| Ring | 16 | 64 -> 24 | 62.5% | 0.041 s | 0.039 s | 7.0% shorter | yes |
+
+Requests, evaluations and hits are unchanged by construction (the key is the
+first lever's). Step wall is the median of seven runs in one process per
+source, the seven within 4% of each other except one run of the one-electron
+world at +17%, outside the median. The saving is the validation of the hits,
+22% of step time times the hit rate on the profile of the Local Focus
+recording, less the hits' share of the cheaper plans. Against `2af76d7`,
+before either lever, the two together shorten the step by 19.2%, 16.1%,
+22.4%, 15.2% and 36.9% on the five worlds in the table's order, at the same
+records.
+
+Records identical means the same three digests as the first lever's, equal
+on all five worlds, and the isolated test (`tests/test_plan_reuse.py`) counts
+the validations: one per evaluation at the execution and none at the Node
+with Focus on, one per request at the Node with Focus off, and the body's
+Node validating after each of its cycles.
+
 ## Active engine: default Focus and exact plan reuse
 
 Measured on Linux with Python 3.14.7 on 2026-09-15. Baseline:
