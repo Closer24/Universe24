@@ -569,7 +569,11 @@ states "exactly" and means integer equality at every tick.
   not physics); a fringe at the real N or a changed Δp (the phase width
   leaking into a coupling that must not read it); a deflection (G_eff · N²
   not constant to the real N).
-- **Status.** planned.
+- **Status.** planned. Reading of 2026-09-17 (Highlights 3.28): the run
+  remains a width check, that `phase_bits` = 75 leaks into no coupling, and
+  nothing on the road to the confrontation runs requires the wide phase, the
+  N of nature being the lag modulus of feature 8b (declared on the lag
+  register, of any width, entering no phase sum) and not the phase circle.
 
 ### A12. Malus's law and the three-polarizer chain (after feature 11)
 
