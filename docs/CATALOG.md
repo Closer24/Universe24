@@ -72,6 +72,12 @@ date) and emitted at an event by any source, a photon one quantum of it. Its
 that light reaches releases it again, the backward heading included, a
 quantum never waiting; until it is declared the field lives on the six axis
 lines of its source and light goes straight.
+Its `source_sign` key is the sign of the releasing charge carried on the
+field ray as a visible property, like the Detector's bit (Highlights 3.5,
+"the field is matter's message about itself", 2026-09-17), read by couplings
+and never the phase; feature 12 carries it, and
+`electron_field_turn.opposite_charge` closes with it (A5). A field ray is a
+ray with an empty event record, rest rate 0 and charge 0, and nothing else.
 A `bound_group` adds `members` (ray id to count), `binding` (the coupling that
 holds it) and, if it can decay, `decay` (the conversion and the mark's
 setting). A property read only at a meeting (`colour`, `spin`,
@@ -128,6 +134,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `lag_bits.world_key` | The key that declares the lag modulus per family, the N of hypothesis 14 on the lag register and not on the phase | feature 8b |
 | `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
 | `rays.light.spread` | The six-heading split table by which every Node that light reaches releases it again (feature 12, Highlights 3.5, 2026-09-17), the backward heading included; a quantum never waits, the remainder leaving whole through the heading the phase selects | feature 12 |
+| `rays.light.source_sign` | The sign of the releasing charge carried on the field ray as a visible property, read by couplings and never the phase (feature 12, Highlights 3.5, 2026-09-17) | feature 12 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
 | `rays.muon.rest_rate` | The muon's rung on the ladder, k × 206.768 28 | A10 |
@@ -141,7 +148,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `rays.neutron.rest_rate` | The neutron's retained content | hypothesis 12 |
 | `rays.mass_field.release` | The release ratio of the computation field | A6 |
 | `couplings.electron_field_turn.strength_table` | The integer table over field content and charge product | A5 |
-| `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign | A5 |
+| `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign; closes with `rays.light.source_sign`, the sign carried on the field ray (feature 12) | A5 |
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
 | `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |

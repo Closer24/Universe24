@@ -85,6 +85,12 @@
     "marker_alpha": 0.8,
     "escape_dot_radius": 0.09,
     "escape_alpha": 0.45,
+    "click_flash_ticks": 4,
+    "click_flash_px_per_quantum": 3,
+    "click_flash_min_px": 6,
+    "click_dot_px": 4,
+    "click_dot_alpha": 0.5,
+    "mark_alpha": 0.35,
     "source_size": 0.4,
     "detector_size": 0.8,
     "body_size": 0.7,
@@ -102,6 +108,7 @@
     "box_alpha": 0.35
   },
   "draw": {
+    "view": "board",
     "markers": [
       "emission",
       "meeting",

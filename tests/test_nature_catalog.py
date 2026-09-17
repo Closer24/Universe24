@@ -409,6 +409,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             ), name
             assert set(entry["values"]) == {"pass", "draw"} and "decided_by" not in entry, name
             assert not undecided(entry), name
+            assert entry["alternative"] == "draw", name
         assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
             {"bit": 1},
             "pass without a draw",
@@ -430,6 +431,10 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             [1, 4],
         )
         assert light["spread"] == UNDECIDED and light["decided_by"]["spread"] == "feature 12"
+        # The sign of the releasing charge travels on the field ray as a visible
+        # property, never the phase (Highlights 3.5, 2026-09-17), carried by feature 12.
+        assert light["source_sign"] == UNDECIDED
+        assert light["decided_by"]["source_sign"] == "feature 12"
         assert not {"electron_field", "positron_field"} & rays.keys()
         assert all("light" in rays[name]["field"] for name in ("electron", "positron"))
     elif case == "undecided":
@@ -441,8 +446,8 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        # 29 since 2026-09-17: feature 2b decided the two couplings of the Detector.
-        assert len(found) == 29
+        # 30 since 2026-09-17: feature 2b decided the two couplings of the Detector.
+        assert len(found) == 30
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
