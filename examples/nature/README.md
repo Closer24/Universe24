@@ -655,8 +655,15 @@ lattice none at all while every interval carries a push.
 **What is open.** The reset of the accumulators at a push was the point of
 decision, and it is decided: since `ray-momentum-turn-v2` (2026-09-17) a
 push keeps them, the push changing the register alone, and the DDA walks a
-curved line under a push every interval; this record, made under v1, is not
-repeated with the fix. The neutral equilibrium would still make the circle
+curved line under a push every interval; this record, made under v1, was
+repeated with the fix on 2026-09-17 (E8's Status): on the 15-cube the
+electron curves half way around the nucleus at distance 5 to 8 and leaves
+through the x = 0 face, the far side of its arc one Node outside the board;
+on `helium_orbit_21.json`, the same world on 21 x 21 x 21 (nucleus at (10,
+10, 10), launch at (16, 10, 10), 200 ticks), it turns a quarter turn to
+distance 7, then runs straight where the field is weak and leaves at
+distance 11.66: an escape on either board, the arc where the field is strong
+and the straight line where the impulse of (ii) is below the register. The neutral equilibrium would still make the circle
 unstable, a spiral in or out at the rate of the first perturbation, and a
 stable orbit would further need the speed to depend on the register, which
 Highlights 3.28 excludes: both are the model owner's to decide. The recoil's `source_sign` 0 and

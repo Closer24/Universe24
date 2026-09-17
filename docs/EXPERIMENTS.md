@@ -2018,7 +2018,29 @@ sign rule, and its other couplings are catalog entries.
   `ray-momentum-turn-v1`, whose push reset the DDA's accumulators;
   `ray-momentum-turn-v2` (2026-09-17,
   [migration](MIGRATION.md#a-push-keeps-the-walk-on-2026-09-17-ray-momentum-turn-v2))
-  keeps them, and the run is not repeated here.
+  keeps them. Repeated under v2 on 2026-09-17, commit
+  `781ce52306091848b214a71109bcbd34dec0f2c7`, source
+  `57d6c941dede850cb952948ad739e1e4216bc0e788ae38c37fdc52a710a23de2`:
+  `helium_orbit.json` (initialization the same, 1621 s), outcome: an arc,
+  not a straight pass: from the tangent point (13, 7, 7) the electron
+  curves around the nucleus through (12, 9), (11, 11), (9, 13), (7, 13),
+  (5, 13), (3, 12) to (0, 10), 23 pushed Links, distance 5.0 to 8.06 (L1 6
+  to 11), the register (0, 256, 0) to (-174, -119, 0), and leaves through
+  the x = 0 face at tick 64 with the far side of its path one Node outside
+  the board, so the record ends at the board's edge; the ledger exact at
+  every tick. And `helium_orbit_21.json`, the same world on 21 x 21 x 21
+  with the nucleus at (10, 10, 10), the launch at (16, 10, 10) and 200
+  ticks, initialization
+  `9de7a51ac7e8808d8f41594950c138e8c957d766d9e44e644e4bd2e1b156dfe4`,
+  5546 s: a quarter turn, from (16, 10) through (15, 12), (14, 14), (12,
+  16) to (10, 17) at distance 7 with the register (-251, 26, 0), then a
+  straight run along y = 17 with one -Y step, out through the x = 0 face at
+  tick 66 at distance 11.66, 25 pushed Links, 154 pushes, no circuit; the
+  ledger exact at all 200 ticks; outcome: escape, the transverse impulse
+  the field delivers on the far side (about 50 over ten Links at distance
+  7 to 11) far below the 256 a turn needs, as (ii) computed; so under v2
+  the electron curves where the field is strong and goes straight where it
+  is weak, and no board size closes the orbit at this m, R and A.
 
 ### E9. The screen with a loop source: the ring radiating on seven marks
 
