@@ -389,3 +389,36 @@ anything else), or above 2 only in the delayed case (as predicted). The
 only door left in the model's own terms is that the sequence feeding the
 draws also feeds the settings (section 1 above); that reading explains any
 correlation and is not a prediction.
+
+## 12. One mass ladder, and the composite spectrum from binding
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.4) a rest mass
+is a rest rate: a bounded integer number of phase steps per interval, zero for
+light. Two hypotheses follow, raised by the model owner on 2026-09-17, each
+with a test.
+
+**The ladder.** Every rest mass is an integer multiple of one unit,
+`m_0 = h / (N delta_t c^2)` with `N` the phase steps of the circle, so every
+mass ratio in the world is a ratio of integers on one grid. The model does not
+say which rungs are occupied: the masses of the elementary families
+(electron, muon, quarks) are catalog values on that grid, not predictions.
+What can be tested is representability: with the bounded integers of the
+engine, the measured ratios (muon to electron 206.77, tau to electron
+3477.2, proton to electron 1836.15) must all fit one grid within the encoding
+error the [reference units](REFERENCE_UNITS.md) declare, at one `N`. If no
+single `N` fits them within that error, the ladder fails.
+
+**The composite spectrum.** A composite (a hadron, a nucleus, an atom) is a
+bound group: rays held at one Node by a binding coupling, an interaction that
+repeats every interval and releases no event (3.4). Given the elementary
+families and their binding couplings as declared tables, every combination
+can be run: whether it stays bound, what it retains (its mass, the retained
+content plus or minus the binding), and what arriving ray unbinds it. The
+list of combinations that stay bound is a prediction of the composite
+spectrum, and the exact invariants of every meeting (charge, family counts,
+momentum) predict which transitions are forbidden. A combination the model
+holds stable that nature does not show, or a known particle the model cannot
+hold, falsifies the declared couplings or the model. This test waits for
+issue #169 feature 8 and for the strong binding as a declared table; its
+cost is a full coupling table and long runs, and its first target is the
+lightest cases (a two-nucleon bound state and its absence for two protons).
