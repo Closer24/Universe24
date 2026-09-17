@@ -1000,8 +1000,16 @@ bound group with a large amount, and then it spreads and is pushed like all
 matter. The external body is the approximation of infinite mass, used for
 the confrontation runs: light bending by a star, an electron near a large
 charge, a hydrogen-like spectrum around a fixed proton, and the two-slit
-and Bell geometries with their walls, mirrors and splitters. It is feature
-7b of the migration in
+and Bell geometries with their walls, mirrors and splitters. In the node's
+law it is one flag: spreading is not enforced for this node's content, and
+every other step of the law (the arrivals, the couplings by table, the
+stamping, the departures of what leaves) is unchanged. That flag is also
+why it has no ladder of masses: the ladder of
+[hypothesis 12](docs/HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding)
+comes from the spreading law, since a bound group is rays that must keep
+moving and bind again every interval, so only the closed patterns the
+binding table can hold exist; a body that does not spread has no closure
+condition and any amount is allowed. It is feature 7b of the migration in
 [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md#6-migration-in-order),
 after feature 7, `external-body-v1`.
 

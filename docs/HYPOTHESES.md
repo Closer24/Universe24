@@ -432,7 +432,12 @@ What can be tested is representability: with the bounded integers of the
 engine, the measured ratios (muon to electron 206.77, tau to electron
 3477.2, proton to electron 1836.15) must all fit one grid within the encoding
 error the [reference units](REFERENCE_UNITS.md) declare, at one `N`. If no
-single `N` fits them within that error, the ladder fails.
+single `N` fits them within that error, the ladder fails. The external body
+of Highlights 3.19 (model owner, 2026-09-17) stands outside the ladder: the
+ladder comes from the spreading law, since a bound group is rays that must
+keep moving and bind again every interval, so only the closed patterns the
+binding table can hold exist, and a body that does not spread has no
+closure condition and any amount is allowed.
 
 **The composite spectrum.** A composite (a hadron, a nucleus, an atom) is a
 bound group: rays held at one Node by a binding coupling, an interaction that
