@@ -684,8 +684,10 @@ arriving transfer, and the bit is all the Detector adds
 Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
 at the birth event to the partner ray's line, and the second Detector
-receives it on the ray that reaches it; a Detector sees nothing of the ray,
-only its own value, and no owner answers at a distance. With two Detectors,
+receives it on the ray that reaches it and draws its own bit on that
+arrival like on any other; a Detector sees nothing of the ray, only its own
+value, the received value is information on the ray, not an input to the
+draw, and no owner answers at a distance. With two Detectors,
 Alice's and Bob's, whichever returns first sends its value through the birth
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided

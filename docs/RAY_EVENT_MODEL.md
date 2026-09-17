@@ -253,10 +253,10 @@ Detectors, Alice's and Bob's, whichever returns first sends its value through
 the birth event and the other receives it; sometimes it is Alice's
 information, sometimes Bob's. To Alice and Bob the correlation feels as if it
 were decided at time zero, but nothing happened at time zero: the value was
-carried through the birth event in event spacetime, one Link per interval. If
-that transmission reaches the second Detector before the second ray is drawn,
-the second draw reads it and the pair agrees by the configured joint law; if
-the second ray was already drawn, the transmission is recorded and ignored.
+carried through the birth event in event spacetime, one Link per interval.
+Every Detector behaves the same: the second Detector draws its own bit on
+that arrival like on any other and reads nothing from the ray; the received
+value is information on the ray, not an input to the draw.
 
 This replaces the shared registry of the historical bonded profile with a
 carried bit, so the model has no owner that answers at a distance. The
@@ -392,8 +392,10 @@ and evidence, under the ordinary gates.
 - An interaction never emits more than six events and never two on one Port;
   every declared invariant is exact over all inputs and all events out.
 - A pair with equal Detector distances gives CHSH at most 2 within counting
-  error; a pair whose second ray is delayed by more than the round trip gives
-  the configured joint law's value.
+  error; the joint law's value appears only when the second ray's path
+  exceeds the round trip through the first Detector, and no Detector reads
+  the carried value: the second Detector draws its own bit and reads nothing
+  from the ray.
 - Conservation audits balance at every tick; no Node holds stock after an
   interaction; every ray is resident, in flight or escaped, and nothing else.
 - A returned ray cancels exactly its own share at its event Node by the
