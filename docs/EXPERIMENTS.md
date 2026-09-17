@@ -988,7 +988,13 @@ states "exactly" and means integer equality at every tick.
   m₀ = h/(N δt c²), so every ratio is a ratio of integers; the rungs of the
   elementary families are catalog values, not predictions; the test is
   representability at one N within the declared encoding error
-  ([reference units](REFERENCE_UNITS.md)).
+  ([reference units](REFERENCE_UNITS.md)). The self-field of the unit-square
+  ring selects no content
+  ([E10](#e10-the-ring-meets-its-own-field-the-loop-under-its-own-light-contents-32-to-128),
+  2026-09-17): with the catalog's turn declared beside the corner table, a
+  ring ray is met by one rule per cycle, so every content survives under
+  the corner first and every content disperses at tick 3 under the turn
+  first, and the ladder at this ring stays the corner table's.
 - **Features.** 9 (and, for the real N, A11).
 - **Run.** A catalog fit, no board: at N = 2^12 (the engine's circle today)
   and at the N of A11, find the smallest integer k (the electron's rung,
@@ -2221,6 +2227,224 @@ sign rule, and its other couplings are catalog entries.
   light line and the group reading from the first run of its board
   ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
   record stays outside the tree; nothing was tuned after the run.
+
+### E10. The ring meets its own field: the loop under its own light, contents 32 to 128
+
+- **Claim.** Highlights 3.5 (only after a change of trajectory can a ray
+  cross field it released earlier, and that is a meeting like any other; the
+  field is matter's message about itself, read by the table of the ray that
+  meets it) with 3.4 (the ladder of hypothesis 12 is the set of contents
+  that close a loop under the table) and [loop binding](LOOP_BINDING.md)
+  sections 6, 7 and 11: on a ring every corner is a change of trajectory,
+  so a ring meets its own field, and a content ladder can come only from
+  the ring's rays meeting the group's own field rays under a table whose
+  turn is produced by what is met. The question: does the E9 ring survive
+  the field its own rays release when the catalog's `electron_field_turn`
+  (feature 8b's momentum-table form, like charges repel) is declared beside
+  the corner table, and does its content select which rings survive.
+- **Features.** 1, 5, 6, 7, 8b (`ray-momentum-turn-v2`), 9, 10, 12, 12b, 14.
+- **Run.** `examples/nature/e10_self_field/` (written by `make_worlds.py`):
+  nine worlds, three per content. The ring of E5 (`ring.json`'s unit square
+  P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5), P3 = (5,6,5) in the plane
+  z = 5, eight `electron` lamps, one of each sense at every corner, the Port
+  form of the corner table) with E9's rays (amount 4, 8 or 16 per ray,
+  content 32, 64 or 128, the catalog's rest rate 1, N = 8) on a
+  12 x 12 x 12 open board, no Detector, 96 ticks (twelve periods of the
+  rate-1 ring); `light` declared as in `screen_loop.json` (`field_of`
+  electron, `release` [1, 4], `spread` [6, 1, 1, 1, 1, 1], rest rate 0,
+  charge 0, 24 ray slots, its `source_sign` set by the engine), so a ray of
+  amount a releases q = a / 4 = 1, 2 or 4 per heading. Per content:
+  `control`, the corner table alone (E9's form, no rule names `light`);
+  `corner_first`, the corner table and then `electron_field_turn` over
+  `[electron, light]` with `momentum_table` `{"light": 1}`; `turn_first`,
+  the same two rules in the other order. The two orders are two worlds
+  because the engine meets a Node's rays in declared order and a ray one
+  rule took is not available to a later rule in the same cycle (computed
+  below). Recorded per world: `run.json`, `events.jsonl`, the recording of
+  `record_sidecar.py` and the extractor's `runs.json`, kept outside the
+  tree; `analyze.py` prints the per-tick reading, the pushes and the verdict
+  table and writes `record.json`. The dictionary, the computation and the
+  readings are in the
+  [README](../examples/nature/README.md#the-ring-meets-its-own-field);
+  `tests/test_ring_self_field.py` pins the content-32 worlds for 16 ticks
+  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+- **Computed (before the run, from the code and the tables).** (i) A corner
+  meeting resets the register: a meeting's outputs are fresh rays
+  (`_output` in `src/event_universe/fields/ray_interactions.py`: heading,
+  accumulators (0, 0, 0), amount, phase, `momentum` at its default `None`,
+  the register amount x heading with an empty walk), so whatever push a ring
+  ray carries into a corner is erased there; a push could accumulate only
+  along one edge of the ring, one Link, and the unit square erases it at
+  every corner. (ii) The declared order decides which rule meets a ring ray:
+  `_meet` fires a layer's rules in declared order; a rule with outputs
+  removes its participants and marks their slots used; a momentum-table
+  rule takes one receiver per rule per Node per interval (the first group
+  in role order then slot order, so the electron in the lower slot, the
+  resident with the lower heading index: the L ray at P0 and P2, the R ray
+  at P1 and P3) and every resident light ray, in heading-index order,
+  returning each reversed; a slot an earlier rule used is not available to a
+  later rule in the same cycle. On the unit square every ring Node is a
+  corner and every ring ray arrives at a corner in every interval with its
+  partner. So under `corner_first` the corner takes both electrons at every
+  corner in every cycle, `electron_field_turn` finds none, no push ever
+  happens, the light is met by nothing and spreads at the corners as in the
+  control, and the coupled record is the control's event for event (the one
+  difference the runner's `ray_layer_families`, one layer
+  `[["electron", "light"]]`). Under `turn_first`, in the first cycle in
+  which light is resident at the corners, the cycle of tick 2 (the releases
+  of the cycle of tick 1 walk the edges and are received at the
+  neighbouring corners at tick 2), one electron per corner is pushed by
+  every light ray there and taken, the corner finds one electron and does
+  not fire, both electrons cross straight, the pushed one along the DDA of
+  its register and the other on its line, and the ring is off its Nodes at
+  tick 3 for every content; the eight rays then walk through the field to
+  the open boundary, pushed on the way wherever their line meets light.
+  Neither order lets a ring ray be turned by the corner and pushed by its
+  field in one cycle: the coupling can be declared beside the corner table
+  (the nine worlds are admitted at initialization) but cannot act beside it
+  at a corner, and on the unit square there is no other Node. (iii) The near
+  field, the light met at a corner per interval, from the release and the
+  split table, checked on 16-tick control probes made for this computation:
+  the two departing rays of a corner release q on five headings each, the R
+  ray's release on the L edge and the L ray's on the R edge run along the
+  ring, so from tick 2 every corner receives two light rays of amount q on
+  its two edge headings (at P0 heading -X from P1 and -Y from P3), 2, 4 and 8
+  in all at contents 32, 64 and 128, the forward beam; the other eight
+  releases leave the ring and their shares return through the neighbours'
+  registers, the spread adding from tick 7, 5 and 4 respectively (the first
+  whole quanta the registers release), the total per corner per interval
+  reaching 6, 12 and 24 by tick 16, with at most 3, 5 and 10 on the two
+  Ports of one axis. (iv) The push per interval at a corner, were it to
+  act: +1 x amount x heading of each light ray met, so the edge rays push
+  the receiver away from the neighbouring corners, (-q, -q, 0) at P0,
+  (+q, -q, 0) at P1, (+q, +q, 0) at P2, (-q, +q, 0) at P3, outward along
+  the diagonal, the four summing to zero; against a register of a on the
+  ray's axis, a transverse push of q = a / 4 per edge ray, and at most 3, 5
+  and 10 per interval from the near field read above against a = 4, 8 and
+  16, is below a, so no interval's push flips the dominant axis: the DDA
+  keeps the line and banks the transverse component toward a Link that
+  would come after a / q = 4 intervals of the same push, which no edge of
+  length 1 gives. Under `turn_first` at tick 2 the pushes are: at P0 the L
+  ray (heading -X) from (-a, 0, 0) by (-q, 0, 0) then (0, -q, 0) to
+  (-a - q, -q, 0); at P1 the R ray (+X) from (a, 0, 0) by (q, 0, 0) then
+  (0, -q, 0) to (a + q, -q, 0); at P2 the L ray (+X) from (a, 0, 0) by
+  (q, 0, 0) then (0, q, 0) to (a + q, q, 0); at P3 the R ray (+Y) from
+  (0, a, 0) by (-q, 0, 0) then (0, q, 0) to (-q, a + q, 0): eight
+  `ray_push` records at tick 2, two per corner, each field ray of amount q
+  returned reversed (eight recoils), the four pushes summing to zero so the
+  world's momentum line stays (0, 0, 0). (v) The prediction per content:
+  `control` closed at 32, 64 and 128 (the Port form reproduces every amount,
+  E5; the light sourced 40, 80 and 160 per interval); `corner_first` closed
+  at 32, 64 and 128 with 0 pushes, event for event the control;
+  `turn_first` dispersed at tick 3 at 32, 64 and 128 with 8 pushes at tick
+  2 and more off the ring, no group read (fewer than two periods at the
+  corners). No content is selected: the expected answer to section 7's
+  question at this ring is that the self-field gives no ladder on the unit
+  square, for a structural reason, one rule per ring ray per cycle, before
+  any table is read, so the ladder at this ring stays the corner table's.
+- **Criterion (written before the run).** For each world: "closed" if the
+  record's group reader (the extractor with the recording) reads exactly one
+  group on the ring's four Nodes with content `{"electron": C}` constant
+  over the last 32 ticks (every tick row from 64 to 95 bound at C, the
+  group's window from tick 64 or earlier to tick 95), C = 32, 64 or 128,
+  the light not counted, and no electron packet received at a Node off the
+  ring; else "dispersed at tick t", t the first tick an electron packet is
+  received off the ring's Nodes or, if none, the first tick the reader's
+  bound row lacks C. Every world: every ledger line balanced at every
+  completed tick and `conserved_at_every_completed_tick` true; the recoils
+  (the returned light) booked, one per push; the pushes per interval per
+  content counted from `ray_push`. The outcome is the table content ->
+  closed / dispersed for `corner_first` and `turn_first` beside the
+  controls, and the answer to section 7's question: the self-field selects
+  contents (a ladder: some contents closed, some dispersed), or every
+  content survives (no ladder from this coupling on the unit square, the
+  ladder then being the corner table's, the Born form's phase condition),
+  or every content disperses (the loop needs the field not to push its own
+  rays). The runs are made once; nothing is tuned after them, and if the
+  first look forces a change, both records are kept and said so.
+- **Shows.** Run once each, 96 ticks; the controls in 21.7, 44.7 and 79.4
+  s (contents 32, 64, 128), `corner_first` in 22.7, 47.1 and 85.3 s,
+  `turn_first` in 2.8, 4.8 and 7.9 s. The table:
+
+  | Content | `control` | `corner_first` | `turn_first` |
+  | --- | --- | --- | --- |
+  | 32 | closed | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 20 pushes |
+  | 64 | closed | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 20 pushes |
+  | 128 | closed | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 24 pushes |
+
+  The six closed records: one group each, ring P0, P1, P2, P3, content C,
+  `{"electron": C}`, period 8, clock 1 on 8 steps, from tick 1 to tick 95,
+  every tick row from 1 to 95 bound at C, no electron packet received off
+  the ring, no `ray_push`; the `corner_first` record equal to the control's
+  in every event line with the host's `cost` removed (the digests of the
+  cost-stripped lines equal at each content) and differing in the `cost`
+  of every cycle record, which counts the light rays the one-layer meeting
+  reads before it finds no electron free, and in `ray_layer_families`. The
+  light met at the corners (all four together) 8, 16 and 32 per interval
+  from tick 2, the spread adding from tick 7, 5 and 4; the largest amount
+  at one corner in one interval over 96 ticks 8, 16 and 29, on the two
+  Ports of one axis 4, 6 and 11 against a = 4, 8 and 16. The light line
+  after tick 96: sourced 3800, current 3276, escaped 524 (32); 7600, 5456,
+  2144 (64); 15200, 8232, 6968 (128); electron C at every tick; momentum
+  (0, 0, 0) at every tick, each corner booking its two quarter turns. The
+  three `turn_first` records: at tick 2 eight `ray_push` events, two per
+  corner, the receiver the electron in the lower slot pushed by the two
+  edge rays of amount q in heading-index order, the registers as computed
+  at P0, P1 and P2 and at P3 from (-a, 0, 0) to (-a - q, 0, 0) to
+  (-a - q, q, 0) (the R ray arrives at P3 heading -X; the computation had
+  written +Y, the L ray's arrival), each corner booking its receiver's net
+  push, (-q, -q, 0) at P0 and the like, the four summing to zero, eight
+  recoils; the corner rule fires at no corner from tick 2, at tick 3 all
+  eight electron packets are received off the ring and none reaches a
+  corner again, no group is read; off the ring the escaping rays are pushed
+  by the light released beside them, eight pushes at tick 3 along their
+  lines and four (eight at 128) at tick 6 across, no line flipped; half the
+  content escaped after tick 8 and all after tick 9; light sourced 300, 600
+  and 1200 in all, the momentum line (0, 0, 0) and every ledger line
+  balanced at every tick. Deviations from the computation, none from the
+  criterion: the receiver's arrival heading at P3; the `cost` line of the
+  `corner_first` record; the pushes after tick 3; the one-axis near field
+  at content 32 reaching the ray's amount once over 96 ticks (the
+  computation over 16 ticks had 3 below 4). The reading tick by tick is in
+  the [README](../examples/nature/README.md#what-the-runs-show).
+- **Status.** measured, 2026-09-17, commit
+  `2ababa5a6bd45618bdfc47686832d149cacd3061` (the worlds, the computation
+  and the criterion; the readings, `record.json` and this status in the
+  next commit of the same branch); source
+  `aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705`;
+  initialization `c32_control`
+  `8820f4c831b6ee77bfd3a78122efbd73b38793a3de24bdd93ee88b495de1d9b7`,
+  `c32_corner_first`
+  `ccc09423aa2b1b79f56b5003d961aa56655cef174c0c7ce34713369e437281d0`,
+  `c32_turn_first`
+  `41f9fb9d2b72d55c0de8f3285da79e40ef41fb76fabc994efebb799c987062e5`,
+  `c64_control`
+  `1dbbfd0b66571b9aabe7a2f984fcbb4de3b70ee0163e0b2ec5ca46c2b9599da4`,
+  `c64_corner_first`
+  `d5e8bcb70545e88ac2f2142d4da943c3afd050e309fd4af655bc28a222c2fdee`,
+  `c64_turn_first`
+  `b6538871347e8b2ace203f5bc4750490502ca2e0f88ed950634e9b47609a1265`,
+  `c128_control`
+  `837da1c3b47fb32c1ca549df934bf2c6c8c8808d49d5fe8e9e5a27e0619f9ae7`,
+  `c128_corner_first`
+  `04d72372be16a1dd5cd6140b9090ae50258c542f13f63754d8aea79d8873e8c7`,
+  `c128_turn_first`
+  `e51ea4b597c995c90b5f94a139bcba025b3db8fb0248924b7ac7dcbb3674bc83`; 96
+  ticks each; outcome: no content selected. Under the corner first every
+  content survives (no ladder from this coupling on the unit square, the
+  ladder there being the corner table's); under the turn first every
+  content disperses at tick 3 (the loop needs the field not to take its
+  rays out of the corner meeting). Both are the one structural fact
+  computed before the run, one rule per ring ray per cycle on a ring whose
+  every Node is a corner, and no table entry was read: a self-field
+  closure needs a ring Node where a ray is met by its field and not turned
+  (a longer ring's side Nodes), or one table at the corner that reads the
+  field met, which is the catalog's to write; the ledger exact at every
+  tick in all nine records; nothing tuned after the runs; the records stay
+  outside the tree, `record.json` beside the worlds. The isolated test
+  (`tests/test_ring_self_field.py`, the content-32 worlds, 24 ticks) pins
+  the pushes, the identity of the records and the group readings
+  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 
