@@ -75,7 +75,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
 | `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
-| `test_screen_loop.py` | 1 | (first run) | The screen with a loop source of E9 in isolation: the unit-square ring of `loop-binding-v1` with rays of amount 4 releasing its light (`released-field-v1`) that spreads by the catalog's table with the Node-owned remainder (`field-spreading-v1`, `field-remainder-v1`) onto seven Detector marks, the ring read as one group of content 32 while it radiates, the first clicks and the world ledger exact |
+| `test_screen_loop.py` | 1 | 7.7 | The screen with a loop source of E9 in isolation: the unit-square ring of `loop-binding-v1` with rays of amount 4 releasing its light (`released-field-v1`) that spreads by the catalog's table with the Node-owned remainder (`field-spreading-v1`, `field-remainder-v1`) onto seven Detector marks, the ring read as one group of content 32 while it radiates, the first clicks and the world ledger exact |
 | `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
 | `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
 | `test_spatial_interactions.py` | 16 | 0.05 | Atomic carrier/local-field exchange with delayed-commit guards |
@@ -2423,13 +2423,19 @@ release takes eleven arrivals at one Node, E6 saw the first pair at tick
 82), and if one does, its mirror mark (7, 10 - y, 5) clicks in the same tick
 with the same amount, the world being symmetric under y -> 10 - y.
 
-Read from the record of the first run of this board and pinned then, as the
-run's integers rather than computed by hand (the field's integer state at a
-mark is the sum of many spreads): the ticks and amounts of every click, the
-light line (sourced, current, escaped) after the last tick, the escaped
-light, the number of `field_spread` records and the extractor's `to_tick`.
-The pinned integers are written into the test's docstring and here after
-that run, with the run's length.
+Read from the record of the first run of this board (2026-09-17, 32 ticks,
+2.9 s for the run and 4.9 s for the recording and the reading, so 32 ticks
+stay) and pinned then, as the run's integers rather than computed by hand
+(the field's integer state at a mark is the sum of many spreads): seven
+clicks, all at the on-axis mark (7, 5, 5), family light, amount 1, bit 1,
+through Port 1 (the -X face, the axis line's arrival), at ticks 11, 15, 18,
+22, 27, 27 and 31 (two quanta of different phases in the same interval at
+tick 27), no click off the axis and no `detector_pass`; the light line after
+tick 32: sourced 1240, current 1016 (rays and registers), escaped 224
+(after tick 2: 40, 40, 0; tick 8: 280, 264, 16; tick 16: 600, 530, 70;
+tick 24: 920, 784, 136); 2759 `field_spread` records; the group read from
+tick 1 to tick 31 over 248 electron rays, `ray_layer_families`
+`[["electron"], ["light"]]`.
 
 ## Catalog of nature
 

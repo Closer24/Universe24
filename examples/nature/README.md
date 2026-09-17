@@ -996,15 +996,115 @@ equal to sourced.
 
 ### screen_loop.json, tick by tick: the first clicks
 
-To be read from the record.
+Run once, 240 ticks, at commit `ed2078f` (92 s; `source_sha256`
+`693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`,
+`initialization_sha256`
+`e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`), the
+record read with the extractor and the recording as the lines under "Run
+and render" say. Every click is of family `light`, bit 1, 28 of amount 1
+and one of amount 2 (tick 63, two whole quanta merged on one Port in one
+interval), 29 in all; every mark clicks, the pairs tick for tick with the
+same amount (the world's mirror y -> 10 - y), the on-axis mark most:
+
+| Mark | Clicks | Ticks | First light received |
+| --- | --- | --- | --- |
+| (7, 5, 5) | 17 (amount 18) | 11, 15, 18, 22, 27, 27, 31, 34, 37, 41, 42, 43, 51, 59, 63, 67, 69 | 11 (the first click) |
+| (7, 4, 5) and (7, 6, 5) | 4 each | 34, 46, 54, 72 | 34 (the first click) |
+| (7, 3, 5) and (7, 7, 5) | 1 each | 71 | 50 (a pass, bit 1 already) |
+| (7, 2, 5) and (7, 8, 5) | 1 each | 70 | 70 (the first click) |
+
+Tick 11: the on-axis mark clicks, through its -X face, the axis line from
+P1, eight ticks before E6's held source (tick 19), as computed. The axis
+line's arrivals at (7, 5, 5) follow at 15, 18, 22, 27 (two quanta, two
+clicks), 31, 34, 37, 41, 42, 46, 48, 51, 52, 56, 59, 63 (amount 2), 67, 69,
+71, 73, 76, 80 and on, 91 arrivals carrying 95 quanta by tick 240. Tick 34:
+the first pair, (7, 4, 5) and (7, 6, 5), through their -X faces, in the same
+interval as an on-axis click; they click again at 46, 54 and 72. Tick 43:
+the one click not through a -X face, at (7, 5, 5) through its +Z face from
+(7, 5, 6): the line y = 5, z = 6 that P2 feeds with 2 per interval, whose
+-Z share at (7, 5, 6) left whole at tick 42. Ticks 70 and 71: the two outer
+pairs, the outermost (7, 2, 5) and (7, 8, 5) first and (7, 3, 5) and (7, 7,
+5) one interval later, once each. Tick 72: the last click of the run. From
+tick 73 to 240 no mark clicks: every arrival carries bit 1 and passes (the
+eye view below). The phase pattern, read from the `field_spread` record of
+the mark at each click (the phase of the arrived whole, which for a single
+arrival is the quantum's): on the axis 3, 1, 2, 1, 2, 2, 0 for the first
+seven clicks (ticks 11 to 31), 1, 1, 1 at 34, 37 and 41, and step 2 at every
+click from tick 42; off the axis step 2 at every click but the outermost
+pair's (step 3); over the run 102 of the 113 spreads at the on-axis mark
+record step 2 (9 step 1, one each of 0 and 3). The ring's clock t mod 8 is
+not read at the marks as a rotation: the released quanta spread at every
+Node on the way and reach the screen mostly as the registers' releases,
+whose phase is the coherent sum's, and the sum settles at one step.
 
 ### The eye view
 
-To be read from the record.
+The extractor's eye document (`runs.json`, `eye.hits`): (7, 5, 5) 17,
+(7, 4, 5) 4, (7, 6, 5) 4, (7, 3, 5) 1, (7, 7, 5) 1, (7, 2, 5) 1, (7, 8, 5)
+1: seven spots, the on-axis one brightest, the pairs equal, E6's picture
+with the loop as the source (E6's 240 ticks: 27, 6, 6, 3, 3, 1, 1). Beside
+the 29 clicks the record holds 378 `detector_pass` events (376 of amount 1,
+2 of amount 2, all bit 1): 120 at (7, 5, 5) from tick 46, 61 each at
+(7, 4, 5) and (7, 6, 5) from tick 43, 42 each at (7, 3, 5) and (7, 7, 5)
+from tick 50, 26 each at (7, 2, 5) and (7, 8, 5) from tick 95, mirrored
+tick for tick; E6's 240-tick record had 47 clicks and 10 passes. The reason
+is in the rules, not in the source: a mark is a Node that spreads, so the
+clicked quantum spreads at the mark itself, and every departure of a spread
+carries the combined bit of that interval's arrivals, 1 outranking 0
+outranking none ([field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1),
+"The combination"; [the bit as a
+property](../../docs/SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1);
+Highlights 5.4), so the read bit leaves the mark on all six headings: along
+the screen to the neighbouring marks (the first light to reach (7, 3, 5)
+and (7, 7, 5), at tick 50, carries it already) and back toward the source,
+where a Node of the axis line that receives read content in an interval
+sends that interval's forward quantum on with the bit; from tick 71 every
+axis-line arrival at (7, 5, 5) passes. What the eye shows is the 29 clicks;
+the 378 passes are arrivals the screen had realized already, and a screen
+under a dense field stops clicking, by this catalog default, once its own
+read light fills the field in front of it. A finding of the record, stated
+and not tuned; whether the combined bit should outrank at a spread is the
+model owner's.
 
 ### The ledger
 
-To be read from the record.
+After tick 240: light sourced 9560 (40 per interval from the cycle of tick
+1), current 3680 (620 on 594 rays, 3060 in the registers of 1177
+Node-and-sign blocks, all of sign -1), escaped 5880; electron initial 32,
+sourced 0, current 32, escaped 0, annulled 0, absorbed 0, the same at every
+tick; momentum (0, 0, 0) sourced and current at every tick; the charge
+line electron -96, light 0; every line balanced at every completed tick,
+`conserved_at_every_completed_tick` true. On the way (sourced, current,
+escaped): tick 8: 280, 264, 16; 16: 600, 530, 70; 32: 1240, 1016, 224; 48:
+1880, 1406, 474; 96: 3800, 2350, 1450; 192: 7640, 3315, 4325. The record's
+events: 181351 `spatial_cycle` (the corners' among them, each booking its
+two quarter turns and `light` 10 in every cycle from tick 1), 98825
+`spatial_sent`, 62808 `spatial_received`, 62403 `field_spread`, 5444
+`spatial_escaped`, 29 `detector_click`, 378 `detector_pass`, and the host's
+960 `cycle_started` and 960 `cycle_committed`; no other kind.
+
+### The group reading
+
+The extractor with the recording (`ray_layer_families` `[["electron"],
+["light"]]` in `run.json`) reports exactly one group: ring (1, 5, 5),
+(2, 5, 5), (2, 5, 6), (1, 5, 6), size 4, content 32, families `{"electron":
+32}`, period 8, clock `{"electron": 1}` on 8 phase steps, from tick 1 to
+tick 239, over 1912 electron chains (the eight rays, one chain per interval,
+239 intervals), the light entering none; every tick row from 1 to 239
+carries `bound` `{"electron": [32]}`; after tick 240 the eight electron
+rays sit at the four corners, amount 4 each, phase 0 (240 = 0 mod 8), as
+after tick 8. The source stayed bound and unchanged for 240 ticks while
+sourcing 9560 quanta of light. The viewer's counts: 38338 rays, 960
+meetings (the corners, 4 x 240), 16879 release markers, 9481 deflection
+markers (field rays leaving a Node changed, the spreads), 5444 escapes, 29
+clicks, 378 passes, no unknown event kind. Against the computation: the
+clicks' order was the on-axis mark, then the first pair, then the outermost
+pair one interval before the next (computed: the pairs from the axis
+outward), and the counts 17, 4, 4, 1, 1, 1, 1 fall from the axis but the two
+outer pairs are equal (computed: falling as E6's 27, 6, 6, 3, 3, 1, 1); one
+click carried 2 (computed: whole quanta of 1); the passes were not
+computed. The criterion of E9, written before the run, holds in every
+clause; the register carries the verdict.
 
 ### Run and render
 

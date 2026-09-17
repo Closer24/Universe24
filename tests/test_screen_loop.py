@@ -13,7 +13,11 @@ built inline, run for TICKS ticks through the runner. The structural
 expectations are written before the first run and the record's integers (the
 clicks, the light line, the escapes, the spreads) were read from the first run
 of this board and pinned then, as docs/TEST_EXPECTATIONS.md ("The screen with a
-loop") says.
+loop") says: 32 ticks, 2.9 s; seven clicks, all at the on-axis mark (7, 5, 5),
+family light, amount 1, bit 1, through Port 1 (the -X face), at ticks 11, 15,
+18, 22, 27, 27 and 31, no click off the axis and no pass; the light line after
+tick 32 sourced 1240, current 1016, escaped 224; 2759 field_spread records;
+the group read from tick 1 to tick 31 over 248 electron chains.
 """
 
 import importlib.util
@@ -59,9 +63,17 @@ EVENT_KINDS = {
 # Pinned from the first run of this board (2026-09-17): every click as
 # (tick, node, amount, the Port it arrived through), the light line after the
 # last tick and the counts.
-CLICKS: list[tuple[int, tuple[int, int, int], int, int]] = []
-LIGHT_LINE = {"sourced": None, "current": None, "escaped": None}
-SPREADS = None
+CLICKS: list[tuple[int, tuple[int, int, int], int, int]] = [
+    (11, AXIS, 1, 1),
+    (15, AXIS, 1, 1),
+    (18, AXIS, 1, 1),
+    (22, AXIS, 1, 1),
+    (27, AXIS, 1, 1),
+    (27, AXIS, 1, 1),
+    (31, AXIS, 1, 1),
+]
+LIGHT_LINE = {"sourced": 1240, "current": 1016, "escaped": 224}
+SPREADS = 2759
 TO_TICK = TICKS - 1
 
 

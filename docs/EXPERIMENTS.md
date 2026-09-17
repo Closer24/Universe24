@@ -1518,7 +1518,10 @@ sign rule, and its other couplings are catalog entries.
   is to be written and pinned anew, after A1's table and width, not
   silently rerun with another source. That demonstration is E9 below
   (`screen_loop.json`, 2026-09-17): this entry's screen and marks, the
-  source the ring of E5 with rays of amount 4.
+  source the ring of E5 with rays of amount 4. E9 was measured the same day
+  at commit `ed2078f`: the ring of content 32 lights all seven marks, 17, 4,
+  4, 1, 1, 1, 1 from the axis outward, the first at tick 11, and stays bound
+  while it radiates.
 
 ### E8. The helium ion with the field spreading and the momentum turn
 
@@ -1747,10 +1750,72 @@ sign rule, and its other couplings are catalog entries.
   one clause, stated as which and why. The run is made once; nothing is
   tuned after it, and if its first look forces a change, both records are
   kept and said so.
-- **Shows.** To be read from the record (the clicks per mark with their
-  ticks, the group reading, the ledger).
-- **Status.** planned (2026-09-17, the criterion fixed, the run to be made
-  once at the commit that carries this entry).
+- **Shows.** Run once, 240 ticks, 92 s. The clicks: 29, every one of
+  family `light`, bit 1, 28 of amount 1 and one of amount 2 (tick 63, two
+  whole quanta merged on one Port in one interval); (7, 5, 5) 17 at ticks
+  11, 15, 18, 22, 27, 27, 31, 34, 37, 41, 42, 43, 51, 59, 63, 67 and 69
+  (the first eight ticks before E6's 19, as computed; the one at 43
+  through the +Z face from the line y = 5, z = 6 of P2, the others through
+  the -X face, the axis line from P1); (7, 4, 5) and (7, 6, 5) 4 each at
+  34, 46, 54 and 72; (7, 2, 5) and (7, 8, 5) once each at 70; (7, 3, 5) and
+  (7, 7, 5) once each at 71; the pairs tick for tick with the same amount;
+  the last click at tick 72, and from 73 to 240 no mark clicks. The passes:
+  378 `detector_pass` (376 of amount 1, 2 of amount 2, all bit 1), 120 at
+  the on-axis mark from tick 46, 61, 42 and 26 at each mark of the pairs
+  outward from ticks 43, 50 and 95, mirrored tick for tick, against E6's 10
+  passes among 47 clicks: a mark is a Node that spreads, and a spread's
+  departures carry the combined bit of the interval's arrivals (1 outranks
+  0 outranks none, Highlights 5.4), so the read bit leaves a mark on all six
+  headings, along the screen and back toward the source, and from tick 71
+  every axis-line arrival at (7, 5, 5) carries it: the screen's own read
+  light fills the field in front of it and the marks stop clicking, a
+  finding of the record. The phases, from the `field_spread` record at the
+  mark at each click: on the axis 3, 1, 2, 1, 2, 2, 0, then 1, 1, 1, then
+  step 2 at every click from tick 42, off the axis step 2 but the outermost
+  pair's 3; 102 of the 113 spreads at the on-axis mark record step 2: the
+  ring's clock is not read at the marks as a rotation, the registers'
+  coherent sums settling at one step. The ledger after tick 240: light
+  sourced 9560, current 3680 (620 on 594 rays, 3060 in the registers of
+  1177 Node-and-sign blocks), escaped 5880; electron 32 at every tick with
+  no source, escape, annulment or absorption; momentum (0, 0, 0); charge
+  electron -96, light 0; every line balanced at every tick,
+  `conserved_at_every_completed_tick` true. The group: the extractor with
+  the recording reads exactly one, ring (1, 5, 5), (2, 5, 5), (2, 5, 6),
+  (1, 5, 6), content 32, `{"electron": 32}`, period 8, clock 1 on 8 steps,
+  from tick 1 to tick 239 over 1912 electron chains, every tick row from 1
+  to 239 bound `{"electron": [32]}`, the eight rays at the corners at
+  amount 4 and phase 0 after tick 240 as after tick 8. The events:
+  `spatial_cycle` 181351, `spatial_sent` 98825, `spatial_received` 62808,
+  `field_spread` 62403, `spatial_escaped` 5444, `detector_click` 29,
+  `detector_pass` 378, `cycle_started` and `cycle_committed` 960 each, no
+  other kind; `ray_layer_families` `[["electron"], ["light"]]`. The
+  readings tick by tick, the eye view and the deviations from the
+  computation are in the
+  [README](../examples/nature/README.md#screen_loopjson-tick-by-tick-the-first-clicks).
+- **Status.** measured, 2026-09-17, commit
+  `ed2078f1dfc73f97f682d0bc3cf1c5dab6eb8810` (the commit that carries this
+  entry and the world); `screen_loop.json`, source
+  `693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`,
+  initialization
+  `e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`, 240
+  ticks, 92 s; outcome: pass in every clause. (1) every ledger line
+  balanced at every completed tick, `conserved_at_every_completed_tick`
+  true; (2) one group, the ring, content 32, `{"electron": 32}`, period 8,
+  clock 1 on 8 steps, from tick 1 to tick 239; (3) all seven marks click,
+  17, 4, 4, 1, 1, 1, 1 from the axis outward, the pairs equal, the on-axis
+  mark most; (4) `light` in a layer of its own, the events of the kinds
+  listed only, the electron line without source, escape, annulment or
+  absorption at every tick. Deviations from the computation, none from the
+  criterion: the order of the first clicks (the outermost pair at tick 70,
+  one interval before the next pair at 71; computed: the pairs from the
+  axis outward), the counts (the two outer pairs equal at 1; computed:
+  falling as E6's 27, 6, 6, 3, 3, 1, 1), one click of amount 2 (computed:
+  whole quanta of 1), and the 378 passes, which the computation did not
+  consider and which end the clicking at tick 72. The isolated test
+  (`tests/test_screen_loop.py`, 32 ticks) pins the first seven clicks, the
+  light line and the group reading from the first run of its board
+  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
+  record stays outside the tree; nothing was tuned after the run.
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 
