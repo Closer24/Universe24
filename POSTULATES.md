@@ -621,8 +621,8 @@ limits are explicit and do not silently extend the older native profiles.
 
 ## 20. Causal local quantum source candidate
 
-The explicit causal source extension (its contract and runtime deleted on
-2026-09-17; the envelope modules stay until issue #164 bucket B.3) permitted
+The explicit causal source extension (its contract, runtime and envelope
+modules deleted on 2026-09-17; issue #164, bucket B.3) permitted
 ordinary emission weighted by a bounded complex envelope retained at the same
 Node. Phase evolution uses frozen local and causally received neighbor inputs.
 Only an actual local contact can prepare or localize the configured inventory.

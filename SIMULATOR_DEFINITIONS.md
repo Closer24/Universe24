@@ -791,8 +791,8 @@ separates possible origin support from particles, field inventory and probabilit
 ## Historical causal ordinary sources from quantum contacts - Q-CAUSAL-SOURCE-1 (deleted on 2026-09-17)
 
 The causal contact runtime and its document were deleted on 2026-09-17 with
-the integration layer; the source-envelope modules stay until issue #164
-bucket B.3. The contract below is history.
+the integration layer, and the source-envelope modules on the same day under
+Highlights section 3.5 (issue #164, bucket B.3). The contract below is history.
 
 `causal-contact-fields-v1` selected the causal source contract, retaining Q-CONTACT-1's
 local preparation, absorption and single inventory ownership. Each participating
