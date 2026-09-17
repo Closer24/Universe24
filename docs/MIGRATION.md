@@ -240,6 +240,32 @@ is otherwise an ordinary Node
 A document without `detectors` has no marked Node, calls the ticket rule
 nowhere and runs exactly as before.
 
+## Ray layers added on 2026-09-17 (`ray-layers-v1`)
+
+Issue #169, feature 5, under [Highlights](HIGHLIGHTS.md) 5.1 and the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): event spacetime
+has layers, a layer is a set of families that couple, and a meeting exists
+only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+
+- `ray_layers` (`core/spatial_state.py`) derives the layers from the catalog
+  as the connected components of the ray fields over the participants of the
+  declared `ray_interactions`; a ray field that no rule selects is its own
+  layer. `SpatialLaw` derives them once when it is built (`layers`) and
+  `apply_ray_interactions` (`fields/ray_interactions.py`) meets the resident
+  rays of a Node layer by layer: each layer's rules fire over that layer's
+  rays alone, in declared order, and a ray of a layer without a firing rule
+  crosses unchanged. Rules of different layers fire independently in one
+  interval.
+- The 32-slot participant capacity of `validate_ray_participants` is now a
+  bound per layer with a rule (the `ray_slots` of that layer's fields sum to
+  at most 32) instead of over every selected field.
+- The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
+  (the derived layers as sorted lists of field names) in `run.json` beside
+  `ray_state`.
+- A world with a single layer runs byte-identically to before: the same
+  owners, rules, charges and events. No initialization key changes; no
+  draw, absorber, readout or Detector is touched.
+
 ## Test suite reduced on 2026-09-17: one test per rule
 
 Decision of the model owner, 2026-09-17: the engine is generic, so the test

@@ -74,6 +74,12 @@ NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # that drew 0 or 1. Every created ray carries 0; a marked Node sets 1 or 2 on
 # arrival (detector_draw) and no rule reads it.
 DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
+# Layers of event spacetime (Highlights 5.1): a layer is a set of families that
+# couple, and a meeting exists only inside a layer. Layers are derived, never
+# declared: the connected components of the ray fields over the participants
+# of the declared ray interactions, a field no rule selects being its own layer.
+RAY_LAYERS = "ray-layers-v1"
+Layers = tuple[tuple[int, ...], ...]
 # Every ray is a wave ray (Highlights 3.3 and 5.1, wave-ray-family-v1): the phase
 # every ray carries has the width its family declares, `phase_bits`, and every
 # phase advance or difference is a mask over 2^phase_bits, never a division. A
@@ -235,8 +241,13 @@ def validate_ray_participants(
             selected.update(role)
         if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
-    if sum(definitions[index].ray_slots for index in selected) > MAX_SLOTS:
-        raise ValueError("ray interactions require at most 32 selected ray slots")
+    for layer in ray_layers(definitions, rules):
+        # The indexed selector's capacity bounds one meeting, and a meeting exists
+        # only inside a layer: fields of different layers never share it.
+        if selected.intersection(layer) and (
+            sum(definitions[index].ray_slots for index in layer) > MAX_SLOTS
+        ):
+            raise ValueError("ray interactions require at most 32 selected ray slots in one layer")
     for index in selected:
         definition = definitions[index]
         field = fields[definition.field]
@@ -257,6 +268,54 @@ def validate_ray_participants(
                 "ray interactions view the phase as a stored value: they require phase_bits at most 30"
             )
     return frozenset(selected)
+
+
+def ray_layers(
+    definitions: tuple[SpatialFieldDefinition, ...],
+    rules: tuple[InteractionDefinition, ...],
+) -> Layers:
+    """The layers over the ray fields (ray-layers-v1): the connected components of the
+    fields that the roles of one rule can select, and one layer for every ray field
+    that no rule selects. Each layer lists its spatial-field indices in field order
+    and the layers are in the order of their first field. Bounded by the number of
+    spatial fields and the fixed rule capacity; nothing is declared."""
+    if type(rules) is not tuple or len(rules) > MAX_RULES:
+        raise ValueError("ray interaction rules exceed their fixed capacity")
+    parent = list(range(len(definitions)))
+
+    def root(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    for rule in rules:
+        selected = {kind for role in rule.participants for kind in role}
+        if any(type(kind) is not int or not 0 <= kind < len(definitions) for kind in selected):
+            raise ValueError("ray participant role refers to an unavailable spatial field")
+        kinds = sorted(selected)
+        for kind in kinds[1:]:
+            parent[root(kind)] = root(kinds[0])
+    members: dict[int, list[int]] = {}
+    for index, definition in enumerate(definitions):
+        if definition.rays:
+            members.setdefault(root(index), []).append(index)
+    return tuple(tuple(layer) for layer in sorted(members.values()))
+
+
+def ray_layer_names(
+    fields: tuple[FieldDefinition, ...],
+    definitions: tuple[SpatialFieldDefinition, ...],
+    rules: tuple[InteractionDefinition, ...],
+) -> tuple[tuple[str, ...], ...]:
+    """The derived layers as family names for the run record, sorted within each layer
+    and between layers."""
+    return tuple(
+        sorted(
+            tuple(sorted(fields[definitions[index].field].name for index in layer))
+            for layer in ray_layers(definitions, rules)
+        )
+    )
 
 
 def validate_ray_coupling(initial: InitialState) -> None:

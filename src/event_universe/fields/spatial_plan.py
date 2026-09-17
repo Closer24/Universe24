@@ -19,6 +19,7 @@ from event_universe.core.sampling_contract import DETECTOR_ONLY, validate_spatia
 from event_universe.core.spatial_state import (
     EmissionDefinition,
     FieldRuleGuard,
+    Layers,
     NodeFieldRuleDefinition,
     Ray,
     Rays,
@@ -32,6 +33,7 @@ from event_universe.core.spatial_state import (
     coherence,
     merge_rays,
     phase_of_sum,
+    ray_layers,
     ray_momentum,
     ray_stock,
     stamp_event,
@@ -70,11 +72,15 @@ class SpatialLaw:
     least_delay_direction: str | None = None
     ray_interactions: tuple[InteractionDefinition, ...] = ()
     sampling_profile: str = DETECTOR_ONLY
+    # The layers of event spacetime (ray-layers-v1): derived here from the declared
+    # ray interactions, never declared; every meeting reads them.
+    layers: Layers = ()
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
+            object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
             if (
                 self.field_rules
                 or self.least_delay_direction is not None
@@ -388,6 +394,7 @@ class SpatialLaw:
                     self.ray_interactions,
                     meter,
                     self.costs,
+                    self.layers,
                 )
             ]
         meter.charge("receive", received_count)

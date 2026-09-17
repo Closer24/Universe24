@@ -24,6 +24,7 @@ the Detector bit at a marked Node.
 
 - **Ray** — the trajectory of one event between two interactions: one heading, one straight line, one Node per Link interval, carrying its share of the event's information. In the spatial-field implementation a `Ray` record is one straight-moving share of a ray field.
 - **Interaction** — a meeting of rays at a Node in one interval, decided by the coupling declared between their families; its result is at most six events, one per Port. In the current slice an emission by a resident record and a firing `ray_interactions` group are the interactions that create rays.
+- **Layer** — a set of families that couple: a connected component of the ray fields over the participants of the declared `ray_interactions`, derived, never declared (`ray-layers-v1`, [layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)). A meeting exists only inside a layer; rays of different layers cross as if the other were not there, so two events can happen at one Node in one interval. A family that no rule selects is its own layer.
 - **Event of a ray** — a change of trajectory: a new straight line leaving an interaction through one Port. The core term Event above names the engine's local transitions and completed transfers; a ray's event is the interaction that created its trajectory.
 - **Steps** — the number of Links a ray has walked since its event, counted up while outbound and down on the walk back; zero at the event Node.
 - **Outbound** — `1` while a ray travels on its event's heading, `0` once it is reversed on its own line (a return).

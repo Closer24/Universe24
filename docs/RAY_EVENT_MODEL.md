@@ -556,6 +556,16 @@ every such set; Highlights 3.20 is the text to follow.
    1/8, 4/8, 7/8, click intensities following the Born rule with nothing
    read by any Detector; the bound group under load.
 
+Layers, the "met layer by layer" of the table in section 2, are not a
+numbered step of this list but feature 5 of issue #169 (done on 2026-09-17,
+`ray-layers-v1`): the layers are derived once from the catalog as the
+connected components of the ray fields over the participants of the declared
+`ray_interactions`, a field that no rule selects is its own layer, the
+interaction step at a Node meets the resident rays layer by layer so that
+rules of different layers fire independently in one interval and an unruled
+ray crosses unchanged, and the runner records the derived layers; see
+[layers](SPATIAL_FIELDS.md#layers-ray-layers-v1).
+
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
 

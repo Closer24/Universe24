@@ -402,6 +402,48 @@ cases; the return is feature 3. A document without `detectors` has no marked
 Node and runs exactly as before, and the runner records
 `detector_mark: "detector-mark-v1"`.
 
+### Layers (`ray-layers-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.1; [ray-event
+model](RAY_EVENT_MODEL.md#1-definitions)): event spacetime has layers. A
+layer is a set of families that couple, and a meeting exists only inside a
+layer. Rays whose families have no declared coupling never meet: they cross
+as if the other were not there, so two events can happen at the same Node
+in the same interval in layers that do not communicate.
+
+Layers are derived, never declared. A family is a ray field and the
+catalog's couplings are the declared `ray_interactions`: the layers are the
+connected components of the ray fields over the participants of those
+rules, where every field a rule's roles can select is one participant set
+(a rule whose roles select `a` and `b` puts `a` and `b` in one layer, and
+two rules that share a field chain their fields into one layer). A ray
+field that no rule selects is its own layer and always crosses.
+`ray_layers` (`core/spatial_state.py`) derives them from the catalog once,
+when the `SpatialLaw` is built, as a tuple of tuples of spatial-field
+indices in field order, bounded by the number of spatial fields; the runner
+records `ray_layers: "ray-layers-v1"` and `ray_layer_families`, the derived
+layers as lists of field names sorted within each layer and between layers,
+in `run.json` beside `ray_state`.
+
+At a Node in one interval the interaction step (`apply_ray_interactions`)
+meets the resident rays layer by layer. For each layer that has a rule, its
+rays and only its rays are the candidate participants; its rules fire in
+declared order, each with its own participants, guard, invariants and
+events, exactly as the [shared coupling contract](SHARED_RAY_COUPLING.md)
+states for one layer; a ray of a layer that has no rule, or whose rules do
+not fire, crosses unchanged with its event record intact. Rules of
+different layers therefore fire independently in the same cycle, and a ray
+of one layer is never a participant, a blocker or a merge partner of a ray
+of another: the indexed selector's 32-slot participant capacity is a bound
+per layer (the declared `ray_slots` of the fields of one layer with a rule
+sum to at most 32), rays of different fields never merge, and there is no
+occupied channel and no capacity rule between layers. The Node's proposal
+stays one atomic commit: a failed guard or invariant in any layer rejects
+the interval's proposal before any owner changes, as before. A world with a
+single layer runs byte-identically to the previous rule, and the existing
+suite is its regression. No new draw, no new arithmetic and no new
+initialization key; the Detector (issue #169, feature 2) is untouched.
+
 ### Wave-ray families (`wave-ray-family-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.3 and 5.1; [ray-event
