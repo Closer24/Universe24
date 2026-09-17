@@ -931,6 +931,42 @@ the record is unchanged.
 - `viewer.html` draws the head over `head_links`; `render_gif.py` validates
   the key; the test pins the defaults.
 
+## Ray viewer: spheres and a softer look, 2026-09-17
+
+Model owner's feedback on the sixth render, applied as defaults of
+`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+the record is unchanged.
+
+- No cubes: `draw.marker_shape` `sphere` (with `cube` as an option and
+  per-kind `shape_overrides` for `source`, `detector`, `body` and `head`)
+  draws sources, Detector marks, external bodies and ray heads as smooth
+  spheres with a soft specular (`sphere_roughness`, `sphere_metalness`), a
+  little emissive light of their colour (`sphere_emissive`) and an additive
+  glow behind them (`draw.glow`, `glow_scale`, `glow_alpha`); bodies differ
+  by colour and size, not by polygon; a head is `head_radius_px` on screen;
+  a Detector mark is a translucent sphere (`detector_alpha`).
+- The picture: `draw.vignette` with `colors.scene` fading to `scene_edge`
+  behind a transparent canvas; `lattice_alpha` 0.07, `node_dot_alpha` 0.22,
+  `box_alpha` 0.35; field rays as faint cyan-white hairlines
+  (`families.field` `#bfefff`, alpha 0.35, `field_width_px` 1) with additive
+  blending (`draw.field_additive`); event markers as thin rings
+  (`marker_ring_thickness` 0.06, `marker_alpha`) with a soft glow; escape
+  dots small and dim (`escape_dot_radius` 0.09, `escape_alpha` 0.45);
+  `elevation_deg` 30, `start_angle_deg` -40, `gif_degrees_per_frame` 4;
+  `motion.gif_supersample` 2 renders a GIF at twice the size and scales it
+  down for gentle anti-aliasing.
+- `motion.camera_fit` `rays` (default; `board` as before) with
+  `camera_fit_margin_links` 1: the camera, the lattice and the thin box fit
+  the region around every matter ray path, source, Detector mark and body
+  over the whole run, padded by the margin and clamped to the board, with the
+  board's own edges drawn fainter around it, so a small action on a large
+  board fills the frame; `colors.families` gains fixed colours for `light`,
+  `proton` and `neutron` beside `electron`, so the families of a run are told
+  apart by colour.
+- `viewer.html` gains the sphere, glow, vignette, additive and camera-fit
+  drawing paths; `render_gif.py` the supersampled capture and the keys; the
+  test pins the defaults.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

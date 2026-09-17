@@ -55,13 +55,29 @@ here that touches the engine.
   lattice grid and a bounding box are the depth cues, with no text on the
   board except the ray labels; the view turns once per 120 s (a checkbox
   stops it; a GIF advances a few degrees per frame).
-- Sources are small cubes, Detector marks wire cubes, and every external
-  body carries its identifying picture (Highlights 3.19: "In a rendering
-  every external body carries its own identifying picture (a star, a mirror,
-  a wall), so it is never mistaken for matter"), chosen by family in the
-  style file (`star`, `plane`, `slab`; `star` by default) and standing at
-  the position the record gives for the tick shown. None of them carries
+- No cubes: sources, Detector marks, external bodies and ray heads are
+  smooth spheres (`draw.marker_shape` `sphere`; `cube` and per-kind
+  `shape_overrides` remain) with a soft specular, a little emissive light of
+  their colour and an additive glow behind them (`draw.glow`); they differ by
+  colour and size (`source_size`, `detector_size` with `detector_alpha`,
+  `body_size`, `head_radius_px`), not by polygon. Every external body keeps
+  its identifying mark (Highlights 3.19: "In a rendering every external body
+  carries its own identifying picture (a star, a mirror, a wall), so it is
+  never mistaken for matter"): its colour and size, and in `cube` mode the
+  picture chosen by family in the style (`star`, `plane`, `slab`); it stands
+  at the position the record gives for the tick shown. None of them carries
   text.
+- The picture is soft: a dark blue-black vignette (`colors.scene` fading to
+  `scene_edge`, `draw.vignette`), a faint lattice (`lattice_alpha`,
+  `node_dot_alpha`) inside a thin box (`box_alpha`), field rays as faint
+  cyan-white hairlines with additive glow (`draw.field_additive`), event
+  markers as thin glowing rings (`marker_ring_thickness`, `marker_alpha`),
+  small dim escape dots (`escape_alpha`), and a GIF rendered at twice the
+  size and scaled down (`motion.gif_supersample`) for gentle anti-aliasing.
+  The camera fits the action (`motion.camera_fit` `rays`): the box around
+  every matter ray path, source, Detector mark and body over the run, padded
+  by `camera_fit_margin_links`, holds the lattice and the thin box, with the
+  board's own edges fainter around it; `board` fits the whole board.
 - Text is at least 14 px; the page works at 400 px width. By default the
   page shows the board with one title line, the run's title from the record,
   and the tick counter; every other block of text around it (record line,
@@ -79,11 +95,11 @@ never a code change. Its sections and keys, all of them, are:
 
 | Section | Keys |
 | --- | --- |
-| `colors` | `background`, `surface`, `scene`, `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
-| `sizes` | `ray_width_px`, `head_links` (the head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `escape_dot_radius`, `source_size`, `detector_size`, `body_size`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `lattice_alpha`, `box_alpha` |
-| `draw` | `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
+| `colors` | `background`, `surface`, `scene` (the vignette's centre), `scene_edge` (its edge), `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
+| `sizes` | `ray_width_px`, `head_radius_px` (a sphere head, on screen), `head_links` (a segment head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `marker_ring_thickness`, `marker_alpha`, `escape_dot_radius`, `escape_alpha`, `source_size`, `detector_size`, `body_size`, `detector_alpha`, `glow_scale`, `glow_alpha`, `sphere_roughness`, `sphere_metalness`, `sphere_emissive`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `node_dot_alpha`, `lattice_alpha`, `box_alpha` |
+| `draw` | `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `marker_shape` (`sphere` or `cube` for sources, Detector marks, bodies and heads) with `shape_overrides` (per kind: `source`, `detector`, `body`, `head`), `glow`, `vignette`, `field_additive`, `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
 | `caption` | `kinds` (the event kinds listed), `max_per_tick`, `more`, `emissions`, `escapes`, `field_escapes`, `empty`, `totals` (`{family}`, `{in_world}`, `{escaped}`, `{on_links}`, `{held}`, `{sourced}`), `conservation` (`{status}`, `{balanced}`, `{every_tick}`) |
-| `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `contact_stills`, `elevation_deg`, `start_angle_deg` |
+| `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `gif_supersample`, `contact_stills`, `elevation_deg`, `start_angle_deg`, `camera_fit` (`rays` or `board`), `camera_fit_margin_links` |
 
 `viewer.html` reads the style from its inlined `<script type="application/json"
 id="style">` block when the renderer filled it, else from `?style=URL`, else

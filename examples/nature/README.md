@@ -1,9 +1,11 @@
 # Two events of nature in the engine's language
 
-Two world files that show, on the one generic engine and with the rules that
-exist today, (A) a photon absorbed by an electron at rest and (B) a nucleus
+Three world files that show, on the one generic engine and with the rules
+that exist today, (A) a photon absorbed by an electron at rest, (B) a nucleus
 split by a high-energy photon, with a low-energy photon that does not split it
-as the control. They are demonstrations under
+as the control, and (C) the photon of (A) held inside the group while its
+clock runs and then emitted on a new heading, the group back in its ground
+state. They are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events),
@@ -27,6 +29,9 @@ the picture only.
 | The photon arrives | The light ray reaches the group's Node and waits the group's `ray_delay` (one interval) before it meets anything: the group's output clock, not a kinematic rule | [Mass as output-clock delay](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); Highlights 3.28 |
 | Absorption | The coupling declared for the families present when the light arrives: the rule `excite`, a binding rule over `[electron, electron, light]` declared before `bind`; it fires with zero events, so the light ray ends at the Node and stays in the group. The literal conversion of the light's amount into electron content is refused by two generic rules (see Limits) | [Binding](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); Highlights 3.4 ("Binding is the interaction whose result is zero events") |
 | The excited electron | The bound group `[electron, electron, light]`: content 8 to 11 (the `bound_tick` record's `amounts`), the Node's output clock `ray_delay` 1 to 3 (a slower clock: every ray of matter that arrives now waits three intervals), the light's phase held at 0 while the electron phases keep advancing | [Binding](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); Highlights 3.28 ("Speed is a clock slowing") |
+| Emission | The outputs rule `emit` over the bound `[electron, electron, light]`, declared before `excite` (rules fire in declared order and a ray one rule used is not available to the next in that interval, so `emit` must come first; while its guard is false `excite` holds the group), fired by the group's clock: its guard `"when": {"op": "eq", "args": [{"field": "phase", "participant": 0}, 1]}` is true in the interval the electron phase reads 1. Its outputs are the light ray leaving through Port 0 (+X, a new heading, so it reads as emission) with the group's phase at emission (`"phase": {"of": 0}`, Highlights 3.3: the frequency of light is the rate of its emitter's clock), and the two electron rays with `delay` 1, which stay at the Node one interval and are re-bound by `bind` in the next; "outputs where two participants stay bound" is this one rule plus the existing binding rule, with `ray_delay` reading 0 for the one tick in between | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) (`delay` on an output); Highlights 3.4 |
+| Lifetime of the excited state | Declared and deterministic: the intervals until the electron phase reaches the guard's value (five here, from the excitation at phase 4 through 5, 6, 7, 0 to 1). The half-life draw of Highlights 3.26, a decaying group as a source and a source as a Detector drawing at each tick, is not in the engine: a Detector mark draws on arrivals through Ports only, never at a resident group's tick. That draw is the missing rule for a random lifetime | Highlights 3.26; [Detector mark](../../docs/SPATIAL_FIELDS.md#detector-mark-detector-mark-v1) |
+| Recoil of the emission | Momentum exact by heading: the light leaves with (4, 0, 0) and one electron's heading turns from +X to +Y, so the group holds (-4, 4, 0) in its rays' headings, the photon's original (0, 4, 0) less what left; a bound group does not move (hypothesis 15 is open), so the recoil is bookkeeping in the group. This is why the light's amount is 4 in `absorption_emission.json` (3 in `absorption.json`): equal to an electron's amount, so that one heading carries it | Highlights 3.14, 3.16 |
 | A two-body nucleus | A bound group of one `proton` ray (charge +3) and one `neutron` ray (charge 0) held by the binding rule `strong` (`delay` 1, `ray_delay` 1) | [Binding](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); Highlights 3.4 |
 | Photofission | The outputs rule `photofission` naming the bound proton, the bound neutron and the arriving light ray, declared before `strong`: three new event rays leave the Node, the proton through Port 2 (+Y) and the neutron through Port 3 (-Y), on opposite headings by the Port table, the light continuing on its heading (`"same"`); nothing is left at the Node and `strong` no longer fires | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1), [unbinding](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); Highlights 3.4 |
 | The fragments | The rule's outputs: each a fresh trajectory with `steps` 0, stamped with the event's Ports and shares | [Ray state](../../docs/SPATIAL_FIELDS.md#ray-state-ray-event-state-v1) |
@@ -63,6 +68,32 @@ ledger electron -24 (= -3 x 8); every line of the audit balanced;
 `conserved_at_every_completed_tick` true. The light lamp keeps the recoil
 (0, -3, 0) and the held light ray reads (0, 3, 0): the photon's momentum is
 in the group.
+
+## absorption_emission.json, tick by tick
+
+Board 11 x 11 x 11, open, `link_ticks` 1, `phase_bits` 3, 14 ticks. Lamps:
+two electron lamps at (4, 5, 5) heading +X and (6, 5, 5) heading -X, amount 4
+each; one light lamp at (5, 2, 5) heading +Y, amount 4. Rules in order:
+`emit` (the outputs rule with the guard on the electron phase), `excite`
+(binds `[electron, electron, light]`, `ray_delay` 3), `bind` (binds
+`[electron, electron]`, `ray_delay` 1).
+
+| Tick | What is on the board |
+| --- | --- |
+| 1 | The two electron rays are at (5, 5, 5); the light ray is at (5, 3, 5) |
+| 2 | `bind` has fired: the group `[electron, electron]`, amounts [4, 4], `ray_delay` 1 |
+| 3 | The light ray (amount 4) arrives at (5, 5, 5) and waits the group's clock (`delay` 1) |
+| 4 | Its wait is over; in the cycle that follows the guard of `emit` reads phase 4 as false and `excite` fires with zero events |
+| 5 to 9 | The group `[electron, electron, light]`, amounts [4, 4, 4], `ray_delay` 3; the electron phases 5, 6, 7, 0, 1, the light's 0: the photon sits inside while the group ticks |
+| 9 | In the cycle that follows, the electron phase reads 1: `emit` fires; the light leaves through +X with phase 1, the electrons stay with `delay` 1, one of them now on +Y |
+| 10 | The light is at (6, 5, 5) heading +X, phase 1, `steps` 1; the two electrons are at (5, 5, 5), `ray_delay` 0 for this one tick, since no binding rule fired in the cycle before |
+| 11 | `bind` has re-formed the ground group: amounts [4, 4], `ray_delay` 1, phases [3, 3], headings -X and +Y; the light is at (7, 5, 5) |
+| 12 to 14 | The ground group ticks; the light walks to (10, 5, 5) at tick 14 |
+
+At every tick: totals electron 8, light 4, momentum (0, 0, 0), the charge
+ledger electron -24, every audit line balanced,
+`conserved_at_every_completed_tick` true. Photon in, held five intervals,
+photon out on a new heading, the group back in its ground state.
 
 ## photofission.json, tick by tick
 
@@ -138,11 +169,22 @@ rather than of each quantum, since today an electron ray of amount 11
 carries charge -33. Neither is added here; the register's B8 and the weak
 interaction of the catalog will need the first.
 
+**A random lifetime is not expressible.** The emission of
+`absorption_emission.json` fires at a declared phase, so the excited state's
+lifetime is one integer. Highlights 3.26 gives the decaying group its
+half-life through the Detector draw at the group's tick (1 = the conversion
+fires, 0 = the group ticks on); the engine's Detector mark draws on arrivals
+through Ports only, so a resident group's tick draws nothing today. The
+missing rule is that draw, the mark's setting applied once per `bound_tick`,
+with the conversion as the outputs rule fired on 1; the catalog's
+`weak_conversion` waits for the same rule.
+
 **Not shown.** No released field is declared: the world's light carries no
 `field_of`, although light is the electron's own field in the catalog since
 2026-09-17 (Highlights 3.5; the family `electron_field` until that date), and
-the `mass_field` of the catalog is absent; neither event needs a release, and
-the faint rays would fill the picture; the groups therefore radiate nothing. All
+the `mass_field` of the catalog is absent; no event of these runs needs a
+release, and the faint rays would fill the picture; the groups therefore
+radiate nothing. All
 matter rest rates are 1 at N = 8, a resolution choice for the picture, not a
 mass. The one-interval pause of each photon at the group's Node is the
 group's declared `ray_delay`, the only clock slowing in the engine.
@@ -159,7 +201,8 @@ python tools/ray_viewer/extract.py runs/absorption --label absorption --out runs
 python tools/ray_viewer/render_gif.py runs/absorption/runs.json --output runs/absorption.gif --contact-sheet runs/absorption-contact.png
 ```
 
-The same four lines with `photofission` render the second run. The
+The same four lines with `absorption_emission` and with `photofission`
+render the other two runs. The
 [ray viewer](../../tools/ray_viewer/README.md) draws the light ray arriving,
 the meeting marker at the group's Node, the `bound_tick` records as generic
 markers at that Node and the fragments leaving; a GIF is a rendering of a

@@ -930,8 +930,8 @@ which stays `planned`: B8 holds its group for 2^12 intervals and pins the
 threshold criterion, while these runs show the events over a dozen ticks.
 The families are catalog rays (`light`, `electron`, `proton`, `neutron`, the
 charge unit e/3, the electron's rest rate 1); the two couplings are the
-worlds' own declarations, since the catalog holds no photon-absorption and no
-photofission coupling, and the proton's and the neutron's rest rates,
+worlds' own declarations, since the catalog holds no photon-absorption, no
+photon-emission and no photofission coupling, and the proton's and the neutron's rest rates,
 undecided in the catalog, are set to 1 for the picture.
 
 ### E1. A photon absorbed by a bound electron
@@ -998,3 +998,45 @@ undecided in the catalog, are set to 1 for the picture.
   initialization `7f8a490db98a1658860c54d3a6b0bb03781366122de31a7a1421dcc65f83bf7f`;
   outcome: the control crosses and the split happens as stated, exact at
   every tick.
+
+### E3. Absorption and emission: the photon held inside a bound electron and released
+
+- **Claim.** Highlights 3.4 (binding is zero events; a group is unbound by
+  the coupling declared for the families present) and 3.3 (a light ray
+  carries the phase of the clock that emitted it): the light ray bound into
+  the group leaves again when the group's clock reaches a declared phase, on
+  a new heading and with the group's phase at emission, and the ground group
+  re-forms.
+- **Features.** 1, 5, 6, 8, 9, 10.
+- **Run.** `examples/nature/absorption_emission.json`: board 11^3, open,
+  N = 8, no Detector, 14 ticks; two electron rays of amount 4 bound at
+  (5, 5, 5) by `bind` (`ray_delay` 1); a light ray of amount 4 from
+  (5, 2, 5) heading +Y; `emit`, declared first, an outputs rule over
+  `[electron, electron, light]` with the guard `eq(phase of the electron, 1)`
+  whose outputs are the light through Port +X with the electron's phase and
+  the two electrons with `delay` 1; `excite` (`ray_delay` 3) second; `bind`
+  third. The light's amount equals an electron's so that one electron
+  heading carries the recoil exactly.
+- **Shows.** Tick 2: the ground group [4, 4]. Tick 3: the light arrives and
+  waits the group's clock. Ticks 5 to 9: the group `[electron, electron,
+  light]`, amounts [4, 4, 4], `ray_delay` 3, the electron phases 5, 6, 7, 0,
+  1 and the light's 0 (the `bound_tick` records of cycles 4 to 8). Cycle 9:
+  the phase reads 1 and `emit` fires, the record's one departure from the
+  center, through +X. Tick 10: the light at (6, 5, 5) with phase 1 and
+  `steps` 1; the electrons at the Node with `ray_delay` 0 for that tick.
+  Tick 11 on: the ground group [4, 4], `ray_delay` 1 (the `bound_tick`
+  records of cycles 10 to 13), one electron on +Y holding the recoil; the
+  light walks to (10, 5, 5) at tick 14. At every tick: totals electron 8,
+  light 4, momentum (0, 0, 0), the charge line electron -24, every audit
+  line balanced, `conserved_at_every_completed_tick` true.
+- **The lifetime is declared.** Five intervals, one integer. The half-life
+  draw of Highlights 3.26 (a decaying group as a source, a source as a
+  Detector drawing at each tick) is not in the engine, whose Detector mark
+  draws on arrivals through Ports only; that draw at a `bound_tick` is the
+  missing rule for a random lifetime, stated in the dictionary and not added
+  by this run.
+- **Status.** measured on 2026-09-17, commit `84854f95da55ca3fc6dd6a43a7e7104bf94ad89e`,
+  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization `b0ba05326c876703651bbd80b25f09fa42efd562b057824c03ef5fe28f8eb8bf`;
+  outcome: photon in, held five intervals, photon out on a new heading, the
+  group back in its ground state, exact at every tick.
