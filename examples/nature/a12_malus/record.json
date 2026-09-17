@@ -4,9 +4,9 @@
    "model": "a12-malus-single-0",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "7cfc9c0d64925654af6b649b02d8184bd7d343457a1a0f752d2c1dce433cf902",
-   "elapsed_seconds": 0.3621453610030585,
+   "elapsed_seconds": 0.2473080560012022,
    "ticks": 72,
    "angles": [
     0
@@ -103,9 +103,9 @@
    "model": "a12-malus-single-22",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "16985a3fdb8034c1d99930ccd72ec74ae54358b8c261769d0beb2ce95c762efc",
-   "elapsed_seconds": 0.3547588280052878,
+   "elapsed_seconds": 0.24788854700454976,
    "ticks": 72,
    "angles": [
     32
@@ -202,9 +202,9 @@
    "model": "a12-malus-single-45",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "98e9c1384d08ec0a2a73fb4f2a7366736dd7cb7708bcffd477c03c4fc6b0f406",
-   "elapsed_seconds": 0.35735166799713625,
+   "elapsed_seconds": 0.2479219649976585,
    "ticks": 72,
    "angles": [
     64
@@ -301,9 +301,9 @@
    "model": "a12-malus-single-67",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "7724631239265cf1f10401660fd0eac67d0ab37bb8fa06b778d7a0cd8225c282",
-   "elapsed_seconds": 0.35542338399682194,
+   "elapsed_seconds": 0.24631451000459492,
    "ticks": 72,
    "angles": [
     96
@@ -400,9 +400,9 @@
    "model": "a12-malus-single-90",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "35bdcf336aff8f559a2eb812e0c7bc3896e922340a51f17994b3243c6e76fbcc",
-   "elapsed_seconds": 0.11172633699607104,
+   "elapsed_seconds": 0.07790724000369664,
    "ticks": 72,
    "angles": [
     128
@@ -499,9 +499,9 @@
    "model": "a12-malus-chain-90",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "7ec4d8e3f359eb752e93d46d095d1a218193bc868a26acd755c7290290fc1626",
-   "elapsed_seconds": 0.11136241500207689,
+   "elapsed_seconds": 0.08232234200113453,
    "ticks": 72,
    "angles": [
     128
@@ -598,9 +598,9 @@
    "model": "a12-malus-chain-45-90",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "b1e0a394497642ebf20905e771fd8c1c1baa2dde07f884f2184350f20eadf906",
-   "elapsed_seconds": 0.38382527400244726,
+   "elapsed_seconds": 0.28413683300459525,
    "ticks": 72,
    "angles": [
     64,
@@ -741,9 +741,9 @@
    "model": "a12-malus-chain-22-45-67-90",
    "status": "completed",
    "error": null,
-   "source_sha256": "328e192e3c7b28c6062cd688e3b0be097c8814f3923ff6c7cb0186e3500c4eab",
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
    "initialization_sha256": "757144db2eb8d7a6772cb042fc24835bd5aa1a00910b60257c1d320d181d359c",
-   "elapsed_seconds": 0.4194623799994588,
+   "elapsed_seconds": 0.34320853799727047,
    "ticks": 72,
    "angles": [
     32,
