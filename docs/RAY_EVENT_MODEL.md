@@ -181,9 +181,10 @@ share carried, and only that. The lattice's exact integer arithmetic is what
 makes the undoing exact rather than approximate.
 
 **Field.** A ray has a field: the field is the ray's own information
-spreading in ray form to the Nodes around it, without an event, along the
-six headings, one Link per interval, with the ordinary dilution or declared
-attenuation of an outward field. Every ray is the same ray; a field ray is
+spreading in ray form to the Nodes around it, without an event, one Link
+per interval, with the ordinary dilution or declared attenuation of an
+outward field, but not ahead of the ray along its own line. Every ray is
+the same ray; a field ray is
 not a second kind, and field rays are not born at events: they are the
 ray's information in ray form. The field's presence at a Node is an
 interaction that makes no event. A field never makes an event unless it
@@ -197,7 +198,11 @@ events is the field ray itself returning reversed: the return is the opposite
 momentum of the field, carried back along the field ray's line to the ray
 that released it, which recoils when the return arrives, at finite speed.
 This is how Highlights 3.14 is satisfied: the recoil is a ray. Until its
-field meets something, a traveling ray pays nothing for it.
+field meets something, a traveling ray pays nothing for it. A ray's field
+does not act on the ray itself: released to the Nodes around it but not
+ahead of it along its own line, the field is never met by the ray that
+released it, and every other ray meets it. A ray's phase per step comes
+from its family rate alone, not from its own field.
 
 **Matter.** There is no matter in the model at this stage. Matter is the name
 for rays bound in one Node: for example a neutron ray and a proton ray held
@@ -386,7 +391,9 @@ on 16 September 2026.
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as
    the emitter's recoil, arriving at finite speed, and a traveling ray pays
-   nothing for its field until the field meets something.
+   nothing for its field until the field meets something; the field is not
+   released ahead of the ray along its own line, so a ray never meets its
+   own field and its phase per step comes from its family rate alone.
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
@@ -438,6 +445,9 @@ and evidence, under the ordinary gates.
   leave through a different Port than the same two rays meeting with a
   phase difference of half a turn, with exact totals in both cases: the
   content that arrived is the content that left, and nothing is erased.
+- A ray with an output-clock delay traveling straight is never met by its
+  own field on any seed, while a second ray on a parallel line is; the first
+  ray's phase advances at its family rate alone.
 
 ## 8. Open decisions
 
