@@ -989,6 +989,19 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   right, in one GIF and one contact sheet); `viewer.html` gains the eye
   drawing path and a runtime `window.__setStyle` hook the renderer uses to
   switch views. The test pins the eye extraction and the defaults.
+- In the eye view a mark is drawn without depth writing and without glow,
+  the flash and the dot on top of it, so hits inside a mark's sphere show;
+  the persistent dot's area grows with the hits at its Node (radius
+  `click_dot_px` x the square root of the count), a spot on a screen.
+- `examples/nature/screen.json` (Highlights 5.5, a demonstration made once,
+  never a test; its section of the
+  [nature README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks)
+  holds the record's fingerprints and the render lines): an electron at
+  rest, the bound group of two `electron` rays of 4, releasing `light` on
+  its six axis lines, and a screen of seven Detector marks at distance 6
+  along +X. Before feature 12 one mark clicks, the on-axis one, eighteen
+  times; after it the whole screen. The test pins the world file's
+  integers, not its run.
 
 ## Primary initialization-based API
 

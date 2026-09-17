@@ -419,6 +419,33 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     ]
 
 
+def test_screen_example_world_is_the_pinned_geometry():
+    world = json.loads((ROOT / "examples/nature/screen.json").read_text(encoding="utf-8"))
+    assert (
+        world["shape"],
+        world["boundary"],
+        world["ticks"],
+        [
+            (seed["position"], emission["heading"], emission["amount"])
+            for seed, emission in zip(world["seeds"], world["emissions"], strict=True)
+        ],
+        [
+            (field["field"], field.get("field_of"), field.get("release"))
+            for field in world["spatial_fields"]
+        ],
+        [(mark["position"], mark["setting"], mark["seed"]) for mark in world["detectors"]],
+        [(rule["name"], rule["ray_delay"]) for rule in world["ray_interactions"]],
+    ) == (
+        [12, 11, 11],
+        "open",
+        24,
+        [([0, 5, 5], [1, 0, 0], 4), ([2, 5, 5], [-1, 0, 0], 4)],
+        [("electron", None, None), ("light", "electron", [1, 4])],
+        [([7, y, 5], [1, 1], 0) for y in range(2, 9)],
+        [("bind", 1)],
+    )
+
+
 def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     style = RENDER.load_style(None)
     assert style["schema"] == "ray-viewer-style-v1"

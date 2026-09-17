@@ -1,16 +1,19 @@
 # Two events of nature in the engine's language
 
-Four world files that show, on the one generic engine and with the rules
+Five world files that show, on the one generic engine and with the rules
 that exist today, (A) a photon absorbed by an electron at rest, (B) a nucleus
 split by a high-energy photon, with a low-energy photon that does not split it
 as the control, (C) the photon of (A) held inside the group while its
 clock runs and then emitted on a new heading, the group back in its ground
-state, and (D) the helium ion, a nucleus of charge +2 with one electron,
-[below](#the-helium-ion-one-electron-at-a-nucleus-of-charge-2). They are demonstrations under
+state, (D) the helium ion, a nucleus of charge +2 with one electron,
+[below](#the-helium-ion-one-electron-at-a-nucleus-of-charge-2), and (E) the
+field of an electron at rest on a screen of seven Detector marks, the eye
+view's first picture,
+[below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks). They are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
-[experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events),
-never repeated as tests. Nothing here is a law of nature; every number is a
+[experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
+((E) in its section here), never repeated as tests. Nothing here is a law of nature; every number is a
 declaration written before the run.
 
 The rays are selected from the [catalog of nature](../../docs/CATALOG.md)
@@ -376,3 +379,64 @@ python tools/ray_viewer/render_gif.py runs/helium-ion/runs.json --output runs/he
 ```
 
 The record stays outside the tree; the register holds its fingerprint.
+
+## The screen: the field of an electron at rest on seven marks
+
+`screen.json` is the model owner's request of 2026-09-17 to see the eye view
+([Highlights](../../docs/HIGHLIGHTS.md) 5.4, "everything begins and is
+realized at a marked Node"; the [ray viewer](../../tools/ray_viewer/README.md#the-eye-view))
+with clicks in it: an electron at rest releasing its field `light` in front
+of a screen of seven Detector marks. Board 12 x 11 x 11, open, `link_ticks`
+1, `phase_bits` 3, 24 ticks. The electron at rest is the bound group of the
+dictionary above: two `electron` lamps at (0, 5, 5) heading +X and (2, 5, 5)
+heading -X, amount 4 each, meet at (1, 5, 5) at tick 1 and `bind` (`delay`
+1, `ray_delay` 1) holds them there, content 8. `light` is the electron's
+field (`field_of` `electron`, `release` [1, 4], the catalog's ratio): a held
+ray releases on all six headings every interval, so from the cycle at tick
+1, in which `bind` fires, the group releases 2 on each of its six axis lines
+every interval (1 per ray, the two merged into one ray with the group's
+phase). The screen is seven marks at (7, 2, 5) through (7, 8, 5), setting
+[1, 1] (every arrival clicks, none is returned), at distance 6 along +X.
+
+**Before feature 12 (2026-09-17): one mark clicks; after: the whole
+screen.** The field lives on the six axis lines of the group only (a field
+has no field until light's `spread` table, feature 12), so the +X line
+reaches the on-axis mark (7, 5, 5) alone: the first release leaves (1, 5, 5)
+in the interval after `bind` fires and arrives at tick 7, and one click of
+amount 2 follows every tick from 7 to 24, eighteen clicks at one mark and
+none at the six others. The eye panel shows one spot at that mark, growing
+with its hits. With the split table of feature 12 the released light reaches
+every Node of the screen and the whole screen clicks; the world file does
+not change for that, only the catalog's `spread` entry and the engine. The
+record, made once: `source_sha256`
+`5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+`initialization_sha256`
+`35dde6ad84145b5042285baadbb27810b5d30527554646cc67f5a69eac941cff`; at
+every tick electron 8 in the world and none escaped, light released 12 per
+interval (276 by tick 24, 214 escaped at the open boundary, 62 in the
+world), momentum (0, 0, 0), the charge ledger electron -24, every audit line
+balanced, `conserved_at_every_completed_tick` true.
+
+**Not shown.** The simpler form, one lamp holding 8 as resident content and
+releasing from its stock ([released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1),
+"Resident content"), releases nothing on `main` today: `SpatialEngine.begin`
+schedules a Node whose record holds stock of a source family, but
+`SpatialNode.plan_cycle` returns before planning at a Node with no active
+source, no field content and nothing received, and no test covers
+`release_stock`. The bound group is used instead, the electron at rest of
+this README's dictionary.
+
+### Run and render
+
+Side by side, the board on the left and the eye on the right:
+
+```bash
+PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/screen.json'), Path('runs/screen'))"
+PYTHONPATH=src python tools/ray_viewer/record_sidecar.py runs/screen
+python tools/ray_viewer/extract.py runs/screen --sidecar runs/screen/ray-recording.json --label "The screen: an electron at rest and seven marks" --out runs/screen/runs.json
+python tools/ray_viewer/render_gif.py runs/screen/runs.json --output runs/screen.gif --contact-sheet runs/screen-contact.png --side-by-side
+```
+
+The record stays outside the tree; the fingerprints above are its register
+line. A GIF is a rendering of a fingerprinted record, not evidence by
+itself.

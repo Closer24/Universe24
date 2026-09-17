@@ -752,6 +752,7 @@
       item.mat.roughness = sz.sphere_roughness == null ? 0.35 : sz.sphere_roughness;
       item.mat.metalness = sz.sphere_metalness == null ? 0.15 : sz.sphere_metalness;
       item.mat.opacity = alpha;
+      item.mat.depthTest = true; item.mat.depthWrite = true; item.obj.renderOrder = 0;
       item.glow = placeGlow(position, color, 1, (sz.glow_alpha == null ? 0.5 : sz.glow_alpha) * alpha);
       if (pxRadius) {
         item.px = pxRadius; item.shape = "sphere";
@@ -986,14 +987,24 @@
     // The eye view (Highlights 5.4): the physical picture is the list of PASS clicks.
     // Only the marked Nodes as dim spheres and each click as a flash of its family's
     // colour, sized by amount, fading over click_flash_ticks and leaving a dim dot,
-    // like a screen accumulating hits. No rays, fields or other markers.
+    // like a screen accumulating hits. No rays, fields or other markers. A mark is
+    // drawn without depth writing and without glow, the flash and the dot on top of
+    // it, so hits inside its sphere show; the dot's area grows with the hits at its
+    // Node (radius click_dot_px x the square root of the count), a spot on a screen.
+    function onTop(item) {
+      item.mat.depthTest = false; item.obj.renderOrder = 30;
+      if (item.glow) item.glow.obj.visible = false;
+      return item;
+    }
     function applyEye() {
       var s = S(), sz = s.sizes;
       var t = state.tick;
       var fam = {}; run.families.forEach(function (f) { fam[f.name] = f; });
       var eye = run.eye || { marks: run.detectors || [], clicks: [] };
       (eye.marks || []).forEach(function (mark) {
-        placeSphere(world(mark.pos), s.colors.detector, sz.detector_size / 2, sz.mark_alpha == null ? 0.35 : sz.mark_alpha, 0);
+        var mark_item = placeSphere(world(mark.pos), s.colors.detector, sz.detector_size / 2, sz.mark_alpha == null ? 0.35 : sz.mark_alpha, 0);
+        mark_item.mat.depthWrite = false;
+        if (mark_item.glow) mark_item.glow.obj.visible = false;
       });
       var hits = {};
       (eye.clicks || []).forEach(function (click) {
@@ -1004,12 +1015,11 @@
         var amount = Math.abs((click.amount && click.amount.length ? click.amount[0] : click.amount) || 1);
         if (age < sz.click_flash_ticks) {
           var px = Math.max(sz.click_flash_min_px, amount * sz.click_flash_px_per_quantum);
-          placeSphere(world(click.node), color, 0, 1 - age / sz.click_flash_ticks, px);
+          onTop(placeSphere(world(click.node), color, 0, 1 - age / sz.click_flash_ticks, px));
         }
         var key = click.node.join(",");
         hits[key] = (hits[key] || 0) + 1;
-        var dot = placeSphere(world(click.node), color, 0, Math.min(1, sz.click_dot_alpha * (0.7 + 0.3 * hits[key])), sz.click_dot_px);
-        if (dot.glow) dot.glow.obj.visible = false;
+        onTop(placeSphere(world(click.node), color, 0, Math.min(1, sz.click_dot_alpha * (0.7 + 0.3 * hits[key])), sz.click_dot_px * Math.sqrt(hits[key])));
       });
     }
 

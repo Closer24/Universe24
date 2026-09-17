@@ -101,7 +101,14 @@ and the camera fit as before. A run without a mark has an empty eye view,
 which is itself the point. `extract.py` writes the `eye` block of every run
 (marks, clicks, hits per Node); `render_gif.py --view eye` renders that
 view, and `--side-by-side` renders the board view and the eye view as two
-panels, left and right, in one GIF and one contact sheet.
+panels, left and right, in one GIF and one contact sheet. A mark's sphere
+is drawn without depth writing and without glow, the flash and the dot on
+top of it, so hits inside the sphere show, and the dot's radius grows with
+the square root of the hits at its Node (its area with the count), a spot
+on a screen. `examples/nature/screen.json`
+([its README](../../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks))
+is the demonstration: an electron at rest releasing its field in front of
+a screen of seven marks, one of which clicks before feature 12.
 
 ## The look lives in `style.json`
 
