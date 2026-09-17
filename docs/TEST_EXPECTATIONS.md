@@ -11,19 +11,63 @@ research runs, made once and recorded with a fingerprint and a date in
 before that date describe the suite as it was and are brought under the rule
 when their tests change.
 
-## Complete-ray direction projection
+## Suite inventory of 2026-09-17
 
-`test_ray_heading_flux.py` distinguishes the optional carried-heading readout
-from the default last-hop projection: amount three with heading `(2,1,0)` arriving
-through +X reads `(6,3,0)` versus `(3,0,0)`. The actual receiver cannot respond
-before causal delivery, and its configured response has an equal opposite field
-reaction. Opposite headings cancel; signed amounts reverse the projection; empty
-resident rays and an immutable baseline contribute no heading. Supported local
-self-exclusion removes the full own-ray vector while retaining external input.
-Missing owners, excessive capacity, invalid selection and overflow reject; a
-receiving ray and carrier remain unchanged on overflow. The explicit projection
-adds ten unit-cost operations per declared ray slot. These checks establish
-direction access, not an electron orbit or a physical force law.
+Decision of the model owner, 2026-09-17: the engine is generic, so the suite
+keeps one module per generic rule, each exercising that rule in isolation on a
+minimal board, and one module per feature of the
+[ray-event model](RAY_EVENT_MODEL.md) (issue #169). Before the reduction the
+suite had 108 modules and 2,194 tests (2,191 passed, 3 visual-only skipped) in
+622 seconds single-process on the recording host; after it, 40 modules and
+1,009 tests in 35 seconds on the same host. Seconds are the recorded
+durations of the run in the [validation entry](VALIDATION.md#test-suite-reduced-to-one-test-per-rule---2026-09-17)
+(tests under five milliseconds are not recorded). The deleted modules and the
+deleted example studies are named in the
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule).
+Feature tests of issue #169 join this table as they land.
+
+| Module | Tests | Seconds | Rule isolated |
+| --- | --- | --- | --- |
+| `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
+| `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
+| `test_check_scope.py` | 47 | 0.10 | Changed-code test selection of `tools/check.py` (running branch, untouched) |
+| `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
+| `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
+| `test_detector_sampling_contract.py` | 18 | 0.00 | Detector-only sampling admission (running branch, untouched) |
+| `test_disturbance_application.py` | 14 | 0.29 | Runner record: headless run files, the saved initialization and source fingerprint that replay a run, explicit CLI opt-ins |
+| `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
+| `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
+| `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
+| `test_integer_arithmetic.py` | 75 | 0.00 | Bounded integer arithmetic: signed and ceiling division, remainders, component operations, overflow before cancellation |
+| `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
+| `test_kerengonen.py` | 19 | 6.88 | Phased rays: phase advance, coherence, capture, slit, mirror and pace (running branch, untouched) |
+| `test_local_conservation.py` | 18 | 0.01 | Passive local energy/momentum audit across Node events and Link flux |
+| `test_local_conversions.py` | 16 | 0.00 | N-to-M record conversion as an atomic inventory transfer with declared balances |
+| `test_local_field_rules.py` | 11 | 0.13 | Local field rule: six-Port reads, retained and outgoing owners, guarded joint proposals |
+| `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
+| `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
+| `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
+| `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
+| `test_node_rule_contract.py` | 38 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, record policies |
+| `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
+| `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
+| `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
+| `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
+| `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
+| `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
+| `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
+| `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
+| `test_ray_integration_guards.py` | 22 | 0.36 | Ray integration boundaries (running branch, untouched) |
+| `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
+| `test_record_operations.py` | 19 | 0.00 | Record merge by type and channel, reserved slots and capacity policy |
+| `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
+| `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
+| `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
+| `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
+| `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
+| `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
+| `test_spatial_interactions.py` | 16 | 0.05 | Atomic carrier/local-field exchange with delayed-commit guards |
+| `test_spatial_transport.py` | 23 | 0.00 | Outward field transport: signed octant partitions, weights and remainders |
 
 ## Native complete-ray coupling
 
@@ -63,39 +107,13 @@ local phase/ray count; it is bounded relative to world size for fixed capacities
 not a claim of linear host work.
 
 ## Active contract coverage and shared execution
-
-`test_active_node_contracts.py` exercises receipt and completion at all six Ports
-for the active carrier Node and spatial Node. For the same
-local payload and fixed capacity it varies world extent, unrelated resident
-counts (0, 8, 128) and elapsed model ticks. The measured production-path line counts,
-modeled carrier cost and recursively retained payload size must stay equal.
-Host world indexes are made unreadable during each local transition.
-Expected outputs remain explicit: one carrier crosses one Link and spatial stock
-64 is owned locally or in outgoing packets.
-These are bounded-work regressions plus state/locality guards, not a timing-based
-proof for arbitrary callbacks, whole-world scheduling or remote evaluation.
-The source-envelope Node's cases of this suite (its six-Port transition and its
-gate and terminal transitions) were deleted on 2026-09-17 with the envelope
-modules (issue #164, bucket B.3).
-
-Shared builders live in narrowly scoped `tests/support/` modules. Their imports
-remain dependencies of every consuming test. They do not contain alternate
-simulation engines. `test_generic_identity.py` records one immutable seven-tick
-baseline per configuration; rename, reorder and combined variants each retain
-their own world and all state/event/accounting comparisons. Baseline conservation,
-activity and input immutability assertions are retained.
-
-| Removed or consolidated execution | Retained or stronger acceptance |
-| --- | --- |
-| Three self-identity assertions in the obsolete Node alias test | Recursive NodeState/schema rejection tests remain; no supported alias requirement was being checked by the self-comparisons |
-| 21 repeated classic baseline worlds | Seven immutable baselines and all 21 independent transformed worlds; all original trace and accounting assertions |
-
-The representative regime-coverage test must fail if a new catalog property value
-is not represented. Data preparation remains checked for every entry. Catalog
-mass and spin are passive inventory/properties in this candidate; these tests do
-not establish species dynamics. Distinct signed, overflow, denominator, boundary,
-null/capture and correlated-state cases are not removed. The exact 25-ticket
-fixtures remain exhaustive.
+Shared builders live in the narrowly scoped `tests/support/disturbances.py`. Its
+imports remain dependencies of every consuming test, and it contains no
+alternate simulation engine. The bounded-work regressions of
+`test_active_node_contracts.py` and the label and declaration-order baselines of
+`test_generic_identity.py` (with its helper `tests/support/identity.py`) were
+deleted on 2026-09-17 with the suite reduction; `test_initialization.py` keeps
+the rule that names and declaration order select no physics.
 
 `test_check_scope.py` requires empty selections to avoid source/dependency scans
 while honoring explicit `--tests`. Prior source reads use two Git processes and
@@ -115,84 +133,28 @@ on 2026-09-17 with the source-envelope modules under Highlights section 3.5
 integration layer on the same day. The dated results stay in
 [validation](VALIDATION.md).
 
-
-## Computational response
-
-`test_node_work_emission.py` checks committed local work, zero startup, pending
-cycles, moving-carrier arrival without transported cost, bounded readout inputs
-and emission-only expression scope. Shared-clock integration checks the same
-Node-owned cost across a moving emission and rejects conflicting clock selections. `test_computational_response.py` checks real
-one-link delivery on all six ports: a unit reaction opposite travel, its exact
-local field counter-reaction, no early/repeated response, cancellation and a zero
-or reversed property coupling. These tests establish the configured mechanism,
-not a Newtonian or energy-conserving physical model.
-
 ## Integer Node execution
-
 `test_node_rule_contract.py` checks six-record frozen permutations, generic vector
 widths, explicit fired-rule duration, nonadditive policy rejection and independent
 arrival presence. `test_node_conservation.py` checks complete-owner readouts and
 rejects nonlinear merge drift (13 becomes 25), unequal momentum, overflow and
-capacity errors without modifying inputs. `test_node_conservation_configuration.py`
-checks exact layout coverage and rejection through the read-only preflight.
-`test_node_runtime.py` checks isolated Node boundaries; `test_node_vector_integration.py`
-checks public execution, timing and failed-transition atomicity.
-`test_joint_reaction_configuration.py` checks role ownership, capacity, ambiguous
-references and rejection of transient commit guards. `test_joint_node_reactions.py`
-checks distinct property layouts, deterministic disjoint selection, all 32 local
-slots, frozen group/field updates, guard invalidation and participant locks.
-`test_field_commit_guards.py` reproduces a delayed norm violation (32 to 34),
-including a zero-net-delta phase, and requires rejection before any owner changes.
-It also covers valid arrivals, ordered guards, consumed triggers and direct
-assembly boundaries. `test_node_vector_examples.py` owns the three example configurations and their
-independently known declared readouts. These are correctness contracts for the
-[selected model](NODE_VECTOR_PROCESSOR.md), not proofs of quantum dynamics.
-
-## Shared field computation delay
-
-`test_spatial_computation_delay.py` checks the opt-in
-[shared-cycle contract](SPATIAL_COMPUTATION_DELAY.md). With unit scalar merge
-cost 32, field costs 68/69/169 and B=100,h=2, departures occur at 0/2/4 and
-receipts at 2/4/6. Field/carrier costs 20+20 plus merge32 share C=72, giving
-one wait at B=40. Later arrivals cannot alter the frozen result or deadline;
-their original owners, source allowances and declared linear inventory remain
-exact through commit. Nonlinear guards stop before the affected transaction
-mutates stock. Real scalar/vector costs, empty input intervals, moving sources,
-finite decay, formula-free state and passive conservation are covered. These
-are timing and inventory claims.
+capacity errors without modifying inputs. These are correctness contracts for the
+[selected model](NODE_VECTOR_PROCESSOR.md), not proofs of quantum dynamics. The
+configuration, runtime, joint-reaction, guard-boundary and example modules of
+this profile were deleted on 2026-09-17 as duplicates of these two.
 
 ## Property coupling and passive local conservation
-
-`test_property_couplings.py` requires property compatibility across differently
-named layouts, all supported selector families, missing-property rejection,
-fraction/budget ownership and identical timing for equivalent check expressions.
-`test_property_entity_profiles.py` validates the shared catalog profiles and
-two independent reservoirs: total energy 14 and momentum zero persist through
-four ticks while the neutral control stays unchanged. Late energy or momentum
-corruption must fault without correction.
 `test_local_conservation.py` covers local changes and actual packet flux,
 pending originals, periodic/open transit, all momentum components, nonlinear
 arrival cancellation, passive observation and saved failure reports. These
 measurements use explicit candidate quantities, not inferred physical energies.
-
-## Coupled unit excitations
-
-`tests/test_coupled_excitations.py` owns the independent expectations for the
-[local coupling candidate](COUPLED_EXCITATIONS.md). Positive absorption of Y into
-an empty receiver gives internal Y and recoil +X; negative coupling gives -Y
-with the same recoil. Zero coupling forwards unchanged. Positive emission of
-internal Y gives spatial -Y and recoil -X; occupied Y/Z exchange gives internal Z
-and spatial -Y without recoil. All admissible cases retain the declared U/P at
-every tick, counting actual in-flight owners once. Delays preserve original state
-until atomic commit; send/arrival and release follow causal event order. Invalid
-state and a deliberately out-of-envelope concurrent arrival test rejection,
-without claiming energy conservation through an invalid same-mode merge.
+The property-coupling and entity-profile modules were deleted on 2026-09-17.
 
 ## Configuration preflight
 
 The [validation contract](CONFIGURATION_VALIDATION.md) is covered by
-`test_json_documents.py`, `test_profile_validation.py` and
-`test_configuration_validation.py`. Shipped runnable configurations must pass;
+`test_json_documents.py` and `test_configuration_validation.py`
+(`test_profile_validation.py` was deleted on 2026-09-17). Shipped runnable configurations must pass;
 unknown/ambiguous formats, duplicate keys, nonfinite numbers, invalid references,
 bad placements and missing/mismatched dependencies must fail. All 46 classical
 profiles are checked independently, including unselected rows; subsets remain
@@ -202,18 +164,6 @@ exit/report behavior and rejection before runner artifacts are created. Existing
 UI and runner tests retain accepted output and physical execution contracts.
 The native event-program validation and the spatial causal-event suites were
 deleted on 2026-09-17 with the `event_program` member.
-
-
-## Local observer
-
-The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,
-two-tick periodic transit, signed post-decay readings, zero versus absence,
-unchanged physical states/costs, exact prefixes, clock independence from global
-timestamps and archive exhaustion. `tests/test_local_observer.py` checks these
-paths. `tests/test_observer_playback.py` checks safe labels, backward seeking,
-paused-clock samples and the explicit world-audit switch. These are observation
-contracts, not human vision or Maxwell acceptance tests.
-
 
 ## Local record operations
 
@@ -227,18 +177,6 @@ and configured cost reporting without repricing. Direct engine composition tests
 prove that the injected activity policy is used and that a capacity-changing
 arrival proposal fails before packets are cleared. Existing timing, generic-name,
 spatial-response and native-event tests retain the cross-owner contracts.
-
-
-
-## Transverse directional-wave candidate
-
-`tests/test_directional_wave.py` validates the configuration-defined
-[candidate](DIRECTIONAL_WAVE.md). The unequal 3Y/2Y encounter produces 3Z/-2Z
-while preserving U=13 and P=5X. It also checks coincident/dark readouts, solitary
-motion, all six modes, same-law cubic covariance, periodic state return and
-atomic rejection of longitudinal, oversized, amplified or misrouted proposals.
-These are candidate acceptance tests, not evidence of Maxwell dynamics.
-
 
 ## Bounded rational particle candidates
 
@@ -260,50 +198,6 @@ Existing integer regressions retain their original paths. The headless
 diagnostics; supplied formulas are reference benchmarks, not emergence claims.
 See [the contract](RATIONAL_PARTICLES.md).
 
-
-## Local reflection and Maxwell-limit experiment
-
-`tests/test_maxwell_configuration.py` checks the selected six-population
-configuration with an independent nontrivial reflection example and involution,
-an atomic rejection of an inexact half, exact one-link population ownership,
-frequency recovery from a signal containing static and fast components, and
-divergence on initially empty neighboring nodes. The tests validate these
-mechanisms; the [experiment](../examples/maxwell/README.md) records physical
-agreement and failures separately. Frequency forecasts and the Gauss
-counterexample are specified in its independent derivation before engine runs.
-
-## Small-space physical comparisons
-
-See [the experiment evidence](../examples/small-space/README.md).
-`tests/test_small_space_experiments.py` checks finite reservoir depletion with
-zero injection, delayed-by-one-link source response and opposite vector stock,
-and a restricted unequal-mass momentum permutation. It also rejects a nonzero
-total-momentum pair and checks classical units using actual displacement.
-The experiment report separately exposes missing physical laws; an accounting
-pass must not be relabeled as physical acceptance.
-
-## Physical entity catalog and elementary probes
-
-`tests/test_entity_catalog.py` checks coverage of the Standard Model inventory,
-disturbance families and representative interactions, alongside sourced values,
-unknowns, units and reciprocal identity links. Negative inputs cover executable
-content, invalid references, measurement descriptors, alias cycles and reaction
-charge imbalance. These tests validate a reference, not a physical derivation.
-
-`tests/test_physical_entities.py` covers the sourced catalog and only its new
-runtime probes. Antiparticle references must be reciprocal where applicable,
-charges conjugate and neutrino ambiguity explicit. Example references and
-particle properties must agree with their catalog mappings.
-
-The equal-mass contact swaps momenta without a continuum update formula;
-individual positive masses/opposite charges and joint momentum/norm persist.
-Equivalent local trials on 9-cubed and 15-cubed domains and different lattice
-axes must agree before any boundary can matter. Rest and separated states must
-not trigger the contact. Two transverse field payloads travel one neighbor per
-two ticks with retained and in-flight ownership counted once. These checks do
-not establish Maxwell dynamics, annihilation or general classical emergence.
-See [the acceptance limits](PHYSICAL_ENTITIES.md).
-
 ## Generic local field rules
 
 These are focused acceptance requirements for
@@ -314,7 +208,6 @@ passed. Reuse the affected run and tests when collecting integration evidence.
 | --- | --- |
 | `test_local_field_rules.py` | Two-vector exchange/rotation reads one frozen rule snapshot and preserves its named invariant; existing outward 216-unit pulse still sends 36 to each axial neighbor; retained and six outgoing owners count stock once and wait a full link; signed counterflows remain separately observable; cross-field changes appear as transformations rather than sources; invalid shapes, bounds, schema 2 rules and broken invariants fail before local commit |
 | `test_spatial_interactions.py` | Multiple field/carrier assignments commit together; conserved combined components hold; delayed field evolution is preserved when a frozen delta commits; an invariant invalidated by live field changes rejects the whole transaction; pending source bookkeeping is not restored from old carrier state |
-| `test_workspace_integration.py` | Field/type renaming preserves groups and directional/joint references; field-only playback reads node values once, keeps field packets separate, and does not mutate the recording or add received samples as inventory |
 
 Check both a nonzero baseline with no dynamic work and actual received channels
 whose net stock is zero. The first must stay quiescent; the second must activate
@@ -331,7 +224,6 @@ See [RETENTION.md](RETENTION.md) for ownership and expiry policy.
 | Suite | Independent expectations |
 | --- | --- |
 | `test_retention.py` | Registered generations expire at 24 hours; later writes extend age; active and dependent writer locks survive future cleanup; unregistered, protected, linked and replaced files survive; interrupted quarantine resumes without deleting replacement data; expected adoption identity rejects stale inventory; concurrent catalog use waits; duplicate watchers share one lock |
-| `test_workspace_retention.py` | Finished/failed/cancelled jobs and exports expire, active and orphaned children protect companion files, log-close failures keep their lease, stale links return 404, linked output paths cause no writes or process launch |
 | `test_check_scope.py` | Explicit non-import edges retain identity-example and reference-script consumers; the exact scope report expires while unrelated files survive; dry-run creates no output |
 
 Ordinary test execution leases its JUnit report. Neither test collection nor
@@ -342,15 +234,7 @@ cleanup enables rendering.
 | Suite | Independent expectations |
 | --- | --- |
 | `test_boundary_configuration.py` | Periodic default under both schemas; exact open/periodic setting; every positive and negative face of a 3x4x5 world; single-node extents; invalid names, coordinates, faces and bounds rejected |
-| `test_open_boundaries.py` | Carrier exits and wrapping on all six faces after full transit; unchanged signed vectors; terminal quantity 1 escapes even with zero retention while an interior copy decays; mixed corner fields/baselines; invalid terminal payloads commit neither loss nor removal; unused emitter allowance does not become physical escape |
-| `test_spatial_scheduling.py` | Optimized and forced full-sweep runs have identical per-tick snapshots, costs, events and balances; dormant history is not enumerated; reactions reactivate known idle nodes without delaying their departure; newly created nodes are not backdated |
 | `test_disturbance_application.py` | Open example records carried escape 72, spatial escape 20 and 52 localized deposits with zero dissipation; no carrier reentry; zero-tick edge case has empty events and zero escape; runner and snapshot agree |
-| `test_workspace.py`, `test_workspace_integration.py` | Workspace accepts field examples and records open escape; direct/HTTP runs retain equal physical output; open terminal playback does not wrap or dereference a missing target; balanced loss/escape is not a failed check; field renaming updates flux expressions |
-
-Measured performance comparisons use the same 5,000 ticks, configuration,
-per-tick accounting and three-record checks. Record source import paths and
-fingerprints, stepping and diagnostic time separately. Timing is evidence for
-that machine, not a fixed wall-time test threshold or a change to model cost.
 
 ## Finite spatial candidate, schema 2
 
@@ -362,17 +246,10 @@ the key selects the default localizing residue.
 
 | Suite | Independent inputs and required outcomes |
 | --- | --- |
-| `test_dissipative_initialization.py` | Version 2 requires strict integer retention and nonnegative component budgets; version 1 rejects new keys; invalid signs, shapes, bounds, missing fields and splitting sources fail |
 | `test_spatial_decay.py` | Half retention maps 20 through 10, 5, 2, 1 to 0; both signed one-unit tails vanish even at retention `(MAX_VALUE-1)/MAX_VALUE`; unsigned invalid input cannot be erased by decay |
-| `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal; the default localizing residue keeps a 20-unit pulse at total 20 with deposits 10, 5, 3, 1, 1 along its path and zero dissipation under both field clocks, deposits two separate 1-unit arrivals before merging, leaves deposits in place under later arrivals, and rejects unknown residues while the runner records `finite-localizing-v1` |
 | `test_ray_field.py` | DDA rays return to their heading after one period with bounded accumulators; emission shares 5 over 2 rays as 3 and 2 and cycles the cursor, and a stock below the sweep count fills the next headings in turn (2 over 4 headings gives 0 and 1, then 2 and 3, then 0 and 1) while a stock that covers the sweep still advances by the whole count; a 64-unit ray source keeps totals at 64 per tick and 64 on every Manhattan shell; a receiver gains 15 momentum from three ticks of 5-unit ray flux; retention 1/2 deposits 4, 2, 1, 1 along a ray or dissipates 8; a third ray phase at a two-slot Node fails explicitly; open boundaries count escaped rays; invalid keys, zero headings, vector fields, octant seeds and the shared clock are rejected; the runner records `isotropic-ray-field-v1`; a ray passes a Node whose receiver reacts to it and reaches the Nodes beyond |
-| `test_gravity_probe.py` | Held bodies beside an axis-ray source gain momentum toward it, proportional to mass within the carried integer remainder, with combined carrier plus local-field momentum conserved; a moving body starting five links out only moves inward with growing inward momentum, turns between five and seven links past the source with zero momentum, and comes back through it: a bound oscillation with combined momentum still zero; signed quanta pull held bodies toward the source and each pays exactly the momentum it gains from its stock, the far body takes its share of what the near one left, the source is credited 65,536 per tick with zero recoil and the quanta close; a body with stock 50 stops at momentum -50 with the event audit passed |
 | `test_energy_audit.py` | Funded emission along (1,0,0) and (0,2,0) debits the emitter by 2 per tick and recoils by (-1,-2,0) per tick with the audit closed; a stock of 5 emits 2, 2, 1, 0; `source: true` is still rejected and `recoil_field` needs funding; escaped quanta are measured escape; an absorber banks five quanta with momentum (5,0,0) while quanta beyond it vanish and the audit stays closed; a moving absorber-emitter never eats the wake of the cycle it departed on, and since `ray-event-state-v1` the quantum of the cycle before, a distinct event travelling with it, is absorbed back from the third tick on (38, 36, 35, 34, 33, formerly 38, 36, 34, 32, 30 when the two cycles merged); absorb validation rejects a scalar momentum field and an amount key; a fraction 1/4 absorbs one quantum of each 4-quantum ray and forwards 3; negative quanta pull an absorber with stock 3 by (-2, -1, 0, 0) and credit the emitter 16 with recoil (16, 0, 0); a ray field cannot be both absorbed and exchanged |
 | `test_kerengonen.py` | A phase advances by the field's step on every link and wraps, a plain field leaves it alone, and rays merge only with equal phase; the cosine table for four steps is (256, 0, -256, 0), equal phases give coherence exactly one, opposite equal amounts exactly zero and a quarter turn one half; two lamps three links from a Node fire 2-quantum rays at each other and the sampled values along the line are 4, 0, 4, 0, 4 with four steps and 4, 2, 0 with eight, while the plain field reads 4 everywhere and the audit closes on 800 quanta; an absorber between the lamps takes 4 quanta before the opposite pair arrives and nothing after, takes 20 at the in-phase Node, and 20 at the dark Node when the second lamp is offset two steps; the runner records `kerengonen-ray-field-v1` and rejects one phase step, an advance equal to the steps, a missing advance, an emission phase beyond the steps, a phase without the key and the key without ray transport; the double-slit probe composes and closes; the bounded ticket rule advances and squares as specified and no absorber draws from it, the share rule takes 2 whole single quanta at a quarter turn where a half share truncates to nothing (closed on 800 quanta), and an unknown capture, the deleted lottery capture and a capture seed are rejected; a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), and partial at a fixed re-emission phase (3), and a carried phase without an absorb rule is rejected; a ray with its own advance ignores the field's, rays of different advance do not merge, beams of momentum 16 and 32 at advance |p|/4 carry advances 4 and 8 with phases in ratio two after the same links, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance so readings are 2, 4, 0 for lamp offsets 0, 16, 48 on a 64-step field; a mirror sends a lamp's wave back along -x with the carried phase, holds 4 quanta and the reversed momentum, closes on 400 quanta, and the line reads 0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5 at advance 4 (period 8) and 6, 1, 1, 6 repeating at advance 8 (period 4); a mirror without every image heading, without a recoil field, on an unknown axis or without an absorb rule is rejected; a three-layer screen's first layer absorbs exactly what a one-layer screen does and the layers behind add to it, both worlds closed; a dissolving record of 10 quanta with after 3 and over 4 holds 10, 10, 10, 7, 4, 1, 0 and a moving one flies while it holds quanta and stops at x = 2 when empty, both closed; dissolution on a sourced emission, an emission without amount or dissolve, and over_ticks 0 are rejected; on the Euclidean metric the integer square root is exact at 0, 1, 2, 3, 4, 15, 16, 17 and a million, the paces of an axis, face and body diagonal are 2364/4096, 2364/2896 and equal, twelve ticks carry the first axis ray 6 links, the face diagonal 9 and the body diagonal 12, the world closes on 400 quanta and an unknown metric is rejected; a diagonal `xy` mirror returns the +x ray along +y with nothing back along -x, and a quarter-fraction mirror passes 3 of every 4 quanta and returns 1, closed; a directed emitter with `heading` fires every ray along -x and closes, and a heading outside the field's list or combined with a mirror is rejected |
-| `test_redshift_sweep.py` | On a 16-row at emission 32 the twelve rays are absorbed, the quanta conserved, the field linear in age, the eye's clock equal to the tick count, the gaps 8, 9, 9, 9, 9, 10, 10, 10, 11, 11, 11, z = 0.2159, the duration ratio 1.2159, the hop-schedule slope between 0.025 and 0.035 and the last hops within a tick of the gaps; without emission the gaps are all 7 and z = 0; a row no longer than the train is rejected; the shapes' deceleration parameters are 1, 0, -1/2, -1/2 and 1/2; the fit recovers LambdaCDM exactly and the coasting shape's residual falls with redshift; the Pantheon table reader drops calibrators and z below 0.01; the wave's frequency is read from link 12 to the eye and compared with the gap ratio over that span, 1.0918: ratio 0.9178 against 0.9159 with phase per link (conserved phase differences, so by construction), 0.8164 against 0.8121 per interval, 1.0 without emission; the single source's frequency is read from link 1, ratio 0.645 against 0.6439; one source emitting twelve rays 24 ticks apart on its own clock across 15 links gives gaps 36, 38, 36, 39, 37, 38, 37, 39, 34, 39, 37, z = 0.553, duration ratio 1.553 and a ray-by-ray k_o / k_e of 1.5051, within 1.2 ticks per gap of 1 + z |
-| `test_euclidean_pace.py` | One lamp on the 26 neighbor headings after twelve ticks reaches 12 links in every heading on the links metric (Euclidean radii 12, 8.49, 6.93, spread 1.732) and 6, 9 and 12 links on the Euclidean metric (radii 6, 6.4, 6.93, spread below 1.2); two lamps four links apart behind a screen twelve links away read their darkest Nodes at x = -1 and 1 on the links metric with a flat line beyond, and at x = -5 and 5 on the Euclidean metric where the Euclidean path difference is a half turn, with the center more than four times the dark reading; every world closed; the runner records `euclidean-ray-pace-v1` beside `isotropic-ray-field-v1` |
-| `test_particle_interactions.py` | With six axis rays per body through one shared field with `self_exclusion` (a lone mover keeps momentum 16 while moving, and without exclusion it pushes itself): like charges approaching head-on never share a Node and leave with reversed, equal-and-opposite momenta; opposite charges at rest move toward each other; neutral bodies emit nothing and cross unchanged; a light body beside a heavy one takes the same kick per hit, moves farther, and the heavy one's kicks lag by retardation; a bound pair converts after its timer into a proton leaving at one hop per tick and a triple-mass core recoiling at a third, with mass 4 and zero momentum conserved |
-| `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 | `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
 | `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the six rays leave with `detector` 1 or 2 matching the bits and continue unchanged, the marked and the unmarked control world agree on totals, momentum, lamps and rays at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
 
@@ -381,21 +258,7 @@ accounting. It checks tracked combined quantities and every spatial owner,
 including a nonconserved computation field. The public examples
 `finite_fields.json` and `three_mass_finite.json` require no visualization.
 
-An independent periodic 3x3x3 rotation check starts a carrier at `(2,1,0)`.
-With two affordable positive Z turns it becomes `(-1,2,0)`, then `(-2,-1,0)`;
-its squared norm remains 5. Sources total `(5,-3,0)`, signed reaction totals
-`(4,2,0)`, and all dynamic field stock is gone at tick 3 with signed loss
-`(9,-1,0)`. Further prescribed turns cannot spend an exhausted allowance.
-
 ## Active generic disturbance contracts
-
-`test_interaction_spatial_integration.py` checks atomic pair assignments after
-a nonzero spatial response, their frozen delayed commit while finite emission
-continues, and nested matrix/dot operations using delivered spatial flux.
-Pair invariants preserve the post-response sum; opposite field reactions and
-independently committed field emissions retain their existing owners.
-An invalid atomic proposal commits neither the rotated carriers nor their recoil,
-while an earlier independently committed emission and allowance debit remain.
 
 The primary Simulation follows [DISTURBANCES.md](DISTURBANCES.md). Schema and
 engine tests must use independent examples for the contracts below. These are
@@ -404,8 +267,6 @@ acceptance requirements, not a statement that a particular source tree passed.
 | Input or boundary | Required outcome |
 | --- | --- |
 | Complete JSON initialization; renamed field/type labels | Equivalent declared behavior with no physical-name branches |
-| `test_generic_identity.py`: rename labels/units, reorder declarations, or both | Exact snapshots, ordered events, costs, timing and accounting over six ticks in six active scenarios; real commits, delays, reactions, decay and exits prevent vacuous equality |
-| Workspace drafts and generated names | `__proto__`, `constructor` and `toString` survive browser draft storage; adding fields/types skips existing names and leaves existing definitions intact |
 | Unknown/duplicate names or keys, wrong components, floats, unsupported expressions | Validation error before simulation |
 | Whole-record move with scalar amounts and a vector attribute | One owner and unchanged carried values in free transport |
 | 12 units, weights `[2,0,1,0,0,0]` | 8 through +X, 4 through +Y |
@@ -435,17 +296,6 @@ not establish those laws for arbitrary configured disturbances.
 
 `test_spatial_transport.py` checks independent signed scalar/vector partitions,
 octant signs, bounded phases, odd weights and overflow rejection.
-`test_spatial_engine.py` checks a 216-unit pulse at successive Manhattan radii,
-continuous stationary/moving injection, fixed transit with carrier delay,
-baseline behavior, signed fractional emission and headless combined accounting.
-Coarrival with a source's own field does not by itself identify its contribution.
-Straight-path and turning behavior are treated separately by the response tests.
-
-`test_emission_residuals.py` checks that independent emitting records retain
-their fractions and that later emission metadata survives a pending carrier
-proposal without changing its physical payload. `test_exchange_residuals.py`
-checks opt-in left-owned fractional exchange across new recipients, signs and
-ordered concurrent matches; pair-owned defaults retain their previous contract.
 
 `test_spatial_coupling.py` checks all signed rotation axes, explicit noncommuting
 axis order, carried fractions, exact carrier norm, equal-and-opposite field
@@ -501,8 +351,11 @@ node schema.
 
 The suite reuses world runs when their inputs and required observations coincide.
 The historical scalar, stream, link, collision and balanced regressions were
-deleted with their engines on 2026-09-17 (issue #164, bucket A); the dated
-records in `VALIDATION.md` keep their original scope.
+deleted with their engines on 2026-09-17 (issue #164, bucket A), and the same
+day the suite was reduced to one module per generic rule and one per feature
+of the ray-event model ([inventory](#suite-inventory-of-2026-09-17),
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule));
+the dated records in `VALIDATION.md` keep their original scope.
 
 Run `python tools/check.py` from the installed project. It checks style, types and
 behavior. Pure-function unit tests do not run a world. See `VALIDATION.md` for
@@ -558,132 +411,25 @@ also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is
 guard against non-English scripts, not a language classifier: Latin-script prose
 still requires review. No physical calculation changes as part of translation.
 
-## Local configuration workspace
-
-`test_workspace.py` drives a real loopback HTTP server and isolated runner children.
-Edited tick counts, model labels and initial amounts must reach saved metadata;
-two configurations must use distinct outputs and match direct CLI input, events,
-state and metadata byte for byte without changing source files. Invalid inputs
-and duplicate keys, including nested editor fragments, fail before execution.
-Tests cover cross-origin/token/Host rejection, restricted artifact paths, active
-job conflicts, explicit cancellation, shutdown cleanup and physical failure data.
-The browser workflow additionally checks forms, JSON editing, draft persistence,
-selection, validation after editing, imports/exports and optional recorded results.
-Inspect the actual UI; a passing HTTP test is not proof of correct controls.
-For phone layout changes, inspect narrow portrait and landscape viewports, all
-configuration tabs, numeric and JSON editing, shortcuts and completed results.
-Check document overflow, readable input text and touch target size. Record the
-actual browser and dimensions; viewport emulation does not verify native iOS
-keyboard, Safari or safe-area behavior on a physical device.
-
-`test_recorded_movie.py` checks that the approaching pair meets at the declared
-node and passes without an invented collision, that parallel speeds differ and
-the pulse spreads while declared inventory remains conserved. Its explicitly
-marked visualization tests check exact sampled/final payloads, headless event
-parity, escaped names and partial failures. Browser checks must cover movie
-play/pause/restart/final hold, scrubbing, projection/speed, folded settings and
-renaming references without resetting an already loaded movie during polling.
-
-## Atomic generic interaction acceptance
-
-`tests/test_atomic_interactions.py` checks the configured 15-cube unequal-mass
-collision: m=(2,3), p=(8,-3)->(-4,9), independent rational kinetic energy 35/2,
-constant total momentum 5, causal arrivals, no repeated bounce while co-resident,
-and final opposite departures. Further small cases cover simultaneous multi-field
-conversion/rotation, weighted inventory, rejection before commit, invalid schema,
-pair totals larger than individual registers, and renamed fields in a larger
-world. These are classical-candidate and generic-contract checks, not proof of
-an emergent gravitational or universal energy law.
-
-## Standalone generic vector lab
-
-[The lab contract suite](../tools/generic_vector_lab/test_lab.py) checks exact
-rational vectors, energy/momentum/charge accounting, reaction rollback, binding,
-recoil and local quantum examples. [Node-rule tests](../tools/generic_vector_lab/test_node_rules.py)
-check six-way A/A/B/B/C/C composition, forbidden mixtures, configurable limits
-including a 17-input case, deterministic matching and property predicates.
-The six-node example has E=3, p=(0,0,0), q=0 before and after its configured
-cyclic vector map. These are mechanism checks, not real-particle validation.
-[The repository adapter](../tests/test_generic_vector_lab.py) runs all 52 lab
-cases; the check selector maps every lab source/configuration change to it.
-
-
 ## Causal event ledger
 
 `test_event_links.py` and the ledger it checked were deleted on 2026-09-17
 under issue #164 bucket B.4 (Highlights 3.20: there is no register), after the
 quantum event network, the origin cells and their suites went the same day.
 
-
 ## Local field impulse and node ownership
-
-`tests/test_local_lorentz_field.py` covers a four-link causal pulse, independent
-electric/magnetic impulse directions, neutral response, equal/opposite local
-momentum, delayed commit, field autonomy, renaming and invalid arithmetic.
-`tests/test_node_state_contract.py` verifies formula-free evolving state and
-rejects injected ASTs, laws, callbacks and formula strings. See
-[the scoped candidate contract](LOCAL_LORENTZ_FIELD.md).
+`tests/test_node_state_contract.py` verifies formula-free evolving state on the
+[local field impulse input](../examples/local_lorentz_field.json) and rejects
+injected ASTs, laws, callbacks and formula strings. The pulse-behavior modules
+`test_local_lorentz_field.py` and `test_lorentz_response_physics.py` were
+deleted on 2026-09-17; see [the scoped candidate contract](LOCAL_LORENTZ_FIELD.md).
 
 ## Executable entity and conversion expectations
-
-`tests/test_entity_compiler.py` validates all 46 profiles, active representative
-carrier/vector and scalar transport, generic name selection, capacity rejection,
-conflicting declarations and malformed profiles. Version 2 requires explicit
-separate profiles; version 1 retains embedded-profile compatibility. Metadata
-changes must not change compiled laws. Profile compilation is distinct
-from physical-law acceptance; do not multiply identical runs across labels.
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
-defaults, causal/delayed commits and rejected invalid balances or carried progress.
-Existing shared engine tests remain necessary consumers of the changed schema.
-
-`tests/test_family_conversion.py` covers the
-[energy-dependent family-conversion candidates](../examples/family-conversion/README.md)
-with expectations written before the first run. Annihilation of an on-shell
-electron (1825, +1752) and positron (1825, -1752) meeting at tick 6 gives two
-1825 keV photons along +/-X that escape at tick 15; asymmetric inputs
-(1825, +1752) + (511, 0) give photons (2044, +2044) and (292, -292), and the odd
-case (1825, +1752) + (512, 0) gives (2044, +2044) and (293, -292) with the
-indivisible keV owned by photon b; transverse momenta block the rule. Pair
-production converts 511 + 511 into a resting pair and rejects 511 + 510; 49 + 5329
-(product exactly 511^2) gives an on-shell pair (2689, -2640) each, 48 + 5329 does
-not convert although its total exceeds 1022; the 500 + 500 control crosses and
-escapes at tick 15 with only photon records ever present. Compton with a 511 keV
-photon on a resting electron gives 255 keV along +Y and a 767 keV electron with
-momentum (511, -255, 0); the fraction follows the integer formula at 100, 511,
-1022, 10,000,000 and `MAX_VALUE - 1` keV, the electron owns the remainder, a
-moving electron crossing a photon strands nothing at any Node, and a stream of
-three photons past a resting electron scatters once and forwards the rest.
-Bound cases: annihilation and pair production at exactly `MAX_VALUE` per record,
-`MAX_VALUE + 1` rejected at initialization, and the Compton proposal at a
-`MAX_VALUE` photon rejected with an unchanged snapshot. Sixteen pairs on a
-48-cubed board convert at tick 21 with energies up to 10 GeV and exact totals.
-The 2 -> 3 three-photon rule turns (1825, +1752) + (511, 0) into photons
-(1752, +X), (292, +Y) and (292, -Y) on three distinct Ports at tick 6, gives the
-transverse photon the odd keV for a 512 keV positron, and does not fire at zero
-net momentum; its capacity control (two slots) and Port control (the collinear variant
-sending two products on +X) fail before commit with unchanged snapshots,
-while a spectator photon leaving on a product's Port completes the cycle. The 4 -> 4 joint rule pools four rays arriving through four Ports at tick 6,
-(1825, +1752), (1825, -1752), (300, +Y), (300, -Y), into photons 1062 along
-+/-X and 1063 along +/-Y; an odd pooled energy gives the +X photon the unit;
-unequal or collinear photons leave the rule silent; three of four rays let the
-declared 2 -> 2 annihilation act instead; the collinear variant with two products
-per Port fails the cycle before commit with four unchanged residents while a
-catalog muon spectator leaving on -X beside a product keeps ordinary transport; sixteen
-quadruples on a 48-cubed board convert at tick 21 into 64 photons.
-Generic arity cases on the stock probe world: 1 -> 6 sends one record
-per Port, 6 -> 1 consumes five slots, seven or zero roles or outputs are
-rejected, two products on one Port, missing free slots, a broken readout
-invariant and a conserved-field mismatch each leave every owner unchanged with
-no pending plan, property-selected inputs convert, and a slow conversion locks
-the free slots its extra outputs need against arrivals, and the same conversion
-under `node_execution` with `k` 2 fires at `ready_tick` 2 while a missing `k`
-is rejected. `bindings.json` must
-equal the builder's catalog derivation: rest energy 511 keV encoded to the
-nearest keV/c2, charges -3/+3/0 in thirds, and each rule's interaction family
-and representative channel matching its participants and outputs.
-Totals plus escaped quantity equal the initial totals at every tick and the local
-audit passes in every run; these are accounting results for supplied laws.
-
+defaults, causal/delayed commits and rejected invalid balances or carried progress
+on the [catalog conversion input](../examples/known-entities/conversion.json).
+The catalog compiler, profile and family-conversion modules were deleted on
+2026-09-17; the conversion rule is covered here alone.
 
 ## Repository consistency and canonical references
 
@@ -706,12 +452,6 @@ human review; a script check cannot certify natural-language meaning.
 including nested example READMEs, and requires the documentation index to route
 every document. Missing-file and missing-heading examples must fail.
 
-`test_reference_examples.py` verifies that collision checks load the canonical
-workspace JSON and that all five existing reference worlds keep their independent numeric
-assertions without producing HTML/GIF. The wrapper and its dynamically selected
-inputs explicitly select this regression through `tools/check.py`; every changed
-path selects the inexpensive repository language and canonical-copy guards.
-
 ## Shared integer arithmetic
 
 `test_integer_arithmetic.py` covers decoded scalar/vector addition and
@@ -726,47 +466,7 @@ even when the quotient would fit, preserving existing timing behavior.
 Existing expression, spatial transaction, rotation, engine timing and link
 transport suites remain the integration coverage for callers and operation costs.
 
-## Parallel Node execution
-
-`test_parallel_node_execution.py` compares serial and two-worker execution after
-every tick for carried disturbances, finite spatial fields and the shared delayed
-field/carrier Node cycle. Snapshots, events, model costs, conserved totals, sources,
-dissipation and escape must remain exactly equal. Separate checks require bounded
-worker counts, saved host-execution
-metadata and actual disturbance/spatial task submission. The tests do not claim a
-speedup for small worlds; performance depends
-on local rule cost, active Node count and interpreter serialization overhead.
-
-Inline observer input is covered by `tests/test_local_observer.py`: normal schema
-validation, rejection before output creation, ambiguous placement rejection, exact
-saved initialization and unchanged physical results with recording enabled.
-
-
-Parallel integration also compares indexed field-only and joint Node profiles,
-and work-driven emissions, against serial snapshots, committed-cost readouts,
-modeled work and complete event order. Worker planning keeps the same local
-proposal validation and field/carrier commit boundaries.
-
-## Localizing-residue integration boundaries
-
-Localizing-residue integration also covers a signed (5, -3, 0) pulse under both
-field clocks, independent localize/dissipate fields, and deposit overflow that
-preserves all receiver state and leaves the original packet on its Link. These
-are component-inventory and atomicity checks, not physical energy proofs.
-
-## Reference unit authoring
-
-`tests/test_reference_units.py` independently checks SI dimensions and exact defining
-constants, Scalar/Vector shape and sign, known catalog mass/charge/magnetic inputs,
-explicit rounding budgets, runtime payload bounds and malformed dependency graphs.
-Its periodic 40-tick probe preserves encoded reference mass inventory and all three
-momentum registers under unchanged two-tick Link transport. It is not a proof of
-mass-dependent dynamics. `tests/test_entity_catalog.py` pins PDG 2026 masses and
-widths, CODATA 2022 electron magnetic moment, signed antiparticle references and
-the distinction between omitted and inapplicable lifetimes. See
-[reference units](REFERENCE_UNITS.md) for calibration and evidence boundaries.
-
-### Ray integration and local Focus
+## Ray integration and local Focus
 
 `test_ray_merge_contracts.py` independently covers funded inventory during a
 load wait, waiting-time absorption, retained-owner capacity and shape, full ray
@@ -777,30 +477,21 @@ modeled cost against the unchanged ordinary scheduler, including six-Port
 revisits, pending delays, failure timing, parallel execution and explicit fallback.
 Host visit reduction is distinct from physical O(1) local work.
 
-
-### Exact transition reuse and active transport
+## Exact transition reuse
 
 `test_plan_reuse.py` checks all carrier and spatial planning arguments, including
 local phases, resident rays, computation cost and time; hash collisions; bounded
 LRU eviction; retry after failure; independent configurations; and default reuse
 of repeated moving patterns in serial and parallel execution. Each tick retains
 identical inventory, snapshots, ordered events, operation cost and local clocks.
-`test_active_ports.py` checks stable
-bank-creation order after reactivation, release during iteration, preserved empty
-mapping entries and continued stepping without scans of inactive bank history.
-The existing Focus, field, delay, boundary, parallel and formula-free state tests
-remain consumers of this host-only optimization. Timing is measured outside CI
-assertions with identical inputs; no speed threshold replaces physical equality.
+The Focus, field, delay and formula-free state tests remain consumers of this
+host-only optimization; `test_active_ports.py` was deleted on 2026-09-17.
+Timing is measured outside CI assertions with identical inputs; no speed threshold replaces physical equality.
 
+## Payload validation and readout reuse
 
-### Boundary validation once per crossing and readout reuse
-
-`test_node_runtime.py` rejects a malformed delivered record (unknown type,
-zero code, mutable payload) and a record policy's unvalidated output at the
-Node boundary without changing owners, and counts boundary validations by
-object identity: one per delivered record at the Node and through transport,
-plus one for a merged record, while a malformed link packet leaves its link
-and target untouched. `test_payload_validation.py` tables signed, unsigned,
+`test_node_runtime.py` was deleted on 2026-09-17.
+`test_payload_validation.py` tables signed, unsigned,
 negative-in-unsigned, largest, zero, above-bound, negative, float and bool
 codes and wrong component counts for field and spatial-state validation
 against the original decoding reference, with identical messages in the same

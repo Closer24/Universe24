@@ -126,8 +126,8 @@ updates remain elementary copy/clear operations. Limits remain 16 fields and
 
 ## Evidence and conversion limits
 
-`tests/test_entity_catalog.py` checks reference coverage, sourced physical
-properties and invalid metadata. `tests/test_entity_compiler.py` checks explicit
+`tests/test_entity_catalog.py` (deleted on 2026-09-17) checks reference coverage, sourced physical
+properties and invalid metadata. `tests/test_entity_compiler.py` (deleted on 2026-09-17) checks explicit
 profile selection, legacy compatibility, rejection cases and active representative
 worlds. Small-space consumers use the same separated profiles.
 Changing reference metadata must not change compiled laws or resulting physics.
