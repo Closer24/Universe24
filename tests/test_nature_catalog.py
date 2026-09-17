@@ -392,12 +392,13 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert apparatus["external_body"]["engine"]["landed"]
         assert len(rays) == 12 and len(couplings) == 16
         # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
-        # electromagnetic family, released by both charged families, its spread
-        # table open, and no other family the field of a charged ray.
+        # electromagnetic family, released by the electron, the positron and the
+        # proton (a body of that family radiates it), its spread table open, and
+        # no other family the field of a charged ray.
         light = rays["light"]
         assert (light["kind"], light["field_of"], light["release"]) == (
             "field",
-            ["electron", "positron"],
+            ["electron", "positron", "proton"],
             [1, 4],
         )
         assert light["spread"] == UNDECIDED and light["decided_by"]["spread"] == "feature 12"

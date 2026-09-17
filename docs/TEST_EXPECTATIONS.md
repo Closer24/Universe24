@@ -1602,10 +1602,11 @@ first run:
 - `records`: the twelve sections, `phase_bits` without a real-N value and
   `lag_bits` open, its world key undecided and its engine (feature 8b) not
   landed; 12 rays and 16 couplings; `light` a field ray of `field_of`
-  electron and positron with release `[1, 4]`, its `spread` undecided and
-  decided by feature 12, `light` in the `field` of both charged families and
-  neither `electron_field` nor `positron_field` a ray (Highlights 3.5,
-  2026-09-17); every ray with
+  electron, positron and proton with release `[1, 4]`, its `spread` undecided
+  and decided by feature 12, `light` in the `field` of the three charged
+  families (the proton's since the helium-ion run, E4, whose fixed nucleus
+  radiates it) and neither `electron_field` nor `positron_field` a ray
+  (Highlights 3.5, 2026-09-17); every ray with
   `kind`, `rest_rate`, `charge`, `phase_bits`, `field` and `note`, a field ray
   with rest rate 0, charge 0 and no field, listed by every ray in its
   `field_of` and listing each of them, a bound group's charge the sum over its

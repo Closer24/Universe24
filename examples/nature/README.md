@@ -1,11 +1,12 @@
 # Two events of nature in the engine's language
 
-Three world files that show, on the one generic engine and with the rules
+Four world files that show, on the one generic engine and with the rules
 that exist today, (A) a photon absorbed by an electron at rest, (B) a nucleus
 split by a high-energy photon, with a low-energy photon that does not split it
-as the control, and (C) the photon of (A) held inside the group while its
+as the control, (C) the photon of (A) held inside the group while its
 clock runs and then emitted on a new heading, the group back in its ground
-state. They are demonstrations under
+state, and (D) the helium ion, a nucleus of charge +2 with one electron,
+[below](#the-helium-ion-one-electron-at-a-nucleus-of-charge-2). They are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events),
@@ -14,11 +15,15 @@ declaration written before the run.
 
 The rays are selected from the [catalog of nature](../../docs/CATALOG.md)
 (`light`, `electron`, `proton`, `neutron`, with the catalog's charge unit e/3
-and the electron's rest rate 1); the two couplings that make the events are
-the worlds' own declarations, since the catalog holds no photon-absorption and
-no photofission coupling yet, and the rest rates of the proton and the
-neutron, undecided in the catalog (A10, hypothesis 12), are set to 1 here for
-the picture only.
+and the electron's rest rate 1); the couplings that make the events of (A),
+(B) and (C) are the worlds' own declarations, since the catalog holds no
+photon-absorption and no photofission coupling yet, and the rest rates of the
+proton and the neutron, undecided in the catalog (A10, hypothesis 12), are set
+to 1 there for the picture only. In (D) light is the field of the nucleus and
+of the electron (Highlights 3.5: light and the field of a charge are one
+family), declared once per releaser as the catalog says, and the attraction
+is the world's own rule standing in for the catalog's open sign rule
+(`opposite_charge`, A5).
 
 ## Dictionary: each physical word next to the engine word
 
@@ -207,3 +212,167 @@ render the other two runs. The
 the meeting marker at the group's Node, the `bound_tick` records as generic
 markers at that Node and the fragments leaving; a GIF is a rendering of a
 fingerprinted record, not evidence by itself.
+
+## The helium ion: one electron at a nucleus of charge +2
+
+`helium_ion.json` is the model owner's request of 2026-09-17: to see a helium
+nucleus with one electron around it (He+, hydrogen-like), and to compute the
+orbit and the frequency a stable, closed orbit needs. The run is honest about
+what the engine on `main` holds: the nucleus radiates its field on the six
+axis lines through it and nowhere else, and the one landed turn of a matter
+ray at a field ray is whole, so there is no closed orbit around the nucleus in
+this engine; the run shows what happens instead, and the orbit is computed
+beside it. The record is registered as
+[E4](../../docs/EXPERIMENTS.md#e4-the-helium-ion-one-electron-at-a-nucleus-of-charge-2).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| The helium nucleus, charge +2 e, mass about 7300 electron masses | An external body (`external_bodies[0]`) of the catalog's `proton` family at the centre (20, 20, 20), `charge` 6 in thirds of e (two protons' charge) and `amount` 2^20: the approximation of infinite mass, its whole content at one Node, never split, never pushed by matter, moved by fields only. The proton family's rest rate is set to 0 in this world, because a coupled body's token must return with the body's phase (external-body-v1); no proton ray exists on the board, so nothing else reads it | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); Highlights 3.19 |
+| The Coulomb field of the nucleus | Light: the catalog's `light` is the field of every charge (Highlights 3.5, 2026-09-17), and the engine names one family per releaser, so this world declares it twice, `light_of_nucleus` (`field_of` `proton`, `release` [1, 4096]) for the nucleus and `light_of_electron` for the electron. The nucleus's: every interval the body releases one ray per Port heading of amount floor(2^20 / 4096) = 256, phase 0, booked as a source; each ray walks straight along its axis line at one Link per interval and releases nothing (a field has no field), so the field exists on the six axis lines through the nucleus only and its amount on a line does not fall with distance | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); Highlights 3.5 |
+| The electron, charge -1 e | One `electron` ray (rest rate 1, `charge` -3) of amount 4, emitted from the lamp at (28, 12, 20) heading +Y at tick 1: one Link per interval, the only speed in the engine. An electron at speed 1/k would be a bound group with `ray_delay` k (Highlights 3.28); a bound group is rays held at one Node by a delay-1 rule and does not move, and a ray field that meets anything must be unpaced, so the electron here is at c, k = 1 | [Binding](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); Highlights 3.4, 3.28 |
+| The electron's own field | `light_of_electron`, the catalog's `light` released by the electron, `field_of` `electron`, `release` [1, 4]: five rays of amount 1 at every Node the electron departs, faint in the picture; those that reach the nucleus end in its sink and pull it by its `momentum_table` (-1: toward the source) | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1) |
+| Coulomb attraction | The rule `nucleus_turn` over `[electron, light_of_nucleus]`, this world's own declaration: where the electron and a ray of the nucleus's light share a Node, the electron leaves on the negation of the field ray's heading (`"heading": "reversed", "input": 1`), toward the nucleus, with its amount and phase, and the field ray returns reversed as the recoil. It stands in for the catalog's open `opposite_charge` entry of `electron_field_turn` (the heading rule when the charges differ in sign, A5's to write), with the sign the model owner's words give ("an electron near a large charge"); the turn is whole at every meeting for any field amount from 1 up, the table that would make it partial (`strength_table`) being undecided too (A5) | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1), [the recoil](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); Highlights 3.5, 3.14 |
+| Coulomb repulsion of the electron by its own kind | The catalog's `electron_field_turn`, declared over `[electron, light_of_electron]` and never met: a straight ray never meets its own field, and after each turn the electron's earlier field rays are on other lines | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); Highlights 3.5 |
+| The recoil of the nucleus | The returned ray of the nucleus's light, amount 256, walking back along its axis to the body, where it ends in the sink and changes the body's momentum by 256 toward the electron (`momentum_table` -1); its velocity, momentum over 2^20, completes no Link in the run | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1) ("motion by fields only") |
+| The electron reaching the nucleus | The body's coupling `phase_plate` at setting 0 (catalog, decided): the arriving electron continues on its heading with its phase, the body's token returned unchanged; the nucleus is transparent to the electron. Under the default sink the electron would be absorbed at its first fall and the board would be empty of matter for the rest of the run | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1) ("a declared coupling") |
+| Energy | The amount; the invariant `energy` of every rule, exact over inputs and outputs | Highlights 3.15 |
+| Momentum | Amount times heading. The electron's is bound to the vector `momentum` (`recoil_field` on its emission, the lamp keeping the recoil), so the audit carries a momentum line; the momentum a turn moves has no ray to carry its transverse part and is booked as the meeting's source of that line, exact at every tick; the recoil's own momentum is on the field ray, read on the bodies' line when absorbed | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) ("Momentum of a split"); Highlights 3.14, 3.16 |
+| Charge | -3 per electron quantum, +3 per proton quantum, 0 on every field family; `charge x amount` appended to every meeting; the body's declared charge 6 on the audit's bodies line | [Wave-ray families](../../docs/SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) |
+| Gravity | Not declared: the catalog's `mass_field` and `mass_field_delay` are left out, gravity being 10^-39 of the Coulomb force at this scale, and the `release` and the delay table are undecided (A6) | [Catalog](../../docs/CATALOG.md) |
+| The orbit | The closed square of side 2r with the nucleus at its centre, four turns of a quarter turn each per circuit, period T = 8 r k intervals, frequency 1/T; computed below, not held by the engine | Highlights 3.4 |
+
+### The orbit computed: what a stable, closed orbit needs
+
+The nucleus is at the origin O. The electron of content m at speed 1/k Links
+per interval runs the square with corners (r, r), (-r, r), (-r, -r), (r, -r)
+in the plane z = 0: sides of 2r Links, 8r Links per circuit,
+
+```text
+T = 8 r k intervals,  f = 1 / T per interval;  here r = 8, k = 1: T = 64, f = 1/64.
+```
+
+At each corner the heading turns a quarter turn: from (0, m, 0) to
+(-m, 0, 0), a momentum change of (-m, -m, 0), and the nucleus must receive
+(m, m, 0) back through the recoil. The conditions for the orbit to close on
+itself, as integer equalities that must hold at every turn:
+
+1. **The turn is where the field is.** The four turns are at the corners
+   (±r, ±r, 0). The body's field is on the six axis lines, which meet the
+   square at the midpoints of its sides, (±r, 0, 0) and (0, ±r, 0), never at
+   a corner; and a quarter turn at a midpoint sends the electron along the
+   axis, into the nucleus (attraction) or away from it (repulsion). So with
+   the field on the axes no closed orbit around the nucleus exists, for any
+   r, m, k or field amount: every closed path of axial segments whose turns
+   all lie on the axis lines runs along the axes themselves. This is the
+   condition that fails today, and it fails by geometry, not by a number.
+2. **A whole quarter turn per turn.** With a Port-table output (the landed
+   form, `heading` a Port or `"reversed"` of the field ray) the whole
+   electron turns whenever the field ray's amount A = floor(M n / d) is at
+   least 1 (here A = 256): one quantum too low, A = 0, is no field ray and no
+   turn, and no amount is too high. With a delay table instead (feature 8,
+   `delay: {"of": 1, "table": [t0, ..., t5], "per": u}`) the lag laid at the
+   crossing is floor(A t_p / u) phase steps and a full Link toward the
+   lagging side needs exactly floor(A t_p / u) = N = 2^`phase_bits` (256
+   here): one quantum too low leaves a lag below N that is never spent (the
+   electron misses the turn and goes straight on), one quantum too high
+   leaves a remainder of one step that accumulates to an extra Link after N
+   turns (the orbit overturns by one Link every N circuits); and a lag turns
+   the line by one Link with the heading unchanged, never by a quarter turn,
+   so a lag on the axes gives no closed orbit either.
+3. **The recoil closes the momentum.** At each turn the field ray returns
+   reversed with amount A, carrying 2A along its own axis, and the transverse
+   m has no ray to carry it (booked as the meeting's source); at the nucleus
+   each recoil adds A toward the electron, so a closed circuit hands the
+   nucleus four recoils of A on +x, +y, -x, -y whose sum is exactly zero, and
+   the body steps only when an axis accumulator reaches 2^20, never here.
+4. **The clock closes on the phase circle.** The electron's phase advances 1
+   per interval, so one circuit advances it 8 r k steps; a meeting reads
+   phases only as a difference through a table, and no table in this world
+   reads one, so the orbit needs 8 r k = j N for no integer j today. Once a
+   turn table reads the phase difference between the electron and the field
+   (the body's phase, constant), closure needs 8 r k to be a multiple of N:
+   at N = 256 and k = 1 the smallest square has r = 32 (T = 256), the model's
+   form of the standing-wave condition on an orbit.
+
+### helium_ion.json, tick by tick
+
+Board 41 x 41 x 41, open, `link_ticks` 1, `phase_bits` 8 (N = 256), 128
+ticks, two computed periods. The nucleus at (20, 20, 20); the electron lamp
+at (28, 12, 20), the lower end of the square's right side x = 28, heading +Y,
+amount 4. Rules in order: `nucleus_turn`, `electron_field_turn`,
+`phase_plate`. The ticks are the state after the tick.
+
+| Tick | What is on the board |
+| --- | --- |
+| 1 | Six `light_of_nucleus` rays of 256 leave the nucleus, one per axis, and six more every tick after; the electron is at (28, 13, 20) heading +Y, releasing five `light_of_electron` rays of 1 at every Node it departs |
+| 8 | The electron reaches (28, 20, 20), the midpoint of the side, where the field ray released at tick 1 arrives in the same interval |
+| 9 | The turn: the electron leaves (28, 20, 20) heading -X, toward the nucleus (`steps` 0, a new event), the field ray reversed behind it as the recoil; the square's next side is not where it goes |
+| 9 to 15 | The fall along the axis: at every Node from x = 27 to 21 the electron meets the next field ray, is left inward by the same rule (a new event and a recoil at each Node) and walks one Link per interval |
+| 16 | The electron is at the nucleus and passes it (`phase_plate`); the eight recoils of 256 arrive at the body in this one interval (each left one Link nearer and one tick later): the sink takes 2048 and the body's momentum becomes (2048, 0, 0), toward where the electron came from |
+| 17 | The electron is at (19, 20, 20), heading -X, past the nucleus |
+| 18 | Turned back by the -X field ray at (19, 20, 20): heading +X, at the nucleus again; the recoil of 256 arrives from the far side, momentum (1792, 0, 0) |
+| 19 | (21, 20, 20) heading +X; turned back there by the +X field ray |
+| 20 to 128 | The cage: the electron runs 21, 20, 19, 20, 21, ... through the nucleus, one recoil of 256 every second interval alternating in sign, the body's momentum between 2048 and 1792 and its accumulator far below the 2^20 of one Link; the phase advances 1 per interval throughout |
+
+Observed period: 4 intervals (the cage), amplitude 1 Link on each side of the
+nucleus. Computed period of the square orbit: 64 intervals. The two stand side
+by side in the register entry. At every one of the 128 ticks: electron 4 in
+the world, none escaped; `light_of_nucleus` sourced 1536 per tick, in the world
+28160 or 28416 from tick 20 on, once the six axis lines are full, the rest
+escaped at the open boundary or in the sink (16384 by tick 128, 64 recoils);
+the momentum line initial (0, 0, 0), sourced (-4, -4, 0) at the first turn
+and then (4, -4, 0) or (-4, -4, 0) as each reversal in the cage is booked,
+current equal to it at every tick (the lamp holds (0, -4, 0), the electron
+(-4, 0, 0) or (4, 0, 0)) and balanced;
+the charge line electron -12; the bodies' line count 1, charge 6; every audit
+line balanced, `conserved_at_every_completed_tick` true.
+
+### Limits: what the run shows instead of an orbit, and the rules that are missing
+
+**Why the fall.** The two facts that decide it: the body's field lives on its
+six axis lines only, and the landed turn is whole. An electron that crosses
+an axis line is sent down the axis, meets a field ray at every Node there,
+and is turned back at the first Node past the nucleus whichever side it
+leaves on: the engine's bound state of He+ is a two-Link cage through the
+nucleus, period 4, for every r, m and field amount, since nothing in the
+turn reads the amount. A partial turn from the delay table would not close
+an orbit either: it shifts the line one Link with the heading unchanged, and
+on the axis the next Node lays the next lag, a runaway into the nucleus once
+the lag per crossing reaches N and nothing at all below it. A bound group
+cannot be the electron at 1/k: it is held at its Node and does not move.
+
+**The missing rules, smallest generic additions.** (i) The field off the
+axes: a ray of the nucleus's light at a Node re-releasing its information on
+the five headings other than its own in shares by a declared table, the path
+counting of Highlights 3.5 ("as a diamond at the scale of Links and as a
+sphere at large scale") that today's "a field has no field" excludes; this is
+the catalog's open `spread` entry of `light` (feature 12), booked as a source
+like every release. (ii) A turn proportional to the field: the delay table of feature 8
+already lays a lag proportional to the field amount, but a lag is spent as a
+sideways Link with the heading unchanged, so the most it can do is a
+staircase of one part in two and it can never reverse the forward motion; the
+generic addition is to spend a transverse lag that reaches N as a quarter
+turn of the heading toward the lagging side when the sideways Links owed
+exceed the forward ones, that is, to let the lag register be the transverse
+momentum the audit reads, as Highlights 3.28 already states for feature 8b.
+With (i) and (ii) the closed orbit is a staircase circle whose period is
+8 r k and whose stability is the integer equalities above. Neither is added
+here.
+
+**Not shown.** The nucleus's picture is the viewer's default body (a star);
+gravity is not declared; the proton's rest rate is 0 in this world for the
+token's sake; no lamp emits light, so every light ray on the board is a
+field ray of one of the two charges.
+
+### Run and render
+
+```bash
+PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/helium_ion.json'), Path('runs/helium-ion'))"
+PYTHONPATH=src python tools/ray_viewer/record_sidecar.py runs/helium-ion
+python tools/ray_viewer/extract.py runs/helium-ion --sidecar runs/helium-ion/ray-recording.json --label "The helium ion" --out runs/helium-ion/runs.json
+python tools/ray_viewer/render_gif.py runs/helium-ion/runs.json --output runs/helium-ion.gif --contact-sheet runs/helium-ion-contact.png
+```
+
+The record stays outside the tree; the register holds its fingerprint.
