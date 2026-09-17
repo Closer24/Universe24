@@ -175,9 +175,9 @@ every line reads six values and its identity:
 | Line | Reads |
 | --- | --- |
 | `initial` | What the world held before the first tick: the lamps' stock, seeded rays and populations |
-| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, the momentum a spread moves (`field-spreading-v1`), an unfunded inverse split (`source_totals`) |
-| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`) |
-| `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`) |
+| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, the momentum a spread moves (`field-spreading-v1`), an unfunded inverse split (`source_totals`), the push a binding rule's momentum table gives a bound group and the difference booked when a pushed group dissolves (`bound-group-motion-v1`) |
+| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`); a bound group's momentum by its register, not by its rays' headings (`bound-group-motion-v1`) |
+| `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`), a bound group with its content and its register |
 | `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
 | `absorbed` | What the external bodies' sinks took (`external_body_totals`, the `absorbed_by_bodies` line of `external-body-v1`), the momentum field's components included when one is bound |
 
@@ -228,7 +228,14 @@ ray's release, five field rays on every heading but its own, has net
 momentum minus its own heading, and without the term the Node's residual
 read exactly that, (1, 0, 0). The momentum a table split moves is still
 booked to the world ledger only ([meetings](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)),
-and an external body's sink is not read by the local audit. A spread
+and an external body's sink is not read by the local audit. Since
+`bound-group-motion-v1` (2026-09-17) both audits read a bound group's
+momentum by its register, at its Node and on the Link it steps along
+(`InventoryNode.group`, `InventoryPacket.group`,
+[bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)):
+a group at rest reads as its rays did, a moving group reads its register
+wherever it is, and the push of a momentum table, like the momentum a split
+moves, is booked to the world ledger only. A spread
 (`field-spreading-v1`, [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1))
 is read from its `field_spread` record, published before the cycle's record:
 the departures of a spreading family, field rays with no event and one Link

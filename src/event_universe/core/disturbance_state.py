@@ -226,6 +226,10 @@ class InteractionDefinition:
     # Node that holds its bound group: every arrival there waits this many intervals.
     lags: tuple[LagTable, ...] = ()
     ray_delay: int = 0
+    # The momentum table of a binding rule (bound-group-motion-v1): one sign per
+    # spatial field, -1 attraction toward the source of an arriving field ray of
+    # that family, 1 repulsion, 0 for a family the table does not name.
+    momentum_table: tuple[int, ...] = ()
     # The Detector bit the outputs of a meeting of rays inherit
     # (detector-bit-property-v1, `inherited_bit` in spatial_state): -1 the highest
     # bit of the inputs (the default), -2 none, or the index of the input whose

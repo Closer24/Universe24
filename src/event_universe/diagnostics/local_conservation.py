@@ -22,7 +22,7 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work
-from event_universe.core.spatial_state import PORT_HEADINGS, Ray, Rays
+from event_universe.core.spatial_state import PORT_HEADINGS, BoundMotion, Ray, Rays, held_ray
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
 from event_universe.fields.disturbances import evaluate
@@ -126,13 +126,16 @@ class LocalConservationAudit:
         self,
         populations: tuple[tuple[tuple[int, ...], ...], ...],
         rays: tuple[Rays, ...] = (),
+        group: BoundMotion | None = None,
     ) -> Quantity:
         """Octant stock feeds the declared expressions; rays add their own quanta.
 
         A ray of amount a carries energy a through the declared spatial energy
         expression (its amount joins the field value) and momentum a x heading
         intrinsically, in amount times heading units, which no field expression
-        can see. The spatial momentum expression must not count ray fields.
+        can see. The spatial momentum expression must not count ray fields. A
+        bound group's rays read their momentum by the group's register, not by
+        their headings (bound-group-motion-v1).
         """
         if self.definition.spatial is None:
             return ZERO
@@ -154,12 +157,16 @@ class LocalConservationAudit:
                     # charge x amount like any ray (ray-event-audit-v1).
                     heading = definition.headings[ray.heading]
                     sign = 1 if ray.outbound else -1
-                    for axis in range(3):
-                        intrinsic[axis] = checked_work(
-                            intrinsic[axis] + sign * ray.amount * heading[axis]
-                        )
+                    if group is None or not held_ray(ray):
+                        for axis in range(3):
+                            intrinsic[axis] = checked_work(
+                                intrinsic[axis] + sign * ray.amount * heading[axis]
+                            )
                     charge = checked_work(charge + checked_work(ray.amount * definition.charge))
             values[definition.field] = pack(tuple(components))
+        if group is not None:
+            for axis in range(3):
+                intrinsic[axis] = checked_work(intrinsic[axis] + group.momentum[axis])
         energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
         return (
             energy,
@@ -246,7 +253,7 @@ class LocalConservationAudit:
     def _packet(self, packet: InventoryPacket) -> Quantity:
         if packet.record is not None:
             return self._carrier(packet.record)
-        return self._spatial(packet.spatial, packet.rays)
+        return self._spatial(packet.spatial, packet.rays, packet.group)
 
     def _released(self, packet: InventoryPacket) -> Quantity:
         """What a new packet carries that its origin released in the cycle that sent
@@ -275,7 +282,9 @@ class LocalConservationAudit:
     ) -> tuple[dict[Address3, Quantity], dict[PacketKey, tuple[InventoryPacket, Quantity]]]:
         nodes: dict[Address3, Quantity] = {}
         for node in view.nodes:
-            amount = self._spatial(tuple(state.populations for state in node.spatial), node.rays)
+            amount = self._spatial(
+                tuple(state.populations for state in node.spatial), node.rays, node.group
+            )
             if node.incoming_spatial:
                 amount = _add(amount, self._spatial(tuple(s.populations for s in node.incoming_spatial)))
             for record in node.records:

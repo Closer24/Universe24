@@ -118,6 +118,16 @@ RELEASED_FIELD = "released-field-v1"
 # the Port the field ray came through, a lag of the output's face clock in phase
 # steps that turns the ray toward the lagging side one Link per phase modulus.
 RAY_BINDING = "ray-binding-v1"
+# Bound groups that move (Highlights 3.4, 3.14, 3.16, 3.19 and 3.28,
+# bound-group-motion-v1): a bound group carries a momentum register and three
+# per-axis accumulators, set at its formation as the sum of amount x heading of
+# its rays; each interval it is bound the accumulators add the momentum and the
+# whole group departs one Link through the Port of the first axis whose
+# accumulator has reached its content, as the external body steps; a binding
+# rule's momentum_table lets an arriving field ray push the group by sign x
+# amount x heading, the field ray returned reversed. Speed is momentum over
+# content, one Link every k intervals, with no kinematic rule.
+BOUND_GROUP_MOTION = "bound-group-motion-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -271,6 +281,25 @@ class ExternalBody:
             raise ValueError("an external body momentum table holds signs -1, 0 or 1")
         if type(self.sink) is not tuple or any(type(v) is not int or v < 0 for v in self.sink):
             raise ValueError("an external body sink holds nonnegative counters")
+
+
+@dataclass(frozen=True, slots=True)
+class BoundMotion:
+    """The momentum register of a bound group (bound-group-motion-v1): its momentum,
+    three integers, and its three per-axis accumulators, held by the Node beside
+    the group's rays and carried on the packet the group departs on. Bounded
+    metadata of the group, like the external body's momentum; no rays, no history.
+    """
+
+    momentum: tuple[int, int, int] = (0, 0, 0)
+    accumulators: tuple[int, int, int] = (0, 0, 0)
+
+    def __post_init__(self) -> None:
+        for vector in (self.momentum, self.accumulators):
+            if type(vector) is not tuple or len(vector) != 3:
+                raise ValueError("a bound group momentum requires three integers")
+            for value in vector:
+                checked_work(value)
 
 
 @dataclass(frozen=True, slots=True)
@@ -463,6 +492,22 @@ def validate_ray_participants(
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
         elif type(rule.ray_delay) is not int or bounded(rule.ray_delay) < 0:
             raise ValueError("a binding rule's ray_delay is a nonnegative bounded integer")
+        if rule.momentum_table:
+            # bound-group-motion-v1: a binding rule's table names the field families
+            # that push its group, families it does not itself bind.
+            participants = {kind for role in rule.participants for kind in role}
+            if (
+                rule.outputs
+                or not any(assignment.field == RAY_DELAY for assignment in rule.assignments)
+                or len(rule.momentum_table) != len(definitions)
+                or any(sign not in (-1, 0, 1) for sign in rule.momentum_table)
+                or not any(rule.momentum_table)
+                or any(sign and kind in participants for kind, sign in enumerate(rule.momentum_table))
+            ):
+                raise ValueError(
+                    "a momentum table is declared by a binding rule and names families it does not bind"
+                )
+            selected.update(kind for kind, sign in enumerate(rule.momentum_table) if sign)
     for layer in ray_layers(definitions, rules):
         # The indexed selector's capacity bounds one meeting, and a meeting exists
         # only inside a layer: fields of different layers never share it.
@@ -512,8 +557,13 @@ def ray_layers(
         return index
 
     for rule in rules:
-        # The fields a rule's roles select and the fields of its outputs couple.
-        selected = {kind for role in rule.participants for kind in role} | set(rule.outputs)
+        # The fields a rule's roles select, the fields of its outputs and the
+        # families its momentum table names (bound-group-motion-v1) couple.
+        selected = (
+            {kind for role in rule.participants for kind in role}
+            | set(rule.outputs)
+            | {kind for kind, sign in enumerate(rule.momentum_table) if sign}
+        )
         if any(type(kind) is not int or not 0 <= kind < len(definitions) for kind in selected):
             raise ValueError("ray participant role refers to an unavailable spatial field")
         kinds = sorted(selected)
@@ -664,7 +714,10 @@ def _released(
 
 
 def release_field(
-    rays: Rays, definition: SpatialFieldDefinition, origin: SpatialFieldDefinition
+    rays: Rays,
+    definition: SpatialFieldDefinition,
+    origin: SpatialFieldDefinition,
+    carried: Heading | None = None,
 ) -> Rays:
     """The field rays a bundle of source rays releases at the Node they depart from
     (released-field-v1): one ray per Port heading except the source ray's own,
@@ -673,7 +726,10 @@ def release_field(
     it, which at link speed the source itself occupies, so it releases nothing
     there and a straight ray never shares a Node with its own field. A ray held
     at the Node by its interaction delay (a bound group, ray-binding-v1) occupies
-    no line ahead of it and releases on all six headings, once per interval. Every
+    no line ahead of it and releases on all six headings, once per interval; in an
+    interval its group is carried one Link through a Port (bound-group-motion-v1),
+    `carried` is that heading, the group's own line ahead of it, and the group's
+    rays (held at their event Node, steps 0) release nothing there. Every
     released ray carries the sign of the source family's charge (`source_sign`)."""
     released: list[Ray] = []
     sign = charge_sign(origin.charge)
@@ -681,23 +737,102 @@ def release_field(
         amount = release_amount(ray.amount, definition)
         if amount <= 0:
             continue
-        skip = None if ray.interaction_delay else origin.headings[ray.heading]
+        if ray.interaction_delay:
+            skip = carried if ray.steps == 0 else None
+        else:
+            skip = origin.headings[ray.heading]
         released.extend(_released(amount, ray.phase, definition, skip, sign))
     return tuple(released)
 
 
+def held_ray(ray: Ray) -> bool:
+    """Whether a resident ray is one of its Node's bound group (ray-binding-v1): an
+    outbound ray at its event Node with no delay or wait pending. A ray is at its
+    event Node with `steps` 0 only while a rule holds it there and ticks again;
+    every other resident ray has walked a Link, is waiting, or is returned."""
+    return bool(ray.outbound and ray.steps == 0 and not ray.interaction_delay and not ray.wait)
+
+
 def bound_group(rays: tuple[Rays, ...]) -> tuple[tuple[int, Ray], ...]:
-    """The bound group resident at a Node (ray-binding-v1, Highlights 3.4): the
-    outbound rays at their event Node with no delay or wait pending, as (spatial
-    field, ray) pairs in field and merge-key order. A ray is at its event Node with
-    `steps` 0 only while a rule holds it there and ticks again; every other resident
-    ray has walked a Link, is waiting, or is returned. The Node keeps nothing else."""
+    """The bound group resident at a Node (ray-binding-v1, Highlights 3.4): the held
+    rays (`held_ray`) as (spatial field, ray) pairs in field and merge-key order.
+    The Node keeps nothing else beyond the group's momentum register
+    (bound-group-motion-v1), which is read where the group's rays are."""
     return tuple(
         (index, ray)
         for index, bundle in enumerate(rays)
         for ray in sorted(bundle, key=ray_merge_key)
-        if ray.outbound and ray.steps == 0 and not ray.interaction_delay and not ray.wait
+        if held_ray(ray)
     )
+
+
+def group_content(group: tuple[tuple[int, Ray], ...]) -> int:
+    """The content of a bound group: the sum of its rays' amounts (Highlights 3.4)."""
+    total = 0
+    for _, ray in group:
+        total = checked_work(total + ray.amount)
+    return bounded(total)
+
+
+def group_momentum(
+    group: tuple[tuple[int, Ray], ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> tuple[int, int, int]:
+    """The momentum of a bound group's rays by headings, amount x heading summed over
+    its (spatial field, ray) pairs: the register at the group's formation
+    (bound-group-motion-v1)."""
+    result = [0, 0, 0]
+    for index, ray in group:
+        for axis, component in enumerate(definitions[index].headings[ray.heading]):
+            result[axis] = checked_work(result[axis] + checked_work(ray.amount * component))
+    return result[0], result[1], result[2]
+
+
+def group_momentum_field(
+    group: tuple[tuple[int, Ray], ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> int | None:
+    """The momentum field a bound group's register is read under: the one its
+    families bind, or None when they bind none; families binding two different
+    momentum fields fail closed (bound-group-motion-v1)."""
+    bound = {definitions[index].momentum_field for index, _ in group}
+    bound.discard(None)
+    if len(bound) > 1:
+        raise ValueError("a bound group's families bind one momentum field")
+    return next(iter(bound)) if bound else None
+
+
+def motion_step(
+    momentum: tuple[int, int, int], accumulators: tuple[int, int, int], content: int
+) -> tuple[int, tuple[int, int, int]]:
+    """One interval of motion over a content (external-body-v1, bound-group-motion-v1):
+    each axis accumulator adds the momentum component, and the owner steps one Link
+    through the Port of the first axis (x before y before z) whose accumulator has
+    reached a whole content, subtracting the content; at most one Link per interval,
+    never faster than a ray. Returns the Port, or -1 when it stays, and the new
+    accumulators. An accumulator only grows past the content while the owner waits
+    its turn on another axis; it is capped so the register stays bounded metadata."""
+    advanced = [a + m for a, m in zip(accumulators, momentum, strict=True)]
+    port = -1
+    for axis in range(3):
+        if advanced[axis] >= content:
+            advanced[axis] -= content
+            port = 2 * axis
+            break
+        if advanced[axis] <= -content:
+            advanced[axis] += content
+            port = 2 * axis + 1
+            break
+    if any(abs(value) > 2 * content for value in advanced):
+        raise ValueError("a momentum exceeds its content: faster than a ray")
+    return port, (advanced[0], advanced[1], advanced[2])
+
+
+def group_step(motion: BoundMotion, content: int) -> tuple[int, BoundMotion]:
+    """One interval of a bound group's motion: `motion_step` over the group's content,
+    the Port it departs through (or -1) and the register with its new accumulators."""
+    if type(content) is not int or content < 1:
+        raise ValueError("a bound group steps over a positive content")
+    port, accumulators = motion_step(motion.momentum, motion.accumulators, content)
+    return port, replace(motion, accumulators=accumulators)
 
 
 def release_stock(
@@ -1329,6 +1464,9 @@ class SpatialNodeState:
     # The output-clock delay of the bound group held here (ray-binding-v1): the
     # intervals every arriving ray waits before it meets or departs; 0 without.
     bound_delay: int = 0
+    # The momentum register of the bound group held here (bound-group-motion-v1):
+    # its momentum and accumulators; None at a Node without a group.
+    bound_motion: BoundMotion | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -1360,6 +1498,11 @@ class SpatialPlan:
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
     body_port: int = -1
+    # The Port the bound group held here departed through this cycle, or -1
+    # when it stays or there is none, and the momentum its binding rule's table
+    # gave it from the field rays it met (bound-group-motion-v1).
+    bound_port: int = -1
+    bound_push: tuple[int, int, int] = (0, 0, 0)
     # The spreads of this cycle, one per spreading family whose content arrived,
     # and the returned field quanta that ended here (field-spreading-v1).
     spreads: tuple[FieldSpread, ...] = ()
@@ -1397,6 +1540,9 @@ class SpatialPacket:
     phases: SpatialBundle = ()
     # An external body stepping one Link through this Port (external-body-v1).
     body: ExternalBody | None = None
+    # The momentum register of a bound group stepping one Link through this Port
+    # with its rays (bound-group-motion-v1); None on every other packet.
+    group: BoundMotion | None = None
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -2168,25 +2314,11 @@ def body_step(body: ExternalBody) -> tuple[int, ExternalBody]:
     (x before y before z) whose accumulator has reached a whole amount, subtracting
     the amount; at most one Link per interval, never faster than a ray. Returns
     the Port, or -1 when it stays, and the body with its new accumulators."""
-    accumulators = [a + m for a, m in zip(body.accumulators, body.momentum, strict=True)]
-    port = -1
-    for axis in range(3):
-        if accumulators[axis] >= body.amount:
-            accumulators[axis] -= body.amount
-            port = 2 * axis
-            break
-        if accumulators[axis] <= -body.amount:
-            accumulators[axis] += body.amount
-            port = 2 * axis + 1
-            break
-    for axis in range(3):
-        # An accumulator only grows past the amount while the body waits its turn
-        # on another axis; it is capped so the mark stays bounded metadata.
-        if accumulators[axis] > 2 * body.amount:
-            raise ValueError("an external body momentum exceeds its amount: faster than a ray")
-        if accumulators[axis] < -2 * body.amount:
-            raise ValueError("an external body momentum exceeds its amount: faster than a ray")
-    return port, replace(body, accumulators=(accumulators[0], accumulators[1], accumulators[2]))
+    try:
+        port, accumulators = motion_step(body.momentum, body.accumulators, body.amount)
+    except ValueError as error:
+        raise ValueError("an external body momentum exceeds its amount: faster than a ray") from error
+    return port, replace(body, accumulators=accumulators)
 
 
 def body_coupled_families(body: ExternalBody, initial: InitialState) -> frozenset[int]:

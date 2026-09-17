@@ -1855,14 +1855,16 @@ def _ray_interactions(
         obj = _object(
             raw,
             "ray interaction",
-            required | {"when", "assignments", "outputs", "ray_delay", "bit"},
+            required | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "bit"},
             required,
         )
         if "outputs" in obj:
             if "assignments" in obj:
                 raise ValueError("a ray meeting with outputs assigns through its outputs")
-            if "ray_delay" in obj:
-                raise ValueError("ray_delay is declared by a binding rule, one without outputs")
+            if "ray_delay" in obj or "momentum_table" in obj:
+                raise ValueError(
+                    "ray_delay and momentum_table are declared by a binding rule, one without outputs"
+                )
             rule = _ray_meeting(obj, spatial, definitions)
         elif "assignments" not in obj:
             raise ValueError("a ray interaction requires assignments or outputs")
@@ -1875,6 +1877,23 @@ def _ray_interactions(
             # ray-binding-v1: the output-clock delay of the Node that holds the
             # group this rule binds; every arrival there waits it.
             rule = replace(rule, ray_delay=_integer(obj.get("ray_delay", 0), "ray_delay", 0))
+            if "momentum_table" in obj:
+                # bound-group-motion-v1: the field families that push the group this
+                # rule binds, family name to sign, as the external body's table.
+                families = {
+                    fields[definition.field].name: index
+                    for index, definition in enumerate(spatial)
+                    if definition.rays
+                }
+                table = _object(obj["momentum_table"], "momentum_table", set(families), set())
+                if not table:
+                    raise ValueError("momentum_table names at least one family")
+                signs = [0] * len(spatial)
+                for name, sign in table.items():
+                    if sign not in (-1, 1):
+                        raise ValueError("momentum_table signs are -1 (attraction) or 1 (repulsion)")
+                    signs[families[name]] = sign
+                rule = replace(rule, momentum_table=tuple(signs))
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
         if "bit" in obj:

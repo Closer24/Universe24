@@ -6,6 +6,49 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Bound groups that move on 2026-09-17 (`bound-group-motion-v1`)
+
+Issue #169, feature 8c ([bound group
+motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)), the gap
+the helium-ion run found (E4): a bound group was held at its Node and could
+not move, while Highlights 3.28 gives a group moving one Link every k
+intervals the speed 1/k. The external body's motion rule now applies to
+matter, the same integers:
+
+- A bound group carries a momentum register with three accumulators
+  (`BoundMotion`, `SpatialNodeState.bound_motion`, `SpatialPacket.group`,
+  `InventoryNode.group`, `InventoryPacket.group`), set at its formation as
+  the sum of amount x heading of its rays; it steps one Link when a whole
+  content has accumulated on an axis (`group_step`, sharing `motion_step`
+  with `body_step`). The planner takes the step Port as an eighth argument
+  (`SpatialLaw.__call__(..., bound_port=-1)`, `SpatialPlanningInput.bound_port`),
+  reports `SpatialPlan.bound_port` and `SpatialPlan.bound_push`, and a
+  held ray released nothing on the heading its group is carried through
+  (`release_field(..., carried)`); `carry_rays` in `fields/rays.py`.
+- A binding rule may declare `momentum_table` (`InteractionDefinition.momentum_table`,
+  [disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)); the named families join
+  the rule's layer (`ray_layers`), and `apply_ray_interactions` takes a
+  `pushes` list beside `bound`.
+- The world ledger and the local conservation audit read a bound group's
+  momentum by its register (`held_ray`, `free_rays`, `group_momentum_field`);
+  the push is booked as a source of the momentum field the group's families
+  bind; a group leaving an open boundary is booked as escaped with its
+  content and register (`spatial_escaped` carries `bound_group`). A group
+  whose families bind two momentum fields fails closed at formation.
+- New record `bound_group_step` (position left, Port, arrival tick, momentum,
+  accumulators, content) after the `bound_tick` of that cycle; the
+  snapshot's `bound_groups` entries carry `momentum` and `accumulators`
+  (`test_ray_binding.py`'s pin updated with a dated note); the runner records
+  `bound_group_motion: "bound-group-motion-v1"` when any group stepped or any
+  rule declares a table. Events and the run record of a world where no group
+  ever has a nonzero register are byte for byte what they were
+  (`test_bound_group_motion.py`, case `rest`); `state.json` gains the two
+  zero vectors per group. The output-clock delay `bound_delay` of a Node
+  returns to 0 when its group departs.
+- Not in this slice: two bound groups at one Node (a group arriving at a
+  Node that holds one fails closed), absorption of a field ray into a group
+  (the table returns it reversed), and the local audit's source term for
+  the push (booked to the world ledger only, as the momentum a split moves).
 ## Field spreading added on 2026-09-17 (`field-spreading-v1`)
 
 Feature 12 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
