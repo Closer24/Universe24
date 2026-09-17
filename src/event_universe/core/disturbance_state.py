@@ -234,6 +234,12 @@ class InteractionDefinition:
     # bit they carry; `bit_declared` when the world file wrote the `bit` key.
     bit: int = -1
     bit_declared: bool = False
+    # The decay setting of a conversion (decay-draw-v1): the pass share [n, d] of
+    # the one draw its meeting takes from the Node's ticket stream, None for a
+    # rule that fires without a draw; `seed` starts the stream of a Node the
+    # declaration marks (salted by the Node's position, `decay_ticket_seed`).
+    draw: tuple[int, int] | None = None
+    seed: int = 0
 
 
 @dataclass(frozen=True, slots=True)

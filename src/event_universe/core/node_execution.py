@@ -21,6 +21,7 @@ SpatialPlanner = Callable[
         int,
         Remainders,
         Remainders,
+        int,
     ],
     SpatialPlan,
 ]
@@ -50,6 +51,9 @@ class SpatialPlanningInput:
     # The Node's remainder registers and their phases (field-remainder-v1).
     remainders: Remainders = ()
     remainder_phases: Remainders = ()
+    # The Node's ticket state before the cycle (decay-draw-v1): part of the
+    # request, so that a reused plan never replays a draw at another state.
+    detector_ticket: int = 0
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -88,6 +92,7 @@ def finish_local_cycle(
                     request.ray_hold,
                     request.remainders,
                     request.remainder_phases,
+                    request.detector_ticket,
                 )
             else:
                 result = None
@@ -118,6 +123,7 @@ def _plan_spatial_batch(
             item.ray_hold,
             item.remainders,
             item.remainder_phases,
+            item.detector_ticket,
         )
         for item in items
     )
@@ -172,6 +178,7 @@ class NodeExecution:
         ray_hold: int = 0,
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
+        detector_ticket: int = 0,
     ) -> SpatialPlan:
         request = SpatialPlanningInput(
             states,
@@ -183,6 +190,7 @@ class NodeExecution:
             ray_hold,
             remainders,
             remainder_phases,
+            detector_ticket,
         )
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 

@@ -39,6 +39,8 @@ from .spatial_state import (
     SpatialState,
     blank_remainders,
     coherent_stock,
+    decay_seed,
+    decay_ticket_seed,
     holds_source_stock,
     ray_charge,
     ray_momentum,
@@ -103,6 +105,10 @@ class SpatialEngine:
         # The Detector marks by position, installed on each marked Node when it is
         # created; a Node without a mark never draws.
         self._marks = {mark.position: mark for mark in initial.detectors}
+        # The seed of the decaying rules' declaration (decay-draw-v1), from which an
+        # unmarked Node's ticket stream starts, salted by its position; None when
+        # no rule draws, and then an unmarked Node's ticket stays 0 and is never used.
+        self._decay_seed = decay_seed(initial.ray_interactions)
         # The external bodies by declared position, installed on their Nodes when
         # they are created; a body that steps carries its mark to the next Node.
         self._bodies = {body.position: body for body in initial.external_bodies}
@@ -187,7 +193,13 @@ class SpatialEngine:
                 localized=self._blank_localized(),
                 rays=tuple(() for _ in self.initial.spatial_fields),
                 detector=mark,
-                detector_ticket=0 if mark is None else mark.seed,
+                detector_ticket=(
+                    mark.seed
+                    if mark is not None
+                    else 0
+                    if self._decay_seed is None
+                    else decay_ticket_seed(self._decay_seed, position)
+                ),
                 body=self._bodies.pop(position, None),
                 remainders=blank_remainders(self.initial.spatial_fields),
                 remainder_phases=blank_remainders(self.initial.spatial_fields),
