@@ -6,6 +6,41 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Binding as a loop designed on 2026-09-17 (`loop-binding-v1`, design only)
+
+Issue #169, feature 14 ([loop binding](LOOP_BINDING.md); Highlights 3.4,
+"Binding is a periodic orbit of the meeting rule", model owner,
+2026-09-17). Documents and two world files only; no module, schema key,
+record or test changes with this note:
+
+- `docs/LOOP_BINDING.md` states the rule, the unit-square corner table in
+  today's schema, the closure condition (`L r = 0 (mod N)`, the presence
+  condition, the amounts by the table), dispersal, mass and clock, the
+  field of a loop, the ladder count for A10, the motion of a loop and the
+  mapping of the interim forms; `examples/nature/ring.json` and
+  `ring_open.json` are the unit-square electron and its dispersing control,
+  registered as E5 (planned) and in the nature README; the expected
+  integers of the future `tests/test_loop_binding.py` are pinned in
+  [test expectations](TEST_EXPECTATIONS.md#loop-binding).
+- When the feature is implemented, after feature 8b, the following are
+  removed with their own dated note here: the binding form of a
+  `ray_interactions` rule without outputs (assignments of `delay` 1 as a
+  hold), the `ray_delay` key and the Node's `bound_delay`, `bound_group`,
+  the snapshot's `bound_groups`, the `bound_tick` record, the six-heading
+  release of a held ray in `release_field`, and all of
+  `bound-group-motion-v1` (`BoundMotion`, `bound_motion`, `group_step`,
+  `carry_rays`, `bound_group_step`, `momentum_table` on binding rules,
+  `SpatialPacket.group`, the ledger's reading of a group by its register).
+  A `ray_interactions` rule with outputs, its `delay` output, the delay
+  table and the lag, the released field with `spread`, and the external
+  body are unchanged; the catalog's `binds` entries become corner tables,
+  and the nature examples that use the held form are rewritten as loops or
+  retired with their dated records kept.
+- The two world files run on today's engine unchanged (the check of
+  2026-09-17 on `main` at `c21e03e` agreed with every pinned line); the
+  run record's `ray_binding` identity and empty `bound_groups` are written
+  for them as for any world.
+
 ## Bound groups that move on 2026-09-17 (`bound-group-motion-v1`)
 
 Issue #169, feature 8c ([bound group

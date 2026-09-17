@@ -48,6 +48,29 @@ ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
 | 3.19, the external body's sinks and momentum | The `absorbed` line is what the bodies' sinks took (`external_body_totals`); the bodies' count, momentum, charge and sinks are their own lines beside the identity |
 | 3.26, the engine validates without inventing | A meeting whose outputs would change the total charge is rejected at validation; the runner's `conserved_at_every_completed_tick` is the ledger's identity re-checked from the recorded integers, and a record altered by hand is reported by tick and line |
 
+## Binding as a loop - 2026-09-17 (`loop-binding-v1`, design, feature 14 planned)
+
+Issue #169, feature 14, the model owner's decision of 2026-09-17 in section
+3.4 ("Binding is a periodic orbit of the meeting rule"): designed on
+2026-09-17 ([loop binding](LOOP_BINDING.md)), with the unit-square electron
+as a world (`examples/nature/ring.json`, its dispersing control
+`ring_open.json`, register entry E5) and the expected integers of
+`tests/test_loop_binding.py` pinned before any run
+([expectations](TEST_EXPECTATIONS.md#loop-binding)). No engine code
+changed; the implementation follows feature 8b (12, 8c and 2b landed).
+
+| Highlights | Design (planned implementation) |
+| --- | --- |
+| 3.4, a ray never stops; a bound group is a set of rays whose meetings, under the ordinary table, reproduce the rays that entered them; no binding rule, only the table | A bound group is a periodic orbit of the Node's law of 5.2: a set of rays and a period after which every ray is back at its Node with its heading, amount and phase modulo the circle; a binding coupling of the catalog is an ordinary `ray_interactions` rule with outputs whose loop closes; nothing holds and nothing registers |
+| 3.4, the smallest loop is a unit square, each corner meeting two rays that leave through each other's Ports | The corner table in today's schema: two outputs, each input's amount and phase (`{"of": i}`) through the Port the other input came in by (`"heading": "reversed"` of the other `input`); four rays close it (two per sense at opposite corners), eight make every corner meet every interval; the world `ring.json` |
+| 3.4, a pattern whose meeting does not close disperses | A corner with one ray fires no rule and the ray crosses off the ring; under the catalog's Born table with the senses in phase every corner empties one sense and the ring disperses (`ring_open.json`); under the Port form a ring holds every content and every rate, the loop counterpart of the held rule's "any content", so the Port form alone gives no ladder |
+| 3.4 and 3.28, its clock is the period of the loop and its mass its content; 3.3, the rest rate as the clock | Closure in one circuit is the integer equality `L r = 0 (mod N)` (unit square `4 r = 0 (mod N)`, r = 2 at N = 8; the catalog's r = 1 repeats after two circuits); the state period is `L N / gcd(L r, N)`; content is the sum of the amounts, exact; the content per corner per interval `C / L` is what a crossing ray meets, and its delay is the table's `delay` output per corner, replacing the interim `ray_delay` |
+| 3.5, the field of a bound group is released by rays in motion, five headings each | Every ring ray releases five headings at every Node it departs, one of them along the ring to the next corner, so the ring meets its own field after every turn; the six-heading release of a held ray goes with the held form; the closure of a ring with its own field, from which alone a content ladder can come, is open |
+| Hypothesis 12, the ladder is the set of contents and phases that close a loop under the table; A10 counts them | The counting procedure ring by ring over the corner table (LOOP_BINDING.md section 7); its result under today's tables: no content ladder from the Port form or the Born table, the only integer conditions being the presence condition and `L r = 0 (mod N)` |
+| 3.28, motion as the corners shifting, not a register on a Node | A moving loop is a different periodic orbit; what it takes (a phase pattern the table reads, the momentum of the turns carried by the field, the timing at the shifted corners) is stated and open; feature 8c's register is the interim form until then |
+| 3.4, the held-ray binding of feature 8 and the register-driven motion of feature 8c are the interim forms | The mapping and the removal list (the binding form of a rule without outputs, `ray_delay`, `bound_delay`, `bound_group`, `bound_groups`, `bound_tick`, the six-heading release of a held ray, all of `bound-group-motion-v1`) in LOOP_BINDING.md section 9; the catalog's `binds` entries become corner tables |
+| 5.5, expected integers written before the first run | The five pinned cases (`ring`, `open`, `slow`, `half`, `quadrature`); the engine of `main` at `c21e03e`, run once afterwards as the check the design allows, holds the ring and agrees with every pinned line, so the implementation starts at the removals and the record's reading of a group, not at a failing step |
+
 ## Bound groups that move - 2026-09-17 (`bound-group-motion-v1`)
 
 Issue #169, feature 8c, implements the motion of matter of sections 3.4 and
