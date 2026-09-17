@@ -898,6 +898,24 @@ Model owner's feedback on the second render, applied as defaults of
   equal to the file, checked by `tests/test_ray_viewer.py`, which pins these
   defaults.
 
+## Ray viewer: faint white wake and momentum arrow, 2026-09-17
+
+Model owner's feedback on the fourth render, applied as defaults of
+`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+the record is unchanged.
+
+- `colors.trail` `#ffffff` (a family may override it with `trail` in its
+  `colors.families` entry) and `trail_fade` [0.35, 0.0]: the path behind a
+  ray is a faint white wake fading to nothing over `trail_links` Links, and
+  the ray's head keeps its family colour.
+- `draw.momentum_arrow` true, `sizes.momentum_arrow_px_per_quantum` 6,
+  `sizes.momentum_arrow_width_px` 2 and `colors.momentum_arrow`: at the
+  ray's head an arrow in its heading whose length is the ray's amount times
+  the pixels per quantum (the momentum, amount x heading; 48 px for an
+  electron of 8), carrying the arrowhead; with the flag off the small
+  arrowhead of `arrowhead_px` returns. `viewer.html` gains that one drawing
+  path; `render_gif.py` validates the keys; the test pins the defaults.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

@@ -145,6 +145,8 @@
     "accent": "#62b8d3",
     "lattice": "#3f4c59",
     "box": "#7e8c99",
+    "trail": "#ffffff",
+    "momentum_arrow": "#7fd7ff",
     "families": {
       "default": {
         "hue": "fixed",
@@ -183,10 +185,12 @@
   "sizes": {
     "ray_width_px": 6,
     "arrowhead_px": 10,
+    "momentum_arrow_px_per_quantum": 6,
+    "momentum_arrow_width_px": 2,
     "trail_links": 10,
     "trail_width_px": 6,
     "trail_fade": [
-      1.0,
+      0.35,
       0.0
     ],
     "field_width_px": 1.5,
@@ -246,6 +250,7 @@
       "screen": "slab"
     },
     "trails": true,
+    "momentum_arrow": true,
     "hue_by_phase": "arrowhead",
     "silent_field_events": true,
     "page_text": {
@@ -356,7 +361,7 @@
   function buildLegend() {
     var s = state.style, c = s.colors;
     var items = [
-      ["ray", c.accent, "ray on the Link it crosses, arrowhead in its heading, trail over the last " + s.sizes.trail_links + " Links; label family and amount; hue = phase"],
+      ["ray", c.accent, "ray on the Link it crosses in its family colour, a white wake over the last " + s.sizes.trail_links + " Links, and a momentum arrow (" + s.sizes.momentum_arrow_px_per_quantum + " px per quantum) in its heading"],
       ["faint", c.families.field.color, "field ray"],
       ["diamond", c.markers.emission, "emission"],
       ["ring", c.markers.meeting, "meeting"],
@@ -645,6 +650,19 @@
       item.mat.opacity = opacity;
       placed.push(item);
     }
+    // A momentum arrow: from the ray's head along its heading, lengthPx on screen
+    // (amount x px per quantum), its own arrowhead at the tip; sized per frame.
+    function placeArrow(item, head, start, dir, lengthPx, widthPx, headPx, color, opacity) {
+      item.obj.visible = true;
+      item.a.copy(start); item.b.copy(dir); item.px = widthPx; item.shape = "arrow";
+      item.lengthPx = lengthPx; item.head = head; item.headPx = headPx;
+      item.mat.color.set(color); item.mat.emissive.set(color);
+      item.mat.opacity = opacity;
+      head.obj.visible = true;
+      head.mat.color.set(color); head.mat.emissive.set(color);
+      head.mat.opacity = opacity;
+      placed.push(item);
+    }
     function placeHead(item, tip, dir, px, color, opacity) {
       item.obj.visible = true;
       item.a.copy(tip); item.b.copy(dir); item.px = px; item.shape = "head";
@@ -663,6 +681,16 @@
           item.obj.position.copy(item.a);
           item.obj.quaternion.setFromUnitVectors(UP, len > 0 ? tmp.normalize() : UP);
           item.obj.scale.set(r, Math.max(len, 0.001), r);
+        } else if (item.shape === "arrow") {
+          var ka = worldPerPx(item.a);
+          var La = item.lengthPx * ka, Ra = Math.max(item.px * ka / 2, 0.01);
+          var Lh = item.headPx * ka, Rh = item.headPx * ka / 2;
+          item.obj.position.copy(item.a);
+          item.obj.quaternion.setFromUnitVectors(UP, item.b);
+          item.obj.scale.set(Ra, Math.max(La, 0.001), Ra);
+          item.head.obj.position.copy(item.a).addScaledVector(item.b, La);
+          item.head.obj.quaternion.setFromUnitVectors(UP, item.b);
+          item.head.obj.scale.set(Rh, Lh, Rh);
         } else {
           var k2 = worldPerPx(item.a);
           var L = item.px * k2, R = item.px * k2 / 2;
@@ -774,6 +802,10 @@
       if (own) return merge(fam.field ? fs.field : fs["default"], own);
       return fam.field ? fs.field : fs["default"];
     }
+    function trailColor(fam) {
+      var fs = familyStyle(fam);
+      return new THREE.Color(fs.trail || S().colors.trail || fs.color || "#ffffff");
+    }
     function rayColor(fam, phase, part) {
       var fs = familyStyle(fam);
       var mode = S().draw.hue_by_phase || "ray";
@@ -816,8 +848,12 @@
           if (seg.tick === t) {
             var a = world(seg.from), b = endOf(seg);
             placeSegment(segs.take(nSeg++), a, b, width, color, alpha);
-            if (!isField || sz.field_arrowhead) {
-              placeHead(heads.take(nHead++), b, tmp.copy(b).sub(a).normalize().clone(), sz.arrowhead_px, rayColor(f, phase, "head"), alpha);
+            var dirSeg = tmp.copy(b).sub(a).normalize().clone();
+            if (!isField && dr.momentum_arrow) {
+              // The momentum arrow carries the arrowhead: amount x heading, in pixels.
+              placeArrow(segs.take(nSeg++), heads.take(nHead++), b, dirSeg, Math.abs(seg.amount[0]) * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
+            } else if (!isField || sz.field_arrowhead) {
+              placeHead(heads.take(nHead++), b, dirSeg, sz.arrowhead_px, rayColor(f, phase, "head"), alpha);
             }
             if (wantLabel) {
               var text = template(dr.label_text, { family: ray.family, amount: vec(seg.amount), phase: seg.phase == null ? "" : seg.phase });
@@ -826,7 +862,7 @@
           } else if (state.trails && dr.trails && seg.arrival <= t && (trailLinks === 0 || (t - seg.arrival) < trailLinks)) {
             var age = t - seg.arrival;
             var fade = sz.trail_fade[0] + (sz.trail_fade[1] - sz.trail_fade[0]) * (span > 1 ? Math.min(age, span - 1) / (span - 1) : 0);
-            placeSegment(segs.take(nSeg++), world(seg.from), endOf(seg), isField ? width : sz.trail_width_px, color, alpha * fade);
+            placeSegment(segs.take(nSeg++), world(seg.from), endOf(seg), isField ? width : sz.trail_width_px, isField ? color : trailColor(f), alpha * fade);
           }
         });
         (ray.held || []).forEach(function (h) {
@@ -837,7 +873,9 @@
           var heldPhase = last.arrival_phase != null ? last.arrival_phase : last.phase;
           var color = rayColor(f, heldPhase, "ray");
           placeSegment(segs.take(nSeg++), p.clone().addScaledVector(dir, -0.3), p.clone().addScaledVector(dir, 0.3), width, color, alpha);
-          if (!isField || sz.field_arrowhead) placeHead(heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, sz.arrowhead_px, rayColor(f, heldPhase, "head"), alpha);
+          if (!isField && dr.momentum_arrow) {
+            placeArrow(segs.take(nSeg++), heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, Math.abs(ray.amount[0]) * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
+          } else if (!isField || sz.field_arrowhead) placeHead(heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, sz.arrowhead_px, rayColor(f, heldPhase, "head"), alpha);
           if (wantLabel) setLabel(label(nLabel++), template(dr.label_text, { family: ray.family, amount: vec(ray.amount), phase: "" }), "#" + color.getHexString(), sz.label_font_px, p);
         });
       });
