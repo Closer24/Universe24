@@ -1212,3 +1212,55 @@ sign rule, and its other couplings are catalog entries.
 - **Status.** planned, feature 14 (design done on 2026-09-17; the
   demonstration is made once the held form is removed and the record reads
   the group).
+
+### E6. The screen: the field of an electron at rest on seven marks
+
+- **Claim.** Highlights 5.4 ("everything begins and is realized at a marked
+  Node": the picture of the world is the list of PASS clicks, the eye view)
+  and 3.5 (light is the field of a charge, and the field spreads by the
+  split table of its family): an electron at rest releasing its field in
+  front of a screen of Detector marks is seen as clicks, and the remainder
+  rule of the split decides whether one mark or the whole screen is lit.
+- **Features.** 1, 2, 7, 8, 9, 10 for the first record; 12
+  (`field-spreading-v1`) for the second.
+- **Run.** `examples/nature/screen.json`: board 12 × 11 × 11, open, N = 8
+  (`phase_bits` 3), 24 ticks; the electron at rest is the bound group of the
+  dictionary, two `electron` lamps of amount 4 meeting at (1, 5, 5) at tick
+  1 and held by `bind` (`delay` 1, `ray_delay` 1), content 8; `light` is its
+  field (`field_of` electron, `release` [1, 4], the catalog's ratio),
+  released on all six headings every interval; the screen is seven marks at
+  (7, 2, 5) through (7, 8, 5), setting [1, 1], at distance 6 along +X.
+  `examples/nature/screen_spread.json`: the same with `spread` `[6, 1, 1, 1,
+  1, 1]` declared on `light`, the catalog's table, and nothing else changed.
+  The dictionary and the eye view are in the
+  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+- **Shows.** Before spreading the field lives on the six axis lines of the
+  group, so the +X line reaches the on-axis mark (7, 5, 5) alone: one click
+  of amount 2 every tick from 7 to 24, eighteen clicks at that mark and none
+  at the six others; light released 12 per interval (276 by tick 24, 214
+  escaped at the open boundary, 62 in the world), electron 8, momentum (0,
+  0, 0), the charge line electron -24, every ledger line balanced. With the
+  split table the released rays of 2 spread at the first Node they reach, 1
+  forward by the table and the remainder 1 through the entry the group's
+  phase selects, and a single quantum then turns the same way at every Node,
+  so the +X line still feeds the on-axis mark alone: twelve clicks at (7, 5,
+  5), amount 24 in all, from tick 7, the six other marks never; light
+  released 276, 207 escaped, 69 in the world at tick 24, electron 8,
+  momentum (0, 0, 0), every ledger line balanced. The single-quantum
+  finding: a phase-selected remainder sends a single quantum along one fixed
+  line and leaves every Node off the axis dark, the reason for the model
+  owner's decision of 2026-09-17 that the Node owns the remainder per family
+  and heading and lets it leave whole when it reaches one quantum
+  (Highlights 3.5, feature 12b). After feature 12b the whole screen is
+  expected to click.
+- **Status.** measured, 2026-09-17: `screen.json`, source
+  `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization
+  `35dde6ad84145b5042285baadbb27810b5d30527554646cc67f5a69eac941cff`;
+  `screen_spread.json`, source
+  `3426aa1ddf25f30348d6238edb66b0454e484a237f40fcf9367bdb948d99c2c9`,
+  initialization
+  `34ce343eeb204d9a8b7b1b0c6e6b5c79a21eeb799f717b76d13514a18718fa2d`;
+  outcome: one mark clicks in both records, eighteen times before spreading
+  and twelve times with the split table, the single-quantum finding; the
+  records stay outside the tree.
