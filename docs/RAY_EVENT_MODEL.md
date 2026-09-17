@@ -318,10 +318,18 @@ on the diagonals and empties the axes), the remainder placed by Highlights
 3.17; Huygens' principle in the lattice's language, one catalog entry of the
 family and not an engine mechanism. Field rays carry no event, so field
 content meeting at a Node combines by phase before it spreads (Highlights
-3.20); a single quantum cannot split, and where the table would give a
-heading less than one the remainder leaves whole through the heading the
-phase selects, so a quantum never waits, the wave shows in intensities and
-the Detector decides where a quantum is realized. The field of a static
+3.20); a single quantum cannot split, and the shares the table gives a
+heading below one quantum are owned by the Node per family and heading
+(Highlights 3.17), their phase combined by the coherence rule, and leave as
+one whole quantum through that heading when they reach one, so the average
+intensities are exact and deterministic and a weak field reaches every Node
+in the end, a quantum waiting at a Node for that while the front of a strong
+field moves at the causal speed (chosen by the model owner on 2026-09-17
+over a phase-selected heading, which the screen run (E6)
+showed sends a single quantum along one fixed line and leaves every Node off
+the axis dark; feature 12b implements it, `field-spreading-v1` selecting the
+remainder's heading by phase until then), so the wave shows in intensities
+and the Detector decides where a quantum is realized. The field of a static
 charge filling space with its net momentum through a Node falling as 1/r²
 (Gauss), isotropy at large scale with the lattice's residue for A6, the
 photon as the far field arriving a whole quantum at a time, and diffraction
@@ -736,8 +744,8 @@ every such set; Highlights 3.20 is the text to follow.
    couplings need, since a phase is read only at a meeting and only as a
    difference (decided 2026-09-17, Highlights 3.28): eight steps resolve the
    Born table, a wider circle is allowed but never required, and the
-   weakness of gravity does not live in the phase but in the lag register of
-   feature 8b under step 8.
+   weakness of gravity does not live in the phase but in a register of any
+   width, the momentum register of feature 8b under step 8.
 7. Field emission by traveling rays, with the outward dilution or declared
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as
@@ -842,14 +850,28 @@ every such set; Highlights 3.20 is the text to follow.
    wait, holds any content and therefore has no ladder, and the
    register-driven motion of a group (feature 8c) is the interim form of its
    motion; both are superseded by feature 14, binding as a loop, below.
-   Feature 8b, lag modulus, after feature 10 (decided 2026-09-17, Highlights
-   3.28): the lag counted in its own modulus, declared per family, in place
-   of the phase steps of feature 8; the register is spent as one Link toward
-   the lagging side when it reaches that modulus, exactly as a heading is
-   carried with a resolution of one part in 2^30 through six Ports, and that
-   modulus, not the phase circle, is the N of hypothesis 14, of any width
-   because it enters no phase sum; the phase circle stays as small as the
-   family's couplings need.
+   Feature 8b, a free ray turns by momentum, `ray-momentum-turn-v1` (done on
+   2026-09-17, issue #169; the second gap the helium-ion run E4 found): a
+   ray's direction is its momentum register, three integers, by default
+   amount x heading, which the DDA walks at every departure in place of the
+   heading, one Link per interval, so the momentum sets the direction and
+   never the speed; a coupling of free rays without outputs whose
+   `momentum_table` names the field family pushes its one unnamed
+   participant by sign x amount x heading of every field ray it meets, the
+   field ray returned reversed as the recoil, no event stamped, the ray's
+   amount, phase, bit and record untouched, `ray_push` published; the
+   ledgers read the register and the push is booked as the meeting's
+   momentum change; the heading index stays the ray's line for the rules
+   that read it; see [a free ray turns by
+   momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1).
+   This is the register of Highlights 3.28 for the turn: a resolution of
+   one part in the ray's amount, of any width because it enters no phase
+   sum, in place of the transverse lag of feature 8 spent in whole Links
+   (the item named "lag modulus" under this number on 2026-09-17); the lag
+   keeps the delay on the ray's own axis in phase steps, and its own modulus
+   for that delay (`lag_bits`, the N of hypothesis 14 on the delay) stays
+   open under this feature until a run needs it. It unlocks A5 and A6 in the
+   [experiments register](EXPERIMENTS.md).
 9. Tests and experiments: reversibility replay; the light cone of the carried
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two
@@ -924,45 +946,55 @@ is testable before this feature, in its phase form.
 **Feature 12, field spreading (model owner, 2026-09-17; Highlights 3.5).**
 One catalog entry of the light family, its `spread` table, not an engine
 mechanism: every Node that field content reaches releases it again in all
-six headings by the declared split table, the backward heading included,
-the remainder placed by Highlights 3.17; field content meeting at a Node
-combines by phase before it spreads; a quantum never waits, the remainder
-leaving whole through the heading the phase selects where the table would
-give a heading less than one. It also carries the sign of the source's
-charge on the field ray as a visible property (`source_sign`; Highlights
-3.5, "the field is matter's message about itself", 2026-09-17), read by the
-coupling that meets it and never encoded in the phase, which is reserved for
-interference, and the open entry on the attraction of opposite charges
-(`opposite_charge`) closes with it (A5). What a field quantum that a Detector
-returns with 0 does once the field spreads is an open decision of the model
-owner before A1 (Highlights 5.5, 2026-09-17): its path is no longer one line
-and a field ray has no event for an inverse split; the orchestrator's
-proposal, which this feature implements until it is decided and says so, is
-that the quantum reverses on the line it arrived by and walks back until the
-first content its coupling responds to absorbs it or it reaches its source,
-with no inverse split, every audit exact. (Done on 2026-09-17,
-`field-spreading-v1`: a family's catalog entry `spread`, six weights in Port
-order relative to the arriving heading with the backward one positive and
-the four transverse equal, the light family's `[6, 1, 1, 1, 1, 1]`; the
-content that arrived is taken off the Node after the marks and the meetings,
-amounts adding per arriving heading and sign and the phase being the phase
-of the coherent sum (3.20); each heading's content is shared in whole quanta
-by the table and the remainder leaves whole through the entry the phase
-selects (3.17), so the wave shows in intensities; the departures are fresh
-field rays with no event carrying their sign, the total is exact and the
-momentum a spread moves is booked as a source of the bound momentum field,
-the ledger of feature 10 exact; one `field_spread` record per Node, interval
-and family; `Ray.source_sign` is set at the release from the releasing
-family's charge and kept through spreading, merging, the return and the
-inverse split; a returned field quantum walks back as proposed, restored to
-its emitter, ended at its source or at coupled content with its release
-unbooked, taken by a body or escaped, the `field_returned` record; a world
-without `spread` is byte-identical, its field on the six axis lines of its
-source and its light straight; the cost is measured in the
-[performance record](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables);
-see [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).)
-It unlocks A1, A2 and the diagonal series of A6 in the
-[experiments register](EXPERIMENTS.md).
+six headings by the declared split table, the backward heading included, the
+remainder placed by Highlights 3.17; field content meeting at a Node
+combines by phase before it spreads; the shares the table gives a heading
+below one quantum are owned by the Node per family and heading (Highlights
+3.17), their phase combined by the coherence rule, and leave as one whole
+quantum through that heading when they reach one, so the average intensities
+are exact and deterministic and a weak field reaches every Node in the end,
+a quantum waiting at a Node for that while the front of a strong field moves
+at the causal speed (chosen by the model owner on 2026-09-17 over a
+phase-selected heading, which the screen run (E6) showed
+sends a single quantum along one fixed line and leaves every Node off the
+axis dark; feature 12b implements it, `field-spreading-v1` selecting the
+remainder's heading by phase until then). It also carries the sign of the
+source's charge on the field ray as a visible property (`source_sign`;
+Highlights 3.5, "the field is matter's message about itself", 2026-09-17),
+read by the coupling that meets it and never encoded in the phase, which is
+reserved for interference, and the open entry on the attraction of opposite
+charges (`opposite_charge`) closes with it (A5). What a field quantum that a
+Detector returns with 0 does once the field spreads is an open decision of
+the model owner before A1 (Highlights 5.5, 2026-09-17): its path is no
+longer one line and a field ray has no event for an inverse split; the
+orchestrator's proposal, which this feature implements until it is decided
+and says so, is that the quantum reverses on the line it arrived by and
+walks back until the first content its coupling responds to absorbs it or it
+reaches its source, with no inverse split, every audit exact. (Done on
+2026-09-17, `field-spreading-v1`: a family's catalog entry `spread`, six
+weights in Port order relative to the arriving heading with the backward one
+positive and the four transverse equal, the light family's `[6, 1, 1, 1, 1,
+1]`; the content that arrived is taken off the Node after the marks and the
+meetings, amounts adding per arriving heading and sign and the phase being
+the phase of the coherent sum (3.20); each heading's content is shared in
+whole quanta by the table and the remainder leaves whole through the entry
+the phase selects (3.17), the interim rule that feature 12b replaces with
+the Node-owned remainder, so the wave shows in intensities; the departures
+are fresh field rays with no event carrying their sign, the total is exact
+and the momentum a spread moves is booked as a source of the bound momentum
+field, the ledger of feature 10 exact; one `field_spread` record per Node,
+interval and family; `Ray.source_sign` is set at the release from the
+releasing family's charge and kept through spreading, merging, the return
+and the inverse split; a returned field quantum walks back as proposed,
+restored to its emitter, ended at its source or at coupled content with its
+release unbooked, taken by a body or escaped, the `field_returned` record; a
+world without `spread` is byte-identical, its field on the six axis lines of
+its source and its light straight; the cost is measured in the [performance
+record](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables);
+see [field
+spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).) It
+unlocks A1, A2 and the diagonal series of A6 in the [experiments
+register](EXPERIMENTS.md).
 
 **Feature 14, binding as a loop (model owner, 2026-09-17; Highlights 3.4).**
 Design done on 2026-09-17 ([loop binding](LOOP_BINDING.md),
@@ -970,17 +1002,17 @@ Design done on 2026-09-17 ([loop binding](LOOP_BINDING.md),
 as integer equalities, the unit-square electron as the world
 `examples/nature/ring.json` with its dispersing control `ring_open.json`,
 register entry E5, and the expected integers of `tests/test_loop_binding.py`
-pinned before any run); implementation after feature 8b, features 12, 8c
-and 2b having landed on 2026-09-17. A ray never stops, and "bound"
-does not mean "resident": a bound group is a set of rays whose meetings,
-under the ordinary coupling table, reproduce the rays that entered them: the
-outputs leave, walk their Links, meet again, and the meeting gives the same
-amounts, the same phases modulo the circle and the same headings, so the
-pattern repeats forever; a pattern whose meeting does not close disperses.
-There is no binding rule: a bound group is a fixed point of the ordinary
-meeting table over a loop, the only declared thing is the table, and step 3
-of the Node's law is untouched, since the loop uses the ordinary meeting. On
-the cubic lattice the smallest loop is a unit square of four Nodes with rays
+pinned before any run); implementation after feature 8b, features 12, 8c and
+2b having landed on 2026-09-17. A ray never stops, and "bound" does not mean
+"resident": a bound group is a set of rays whose meetings, under the
+ordinary coupling table, reproduce the rays that entered them: the outputs
+leave, walk their Links, meet again, and the meeting gives the same amounts,
+the same phases modulo the circle and the same headings, so the pattern
+repeats forever; a pattern whose meeting does not close disperses. There is
+no binding rule: a bound group is a fixed point of the ordinary meeting
+table over a loop, the only declared thing is the table, and step 3 of the
+Node's law is untouched, since the loop uses the ordinary meeting. On the
+cubic lattice the smallest loop is a unit square of four Nodes with rays
 circulating both ways, each corner meeting every interval two rays that
 leave through each other's Ports; a group lives on a ring of Nodes, not at
 one Node, its size is the ring, its clock is the period of the loop, its
@@ -991,17 +1023,20 @@ is the set of contents and phases that close a loop under the table, which
 experiment A10 counts once this feature lands; the held-ray binding of
 feature 8 and the register-driven motion of feature 8c are its interim
 forms, and a binding coupling of the catalog is then an ordinary meeting
-table whose loop closes. What the design found by following the tables:
-the corner table of the unit square is an outputs rule of today's schema
-(each input's amount and phase through the Port the other came in by), the
-phase closes in one circuit when `L r = 0 (mod N)` (`4 r = 0 (mod N)` on
-the unit square), the phase difference at a corner is a constant of the
-motion for one family so no rate is read at any meeting of the ring, the
-Port-form corner holds every content and every rate and so gives no ladder
-by itself, the ladder needs the ring's turn to be produced by the group's
-own field (open), and the engine of `main` already holds the ring under the
-Port form, so the implementation begins with the removal of the interim
-forms and the record's reading of a group.
+table whose loop closes. What the design found by following the tables: the
+corner table of the unit square is an outputs rule of today's schema (each
+input's amount and phase through the Port the other came in by), the phase
+closes in one circuit when `L r = 0 (mod N)` (`4 r = 0 (mod N)` on the unit
+square), the phase difference at a corner is a constant of the motion for
+one family so no rate is read at any meeting of the ring, the Port-form
+corner holds every content and every rate and so gives no ladder by itself,
+the ladder needs the ring's turn to be produced by the group's own field
+(open), and the engine of `main` already holds the ring under the Port form,
+so the implementation begins with the removal of the interim forms and the
+record's reading of a group. The strong loops of Highlights 3.26, a string
+of gluon rays between quarks whose colour-neutral closure is confinement,
+are this feature's reading of the gluon couplings, hypothesis 13's research
+run after it.
 
 **The strong interaction, catalog work after feature 10.** Quark families,
 colour a property with three values (a family property like charge, feature
@@ -1009,9 +1044,19 @@ colour a property with three values (a family property like charge, feature
 the binding of three quarks a binding coupling (feature 8, Highlights 3.4),
 and one more declared coupling, the quark's field rays binding to each
 other, from which the short range and the growth with distance are expected.
-Whether that yields confinement is
-[hypothesis 13](HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other),
-a research question for a run, not an engine decision.
+Whether that yields confinement is [hypothesis
+13](HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other),
+a research question for a run, not an engine decision. In the language of
+binding as a loop (feature 14; Highlights 3.26, 2026-09-17): the strong
+field differs from light by one catalog line, its rays couple to each other,
+so the field between quarks does not spread as a sphere but closes into
+loops of gluon rays along the line between them, a string whose content, and
+so whose mass, grows with the distance; only colour-neutral patterns close a
+loop, which is confinement as a closure condition; and a string stretched to
+the content at which a new loop closes with a quark and an antiquark breaks
+into two hadrons, which is hadronization; none of it inserted, hypothesis 13
+saying whether the two catalog lines produce it in a research run after
+feature 14 (E7 of the register).
 
 **The weak interaction and decay, catalog work after feature 10.** A change
 of family: an N-to-M conversion at an event (feature 6) with its declared

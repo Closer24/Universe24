@@ -846,6 +846,23 @@ class SpatialNode(SpatialNodeState):
                 coherence=spread.coherence,
                 signs=spread.signs,
             )
+        for push in plan.ray_pushes:
+            # A free ray turned by momentum (ray-momentum-turn-v1, Highlights 3.16):
+            # the push of one field ray the coupling's table met, its register
+            # before and after; no event is stamped, the ray's record stays.
+            self._event(
+                "ray_push",
+                tick,
+                services,
+                notifications=notifications,
+                family=services.initial.fields[services.initial.spatial_fields[push.field].field].name,
+                amount=push.amount,
+                before=push.before,
+                after=push.after,
+                field=services.initial.fields[services.initial.spatial_fields[push.pusher].field].name,
+                field_amount=push.pusher_amount,
+                field_heading=push.pusher_heading,
+            )
         for item in plan.returned:
             # A returned field quantum that ended here (field-spreading-v1, the
             # proposal of Highlights 5.5): restored to its emitter or unbooked.

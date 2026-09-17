@@ -340,6 +340,7 @@ delay:
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every emitted ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)). A property of the ray like charge (`detector-bit-property-v1`): the outputs of a meeting inherit it, a coupling reads it as the ray property `detector`, and a marked Node reads it ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 | `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
+| `momentum` | `None` or three bounded signed integers | The momentum register ([a free ray turns by momentum](#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)): the ray's momentum, `None` for the default amount x heading of its line, which every created ray carries; set by a push, walked by the DDA in place of the heading, cleared when a push brings it back to the default, negated by a return with the heading, part of the merge identity and, being extensive, summed when rays merge |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
@@ -372,7 +373,7 @@ the event's mask and shares as a fresh outbound trajectory with `steps 0`:
 
 Merge identity: `merge_rays` combines rays that agree in heading, lattice
 accumulators, wave phase, advance, wait, interaction delay, steps, outbound,
-event Ports, event shares and Detector bit. Rays of different events never
+event Ports, event shares, Detector bit and momentum register. Rays of different events never
 merge, even with the same heading, family and phase: each keeps the
 information of its own event, and two rays of one emitter's successive cycles
 are two events. `ray_count` and slot use therefore count events on a line,
@@ -1115,6 +1116,16 @@ amount is exact: the coherence of the arrivals (`coherence`, the ratio a
 reader or an absorber sees) is recorded and never applied to the amount,
 since nothing but a sink ends a quantum.
 
+Superseded (model owner, 2026-09-17, Highlights 3.5): the remainder below
+the table's whole quanta is owned by the Node per family and heading
+(Highlights 3.17), its phase combined by the coherence rule, and leaves as
+one whole quantum through that heading when it reaches one, a quantum
+waiting at a Node for that while the front of a strong field moves at the
+causal speed, so the phase-selected heading this slice implements is
+superseded by feature 12b, the screen run (E6) having shown
+that it sends a single quantum along one fixed line and leaves every Node
+off the axis dark.
+
 **The split.** Each arriving heading's content A is shared over the six
 relative headings in whole quanta, floor(A x w_i / S), S the table's total.
 The quanta the floors leave, at most five per heading, are the remainder of
@@ -1531,6 +1542,132 @@ only, naming ray families that are not among its participants, signs -1 or
 1; the named families are admitted as every selected ray field is
 (unit-axial, unpaced, no decay). No draw, no new arithmetic beyond the
 body's; nothing else changes.
+
+### A free ray turns by momentum (`ray-momentum-turn-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.16 and 3.28;
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature
+8b; issue #169): a ray's direction is its momentum vector, and a field ray
+that meets it changes that vector by the momentum it carries, so a free ray
+bends gradually, by the field, and not by whole Ports alone. The gap it
+closes was found by the helium-ion run
+([E4](EXPERIMENTS.md#e4-the-helium-ion-one-electron-at-a-nucleus-of-charge-2),
+"the missing rules", ii): a free ray's heading changed only by an outputs
+rule's Port table or by the lag of `ray-binding-v1`, one Link sideways per
+phase modulus with the heading unchanged, so a curved path, light bending
+(A6) or an electron deflected by a charge (A5), was not expressible. It is
+the momentum register of `bound-group-motion-v1` given to a free ray.
+`test_ray_momentum_turn.py`
+([expectations](TEST_EXPECTATIONS.md#a-free-ray-turns-by-momentum)) is the
+test.
+
+**The register.** Every ray carries a momentum register, `Ray.momentum`,
+three integers: by default `None`, which reads as amount x heading of its
+line, the momentum every ray has carried since `isotropic-ray-field-v1`, so
+every existing ray is unchanged and every existing record byte-identical
+where no push happens (the test's case (d) pins the digests of two worlds).
+A push sets the register to an explicit vector; a push that brings it back
+to the default clears it, so a ray that resumes its line is the ray it was
+and merges with its kind. `ray_momentum_vector` reads a ray's momentum
+either way; a return negates the register with the heading
+(`return_ray`), and a returning ray reads as its share on the event's
+heading as before; the register is part of the merge identity, and rays of
+one register that merge carry the sum of their registers, as they carry the
+sum of their amounts (a register is extensive). Storage: three stored
+values bounded by `MAX_VALUE`, not all zero.
+
+**The DDA walks the register.** At every departure the Port is chosen by
+`dda_step` on the ray's vector (`ray_vector`): the register when one is
+set, the heading of its line otherwise, with the ray's three accumulators
+exactly as today (they add the vector's components, the axis furthest
+ahead steps and loses the vector's Manhattan length, ties to the lowest
+axis). So a ray with momentum (7, -1, 0) takes seven +X Links per -Y Link,
+and one with (2, 3, 0), past 45 degrees, three +Y per two +X, one Link per
+interval always: the momentum sets the direction and never the speed, which
+is the one speed of the board (Highlights 3.28). The DDA on a register and
+on the same vector scaled give the same Ports (the accumulators scale with
+it), so the register needs no reduction. The heading index stays the ray's
+line for the rules that read it: a coupling's view of `heading`, the event
+Port of a return and the inverse split read the index; the release
+geometry of [released-field-v1](#field-as-the-rays-information-released-field-v1)
+skips `ray_line`, the unit-axial heading of the register's dominant axis
+(the largest component, ties to the lowest axis), the line the ray occupies
+ahead of it, and releases on the five others. A rule that assigns the ray a
+new heading clears the register: the new line is what the rule said.
+
+**The push.** A `ray_interactions` entry without outputs and without
+assignments may declare `"momentum_table": {family: sign}` (family name to
+-1, attraction toward the source of an arriving field ray, or 1, repulsion;
+[disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)), the table of
+`bound-group-motion-v1` with one difference: it names a participant
+family. Such a rule is a coupling of free rays: its one role the table does
+not name is the ray that is pushed (`turn_receiver`); every other role's
+families are named, the field rays; a table that names no participant is a
+binding rule's (a group's push), and a mixed role or two unnamed roles is
+refused at admission. In the interval the rule's guard holds over a group of
+its participants, the ray is pushed by every resident outbound ray of a
+named family that no earlier declared rule met, the group's field
+participant among them, in slot order: each push is sign x amount x heading
+of the field ray, exactly `body_absorb`'s and the group's arithmetic, the
+register moves by it (`pushed_ray`), the accumulators reset as at a change
+of line, and the field ray is returned reversed as the recoil, a new event
+ray on the negated heading with its amount and phase (the recoil of
+[released-field-v1](#field-as-the-rays-information-released-field-v1),
+Highlights 3.5, 3.14). A push never changes the ray's amount, phase, bit,
+heading index, steps or event record: it is not a new event of trajectory
+in the sense of Highlights 5.2 step 4, no event is stamped and the ray's
+record stays, so the return of a pushed ray still undoes its event. A push
+that would leave the register at the zero vector fails the cycle: a ray
+never stops. A later group of the same rule whose field ray an earlier push
+took does not fire (one receiver per rule per Node per interval takes every
+field ray the table names); a family that also has an earlier declared
+rule with the ray's family is met by that rule first. A coupling with
+outputs is an ordinary meeting and declares no table, as before. The Node
+publishes one `ray_push` record per field ray met (family, amount, the
+register before and after, the field family, its amount and its heading),
+before the cycle's record; the runner records `ray_momentum_turn:
+"ray-momentum-turn-v1"` when any push happened, and nothing for a world
+where none did (a free-ray table alone does not mark `bound_group_motion`).
+
+```json
+{"name": "turn", "participants": [{"type": "electron"}, {"type": "light"}],
+ "momentum_table": {"light": -1},
+ "invariants": [{"name": "energy", "expression": {"op": "add", "args": [
+   {"field": "amount", "participant": 0}, {"field": "amount", "participant": 1}]}}]}
+```
+
+**The identity.** The world ledger reads a free ray's momentum by its
+register (`ray_momentum`, wherever it is: at a Node, on a Link, escaped,
+absorbed by a body's sink), and the push is booked as a meeting's momentum
+change exactly as `bound-group-motion-v1` books a group's push: at the push
+Node the ray's family changes by sign x amount x heading of the field ray
+(the push) and the field family by -2 x amount x heading (the reversal),
+both as the meeting's source of the momentum field the families bind, so
+`initial + sourced = current + escaped + annulled + absorbed` holds at every
+tick and `conserved_at_every_completed_tick` stays true. The recoil carries
+the opposite of what the field ray brought back along its line to its
+source, and what the source does with it is the source's own table (a
+body's `momentum_table`, a group's, or the open `recoil_return`); the
+identity does not depend on it, since every change is an explicitly
+accounted source (Highlights 3.15). The local audit reads the register the
+same way (`InventoryNode` rays, [local
+conservation](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1));
+the push, like the momentum a split moves and a group's push, is booked to
+the world ledger only. A ray with a register that a legacy absorption rule
+takes is taken whole (`ray_momentum_share`). The ray viewer's momentum
+arrow reads the register from the recording (`tools/ray_viewer`).
+
+Admission: `momentum_table` on a rule without outputs and without
+assignments, naming at least one participant family and leaving exactly
+one role unnamed, signs -1 or 1; the named families are admitted as every
+selected ray field is (unit-axial, unpaced, no decay). Not in this slice:
+absorption of the field ray into the ray (the table returns it reversed),
+a push combined with an assignment or a delay table on one rule (gravity's
+delay and turn stay two rules), and the lag's own modulus for the delay on
+the ray's own axis (`lag_bits`, [catalog](CATALOG.md)); the transverse
+part of the lag, the turn, is what this register carries with no modulus
+but the ray's amount, of any width because it enters no phase sum
+(Highlights 3.28).
 
 ### Funded emission and absorption
 

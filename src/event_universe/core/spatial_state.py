@@ -128,6 +128,17 @@ RAY_BINDING = "ray-binding-v1"
 # amount x heading, the field ray returned reversed. Speed is momentum over
 # content, one Link every k intervals, with no kinematic rule.
 BOUND_GROUP_MOTION = "bound-group-motion-v1"
+# A free ray turns by momentum (Highlights 3.5, 3.14, 3.16 and 3.28,
+# ray-momentum-turn-v1): a ray's direction is its momentum vector, three integers
+# carried as its register, by default amount x heading, the line its event gave
+# it; the DDA walks the register at every departure, one Link per interval, so
+# a ray with momentum (7, -1, 0) takes seven +x Links per -y Link. A coupling
+# without outputs whose momentum_table names a participant family pushes the
+# one participant it does not name by sign x amount x heading of every field
+# ray it meets, as the table pushes a bound group, the field ray returned
+# reversed; the push stamps no event and changes no amount, phase or bit. The
+# heading index stays the ray's line for the rules that read it.
+RAY_MOMENTUM_TURN = "ray-momentum-turn-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -359,6 +370,13 @@ class Ray:
     # family; a visible property like the Detector bit, never encoded in the
     # phase, read by no rule of the engine.
     source_sign: int = 0
+    # The momentum register (ray-momentum-turn-v1, Highlights 3.16): the ray's
+    # momentum, three integers, or None for the default amount x heading, the
+    # line of its heading index. Set by a push, the DDA walks it in place of the
+    # heading; a push that brings it back to the default clears it, so a ray
+    # that resumes its line is the ray it was. Negated by a return with the
+    # heading; extensive, so merging rays adds it as it adds their amounts.
+    momentum: tuple[int, int, int] | None = None
 
 
 Rays = tuple[Ray, ...]
@@ -510,18 +528,33 @@ def validate_ray_participants(
             raise ValueError("a binding rule's ray_delay is a nonnegative bounded integer")
         if rule.momentum_table:
             # bound-group-motion-v1: a binding rule's table names the field families
-            # that push its group, families it does not itself bind.
+            # that push its group, families it does not itself bind;
+            # ray-momentum-turn-v1: a table that names a participant family is a
+            # coupling of free rays, assigning nothing, whose one unnamed role is
+            # the ray the named field rays push.
             participants = {kind for role in rule.participants for kind in role}
             if (
                 rule.outputs
-                or not any(assignment.field == RAY_DELAY for assignment in rule.assignments)
                 or len(rule.momentum_table) != len(definitions)
                 or any(sign not in (-1, 0, 1) for sign in rule.momentum_table)
                 or not any(rule.momentum_table)
-                or any(sign and kind in participants for kind, sign in enumerate(rule.momentum_table))
             ):
                 raise ValueError(
                     "a momentum table is declared by a binding rule and names families it does not bind"
+                )
+            names_participant = any(
+                sign and kind in participants for kind, sign in enumerate(rule.momentum_table)
+            )
+            if rule.assignments or bounded(rule.ray_delay):
+                if names_participant or not any(
+                    assignment.field == RAY_DELAY for assignment in rule.assignments
+                ):
+                    raise ValueError(
+                        "a momentum table is declared by a binding rule and names families it does not bind"
+                    )
+            elif not names_participant or turn_receiver(rule) in (None, -1):
+                raise ValueError(
+                    "a momentum table on a coupling of free rays names every role but the one ray it turns"
                 )
             selected.update(kind for kind, sign in enumerate(rule.momentum_table) if sign)
     for layer in ray_layers(definitions, rules):
@@ -756,7 +789,7 @@ def release_field(
         if ray.interaction_delay:
             skip = carried if ray.steps == 0 else None
         else:
-            skip = origin.headings[ray.heading]
+            skip = ray_line(ray, origin)
         released.extend(_released(amount, ray.phase, definition, skip, sign))
     return tuple(released)
 
@@ -1612,6 +1645,26 @@ class SpatialPlan:
     # The remainder registers after this cycle (field-remainder-v1).
     remainders: Remainders = ()
     remainder_phases: Remainders = ()
+    # The pushes of free rays this cycle, one per field ray met by a coupling's
+    # momentum table (ray-momentum-turn-v1).
+    ray_pushes: tuple[RayPush, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class RayPush:
+    """The record of one push of a free ray for the Node to publish
+    (ray-momentum-turn-v1): plain bounded integers, as the Node state contract
+    requires. The pushed ray's spatial field and amount, its register before and
+    after, and the field ray that pushed it: its spatial field, amount and heading.
+    """
+
+    field: int
+    amount: int
+    before: tuple[int, int, int]
+    after: tuple[int, int, int]
+    pusher: int
+    pusher_amount: int
+    pusher_heading: Heading
 
 
 @dataclass(frozen=True, slots=True)
@@ -1686,7 +1739,18 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray transport requires immutable Ray entries")
         if type(ray.heading) is not int or not 0 <= ray.heading < len(definition.headings):
             raise ValueError("ray heading index is outside the configured sequence")
-        length = validate_heading(definition.headings[ray.heading])
+        validate_heading(definition.headings[ray.heading])
+        if ray.momentum is not None:
+            # ray-momentum-turn-v1: a register is three stored integers, not all zero.
+            if type(ray.momentum) is not tuple or len(ray.momentum) != 3:
+                raise ValueError("a ray momentum register requires three integers")
+            for value in ray.momentum:
+                if type(value) is not int:
+                    raise ValueError("a ray momentum register requires three integers")
+                bounded(value)
+            if not any(ray.momentum):
+                raise ValueError("a ray momentum register must not be the zero vector")
+        length = vector_length(ray_vector(ray, definition))
         if type(ray.accumulators) is not tuple or len(ray.accumulators) != 3:
             raise ValueError("a ray requires three integer accumulators")
         if any(type(a) is not int or not -length < a <= length for a in ray.accumulators):
@@ -1729,9 +1793,117 @@ def validate_ray_event_state(ray: Ray) -> None:
         raise ValueError("ray detector must be 0 (none), 1 (bit 0) or 2 (bit 1)")
 
 
+def vector_length(vector: Heading) -> int:
+    """The Manhattan length of a nonzero integer vector the DDA walks: a heading of
+    the family's table or a ray's momentum register (ray-momentum-turn-v1), whose
+    components are stored values and may exceed a heading's bound."""
+    if type(vector) is not tuple or len(vector) != 3:
+        raise ValueError("a ray vector requires three integer components")
+    length = 0
+    for component in vector:
+        if type(component) is not int:
+            raise ValueError("ray vector components must be integers")
+        length = checked_work(length + abs(bounded(component)))
+    if length == 0:
+        raise ValueError("a ray vector must not be the zero vector")
+    return length
+
+
+def ray_vector(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
+    """The vector the ray's DDA walks (ray-momentum-turn-v1): its momentum register
+    when a push set one, else the heading of its line, which is the default
+    register amount x heading up to the amount."""
+    if ray.momentum is not None:
+        return ray.momentum
+    return definition.headings[ray.heading]
+
+
+def ray_line(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
+    """The line a ray occupies ahead of it, for the release geometry
+    (released-field-v1): the heading of its index, or, for a ray with a momentum
+    register, the unit-axial heading of the register's dominant axis, the axis of
+    the largest component, ties to the lowest axis as the DDA takes them."""
+    if ray.momentum is None:
+        return definition.headings[ray.heading]
+    momentum = ray.momentum
+    axis = max(range(3), key=lambda i: (abs(momentum[i]), -i))
+    return PORT_HEADINGS[2 * axis + (0 if momentum[axis] > 0 else 1)]
+
+
+def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
+    """One ray's momentum as the ledger reads it: its register when a push set one,
+    else amount x heading (ray-momentum-turn-v1). The sign of a returning ray is the
+    caller's."""
+    if ray.momentum is not None:
+        return ray.momentum
+    heading = definition.headings[ray.heading]
+    return (
+        checked_work(ray.amount * heading[0]),
+        checked_work(ray.amount * heading[1]),
+        checked_work(ray.amount * heading[2]),
+    )
+
+
+def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
+    """The momentum a share of one ray carries away: share x heading on the ray's
+    line; a ray with a momentum register is taken whole or not at all."""
+    if ray.momentum is None:
+        heading = definition.headings[ray.heading]
+        return (
+            checked_work(share * heading[0]),
+            checked_work(share * heading[1]),
+            checked_work(share * heading[2]),
+        )
+    if share != ray.amount:
+        raise ValueError("a ray with a momentum register is absorbed whole")
+    return ray.momentum
+
+
+def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDefinition) -> Ray:
+    """The ray after a push (ray-momentum-turn-v1): its register moved by the push,
+    its accumulators reset as at a change of line, amount, phase, bit, heading
+    index and event record untouched. A register back at the default amount x
+    heading is cleared, so the ray resumes its line as the ray it was; a push
+    that would leave no direction fails closed, since a ray never stops."""
+    before = ray_momentum_vector(ray, definition)
+    after = (
+        bounded(checked_work(before[0] + push[0])),
+        bounded(checked_work(before[1] + push[1])),
+        bounded(checked_work(before[2] + push[2])),
+    )
+    if not any(after):
+        raise ValueError("a push cannot stop a ray: its momentum would be the zero vector")
+    heading = definition.headings[ray.heading]
+    default = tuple(checked_work(ray.amount * component) for component in heading)
+    return replace(ray, momentum=None if after == default else after, accumulators=(0, 0, 0))
+
+
+def turn_receiver(rule: InteractionDefinition) -> int | None:
+    """The role a momentum table on a coupling of free rays pushes
+    (ray-momentum-turn-v1): a table that names a participant family is the free
+    ray's table, and the one role the table does not name receives every push.
+    None for a binding rule's table, which names no participant (bound-group-motion-v1),
+    and for a rule without a table; -1 when the roles do not give one receiver."""
+    if not rule.momentum_table:
+        return None
+    named = {kind for kind, sign in enumerate(rule.momentum_table) if sign}
+    if not any(kind in named for role in rule.participants for kind in role):
+        return None
+    receivers = [
+        index for index, role in enumerate(rule.participants) if all(kind not in named for kind in role)
+    ]
+    pushers = [
+        index for index, role in enumerate(rule.participants) if all(kind in named for kind in role)
+    ]
+    if len(receivers) != 1 or len(receivers) + len(pushers) != len(rule.participants):
+        return -1
+    return receivers[0]
+
+
 def dda_step(accumulators: tuple[int, int, int], heading: Heading) -> tuple[int, tuple[int, int, int]]:
-    """One Link along the axis furthest behind the heading; ties take the lowest axis."""
-    length = validate_heading(heading)
+    """One Link along the axis furthest behind the heading; ties take the lowest axis.
+    The vector is a heading of the table or a ray's momentum register."""
+    length = vector_length(heading)
     advanced = [a + abs(h) for a, h in zip(accumulators, heading, strict=True)]
     axis = max(range(3), key=lambda i: (advanced[i], -i))
     advanced[axis] -= length
@@ -1859,6 +2031,10 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     negated = (-heading[0], -heading[1], -heading[2])
     if negated not in definition.headings:
         raise ValueError("a return requires the negated heading in the field's sequence")
+    momentum = ray.momentum
+    if momentum is not None:
+        # ray-momentum-turn-v1: the same ray reversed walks its register back.
+        momentum = (-momentum[0], -momentum[1], -momentum[2])
     return replace(
         ray,
         heading=definition.headings.index(negated),
@@ -1867,6 +2043,7 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         interaction_delay=0,
         lag=(0, 0, 0),
         outbound=0,
+        momentum=momentum,
     )
 
 
@@ -1959,6 +2136,7 @@ RayMergeKey = tuple[
     int,
     tuple[int, int, int],
     int,
+    tuple[int, int, int] | None,
 ]
 
 
@@ -1978,6 +2156,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.detector,
         ray.lag,
         ray.source_sign,
+        ray.momentum,
     )
 
 
@@ -1990,43 +2169,51 @@ def merge_rays(rays: Rays) -> Rays:
     it stays two rays of the same family (field-spreading-v1).
     """
     combined: dict[RayMergeKey, int] = {}
+    # ray-momentum-turn-v1: a register is extensive, so rays of one register that
+    # merge carry the sum of their registers, as they carry the sum of their amounts.
+    counts: dict[RayMergeKey, int] = {}
     for ray in rays:
         key = ray_merge_key(ray)
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
+        counts[key] = counts.get(key, 0) + 1
     return tuple(
         Ray(
-            heading,
-            accumulators,
+            key[0],
+            key[1],
             bounded(amount),
-            phase,
-            advance,
-            wait,
-            delay,
-            steps=steps,
-            outbound=outbound,
-            event_ports=ports,
-            event_shares=shares,
-            detector=detector,
-            lag=lag,
-            source_sign=sign,
+            key[2],
+            key[3],
+            key[4],
+            key[5],
+            steps=key[6],
+            outbound=key[7],
+            event_ports=key[8],
+            event_shares=key[9],
+            detector=key[10],
+            lag=key[11],
+            source_sign=key[12],
+            momentum=_merged_register(key[13], counts[key]),
         )
-        for (
-            heading,
-            accumulators,
-            phase,
-            advance,
-            wait,
-            delay,
-            steps,
-            outbound,
-            ports,
-            shares,
-            detector,
-            lag,
-            sign,
-        ), amount in sorted(combined.items())
+        for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount
     )
+
+
+def _merged_register(momentum: tuple[int, int, int] | None, count: int) -> tuple[int, int, int] | None:
+    """The register of `count` merged rays that share one: its sum, count times it."""
+    if momentum is None:
+        return None
+    return (
+        bounded(checked_work(momentum[0] * count)),
+        bounded(checked_work(momentum[1] * count)),
+        bounded(checked_work(momentum[2] * count)),
+    )
+
+
+def _merge_order(key: RayMergeKey) -> tuple[object, ...]:
+    """The fixed order of merged rays: the key with a register not set before one set."""
+    momentum = key[13]
+    return (*key[:13], momentum is not None, momentum or (0, 0, 0))
 
 
 def ray_stock(rays: Rays) -> int:
@@ -2046,8 +2233,8 @@ def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, i
     result = [0, 0, 0]
     for ray in rays:
         sign = 1 if ray.outbound else -1
-        for axis, component in enumerate(definition.headings[ray.heading]):
-            result[axis] = checked_work(result[axis] + sign * checked_work(ray.amount * component))
+        for axis, value in enumerate(ray_momentum_vector(ray, definition)):
+            result[axis] = checked_work(result[axis] + sign * value)
     return result[0], result[1], result[2]
 
 

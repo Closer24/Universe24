@@ -136,7 +136,12 @@ states "exactly" and means integer equality at every tick.
   field quantum returned with 0 does once the field spreads is an open
   decision of the model owner before this run (Highlights 5.5, 2026-09-17);
   until it is decided feature 12 implements the proposal, a walk back on the
-  line of arrival with no inverse split, and says so.
+  line of arrival with no inverse split, and says so. The sub-quantum
+  remainder of a spread is owned by the Node per family and heading and
+  leaves whole when it reaches one quantum (Highlights 3.5, decided
+  2026-09-17 over the phase-selected heading; feature 12b), so the fringes
+  are where whole quanta are realized after the Node's remainders have grown
+  to one.
 
 ### A2. Bell test in phase form, symmetric geometry
 
@@ -314,7 +319,14 @@ states "exactly" and means integer equality at every tick.
   matter's message about itself): the sign of the releasing charge travels
   on the field ray as a visible property (`source_sign`, feature 12), never
   in the phase, and the attraction of opposite charges (`opposite_charge`)
-  closes with it.
+  closes with it. Under Highlights 5.5 (2026-09-17) the release ratio and
+  the strength table are inputs until hypothesis 17 says what fixes them:
+  this entry confronts the form of Coulomb's law, the exponent -1 in b, and
+  not the value of the coupling. Runnable after feature 8b
+  (`ray-momentum-turn-v1`, 2026-09-17), which turns a free ray gradually by
+  the momentum of every field ray it meets under a coupling's
+  `momentum_table`, so Δp(b) is a register the audit reads and not a count
+  of whole Ports.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
@@ -393,15 +405,21 @@ states "exactly" and means integer equality at every tick.
   its source, so the diagonal passes meet no field and the clause comparing
   the axis with the diagonal measures nothing; with it the field fills the
   board and the lattice's anisotropy is the residue this entry measures. The
-  N-scan part of the criterion ran on 2026-09-17 as
-  the acceptance test of feature 8 (`test_ray_binding.py`, a test, not this
-  experiment): a bound group of mass N / 4 phase steps per interval, b = 4,
-  the delay table `[4, 4, 4, 4, 4, 4]` per unit of field amount, gave
-  G_eff · N² = 64 exactly for N = 2^8, 2^10, 2^12 and 2^16, by the
-  construction of the delay in phase steps of a content-fixed field amount
+  N-scan part of the criterion ran on 2026-09-17 as the acceptance test of
+  feature 8 (`test_ray_binding.py`, a test, not this experiment): a bound
+  group of mass N / 4 phase steps per interval, b = 4, the delay table `[4,
+  4, 4, 4, 4, 4]` per unit of field amount, gave G_eff · N² = 64 exactly for
+  N = 2^8, 2^10, 2^12 and 2^16, by the construction of the delay in phase
+  steps of a content-fixed field amount
   ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
   The five b, the exponent, the linearity in M and the external body remain
-  to be run here.
+  to be run here. Under Highlights 5.5 (2026-09-17) the lag modulus N and
+  the mass field's release are inputs until hypotheses 16 and 17 say what
+  fixes them: this entry confronts the forms, the exponent -1 in b and G_eff
+  · N² constant, and not the value of G. Runnable after feature 8b
+  (`ray-momentum-turn-v1`, 2026-09-17), the gradual turn of a free ray by a
+  coupling's `momentum_table`, for the deflection measured as a momentum
+  register.
 
 ### A7. Newtonian attraction between two bound groups
 
@@ -615,8 +633,10 @@ states "exactly" and means integer equality at every tick.
 - **Status.** planned. Reading of 2026-09-17 (Highlights 3.28): the run
   remains a width check, that `phase_bits` = 75 leaks into no coupling, and
   nothing on the road to the confrontation runs requires the wide phase, the
-  N of nature being the lag modulus of feature 8b (declared on the lag
-  register, of any width, entering no phase sum) and not the phase circle.
+  N of nature being a register of any width that enters no phase sum (the
+  momentum register of feature 8b for the turn, `ray-momentum-turn-v1`,
+  2026-09-17; the lag's own modulus for the delay, open) and not the phase
+  circle.
 
 ### A12. Malus's law and the three-polarizer chain (after feature 11)
 
@@ -1144,6 +1164,11 @@ sign rule, and its other couplings are catalog entries.
   heading toward the lagging side, the lag register being the transverse
   momentum the audit reads (Highlights 3.28, feature 8b). Neither is added
   by this run; with both, the orbit is a staircase circle of period 8 r k.
+  Feature 8b landed on 2026-09-17 as `ray-momentum-turn-v1`: the transverse
+  momentum is the ray's momentum register, pushed by a coupling's
+  `momentum_table` and walked by the DDA ([a free ray turns by
+  momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1));
+  this run is not repeated.
   The extractor of the ray viewer was corrected for this record: a ray a
   body's sink takes is not in the receiver's reading, so its transit now
   takes the amount from the `external_body_absorbed` record, and at a
@@ -1207,3 +1232,88 @@ sign rule, and its other couplings are catalog entries.
 - **Status.** planned, feature 14 (design done on 2026-09-17; the
   demonstration is made once the held form is removed and the record reads
   the group).
+
+### E6. The screen: the field of an electron at rest on seven marks
+
+- **Claim.** Highlights 5.4 ("everything begins and is realized at a marked
+  Node": the picture of the world is the list of PASS clicks, the eye view)
+  and 3.5 (light is the field of a charge, and the field spreads by the
+  split table of its family): an electron at rest releasing its field in
+  front of a screen of Detector marks is seen as clicks, and the remainder
+  rule of the split decides whether one mark or the whole screen is lit.
+- **Features.** 1, 2, 7, 8, 9, 10 for the first record; 12
+  (`field-spreading-v1`) for the second.
+- **Run.** `examples/nature/screen.json`: board 12 × 11 × 11, open, N = 8
+  (`phase_bits` 3), 24 ticks; the electron at rest is the bound group of the
+  dictionary, two `electron` lamps of amount 4 meeting at (1, 5, 5) at tick
+  1 and held by `bind` (`delay` 1, `ray_delay` 1), content 8; `light` is its
+  field (`field_of` electron, `release` [1, 4], the catalog's ratio),
+  released on all six headings every interval; the screen is seven marks at
+  (7, 2, 5) through (7, 8, 5), setting [1, 1], at distance 6 along +X.
+  `examples/nature/screen_spread.json`: the same with `spread` `[6, 1, 1, 1,
+  1, 1]` declared on `light`, the catalog's table, and nothing else changed.
+  The dictionary and the eye view are in the
+  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+- **Shows.** Before spreading the field lives on the six axis lines of the
+  group, so the +X line reaches the on-axis mark (7, 5, 5) alone: one click
+  of amount 2 every tick from 7 to 24, eighteen clicks at that mark and none
+  at the six others; light released 12 per interval (276 by tick 24, 214
+  escaped at the open boundary, 62 in the world), electron 8, momentum (0,
+  0, 0), the charge line electron -24, every ledger line balanced. With the
+  split table the released rays of 2 spread at the first Node they reach, 1
+  forward by the table and the remainder 1 through the entry the group's
+  phase selects, and a single quantum then turns the same way at every Node,
+  so the +X line still feeds the on-axis mark alone: twelve clicks at (7, 5,
+  5), amount 24 in all, from tick 7, the six other marks never; light
+  released 276, 207 escaped, 69 in the world at tick 24, electron 8,
+  momentum (0, 0, 0), every ledger line balanced. The single-quantum
+  finding: a phase-selected remainder sends a single quantum along one fixed
+  line and leaves every Node off the axis dark, the reason for the model
+  owner's decision of 2026-09-17 that the Node owns the remainder per family
+  and heading and lets it leave whole when it reaches one quantum
+  (Highlights 3.5, feature 12b). After feature 12b the whole screen is
+  expected to click.
+- **Status.** measured, 2026-09-17: `screen.json`, source
+  `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization
+  `35dde6ad84145b5042285baadbb27810b5d30527554646cc67f5a69eac941cff`;
+  `screen_spread.json`, source
+  `3426aa1ddf25f30348d6238edb66b0454e484a237f40fcf9367bdb948d99c2c9`,
+  initialization
+  `34ce343eeb204d9a8b7b1b0c6e6b5c79a21eeb799f717b76d13514a18718fa2d`;
+  outcome: one mark clicks in both records, eighteen times before spreading
+  and twelve times with the split table, the single-quantum finding; the
+  records stay outside the tree.
+
+### E7. The string: gluon loops between two quarks (after feature 14)
+
+- **Claim.** Highlights 3.26 in the language of binding as a loop (3.4,
+  model owner, 2026-09-17): the strong field differs from light by one
+  catalog line, its rays couple to each other (`gluon_gluon_binding`), so
+  the field between two quarks closes into loops of gluon rays along the
+  line between them, a string whose content, and so whose mass, grows with
+  the distance; only colour-neutral patterns close a loop, confinement as a
+  closure condition, and a string stretched to the content at which a new
+  loop closes with a quark and an antiquark breaks into two hadrons,
+  hadronization. Nothing is inserted: hypothesis 13 says whether the two
+  catalog lines produce it.
+- **Features.** 1, 5, 6, 9, 10, 12, 14, with the quark families, colour and
+  the couplings `quark_binding` and `gluon_gluon_binding` as declared tables
+  (catalog work after feature 10, hypothesis 13).
+- **Run.** Two quark rays of declared colours at a declared separation on a
+  small open board, their gluon field released and spreading by its family's
+  table, the field-to-field table declared before the run; the content held
+  between them read against the separation d = 2, 4, 8 and 16 Links; the
+  pull, one quark stepped away one Link per k intervals until the held
+  content reaches the content at which a new loop closes; the control, two
+  charges with light in place of the gluon under `electron_field_turn`.
+- **Shows (to be pinned before the run).** The content between the quarks
+  growing with d while the field off the line falls to nothing beyond a
+  declared distance, a string, against the control's 1/r; the loop closing
+  for colour-neutral pairs only; the string breaking into two colour-neutral
+  groups at the declared content, no quark ray alone on a straight line at
+  any tick; every ledger line exact.
+- **Status.** planned, hypothesis 13, after feature 14 (binding as a loop)
+  and the strong catalog entries; its outcomes are those of hypothesis 13:
+  the content grows and no lone quark appears, or it falls off as for a
+  charge, or the pattern does not close.

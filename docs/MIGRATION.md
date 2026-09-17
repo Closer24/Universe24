@@ -6,6 +6,50 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A free ray turns by momentum on 2026-09-17 (`ray-momentum-turn-v1`)
+
+Issue #169, feature 8b ([a free ray turns by
+momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)),
+the second gap the helium-ion run found (E4, "the missing rules", ii): a
+free ray's heading changed only by whole Ports or by the lag of feature 8,
+so no curved path of a free ray was expressible. The momentum register of
+feature 8c now belongs to every ray:
+
+- `Ray.momentum`, three integers or `None` for the default amount x
+  heading; every existing ray and record is unchanged where no push
+  happens. `ray_vector` is what the DDA walks (`forward_rays`, the lag
+  spending, the event stamp of a rule's outputs), `ray_line` the unit-axial
+  line the release geometry skips (`release_field`), `ray_momentum_vector`
+  what the ledgers read (`ray_momentum`, the local audit), `pushed_ray` the
+  push, `turn_receiver` the role a free-ray table pushes; `dda_step` walks
+  any nonzero bounded vector (`vector_length`); `return_ray` negates the
+  register; `ray_merge_key` includes it and `merge_rays` sums it; a rule
+  that assigns a new heading clears it (`_replacement`).
+- A `ray_interactions` entry without outputs and without assignments may
+  declare `momentum_table` naming a participant family
+  ([disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)); the parser
+  admits it without `assignments` and `validate_ray_participants` requires
+  exactly one unnamed role. `apply_ray_interactions` takes a `turns` list
+  beside `bound` and `pushes`; `_table_pushes` is the shared scan of the
+  field rays a table meets (the group's push reuses it).
+- New record `ray_push` (family, amount, the register before and after, the
+  field family, its amount and heading), published before the cycle's
+  record from `SpatialPlan.ray_pushes` (`RayPush` in the Node state
+  contract); the runner records `ray_momentum_turn: "ray-momentum-turn-v1"`
+  when any push happened, and a free-ray table alone no longer marks
+  `bound_group_motion`. `test_ray_momentum_turn.py` pins the digests of two
+  worlds without a free-ray table (case (d)).
+- The ray viewer's segments carry `momentum` (the register when the
+  recording has one, else amount x heading), `momentum_in` and
+  `momentum_out` of an event sum it, and the viewer's momentum arrow points
+  along it (`tools/ray_viewer/extract.py`, `viewer.html`).
+- Not in this slice: absorption of the field ray into the ray, a push and
+  an assignment or a delay table on one rule, the lag's own modulus for the
+  delay on the ray's own axis (`lag_bits` stays open), the local audit's
+  source term for the push (booked to the world ledger only, as the
+  group's), and two receivers at one Node in one interval (the first in
+  slot order takes every field ray the table names).
+
 ## Binding as a loop designed on 2026-09-17 (`loop-binding-v1`, design only)
 
 Issue #169, feature 14 ([loop binding](LOOP_BINDING.md); Highlights 3.4,
@@ -1200,6 +1244,22 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   along +X. Before feature 12 one mark clicks, the on-axis one, eighteen
   times; after it the whole screen. The test pins the world file's
   integers, not its run.
+
+## Ray viewer: several runs on one page, the eye toggle, a tick cap, 2026-09-17
+
+The model owner wants one HTML page with the nature runs, no GIF
+([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+
+- `style.json` gains `draw.page_text.runs` (the run buttons above the
+  board when the document holds several runs; a button starts its run
+  from tick 0 in the board view, playing when the style autoplays) and
+  `draw.page_text.eye_toggle` (an `eye view` button for a run with marked
+  Nodes, switching the page between the board and the eye view), both
+  true by default; the run buttons no longer depend on `controls`.
+- `extract.py --ticks N` caps a large record at N ticks: only the events
+  through N are read, the run's `ticks` is N and
+  `record.ticks_capped_from` keeps the recorded length. The test pins the
+  cap and the flags.
 
 ## Ray viewer: phone GIF preset, 2026-09-17
 

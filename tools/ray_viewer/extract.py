@@ -17,7 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -183,6 +183,9 @@ class Unit:
     event_ports: int | None = None
     event_shares: list[int] | None = None
     detector: int | None = None
+    # The ray's momentum register when the recording carries one set by a push
+    # (ray-momentum-turn-v1); None reads as amount x the Link's heading.
+    momentum: list[int] | None = None
     chain: Chain | None = None
 
 
@@ -413,6 +416,8 @@ def enrich_from_frames(units: list[Unit], frames: list[dict[str, Any]] | None) -
                     setattr(unit, name, int(ray[name]))
             if "event_shares" in ray:
                 unit.event_shares = [int(v) for v in ray["event_shares"]]
+            if ray.get("momentum") is not None:
+                unit.momentum = [int(v) for v in ray["momentum"]]
         if transit.target is not None:
             arrived = recorded_ray(
                 by_tick.get(transit.arrival), transit.target, unit.family, transit.port
@@ -421,8 +426,16 @@ def enrich_from_frames(units: list[Unit], frames: list[dict[str, Any]] | None) -
                 unit.arrival_phase = int(arrived["phase"])
 
 
+def unit_momentum(unit: Unit) -> list[int]:
+    """One drawable ray's momentum: its register when the recording carries one
+    (ray-momentum-turn-v1), else amount x the heading of the Link it crosses."""
+    if unit.momentum is not None:
+        return list(unit.momentum)
+    return scale(heading_of_port(unit.transit.port), unit.amount[0])
+
+
 def momentum(units: list[Unit]) -> list[int]:
-    return add_vectors([scale(heading_of_port(u.transit.port), u.amount[0]) for u in units])
+    return add_vectors([unit_momentum(u) for u in units])
 
 
 def amounts_of(units: list[Unit]) -> Amounts:
@@ -1150,6 +1163,7 @@ def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any
                 "port": unit.transit.port,
                 "heading": heading_of_port(unit.transit.port),
                 "amount": unit.amount,
+                "momentum": unit_momentum(unit),
                 "phase": unit.phase,
                 "arrival_phase": unit.arrival_phase,
                 "steps": steps,
@@ -1226,14 +1240,32 @@ def event_document(event: Event, chains: list[Chain]) -> dict[str, Any]:
 
 
 def extract_record(
-    path: Path, *, key: str | None = None, label: str | None = None, sidecar: Path | None = None
+    path: Path,
+    *,
+    key: str | None = None,
+    label: str | None = None,
+    sidecar: Path | None = None,
+    ticks: int | None = None,
 ) -> dict[str, Any]:
-    """The viewer document of one recorded run."""
+    """The viewer document of one recorded run.
+
+    ``ticks`` caps a large record: only the events through that tick are read, the
+    run's ``ticks`` becomes the cap and ``record.ticks_capped_from`` names the
+    recorded length, so a page can carry the first part of a long run and say so."""
     record = load_record(Path(path), sidecar)
     metadata = record.metadata
     shape = position_of(metadata.get("shape") or (record.initialization or {}).get("shape"))
     boundary = str(metadata.get("boundary") or (record.initialization or {}).get("boundary", "open"))
-    ticks = int(metadata.get("completed_ticks", metadata.get("tick", 0)))
+    recorded_ticks = int(metadata.get("completed_ticks", metadata.get("tick", 0)))
+    capped_from: int | None = None
+    if ticks is not None and 0 <= ticks < recorded_ticks:
+        capped_from = recorded_ticks
+        record = replace(
+            record,
+            events=[e for e in record.events if int(e.get("tick", 0)) <= ticks],
+            frames=None if record.frames is None else record.frames[: ticks + 1],
+        )
+    run_ticks: int = recorded_ticks if capped_from is None or ticks is None else ticks
     builder = Builder(shape, boundary)
     ingest(builder, record.events)
     family_list = families(record)
@@ -1245,7 +1277,7 @@ def extract_record(
     resolution = resolve(
         builder,
         units,
-        ticks=ticks,
+        ticks=run_ticks,
         detectors={position_of(m["pos"]) for m in marks},
         couplings=couplings(record),
         field_families=field_set,
@@ -1260,7 +1292,7 @@ def extract_record(
         "label": label or str(metadata.get("model", name)),
         "model": metadata.get("model"),
         "status": metadata.get("status"),
-        "ticks": ticks,
+        "ticks": run_ticks,
         "shape": list(shape),
         "boundary": boundary,
         "link_ticks": metadata.get("link_ticks"),
@@ -1278,6 +1310,7 @@ def extract_record(
             "event_count": len(record.events),
             "unknown_event_kinds": builder.unknown_kinds,
             "frames": record.frames is not None,
+            "ticks_capped_from": capped_from,
         },
         "families": family_list,
         "sources": sources(record),
@@ -1289,20 +1322,25 @@ def extract_record(
         "rays": [chain_document(c, flags) for c in resolution.chains],
         "events": [event_document(e, resolution.chains) for e in resolution.events],
         "eye": eye_document(resolution.events, marks),
-        "ticks_data": tick_captions(record, resolution, builder, ticks),
+        "ticks_data": tick_captions(record, resolution, builder, run_ticks),
     }
 
 
 def extract_runs(
-    paths: list[Path], labels: list[str] | None = None, sidecars: list[Path] | None = None
+    paths: list[Path],
+    labels: list[str] | None = None,
+    sidecars: list[Path] | None = None,
+    ticks: list[int | None] | None = None,
 ) -> dict[str, Any]:
     labels = labels or []
     sidecars = sidecars or []
+    ticks = ticks or []
     runs = [
         extract_record(
             path,
             label=labels[i] if i < len(labels) else None,
             sidecar=sidecars[i] if i < len(sidecars) else None,
+            ticks=ticks[i] if i < len(ticks) else None,
         )
         for i, path in enumerate(paths)
     ]
@@ -1325,8 +1363,16 @@ def main() -> None:
         type=Path,
         help="a ray-recording.json per record, in order (default: the one beside run.json)",
     )
+    parser.add_argument(
+        "--ticks",
+        action="append",
+        default=[],
+        type=int,
+        help="a tick cap per record, in order (0 or above the record's length: none)",
+    )
     args = parser.parse_args()
-    document = extract_runs(args.records, args.label, args.sidecar)
+    caps = [cap if cap > 0 else None for cap in args.ticks]
+    document = extract_runs(args.records, args.label, args.sidecar, caps)
     args.out.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
     summary = {
         "output": str(args.out),
@@ -1338,6 +1384,7 @@ def main() -> None:
                 "rays": len(run["rays"]),
                 "events": run["event_kinds"],
                 "sidecar": run["record"]["sidecar"],
+                "ticks_capped_from": run["record"]["ticks_capped_from"],
                 "unknown_event_kinds": run["record"]["unknown_event_kinds"],
             }
             for run in document["runs"]

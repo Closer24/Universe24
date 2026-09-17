@@ -830,7 +830,12 @@ def _indexed_interaction(
         return _Expressions(fields, (), participants=layouts).parse(value, size, invariant=invariant)
 
     assignments: list[Assignment] = []
-    for raw in _array(obj["assignments"], "assignments", MAX_FIELDS * MAX_SLOTS, 1):
+    # A coupling of free rays with a momentum table assigns nothing
+    # (ray-momentum-turn-v1); every other indexed interaction assigns at least once.
+    turn = "momentum_table" in obj and "assignments" not in obj
+    for raw in _array(
+        obj.get("assignments", []), "assignments", MAX_FIELDS * MAX_SLOTS, 0 if turn else 1
+    ):
         item = _object(
             raw,
             "assignment",
@@ -1866,7 +1871,7 @@ def _ray_interactions(
                     "ray_delay and momentum_table are declared by a binding rule, one without outputs"
                 )
             rule = _ray_meeting(obj, spatial, definitions)
-        elif "assignments" not in obj:
+        elif "assignments" not in obj and "momentum_table" not in obj:
             raise ValueError("a ray interaction requires assignments or outputs")
         else:
             rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
@@ -1879,7 +1884,10 @@ def _ray_interactions(
             rule = replace(rule, ray_delay=_integer(obj.get("ray_delay", 0), "ray_delay", 0))
             if "momentum_table" in obj:
                 # bound-group-motion-v1: the field families that push the group this
-                # rule binds, family name to sign, as the external body's table.
+                # rule binds, family name to sign, as the external body's table;
+                # ray-momentum-turn-v1: on a coupling of free rays, assigning
+                # nothing, the field families that push the one participant it
+                # does not name.
                 families = {
                     fields[definition.field].name: index
                     for index, definition in enumerate(spatial)

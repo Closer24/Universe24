@@ -27,6 +27,7 @@ from event_universe.core.spatial_state import (
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
+    RAY_MOMENTUM_TURN,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
     detector_bit_property_declared,
@@ -34,6 +35,7 @@ from event_universe.core.spatial_state import (
     ray_layer_names,
     released_field_names,
     spreading_field_names,
+    turn_receiver,
 )
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
@@ -138,16 +140,20 @@ def _execute_run(
     # The world ledger per completed tick (ray-event-audit-v1); the conservation
     # flag is true when every line of every completed tick balances.
     audit: list[dict[str, object]] = []
-    # Whether any bound group stepped (bound-group-motion-v1).
+    # Whether any bound group stepped (bound-group-motion-v1), and whether any
+    # free ray was pushed (ray-momentum-turn-v1).
     moved = False
+    turned = False
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
         def record(event: dict[str, object]) -> None:
-            nonlocal moved
+            nonlocal moved, turned
             stream.write(json.dumps(event) + "\n")
             if event.get("event") == "bound_group_step":
                 moved = True
+            if event.get("event") == "ray_push":
+                turned = True
             if probe is not None:
                 probe.receive(event)
 
@@ -281,9 +287,16 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
-    if moved or any(any(rule.momentum_table) for rule in initial.ray_interactions):
-        # A world where no group ever has a nonzero register records nothing here.
+    if moved or any(
+        any(rule.momentum_table) and turn_receiver(rule) is None for rule in initial.ray_interactions
+    ):
+        # A world where no group ever has a nonzero register records nothing here;
+        # a momentum table on a coupling of free rays is ray-momentum-turn-v1's.
         metadata["bound_group_motion"] = BOUND_GROUP_MOTION
+    if turned:
+        # A free ray turned by momentum (ray-momentum-turn-v1): recorded only when a
+        # push happened, so the record of every other world is byte for byte the same.
+        metadata["ray_momentum_turn"] = RAY_MOMENTUM_TURN
     spreading = spreading_field_names(initial.fields, initial.spatial_fields)
     if spreading:
         # Field spreading (field-spreading-v1): recorded only when a family declares
