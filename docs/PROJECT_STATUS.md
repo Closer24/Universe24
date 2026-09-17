@@ -23,9 +23,12 @@ localized-contact profiles, the quantum origin cells and the native event
 programs, were deleted on 2026-09-17 under Highlights sections 3.18 (deleted),
 3.19, 3.20 and 5.4; see the
 [migration note](MIGRATION.md#shared-quantum-resource-and-integration-layer-deleted-on-2026-09-17).
-Their dated evidence stays in [validation](VALIDATION.md); the source-envelope
-modules and the causal event ledger stay until buckets B.3, B.4 and B.6 of
-issue #164, and the bond registry and claim/gather went with bucket B.5.
+Their dated evidence stays in [validation](VALIDATION.md). The source-envelope
+modules were deleted on 2026-09-17 under Highlights section 3.5 (bucket B.3;
+see the [migration note](MIGRATION.md#source-envelopes-deleted-on-2026-09-17)),
+and the bond registry and claim/gather the same day with bucket B.5; the
+causal event ledger and the record operations stay until buckets B.4 and B.6
+of issue #164.
 
 
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout

@@ -152,12 +152,13 @@ generic engine. External floating-point or globally coupled reference prototypes
 are not compliant active-engine implementations, even if their GIFs look useful.
 
 Q-ORACLE-1, the explicitly scoped opt-in quantum exception, was deleted on
-2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2). No
-path in the package answers at a distance; the bond registry, claim-gather and
-the lottery capture went with bucket B.5 on the same day. The source-envelope
-and event-ledger modules that stay until buckets B.3, B.4 and B.6 are scope
-limits to report, not evidence that every repository path already satisfies
-the active local integer contract.
+2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2), the
+source envelopes on the same day under Highlights section 3.5 (bucket B.3),
+and the bond registry, claim-gather and the lottery capture the same day under
+Highlights sections 3.19, 3.20, 5.1 and 5.4 (bucket B.5). No path in the
+package answers at a distance. The event-ledger modules that stay until
+buckets B.4 and B.6 are scope limits to report, not evidence that every
+repository path already satisfies the active local integer contract.
 
 ## Generated output ownership
 
@@ -371,22 +372,23 @@ validation, operation pricing and atomic commit ownership. The expression
 interpreter delegates arithmetic while retaining broadcasting and AST costs.
 See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
 
-## Source envelopes, kept until bucket B.3
+## Deleted on 2026-09-17: the source envelopes
 
-The `core/source_*` modules own formula-free amplitudes, finite source state,
-pending proposals, twenty-four Port slots (amplitude, terminal, null-notice
-and correction), one rational weight scale, at most one null record and local
-transitions. No component holds a world reference, executable matrix or
-expression tree in its physical state. `fields/source_envelope.py` owns the
-shared rational complex and weighted-source arithmetic;
-`fields/source_emission.py` composes generic spatial primitives. Their
-runtime owners (`integration/contact_runtime.py`,
-`integration/causal_contact_runtime.py`,
-`integration/recurrent_contact_runtime.py`) and the quantum rules they
-composed (`quantum/contact_rules.py`, `quantum/contact_outcomes.py`) were
-deleted on 2026-09-17, so no public assembly creates an envelope; the modules
-and their Node-level tests stay until issue #164 bucket B.3 (Highlights 3.5:
-fields are emergent descriptions).
+The modules `core/source_envelope_node.py`, `core/source_envelope_state.py`,
+`core/source_emission.py`, `core/source_emission_node.py`,
+`fields/source_envelope.py` and `fields/source_emission.py` (formula-free
+amplitudes, finite source state, pending proposals, twenty-four Port slots,
+the rational weight scale, the null record and their local transitions), the
+`CausalSourceResolver` protocol of `core/event_resolution.py`,
+`SpatialEngine.commit_source` with its `spatial_envelope_source` event, the
+`source_envelope` member of the disturbance NodeState and the envelope
+records of the formula-free state audit were deleted under Highlights section
+3.5 and the [ray-event model](RAY_EVENT_MODEL.md) section 5 (row R5) and
+section 6, step 7 (issue #164, bucket B.3): a field is the ray's own
+information spreading in ray form, not a complex envelope retained at a Node.
+Their runtime owners had gone with the integration layer on the same day.
+There is no replacement module; the dated evidence stays in
+[validation](VALIDATION.md).
 
 ## Deleted on 2026-09-17: the shared quantum resource, Q-ORACLE-1
 

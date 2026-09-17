@@ -81,7 +81,33 @@ alternative is an event on the board.
 There is no replacement API. `core/event_space.py`, `core/event_links.py`,
 `core/event_resolution.py`, the source-envelope modules, the bond registry,
 claim/gather and `fields/record_operations.py` stay until buckets B.3 to B.6
-of the same issue.
+of the same issue. The source-envelope modules were deleted in the next step,
+below.
+
+## Source envelopes deleted on 2026-09-17
+
+Under the same instruction, issue #164 bucket B.3 removed the source
+envelopes, following [HIGHLIGHTS.md](HIGHLIGHTS.md) section 3.5 and
+[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 5 (row R5) and section 6,
+step 7: a field is the ray's own information spreading in ray form to the
+Nodes around it, and no Node retains a source envelope.
+
+- `core/source_envelope_node.py`, `core/source_envelope_state.py`,
+  `core/source_emission.py`, `core/source_emission_node.py`,
+  `fields/source_envelope.py` and `fields/source_emission.py` are gone, with
+  the `CausalSourceResolver` protocol of `core/event_resolution.py`,
+  `SpatialEngine.commit_source` and its `spatial_envelope_source` event, the
+  `source_envelope` member of the disturbance NodeState and the envelope
+  records of the formula-free state audit in `diagnostics/node_contract.py`.
+- `tests/test_source_envelope.py` and `tests/test_null_notices.py` are gone;
+  the envelope cases of `test_active_node_contracts.py` and
+  `test_node_state_contract.py` and the envelope rows of the architecture
+  gate went with them. No example declared an envelope source, so no example
+  or `tools/check.py` consumer row changed.
+
+There is no replacement API. `core/event_space.py`, `core/event_links.py`,
+`core/event_resolution.py`, the bond registry, claim/gather and
+`fields/record_operations.py` stay until buckets B.4 to B.6 of the same issue.
 
 ## Bond registry, claim-gather, lottery capture and occupied-links guard deleted on 2026-09-17
 
@@ -119,8 +145,9 @@ There is no replacement API: `capture` is `share` or `threshold`, and the
 Detector mark of Highlights 3.19 (issue #169, feature 2) will own the ticket
 sequence that `core/spatial_state.py` keeps (`TICKET_MODULUS`, `next_ticket`,
 `ticket_draw`, `phase_cosines`). `core/event_space.py`, `core/event_links.py`,
-`core/event_resolution.py`, the source-envelope modules and
-`fields/record_operations.py` stay until buckets B.3, B.4 and B.6.
+`core/event_resolution.py` and `fields/record_operations.py` stay until
+buckets B.4 and B.6; the source-envelope modules went with bucket B.3 on the
+same day.
 
 ## Primary initialization-based API
 
