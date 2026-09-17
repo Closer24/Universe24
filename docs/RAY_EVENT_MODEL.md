@@ -359,6 +359,23 @@ birth-code collision found on 16 September 2026 by the Bell and postulate 22
 study (`examples/research/bell-postulate-22/`, deleted on 2026-09-17 with the
 bond registry).
 
+**Entanglement is the name for siblings of one event (2026-09-17, Highlights
+3.20).** Entanglement is the shared last-event record of siblings and nothing
+else: rays that left the same last event carry the same record of it, nothing
+reads that record until a Detector, and that shared record and the trajectory
+back to the event are all there is to it; no register and no state at a
+distance. A Detector that draws 1 realizes its ray; one that draws 0 returns
+it, and the returning ray delivers what it carries to the sibling lines
+through the event by the inverse split of the Return definition, so whatever
+happens between an event and the first pass, 1, is a correlated set of rays,
+and a pass is the only thing that ends it. An ordinary meeting on the way is
+itself an event: its outputs are new siblings of that new event, and each
+ray's siblings are always those of its own last event. The earlier
+correlation is not lost: the transmission from a return chases the share
+through the later event by that same rule, which is how correlation passes
+from one pair to another without any rule for it. The price above applies to
+every such set; Highlights 3.20 is the text to follow.
+
 ## 4. Why this is consistent
 
 - One kind of entity (an event trajectory with the state of Highlights 5.1:

@@ -1034,6 +1034,22 @@ property of the returns, not of a shared owner, and it is accepted that a
 sibling can be realized at a second Detector before a return from the first
 arrives.
 
+Addition (model owner, 2026-09-17; Highlights 3.20): entanglement is the
+shared last-event record of siblings and nothing else. Rays that left the
+same last event carry the same record of it, and nothing reads that record
+until a Detector; that shared record and the trajectory back to the event
+are all there is to entanglement, with no register and no state at a
+distance. A Detector that draws 1 realizes its ray; one that draws 0 returns
+it, and the returning ray delivers what it carries to the sibling lines
+through the event by the inverse split above, so whatever happens between an
+event and the first pass, 1, is a correlated set of rays, and a pass is the
+only thing that ends it. An ordinary meeting on the way is itself an event:
+its outputs are new siblings of that new event, and each ray's siblings are
+always those of its own last event. The earlier correlation is not lost: the
+transmission from a return chases the share through the later event by the
+rule above, which is how correlation passes from one pair to another without
+any rule for it. The price of section 22 applies to every such set.
+
 The conservation laws exist for this. Energy, momentum component by
 component, charge and every other declared invariant are conserved exactly
 across an interaction so that the event can be rebuilt from its pieces when
