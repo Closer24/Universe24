@@ -111,6 +111,9 @@ MAX_STORED_PHASE_BITS = 30
 # an ordinary Node. In this slice the ray continues unchanged on both outcomes.
 DETECTOR_MARK = "detector-mark-v1"
 MAX_DETECTORS = 4096
+# A draw of 0 returns the arriving ray on its own line (detector-return-v1): the
+# same wave ray reversed, unchanged, walking its steps back to its event Node.
+DETECTOR_RETURN = "detector-return-v1"
 
 
 @dataclass(frozen=True, slots=True)
@@ -890,6 +893,29 @@ def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
     )
 
 
+def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
+    """The same wave ray reversed on its line (detector-return-v1).
+
+    The heading index becomes the index of the negated heading, outbound becomes 0
+    and the transport accumulators (DDA, pace wait, interaction delay) are reset;
+    amount, phase, steps, event Ports, event shares and Detector bit are exactly
+    what arrived. The Detector admission guarantees the negated heading is in the
+    sequence; a field where it is not fails closed.
+    """
+    heading = definition.headings[ray.heading]
+    negated = (-heading[0], -heading[1], -heading[2])
+    if negated not in definition.headings:
+        raise ValueError("a return requires the negated heading in the field's sequence")
+    return replace(
+        ray,
+        heading=definition.headings.index(negated),
+        accumulators=(0, 0, 0),
+        wait=0,
+        interaction_delay=0,
+        outbound=0,
+    )
+
+
 RayMergeKey = tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int]
 
 
@@ -961,11 +987,17 @@ def ray_stock(rays: Rays) -> int:
 
 
 def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
-    """Read the candidate's amount-times-heading inventory from actual ray owners."""
+    """Read the candidate's amount-times-heading inventory from actual ray owners.
+
+    A returning ray (outbound 0) reads as its share on the event's heading, its
+    own heading negated: the Detector takes no recoil on a return and the audit
+    stays exact (detector-return-v1, issue #169).
+    """
     result = [0, 0, 0]
     for ray in rays:
+        sign = 1 if ray.outbound else -1
         for axis, component in enumerate(definition.headings[ray.heading]):
-            result[axis] = checked_work(result[axis] + checked_work(ray.amount * component))
+            result[axis] = checked_work(result[axis] + sign * checked_work(ray.amount * component))
     return result[0], result[1], result[2]
 
 
