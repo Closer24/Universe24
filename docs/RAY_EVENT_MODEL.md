@@ -143,7 +143,19 @@ Detector; for a pair this is the condition of Highlights 5.4. Even when it
 is never caught, the event as it was has changed: the returned ray reversed
 its share, so the event lost that share, and the information is never lost,
 it chases the share it cancels. If the share is delayed and caught, momentum
-and everything else are conserved at the Node where they meet.
+and everything else are conserved at the Node where they meet. What a returning ray does at its event Node when nothing is there is a
+configured mode of the world, three of which are defined and tested:
+siblings, the default and the rule above (it transmits its share and bit to
+every line the event sent to, which needs at most six records on the ray,
+one per Port); straight (it continues straight through the Node on the one
+line opposite its own, enough for a pair, with no records); and annul (it
+ends there, its content leaves the world into an explicitly accounted sink,
+initial equals current plus escaped plus annulled at every tick, and its
+information survives only in the record). If something is at the Node, a
+bound group or other rays, the returning ray meets it by the declared
+coupling in every mode. For a ray-interaction event whose inputs were
+consumed, the returning ray cancels its own share only and continues along
+the event's output lines; nothing is left at the Node.
 
 **Information.** Everything on the board is a transfer of information. An
 event is a splitting of information: each ray carries its own share of what
@@ -383,7 +395,15 @@ on 16 September 2026.
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
    meeting rule at the far Detector as in section 3. No event is moved and
-   no Node keeps a register.
+   no Node keeps a register. `return_mode` in the initialization selects
+   what a returning ray does at its event Node when nothing is there, with
+   the three values siblings (default; at most six records on the ray, one
+   per Port), straight (no records) and annul (an explicitly accounted
+   sink: initial equals current plus escaped plus annulled at every tick);
+   in every mode a returning ray that finds something at the Node meets it
+   by the declared coupling, and for a ray-interaction event whose inputs
+   were consumed it cancels its own share only and continues along the
+   event's output lines.
 5. Registry removal from the physical path; the historical bonded profile and
    its tests are retained as history, not as the active law.
 6. Light as a wave ray with no mass and no charge, every ray being a wave
@@ -441,11 +461,24 @@ and evidence, under the ordinary gates.
   from the ray.
 - Conservation audits balance at every tick; no Node holds stock after an
   interaction; every ray is resident, in flight or escaped, and nothing else.
-- A returned ray cancels exactly its own share at its event Node by the
-  inverse split, transmitted to the same places the event sent to; the other
-  shares are untouched until their own rays return; every declared invariant
-  is equal before the split and after the return; no Node keeps anything
-  about the event.
+- Mode siblings (the default): a returned ray that finds nothing at its
+  event Node transmits its share and bit to every line the event sent to,
+  at most six records on the ray, one per Port; it cancels exactly its own
+  share, the other shares are untouched until their own rays return, every
+  declared invariant is equal before the split and after the return, and
+  no Node keeps anything about the event.
+- Mode straight: a returned ray that finds nothing at its event Node
+  continues straight through it on the one line opposite its own, with no
+  records; for a pair, the partner's Detector receives the bit on that ray.
+- Mode annul: a returned ray that finds nothing at its event Node ends
+  there and its content leaves the world into an explicitly accounted sink,
+  so that initial equals current plus escaped plus annulled at every tick;
+  its information survives only in the record.
+- In every mode, a returned ray that finds a bound group or other rays at
+  its event Node meets them by the declared coupling; for a ray-interaction
+  event whose inputs were consumed, it cancels its own share only and
+  continues along the event's output lines, and nothing is left at the
+  Node.
 - Two rays of one event that meet in one layer with phase difference 0
   leave through a different Port than the same two rays meeting with a
   phase difference of half a turn, with exact totals in both cases: the

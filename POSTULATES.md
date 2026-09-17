@@ -924,6 +924,20 @@ its share, so the event lost that share, and the information is never lost,
 it chases the share it cancels. If the share is delayed and caught, momentum
 and everything else are conserved at the node where they meet.
 
+What a returning ray does at its event node when nothing is there is a
+configured mode of the world, three of which are defined and tested:
+siblings, the default and the rule above (it transmits its share and bit to
+every line the event sent to, which needs at most six records on the ray,
+one per Port); straight (it continues straight through the node on the one
+line opposite its own, enough for a pair, with no records); and annul (it
+ends there, its content leaves the world into an explicitly accounted sink,
+initial equals current plus escaped plus annulled at every tick, and its
+information survives only in the record). If something is at the node, a
+bound group or other rays, the returning ray meets it by the declared
+coupling in every mode. For a ray-interaction event whose inputs were
+consumed, the returning ray cancels its own share only and continues along
+the event's output lines; nothing is left at the node.
+
 Each ray meets its own fate. Sibling events of one interaction are
 independent rays; nothing cancels a sibling's share except its own return.
 The once-only requirement of the central specification is therefore a
