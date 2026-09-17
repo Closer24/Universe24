@@ -79,6 +79,20 @@ DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
 # of the declared ray interactions, a field no rule selects being its own layer.
 RAY_LAYERS = "ray-layers-v1"
 Layers = tuple[tuple[int, ...], ...]
+# The meeting of rays with N-to-M outputs (Highlights 3.17, 3.26 and 5.1): a rule
+# with declared outputs replaces its participants by new event rays at the
+# meeting Node, an amount may be split by a declared table indexed by the phase
+# difference of two inputs, and every family's stock is exact across the event.
+RAY_MEETING = "ray-meeting-conversion-v1"
+# The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
+PORT_HEADINGS: tuple[Heading, ...] = (
+    (1, 0, 0),
+    (-1, 0, 0),
+    (0, 1, 0),
+    (0, -1, 0),
+    (0, 0, 1),
+    (0, 0, -1),
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -152,12 +166,7 @@ def validate_ray_participants(
         raise ValueError("ray interaction rules exceed their fixed capacity")
     selected: set[int] = set()
     for rule in rules:
-        if (
-            not 2 <= len(rule.participants) <= 6
-            or rule.k
-            or rule.output_types is not None
-            or rule.outputs
-        ):
+        if not 2 <= len(rule.participants) <= 6 or rule.k or rule.output_types is not None:
             raise ValueError("ray interactions require two to six indexed roles without k or conversion")
         for role in rule.participants:
             if not role or any(
@@ -165,7 +174,41 @@ def validate_ray_participants(
             ):
                 raise ValueError("ray participant role refers to an unavailable spatial field")
             selected.update(role)
-        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
+        if rule.outputs:
+            # A meeting with outputs (ray-meeting-conversion-v1): one to six new event
+            # rays of ray fields, assigned from the frozen inputs, in the same layer.
+            if not 1 <= len(rule.outputs) <= 6 or any(
+                type(kind) is not int or not 0 <= kind < len(definitions) for kind in rule.outputs
+            ):
+                raise ValueError("ray meeting outputs require one to six ray fields")
+            selected.update(rule.outputs)
+            if any(
+                not 0 <= assignment.side < len(rule.outputs)
+                or not 0 <= assignment.field < len(RAY_PROPERTIES)
+                for assignment in rule.assignments
+            ):
+                raise ValueError("ray meeting assignments address its declared outputs")
+            if any(
+                not 0 <= split.first < len(rule.outputs)
+                or not 0 <= split.second < len(rule.outputs)
+                or split.first == split.second
+                or split.field != 0
+                or split.phase_field != 2
+                or not 1 <= len(split.table) <= MAX_PHASE_STEPS
+                or any(
+                    type(weight) is not int or not 0 <= weight <= len(split.table)
+                    for weight in split.table
+                )
+                or any(not 0 <= index < len(rule.participants) for index in split.between)
+                or split.between[0] == split.between[1]
+                or not -1 <= split.source < len(rule.participants)
+                or any(len(split.table) != definitions[kind].phase_steps for kind in rule.outputs)
+                for split in rule.splits
+            ):
+                raise ValueError("ray meeting table split requires two outputs and the phase modulus")
+        elif rule.splits:
+            raise ValueError("a table split requires a meeting with outputs")
+        elif any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
             raise ValueError("ray interaction amount and advance are read-only")
     for layer in ray_layers(definitions, rules):
         # The indexed selector's capacity bounds one meeting, and a meeting exists
@@ -212,7 +255,8 @@ def ray_layers(
         return index
 
     for rule in rules:
-        selected = {kind for role in rule.participants for kind in role}
+        # The fields a rule's roles select and the fields of its outputs couple.
+        selected = {kind for role in rule.participants for kind in role} | set(rule.outputs)
         if any(type(kind) is not int or not 0 <= kind < len(definitions) for kind in selected):
             raise ValueError("ray participant role refers to an unavailable spatial field")
         kinds = sorted(selected)

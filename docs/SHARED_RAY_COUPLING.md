@@ -52,11 +52,14 @@ properties are `amount`, `heading`, `phase`, `advance` and `delay`; `delay` maps
 to native `interaction_delay`. Only heading, phase and delay are writable in
 this first interface. Amount and advance are read-only. The shared value-level
 evaluator is also the carrier path's evaluator, not a copied implementation.
-Native ray operations preserve the number and identity of complete owners. They
-reject both carrier conversion forms (`outputs` and `output_types`), including
-typed initialization and direct local-law calls. Ordinary carrier N-to-M
-conversion retains its separate declared-output implementation and invariants;
-its one-input admission does not widen native ray participant limits.
+Native ray operations without outputs preserve the number and identity of
+complete owners. They reject `output_types`, including typed initialization and
+direct local-law calls; a rule with `outputs` is the meeting with N-to-M outputs
+of `ray-meeting-conversion-v1` ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)), which replaces its
+participants by new event rays and shares the record conversion's arithmetic
+(`convert_values`). Ordinary carrier N-to-M conversion retains its
+declared-output invariants; its one-input admission does not widen native ray
+participant limits, a meeting having at least two.
 Process each selected ray at most once in one local coupling pass. An earlier
 successfully received packet remains an owned input when a proposal is rejected.
 

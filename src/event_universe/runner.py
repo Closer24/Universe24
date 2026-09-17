@@ -13,7 +13,12 @@ from event_universe.configuration_validation import (
     validate_observer_selection,
 )
 from event_universe.core.disturbance_state import InitialState
-from event_universe.core.spatial_state import RAY_EVENT_STATE, RAY_LAYERS, ray_layer_names
+from event_universe.core.spatial_state import (
+    RAY_EVENT_STATE,
+    RAY_LAYERS,
+    RAY_MEETING,
+    ray_layer_names,
+)
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
@@ -188,6 +193,7 @@ def _execute_run(
                 initial.fields, initial.spatial_fields, initial.ray_interactions
             )
         ],
+        "ray_meeting": RAY_MEETING,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

@@ -95,6 +95,10 @@ plain indexed interaction without `outputs` still requires `node_execution`.
 | Cost | One `couple`, one `update` per assignment and one `update` per output replacement; rational projections carry their fixed tariff |
 | Failure | Guard, arithmetic, bound, conservation, invariant, slot or Port failure installs no replacement and no pending plan |
 
+The arithmetic (guard, outputs from the frozen inputs, conserved and invariant
+sums) is `convert_values` in `fields/disturbances.py`, shared unchanged with
+the [meeting of rays with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1).
+
 Excluded and rejected at initialization: pair selectors or `output_types` together
 with `outputs`, `outputs` without `participants`, more than six roles or outputs,
 split or cost-reporting families, schema 2, and families that also join exchange

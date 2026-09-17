@@ -901,6 +901,86 @@ or `a_swap` alone. Pinned before the first run:
 Existing worlds keep their amounts, phases, totals, audits and charges: a
 world whose rules select one layer meets the same owners in the same order.
 
+## Ray meetings with outputs
+
+`test_ray_meeting_conversion.py` builds its board inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order) on a periodic 15^3
+lattice: one ray family `a`, a conserved scalar with an 8-step phase
+advancing 1 per Link, and one signed `momentum` vector
+([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
+Two lamps each hold 5 of `a` and emit it once, funded, directed at
+N = (7,7,7) with recoil into `momentum`: lamp 0 from (5,7,7) along +X at
+phase 0, lamp 1 from (9,7,7) along -X at the emission phase d of the case.
+One rule is declared, guarded by equal amounts and opposite headings, with
+per-ray readout invariants summed over inputs and outputs. The test is
+parametrized over the cases `four` (d = 0), `table_0`, `table_4`, `table_2`,
+`table_1` (d = 0, 4, 2, 1) and `broken`. Pinned before the first run:
+
+- at ticks 1 and 2 the world holds two rays; after tick 2 both are at N:
+  heading 0, phase 2, mask 1, shares (5, 0, 0, 0, 0, 0) and heading 1, phase
+  (2 + d) mod 8, mask 2, shares (0, 5, 0, 0, 0, 0), both steps 2, amount 5,
+  `outbound` 1, `detector` 0; after tick 1 the lamps hold 0 of `a` and the
+  recoils (-5, 0, 0) and (5, 0, 0);
+- (a) `four`: the rule's outputs are four rays of `a` on Ports 2, 3, 4 and 5
+  with amounts 2, 2, 3 and 3 and phases "same" (input 0), input 1, offset 3
+  from input 0 and input 1 plus 7, invariants energy (`amount`) and
+  momentum (`amount x heading`). Applied to the two residents, the meeting
+  returns one bundle of exactly these four rays, in declared order, each
+  with steps 0, `outbound` 1, `detector` 0, accumulators (0, 0, 0), mask 60
+  (0b111100) and shares (0, 0, 2, 2, 3, 3): heading 2 amount 2 phase 2,
+  heading 3 amount 2 phase 2, heading 4 amount 3 phase 5, heading 5 amount
+  3 phase 1. After tick 3 N is empty, (6,7,7) and (8,7,7) are empty, and
+  the four neighbors hold one ray each with steps 1: (7,8,7) heading 2
+  amount 2 phase 3, (7,6,7) heading 3 amount 2 phase 3, (7,7,8) heading 4
+  amount 3 phase 6, (7,7,6) heading 5 amount 3 phase 2; after tick 4, with
+  steps 2, (7,9,7) phase 4, (7,5,7) phase 4, (7,7,9) phase 7, (7,7,5) phase
+  3. The world holds four rays at ticks 3 and 4;
+- (b) `table_d`: output 0 on Port 2 takes the sum of the inputs split by the
+  table [8, 7, 4, 1, 0, 1, 4, 7] at the phase difference d of inputs 0 and
+  1, output 1 on Port 3 takes the rest and owns the remainder, invariant
+  energy. The shared content is 10. Applied to the residents the meeting
+  returns: d = 0, one ray, heading 2 amount 10 phase 2, mask 4, shares
+  (0, 0, 10, 0, 0, 0); d = 4, one ray, heading 3 amount 10 phase 6, mask 8,
+  shares (0, 0, 0, 10, 0, 0); d = 2, heading 2 amount 5 phase 2 and heading
+  3 amount 5 phase 4, mask 12, shares (0, 0, 5, 5, 0, 0); d = 1, 10 x 7 / 8
+  is 8 whole quanta with 6/8 left and 10 x 1 / 8 is 1 with 2/8 left, so the
+  rest output owns the quantum the two floors leave: heading 2 amount 8
+  phase 2 and heading 3 amount 2 phase 3, mask 12, shares (0, 0, 8, 2, 0, 0).
+  An output of amount 0 is no ray and no Port. After tick 3 N, (6,7,7) and
+  (8,7,7) are empty and the products are at (7,8,7) (phase 3) and (7,6,7)
+  (phase (3 + d) mod 8) with steps 1, at (7,9,7) and (7,5,7) after tick 4
+  with steps 2 and phases 4 and (4 + d) mod 8; the world holds one ray at
+  ticks 3 and 4 for d = 0 and d = 4, two rays for d = 2 and d = 1. A split
+  between two Ports moves ray momentum whose owner, the recoil of the field
+  ray, is feature 7; the move is booked as an explicitly accounted source
+  of `momentum` (Highlights 3.15): after ticks 3 and 4 the `momentum` total
+  and the `momentum` source total are both (0, 10, 0) for d = 0,
+  (0, -10, 0) for d = 4, (0, 0, 0) for d = 2 and (0, 6, 0) for d = 1, and
+  (0, 0, 0) at ticks 1 and 2. The table worlds declare no local
+  energy/momentum audit (its per-Node residual has no source term) and
+  their conservation report reads `not_configured`; the `four` world
+  declares it and its meeting keeps the rays' momentum at (0, 0, 0);
+- in every case, at every tick 1 to 4, the `a` total is 10 with source 0,
+  the spatial accounting balances, in `four` the totals and sources of
+  `momentum` are (0, 0, 0) and the conservation report passes with energy
+  10 and momentum (0, 0, 0), and the runner records `ray_meeting:
+  "ray-meeting-conversion-v1"` beside `ray_state` "ray-event-state-v1" and
+  `ray_layers` "ray-layers-v1", with `conserved_at_every_completed_tick`
+  true, final totals `a` [10] and `momentum` as above, and the same
+  `momentum` in `source_totals`;
+- (c) `broken`: the `four` rule with amounts 2, 2, 3 and 4 (11 out of 10 in)
+  is rejected by the meeting ("violates conservation of amount") both when
+  applied to the residents directly and at tick 3 of the run, before any
+  owner changes; the `four` rule with amounts 2, 2, 3, 3 on Ports 2, 2, 4, 5
+  (momentum (0, 4, 0) out of (0, 0, 0) in) is rejected for its momentum
+  invariant; at initialization a table of 7 entries under 8 phase steps
+  ([7, 4, 1, 0, 1, 4, 7]), a `rest_of` naming an output without a table,
+  and a heading Port 6 are rejected before any run.
+
+Existing worlds with the single-output rules are byte-identical: the suite
+is the regression.
+
 ## Detector-owned sampling admission
 
 [Detector sampling tests](../tests/test_detector_sampling_contract.py) accept only
