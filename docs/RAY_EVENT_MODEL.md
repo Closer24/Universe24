@@ -54,18 +54,22 @@ the line. A non-wave ray carries quantities only (energy, momentum, charge,
 family properties). Light is a wave ray with no mass and no charge: it is an
 event moving in time, exactly as defined above, not a separate photon object.
 
-**Detector.** A Detector is a Node marked as a Detector. The mark is bounded
-Node metadata (the mark itself, a setting, a ticket seed), not a record, not
+**Detector.** Every Node carries one bit: Detector or not. The mark is
+bounded Node metadata (the bit, a setting, a ticket seed), not a record, not
 an object and not an external device; "Detector behavior" is simply how a
-Node behaves when it carries the mark. Any wave ray entering a marked Node
-undergoes a simple binary lottery, and this is the only place a lottery exists
-(`detector-only-v1`): the ray either continues on the same line in the same
-heading, or reverses by a half turn and goes back along the same line. It is
-the same ray in both outcomes: not absorbed, not split, no stock taken. The
-click is the record that the ray passed or returned. A non-wave ray entering
-a marked Node is not drawn; its outcome follows from its declared coupling.
-Because a marked Node is a Node like any other, everything else about it
-(rays crossing, interactions of other families, fields) is unchanged.
+Node behaves when the bit is set. A marked Node does one very simple thing.
+For each transfer that passes through it, whatever it is, it draws one
+bounded integer and reads it as 1 or 0, and this is the only place a lottery
+exists (`detector-only-v1`). On 1 the Node behaves as an ordinary Node: the
+transfer continues on its line as if no Detector were there. On 0 the Node
+behaves as a Detector: it returns the transfer on the same line in the
+opposite direction, unchanged, so that it arrives at the Node it left from
+with exactly the information it left with. The Detector does not read,
+change, absorb or add anything; it needs to know nothing about what passed.
+It is the same ray in both outcomes: not absorbed, not split, no stock taken.
+The click is the record of the bit drawn. Because a marked Node is a Node
+like any other, everything else about it (rays crossing, interactions of
+other families, fields) is unchanged.
 
 **Return.** A returning ray retraces its own trajectory: it reverses its
 heading and walks back the number of steps it counted since its last
@@ -147,9 +151,10 @@ declared coupling between their families decides one of:
   [N-to-M conversion contract](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
   already does for records: up to six inputs, up to six outputs, one output
   departure per Port;
-- **a Detector interaction**: only at a Node marked as a Detector and only
-  for a wave ray: one bounded integer is drawn from the mark's own ticket
-  sequence and selects pass or return.
+- **a Detector interaction**: only at a Node whose Detector bit is set, for
+  each transfer passing through it: one bounded integer is drawn from the
+  mark's own ticket sequence; 1 means the Node behaves as an ordinary Node,
+  0 means it returns the transfer on its line in the opposite direction.
 
 Nothing else decides anything. A ray alone at a Node never interacts. A Node
 never holds a ray without a declared binding coupling. Binding is the
@@ -165,7 +170,7 @@ The rule in the form Highlights 3.27 requires:
 | --- | --- |
 | Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, the Detector mark if the Node carries one (mark, setting, ticket seed), and a bounded register of open alternatives for the interactions born there |
 | What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
-| What operation acts | The coupling declared for the set of families present, in declared order; the Detector lottery only at a marked Node and only for a wave ray |
+| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, the 1-or-0 draw for each passing transfer, 1 ordinary, 0 return |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count. No message, no registry answer, nothing that skips a Node |
@@ -240,10 +245,10 @@ on 16 September 2026.
 2. Ray state: step count since the last interaction and one bounded outcome
    register added to the ray; heading and phase exist. No origin reference is
    stored: the count suffices on a straight line.
-3. Detector as a Node mark in the initialization (position, setting, ticket
-   seed): any wave ray entering the marked Node passes or returns, drawn from
-   the mark's ticket sequence; click event recorded; no stock; no detector
-   record type. Non-wave rays are not drawn.
+3. Detector as a Node bit in the initialization (position, setting, ticket
+   seed): each transfer through a marked Node draws 1 or 0 from the mark's
+   ticket sequence, 1 ordinary behavior, 0 return on the same line reversed;
+   click event recorded; no stock; no detector record type.
 4. Return propagation: reversed heading, decreasing count, straight through
    the birth interaction; meeting rule at the far Detector as in section 3.
 5. Registry removal from the physical path; the historical bonded profile and
@@ -269,9 +274,11 @@ and evidence, under the ordinary gates.
 
 ## 7. Acceptance criteria for the first implementation slice
 
-- A wave ray meeting a Detector passes or returns; the returned ray reaches
-  its birth Node after exactly the counted number of steps, on every seed, in
-  every direction, and continues straight; a non-wave ray is never drawn.
+- A transfer through a marked Node draws 1 or 0; on 1 the Node's behavior is
+  identical to the unmarked Node (same events, same totals); on 0 the
+  returned ray reaches its birth Node after exactly the counted number of
+  steps, on every seed, in every direction, with its information unchanged,
+  and continues straight; an unmarked Node never draws.
 - One number per Detector interaction; replay with the same seed reproduces
   every click; changing one Detector's number changes the world only inside
   the forward light cone of that interaction.
