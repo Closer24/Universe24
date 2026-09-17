@@ -31,8 +31,11 @@ Validate both the parsed immutable initial state and the responsible local law;
 direct typed construction must not bypass the same boundary. The bounded ticket
 sequence (`TICKET_MODULUS`, `next_ticket`, `ticket_draw` and the phase tables
 in `core/spatial_state.py`) is the local draw the Detector mark owns
-([the mark](#the-detector-mark-detector-mark-v1), `detector-mark-v1`); no
-ordinary owner calls it. The native program admission, resolver construction
+([the mark](#the-detector-mark-detector-mark-v1), `detector-mark-v1`); its
+one other caller is the draw of a decaying rule at its meeting, the same
+draw at a Node the rule's declaration marks
+([the decay draw](#the-decay-draw-decay-draw-v1), `decay-draw-v1`,
+2026-09-17); no ordinary owner calls it. The native program admission, resolver construction
 and resolver ticket gates were deleted on 2026-09-17 with the integration
 layer, and the bond-registry gate with the registry itself.
 
@@ -94,7 +97,9 @@ event Ports, event shares, Detector bit). The draw reads nothing from the ray:
 not its family, not its amount, not its phase and not its hidden fields; the
 Node sees only its own value. Each draw is one `next_ticket` step of the
 mark's own state, so a second mark with its own seed draws independently, and
-a Node without a mark never calls the ticket rule.
+a Node without a mark never calls the ticket rule for an arrival; since
+2026-09-17 a Node at which a decaying rule fires draws once per meeting of
+that rule from the same one stream ([the decay draw](#the-decay-draw-decay-draw-v1)).
 
 **1, PASS.** The ray continues exactly as at an unmarked Node: it joins the
 resident rays and leaves on its line at the next cycle, or enters the coupling
@@ -191,6 +196,30 @@ byte, unless a marked ray reaches a second mark or meets another ray. The
 viewer reads `detector_pass` as the kind `pass` and carries each ray's
 `bit`. The test is `test_detector_bit_property.py` ([Detector bit as a
 property](TEST_EXPECTATIONS.md#detector-bit-as-a-property)).
+
+## The decay draw (`decay-draw-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.26 with 3.19; feature 13 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), landed
+2026-09-17): a bound group that can decay is a source, and a source is a
+Detector, so at each of its ticks, its corner meetings in the loop form, it
+draws with its declared ratio as the setting, 1 = the conversion fires, 0 =
+the group ticks on unchanged, and nothing else in the world draws. The
+conversion's `ray_interactions` rule declares `draw: [n, d]` and its
+`seed`; when its participants meet, the meeting draws once (per meeting,
+not per ray) from the Node's ticket stream with `ticket_bit`, the unsalted
+draw of the mark, and fires on 1 only. The Node the rule fires at counts as
+marked by that declaration, for the meeting alone: its arrivals are not
+drawn unless a `detectors` mark is declared there too, and then the one
+stream serves both, the arrivals at the receipt and the meetings in the
+cycle. A Node without a mark is seeded from the declaration salted by its
+position, so the corners of a ring draw independently. Each draw is a
+`decay_draw` record (position, tick, rule, setting, ticket, bit), one per
+ticket consumed. The schema, the reading of "at each tick" in the loop form
+with the survival law per meeting, the family change of the conversion and
+its booking are stated in [spatial
+fields](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1); the test
+is `test_decay_draw.py` ([decay draw](TEST_EXPECTATIONS.md#decay-draw)).
 
 ## The return (`detector-return-v1`)
 

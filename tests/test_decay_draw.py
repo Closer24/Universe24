@@ -59,8 +59,20 @@ CORNER = {
     "name": "corner",
     "participants": [{"type": "electron"}, {"type": "electron"}],
     "outputs": [
-        {"field": "electron", "amount": {"of": 0}, "heading": "reversed", "input": 1, "phase": {"of": 0}},
-        {"field": "electron", "amount": {"of": 1}, "heading": "reversed", "input": 0, "phase": {"of": 1}},
+        {
+            "field": "electron",
+            "amount": {"of": 0},
+            "heading": "reversed",
+            "input": 1,
+            "phase": {"of": 0},
+        },
+        {
+            "field": "electron",
+            "amount": {"of": 1},
+            "heading": "reversed",
+            "input": 0,
+            "phase": {"of": 1},
+        },
     ],
     "invariants": [ENERGY],
 }

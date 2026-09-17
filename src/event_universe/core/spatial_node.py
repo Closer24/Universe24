@@ -86,6 +86,7 @@ SpatialPlanner = Callable[
         int,
         Remainders,
         Remainders,
+        int,
     ],
     SpatialPlan,
 ]
@@ -781,7 +782,7 @@ class SpatialNode(SpatialNodeState):
                 tick,
                 services,
                 notifications=notifications,
-                rule=draw.rule,
+                rule=services.initial.ray_interactions[draw.rule].name,
                 setting=(draw.numerator, draw.denominator),
                 ticket=draw.ticket,
                 bit=draw.bit,

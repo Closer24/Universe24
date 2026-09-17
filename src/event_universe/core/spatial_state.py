@@ -1563,11 +1563,13 @@ class SpatialPlan:
 @dataclass(frozen=True, slots=True)
 class DecayDraw:
     """The record of one draw of a decaying rule for the Node to publish
-    (decay-draw-v1): the rule's name, its setting `[n, d]`, the ticket state the
-    draw left the Node's stream in, and the bit, 1 = the conversion fired.
+    (decay-draw-v1): plain bounded integers, as the Node state contract requires.
+    The rule's index among the world's declared ray interactions, its setting
+    `[n, d]`, the ticket state the draw left the Node's stream in, and the bit,
+    1 = the conversion fired.
     """
 
-    rule: str
+    rule: int
     numerator: int
     denominator: int
     ticket: int

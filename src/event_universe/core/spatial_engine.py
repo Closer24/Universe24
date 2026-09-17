@@ -60,6 +60,7 @@ SpatialPlanner = Callable[
         int,
         Remainders,
         Remainders,
+        int,
     ],
     SpatialPlan,
 ]

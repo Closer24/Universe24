@@ -131,9 +131,11 @@ def _convert(
     """The outputs of a meeting with declared outputs, as (field, ray) pairs stamped as
     the events of the meeting, or None when the guard is false. The stock of every
     family is exact across the event: the sum over the inputs of one field equals the
-    sum over its outputs, beside the rule's own declared invariants. The outputs
-    carry the Detector bit the inputs hand down by the rule's `bit`
-    (detector-bit-property-v1), whatever the view of the outputs says of it."""
+    sum over its outputs, beside the rule's own declared invariants; a decaying rule
+    (decay-draw-v1) is the one exception, its outputs may change family with the
+    total amount exact. The outputs carry the Detector bit the inputs hand down by
+    the rule's `bit` (detector-bit-property-v1), whatever the view of the outputs
+    says of it."""
     before = tuple(_view(ray, definitions[kind], kind) for kind, ray in inputs)
     converted = convert_values(rule, before, RAY_PROPERTIES, meter, costs)
     if converted is None:
@@ -296,6 +298,7 @@ def _meet(
     turns: Turns | None = None,
     draws: Draws | None = None,
     ticket: int = 0,
+    declared: tuple[InteractionDefinition, ...] = (),
 ) -> None:
     """The meeting inside one layer: its rules fire over its rays alone, in declared
     order, each group once; the events are written to the candidate bundles. A rule
@@ -387,7 +390,8 @@ def _meet(
                     if draws is None:
                         raise ValueError("a decaying rule draws from the Node's ticket stream")
                     state, bit = ticket_bit(draws[-1].ticket if draws else ticket, *rule.draw)
-                    draws.append(DecayDraw(rule.name, rule.draw[0], rule.draw[1], state, bit))
+                    index = (declared or rules).index(rule)
+                    draws.append(DecayDraw(index, rule.draw[0], rule.draw[1], state, bit))
                     if not bit:
                         continue
                 products = _convert(rule, inputs, definitions, meter, costs)
@@ -465,7 +469,20 @@ def apply_ray_interactions(
         layer_rules = tuple(
             rule for rule in rules if all(kind in layer for role in rule.participants for kind in role)
         )
-        _meet(layer, layer_rules, rays, candidate, definitions, fields, meter, costs, turns, draws, ticket)
+        _meet(
+            layer,
+            layer_rules,
+            rays,
+            candidate,
+            definitions,
+            fields,
+            meter,
+            costs,
+            turns,
+            draws,
+            ticket,
+            rules,
+        )
     result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
     for index, bundle in enumerate(result):
         if len(bundle) > definitions[index].ray_slots:

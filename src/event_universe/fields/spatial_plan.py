@@ -833,9 +833,7 @@ class SpatialLaw:
                     # is booked as that family's source, the families summing to
                     # zero since the total amount is exact; a rule without `draw`
                     # keeps every family's stock, so this is zero for it.
-                    moved = checked_work(
-                        ray_stock(met[index]) - ray_stock(tuple(resident_rays[index]))
-                    )
+                    moved = checked_work(ray_stock(met[index]) - ray_stock(tuple(resident_rays[index])))
                     if moved:
                         converted.append((definition.field, moved))
             resident_rays = [list(bundle) for bundle in met]
