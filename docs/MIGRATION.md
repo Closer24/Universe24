@@ -916,6 +916,21 @@ the record is unchanged.
   arrowhead of `arrowhead_px` returns. `viewer.html` gains that one drawing
   path; `render_gif.py` validates the keys; the test pins the defaults.
 
+## Ray viewer: small head and small momentum arrow, 2026-09-17
+
+Model owner's feedback on the fifth render, applied as defaults of
+`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+the record is unchanged.
+
+- `sizes.head_links` 0.5 (new key: the bright head is a short segment from
+  the ray's Node along its heading, that fraction of a Link; 1 draws the
+  whole Link) and `ray_width_px` 3: a small head in the family colour.
+- `sizes.momentum_arrow_px_per_quantum` 1.75, `momentum_arrow_width_px` 1.5
+  and `arrowhead_px` 5: a tiny arrow, 14 px for an electron of 8, that still
+  reads as an arrow of the momentum; the faint white wake is unchanged.
+- `viewer.html` draws the head over `head_links`; `render_gif.py` validates
+  the key; the test pins the defaults.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

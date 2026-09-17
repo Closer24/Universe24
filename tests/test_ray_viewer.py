@@ -423,12 +423,16 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     assert json.loads(page[start : page.index("</script>", start)]) == style
     # The model owner's defaults of 2026-09-17: the whole path as one bright line,
     # hue by phase on the arrowhead only, no text around the board, autoplay.
-    assert style["sizes"]["trail_links"] == 10 and style["sizes"]["ray_width_px"] == 6
+    assert style["sizes"]["trail_links"] == 10 and style["sizes"]["ray_width_px"] == 3
+    # A small head (half a Link, 3 px) and a tiny momentum arrow (14 px for an
+    # electron of 8, a 5 px arrowhead, 1.5 px wide) over a faint white wake.
+    assert style["sizes"]["head_links"] == 0.5 and style["sizes"]["arrowhead_px"] == 5
+    assert style["sizes"]["momentum_arrow_width_px"] == 1.5
     assert style["sizes"]["trail_width_px"] == 6 and style["sizes"]["trail_fade"] == [0.35, 0.0]
     # The wake is white and faint; the head keeps its family colour and carries a
     # momentum arrow of amount x 6 px (48 px for an electron of 8).
     assert style["colors"]["trail"] == "#ffffff" and style["draw"]["momentum_arrow"] is True
-    assert style["sizes"]["momentum_arrow_px_per_quantum"] == 6
+    assert style["sizes"]["momentum_arrow_px_per_quantum"] == 1.75
     assert style["colors"]["momentum_arrow"] == "#7fd7ff"
     assert style["colors"]["families"]["default"]["hue"] == "fixed"
     assert style["draw"]["hue_by_phase"] == "arrowhead"
@@ -455,4 +459,4 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     start = inlined.index('id="style">') + len('id="style">')
     assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 9
     start = inlined.index('id="style-default">') + len('id="style-default">')
-    assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 6
+    assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 3
