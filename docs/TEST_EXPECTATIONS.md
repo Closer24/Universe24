@@ -1395,10 +1395,11 @@ parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
   24 (t - 1): 0, 24, 48, 72, 96, 120; the `n` total is 16 with source 0;
   the spatial accounting balances. The runner records
   `ray_binding: "ray-binding-v1"` beside `released_field`, and a run of 6
-  ticks writes five `bound_tick` events, one per cycle of ticks 1 to 5 (a
+  ticks writes four `bound_tick` events, one per cycle of ticks 2 to 5 (a
   cycle record carries the tick it started at; the cycle of tick t completes
-  tick t + 1), each with position (10,10,10), families `["n", "n"]`,
-  amounts `[8, 8]`, phases `[t + 1, t + 1]` and `ray_delay` 0;
+  tick t + 1; the cycle of tick 1 is the meeting that forms the group, not a
+  tick), each with position (10,10,10), families `["n", "n"]`, amounts
+  `[8, 8]`, phases `[t + 1, t + 1]` and `ray_delay` 0;
 - (b) `unbinding`: the rule `ionize`, declared before `bind`, is
   `n x n x x` with outputs `n` on Port 2 (amount and phase of input 0), `n`
   on Port 3 (of input 1) and `x` on `"same"` of input 2, invariant energy.

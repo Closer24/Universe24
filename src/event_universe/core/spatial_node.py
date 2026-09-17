@@ -601,6 +601,9 @@ class SpatialNode(SpatialNodeState):
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
+        # The bound group held here before this cycle (ray-binding-v1): a firing
+        # of the binding rule on it is the group's tick, published below.
+        held_before = bound_group(self.rays) if self.rays else ()
         packets: list[SpatialPacket | None] = [None] * 6
         # Field-phase-first packets complete their link inside the departure interval.
         arrival = bounded(tick + services.initial.link_ticks - int(services.initial.field_phase_first))
@@ -713,9 +716,11 @@ class SpatialNode(SpatialNodeState):
                 },
             )
         group = bound_group(plan.kept_rays)
-        if group:
+        if group and held_before:
             # The tick of the bound group (ray-binding-v1, Highlights 3.4): the
-            # binding rule fired again and the group stays, its phases advanced.
+            # binding rule fired again on rays it already held and the group
+            # stays, its phases advanced. The first firing is the meeting that
+            # forms the group, recorded as every meeting is.
             self._event(
                 "bound_tick",
                 tick,

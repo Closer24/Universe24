@@ -273,8 +273,9 @@ def test_a_bound_group_ticks_releases_unbinds_delays_and_bends_light_by_delay(tm
             for line in (tmp_path / "out" / "events.jsonl").read_text(encoding="utf-8").splitlines()
         ]
         ticks = [event for event in ticks if event["event"] == "bound_tick"]
-        # A Node's cycle record carries the tick the cycle started at.
-        assert [event["tick"] for event in ticks] == [1, 2, 3, 4, 5]
+        # A Node's cycle record carries the tick the cycle started at; the cycle of
+        # tick 1 is the meeting that forms the group, the later ones its ticks.
+        assert [event["tick"] for event in ticks] == [2, 3, 4, 5]
         assert all(
             event["families"] == ["n", "n"]
             and event["amounts"] == [8, 8]
