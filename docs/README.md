@@ -75,6 +75,7 @@ were deleted on 2026-09-17 under [Highlights](HIGHLIGHTS.md) sections 3.18
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
 | [Workspace](WORKSPACE.md) | Local configuration UI, templates and recorded playback |
+| [Ray viewer](../tools/ray_viewer/README.md) | 3D viewer and GIF renderer of a run record: rays on their Links with trails and hue by phase, event markers with their Ports, Detector marks and captions from the record; a rendering of a fingerprinted record, not evidence |
 | [Local observer](LOCAL_OBSERVER.md) | Completed Node receptions, cycle counter and local playback prefixes |
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
 | [Performance](PERFORMANCE.md) | Revision-specific host-time measurements and reproduction |

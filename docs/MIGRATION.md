@@ -577,6 +577,33 @@ is bounded metadata like the Detector mark, with one exact counter, the
 sink totals per family; and where the back-reaction is wanted an ordinary
 bound group with a large amount is declared instead. No initialization key,
 API or runtime behavior changes; `external-body-v1` is not yet in the code.
+## Ray viewer added on 2026-09-17 (`tools/ray_viewer/`)
+
+The model owner's visualization requirement of 2026-09-17 (issue #169) is
+implemented as a repository tool, ready before feature 7 lands: a Renderer
+under [Highlights](HIGHLIGHTS.md) 3.29 and 3.30 that reads the runner's
+record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
+
+- `tools/ray_viewer/extract.py` turns one or more records (`run.json`,
+  `events.jsonl`, `initialization.json`, an optional `ray-recording.json`)
+  into `runs.json` (`ray-viewer-runs-v1`): rays chained from the Link
+  transits with their trails, every event as a marker with its Ports, and
+  a caption per tick with the coupling, the invariants and the totals from
+  the record; an event kind it does not know becomes a generic marker.
+- `tools/ray_viewer/viewer.html` is the self-contained page (Three.js r128
+  from cdnjs): dark, rays as segments with arrowheads and trails, hue by
+  phase, field rays faint, markers that stay, Detector marks with their
+  bits, lattice, axes and bounding box, a tick slider, play, a rotation
+  toggle and a run selector.
+- `tools/ray_viewer/render_gif.py` renders a GIF and a contact sheet with
+  Playwright, headless Chromium and Pillow; `playwright` joins the `render`
+  extra in `pyproject.toml`.
+- `tests/test_ray_viewer.py` pins the extraction of a two-lamp, six-tick
+  world ([expectations](TEST_EXPECTATIONS.md#ray-viewer-extraction));
+  `tools/check.py` selects it for any change under `tools/ray_viewer/`.
+
+No engine, schema or record change. The prototype under the session
+scratchpad (`gif-electrons-3d`) is superseded by the tool.
 
 ## Primary initialization-based API
 
