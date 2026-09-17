@@ -677,12 +677,13 @@ limits; it does not derive the matrices or establish physical energy closure.
 
 Adopted direction (model owner, 2026-09-17): the only draw in the model is the
 Detector interaction, 1 or 0 for each transfer arriving at a marked node,
-every ray being a wave ray, 1 ordinary behavior and 0 return, one bounded
-integer per arriving transfer
+every ray being a wave ray, 1 ordinary behavior and 0 return, one bit per
+arriving transfer, and the bit is all the Detector adds
 (the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
-[section 23](#23-the-ray-event-model)). A pair's number is drawn at the first
+[section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
-of steps it has made since its event; no owner answers at a distance.
+of steps it has made since its event and transmits it by the inverse split
+at the birth event to the partner ray's line; no owner answers at a distance.
 For two Detectors at equal distance from the birth the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below
@@ -738,22 +739,27 @@ and that law is configured. The [hypotheses page](docs/HYPOTHESES.md) states the
 ## 23. The ray-event model
 
 Adopted as the target direction by the model owner on 2026-09-17 and recorded
-in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) (sections 3.3, 3.4, 3.15, 3.19,
-3.20, 5.1 and 5.4), the Highlights specification edited directly since that
-date. The design candidate `ray-event-model-v1` in
+in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) (sections 3.3, 3.4, 3.5, 3.15,
+3.19, 3.20, 5.1 and 5.4), the Highlights specification edited directly since
+that date. The design candidate `ray-event-model-v1` in
 [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md) holds the complete
 statement, the migration order and the acceptance criteria.
 Nothing in this section is implemented yet; every implementation step is a
 separate published change measured against that document.
 
-Two words carry the model. An interaction is a meeting of rays at a node in
+The model has exactly two definitions, event and ray: a ray carries
+information, an event is where that information splits, and a ray is what
+was split off from an event. An interaction is a meeting of rays at a node in
 one interval, decided by the coupling declared between the families present;
 it is the only place where anything is decided, and its result is at most six
 events, one per Port. An event is a change of trajectory: a new straight line
 leaving the interaction through one Port. A ray is not an object; it is the
 trajectory of one event between two interactions, the same event with the
 same family properties, one node per Link interval, one heading. From its
-event, every ray carries the number of steps it has made. A ray trajectory is
+event, every ray carries the number of steps it has made, and every ray
+carries the information of the last event it was involved in; if that event
+was at a Detector, the ray records that it was a Detector event and the bit
+drawn, 1 or 0, and the bit is all the Detector adds. A ray trajectory is
 reversible: run backward it returns exactly to the interaction
 that created it, because nothing was added or lost along the line. A node
 that a ray merely crosses hosts no event.
@@ -794,79 +800,92 @@ the ordinary interaction together, each arrival that drew 0 is returned on
 its own line. The Detector reads, changes,
 absorbs and adds nothing; the click is the record of the bit drawn.
 A returning ray retraces its own trajectory by its step count, reaches its
-birth interaction with certainty and continues straight, which is the
-direction of the partner ray of a pair. It carries the number the partner's
-Detector was missing. Pair identity is the trajectory, not the birth node and
-tick.
+birth interaction with certainty and there performs the inverse split of its
+share: it transmits what happened at the event, with its bit, to the same
+places the event sent to, the partner ray's line among them, so the
+partner's Detector is not missing it. Pair identity is the trajectory, not
+the birth node and tick.
 
-A traveling ray releases a field, and the field is itself made of rays that
-cross nodes without event and meet other rays as any ray does. There is no
+A ray has a field: a traveling ray releases it, and the field is itself made
+of rays; a field ray is not a second kind. The field's presence at a node is
+an interaction that makes no event: a field never makes an event unless it
+meets something it changes. Where a field ray meets a ray whose declared
+coupling responds, the meeting is an ordinary interaction and its events
+change that ray's trajectory; everywhere else the field crosses without an
+event. One of those events is the field ray itself returning reversed: the
+return is the opposite momentum of the field, carried back along the field
+ray's line to the ray that released it, which recoils when the return
+arrives, at finite speed. That is how postulate 7 and Highlights 3.14 are
+satisfied: the recoil is a ray. Until its field meets something, a
+traveling ray pays nothing for it. There is no
 matter in the model at this stage: matter is the name for rays bound in one
 node by a declared binding coupling, a neutron ray and a proton ray held
 together by the strong binding, an electron ray around them whose trajectory
 is changed at every step by the field rays the bound pair releases. Mass is
 the retained energy of a bound group, and the group's phase advance is its
-clock. Held source records remain an explicitly labeled interim device until
-the binding couplings exist.
+clock. A bound group has no lifetime of its own: it lasts as long as the
+binding interaction repeats at that node without releasing an event. The
+binding may be nothing more than a very large output-clock delay (Highlights
+3.28) that the bound rays create together, a large mass making the node very
+slow, so that the rays do not leave. It is unbound the same way anything
+else happens on the board: a ray arrives (a high-energy light ray, for
+instance; there is no photon, only a ray) and the coupling declared for the
+families present produces events that leave. Nothing else creates or
+destroys matter. Held source records remain an explicitly labeled interim
+device until the binding couplings exist.
 
 Postulates 1 to 4 hold under this model without exception; the registry
 exception of postulate 4 and the shared query of section 14 lapsed with
 Highlights section 3.18, deleted on 2026-09-17, and the price stated in
 postulate 22 is accepted.
 
-## 24. Everything is information transfer; a return erases at the origin
+## 24. Everything is information transfer; a return is the inverse split at the event
 
 Adopted as the target direction by the model owner on 2026-09-17, together
-with section 23; implementation pending.
+with section 23, and restated by him the same day (Highlights 3.3, 3.20 and
+5.4); implementation pending.
 
-Everything on the board is a transfer of information. A ray carries a piece
-of information away from the interaction that created it, along its line,
-one node per interval. The node of that interaction keeps the complementary
-piece, what is now missing there, in bounded local state for as long as the
-alternative is open. Nothing else is stored about the ray anywhere.
+Everything on the board is a transfer of information. The model has exactly
+two definitions, event and ray: a ray carries information, an event is where
+that information splits, and a ray is what was split off from an event. An
+event is a splitting of information: the interaction splits what arrived
+into the rays that leave, at most six, and each ray carries its own share of
+what happened at the event away from it, along its line, one node per
+interval. All the information is on the rays; the origin node keeps nothing,
+and there is no register of any kind at the origin. Every ray carries the
+information of the last event it was involved in; if that event was at a
+Detector, the ray records that it was a Detector event and the bit drawn,
+1 or 0, and the bit is all the Detector adds. An event cannot be moved;
+there is no such thing. It happened at its node, and a returning ray walks
+back exactly the number of steps it has made to reach it.
 
-A Detector that returns a ray is not sending a message to anyone. It sends
-the piece of information back to the node it came from, so that the missing
-piece can be erased there: the returning ray retraces its own line, reaches
-the origin with certainty, and the origin deletes the open alternative. A
-ray that passes the Detector is realized; its alternative stays open at the
-origin until a return arrives or the bounded lifetime of the open piece ends.
-For a pair, the returning piece continues straight through the origin to the
-partner ray, which is how the partner's Detector receives the number it was
-missing; that continuation is the same transfer in the opposite direction,
-not a second mechanism.
+A Detector that returns a ray is not sending a message to anyone. The
+returning ray carries what happened at the event, its own share only, with
+its bit and nothing larger, and at the event node it performs the inverse
+split with its information, transmitting it to the same places the event
+sent to, so that it cancels what was already there. This turns time back
+for that ray's share only; the other shares are untouched until their own
+rays return. A ray that passes the Detector is realized. For a pair, the
+partner ray's line is among the same places, so the partner's Detector is
+not missing the bit; that is the same inverse split, not a second mechanism.
 
 Each ray meets its own fate. Sibling events of one interaction are
-independent rays; nothing erases a sibling except its own return. The
-once-only requirement of the central specification is therefore a property
-of the returns and of the bounded lifetime at the origin, not of a shared
-owner, and it is accepted that a sibling can be realized at a second Detector
-before a return from the first arrives.
-
-An event is a splitting of information. The interaction splits the piece of
-information that arrived into the pieces that leave, at most six, and each
-leaving piece is a ray. Because nothing is added or lost on a line, the
-information of the event is recoverable: when its rays return to the same
-event, the pieces reassemble and the event's information is complete again,
-as if it had not split. A Detector that returns a ray is telling the event
-which piece it gives back. Since the event is its information and not a
-place, the event can be moved: the open piece kept at the origin may be
-displaced along the trajectory line, and a returning ray, which walks that
-line, still meets it. The displacement mechanism (the occupied-channel rule
-of Highlights section 5.1, which pushes a saved event toward
-its origin along the same path without capacity waiting) is to be specified
-in the design document before implementation.
+independent rays; nothing cancels a sibling's share except its own return.
+The once-only requirement of the central specification is therefore a
+property of the returns, not of a shared owner, and it is accepted that a
+sibling can be realized at a second Detector before a return from the first
+arrives.
 
 The conservation laws exist for this. Energy, momentum component by
 component, charge and every other declared invariant are conserved exactly
-across an interaction so that the event can be reconstructed from its pieces:
-the pieces are the information, and the conserved totals are the check that
-nothing was added or lost when they split and when they reassemble. A
-Detector that returns a ray is therefore returning an event in time: the
-piece walks its line backward and the event is undone by exactly the amount
-that piece carried. Exact integer conservation on the lattice is what makes
-this undoing exact rather than approximate.
+across an interaction so that the event can be rebuilt from its pieces when
+they return: the pieces are the information, and the conserved totals are
+the check that nothing was added or lost when they split and when a share is
+returned. A Detector that returns a ray is therefore returning an event in
+time: the share walks its line backward and the event is undone by exactly
+the amount that share carried, and only that. Exact integer conservation on
+the lattice is what makes this undoing exact rather than approximate.
 
 The design candidate in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
-carries this section's consequences for Node state (a bounded register of
-open alternatives at each interaction node) and for the acceptance criteria.
+carries this section's consequences for ray state and for the acceptance
+criteria.

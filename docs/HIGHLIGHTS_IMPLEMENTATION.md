@@ -1,5 +1,37 @@
 # Highlights implementation coverage
 
+## Highlights as the edited specification and the ray-event decisions - 2026-09-17
+
+Reviewed `docs/HIGHLIGHTS.md` as revised on 2026-09-17 on branch
+`design/ray-event-model`.
+
+By the model owner's decision of 2026-09-17, [docs/HIGHLIGHTS.md](HIGHLIGHTS.md)
+became the Highlights specification and the only copy that is edited; the
+Google Doc is its historical source up to the revision of 2026-09-16 and is
+neither edited nor resynced. The 2026-09-17 revision restates sections 3.3,
+3.4, 3.5, 3.15, 3.19, 3.20, 5.1 and 5.4 (exactly two definitions, event and
+ray; every ray a wave ray carrying a phase, its step count and the information
+of its last event, with the bit if that event was at a Detector; the Detector
+as a marked Node that draws once per arriving transfer and returns the ray
+unchanged by its step count; the return as the inverse split of that ray's
+share at its event Node, with no register at the origin; a field ray as the
+same ray, making no event unless it meets something it changes, and returning
+reversed as the emitter's recoil; a bound group with no lifetime of its own)
+and deletes section 3.18, the shared quantum resource.
+[POSTULATES.md](../POSTULATES.md) (sections 1, 4, 22, 23 and 24, with a note
+on section 14), [the ray-event model](RAY_EVENT_MODEL.md), the
+[documentation index](README.md), the [README](../README.md) and
+[project status](PROJECT_STATUS.md) were synchronized to it.
+
+This is documentation only: no implementation, runtime behavior, test or
+configuration changed. The implementation contracts (the Detector-owned
+sampling, quantum, spatial-fields and local-conversion contracts, with the
+definitions, architecture, terminology and test-expectation sections that cite
+them) describe the current code until the ray-event migration in
+[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md#6-migration-in-order) updates them.
+Bell results recorded with the former shared resource remain historical
+evidence about that profile, not evidence for the current model.
+
 ## Ray integration and local Focus - 2026-09-14
 
 The repository now distinguishes the optional [local Focus scheduler](LOCAL_FOCUS.md)
