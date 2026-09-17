@@ -45,10 +45,12 @@ from .core.disturbance_state import (
 )
 from .core.integer import checked_work
 from .core.spatial_state import (
+    BODY_SINK,
     CAPTURE_MODES,
     CHARGE_INVARIANT,
     DECAY_RESIDUES,
     MAX_DETECTORS,
+    MAX_EXTERNAL_BODIES,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
@@ -59,6 +61,7 @@ from .core.spatial_state import (
     DecayDefinition,
     DetectorMark,
     EmissionDefinition,
+    ExternalBody,
     FieldAssignment,
     FieldGroupDefinition,
     NodeFieldRuleDefinition,
@@ -900,6 +903,95 @@ def _detectors(value: object) -> tuple[DetectorMark, ...]:
                 _integer(setting[0], "detector.setting numerator", 0),
                 _integer(setting[1], "detector.setting denominator", 1),
                 _integer(obj["seed"], "detector.seed", 0),
+            )
+        )
+    return tuple(result)
+
+
+def _external_bodies(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    rules: tuple[InteractionDefinition, ...],
+) -> tuple[ExternalBody, ...]:
+    """External bodies (external-body-v1): position, family and amount required; the
+    amount a positive integer of any width (it enters no sum); charge, phase,
+    initial_momentum (heading and pace, zero for a body at rest), coupling ("sink",
+    the default, or the name of a declared ray interaction) and momentum_table
+    (family name to sign, -1 attraction toward the source) optional."""
+    result: list[ExternalBody] = []
+    names = _names(fields)
+    families = {
+        fields[definition.field].name: index
+        for index, definition in enumerate(spatial)
+        if definition.rays
+    }
+    rule_names = {rule.name: index for index, rule in enumerate(rules)}
+    for index, raw in enumerate(_array(value, "external_bodies", MAX_EXTERNAL_BODIES)):
+        obj = _object(
+            raw,
+            "external body",
+            {
+                "position",
+                "family",
+                "amount",
+                "charge",
+                "phase",
+                "initial_momentum",
+                "coupling",
+                "momentum_table",
+            },
+            {"position", "family", "amount"},
+        )
+        amount = obj["amount"]
+        if type(amount) is not int or amount < 1:
+            raise ValueError("external body amount must be a positive integer of any width")
+        family = _index(obj["family"], names, "external body family")
+        if fields[family].name not in families:
+            raise ValueError("external body family must name a ray spatial field")
+        family_index = families[fields[family].name]
+        definition = spatial[family_index]
+        momentum = [0, 0, 0]
+        if "initial_momentum" in obj:
+            initial = _object(
+                obj["initial_momentum"], "initial_momentum", {"heading", "pace"}, {"heading", "pace"}
+            )
+            heading = _address(initial["heading"], "initial_momentum.heading", -MAX_VALUE)
+            pace = _array(initial["pace"], "initial_momentum.pace", 2, 2)
+            numerator = _integer(pace[0], "initial_momentum.pace numerator", 0)
+            denominator = _integer(pace[1], "initial_momentum.pace denominator", 1)
+            if numerator > denominator:
+                raise ValueError("an external body pace must not exceed one Link per interval")
+            if sum(abs(c) for c in heading) > 1:
+                raise ValueError("an external body initial_momentum requires a unit-axial heading")
+            for axis in range(3):
+                # The whole quanta of amount x pace on the heading's axis, signed.
+                magnitude = (amount * numerator * abs(heading[axis])) // denominator
+                momentum[axis] = -magnitude if heading[axis] < 0 else magnitude
+        coupling = _text(obj.get("coupling", "sink"), "external body coupling")
+        if coupling != "sink" and coupling not in rule_names:
+            raise ValueError("external body coupling must be sink or a declared ray interaction")
+        signs = [0] * len(spatial)
+        table = _object(obj.get("momentum_table", {}), "momentum_table", set(families), set())
+        for name, sign in table.items():
+            if sign not in (-1, 1):
+                raise ValueError("momentum_table signs are -1 (attraction) or 1 (repulsion)")
+            signs[families[name]] = sign
+        released = [i for i, d in enumerate(spatial) if d.field_of == family_index]
+        result.append(
+            ExternalBody(
+                index,
+                _address(obj["position"], "external body position", 0),
+                family_index,
+                amount,
+                charge=_integer(obj.get("charge", 0), "external body charge"),
+                field=released[0] if released else -1,
+                coupling=BODY_SINK if coupling == "sink" else rule_names[coupling],
+                phase=_phase_value(obj.get("phase", 0), "external body phase", definition.phase_bits),
+                signs=tuple(signs),
+                accumulators=(0, 0, 0),
+                momentum=(momentum[0], momentum[1], momentum[2]),
+                sink=(0,) * len(spatial),
             )
         )
     return tuple(result)
@@ -1981,6 +2073,7 @@ def parse_initial_state(document: object) -> InitialState:
             "sampling_profile",
             "detectors",
             "return_mode",
+            "external_bodies",
         },
         required,
     )
@@ -2003,6 +2096,7 @@ def parse_initial_state(document: object) -> InitialState:
     fields = _fields(obj["fields"], node_execution=node_execution)
     disturbances = _disturbances(obj["disturbance_types"], fields)
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
+    ray_rules = _ray_interactions(obj.get("ray_interactions", []), fields, spatial)
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
         sampling_profile=_text(obj.get("sampling_profile", "detector-only-v1"), "sampling_profile"),
@@ -2040,7 +2134,7 @@ def parse_initial_state(document: object) -> InitialState:
             spatial,
             node_execution=node_execution,
         ),
-        ray_interactions=_ray_interactions(obj.get("ray_interactions", []), fields, spatial),
+        ray_interactions=ray_rules,
         node_execution=node_execution,
         spatial_computation_delay=_boolean(
             obj.get("spatial_computation_delay", False), "spatial_computation_delay"
@@ -2062,6 +2156,7 @@ def parse_initial_state(document: object) -> InitialState:
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
         detectors=_detectors(obj.get("detectors", [])),
         return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
+        external_bodies=_external_bodies(obj.get("external_bodies", []), fields, spatial, ray_rules),
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")

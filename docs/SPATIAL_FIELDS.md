@@ -828,6 +828,115 @@ none), beside `ray_meeting`, so a Renderer can draw the G rays faint from the
 per-Node `ray_count` and `value` of that family. A world that declares no
 `field_of` runs byte-identically.
 
+### The external body (`external-body-v1`)
+
+The second declared element of a world beside the Detector mark
+([Highlights](HIGHLIGHTS.md) 3.19, model owner 2026-09-17; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 7b; issue #169): a
+Node declared to hold a family with an amount of any width, standing for a
+star, a fixed proton, a large charge or a piece of apparatus. Like the
+Detector it is a declaration, not physics, and bounded Node metadata: the
+kind of mark, the declaration, the momentum with its three accumulators and
+one exact sink counter per family; no rays, no history.
+
+```json
+{"external_bodies": [
+  {"position": [7, 7, 7], "family": "star", "amount": 4096, "charge": 0,
+   "initial_momentum": {"heading": [1, 0, 0], "pace": [1, 4]},
+   "coupling": "sink", "momentum_table": {"G": -1}, "phase": 0}
+]}
+```
+
+**The declaration.** `position`, `family` (a ray spatial field that is not
+itself a field of anything, unit-axial, on the links metric at pace 1, no
+decay) and `amount` (a positive integer of any width: it enters no sum, it
+only sets how much field leaves per interval) are required; `charge` (a
+bounded integer, read by couplings as the family's charge is), `phase` (the
+phase its field rays carry, below the family's width), `initial_momentum`
+(a unit-axial `heading` and a rational `pace` `[n, d]` of Links per interval,
+n at most d; the momentum is the whole quanta of amount x n / d on that
+axis, signed; zero, the default, for a body at rest), `coupling` (`"sink"`,
+the default, or the name of a declared ray interaction) and
+`momentum_table` (family name to sign, -1 attraction toward the source of an
+arriving field ray, 1 repulsion) are optional. One body per Node, never on a
+Detector; a body is never a field family. A world with a body runs under the
+shared Detector admission (schema 1, `link_ticks` 1, the default fixed
+clock, no field rules, spatial interactions or couplings).
+
+**The release.** Every interval the body releases the field of its family,
+the ray field declared `field_of` its family, on all six Port headings: one
+ray per heading of amount `floor(amount x n / d)` by that field's `release`,
+with the body's declared phase, no event, one Link on with the residents.
+The released stock is booked as an explicitly accounted source of the field
+(and of its momentum field when one is bound), exactly as a bound group's
+release of resident content (`release_stock`); the body's amount never
+changes. In an interval the body steps through a Port, that heading is its
+own line ahead of it, which its ray occupies, and it releases nothing there
+(no self-field, Highlights 3.5). A body whose family has no `field_of`
+radiates nothing. A body's Node exists and is active from the start.
+
+**It does not spread.** The body never splits, binds, unbinds, converts or
+decays: it is one flag in the Node's law, and every other step (the
+arrivals, the meetings by table, the stamping, the departures of what
+leaves) is unchanged. No ray of its family exists at its Node.
+
+**The sink.** Whatever arrives at the body's Node is met by its declared
+coupling. Under `"sink"`, every arriving ray, outbound or returning, ends in
+the body's exact sink counter for its family in the arrival interval and is
+booked on the audit's `absorbed_by_bodies` line per field
+(`external_body_totals()`, with the momentum field's components when one is
+bound), an `external_body_absorbed` record naming the body, the Port, the
+family, the amount and the body's momentum after it. The conservation line
+becomes initial + sources = current + dissipated + escaped + annulled +
+absorbed_by_bodies at every completed tick, the sources holding what the
+bodies released; `conserved_at_every_completed_tick` (initial + sources =
+current) is therefore false once a sink has taken anything, as under
+`annul`. A wall, a screen and a beam stop are this default.
+
+**A declared coupling.** Under the name of a declared meeting with outputs
+([meetings](#meetings-with-outputs-ray-meeting-conversion-v1)), the body is
+the participant that never changes: the rule has one role that selects the
+body's family alone and returns it once among its outputs, and the other
+roles name the families it meets. Each interval the Node adds one token of
+the body's family (amount 1, heading +X, the body's phase, no event) to the
+residents, the rule fires over the token and the arriving rays of the
+families it names as an ordinary meeting, and the Node strips the token's
+output before anything leaves, requiring it back unchanged (amount 1, the
+body's phase) or the cycle fails. The event record of the rule's other
+outputs therefore counts the token as one quantum on its Port, +X. A family
+the rule does not name, and every returning ray, ends in the sink as under
+the default. A reversed heading of the arriving ray is a mirror, a split by
+a declared table a beam splitter, a phase offset a phase plate; a
+polarization read is a polarizer once feature 11 exists.
+
+**Motion by fields only.** The body starts with its declared momentum. A
+field ray of a family its `momentum_table` names that ends in its sink
+changes its momentum by sign x amount x heading of the arriving ray, an
+integer vector (-1: toward the source, which lies opposite the arriving
+heading); nothing else moves it, since matter that arrives is absorbed
+without a push, and a coupled family is met by the rule, not the table. Its
+velocity is its momentum over its amount, kept exactly: every interval each
+axis accumulator adds the momentum component, and the body steps one Link
+through the Port of the first axis (x before y before z) whose accumulator
+has reached a whole amount, subtracting the amount; at most one Link per
+interval, never faster than a ray, and a momentum that would exceed the
+amount fails the cycle. The step is a departure like a ray's: the body
+leaves on the packet of that Port (`external_body_step`, with the arrival
+tick), is on the Link for the interval, and the next Node holds all of it
+from the arrival tick, meeting every ray that arrives there in the same
+interval; a body cannot leave an open world. So a small momentum over a huge
+amount moves it rarely and exactly, against an electron it stands still,
+and two stars turn each other over long times.
+
+**The audit.** `external_bodies()` lists every body in declaration order
+with its Node (the Node it steps to while on a Link, `stepping` true), its
+momentum, its accumulators and its sink per family; `external_body_momentum()`
+is the bodies' momentum line, the exact sum. The runner records
+`external_body: "external-body-v1"`, `external_bodies` (each declaration
+with its `positions` per completed tick, `[tick, x, y, z]`, and its final
+state), `external_body_totals` and `external_body_momentum`. A world that
+declares no `external_bodies` runs byte-identically.
+
 ### Funded emission and absorption
 
 A field whose emitting type also carries a scalar field of the same name may

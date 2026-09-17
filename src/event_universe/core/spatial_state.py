@@ -127,6 +127,16 @@ DETECTOR_RETURN = "detector-return-v1"
 # ends there into an explicitly accounted sink (annul).
 INVERSE_SPLIT = "inverse-split-v1"
 RETURN_MODES = ("siblings", "straight", "annul")
+# The external body (Highlights 3.19, external-body-v1): the second declared
+# element of a world beside the Detector mark, a Node declared to hold a family
+# with an amount of any width, a charge and a momentum. It radiates the field of
+# its family on all six headings once per interval, booked as a source; it never
+# spreads; whatever arrives is met by its declared coupling, the sink by default;
+# only field rays named by its momentum table move it, one Link per axis when a
+# whole amount has accumulated.
+EXTERNAL_BODY = "external-body-v1"
+MAX_EXTERNAL_BODIES = 4096
+BODY_SINK = -1
 
 
 @dataclass(frozen=True, slots=True)
@@ -154,6 +164,61 @@ class DetectorMark:
             raise ValueError("a Detector setting must be a rational from 0 through 1")
         if type(self.seed) is not int or not 0 <= self.seed < TICKET_MODULUS:
             raise ValueError("a Detector seed must stay below the ticket modulus")
+
+
+@dataclass(frozen=True, slots=True)
+class ExternalBody:
+    """The external body mark of a Node (external-body-v1): bounded Node metadata.
+
+    The declaration (position, family as a spatial field index, amount of any
+    width, charge, the released field's index or -1, the coupling as a ray
+    interaction index or BODY_SINK, the released phase, the momentum table as one
+    sign per spatial field), the momentum with its three exact accumulators, and
+    one exact sink counter per spatial field. No rays, no history.
+    """
+
+    index: int
+    position: Address3
+    family: int
+    amount: int
+    charge: int = 0
+    field: int = -1
+    coupling: int = BODY_SINK
+    phase: int = 0
+    signs: tuple[int, ...] = ()
+    momentum: tuple[int, int, int] = (0, 0, 0)
+    accumulators: tuple[int, int, int] = (0, 0, 0)
+    sink: tuple[int, ...] = ()
+
+    def __post_init__(self) -> None:
+        if type(self.index) is not int or not 0 <= self.index < MAX_EXTERNAL_BODIES:
+            raise ValueError("an external body index must stay below the body capacity")
+        if type(self.position) is not tuple or len(self.position) != 3:
+            raise ValueError("an external body requires a three-integer position")
+        if any(type(c) is not int or bounded(c) < 0 for c in self.position):
+            raise ValueError("an external body position must be nonnegative bounded integers")
+        if type(self.amount) is not int or self.amount < 1:
+            raise ValueError("an external body amount must be a positive integer")
+        if type(self.family) is not int or self.family < 0:
+            raise ValueError("an external body family must be a spatial field index")
+        if type(self.field) is not int or self.field < -1:
+            raise ValueError("an external body field must be a spatial field index or -1")
+        if type(self.coupling) is not int or self.coupling < BODY_SINK:
+            raise ValueError("an external body coupling must be a rule index or the sink")
+        if type(self.phase) is not int or self.phase < 0:
+            raise ValueError("an external body phase must be a nonnegative integer")
+        bounded(self.charge)
+        for vector in (self.momentum, self.accumulators):
+            if type(vector) is not tuple or len(vector) != 3:
+                raise ValueError("an external body momentum requires three integers")
+            for value in vector:
+                checked_work(value)
+        if any(abs(value) >= self.amount for value in self.accumulators):
+            raise ValueError("an external body accumulator stays below its amount")
+        if type(self.signs) is not tuple or any(sign not in (-1, 0, 1) for sign in self.signs):
+            raise ValueError("an external body momentum table holds signs -1, 0 or 1")
+        if type(self.sink) is not tuple or any(type(v) is not int or v < 0 for v in self.sink):
+            raise ValueError("an external body sink holds nonnegative counters")
 
 
 @dataclass(frozen=True, slots=True)
@@ -859,6 +924,9 @@ class SpatialNodeState:
     # state: seeded from the mark, advanced by one unsalted step per arriving ray.
     detector: DetectorMark | None = None
     detector_ticket: int = 0
+    # The external body this Node holds, whole, when one is declared or has
+    # stepped here (external-body-v1); None at every other Node.
+    body: ExternalBody | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -884,6 +952,10 @@ class SpatialPlan:
     # and the content they annulled per field (inverse-split-v1).
     inverse_splits: tuple[InverseSplit, ...] = ()
     annulled: Values = ()
+    # The external body after this cycle and the Port it steps through, or -1
+    # when it stays (external-body-v1); None at a Node without a body.
+    body: ExternalBody | None = None
+    body_port: int = -1
 
 
 @dataclass(frozen=True, slots=True)
@@ -915,6 +987,8 @@ class SpatialPacket:
     fields: SpatialBundle
     rays: tuple[Rays, ...] = ()
     phases: SpatialBundle = ()
+    # An external body stepping one Link through this Port (external-body-v1).
+    body: ExternalBody | None = None
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -1552,3 +1626,183 @@ def heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], 
 
 def heading_pace(definition: SpatialFieldDefinition, heading: int) -> tuple[int, int]:
     return heading_paces(definition)[heading]
+
+
+# The external body (external-body-v1). Every rule here reads the body's own mark
+# and the rays that arrived at its Node; nothing reads another Node.
+
+
+def body_release(body: ExternalBody, definition: SpatialFieldDefinition, port: int = -1) -> Rays:
+    """The field rays a body releases once per interval: one per Port heading, each
+    the whole quanta of amount x n / d, with the body's declared phase, no event;
+    booked as a source by the Node. In an interval the body steps through a Port,
+    that heading is its own line ahead of it, which its ray occupies, and it
+    releases nothing there (no self-field, Highlights 3.5). The amount enters no
+    sum: the product is a Python integer and only the released ray amount is bounded."""
+    amount = (body.amount * definition.release_numerator) // definition.release_denominator
+    if amount <= 0:
+        return ()
+    skip = PORT_HEADINGS[port] if port >= 0 else None
+    return _released(bounded(amount), body.phase & definition.phase_mask, definition, skip)
+
+
+def body_absorb(
+    body: ExternalBody, index: int, rays: Rays, definition: SpatialFieldDefinition
+) -> ExternalBody:
+    """The sink: the arriving rays of one family end in the body's exact counter for
+    that family, and a field ray of a family the momentum table names changes the
+    momentum by sign x amount x heading (-1 is attraction toward the source, which
+    lies opposite the arriving heading). The body's content never changes."""
+    sink = list(body.sink)
+    momentum = list(body.momentum)
+    sign = body.signs[index] if index < len(body.signs) else 0
+    for ray in rays:
+        sink[index] = checked_work(sink[index] + ray.amount)
+        if sign:
+            heading = definition.headings[ray.heading]
+            for axis in range(3):
+                momentum[axis] = checked_work(momentum[axis] + sign * ray.amount * heading[axis])
+    return replace(body, sink=tuple(sink), momentum=(momentum[0], momentum[1], momentum[2]))
+
+
+def body_step(body: ExternalBody) -> tuple[int, ExternalBody]:
+    """One interval of the body's motion: each axis accumulator adds the momentum
+    component, and the body steps one Link through the Port of the first axis
+    (x before y before z) whose accumulator has reached a whole amount, subtracting
+    the amount; at most one Link per interval, never faster than a ray. Returns
+    the Port, or -1 when it stays, and the body with its new accumulators."""
+    accumulators = [a + m for a, m in zip(body.accumulators, body.momentum, strict=True)]
+    port = -1
+    for axis in range(3):
+        if accumulators[axis] >= body.amount:
+            accumulators[axis] -= body.amount
+            port = 2 * axis
+            break
+        if accumulators[axis] <= -body.amount:
+            accumulators[axis] += body.amount
+            port = 2 * axis + 1
+            break
+    for axis in range(3):
+        # An accumulator only grows past the amount while the body waits its turn
+        # on another axis; it is capped so the mark stays bounded metadata.
+        if accumulators[axis] > 2 * body.amount:
+            raise ValueError("an external body momentum exceeds its amount: faster than a ray")
+        if accumulators[axis] < -2 * body.amount:
+            raise ValueError("an external body momentum exceeds its amount: faster than a ray")
+    return port, replace(body, accumulators=(accumulators[0], accumulators[1], accumulators[2]))
+
+
+def body_coupled_families(body: ExternalBody, initial: InitialState) -> frozenset[int]:
+    """The spatial fields the body's declared coupling rule meets: every role of the
+    rule that does not select the body's family; empty for the sink."""
+    if body.coupling == BODY_SINK:
+        return frozenset()
+    rule = initial.ray_interactions[body.coupling]
+    return frozenset(kind for role in rule.participants for kind in role if kind != body.family)
+
+
+def body_token(body: ExternalBody) -> Ray:
+    """The body as the participant of its coupling rule that never changes: one
+    quantum of its family at the Node, heading 0, no event; the Node strips the
+    rule's unchanged output of it before anything leaves."""
+    return Ray(0, (0, 0, 0), 1, phase=body.phase)
+
+
+def validate_external_bodies(initial: InitialState) -> None:
+    """The admission of external bodies (external-body-v1): the shared Detector
+    admission, one body per Node, never on a Detector, a unit-axial links-metric
+    ray family at pace 1, the family's released field when one is declared, a
+    coupling that is the sink or a declared meeting with outputs in which one role
+    selects the body's family alone and the body is returned unchanged."""
+    if type(initial.external_bodies) is not tuple or len(initial.external_bodies) > MAX_EXTERNAL_BODIES:
+        raise ValueError("external bodies exceed their fixed capacity")
+    if not initial.external_bodies:
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+        or initial.spatial_couplings
+    ):
+        raise ValueError("an external body requires the default fixed H=1 spatial clock")
+    positions = {mark.position for mark in initial.detectors}
+    for expected, body in enumerate(initial.external_bodies):
+        if type(body) is not ExternalBody:
+            raise ValueError("external_bodies require ExternalBody entries")
+        if body.index != expected:
+            raise ValueError("external bodies are indexed in declaration order")
+        if any(c >= length for c, length in zip(body.position, initial.shape, strict=True)):
+            raise ValueError("an external body position must be within shape")
+        if body.position in positions:
+            raise ValueError("a Node carries one external body and no Detector mark beside it")
+        positions.add(body.position)
+        if body.family >= len(initial.spatial_fields) or body.field >= len(initial.spatial_fields):
+            raise ValueError("an external body family must name a ray spatial field")
+        family = initial.spatial_fields[body.family]
+        if family.field_of is not None:
+            raise ValueError("an external body holds a family, not a field")
+        if (
+            not family.rays
+            or family.euclidean
+            or family.pace_numerator != family.pace_denominator
+            or family.decay is not None
+            or any(sum(abs(c) for c in heading) != 1 for heading in family.headings)
+            or any(heading not in family.headings for heading in PORT_HEADINGS)
+        ):
+            raise ValueError("an external body requires a unit-axial unpaced ray family")
+        released = [i for i, d in enumerate(initial.spatial_fields) if d.field_of == body.family]
+        if body.field != (released[0] if released else -1):
+            raise ValueError("an external body radiates the released field of its family")
+        if body.phase >= family.phase_modulus:
+            raise ValueError("an external body phase must be below its family's phase width")
+        if len(body.signs) != len(initial.spatial_fields) or len(body.sink) != len(
+            initial.spatial_fields
+        ):
+            raise ValueError("an external body holds one sign and one sink counter per spatial field")
+        if any(sign and not initial.spatial_fields[i].rays for i, sign in enumerate(body.signs)):
+            raise ValueError("an external body momentum table names ray families")
+        if body.coupling == BODY_SINK:
+            continue
+        if body.coupling >= len(initial.ray_interactions):
+            raise ValueError("an external body coupling names a declared ray interaction")
+        rule = initial.ray_interactions[body.coupling]
+        own = [role for role in rule.participants if role == (body.family,)]
+        if (
+            not rule.outputs
+            or len(own) != 1
+            or any(body.family in role for role in rule.participants if role != (body.family,))
+        ):
+            raise ValueError(
+                "an external body coupling is a meeting with outputs in which one role is the body"
+            )
+        if rule.outputs.count(body.family) != 1:
+            raise ValueError("an external body coupling returns the body once, unchanged")
+
+
+def external_body_names(initial: InitialState) -> list[dict[str, object]]:
+    """The declared bodies for the run record, in declaration order."""
+    return [
+        {
+            "index": body.index,
+            "family": initial.fields[initial.spatial_fields[body.family].field].name,
+            "amount": body.amount,
+            "charge": body.charge,
+            "field": (
+                None if body.field < 0 else initial.fields[initial.spatial_fields[body.field].field].name
+            ),
+            "coupling": (
+                "sink" if body.coupling == BODY_SINK else initial.ray_interactions[body.coupling].name
+            ),
+            "initial_position": list(body.position),
+            "initial_momentum": list(body.momentum),
+        }
+        for body in initial.external_bodies
+    ]
