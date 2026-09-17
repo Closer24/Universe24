@@ -104,7 +104,11 @@ probability of a click is already in how much content reached it.
 **Detector.** Every Node carries one bit: Detector or not. The mark is
 bounded Node metadata (the bit, a setting, a ticket seed), not a record, not
 an object and not an external device; "Detector behavior" is simply how a
-Node behaves when the bit is set. A marked Node does one very simple thing.
+Node behaves when the bit is set. A source is a Detector: whatever emits a
+ray of a known family is a marked Node, because knowing the family of what
+it emits is a measurement; the birth event of a pair therefore happens at a
+marked Node, which draws on every arrival like any other. A marked Node
+does one very simple thing.
 What arrives at it is a wave ray carrying information; every ray is a wave
 ray, so the kind of ray makes no difference to the Detector. For each
 transfer that arrives,
@@ -309,9 +313,13 @@ The rule in the form Highlights 3.27 requires:
 ## 3. Pairs, the carried bit and the price
 
 A bonded pair is one birth interaction and two rays with opposite headings.
-Each ray reaches its own Detector and is drawn there. A ray that returns
-walks back exactly its step count to the birth interaction and there performs
-the inverse split of its share: it transmits what happened at the event, with
+The source is a marked Node: whatever emits a ray of a known family is a
+Detector, because knowing the family of what it emits is a measurement, so
+the birth event happens at a marked Node that draws on every arrival like
+any other. Each ray reaches its own Detector and is drawn there. A ray that
+returns walks back exactly its step count to the birth interaction, where it
+is drawn like any arrival: on 0 it is sent back out along its own line; on 1
+it performs the inverse split of its share there: it transmits what happened at the event, with
 its bit (the outcome of the first draw, all the Detector added), to the same
 places the event sent to, the partner ray's line among them, so the partner's
 Detector is not missing it: the first Detector saw only its own value, and
@@ -487,12 +495,16 @@ and evidence, under the ordinary gates.
   only inside the forward light cone of that interaction.
 - An interaction never emits more than six events and never two on one Port;
   every declared invariant is exact over all inputs and all events out.
-- A pair with equal Detector distances gives CHSH at most 2 within counting
-  error; the joint law's value appears only when the second ray's path
-  exceeds the round trip through the first Detector, and no Detector reads
-  the carried value: the second Detector draws its own bit and reads nothing
-  from the ray. The pair test counts coincidences of clicks within a declared
-  time window; a pair with one return is unpaired.
+- The source of a pair is a marked Node, drawing on every arrival like any
+  other. A pair with equal Detector distances gives CHSH at most 2 within
+  counting error; the joint law's value appears only when the second ray's
+  path exceeds the round trip through the first Detector, and no Detector
+  reads the carried value: the second Detector draws its own bit and reads
+  nothing from the ray. The pair test counts coincidences of clicks within a
+  declared time window; a pair with one return is unpaired. The test reports
+  CHSH in the symmetric geometry and in the delayed geometry; what each
+  outcome means is stated in
+  [HYPOTHESES.md section 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail).
 - Conservation audits balance at every tick; no Node holds stock after an
   interaction; every ray is resident, in flight or escaped, and nothing else.
 - Mode siblings (the default): a returned ray that finds nothing at its
