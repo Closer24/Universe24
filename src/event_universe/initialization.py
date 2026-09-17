@@ -1775,19 +1775,17 @@ def _ray_interactions(
             raise ValueError("ray interactions admit at most six participants")
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
-        if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
-            raise ValueError(
-                "the charge invariant is declared for every ray interaction; "
-                "do not declare another invariant named charge"
-            )
         # wave-ray-family-v1: charge x amount summed over the participants is an
         # invariant of every declared ray interaction, checked like the declared ones.
         # A meeting with outputs carries it as a per-ray readout summed over its
-        # inputs and over its outputs (appended by _ray_meeting).
+        # inputs and over its outputs, appended by _ray_meeting after the same check.
         if not rule.outputs:
-            rule = replace(
-                rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants)))
-            )
+            if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
+                raise ValueError(
+                    "the charge invariant is declared for every ray interaction; "
+                    "do not declare another invariant named charge"
+                )
+            rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
         rules.append(rule)
     return tuple(rules)
 
