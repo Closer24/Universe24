@@ -182,11 +182,15 @@ def test_emission_shares_amount_over_the_next_headings_and_cycles_the_cursor():
         ray_slots=4,
     )
     rays, cursor = emit_rays(5, 2, definition, meter())
-    assert rays == (Ray(2, (0, 0, 0), 3), Ray(0, (0, 0, 0), 2)) and cursor == 1
+    # One emission is one event: its rays carry the Ports it sent to (+Z and +X)
+    # and the amount per Port (ray-event-state-v1).
+    stamp = {"event_ports": 0b010001, "event_shares": (2, 0, 0, 0, 3, 0)}
+    assert rays == (Ray(2, (0, 0, 0), 3, **stamp), Ray(0, (0, 0, 0), 2, **stamp)) and cursor == 1
     # Edge case: an amount smaller than the ray count skips empty rays, keeps the sum,
     # and moves the cursor on by the headings it filled, not the whole sweep.
     rays, cursor = emit_rays(1, 1, definition, meter())
-    assert rays == (Ray(1, (0, 0, 0), 1),) and cursor == 2
+    assert rays == (Ray(1, (0, 0, 0), 1, event_ports=0b000100, event_shares=(0, 0, 1, 0, 0, 0)),)
+    assert cursor == 2
     ports, kept = forward_rays(rays, definition, meter())
     assert [len(p) for p in ports] == [0, 0, 1, 0, 0, 0] and kept == ()
     assert merge_rays((Ray(1, (0, 0, 0), 1), Ray(1, (0, 0, 0), 2), Ray(1, (1, 0, 0), 1))) == (

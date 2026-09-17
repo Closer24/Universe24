@@ -272,8 +272,10 @@ between arrival and the next cycle; there is no octant stock.
 
 An emitting record keeps a cursor into the heading sequence in its emission
 phase register and advances it by `rays_per_tick` each tick, so a long sequence
-spread evenly over the observer's sphere is swept over time. Rays with the same
-heading and phase merge exactly at a Node because they share one line. Delivered
+spread evenly over the observer's sphere is swept over time. Rays of one event
+with the same heading and phase merge exactly at a Node because they share one
+line; rays of different events never merge
+([ray state](#ray-state-ray-event-state-v1)). Delivered
 samples and the `flux` leaf see ray arrivals per port, resident ray stock is the
 local `value`, and node values report `ray_count`. A coupling reaction that
 amends a departing packet leaves the rays on that port untouched, so rays pass
@@ -286,12 +288,15 @@ rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its 
 (zero while it stays), and every coupling it evaluates after arriving reads the
 sampled flux and value with those rays subtracted. The work is bounded by
 `rays_per_tick`, uses only the record's own registers and the port it left
-through, and reads no ray identity or remote state. Rays of another record
-that merged with them at that Node are subtracted too; that coincidence needs
-the same heading, lattice accumulators, wave phase and advance from an adjacent
-Node. Rays that return later, from
-any distance, are not excluded: this is one-link exclusion of the emitter's own
-wake, not a general self-field law. Schema 2 decay attenuates each
+through, and reads no ray identity or remote state. The reconstructed rays
+carry the departure's event state, so they match exactly the rays of that
+emission event: a ray of another event, another record's or the same record's
+earlier cycle, never merges with them
+([ray state](#ray-state-ray-event-state-v1)) and is not subtracted. An
+emitter that moves at link speed therefore meets the rays of its earlier
+cycles as distinct events and treats them as foreign. Rays that return later,
+from any distance, are not excluded: this is one-link exclusion of the
+emitter's own wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
@@ -304,6 +309,62 @@ solid angle the node subtends from the source, in every direction. The
 [gravity probe](../examples/gravity-probe/README.md) then couples held and moving
 bodies to that flux with `mass x flux / D` and reports attraction, an inverse
 square in every direction, and mass-independent acceleration.
+
+### Ray state (`ray-event-state-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1; [ray-event
+model](RAY_EVENT_MODEL.md#1-definitions), migration step 2): every ray
+carries the number of steps it has made since its event and the information
+of that event, and if that event was at a Detector, the bit drawn. In this
+slice they are hidden variables (Highlights 5.4): carried, part of the merge
+identity, validated, and read by no rule, coupling, absorber or readout. An
+existing world runs exactly as before except where rays of different events
+used to merge; they no longer do.
+
+The `Ray` record (`core/spatial_state.py`) holds, beside its heading index,
+DDA accumulators, amount, wave phase, advance, pace wait and interaction
+delay:
+
+| Field | Values | Rule |
+| --- | --- | --- |
+| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node; what it does there is features 3 and 4 of issue #169, so walking it further is refused |
+| `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. No rule sets `0` yet: every created ray is outbound |
+| `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
+| `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
+| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. No Detector exists yet, so every ray carries `0` |
+
+Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
+sums that form the shares and the step count are 64-bit intermediates
+(`checked_work`) bounded before they are stored. The phase uses the field's
+`phase_steps` modulus: outbound, the phase advances by the ray's step per
+Link as before; on the walk back it decrements by the same step, so the
+phase, like the count, returns to what it was at the event. A ray that spends
+a tick at its Node (pace wait, interaction delay, load hold) moves its phase
+by the same signed step.
+
+An event is where rays are created, and every ray it creates is stamped with
+the event's mask and shares as a fresh outbound trajectory with `steps 0`:
+
+- an emission (`emit_rays`: one record, one emission rule, one cycle, funded or
+  sourced, swept or directed, and a mirror's reflection alike) is one event;
+  its mask is the set of Ports its rays first step through, and its share per
+  Port is the sum of their amounts, so a sweep of several headings that leave
+  through one Port is one event on that Port;
+- a ray interaction (`ray_interactions`) is one event per group that fires: its
+  outputs, whether their heading changed or not, carry the mask and shares of
+  all the group's outputs. A group that does not fire leaves its rays, and
+  their event state, untouched.
+
+Merge identity: `merge_rays` combines rays that agree in heading, lattice
+accumulators, wave phase, advance, wait, interaction delay, steps, outbound,
+event Ports, event shares and Detector bit. Rays of different events never
+merge, even with the same heading, family and phase: each keeps the
+information of its own event, and two rays of one emitter's successive cycles
+are two events. `ray_count` and slot use therefore count events on a line,
+not lines, and one-Link self-exclusion excludes exactly the departure cycle's
+rays (above). Nothing else changes: amounts, headings, phases, coherence,
+absorption shares, totals and the audits are what they were, and the runner
+records `ray_state: "ray-event-state-v1"` beside `sampling_profile`.
 
 ### Funded emission and absorption
 
@@ -428,8 +489,9 @@ departure cycle and compares heading, lattice accumulators, wave phase and advan
 A distinguishable external phase or advance is not excluded, even if the emitter's
 properties have changed since departure. A cycle without emission clears the
 previous emission row to four zeros, so the fallback advance sentinel cannot keep
-an exhausted source active. A foreign ray that has already merged with the same complete key
-still cannot be distinguished by this candidate. Phased or attenuating
+an exhausted source active. A foreign ray never merges with the own key, since
+its event differs ([ray state](#ray-state-ray-event-state-v1)); the own ray
+of the departure cycle is the only one excluded. Phased or attenuating
 self-exclusion alongside response couplings is rejected: subtracting a raw own
 amount from a coherent or decayed sample is not the corresponding local
 subtraction; the supported combination is absorption. Coherence evaluation is

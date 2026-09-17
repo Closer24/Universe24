@@ -19,6 +19,7 @@ from event_universe.core.spatial_state import (
     Ray,
     Rays,
     SpatialFieldDefinition,
+    stamp_event,
     validate_ray_participants,
     validate_rays,
 )
@@ -37,6 +38,7 @@ def _view(ray: Ray, definition: SpatialFieldDefinition) -> Values:
 
 
 def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition) -> Ray:
+    """One output of an interaction: the ray on its new line, before the event stamp."""
     if unpack(values[0]) != (ray.amount,) or unpack(values[3]) != (ray.advance,):
         raise ValueError("ray coupling amount and advance are read-only")
     vector = unpack(values[1])
@@ -53,6 +55,17 @@ def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition) -
         accumulators=ray.accumulators if heading == ray.heading else (0, 0, 0),
         phase=unpack(values[2])[0],
         interaction_delay=unpack(values[4])[0],
+    )
+
+
+def _events(
+    group: tuple[tuple[Ray, SpatialFieldDefinition], ...],
+) -> Rays:
+    """The events of one interaction: its outputs stamped together with the mask of the
+    Ports they leave through and the amount per Port, each a fresh trajectory."""
+    return stamp_event(
+        tuple(ray for ray, _ in group),
+        tuple(definition.headings[ray.heading] for ray, definition in group),
     )
 
 
@@ -102,9 +115,12 @@ def apply_ray_interactions(
             after = interact_values(rule, before, RAY_PROPERTIES, meter, costs)
             if after is before:
                 continue
-            for owner, values in zip(group, after, strict=True):
+            outputs = tuple(
+                (_replacement(rays[index][slot], values, definitions[index]), definitions[index])
+                for (index, slot), values in zip((owners[o] for o in group), after, strict=True)
+            )
+            for owner, replacement in zip(group, _events(outputs), strict=True):
                 index, slot = owners[owner]
-                replacement = _replacement(rays[index][slot], values, definitions[index])
                 validate_rays((replacement,), definitions[index], fields[definitions[index].field])
                 candidate[index][slot] = replacement
                 meter.charge("update", 5)

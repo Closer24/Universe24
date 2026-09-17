@@ -102,9 +102,12 @@ def test_common_swap_preserves_complete_metadata_and_resets_changed_line():
     initial = parse_initial_state(document())
     rays = (Ray(0, (1, 0, 0), 5, advance=3), Ray(1, (0, 1, 0), 5, advance=5))
     updated = apply(initial, rays)
+    # The interaction is one event on -X and one on +X: both outputs carry that
+    # mask and the amount per Port, as fresh trajectories (ray-event-state-v1).
+    event = {"event_ports": 0b000011, "event_shares": (5, 5, 0, 0, 0, 0)}
     assert updated == (
-        replace(rays[0], heading=1, accumulators=(0, 0, 0), interaction_delay=2),
-        replace(rays[1], heading=0, accumulators=(0, 0, 0), interaction_delay=2),
+        replace(rays[0], heading=1, accumulators=(0, 0, 0), interaction_delay=2, **event),
+        replace(rays[1], heading=0, accumulators=(0, 0, 0), interaction_delay=2, **event),
     )
     assert rays[0].heading == 0 and rays[1].heading == 1
 
@@ -168,7 +171,10 @@ def test_unchanged_vector_preserves_duplicate_heading_index_and_dda():
     rule["assignments"] = [item for item in rule["assignments"] if item["field"] == "delay"]
     initial = parse_initial_state(doc)
     rays = (Ray(1, (1, 0, 0), 5), Ray(2, (0, 1, 0), 5))
-    assert apply(initial, rays) == tuple(replace(ray, interaction_delay=2) for ray in rays)
+    assert apply(initial, rays) == tuple(
+        replace(ray, interaction_delay=2, event_ports=0b000011, event_shares=(5, 5, 0, 0, 0, 0))
+        for ray in rays
+    )
 
 
 def test_new_ray_candidate_rejects_a_sampling_profile_other_than_detector_only():

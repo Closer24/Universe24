@@ -95,6 +95,7 @@ are illustrative data, not a list of recognized physical entities.
 | Node | Fixed resident slots, one pending local proposal and fixed coupling remainders |
 | Transfer | A record owned by an outgoing link, with type, values, port and arrival time |
 | Coupling | Configured local exchange between records, or between a record and a spatial field |
+| Ray | One straight-moving share of a ray field: heading, amount, wave phase and the carried ray-event state (steps since its event, outbound, the event's Ports and shares, the Detector bit), owned by a Node between arrival and the next cycle or by a Link in transit ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)) |
 
 The six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
 of transport. A vector value still has three components; it is not automatically
@@ -173,6 +174,10 @@ is valid and retains the ordinary disturbance laws.
 
 The runner records this policy from `schema_version`; the user's `model_id`
 remains a free configured identity and cannot select behavior through its name.
+Every run also records `sampling_profile` (`detector-only-v1`, the
+[Detector-owned sampling](DETECTOR_SAMPLING.md) admission) and `ray_state`
+(`ray-event-state-v1`, the [ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)
+every ray carries).
 See [spatial fields](SPATIAL_FIELDS.md) for per-completed-link decay and clipped
 emission allowances, and [spatial response](SPATIAL_COUPLINGS.md) for atomic
 whole-action allowances. Neither allowance is a conserved physical reservoir.

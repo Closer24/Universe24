@@ -171,6 +171,37 @@ sequence that `core/spatial_state.py` keeps (`TICKET_MODULUS`, `next_ticket`,
 modules went with bucket B.3 and the causal event ledger with bucket B.4 on
 the same day.
 
+## Ray hidden state added on 2026-09-17 (`ray-event-state-v1`)
+
+Issue #169, feature 1, the first implementation step of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) (step 2) under
+[Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1: every ray carries the
+number of steps it has made since its event and the information of that
+event, as hidden variables that no rule reads
+([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)).
+
+- `Ray` (`core/spatial_state.py`) gains `steps`, `outbound`, `event_ports`,
+  `event_shares` (six bounded entries in Port order) and `detector`, all with
+  defaults, so a `Ray(heading, accumulators, amount, ...)` call still
+  constructs; `validate_rays` bounds them; `advance_ray` counts `steps` up
+  while outbound and down on the walk back and moves the phase the same way;
+  `merge_rays` keys on them, so rays of different events never merge;
+  `emit_rays`, a mirror's reflection and a firing `ray_interactions` group
+  stamp every ray they create with the event's mask and shares.
+- The runner records `ray_state: "ray-event-state-v1"` in `run.json` beside
+  `sampling_profile`.
+- Behavior of existing worlds is unchanged except where rays of different
+  events used to merge: `ray_count` and slot use count events, and one-Link
+  self-exclusion excludes exactly the departure cycle's rays, so a moving
+  absorber-emitter absorbs its earlier cycle's quantum back
+  (`test_energy_audit.py`, [expectations](TEST_EXPECTATIONS.md#ray-hidden-state)).
+- Tests that construct rays or compare emitted or interacted rays directly
+  include the stamp (`test_ray_field.py`, `test_native_ray_coupling.py`,
+  `test_ray_merge_contracts.py`, `test_ray_integration_guards.py`).
+
+No initialization key changes. No rule, coupling, absorber, readout or
+Detector reads the new fields in this step.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

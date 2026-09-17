@@ -236,9 +236,13 @@ def test_absorber_with_self_exclusion_does_not_eat_its_own_wake():
             break
         energies.append(found[0]["energy"][0])
     # It moves along x = 3 off the emitter's line, so the only rays it meets are its
-    # own +x quanta arriving with it at every new Node; they are never absorbed back
-    # and the stock only falls by the two quanta emitted each tick.
-    assert energies == [38, 36, 34, 32, 30]
+    # own +x quanta arriving with it at every new Node. Self-exclusion is one-Link
+    # exclusion of the cycle it departed on: that quantum is never absorbed back.
+    # The +x quantum of the cycle before travels with it too, but as the ray of
+    # an earlier event (two Links walked) it no longer merges with the excluded
+    # one (ray-event-state-v1), so from the third tick on the absorber takes that
+    # one quantum back each tick while paying two.
+    assert energies == [38, 36, 35, 34, 33]
     assert world.conservation_report()["status"] == "passed"
 
 
