@@ -10,7 +10,7 @@ import pytest
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import CostMeter, pack, unpack
-from event_universe.core.spatial_state import Ray, SpatialFieldDefinition
+from event_universe.core.spatial_state import Ray, SpatialFieldDefinition, phase_cosines, phase_sines
 from event_universe.fields.spatial_plan import SpatialLaw
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
@@ -76,7 +76,9 @@ def test_physical_stepping_never_constructs_trigonometric_law_tables():
         table = getattr(spatial_state, name, None)
         if table is not None:
             table.clear()
-    world = Simulation(parse_initial_state(two_lamps(37, 1, absorber=0)))
+    # 32 phase steps: a power of two (the phase modulus is a mask) that no other
+    # test prepares.
+    world = Simulation(parse_initial_state(two_lamps(32, 1, absorber=0)))
     # Prepared laws remain sufficient even after all host cache entries disappear.
     for builder in (spatial_state.phase_cosines, spatial_state.phase_sines):
         clear = getattr(builder, "cache_clear", None)
@@ -99,21 +101,36 @@ def test_physical_stepping_never_constructs_trigonometric_law_tables():
 
 @pytest.mark.parametrize("steps", [3, 37, 4096])
 def test_prepared_phase_tables_match_an_independent_circle_at_supported_bounds(steps):
-    definition = SpatialFieldDefinition(
-        0,
-        pack((0,)),
-        transport="ray",
-        headings=((1, 0, 0),),
-        rays_per_tick=1,
-        ray_slots=1,
-        phase_steps=steps,
-    )
+    # The table builders take any count from 2 to 4096; a field declares a power of
+    # two (wave-ray-family-v1: the phase modulus is a mask), so the odd counts are
+    # checked through the builders and the maximum through a field as well.
+    tables = (phase_cosines(steps), phase_sines(steps))
+    if steps & (steps - 1) == 0:
+        definition = SpatialFieldDefinition(
+            0,
+            pack((0,)),
+            transport="ray",
+            headings=((1, 0, 0),),
+            rays_per_tick=1,
+            ray_slots=1,
+            phase_steps=steps,
+        )
+        assert (definition.cosine_table, definition.sine_table) == tables
+        assert definition.phase_bits == steps.bit_length() - 1
+    else:
+        with pytest.raises(ValueError, match="power of two"):
+            SpatialFieldDefinition(
+                0,
+                pack((0,)),
+                transport="ray",
+                headings=((1, 0, 0),),
+                rays_per_tick=1,
+                ray_slots=1,
+                phase_steps=steps,
+            )
     # Floating point is confined to this independent observer expectation; the
     # prepared law contains only bounded integer entries, including at maximum P.
-    for table, function in (
-        (definition.cosine_table, math.cos),
-        (definition.sine_table, math.sin),
-    ):
+    for table, function in zip(tables, (math.cos, math.sin), strict=True):
         assert type(table) is tuple and len(table) == steps
         assert all(type(value) is int and -256 <= value <= 256 for value in table)
         assert table == tuple(round(256 * function(2 * math.pi * step / steps)) for step in range(steps))

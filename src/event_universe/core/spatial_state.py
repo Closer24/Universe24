@@ -80,6 +80,17 @@ DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
 # of the declared ray interactions, a field no rule selects being its own layer.
 RAY_LAYERS = "ray-layers-v1"
 Layers = tuple[tuple[int, ...], ...]
+# Every ray is a wave ray (Highlights 3.3 and 5.1, wave-ray-family-v1): the phase
+# every ray carries has the width its family declares, `phase_bits`, and every
+# phase advance or difference is a mask over 2^phase_bits, never a division. A
+# plain family is the special case with rest rate 0. The width has no bound in
+# the model; two host limits follow from what else stores a phase: the coherence
+# table of a Kerengonen field has one entry per phase step (at most 4096, twelve
+# bits), and a ray interaction view or a self-exclusion row stores the phase as
+# a bounded value (MAX_VALUE = 2^30 - 1, thirty bits).
+WAVE_RAY_FAMILY = "wave-ray-family-v1"
+MAX_TABLE_BITS = 12
+MAX_STORED_PHASE_BITS = 30
 # The Detector mark (Highlights 3.19, 3.20 and 5.4, detector-mark-v1): a Node's
 # bit with its setting and ticket seed. A marked Node draws one bit per arriving
 # ray from its own ticket stream, reading nothing from the ray, and is otherwise
@@ -157,7 +168,36 @@ RAY_PROPERTIES = (
     FieldDefinition("phase", 1, "phase step", False, False),
     FieldDefinition("advance", 1, "phase step per interval", True, False),
     FieldDefinition("delay", 1, "local interval", False, False),
+    # wave-ray-family-v1: the ray's family (the index of its spatial field) and
+    # that family's charge per quantum, read-only views for a coupling at a meeting.
+    FieldDefinition("family", 1, "spatial field index", False, False),
+    FieldDefinition("charge", 1, "charge per quantum", True, False),
 )
+RAY_AMOUNT, RAY_HEADING, RAY_PHASE, RAY_ADVANCE, RAY_DELAY, RAY_FAMILY, RAY_CHARGE = range(7)
+# A ray interaction may assign heading, phase and delay; the rest is read-only.
+RAY_WRITABLE = frozenset((RAY_HEADING, RAY_PHASE, RAY_DELAY))
+RAY_VIEW_COMPONENTS = sum(field.components for field in RAY_PROPERTIES)
+CHARGE_INVARIANT = "charge"
+
+
+def charge_invariant(participants: int) -> Invariant:
+    """The charge readout, charge x amount summed over the participants, declared as an
+    invariant of a ray interaction: exact before and after, checked like every
+    declared invariant (wave-ray-family-v1)."""
+    if type(participants) is not int or not 1 <= participants <= 6:
+        raise ValueError("the charge invariant covers one to six participants")
+    total: Expression | None = None
+    for side in range(participants):
+        term = Expression(
+            "mul",
+            (
+                Expression("field", field=RAY_CHARGE, side=side),
+                Expression("field", field=RAY_AMOUNT, side=side),
+            ),
+        )
+        total = term if total is None else Expression("add", (total, term))
+    assert total is not None
+    return Invariant(CHARGE_INVARIANT, total)
 
 
 def ray_participant_definitions(
@@ -199,8 +239,8 @@ def validate_ray_participants(
             ):
                 raise ValueError("ray participant role refers to an unavailable spatial field")
             selected.update(role)
-        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
-            raise ValueError("ray interaction amount and advance are read-only")
+        if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
+            raise ValueError("ray interaction amount, advance, family and charge are read-only")
     for layer in ray_layers(definitions, rules):
         # The indexed selector's capacity bounds one meeting, and a meeting exists
         # only inside a layer: fields of different layers never share it.
@@ -223,6 +263,10 @@ def validate_ray_participants(
             or any(sum(abs(component) for component in heading) != 1 for heading in definition.headings)
         ):
             raise ValueError("ray coupling requires positive unit-axial unpaced ray fields")
+        if definition.phase_bits > MAX_STORED_PHASE_BITS:
+            raise ValueError(
+                "ray interactions view the phase as a stored value: they require phase_bits at most 30"
+            )
     return frozenset(selected)
 
 
@@ -318,8 +362,11 @@ class SpatialFieldDefinition:
     # Ray transport only: an emitting record that departs subtracts its own rays
     # from the flux it samples at the next Node, using only its own bookkeeping.
     self_exclusion: bool = False
-    # Kerengonen (phased rays) only: the number of phase steps in one cycle and
-    # the steps a ray advances on every link. Zero steps is the plain ray field.
+    # Kerengonen (phased rays): the coherence table, one entry per phase step of
+    # one turn (2^phase_bits entries, a power of two up to 4096; 0 is no table),
+    # and the family's rest rate, the steps its phase advances every interval
+    # (0 for light and for the plain field). A ray's own advance overrides the
+    # rest rate (kerengonen_advance); every advance is a mask over the width.
     phase_steps: int = 0
     phase_advance: int = 0
     # Kerengonen only: how an absorber takes a ray. "share" takes the coherent
@@ -340,6 +387,14 @@ class SpatialFieldDefinition:
     pace_denominator: int = 1
     # Scalar response readout: last-hop Port channels or complete resident ray headings.
     flux_projection: str = "ports"
+    # Every ray is a wave ray (wave-ray-family-v1): the width of the phase every
+    # ray of this family carries, the modulus being 2^phase_bits; 0 (one phase
+    # value, the plain field of existing worlds) unless declared, and log2 of
+    # phase_steps when a coherence table is declared without a width.
+    phase_bits: int = 0
+    # The family's charge per quantum, a bounded signed integer read by couplings
+    # at a meeting and summed as charge x amount by the charge readout.
+    charge: int = 0
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
@@ -351,14 +406,42 @@ class SpatialFieldDefinition:
             raise ValueError("carried_heading flux_projection requires ray transport")
         if self.rays:
             object.__setattr__(self, "pace_table", prepare_heading_paces(self))
+        if type(self.phase_bits) is not int or self.phase_bits < 0:
+            raise ValueError("phase_bits must be a nonnegative integer")
         if self.phase_steps:
+            if (
+                type(self.phase_steps) is not int
+                or not 2 <= self.phase_steps <= MAX_PHASE_STEPS
+                or self.phase_steps & (self.phase_steps - 1)
+            ):
+                raise ValueError("kerengonen phase_steps must be a power of two between 2 and 4096")
+            bits = self.phase_steps.bit_length() - 1
+            if self.phase_bits == 0:
+                object.__setattr__(self, "phase_bits", bits)
+            elif self.phase_bits != bits:
+                raise ValueError("kerengonen phase_steps must equal 2 to the power phase_bits")
             # Immutable law preparation precedes every physical event.
             object.__setattr__(self, "cosine_table", phase_cosines(self.phase_steps))
             object.__setattr__(self, "sine_table", phase_sines(self.phase_steps))
+        bounded(self.charge)
 
     @property
     def rays(self) -> bool:
         return self.transport == "ray"
+
+    @property
+    def coherent(self) -> bool:
+        """The family declares the Kerengonen coherence table."""
+        return self.phase_steps > 0
+
+    @property
+    def phase_modulus(self) -> int:
+        """The phase turns over at 2^phase_bits; 1 for a family without a declared width."""
+        return 1 << self.phase_bits
+
+    @property
+    def phase_mask(self) -> int:
+        return (1 << self.phase_bits) - 1
 
     @property
     def euclidean(self) -> bool:
@@ -366,7 +449,8 @@ class SpatialFieldDefinition:
 
     @property
     def kerengonen(self) -> bool:
-        return self.phase_steps > 0
+        """The family declares a phase rule: a coherence table or a nonzero rest rate."""
+        return self.phase_steps > 0 or self.phase_advance > 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -642,10 +726,10 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         if bounded(ray.amount) == 0:
             raise ValueError("a resident ray must carry a nonzero amount")
         field.validate(pack((ray.amount,)))
-        if type(ray.phase) is not int or not 0 <= ray.phase < max(definition.phase_steps, 1):
-            raise ValueError("ray phase must index the field's phase steps")
-        if type(ray.advance) is not int or not -1 <= ray.advance < max(definition.phase_steps, 1):
-            raise ValueError("ray advance must be -1 or index the field's phase steps")
+        if type(ray.phase) is not int or not 0 <= ray.phase < definition.phase_modulus:
+            raise ValueError("ray phase must be below the field's phase width")
+        if type(ray.advance) is not int or not -1 <= ray.advance < definition.phase_modulus:
+            raise ValueError("ray advance must be -1 or below the field's phase width")
         pace = heading_pace(definition, ray.heading)
         if type(ray.wait) is not int or not 0 <= bounded(ray.wait) < pace[1]:
             raise ValueError("ray wait must stay below its heading's pace denominator")
@@ -689,14 +773,25 @@ def ray_phase_step(ray: Ray, phase_advance: int) -> int:
     return step if ray.outbound else -step
 
 
-def advance_ray(
-    ray: Ray, heading: Heading, phase_steps: int = 0, phase_advance: int = 0
-) -> tuple[int, Ray]:
-    """Walk one Link: the DDA port, the step count and, for a Kerengonen ray, the phase.
+def phase_mask(phase_modulus: int) -> int:
+    """The mask of a phase modulus: 2^phase_bits - 1. The modulus is a power of two, so
+    every phase advance and difference is a mask, never a division; 0 means that no
+    width was given and the phase is left as it is."""
+    if type(phase_modulus) is not int or phase_modulus < 0 or phase_modulus & (phase_modulus - 1):
+        raise ValueError("the phase modulus must be a power of two")
+    return phase_modulus - 1 if phase_modulus else 0
 
-    An outbound ray counts its steps up and its phase forward; a returning ray counts
-    both down. A returning ray with no steps left is at its event Node, and what it
-    does there is not defined in this slice, so walking it further is refused.
+
+def advance_ray(
+    ray: Ray, heading: Heading, phase_modulus: int = 0, phase_advance: int = 0
+) -> tuple[int, Ray]:
+    """Walk one Link: the DDA port, the step count and the phase.
+
+    An outbound ray counts its steps up and its phase forward by its rate; a
+    returning ray counts both down. The phase is masked by the modulus, a power of
+    two (2^phase_bits); a plain family has rate 0 and its phase stays. A returning
+    ray with no steps left is at its event Node, and what it does there is not
+    defined in this slice, so walking it further is refused.
     """
     port, accumulators = dda_step(ray.accumulators, heading)
     if ray.outbound:
@@ -705,7 +800,9 @@ def advance_ray(
         steps = ray.steps - 1
     else:
         raise ValueError("a returning ray with no steps left is at its event Node")
-    phase = (ray.phase + ray_phase_step(ray, phase_advance)) % phase_steps if phase_steps else ray.phase
+    phase = ray.phase
+    if phase_modulus:
+        phase = (ray.phase + ray_phase_step(ray, phase_advance)) & phase_mask(phase_modulus)
     return port, replace(ray, accumulators=accumulators, phase=phase, steps=steps)
 
 
@@ -828,6 +925,15 @@ def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, i
     return result[0], result[1], result[2]
 
 
+def ray_charge(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The charge readout of one bundle: the family's charge per quantum times the amount,
+    summed over its rays as a 64-bit intermediate (wave-ray-family-v1)."""
+    total = 0
+    for ray in rays:
+        total = checked_work(total + checked_work(ray.amount * definition.charge))
+    return total
+
+
 def attenuate_rays(rays: Rays, decay: DecayDefinition, meter: CostMeter) -> tuple[Rays, int]:
     """Apply the completed-link ratio to each ray; return survivors and the removed total."""
     numerator, denominator = decay.retain_numerator, decay.retain_denominator
@@ -905,12 +1011,12 @@ def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDef
 
     Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
     """
-    phase_steps = definition.phase_steps
+    phase_steps, mask = definition.phase_steps, definition.phase_mask
     cosines, sines = definition.cosine_table, definition.sine_table
     x = y = 0
     for amount, phase in terms:
-        x = checked_work(x + amount * cosines[phase % phase_steps])
-        y = checked_work(y + amount * sines[phase % phase_steps])
+        x = checked_work(x + amount * cosines[phase & mask])
+        y = checked_work(y + amount * sines[phase & mask])
     best, best_projection = 0, None
     for step in range(phase_steps):
         projection = checked_work(x * cosines[step] + y * sines[step])
@@ -943,9 +1049,9 @@ def phase_cosines(phase_steps: int) -> tuple[int, ...]:
 
 def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]:
     """Numerator and denominator of the coherent fraction of one Node's rays, in [0, 1]."""
-    if not definition.kerengonen or not rays:
+    if not definition.coherent or not rays:
         return (1, 1)
-    steps = definition.phase_steps
+    mask = definition.phase_mask
     cosines = definition.cosine_table
     by_phase: dict[int, int] = {}
     magnitude = 0
@@ -956,7 +1062,7 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
     for phase, amount in by_phase.items():
         for other, other_amount in by_phase.items():
             numerator = checked_work(
-                numerator + checked_work(amount * other_amount) * cosines[(phase - other) % steps]
+                numerator + checked_work(amount * other_amount) * cosines[(phase - other) & mask]
             )
     denominator = checked_work(checked_work(magnitude * magnitude) * PHASE_COSINE_SCALE)
     return (min(max(numerator, 0), denominator), denominator)

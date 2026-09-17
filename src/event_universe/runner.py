@@ -17,6 +17,7 @@ from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     RAY_EVENT_STATE,
     RAY_LAYERS,
+    WAVE_RAY_FAMILY,
     ray_layer_names,
 )
 from event_universe.disturbance_api import Simulation
@@ -187,6 +188,7 @@ def _execute_run(
         "sampling_profile": initial.sampling_profile,
         "ray_state": RAY_EVENT_STATE,
         "detector_mark": DETECTOR_MARK,
+        "wave_ray": WAVE_RAY_FAMILY,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [
             list(layer)

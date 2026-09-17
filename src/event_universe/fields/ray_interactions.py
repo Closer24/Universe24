@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.spatial_state import (
     RAY_PROPERTIES,
+    RAY_VIEW_COMPONENTS,
     Layers,
     Ray,
     Rays,
@@ -29,20 +30,26 @@ from event_universe.core.spatial_state import (
 from .disturbances import interact_values
 
 
-def _view(ray: Ray, definition: SpatialFieldDefinition) -> Values:
+def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
+    """The RAY_PROPERTIES view of one ray: its family is the index of its spatial field
+    and its charge per quantum is the family's (wave-ray-family-v1)."""
     return (
         pack((ray.amount,)),
         pack(definition.headings[ray.heading]),
         pack((ray.phase,)),
         pack((ray.advance,)),
         pack((ray.interaction_delay,)),
+        pack((family,)),
+        pack((definition.charge,)),
     )
 
 
-def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition) -> Ray:
+def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition, family: int) -> Ray:
     """One output of an interaction: the ray on its new line, before the event stamp."""
     if unpack(values[0]) != (ray.amount,) or unpack(values[3]) != (ray.advance,):
         raise ValueError("ray coupling amount and advance are read-only")
+    if unpack(values[5]) != (family,) or unpack(values[6]) != (definition.charge,):
+        raise ValueError("ray coupling family and charge are read-only")
     vector = unpack(values[1])
     if vector == definition.headings[ray.heading]:
         heading = ray.heading
@@ -86,7 +93,7 @@ def _meet(
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
-    meter.charge("read", 7 * len(owners))
+    meter.charge("read", RAY_VIEW_COMPONENTS * len(owners))
     for index in layer:
         validate_rays(rays[index], definitions[index], fields[definitions[index].field])
         if any(ray.amount <= 0 for ray in rays[index]):
@@ -96,7 +103,7 @@ def _meet(
     views: tuple[DisturbanceRecord | None, ...] = tuple(
         None
         if rays[index][slot].interaction_delay
-        else DisturbanceRecord(index, _view(rays[index][slot], definitions[index]), ())
+        else DisturbanceRecord(index, _view(rays[index][slot], definitions[index], index), ())
         for index, slot in owners
     )
     used: set[int] = set()
@@ -110,7 +117,7 @@ def _meet(
             if after is before:
                 continue
             outputs = tuple(
-                (_replacement(rays[index][slot], values, definitions[index]), definitions[index])
+                (_replacement(rays[index][slot], values, definitions[index], index), definitions[index])
                 for (index, slot), values in zip((owners[o] for o in group), after, strict=True)
             )
             for owner, replacement in zip(group, _events(outputs), strict=True):
