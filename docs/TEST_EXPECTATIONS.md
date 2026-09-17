@@ -64,7 +64,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
-| `test_ray_viewer.py` | 1 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, pinned below (no browser) |
+| `test_ray_viewer.py` | 3 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file and the screen example world, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -962,6 +962,21 @@ from the event stream alone (no per-tick recording, so no phase):
   (tick 3 named one G click, tick 4 ended "field escaped: G 10"); the
   tick-2 departure release, the tick-3 and tick-4 releases, the escape
   counts, the ray count and `final_totals` are unchanged;
+- (h) the eye view (Highlights 5.4, "everything begins and is realized at
+  a marked Node"): the run's `eye` block lists the marked Nodes (`marks`,
+  (4,1,1) with setting 1/1) and every PASS click (`clicks`: the same five
+  ticks, families and amounts as the click markers, each at (4,1,1) through
+  Port -X with bit 1) and counts the hits per Node (`hits`: five at
+  "4,1,1"); the page's eye view draws only these;
+- (i) the screen example (`examples/nature/screen.json`, the eye view's
+  demonstration of 2026-09-17 under Highlights 5.5, made once and never
+  repeated as a test): the world file's integers are pinned, not its run:
+  board [12, 11, 11], open, 24 ticks; two `electron` lamps of amount 4 at
+  (0,5,5) heading +X and (2,5,5) heading -X; `light` the field of
+  `electron` with release [1, 4]; seven Detector marks at (7, 2..8, 5),
+  every one with setting [1, 1] and seed 0; one rule, `bind`, with
+  `ray_delay` 1. The on-axis mark (7,5,5) is the one that clicks before
+  feature 12;
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
@@ -992,7 +1007,9 @@ from the event stream alone (no per-tick recording, so no phase):
   `camera_fit` `rays` with `camera_fit_margin_links` 1 (the camera and the
   lattice fit the box around every matter ray path, source, Detector mark and
   body over the run, padded by one Link; `board` fits the whole board), and
-  fixed colours for the families `electron`, `light`, `proton` and `neutron`, of the `page_text` flags
+  fixed colours for the families `electron`, `light`, `proton` and `neutron`,
+  `draw.view` `board` (`eye` draws the marked Nodes and the PASS clicks alone,
+  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot), of the `page_text` flags
   only `header` (the run's title) and `tick_counter` true, every `labels`
   flag false, and `autoplay` and `loop` true.
 

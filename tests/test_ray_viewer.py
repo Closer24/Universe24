@@ -281,6 +281,13 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     escapes = [e for e in matter if e["kind"] == "escape"]
     assert escapes[0]["in"] == [minus["id"]] and escapes[1]["in"] == [plus["id"]]
     assert run["detectors"] == [{"pos": [4, 1, 1], "setting": [1, 1], "seed": 0}]
+    # (h) The eye view (Highlights 5.4): the marked Nodes and the list of PASS clicks.
+    assert run["eye"]["marks"] == [{"pos": [4, 1, 1], "setting": [1, 1]}]
+    assert sorted((c["tick"], c["family"], c["amount"]) for c in run["eye"]["clicks"]) == sorted(
+        (e["tick"], e["detail"]["family"], e["detail"]["amount"]) for e in clicks
+    )
+    assert all(c["node"] == [4, 1, 1] and c["bit"] == 1 and c["port"] == 1 for c in run["eye"]["clicks"])
+    assert run["eye"]["hits"] == {"4,1,1": len(clicks)}
     assert [s["type"] for s in run["sources"]] == ["lamp_a", "lamp_b"]
     assert run["external_bodies"] == []
 
@@ -412,6 +419,33 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     ]
 
 
+def test_screen_example_world_is_the_pinned_geometry():
+    world = json.loads((ROOT / "examples/nature/screen.json").read_text(encoding="utf-8"))
+    assert (
+        world["shape"],
+        world["boundary"],
+        world["ticks"],
+        [
+            (seed["position"], emission["heading"], emission["amount"])
+            for seed, emission in zip(world["seeds"], world["emissions"], strict=True)
+        ],
+        [
+            (field["field"], field.get("field_of"), field.get("release"))
+            for field in world["spatial_fields"]
+        ],
+        [(mark["position"], mark["setting"], mark["seed"]) for mark in world["detectors"]],
+        [(rule["name"], rule["ray_delay"]) for rule in world["ray_interactions"]],
+    ) == (
+        [12, 11, 11],
+        "open",
+        24,
+        [([0, 5, 5], [1, 0, 0], 4), ([2, 5, 5], [-1, 0, 0], 4)],
+        [("electron", None, None), ("light", "electron", [1, 4])],
+        [([7, y, 5], [1, 1], 0) for y in range(2, 9)],
+        [("bind", 1)],
+    )
+
+
 def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     style = RENDER.load_style(None)
     assert style["schema"] == "ray-viewer-style-v1"
@@ -443,6 +477,7 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     assert style["sizes"]["head_radius_px"] == 4 and style["sizes"]["lattice_alpha"] == 0.07
     assert style["colors"]["scene_edge"] == "#03060b" and style["motion"]["gif_supersample"] == 2
     assert style["motion"]["camera_fit"] == "rays" and style["motion"]["camera_fit_margin_links"] == 1
+    assert style["draw"]["view"] == "board" and style["sizes"]["click_flash_ticks"] == 4
     assert {"electron", "light", "proton", "neutron"} <= set(style["colors"]["families"])
     assert style["colors"]["families"]["default"]["hue"] == "fixed"
     assert style["draw"]["hue_by_phase"] == "arrowhead"
