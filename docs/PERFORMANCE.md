@@ -158,6 +158,32 @@ numpy mode for boards that fields fill is measured before adoption, with
 feature 12, field spreading (Highlights 3.5, 2026-09-17), under which the
 field fills the board.
 
+**Field spreading measured before adoption (2026-09-17, `field-spreading-v1`,
+feature 12).** The electron world of `tests/test_released_field.py` (one lamp
+at (2,5,3) emitting an electron of 5 along +X, `G` its field at `release:
+[1, 4]`, G's 16 slots raised to 4096 so that no slot budget cuts the run) on
+21 x 11 x 7 open, 48 ticks, single process on the recording host, with and
+without `spread: [6, 1, 1, 1, 1, 1]` on G; `Simulation.step` wall time summed
+over the 48 ticks, active Nodes and rays read from the engine after each
+step. Without spread: 0.28 s; active Nodes 2, 7, 17, 27 at ticks 1 to 4, 43
+at tick 8, 47 at 12, 51 at 16, 48 at 20, 18 at 24, 12 at 28, 1 from tick 40,
+the peak 53; rays in the world 1, 6, 11, 16 at ticks 1 to 4, 22 at 8, 24 at
+12, 26 at 16, 22 at 20, 8 at 24, 6 at 28, none from tick 40, the peak 27,
+never more than one ray at a Node. With spread: 0.33 s; active Nodes 2, 7,
+17, 27, then 33 at tick 8, 58 at 12, 56 at 16, 63 at 20, 29 at 24, 12 at 28,
+1 from tick 40, the peak 67; rays 1, 6, 11, 16, then 22 at 8, 34 at 12, 37 at
+16, 34 at 20, 17 at 24, 5 at 28, none from tick 40, the peak 39, at most 6
+rays at a Node. The G total per tick and the 90 quanta escaped by tick 40
+are the same in both runs: the release booking is unchanged, and every
+released ray of this world is one quantum, which the table cannot split, so
+the remainder rule sends each whole through the entry its phase selects
+(phases 0 to 4 forward, 5 backward, 6 and 7 transverse) and the field
+wanders on whole quanta instead of filling the board. On this world the
+spread costs 18% of step time and 26% more active Nodes at the peak; a world
+whose releases carry many quanta per ray (a body of amount 4096 at
+`release: [1, 2048]` releases 2 per heading, still below the table's total
+11) is where the split itself acts, and it is not measured here.
+
 ## Active engine: default Focus and exact plan reuse
 
 Measured on Linux with Python 3.14.7 on 2026-09-15. Baseline:

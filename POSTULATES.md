@@ -379,6 +379,22 @@ family, not an engine mechanism: feature 12, field spreading, of the
 ray-event model, its cost measured before adoption; until it lands the field
 lives on the six axis lines of its source and light goes straight.
 
+Addition (model owner, 2026-09-17; Highlights 3.5, "the field is matter's
+message about itself"): a field ray says "I am here", from which heading,
+how much, at what phase and with which sign of charge, and what happens to
+the ray that meets it is that ray's own table reading the message, so a
+force is how a ray reads the message of another; the message tells where
+its source was r intervals ago, since it travels at the causal speed, and
+it is not free, every field ray carrying momentum and its source paying
+the recoil. A field ray is a ray with an empty event record, rest rate 0
+and charge 0, and nothing else, which is why it merges by family and phase
+and spreads and why nothing in the engine knows what a field is. The sign
+of the source's charge travels on the field ray as a visible property,
+like the Detector's bit, read by the coupling that meets it and never
+encoded in the phase, which is reserved for interference; feature 12
+carries it, and the catalog's open entry on the attraction of opposite
+charges closes with it (experiment A5).
+
 ## 7. An isolated symmetric source does not push itself
 
 For a single stationary source in symmetric space, field values on opposite sides
@@ -822,11 +838,13 @@ is already realized and passes a later Detector without a draw, as a
 measurement repeated in the same basis repeats its result, a ray carrying
 0 is a transmission and is never drawn, and only a ray carrying no bit is
 drawn, how a marked Node meets each bit being its declared coupling in the
-catalog with this as the default (feature 2b of the ray-event model, after
-feature 10; until it lands the engine draws on every arrival). The price
-of Highlights 5.4 is to be re-derived under this rule by hypothesis 11 and
-experiment A13 before it is quoted again. With two Detectors, Alice's and
-Bob's, whichever returns first sends its value through the birth
+catalog with this as the default and the draw on every arrival, as before,
+the declarable alternative (feature 2b of the ray-event model, after
+feature 10, implements both; until it lands the engine draws on every
+arrival). The price of Highlights 5.4 is to be re-derived under this rule
+by hypothesis 11 and experiment A13 before it is quoted again. With two
+Detectors, Alice's and Bob's, whichever returns first sends its value
+through the birth
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
 at time zero, but nothing happened at time zero: the value was carried
@@ -838,6 +856,16 @@ describes the historical candidates, including the shared registry, and their
 measurements; the lottery capture, the bond registry, the Bell probes and the
 `historical-autonomous-v1` profile were deleted on 2026-09-17 (issue #164,
 bucket B.5), and the measurements stay in the validation log.
+
+Addition (model owner, 2026-09-17; Highlights 5.4, "everything begins and
+is realized at a marked Node"): a source is a Detector, so every ray's
+history begins at a marked Node; between marked Nodes it is content on
+paths, combining by phase where paths meet; a marked Node that draws 1
+realizes one path of events, and its return cancels the others through
+their event. The picture of the world is the list of PASS clicks in the
+frame of the observer, and nothing else is ever seen: the rendering of the
+board is the record's view, which no observer inside the world has, and
+the same run drawn as clicks only is the physical picture.
 
 Every interaction whose outcome is not certain consumes exactly one bounded
 integer from a configured sequence, and nothing else decides it: the record's
@@ -895,6 +923,22 @@ that date. The design candidate `ray-event-model-v1` in
 statement, the migration order and the acceptance criteria.
 Nothing in this section is implemented yet; every implementation step is a
 separate published change measured against that document.
+
+Addition (model owner, 2026-09-17; Highlights 3.6, "one ray, one
+catalog"): there is one kind of thing on the board, a ray, content in
+whole quanta with an amount, a phase, a heading and a family, moving one
+Link per interval, and everything else is a name for a situation of rays:
+a family is a field, its free rays what physics calls the field and one
+quantum of them its particle in flight, and matter is a bound pattern of
+rays of a family, the particle at rest, its content its mass and its
+clock. The catalog, the families with their properties and the couplings
+with their tables, is the whole content of the theory, what the Lagrangian
+is in physics; the engine is the one law that runs it, stepping, counting
+and dividing, never knowing what an electron or a star is; the only draw
+is at a marked Node, and the picture of the world is the list of PASS
+clicks. The model owner's reading is that this one ray, in whole quanta,
+is what physics calls the quantum field, a reading the confrontation runs
+test.
 
 The model has exactly two definitions, event and ray: a ray carries
 information, an event is where that information splits, and a ray is what

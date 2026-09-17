@@ -15,7 +15,7 @@ Authority: the [Highlights specification](HIGHLIGHTS.md) is the Highlights
 text, edited directly since 2026-09-17 by the model owner's decision; the
 Google Doc named in the [README](../README.md#project-specification-google-docs)
 is its historical source up to the revision of 2026-09-16 and is neither
-edited nor resynced. Highlights sections 3.3, 3.4, 3.5, 3.15, 3.19, 3.20, 3.26,
+edited nor resynced. Highlights sections 3.3, 3.4, 3.5, 3.6, 3.15, 3.19, 3.20, 3.26,
 5.1, 5.3 and 5.4 record the decisions this document restates in the
 coordinator's words;
 where the two differ, Highlights is the text to follow and this document is
@@ -27,7 +27,16 @@ corrected. The [Detector-only sampling contract](DETECTOR_SAMPLING.md)
 The system has exactly two definitions, **event** and **ray**: a ray carries
 information, an event is where that information splits, and a ray is what
 was split off from an event. An interaction, the meeting of rays at a Node,
-is where events are made; everything else is defined from these.
+is where events are made; everything else is defined from these. There is
+therefore one kind of thing on the board, a ray, content in whole quanta
+with an amount, a phase, a heading and a family, moving one Link per
+interval, and everything else is a name for a situation of rays: a family is
+a field, one quantum of its free rays its particle in flight, and matter a
+bound pattern of rays of a family (model owner, 2026-09-17, Highlights 3.6,
+"one ray, one catalog"). The catalog, the families with their properties and
+the couplings with their tables, is the whole content of the theory, and the
+engine is the one law that runs it, never knowing what an electron or a star
+is.
 
 **Interaction.** An interaction is a meeting of rays at a Node in one
 interval, decided by the coupling declared between the families present.
@@ -230,11 +239,21 @@ makes the undoing exact rather than approximate.
 **Field.** A ray has a field: the field is the ray's own information
 spreading in ray form to the Nodes around it, without an event, along the
 six headings, in all directions, one Link per interval, with the ordinary
-dilution or declared attenuation of an outward field. Every ray is
-the same ray; a field ray is
-not a second kind, and field rays are not born at events: they are the
-ray's information in ray form. The field's presence at a Node is an
-interaction that makes no event. A field never makes an event unless it
+dilution or declared attenuation of an outward field. Every ray is the same
+ray; a field ray is not a second kind, and field rays are not born at
+events: they are the ray's information in ray form. A field ray is a ray
+with an empty event record, rest rate 0 and charge 0, and nothing else
+(model owner, 2026-09-17, Highlights 3.5, "the field is matter's message
+about itself"): a field ray says "I am here", from which heading, how much,
+at what phase and with which sign of charge, and what happens to the ray
+that meets it is that ray's own table reading the message, so a force is how
+a ray reads the message of another; that is why it merges by family and
+phase and spreads, and why nothing in the engine knows what a field is. The
+sign of the source's charge travels on the field ray as a visible property,
+like the Detector's bit, read by the coupling that meets it and never
+encoded in the phase, which is reserved for interference; feature 12 carries
+it. The field's presence at a Node is an interaction that makes no event.
+A field never makes an event unless it
 meets something it changes; the first event a field is involved in is that
 meeting, and the returning ray that carries the recoil is split off from
 it, like every ray from its event. Where a field ray meets a ray whose
@@ -463,7 +482,7 @@ The rule in the form Highlights 3.27 requires:
 | --- | --- |
 | Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the mark if the Node carries one, a Detector mark (mark, setting, ticket seed) or an external body (Highlights 3.19). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
 | What arrived | The rays delivered through the six Ports this interval, met layer by layer (a layer is a set of families that couple; rays of families with no declared coupling never meet); a resident bound group counts as arrived every interval |
-| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval carrying no bit, independently, the kind of ray making no difference since every ray is a wave ray (an arrival carrying 1 passes without a draw and an arrival carrying 0 is a transmission and is never drawn, by the marked Node's declared coupling with this default; Highlights 5.4, 2026-09-17, feature 2b); the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to; the bit a marked Node set travels with the ray as a visible property, inherited by the outputs of any event the ray takes part in and readable by a catalog coupling and read by a later Detector as above (feature 2b, after feature 10; Highlights 5.4, 2026-09-17) |
+| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval carrying no bit, independently, the kind of ray making no difference since every ray is a wave ray (an arrival carrying 1 passes without a draw and an arrival carrying 0 is a transmission and is never drawn, by the marked Node's declared coupling with this default, the draw on every arrival the declarable alternative; Highlights 5.4, 2026-09-17, feature 2b implementing both); the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to; the bit a marked Node set travels with the ray as a visible property, inherited by the outputs of any event the ray takes part in and readable by a catalog coupling and read by a later Detector as above (feature 2b, after feature 10; Highlights 5.4, 2026-09-17) |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a marked Node the click on 1 only, the pass being the measurement; a return (0) is not a measurement and records no outcome; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count, and what its inverse split transmits travels the lines the event sent to, one Link per interval. No message, no registry answer, nothing that skips a Node |
@@ -637,11 +656,14 @@ every such set; Highlights 3.20 is the text to follow.
    same basis repeats its result, a ray carrying 0 is a transmission and is
    never drawn, and only a ray carrying no bit is drawn; how a marked Node
    meets each bit is its declared coupling in the catalog with this as the
-   default (`apparatus.detector.couplings` of `catalog/nature.json`, two
-   open entries decided by this feature), a table entry and not an engine
-   mechanism (Highlights 3.26); until the feature lands the engine draws on
-   every arrival, and the price of section 3 is to be re-derived under this
-   rule by hypothesis 11 and experiment A13 before it is quoted again.
+   default and the draw on every arrival, as before, the declarable
+   alternative (`apparatus.detector.couplings` of `catalog/nature.json`, two
+   open entries decided by this feature, each with its default and its
+   alternative `draw`), a table entry and not an engine mechanism
+   (Highlights 3.26), this feature implementing both; until it lands the
+   engine draws on every arrival, and the price of section 3 is to be
+   re-derived under this rule by hypothesis 11 and experiment A13 before it
+   is quoted again.
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
@@ -877,17 +899,46 @@ with the same spin. The Bell prediction of
 is testable before this feature, in its phase form.
 
 **Feature 12, field spreading (model owner, 2026-09-17; Highlights 3.5).**
-Planned. One catalog entry of the light family, its `spread` table, not an
-engine mechanism: every Node that field content reaches releases it again
-in all six headings by the declared split table, the backward heading
-included, the remainder placed by Highlights 3.17; field content meeting at
-a Node combines by phase before it spreads; a quantum never waits, the
-remainder leaving whole through the heading the phase selects where the
-table would give a heading less than one. Its cost is measured before
-adoption, since the field then fills the board
-([performance record](PERFORMANCE.md)); until it lands the field lives on
-the six axis lines of its source and light goes straight. It unlocks A1, A2
-and the diagonal series of A6 in the
+One catalog entry of the light family, its `spread` table, not an engine
+mechanism: every Node that field content reaches releases it again in all
+six headings by the declared split table, the backward heading included,
+the remainder placed by Highlights 3.17; field content meeting at a Node
+combines by phase before it spreads; a quantum never waits, the remainder
+leaving whole through the heading the phase selects where the table would
+give a heading less than one. It also carries the sign of the source's
+charge on the field ray as a visible property (`source_sign`; Highlights
+3.5, "the field is matter's message about itself", 2026-09-17), read by the
+coupling that meets it and never encoded in the phase, which is reserved for
+interference, and the open entry on the attraction of opposite charges
+(`opposite_charge`) closes with it (A5). What a field quantum that a Detector
+returns with 0 does once the field spreads is an open decision of the model
+owner before A1 (Highlights 5.5, 2026-09-17): its path is no longer one line
+and a field ray has no event for an inverse split; the orchestrator's
+proposal, which this feature implements until it is decided and says so, is
+that the quantum reverses on the line it arrived by and walks back until the
+first content its coupling responds to absorbs it or it reaches its source,
+with no inverse split, every audit exact. (Done on 2026-09-17,
+`field-spreading-v1`: a family's catalog entry `spread`, six weights in Port
+order relative to the arriving heading with the backward one positive and
+the four transverse equal, the light family's `[6, 1, 1, 1, 1, 1]`; the
+content that arrived is taken off the Node after the marks and the meetings,
+amounts adding per arriving heading and sign and the phase being the phase
+of the coherent sum (3.20); each heading's content is shared in whole quanta
+by the table and the remainder leaves whole through the entry the phase
+selects (3.17), so the wave shows in intensities; the departures are fresh
+field rays with no event carrying their sign, the total is exact and the
+momentum a spread moves is booked as a source of the bound momentum field,
+the ledger of feature 10 exact; one `field_spread` record per Node, interval
+and family; `Ray.source_sign` is set at the release from the releasing
+family's charge and kept through spreading, merging, the return and the
+inverse split; a returned field quantum walks back as proposed, restored to
+its emitter, ended at its source or at coupled content with its release
+unbooked, taken by a body or escaped, the `field_returned` record; a world
+without `spread` is byte-identical, its field on the six axis lines of its
+source and its light straight; the cost is measured in the
+[performance record](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables);
+see [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).)
+It unlocks A1, A2 and the diagonal series of A6 in the
 [experiments register](EXPERIMENTS.md).
 
 **The strong interaction, catalog work after feature 10.** Quark families,

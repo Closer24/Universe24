@@ -175,7 +175,7 @@ every line reads six values and its identity:
 | Line | Reads |
 | --- | --- |
 | `initial` | What the world held before the first tick: the lamps' stock, seeded rays and populations |
-| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, an unfunded inverse split, the push a binding rule's momentum table gives a bound group and the difference booked when a pushed group dissolves (`source_totals`) |
+| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, the momentum a spread moves (`field-spreading-v1`), an unfunded inverse split (`source_totals`), the push a binding rule's momentum table gives a bound group and the difference booked when a pushed group dissolves (`bound-group-motion-v1`) |
 | `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`); a bound group's momentum by its register, not by its rays' headings (`bound-group-motion-v1`) |
 | `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`), a bound group with its content and its register |
 | `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
@@ -235,7 +235,19 @@ momentum by its register, at its Node and on the Link it steps along
 [bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)):
 a group at rest reads as its rays did, a moving group reads its register
 wherever it is, and the push of a momentum table, like the momentum a split
-moves, is booked to the world ledger only.
+moves, is booked to the world ledger only. A spread
+(`field-spreading-v1`, [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1))
+is read from its `field_spread` record, published before the cycle's record:
+the departures of a spreading family, field rays with no event and one Link
+walked, are measured as a release at the Node, and the content the record
+says arrived (amount per heading, measured like resident rays) is given
+back, so the Node's residual is zero and the `sourced` line gains exactly
+the momentum the spread moved, as the world ledger books it. A returned
+field quantum that a Node ends without an owner to give it to (the
+`field_returned` record with `restored` false, its release unbooked as a
+negative source) is given back the same way, measured as the returning ray
+it was; one restored to its emitter needs no term, the record's stock and
+recoil taking exactly what the ray carried.
 
 ## Independence, bounds and acceptance
 

@@ -49,6 +49,80 @@ matter, the same integers:
   Node that holds one fails closed), absorption of a field ray into a group
   (the table returns it reversed), and the local audit's source term for
   the push (booked to the world ledger only, as the momentum a split moves).
+## Field spreading added on 2026-09-17 (`field-spreading-v1`)
+
+Feature 12 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+the model owner's decision of 2026-09-17 in Highlights 3.5 ("Light is the
+field, and the field spreads"; [field
+spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
+
+- `spatial_fields[i].spread`, ray transport only: six nonnegative integer
+  weights in Port order relative to the arriving heading (forward, backward,
+  the four transverse in Port order), the backward one positive and the four
+  transverse equal; the sum is the denominator. Every Node that content of
+  the family reaches releases it again by the table, after the marks and
+  the meetings of the interval and before the departures: amounts add per
+  arriving heading, the phase is the phase of the coherent sum, whole quanta
+  by the table, the remainder whole through the entry the phase selects. A
+  world that declares no `spread` runs byte-identically, its run record
+  included (`test_field_spreading.py`, `unchanged`, pins the record hashes of
+  the released-field world on main `f3809be`).
+- New in `core/spatial_state.py`: `FIELD_SPREADING`, the definition key
+  `spread`, `FieldSpread` (the plan's record, in `STATE_RECORDS`),
+  `validate_spread_table`, `validate_spread_fields`,
+  `validate_spread_admission`, `relative_ports`, `spread_remainder_entry`,
+  `spread_phase`, `spread_content` and `spreading_field_names`;
+  `SpatialPlan.spreads`. The spatial law's `_spread` runs per ray field after
+  the inverse split and before forwarding.
+- A new record kind, `field_spread`, per Node, interval and family (`family`,
+  `amount`, `arrived`, `amounts`, `remainders`, `phase`, `coherence`),
+  published before the cycle's `spatial_cycle` record; the ray viewer's
+  extractor lists it among its silent kinds and shows the spread as a
+  release. The momentum a spread moves is an explicitly accounted source of
+  the family's momentum field, so `source_totals` and the ledger's `sourced`
+  line carry it and `conserved_at_every_completed_tick` stays the identity;
+  the local conservation audit reads the record and reports the same term.
+- The runner records `field_spreading: "field-spreading-v1"` and
+  `spreading_fields` only when a family declares `spread`.
+- `Ray.source_sign` (Highlights 3.5, the field is matter's message about
+  itself): -1, 0 or 1, the sign of the releasing family's charge (a body's
+  declared charge), set by `release_field`, `release_stock` (which now takes
+  the origin definition) and `body_release`, part of `ray_merge_key`, kept
+  by the return, copied by `transmit`, carried by a meeting's output from the
+  input of its own family and by the spread per sign; 0 on every ray of an
+  existing world, so nothing else changes. `FieldSpread.signs` and the
+  record's `signs` list the signs the spread took.
+- A returned field quantum of a spreading family (the orchestrator's
+  proposal of Highlights 5.5, pending the model owner's decision,
+  implemented exactly): it walks back past the Node that spread it with its
+  steps at 0 (`advance_ray` and `forward_rays` walk an eventless returning
+  ray on, `_inverse_split` skips it), is restored to the record that emitted
+  its family or ended at content of its origin family or of a family a rule
+  couples with it (`SpatialLaw._returned`, a negative source of the field
+  and its momentum field), may escape (`SpatialEngine._escape` lets an
+  eventless returning ray of a spreading family out); `ReturnedField` (in
+  `STATE_RECORDS`), `SpatialPlan.returned` and the record `field_returned`,
+  which the local audit and the viewer read.
+- A spreading family needs a phase width of at most twelve bits, not a
+  declared coherence table: the coherent sum uses the table of the modulus
+  (`spread_tables`, `spread_phase`, `spread_coherence`).
+- The catalog: `rays.light.spread` is declared, `[6, 1, 1, 1, 1, 1]`, and
+  `rays.light.source_sign` is `releaser`; the undecided table loses the
+  spread row and `test_nature_catalog.py` builds the light family with its
+  table.
+- A defect fixed: a record holding stock of a family with a released field
+  released nothing, because `SpatialNode.plan_cycle` returned early as idle
+  before `SpatialLaw._release` ran (`SpatialEngine.begin` scheduled the Node
+  through `holds_source_stock`, the cycle then left); the resident-content
+  sentence of `released-field-v1` (Highlights 3.5) was not honoured and no
+  test covered `release_stock`. The idle exit now counts such a record as
+  active, so resident stock releases every interval on all six headings,
+  booked as a source; a world whose records hold stock of such a family
+  changes accordingly (none of the shipped worlds and tests does, the lamps
+  emitting their whole stock at once), pinned by the `resident` case.
+- Tests: `tests/test_field_spreading.py` (single, superposition, cancelled,
+  quantum, sign, returned, source, resident, rejected, unchanged;
+  [expectations](TEST_EXPECTATIONS.md#field-spreading)).
 
 ## Ray-event audits on 2026-09-17 (`ray-event-audit-v1`)
 
@@ -1010,6 +1084,42 @@ the record is unchanged.
 - `viewer.html` gains the sphere, glow, vignette, additive and camera-fit
   drawing paths; `render_gif.py` the supersampled capture and the keys; the
   test pins the defaults.
+
+## Ray viewer: the eye view of clicks beside the board, 2026-09-17
+
+By the model owner's decision on [Highlights](HIGHLIGHTS.md) 5.4
+("everything begins and is realized at a marked Node"), the physical
+picture is the list of PASS clicks and the board rendering is the record's
+view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+
+- `extract.py` adds an `eye` block to every run: the marked Nodes, the
+  list of PASS clicks (tick, Node, family, amount, bit, Port) and the hits
+  per Node.
+- `style.json` gains `draw.view` (`board`, the default, everything as
+  before; `eye`, only the marked Nodes as dim spheres and each click as a
+  flash of its family's colour at its Node, sized by amount, fading over
+  `click_flash_ticks` and leaving a persistent dim dot, like a screen
+  accumulating hits; no rays, fields or other markers; title, tick and the
+  camera fit as before) with `click_flash_px_per_quantum`,
+  `click_flash_min_px`, `click_dot_px`, `click_dot_alpha` and `mark_alpha`.
+- `render_gif.py` gains `--view` (overrides the style) and
+  `--side-by-side` (the board view and the eye view as two panels, left and
+  right, in one GIF and one contact sheet); `viewer.html` gains the eye
+  drawing path and a runtime `window.__setStyle` hook the renderer uses to
+  switch views. The test pins the eye extraction and the defaults.
+- In the eye view a mark is drawn without depth writing and without glow,
+  the flash and the dot on top of it, so hits inside a mark's sphere show;
+  the persistent dot's area grows with the hits at its Node (radius
+  `click_dot_px` x the square root of the count), a spot on a screen.
+- `examples/nature/screen.json` (Highlights 5.5, a demonstration made once,
+  never a test; its section of the
+  [nature README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks)
+  holds the record's fingerprints and the render lines): an electron at
+  rest, the bound group of two `electron` rays of 4, releasing `light` on
+  its six axis lines, and a screen of seven Detector marks at distance 6
+  along +X. Before feature 12 one mark clicks, the on-axis one, eighteen
+  times; after it the whole screen. The test pins the world file's
+  integers, not its run.
 
 ## Primary initialization-based API
 

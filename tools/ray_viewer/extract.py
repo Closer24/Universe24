@@ -28,7 +28,18 @@ RECORD_FILES = ("run.json", "events.jsonl", "initialization.json", "state.json",
 # Event kinds consumed structurally (they build rays) rather than drawn as markers,
 # and host-timing diagnostics of a Node's cycle that mark nothing on the board.
 STRUCTURAL_KINDS = ("spatial_sent", "spatial_received", "spatial_escaped", "spatial_cycle")
-SILENT_KINDS = ("spatial_cycle_started", "cycle_started", "cycle_committed", "external_body_step")
+SILENT_KINDS = (
+    "spatial_cycle_started",
+    "cycle_started",
+    "cycle_committed",
+    "external_body_step",
+    # A spread (field-spreading-v1) is read from the transits: the field content
+    # that continues is the ray's trail and what leaves on the other Ports is a
+    # release, silent on the page like every release; a returned field quantum
+    # that ends at a Node is a field chain that stops there.
+    "field_spread",
+    "field_returned",
+)
 # Event kinds the default caption lists (a style file can choose others).
 CAPTION_KINDS = ("meeting", "deflection", "conversion", "click", "return", "arrival", "split")
 CAPTION_MAX = 3
@@ -843,6 +854,7 @@ def families(record: Record) -> list[dict[str, Any]]:
                 "field": is_field_family(name, definition),
                 "field_of": None if definition is None else definition.get("field_of"),
                 "release": None if definition is None else definition.get("release"),
+                "spread": None if definition is None else definition.get("spread"),
                 "phase_steps": kerengonen.get("phase_steps"),
             }
         )
@@ -1126,6 +1138,31 @@ def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any
     }
 
 
+def eye_document(events: list[Event], marks: list[dict[str, Any]]) -> dict[str, Any]:
+    """The physical picture (Highlights 5.4): the marked Nodes and the list of PASS clicks."""
+    clicks = [
+        {
+            "tick": event.tick,
+            "node": list(event.node),
+            "family": event.detail.get("family"),
+            "amount": event.detail.get("amount"),
+            "bit": event.detail.get("bit", 1),
+            "port": event.detail.get("port"),
+        }
+        for event in events
+        if event.kind == "click"
+    ]
+    hits: dict[str, int] = {}
+    for click in clicks:
+        key = ",".join(str(v) for v in click["node"])
+        hits[key] = hits.get(key, 0) + 1
+    return {
+        "marks": [{"pos": m["pos"], "setting": m["setting"]} for m in marks],
+        "clicks": clicks,
+        "hits": hits,
+    }
+
+
 def event_document(event: Event, chains: list[Chain]) -> dict[str, Any]:
     return {
         "id": event.identifier,
@@ -1206,6 +1243,7 @@ def extract_record(
         "event_kinds": kinds,
         "rays": [chain_document(c, flags) for c in resolution.chains],
         "events": [event_document(e, resolution.chains) for e in resolution.events],
+        "eye": eye_document(resolution.events, marks),
         "ticks_data": tick_captions(record, resolution, builder, ticks),
     }
 

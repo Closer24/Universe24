@@ -23,11 +23,13 @@ from event_universe.core.spatial_state import (
     RETURN_MODES,
     EmissionDefinition,
     FieldRuleGuard,
+    FieldSpread,
     InverseSplit,
     Layers,
     NodeFieldRuleDefinition,
     Ray,
     Rays,
+    ReturnedField,
     SpatialCouplingDefinition,
     SpatialFieldDefinition,
     SpatialOutgoing,
@@ -44,11 +46,13 @@ from event_universe.core.spatial_state import (
     ray_stock,
     release_field,
     release_stock,
+    spread_content,
     stamp_event,
     transmit,
     validate_ray_participants,
     validate_rays,
     validate_released_fields,
+    validate_spread_fields,
 )
 
 from .disturbances import evaluate
@@ -94,12 +98,25 @@ class SpatialLaw:
     # The layers of event spacetime (ray-layers-v1): derived here from the declared
     # ray interactions, never declared; every meeting reads them.
     layers: Layers = ()
+    # Per spatial field, the families a declared ray interaction couples it with
+    # (field-spreading-v1): the content a returned field quantum is absorbed by.
+    coupled: tuple[tuple[int, ...], ...] = ()
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
         if self.return_mode not in RETURN_MODES:
             raise ValueError("return_mode must be siblings, straight or annul")
         validate_released_fields(self.definitions, self.fields)
+        validate_spread_fields(self.definitions, self.fields)
+        coupled: list[tuple[int, ...]] = []
+        for index in range(len(self.definitions)):
+            partners: set[int] = set()
+            for rule in self.ray_interactions:
+                roles = {kind for role in rule.participants for kind in role}
+                if index in roles:
+                    partners |= roles - {index}
+            coupled.append(tuple(sorted(partners)))
+        object.__setattr__(self, "coupled", tuple(coupled))
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
             object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
@@ -385,10 +402,16 @@ class SpatialLaw:
         publish and the transmitted rays, which join this cycle's emitted rays.
         """
         definition = self.definitions[index]
-        due = [ray for ray in resident if not ray.outbound and ray.steps == 0]
+        # A returned field quantum of a spreading family has no event Node and no
+        # inverse split: it walks on (field-spreading-v1, Highlights 5.5).
+        due = [
+            ray
+            for ray in resident
+            if not ray.outbound and ray.steps == 0 and (ray.event_ports or not definition.spread)
+        ]
         if not due:
             return [], ()
-        resident[:] = [ray for ray in resident if ray.outbound or ray.steps]
+        resident[:] = [ray for ray in resident if ray not in due]
         splits: list[InverseSplit] = []
         transmitted: list[Ray] = []
         slot = self._input_slot(index, records)
@@ -490,7 +513,7 @@ class SpatialLaw:
                 stock = unpack(record.values[origin.field])[0]
                 if stock > 0:
                     meter.charge("read")
-                    released += release_stock(stock, definition)
+                    released += release_stock(stock, definition, origin)
             if not released:
                 continue
             meter.charge("split", len(released))
@@ -501,6 +524,141 @@ class SpatialLaw:
                     source[definition.momentum_field][axis] = checked_work(
                         source[definition.momentum_field][axis] + value
                     )
+
+    def _spread(
+        self,
+        index: int,
+        resident: list[Ray],
+        emitted: list[Ray],
+        source: list[list[int]],
+        meter: CostMeter,
+    ) -> FieldSpread | None:
+        """Field spreading (field-spreading-v1, Highlights 3.5): every Node that
+        content of a spreading family reaches releases it again by the declared
+        table. After the marks and the meetings and before the departures, the
+        outbound content that arrived this interval and is due to leave (at least
+        one Link walked, no delay or wait pending) is taken off the Node; a fresh
+        ray at its event Node and a fresh release depart on their line and spread
+        from the next Node, a returning ray walks back, a held ray is not due. The
+        departures join this interval's emitted rays. The total is exact, so no
+        amount is sourced; the momentum the spread moves, amount x heading over
+        the departures less the same over what arrived, is booked as an explicitly
+        accounted source of the family's momentum field when one is bound, as the
+        release and the table split are (Highlights 3.15)."""
+        definition = self.definitions[index]
+        due = tuple(
+            ray
+            for ray in resident
+            if ray.outbound and ray.steps and not ray.interaction_delay and not ray.wait
+        )
+        if not due:
+            return None
+        resident[:] = [ray for ray in resident if ray not in due]
+        meter.charge("read", len(due))
+        if definition.coherent:
+            meter.charge("evaluate", len(due) + definition.phase_steps)
+        departures, record = spread_content(index, due, definition)
+        meter.charge("split", len(departures))
+        emitted.extend(departures)
+        if definition.momentum_field is not None:
+            before = ray_momentum(due, definition)
+            after = ray_momentum(departures, definition)
+            for axis in range(3):
+                source[definition.momentum_field][axis] = checked_work(
+                    source[definition.momentum_field][axis] + after[axis] - before[axis]
+                )
+        return record
+
+    def _returned(
+        self,
+        index: int,
+        residents: list[list[Ray]],
+        records: list[DisturbanceRecord | None],
+        source: list[list[int]],
+        absorbed: list[int],
+        meter: CostMeter,
+    ) -> list[ReturnedField]:
+        """A returned field quantum (field-spreading-v1; the orchestrator's proposal
+        of Highlights 5.5, pending the model owner's decision): a returning ray with
+        no event of a spreading family walks back along the line it arrived by,
+        with no inverse split, until it is absorbed by the first content its
+        coupling responds to or reaches its source. At the Node it is at: it is
+        restored to the record that emitted the family, if one is here (the funded
+        emission's input; stock and recoil back exactly, booked as the inverse
+        split's restore is); else it ends at content of the family this field is
+        the field of (a record holding its stock, a resident ray of it) or at a
+        resident ray of a family a declared rule couples with this one, its
+        release unbooked as a negative source of the field and of its momentum
+        field; else it walks on. Nothing is created and every audit stays exact."""
+        definition = self.definitions[index]
+        resident = residents[index]
+        due = [ray for ray in resident if not ray.outbound and not ray.event_ports]
+        if not due:
+            return []
+        field = self.fields[definition.field]
+        origin = definition.field_of
+        origin_stock = origin is not None and any(
+            record is not None
+            and self.definitions[origin].field < len(record.values)
+            and unpack(record.values[self.definitions[origin].field])[0] > 0
+            for record in records
+        )
+        source_here = origin is not None and (
+            origin_stock or any(ray.outbound for ray in residents[origin])
+        )
+        coupled = next(
+            (kind for kind in self.coupled[index] if any(r.outbound for r in residents[kind])), -1
+        )
+        slot = self._input_slot(index, records)
+        taken: list[ReturnedField] = []
+        ended: list[Ray] = []
+        for ray in due:
+            meter.charge("read")
+            port = PORT_HEADINGS.index(definition.headings[ray.heading])
+            if slot is not None:
+                record = records[slot]
+                assert record is not None
+                values = list(record.values)
+                stock = unpack(values[definition.field])[0]
+                values[definition.field] = pack((checked_work(stock + ray.amount),))
+                field.validate(values[definition.field])
+                recoil_field = next(
+                    (
+                        rule.recoil_field
+                        for rule in self.emissions
+                        if rule.spatial_field == index
+                        and rule.funded
+                        and matches_type(rule, record.type_index)
+                    ),
+                    None,
+                )
+                if recoil_field is not None:
+                    recoil = list(unpack(values[recoil_field]))
+                    for axis, value in enumerate(ray_momentum((ray,), definition)):
+                        recoil[axis] = checked_work(recoil[axis] + value)
+                    values[recoil_field] = pack(tuple(recoil))
+                    self.fields[recoil_field].validate(values[recoil_field])
+                records[slot] = replace(record, values=tuple(values))
+                absorbed[definition.field] = checked_work(absorbed[definition.field] + ray.amount)
+                meter.charge("update", 4)
+                ended.append(ray)
+                taken.append(ReturnedField(index, ray.amount, port, -1, 1))
+                continue
+            by = origin if source_here and origin is not None else coupled
+            if by < 0:
+                continue
+            source[definition.field][0] = checked_work(source[definition.field][0] - ray.amount)
+            if definition.momentum_field is not None:
+                for axis, value in enumerate(ray_momentum((ray,), definition)):
+                    source[definition.momentum_field][axis] = checked_work(
+                        source[definition.momentum_field][axis] - value
+                    )
+            meter.charge("update")
+            ended.append(ray)
+            taken.append(ReturnedField(index, ray.amount, port, by, 0))
+        if ended:
+            resident[:] = [ray for ray in resident if ray not in ended]
+        return taken
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
         validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
@@ -694,6 +852,8 @@ class SpatialLaw:
         absorbed_by_field = [0] * len(self.fields)
         annulled = [[0] * field.components for field in self.fields]
         inverse_splits: list[InverseSplit] = []
+        spreads: list[FieldSpread] = []
+        returned: list[ReturnedField] = []
         for index, rule in enumerate(self.emissions):
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
@@ -881,6 +1041,20 @@ class SpatialLaw:
                         absorbed = checked_work(absorbed + split.amount)
                     if RETURN_MODES[split.mode] == "annul":
                         absorbed = checked_work(absorbed + split.amount)
+                if definition.spread:
+                    ended = self._returned(
+                        index, resident_rays, updated_records, source, absorbed_by_field, meter
+                    )
+                    returned.extend(ended)
+                    # What a restore took out of the resident rays without sending it.
+                    for item in ended:
+                        if item.restored:
+                            absorbed = checked_work(absorbed + item.amount)
+                    spread = self._spread(
+                        index, resident_rays[index], emitted_rays[index], source, meter
+                    )
+                    if spread is not None:
+                        spreads.append(spread)
                 if ray_hold:
                     ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)
                     kept = merge_rays(
@@ -1001,4 +1175,6 @@ class SpatialLaw:
             bound_delay=max(bound, default=0),
             bound_port=stepped_port,
             bound_push=(push[0], push[1], push[2]),
+            spreads=tuple(spreads),
+            returned=tuple(returned),
         )

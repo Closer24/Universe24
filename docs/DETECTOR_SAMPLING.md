@@ -57,8 +57,9 @@ carrying 1 is already realized and passes a later Detector without a draw,
 as a measurement repeated in the same basis repeats its result, a ray
 carrying 0 is a transmission and is never drawn, and only a ray carrying no
 bit is drawn, how a marked Node meets each bit being its declared coupling
-in the catalog with this as the default. Until feature 2b lands the code
-draws once for each arriving ray, as this section states.
+in the catalog with this as the default and the draw on every arrival, as
+this section states, the declarable alternative, feature 2b implementing
+both. Until feature 2b lands the code draws once for each arriving ray.
 
 **The mark.** The initialization key `"detectors": [{"position": [x, y, z],
 "setting": [n, d], "seed": s}]` sets the Detector bit of the Node at

@@ -77,6 +77,12 @@ STYLE_KEYS = {
         "marker_alpha",
         "escape_dot_radius",
         "escape_alpha",
+        "click_flash_ticks",
+        "click_flash_px_per_quantum",
+        "click_flash_min_px",
+        "click_dot_px",
+        "click_dot_alpha",
+        "mark_alpha",
         "source_size",
         "detector_size",
         "body_size",
@@ -94,6 +100,7 @@ STYLE_KEYS = {
         "box_alpha",
     ),
     "draw": (
+        "view",
         "markers",
         "marker_shapes",
         "marker_shape",
@@ -217,6 +224,18 @@ def inline_page(runs: dict[str, Any], style: dict[str, Any] | None = None) -> st
     return page
 
 
+def side_by_side(parts: list[Image.Image]) -> Image.Image:
+    """Panels left to right, tops aligned, the ground colour filling any gap."""
+    width = sum(im.width for im in parts)
+    height = max(im.height for im in parts)
+    frame = Image.new("RGB", (width, height), parts[0].getpixel((0, 0)))
+    x = 0
+    for im in parts:
+        frame.paste(im, (x, 0))
+        x += im.width
+    return frame
+
+
 def stack(parts: list[Image.Image]) -> Image.Image:
     width = max(im.width for im in parts)
     height = sum(im.height for im in parts)
@@ -277,6 +296,7 @@ def capture_frames(
     three: Path,
     work: Path,
     supersample: int = 1,
+    views: tuple[str, ...] = ("board",),
 ) -> tuple[list[Image.Image], list[str], list[str]]:
     wrapped = (work / "viewer-inlined.html").resolve()
     wrapped.write_text(page_html, encoding="utf-8")
@@ -316,19 +336,23 @@ def capture_frames(
             angle = start_angle + step * i
             parts = []
             for j, key in enumerate(run_keys):
-                page.evaluate(
-                    "([t, a, r, m, e]) => { window.__capture(m); window.__render(t, a, r, e); }",
-                    [tick, angle, key, "first" if j == 0 else "second", elevation],
-                )
-                png = capture.screenshot(type="png")
-                image = Image.open(io.BytesIO(png)).convert("RGB")
-                if supersample > 1:
-                    # Rendered at supersample times the size and scaled down: gentle anti-aliasing.
-                    image = image.resize(
-                        (image.width // supersample, image.height // supersample),
-                        Image.Resampling.LANCZOS,
+                panels = []
+                for view in views:
+                    page.evaluate("v => window.__setStyle({draw: {view: v}})", view)
+                    page.evaluate(
+                        "([t, a, r, m, e]) => { window.__capture(m); window.__render(t, a, r, e); }",
+                        [tick, angle, key, "first" if j == 0 else "second", elevation],
                     )
-                parts.append(image)
+                    png = capture.screenshot(type="png")
+                    image = Image.open(io.BytesIO(png)).convert("RGB")
+                    if supersample > 1:
+                        # Rendered at supersample times the size and scaled down: gentle anti-aliasing.
+                        image = image.resize(
+                            (image.width // supersample, image.height // supersample),
+                            Image.Resampling.LANCZOS,
+                        )
+                    panels.append(image)
+                parts.append(side_by_side(panels) if len(panels) > 1 else panels[0])
             images.append(stack(parts))
             print(f"frame {i:03d} tick {tick:03d} angle {angle:7.1f} size {images[-1].size}", flush=True)
         browser.close()
@@ -357,10 +381,19 @@ def main() -> None:
         "--run", action="append", default=[], help="run key to draw; repeat; default all"
     )
     parser.add_argument("--three", type=Path, help="local copy of Three.js r128 (three.min.js)")
+    parser.add_argument("--view", choices=["board", "eye"], help="override the style's draw.view")
+    parser.add_argument(
+        "--side-by-side",
+        action="store_true",
+        help="render the board view and the eye view as two panels, left and right",
+    )
     parser.add_argument("--work", type=Path, help="directory for the inlined page and stills")
     args = parser.parse_args()
 
     style = load_style(args.style)
+    if args.view:
+        style["draw"]["view"] = args.view
+    views: tuple[str, ...] = ("board", "eye") if args.side_by_side else (style["draw"]["view"],)
     motion = style["motion"]
 
     def pick(value: Any, key: str, fallback: Any) -> Any:
@@ -411,6 +444,7 @@ def main() -> None:
         three=three,
         work=work,
         supersample=supersample,
+        views=views,
     )
     if errors:
         raise RuntimeError("page errors: " + "; ".join(errors))
@@ -427,7 +461,7 @@ def main() -> None:
         disposal=1,
     )
     sheet_path = args.contact_sheet or args.output.with_name(args.output.stem + "-contact.png")
-    contact_sheet(images, count=stills).save(sheet_path)
+    contact_sheet(images, count=stills, width=320 * len(views)).save(sheet_path)
     still_paths = {}
     for index in sorted({0, min(ticks // 2, frames - 1), min(ticks, frames - 1), frames - 1}):
         path = work / f"frame-{index:03d}.png"
@@ -448,6 +482,7 @@ def main() -> None:
         "style": str(args.style or STYLE_FILE),
         "contact_stills": stills,
         "supersample": supersample,
+        "views": list(views),
         "runs": keys,
         "tick_schedule": f"tick = min(frame, {ticks}); frames {ticks + 1}..{frames - 1} hold tick {ticks}",
         "records": [
