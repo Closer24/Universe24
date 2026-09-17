@@ -1516,7 +1516,9 @@ sign rule, and its other couplings are catalog entries.
   releases floor(1 / 4) = 0), and a radiating loop needs rays of amount 4,
   content 32 at least, a different demonstration: the screen under a loop
   is to be written and pinned anew, after A1's table and width, not
-  silently rerun with another source.
+  silently rerun with another source. That demonstration is E9 below
+  (`screen_loop.json`, 2026-09-17): this entry's screen and marks, the
+  source the ring of E5 with rays of amount 4.
 
 ### E8. The helium ion with the field spreading and the momentum turn
 
@@ -1631,6 +1633,124 @@ sign rule, and its other couplings are catalog entries.
   outcome: no closed orbit, the straight pass and the escape at tick 50 as
   stated, the control's fall at tick 48 and its cage, exact at every tick;
   the records stay outside the tree.
+
+### E9. The screen with a loop source: the ring radiating on seven marks
+
+- **Claim.** The claim of E6 (Highlights 5.4, the picture of the world is
+  the list of PASS clicks; 3.5, light is the field of a charge and the field
+  spreads by the split table of its family) with the source in the loop form
+  of binding (3.4, 3.28; feature 14): an electron at rest is a ring of rays,
+  and every ray in motion releases its field on the five headings other than
+  its own at every Node it departs (3.5), booked as a source (3.15), so a
+  ring radiates under nothing but the corner table and the catalog's release
+  ratio, stays bound while it radiates because a release costs the ray
+  nothing, and its spreading field lights the whole screen as E6's did. A
+  ring of content 8 releases nothing at `[1, 4]`; this entry is the radiating
+  ring E6's retirement asked for, written and pinned anew.
+- **Features.** 1, 2, 5, 6, 7, 9, 10, 12, 12b, 14.
+- **Run.** `examples/nature/screen_loop.json`: E6's board 12 x 11 x 11,
+  open, N = 8 (`phase_bits` 3), 240 ticks in the file (E6's registered
+  length, no override); E6's seven marks at (7, 2, 5) through (7, 8, 5),
+  setting [1, 1] (every arrival passes), at distance 6 along +X from the
+  source's first Node (1, 5, 5) and 5 from its second (2, 5, 5). The source:
+  the ring of E5 with rays of amount 4, eight `electron` lamps (charge -3,
+  the catalog's rest rate 1) at the corners of the unit square P0 =
+  (1,5,5), P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6), one of each sense at
+  every corner, the R lamps on +X at P0, +Z at P1, -X at P2, -Z at P3 and
+  the L lamps on +Z at P0, -X at P1, -Z at P2, +X at P3 (`ring.json`'s
+  lamps with Y read as Z), content 32; the one rule `corner` over
+  `[electron, electron]`, the Port form. `light` is declared as in the
+  retired `screen_spread.json`: `field_of` electron, `release` [1, 4],
+  `spread` [6, 1, 1, 1, 1, 1], rest rate 0, charge 0, its `source_sign` set
+  by the engine from the electron's charge; 24 ray slots (E8's field
+  family), since a corner receives field content on six Ports with up to
+  three phases per Port. No rule names `light`: layers are derived, so it is
+  a layer of its own and crosses the ring's Nodes unmet (`ray-layers-v1`),
+  spreading there like at any Node; nothing is declared to say so, where
+  E1's world declares `absorb` to say the opposite. The square lies in the
+  plane y = 5, which contains the axis and is perpendicular to the marks'
+  line, not in the plane z = 5 of the marks' line: a unit square in that
+  plane would put two of its Nodes at y = 6 (or 4), one of them on the line
+  of the mark (7, 6, 5) with an axis beam of its own, and the mirror about
+  y = 5 that clause (3) of the criterion demands would be broken by
+  construction; in the plane y = 5 the source, the marks and the split table
+  are exactly symmetric under y -> 10 - y. The dictionary, the computation
+  and the readings are in the
+  [README](../examples/nature/README.md#the-screen-with-a-loop-the-ring-radiating-on-seven-marks);
+  `tests/test_screen_loop.py` pins the first ticks in isolation
+  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)).
+- **Computed (before the run).** The content: at `[1, 4]` a ray of amount a
+  releases floor(a / 4) per heading, 0 for a < 4, so 4 is the least amount
+  that radiates, and with one ray of each sense at every corner, as
+  `ring.json` declares the electron (eight rays), content 32 is the least
+  radiating ring of that electron; the four-ray loop of E5's `half` case
+  would radiate at 16 but is not that electron. The rate: the catalog's 1,
+  not `ring.json`'s 2 (chosen there so that the hand table closes in one
+  circuit), because the light carries its releaser's clock and the source
+  here is the catalog's electron, as E1's ring and E6's held group had it;
+  at rate 1 the ring closes in two circuits, period 8, every ray at phase t
+  mod 8 after tick t (E5's `slow` case), nothing lost. The release: the
+  lamps' rays are fresh at tick 0 and release nothing; from the cycle of
+  tick 1, every interval, each of the eight rays releases 1 on the five
+  headings other than the one it departs on (the release is taken from the
+  trajectory that leaves the corner meeting), 40 quanta per interval against
+  E6's 12, 40 (t - 1) sourced by tick t, 9560 by tick 240. Per corner 10:
+  the two departing rays' releases merge per heading (one phase, one sign),
+  so P1 sends 2 on +X along the axis line y = 5, z = 5 toward the screen, 1
+  on -X and 1 on +Z along the edges to P0 and P2, 2 on -Z, 2 on +Y and 2 on
+  -Y; P2 sends 2 on +X along y = 5, z = 6, one Link beside the marks' plane;
+  P0 and P3 send 2 on -X away from the screen; per interval the ring sends 6
+  on each of +X, -X, +Z, -Z and 8 on each of +Y, -Y, of which 8 run along
+  the four edges and reach the neighbouring corners in the next interval,
+  where they are not met (no rule) and spread, so the corners' registers
+  are sources of spread content as any Node's are. The phase: every release
+  of the cycle of tick t carries the ring's phase t mod 8 and light's rate
+  0 keeps it, so the source has a clock and the screen reads it: a quantum
+  that reaches a mark on whole-quantum steps carries the phase of its
+  release tick, and a quantum a register releases carries the phase of the
+  coherent sum of the shares that filled it, which over eight consecutive
+  intervals of this clock cancels to step 0 and otherwise is the phase of
+  the shares beyond whole circles; the phases the marks see are read from
+  the recording. The momentum: `light` binds no momentum field, so a spread
+  and a release book none (as in E6) and the world's momentum is the
+  corners' bookings of their two quarter turns, (8, 0, 8) at P0, (-8, 0, 8)
+  at P1, (-8, 0, -8) at P2, (8, 0, -8) at P3 per interval, summing to zero:
+  momentum (0, 0, 0) at every tick; electron 32 in the world and none
+  escaped at every tick, the charge line -96; light current (rays and
+  registers) plus escaped equal to sourced. The order of the first clicks:
+  the on-axis mark (7, 5, 5) first, fed by the axis line from P1, two fresh
+  quanta per interval plus P1's register releases (the edge light of P0
+  arriving on +X fills P1's +X register by 6/11 per interval), a stronger
+  beam than E6's 2 starting one Node nearer the screen, so before E6's tick
+  19; then (7, 4, 5) and (7, 6, 5) in one tick, then (7, 3, 5) and (7, 7, 5),
+  then (7, 2, 5) and (7, 8, 5), each pair in the same tick with the same
+  amount by the mirror, the counts falling outward as E6's 27, 6, 6, 3, 3,
+  1, 1; the ticks are the run's to give.
+- **Criterion (written before the run).** Pass, all of: (1) every ledger
+  line balanced at every completed tick and
+  `conserved_at_every_completed_tick` true; (2) the record's group reader
+  (the ray viewer's extractor with the recording) reads exactly one group,
+  ring P0, P1, P2, P3, content 32, `{"electron": 32}`, period 8, clock 1 on
+  8 steps, from tick 1 to tick 239, so that the eight ring rays' states
+  recur at every corner through the whole run: the source stays bound while
+  radiating and its content does not change, because a release is booked as
+  a source (Highlights 3.15); (3) all seven marks click within 240 ticks,
+  the pairs (7, 4, 5) and (7, 6, 5), (7, 3, 5) and (7, 7, 5), (7, 2, 5) and
+  (7, 8, 5) with equal click counts, and the on-axis mark (7, 5, 5) with
+  the most; (4) no light ray meets a ring ray: `ray_layer_families` in
+  `run.json` lists `light` in a layer of its own, the events of the record
+  are of the kinds `spatial_cycle` (the corner meetings and the releases,
+  read in its `source_delta`), `spatial_sent`, `spatial_received`,
+  `spatial_escaped`, `field_spread`, `detector_click` and `detector_pass`
+  only, beside the host's cycle records, and the electron line has no
+  source, no escape, no annulment and no absorption at any tick. Fail: any
+  one clause, stated as which and why. The run is made once; nothing is
+  tuned after it, and if its first look forces a change, both records are
+  kept and said so.
+- **Shows.** To be read from the record (the clicks per mark with their
+  ticks, the group reading, the ledger).
+- **Status.** planned (2026-09-17, the criterion fixed, the run to be made
+  once at the commit that carries this entry).
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 

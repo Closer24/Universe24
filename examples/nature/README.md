@@ -1,6 +1,6 @@
 # Two events of nature in the engine's language
 
-Eight world files that show, on the one generic engine and with the rules
+Nine world files that show, on the one generic engine and with the rules
 that exist today, (A) a photon absorbed by an electron at rest, (B) a nucleus
 split by a high-energy photon, with a low-energy photon that does not split
 it as the control, (C) the photon of (A) carried in the group while its
@@ -15,12 +15,15 @@ fields, in `a5_coulomb/`,
 [below](#a5-coulombs-law-through-the-spreading-field), and (H) the helium
 ion again, on the engine with the field spreading and the momentum turn, with
 the axis-only control,
-[below](#the-helium-ion-with-the-field-spreading-and-the-momentum-turn).
+[below](#the-helium-ion-with-the-field-spreading-and-the-momentum-turn),
+and (I) the screen of (E) with the ring of (F) as its source, rays of amount
+4 radiating their light on seven marks,
+[below](#the-screen-with-a-loop-the-ring-radiating-on-seven-marks).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
 [below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
-(A) to (F) and (H) are demonstrations under
+(A) to (F), (H) and (I) are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
@@ -678,7 +681,10 @@ A loop of content 8 releases nothing at the catalog's ratio `[1, 4]` (a ray
 of amount 1 releases floor(1 / 4) = 0), and a radiating loop needs rays of
 amount 4, content 32 at least, a different demonstration to be written and
 pinned anew after A1's table and width, not a silent rerun with another
-source. The text below describes the retired worlds as they were.
+source. The text below describes the retired worlds as they were; the
+demonstration with the loop source is
+[below](#the-screen-with-a-loop-the-ring-radiating-on-seven-marks)
+(`screen_loop.json`, E9).
 
 `screen.json` was the model owner's request of 2026-09-17 to see the eye view
 ([Highlights](../../docs/HIGHLIGHTS.md) 5.4, "everything begins and is
@@ -907,6 +913,109 @@ python tools/ray_viewer/render_gif.py runs/ring/runs.json --output runs/ring.gif
 
 The same four lines with `ring_open` render the control. The record stays
 outside the tree; the register entry E5 carries the fingerprints.
+
+## The screen with a loop: the ring radiating on seven marks
+
+`screen_loop.json` is the retired screen of (E) with its source in the loop
+form of binding (feature 14, `loop-binding-v1`): the same board, the same
+seven Detector marks and the same declaration of `light` as
+`screen_spread.json` had, the source the ring of (F) with rays of amount 4,
+content 32, at the catalog's rest rate 1. It is registered as
+[E9](../../docs/EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks),
+its criterion written there before the run, and pinned in isolation by
+`tests/test_screen_loop.py`
+([expectations](../../docs/TEST_EXPECTATIONS.md#the-screen-with-a-loop)).
+Board 12 x 11 x 11, open, `link_ticks` 1, `phase_bits` 3 (N = 8), 240 ticks
+in the file (E6's registered length). The marks: (7, 2, 5) through
+(7, 8, 5), setting [1, 1] (every arrival clicks, none is returned), at
+distance 6 along +X from P0 = (1, 5, 5) and 5 from P1 = (2, 5, 5). The
+ring: the unit square P0 = (1,5,5), P1 = (2,5,5), P2 = (2,5,6),
+P3 = (1,5,6) in the plane y = 5, eight `electron` lamps of amount 4 at its
+corners as `ring.json` declares them with Y read as Z (the R lamps on +X at
+P0, +Z at P1, -X at P2, -Z at P3, the L lamps on +Z at P0, -X at P1, -Z at
+P2, +X at P3), the one rule `corner`. `light`: `field_of` `electron`,
+`release` [1, 4], `spread` [6, 1, 1, 1, 1, 1], rest rate 0, charge 0, 24 ray
+slots. No rule names `light`.
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| An electron at rest, radiating | The ring of (F) with `emissions[].amount` 4 and the lamps' `defaults.electron` 4: eight `electron` rays (charge -3) of amount 4 circulating both ways on the unit square P0, P1, P2, P3 in the plane y = 5, one of each sense at every corner in every interval, turned by `corner`; content 32; nothing is held, and the ring's meetings change nothing about the field | [Binding as a loop](../../docs/SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1); Highlights 3.4, 3.28 |
+| Why content 32 | At the catalog's ratio `[1, 4]` a ray of amount a releases floor(a / 4) per heading, 0 for a < 4, so 4 is the least amount that radiates, and the electron of `ring.json` has eight rays (one of each sense at every corner): 8 x 4 = 32 is its least radiating content; the four-ray loop of E5's `half` case would radiate at 16 but is not that electron | [Loop binding](../../docs/LOOP_BINDING.md#6-the-field-of-a-loop); [E6](../../docs/EXPERIMENTS.md#e6-the-screen-the-field-of-an-electron-at-rest-on-seven-marks) (retired) |
+| The clock | `kerengonen.phase_advance` 1 on `electron`, the catalog's rest rate (not `ring.json`'s 2, chosen there so that the hand table closes in one circuit): every ray at phase t mod 8 after tick t, the ring closing in two circuits (4 x 1 = 4 is not 0 mod 8), period 8, nothing lost (E5's `slow` case); the light carries this clock, so the source that lights the screen has a frequency | [Loop binding](../../docs/LOOP_BINDING.md#3-closure-as-integer-equalities); Highlights 3.3 |
+| Its field, light | `light` declared `field_of` `electron` with `release` [1, 4]: every ring ray, at every corner it departs from, releases one `light` ray of amount floor(4 / 4) = 1 on each of the five Port headings other than the one it leaves on (the release is taken from the trajectory that leaves the corner meeting), with its own phase and the sign of its family's charge (`source_sign` -1), booked as a source of `light`; the ray pays nothing and the ring's content stays 32 | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); Highlights 3.5, 3.15 |
+| The radiated power | 40 quanta per interval (eight rays, five headings, 1 each) from the cycle of tick 1 (the lamps' rays are fresh at tick 0 and release nothing), 40 (t - 1) sourced by tick t, 9560 by tick 240; against E6's 12 per interval | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1) |
+| The spreading | `spread` [6, 1, 1, 1, 1, 1] on `light`, the catalog's table: at every Node the arrived content is shared six of eleven forward, one backward, one to each transverse heading, the whole quanta leaving and the shares below one quantum kept in the Node's registers per sign and Port until a register reaches eleven, so the field is whole quanta released where registers fill; the amounts are exact and the phase of the departures is the coherent sum's | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1); Highlights 3.5, 3.17 |
+| The screen | `detectors`: seven marks at (7, y, 5), y = 2 to 8, `setting` [1, 1], `seed` 0: every arriving ray clicks (`detector_click`, the ray's family and amount, bit 1) and walks on with its bit; a ray whose bit was read at an earlier mark passes a later one without a draw (`detector_pass`) | [Detector mark](../../docs/SPATIAL_FIELDS.md#detector-mark-detector-mark-v1), [the bit as a property](../../docs/SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1); Highlights 5.4 |
+| No coupling of light with the ring | Nothing: no `ray_interactions` rule names `light`, and layers are derived, so `light` is a layer of its own and crosses the ring's Nodes unmet, spreading there like at any Node (the edge light of a corner arrives at the next corner and fills its registers). Where E1's world declares `absorb` over `[electron, electron, light]` to make the photon join the ring, this world declares no rule over `light` at all; the runner's `ray_layer_families` records the two layers | [Layers](../../docs/SPATIAL_FIELDS.md#layers-ray-layers-v1); Highlights 5.1 |
+| The square edge-on to the screen | The ring in the plane y = 5, which contains the axis (1, 5, 5) to (7, 5, 5) and is perpendicular to the marks' line, rather than in the marks' plane z = 5: a unit square in z = 5 would have two Nodes at y = 6 (or 4), one of them sending an axis beam of its own along the line of the mark (7, 6, 5), and the pairs of marks could not be equal; in y = 5 the source, the marks and the split table are symmetric under y -> 10 - y exactly, so the pairs click alike, tick for tick | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1) (the four transverse weights equal); Highlights 3.23 |
+| Momentum | Amount times heading; the two quarter turns of a corner move (8, 0, 8) at P0, (-8, 0, 8) at P1, (-8, 0, -8) at P2, (8, 0, -8) at P3 per interval, booked as that corner's source, the four summing to zero; `light` binds no momentum field (no `recoil_field` releases it), so neither a release nor a spread books momentum, as in E6, and the world's momentum stays (0, 0, 0) exact | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) ("Momentum of a split"); Highlights 3.14 |
+| Charge | -3 per electron quantum, the ledger's electron line -96; light 0; the sign travels on every field ray as `source_sign` -1 | [Wave-ray families](../../docs/SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1); [field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1) ("The sign of the source") |
+| Capacity | `ray_slots` 24 on `light` (E8's field family; the retired screen had 8 for one source Node): a corner receives field content on six Ports with up to three phases per Port (the split's, a register's, a ring ray's release) and a full slot budget aborts a run; a capacity, not a law | [Straight-ray transport](../../docs/SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1) |
+| The group in the record | Nothing at a Node names it: the ray viewer's extractor reads the electron rays that keep meeting at the corners and reports one group, ring P0, P1, P2, P3, content 32, period 8, clock 1, over the window in which their states recur; the light that spreads at a corner is a field family and enters no group. The extractor cannot tell a spread at a corner from a meeting with the matter there (a field ray that leaves a Node changed is drawn as meeting it), so its markers at the corners are a rendering, and the engine's record is the evidence that nothing met: the derived layers, the electron line without a source, the ring's states recurring | [Ray viewer](../../tools/ray_viewer/README.md#what-the-record-must-contain); Highlights 3.4 |
+
+### Computed before the run
+
+The release per corner and per interval, from the two rays that leave it
+(the R ray on the R sense's edge, the L ray on the L sense's edge), each
+releasing 1 on the five headings other than its own, the two releases on one
+heading merging into one ray (one phase, one sign, no event):
+
+| Corner | Departing | +X | -X | +Y | -Y | +Z | -Z |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| P0 = (1,5,5) | R +X to P1, L +Z to P3 | 1 (edge to P1) | 2 | 2 | 2 | 1 (edge to P3) | 2 |
+| P1 = (2,5,5) | R +Z to P2, L -X to P0 | 2 (the axis line to (7,5,5)) | 1 (edge to P0) | 2 | 2 | 1 (edge to P2) | 2 |
+| P2 = (2,5,6) | R -X to P3, L -Z to P1 | 2 (the line y = 5, z = 6) | 1 (edge to P3) | 2 | 2 | 2 | 1 (edge to P1) |
+| P3 = (1,5,6) | R -Z to P0, L +X to P2 | 1 (edge to P2) | 2 | 2 | 2 | 2 | 1 (edge to P0) |
+
+Forty per interval: 6 on each of +X, -X, +Z, -Z and 8 on each of +Y, -Y, of
+which 8 run along the four edges and reach the neighbouring corners in the
+next interval, where no rule meets them and they spread as at any Node, so
+the corners' registers are sources of spread content too. From the cycle of
+tick 1 (the lamps' rays are fresh at tick 0 and release nothing) the light
+sourced by tick t is 40 (t - 1), 9560 by tick 240. The ring's period is 8
+at rate 1 and every release of the cycle of tick t carries the phase t mod
+8, which light's rate 0 keeps: a quantum that reaches a mark on
+whole-quantum steps carries the phase of its release tick, and a quantum a
+register releases carries the phase of the coherent sum of the shares that
+filled it (over eight consecutive intervals of this clock the sum cancels to
+step 0, and otherwise it is the phase of the shares beyond whole circles);
+the phases the marks see are read from the recording below. The order of
+the first clicks: the on-axis mark (7, 5, 5) first, fed by the axis line
+from P1, two fresh quanta per interval plus P1's register releases (the
+edge light of P0 arrives at P1 on +X and fills its +X register by 6/11 per
+interval, the edge light of P2 arrives on -Z and adds 1/11), a stronger beam
+than E6's 2 starting one Node nearer the screen, so before E6's tick 19;
+then (7, 4, 5) and (7, 6, 5) in one tick, then (7, 3, 5) and (7, 7, 5), then
+(7, 2, 5) and (7, 8, 5), each pair in the same tick with the same amount by
+the mirror, the counts falling outward as E6's 27, 6, 6, 3, 3, 1, 1; the
+ticks are the run's to give. Momentum (0, 0, 0), electron 32 and the charge
+line -96 at every tick; light current (rays and registers) plus escaped
+equal to sourced.
+
+### screen_loop.json, tick by tick: the first clicks
+
+To be read from the record.
+
+### The eye view
+
+To be read from the record.
+
+### The ledger
+
+To be read from the record.
+
+### Run and render
+
+```bash
+PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/screen_loop.json'), Path('runs/screen_loop'))"
+PYTHONPATH=src python tools/ray_viewer/record_sidecar.py runs/screen_loop
+python tools/ray_viewer/extract.py runs/screen_loop --sidecar runs/screen_loop/ray-recording.json --label "E9: the screen with a loop source" --out runs/screen_loop/runs.json
+```
+
+The record stays outside the tree; the register entry E9 carries the
+fingerprints. No GIF was rendered for this record.
 
 ## A5: Coulomb's law through the spreading field
 
