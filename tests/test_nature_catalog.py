@@ -382,7 +382,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
         assert apparatus["external_body"]["engine"]["landed"]
-        assert len(rays) == 14 and len(couplings) == 16
+        assert len(rays) == 15 and len(couplings) == 17
     elif case == "undecided":
         # (b) Every "undecided" names, in its own record, an entry of the register or
         # a hypothesis of the hypotheses page that decides it, and the table of
@@ -392,7 +392,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        assert len(found) == 28
+        assert len(found) == 30
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",

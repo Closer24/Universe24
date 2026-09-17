@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "model_id": "helium-ion-v1",
+  "shape": [
+    41,
+    41,
+    41
+  ],
+  "boundary": "open",
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 128,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "electron",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "electron_field",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "proton",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "proton_field",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "quantum times heading",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "electron_source",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 4,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "electron",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 8,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 8,
+      "kerengonen": {
+        "phase_advance": 1
+      },
+      "charge": -3
+    },
+    {
+      "field": "electron_field",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 8,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 8,
+      "kerengonen": {
+        "phase_advance": 0
+      },
+      "charge": 0,
+      "field_of": "electron",
+      "release": [
+        1,
+        4
+      ]
+    },
+    {
+      "field": "proton",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 8,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 8,
+      "kerengonen": {
+        "phase_advance": 0
+      },
+      "charge": 3
+    },
+    {
+      "field": "proton_field",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 8,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 8,
+      "kerengonen": {
+        "phase_advance": 0
+      },
+      "charge": 0,
+      "field_of": "proton",
+      "release": [
+        1,
+        4096
+      ]
+    }
+  ],
+  "emissions": [
+    {
+      "type": "electron_source",
+      "field": "electron",
+      "amount": 4,
+      "denominator": 1,
+      "source": false,
+      "heading": [
+        0,
+        1,
+        0
+      ],
+      "kerengonen_phase": 0,
+      "recoil_field": "momentum"
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        28,
+        12,
+        20
+      ],
+      "type": "electron_source"
+    }
+  ],
+  "ray_interactions": [
+    {
+      "name": "proton_field_turn",
+      "participants": [
+        {
+          "type": "electron"
+        },
+        {
+          "type": "proton_field"
+        }
+      ],
+      "outputs": [
+        {
+          "field": "electron",
+          "amount": {
+            "of": 0
+          },
+          "heading": "reversed",
+          "input": 1,
+          "phase": {
+            "of": 0
+          }
+        },
+        {
+          "field": "proton_field",
+          "amount": {
+            "of": 1
+          },
+          "heading": "reversed",
+          "input": 1
+        }
+      ],
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "field": "amount"
+          }
+        }
+      ]
+    },
+    {
+      "name": "electron_field_turn",
+      "participants": [
+        {
+          "type": "electron"
+        },
+        {
+          "type": "electron_field"
+        }
+      ],
+      "outputs": [
+        {
+          "field": "electron",
+          "amount": {
+            "of": 0
+          },
+          "heading": "same",
+          "input": 1,
+          "phase": {
+            "of": 0
+          }
+        },
+        {
+          "field": "electron_field",
+          "amount": {
+            "of": 1
+          },
+          "heading": "reversed",
+          "input": 1
+        }
+      ],
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "field": "amount"
+          }
+        }
+      ]
+    },
+    {
+      "name": "phase_plate",
+      "participants": [
+        {
+          "type": "electron"
+        },
+        {
+          "type": "proton"
+        }
+      ],
+      "outputs": [
+        {
+          "field": "electron",
+          "amount": {
+            "of": 0
+          },
+          "heading": "same",
+          "input": 0,
+          "phase": {
+            "of": 0,
+            "offset": 0
+          }
+        },
+        {
+          "field": "proton",
+          "amount": {
+            "of": 1
+          },
+          "heading": "same",
+          "input": 1,
+          "phase": {
+            "of": 1
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "field": "amount"
+          }
+        }
+      ]
+    }
+  ],
+  "external_bodies": [
+    {
+      "position": [
+        20,
+        20,
+        20
+      ],
+      "family": "proton",
+      "amount": 1048576,
+      "charge": 6,
+      "coupling": "phase_plate",
+      "momentum_table": {
+        "proton_field": -1,
+        "electron_field": -1
+      }
+    }
+  ]
+}

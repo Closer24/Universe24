@@ -123,8 +123,10 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `rays.proton.rest_rate` | The proton's rung, k × 1836.152 67 | A10 |
 | `rays.neutron.rest_rate` | The neutron's retained content | hypothesis 12 |
 | `rays.mass_field.release` | The release ratio of the computation field | A6 |
+| `rays.proton_field.release` | The release ratio of the proton's own field, the field of its charge | A8 |
 | `couplings.electron_field_turn.strength_table` | The integer table over field content and charge product | A5 |
 | `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign | A5 |
+| `couplings.proton_field_turn.strength_table` | The integer table over the proton's field content and the charge product, how much of the electron turns per meeting | A8 |
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
 | `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |
