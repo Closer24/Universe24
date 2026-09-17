@@ -93,8 +93,13 @@ Because every permitted trajectory happens, the intensity at a place is how
 much content arrived there, and interference is steering: where rays meet
 in one layer, the declared coupling reads their phase difference and decides
 through which Port the shared content leaves, with every invariant exact;
-nothing is erased. The Detector reads none of this; the probability of a
-click is already in how much content reached it.
+nothing is erased. The basic steering coupling is the Born rule stated as a coupling: for a
+phase difference δ it splits the shared content between the two candidate
+Ports in the ratio cos²(δ/2) to sin²(δ/2), as a declared table of bounded
+integer ratios with the remainder owned as Highlights 3.17 requires, so that
+click intensities follow the Born rule with nothing read by any Detector. It
+is declared, not derived. The Detector reads none of this; the
+probability of a click is already in how much content reached it.
 
 **Detector.** Every Node carries one bit: Detector or not. The mark is
 bounded Node metadata (the bit, a setting, a ticket seed), not a record, not
@@ -263,7 +268,11 @@ declared coupling between their families decides one of:
   as the declared coupling says and, where the arriving rays' phases
   differ, the coupling reading their phase difference to decide through
   which Port the shared content leaves (interference as steering, nothing
-  erased), exactly as the
+  erased; the basic steering coupling is the Born rule stated as a coupling,
+  splitting the shared content between the two candidate Ports in the ratio
+  cos²(δ/2) to sin²(δ/2) for a phase difference δ, as a declared table of
+  bounded integer ratios with the remainder owned as Highlights 3.17
+  requires, declared, not derived), exactly as the
   [N-to-M conversion contract](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
   already does for records: up to six inputs, up to six outputs, one output
   departure per Port;
@@ -424,7 +433,11 @@ on 16 September 2026.
    carries its emitter's clock phase at emission and delivers it unchanged;
    conversion products emitted as events from the
    interaction; the N-to-M mechanism invoked at a meeting of rays without a
-   resident record, up to six events out.
+   resident record, up to six events out; the steering table as a catalog
+   coupling, the Born rule stated as a coupling (for 8 phase steps the
+   example ratios 8/8, 7/8, 4/8, 1/8, 0/8, 1/8, 4/8, 7/8 of the shared
+   content to the first candidate Port and the rest to the second, the
+   remainder owned as Highlights 3.17 requires).
 7. Field emission by traveling rays, with the outward dilution or declared
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as
@@ -444,7 +457,10 @@ on 16 September 2026.
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two
    Detectors instead of two mirrors, the family's declared rate being a rest
-   rate, the mass as a clock, zero for light; the bound group under load.
+   rate, the mass as a clock, zero for light; the steering table as a
+   catalog coupling, for 8 phase steps the ratios 8/8, 7/8, 4/8, 1/8, 0/8,
+   1/8, 4/8, 7/8, click intensities following the Born rule with nothing
+   read by any Detector; the bound group under load.
 
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
@@ -497,9 +513,10 @@ and evidence, under the ordinary gates.
   event whose inputs were consumed, it cancels its own share only and
   continues along the event's output lines, and nothing is left at the
   Node.
-- Two rays of one event that meet in one layer with phase difference 0
-  leave through a different Port than the same two rays meeting with a
-  phase difference of half a turn, with exact totals in both cases: the
+- Two rays of one event that meet in one layer under the Born steering
+  coupling: a phase difference of 0 sends all the shared content to one
+  Port, half a turn sends all of it to the other, and a quarter turn splits
+  it in half, with exact totals in every case and the remainder owned: the
   content that arrived is the content that left, and nothing is erased.
 - A light ray's phase is constant along its line and equals its emitter's
   clock phase at emission, while a massive ray's phase advances by its
