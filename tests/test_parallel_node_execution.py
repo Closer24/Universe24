@@ -72,12 +72,6 @@ def test_node_worker_count_is_bounded(workers: object) -> None:
         Simulation(initial, node_workers=workers)  # type: ignore[arg-type]
 
 
-def test_event_program_rejects_parallel_execution_before_a_run() -> None:
-    initial = load_initial_state(ROOT / "examples" / "quantum" / "native_classical.json")
-    with pytest.raises(ValueError, match="event program"):
-        Simulation(initial, node_workers=2)
-
-
 def test_only_one_caller_can_advance_a_tick() -> None:
     initial = load_initial_state(ROOT / "examples" / "basic.json")
     world = Simulation(initial)

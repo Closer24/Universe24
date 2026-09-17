@@ -138,10 +138,10 @@ def test_existing_initialization_validator_remains_the_owner_of_semantic_errors(
     _assert_invalid(validate_configuration(json.dumps(raw)), "type")
 
 
-def test_profile_validation_requires_an_explicit_catalog_and_checks_every_representation():
+def test_profile_validation_requires_an_explicit_catalog_and_checks_every_profile():
     _assert_invalid(validate_configuration(_read(PROFILES)), "catalog")
     raw = json.loads(_read(PROFILES))
-    raw["profiles"][-1]["quantum_profile"]["claim_level"] = "invented_species_law"
+    raw["profiles"][-1]["executable_profile"]["claim_level"] = "invented_species_law"
     _assert_invalid(validate_configuration(json.dumps(raw), catalog_source=_read(CATALOG)))
 
 
@@ -382,7 +382,7 @@ def test_cli_batch_continues_after_excessively_nested_json_and_catalog(tmp_path)
     assert "Traceback" not in result.stderr
 
 
-@pytest.mark.parametrize("case", ["schema", "native_capacity"])
+@pytest.mark.parametrize("case", ["schema", "reference"])
 def test_ui_and_runner_reuse_semantic_preflight_before_any_output(tmp_path, case):
     from event_universe.runner import run_initialization
     from event_universe.ui import validate_source
@@ -391,8 +391,8 @@ def test_ui_and_runner_reuse_semantic_preflight_before_any_output(tmp_path, case
         raw = json.loads(_read(BASIC))
         raw["schema_version"] = 3
     else:
-        raw = json.loads(_read(ROOT / "examples/quantum/native_quantum.json"))
-        raw["event_program"]["capacity"] = 0
+        raw = json.loads(_read(BASIC))
+        raw["seeds"][0]["type"] = "missing disturbance"
     source = json.dumps(raw)
     report = validate_configuration(source, kind="initialization")
     _assert_invalid(report)

@@ -138,25 +138,23 @@ def test_shared_field_conflicts_and_duplicate_spatial_ownership_are_rejected():
         compile_entities(data, [data["field_entities"][0]["id"], duplicate["id"]])
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_external_profiles_preserve_all_46_legacy_compiled_outputs(representation):
+def test_external_profiles_preserve_all_46_legacy_compiled_outputs():
     data = physical_catalog()
     experiments = profiles()
     legacy = catalog()
     assert len(experiments["profiles"]) == 46
     for row in experiments["profiles"]:
         identity = row["entity_id"]
-        assert compile_entities(
-            data, [identity], profiles=experiments, representation=representation
-        ) == (compile_entities(legacy, [identity], representation=representation))
+        assert compile_entities(data, [identity], profiles=experiments) == (
+            compile_entities(legacy, [identity])
+        )
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_v2_metadata_and_profile_order_cannot_select_or_modify_a_law(representation):
+def test_v2_metadata_and_profile_order_cannot_select_or_modify_a_law():
     data = physical_catalog()
     experiments = profiles()
     selected = ["electron", "electromagnetic_field"]
-    original = compile_entities(data, selected, profiles=experiments, representation=representation)
+    original = compile_entities(data, selected, profiles=experiments)
     changed = copy.deepcopy(data)
     for section in ("field_entities", "particle_entities", "disturbance_families"):
         changed[section].reverse()
@@ -179,10 +177,7 @@ def test_v2_metadata_and_profile_order_cannot_select_or_modify_a_law(representat
         row["conditions"] = ["A different descriptive condition for this reference channel."]
     changed["representative_channels"].reverse()
     experiments["profiles"].reverse()
-    assert (
-        compile_entities(changed, selected, profiles=experiments, representation=representation)
-        == original
-    )
+    assert compile_entities(changed, selected, profiles=experiments) == original
 
 
 def replace_identity(value, previous, identity):
@@ -194,34 +189,25 @@ def replace_identity(value, previous, identity):
     return identity if value == previous else value
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_v2_arbitrary_ids_only_bind_profiles(representation):
+def test_v2_arbitrary_ids_only_bind_profiles():
     data = physical_catalog()
     experiments = profiles()
-    original = compile_entities(data, ["electron"], profiles=experiments, representation=representation)
+    original = compile_entities(data, ["electron"], profiles=experiments)
     changed = replace_identity(data, "electron", "__proto__")
     binding = next(row for row in experiments["profiles"] if row["entity_id"] == "electron")
     binding["entity_id"] = "__proto__"
-    renamed = compile_entities(
-        changed, ["__proto__"], profiles=experiments, representation=representation
-    )
-    if representation == "quantum":
-        original["event_program"]["register_names"] = renamed["event_program"]["register_names"]
+    renamed = compile_entities(changed, ["__proto__"], profiles=experiments)
     assert renamed == original
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_v2_compilation_neither_mutates_nor_aliases_inputs(representation):
+def test_v2_compilation_neither_mutates_nor_aliases_inputs():
     data, experiments = physical_catalog(), profiles()
     before = copy.deepcopy((data, experiments))
-    result = compile_entities(data, ["electron"], profiles=experiments, representation=representation)
+    result = compile_entities(data, ["electron"], profiles=experiments)
     assert (data, experiments) == before
     result["fields"][0]["units"] = "Changed compiled output"
-    if representation == "quantum":
-        result["event_program"]["initial_levels"][0] = 0
-    else:
-        result["seeds"][0]["values"]["momentum"][0] = 99
-        result["disturbance_types"][0]["transport"]["rate_denominator"] = 3
+    result["seeds"][0]["values"]["momentum"][0] = 99
+    result["disturbance_types"][0]["transport"]["rate_denominator"] = 3
     assert (data, experiments) == before
 
 
@@ -284,7 +270,7 @@ def test_external_profile_document_boundaries(mutation, message):
     elif mutation == "empty":
         experiments["profiles"][0] = {"entity_id": row["entity_id"]}
     elif mutation == "null_profile":
-        row["quantum_profile"] = None
+        row["executable_profile"] = None
     elif mutation == "unknown_top_level":
         experiments["unexpected"] = "unrecognized document data"
     elif mutation == "missing_purpose":
@@ -299,27 +285,25 @@ def test_external_profile_document_boundaries(mutation, message):
         compile_entities(physical_catalog(), ["electron"], profiles=experiments)
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_missing_profiles_and_known_unsupported_families_fail_clearly(representation):
+def test_missing_profiles_and_known_unsupported_families_fail_clearly():
     data, experiments = physical_catalog(), profiles()
     experiments["profiles"] = [row for row in experiments["profiles"] if row["entity_id"] == "electron"]
-    compile_entities(data, ["electron"], profiles=experiments, representation=representation)
+    compile_entities(data, ["electron"], profiles=experiments)
     for identity in ("positron", data["disturbance_families"][0]["id"]):
-        with pytest.raises(ValueError, match=f"unsupported {representation} representation"):
-            compile_entities(data, [identity], profiles=experiments, representation=representation)
+        with pytest.raises(ValueError, match="unsupported classical representation"):
+            compile_entities(data, [identity], profiles=experiments)
     with pytest.raises(ValueError, match="unknown entity"):
-        compile_entities(data, ["no such entity"], profiles=experiments, representation=representation)
-    key = "executable_profile" if representation == "classical" else "quantum_profile"
-    del experiments["profiles"][0][key]
-    with pytest.raises(ValueError, match=f"unsupported {representation} representation"):
-        compile_entities(data, ["electron"], profiles=experiments, representation=representation)
+        compile_entities(data, ["no such entity"], profiles=experiments)
+    experiments["profiles"][0] = {"entity_id": "electron"}
+    with pytest.raises(ValueError, match="incomplete profile binding"):
+        compile_entities(data, ["electron"], profiles=experiments)
 
 
 @pytest.mark.parametrize("version", [1, 2])
 def test_embedded_and_external_profiles_cannot_be_combined(version):
     data = physical_catalog()
     data["catalog_version"] = version
-    data["particle_entities"][0]["quantum_profile"] = {}
+    data["particle_entities"][0]["executable_profile"] = {}
     with pytest.raises(ValueError, match="embedded profiles"):
         compile_entities(data, ["electron"], profiles=profiles())
     if version == 2:
@@ -336,8 +320,7 @@ def test_v2_rejects_metadata_formula_injection_before_compilation():
         compile_entities(data, ["electron"], profiles=profiles())
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_cli_requires_and_reads_explicit_profiles(tmp_path, monkeypatch, representation):
+def test_cli_requires_and_reads_explicit_profiles(tmp_path, monkeypatch):
     output = tmp_path / "compiled.json"
     args = [
         "entities",
@@ -347,8 +330,6 @@ def test_cli_requires_and_reads_explicit_profiles(tmp_path, monkeypatch, represe
         "electron",
         "--output-init",
         str(output),
-        "--representation",
-        representation,
     ]
     monkeypatch.setattr(sys, "argv", args)
     with pytest.raises(ValueError, match="requires explicit profiles"):
@@ -359,7 +340,7 @@ def test_cli_requires_and_reads_explicit_profiles(tmp_path, monkeypatch, represe
     )
     main()
     assert json.loads(output.read_text()) == compile_entities(
-        physical_catalog(), ["electron"], profiles=profiles(), representation=representation
+        physical_catalog(), ["electron"], profiles=profiles()
     )
 
 

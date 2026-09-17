@@ -28,13 +28,6 @@ class Simulation(DisturbanceEngine):
         observer: EventSink | None = None,
         node_workers: int = 1,
     ) -> None:
-        if type(node_workers) is int and node_workers > 1 and initial.event_program is not None:
-            raise ValueError("parallel Node execution does not support an event program")
-        event_space, resolver = None, None
-        if initial.event_program is not None:
-            from event_universe.integration.event_runtime import build_event_runtime
-
-            event_space, resolver = build_event_runtime(initial)
         responses = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
         bonded = [field for field in initial.spatial_fields if field.bonded]
         if bonded and type(node_workers) is int and node_workers > 1:
@@ -100,8 +93,6 @@ class Simulation(DisturbanceEngine):
                 initial.interactions,
                 selected_type_set(initial.spatial_couplings, initial.spatial_interactions),
             ),
-            event_space=event_space,
-            resolver=resolver,
             field_guard=spatial_law.validate_guards,
             balance_guard=(
                 LocalBalanceGuard(
@@ -114,8 +105,8 @@ class Simulation(DisturbanceEngine):
                 else None
             ),
             node_workers=node_workers,
-            reuse_carrier_plans=initial.focus and resolver is None,
-            reuse_spatial_plans=initial.focus and resolver is None and not bonded,
+            reuse_carrier_plans=initial.focus,
+            reuse_spatial_plans=initial.focus and not bonded,
         )
         self._audit: LocalConservationAudit | None = None
         if initial.conservation is not None:

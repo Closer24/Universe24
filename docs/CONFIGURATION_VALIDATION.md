@@ -14,9 +14,8 @@ that completes, and a physically accepted hypothesis are three separate results.
 | JSON decoding | `json_documents.parse_json_document` | Reject duplicate keys at every depth, malformed JSON, nonfinite constants and exponent overflow; preserve ordinary integers and finite metadata floats |
 | Dispatch and composition | `configuration_validation` | Select an explicit format, require supplied dependencies, coordinate initialization/observer exclusivity, return a report |
 | Initialization | `initialization.parse_initial_state` | Schema versions 1/2, fields, bounded values, references, placements and supported mechanism composition |
-| Native program | `integration.event_program.parse_event_program` | Native program dimensions, operations, clocks and configured event bounds |
 | Physical reference | `entity_catalog.validate_catalog` | Version 2 metadata, measurements, reciprocal identities and possible interaction references; reject executable catalog content |
-| Representation profiles | `entities.validate_profiles` | Version 1 bindings against an explicit version 2 catalog; compile every present classical/quantum representation independently through existing owners |
+| Representation profiles | `entities.validate_profiles` | Version 1 bindings against an explicit version 2 catalog; compile every present classical profile independently through the existing owner |
 | Observer | `observer_configuration.ObserverDefinition.parse` | Position within the supplied world's shape and receipt capacity |
 | Entry points | CLI, UI, runner | Explicit file reading, transport limits, output/exit formatting and actual execution when requested |
 
@@ -98,11 +97,6 @@ A failure before kind detection retains
 `auto` or the requested kind.
 
 ## Guarantees and remaining runtime checks
-
-For native programs, initial event capacity must cover one causal source per
-distinct classical seed node plus one event per quantum register, including
-colocated registers. The native parser owns this deterministic check; it does not
-reserve capacity or replace the runtime ledger's future-event bound checks.
 
 Static validation checks schema structure, bounded declared inputs, references,
 supported compositions and determinable initial requirements. It does not prove

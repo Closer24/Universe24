@@ -13,7 +13,8 @@ research configuration (`model_id` `bell-chsh-ray-probe-v1-exploration`)
 built by `common.py` on the pattern of the [Bell probe](../../bell-chsh/README.md)
 with `capture = "bond"`, and every number is a read-only audit of the world's
 inventory and of the questions asked to the
-[bond registry](../../../docs/QUANTUM_CLASSICAL_COUPLING.md), logged through a
+bond registry (its coupling summary, `docs/QUANTUM_CLASSICAL_COUPLING.md`, was
+deleted on 2026-09-17), logged through a
 wrapper around one registry instance owned by one `Simulation` object.
 
 The question, in the words of

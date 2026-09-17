@@ -123,9 +123,9 @@ Sections 1–5 and 10–11 state shared locality, arithmetic and evidence princi
 Sections 6–9 document the source, self-force, momentum and turning requirements
 of the explicitly selected historical research models; they are not implicit
 laws of every configured disturbance. Sections 13 and 15 likewise belong to
-named historical candidates. Section 14 defines the optional quantum
-assumption of the current implementation; as a model law it lapsed with
-Highlights section 3.18, deleted on 2026-09-17 (section 23). Section 23 states the
+named historical candidates. Section 14 described the shared quantum query
+assumption; its implementation and the model law were deleted on 2026-09-17
+with Highlights section 3.18 (section 23). Section 23 states the
 ray-event model adopted as the target direction on 2026-09-17, with
 implementation pending. Section 16 explicitly
 selects its native local-cycle integration without changing unselected worlds.
@@ -166,8 +166,8 @@ if they arise from local events and laws, rather than being inserted under anoth
 
 A physical node does not store a picture of the entire universe. It stores a fixed
 amount of information and reads its own state and information already delivered
-by its six neighbors. Section 14
-explicitly adds an optional shared quantum query primitive, not a neighbor read.
+by its six neighbors. The shared quantum query primitive of section 14 was
+deleted on 2026-09-17; there is no read beyond the six neighbors.
 
 Local disturbance capacity is fixed in advance. A node has no list that grows with the
 number of sources in the universe and does not retain its entire history.
@@ -188,8 +188,8 @@ reached it. It need not know about a distant event before information arrives.
 There is no instantaneous update of the whole universe or central repair of all
 space. An event first changes its own location. Its influence travels from neighbor
 to neighbor, and each location updates upon receipt under the same local law.
-The optional oracle in section 14 is a host-computation exception, not permission
-to rewrite physical records or send instantaneous physical messages.
+There is no host-computation exception: the oracle of section 14 was deleted
+on 2026-09-17.
 
 Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
@@ -205,7 +205,7 @@ consistency, particularly quantum consistency and entanglement.
 
 Physical influence cannot skip nodes. It travels at most one neighboring node per
 elementary step. This is the role of c: the maximum propagation speed of causal
-influence in the simulator. Oracle evaluation is not physical propagation.
+influence in the simulator.
 
 Adopted direction (model owner, 2026-09-17): the bound has no exception. The
 joint outcome of a pair travels on the returning ray itself, one Link per
@@ -216,8 +216,10 @@ historical `bonded-ray-field-v1` profile; its measurements stand as evidence
 about that profile, not for the current model. Highlights section 3.18,
 which described the shared resource, was deleted on 2026-09-17.
 
-Historical (withdrawn 2026-09-17): the bound was split in two, as the
-experiments split it. Energy, momentum,
+Historical (withdrawn as a model law on 2026-09-17; the shared quantum resource
+of Highlights section 3.18 was deleted the same day, and the bond registry
+described here stays only as the historical `bonded-ray-field-v1` profile until
+its own deletion step): the bound was split in two, as the experiments split it. Energy, momentum,
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
@@ -403,12 +405,12 @@ takes time.
 ## 12. Quantum behavior and entanglement remain open
 
 The physical core describes discrete fields and particles. The selected quantum
-candidate is a deferred event network: a saved joint state plus local operations
-and immutable outcome records defines the wave without evaluating it every tick.
-An explicit query follows the required past dependencies and evaluates forward.
-This is a bounded finite-state model, not a derived electron/photon field law.
-The previous scalar-amplitude and terminal-trial interfaces remain available as
-separate, explicitly selected historical contracts.
+candidate was a deferred event network: a saved joint state plus local operations
+and immutable outcome records defined the wave without evaluating it every tick,
+and an explicit query followed the required past dependencies and evaluated
+forward. That bounded finite-state model, with the earlier scalar-amplitude and
+terminal-trial interfaces, was deleted on 2026-09-17 (section 23): the Detector
+of Highlights 3.19 and the returning ray of 3.20 replace it.
 
 A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
@@ -482,6 +484,10 @@ storage capacity. They do not establish gravity or geodesics.
 
 ## 14. Shared quantum query postulate — Q-ORACLE-1
 
+Deleted on 2026-09-17: the shared quantum resource and this assumption were
+removed with Highlights section 3.18 (issue #164, buckets B.1 and B.2); no
+owner answers at a distance. The text below is history and is not renumbered.
+
 The user explicitly authorized `deferred-unit-cost-oracle-v1`: one successful
 query to the shared quantum space counts as one elementary model operation and
 consumes zero world ticks. This is a model assumption, not an established physical
@@ -529,8 +535,8 @@ relativistic physics or energy conservation of the existing field law.
 
 ### Selected event-network method
 
-`deferred-event-network-v1` extends the existing quantum owner, not the ordinary
-physical nodes. Its detailed contract is [QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md).
+`deferred-event-network-v1` extended the existing quantum owner, not the ordinary
+physical nodes; it was deleted on 2026-09-17 with its contract document.
 Queries compute possibilities without choosing historical paths. Only an explicit
 instrument request can select a result; it retains the conditional joint state,
 including a no-event branch. No universal interaction-to-collapse trigger is claimed.
@@ -549,8 +555,9 @@ can select a configured mechanical continuation; it is not a free remote state
 read. Every executed physical path retains its local operation costs. A query
 is one additional model operation, with zero direct world ticks; total local
 cycle cost may still produce the ordinary computation delay. No cost is erased
-to manufacture the classical endpoint. See [the native contract](docs/NATIVE_QUANTUM_EVENTS.md).
-This extends section 14 only for the declared candidate, not all interactions.
+to manufacture the classical endpoint. The native contract and its
+implementation were deleted on 2026-09-17 with the integration layer.
+This extended section 14 only for the declared candidate, not all interactions.
 
 ## 17. Explicit finite-register and unobserved-channel extension
 
@@ -560,8 +567,8 @@ is not a classical record and is not sampled. Preserve its density sum and all
 remaining coherent information. Mixed checkpoints represent the complete live
 component. Local supports, integer bounds, classical cycle charges and zero
 direct oracle ticks remain unchanged. This is a representation/channel extension,
-not a new collapse law or a derived physical species Hamiltonian. See
-[QUANTUM_ENTITIES.md](docs/QUANTUM_ENTITIES.md).
+not a new collapse law or a derived physical species Hamiltonian. Its
+implementation and document were deleted on 2026-09-17.
 
 ## 18. Event-spacetime origin cells - Q-ORIGINS-3
 
@@ -591,13 +598,15 @@ and a coherent interaction need not sample at all.
 Resolution status is quantum-owner bookkeeping associated with the source event,
 not a mutation of its historical physical data or an ordinary remote field read.
 The finite candidate, initialization requirements, cost distinctions and open
-physical questions are defined in [WAVE_ORIGINS.md](docs/WAVE_ORIGINS.md).
+physical questions were defined in a document deleted on 2026-09-17 with the
+origin cells themselves.
 Bounded local lookup does not make total host evaluation or memory constant.
 
 ## 19. Localized quantum contact candidate
 
-The explicitly selected [localized contact hybrid](docs/LOCALIZED_QUANTUM_CONTACT.md)
-transfers one configured ordinary inventory into a finite coherent domain only
+The explicitly selected localized contact hybrid (its contract and
+implementation deleted on 2026-09-17)
+transferred one configured ordinary inventory into a finite coherent domain only
 when an actual local contact commits. Undefined momentum is explicit information
 state, not a zero vector or a derivation of propagation amplitudes. A complete
 local absorption instrument restores one localized record and leaves quantum
@@ -612,7 +621,8 @@ limits are explicit and do not silently extend the older native profiles.
 
 ## 20. Causal local quantum source candidate
 
-The explicit [causal source extension](docs/CAUSAL_QUANTUM_SOURCES.md) permits
+The explicit causal source extension (its contract and runtime deleted on
+2026-09-17; the envelope modules stay until issue #164 bucket B.3) permitted
 ordinary emission weighted by a bounded complex envelope retained at the same
 Node. Phase evolution uses frozen local and causally received neighbor inputs.
 Only an actual local contact can prepare or localize the configured inventory.
@@ -627,7 +637,7 @@ and charge inventory is counted separately from field-source weights. This
 extends section 19 only for `causal-contact-fields-v1`, preserving its older
 localized-only selection and making no new quantum-field or energy-closure claim.
 
-The optional [null notice extension](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
+The optional null notice extension (deleted on 2026-09-17 with the same runtime)
 lets a Node that records a null result send its own renormalization factor
 `1/(1-p)` through Links. Receiving Nodes multiply a local weight scale after
 their control delay and forward the notice. The factor is computed from local
@@ -637,7 +647,7 @@ remote weights remain stale. This is a candidate rule that closes a measured
 gap in the single-excitation sector; it is not a general Born-rule mechanism
 for entangled registers and it never reads the shared quantum state.
 
-The optional [field-dependent phase](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+The optional field-dependent phase (deleted on 2026-09-17 with the same runtime)
 lets a configured one-mode gate choose its exact integer phase from the Node's
 own classical field value at the schedule tick. The classical field then acts
 on the wave, locally and causally, as a phase only. Its `unit / vacuum` ratio
@@ -646,7 +656,7 @@ conservation follows from it. Negative field exponents invert that relative
 phase by conjugating both coefficients; a common phase on the coefficient pair
 does not change observable probabilities.
 
-The optional [funded envelope emission](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission)
+The optional funded envelope emission (deleted on 2026-09-17 with the same runtime)
 pays the wave's classical field from the wave's own conserved stock instead of
 an external source, so the field and the wave close together: totals stay
 constant, the localized winner inherits the unspent stock, and the only
@@ -656,8 +666,9 @@ it is not transported between modes, and the field still exerts no force on it.
 
 ## 21. Configured recurrent contact outcomes
 
-The explicit [recurrent contact candidate](docs/RECURRENT_QUANTUM_CONTACT.md),
-`recurrent-contact-fields-v1`, extends section 20 with complete configured local
+The explicit recurrent contact candidate (deleted on 2026-09-17 with its
+contract and runtime),
+`recurrent-contact-fields-v1`, extended section 20 with complete configured local
 outcome instruments. A source encounter can retain its localized record or
 transfer it into a vacuum domain. A capture can leave vacuum, localize the
 inventory, continue the conditional wave, or resolve its origin and begin a new

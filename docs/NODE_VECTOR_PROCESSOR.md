@@ -126,8 +126,8 @@ Its explicit scope excludes stock that has already left an open boundary. A
 `guarded` status identifies enforcement; it is not a statement of physical proof.
 
 This first opt-in profile accepts schema 1 closed local rules with zero spatial
-baselines. Native quantum programs, external emission/update sources and legacy
-unpriced coupling mechanisms require their existing profiles. Unsupported
+baselines. External emission/update sources and legacy unpriced coupling
+mechanisms require their existing profiles. Unsupported
 combinations are rejected during initialization rather than silently ignored.
 
 ## Claims and evidence

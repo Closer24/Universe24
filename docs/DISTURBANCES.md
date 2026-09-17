@@ -63,8 +63,7 @@ same pool. Every Node calculation receives only immutable local records and fiel
 state. The scheduler then validates and commits returned proposals in canonical
 address order before advancing the tick, so worker completion order cannot change
 state, events, costs or conservation accounting. Empty Nodes remain sparse and do
-not consume a worker. Native event programs currently require `N=1` because their
-resolver owns ordered oracle and ticket state. `run.json.execution` records the
+not consume a worker. `run.json.execution` records the
 backend, worker count and submitted task totals separately from modeled operation
 cost and local delay.
 
@@ -143,7 +142,6 @@ separate carriers and their different directions.
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
-| `event_program` | Optional bounded causal graph; `causal-events-v1` records carrier and spatial events without quantum rules; see [graph configuration](EVENT_GRAPH_CONFIGURATION.md) |
 
 The authoritative contract for local field selection, group semantics, rule
 expressions and joint transactions is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
@@ -570,9 +568,9 @@ the tested source identity belong in the current validation evidence, not in
 this contract. This framework does not establish gravity, wave behavior,
 relativity, energy conservation or all historical candidates' acceptance laws.
 
-## Optional event program
+## Event program, deleted on 2026-09-17
 
-The top-level `event_program` selects [native causal events and local instruments](NATIVE_QUANTUM_EVENTS.md).
-It leaves existing configurations unchanged. It can supply a locally recorded
-control code to an existing generic law; all resulting moves retain ordinary
-operation costs, frozen proposals, conservation checks and causal transit.
+The optional top-level `event_program` member, its native causal events and
+local instruments were deleted on 2026-09-17 with the shared quantum resource
+(Highlights section 3.18 deleted, 3.19, 3.20). A document that still carries
+the member is rejected as an unknown key.

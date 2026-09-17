@@ -49,111 +49,10 @@ def test_historical_research_resources_select_sampling_admission(path):
     assert "tests/test_research_sampling_admission.py" in selected
 
 
-@pytest.mark.parametrize("name", ["causal_charge.json", "repeated_contacts.json"])
-def test_contact_composition_resources_select_their_preflight_regressions(name):
-    selected, _ = CHECK.select(["examples/quantum/" + name], {})
-    assert "tests/test_contact_profile_composition.py" in selected
-
-
-@pytest.mark.parametrize(
-    "name",
-    [
-        "spatial_momentum.py",
-        "position_moment_response.py",
-        "run_position_moment_response.py",
-        "spatial_measurement_controls.py",
-        "localized_charge.json",
-    ],
-)
-def test_position_moment_resources_select_native_experiment(name):
-    selected, _ = CHECK.select(["examples/quantum/" + name], {})
-    assert "tests/test_position_moment_response.py" in selected
-
-
-@pytest.mark.parametrize(
-    "name",
-    [
-        "local_moment_exchange.py",
-        "run_local_moment_exchange.py",
-        "momentum_state_exchange.py",
-        "localized_charge.json",
-    ],
-)
-def test_local_moment_resources_select_their_experiment(name):
-    selected, _ = CHECK.select(["examples/quantum/" + name], {})
-    assert "tests/test_local_moment_exchange.py" in selected
-
-
 def test_local_field_example_selects_state_and_physical_contract_consumers():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_node_state_contract.py" in selected
     assert "tests/test_local_lorentz_field.py" in selected
-
-
-def test_spatial_graph_example_selects_its_causal_contract():
-    selected, _ = CHECK.select(["examples/spatial_causal_events.json"], {})
-    assert "tests/test_spatial_causal_events.py" in selected
-
-
-def test_many_contacts_selects_its_experiment_contract():
-    selected, _ = CHECK.select(["examples/quantum/many_contacts.json"], {})
-    assert "tests/test_many_contacts.py" in selected
-    assert "tests/test_spatial_engine.py" not in selected
-
-
-def test_repeated_contacts_selects_its_runtime_input_consumer():
-    selected, _ = CHECK.select(["examples/quantum/repeated_contacts.json"], {})
-    assert "tests/test_recurrent_quantum_contact.py" in selected
-    assert "tests/test_spatial_engine.py" not in selected
-
-
-@pytest.mark.parametrize(
-    "name",
-    [
-        "quantum_classical_check.py",
-        "environment_coherence_check.py",
-        "trajectory_support_check.py",
-        "run_physics_checks.py",
-        "interference.json",
-        "partial_dephasing.json",
-        "repeated_contacts.json",
-    ],
-)
-def test_quantum_classical_resources_select_the_bounded_experiment(name):
-    selected, _ = CHECK.select(["examples/quantum/" + name], {})
-    assert "tests/test_quantum_classical_experiment.py" in selected
-    assert "tests/test_spatial_engine.py" not in selected
-
-
-@pytest.mark.parametrize(
-    "path",
-    [
-        "examples/catalog-contact/experiment.json",
-        "examples/catalog-contact/prepare.py",
-        "examples/known-entities/catalog.json",
-        "examples/known-entities/physical-units.json",
-        "examples/quantum/causal_charge.json",
-    ],
-)
-def test_catalog_contact_dependencies_select_their_integration_contract(path):
-    selected, _ = CHECK.select([path], {})
-    assert "tests/test_catalog_contact.py" in selected
-
-
-def test_causal_interference_harness_selects_its_acceptance_contract():
-    for path in ("examples/quantum/causal_interference.py", "examples/quantum/causal_charge.json"):
-        selected, _ = CHECK.select([path], {})
-        assert "tests/test_causal_interference.py" in selected
-        assert "tests/test_spatial_engine.py" not in selected
-
-
-def test_causal_charge_example_selects_its_field_contract_without_unrelated_worlds():
-    selected, typed = CHECK.select(["examples/quantum/causal_charge.json"], {})
-    assert "tests/test_causal_contact_fields.py" in selected
-    assert "tests/test_configuration_validation.py" in selected
-    assert "tests/test_spatial_engine.py" not in selected
-    assert "tests/test_native_wave_origins.py" not in selected
-    assert not typed
 
 
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
@@ -394,23 +293,14 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     assert selected.exists()
 
 
-def test_quantum_profile_and_experiment_resources_select_consumers():
+def test_catalog_and_profile_resources_select_their_consumers():
     tests, _ = CHECK.select(["examples/known-entities/catalog.json"], {})
-    assert "tests/test_quantum_entities.py" in tests
-    assert "tests/test_native_quantum_channels.py" in tests
     assert "tests/test_small_space_experiments.py" in tests
     assert "tests/test_entity_catalog.py" in tests
     assert "tests/test_entity_compiler.py" in tests
     assert "tests/test_physical_entities.py" in tests
     tests, _ = CHECK.select(["examples/known-entities/representation-probes.json"], {})
-    assert {
-        "tests/test_entity_compiler.py",
-        "tests/test_quantum_entities.py",
-        "tests/test_native_quantum_channels.py",
-        "tests/test_small_space_experiments.py",
-    } <= set(tests)
-    tests, _ = CHECK.select(["examples/quantum/partial_dephasing.json"], {})
-    assert "tests/test_native_quantum_channels.py" in tests
+    assert {"tests/test_entity_compiler.py", "tests/test_small_space_experiments.py"} <= set(tests)
 
 
 @pytest.mark.parametrize(

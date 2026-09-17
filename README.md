@@ -1,8 +1,9 @@
 # Universe24 — a three-dimensional event simulator
 
 Universe24 implements **Reality Theory (Universe24)**: one discrete world of
-Nodes and Links, bounded integer arithmetic, local rules, and a finite quantum
-owner coupled to the classical lattice by local contacts. The name of the
+Nodes and Links, bounded integer arithmetic and local rules; the Detector is a
+marked Node and a pair's outcome travels on the returning ray
+([Highlights](docs/HIGHLIGHTS.md) sections 3.19 and 3.20). The name of the
 framework is Reality Theory; the simulator that realizes it is Universe24.
 
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
@@ -18,14 +19,9 @@ defines field names and values, disturbance types, local updates, couplings,
 transport, operation costs, normal cost and initial placements. The engine does
 not recognize mass, charge or velocity by name or supply a hidden physical model.
 Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
-Optional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated
-local quantum decisions to that same engine and charge the executed mechanical
-path. They currently cannot be combined with spatial fields.
-For what the quantum and classical parts do and do not establish together,
-read [the coupling summary](docs/QUANTUM_CLASSICAL_COUPLING.md) and its
-[two-arm interference experiment](examples/quantum/causal_interference.md) and
-its [two-wing Bell test](examples/quantum/bell_chsh.md). The
-[named-particle gallery](examples/gallery/README.md) renders recorded
+The shared quantum resource and its integration layer were deleted on
+2026-09-17 ([migration](docs/MIGRATION.md#shared-quantum-resource-and-integration-layer-deleted-on-2026-09-17)).
+The [named-particle gallery](examples/gallery/README.md) renders recorded
 electron and positron runs as three-dimensional animations.
 
 For a complete authoring walkthrough, use the
@@ -190,7 +186,7 @@ protected. Original initialization files and templates are preserved. See
 [output retention](docs/RETENTION.md) for ownership and interrupted runs.
 For CPU-parallel active-Node planning, pass `--node-workers N` with `N` from 2
 through 64. Each tick commits the isolated worker proposals in deterministic Node
-order. The default is one worker, and native event programs remain serial. The
+order. The default is one worker. The
 worker setting affects host execution only and is recorded in `run.json`.
 The reported `elapsed_seconds` includes world construction, simulation steps,
 per-tick accounting, event writing and the final snapshot. Input parsing and final

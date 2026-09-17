@@ -3,8 +3,8 @@
 [Local Focus](LOCAL_FOCUS.md) defaults on: certified empty carrier Nodes sleep,
 and equal complete local planning inputs reuse immutable pure transition results.
 Host transport indexes occupied output banks in their original creation order.
-Event resolvers and mutable bond planners bypass plan reuse; event resolvers and
-shared field clocks retain the ordinary carrier scheduler. Model operation costs,
+Mutable bond planners bypass plan reuse; shared field clocks retain the
+ordinary carrier scheduler. Model operation costs,
 local commit timing, events and physical owners are unchanged. Measured savings
 and the low-repetition case without a benefit are in [performance](PERFORMANCE.md).
 The integrated ray policies now validate retained rays and incoming claims,
@@ -15,72 +15,20 @@ registry is bounded and idempotent (at most 4096 open pairs, released at the
 second answer, one number per pair fixed by seed and birth code) and drives
 ordinary Simulation as the split of postulate 4 that the model owner withdrew
 as a model law on 2026-09-17, retained as the historical `bonded-ray-field-v1`
-profile; the explicit Q-ORACLE option remains separate and available as
-current code, not as a model law ([Highlights](HIGHLIGHTS.md) section 3.18,
-deleted).
+profile; the explicit Q-ORACLE option was deleted on 2026-09-17 with
+[Highlights](HIGHLIGHTS.md) section 3.18 (issue #164, buckets B.1 and B.2).
 See the exact submitted source and check results in the integration PR.
 
-The [position-output experiment](../examples/quantum/position_moment_response.md)
-derives localized mean/spread from a finite neighboring-mode operator and reads
-incident wave moments from actual density only as a diagnostic. Its ordinary
-output re-encodes a position state, distinct from post-absorption vacuum.
-Endpoint/middle variance is 1/2. Later local exchange works, but propagation
-changes the new kinetic readout; joint quantum/apparatus closure remains open.
-No global wave readout controls ordinary motion.
+The shared quantum resource and its integration layer, with the position-output
+and local moment-response experiments, the recurrent, causal-source and
+localized-contact profiles, the quantum origin cells and the native event
+programs, were deleted on 2026-09-17 under Highlights sections 3.18 (deleted),
+3.19, 3.20 and 5.4; see the
+[migration note](MIGRATION.md#shared-quantum-resource-and-integration-layer-deleted-on-2026-09-17).
+Their dated evidence stays in [validation](VALIDATION.md); the source-envelope
+modules, the causal event ledger, the bond registry and claim/gather stay until
+buckets B.3 to B.6 of issue #164.
 
-The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
-composes the existing held quantum capture with later generic local conversions.
-It transfers supplied mean momentum and variance to/from an arriving reservoir,
-records one-shot detector completion, and produces slow ordinary motion.
-This is an expectation-level candidate; spatial amplitudes do not derive the
-moments, and the uncertain reservoir does not spread. A separate exact quantum
-SWAP control verifies phase and branch balances. The associated receipt fix
-keeps empty pending-output slots reserved while accepting arrivals into unlocked
-spares. Exact source and completed checks are in [validation](VALIDATION.md).
-
-The explicit [recurrent contact profile](RECURRENT_QUANTUM_CONTACT.md) adds
-configured localized, continued-wave and new-wave outcomes to local encounters.
-Complete instruments determine probabilities; a new wave atomically receives a
-fresh event-space origin while retaining one inventory owner. Finite preallocated
-ordinary envelope generations keep cancellation causal and source allowances
-bounded. The [48-tick input](../examples/quantum/repeated_contacts.md) exercises
-three new-wave encounters, several continuations, final localization and field
-decay. Existing one-shot profiles remain supported. This is a finite configured
-candidate; source identity and completed checks are in [validation](VALIDATION.md).
-
-The opt-in [causal quantum source candidate](CAUSAL_QUANTUM_SOURCES.md) extends
-the contact path with bounded source envelopes attached to participating Nodes.
-Local squared weights scale finite ordinary emission; amplitude updates and
-termination traverse real Links and tariff-derived local delays. Capture creates
-one full-strength localized output, while previously emitted fields continue.
-After measurement the envelopes are a retarded, potentially unnormalized source
-approximation, separate from conserved carrier inventory and exact conditional
-quantum state. The existing localized-only profile remains available. Consult
-[validation evidence](VALIDATION.md) for the tested source and completed checks.
-
-The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) now connects
-actual committed ordinary contacts, deferred origin creation, coherent propagation
-and local capture through the primary runner. Classical fields are emitted only
-at localized sources and continue causally after conversion. Finite templates,
-number-preserving matrices and separate source accounting define this explicit
-hybrid; it is not full quantum electromagnetism. Its configuration, supported
-clocks and acceptance evidence are linked from the contract.
-
-The native [quantum origin cells](WAVE_ORIGINS.md) use the shared immutable event
-spacetime as their history. Each participating physical Node holds up to six
-origin IDs and checks their resolution on every native tick. A terminal configured
-outcome closes its selected origins atomically; other Nodes discard those IDs
-on their next tick, without an eager sweep at commit. Later gates requiring
-resolved origins may be suppressed only when a full-density check proves them
-inert; retired instruments additionally require a certain explicit null outcome.
-Unsafe cancellation fails. One origin can describe several disturbances, and
-continuing outcomes keep the conditional joint state. Separate linked histories
-have been removed.
-Current register heads and individual Link readiness still survive checkpoints.
-Reproduce coherent paths with `examples/quantum/event_paths.json`; native v3 adds
-explicit origin and interaction definitions. This remains the finite configured
-register candidate, with supplied propagation and instrument matrices. Exact
-source, passing checks and remaining blockers require current validation evidence.
 
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
 of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate
@@ -140,21 +88,9 @@ genericity skill and local retention setup.
 The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
 dated Highlights reconciliations, entity coverage and exact source contracts.
 
-The [quantum and classical coupling summary](QUANTUM_CLASSICAL_COUPLING.md)
-states the hybrid hypothesis, its measured evidence and its non-claims for an
-external reader, with related work. Its [two-arm interference experiment](../examples/quantum/causal_interference.md)
-records exact phase-dependent capture weights, classical emission carrying the
-interference term, which-path decoherence by a held arm detector, and the 9/25
-retarded-source departure after a null result. Its [two-wing Bell test](../examples/quantum/bell_chsh.md)
-records CHSH 14/5 from two lattice wings nine Links apart on the canonical
-runner, with no-signalling marginals and a dephased control at 6/5. No
-classical limit, field back-action or energy closure is established.
-
-The [finite quantum-register extension](QUANTUM_ENTITIES.md) adds unobserved
-channels, mixed conditional states, grouped outcomes, finite multilevel registers
-and quantum preparation profiles for the existing 46 catalog entries. Species
-dynamics, spatial-field clock composition and general classical emergence are
-not established. Reproduce with `examples/quantum/run_physics_checks.py`.
+The quantum and classical coupling summary, its two-arm interference and
+two-wing Bell experiments and the finite quantum-register extension were
+deleted on 2026-09-17 with the shared quantum resource.
 
 
 The [local Maxwell experiment](../examples/maxwell/README.md) selects a
@@ -192,11 +128,8 @@ quanta, funded emission with recoil and the `absorb` coupling move energy and
 momentum only between records and rays; signed quanta with a mass-proportional
 absorbed share give attraction that the pulled body pays for, and the
 radiation-pressure probe runs
-with that audit closed. The
-[quantum-to-classical probes](../examples/quantum-classical/README.md) measure
-where the finite quantum rules meet these classical ones: a dephased walk is the
-classical random walk exactly, single ray quanta click whole and average to the
-inverse square, and repeated capture attempts follow the geometric decay law.
+with that audit closed. The quantum-to-classical probes
+(`examples/quantum-classical`) were deleted on 2026-09-17.
 The [Kerengonen candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
 (`kerengonen-ray-field-v1`) gives rays a phase: rays that meet combine by phase,
 coherence gates absorption and sampling, and two sources in phase give a fringe
@@ -214,10 +147,10 @@ emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
 halves the fringe period each time the beam's momentum doubles in its measured
 range. The momentum-to-advance relation is supplied by configuration, not derived.
 The [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md)
-places the candidate: with the quantum owner's four CHSH settings it measures
-1.40 exactly, one half of the owner's 14/5 in every correlation, and the plain
-field 2, so the classical candidate stays inside the local bound that the
-finite quantum owner exceeds.
+places the candidate: with the four CHSH settings of the former quantum owner
+(deleted on 2026-09-17) it measures 1.40 exactly, one half of that owner's
+recorded 14/5 in every correlation, and the plain field 2, so the classical
+candidate stays inside the local bound.
 halves the fringe period each time the beam's momentum doubles, and the
 [matter-wave probe](../examples/matter-wave/README.md) stops a moving particle,
 pays its matter out as a wave train and lands it on the screen with the fringe
@@ -267,8 +200,8 @@ Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phas
 the supplied JSON couplings and declared transport/phase policies produce
 finite attraction, velocity-scaling, lensing-like and delay observations.
 These are configured candidates, not a derivation of Newtonian gravity or
-relativity. Forward replay matches the quantum example's exposed snapshots,
-and the equal-mass collision example returns positions and reversed momenta
+relativity. Forward replay matched the quantum example's exposed snapshots
+(that probe was deleted on 2026-09-17), and the equal-mass collision example returned positions and reversed momenta
 after restarting with negated momenta. Neither establishes reversal of arbitrary
 hidden state. The radius-independent loss observations remain inconclusive
 until the same-metric open-3D control is completed; they do not establish dark
@@ -316,9 +249,7 @@ records are temporary, while their recorded conclusions remain in the repository
 | Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |
 | Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
 | Entity reference and representation | [entity_catalog.py](../src/event_universe/entity_catalog.py), [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | Sourced properties and interactions are validated separately; 46 explicitly supplied experiment profiles compile without deriving laws from labels |
-| Quantum event backend | [event_network.py](../src/event_universe/quantum/event_network.py) | Deferred joint-state evaluation and explicit instruments under the quantum owner |
-| Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Bounded classical carrier/spatial graph; optional quantum triggers and charged paths; quantum programs still reject spatial fields |
-| Historical contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |
+| Causal event ledger | [event_space.py](../src/event_universe/core/event_space.py), [event_links.py](../src/event_universe/core/event_links.py) | Immutable event identities and fixed handles; no public assembly creates it since the `event_program` member was deleted on 2026-09-17; stays until issue #164 bucket B.4 |
 | Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
 | Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
 | Formula-free state diagnostic | [node_contract.py](../src/event_universe/diagnostics/node_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |
@@ -372,26 +303,13 @@ clock is unchanged and still shows the coarrival self push for value-driven exch
 A passing isolated-motion rejection test identifies invalid behavior; it does not
 repair the underlying candidate law.
 
-[Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
-method. Querying computes branch weights; an explicit instrument and ticket select
-a recorded outcome without advancing the physical clock. Host dependency evaluation
-is counted separately from Q-ORACLE-1. Required stored dependencies are collected
-and evaluated forward; neither physical time nor earlier outcomes are reversed.
-The [origin lookup clarification](QUANTUM_EVENTS.md#time-direction-and-origin-lookup)
-separates that evaluation from direct origin status access in unmerged PR #91.
-[Focus](QUANTUM_FOCUS.md) remains a separate
-opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
-now composes the optional quantum owner through the ordinary `Simulation` and
-runner, with shared causal identities, repeated local encounters and explicit
-computation charges. Configured deterministic endpoints reproduce an ordinary
-mechanical path when both costs fit the budget; resolver overhead is not hidden.
-The [classical causal graph](EVENT_GRAPH_CONFIGURATION.md) also records spatial
-transport, emission, frozen samples and joint reactions without changing their
-physics. Quantum programs still reject spatial fields. These finite controls
-do not derive universal scattering, an objective collapse criterion, a general
-classical limit or quantum-plus-matter energy conservation. The earlier
-[contact trial](QUANTUM_CONTACT_TRIAL.md) remains a historical eight-tick fixture,
-not the current scope of the native event-program interface.
+The quantum events, focus, native event programs, classical causal-graph
+configuration and contact trial were deleted on 2026-09-17 (issue #164,
+buckets B.1 and B.2) under Highlights 3.18 (deleted), 3.19, 3.20 and 5.4: no
+owner answers at a distance, the Detector is a marked Node and every
+alternative is an event on the board. The [ray-event model](RAY_EVENT_MODEL.md)
+section 6 lists the remaining migration steps.
+
 
 The [entity inventory](PHYSICAL_ENTITIES.md), [catalog](ENTITY_CATALOG.md) and
 [conversion interface](LOCAL_CONVERSIONS.md) separate representation from physical
@@ -438,7 +356,8 @@ not a competing current-status list.
 ## Repository naming and ownership audit
 
 The repository-wide naming/ownership audit is reconciled against main
-`8ceb1fd00e9f23020965d8c2873caf0eff384f92`. It preserves the integrated
-native quantum, quantum-entity and Maxwell research additions while keeping
+`8ceb1fd00e9f23020965d8c2873caf0eff384f92`. It preserved the integrated
+native quantum, quantum-entity and Maxwell research additions, of which the
+quantum ones were deleted on 2026-09-17, while keeping
 one active implementation owner per documented responsibility. Historical
 research APIs and standalone laboratories remain explicitly labeled.

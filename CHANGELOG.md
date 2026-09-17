@@ -52,7 +52,7 @@ gains two modes and the framework's claims are narrowed to what is measured.
   moves with Alice's setting for 0.72 of the hidden variables at
   `b'`); the quantum owner breaks outcome independence
   ([report](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks),
-  [coupling](docs/QUANTUM_CLASSICAL_COUPLING.md)).
+  coupling (`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17)).
 - The door of postulate 22 is measured half by half: `--source agreement`
   keeps the coin even and fixes the agreement half, giving S = 4 (the
   Popescu-Rohrlich box) with even marginals and no signal; no-signalling
@@ -94,10 +94,10 @@ below is recorded with its source fingerprint in [validation](docs/VALIDATION.md
 
 - Two-arm interference on the canonical runner: exact capture weights, a
   balanced Hadamard splitter, which-path decoherence, causal termination
-  ([report](examples/quantum/causal_interference.md)).
+  (report (`examples/quantum/causal_interference.md`, deleted on 2026-09-17)).
 - Opt-in null notices restore the exact conditional Born weights after Link
   transit; crossing nulls are corrected locally by the later Node
-  ([crossing nulls](examples/quantum/crossing_nulls.md)).
+  (crossing nulls (`examples/quantum/crossing_nulls.md`, deleted on 2026-09-17)).
 - Opt-in field-dependent phase: an external classical field on one arm shifts
   the fringe by an exact configured phase per field unit.
 - Opt-in funded emission: the wave pays for its own field from its conserved
@@ -106,7 +106,7 @@ below is recorded with its source fingerprint in [validation](docs/VALIDATION.md
 - Emission-scale sweep: the integer field follows `amount x |psi|^2` within one
   unit per tick at every scale.
 - Two-wing Bell CHSH on the finite quantum owner: 14/5 exact, no-signalling
-  marginals, dephased control 6/5 ([report](examples/quantum/bell_chsh.md)).
+  marginals, dephased control 6/5 (report (`examples/quantum/bell_chsh.md`, deleted on 2026-09-17)).
 
 ### Straight and phased rays (Kerengonen candidate)
 

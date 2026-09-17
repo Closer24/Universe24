@@ -1,9 +1,10 @@
 # Physical entities and discrete support
 
-The [quantum-mode definitions](QUANTUM_ENTITIES.md) give the original 46 entries
-finite quantum preparations in a separate experiment file. Missing physical dynamics remain
-missing: register dimensions and working quantum channels are not a Standard
-Model field theory or a derivation of particle properties.
+The quantum-mode definitions of the 46 entries (`docs/QUANTUM_ENTITIES.md` and
+the `quantum_profile` members of the representation probes) were deleted on
+2026-09-17 with the shared quantum resource. Missing physical dynamics remain
+missing: the classical probes are not a Standard Model field theory or a
+derivation of particle properties.
 
 
 The entity inventory is [catalog.json](../examples/known-entities/catalog.json).

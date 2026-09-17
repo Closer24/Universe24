@@ -90,7 +90,7 @@ in English under the repository language rule in AGENTS.md.
 
 The active generic schema supports its bounded scalar/vector fields and
 configured local rules; it does not allow unbounded state or arbitrary code.
-Before adding a new value kind, coupling primitive or quantum integration,
+Before adding a new value kind or coupling primitive,
 check the state and scheduling contract and its capacity/error behavior. Postulate and schema changes must be explicit,
 documented and tested within user authorization. Static checks enforce some
 boundaries; code review also checks hidden dependencies and external state that

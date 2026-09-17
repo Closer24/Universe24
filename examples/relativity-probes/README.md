@@ -35,7 +35,7 @@ no gravitational, relativistic or quantum-matter formula.
 python examples/relativity-probes/gravity_lensing.py 24000 80 300 1 default
 python examples/relativity-probes/gravity_lensing.py 24000 80 300 1 along 44
 python examples/relativity-probes/twins_dilation.py
-python examples/relativity-probes/quantum_gravity.py
+# quantum_gravity.py, quantum_from_the_side.py and time_symmetry.py were deleted on 2026-09-17
 ```
 
 ## 1. Deflection by a mass (`gravity_lensing.py`)
@@ -237,9 +237,12 @@ No kinematic time dilation emerges. Only a budget below the moving cycle's cost
 moves, not as √(1−v²). The engine clock is Galilean; velocity-dependent
 dilation is not implied by the fixed link time.
 
-## 3. Quantum transport under the field (`quantum_gravity.py`)
+## 3. Quantum transport under the field (`quantum_gravity.py`, deleted on 2026-09-17)
 
-`localized-contact-quantum-v1` converts a charge into a one-excitation domain at
+Recorded on 2026-09-14; the probe scripts `quantum_gravity.py` and
+`quantum_from_the_side.py` were deleted on 2026-09-17 with the shared quantum
+resource and its integration layer, so this section is history.
+`localized-contact-quantum-v1` converted a charge into a one-excitation domain at
 x = 1 and hops it by configured swap gates one Link per tick to a detector at
 x = 7. A mass beside the chain emits `computation`; `delay_direction: "along"`
 delays classical departures (the contact program rejects the shared clock). A
@@ -590,7 +593,10 @@ phase +11 mod 8 = 3 under C. Both keys are declared timing rules; the probe
 shows which one puts the computation clock and the wave in the same
 measurement.
 
-## 9. Forward replay and a collision restart (`time_symmetry.py`)
+## 9. Forward replay and a collision restart (`time_symmetry.py`, deleted on 2026-09-17)
+
+Recorded on 2026-09-14; the probe script and its seeded input were deleted on
+2026-09-17 with the shared quantum resource, so this section is history.
 
 **One number.** The seeded quantum world (`examples/quantum/native_quantum.json`,
 seed 17) drew one ticket, 16, in eight ticks. Logged aside and supplied back as
@@ -621,10 +627,10 @@ replay and this finite collision return are separate claims.
 
 ## 7. Focus and computing less
 
-The repository's [Focus](../../docs/QUANTUM_FOCUS.md) is an octree over
-regions used to narrow one ticket to one quantum event; it is
-probability-preserving by contract and never touches field transport, so it
-cannot by itself make the field cheaper or flatter. What already computes
+The repository's former quantum Focus (`quantum/focus.py`, deleted on
+2026-09-17) was an octree over regions used to narrow one ticket to one
+quantum event; it was probability-preserving by contract and never touched
+field transport, so it could not by itself make the field cheaper or flatter. What already computes
 less is the ray transport (only the Nodes a ray crosses are active: the ray
 lensing runs took minutes where the octant runs took most of an hour), and
 main's [isotropy probe](../isotropy-probe/README.md) shows why the octant

@@ -14,10 +14,20 @@ from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
 from .test_finite_spatial_engine import all_records, finite_document
-from .test_spatial_causal_events import single_packet, traced
 from .test_spatial_engine import ORIGIN as FIELD_ORIGIN
 from .test_spatial_engine import document
 from .test_spatial_interactions import ORIGIN, carrier, exchange
+
+
+def single_packet():
+    """One eight-quantum packet on a three-Node periodic line, fixed two-tick Links."""
+    raw = document(travel=2)
+    raw.update(shape=[3, 1, 1], boundary="periodic")
+    raw["spatial_fields"][0]["axis_weights"] = [1, 0, 0]
+    raw["spatial_seeds"] = [
+        {"position": [2, 0, 0], "field": "radiation", "populations": [8, 0, 0, 0, 0, 0, 0, 0]}
+    ]
+    return raw
 
 
 def delayed(raw):
@@ -59,7 +69,7 @@ def test_field_only_budget_boundaries_preserve_originals_until_commit(cost, comm
 
 
 def test_omitted_and_disabled_switch_have_identical_legacy_states_and_events():
-    raw = traced(single_packet())
+    raw = single_packet()
     plain_events, disabled_events = [], []
     plain = Simulation(parse_initial_state(raw), observer=plain_events.append)
     raw["spatial_computation_delay"] = False
@@ -77,7 +87,7 @@ def test_shared_budget_counts_field_and_carrier_work_once_and_defers_emission(mo
     raw = delayed(finite_document(source=True, moving=moving, travel=2))
     raw["normal_budget"] = 40
     raw["disturbance_types"][0]["defaults"]["strength"] = 2
-    world = Simulation(parse_initial_state(traced(raw)))
+    world = Simulation(parse_initial_state(raw))
     field_planner, carrier_planner = world._spatial.planner, world._planner
     world._spatial._services = replace(
         world._spatial._services, planner=lambda *args: replace(field_planner(*args), cost=20)
@@ -93,7 +103,6 @@ def test_shared_budget_counts_field_and_carrier_work_once_and_defers_emission(mo
     assert world.source_totals()["radiation"] == (0,)
     assert world.totals()["radiation"] == (0,)
     assert world.computation_report()["model_operations_cost"] == 72
-    assert world.computation_report()["event_ledger_cost"] == 72
     world.step()
     assert world.source_totals()["radiation"] == (2,)
     assert unpack(all_records(world)[0].emission_remaining[0]) == (3,)
@@ -107,7 +116,7 @@ def test_arrival_during_joint_wait_is_preserved_without_changing_the_frozen_samp
     raw = delayed(exchange(delayed=True, incoming=True))
     raw["normal_budget"] = 40
     raw["spatial_interactions"][0]["invariants"] = raw["spatial_interactions"][0]["invariants"][:1]
-    world = Simulation(parse_initial_state(traced(raw)))
+    world = Simulation(parse_initial_state(raw))
     field_planner = world._spatial.planner
     world._spatial._services = replace(
         world._spatial._services, planner=lambda *args: replace(field_planner(*args), cost=1)
@@ -119,17 +128,12 @@ def test_arrival_during_joint_wait_is_preserved_without_changing_the_frozen_samp
     assert carrier(world) == (5,)
     assert world.spatial_values(ORIGIN)["quantity"]["value"] == (2,)
     assert world.totals()["quantity"] == (8,)
-    events = world.event_space
-    arrival = next(e for e in events.events if e.kind == "spatial_received" and e.addresses == (ORIGIN,))
-    assert arrival.id not in events.ancestors(pending.cause_id)
     while world.tick < pending.ready_tick:
         world.step()
         assert world.totals()["quantity"] == (8,)
     assert carrier(world) == (2,)
     assert world.spatial_values(ORIGIN)["quantity"]["value"] == (6,)
     assert not world._spatial.nodes[ORIGIN].incoming
-    joint = next(e for e in events.events if e.kind == "spatial_coupled")
-    assert arrival.id in events.ancestors(joint.id)
 
 
 def test_late_merge_cannot_bypass_a_joint_nonlinear_guard():
@@ -155,41 +159,10 @@ def test_late_merge_cannot_bypass_a_joint_nonlinear_guard():
     assert world.totals()["quantity"] == (8,)
 
 
-@pytest.mark.parametrize("capacity", [4, 5])
-def test_ready_commit_reserves_all_events_before_mutating_field_stock(capacity):
-    raw = delayed(single_packet())
-    raw["normal_budget"] = 100
-    world = Simulation(parse_initial_state(traced(raw, capacity)))
-    planner = world._spatial.planner
-    world._spatial._services = replace(
-        world._spatial._services, planner=lambda *args: replace(planner(*args), cost=169)
-    )
-    world.step()
-    original = world._spatial.nodes[(2, 0, 0)].states
-    for _ in range(2):
-        world.step()
-    assert world.event_space.next_id == 2
-    if capacity == 4:
-        with pytest.raises(OverflowError, match="causal event capacity"):
-            world.step()
-        assert world.faulted and world.event_space.next_id == 2
-        assert world._spatial.nodes[(2, 0, 0)].states == original
-        assert world.nodes[(2, 0, 0)].pending is not None
-        assert not world.snapshot()["spatial_transfers"]
-    else:
-        world.step()
-        assert world.event_space.next_id == 5
-        assert world.nodes[(2, 0, 0)].pending is None
-        packet = next(p for p in world._spatial.links[(2, 0, 0)] if p)
-        assert packet.arrival_tick == 6
-        assert world.event_space.event(packet.cause_id).kind == "spatial_sent"
-    assert world.totals()["radiation"] == (8,)
-
-
 def test_invalid_joint_proposal_changes_neither_original_owner():
     raw = delayed(exchange())
     raw["spatial_interactions"][0]["assignments"][0]["expression"] = 99
-    world = Simulation(parse_initial_state(traced(raw)))
+    world = Simulation(parse_initial_state(raw))
     stock = world.totals()
     with pytest.raises(ValueError):
         world.step()
@@ -198,7 +171,6 @@ def test_invalid_joint_proposal_changes_neither_original_owner():
     assert carrier(world) == (5,)
     assert world.spatial_values(ORIGIN)["quantity"]["value"] == (2,)
     assert not world._spatial.nodes[ORIGIN].pending
-    assert world.event_space.next_id == 2
 
 
 @pytest.mark.parametrize("enabled", [False, True])
@@ -240,28 +212,6 @@ def test_real_field_cost_controls_arrival_for_scalar_and_vector_fields(component
     assert sent["tick"] == (cycles - 1) * travel
     assert received["tick"] == cycles * travel
     assert world.totals()["radiation"] == ((8,) if components == 1 else (8, -8, 16))
-
-
-def test_causal_graph_does_not_change_delayed_physics_or_work():
-    raw = delayed(single_packet())
-    raw["normal_budget"] = 40
-    plain = Simulation(parse_initial_state(raw))
-    recorded = Simulation(parse_initial_state(traced(raw)))
-    for _ in range(100):
-        plain.step()
-        recorded.step()
-        assert plain.snapshot() == recorded.snapshot()
-        assert plain.spatial_accounting() == recorded.spatial_accounting()
-        assert (
-            plain.computation_report()["model_operations_cost"]
-            == recorded.computation_report()["model_operations_cost"]
-        )
-        assert plain.totals()["radiation"] == (8,)
-    assert len(plain._spatial.nodes) <= 3
-    assert (
-        recorded.computation_report()["event_ledger_cost"]
-        == recorded.computation_report()["model_operations_cost"]
-    )
 
 
 def test_finite_decay_waits_for_arrival_and_source_allowance_stays_exhausted():

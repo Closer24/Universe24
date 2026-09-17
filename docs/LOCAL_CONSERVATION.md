@@ -40,7 +40,7 @@ measurement expressions; it neither constructs a world nor executes an update,
 and it contributes no model operation cost.
 
 This scope requires zero spatial baselines and rejects declared external sources,
-unfunded emissions, nonzero decay and native event programs. Open boundaries are supported as explicitly measured escape.
+unfunded emissions and nonzero decay. Open boundaries are supported as explicitly measured escape.
 
 Straight-ray fields are measured as quanta. A ray of amount `a` adds `a` to its
 field's value, so the declared spatial energy expression sees it, and carries

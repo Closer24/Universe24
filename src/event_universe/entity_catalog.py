@@ -66,7 +66,6 @@ EXECUTION_KEYS = {
     "hamiltonian",
     "rates",
     "executable_profile",
-    "quantum_profile",
     "disturbance_types",
     "spatial_fields",
     "spatial_interactions",

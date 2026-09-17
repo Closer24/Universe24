@@ -41,7 +41,7 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("fields.rays", "from ..core.state import Config as Settings"),
+        ("fields.rays", "from ..core.disturbance_engine import DisturbanceEngine as Settings"),
         ("fields.rays", "from ..core import disturbance_engine"),
         ("fields.disturbances", "from ..core.disturbance_engine import DisturbanceEngine"),
         ("fields.source_envelope", "from ..core.source_envelope_node import SourceEnvelopeNode"),
@@ -61,10 +61,10 @@ def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source)
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("core.topology", "from .state import Address"),
+        ("core.topology", "from .disturbance_state import Address3"),
         ("fields.disturbances", "from ..core.disturbance_state import DisturbanceRecord"),
         ("fields.disturbances", "from ..core.integer import checked_work"),
-        ("fields.source_envelope", "from ..core.state import bounded_gcd"),
+        ("fields.source_envelope", "from ..core.integer import bounded_gcd"),
         ("fields.source_envelope", "from ..core.source_envelope_state import EnvelopeAmplitude"),
         ("fields.source_emission", "from ..core.source_emission import SourceDeposit"),
         ("fields.disturbances", "from ..core.coupling_selectors import matches_pair"),

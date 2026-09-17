@@ -53,7 +53,7 @@ needed for these fixes.
 Base: `0299cb98bf07f00dc10bad858b674ded449be03e` (main after PR #108). Runtime
 source fingerprint of the executed harness:
 `f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`. The opt-in
-[funded envelope emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission)
+funded envelope emission (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17)
 lets `"source": false` pay the wave's classical field from its own conserved
 stock. Funded octant emission by ordinary records is now admitted under both
 schemas; the plan's conservation check counts it and books the transfer.
@@ -79,7 +79,7 @@ to it; this is emission-side closure, not a complete field-matter loop.
 Base: `53e44a5` (main after PR #101). Runtime source fingerprint of the
 executed harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
 No source module under `src/` changed; the addition is the
-[two-wing Bell test](../examples/quantum/bell_chsh.md) harness and template,
+two-wing Bell test (`examples/quantum/bell_chsh.md`, deleted on 2026-09-17) harness and template,
 its acceptance test, a check-scope entry and index updates.
 
 The harness ran sixteen exact and 400 seeded headless nine-tick worlds under
@@ -107,8 +107,8 @@ Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of
 the interference harness below. Runtime source fingerprint of the executed
 harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
 Two opt-in extensions of `causal-contact-fields-v1` were added, both inactive
-without their configuration keys: [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
-and the [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase).
+without their configuration keys: null notices (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17)
+and the field-dependent phase (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17).
 The envelope output bank grew from twelve to eighteen fixed slots; the
 NodeState contract fixture was widened accordingly and no other test changed.
 
@@ -141,7 +141,7 @@ source fingerprint of the executed harness:
 module under `src/` changed; the addition is an experiment harness, its
 acceptance test, a reader-facing coupling summary and index updates.
 
-The [interference harness](../examples/quantum/causal_interference.md) ran
+The interference harness (`examples/quantum/causal_interference.md`, deleted on 2026-09-17) ran
 thirteen headless 14-tick worlds on the unchanged `causal-contact-fields-v1`
 profile. Recorded output decision weights were `[337, 288]`, `[49, 576]` and
 `[337, 288]` for `phi = pi/2, pi, 3pi/2`, with no uncertain decision at
@@ -161,7 +161,7 @@ The affected gate passed: **101 passed, two visual-only skipped**, including
 repository navigation, language and hygiene checks. Ruff and formatting passed.
 Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
 candidate; it does not establish a classical limit, field back-action or
-energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
+energy closure, as stated in the coupling summary (`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17).
 
 ## Negative field phase with complex reference - 2026-09-14
 
@@ -228,7 +228,7 @@ The optional rendering tests were skipped deliberately, and no build ran.
 
 Continuation base: `86eeb9c5b1c0297067a0ce828ba2faa147c3c151` on draft PR #104,
 including open PR #100; fetched main was `d66b43eb193954a9a14a5a33deefd290d61ed547`.
-The [new candidate report](../examples/quantum/position_moment_response.md)
+The new candidate report (`examples/quantum/position_moment_response.md`, deleted on 2026-09-17)
 specifies the finite observable, local re-encoding and unclosed energy terms.
 There are no production changes relative to this base. Production fingerprint
 remains `1cf98faec97a7a58fd4ba1b7703d4521e6ea9f02646c6e3338d49753de42e419`.
@@ -263,7 +263,7 @@ versioned coverage map; it was not edited. No build or visualization ran.
 Task base: `3a2fdfdc796212961a2f305544f0d98998506864`; current main was
 `1c782390456ea9629eb0f73c030095574d80e454`. This work includes the still-open
 PR #100 dependency and the earlier bounded quantum-to-classical investigation.
-The [local response report](../examples/quantum/local_moment_exchange.md) defines
+The local response report (`examples/quantum/local_moment_exchange.md`, deleted on 2026-09-17) defines
 the supplied candidate, input authoring, exact outcomes and remaining limits.
 
 The complete headless experiment passed in **10.8934 seconds** on the final
@@ -304,7 +304,7 @@ law changed.
 
 ## Quantum-to-classical claim investigation - 2026-09-14
 
-The [reproducible investigation](../examples/quantum/quantum_classical_check.md)
+The reproducible investigation (`examples/quantum/quantum_classical_check.md`, deleted on 2026-09-17)
 ran on `be518fe1089457032b201324372201086e1edbcf` with experiment-only additions;
 production source was unchanged. Its source fingerprint, exact numerical
 results and limitations are recorded in that report. The aggregate completed
@@ -370,7 +370,7 @@ python -m event_universe --init examples/quantum/repeated_contacts.json --output
 The actual primary-runner example completed **48/48 ticks in 0.1671985 seconds**
 with `display=none`, eight random draws and reported model cost 7,632. Its input
 SHA-256 is `f73311793174e383d3dcd513e875d10fba40820cf2744706df79f15afa627c3e`.
-The [event sequence](../examples/quantum/repeated_contacts.md) has new-wave results
+The event sequence (`examples/quantum/repeated_contacts.md`, deleted on 2026-09-17) has new-wave results
 at ticks 3, 9 and 21, continuation at 6/12/15/18 and localization at 24. Charge -1
 and mass 1 retain one owner at every tick. Ordinary injection -36 and dissipation
 -36 leave zero final field stock, with every-tick accounting balanced. Saved
@@ -402,8 +402,8 @@ Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of
 the interference harness below. Runtime source fingerprint of the executed
 harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
 Two opt-in extensions of `causal-contact-fields-v1` were added, both inactive
-without their configuration keys: [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
-and the [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase).
+without their configuration keys: null notices (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17)
+and the field-dependent phase (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17).
 The envelope output bank grew from twelve to eighteen fixed slots; the
 NodeState contract fixture was widened accordingly and no other test changed.
 
@@ -436,7 +436,7 @@ source fingerprint of the executed harness:
 module under `src/` changed; the addition is an experiment harness, its
 acceptance test, a reader-facing coupling summary and index updates.
 
-The [interference harness](../examples/quantum/causal_interference.md) ran
+The interference harness (`examples/quantum/causal_interference.md`, deleted on 2026-09-17) ran
 thirteen headless 14-tick worlds on the unchanged `causal-contact-fields-v1`
 profile. Recorded output decision weights were `[337, 288]`, `[49, 576]` and
 `[337, 288]` for `phi = pi/2, pi, 3pi/2`, with no uncertain decision at
@@ -456,7 +456,7 @@ The affected gate passed: **101 passed, two visual-only skipped**, including
 repository navigation, language and hygiene checks. Ruff and formatting passed.
 Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
 candidate; it does not establish a classical limit, field back-action or
-energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
+energy closure, as stated in the coupling summary (`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17).
 
 ## Causal quantum source envelopes - 2026-09-13
 
@@ -519,7 +519,7 @@ The existing origin example completed **5/5 ticks in 0.0078832 seconds**, retain
 one random draw and model cost 17. All three actual runner outputs are headless,
 excluded from Git and enrolled in 24-hour retention.
 
-The [causal source contract](CAUSAL_QUANTUM_SOURCES.md), postulates, definitions,
+The causal source contract (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17), postulates, definitions,
 architecture, Highlights coverage, examples, test expectations and physics-review
 Skill are updated together. The example now has an explicit affected-test mapping.
 Existing Boss and test-runner instructions already cover the required coordination
@@ -582,7 +582,7 @@ same source, preserving one random draw and three oracle calls. Origin 3 resolve
 to record 13 at tick 2; origin 4 remains active. Both runs are headless and their
 generated outputs remain outside Git under the 24-hour retention policy.
 
-The [contact contract](LOCALIZED_QUANTUM_CONTACT.md), postulates, definitions,
+The contact contract (`docs/LOCALIZED_QUANTUM_CONTACT.md`, deleted on 2026-09-17), postulates, definitions,
 architecture, test expectations and Highlights coverage describe the same finite
 hybrid model. The physics-review Skill now requires commit-time ownership,
 complete alternative validation and explicit field-source accounting. Boss,
@@ -657,7 +657,7 @@ the continuing test variant explicitly uses a position instrument. This finite
 candidate does not derive a physical momentum observable, generic absorption
 exchange, a universal classical limit or unrestricted no-signalling.
 
-The [origin contract](WAVE_ORIGINS.md), postulates, definitions, Highlights coverage
+The origin contract (`docs/WAVE_ORIGINS.md`, deleted on 2026-09-17), postulates, definitions, Highlights coverage
 and physics-review Skill describe the same supported scope and rejection paths.
 Boss and test-runner instructions already cover bounded ownership and proportional
 verification. Generated outputs and validation logs remain outside source commits
@@ -2034,7 +2034,7 @@ carry no energy.
 
 Base: `3c52a08` on this branch, after merging main. Three host-side
 measurements on existing rules only, in
-[examples/quantum-classical](../examples/quantum-classical/README.md).
+examples/quantum-classical (`examples/quantum-classical/README.md`, deleted on 2026-09-17).
 
 | Check | Result |
 | --- | --- |

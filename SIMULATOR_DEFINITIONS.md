@@ -87,8 +87,8 @@ that captured it: a claim floods Node to Node at link speed, the train's rays
 turn homeward along its parent ports, and the capturing record takes them
 whole; the earlier of two claims wins where they meet. The historical global
 `bonded-ray-field-v1` reference supplies nonlocal outcomes and is rejected by
-ordinary initialization. Q-ORACLE-1 remains confined to its explicit quantum
-owner; this reference does not extend that exception to field capture.
+ordinary initialization. The shared quantum resource (Q-ORACLE-1) was deleted
+on 2026-09-17; this reference is not an exception to locality.
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio
@@ -330,9 +330,10 @@ oracles. Their values must not feed a production trajectory, force or field, and
 their success does not establish a compliant cure. Read-only diagnostics may
 scan the world and reject a run; they must never repair its physical state.
 
-Q-ORACLE-1 is the sole explicit model-computation exception and is confined to
-the opt-in quantum owner. It does not relax ordinary field, self-field, movement,
-force or geometry locality. The current bridge does not write physical state.
+There is no model-computation exception: the shared quantum resource
+(Q-ORACLE-1) was deleted on 2026-09-17 under Highlights section 3.18, and
+ordinary field, self-field, movement, force and geometry locality hold without
+exception.
 
 Review must identify each input's owner, causal delivery, fixed record count and
 maximum local loop bound. The architecture gate rejects known world/replay member
@@ -360,9 +361,13 @@ propagation, per-particle update order, matter-field exchange, offset-pair
 turning, contact response, recording invariance and component replacement
 through its API) were deleted with that candidate on 2026-09-17.
 
-## Opt-in quantum contracts — Q-ORACLE-1
+## Historical opt-in quantum contracts — Q-ORACLE-1 (deleted on 2026-09-17)
 
-The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
+The shared quantum resource, its terminal trial and its bridge were deleted on
+2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2). The
+contract below is history.
+
+The model assumption `deferred-unit-cost-oracle-v1` was defined in POSTULATES.md.
 A successful query returns fixed-size integer records with model_cost=1 and
 world_ticks=0, regardless of host evaluation work. It never calls Engine.step
 or writes physical state. Host counters and budgets remain distinct from cost.
@@ -395,7 +400,7 @@ tickets, rather than validating an RNG or general measurement statistics.
 Only the quantum owner's single terminal record stores the readout. No Engine-native
 physical event is added, no source or field is changed, and no post-detection
 excitation continues. No general entanglement, Bell, no-signalling, energy or
-momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contract.
+momentum claim follows. The trial contract document was deleted with it.
 
 ## Output and failures
 
@@ -670,10 +675,13 @@ response. Its exact inputs, results and limitations were recorded in a candidate
 deleted with it.
 
 
-## Selected quantum event network — Q-EVENTS-1
+## Historical quantum event network — Q-EVENTS-1 (deleted on 2026-09-17)
 
-The selected finite candidate is `deferred-event-network-v1`, specified in
-[QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md). A fresh `DeferredQuantum` owner binds
+The event network and its document were deleted on 2026-09-17 with the shared
+quantum resource (Highlights 3.18 deleted, 3.20: no register). The contract
+below is history.
+
+The selected finite candidate was `deferred-event-network-v1`. A fresh `DeferredQuantum` owner bound
 one `EventNetworkConfig` before creating legacy scalar nodes. The two state
 representations cannot be mixed in one owner. Existing terminal/Focus consumers
 retain their old API and behavior unless the new representation is selected.
@@ -728,9 +736,12 @@ same two local slots, with complete explicit payload assignments, exact declared
 balances, zero carried routing progress and the documented schema/ownership
 restrictions. Invalid proposals cannot install partial converted records.
 
-## Native causal event programs — NATIVE-EVENTS-1
+## Historical native causal event programs — NATIVE-EVENTS-1 (deleted on 2026-09-17)
 
-The optional [native program](docs/NATIVE_QUANTUM_EVENTS.md) binds the selected
+The `event_program` member, its parser and runtime and their document were
+deleted on 2026-09-17 with the integration layer. The contract below is history.
+
+The optional native program bound the selected
 Q-EVENTS-1 owner into the primary Simulation through a generic local protocol.
 Physical causes and computational dependencies retain distinct permissions in
 one bounded immutable identity store. Local nodes and packets keep fixed-size
@@ -741,10 +752,13 @@ waiting nor commit charges it again. Host work remains separate. Independent
 spatial-field composition is currently rejected for this candidate, not silently
 run without provenance. Existing configurations without event_program are unchanged.
 
-## Finite quantum registers and channels - Q-REGISTERS-2
+## Historical finite quantum registers and channels - Q-REGISTERS-2 (deleted on 2026-09-17)
 
-The explicit `local-quantum-events-v2` contract is defined in
-[QUANTUM_ENTITIES.md](docs/QUANTUM_ENTITIES.md). It permits dimensions two to four,
+The register extension, the quantum entity profiles and their document were
+deleted on 2026-09-17 with the shared quantum resource. The contract below is
+history.
+
+The explicit `local-quantum-events-v2` contract permitted dimensions two to four,
 colocated named degrees of freedom, unobserved complete channels and grouped
 observable outcomes under existing bounded arithmetic and local support rules.
 Only an observable result is sampled. Inaccessible alternatives are summed as
@@ -754,11 +768,13 @@ The entity compiler's explicit quantum selection adds no species-name dispatch.
 Independent spatial-field clocks and general field/particle dynamics remain
 outside this candidate. Legacy binary inputs retain their original behavior.
 
-## Localized contact quantum/classical transfer - Q-CONTACT-1
+## Historical localized contact quantum/classical transfer - Q-CONTACT-1 (deleted on 2026-09-17)
 
-`localized-contact-quantum-v1` composes the ordinary runner, fixed spatial clock
-and finite deferred quantum owner under the
-[localized contact contract](docs/LOCALIZED_QUANTUM_CONTACT.md). An actual local
+The contact program, its runtime and their document were deleted on 2026-09-17
+with the integration layer. The contract below is history.
+
+`localized-contact-quantum-v1` composed the ordinary runner, fixed spatial clock
+and finite deferred quantum owner under the localized contact contract. An actual local
 unknown-momentum contact creates its origin at commit; absorption returns one
 held localized record. Conserved template quantities have exactly one ordinary
 or coherent owner. Delayed alternatives preserve local field reactions and every
@@ -772,10 +788,13 @@ the passive classical-only conservation audit, automatic exterior quantum modes
 or reciprocal classical-field action on delocalized matter. Read-only playback
 separates possible origin support from particles, field inventory and probability.
 
-## Causal ordinary sources from quantum contacts - Q-CAUSAL-SOURCE-1
+## Historical causal ordinary sources from quantum contacts - Q-CAUSAL-SOURCE-1 (deleted on 2026-09-17)
 
-`causal-contact-fields-v1` selects the
-[causal source contract](docs/CAUSAL_QUANTUM_SOURCES.md), retaining Q-CONTACT-1's
+The causal contact runtime and its document were deleted on 2026-09-17 with
+the integration layer; the source-envelope modules stay until issue #164
+bucket B.3. The contract below is history.
+
+`causal-contact-fields-v1` selected the causal source contract, retaining Q-CONTACT-1's
 local preparation, absorption and single inventory ownership. Each participating
 Node additionally owns one bounded complex source envelope and finite emission
 allowances. Its source is full configured emission times local squared magnitude.
@@ -824,10 +843,13 @@ causal model, ownership of the field by the source and output types, and
 `modes x budget <= stock`. Funded octant emission by ordinary records is
 admitted under both schemas; funded ray emission keeps schema 1.
 
-## Recurrent contact outcomes - Q-RECURRENT-1
+## Historical recurrent contact outcomes - Q-RECURRENT-1 (deleted on 2026-09-17)
 
-The separate [recurrent contact profile](docs/RECURRENT_QUANTUM_CONTACT.md),
-`recurrent-contact-fields-v1`, composes Q-CONTACT-1 and Q-CAUSAL-SOURCE-1 with
+The recurrent contact runtime and its document were deleted on 2026-09-17 with
+the integration layer. The contract below is history.
+
+The separate recurrent contact profile,
+`recurrent-contact-fields-v1`, composed Q-CONTACT-1 and Q-CAUSAL-SOURCE-1 with
 configured outcome effects. Its source supports localized retention and new-wave
 transfer; its capture supports null, localization, continuation and a fresh local
 origin. Matrix support, completeness, full-domain vacuum and conserved output
@@ -839,10 +861,12 @@ finite allowances and locally applied nulls cannot use remote generation status
 to choose ordinary field values or clocks. See the linked contract for exact
 schema, cost, capacity and representation limits.
 
-## Quantum origin cells in event spacetime - Q-ORIGINS-3
+## Historical quantum origin cells in event spacetime - Q-ORIGINS-3 (deleted on 2026-09-17)
 
-The explicit native v3 candidate is specified in
-[WAVE_ORIGINS.md](docs/WAVE_ORIGINS.md). Every participating physical Node owns
+The origin cells and their document were deleted on 2026-09-17 with the shared
+quantum resource. The contract below is history.
+
+The explicit native v3 candidate gave every participating physical Node
 at most six integer origin references. Origins propagate only through configured
 local quantum operations, subject to native Link timing and capacity checks.
 The references describe possible causal support; exact amplitudes and correlations

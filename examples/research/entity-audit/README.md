@@ -14,7 +14,7 @@ what they report. Nothing was changed.
 | `dump_catalog.py` | tabulates every catalog record with status, value, uncertainty and sources (`results/catalog_dump.txt`) |
 | `cross_checks.py` | cross-file checks: channel balances, antiparticle reciprocity, mass consistency with `particle-contracts`, keV rounding, property coverage (`results/cross_checks.txt`) |
 | `run_headless.py` | runs `LABEL=init.json` pairs through `python -m event_universe` and tabulates `run.json` (`results/runs_summary.json`, trimmed of stdout tails and key lists) |
-| `inputs/*.json` | the ten hand-written probe initializations of the `rp-*` runs (all validate as initializations) |
+| `inputs/*.json` | the hand-written probe initializations of the `rp-*` runs (all validate as initializations); the three quantum probes `e-quantum`, `e-p-quantum` and `photon-quantum` and their rows in `results/runs_summary.json` were deleted on 2026-09-17 with the quantum layer, leaving seven |
 | `results/validate_*.json` | `python -m event_universe.configuration_validation --json` reports |
 | `results/pytest_entity_suites.txt` | the entity test suites: 287 passed |
 | `results/audit_particle_contracts_summary.json` | `tools/audit_particle_contracts.py --output` with the configuration copies removed; 24 result rows verbatim |
@@ -26,16 +26,17 @@ python examples/research/entity-audit/cross_checks.py --output artifacts/researc
 python -m event_universe.configuration_validation --json examples/known-entities/catalog.json
 python -m event_universe.configuration_validation --json --catalog examples/known-entities/catalog.json examples/known-entities/representation-probes.json
 python examples/research/entity-audit/run_headless.py --output artifacts/research/entity-audit \
-    discrete-pair=examples/known-entities/discrete-pair.json rp-e-quantum=examples/research/entity-audit/inputs/e-quantum.json
-python examples/catalog-contact/prepare.py --all --output artifacts/research/entity-audit/catalog-contact-all
+    discrete-pair=examples/known-entities/discrete-pair.json rp-e-positron=examples/research/entity-audit/inputs/e-positron.json
+# examples/catalog-contact/prepare.py --all was part of the recorded audit; it was deleted on 2026-09-17
 python tools/audit_particle_contracts.py --output artifacts/research/entity-audit/audit_particle_contracts.json
 ```
 
 The 56 recorded runs were: the 11 shipped initializations under
 `examples/known-entities`, `examples/particle-contracts` and
-`examples/quantum/causal_charge.json`; the catalog-contact demo and one
-bounded world per catalog particle from `prepare.py --all` (35 `cc-*` runs);
-and the ten `rp-*` probes in `inputs/`. Re-run at packaging: `dump_catalog.py`
+`examples/quantum/causal_charge.json` (deleted on 2026-09-17); the catalog-contact
+demo and one bounded world per catalog particle from `prepare.py --all`
+(35 `cc-*` runs, deleted on 2026-09-17); and the ten `rp-*` probes in `inputs/`,
+of which the three quantum probes were deleted on 2026-09-17. Re-run at packaging: `dump_catalog.py`
 and `cross_checks.py` (outputs byte-identical to the recorded ones) and
 `run_headless.py` on two inputs (completed, balanced).
 

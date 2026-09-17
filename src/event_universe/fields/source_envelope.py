@@ -14,14 +14,13 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work, signed_divrem
+from event_universe.core.integer import bounded_gcd, checked_work, signed_divrem
 from event_universe.core.source_envelope_state import (
     EnvelopeAmplitude,
     EnvelopeRemainder,
     EnvelopeScale,
     NullRecord,
 )
-from event_universe.core.state import bounded_gcd
 
 from .spatial import bounded_emission_amount
 

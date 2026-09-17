@@ -64,7 +64,7 @@ def inventories(snapshot):
 
 def test_shared_profiles_and_fresh_compiled_input_pass_their_real_preflight_owners():
     catalog, profiles = documents()
-    assert validate_profiles(catalog, profiles) == {"profiles": 3, "classical": 3, "quantum": 0}
+    assert validate_profiles(catalog, profiles) == {"profiles": 3, "classical": 3}
     report = validate_configuration(json.dumps(profiles), catalog_source=json.dumps(catalog))
     assert report.valid, report.to_dict()
     raw = compiled()
@@ -149,14 +149,12 @@ def test_labels_cannot_change_property_response_and_compilation_does_not_alias_p
         "assumptions",
         "seeds",
         "field_conflict",
-        "quantum",
         "empty",
     ],
 )
 def test_shared_context_rejects_incomplete_or_ambiguous_authoring(change):
     catalog, profiles = documents()
     shared = profiles["shared_classical"]
-    representation = "classical"
     if change == "missing":
         del shared["conservation"]
     elif change == "unknown":
@@ -172,15 +170,13 @@ def test_shared_context_rejects_incomplete_or_ambiguous_authoring(change):
     elif change == "field_conflict":
         shared["fields"][0]["name"] = "energy"
         shared["fields"][0]["signed"] = True
-    elif change == "quantum":
-        representation = "quantum"
     else:
         profiles["profiles"] = []
         with pytest.raises(ValueError, match="at least one classical profile"):
             validate_profiles(catalog, profiles)
         return
     with pytest.raises(ValueError):
-        compile_entities(catalog, ENTITIES, profiles=profiles, representation=representation)
+        compile_entities(catalog, ENTITIES, profiles=profiles)
 
 
 @pytest.mark.parametrize("target", ["energy", "momentum"])

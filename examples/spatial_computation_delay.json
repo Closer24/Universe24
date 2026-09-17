@@ -154,9 +154,5 @@
       ]
     }
   ],
-  "event_program": {
-    "model": "causal-events-v1",
-    "capacity": 128
-  },
   "spatial_computation_delay": true
 }
