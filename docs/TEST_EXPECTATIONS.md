@@ -40,7 +40,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
 | `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
 | `test_field_spreading.py` | 10 | 0.90 | Issue #169 feature 12: every Node that field content reaches releases it again by the family's split table, amounts adding per heading, the phase of the coherent sum, whole quanta leaving and the shares below one quantum owned by the Node's remainder registers until they reach one (`field-spreading-v1`, `field-remainder-v1`); the source sign on the field ray; a returned field quantum walking back until something takes it |
-| `test_helium_orbit.py` | 1 | 7.6 | The helium orbit of E8 in isolation on a 7^3 board: a proton-family body releasing its spreading light (`field-spreading-v1`, `field-remainder-v1`), an electron held at a launcher body by an output delay and released into that field, pushed at every Node by the momentum-table coupling (`ray-momentum-turn-v1`), the recoils, the transparent nucleus and its sink, the world ledger exact |
+| `test_helium_orbit.py` | 1 | 7.6 | The helium orbit of E8 in isolation on a 7^3 board: a proton-family body releasing its spreading light (`field-spreading-v1`, `field-remainder-v1`), an electron held at a launcher body by an output delay and released into that field, pushed at every Node by the momentum-table coupling (`ray-momentum-turn-v2`), the recoils, the transparent nucleus and its sink, the world ledger exact |
 | `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
 | `test_integer_arithmetic.py` | 75 | 0.00 | Bounded integer arithmetic: signed and ceiling division, remainders, component operations, overflow before cancellation |
 | `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
@@ -51,6 +51,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
 | `test_loop_binding.py` | 7 | 0.70 | Issue #169 feature 14: a bound group is a periodic orbit of the ordinary meeting rule on a ring of Nodes, nothing at a Node names it, the record reads it, and the held form's keys are rejected (`loop-binding-v1`) |
+| `test_momentum_turn_walk.py` | 4 | 7.8 | The fix of `ray-momentum-turn-v2`: a push keeps the DDA's accumulators, so a ray pushed at every interval walks the DDA line of its running register; the staircases of a push of 1 and of 8 per interval on a ray of 64, the flip, the cancel, the shrink and the lift by hand, and two boards where a field ray meets the ray at every Node |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_nature_catalog.py` | 4 | 0.12 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
@@ -69,7 +70,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
-| `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`) |
+| `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`; the walk kept through a push since `ray-momentum-turn-v2`, [the walk kept through a push](#the-walk-kept-through-a-push)) |
 | `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the compressed inline page, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
@@ -2095,7 +2096,7 @@ run:
 `test_ray_momentum_turn.py` builds its boards inline under the shared
 Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
 no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
-([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)).
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)).
 The family `m` has rest rate 1 on a 3-bit phase (8 steps); `f` is a plain
 family of rate 0, the field ray, with no release around it; both have 8 ray
 slots. A vector field `momentum` (three signed components) is bound to both
@@ -2118,7 +2119,8 @@ Pinned before the first run:
   shares (0, 0, 2, 0, 0, 0); both are resident at the center (10,10,10)
   after tick 6. In the cycle of tick 6 the coupling fires: the push is -1 x
   2 x (0, 1, 0) = (0, -2, 0), toward the source, and the register becomes
-  (8, 0, 0) + (0, -2, 0) = (8, -2, 0), the accumulators (0, 0, 0); the
+  (8, 0, 0) + (0, -2, 0) = (8, -2, 0), the accumulators (0, 0, 0), kept
+  from the walk on the line (zero on a unit-axial heading; `ray-momentum-turn-v2`); the
   amount, phase, steps, heading index 0, mask and shares are untouched, and
   no event is stamped; `ray_push` at tick 6 at the center: family `m`,
   amount 8, before (8, 0, 0), after (8, -2, 0), field `f`, field amount 2,
@@ -2142,7 +2144,7 @@ Pinned before the first run:
   and (0, -2, 0), the m ray's register, the f ray's -2 while on the board);
   every ledger balanced, `m` 8 and `f` 2 throughout (`f` 0 and escaped 2
   from tick 17), the runner's `conserved_at_every_completed_tick` true with
-  `ray_momentum_turn: "ray-momentum-turn-v1"` and no `bound_group_motion`
+  `ray_momentum_turn: "ray-momentum-turn-v2"` and no `bound_group_motion`
   key; final totals `m` 8, `f` 0, momentum (0, -4, 0);
 - (b) `cancel`: the lamps of (a) and a third lamp at (12,18,10) emitting `f`
   2 along -Y, the field ray from the +Y side, `{"f": -1}`, 14 ticks. The
@@ -2206,6 +2208,157 @@ Pinned before the first run:
   along -X from (16,10,10) at the center after tick 6 under `{"f": 1}`,
   the push 1 x 2 x (-1, 0, 0) = (-2, 0, 0) would make the register
   (0, 0, 0), and the seventh `step()` raises ("cannot stop a ray").
+
+## The walk kept through a push
+
+`test_momentum_turn_walk.py` is the test of `ray-momentum-turn-v2`
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2),
+"a push keeps the walk"), the fix the helium-orbit run
+([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn))
+asked for: a push moves the register and keeps the DDA's three
+accumulators, the momentum-intervals each axis has banked toward its next
+Link, so that under a push at every interval the ray walks the DDA line of
+its running register. The DDA per interval: every axis adds the register's
+component (its absolute value), the axis furthest ahead steps and loses the
+register's Manhattan length, ties to the lowest axis; a push before the
+departure moves the register and leaves the accumulators as they are. Two
+cases walk the engine's own functions (`pushed_ray`, then `advance_ray` on
+`ray_vector`, the order of the Node cycle) from (0, 0, 0); two build a
+board. Every integer below is computed by hand from the rule and pinned
+before the first run. The test is parametrized over `running`, `kept`,
+`board` and `board_8`.
+
+- (a) `running`: a ray of amount 64 heading +X, the default register
+  (64, 0, 0), pushed by (0, 1, 0) before every departure has the register
+  (64, t, 0) at its t-th Link, of Manhattan length 64 + t. From (0, 0, 0)
+  the accumulators after Links 1 to 8 are (-1, 1, 0), (-3, 3, 0),
+  (-6, 6, 0), (-10, 10, 0), (-15, 15, 0), (-21, 21, 0), (-28, 28, 0),
+  (-36, 36, 0), the x axis ahead each time (the tie at Link 8, 36 against
+  36, to x); at Link 9 the y axis is ahead, 45 against 28, the Link is +Y
+  and the accumulators (28, -28, 0); then +X five times ((18, -18, 0),
+  (7, -7, 0), (-5, 5, 0), (-18, 18, 0), (-32, 32, 0)), +Y at Link 15
+  ((32, -32, 0)), +X four times ((16, -16, 0), (-1, 1, 0), (-19, 19, 0),
+  (-38, 38, 0)), +Y at Link 20 ((26, -26, 0)), +X three times ((5, -5, 0),
+  (-17, 17, 0), (-40, 40, 0)) and +Y at Link 24 ((24, -24, 0)): the Ports
+  x x x x x x x x y x x x x x y x x x x y x x x y, the +Y Links at 9, 15,
+  20 and 24, closer as the register turns (the parabola of a constant
+  push), and the positions from (0, 0, 0): (1,0,0), (2,0,0), (3,0,0),
+  (4,0,0), (5,0,0), (6,0,0), (7,0,0), (8,0,0), (8,1,0), (9,1,0), (10,1,0),
+  (11,1,0), (12,1,0), (13,1,0), (13,2,0), (14,2,0), (15,2,0), (16,2,0),
+  (17,2,0), (17,3,0), (18,3,0), (19,3,0), (20,3,0), (20,4,0). Under v1,
+  the accumulators reset at every push, the same 24 Links were all +X.
+  Pushed by (0, 8, 0) before every departure, the register (64, 8t, 0) of
+  length 64 + 8t: the accumulators after each Link (-8, 8, 0),
+  (-24, 24, 0), (40, -40, 0), (8, -8, 0), (-32, 32, 0), (32, -32, 0),
+  (-24, 24, 0), (40, -40, 0), (-32, 32, 0), (32, -32, 0), (-56, 56, 0),
+  (8, -8, 0), (72, -72, 0), (-40, 40, 0), (24, -24, 0), (88, -88, 0),
+  (-48, 48, 0), (16, -16, 0), (80, -80, 0), (-80, 80, 0), (-16, 16, 0),
+  (48, -48, 0), (112, -112, 0), (-80, 80, 0); the Ports
+  x x y x x y x y x y x y y x y y x y y x y y y x; the positions (1,0,0),
+  (2,0,0), (2,1,0), (3,1,0), (4,1,0), (4,2,0), (5,2,0), (5,3,0), (6,3,0),
+  (6,4,0), (7,4,0), (7,5,0), (7,6,0), (8,6,0), (8,7,0), (8,8,0), (9,8,0),
+  (9,9,0), (9,10,0), (10,10,0), (10,11,0), (10,12,0), (10,13,0), (11,13,0):
+  eleven +X and thirteen +Y Links, the staircase of the running register
+  from along x to past 45 degrees (the register (64, 64, 0) at Link 8 and
+  (64, 192, 0) at Link 24). One push (0, 1, 0) before the first Link and
+  none after is the static register (64, 1, 0) from (0, 0, 0), length 65:
+  +Y at Links 33, 98 and 163 of 200 (the y accumulator 33 against x's 32
+  at Link 33, then one +Y Link per 65), the DDA of the static register
+  exactly, as under v1;
+- (b) `kept`: the register (64, 1, 0) walked 20 Links from (0, 0, 0),
+  accumulators (-20, 20, 0), pushed by (0, 1, 0) is (64, 2, 0) with the
+  accumulators kept, (-20, 20, 0) (under v1 (0, 0, 0)), and its next Link
+  is +X with (-22, 22, 0) (44 against 22, length 66). The flip: the
+  register (64, 10, 0) with accumulators (-20, 20, 0) pushed by (0, 90, 0)
+  is (64, 100, 0), length 164, the accumulators kept; its next five Links
+  are +Y, +X, +Y, +Y, +X (Ports 2, 0, 2, 2, 0) with the accumulators
+  (44, -44, 0), (-56, 56, 0), (8, -8, 0), (72, -72, 0), (-28, 28, 0): the
+  whole Port turns at once when the dominant axis flips, then the
+  staircase of the new register; pushed by (-128, 0, 0) instead it is
+  (-64, 10, 0), length 74, the accumulators kept, and the next Link is -X
+  (Port 1) with (-30, 30, 0). The cancel: the default ray of amount 64
+  heading +X pushed by (0, 1, 0) and then by (0, -1, 0) is the ray it was,
+  equal field by field (no register, accumulators (0, 0, 0)); the register
+  (64, 1, 0) with accumulators (-20, 20, 0) pushed by (0, -1, 0) is the
+  default with (0, 0, 0), the walk starting over when the register returns
+  to the default. The shrink: the register (64, 30, 0) with accumulators
+  (-30, 30, 0) pushed by (-30, 0, 0) is (34, 30, 0), length 64, the
+  accumulators kept (they lie within (-64, 64]); pushed by (-62, -28, 0)
+  it is (2, 2, 0), length 4, which cannot hold them, and the accumulators
+  are (0, 0, 0). The lift: a ray of amount 5 on the table heading
+  (7, -1, 0) walked three Links from (0, 0, 0) has the accumulators
+  (-3, 3, 0) at the table's scale (length 8); pushed by (0, 0, 1) its
+  register is (35, -5, 1), length 41, and the accumulators are lifted by
+  the amount to (-15, 15, 0), the same fraction of a Link against the
+  default register's length 40; its next Link is +X (the tie of 20 against
+  20 to x) with (-21, 20, 1), as the unpushed walk's next Link is +X (4
+  against 4);
+- (c) `board`: an open 28 x 56 x 5 lattice under the shared Detector
+  admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no
+  decay, the six unit-axial headings in Port order), the families `m`
+  (rest rate 1, 3-bit phase), `f` and `g` (rate 0, the field rays), 8 ray
+  slots each, a vector field `momentum` bound through `recoil_field` on
+  every emission; every lamp holds its amount and emits it once, funded, at
+  phase 0 in the cycle of tick 0. Two couplings without outputs: `above`
+  over `[m, f]` with `{"f": -1}` and `below` over `[m, g]` with
+  `{"g": 1}`, so an `f` ray coming down (-Y) and a `g` ray coming up (+Y)
+  each push the m ray by (0, 1, 0) and return reversed. A lamp at
+  (2, 26, 2) emits `m` 64 along +X; after tick t the m ray is at P(t) =
+  (3, 26, 2) plus the position after t - 1 Links of (a) (P(1) = (3, 26, 2),
+  P(9) = (11, 26, 2), P(10) = (11, 27, 2), P(16) = (16, 28, 2), P(21) =
+  (20, 29, 2), P(25) = (23, 30, 2)). A lamp of `f` 1 along -Y stands at
+  P(t) + (0, t, 0) for every t from 1 to 24 whose Link is +X, and a lamp of
+  `g` 1 along +Y at P(t) - (0, t, 0) for t = 9, 15, 20 and 24, the +Y
+  Links (a delivery from below for the tick after a +Y Link would reach the
+  ray's Node a tick early, two pushes in one cycle, and a delivery from
+  above at a +Y Link would send its recoil along with the ray): the f lamps
+  at (3,27,2), (4,28,2), (5,29,2), (6,30,2), (7,31,2), (8,32,2), (9,33,2),
+  (10,34,2), (11,37,2), (12,38,2), (13,39,2), (14,40,2), (15,41,2),
+  (16,44,2), (17,45,2), (18,46,2), (19,47,2), (20,50,2), (21,51,2),
+  (22,52,2) and the g lamps at (11,17,2), (16,12,2), (20,8,2), (23,5,2).
+  So exactly one field ray is resident with the m ray at every tick from 1
+  to 24, none after, and no recoil (walking +Y from an f push, -Y from a g
+  push) meets the ray again; 27 ticks. In the cycle of tick t (1 to 24) the
+  push is (0, 1, 0), `ray_push` at P(t): family `m`, amount 64, before
+  (64, t - 1, 0), after (64, t, 0), field `f` with heading (0, -1, 0), or
+  `g` with (0, 1, 0) at 9, 15, 20 and 24, field amount 1; the departure of
+  that cycle is Link t of (a). After tick t from 2 to 25 the m ray is at
+  P(t) with register (64, t - 1, 0), the accumulators after Link t - 1 of
+  (a), phase t mod 8, steps t, heading index 0, mask 1, shares
+  (64, 0, 0, 0, 0, 0); after tick 1 it has no register and accumulators
+  (0, 0, 0). Without a push the walk continues on the static (64, 24, 0),
+  length 88: after tick 26 the ray is at (24, 30, 2) with (0, 0, 0) (88
+  against 0), after tick 27 at (25, 30, 2) with (-24, 24, 0). The momentum
+  line: sourced = current = (0, 3a - b, 0) after every tick, a the f pushes
+  of the cycles before it (each the push +1 and the reversal +2; the push
+  of the cycle of tick u is booked with the delivery of tick u + 1) and b
+  the g pushes (+1 and -2), nothing escaped through tick 27 (the first recoil reaches a face at
+  tick 31); every ledger balanced; `m` 64, `f` 20 and `g` 4 throughout;
+  the runner records `ray_momentum_turn: "ray-momentum-turn-v2"`,
+  `conserved_at_every_completed_tick` true;
+- (d) `board_8`: the board of (c) on an open 16 x 32 x 5 lattice, the lamp
+  at (2, 14, 2) emitting `m` 64 along +X, the field lamps of amount 8, so
+  every push is (0, 8, 0): after tick t the m ray is at P(t) = (3, 14, 2)
+  plus the position after t - 1 Links of the (0, 8, 0) walk of (a), the f
+  lamps (along -Y) at P(t) + (0, t, 0) for t = 1, 2, 4, 5, 7, 9 and 11, the
+  +X Links, ((3,15,2), (4,16,2), (5,19,2), (6,20,2), (7,23,2), (8,26,2),
+  (9,29,2)) and the g lamps (along +Y) at P(t) - (0, t, 0) for t = 3, 6,
+  8, 10 and 12, the +Y Links ((5,11,2), (7,9,2), (8,8,2), (9,7,2),
+  (10,6,2)); 17 ticks. Links 13 and 12 are both +Y, and Link 13 can be
+  served from neither side, so the pushes stop after tick 12 and the walk
+  goes on with the static register (64, 96, 0), length 160: positions
+  after ticks 1 to 17: (3,14,2), (4,14,2), (5,14,2), (5,15,2), (6,15,2),
+  (7,15,2), (7,16,2), (8,16,2), (8,17,2), (9,17,2), (9,18,2), (10,18,2),
+  (10,19,2), (10,20,2), (11,20,2), (11,21,2), (12,21,2); the register
+  (64, 8(t - 1), 0) after tick t from 2 to 13 and (64, 96, 0) after, the
+  accumulators after tick t from 2 to 13 those after Link t - 1 of the
+  (0, 8, 0) walk, then (72, -72, 0), (-24, 24, 0), (40, -40, 0),
+  (-56, 56, 0) after ticks 14 to 17 (+Y, +X, +Y, +X: 72 against 88, 136
+  against 24, 40 against 120, 104 against 56). `ray_push` at tick t (1 to
+  12) at P(t): before (64, 8(t - 1), 0), after (64, 8t, 0), field amount
+  8. The momentum line: sourced = current = (0, 24a - 8b, 0), nothing
+  escaped through tick 17 (the first recoil reaches a face at tick 18);
+  every ledger balanced; `m` 64, `f` 56, `g` 40 throughout.
 
 ## Loop binding
 
@@ -2572,7 +2725,15 @@ is true.
 
 Read from the record of the first run of this board (2026-09-17) and pinned
 then, as the run's integers rather than computed by hand (the field's integer
-state at tick 6 is the sum of many spreads): the pushes of tick 6 at (5, 3, 3),
+state at tick 6 is the sum of many spreads); re-read under
+`ray-momentum-turn-v2` on 2026-09-17 ([the walk kept through a
+push](#the-walk-kept-through-a-push)) and unchanged, since the kept walk
+takes the same Links here: the electron arrives at (5, 3, 3) with its
+accumulators at zero and leaves -X (743 against 277 on the register
+(-743, 277, 0)) with (-277, 277, 0), which every register of the pushes of
+tick 7 holds and against which (4, 3, 3) is left -X again (1080 against 557
+on (-1357, 280, 0), length 1637), and the cage's pushes start from the fresh
+output of `phase_plate`: the pushes of tick 6 at (5, 3, 3),
 (before, after, field amount, field heading): ((0, 256, 0), (-785, 256, 0),
 785, +X), ((-785, 256, 0), (-743, 256, 0), 42, -X), ((-743, 256, 0), (-743,
 277, 0), 21, -Y), ((-743, 277, 0), (-743, 277, -22), 22, +Z), ((-743, 277,

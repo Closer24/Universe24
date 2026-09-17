@@ -237,7 +237,7 @@ a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1); the register of
 `bound-group-motion-v1` went with the held form). Since `ray-momentum-turn-v1`
 (2026-09-17) both audits read a free ray by its momentum register where a
 push set one ([a free ray turns by
-momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)):
+momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)):
 amount x heading until a push, the register after, negated on a return as
 the heading is; the push and the recoil's reversal are the meeting's
 momentum change in the world ledger, booked as its source, and the local

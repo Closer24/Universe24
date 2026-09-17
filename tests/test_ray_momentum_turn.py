@@ -1,4 +1,4 @@
-"""A free ray turns by momentum (ray-momentum-turn-v1, Highlights 3.5, 3.14, 3.16
+"""A free ray turns by momentum (ray-momentum-turn-v2, Highlights 3.5, 3.14, 3.16
 and 3.28): a ray's direction is its momentum register, three integers, by default
 amount x heading, which the DDA walks at every departure, one Link per interval;
 a coupling of free rays whose `momentum_table` names a participant family pushes
@@ -6,7 +6,9 @@ its one unnamed participant by sign x amount x heading of every field ray it
 meets and returns each field ray reversed as the recoil; the push stamps no event
 and changes no amount, phase or bit; two pushes of opposite sign cancel and the
 ray resumes its line; the world ledger reads the register; a world without a
-momentum table on a coupling of free rays runs byte-identically.
+momentum table on a coupling of free rays runs byte-identically. Every push here
+finds the accumulators at zero, so the walk kept through a push (v2, tested in
+test_momentum_turn_walk.py) leaves these integers as they were.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("A free ray turns by
 momentum") before the first run.
@@ -308,7 +310,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             (6, CENTER, "m", 8, (8, 0, 0), (8, -2, 0), "f", 2, (0, 1, 0)),
         ]
         metadata, records, _ = run(tmp_path, raw, 18)
-        assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v1"
+        assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v2"
         assert "bound_group_motion" not in metadata
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["accounting_balanced_at_every_completed_tick"]
