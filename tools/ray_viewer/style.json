@@ -10,6 +10,8 @@
     "accent": "#62b8d3",
     "lattice": "#3f4c59",
     "box": "#7e8c99",
+    "trail": "#ffffff",
+    "momentum_arrow": "#7fd7ff",
     "families": {
       "default": {
         "hue": "fixed",
@@ -48,10 +50,12 @@
   "sizes": {
     "ray_width_px": 6,
     "arrowhead_px": 10,
+    "momentum_arrow_px_per_quantum": 6,
+    "momentum_arrow_width_px": 2,
     "trail_links": 10,
     "trail_width_px": 6,
     "trail_fade": [
-      1.0,
+      0.35,
       0.0
     ],
     "field_width_px": 1.5,
@@ -111,6 +115,7 @@
       "screen": "slab"
     },
     "trails": true,
+    "momentum_arrow": true,
     "hue_by_phase": "arrowhead",
     "silent_field_events": true,
     "page_text": {

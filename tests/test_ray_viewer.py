@@ -424,7 +424,12 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     # The model owner's defaults of 2026-09-17: the whole path as one bright line,
     # hue by phase on the arrowhead only, no text around the board, autoplay.
     assert style["sizes"]["trail_links"] == 10 and style["sizes"]["ray_width_px"] == 6
-    assert style["sizes"]["trail_width_px"] == 6 and style["sizes"]["trail_fade"] == [1.0, 0.0]
+    assert style["sizes"]["trail_width_px"] == 6 and style["sizes"]["trail_fade"] == [0.35, 0.0]
+    # The wake is white and faint; the head keeps its family colour and carries a
+    # momentum arrow of amount x 6 px (48 px for an electron of 8).
+    assert style["colors"]["trail"] == "#ffffff" and style["draw"]["momentum_arrow"] is True
+    assert style["sizes"]["momentum_arrow_px_per_quantum"] == 6
+    assert style["colors"]["momentum_arrow"] == "#7fd7ff"
     assert style["colors"]["families"]["default"]["hue"] == "fixed"
     assert style["draw"]["hue_by_phase"] == "arrowhead"
     assert set(style["draw"]["page_text"]) == {
