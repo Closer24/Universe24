@@ -320,10 +320,15 @@ class InitialState:
     detectors: tuple[DetectorMark, ...] = ()
 
     def __post_init__(self) -> None:
-        from .spatial_state import validate_detector_marks, validate_ray_coupling
+        from .spatial_state import (
+            validate_detector_marks,
+            validate_ray_coupling,
+            validate_released_field_admission,
+        )
 
         validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
         validate_ray_coupling(self)
+        validate_released_field_admission(self)
         validate_detector_marks(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")

@@ -36,9 +36,12 @@ from event_universe.core.spatial_state import (
     ray_layers,
     ray_momentum,
     ray_stock,
+    release_field,
+    release_stock,
     stamp_event,
     validate_ray_participants,
     validate_rays,
+    validate_released_fields,
 )
 
 from .disturbances import evaluate
@@ -78,6 +81,7 @@ class SpatialLaw:
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
+        validate_released_fields(self.definitions, self.fields)
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
             object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
@@ -276,6 +280,50 @@ class SpatialLaw:
                 )
         resident.extend(returning)
         return absorbed_total
+
+    def _release(
+        self,
+        resident: list[list[Ray]],
+        records: list[DisturbanceRecord | None],
+        emitted: list[list[Ray]],
+        source: list[list[int]],
+        meter: CostMeter,
+    ) -> None:
+        """The field as the ray's information (released-field-v1, Highlights 3.5).
+
+        Every resident ray of a family that has a released field releases, at the
+        Node it departs from, one field ray per Port heading except its own, each
+        carrying the whole quanta of its amount times the release ratio and its
+        phase; resident content (a record holding stock of the family after this
+        interval's emission) releases on all six headings once per interval. The
+        released rays leave this interval with the residents. They are booked as an
+        explicitly accounted source of their field, and of its momentum field when
+        one is bound, so the source ray pays nothing: its amount, phase and heading
+        are untouched. A field ray releases nothing (a field has no field).
+        """
+        for index, definition in enumerate(self.definitions):
+            if definition.field_of is None:
+                continue
+            origin = self.definitions[definition.field_of]
+            released = release_field(tuple(resident[definition.field_of]), definition, origin)
+            meter.charge("read", len(resident[definition.field_of]))
+            for record in records:
+                if record is None or origin.field >= len(record.values):
+                    continue
+                stock = unpack(record.values[origin.field])[0]
+                if stock > 0:
+                    meter.charge("read")
+                    released += release_stock(stock, definition)
+            if not released:
+                continue
+            meter.charge("split", len(released))
+            emitted[index].extend(released)
+            source[definition.field][0] = checked_work(source[definition.field][0] + ray_stock(released))
+            if definition.momentum_field is not None:
+                for axis, value in enumerate(ray_momentum(released, definition)):
+                    source[definition.momentum_field][axis] = checked_work(
+                        source[definition.momentum_field][axis] + value
+                    )
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
         validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
@@ -572,6 +620,7 @@ class SpatialLaw:
                     source[definition.field][component] = checked_work(
                         source[definition.field][component] + value
                     )
+        self._release(resident_rays, updated_records, emitted_rays, source, meter)
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()

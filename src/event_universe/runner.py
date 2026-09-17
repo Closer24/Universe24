@@ -19,8 +19,10 @@ from event_universe.core.spatial_state import (
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
+    RELEASED_FIELD,
     WAVE_RAY_FAMILY,
     ray_layer_names,
+    released_field_names,
 )
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
@@ -200,6 +202,8 @@ def _execute_run(
             )
         ],
         "ray_meeting": RAY_MEETING,
+        "released_field": RELEASED_FIELD,
+        "released_fields": released_field_names(initial.fields, initial.spatial_fields),
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",
