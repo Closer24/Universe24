@@ -688,8 +688,9 @@ limits; it does not derive the matrices or establish physical energy closure.
 
 Adopted direction (model owner, 2026-09-17): the only draw in the model is the
 Detector interaction, 1 or 0 for each transfer arriving at a marked node,
-every ray being a wave ray, 1 ordinary behavior and 0 return, one bit per
-arriving transfer, and the bit is all the Detector adds
+every ray being a wave ray, 1 ordinary behavior and the only measurement,
+0 return and no measurement (nothing measured or recorded as an outcome),
+one bit per arriving transfer, and the bit is all the Detector adds
 (the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
 [section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
@@ -797,7 +798,32 @@ the conserved quantities and its phase. Alternatives are created only at
 interactions, never at the empty nodes a ray crosses. Every ray is a wave ray
 and carries a phase; a plain ray is a special case of the wave ray, not a
 second kind. Light is a wave ray with no mass and no charge, an event moving
-in time.
+in time. Three things change a phase and nothing else: each interval advances
+it at the rest rate its family declares, which is the ray's mass as a clock,
+and that rate is zero for light, whose phase does not advance along its own
+line; an interaction changes it as the declared coupling says; a bound group
+advances it once per interval it is held. A light ray carries the phase of
+the clock that emitted it at the moment of emission and delivers it
+unchanged, so the frequency of light is the rate of its emitter's clock.
+Interference of light follows from this alone: two paths of different length
+reach one place at one time only if their rays were emitted at different
+times, so they carry different emission phases, and the difference is the
+emitter's rate times the difference in path length; nothing is accumulated
+on the way. There is no amplitude as a number and no probability field: the
+phase and the ray's conserved content together are the discrete stand-in for
+the quantum amplitude, the phase as its angle and the conserved content as
+its size. Because every permitted trajectory happens, the intensity at a
+place is how much content arrived there, and interference is steering:
+where rays meet in one layer, the declared coupling reads their phase
+difference and decides through which Port the shared content leaves, with
+every invariant exact; nothing is erased. The basic steering coupling is the Born rule stated as a coupling: for a
+phase difference δ it splits the shared content between the two candidate
+Ports in the ratio cos²(δ/2) to sin²(δ/2), as a declared table of bounded
+integer ratios with the remainder owned as Highlights 3.17 requires, so that
+click intensities follow the Born rule with nothing read by any Detector. It
+is declared, not derived. The Detector reads
+none of this; the probability of a click is already in how much content
+reached it.
 
 At a node where rays meet, the declared coupling decides one of three things:
 no interaction, and the rays cross as if the other were not there; a
@@ -815,6 +841,10 @@ interval.
 Every node carries one bit, Detector or not; the mark is bounded node
 metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
+source is a Detector: whatever emits a ray of a known family is a marked
+node, because knowing the family of what it emits is a measurement; the
+birth event of a pair therefore happens at a marked node, which draws on
+every arrival like any other. A
 marked node does one very simple thing. What arrives is a wave ray carrying
 information; every ray is a wave ray, so the kind makes no difference. For
 each transfer that arrives, whatever it is, it draws 1 or 0. On 1 it behaves
@@ -827,6 +857,11 @@ the node draws once for each, independently: the arrivals that drew 1 enter
 the ordinary interaction together, each arrival that drew 0 is returned on
 its own line. The Detector reads, changes,
 absorbs and adds nothing; the click is the record of the bit drawn. A
+measurement exists only when the node drew 1 and let the ray pass: on 0
+there is no measurement, the node returns the ray without touching it and
+is a node without measurement, as if the ray had not arrived, and it waits
+for what the return brings back; nothing is measured or recorded as an
+outcome. A
 Detector sees nothing of the ray, on 1 or on 0: it sees only its own value.
 When it returned a ray with 0, that value travels with the ray, and the
 second Detector of the pair receives it on the ray that reaches it.
@@ -852,7 +887,15 @@ return is the opposite momentum of the field, carried back along the field
 ray's line to the ray that released it, which recoils when the return
 arrives, at finite speed. That is how postulate 7 and Highlights 3.14 are
 satisfied: the recoil is a ray. Until its field meets something, a
-traveling ray pays nothing for it. There is no
+traveling ray pays nothing for it. The field is released in all directions.
+A ray traveling straight never meets its own field: the field is born where
+the ray is and leaves at the causal speed, ahead of the ray or away from it,
+and the ray is never faster than its field, at any output-clock delay; no
+exclusion rule is needed. Only after a change of trajectory can a ray cross
+field it released earlier, and that is a meeting like any other. A ray's
+phase per interval comes from its family's rest rate alone, not from its
+own field.
+There is no
 matter in the model at this stage: matter is the name for rays bound in one
 node by a declared binding coupling, a neutron ray and a proton ray held
 together by the strong binding, an electron ray around them whose trajectory
@@ -866,7 +909,17 @@ slow, so that the rays do not leave. It is unbound the same way anything
 else happens on the board: a ray arrives (a high-energy light ray, for
 instance; there is no photon, only a ray) and the coupling declared for the
 families present produces events that leave. Nothing else creates or
-destroys matter. Held source records remain an explicitly labeled interim
+destroys matter. The computation field obeys the one field rule above, with
+no rule of its own: the retained content of a node, its mass, is what makes it slow, and the
+information that a node is heavy spreads from it in ray form in all
+directions. Where such a field ray meets a ray whose declared coupling
+responds, there is an event with two effects: the ray that was met is
+delayed, its output clock grows, and the field ray returns reversed to the
+heavy node. The delay is larger on the side nearer the heavy node, so the
+ray bends toward it; that bending is a change of momentum, and the
+returning field ray carries the opposite momentum back to the heavy node,
+which is drawn toward the ray. Gravity is this bending by delay; it is not
+inserted as a force, nothing is absorbed, and momentum is exact. Held source records remain an explicitly labeled interim
 device until the binding couplings exist.
 
 Postulates 1 to 4 hold under this model without exception; the registry
@@ -916,6 +969,20 @@ is never caught, the event as it was has changed: the returned ray reversed
 its share, so the event lost that share, and the information is never lost,
 it chases the share it cancels. If the share is delayed and caught, momentum
 and everything else are conserved at the node where they meet.
+
+What a returning ray does at its event node when nothing is there is a
+configured mode of the world, three of which are defined and tested:
+siblings, the default and the rule above (it transmits its share and bit to
+every line the event sent to, which needs at most six records on the ray,
+one per Port); straight (it continues straight through the node on the one
+line opposite its own, enough for a pair, with no records); and annul (it
+ends there, its content leaves the world into an explicitly accounted sink,
+initial equals current plus escaped plus annulled at every tick, and its
+information survives only in the record). If something is at the node, a
+bound group or other rays, the returning ray meets it by the declared
+coupling in every mode. For a ray-interaction event whose inputs were
+consumed, the returning ray cancels its own share only and continues along
+the event's output lines; nothing is left at the node.
 
 Each ray meets its own fate. Sibling events of one interaction are
 independent rays; nothing cancels a sibling's share except its own return.

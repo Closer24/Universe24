@@ -311,3 +311,125 @@ temperature scaling as `1 + z`; and a stretch quantized in steps of
 `1 / k_e` per gap, unobservable at any real scale. Line 3 is what the
 third manuscript can turn into a result; line 1 then becomes a law with a
 number, `H_0` from `lambda / B`.
+
+## 10. Rest phase as the self-field
+
+**Fails on geometry, 2026-09-17.** A ray's field is born where the ray is
+and leaves at the causal speed, ahead of the ray or away from it; a ray is
+never faster than its own field, so a ray traveling straight never meets it,
+at any output-clock delay. There is no self-meeting from which a rest phase
+could come. The hypothesis is kept on the page as a closed one; the declared
+rate of [Highlights](HIGHLIGHTS.md) 3.3 stands. The text below is the
+hypothesis as raised.
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3 and 3.5) a ray's
+phase advances each step at a rate its family declares, and a ray's field is
+not released ahead of it along its own line, so a ray never meets its own
+field. The hypothesis is that the second rule could be relaxed for the
+phase alone and the first rule then derived: a ray with mass is slower than
+its field ([Highlights](HIGHLIGHTS.md) 3.28), so field released behind it on
+its own line would catch it from behind, and the field's presence at the
+ray's Node is an interaction that makes no event (3.5). If that meeting
+advanced the ray's phase and changed nothing else (no heading, no momentum,
+no energy, so no self-force and no cost to a free ray), the phase gained per
+step would grow with the ray's slowness, that is with its mass: a rest
+frequency derived from the strength of the field and the output-clock delay
+instead of declared per family, the model's own `E = m c^2`. A ray with no
+mass and no charge would gain nothing, as light should. The hypothesis is
+raised by the model owner on 2026-09-17 and is not a law: 3.3 keeps the
+declared rate.
+
+What it would cost, stated so that it can fail: the field ray would have to
+carry the identity of its source (the information of its last event) and
+the rule would have to read it, since a field arriving from behind on the
+same line may belong to another ray traveling behind; today no rule reads
+that hidden variable ([Highlights](HIGHLIGHTS.md) 5.4). A neutral ray with
+mass but no charge field would gain no rest phase from this mechanism alone
+and would need another field to supply it. And the phase gained per
+self-meeting is one more number to fix.
+
+What can be tested, once the ray-event engine runs: one ray with an
+output-clock delay and a charge field, no declared phase rate, on a straight
+line on a small board; measure the phase gained per step as a function of the
+delay `k_out`. Three outcomes: a fixed ratio that depends only on the delay
+(the hypothesis lives and the declared rate of 3.3 becomes derivable), a
+ratio that needs tuning per family (the parameter has only moved), or no
+stable ratio (the hypothesis fails). The same run with a massless ray must
+gain nothing.
+
+## 11. The Bell prediction of the ray-event model, stated so that it can fail
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.19, 3.20, 5.4) a
+pair is two rays of one birth event, each carrying its share of that event;
+every Detector draws 1 or 0 without reading the ray; only a pass is a
+measurement; a return walks back to the birth event and transmits the share
+and the bit along the partner's line at one Link per interval; no register
+answers at a distance. The hypothesis raised by the model owner on
+2026-09-17 is that this reproduces the correlations of entangled pairs. What
+the model predicts, exactly:
+
+1. Two Detectors at equal distance from the birth, settings chosen at the
+   last moment, coincidences counted within a window: the first Detector's
+   value reaches the other only after the round trip through the birth
+   event, after the other has already drawn, so each measured outcome
+   depends only on its own setting, the arriving ray and a local draw. Every
+   such model obeys CHSH at most 2 (Bell's theorem); with a blind draw the
+   passed pairs are a fair sample, so the coincidence subset obeys it too.
+2. One arm delayed beyond the round trip before its Detector: the value
+   arrives first, and the joint law of the declared couplings can give the
+   quantum value.
+3. A draw that reads the ray and the setting would bias which pairs count
+   (the detection loophole); a shared draw sequence correlates the two bits
+   with each other but not with the settings.
+
+What is measured: the loophole-free experiments of 2015 (Delft, event-ready
+electron spins over 1.3 km, S = 2.42; Vienna and NIST, photons with detection
+efficiency above the fair-sampling bound and settings chosen at spacelike
+separation) and the three-particle GHZ tests all report violations under
+condition 1. The prediction of line 1 therefore contradicts existing data
+unless the model's coincidence count differs from the experiments' in a way
+the pair test can show. The test (issue #169, feature 4): the pair board with
+the source as a marked Node, two Detectors at equal distance with settings
+drawn per pair, coincidences counted within a declared window, CHSH computed
+from clicks only; then the same board with one arm delayed by more than the
+round trip. Three outcomes: at most 2 in the symmetric case (the model's
+prediction stands and disagrees with the data; the hypothesis fails as a
+model of entanglement and is kept as the model's stated limit), above 2 in
+the symmetric case (the analysis above is wrong, to be understood before
+anything else), or above 2 only in the delayed case (as predicted). The
+only door left in the model's own terms is that the sequence feeding the
+draws also feeds the settings (section 1 above); that reading explains any
+correlation and is not a prediction.
+
+## 12. One mass ladder, and the composite spectrum from binding
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.4) a rest mass
+is a rest rate: a bounded integer number of phase steps per interval, zero for
+light. Two hypotheses follow, raised by the model owner on 2026-09-17, each
+with a test.
+
+**The ladder.** Every rest mass is an integer multiple of one unit,
+`m_0 = h / (N delta_t c^2)` with `N` the phase steps of the circle, so every
+mass ratio in the world is a ratio of integers on one grid. The model does not
+say which rungs are occupied: the masses of the elementary families
+(electron, muon, quarks) are catalog values on that grid, not predictions.
+What can be tested is representability: with the bounded integers of the
+engine, the measured ratios (muon to electron 206.77, tau to electron
+3477.2, proton to electron 1836.15) must all fit one grid within the encoding
+error the [reference units](REFERENCE_UNITS.md) declare, at one `N`. If no
+single `N` fits them within that error, the ladder fails.
+
+**The composite spectrum.** A composite (a hadron, a nucleus, an atom) is a
+bound group: rays held at one Node by a binding coupling, an interaction that
+repeats every interval and releases no event (3.4). Given the elementary
+families and their binding couplings as declared tables, every combination
+can be run: whether it stays bound, what it retains (its mass, the retained
+content plus or minus the binding), and what arriving ray unbinds it. The
+list of combinations that stay bound is a prediction of the composite
+spectrum, and the exact invariants of every meeting (charge, family counts,
+momentum) predict which transitions are forbidden. A combination the model
+holds stable that nature does not show, or a known particle the model cannot
+hold, falsifies the declared couplings or the model. This test waits for
+issue #169 feature 8 and for the strong binding as a declared table; its
+cost is a full coupling table and long runs, and its first target is the
+lightest cases (a two-nucleon bound state and its absence for two protons).
