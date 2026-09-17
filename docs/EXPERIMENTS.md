@@ -24,7 +24,7 @@ specialist may propose an entry or a criterion; the register changes only by
 the model owner's decision, dated.
 
 **The rule of every entry.** Before its run, an entry names the features it
-needs (numbers 1 to 11 below), the board, the families, the Detector marks
+needs (numbers 1 to 12 below), the board, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
 and its pass or fail criterion as an exact statement. The families and
 couplings it names are entries of the [catalog of nature](CATALOG.md)
@@ -35,8 +35,8 @@ against the result and no criterion is redefined after a failure
 A failed confrontation is recorded as the model's stated limit; it does not
 reopen an adopted decision and does not authorize a new law.
 
-**Features.** The numbers are the ten features of issue #169 and the eleventh
-of Highlights 3.26, in the order they land
+**Features.** The numbers are the ten features of issue #169, the eleventh
+of Highlights 3.26 and the twelfth of Highlights 3.5, in the order they land
 ([ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)): 1 ray state
 (done on 2026-09-17, `ray-event-state-v1`); 2 the Node Detector bit (mark,
 setting, ticket seed; done on 2026-09-17, `detector-mark-v1`, the
@@ -57,7 +57,13 @@ an explicitly accounted sink by default (a wall, a screen, a beam stop) and
 otherwise a mirror, a beam splitter, a phase plate or, after 11, a
 polarizer; 8 binding and gravity by
 delay; 9 every ray a wave ray with family, charge and `phase_bits`; 10 the
-audits; 11 polarization (after the ten).
+audits; 11 polarization (after the ten); 12 field spreading (Highlights 3.5,
+model owner, 2026-09-17): light and the field of a charge one family of the
+catalog, and every Node that field content reaches releasing it again in all
+six headings by the family's declared split table, the backward heading
+included, a quantum never waiting; until it lands the field lives on the six
+axis lines of its source and light goes straight, and its cost is measured
+before adoption.
 
 **Status values.** `planned` (this page, criterion fixed, not run);
 `measured` with date, commit and fingerprint, and the outcome in one word
@@ -93,7 +99,7 @@ states "exactly" and means integer equality at every tick.
   rate is zero; the Detector reads none of this and click intensity is the
   content that arrived. The fringe period is therefore λ = N/r Links for an
   emitter of rate r steps per interval.
-- **Features.** 1, 2, 5, 6, 7b, 9, 10.
+- **Features.** 1, 2, 5, 6, 7b, 9, 10, 12.
 - **Run.** A slab of 129 × 65 × 3 Nodes, open boundary. One emitter, a bound
   clock of rate r = 32 at N = 2^8 (λ = 8 Links, so that the integer path
   differences of the screen hit the table's exact zero), a marked Node with
@@ -122,7 +128,11 @@ states "exactly" and means integer equality at every tick.
   any column off the table, a maximum or minimum displaced by more than one
   Node, visibility below 1 − 4/N, or content in unequal to content out at
   any tick.
-- **Status.** planned.
+- **Status.** planned; waits for feature 12, field spreading (Highlights
+  3.5, 2026-09-17): light is the field and spreads by the split table of its
+  family, so a slit is a gap in a wall that absorbs and the fringes are
+  where a whole quantum, which never waits, is realized by the Detector;
+  until it lands light goes straight and the slit coupling re-emits.
 
 ### A2. Bell test in phase form, symmetric geometry
 
@@ -140,8 +150,8 @@ states "exactly" and means integer equality at every tick.
   the first Detector's value reaches the other only after the round trip
   through the birth event, so S ≤ 2 for symmetric spacelike settings; the
   passed pairs are a fair sample because the draw reads nothing.
-- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10. No polarization (feature 11) is
-  needed: the settings are phases.
+- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10, 12. No polarization (feature 11)
+  is needed: the settings are phases.
 - **Run.** A board of 161 × 17 × 17 Nodes, open boundary; the pair source at
   the center, a marked Node with setting 1, emitting one pair per 8 intervals
   as two light rays of one birth event on opposite headings ±x carrying the
@@ -173,7 +183,11 @@ states "exactly" and means integer equality at every tick.
   with the other side's setting by less than 3 standard errors
   (no-signalling; a larger shift is a fail whatever S is), and every pair
   with a return must be counted unpaired, not dropped.
-- **Status.** planned.
+- **Status.** planned; waits for feature 12, field spreading (Highlights
+  3.5, 2026-09-17): the pair's light rays are field content, spreading by
+  the split table of their family and combining by phase where they meet,
+  and the arms run on that spreading family; until it lands light goes
+  straight.
 
 ### A3. Bell test in phase form, delayed geometry
 
@@ -309,7 +323,7 @@ states "exactly" and means integer equality at every tick.
   lattice units scales as 1/N²: G_eff · N² is constant across the phase
   width. This statement is not yet in Highlights or on the hypotheses page;
   the run pins it as stated.
-- **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
+- **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10, 12.
 - **Run.** A board of 65 × 65 × 9 Nodes, open boundary. The star at the
   center: an external body (feature 7b, `external-body-v1`, Highlights 3.19)
   of declared family and amount M, no charge, at rest (`initial_momentum`
@@ -362,7 +376,12 @@ states "exactly" and means integer equality at every tick.
   the unit of action in the derivation, not the engine); a diagonal α
   outside its band (the lattice, Highlights 3.5, recorded under 3.23), each
   stated as which.
-- **Status.** planned. The N-scan part of the criterion ran on 2026-09-17 as
+- **Status.** planned; waits for feature 12, field spreading (Highlights
+  3.5, 2026-09-17): until it lands the field lives on the six axis lines of
+  its source, so the diagonal passes meet no field and the clause comparing
+  the axis with the diagonal measures nothing; with it the field fills the
+  board and the lattice's anisotropy is the residue this entry measures. The
+  N-scan part of the criterion ran on 2026-09-17 as
   the acceptance test of feature 8 (`test_ray_binding.py`, a test, not this
   experiment): a bound group of mass N / 4 phase steps per interval, b = 4,
   the delay table `[4, 4, 4, 4, 4, 4]` per unit of field amount, gave
@@ -858,7 +877,7 @@ states "exactly" and means integer equality at every tick.
 
 ## C. Order
 
-The features land in the order 1 to 11. Each line names what its feature
+The features land in the order 1 to 12. Each line names what its feature
 unlocks; an entry runs when the last feature it names has landed.
 
 1. Feature 1, ray state (done on 2026-09-17): unlocks no run by itself; every
@@ -880,6 +899,8 @@ unlocks; an entry runs when the last feature it names has landed.
 10. Feature 10, the audits: B1, and the exactness clauses of every entry
     above in their final form.
 11. Feature 11, polarization: A12, A13.
+12. Feature 12, field spreading (Highlights 3.5, 2026-09-17): A1, A2 and the
+    diagonal series of A6.
 
 ## D. What is deleted
 

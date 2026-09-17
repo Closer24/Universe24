@@ -138,9 +138,11 @@ rather than of each quantum, since today an electron ray of amount 11
 carries charge -33. Neither is added here; the register's B8 and the weak
 interaction of the catalog will need the first.
 
-**Not shown.** No field family is declared (the electron's `electron_field`
-and the `mass_field` of the catalog): neither event needs one, and their
-faint rays would fill the picture; the groups therefore radiate nothing. All
+**Not shown.** No released field is declared: the world's light carries no
+`field_of`, although light is the electron's own field in the catalog since
+2026-09-17 (Highlights 3.5; the family `electron_field` until that date), and
+the `mass_field` of the catalog is absent; neither event needs a release, and
+the faint rays would fill the picture; the groups therefore radiate nothing. All
 matter rest rates are 1 at N = 8, a resolution choice for the picture, not a
 mass. The one-interval pause of each photon at the group's Node is the
 group's declared `ray_delay`, the only clock slowing in the engine.

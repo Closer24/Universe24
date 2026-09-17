@@ -360,6 +360,25 @@ leading order; whether the bending of a passing ray is the same on an axis
 and on a diagonal is a measurable prediction (experiment A6 of
 [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)), not an assumption.
 
+Addition (model owner, 2026-09-17; Highlights 3.5, "light is the field, and
+the field spreads"): light and the field of a charge are one family of the
+catalog, the electromagnetic field in ray form; a photon is one quantum of a
+field ray, an emission is a release of that family at an event, and an
+absorption is a meeting of a field ray with a bound group. Because light
+spreads, the field spreads by the same rule: every node that field content
+reaches releases it again in all six headings by a declared split table of
+the family, the backward heading included, the remainder owned (Highlights
+3.17). Field content meeting at a node combines by phase before it spreads;
+a single quantum cannot split, and where the table would give a heading less
+than one the remainder leaves whole through the heading the phase selects,
+so a quantum never waits and only a Detector decides where it is realized.
+The field of a static charge then fills space, the net momentum through a
+node falling as 1/r² (Gauss), and diffraction needs no rule of its own, a
+wall being a body that absorbs. This is one catalog entry of the light
+family, not an engine mechanism: feature 12, field spreading, of the
+ray-event model, its cost measured before adoption; until it lands the field
+lives on the six axis lines of its source and light goes straight.
+
 ## 7. An isolated symmetric source does not push itself
 
 For a single stationary source in symmetric space, field values on opposite sides

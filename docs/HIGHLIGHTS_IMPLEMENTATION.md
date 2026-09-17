@@ -81,6 +81,7 @@ Issue #169, feature 7, implements the one field rule of sections 3.5 and 3.28
 | 3.17, remainders | The fraction the floor leaves is not released; a description booked as a source destroys nothing |
 | 3.28, gravity is bending by delay | The delay and the turn are outputs of the declared rule (heading, delay or phase); the delay by a table per Port and the turn it produces are feature 8 (`ray-binding-v1`, above); the recoil's coupling to its source and to bound groups is open |
 | 3.19, the external body (`external-body-v1`) | Feature 7b (done 2026-09-17) releases the body's field on six headings by the same rule (`body_release`), booked as a source, with the sink it declares |
+| 3.5, light is the field, and the field spreads (model owner, 2026-09-17) | The catalog's `light` family is the field of the electron and the positron (`field_of`, released by `release_field` as any field) and the family every source emits, `electron_field` and `positron_field` removed; its `spread` entry, the six-heading split table by which every Node the field reaches releases it again, the backward heading included and a quantum never waiting, is open for feature 12, field spreading, planned with its cost measured before adoption; until it lands the field lives on the six axis lines of its source and light goes straight |
 
 ## Ray integration and local Focus - 2026-09-14
 
