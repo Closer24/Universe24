@@ -58,13 +58,19 @@ event moving in time, exactly as defined above, not a separate photon object.
 bounded Node metadata (the bit, a setting, a ticket seed), not a record, not
 an object and not an external device; "Detector behavior" is simply how a
 Node behaves when the bit is set. A marked Node does one very simple thing.
-For each transfer that passes through it, whatever it is, it draws one
-bounded integer and reads it as 1 or 0, and this is the only place a lottery
-exists (`detector-only-v1`). On 1 the Node behaves as an ordinary Node: the
-transfer continues on its line as if no Detector were there. On 0 the Node
-behaves as a Detector: it returns the transfer on the same line in the
-opposite direction, unchanged, so that it arrives at the Node it left from
-with exactly the information it left with. The Detector does not read,
+What arrives at it is a ray carrying information, wave or not; the kind of
+ray makes no difference to the Detector. For each transfer that arrives,
+whatever it is, it draws one bounded integer and reads it as 1 or 0, and this
+is the only place a lottery exists (`detector-only-v1`). On 1 the Node
+behaves as an ordinary Node for that arrival: the transfer continues on its
+line, or enters the declared interaction, as if no Detector were there. On 0
+the Node behaves as a Detector for that arrival: it returns the transfer on
+the same line in the opposite direction, unchanged, so that it arrives at the
+Node it left from with exactly the information it left with. Up to six
+transfers can arrive in the same interval, one through each Port, and the
+Node draws once for each arrival, independently: the arrivals that drew 1
+enter the ordinary interaction together, exactly as at an unmarked Node, and
+each arrival that drew 0 is returned on its own line. The Detector does not read,
 change, absorb or add anything; it needs to know nothing about what passed.
 It is the same ray in both outcomes: not absorbed, not split, no stock taken.
 The click is the record of the bit drawn. Because a marked Node is a Node
@@ -152,9 +158,11 @@ declared coupling between their families decides one of:
   already does for records: up to six inputs, up to six outputs, one output
   departure per Port;
 - **a Detector interaction**: only at a Node whose Detector bit is set, for
-  each transfer passing through it: one bounded integer is drawn from the
-  mark's own ticket sequence; 1 means the Node behaves as an ordinary Node,
-  0 means it returns the transfer on its line in the opposite direction.
+  each transfer arriving through a Port this interval, independently, up to
+  six at once: one bounded integer is drawn from the mark's own ticket
+  sequence; 1 means that arrival enters the two cases above together with
+  the other arrivals that drew 1, 0 means the Node returns that arrival on
+  its own line in the opposite direction.
 
 Nothing else decides anything. A ray alone at a Node never interacts. A Node
 never holds a ray without a declared binding coupling. Binding is the
@@ -170,7 +178,7 @@ The rule in the form Highlights 3.27 requires:
 | --- | --- |
 | Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, the Detector mark if the Node carries one (mark, setting, ticket seed), and a bounded register of open alternatives for the interactions born there |
 | What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
-| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, the 1-or-0 draw for each passing transfer, 1 ordinary, 0 return |
+| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, wave or not; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count. No message, no registry answer, nothing that skips a Node |
@@ -200,7 +208,7 @@ on 16 September 2026.
 - One kind of entity (an event trajectory with family properties and an
   optional phase), one kind of interaction (a meeting at a Node, declared per
   family set, exactly conserved, at most six events out), one door for
-  randomness (the Detector interaction of a wave ray). Postulates 1 to 4 hold
+  randomness (the Detector draw, one per transfer arriving at a marked Node). Postulates 1 to 4 hold
   without exception; the registry exception of postulate 4 is withdrawn.
 - Fields as rays satisfies Highlights 3.5 and 3.28 directly: a field is a
   local description of ray state, and the computation field is a propagating
@@ -279,7 +287,12 @@ and evidence, under the ordinary gates.
   returned ray reaches its birth Node after exactly the counted number of
   steps, on every seed, in every direction, with its information unchanged,
   and continues straight; an unmarked Node never draws.
-- One number per Detector interaction; replay with the same seed reproduces
+- Six transfers arriving at a marked Node in one interval receive six
+  independent draws, wave or not; those that drew 1 interact exactly as at
+  an unmarked Node, each that drew 0 is returned on its own line, and the
+  totals of the two groups together equal the totals that arrived.
+- One number per transfer arriving at a marked Node; replay with the same
+  seed reproduces
   every click; changing one Detector's number changes the world only inside
   the forward light cone of that interaction.
 - An interaction never emits more than six events and never two on one Port;

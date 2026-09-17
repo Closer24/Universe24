@@ -673,8 +673,9 @@ limits; it does not derive the matrices or establish physical energy closure.
 ## 22. Historical autonomous sampling candidates
 
 Adopted direction (model owner, 2026-09-17): the only draw in the model is the
-Detector interaction, 1 or 0 for each transfer through a marked node, 1
-ordinary behavior and 0 return, one bounded integer per interaction
+Detector interaction, 1 or 0 for each transfer arriving at a marked node,
+wave or not, 1 ordinary behavior and 0 return, one bounded integer per
+arriving transfer
 (the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
 [section 23](#23-the-ray-event-model)). A pair's number is drawn at the first
 Detector and carried by the returning ray; no owner answers at a distance.
@@ -760,8 +761,10 @@ At a node where rays meet, the declared coupling decides one of three things:
 no interaction, and the rays cross; a deterministic interaction, up to six
 events computed from the frozen inputs with every declared invariant exact
 over all inputs and outputs; or a Detector interaction, at a node whose Detector
-bit is set, which draws 1 or 0 for each passing transfer: 1 ordinary
-behavior, 0 return. A ray alone at a node never interacts.
+bit is set, which draws 1 or 0 for each arriving transfer, independently,
+up to six in one interval: 1 ordinary behavior together with the other
+arrivals that drew 1, 0 return of that arrival on its own line. A ray alone
+at a node never interacts.
 Binding is the interaction whose result is zero events: the rays stay at the
 node, interact again every interval, and their phase advances once per
 interval.
@@ -769,11 +772,16 @@ interval.
 Every node carries one bit, Detector or not; the mark is bounded node
 metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
-marked node does one very simple thing: for each transfer that passes through
-it, whatever it is, it draws 1 or 0. On 1 it behaves as an ordinary node and
-the transfer continues. On 0 it returns the transfer on the same line in the
-opposite direction, unchanged, so that it arrives at the node it left from
-with exactly the information it left with. The Detector reads, changes,
+marked node does one very simple thing. What arrives is a ray carrying
+information, wave or not; the kind makes no difference. For each transfer
+that arrives, whatever it is, it draws 1 or 0. On 1 it behaves as an ordinary
+node for that arrival and the transfer continues or interacts. On 0 it
+returns that transfer on the same line in the opposite direction, unchanged,
+so that it arrives at the node it left from with exactly the information it
+left with. Up to six transfers can arrive in one interval, one per Port, and
+the node draws once for each, independently: the arrivals that drew 1 enter
+the ordinary interaction together, each arrival that drew 0 is returned on
+its own line. The Detector reads, changes,
 absorbs and adds nothing; the click is the record of the bit drawn.
 A returning ray retraces its own trajectory by its step count, reaches its
 birth interaction with certainty and continues straight, which is the
