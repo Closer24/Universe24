@@ -187,7 +187,11 @@ states "exactly" and means integer equality at every tick.
   3.5, 2026-09-17): the pair's light rays are field content, spreading by
   the split table of their family and combining by phase where they meet,
   and the arms run on that spreading family; until it lands light goes
-  straight.
+  straight. Reading of 2026-09-17 (Highlights 5.4): a Detector reads the bit
+  a ray carries (feature 2b), a ray carrying 1 passing without a draw and a
+  ray carrying 0 never drawn, so the independence of the two draws and the
+  fair sample stated above are to be re-derived under that rule by
+  hypothesis 11 and A13 before the price is quoted again.
 
 ### A3. Bell test in phase form, delayed geometry
 
@@ -652,7 +656,11 @@ states "exactly" and means integer equality at every tick.
   geometry of A3.
 - **Criterion.** As A2 for the symmetric geometry and A3 for the delayed one,
   with the same no-signalling and unpaired-count conditions.
-- **Status.** planned.
+- **Status.** planned. Reading of 2026-09-17 (Highlights 5.4): a Detector
+  reads the bit a ray carries (feature 2b), so the price of 5.4, S ≤ 2 in
+  the symmetric geometry, is to be re-derived under that rule by hypothesis
+  11 and this entry before it is quoted again; the prediction above stands
+  as recorded until then.
 
 ## B. Proof for the paper
 

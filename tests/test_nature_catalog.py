@@ -389,6 +389,25 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
+        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two open couplings
+        # on the bit a ray carries, decided by feature 2b, with the decided default.
+        bits = apparatus["detector"]["couplings"]
+        assert set(bits) == {"on_bit_1", "on_bit_0"}
+        for name, entry in bits.items():
+            assert (entry["status"], entry["world_key"], entry["decided_by"]) == (
+                "open",
+                UNDECIDED,
+                "feature 2b",
+            ), name
+            assert entry["engine"]["landed"] is False, name
+        assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
+            {"bit": 1},
+            "pass without a draw",
+        )
+        assert (bits["on_bit_0"]["reads"], bits["on_bit_0"]["default"]) == (
+            {"bit": 0},
+            "transmission, no draw",
+        )
         assert apparatus["external_body"]["engine"]["landed"]
         assert len(rays) == 12 and len(couplings) == 16
         # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
@@ -413,7 +432,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        assert len(found) == 29
+        assert len(found) == 31
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
@@ -426,6 +445,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A12",
             "hypothesis 12",
             "hypothesis 13",
+            "feature 2b",
             "feature 8b",
             "feature 12",
         }

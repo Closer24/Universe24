@@ -63,12 +63,14 @@ it. The Detector's bit is a visible property of the ray (model owner,
 record and by the rendering, it is inherited by the outputs of any event a
 marked ray takes part in (where the inputs carry different bits the declared
 coupling says which the outputs carry, by default 1 outranking 0 and 0
-outranking none), and a catalog coupling may read it as it reads charge,
-while a Detector still draws on every arrival and reads nothing from the ray
-(feature 2b of section 6, after feature 10). Between two interactions
-nothing new happens to it. A ray trajectory is therefore reversible: run
-backward step by step it returns exactly to the interaction that created
-it, because no information was added or lost along the line.
+outranking none), a catalog coupling may read it as it reads charge, and a
+Detector reads it (model owner, 2026-09-17): a ray carrying 1 passes a later
+Detector without a draw, a ray carrying 0 is a transmission and is never
+drawn, only a ray carrying no bit is drawn (feature 2b of section 6, after
+feature 10). Between two interactions nothing new happens to it. A ray
+trajectory is therefore reversible: run backward step by step it returns
+exactly to the interaction that created it, because no information was added
+or lost along the line.
 
 **Alternatives.** Outside a Detector, every trajectory that an interaction
 permits actually happens: the up-to-six events leaving the interaction all
@@ -135,9 +137,12 @@ enter the ordinary interaction together, exactly as at an unmarked Node, and
 each arrival that drew 0 is returned on its own line. The Detector does not read,
 change, absorb or add anything; it needs to know nothing about what passed.
 A Detector sees nothing of the ray, on 1 or on 0: it sees only its own
-value, the bit it drew. It is the same ray in both outcomes: not absorbed,
-not split, no stock taken. The click is the record of the bit drawn, and it
-exists on 1 only: a measurement exists only when the Node drew 1 and let the
+value, the bit it drew, and, since 2026-09-17, the bit a ray already carries
+(Highlights 5.4, feature 2b): a ray carrying 1 passes without a draw, a ray
+carrying 0 is a transmission and is never drawn, only a ray carrying no bit
+is drawn. It is the same ray in both outcomes: not absorbed, not split, no
+stock taken. The click is the record of the bit drawn, and it exists on 1
+only: a measurement exists only when the Node drew 1 and let the
 ray pass; on 0 there is no measurement and no click, the Node returns the
 ray without touching it and is a Node without measurement, as if the ray
 had not arrived, and it waits for what the return brings back. The bit is
@@ -458,7 +463,7 @@ The rule in the form Highlights 3.27 requires:
 | --- | --- |
 | Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the mark if the Node carries one, a Detector mark (mark, setting, ticket seed) or an external body (Highlights 3.19). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
 | What arrived | The rays delivered through the six Ports this interval, met layer by layer (a layer is a set of families that couple; rays of families with no declared coupling never meet); a resident bound group counts as arrived every interval |
-| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, the kind of ray making no difference since every ray is a wave ray; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to; the bit a marked Node set travels with the ray as a visible property, inherited by the outputs of any event the ray takes part in and readable by a catalog coupling, no Detector reading it (feature 2b, after feature 10; Highlights 5.4, 2026-09-17) |
+| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval carrying no bit, independently, the kind of ray making no difference since every ray is a wave ray (an arrival carrying 1 passes without a draw and an arrival carrying 0 is a transmission and is never drawn, by the marked Node's declared coupling with this default; Highlights 5.4, 2026-09-17, feature 2b); the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to; the bit a marked Node set travels with the ray as a visible property, inherited by the outputs of any event the ray takes part in and readable by a catalog coupling and read by a later Detector as above (feature 2b, after feature 10; Highlights 5.4, 2026-09-17) |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a marked Node the click on 1 only, the pass being the measurement; a return (0) is not a measurement and records no outcome; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count, and what its inverse split transmits travels the lines the event sent to, one Link per interval. No message, no registry answer, nothing that skips a Node |
@@ -472,7 +477,10 @@ the birth event happens at a marked Node that draws on every arrival like
 any other. Each ray reaches its own Detector and is drawn there. A ray that
 returns walks back exactly its step count to the birth interaction, where it
 is drawn like any arrival: on 0 it is sent back out along its own line; on 1
-it performs the inverse split of its share there: it transmits what happened at the event, with
+it performs the inverse split of its share there (superseded on 2026-09-17
+for rays that carry a bit, Highlights 5.4: a returning ray carries 0, is
+never drawn and performs the inverse split without a draw): it transmits
+what happened at the event, with
 its bit (the outcome of the first draw, all the Detector added), to the same
 places the event sent to, the partner ray's line among them, so the partner's
 Detector is not missing it: the first Detector saw only its own value, and
@@ -484,20 +492,31 @@ were decided at time zero, but nothing happened at time zero: the value was
 carried through the birth event in event spacetime, one Link per interval.
 Every Detector behaves the same: the second Detector draws its own bit on
 that arrival like on any other and reads nothing from the ray; the received
-value is information on the ray, not an input to the draw. The information
-of the last event, its Ports and shares, stays on the ray as a hidden
-variable: no Detector and no ordinary coupling reads it, it comes from no
-ordinary physics, and nothing on the board feels it. The Detector's bit is
-different since 2026-09-17 (Highlights 5.4): a visible property of the ray,
-inherited at every meeting and readable by a catalog coupling, feature 2b of
-section 6 after feature 10.
+value is information on the ray, not an input to the draw (superseded on
+2026-09-17 for rays that carry a bit: a Detector reads the bit, below). The
+information of the last event, its Ports and shares, stays on the ray as a
+hidden variable: no Detector and no ordinary coupling reads it, it comes
+from no ordinary physics, and nothing on the board feels it. The Detector's
+bit is different since 2026-09-17 (Highlights 5.4): a visible property of
+the ray, inherited at every meeting and readable by a catalog coupling,
+feature 2b of section 6 after feature 10, and read by a Detector (model
+owner, 2026-09-17): a ray carrying 1 is already realized and passes a later
+Detector without a draw, as a measurement repeated in the same basis repeats
+its result, a ray carrying 0 is a transmission and is never drawn, and only
+a ray carrying no bit is drawn, how a marked Node meets each bit being its
+declared coupling in the catalog with this as the default; the price below
+is to be re-derived under this rule by hypothesis 11 and experiment A13
+before it is quoted again.
 
 This replaces the shared registry of the historical bonded profile with a
 carried bit, so the model has no owner that answers at a distance. The
 price is accepted explicitly: two Detectors at equal distance from the birth
 draw independently, and the CHSH value for spacelike settings is at most 2.
 The quantum value appears only when the second ray's path is longer than the
-round trip through the first Detector. Pair identity becomes the trajectory,
+round trip through the first Detector. That price stands as recorded until
+hypothesis 11 and experiment A13 re-derive it under the rule of 2026-09-17
+that a Detector reads the bit (Highlights 5.4).
+Pair identity becomes the trajectory,
 so two pairs born at one Node in one tick are distinct, which closes the
 birth-code collision found on 16 September 2026 by the Bell and postulate 22
 study (`examples/research/bell-postulate-22/`, deleted on 2026-09-17 with the
@@ -611,11 +630,18 @@ every such set; Highlights 3.20 is the text to follow.
    the declared coupling says which the outputs carry, by default 1 outranks
    0 and 0 outranks none), readable by a catalog coupling as charge is, and
    shown in the record and the rendering; the engine already carries the bit
-   and stamps it on the outputs of the inverse split (features 1 to 4); the
-   draw is unchanged, a Detector reading nothing from the ray, and whether a
-   ray carrying 1 passes a later Detector without a draw is an open decision
-   of the model owner (Highlights 5.5), no Detector reading the bit until it
-   is made.
+   and stamps it on the outputs of the inverse split (features 1 to 4); a
+   Detector reads the bit (model owner, 2026-09-17, closing the open
+   decision of that morning): a ray carrying 1 is already realized and
+   passes a later Detector without a draw, as a measurement repeated in the
+   same basis repeats its result, a ray carrying 0 is a transmission and is
+   never drawn, and only a ray carrying no bit is drawn; how a marked Node
+   meets each bit is its declared coupling in the catalog with this as the
+   default (`apparatus.detector.couplings` of `catalog/nature.json`, two
+   open entries decided by this feature), a table entry and not an engine
+   mechanism (Highlights 3.26); until the feature lands the engine draws on
+   every arrival, and the price of section 3 is to be re-derived under this
+   rule by hypothesis 11 and experiment A13 before it is quoted again.
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
