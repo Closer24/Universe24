@@ -1703,7 +1703,7 @@ field of a charge at rest is established, in this table's sense, at no r
 the engine reaches today, and the exponent clause can be met only from r ≈
 24 up.
 
-### Run 2, to the steady state (dense mode): r = 12 and 16 measured, r = 20 running
+### Run 2, to the steady state (dense mode), planned
 
 Planned before the run on 2026-09-17 (the register's entry, "Run 2, to the
 steady state (dense mode)"): the same two bodies under the dense mode
