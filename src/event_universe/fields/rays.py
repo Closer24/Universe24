@@ -118,6 +118,14 @@ def forward_rays(
         if wait < denominator:
             kept.append(replace(ray, wait=bounded(wait), phase=_held_phase(ray, definition)))
             continue
+        lagged = _spend_lag(ray, definition, meter)
+        if lagged is not None:
+            port, moved = lagged
+            if port < 0:
+                kept.append(moved)
+            else:
+                outgoing[port].append(moved)
+            continue
         port, moved = advance_ray(
             replace(ray, wait=wait - denominator),
             definition.headings[ray.heading],
@@ -128,6 +136,31 @@ def forward_rays(
     result = tuple(merge_rays(tuple(port_rays)) for port_rays in outgoing)
     meter.charge("send", sum(1 for port_rays in result if port_rays))
     return result, merge_rays(tuple(kept))
+
+
+def _spend_lag(ray: Ray, definition: SpatialFieldDefinition, meter: CostMeter) -> tuple[int, Ray] | None:
+    """Bending by delay (ray-binding-v1, Highlights 3.28): a face-clock lag that has
+    reached the phase modulus, one full interval of delay on that side, is spent at
+    this departure. On a transverse axis the ray steps one Link toward the lagging
+    side (the Port returned), its steps up by one and its phase moved by its rate,
+    its heading and event record unchanged: the turn of its line. On its own axis
+    the ray waits one interval (Port -1). A ray at its event Node leaves through its
+    event's Port first, so a lag is spent from the next Node on; the lowest lagging
+    axis is spent first, one Link per interval. None when no lag is due."""
+    if not ray.steps or not any(ray.lag):
+        return None
+    modulus = definition.phase_modulus
+    axis = next((a for a in range(3) if abs(ray.lag[a]) >= modulus), None)
+    if axis is None:
+        return None
+    sign = 1 if ray.lag[axis] > 0 else -1
+    lag = list(ray.lag)
+    lag[axis] = bounded(checked_work(lag[axis] - sign * modulus))
+    meter.charge("update", 2)
+    spent = replace(ray, lag=(lag[0], lag[1], lag[2]), phase=_held_phase(ray, definition))
+    if definition.headings[ray.heading][axis] != 0:
+        return -1, spent
+    return 2 * axis + (0 if sign > 0 else 1), replace(spent, steps=bounded(checked_work(ray.steps + 1)))
 
 
 def hold_rays(

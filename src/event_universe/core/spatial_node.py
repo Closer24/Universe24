@@ -56,6 +56,7 @@ from .spatial_state import (
     body_release,
     body_step,
     body_token,
+    bound_group,
     coherent_stock,
     detector_draw,
     holds_source_stock,
@@ -653,6 +654,9 @@ class SpatialNode(SpatialNodeState):
         if next_ray_wait is not None:
             # A later unrelated arrival starts its own load-priced wait.
             self.ray_wait = next_ray_wait if any(self.rays) else 0
+        # The output-clock delay of the bound group held here (ray-binding-v1):
+        # declared by the binding rule that fired this cycle, 0 once it is unbound.
+        self.bound_delay = plan.bound_delay
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -707,6 +711,23 @@ class SpatialNode(SpatialNodeState):
                     for i, field in enumerate(services.initial.fields)
                     if split.annulled and any(split.annulled[i])
                 },
+            )
+        group = bound_group(plan.kept_rays)
+        if group:
+            # The tick of the bound group (ray-binding-v1, Highlights 3.4): the
+            # binding rule fired again and the group stays, its phases advanced.
+            self._event(
+                "bound_tick",
+                tick,
+                services,
+                notifications=notifications,
+                families=[
+                    services.initial.fields[services.initial.spatial_fields[index].field].name
+                    for index, _ in group
+                ],
+                amounts=[ray.amount for _, ray in group],
+                phases=[ray.phase for _, ray in group],
+                ray_delay=plan.bound_delay,
             )
         self._event(
             "spatial_cycle",
@@ -1264,6 +1285,23 @@ class SpatialNode(SpatialNodeState):
                         index, arriving + returning, packet.port ^ 1, tick, services, absorbed, returns
                     )
                     returning = ()
+                if self.bound_delay and definition.field_of is None:
+                    # The bound load delays every departure of matter from this Node
+                    # (ray-binding-v1, Highlights 3.28): an arrival waits the declared
+                    # intervals before it meets or departs, one Node-wide wait in
+                    # place of the six per-face clocks. A field ray is information
+                    # and is never delayed by a clock (Highlights 3.5).
+                    arriving = tuple(
+                        replace(
+                            ray,
+                            interaction_delay=bounded(
+                                checked_work(ray.interaction_delay + self.bound_delay)
+                            ),
+                        )
+                        if ray.outbound
+                        else ray
+                        for ray in arriving
+                    )
                 ray_arrivals[index][packet.port] = checked_work(
                     ray_arrivals[index][packet.port]
                     + ray_stock(tuple(ray for ray in arriving if ray.outbound))

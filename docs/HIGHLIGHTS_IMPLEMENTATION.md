@@ -48,6 +48,24 @@ ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
 | 3.19, the external body's sinks | The `absorbed` line, 0 until feature 7b books it |
 | 3.26, the engine validates without inventing | A meeting whose outputs would change the total charge is rejected at validation; the runner's `conserved_at_every_completed_tick` is the ledger's identity re-checked from the recorded integers, and a record altered by hand is reported by tick and line |
 
+## Binding and gravity by delay - 2026-09-17 (`ray-binding-v1`)
+
+Issue #169, feature 8, implements the bound group of section 3.4 and gravity
+as bending by delay of section 3.28
+([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)):
+
+| Highlights | Implementation |
+| --- | --- |
+| 3.4, matter is a bound group; binding is the interaction whose result is zero events, the rays stay at the Node and interact again every interval | A `ray_interactions` rule without outputs assigning `delay` 1 holds its participants; the rule fires again every interval, the group's tick, stamped as one event and published as `bound_tick`; `bound_group` reads the group from the Node's rays and the snapshot lists `bound_groups` |
+| 3.4, mass is the retained energy of a bound group; the group's phase advance is its clock | The held rays keep their amounts; each phase advances once per interval by its family's rest rate; the group's mass in phase units is the sum of the rates |
+| 3.4, the binding may be a very large output-clock delay; a large mass makes the Node very slow | `ray_delay` on the binding rule: every arrival at the group's Node waits the declared intervals, one Node-wide wait approximating the six per-face clocks of 3.28 |
+| 3.4, unbound the same way anything else happens: a ray arrives and the declared coupling produces events that leave | An earlier declared outputs rule naming a bound participant and an arriving ray fires; its outputs leave as new event rays; the binding rule no longer fires |
+| 3.5, a bound group releases its field | A held ray releases on all six headings once per interval, booked as a source |
+| 3.28, the met ray is delayed, its output clock grows, more on the side nearer the heavy Node | A meeting output's `delay` by a declared table per the Port the field ray came through, in phase steps of the face clock on that side, carried as the ray's `lag` |
+| 3.28, the ray bends toward the heavy Node; bending is a change of momentum | A transverse lag that reaches the phase modulus is spent as one Link toward the lagging side at a later departure; the field ray returns reversed as the recoil; the momentum the turn moves is booked at the meeting as the meeting's source, the recoil's coupling to the group being open |
+| 3.17, remainders | The lag below the modulus stays on the ray as its owner; the floor of the delay is of a clock count, not of content |
+| Hypothesis 14, G = hbar c / (N m_0)^2 | `test_ray_binding.py` pins G_eff x N^2 = 64 over N = 2^8, 2^10, 2^12, 2^16 with the mass N / 4 phase steps per interval and b = 4 |
+
 ## The field as the ray's information - 2026-09-17 (`released-field-v1`)
 
 Issue #169, feature 7, implements the one field rule of sections 3.5 and 3.28
@@ -61,7 +79,7 @@ Issue #169, feature 7, implements the one field rule of sections 3.5 and 3.28
 | 3.5 and 3.14, the field ray returns reversed as the recoil, at finite speed | A `ray_interactions` rule with an output of heading `"reversed"`; the test pins the recoil walking back one Link per tick |
 | 3.3, the field acts at the crossing | The meeting fires in the interval the G ray and the responding ray share a Node, like every meeting |
 | 3.17, remainders | The fraction the floor leaves is not released; a description booked as a source destroys nothing |
-| 3.28, gravity is bending by delay | The delay and the turn are outputs of the declared rule (heading, delay or phase); the recoil's coupling to its source and to bound groups is feature 8 |
+| 3.28, gravity is bending by delay | The delay and the turn are outputs of the declared rule (heading, delay or phase); the delay by a table per Port and the turn it produces are feature 8 (`ray-binding-v1`, above); the recoil's coupling to its source and to bound groups is open |
 | 3.19, the external body (`external-body-v1`) | Feature 7b (done 2026-09-17) releases the body's field on six headings by the same rule (`body_release`), booked as a source, with the sink it declares |
 
 ## Ray integration and local Focus - 2026-09-14

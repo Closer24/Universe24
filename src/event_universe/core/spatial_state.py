@@ -8,6 +8,7 @@ from .disturbance_state import (
     MAX_COMPONENTS,
     MAX_RULES,
     MAX_SLOTS,
+    MAX_VALUE,
     Address3,
     Assignment,
     CostMeter,
@@ -91,6 +92,15 @@ RAY_MEETING = "ray-meeting-conversion-v1"
 # a meeting of a field ray is an ordinary declared rule whose outputs return it
 # reversed as the recoil. A field has no field.
 RELEASED_FIELD = "released-field-v1"
+# Binding and gravity by delay (Highlights 3.4 and 3.28, ray-binding-v1): a rule
+# without outputs whose assignment sets delay 1 binds its participants as a bound
+# group that stays at the Node, ticks every interval and releases its field on all
+# six headings; an earlier outputs rule that names a bound participant and an
+# arriving ray unbinds it; a binding rule may declare the Node's output-clock
+# delay (ray_delay); a meeting output may carry a delay by a declared table per
+# the Port the field ray came through, a lag of the output's face clock in phase
+# steps that turns the ray toward the lagging side one Link per phase modulus.
+RAY_BINDING = "ray-binding-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -252,6 +262,12 @@ class Ray:
     event_ports: int = 0
     event_shares: EventShares = NO_EVENT_SHARES
     detector: int = DETECTOR_NONE
+    # Bending by delay (ray-binding-v1, Highlights 3.28): the lag of the ray's
+    # output-face clocks in phase steps, one signed integer per axis, positive
+    # toward the +axis Port. A transverse lag that reaches the phase modulus is
+    # spent as one Link toward the lagging side at the next departure; a lag on
+    # the ray's own axis as one interval of wait. Zero on every created ray.
+    lag: tuple[int, int, int] = (0, 0, 0)
 
 
 Rays = tuple[Ray, ...]
@@ -361,10 +377,30 @@ def validate_ray_participants(
                 for split in rule.splits
             ):
                 raise ValueError("ray meeting table split requires two outputs and the phase modulus")
+            if bounded(rule.ray_delay):
+                raise ValueError("ray_delay is declared by a binding rule, one without outputs")
+            for lag in rule.lags:
+                # ray-binding-v1: a delay by a table per Port on one output, read from
+                # the amount and the Port of one input.
+                if (
+                    not 0 <= lag.output < len(rule.outputs)
+                    or not 0 <= lag.source < len(rule.participants)
+                    or len(lag.table) != 6
+                    or any(type(v) is not int or bounded(v) < 0 for v in lag.table)
+                    or type(lag.per) is not int
+                    or not 1 <= lag.per <= MAX_VALUE
+                ):
+                    raise ValueError(
+                        "a delay table names an output and an input, six Port entries and a unit"
+                    )
         elif rule.splits:
             raise ValueError("a table split requires a meeting with outputs")
+        elif rule.lags:
+            raise ValueError("a delay table requires a meeting with outputs")
         elif any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
+        elif type(rule.ray_delay) is not int or bounded(rule.ray_delay) < 0:
+            raise ValueError("a binding rule's ray_delay is a nonnegative bounded integer")
     for layer in ray_layers(definitions, rules):
         # The indexed selector's capacity bounds one meeting, and a meeting exists
         # only inside a layer: fields of different layers never share it.
@@ -566,14 +602,31 @@ def release_field(
     each with the released amount and the source's phase, no event (mask 0,
     steps 0). The heading the source travels on is the source's own line ahead of
     it, which at link speed the source itself occupies, so it releases nothing
-    there and a straight ray never shares a Node with its own field."""
+    there and a straight ray never shares a Node with its own field. A ray held
+    at the Node by its interaction delay (a bound group, ray-binding-v1) occupies
+    no line ahead of it and releases on all six headings, once per interval."""
     released: list[Ray] = []
     for ray in rays:
         amount = release_amount(ray.amount, definition)
         if amount <= 0:
             continue
-        released.extend(_released(amount, ray.phase, definition, origin.headings[ray.heading]))
+        skip = None if ray.interaction_delay else origin.headings[ray.heading]
+        released.extend(_released(amount, ray.phase, definition, skip))
     return tuple(released)
+
+
+def bound_group(rays: tuple[Rays, ...]) -> tuple[tuple[int, Ray], ...]:
+    """The bound group resident at a Node (ray-binding-v1, Highlights 3.4): the
+    outbound rays at their event Node with no delay or wait pending, as (spatial
+    field, ray) pairs in field and merge-key order. A ray is at its event Node with
+    `steps` 0 only while a rule holds it there and ticks again; every other resident
+    ray has walked a Link, is waiting, or is returned. The Node keeps nothing else."""
+    return tuple(
+        (index, ray)
+        for index, bundle in enumerate(rays)
+        for ray in sorted(bundle, key=ray_merge_key)
+        if ray.outbound and ray.steps == 0 and not ray.interaction_delay and not ray.wait
+    )
 
 
 def release_stock(stock: int, definition: SpatialFieldDefinition) -> Rays:
@@ -927,6 +980,9 @@ class SpatialNodeState:
     # The external body this Node holds, whole, when one is declared or has
     # stepped here (external-body-v1); None at every other Node.
     body: ExternalBody | None = None
+    # The output-clock delay of the bound group held here (ray-binding-v1): the
+    # intervals every arriving ray waits before it meets or departs; 0 without.
+    bound_delay: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -948,6 +1004,8 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
+    # The output-clock delay declared by the binding rule that fired this cycle.
+    bound_delay: int = 0
     # The inverse splits of this cycle, one per returned ray at its event Node,
     # and the content they annulled per field (inverse-split-v1).
     inverse_splits: tuple[InverseSplit, ...] = ()
@@ -1044,6 +1102,10 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray wait must stay below its heading's pace denominator")
         if bounded(ray.interaction_delay) < 0:
             raise ValueError("ray interaction delay must be nonnegative")
+        if type(ray.lag) is not tuple or len(ray.lag) != 3 or any(type(v) is not int for v in ray.lag):
+            raise ValueError("a ray requires three integer face-clock lags")
+        for value in ray.lag:
+            bounded(value)
         validate_ray_event_state(ray)
 
 
@@ -1159,7 +1221,8 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     """The same wave ray reversed on its line (detector-return-v1).
 
     The heading index becomes the index of the negated heading, outbound becomes 0
-    and the transport accumulators (DDA, pace wait, interaction delay) are reset;
+    and the transport accumulators (DDA, pace wait, interaction delay, face-clock
+    lag) are reset;
     amount, phase, steps, event Ports, event shares and Detector bit are exactly
     what arrived. The Detector admission guarantees the negated heading is in the
     sequence; a field where it is not fails closed.
@@ -1174,6 +1237,7 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         accumulators=(0, 0, 0),
         wait=0,
         interaction_delay=0,
+        lag=(0, 0, 0),
         outbound=0,
     )
 
@@ -1246,7 +1310,9 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
     return tuple(replace(r, detector=ray.detector) for r in stamped), ports
 
 
-RayMergeKey = tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int]
+RayMergeKey = tuple[
+    int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int, tuple[int, int, int]
+]
 
 
 def ray_merge_key(ray: Ray) -> RayMergeKey:
@@ -1263,6 +1329,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.event_ports,
         ray.event_shares,
         ray.detector,
+        ray.lag,
     )
 
 
@@ -1291,6 +1358,7 @@ def merge_rays(rays: Rays) -> Rays:
             event_ports=ports,
             event_shares=shares,
             detector=detector,
+            lag=lag,
         )
         for (
             heading,
@@ -1304,6 +1372,7 @@ def merge_rays(rays: Rays) -> Rays:
             ports,
             shares,
             detector,
+            lag,
         ), amount in sorted(combined.items())
         if amount
     )

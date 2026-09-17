@@ -32,6 +32,7 @@ from .core.disturbance_state import (
     InitialState,
     InteractionDefinition,
     Invariant,
+    LagTable,
     OperationCosts,
     Payload,
     Seed,
@@ -1813,10 +1814,17 @@ def _ray_interactions(
     required = {"name", "participants", "invariants"}
     rules: list[InteractionDefinition] = []
     for raw in _array(value, "ray_interactions", MAX_RULES):
-        obj = _object(raw, "ray interaction", required | {"when", "assignments", "outputs"}, required)
+        obj = _object(
+            raw,
+            "ray interaction",
+            required | {"when", "assignments", "outputs", "ray_delay"},
+            required,
+        )
         if "outputs" in obj:
             if "assignments" in obj:
                 raise ValueError("a ray meeting with outputs assigns through its outputs")
+            if "ray_delay" in obj:
+                raise ValueError("ray_delay is declared by a binding rule, one without outputs")
             rule = _ray_meeting(obj, spatial, definitions)
         elif "assignments" not in obj:
             raise ValueError("a ray interaction requires assignments or outputs")
@@ -1824,6 +1832,9 @@ def _ray_interactions(
             rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
             if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
                 raise ValueError("ray interaction amount, advance, family and charge are read-only")
+            # ray-binding-v1: the output-clock delay of the Node that holds the
+            # group this rule binds; every arrival there waits it.
+            rule = replace(rule, ray_delay=_integer(obj.get("ray_delay", 0), "ray_delay", 0))
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
         if any(existing.name == rule.name for existing in rules):
@@ -1856,8 +1867,10 @@ def _ray_meeting(
     `{"rest_of": j}` for the rest of the content that output `j`'s table splits),
     `heading` (a Port index, `"same"` or `"reversed"` from its source `input`),
     `phase` (`"same"`, an offset from the source input, or `{"of": i, "offset": k}`)
-    and `delay`; its advance is its source input's. The outputs are compiled to the
-    assignments and table splits of `convert_values`.
+    and `delay` (an integer, or `{"of": i, "table": [six], "per": u}`, a lag of the
+    output's face clock by a declared table per the Port input i came through,
+    ray-binding-v1); its advance is its source input's. The outputs are compiled to
+    the assignments, table splits and delay tables of the meeting.
     """
     selections, layouts = _participant_selections(
         obj, RAY_PROPERTIES, definitions, minimum=2, maximum=MAX_CONVERSION_ARITY
@@ -1878,6 +1891,7 @@ def _ray_meeting(
     # of a family whose charge differs from its source's changes the total charge.
     amount_sources: dict[int, tuple[int, ...]] = {}
     every_input = tuple(range(len(selections)))
+    lags: list[LagTable] = []
     for position, raw in enumerate(raw_outputs):
         item = _object(
             raw,
@@ -1976,7 +1990,28 @@ def _ray_meeting(
             phase_expression = {"op": "add", "args": [phase_expression, offset]}
         assignments.append(Assignment(position, 2, parser.parse(phase_expression, 1)))
         assignments.append(Assignment(position, 3, parser.parse(ref("advance", source), 1)))
-        delay = _integer(item.get("delay", 0), "output.delay", 0)
+        raw_delay = item.get("delay", 0)
+        delay = 0
+        if isinstance(raw_delay, dict):
+            spec = _object(raw_delay, "output.delay", {"of", "table", "per"}, {"of", "table"})
+            of_input = _integer(spec["of"], "output.delay.of", 0)
+            if of_input >= len(selections):
+                raise ValueError("output.delay.of exceeds the declared roles")
+            entries = tuple(
+                _integer(entry, "output.delay.table", 0)
+                for entry in _array(spec["table"], "output.delay.table", 6, 6)
+            )
+            per = _integer(spec.get("per", 1), "output.delay.per", 1)
+            lags.append(
+                LagTable(
+                    position,
+                    of_input,
+                    (entries[0], entries[1], entries[2], entries[3], entries[4], entries[5]),
+                    per,
+                )
+            )
+        else:
+            delay = _integer(raw_delay, "output.delay", 0)
         assignments.append(Assignment(position, 4, parser.parse(delay, 1)))
         # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
         assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
@@ -2044,6 +2079,7 @@ def _ray_meeting(
         participants=tuple(selections),
         outputs=tuple(outputs),
         splits=tuple(splits),
+        lags=tuple(lags),
     )
 
 
