@@ -162,11 +162,14 @@ class SpatialLaw:
         record's field of the same name and share x heading to its momentum field;
         the rest of the ray stays resident and is forwarded. A record's own rays
         that arrived with it are left alone. Nothing here draws: the capture is
-        the coherent share or the deterministic threshold. Returns the total
-        amount absorbed.
+        the coherent share or the deterministic threshold. A returning ray
+        (outbound 0) enters no absorption and gates no coherence: it crosses the
+        Node as if alone (detector-return-v1). Returns the total amount absorbed.
         """
         definition = self.definitions[index]
         absorbed_total = 0
+        returning = [ray for ray in resident if not ray.outbound]
+        resident[:] = [ray for ray in resident if ray.outbound]
         # Kerengonen: the coherence of everything that arrived gates every share.
         coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
         if definition.coherent:
@@ -271,6 +274,7 @@ class SpatialLaw:
                     values=tuple(values),
                     absorbed_phases=tuple(phases) if definition.coherent else record.absorbed_phases,
                 )
+        resident.extend(returning)
         return absorbed_total
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:

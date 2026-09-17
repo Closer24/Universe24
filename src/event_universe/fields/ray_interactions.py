@@ -158,10 +158,11 @@ def _meet(
         if any(ray.amount <= 0 for ray in rays[index]):
             raise ValueError("ray coupling requires positive amounts")
     # Projection records only borrow values for the shared selector and evaluator.
-    # Their stable owner references below are the only commit destinations.
+    # Their stable owner references below are the only commit destinations. A
+    # returning ray takes part in no group (detector-return-v1).
     views: tuple[DisturbanceRecord | None, ...] = tuple(
         None
-        if rays[index][slot].interaction_delay
+        if rays[index][slot].interaction_delay or not rays[index][slot].outbound
         else DisturbanceRecord(index, _view(rays[index][slot], definitions[index], index), ())
         for index, slot in owners
     )

@@ -42,6 +42,7 @@ from .spatial_state import (
     Rays,
     SpatialBundle,
     SpatialCouplingResult,
+    SpatialFieldDefinition,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
@@ -52,6 +53,7 @@ from .spatial_state import (
     merge_rays,
     ray_merge_key,
     ray_stock,
+    return_ray,
     validate_rays,
     zero_spatial_state,
 )
@@ -235,18 +237,27 @@ class SpatialNode(SpatialNodeState):
     def catch_up_idle(self, tick: int) -> None:
         self.last_begin_tick = tick
 
+    def coupling_rays(self) -> tuple[Rays, ...]:
+        """The resident rays a coupling may read: the outbound ones.
+
+        A returning ray crosses the Node as if alone (detector-return-v1): no
+        coupling samples it, and a Node without one reads its rays as before.
+        """
+        if not any(not ray.outbound for rays in self.rays for ray in rays):
+            return self.rays
+        return tuple(tuple(ray for ray in rays if ray.outbound) for rays in self.rays)
+
     def _sampled_states(self, services: SpatialServices) -> tuple[SpatialState, ...]:
         """Resident ray stock is local value for a carrier reading a ray field."""
         if not any(self.rays):
             return self.states
+        rays = self.coupling_rays()
         result = []
         for index, (definition, state) in enumerate(
             zip(services.initial.spatial_fields, self.states, strict=True)
         ):
-            if definition.rays and index < len(self.rays) and self.rays[index]:
-                populations = (
-                    pack((coherent_stock(self.rays[index], definition),)),
-                ) + state.populations[1:]
+            if definition.rays and index < len(rays) and rays[index]:
+                populations = (pack((coherent_stock(rays[index], definition),)),) + state.populations[1:]
                 result.append(replace(state, populations=populations))
             else:
                 result.append(state)
@@ -296,7 +307,7 @@ class SpatialNode(SpatialNodeState):
         ):
             # Freeze only locally delivered input, before fresh source injection.
             sample_values = services.coupler.sample(self._sampled_states(services))
-            sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
+            sample_fluxes = services.coupler.sample_fluxes(self.states, self.coupling_rays())
             if services.initial.arrival_port_blind:
                 self.sample_delivered = tuple(state.delivered for state in self.states)
             if services.initial.spatial_interactions:
@@ -596,7 +607,7 @@ class SpatialNode(SpatialNodeState):
                 raise ValueError("pending field inputs are reserved by their local interaction")
             if self.last_begin_tick != tick or self.completed_tick == tick:
                 self.sample_values = services.coupler.sample(self.states)
-                self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
+                self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.coupling_rays())
                 self.sample_ports = services.coupler.sample_ports(self.states)
                 self.sample_received_masks = services.coupler.sample_received_masks(self.states)
             validate_samples(services.initial, self.sample_values, self.sample_fluxes, self.sample_ports)
@@ -680,7 +691,7 @@ class SpatialNode(SpatialNodeState):
         return services.coupler(
             records,
             services.coupler.sample(states),
-            services.coupler.sample_fluxes(states, self.rays),
+            services.coupler.sample_fluxes(states, self.coupling_rays()),
             services.coupler.sample_ports(states) if services.initial.spatial_interactions else (),
         )
 
@@ -892,7 +903,7 @@ class SpatialNode(SpatialNodeState):
         """Freeze coupled samples after this interval's field phase has delivered."""
         assert services.coupler is not None
         self.sample_values = services.coupler.sample(self._sampled_states(services))
-        self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
+        self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.coupling_rays())
         if services.initial.spatial_interactions:
             self.sample_ports = services.coupler.sample_ports(self.states)
             self.sample_received_masks = services.coupler.sample_received_masks(self.states)
@@ -933,25 +944,29 @@ class SpatialNode(SpatialNodeState):
         self,
         rays: Rays,
         port: int,
-        family: str,
+        definition: SpatialFieldDefinition,
         tick: int,
         services: SpatialServices,
         clicks: list[dict[str, object]],
+        returns: list[dict[str, object]],
     ) -> Rays:
         """One unsalted draw per arriving ray from the mark's own stream (detector-mark-v1).
 
         The rays of one Port are drawn in merge-key order. Each ray leaves with its
-        Detector bit set; a draw of 1 is recorded as a click and a draw of 0 records
-        nothing, because a return is no measurement. The draw reads nothing from the
-        ray. In this slice the ray continues unchanged on both outcomes; the return on
-        0 is not defined here.
+        Detector bit set. On 1 the ray continues unchanged and a click is recorded, the
+        measurement. On 0 the ray is returned in this interval (detector-return-v1):
+        the same wave ray reversed on its line, unchanged, leaving through the Port it
+        came in through at the next cycle; a detector_return event records the
+        reversal and no click, because a return is no measurement. The draw reads
+        nothing from the ray.
         """
         assert self.detector is not None
+        family = services.initial.fields[definition.field].name
         drawn = []
         for ray in sorted(rays, key=ray_merge_key):
             self.detector_ticket, bit = detector_draw(self.detector_ticket, self.detector)
-            drawn.append(replace(ray, detector=DETECTOR_BIT_1 if bit else DETECTOR_BIT_0))
             if bit:
+                drawn.append(replace(ray, detector=DETECTOR_BIT_1))
                 clicks.append(
                     services.events.message(
                         "detector_click",
@@ -963,6 +978,18 @@ class SpatialNode(SpatialNodeState):
                         bit=1,
                     )
                 )
+                continue
+            drawn.append(return_ray(replace(ray, detector=DETECTOR_BIT_0), definition))
+            returns.append(
+                services.events.message(
+                    "detector_return",
+                    tick,
+                    self.position,
+                    port=port,
+                    family=family,
+                    amount=ray.amount,
+                )
+            )
         return tuple(drawn)
 
     def receive(
@@ -1022,6 +1049,7 @@ class SpatialNode(SpatialNodeState):
         resident_rays = list(self.rays) or [() for _ in services.initial.spatial_fields]
         ray_arrivals = [[0] * 6 for _ in services.initial.spatial_fields]
         clicks: list[dict[str, object]] = []
+        returns: list[dict[str, object]] = []
         # A marked Node draws in the order of the Ports the rays came in through.
         for packet in sorted(arrivals, key=lambda packet: packet.port ^ 1):
             for index, packet_rays in enumerate(packet.rays):
@@ -1038,14 +1066,19 @@ class SpatialNode(SpatialNodeState):
                     losses[definition.field][0] = checked_work(losses[definition.field][0] + removed)
                     decay_cost = bounded(checked_work(decay_cost + meter.total))
                     arrival_cost = bounded(checked_work(arrival_cost + meter.total))
-                if self.detector is not None:
-                    incoming_rays = self._draw_arrivals(
-                        incoming_rays, packet.port ^ 1, field.name, tick, services, clicks
+                # A ray already on its way back crosses a marked Node undrawn, and a
+                # returning ray is delivered as no flux, as if it had not arrived.
+                arriving = tuple(ray for ray in incoming_rays if ray.outbound)
+                returning = tuple(ray for ray in incoming_rays if not ray.outbound)
+                if self.detector is not None and arriving:
+                    arriving = self._draw_arrivals(
+                        arriving, packet.port ^ 1, definition, tick, services, clicks, returns
                     )
                 ray_arrivals[index][packet.port] = checked_work(
-                    ray_arrivals[index][packet.port] + ray_stock(incoming_rays)
+                    ray_arrivals[index][packet.port]
+                    + ray_stock(tuple(ray for ray in arriving if ray.outbound))
                 )
-                resident_rays[index] = merge_rays(tuple(resident_rays[index]) + incoming_rays)
+                resident_rays[index] = merge_rays(tuple(resident_rays[index]) + arriving + returning)
                 validate_rays(resident_rays[index], definition, field)
         localized = list(self.localized) or [
             pack((0,) * services.initial.fields[d.field].components)
@@ -1178,8 +1211,10 @@ class SpatialNode(SpatialNodeState):
             packets=len(arrivals),
             received_fields=received_fields,
         )
-        # The clicks of this arrival interval: one per draw of 1, in draw order.
+        # The clicks of this arrival interval, one per draw of 1, then the returns,
+        # one per draw of 0, each in draw order.
         notifications.extend(clicks)
+        notifications.extend(returns)
         if services.decayer is not None:
             self._event(
                 "spatial_decayed",
