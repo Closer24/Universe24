@@ -751,12 +751,14 @@ class SpatialLaw:
         received_count: int = 0,
         node_cost: int | None = None,
         rays: tuple[Rays, ...] = (),
-        tick: int = 0,
         ray_hold: int = 0,
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
         detector_ticket: int = 0,
     ) -> SpatialPlan:
+        """One Node's spatial plan from its local input alone: the law reads no clock
+        (the Node checks its tick before planning), so equal inputs give equal plans
+        at any tick, which is what the plan-reuse key relies on."""
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
         if type(detector_ticket) is not int or bounded(detector_ticket) < 0:
@@ -777,8 +779,6 @@ class SpatialLaw:
             raise ValueError("ray interactions do not support a second ray hold clock")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
-        if bounded(tick) < 0:
-            raise ValueError("node clock must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)
         # Rays that arrived on the previous link; this cycle's emission joins them
         # only after absorption, so a record never swallows its own fresh rays.

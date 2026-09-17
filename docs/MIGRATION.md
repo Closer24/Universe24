@@ -6,6 +6,46 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A spatial plan is validated once, when it is made, on 2026-09-17
+
+The second of the two levers scheduled in
+[Run performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables):
+the Node boundary's `validate_spatial_plan` runs once per evaluated plan, at
+the execution, before the plan is returned or retained, so a plan-reuse hit
+is served a plan validated at its miss and the Node validates only what it
+changes after planning (an external body's part, whose registers are outside
+the key). Host work only; every run record is byte for byte the same (the
+measurement is recorded in
+[Run performance](PERFORMANCE.md#ray-event-engine-no-validation-on-a-plan-reuse-hit-2026-09-17)).
+
+- `NodeExecution` (`core/node_execution.py`) takes `spatial_validator`, a
+  `SpatialValidator` (`Callable[[SpatialPlanningInput, SpatialPlan], None]`),
+  and calls it on every spatial plan it evaluates, serial or batched;
+  `DisturbanceEngine` installs the Node boundary's check.
+- `SpatialEngine` takes `planner_validates` and `SpatialServices` carries it
+  (default `False`): `True` when `planner` validates every plan it returns
+  (the execution's reuse adapter, or parallel execution, whose batches serve
+  every request); a law installed on the services directly does not
+  validate, and the Node validates each of its plans as before.
+
+## The spatial plan key drops the world tick on 2026-09-17
+
+The first of the two levers scheduled in
+[Run performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables):
+the spatial law reads nothing from the clock, so the tick left the plan-reuse
+key and the law's signature, and a Node whose local input repeats reuses its
+plan across ticks. Host work only; every run record is byte for byte the same
+(the measurement is recorded in
+[Run performance](PERFORMANCE.md#ray-event-engine-the-tick-leaves-the-spatial-plan-key-2026-09-17)).
+
+- `SpatialPlanningInput` (`core/node_execution.py`) has no `tick` field; its
+  fields are `states`, `records`, `received`, `node_cost`, `rays`, `ray_hold`,
+  `remainders` and `remainder_phases`.
+- `SpatialLaw.__call__` (`fields/spatial_plan.py`), the `SpatialPlanner`
+  callable and `NodeExecution.spatial` take no `tick` argument; `rays` is
+  followed by `ray_hold`. The Node's clock check (`node clock must be
+  nonnegative`) stays in `SpatialNode.plan_cycle`.
+
 ## A push keeps the walk on 2026-09-17 (`ray-momentum-turn-v2`)
 
 Issue #169, feature 8b ([a free ray turns by
