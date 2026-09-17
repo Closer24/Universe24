@@ -53,20 +53,6 @@ def turn(table, participants=({"type": "m"}, {"type": "f"})):
     }
 
 
-def bind(table):
-    """The binding rule of bound-group-motion-v1, for the byte-identity case."""
-    return {
-        "name": "bind",
-        "participants": [{"type": "m"}, {"type": "m"}],
-        "assignments": [
-            {"participant": 0, "field": "delay", "expression": 1},
-            {"participant": 1, "field": "delay", "expression": 1},
-        ],
-        "momentum_table": table,
-        "invariants": [ENERGY],
-    }
-
-
 # The ordinary meeting with outputs of released-field-v1: the ray leaves on the
 # field ray's heading, a whole Port, and the field ray returns reversed.
 DEFLECT = {
@@ -262,17 +248,15 @@ STEEP_PATH = [
     ((14, 16, 10), ZERO),
 ]
 STEEP_PORTS = [2, 0, 2, 0, 2, 2, 0, 2, 0, 2]
-# The records of the worlds without a momentum table on a coupling of free rays,
-# byte for byte those of the source before ray-momentum-turn-v1 (events.jsonl,
-# state.json).
+# The record of the world without a momentum table on a coupling of free rays,
+# byte for byte that of the source before ray-momentum-turn-v1 (events.jsonl);
+# state.json re-pinned on 2026-09-17 when loop-binding-v1 removed the snapshot's
+# `bound_groups` key. The bound group of bound-group-motion-v1 went with that
+# feature.
 IDENTICAL = {
     "meeting": (
         "7ee9f730782a5c4de8cbc611751382cd48347005c9c4af0a557175ce7bdfec4d",
-        "687b709c767476b08de9d8dcbbdbd44eb4a693ebed02ec8126b82a743cedacdf",
-    ),
-    "group": (
-        "f4cfa4330b7fda3a54a944f86a8e8e10341fb6eb6a050ee47274a853355a2221",
-        "9a60f9ed7cc3b96fb696ef17971019c0e5aa31d95275c9e439bf0db48a4f4d3b",
+        "d824629b8e7570a3b7aab55fab2f7c286e885f10116133bbb9fc4fa99d4160bc",
     ),
 }
 
@@ -402,15 +386,10 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         return
     if case == "identical":
         # (d) No momentum table on a coupling of free rays: the ordinary meeting
-        # with outputs and the bound group pushed by its binding rule's table run
-        # byte for byte as before, no push recorded, no identity written.
+        # with outputs runs byte for byte as before, no push recorded, no
+        # identity written.
         worlds = {
             "meeting": document((((4, 10, 10), "m", 8, 0), ((10, 4, 10), "f", 2, 2)), [DEFLECT], 12),
-            "group": document(
-                (((9, 10, 10), "m", 4, 0), ((11, 10, 10), "m", 4, 1), ((5, 10, 10), "f", 2, 0)),
-                [bind({"f": -1})],
-                14,
-            ),
         }
         for name, raw in worlds.items():
             (tmp_path / name).mkdir()
@@ -421,14 +400,16 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             assert digests == IDENTICAL[name], name
         return
     # (e) Malformed tables are rejected at initialization, and a push that would
-    # leave a ray with no direction fails the cycle: a ray never stops.
+    # leave a ray with no direction fails the cycle: a ray never stops. A table
+    # beside assignments and a `ray_delay` are the held form of binding, removed
+    # by loop-binding-v1 on 2026-09-17, and name its migration note.
     lamps = (((4, 10, 10), "m", 8, 0), ((10, 4, 10), "f", 2, 2))
     for rules, message in (
         (
             [turn({"f": -1}) | {"assignments": [{"participant": 0, "field": "delay", "expression": 1}]}],
-            "families it does not bind",
+            "removed by loop-binding-v1",
         ),
-        ([turn({"f": -1}) | {"ray_delay": 1}], "families it does not bind"),
+        ([turn({"f": -1}) | {"ray_delay": 1}], "removed by loop-binding-v1"),
         ([turn({"f": -1}, ({"type": "m"}, {"type": "m"}, {"type": "f"}))], "the one ray it turns"),
         ([turn({"f": 2})], "attraction"),
         (

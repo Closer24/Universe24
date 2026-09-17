@@ -63,18 +63,23 @@ the second gap the helium-ion run (E4) found:
 | 3.15, exact accounting | The world ledger and the local audit read a free ray by its register wherever it is; the push and the reversal are booked as the meeting's momentum change, `conserved_at_every_completed_tick` true; a world without a free-ray table runs byte-identically (case (d) pins two records' digests) |
 | 3.4, the electron ray "whose trajectory is changed at every step by the field rays" | With a spread field (feature 12) and this coupling, the orbit of E4 becomes a staircase of pushes; A5 and A6 are runnable after this feature ([experiments](EXPERIMENTS.md)) |
 
-## Binding as a loop - 2026-09-17 (`loop-binding-v1`, design, feature 14 planned)
+## Binding as a loop - 2026-09-17 (`loop-binding-v1`)
 
 Issue #169, feature 14, the model owner's decision of 2026-09-17 in section
 3.4 ("Binding is a periodic orbit of the meeting rule"): designed on
-2026-09-17 ([loop binding](LOOP_BINDING.md)), with the unit-square electron
-as a world (`examples/nature/ring.json`, its dispersing control
-`ring_open.json`, register entry E5) and the expected integers of
-`tests/test_loop_binding.py` pinned before any run
-([expectations](TEST_EXPECTATIONS.md#loop-binding)). No engine code
-changed; the implementation follows feature 8b (12, 8c and 2b landed).
+2026-09-17 ([loop binding](LOOP_BINDING.md)) and landed the same day
+([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)),
+with the unit-square electron as a world (`examples/nature/ring.json`, its
+dispersing control `ring_open.json`, register entry E5, measured) and the
+expected integers of `tests/test_loop_binding.py` pinned before any run
+([expectations](TEST_EXPECTATIONS.md#loop-binding)). The implementation is
+the removal of the held form and its register, the record's reading of a
+group, the catalog's binding entries as corner tables, and the nature
+examples as loops (E1 to E3) or retired (E6); the rows of the held form
+below (feature 8) and of the register-driven motion (feature 8c) describe
+what was removed.
 
-| Highlights | Design (planned implementation) |
+| Highlights | Implementation |
 | --- | --- |
 | 3.4, a ray never stops; a bound group is a set of rays whose meetings, under the ordinary table, reproduce the rays that entered them; no binding rule, only the table | A bound group is a periodic orbit of the Node's law of 5.2: a set of rays and a period after which every ray is back at its Node with its heading, amount and phase modulo the circle; a binding coupling of the catalog is an ordinary `ray_interactions` rule with outputs whose loop closes; nothing holds and nothing registers |
 | 3.4, the smallest loop is a unit square, each corner meeting two rays that leave through each other's Ports | The corner table in today's schema: two outputs, each input's amount and phase (`{"of": i}`) through the Port the other input came in by (`"heading": "reversed"` of the other `input`); four rays close it (two per sense at opposite corners), eight make every corner meet every interval; the world `ring.json` |
@@ -83,15 +88,19 @@ changed; the implementation follows feature 8b (12, 8c and 2b landed).
 | 3.5, the field of a bound group is released by rays in motion, five headings each | Every ring ray releases five headings at every Node it departs, one of them along the ring to the next corner, so the ring meets its own field after every turn; the six-heading release of a held ray goes with the held form; the closure of a ring with its own field, from which alone a content ladder can come, is open |
 | Hypothesis 12, the ladder is the set of contents and phases that close a loop under the table; A10 counts them | The counting procedure ring by ring over the corner table (LOOP_BINDING.md section 7); its result under today's tables: no content ladder from the Port form or the Born table, the only integer conditions being the presence condition and `L r = 0 (mod N)` |
 | 3.28, motion as the corners shifting, not a register on a Node | A moving loop is a different periodic orbit; what it takes (a phase pattern the table reads, the momentum of the turns carried by the field, the timing at the shifted corners) is stated and open; feature 8c's register is the interim form until then |
-| 3.4, the held-ray binding of feature 8 and the register-driven motion of feature 8c are the interim forms | The mapping and the removal list (the binding form of a rule without outputs, `ray_delay`, `bound_delay`, `bound_group`, `bound_groups`, `bound_tick`, the six-heading release of a held ray, all of `bound-group-motion-v1`) in LOOP_BINDING.md section 9; the catalog's `binds` entries become corner tables |
-| 5.5, expected integers written before the first run | The five pinned cases (`ring`, `open`, `slow`, `half`, `quadrature`); the engine of `main` at `c21e03e`, run once afterwards as the check the design allows, holds the ring and agrees with every pinned line, so the implementation starts at the removals and the record's reading of a group, not at a failing step |
+| 3.4, the held-ray binding of feature 8 and the register-driven motion of feature 8c are the interim forms | Removed on 2026-09-17 (the binding form of a rule without outputs, `ray_delay`, `bound_delay`, `bound_group`, `bound_groups`, `bound_tick`, the six-heading release of a held ray, all of `bound-group-motion-v1`; [migration](MIGRATION.md#binding-as-a-loop-landed-on-2026-09-17-loop-binding-v1)): a rule meets only rays that arrived at the Node, so the output of a rule waiting its `delay` at its event Node is met by nothing there and leaves, and nothing can hold; a world declaring the removed keys is rejected naming the note; the catalog's `binds` entries are corner tables ([catalog](CATALOG.md)) |
+| 3.4, a group lives on a ring, not at one Node; nothing at a Node names it | The reading of a group from the record: the ray viewer's extractor reads the rays that keep meeting each other at the Nodes where they meet, their states recurring with a period over at least two periods, and reports each group's ring, content, period and clock (`groups` in the run document, `group` on each ray, `bound` per tick), drawn as matter; `ring.json` reads as one group, content 8, period 4, clock 2 |
+| 5.5, expected integers written before the first run | The five pinned cases (`ring`, `open`, `slow`, `half`, `quadrature`) hold line for line on the landed engine, with the record's cases (`record`: the corner bookings, no `bound_tick`, the loop identity, the reading of the group) and the rejection of the removed keys (`rejected`); E5 measured on 2026-09-17 |
 
-## Bound groups that move - 2026-09-17 (`bound-group-motion-v1`)
+## Bound groups that move - 2026-09-17 (`bound-group-motion-v1`, removed 2026-09-17)
 
-Issue #169, feature 8c, implements the motion of matter of sections 3.4 and
+Issue #169, feature 8c, implemented the motion of matter of sections 3.4 and
 3.28 by the external body's rule of section 3.19
 ([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)),
-the gap the helium-ion run (E4) found:
+the gap the helium-ion run (E4) found; removed the same day by feature 14
+(`loop-binding-v1`, above): the motion of a group as a whole must be its
+corners shifting, a different periodic orbit, which is open. The rows
+describe what was removed:
 
 | Highlights | Implementation |
 | --- | --- |
@@ -101,11 +110,16 @@ the gap the helium-ion run (E4) found:
 | 3.16, momentum is directional, conserved component by component; 3.15, exact accounting | The world ledger and the local audit read a bound group by its register, the push and the recoil's reversal are booked as the meeting's sources of the momentum field, a group leaving an open boundary is booked as escaped with its content and register; `conserved_at_every_completed_tick` stays true |
 | Hypothesis 15, the slower ticking of a moving group must emerge, not be inserted | Nothing here slows a clock: a moving group ticks once per interval as at rest; A14 remains the experiment |
 
-## Binding and gravity by delay - 2026-09-17 (`ray-binding-v1`)
+## Binding and gravity by delay - 2026-09-17 (`ray-binding-v1`; its held form removed 2026-09-17)
 
-Issue #169, feature 8, implements the bound group of section 3.4 and gravity
-as bending by delay of section 3.28
-([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)):
+Issue #169, feature 8, implemented the bound group of section 3.4 as a held
+group and gravity as bending by delay of section 3.28
+([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
+The held form (the first five rows below) was removed the same day by feature
+14 (`loop-binding-v1`, above): a bound group is a periodic orbit of the
+meeting rule on a ring; the delay table, the lag and the criterion of
+hypothesis 14 (the last three rows) stay under this identity, with resident
+content, a record holding stock, as the mass in `test_ray_binding.py`:
 
 | Highlights | Implementation |
 | --- | --- |
@@ -328,6 +342,7 @@ a schedule (`dissolve`: a particle becoming its own wave train).
 | 3.15, 3.17, 3.26, 5.1 | Meeting of rays with N-to-M outputs (2026-09-17, issue #169 feature 6): a rule with declared outputs replaces its participants by one to six new event rays at the meeting Node, each stamped `steps 0` with the mask and shares of the meeting; every family's stock and the declared readout invariants are exact as sums over inputs and outputs; an amount may be split by a declared table indexed by the phase difference of two inputs, the rest output owning the remainder (3.17), the engine only splitting by the table (3.26); the momentum a split moves is booked as an accounted source until the field ray of feature 7 owns it (3.15); no draw. Identity `ray-meeting-conversion-v1`. | [Meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1), [expectations](TEST_EXPECTATIONS.md#ray-meetings-with-outputs) |
 | 3.3, 5.1 | Wave-ray families (2026-09-17, issue #169 feature 9): every ray is a wave ray, a plain ray the special case with rest rate 0; each family's catalog entry declares its phase width `phase_bits` (a mask, never a division, no bound in the model), its rest rate (`kerengonen.phase_advance`, 0 for light, whose rays carry the emitter's phase unchanged) and its charge per quantum; `RAY_PROPERTIES` gains read-only `family` and `charge`, and `charge x amount` summed over rays is an invariant of every declared ray interaction and a world readout. Identity `wave-ray-family-v1`. | [Wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1), [expectations](TEST_EXPECTATIONS.md#wave-ray-families) |
 | 3.5, 3.19, 3.28 | External body (2026-09-17, issue #169 feature 7b): the world key `external_bodies` declares a Node holding a family with an amount of any width, a charge, an initial momentum (heading and pace), a coupling and a momentum table; it radiates the released field of its family on all six headings every interval, `floor(amount x n / d)` per heading, booked as a source; it never spreads and no ray of its family exists at its Node; whatever arrives is met by its coupling, the explicitly accounted sink by default (`external_body_totals()`, the conservation line initial + sources = current + dissipated + escaped + annulled + absorbed_by_bodies) or a declared meeting with outputs in which the body is the participant that never changes (a mirror, a splitter, a phase plate); only field rays its table names move it, sign x amount x heading, and its velocity is an exact accumulator per axis that steps one Link when a whole amount has accumulated, the bodies' momentum an audit line of its own; the runner records `external_body: "external-body-v1"` and `external_bodies` with positions per tick. Identity `external-body-v1`. | [External body](SPATIAL_FIELDS.md#the-external-body-external-body-v1), [expectations](TEST_EXPECTATIONS.md#external-body) |
+| 3.4, 3.28 | Binding as a loop (2026-09-17, issue #169 feature 14): a ray never stops; a bound group is a periodic orbit of the ordinary meeting rule, rays in motion on a ring of Nodes whose corner meetings, under an ordinary `ray_interactions` rule with outputs, reproduce the rays that entered them; the unit square is the smallest ring, its corner table the Port form (each input through the Port the other came in by), closure the integer equalities of presence, geometry, the table and `L r = 0 (mod N)`; content is the sum of the rays' amounts and the clock their phases; a rule meets only rays that arrived, so the outputs of a rule waiting their `delay` at their event Node are met by nothing and leave, and nothing holds; the held form of `ray-binding-v1` and all of `bound-group-motion-v1` removed; a group is read from the record by the ray viewer's extractor (ring, content, period, clock). Identity `loop-binding-v1`. | [Binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop binding](LOOP_BINDING.md), [expectations](TEST_EXPECTATIONS.md#loop-binding) |
 | 3.5, 3.17, 3.20, 3.23 | Field spreading (2026-09-17, issue #169 feature 12): a ray family's catalog entry `spread`, six weights in Port order relative to the arriving heading (forward, backward, four equal transverse, the backward one positive), makes every Node its content reaches release it again in all six headings, after the marks and the meetings and before the departures: the outbound content that arrived is taken off the Node, amounts add per arriving heading, the phase is the phase of the coherent sum, each heading's content is shared in whole quanta by the table and the remainder leaves whole through the entry the phase selects, so a quantum never waits (the interim rule; feature 12b, `field-remainder-v1` below, replaced it the same day with the remainder owned by the Node); the departures are fresh field rays with no event; the total is exact, the momentum difference is an accounted source of the bound momentum field, the local audit reads the `field_spread` record; the runner records `field_spreading: "field-spreading-v1"` and `spreading_fields` only when a family declares `spread`, and a world without one is byte-identical. The sign of the source's charge travels on the field ray as `source_sign`, a visible property like the Detector bit and never in the phase (3.5, the field is matter's message about itself); a returned field quantum walks back along its line, with no inverse split, until its emitter, its source, coupled content, a body or the boundary takes it (the `field_returned` record): the orchestrator's proposal of 5.5, implemented exactly and pending the model owner's decision. Identity `field-spreading-v1`. | [Field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), [expectations](TEST_EXPECTATIONS.md#field-spreading) |
 | 3.5, 3.15, 3.17, 3.20 | The Node owns the sub-quantum remainder (2026-09-17, feature 12b): in the spread step the whole quanta per heading leave and the shares below one quantum go to the Node's remainder registers per family, source sign and heading, in units of 1/S, their phase combined with the arriving share's by the coherence rule; a register that reaches S releases one whole quantum through its heading in that interval (k for kS), with the register's phase, as a fresh eventless field ray keeping the source sign; a Node with a nonzero register stays active until it is empty; the `field_spread` record carries `released`, `stored`, `registers` and `register_phases`, the snapshot `field_remainders`; the world ledger and the local audit count the registers as current content, their sum over S, whole quanta exactly since the weights sum to S, with no momentum, and a register never escapes; the runner records `field_remainder: "field-remainder-v1"`, and a world without `spread` is byte-identical. Chosen over the phase-selected heading that the screen run (E6) showed sends a single quantum along one fixed line. Identity `field-remainder-v1`. | [The split and the remainder](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), [expectations](TEST_EXPECTATIONS.md#field-spreading) |
 | 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), de Broglie (`examples/de-broglie/`, deleted on 2026-09-17), matter wave (`examples/matter-wave/`, deleted on 2026-09-17), mirror (`examples/kerengonen-mirror/`, deleted on 2026-09-17), Euclidean pace (`examples/euclidean-pace/`, deleted on 2026-09-17), claim and gather (`examples/claim-gather/`, deleted on 2026-09-17), [validation](VALIDATION.md) |

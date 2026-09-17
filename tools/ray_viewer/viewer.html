@@ -547,6 +547,7 @@
       parts.push(template(cs.totals, {
         family: f.name, in_world: vec(inWorld), escaped: vec(esc),
         on_links: vec((row.on_links || {})[f.name] || [0]), held: vec((row.held || {})[f.name] || [0]),
+        bound: vec((row.bound || {})[f.name] || [0]),
         sourced: vec((row.sourced || {})[f.name] || [0])
       }));
     });

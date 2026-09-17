@@ -84,9 +84,9 @@ set by the engine at the release, read by couplings and never the phase;
 feature 12 carries it, and `electron_field_turn.opposite_charge` closes with
 it (A5). A field ray is a ray with an empty event record, rest rate 0 and
 charge 0, and nothing else.
-A `bound_group` adds `members` (ray id to count), `binding` (the coupling that
-holds it) and, if it can decay, `decay` (the conversion and the mark's
-setting). A property read only at a meeting (`colour`, `spin`,
+A `bound_group` adds `members` (ray id to count), `binding` (the corner table
+whose loop its rays close, loop-binding-v1, 2026-09-17) and, if it can decay,
+`decay` (the conversion and the mark's setting). A property read only at a meeting (`colour`, `spin`,
 `polarization`) sits on the ray record; `reference` holds a measured number
 the register quotes for comparison, never a lattice value.
 
@@ -96,16 +96,21 @@ identity that runs it, and `landed`: true when every mechanism it needs is on
 `main`, false when a feature or a property it needs, colour, spin, the
 group's draw, is not), `participants` (the ray ids that meet, `"any"` for
 every ray, or `{"apparatus": "external_body"}`), one of `outputs` (the event
-rays, in the format of a `ray_interactions` rule when decided, or the shape
-of the table when not), `binds` (the rays held at the Node, zero events: the
-interim held form of feature 8; under feature 14, binding as a loop,
-Highlights 3.4, 2026-09-17, a binding coupling is an ordinary meeting table
-whose loop closes) or `sink` (absorption into the accounted sink),
+rays, in the format of a `ray_interactions` rule when decided, or
+`"undecided"` when not) or `sink` (absorption into the accounted sink),
 `invariants` (the exact sums
 over inputs and outputs; `charge × amount` is appended by the engine) and
 `note`. In an external-body coupling `"any"` and `"same"` stand for the met
 family, `"body"` for the body's family and `"setting"` for the body's
-offset; a world writes the names.
+offset; a world writes the names. A binding coupling
+(`electron_proton_binding`, `quark_binding`, `gluon_gluon_binding`,
+`pauli_exclusion`) is a **corner table** since 2026-09-17 (feature 14,
+[loop binding](LOOP_BINDING.md), `loop-binding-v1`): an ordinary outputs
+rule whose loop closes, with a `closes` note saying what closes under it;
+the Port form of the ring's `corner` rule where the design gives it, the Born
+form where the design names it, `"undecided"` where the model owner has not
+decided. The held form of feature 8 (`binds`, `delay` 1, `ray_delay`) is gone
+from the engine and from the file.
 
 **The apparatus** (`apparatus.detector`, `apparatus.external_body`):
 `world_key`, `engine`, `declaration` (the keys a world writes), `does` and
@@ -159,12 +164,12 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
 | `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |
-| `couplings.quark_binding.table` | The three-quark binding table | hypothesis 12 |
-| `couplings.gluon_gluon_binding.table` | The field-to-field binding table, the one catalog line by which gluon rays close into a string between quarks (Highlights 3.26, 2026-09-17) | hypothesis 13 |
+| `couplings.quark_binding.outputs` | The three-quark corner table (an outputs rule whose loop closes, loop-binding-v1) | hypothesis 12 |
+| `couplings.gluon_gluon_binding.outputs` | The field-to-field corner table, the one catalog line by which gluon rays close into a string between quarks (Highlights 3.26, 2026-09-17; an outputs rule whose loop closes, loop-binding-v1) | hypothesis 13 |
 | `couplings.weak_conversion.shares` | The neutron's content shared among proton, electron and antineutrino | A9 |
 | `couplings.weak_conversion.headings` | The headings of the three products | A9 |
-| `couplings.pauli_exclusion.table` | What two electrons of opposite spin bind to (feature 11) | hypothesis 12 |
-| `couplings.transmission_meets_held_share.outputs` | The table between the transmission and the held share | A3 |
+| `couplings.pauli_exclusion.outputs` | What two electrons of opposite spin bind to (feature 11): the Born-form corner table with the guard on spin, loop-binding-v1 | hypothesis 12 |
+| `couplings.transmission_meets_held_share.outputs` | The table between the transmission and the share waiting under its delay output, and where the two meet (a ray waiting at its event Node is met by nothing there since loop-binding-v1) | A3 |
 | `couplings.beam_splitter.outputs.table` | The split ratio of the splitter | A2 |
 | `couplings.slit.outputs.shares` | The share per forward heading of a slit | A1 |
 | `couplings.polarizer.outputs.table` | The polarizer's cos² table in N-ths (feature 11) | A12 |
@@ -187,7 +192,7 @@ it uses; the layers follow.
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
 | `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, the optional `on_bit_1` and `on_bit_0` (`"pass"` or `"draw"`, the couplings on the bit a ray carries, `detector-bit-property-v1`), and the world's `return_mode`; a coupling's `bit` (`"highest"`, `"none"`, `{"of": i}`) is the `bit` key of its `ray_interactions` rule |
 | `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once |
-| A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)); the interim held form, superseded by feature 14, binding as a loop, under which a bound group is a fixed point of the ordinary meeting table over a loop on a ring of Nodes (Highlights 3.4, 2026-09-17) |
+| A bound group | A loop: rays circulating on a ring of Nodes under the corner table, one `ray_interactions` rule with outputs per binding coupling, as `examples/nature/ring.json` declares the unit-square electron ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop binding](LOOP_BINDING.md); Highlights 3.4, 2026-09-17); nothing holds and no key names the group, which a reader finds in the record. The held form (a rule without outputs assigning `delay` 1, `ray_delay`) was removed by feature 14 on 2026-09-17 |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 
 A bound group's decay draw (the mark drawing at the group's tick), colour

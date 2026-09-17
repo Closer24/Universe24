@@ -19,7 +19,6 @@ SpatialPlanner = Callable[
         tuple[Rays, ...],
         int,
         int,
-        int,
         Remainders,
         Remainders,
     ],
@@ -48,9 +47,6 @@ class SpatialPlanningInput:
     tick: int = 0
     # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
     ray_hold: int = 0
-    # The Port the bound group held at the Node departs through this interval,
-    # or -1 (bound-group-motion-v1): decided by the Node from its register.
-    bound_port: int = -1
     # The Node's remainder registers and their phases (field-remainder-v1).
     remainders: Remainders = ()
     remainder_phases: Remainders = ()
@@ -90,7 +86,6 @@ def finish_local_cycle(
                     request.rays,
                     request.tick,
                     request.ray_hold,
-                    request.bound_port,
                     request.remainders,
                     request.remainder_phases,
                 )
@@ -121,7 +116,6 @@ def _plan_spatial_batch(
             item.rays,
             item.tick,
             item.ray_hold,
-            item.bound_port,
             item.remainders,
             item.remainder_phases,
         )
@@ -176,7 +170,6 @@ class NodeExecution:
         rays: tuple[Rays, ...] = (),
         tick: int = 0,
         ray_hold: int = 0,
-        bound_port: int = -1,
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
     ) -> SpatialPlan:
@@ -188,7 +181,6 @@ class NodeExecution:
             rays,
             tick,
             ray_hold,
-            bound_port,
             remainders,
             remainder_phases,
         )

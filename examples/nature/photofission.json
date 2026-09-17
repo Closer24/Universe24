@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "model_id": "nature-photofission-v1",
+  "model_id": "nature-photofission-v2",
   "shape": [
-    21,
-    21,
-    21
+    26,
+    26,
+    11
   ],
   "boundary": "open",
   "slots_per_node": 2,
   "link_ticks": 1,
   "normal_budget": 100000,
-  "ticks": 16,
+  "ticks": 32,
   "operation_costs": {
     "receive": 1,
     "read": 1,
@@ -58,7 +58,7 @@
   ],
   "disturbance_types": [
     {
-      "name": "proton_lamp",
+      "name": "proton_0",
       "fields": [
         "proton",
         "momentum"
@@ -76,7 +76,7 @@
       }
     },
     {
-      "name": "neutron_lamp",
+      "name": "neutron_0",
       "fields": [
         "neutron",
         "momentum"
@@ -94,7 +94,43 @@
       }
     },
     {
-      "name": "light_lamp_low",
+      "name": "proton_2",
+      "fields": [
+        "proton",
+        "momentum"
+      ],
+      "defaults": {
+        "proton": 6,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "neutron_2",
+      "fields": [
+        "neutron",
+        "momentum"
+      ],
+      "defaults": {
+        "neutron": 6,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "photon_low",
       "fields": [
         "light",
         "momentum"
@@ -112,7 +148,7 @@
       }
     },
     {
-      "name": "light_lamp_high",
+      "name": "photon_high",
       "fields": [
         "light",
         "momentum"
@@ -175,10 +211,10 @@
         1
       ],
       "phase_bits": 3,
-      "charge": 3,
       "kerengonen": {
         "phase_advance": 1
-      }
+      },
+      "charge": 3
     },
     {
       "field": "neutron",
@@ -224,10 +260,10 @@
         1
       ],
       "phase_bits": 3,
-      "charge": 0,
       "kerengonen": {
         "phase_advance": 1
-      }
+      },
+      "charge": 0
     },
     {
       "field": "light",
@@ -273,15 +309,15 @@
         1
       ],
       "phase_bits": 3,
-      "charge": 0,
       "kerengonen": {
         "phase_advance": 0
-      }
+      },
+      "charge": 0
     }
   ],
   "emissions": [
     {
-      "type": "proton_lamp",
+      "type": "proton_0",
       "field": "proton",
       "amount": 6,
       "denominator": 1,
@@ -295,8 +331,22 @@
       "kerengonen_phase": 0
     },
     {
-      "type": "neutron_lamp",
+      "type": "neutron_0",
       "field": "neutron",
+      "amount": 6,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        0,
+        1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "proton_2",
+      "field": "proton",
       "amount": 6,
       "denominator": 1,
       "source": false,
@@ -309,21 +359,35 @@
       "kerengonen_phase": 0
     },
     {
-      "type": "light_lamp_low",
+      "type": "neutron_2",
+      "field": "neutron",
+      "amount": 6,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        0,
+        -1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "photon_low",
       "field": "light",
       "amount": 2,
       "denominator": 1,
       "source": false,
       "recoil_field": "momentum",
       "heading": [
+        1,
         0,
-        0,
-        1
+        0
       ],
       "kerengonen_phase": 0
     },
     {
-      "type": "light_lamp_high",
+      "type": "photon_high",
       "field": "light",
       "amount": 6,
       "denominator": 1,
@@ -331,8 +395,8 @@
       "recoil_field": "momentum",
       "heading": [
         0,
-        0,
-        -1
+        1,
+        0
       ],
       "kerengonen_phase": 0
     }
@@ -340,35 +404,51 @@
   "seeds": [
     {
       "position": [
-        9,
-        10,
-        10
+        20,
+        20,
+        5
       ],
-      "type": "proton_lamp"
+      "type": "proton_0"
     },
     {
       "position": [
-        11,
-        10,
-        10
+        20,
+        20,
+        5
       ],
-      "type": "neutron_lamp"
+      "type": "neutron_0"
     },
     {
       "position": [
-        10,
-        10,
-        4
+        21,
+        21,
+        5
       ],
-      "type": "light_lamp_low"
+      "type": "proton_2"
     },
     {
       "position": [
-        10,
-        10,
-        19
+        21,
+        21,
+        5
       ],
-      "type": "light_lamp_high"
+      "type": "neutron_2"
+    },
+    {
+      "position": [
+        0,
+        20,
+        5
+      ],
+      "type": "photon_low"
+    },
+    {
+      "position": [
+        20,
+        0,
+        5
+      ],
+      "type": "photon_high"
     }
   ],
   "ray_interactions": [
@@ -401,16 +481,22 @@
           "amount": {
             "of": 0
           },
-          "heading": 2,
-          "input": 0
+          "heading": "same",
+          "input": 0,
+          "phase": {
+            "of": 0
+          }
         },
         {
           "field": "neutron",
           "amount": {
             "of": 1
           },
-          "heading": 3,
-          "input": 1
+          "heading": "same",
+          "input": 1,
+          "phase": {
+            "of": 1
+          }
         },
         {
           "field": "light",
@@ -418,7 +504,10 @@
             "of": 2
           },
           "heading": "same",
-          "input": 2
+          "input": 2,
+          "phase": {
+            "of": 2
+          }
         }
       ],
       "invariants": [
@@ -454,37 +543,38 @@
           "type": "neutron"
         }
       ],
-      "assignments": [
+      "outputs": [
         {
-          "participant": 0,
-          "field": "delay",
-          "expression": 1
+          "field": "proton",
+          "amount": {
+            "of": 0
+          },
+          "heading": "reversed",
+          "input": 1,
+          "phase": {
+            "of": 0
+          }
         },
         {
-          "participant": 1,
-          "field": "delay",
-          "expression": 1
+          "field": "neutron",
+          "amount": {
+            "of": 1
+          },
+          "heading": "reversed",
+          "input": 0,
+          "phase": {
+            "of": 1
+          }
         }
       ],
       "invariants": [
         {
           "name": "energy",
           "expression": {
-            "op": "add",
-            "args": [
-              {
-                "field": "amount",
-                "participant": 0
-              },
-              {
-                "field": "amount",
-                "participant": 1
-              }
-            ]
+            "field": "amount"
           }
         }
-      ],
-      "ray_delay": 1
+      ]
     }
   ]
 }

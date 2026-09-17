@@ -29,7 +29,6 @@ Feature tests of issue #169 join this table as they land.
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
-| `test_bound_group_motion.py` | 5 | 0.90 | Issue #169 feature 8c: a bound group carries a momentum register and steps one Link when a whole content has accumulated on an axis, pushed by the field rays its binding rule's table names (`bound-group-motion-v1`) |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
@@ -50,6 +49,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_local_field_rules.py` | 11 | 0.13 | Local field rule: six-Port reads, retained and outgoing owners, guarded joint proposals |
 | `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
+| `test_loop_binding.py` | 7 | 0.70 | Issue #169 feature 14: a bound group is a periodic orbit of the ordinary meeting rule on a ring of Nodes, nothing at a Node names it, the record reads it, and the held form's keys are rejected (`loop-binding-v1`) |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_nature_catalog.py` | 4 | 0.12 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
@@ -58,6 +58,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
 | `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
+| `test_ray_binding.py` | 2 | 1.43 | Issue #169 feature 8, gravity by delay: a light ray is delayed by a declared table per Port at the field of a mass and turns toward it, G_eff x N^2 one integer over four widths (`ray-binding-v1`; its held form removed on 2026-09-17 by feature 14) |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
 | `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
 | `test_ray_event_audit.py` | 3 | 0.90 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release, an escape and an external body's sink (`ray-event-audit-v1`) |
@@ -68,7 +69,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
 | `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`) |
-| `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the screen example world, pinned below (no browser) |
+| `test_ray_viewer.py` | 3 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file and its GIF presets, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -1055,10 +1056,22 @@ from the event stream alone (no per-tick recording, so no phase):
   reads the two G clicks and "field escaped: G 8", tick 4 the two Detector
   PASS lines and "field escaped: G 12", tick 5 "escaped: quanta 6" and
   "field escaped: G 10", tick 6 the G click and "field escaped: G 8";
-  `record.released_field` is `released-field-v1`. The first pin had one
-  release at (2,1,1), at tick 2 only, from the released-field text ("in the
-  interval it departs"): the first run showed the engine also releasing at
-  tick 1, while both rays were held at (2,1,1) by the coupling's `delay`
+  `record.released_field` is `released-field-v1`. Since 2026-09-17 (feature
+  14, `loop-binding-v1`), the six-heading release of a held ray gone, a ray
+  waiting under the coupling's `delay` releases the five headings other than
+  its own like any ray: the tick-1 release sources G 10 (the four transverse
+  spokes G 2, the +X and -X spokes G 1, one from each waiting ray, read as
+  G rays of 2, 2, 2, 2, 1, 1), the tick-3 clicks are one G 1 (the +X G ray
+  of the ray heading -X), the clicks are four, the field escapes are G 8,
+  10, 10, 8 (the two axial packets of tick 1 carrying 1 each), the
+  `source_totals` G 40, `escaped_totals` G 38 becomes 36, `in_world` G 0, 0,
+  10, 12, 12, 12, 4, and tick 3's caption reads one Detector PASS and tick
+  4's ends "field escaped: G 10"; everything else as pinned, at the first
+  run on the new engine. The screen geometry test was deleted with the
+  retired `screen.json` (E6). The first pin had one release at (2,1,1), at
+  tick 2 only, from the released-field text ("in the interval it departs"):
+  the first run showed the engine also releasing at tick 1, while both rays
+  were held at (2,1,1) by the coupling's `delay`
   (source G 40, not 30; a fourth click at tick 3). That difference between
   the text and the implementation for a retained ray was reported with this
   fixture as the reproduction and is settled by feature 8; this test pins
@@ -1609,7 +1622,9 @@ nonzero block. `relative_ports` gives (0, 1, 2, 3, 4, 5) for Port 0 and
   its `state.json` `c13cd23158e5e461f171a8e2241ff793a24ccea531bd25ef54b28cfb2623e560`,
   both taken on main `f3809be` before feature 12 (final totals `G` 16 and
   `electron` 5, `G` 9 escaped), and its run record carries no
-  `field_spreading` key.
+  `field_spreading` key. Since 2026-09-17 (feature 14, `loop-binding-v1`)
+  the `state.json` digest is `026ac5ed...`, the snapshot having lost the
+  empty `bound_groups` key; `events.jsonl` is unchanged.
 
 ## Ray-event audit
 
@@ -1857,6 +1872,25 @@ assigning `delay` 1 to both participants, invariant energy. The test is
 parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
 `criterion`. Pinned before the first run:
 
+**Since 2026-09-17 (feature 14, `loop-binding-v1`).** The held form was
+removed ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)),
+so the cases `binding`, `unbinding` and `ray_delay` below are deleted and
+the test is parametrized over `gravity` and `criterion` alone, with the
+mass no longer a held pair but resident content: one record `mass` at
+(10,10,10) holding 16 of `n` and emitting nothing, whose stock releases
+floor(16 / 4) = 4 of `G` on every heading every interval from the cycle of
+tick 0, with phase 0 (released-field-v1, "resident content"); the two `n`
+lamps and `bind` are gone. The lines of (d) and (e) hold with three
+changes, pinned before the first run on the new engine: the G total and
+source after tick t are 24 t (24, 48, ..., 264 after tick 11, the first
+releases of the cycle of tick 0 escaping at tick 11, so the G total plus
+the G escaped equals the source); the G ray met at (10,14,10) after tick 6
+and the recoil have phase 0, not 2 (a record releases with phase 0); and in
+(e) the G total after tick 8 is 192, the mass M = N / 4 being the
+criterion's fraction rather than a sum of rates. The `n` total is 16 as
+before. The text of (a) to (c) stays below for the record of what the held
+form was.
+
 - (a) `binding`: after tick 1 the two `n` rays are at the center with
   headings 0 and 1, amount 8, phase 1, steps 1, masks 1 and 2 and shares
   (8, 0, 0, 0, 0, 0) and (0, 8, 0, 0, 0, 0). From tick 2 the rule fires
@@ -1939,9 +1973,16 @@ parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
   passage, exact), G_eff = alpha x b / (4 M) = 64 / N^2 (1/1024, 1/16384,
   1/262144, 1/67108864), and G_eff x N^2 = 64 for all four N, exactly.
 
-## Bound group motion
+## Bound group motion (deleted on 2026-09-17)
 
-`test_bound_group_motion.py` builds its boards inline under the shared
+`test_bound_group_motion.py` was deleted on 2026-09-17 with
+`bound-group-motion-v1` by feature 14, `loop-binding-v1`
+([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)):
+a bound group is rays in motion on a ring, and its motion as a whole is its
+corners shifting, which is open. The pins below stay for the record of what
+the register-driven motion was.
+
+`test_bound_group_motion.py` built its boards inline under the shared
 Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
 no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
 ([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)).
@@ -2147,11 +2188,17 @@ Pinned before the first run:
   +X, the binding rule with `{"f": -1}`), 14 ticks. The SHA-256 digests of
   `events.jsonl` and `state.json`, computed on the source before the
   feature (main `c21e03e`), are pinned in the test (`IDENTICAL`); no
-  `ray_push` record and no `ray_momentum_turn` key, every ledger balanced;
+  `ray_push` record and no `ray_momentum_turn` key, every ledger balanced.
+  Since 2026-09-17 (feature 14, `loop-binding-v1`) the bound group world
+  is gone with the held form and only the `meeting` world remains, its
+  `events.jsonl` digest unchanged and its `state.json` digest re-pinned
+  (`d824629b...`), the snapshot having lost the `bound_groups` key;
 - (e) `rejected`: a table naming a participant family on a rule that
-  assigns (`delay` 1) or declares `ray_delay`, a table with two unnamed
-  roles (`m x m x f`), a sign of 2, and a rule with neither assignments,
-  outputs nor table are each rejected at initialization; a role that mixes
+  assigns (`delay` 1) or declares `ray_delay` (both since 2026-09-17 the
+  held form removed by `loop-binding-v1`, rejected with a message naming
+  the migration note), a table with two unnamed roles (`m x m x f`), a
+  sign of 2, and a rule with neither assignments, outputs nor table are
+  each rejected at initialization; a role that mixes
   a named and an unnamed family gives `turn_receiver` no receiver (-1, the
   admission's refusal); and a push that would leave a ray with no
   direction fails the cycle: `m` 2 along +X from (4,10,10) meets `f` 2
@@ -2163,8 +2210,9 @@ Pinned before the first run:
 
 `tests/test_loop_binding.py` is the test of feature 14, binding as a loop
 (`loop-binding-v1`, [loop binding](LOOP_BINDING.md)), pinned here on
-2026-09-17 before the module exists, as Highlights 5.5 requires; it is
-written when the feature is implemented, after feature 8b. It builds the
+2026-09-17 before the module exists, as Highlights 5.5 requires, and written
+the same day when the feature landed, after feature 8b (the cases `record`
+and `rejected` below were pinned then, before their first run). It builds the
 unit-square ring of `examples/nature/ring.json` and `ring_open.json`
 inline (and does not load the example files): an open 12 x 12 x 11 board,
 `link_ticks` 1, `metric: "links"`, pace 1/1, the six unit-axial headings in
@@ -2182,11 +2230,12 @@ amounts by the catalog's Born table on the sum (`[8, 7, 4, 1, 0, 1, 4, 7]`,
 `"of": "sum"`, `"index": "phase_difference"`) and `{"rest_of": 0}`. A tick
 t is one `step()`; the state after tick t is read from `inventory_view()`;
 a ray is written as (Node, heading index, amount, phase, steps, mask,
-shares). The test is parametrized over `ring`, `open`, `slow`, `half` and
-`quadrature`. The engine of `main` at `c21e03e` was run once on every case
-after the pins were written (the check the design allows): its column is
-identical to the hand column below in every line, so one column is given.
-Pinned before the first run:
+shares). The test is parametrized over `ring`, `open`, `slow`, `half`,
+`quadrature`, `record` and `rejected`. The engine of `main` at `c21e03e`
+was run once on every case after the pins were written (the check the design
+allows): its column is identical to the hand column below in every line, so
+one column is given; on the landed engine every line of (a) to (e) held at
+the first run. Pinned before the first run:
 
 - (a) `ring` (`ring.json`, the Port form, r = 2): after tick 1 each corner
   holds two rays of amount 1, phase 2, steps 1, each carrying its lamp's
@@ -2212,9 +2261,10 @@ Pinned before the first run:
   and in the sources (the lamps hold minus their rays' momentum, (-1,0,0),
   (0,-1,0), (0,-1,0), (1,0,0), (1,0,0), (0,1,0), (0,1,0), (-1,0,0)), the
   charge line electron -24, every ledger line balanced,
-  `conserved_at_every_completed_tick` true; the snapshot's `bound_groups`
-  is empty at every tick and no `bound_tick` is written; the runner records
-  `ray_meeting: "ray-meeting-conversion-v1"`;
+  `conserved_at_every_completed_tick` true; the snapshot has no
+  `bound_groups` key (the design's "empty at every tick", the key itself
+  gone with the held form) and no `bound_tick` is written; the runner
+  records `ray_meeting: "ray-meeting-conversion-v1"`;
 - (b) `open` (`ring_open.json`, the Born form in phase, d = 0): after tick
   1 exactly the lines of (a). In the cycle of tick 1 input 0 at each corner
   is the resident ray with the lower heading index (the L ray at P0 and P2,
@@ -2256,7 +2306,44 @@ Pinned before the first run:
   table output takes floor(2 x 4 / 8) = 1 and the rest output 1, so the
   amounts are reproduced and the corner bookings are those of (a); the
   state after tick t + 4 equals the state after tick t from t = 2, electron
-  8, none escaped, through tick 6.
+  8, none escaped, through tick 6;
+- (f) `record`: the worlds of (a) and (b) through `run_initialization` for
+  16 ticks. The run record carries `loop_binding: "loop-binding-v1"` and
+  `ray_meeting: "ray-meeting-conversion-v1"`, no `bound_group_motion` key,
+  `conserved_at_every_completed_tick` true; no `bound_tick` and no
+  `bound_group_step` event exists; the `spatial_cycle` records of the
+  corners carry the momentum of the two quarter turns as their
+  `source_delta`: in every cycle of ticks 1 to 15 of (a) (2, 2, 0) at P0,
+  (-2, 2, 0) at P1, (-2, -2, 0) at P2, (2, -2, 0) at P3, and in the cycle
+  of tick 1 of (b) (1, 3, 0), (-1, 3, 0), (-1, -3, 0), (1, -3, 0) with no
+  momentum booked at any corner in the cycle of tick 2; the final totals
+  are electron 8 and momentum (0, 0, 0) for (a), electron 0 with 8 escaped
+  for (b). The ray viewer's extractor
+  ([ray viewer](../tools/ray_viewer/README.md)), reading the record of (a)
+  with its phase recording (`record_sidecar.py`), reports exactly one
+  group: ring `[P0, P1, P2, P3]` (the closed walk from the lowest Node
+  through the lowest Port), ring size 4, content 8, families
+  `{"electron": 8}`, period 4, clock `{"electron": 2}` on phase steps
+  `{"electron": 8}`, read from tick 1 to tick 15 (the emissions of tick 0
+  carry no recorded phase), over 120 rays, each of which carries `group` 0
+  and every other ray `group` None; the tick rows carry `bound`
+  `{"electron": [8]}` at ticks 1 to 15 and nothing at ticks 0 and 16.
+  Without the phase recording the reading is the same group with period 1
+  (the pattern of Nodes, headings and amounts is the same every interval)
+  and clock None. The record of (b) reads no group and no `bound` content;
+- (g) `rejected`: `ray_delay` 1 on the held rule of feature 8 (`n x n`
+  without outputs assigning `delay` 1 to both), `ray_delay` 1 on the
+  corner rule, and `{"electron": -1}` as `momentum_table` on the held rule
+  are each rejected at initialization with a message that says "removed by
+  loop-binding-v1" and names `docs/MIGRATION.md`. The held rule alone
+  parses and is a wait, not a hold: on the board of (a) with it in place of
+  `corner`, the two rays at each corner after tick 1 wait one interval at
+  their event Node (after tick 2 they are still there with steps 0 and
+  delay 0), are met by nothing, leave in the cycle of tick 2 on their
+  unchanged headings, off the square, and after tick 7 the eight rays are
+  at the board's edge, at (0,5,5), (0,6,5), (5,0,5), (5,11,5), (6,0,5),
+  (6,11,5), (11,5,5) and (11,6,5), the corners empty from tick 3, electron
+  8, none escaped, momentum (0, 0, 0), charge -24, every line balanced.
 
 ## Catalog of nature
 
@@ -2303,8 +2390,15 @@ first run:
   `on_bit_1` and `on_bit_0`, open, their world key undecided and decided by
   feature 2b, their engine not landed, their defaults pass without a draw
   and transmission without a draw and their alternative `draw`
-  (Highlights 5.4, 2026-09-17); both apparatus kinds landed;
-- `undecided`: 28 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  (Highlights 5.4, 2026-09-17); both apparatus kinds landed. Since
+  2026-09-17 (feature 14, `loop-binding-v1`) a coupling has `outputs` or
+  `sink`, never `binds`: the four binding couplings are corner tables, an
+  outputs rule whose loop closes with a `closes` note, `electron_proton_binding`
+  the Port form and the three others `"undecided"`, and a bound group's
+  `binding` names one of them;
+- `undecided`: 28 entries (since 2026-09-17 the three undecided binding
+  tables under `outputs` instead of `table`, the same count), every decider
+  one of A1, A2, A3, A5, A6, A8, A9,
   A10, A12, hypothesis 12, hypothesis 13, hypothesis 16, hypothesis 17,
   feature 8b, read from the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings

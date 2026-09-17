@@ -53,7 +53,9 @@ SECTIONS = {
 }
 RAY_KEYS = {"kind", "rest_rate", "charge", "phase_bits", "field", "note"}
 COUPLING_KEYS = {"status", "engine", "participants", "invariants", "note"}
-RESULT_KEYS = {"outputs", "binds", "sink"}
+# A coupling has outputs (a binding coupling among them, an outputs rule whose
+# loop closes, loop-binding-v1) or is the sink of an external body.
+RESULT_KEYS = {"outputs", "sink"}
 APPARATUS_KEYS = {"world_key", "engine", "declaration", "does", "note"}
 EXPERIMENT_KEYS = {"rays", "couplings", "apparatus", "note"}
 # The rays a world can select today, in catalog order, the releases a world can
@@ -307,8 +309,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
     if case == "records":
         # (a) The sections, the units and every record with its required keys, every
         # reference resolving: a field lists its sources and each source lists it; a
-        # bound group's charge is the sum over its members; a decided coupling has
-        # nothing undecided in what it does; an external-body coupling is one the
+        # bound group's charge is the sum over its members and its binding is a
+        # corner table; a decided coupling has nothing undecided in what it does;
+        # an external-body coupling is one the
         # external body lists, and the Detector's declaration is the mark's three keys.
         assert set(data) == SECTIONS
         assert (data["schema"], data["date"]) == ("nature-catalog-v1", "2026-09-17")
@@ -345,7 +348,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                     for member, count in members.items()
                 ), name
                 assert sum(rays[m]["charge"] * count for m, count in members.items()) == ray["charge"]
-                assert "binds" in couplings[ray["binding"]], name
+                # A bound group's binding is a corner table (loop-binding-v1,
+                # 2026-09-17): an outputs rule whose loop closes, decided or not.
+                assert "outputs" in couplings[ray["binding"]], name
                 assert "decay" not in ray or ray["decay"]["coupling"] in couplings, name
             else:
                 assert not {"members", "binding", "decay"} & ray.keys(), name
@@ -365,7 +370,6 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                     assert set(participant) == {"type"}, name
                     assert all(kind == "any" or kind in rays for kind in types_of(participant)), name
             assert all({"name", "expression"} <= inv.keys() for inv in coupling["invariants"]), name
-            assert all(kind in rays for kind in coupling.get("binds", [])), name
             if coupling["status"] == "decided":
                 assert not undecided({key: coupling[key] for key in results}), name
                 assert engine["landed"], name

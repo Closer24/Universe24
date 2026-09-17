@@ -540,9 +540,11 @@ Recorded 2026-09-17 from the model owner's statement of that day; open.
 **What would falsify it.** A bending that does not fall as 1/N², or that depends on the board size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the board allows.
 
 **Status.** Open. Feature 8 (`ray-binding-v1`, 2026-09-17) ran the owner's
-acceptance criterion as `test_ray_binding.py` on a 21^3 board with an
-ordinary bound group of mass N / 4 phase steps per interval in place of the
-external body, b = 4, the delay table `[4, 4, 4, 4, 4, 4]` per unit of the
+acceptance criterion as `test_ray_binding.py` on a 21^3 board with a mass of
+N / 4 phase steps per interval in place of the external body (an ordinary
+bound group of the held form then; since 2026-09-17, when `loop-binding-v1`
+removed the held form, resident content, a record holding stock of the
+family whose field is met, with the same numbers), b = 4, the delay table `[4, 4, 4, 4, 4, 4]` per unit of the
 field amount: the delay is 16 phase steps at every N, G_eff = 64 / N^2 and
 G_eff x N^2 = 64 exactly for N = 2^8, 2^10, 2^12, 2^16. The constancy follows
 from the delay being counted in phase steps of the field amount, which is

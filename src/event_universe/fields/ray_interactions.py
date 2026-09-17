@@ -38,7 +38,6 @@ from event_universe.core.spatial_state import (
 
 from .disturbances import convert_values, evaluate, interact_values
 
-Pushes = list[tuple[int, int, int]]
 Turns = list[RayPush]
 
 
@@ -179,7 +178,7 @@ def _convert(
 
 
 def _recoil(ray: Ray, definition: SpatialFieldDefinition) -> tuple[Ray, Heading]:
-    """A field ray returned reversed by the group it pushed (bound-group-motion-v1):
+    """A field ray returned reversed by the ray it pushed (ray-momentum-turn-v1):
     a new event ray on the negated heading with the ray's amount, phase and advance,
     stamped as one event on its Port, as the recoil of released-field-v1."""
     heading = definition.headings[ray.heading]
@@ -227,28 +226,6 @@ def _table_pushes(
         met.append((index, ray, heading, push))
         meter.charge("update", 5)
     return met
-
-
-def _push(
-    rule: InteractionDefinition,
-    owners: tuple[tuple[int, int], ...],
-    views: tuple[DisturbanceRecord | None, ...],
-    used: set[int],
-    rays: tuple[Rays, ...],
-    candidate: list[list[Ray | None]],
-    definitions: tuple[SpatialFieldDefinition, ...],
-    fields: tuple[FieldDefinition, ...],
-    meter: CostMeter,
-    pushes: Pushes,
-) -> None:
-    """The momentum table of a binding rule that fired (bound-group-motion-v1): every
-    resident outbound ray of a named family that no earlier rule met is met by the
-    group, the register moved by sign x amount x heading (-1 toward the source,
-    which lies opposite the arriving heading) and the field ray returned reversed."""
-    for _, _, _, push in _table_pushes(
-        rule, owners, views, used, rays, candidate, definitions, fields, meter
-    ):
-        pushes.append(push)
 
 
 def _turn(
@@ -306,19 +283,17 @@ def _meet(
     fields: tuple[FieldDefinition, ...],
     meter: CostMeter,
     costs: OperationCosts,
-    bound: list[int] | None = None,
-    pushes: Pushes | None = None,
     turns: Turns | None = None,
 ) -> None:
     """The meeting inside one layer: its rules fire over its rays alone, in declared
     order, each group once; the events are written to the candidate bundles. A rule
-    with outputs removes its participants and appends its new event rays. A rule
-    without outputs that fires and declares `ray_delay` reports it through `bound`
-    (ray-binding-v1): the Node's output-clock delay while its group is held; one
-    that declares a `momentum_table` meets the field rays the table names and
-    reports each push through `pushes` (bound-group-motion-v1); a coupling of free
-    rays whose table names a participant family pushes its unnamed participant and
-    reports each push through `turns` (ray-momentum-turn-v1)."""
+    with outputs removes its participants and appends its new event rays; a
+    coupling of free rays whose table names a participant family pushes its
+    unnamed participant and reports each push through `turns`
+    (ray-momentum-turn-v1). A rule meets only the rays that arrived at the Node
+    (loop-binding-v1, Highlights 3.4: a ray never stops): a ray at its event Node,
+    the output of a rule waiting its declared delay there, is met by nothing and
+    leaves, so no rule can hold its participants by meeting them again."""
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
@@ -329,10 +304,16 @@ def _meet(
             raise ValueError("ray coupling requires positive amounts")
     # Projection records only borrow values for the shared selector and evaluator.
     # Their stable owner references below are the only commit destinations. A
-    # returning ray takes part in no group (detector-return-v1).
+    # returning ray takes part in no group (detector-return-v1), and neither does
+    # an event ray still at its event Node (steps 0 with an event stamp): the
+    # output of a rule waiting its delay here arrived nowhere (loop-binding-v1).
+    # A ray with no event, an external body's token or a direct caller's ray, is
+    # met as it always was.
     views: tuple[DisturbanceRecord | None, ...] = tuple(
         None
-        if rays[index][slot].interaction_delay or not rays[index][slot].outbound
+        if rays[index][slot].interaction_delay
+        or not rays[index][slot].outbound
+        or (rays[index][slot].steps == 0 and rays[index][slot].event_ports)
         else DisturbanceRecord(index, _view(rays[index][slot], definitions[index], index), ())
         for index, slot in owners
     )
@@ -402,10 +383,6 @@ def _meet(
                 candidate[index][slot] = replacement
                 meter.charge("update", 5)
             used.update(group)
-            if bound is not None and rule.ray_delay:
-                bound.append(rule.ray_delay)
-            if pushes is not None and rule.momentum_table:
-                _push(rule, owners, views, used, rays, candidate, definitions, fields, meter, pushes)
 
 
 def apply_ray_interactions(
@@ -416,8 +393,6 @@ def apply_ray_interactions(
     meter: CostMeter,
     costs: OperationCosts,
     layers: Layers | None = None,
-    bound: list[int] | None = None,
-    pushes: Pushes | None = None,
     turns: Turns | None = None,
 ) -> tuple[Rays, ...]:
     """Build one complete proposal; no physical owner changes before all guards pass.
@@ -430,10 +405,8 @@ def apply_ray_interactions(
     participants by its outputs, new event rays at this Node, with every family's
     stock exact; nothing is left at the Node. The outputs of every group that
     fires carry the Detector bit its inputs hand down (detector-bit-property-v1).
-    `bound`, when given, collects the `ray_delay` of every binding rule that fired
-    (ray-binding-v1), `pushes` the momentum every field ray a binding rule's
-    table met gave the group (bound-group-motion-v1), and `turns` the record of
-    every push a coupling of free rays gave its ray (ray-momentum-turn-v1).
+    `turns`, when given, collects the record of every push a coupling of free
+    rays gave its ray (ray-momentum-turn-v1).
     """
     if not rules:
         return rays
@@ -450,9 +423,7 @@ def apply_ray_interactions(
         layer_rules = tuple(
             rule for rule in rules if all(kind in layer for role in rule.participants for kind in role)
         )
-        _meet(
-            layer, layer_rules, rays, candidate, definitions, fields, meter, costs, bound, pushes, turns
-        )
+        _meet(layer, layer_rules, rays, candidate, definitions, fields, meter, costs, turns)
     result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
     for index, bundle in enumerate(result):
         if len(bundle) > definitions[index].ray_slots:
