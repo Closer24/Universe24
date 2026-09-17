@@ -771,10 +771,21 @@ at the birth event to the partner ray's line, and the second Detector
 receives it on the ray that reaches it and draws its own bit on that
 arrival like on any other; a Detector sees nothing of the ray, only its own
 value, the received value is information on the ray, not an input to the
-draw, and no owner answers at a distance. The information of the last event
-and the Detector's bit stay on the ray as hidden variables: no Detector and
-no ordinary coupling reads them today, they come from no ordinary physics,
-and for now they affect no one; nothing on the board feels them. With two Detectors,
+draw, and no owner answers at a distance. The information of the last
+event, its Ports and shares, stays on the ray as a hidden variable: no
+Detector and no ordinary coupling reads it, it comes from no ordinary
+physics, and nothing on the board feels it. The Detector's bit is
+different (model owner, 2026-09-17; Highlights 5.4, "the Detector's bit is
+a property of the ray"): it travels with the ray as a visible property
+like charge, seen by every meeting, by the record and by the rendering,
+inherited by the outputs of any event a marked ray takes part in (where
+the inputs carry different bits the declared coupling says which the
+outputs carry, by default 1 outranks 0 and 0 outranks none) and readable
+by a coupling in the catalog as charge is; the draw is unchanged, a
+Detector drawing on every arrival and reading nothing from the ray, and
+whether a ray carrying 1 passes a later Detector without a draw is an open
+decision of the model owner, no Detector reading the bit until it is made
+(feature 2b of the ray-event model, after feature 10). With two Detectors,
 Alice's and Bob's, whichever returns first sends its value through the birth
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
