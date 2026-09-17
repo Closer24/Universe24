@@ -1121,7 +1121,7 @@ the table's whole quanta is owned by the Node per family and heading
 one whole quantum through that heading when it reaches one, a quantum
 waiting at a Node for that while the front of a strong field moves at the
 causal speed, so the phase-selected heading this slice implements is
-superseded by feature 12b, the screen run (examples/nature, E5) having shown
+superseded by feature 12b, the screen run (examples/nature) having shown
 that it sends a single quantum along one fixed line and leaves every Node
 off the axis dark.
 

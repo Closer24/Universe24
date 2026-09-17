@@ -325,7 +325,7 @@ one whole quantum through that heading when they reach one, so the average
 intensities are exact and deterministic and a weak field reaches every Node
 in the end, a quantum waiting at a Node for that while the front of a strong
 field moves at the causal speed (chosen by the model owner on 2026-09-17
-over a phase-selected heading, which the screen run (examples/nature, E5)
+over a phase-selected heading, which the screen run (examples/nature)
 showed sends a single quantum along one fixed line and leaves every Node off
 the axis dark; feature 12b implements it, `field-spreading-v1` selecting the
 remainder's heading by phase until then), so the wave shows in intensities
@@ -941,7 +941,7 @@ quantum through that heading when they reach one, so the average intensities
 are exact and deterministic and a weak field reaches every Node in the end,
 a quantum waiting at a Node for that while the front of a strong field moves
 at the causal speed (chosen by the model owner on 2026-09-17 over a
-phase-selected heading, which the screen run (examples/nature, E5) showed
+phase-selected heading, which the screen run (examples/nature) showed
 sends a single quantum along one fixed line and leaves every Node off the
 axis dark; feature 12b implements it, `field-spreading-v1` selecting the
 remainder's heading by phase until then). It also carries the sign of the
