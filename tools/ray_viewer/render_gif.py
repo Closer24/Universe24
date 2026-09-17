@@ -23,6 +23,8 @@ Run:  python tools/ray_viewer/render_gif.py runs.json --output electron.gif
 from __future__ import annotations
 
 import argparse
+import base64
+import gzip
 import hashlib
 import io
 import json
@@ -280,10 +282,40 @@ def inline_json(page: str, tag: str, document: dict[str, Any]) -> str:
     return page.replace(tag, tag.replace("></script>", ">" + payload + "</script>"))
 
 
-def inline_page(runs: dict[str, Any], style: dict[str, Any] | None = None) -> str:
-    """The viewer page with the runs document and the style inlined; self-contained."""
+def inline_gzip(page: str, tag: str, document: dict[str, Any]) -> str:
+    """The document gzipped and base64-encoded in the tag, marked with data-encoding;
+    the page decodes it with the browser's DecompressionStream at load time."""
+    if page.count(tag) != 1:
+        raise ValueError(f"viewer.html must hold {tag} exactly once")
+    raw = json.dumps(document, separators=(",", ":")).encode("utf-8")
+    payload = base64.b64encode(gzip.compress(raw, compresslevel=9, mtime=0)).decode("ascii")
+    opened = tag.replace("></script>", ' data-encoding="gzip+base64">' + payload + "</script>")
+    return page.replace(tag, opened)
+
+
+def read_inline(page: str, tag_id: str) -> dict[str, Any]:
+    """The document a page holds in the tag of that id, plain or gzip+base64."""
+    start = page.index(f'id="{tag_id}"')
+    end = page.index("</script>", start)
+    open_end = page.index(">", start) + 1
+    head = page[start:open_end]
+    body = page[open_end:end]
+    if 'data-encoding="gzip+base64"' in head:
+        document: dict[str, Any] = json.loads(gzip.decompress(base64.b64decode(body)).decode("utf-8"))
+        return document
+    plain: dict[str, Any] = json.loads(body.replace("<\\/", "</"))
+    return plain
+
+
+def inline_page(
+    runs: dict[str, Any], style: dict[str, Any] | None = None, *, compress: bool = False
+) -> str:
+    """The viewer page with the runs document and the style inlined; self-contained.
+    With compress the runs go in gzipped and base64-encoded (a run document shrinks
+    about twentyfold; the page decodes it with DecompressionStream, which every
+    current phone browser has)."""
     page = (HERE / "viewer.html").read_text(encoding="utf-8")
-    page = inline_json(page, DATA_TAG, runs)
+    page = inline_gzip(page, DATA_TAG, runs) if compress else inline_json(page, DATA_TAG, runs)
     if style is not None:
         page = inline_json(page, STYLE_TAG, style)
     return page
@@ -426,6 +458,11 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=Path("ray-viewer.gif"))
     parser.add_argument("--contact-sheet", type=Path, help="default: the output name with -contact.png")
     parser.add_argument("--html", type=Path, help="also write the viewer page with the runs inlined")
+    parser.add_argument(
+        "--compress",
+        action="store_true",
+        help="inline the runs of --html gzipped and base64-encoded (about twentyfold smaller)",
+    )
     parser.add_argument("--style", type=Path, help="style file (default: style.json beside this script)")
     parser.add_argument(
         "--preset",
@@ -516,7 +553,7 @@ def main() -> None:
     three = three_js(args.three)
     page_html = inline_page(runs, style)
     if args.html:
-        args.html.write_text(page_html, encoding="utf-8")
+        args.html.write_text(inline_page(runs, style, compress=args.compress), encoding="utf-8")
     started = time.time()
     images, errors, blocked = capture_frames(
         page_html,
