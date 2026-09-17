@@ -759,15 +759,19 @@ moving in time.
 At a node where rays meet, the declared coupling decides one of three things:
 no interaction, and the rays cross; a deterministic interaction, up to six
 events computed from the frozen inputs with every declared invariant exact
-over all inputs and outputs; or a Detector interaction, when one participant
-is a declared Detector and the other a wave ray, which draws one bounded
-integer and selects pass or return. A ray alone at a node never interacts.
+over all inputs and outputs; or a Detector interaction, at a node marked as a
+Detector and only for a wave ray, which draws one bounded integer and selects
+pass or return. A ray alone at a node never interacts.
 Binding is the interaction whose result is zero events: the rays stay at the
 node, interact again every interval, and their phase advances once per
 interval.
 
-A Detector does not absorb. The same ray either continues on its line or
-reverses by a half turn; the click is the record that it passed or returned.
+A Detector is a node marked as a Detector: the mark is bounded node metadata
+(mark, setting, ticket seed), not a record and not an external device, and
+Detector behavior is how a node behaves when it carries the mark. A Detector
+does not absorb. The same wave ray entering the marked node either continues
+on its line or reverses by a half turn; the click is the record that it
+passed or returned.
 A returning ray retraces its own trajectory by its step count, reaches its
 birth interaction with certainty and continues straight, which is the
 direction of the partner ray of a pair. It carries the number the partner's

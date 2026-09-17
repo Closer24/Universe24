@@ -12,12 +12,11 @@ are the document's own.
 Proposed revision of 2026-09-17 (model owner's decisions on the ray-event
 model): the paragraphs marked "Revision 2026-09-17" below are proposed for
 the live document and are not yet in it. Their full statement is
-[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) and postulate 23. Where a proposed
-paragraph contradicts the live text (sections 3.18 and 5.4, the shared
-quantum resource), the live text stands until the central specification
-adopts the revision; the document's own rule is that the latest explicit user
-decision supersedes older prose, and that decision is recorded here for the
-owner to carry into the live document.
+[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) and postulate 23. By the model
+owner's decision of 2026-09-17, section 3.18 (the shared quantum resource) is
+withdrawn and is to be deleted from the live document, and the shared-resource
+sentences of 5.4 lapse with it; the live text is kept below only until that
+edit is made, with the decision recorded in place.
 
 ---
 
@@ -113,13 +112,13 @@ Discrete division or allocation must not silently destroy information or conserv
 
 Q-ORACLE-1 and the named shared quantum profiles are already accepted project mechanisms. A permitted quantum query costs one model operation and zero query-delay model time; shared-state storage and host work are measured separately and need not be O(1). Only the declared quantum interface may use that shared state. It supplies no hidden remote input to ordinary fields, forces, movement or geometry, and no autonomous draw authority. Focus and diagnostics do not alter those boundaries. This is an explicit exception to Bell-local factorization, not a local hidden-variable derivation; no-signalling and symmetry must be checked separately.
 
-Revision 2026-09-17 (proposed, contradicts the paragraph above): under the ray-event model no owner answers at a distance. The first draw's outcome travels on the returning ray itself, through the birth interaction to the partner, and ordinary locality holds without exception. The accepted price is that two Detectors at equal distance from the birth draw independently (CHSH at most 2 for spacelike settings). The shared quantum resource stays as written until the central specification adopts the revision.
+Decision 2026-09-17 (model owner): this section is withdrawn and is to be deleted from the live document, because it contradicts the Detector as now defined. No owner answers at a distance. The first draw's outcome travels on the returning ray itself, through the birth interaction to the partner, and ordinary locality holds without exception. The accepted price is that two Detectors at equal distance from the birth draw independently (CHSH at most 2 for spacelike settings). The paragraph above is kept here only until the live document is edited; section 3.2's reference to it lapses with it.
 
 ## 3.19 Measurement is an interaction
 
 A measurement requires an actual encounter with the external Detector through its declared causal interface. Only that Detector may authorize a draw under the declared measurement or exchange law. Ordinary Node creation, propagation, coherent interactions and emissions do not sample autonomously. The quantum owner may deterministically prepare states, operators, weights and conditional updates. A passive Recorder or Renderer does not perform a measurement or acquire sampling authority.
 
-Revision 2026-09-17: a Detector is an interaction with a simple binary lottery on a wave ray, the only lottery in the model. The same ray either continues on its line or reverses by a half turn; it is not absorbed and no stock is taken; the click is the record that it passed or returned. A non-wave ray is not drawn.
+Revision 2026-09-17: a Detector is a Node marked as a Detector; the mark is bounded Node metadata (mark, setting, ticket seed), not a record and not an external device, and Detector behavior is how a Node behaves when it carries the mark. Any wave ray entering a marked Node undergoes a simple binary lottery, the only lottery in the model. The same ray either continues on its line or reverses by a half turn; it is not absorbed and no stock is taken; the click is the record that it passed or returned. A non-wave ray is not drawn.
 
 ## 3.20 Coherent alternatives and Detector-authorized outcomes
 
@@ -207,7 +206,7 @@ Propagation, funded emission, remainders, six independent output clocks, no inpu
 
 The shared quantum action and resource exception are already accepted; profile integration is separate. Only an actual external Detector encounter may draw, and replay never redraws or re-emits. Its separate exchange interface uses 1 = PASS and 0 = RETURN/CANCEL. PASS can follow an action draw but preserves received content and provenance without another content draw; passing Detector-generated content adopts it under LOCK. RETURN generates under its declared law and proceeds backward along the selected branch in space, forward in time, without erasing history. The action distribution is not assumed to be 50/50. Return-content/phase laws, LOCK lifecycle, clock mapping and complete bounded cancellation handling remain open. Pair profiles, general shared state and PASS/RETURN are not interchangeable.
 
-Revision 2026-09-17: PASS is the ray continuing on its line and RETURN is the same ray reversing by a half turn. A returning ray retraces its own trajectory by its step count, reaches its birth interaction with certainty and continues straight toward the partner ray, carrying the number the partner's Detector was missing. No registry answers at a distance; pair identity is the trajectory. The accepted price: two Detectors at equal distance from the birth draw independently and the CHSH value for spacelike settings is at most 2; the joint law's value appears only when the second ray's path exceeds the round trip through the first Detector. This proposal makes PASS/RETURN the quantum measurement itself and withdraws the separate shared resource, which the paragraph above keeps distinct.
+Revision 2026-09-17: PASS is the ray continuing on its line and RETURN is the same ray reversing by a half turn. A returning ray retraces its own trajectory by its step count, reaches its birth interaction with certainty and continues straight toward the partner ray, carrying the number the partner's Detector was missing. No registry answers at a distance; pair identity is the trajectory. The accepted price: two Detectors at equal distance from the birth draw independently and the CHSH value for spacelike settings is at most 2; the joint law's value appears only when the second ray's path exceeds the round trip through the first Detector. By the decision of 2026-09-17 PASS/RETURN at a marked Node is the quantum measurement itself; the separate shared resource that the paragraph above keeps distinct is withdrawn together with section 3.18.
 
 ## 5.5 Acceptance tests and open decisions
 

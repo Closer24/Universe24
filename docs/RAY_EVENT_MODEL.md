@@ -54,13 +54,18 @@ the line. A non-wave ray carries quantities only (energy, momentum, charge,
 family properties). Light is a wave ray with no mass and no charge: it is an
 event moving in time, exactly as defined above, not a separate photon object.
 
-**Detector.** A Detector is an interaction with a simple binary lottery, and
-it is the only place a lottery exists (`detector-only-v1`). A wave ray meeting
-a Detector either continues on the same line in the same heading, or reverses
-by a half turn and goes back along the same line. It is the same ray in both
-outcomes: not absorbed, not split, no stock taken. The click is the record
-that the ray passed or returned. A non-wave ray meeting a Detector is not
-drawn; its outcome follows from its declared coupling.
+**Detector.** A Detector is a Node marked as a Detector. The mark is bounded
+Node metadata (the mark itself, a setting, a ticket seed), not a record, not
+an object and not an external device; "Detector behavior" is simply how a
+Node behaves when it carries the mark. Any wave ray entering a marked Node
+undergoes a simple binary lottery, and this is the only place a lottery exists
+(`detector-only-v1`): the ray either continues on the same line in the same
+heading, or reverses by a half turn and goes back along the same line. It is
+the same ray in both outcomes: not absorbed, not split, no stock taken. The
+click is the record that the ray passed or returned. A non-wave ray entering
+a marked Node is not drawn; its outcome follows from its declared coupling.
+Because a marked Node is a Node like any other, everything else about it
+(rays crossing, interactions of other families, fields) is unchanged.
 
 **Return.** A returning ray retraces its own trajectory: it reverses its
 heading and walks back the number of steps it counted since its last
@@ -101,9 +106,9 @@ declared coupling between their families decides one of:
   [N-to-M conversion contract](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
   already does for records: up to six inputs, up to six outputs, one output
   departure per Port;
-- **a Detector interaction**: only if one participant is a declared Detector
-  and the other is a wave ray: one bounded integer is drawn from the
-  Detector's own ticket sequence and selects pass or return.
+- **a Detector interaction**: only at a Node marked as a Detector and only
+  for a wave ray: one bounded integer is drawn from the mark's own ticket
+  sequence and selects pass or return.
 
 Nothing else decides anything. A ray alone at a Node never interacts. A Node
 never holds a ray without a declared binding coupling. Binding is the
@@ -117,9 +122,9 @@ The rule in the form Highlights 3.27 requires:
 
 | Question | Answer under this model |
 | --- | --- |
-| Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: nothing but the rays resident this interval and the bounded bound group, if any |
+| Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed) |
 | What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
-| What operation acts | The coupling declared for the set of families present, in declared order; the Detector lottery only for a Detector and a wave ray |
+| What operation acts | The coupling declared for the set of families present, in declared order; the Detector lottery only at a marked Node and only for a wave ray |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count. No message, no registry answer, nothing that skips a Node |
@@ -171,7 +176,8 @@ on 16 September 2026.
 
 | Today | Under this model |
 | --- | --- |
-| Every interaction passes through a resident record (mirror, screen, detector, lamp) with stock and absorption | An interaction is a property of the meeting of rays; a Detector is a rule on the line, not a record with stock |
+| Every interaction passes through a resident record (mirror, screen, detector, lamp) with stock and absorption | An interaction is a property of the meeting of rays; a Detector is a mark on a Node, not a record with stock |
+| The shared quantum resource (Q-ORACLE-1, bond registry) is an accepted exception to locality | Withdrawn by the model owner on 2026-09-17: no owner answers at a distance; the marked-Node lottery and the returning ray are the whole quantum mechanism |
 | The photon is a record of a family; conversion products are records | Light is a wave ray with no mass and no charge; conversion products are events leaving the interaction |
 | A bonded pair is answered by a global registry keyed by (Node, tick) | The first draw's outcome travels back and forward on the ray itself; pair identity is the trajectory |
 | Records emit fields; rays do not | A traveling ray of an emitting family releases field rays along its line |
@@ -190,9 +196,10 @@ on 16 September 2026.
 2. Ray state: step count since the last interaction and one bounded outcome
    register added to the ray; heading and phase exist. No origin reference is
    stored: the count suffices on a straight line.
-3. Detector as an interaction on the field: pass or return, drawn from the
-   Detector's ticket sequence; click event recorded; no stock. Non-wave rays
-   are not drawn.
+3. Detector as a Node mark in the initialization (position, setting, ticket
+   seed): any wave ray entering the marked Node passes or returns, drawn from
+   the mark's ticket sequence; click event recorded; no stock; no detector
+   record type. Non-wave rays are not drawn.
 4. Return propagation: reversed heading, decreasing count, straight through
    the birth interaction; meeting rule at the far Detector as in section 3.
 5. Registry removal from the physical path; the historical bonded profile and
