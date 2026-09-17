@@ -673,6 +673,73 @@ states "exactly" and means integer equality at every tick.
   other work: 156, 197, 239, 341, 448 s for the like-charge axis worlds,
   154, 328, 247, 342, 443 s for the opposite-charge ones, 209, 264, 396,
   570 s for the diagonal, 111 s for the control.
+- **Computed after the run (2026-09-17;
+  `examples/nature/a5_static/mean_field_gauss.py`, a computation, not an
+  engine run).** Method: the table's mean field, per-heading amounts on the
+  cubic lattice in floating point (the split is exact on average under the
+  remainder rule, so this is the expectation of the engine's integers), the
+  source releasing 4096 on each heading every interval and absorbing what
+  returns to it, a sink absorbing everything that arrives and booking amount
+  × heading, the open faces absorbing, the steady states solved as the fixed
+  points of the linear map (BiCGSTAB, residual 10^−10) and the transients
+  stepped; the source alone in an octant of the cube of half-width 96
+  (193³, the boundary 2r beyond r = 48), the simple walk [1, 1, 1, 1, 1, 1]
+  in the same box for the lattice Laplacian's Green's function, and the
+  sink at r = 4, 6, 8, 12, 16, 24 and 32 with the boundary 2r from both
+  bodies (3r and 4r checked at r = 8, 12, 16). Verdict: the table gives
+  Gauss's law, exactly for the Link current through every closed surface
+  and as 1/r² on the axis from r ≈ 21 on, reached after about 1.5 r²
+  intervals, while the run's window r = 4 to 16 is the beam's and shows −2
+  at no box size and no duration. What it gives, in order. (1) Free space:
+  the effective source S = 20132 per interval (24576 released, 4444
+  returning to the source's sink); the outflow through the cube of
+  half-width r equals S to 10^−7 at r = 2 to 64, Gauss exact on the lattice
+  by conservation. The net momentum arriving at a Node, J (amount × heading
+  of the arrivals, what a sink absorbs and a met ray feels), is exactly 11/8
+  of the mean Link current through it, Φ, at every Node: on any axis the two
+  Links' currents sum to J + (g₊ − g₋) = J (1 + 5/11), the transverse shares
+  cancelling, so J = 2 Φ / (1 + c) with the table's persistence cosine c =
+  5/11 (2 Φ for the simple walk). Gauss's S/(4π r²) is the Link current, and
+  on the axis Φ/(S/4π r²) = 5.09, 4.12, 2.91, 1.58, 1.19, 1.05, 1.03, 1.02
+  at r = 4, 6, 8, 12, 16, 24, 32, 48 (J: 7.00, 5.67, 4.00, 2.17, 1.64, 1.45,
+  1.41, 1.41); on the (1, 1, 0) diagonal Φ is 1.01, 0.99, 0.99 of Gauss at
+  r = 11.3, 22.6, 33.9 and on the (1, 1, 1) diagonal 0.93, 0.97, 0.98 at r =
+  13.9, 20.8, 27.7: the current is isotropic to 5 % from r ≈ 24 and to 3 %
+  from r ≈ 30. The density is the lattice Laplacian's Green's function
+  scaled by D_simple / D = 3/8, within 1.5 % from r = 20 and 1 % from r =
+  31 (D = 4/9 Link² per interval). The beam 4096 (6/11)^(r−1) is 0.95,
+  0.78, 0.59, 0.22, 0.045 and 0.0009 of J at r = 4, 6, 8, 12, 16, 24 and the
+  scattered part exceeds it from r = 9; the log-log exponent of J over
+  windows of r: 2..4 −1.55, 3..6 −2.24, 4..8 −2.81, 6..12 −3.41, 8..16
+  −3.31, 12..24 −2.55, 16..32 −2.19, 24..48 −2.04 ± 0.004; the local
+  exponent stays within −2.0 ± 0.2 from r = 21 on and within ± 0.1 from r =
+  26 on; over the run's r = 4, 6, 8, 12, 16 it is −3.11 ± 0.11. (2) The
+  sink: F = 753.10, 269.09, 106.11, 25.32, 10.67, 4.149, 2.272 per interval
+  at r = 4, 6, 8, 12, 16, 24, 32 (r² F = 12050, 9687, 6791, 3647, 2731,
+  2390, 2327), F/J = 1.07 to 1.03 (the sink's own shadow), the boundary at
+  3r and 4r raising F by 0.4 and 0.5 % at r = 8, 1.2 and 1.5 % at r = 12,
+  1.7 and 2.2 % at r = 16; the exponent over r ≥ 12 is −2.44 ± 0.13, over
+  r ≥ 16 −2.24 ± 0.07 (−2.09 between 24 and 32), and over the run's r = 4
+  to 16 at steady state −3.14 ± 0.11: the run's window shows the beam at
+  any box size and any duration. (3) The time to 90 % of the steady push,
+  t90 = 6, 16, 44, 164, 354, 866, 1564 ticks at r = 4 to 32 (t50 = 4, 6, 8,
+  34, 94, 246, 450; t99 = 22, 74, 170 at r = 4, 6, 8 and beyond 3 r² + 64
+  ticks from r = 12), t90 / r² rising to 1.53 at r = 32 against the
+  continuum's 1.93 r² for D = 4/9, t90 ∝ r^2.29 ± 0.09 over r ≥ 12 and
+  r^2.76 ± 0.10 over all r (the near r are the beam's, at tick r + 2); at
+  the run's 2r + 32 ticks the push is 99.8, 97.5, 91.5, 65.2, 35.3 % of the
+  steady state at r = 4 to 16 and 7.8, 1.5 % at r = 24, 32, at the plan's
+  2r + 64 ticks 100, 99.1, 95.8, 77.8, 51.4, 16.8, 4.4 %. (4) The beam is
+  0.883, 0.735, 0.555, 0.206, 0.043, 0.0009 and 0.0000 of F at r = 4 to 32;
+  the rest, (F − beam) r² = 1414, 2568, 3025, 2897, 2613, 2388, 2327, is the
+  diffusive field, converging from above to about 11/8 × 1.03 × S/(4π) ≈
+  2300. At the engine's measured 2.3 ms per Node cycle, a world with the
+  boundary 2r away run to t90 costs 342 k Nodes × 354 ticks ≈ 78 hours at
+  r = 16, 1.14 M × 866 ≈ 26 days at r = 24 and 2.68 M × 1564 ≈ 110 days at
+  r = 32: the field of a charge at rest is established, in this table's
+  sense, at no r the engine reaches today, and the exponent clause can be
+  met only from r ≈ 24 up. CPU: 607 s for the four computations and 244 s
+  for the free-space part with its Link-current column, on one core.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 

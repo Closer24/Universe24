@@ -52,6 +52,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
 | `test_loop_binding.py` | 7 | 0.70 | Issue #169 feature 14: a bound group is a periodic orbit of the ordinary meeting rule on a ring of Nodes, nothing at a Node names it, the record reads it, and the held form's keys are rejected (`loop-binding-v1`) |
+| `test_mean_field_gauss.py` | 3 | 0.01 | The mean-field kernel of `examples/nature/a5_static/mean_field_gauss.py` (the computation after experiment A5s): the split of one heading's content at one Node by the table [6, 1, 1, 1, 1, 1] relative to its heading, the conservation of the transport (the total kept until the front reaches the open boundary, the source's own sink taking the backward shares, the mirrored octant equal to the full box), and the beam 4096 x (6/11)^(r-1) as the push at ticks r and r + 1 on a sink at r = 1 to 4, pinned below |
 | `test_momentum_turn_walk.py` | 4 | 7.8 | The fix of `ray-momentum-turn-v2`: a push keeps the DDA's accumulators, so a ray pushed at every interval walks the DDA line of its running register; the staircases of a push of 1 and of 8 per interval on a ray of 64, the flip, the cancel, the shrink and the lift by hand, and two boards where a field ray meets the ray at every Node |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_nature_catalog.py` | 4 | 0.12 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
@@ -2836,6 +2837,44 @@ the measured record:
   the clause table's verdicts in order: ledger pass, control pass,
   registers pass, exponent fail, signs pass, diagonal reported; and the
   clause's series of (r, F) with the same exponent for `pp` and `pe`.
+
+## The split table's mean field
+
+`test_mean_field_gauss.py` pins the kernel of
+`examples/nature/a5_static/mean_field_gauss.py`, the computation made after
+experiment A5s ([register](EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest),
+"Computed after the run"): the catalog's table [6, 1, 1, 1, 1, 1] over 11 as
+the linear map it is on average, per-heading amounts in floating point on a
+box whose open faces absorb and whose mirrored faces are symmetry planes.
+Three tests, written before the first run:
+
+- the split of one heading's content at one Node: 11 arriving on +X at the
+  centre of a 3^3 box leaves 6 on +X, 1 on -X and 1 on each of +Y, -Y, +Z, -Z,
+  nothing elsewhere, the total 11 kept and the net momentum of the departures
+  (6 - 1, 0, 0); 1 arriving on +Y leaves 6/11 on +Y, 1/11 on -Y and 1/11 on
+  each of +X, -X, +Z, -Z (the Port order relative to the arriving heading);
+  the split is linear, 11 on +X with 22 on -X leaving 8 on +X, 13 on -X and 3
+  on each transverse Port, total 33; the simple walk [1, 1, 1, 1, 1, 1] sends
+  6 on +X as 1 through every Port; the diffusion constants of the two walks
+  are 4/9 and 1/6 Links^2 per interval;
+- conservation: 11 on +X at the centre of a 9^3 box with no source and no
+  sink keeps the total 11 exactly through ticks 1 to 4 (the front inside the
+  box) and loses content to the open faces from tick 5, monotonically; the
+  source releasing 4096 on six headings with its own sink has the totals
+  6 x 4096 = 24576, 12 x 4096 - 6 x 4096 / 11 = 46917.82 and 18 x 4096 -
+  12 x 4096 / 11 = 69259.64 after ticks 1, 2 and 3 (each tick from the second
+  returns the six backward shares of the fresh releases, 6 x 4096 / 11, to the
+  source's sink), its push (0, 0, 0) at every tick, and the octant of a 5^3
+  box with three mirror planes holds the same field on the stored part as the
+  full 9^3 box, to 1e-9;
+- the beam: a sink at (r, 0, 0) with the boundary 6 Links from both bodies
+  has no push before tick r; at ticks r and r + 1 the push on x is exactly
+  4096 x (6/11)^(r-1): 4096, 2234.1818, 1218.6446 and 664.7153 at r = 1, 2,
+  3, 4 (the engine's integers of A5s, 664 then 665 at r = 4, are this share
+  under the remainder rule), zero on y and z; at tick r + 2 the first
+  detoured content arrives and the push exceeds the beam for r = 2, 3, 4; at
+  r = 1 (the source's neighbour) the first detoured content arrives on a
+  transverse heading and the push on x stays 4096 through tick 4.
 
 ## The helium orbit
 

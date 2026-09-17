@@ -1258,7 +1258,10 @@ by `make_worlds.py` beside them and never by hand: `pp_r{4,6,8,12,16}.json`
 `pp_d{3,4,6,8}.json` (like charges on the diagonal, B at (d, d, 0) from A)
 and `p_alone.json` (the control, one body). `analyze.py` reads the records
 and evaluates the criterion clause by clause; `record.json` is its small
-committed record, which `tests/test_a5_static.py` reads. The measured
+committed record, which `tests/test_a5_static.py` reads;
+`mean_field_gauss.py` is the computation made after the run, the table's
+mean field at large distance ([below](#computed-after-the-run-the-split-tables-mean-field-at-large-distance)),
+whose kernel `tests/test_mean_field_gauss.py` pins. The measured
 outcome is in the register's entry and summarized
 [below](#what-the-static-runs-show).
 
@@ -1355,6 +1358,95 @@ in parallel on four cores shared with other work: 156, 197, 239, 341 and
 the control; each viewer document (`runs.json`) is 136 MB (the control) to
 582 MB (d = 8), the field's rays being the record.
 
+### Computed after the run: the split table's mean field at large distance
+
+`mean_field_gauss.py` (2026-09-17, a computation and not an engine run)
+settles what the table gives beyond the run's reach: the catalog's split as
+the linear map it is on average (the remainder rule realizes it exactly on
+average, so this is the expectation of the engine's integers), per-heading
+amounts on the cubic lattice in floating point, the source releasing 4096 on
+each heading every interval and absorbing what returns to it, a sink
+absorbing everything that arrives and booking amount × heading, the open
+faces absorbing; the steady states are the fixed points of the linear map
+(BiCGSTAB to a residual of 10^−10) and the transients are stepped. Four
+computations: the source alone in an octant of the cube of half-width 96
+(193³, the boundary 2r beyond r = 48), with the simple walk [1, 1, 1, 1, 1,
+1] in the same box for the Green's function of the lattice Laplacian; the
+sink at r = 4 to 32 with the boundary 2r from both bodies; the time to 90 %
+of the steady push; and the split of every push into the beam
+4096 × (6/11)^(r−1) and the rest. The verdict: the table gives Gauss's
+law, exactly for the Link current through every closed surface and as 1/r²
+on the axis from r ≈ 21 on, reached after about 1.5 r² intervals; the run's
+window r = 4 to 16 is the beam's and shows −2 at no box size and no
+duration. CPU 607 s for the four computations on one core (and 244 s for the
+free-space part alone with its Link-current column, added after).
+
+Free space (the source alone; S = 20132 per interval is the effective
+source, 24576 released less 4444 returning to the source's sink; the outflow
+through the cube of half-width r equals S to 10^−7 at r = 2 to 64). J is the
+net momentum arriving at the Node on the axis (amount × heading of the
+arrivals, what a sink absorbs and a met ray feels); Φ is the Link current
+through it, exactly 8/11 of J at every Node (on an axis the two Links'
+currents sum to J + (g₊ − g₋) = J (1 + 5/11), the transverse shares
+cancelling; in general J = 2 Φ / (1 + c) for the table's persistence cosine
+c = 5/11, and 2 Φ for the simple walk), so Gauss's S/(4π r²) is the Link
+current; n is the density and n_simple the simple walk's, scaled by
+D_simple / D = 3/8 (D = 4/9 Link² per interval):
+
+| r | J | J / Gauss | Φ / Gauss | beam / J | n / (3/8 n_simple) | local exponent of J |
+| --- | --- | --- | --- | --- | --- | --- |
+| 4 | 701.30 | 7.00 | 5.09 | 0.948 | 1.804 | −2.33 |
+| 6 | 252.37 | 5.67 | 4.12 | 0.784 | 1.463 | −3.09 |
+| 8 | 100.09 | 4.00 | 2.91 | 0.588 | 1.242 | −3.51 |
+| 12 | 24.18 | 2.17 | 1.58 | 0.215 | 1.072 | −3.23 |
+| 16 | 10.276 | 1.64 | 1.19 | 0.045 | 1.031 | −2.56 |
+| 24 | 4.024 | 1.45 | 1.05 | 0.0009 | 1.013 | −2.12 |
+| 32 | 2.211 | 1.41 | 1.03 | 0.0000 | 1.010 | −2.05 |
+| 48 | 0.979 | 1.41 | 1.02 | 0.0000 | 1.010 | — |
+
+The scattered part exceeds the beam from r = 9. The log-log exponent of J
+over windows of r: 2..4 −1.55, 3..6 −2.24, 4..8 −2.81, 6..12 −3.41, 8..16
+−3.31, 12..24 −2.55, 16..32 −2.19, 24..48 −2.04 ± 0.004; the local exponent
+stays within −2.0 ± 0.2 from r = 21 on and within ± 0.1 from r = 26 on; over
+the run's r = 4, 6, 8, 12, 16 it is −3.11 ± 0.11. Off the axis, Φ / Gauss is
+1.01, 0.99, 0.99 on the (1, 1, 0) diagonal at r = 11.3, 22.6, 33.9 and 0.93,
+0.97, 0.98 on the (1, 1, 1) diagonal at r = 13.9, 20.8, 27.7: the current is
+isotropic to 5 % from r ≈ 24 and to 3 % from r ≈ 30, the axis above and the
+diagonals below. The axis flux in the cube of half-width 64 is within 0.1 %
+of the half-width 96 value at r ≤ 16 and 1.1 % at r = 32.
+
+The point sink at r (the boundary 2r from both bodies; F the net momentum
+absorbed per interval at steady state; t50, t90 and t99 the first tick at
+which the push reaches that fraction of it, t99 beyond 3 r² + 64 ticks from
+r = 12; the last two columns the push at the run's 2r + 32 and the plan's
+2r + 64 ticks as a fraction of the steady state):
+
+| r | F | r² F | beam / F | (F − beam) r² | F / J | local exponent | t50 | t90 | t99 | t90 / r² | at 2r + 32 | at 2r + 64 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 4 | 753.10 | 12050 | 0.883 | 1414 | 1.074 | −2.54 | 4 | 6 | 22 | 0.38 | 99.8 % | 100 % |
+| 6 | 269.09 | 9687 | 0.735 | 2568 | 1.066 | −3.24 | 6 | 16 | 74 | 0.44 | 97.5 % | 99.1 % |
+| 8 | 106.11 | 6791 | 0.555 | 3025 | 1.060 | −3.53 | 8 | 44 | 170 | 0.69 | 91.5 % | 95.8 % |
+| 12 | 25.32 | 3647 | 0.206 | 2897 | 1.047 | −3.01 | 34 | 164 | — | 1.14 | 65.2 % | 77.8 % |
+| 16 | 10.667 | 2731 | 0.043 | 2613 | 1.038 | −2.33 | 94 | 354 | — | 1.38 | 35.3 % | 51.4 % |
+| 24 | 4.149 | 2390 | 0.0009 | 2388 | 1.031 | −2.09 | 246 | 866 | — | 1.50 | 7.8 % | 16.8 % |
+| 32 | 2.272 | 2327 | 0.0000 | 2327 | 1.028 | — | 450 | 1564 | — | 1.53 | 1.5 % | 4.4 % |
+
+The exponent of F over r ≥ 12 is −2.44 ± 0.13, over r ≥ 16 −2.24 ± 0.07,
+and over the run's r = 4 to 16 at steady state −3.14 ± 0.11: the run's window
+shows the beam at any box size and any duration (the boundary at 3r and 4r
+raises F by 0.4 and 0.5 % at r = 8, 1.2 and 1.5 % at r = 12, 1.7 and 2.2 % at
+r = 16). The rest, (F − beam) r², is the diffusive field, converging from
+above to about 11/8 × 1.03 × S/(4π) ≈ 2300. The time to 90 % scales as
+t90 ∝ r^2.29 ± 0.09 over r ≥ 12 (r^2.76 ± 0.10 over all r, the near r being
+the beam's at tick r + 2), t90 / r² rising to 1.53 at r = 32 against the
+continuum's 1.93 r² for D = 4/9: the field is diffusive, not ballistic. At
+the engine's measured 2.3 ms per Node cycle, a world with the boundary 2r
+away run to t90 costs 342 k Nodes × 354 ticks ≈ 78 hours at r = 16, 1.14 M
+× 866 ≈ 26 days at r = 24 and 2.68 M × 1564 ≈ 110 days at r = 32: the
+field of a charge at rest is established, in this table's sense, at no r
+the engine reaches today, and the exponent clause can be met only from r ≈
+24 up.
+
 ### Run and render
 
 ```bash
@@ -1364,6 +1456,13 @@ for w in pp_r4 pp_r6 pp_r8 pp_r12 pp_r16 pe_r4 pe_r6 pe_r8 pe_r12 pe_r16 pp_d3 p
   python tools/ray_viewer/extract.py runs/a5s/$w --label "$w" --out runs/a5s/$w/runs.json
 done
 python examples/nature/a5_static/analyze.py runs/a5s/pp_r* runs/a5s/pe_r* runs/a5s/pp_d* runs/a5s/p_alone --out runs/a5s/summary.json --record examples/nature/a5_static/record.json
+```
+
+The computation after the run (about ten minutes on one core; `--only-free`
+for the free-space part alone, `--out` for the tables as JSON):
+
+```bash
+OPENBLAS_NUM_THREADS=1 python examples/nature/a5_static/mean_field_gauss.py
 ```
 
 The records stay outside the tree (one directory per world, siblings, since
