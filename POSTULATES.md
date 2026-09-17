@@ -123,7 +123,9 @@ Sections 1–5 and 10–11 state shared locality, arithmetic and evidence princi
 Sections 6–9 document the source, self-force, momentum and turning requirements
 of the explicitly selected historical research models; they are not implicit
 laws of every configured disturbance. Sections 13 and 15 likewise belong to
-named historical candidates. Section 14 defines the optional quantum assumption. Section 16 explicitly
+named historical candidates. Section 14 defines the optional quantum assumption. Section 23 states the
+ray-event model adopted as the target direction on 2026-09-17, with
+implementation pending. Section 16 explicitly
 selects its native local-cycle integration without changing unselected worlds.
 
 For a configured law claiming energy and momentum conservation, account for the
@@ -145,6 +147,13 @@ neighbor, or exits the simulated domain at an explicitly open boundary.
 
 An event is a local change in a node at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt.
+
+Adopted direction (model owner, 2026-09-17; implementation pending, see
+[section 23](#23-the-ray-event-model)): an event is the birth or the break of
+a ray. A ray is the trajectory of one event along one straight line of nodes,
+and a node that a ray merely crosses hosts no event. The definition above
+describes the current implementation; the ray-event definition is the target
+every future profile is measured against.
 
 The simulator does not assume every familiar physical phenomenon is fundamental.
 Mass, gravity, curvature or a known particle can count as an emergent result only
@@ -195,7 +204,16 @@ Physical influence cannot skip nodes. It travels at most one neighboring node pe
 elementary step. This is the role of c: the maximum propagation speed of causal
 influence in the simulator. Oracle evaluation is not physical propagation.
 
-The bound is split in two, as the experiments split it. Energy, momentum,
+Adopted direction (model owner, 2026-09-17): the bound has no exception. The
+joint outcome of a pair travels on the returning ray itself, one Link per
+step, back to the birth event and on to the partner ray
+([section 23](#23-the-ray-event-model)). The registry exception described in
+the next paragraph is withdrawn as a model law and retained only as the
+historical `bonded-ray-field-v1` profile; its measurements stand as evidence
+about that profile.
+
+Historical (withdrawn 2026-09-17): the bound was split in two, as the
+experiments split it. Energy, momentum,
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
@@ -653,6 +671,17 @@ limits; it does not derive the matrices or establish physical energy closure.
 
 ## 22. Historical autonomous sampling candidates
 
+Adopted direction (model owner, 2026-09-17): the only draw in the model is the
+Detector break of a wave ray, pass or return, one bounded integer per break
+(the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
+[section 23](#23-the-ray-event-model)). A pair's number is drawn at the first
+Detector and carried by the returning ray; no owner answers at a distance.
+For two Detectors at equal distance from the birth the CHSH value is at most 2,
+and the joint law's value appears only when the second ray's path exceeds the
+round trip through the first Detector. This price is accepted. The text below
+describes the historical candidates, including the shared registry, and their
+measurements.
+
 Every interaction whose outcome is not certain consumes exactly one bounded
 integer from a configured sequence, and nothing else decides it: the record's
 own ticket for a lottery capture on a ray field, the quantum owner's ticket at
@@ -698,3 +727,50 @@ fixed lower half gives the Popescu-Rohrlich box, `S = 4`, with even
 marginals. No-signalling bounds the coin, not the correlation; what bounds
 the correlation at the quantum value is the singlet law in the lower half,
 and that law is configured. The [hypotheses page](docs/HYPOTHESES.md) states the tests.
+
+## 23. The ray-event model
+
+Adopted as the target direction by the model owner on 2026-09-17. The design
+candidate `ray-event-model-v1` in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
+holds the complete statement, the migration order and the acceptance criteria.
+Nothing in this section is implemented yet; every implementation step is a
+separate published change measured against that document.
+
+A ray is not an object. It is the trajectory of one event along one straight
+line of nodes: the same event, the same family properties, one node per Link
+interval, one heading. A ray trajectory is reversible: run backward it returns
+exactly to the event that created it, because nothing was added or lost along
+the line. An event is an endpoint of a ray, its birth or its break. A break,
+a split or a change of heading, is the only interaction; only there is
+anything decided. A wave ray carries a phase; light is a wave ray with no mass
+and no charge, an event moving in time.
+
+At a node where rays meet, the coupling declared between their families
+decides one of three things: no break, and the rays cross; a deterministic
+break, a split or a heading change computed from the frozen inputs with every
+declared invariant exact over all inputs and outputs; or a Detector break,
+when one participant is a declared Detector and the other a wave ray, which
+draws one bounded integer and selects pass or return. A ray alone at a node
+never breaks, and a node never holds a ray without a declared binding
+coupling.
+
+A Detector does not absorb. The same ray either continues on its line or
+reverses by a half turn; the click is the record that it passed or returned.
+A returning ray retraces its own trajectory by its step count, reaches its
+birth event with certainty and continues straight, which is the direction of
+the partner ray of a pair. It carries the number the partner's Detector was
+missing. Pair identity is the trajectory, not the birth node and tick.
+
+A traveling ray releases a field, and the field is itself made of rays that
+cross nodes without event and meet other rays as any ray does. There is no
+matter in the model at this stage: matter is the name for rays bound in one
+node by a declared binding coupling, a neutron ray and a proton ray held
+together by the strong binding, an electron ray around them whose line is
+broken at every step by the field rays the bound pair releases. Mass is the
+retained energy of a bound group, and the group's phase advance is its clock.
+Held source records remain an explicitly labeled interim device until the
+binding couplings exist.
+
+Postulates 1 to 4 hold under this model without exception; the registry
+exception of postulate 4 is withdrawn, and the price stated in postulate 22 is
+accepted.
