@@ -124,6 +124,8 @@ Revision 2026-09-17: a Detector is a Node marked as a Detector; the mark is boun
 
 The state may retain coherent alternatives and joint correlations during deterministic evolution. Determinism does not assign a sharp hidden value to every unmeasured observable or select a classical trajectory. A new ordinary event does not authorize sampling. An actual Detector measurement applies its specified conditional update; PASS/RETURN exchange is not automatically that quantum measurement. Replaying one committed Detector decision returns the same result without another draw, emission or inventory charge. Later calculation must preserve recorded history, not rewrite the past.
 
+Revision 2026-09-17: everything on the board is a transfer of information. A ray carries a piece of information away from the interaction that created it, and that Node keeps the missing piece in a bounded register of open alternatives. A return is a deletion, not a message: the returning ray brings the piece back to its origin, which erases the open alternative; a ray that passes is realized. Sibling events of one interaction are independent rays, each meeting its own fate.
+
 ## 3.21 Emergence, not insertion
 
 Large-scale laws must be derived from repeated local interactions. The desired macroscopic equation must not be inserted directly into the elementary update rule.

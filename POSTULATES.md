@@ -791,3 +791,36 @@ the binding couplings exist.
 Postulates 1 to 4 hold under this model without exception; the registry
 exception of postulate 4 is withdrawn, and the price stated in postulate 22 is
 accepted.
+
+## 24. Everything is information transfer; a return erases at the origin
+
+Adopted as the target direction by the model owner on 2026-09-17, together
+with section 23; implementation pending.
+
+Everything on the board is a transfer of information. A ray carries a piece
+of information away from the interaction that created it, along its line,
+one node per interval. The node of that interaction keeps the complementary
+piece, what is now missing there, in bounded local state for as long as the
+alternative is open. Nothing else is stored about the ray anywhere.
+
+A Detector that returns a ray is not sending a message to anyone. It sends
+the piece of information back to the node it came from, so that the missing
+piece can be erased there: the returning ray retraces its own line, reaches
+the origin with certainty, and the origin deletes the open alternative. A
+ray that passes the Detector is realized; its alternative stays open at the
+origin until a return arrives or the bounded lifetime of the open piece ends.
+For a pair, the returning piece continues straight through the origin to the
+partner ray, which is how the partner's Detector receives the number it was
+missing; that continuation is the same transfer in the opposite direction,
+not a second mechanism.
+
+Each ray meets its own fate. Sibling events of one interaction are
+independent rays; nothing erases a sibling except its own return. The
+once-only requirement of the central specification is therefore a property
+of the returns and of the bounded lifetime at the origin, not of a shared
+owner, and it is accepted that a sibling can be realized at a second Detector
+before a return from the first arrives.
+
+The design candidate in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
+carries this section's consequences for Node state (a bounded register of
+open alternatives at each interaction node) and for the acceptance criteria.

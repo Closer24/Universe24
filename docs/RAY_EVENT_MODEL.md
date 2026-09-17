@@ -76,6 +76,17 @@ phase, and the Detector's outcome in a bounded register). When it reaches its
 birth interaction it continues straight through it, which is by construction
 the direction of the partner ray of a pair.
 
+**Information.** Everything on the board is a transfer of information. A ray
+carries a piece of information away from the interaction that created it;
+the node of that interaction keeps the complementary piece, what is missing
+there, in a bounded register of open alternatives for as long as the
+alternative is open. A return is a deletion, not a message: the returning ray
+brings the piece back to the origin, which erases the open alternative. A ray
+that passes a Detector is realized, and its open piece at the origin ends
+with the bounded lifetime of the register or with a later return. Sibling
+events of one interaction are independent rays, each meeting its own fate;
+nothing erases a sibling except its own return.
+
 **Field.** A ray that travels releases a field, and the field is itself made
 of rays: family-declared outward emission along the six headings, one Link
 per interval, with its own conserved quantity and the ordinary dilution or
@@ -122,7 +133,7 @@ The rule in the form Highlights 3.27 requires:
 
 | Question | Answer under this model |
 | --- | --- |
-| Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed) |
+| Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, the Detector mark if the Node carries one (mark, setting, ticket seed), and a bounded register of open alternatives for the interactions born there |
 | What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
 | What operation acts | The coupling declared for the set of families present, in declared order; the Detector lottery only at a marked Node and only for a wave ray |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
@@ -238,13 +249,18 @@ and evidence, under the ordinary gates.
   the configured joint law's value.
 - Conservation audits balance at every tick; no Node holds stock after an
   interaction; every ray is resident, in flight or escaped, and nothing else.
+- A returned ray erases exactly one open alternative at its origin, the one
+  it was; a register of open alternatives never grows beyond its bound, and a
+  return to an origin whose alternative has already ended is recorded and
+  ignored.
 
 ## 8. Open decisions
 
-- What happens at a Detector to the alternatives that were not selected: they
-  return to their birth interaction and cancel there, or they continue; and
-  what a second Detector on another alternative does before that return
-  arrives (the once-only requirement of the central specification).
+- Decided on 2026-09-17 (postulate 24): a return erases the open alternative
+  at the origin; sibling alternatives are independent and a second Detector
+  may realize one before a return from the first arrives. Remaining choice:
+  the bounded lifetime of an open alternative at the origin, and what the
+  origin does when the register is full.
 - What exactly the returning ray carries: its own outcome only, or the full
   drawn number.
 - Whether a field ray alone can change a ray's trajectory (a lens,
