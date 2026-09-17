@@ -68,10 +68,13 @@ heading except the ray's own,
 3.5, model owner, 2026-09-17): released by the electron and the positron as
 their field (the families `electron_field` and `positron_field` until that
 date) and emitted at an event by any source, a photon one quantum of it. Its
-`spread` key is the six-heading split table of feature 12 by which every Node
-that light reaches releases it again, the backward heading included, a
-quantum never waiting; until it is declared the field lives on the six axis
-lines of its source and light goes straight.
+`spread` key is the six-heading split table by which every Node that light
+reaches releases it again, the backward heading included, a quantum never
+waiting: the rule and the world key are feature 12
+(`field-spreading-v1`, [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)),
+the weights the model owner's declaration before A1's run; until they are
+declared the field lives on the six axis lines of its source and light goes
+straight.
 A `bound_group` adds `members` (ray id to count), `binding` (the coupling that
 holds it) and, if it can decay, `decay` (the conversion and the mark's
 setting). A property read only at a meeting (`colour`, `spin`,
@@ -125,7 +128,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 | --- | --- | --- |
 | `lag_bits.world_key` | The key that declares the lag modulus per family, the N of hypothesis 14 on the lag register and not on the phase | feature 8b |
 | `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
-| `rays.light.spread` | The six-heading split table by which every Node that light reaches releases it again (feature 12, Highlights 3.5, 2026-09-17), the backward heading included; a quantum never waits, the remainder leaving whole through the heading the phase selects | feature 12 |
+| `rays.light.spread` | The weights of the six-heading split table by which every Node that light reaches releases it again (Highlights 3.5, 2026-09-17), the backward heading included; a quantum never waits, the remainder leaving whole through the heading the phase selects. The rule and the world key are feature 12, `field-spreading-v1` ([field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)); the weights are declared before A1's run | A1 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
 | `rays.muon.rest_rate` | The muon's rung on the ladder, k × 206.768 28 | A10 |
@@ -176,11 +179,13 @@ it uses; the layers follow.
 | A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 
-A bound group's decay draw (the mark drawing at the group's tick), colour,
-the properties of feature 11 and the split table of feature 12 (`spread`)
-have no world key yet; their catalog records wait for them, and no engine
-rule is added for them
+A bound group's decay draw (the mark drawing at the group's tick), colour
+and the properties of feature 11 have no world key yet; their catalog
+records wait for them, and no engine rule is added for them
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
+The split table of feature 12 has its world key, `spread` on a ray spatial
+field (`field-spreading-v1`, 2026-09-17); the light family's weights are
+undecided until A1 declares them.
 
 ## What the catalog is not
 
