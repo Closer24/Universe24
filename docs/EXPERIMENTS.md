@@ -740,6 +740,96 @@ states "exactly" and means integer equality at every tick.
   sense, at no r the engine reaches today, and the exponent clause can be
   met only from r ≈ 24 up. CPU: 607 s for the four computations and 244 s
   for the free-space part with its Link-current column, on one core.
+- **Run 2, to the steady state (dense mode), planned before the run
+  (2026-09-17).** The same two bodies under the dense mode (`dense_field:
+  true`, `dense-field-v1`, PR #251, [the dense
+  mode](SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1): the pure-field
+  Nodes cycled as one vectorized step with the same integers, `state.json`
+  and the ledger byte for byte the engine's), which makes the boxes and
+  durations of the computation above feasible: the boundary 2r from both
+  bodies, the box [5r + 1, 4r + 1, 4r + 1] with A at (2r, 2r, 2r) and B
+  at (3r, 2r, 2r), run for t90 + 32 ticks, t90 the first tick at which the
+  mean field's push in that box reaches 90 % of its steady state (t90 ∝
+  r^2.29 over r ≥ 12): like charges at r = 12, 16, 20 and 24
+  (`pp_r{r}d`: [61, 49, 49] for 196 ticks, [81, 65, 65] for 386, [101,
+  81, 81] for 622, [121, 97, 97] for 898), opposite charges at r = 16 for
+  the sign (`pe_r16d`, 386 ticks) and the control alone in the cube of r =
+  16's margin, 65³, for 386 ticks (`p_alone_16d`, its register zero by
+  symmetry as in Run 1); the six worlds written by `make_worlds.py`
+  beside the fifteen of Run 1 (`dense_cases`), the mode's admission met
+  (no `conservation` key, no polarization, no ray interaction, one Node
+  worker), and run one at a time, smallest first (r = 12; r = 16 like,
+  opposite, the control; r = 20; r = 24 last and only if the machine has
+  8 GB available when its turn comes). Memory, measured before the run on
+  the r = 12 board: the dense arrays and their temporaries cost about 6
+  KB per Node (the 16-tick run peaks at 1.0 GB) and the runner's final
+  snapshot, `state.json`, every filled Node read back as Node state and
+  written as text, about 16 KB per filled Node (an 80-tick run with
+  62 k of the 146 k Nodes filled peaks at 1.9 GB), so a full board peaks
+  at about 22 KB per Node: 3.3 GB at r = 12, 7.8 at r = 16, 3.1 for the
+  control, 15 at r = 20 and 26 at r = 24, against 16 GB on the machine;
+  the series script runs a world only if the available memory covers its
+  projection when its turn comes, so r = 20 is a borderline attempt and
+  r = 24 cannot run on this machine until the runner writes the snapshot
+  Node by Node (a runner change, not made here). Smoke test before the
+  run: the r = 12 world's document for 16 ticks with the key and without
+  it gives the same `state.json` (SHA-256
+  `ab54313628ce06f00598ea1be3c8c87a7f78f3b340531005491e93eda93108e7`),
+  the same ledger, totals and body registers (B's register (29, 0, 0)
+  after tick 16, the first push at tick 12), in 63 s against 76 s (at 16
+  ticks the field covers about 7 k of the 146 k Nodes; the engine alone
+  would cost about 5 minutes per tick once the board is full). Predictions,
+  written before the run by `predict_dense.py` into `predictions.json`
+  beside the worlds (the mean field of `mean_field_gauss.py` at exactly
+  these boxes and ticks, the push averaged over the last 32 ticks as
+  `analyze.py` reads it): F(r) = 23.137, 9.675, 5.604 and 3.747 quanta per
+  interval at r = 12, 16, 20, 24 (r² F = 3332, 2477, 2242, 2158), 91.4,
+  90.7, 90.5 and 90.3 % of the box's steady state 25.324, 10.668, 6.193
+  and 4.149, the window before the last one 22.400, 9.519, 5.548 and
+  3.721 (the push still rising by about 1 % per 32 ticks at t90), t50 =
+  34, 94, 164, 246; the first push at tick r in the mean field, the beam
+  5.21, 0.46, 0.041 and 0.0036 quanta per interval, below one quantum
+  from r = 16 (in Run 1 the first quantum reached B at tick 18 at r = 16,
+  through the remainder registers, and it will come later still at r =
+  20 and 24: reported, not a clause); the log-log exponent of the
+  predicted F over r = 12, 16, 20 is −2.79 ± 0.16 and over 12, 16, 20, 24
+  −2.63 ± 0.14 (of the steady state in the same boxes −2.77 and −2.61).
+  The mean field's asymptote is −2: the local exponent of the box's
+  steady push is −3.01, −2.44, −2.20 and −2.09 between r = 12 and 16, 16
+  and 20, 20 and 24, 24 and 32, and in free space the local exponent of
+  the axis flux stays within −2.0 ± 0.2 from r = 21 on and within ± 0.1
+  from r = 26 on (the computation above); so at these r the run reads the
+  approach to Gauss's law, not its asymptote, and the criterion is the
+  agreement with the mean field, the expectation of the engine's
+  integers, clause by clause. Criterion, pre-registered, pass, all of:
+  (1) every ledger line balanced and `conserved_at_every_completed_tick`
+  at every tick of every world; (2) the two registers equal and opposite
+  at every tick of every two-body world, the control's (0, 0, 0) at every
+  tick; (3) the engine's steady-state push F(r) on B, the mean over the
+  last 32 ticks, equals the prediction above within 3 % at every r run;
+  (4) the log-log exponent of F(r) over the r run (12, 16, 20, and 24 if
+  run) equals the mean field's over the same points, −2.79 (−2.63 with r
+  = 24), within ± 0.1, the asymptote −2 stated beside it with the r from
+  which it holds; (5) the opposite-charge series at r = 16 the exact
+  negation of the like-charge series, tick by tick. Fail: any of the
+  five, stated as which and why (the remainder rule's integers against
+  the mean, the box, the transient, or the mode); nothing is tuned after
+  the fact. `analyze_dense.py` evaluates the five clauses from the
+  records against `predictions.json` (a run not yet made is reported as
+  missing). Expected cost at the measured 26 µs per Node and tick: 12
+  minutes at r = 12, 57 minutes each at r = 16 (the control, one family,
+  about 23), 3 hours at r = 20 and 7.4 hours at r = 24, about 13 hours in
+  all; initialization fingerprints, `pp_r12d`, `pp_r16d`, `pp_r20d`,
+  `pp_r24d`, `pe_r16d`, `p_alone_16d`:
+  `722fd4815761d5dd27416d4785543eb2bb1c05193c2a185a23acfdbeb2f1163d`,
+  `9bd1c35590668b892be8492ac6c65fbe8a311003cb49aca00ab59f7f4b38ebbf`,
+  `0a249b0f7134f16695f7d4df3feb76186ffbae9d771e35feb49b99d9a45b7e1b`,
+  `7c91c70988cc45e0459cf255af68bd3c0969a870043a49c7ac354f2556e08add`,
+  `470b1f5e5c693edd2a3f4efa7ae02b437a425a4d08994f367bcd468ace321d22`,
+  `20943c970bc264e33bf5cf3c776381a0b5eda9d81a3350b3f892e2fe68e03599`.
+  Status: launched on 2026-09-17 (the engine of `main` at `c879d9e`, no
+  engine change on the branch), results to be registered from the
+  records.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 

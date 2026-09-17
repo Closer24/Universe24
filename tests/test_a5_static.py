@@ -7,7 +7,9 @@ the fingerprinted runs) holds the pinned integers of the criterion.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("A5s Coulomb at rest"):
 the first two tests before the first pinning run, the third from the record of the
-runs of 2026-09-17.
+runs of 2026-09-17, the fourth and fifth (Run 2, the dense mode to the steady
+state: the six dense worlds byte for byte what make_worlds.py writes and the
+mean field's predictions written before the run) before Run 2.
 """
 
 import hashlib
@@ -43,6 +45,23 @@ NAMES = (
 )
 AXIS = (4, 6, 8, 12, 16)
 DIAGONAL = (3, 4, 6, 8)
+# Run 2 (the dense mode, to the steady state): the boundary 2r from both bodies,
+# t90 + 32 ticks by the mean field's t90 in that box (predictions.json, written
+# by predict_dense.py before the run), like charges at every r, opposite charges
+# at r = 16, the control in r = 16's cube for r = 16's ticks.
+DENSE_NAMES = ("pp_r12d", "pp_r16d", "pp_r20d", "pp_r24d", "pe_r16d", "p_alone_16d")
+DENSE_AXIS = (12, 16, 20, 24)
+DENSE_T90 = {12: 164, 16: 354, 20: 590, 24: 866}
+DENSE_TICKS = {12: 196, 16: 386, 20: 622, 24: 898}
+# The mean field's numbers of predictions.json, pinned before Run 2 (four
+# decimals): the steady push in the box, the predicted push (the mean over the
+# last 32 of the ticks), t50, and the fits over the run's points.
+PREDICTED_STEADY = {12: 25.3245, 16: 10.6675, 20: 6.1929, 24: 4.1493}
+PREDICTED_PUSH = {12: 23.1370, 16: 9.6752, 20: 5.6039, 24: 3.7474}
+PREDICTED_T50 = {12: 34, 16: 94, 20: 164, 24: 246}
+PREDICTED_EXPONENT = {"12-16-20": -2.788, "12-16-20-24": -2.629}
+PREDICTED_STEADY_EXPONENT = {"12-16-20": -2.769, "12-16-20-24": -2.612}
+PREDICTED_LOCAL_24_32 = -2.093
 
 # Written from record.json after the runs of 2026-09-17 (the register's entry
 # states them): the sum of B's pushes over the last 32 ticks (F(r) is its 32nd
@@ -152,6 +171,89 @@ def test_a5s_worlds_are_the_pinned_geometry_and_the_generator_writes_them():
             (e["type"], e["field"], e["amount"], e["heading"], e["recoil_field"])
             for e in raw["emissions"]
         ] == [(f"idle_{light}", light, 1, [1, 0, 0], "momentum") for light in lights], name
+
+
+def test_a5s_dense_worlds_are_the_pinned_geometry_and_the_generator_writes_them():
+    make_worlds = load_script("make_worlds")
+    generated = dict(make_worlds.dense_cases())
+    assert list(generated) == list(DENSE_NAMES)
+    assert make_worlds.DENSE_TICKS == DENSE_TICKS
+    for name in DENSE_NAMES:
+        text = (WORLDS / f"{name}.json").read_text(encoding="utf-8")
+        assert text == json.dumps(generated[name], indent=1) + "\n", name
+    for name in DENSE_NAMES:
+        raw = world(name)
+        case, tail = name.split("_", 1)
+        if case == "p":
+            r, offset, shape = 16, (0, 0, 0), [65, 65, 65]
+        else:
+            r = int(tail[1:-1])
+            offset, shape = (r, 0, 0), [5 * r + 1, 4 * r + 1, 4 * r + 1]
+        margin = 2 * r
+        assert raw["dense_field"] is True, name
+        assert "conservation" not in raw and "polarization" not in raw, name
+        assert raw["model_id"] == model_of(name), name
+        assert (raw["shape"], raw["boundary"], raw["ticks"]) == (shape, "open", DENSE_TICKS[r]), name
+        assert raw["ticks"] == DENSE_T90[r] + 32, name
+        positions = [b["position"] for b in raw["external_bodies"]]
+        expected = [[margin] * 3] + ([[margin + r, margin, margin]] if case != "p" else [])
+        assert positions == expected, name
+        # The same world as make_worlds.world at this margin and these ticks
+        # without the mode: the key and the name are the only differences.
+        _, plain = make_worlds.world(case, offset, margin=margin, ticks=raw["ticks"])
+        stripped = {k: v for k, v in raw.items() if k != "dense_field"}
+        stripped["model_id"] = plain["model_id"]
+        assert stripped == plain, name
+        # The margin is at least 2r from both bodies on every side.
+        for body in raw["external_bodies"]:
+            for axis in range(3):
+                assert body["position"][axis] >= 2 * r
+                assert raw["shape"][axis] - 1 - body["position"][axis] >= 2 * r
+    assert world("pe_r16d")["external_bodies"][1]["momentum_table"] == {"light_a": -1}
+    assert world("p_alone_16d")["external_bodies"][0]["momentum_table"] == {"light_a": 1}
+
+
+def test_a5s_dense_predictions_are_the_mean_fields_and_the_r12_row_recomputes():
+    predict = load_script("predict_dense")
+    document = json.loads((WORLDS / "predictions.json").read_text(encoding="utf-8"))
+    assert (document["boundary_factor"], document["window"], document["extra_ticks"]) == (2, 32, 32)
+    rows = {row["r"]: row for row in document["rows"]}
+    assert list(rows) == list(DENSE_AXIS)
+    for r in DENSE_AXIS:
+        row = rows[r]
+        assert row["boundary"] == 2 * r
+        assert row["box"] == {
+            "shape": [5 * r + 1, 4 * r + 1, 4 * r + 1],
+            "a": [2 * r] * 3,
+            "b": [3 * r, 2 * r, 2 * r],
+        }
+        assert row["mean_field_shape"] == [5 * r + 1, 2 * r + 1, 2 * r + 1]
+        assert (row["t50"], row["t90"], row["ticks"]) == (PREDICTED_T50[r], DENSE_T90[r], DENSE_TICKS[r])
+        assert row["window"] == 32 and row["first_push_tick"] == r
+        assert round(row["steady_push"], 4) == PREDICTED_STEADY[r], r
+        assert round(row["predicted_push"], 4) == PREDICTED_PUSH[r], r
+        assert 0.9 <= row["fraction_of_steady"] < 0.92, r
+        assert row["previous_window_push"] < row["predicted_push"] < row["steady_push"], r
+        assert world(f"pp_r{r}d")["ticks"] == row["ticks"], r
+    fits = document["fits"]
+    for label in ("12-16-20", "12-16-20-24"):
+        assert fits[label]["predicted"]["points"] == [
+            [r, rows[r]["predicted_push"]] for r in map(int, label.split("-"))
+        ], label
+        assert round(fits[label]["predicted"]["exponent"], 3) == PREDICTED_EXPONENT[label], label
+        assert round(fits[label]["steady"]["exponent"], 3) == PREDICTED_STEADY_EXPONENT[label], label
+    asymptote = document["asymptote"]
+    assert round(asymptote["local_exponent"]["24-32"], 3) == PREDICTED_LOCAL_24_32
+    assert asymptote["free_space_within_band_from"] == {"0.2": 21, "0.1": 26}
+    # The r = 12 row recomputed from the kernel (about two seconds).
+    again = predict.predict(12, 24)
+    for key in ("t50", "t90", "ticks", "first_push_tick", "box", "mean_field_shape"):
+        assert again[key] == rows[12][key], key
+    for key in ("steady_push", "predicted_push", "previous_window_push"):
+        # The kernel is floating point (a computation about the average); another
+        # host's BLAS differs in the last bits, so the row is matched to one part in
+        # a million, not to the bit.
+        assert abs(again[key] - rows[12][key]) <= 1e-6 * max(1.0, abs(rows[12][key])), key
 
 
 def test_a5s_r4_like_charges_first_eight_ticks(tmp_path):
