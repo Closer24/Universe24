@@ -397,8 +397,8 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     assert json.loads(page[start : page.index("</script>", start)]) == style
     # The model owner's defaults of 2026-09-17: the whole path as one bright line,
     # hue by phase on the arrowhead only, no text around the board, autoplay.
-    assert style["sizes"]["trail_links"] == 0 and style["sizes"]["ray_width_px"] == 6
-    assert style["sizes"]["trail_width_px"] == 6 and style["sizes"]["trail_fade"] == [1.0, 0.75]
+    assert style["sizes"]["trail_links"] == 10 and style["sizes"]["ray_width_px"] == 6
+    assert style["sizes"]["trail_width_px"] == 6 and style["sizes"]["trail_fade"] == [1.0, 0.0]
     assert style["colors"]["families"]["default"]["hue"] == "fixed"
     assert style["draw"]["hue_by_phase"] == "arrowhead"
     assert set(style["draw"]["page_text"]) == {
@@ -410,7 +410,8 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
         "tick_counter",
         "controls",
     }
-    assert not any(style["draw"]["page_text"].values())
+    on = {k for k, v in style["draw"]["page_text"].items() if v}
+    assert on == {"header", "tick_counter"}
     assert not any(style["draw"]["labels"].values())
     assert style["motion"]["autoplay"] is True and style["motion"]["loop"] is True
     bad = copy.deepcopy(style)

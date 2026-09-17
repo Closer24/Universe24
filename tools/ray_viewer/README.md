@@ -13,9 +13,10 @@ here that touches the engine.
 
 - Dark background. A ray is a ray, not a particle: a bright segment about
   6 px wide on the Link it is crossing, an arrowhead about 10 px long in its
-  heading, and its whole path since its event as one line of the same width,
-  nearly as bright, so a matter ray reads as one continuous line across the
-  board (`sizes.trail_links` 0; a positive value keeps only that many Links).
+  heading, and a trail of the same width fading smoothly to nothing over the
+  last ten Links, one opacity per Link, so the path is understood without a
+  hard cut (`sizes.trail_links` 10 and `trail_fade` [1.0, 0.0]; 0 draws the
+  whole path since the ray's event).
   Matter families have a fixed high-contrast colour and the phase hue shows
   on the arrowhead (`draw.hue_by_phase`: `arrowhead`, `ray` or `none`; grey
   when the record carries no phase). A label per ray, family and amount,
@@ -56,11 +57,12 @@ here that touches the engine.
   the position the record gives for the tick shown. None of them carries
   text.
 - Text is at least 14 px; the page works at 400 px width. By default the
-  page shows the board alone: every block of text around it (header, record
-  line, legend, captions, totals, tick counter, controls) is off in
-  `draw.page_text` and switched on there when wanted; playback starts on load
-  with the slow rotation and loops (`motion.autoplay`, `motion.loop`), and
-  the space key pauses and resumes.
+  page shows the board with one title line, the run's title from the record,
+  and the tick counter; every other block of text around it (record line,
+  legend, captions, totals, controls) is off in `draw.page_text` and switched
+  on there when wanted; playback starts on load with the slow rotation and
+  loops (`motion.autoplay`, `motion.loop`), and the space key pauses and
+  resumes.
 
 ## The look lives in `style.json`
 

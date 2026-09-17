@@ -183,11 +183,11 @@
   "sizes": {
     "ray_width_px": 6,
     "arrowhead_px": 10,
-    "trail_links": 0,
+    "trail_links": 10,
     "trail_width_px": 6,
     "trail_fade": [
       1.0,
-      0.75
+      0.0
     ],
     "field_width_px": 1.5,
     "field_trail_links": 3,
@@ -249,12 +249,12 @@
     "hue_by_phase": "arrowhead",
     "silent_field_events": true,
     "page_text": {
-      "header": false,
+      "header": true,
       "record": false,
       "legend": false,
       "captions": false,
       "totals": false,
-      "tick_counter": false,
+      "tick_counter": true,
       "controls": false
     }
   },
@@ -342,7 +342,8 @@
   function applyPageText() {
     var pt = state.style.draw.page_text || {};
     document.querySelector("header").hidden = !pt.header && !pt.record;
-    els.title.hidden = !pt.header; els.boardLabel.hidden = !pt.header;
+    els.title.hidden = !pt.header;
+    els.boardLabel.hidden = !pt.record;
     els.recordLabel.hidden = !pt.record;
     els.legend.hidden = !pt.legend;
     els.note.hidden = !pt.captions;
@@ -472,7 +473,8 @@
     els.note.classList.toggle("event", cap.event);
     els.totals.textContent = totalsLine(run, row);
     var steps = phaseSteps(run);
-    els.boardLabel.textContent = (run.label || run.key) + " · board " + run.shape.join(" × ") + " · " + T + " ticks" + (steps ? " · phase " + steps + " steps" : "") + " · " + run.boundary + " boundary";
+    els.title.textContent = run.label || run.key;
+    els.boardLabel.textContent = "board " + run.shape.join(" × ") + " · " + T + " ticks" + (steps ? " · phase " + steps + " steps" : "") + " · " + run.boundary + " boundary";
     var rec = run.record || {};
     els.recordLabel.textContent = "record: " + (run.model || run.key) + " · source " + shortHash(rec.source_sha256) + " · initialization " + shortHash(rec.initialization_sha256) + (rec.ray_state ? " · " + rec.ray_state : "") + (rec.released_field ? " · " + rec.released_field : "") + " · " + run.status;
   }

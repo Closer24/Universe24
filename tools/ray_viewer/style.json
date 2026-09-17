@@ -48,11 +48,11 @@
   "sizes": {
     "ray_width_px": 6,
     "arrowhead_px": 10,
-    "trail_links": 0,
+    "trail_links": 10,
     "trail_width_px": 6,
     "trail_fade": [
       1.0,
-      0.75
+      0.0
     ],
     "field_width_px": 1.5,
     "field_trail_links": 3,
@@ -114,12 +114,12 @@
     "hue_by_phase": "arrowhead",
     "silent_field_events": true,
     "page_text": {
-      "header": false,
+      "header": true,
       "record": false,
       "legend": false,
       "captions": false,
       "totals": false,
-      "tick_counter": false,
+      "tick_counter": true,
       "controls": false
     }
   },
