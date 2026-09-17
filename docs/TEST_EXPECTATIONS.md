@@ -38,6 +38,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_disturbance_application.py` | 14 | 0.29 | Runner record: headless run files, the saved initialization and source fingerprint that replay a run, explicit CLI opt-ins |
 | `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
 | `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
+| `test_field_spreading.py` | 10 | 0.80 | Issue #169 feature 12: every Node that field content reaches releases it again by the family's split table, amounts adding per heading, the phase of the coherent sum, whole quanta and the remainder through the entry the phase selects; the source sign on the field ray; a returned field quantum walking back until something takes it (`field-spreading-v1`) |
 | `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
 | `test_integer_arithmetic.py` | 75 | 0.00 | Bounded integer arithmetic: signed and ceiling division, remainders, component operations, overflow before cancellation |
 | `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
@@ -1272,6 +1273,179 @@ n (arrivals, the sink). The test is parametrized over `sink`, `stars`,
 A world without `external_bodies` is unchanged: no body Node exists, no
 token is added, no source is booked and the sink line is zero.
 
+## Field spreading
+
+`test_field_spreading.py` builds its boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order) on an open 13^3 lattice
+([field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)).
+The family `light` is a conserved scalar with an 8-step phase advancing 0
+and the table `spread: [6, 1, 1, 1, 1, 1]`, total 11: forward 6/11, backward
+1/11, each transverse 1/11. Every lamp holds its amount and emits it once,
+funded and directed, with its recoil into the lamp's `momentum` field, so
+the `momentum` total is the lamps' recoils plus the rays' amount x heading
+and the `momentum` source is what the spreads moved. At eight phase steps
+and total 11 the remainder entry the phase selects is: phases 0 to 4
+forward, 5 backward, 6 the second transverse (-Y for content on +X or -X,
+-X for content on any other heading), 7 the third transverse (+Z for
+content on +X, -X, +Y or -Y, +Y for content on +Z or -Z);
+`spread_remainder_entry` over phases 0 to 7 returns 0, 0, 0, 0, 0, 1, 3, 4,
+and `relative_ports` gives (0, 1, 2, 3, 4, 5) for Port 0 and (3, 2, 0, 1, 4, 5)
+for Port 3. The test is parametrized over `single`, `superposition`,
+`cancelled`, `quantum`, `sign`, `returned`, `source`, `resident`, `rejected`
+and `unchanged`. Pinned before the first run:
+
+- (a) `single`: a lamp at (5,7,7) emits 12 along +X at phase 6, four ticks.
+  After tick 1 the ray is at (6,7,7) (heading 0, amount 12, phase 6, steps
+  1, mask 1, shares (12, 0, 0, 0, 0, 0)). The spread at (6,7,7) in the
+  interval of tick 2 (the `field_spread` record of tick 1): floor(12 x 6 /
+  11) = 6 forward, floor(12 / 11) = 1 on each of the other five, the
+  remainder 1 through -Y: `arrived` (12, 0, 0, 0, 0, 0), `amounts` per Port
+  (6, 1, 1, 2, 1, 1), `remainders` (0, 0, 0, 1, 0, 0), `phase` 6,
+  `coherence` [1, 1], `amount` 12. After tick 2 the rays, as (position,
+  heading, amount), are (7,7,7) 0 6; (5,7,7) 1 1; (6,8,7) 2 1; (6,6,7) 3 2;
+  (6,7,8) 4 1; (6,7,6) 5 1, each phase 6, steps 1, no event, and no other
+  Node holds light. In the interval of tick 3 every one spreads again (six
+  records of tick 2, in position order): (5,7,7) arrived (0, 1, 0, 0, 0, 0)
+  gives (0, 0, 0, 1, 0, 0), the remainder; (6,6,7) arrived (0, 0, 0, 2, 0,
+  0) gives (0, 1, 0, 1, 0, 0), 1 forward and the remainder 1 through -X;
+  (6,7,6), (6,7,8) and (6,8,7), each arrived 1, give (0, 1, 0, 0, 0, 0), the
+  remainder through -X; (7,7,7) arrived (6, 0, 0, 0, 0, 0) gives (3, 0, 0,
+  3, 0, 0), 3 forward and the remainder 3 through -Y. After tick 3: (8,7,7)
+  0 3; (7,6,7) 3 3; (5,6,7) 1 1 and 3 1; (5,8,7) 1 1; (6,5,7) 3 1; (5,7,8)
+  1 1; (5,7,6) 1 1. The seven records of tick 3: (5,6,7) arrived (0, 1, 0,
+  1, 0, 0), amount 2, phase 6, gives (0, 1, 0, 1, 0, 0), both remainders;
+  (5,7,6), (5,7,8) and (5,8,7) arrived (0, 1, 0, 0, 0, 0) give (0, 0, 0, 1,
+  0, 0); (6,5,7) arrived (0, 0, 0, 1, 0, 0) gives (0, 1, 0, 0, 0, 0);
+  (7,6,7) arrived (0, 0, 0, 3, 0, 0) gives (0, 2, 0, 1, 0, 0), remainders
+  (0, 2, 0, 0, 0, 0); (8,7,7) arrived (3, 0, 0, 0, 0, 0) gives (1, 0, 0, 2,
+  0, 0), remainders (0, 0, 0, 2, 0, 0). After tick 4: (9,7,7) 0 1; (8,6,7)
+  3 2; (7,5,7) 3 1; (6,6,7) 1 2; (4,6,7) 1 1; (5,5,7) 1 1 and 3 1; (5,7,7)
+  3 1; (5,6,8) 3 1; (5,6,6) 3 1. The light total is 12 at every tick with
+  source 0; the rays' momentum after ticks 1 to 4 is (12, 0, 0), (5, -1, 0),
+  (-1, -5, 0), (-3, -7, 0) and the lamp's recoil (-12, 0, 0), so the
+  `momentum` total is (0, 0, 0), (-7, -1, 0), (-13, -5, 0), (-15, -7, 0)
+  and equals `source_totals` at every tick; the spatial accounting balances
+  and the local audit passes. The runner records `field_spreading:
+  "field-spreading-v1"`, `spreading_fields` `[{"field": "light", "spread":
+  [6, 1, 1, 1, 1, 1]}]`, fourteen `field_spread` records (ticks 1 to 3),
+  `conserved_at_every_completed_tick` true, `local_conservation` passed,
+  final totals `light` [12] and `momentum` [-15, -7, 0], `source_totals`
+  `light` [0] and `momentum` [-15, -7, 0];
+- (b) `superposition` and `cancelled`: lamp 0 at (5,7,7) emits 23 along +X
+  at phase 0 and lamp 1 at (7,7,7) emits 23 along -X at phase 6
+  (`superposition`) or 4 (`cancelled`), two ticks. Both rays arrive at
+  (6,7,7) at tick 1, where the coherent stock a reader sees
+  (`spatial_values`) is 23 (coherence 1/2) or 0 (coherence 0/1). The spread
+  in the interval of tick 2 combines them: `amount` 46, `arrived` (23, 23,
+  0, 0, 0, 0), the phase of the coherent sum 7 (`superposition`) or 0
+  (`cancelled`, a cancelled sum); each heading's 23 gives floor(23 x 6 / 11)
+  = 12 forward and floor(23 / 11) = 2 on each other heading, the remainder
+  1 through the third transverse, +Z, at phase 7 or forward at phase 0:
+  `amounts` (14, 14, 4, 4, 6, 4) with `remainders` (0, 0, 0, 0, 2, 0), or
+  (15, 15, 4, 4, 4, 4) with (1, 1, 0, 0, 0, 0). After tick 2 the rays are
+  at (7,7,7) heading 0, (5,7,7) heading 1, (6,8,7) heading 2, (6,6,7)
+  heading 3, (6,7,8) heading 4 and (6,7,6) heading 5 with those amounts,
+  the combined phase, steps 1 and no event; the light total is 46, and the
+  `momentum` total, the lamps' recoils cancelling, equals the source:
+  (0, 0, 2) in `superposition`, (0, 0, 0) in `cancelled`;
+- (c) `quantum`: a lamp at (5,7,7) emits 1 along +X at phase 7, six ticks.
+  The quantum never waits: after tick 1 at (6,7,7) heading 0, and then, its
+  remainder leaving through the third transverse relative to its heading at
+  every Node, after ticks 2 to 6 at (6,7,8) heading 4, (6,8,8) heading 2,
+  (6,8,9) heading 4, (6,9,9) heading 2 and (6,9,10) heading 4, amount 1,
+  phase 7 and steps 1 throughout, one Link per interval and alone on the
+  board; the `momentum` total and source after ticks 1 to 6 are (0, 0, 0),
+  (-1, 0, 1), (-1, 1, 0), (-1, 0, 1), (-1, 1, 0), (-1, 0, 1), the lamp's
+  recoil (-1, 0, 0) included in the total;
+- (f) `sign`: an electron lamp at (5,7,7) (family `electron`, charge -3,
+  rest rate 1) emits 4 along +X at phase 0; `light` is its field at
+  `release: [1, 4]` with the table; three ticks. The electron is at (8,7,7)
+  after tick 3 (heading 0, amount 4, phase 3, steps 3, mask 1). It releases
+  five light rays of 1 at (6,7,7) in the interval of tick 2 (phase 1) and at
+  (7,7,7) in the interval of tick 3 (phase 2), every one with `source_sign`
+  -1, the sign of the electron's charge; phases 1 and 2 select forward, so
+  after tick 3 they are at (4,7,7) heading 1, (6,9,7) 2, (6,5,7) 3, (6,7,9)
+  4, (6,7,5) 5 (phase 1) and (6,7,7) 1, (7,8,7) 2, (7,6,7) 3, (7,7,8) 4,
+  (7,7,6) 5 (phase 2), amount 1, steps 1, sign -1, and nothing else holds
+  light; the five `field_spread` records of tick 2 carry `signs` (-1,);
+  light 10 with source 10, electron 4 with source 0. `release_field` on the
+  electron's ray gives the five rays with sign -1; `merge_rays` keeps a ray
+  of sign 1 and one of sign -1 on one line as two rays; `spread_content`
+  over 3 of sign 1 and 3 of sign -1 arriving on +X at phase 0 gives two
+  departures on Port 0 of 3 each (1 by the table and 2 as the remainder,
+  per sign), sign -1 first, and a record with `arrived` (6, 0, 0, 0, 0, 0),
+  `amounts` (6, 0, 0, 0, 0, 0), `remainders` (4, 0, 0, 0, 0, 0) and `signs`
+  (-1, 1); `transmit` in `siblings` mode of a returned ray of sign -1 on -X
+  (mask 3, shares (2, 2, 0, 0, 0, 0), amount 2) gives one transmission of 2
+  on -X with sign -1;
+- (g) `returned` (the orchestrator's proposal of Highlights 5.5, pending the
+  model owner's decision): the lamp world with a lamp at (5,7,7) emitting 1
+  along +X at phase 0 and a Detector at (8,7,7) with setting 0/1 (every
+  draw 0), seven ticks. After tick 1 the quantum is at (6,7,7) (emitted,
+  mask 1); after tick 2 at (7,7,7), a spread departure with no event (the
+  spreads of ticks 1 and 2 send it forward); at tick 3 it arrives at the
+  Detector and is returned: at (8,7,7) heading 1, outbound 0, steps 1,
+  Detector bit 0; after tick 4 at (7,7,7) with steps 0, the Node that spread
+  it, where it neither rests nor performs an inverse split; after tick 5 at
+  (6,7,7) and after tick 6 at (5,7,7), steps 0 throughout; in the cycle of
+  tick 6 the lamp, the record that emitted the family, takes it back: after
+  tick 7 no light ray is on the board and the lamp holds light 1 and
+  momentum (0, 0, 0). The light total is 1 and the `momentum` total
+  (0, 0, 0) at every tick, both sources 0; the records are `field_spread`
+  at ticks 1 and 2, `detector_return` at tick 3 and `field_returned` at
+  tick 6 (position (5,7,7), family light, amount 1, port 1, by none,
+  restored true); the local audit passes and the runner's ledger is exact
+  with final totals light [1] and momentum [0, 0, 0];
+- (h) `source` (the same proposal): a record holding 4 electrons at (5,7,7)
+  with no emission (its Node cycles for the release, (i)), `light` its field at
+  `release: [1, 4]` with the table, the Detector at (8,7,7) with setting
+  0/1, eight ticks. Every interval the record releases six light quanta (1
+  per heading, phase 0, sign -1), which go straight (phase 0 selects
+  forward). On the +X line the quantum released in the cycle of tick k
+  reaches the Detector at tick k+3, is returned, and walks back to (5,7,7)
+  at tick k+6, where the cycle of tick k+6 ends it at the record, content of
+  the family the field is the field of, its release unbooked as a negative
+  source (`field_returned` of tick k+6, port 1, by `electron`, restored
+  false). The -X, +Y and +Z quanta escape at tick k+6, the -Y and -Z quanta
+  at tick k+8. After tick t the light total is 6t - 3 max(0, t-5) - 2 max(0,
+  t-7) - max(0, t-6), the source 6t - max(0, t-6) and the escaped 3 max(0,
+  t-5) + 2 max(0, t-7): after tick 8 the total is 35, the source 46 and 11
+  escaped, the ledger balanced at every tick. The +X line after tick 8 holds
+  at (5,7,7) a returning quantum with steps 0, at (6,7,7) an outbound
+  quantum (steps 1) and a returning one (steps 0), at (7,7,7) the same, and
+  at (8,7,7) a returning quantum with steps 1, every one of sign -1;
+  `detector_return` records at ticks 3 to 8, `field_returned` at ticks 6 and
+  7; the local audit passes;
+- (i) `resident` (a defect fixed on 2026-09-17: a record holding stock of a
+  family with a released field released nothing, because the Node's cycle
+  returned early as idle before the release; `plan_cycle` now cycles for
+  it): a record holding 8 electrons at (5,7,7) with no emission, `light` its
+  field at `release: [1, 4]` with the table, four ticks. Every interval the
+  record releases six light rays of floor(8 x 1 / 4) = 2, phase 0, sign -1,
+  booked as a source, twelve per interval; each spreads whole forward at
+  the next Node (2 gives 1 by the table and the remainder 1 at phase 0).
+  After tick t the light total and source are 12t, the electron total 8
+  with source 0 and the record unchanged; the rays are at distance 1 to t
+  from (5,7,7) on each of the six lines, one ray of 2 per Node, phase 0,
+  steps 1, sign -1, no event; the ledger is balanced at every tick and the
+  local audit passes;
+- (d) `rejected`, at initialization: a table of five entries and a negative
+  weight ("spread"), a zero backward weight `[6, 0, 1, 1, 1, 1]` ("backward
+  heading"), unequal transverse weights `[6, 1, 1, 1, 1, 2]` ("one weight"),
+  `spread` on an outward field ("require ray transport"), a spreading family
+  with `phase_bits` 13 ("twelve bits") and a spreading family without the -Z
+  heading ("six Port headings");
+- (e) `unchanged`: the released-field world of feature 7 without `spread`, an
+  electron lamp at (2,3,3) emitting 5 along +X with `G` its field at
+  `release: [1, 4]` and 16 slots, on an open 9 x 7 x 7 lattice for 6 ticks,
+  runs byte-identically: the sha256 of its `events.jsonl` is
+  `8ab9901a4e5c2da7b4571e7438e674e528050c5fb61e894fbb7d18703adb8fa5` and of
+  its `state.json` `c13cd23158e5e461f171a8e2241ff793a24ccea531bd25ef54b28cfb2623e560`,
+  both taken on main `f3809be` before this feature (final totals `G` 16 and
+  `electron` 5, `G` 9 escaped), and its run record carries no
+  `field_spreading` key.
+
 ## Ray-event audit
 
 `test_ray_event_audit.py` builds its board inline under the shared Detector
@@ -1619,9 +1793,12 @@ first run:
 - `records`: the twelve sections, `phase_bits` without a real-N value and
   `lag_bits` open, its world key undecided and its engine (feature 8b) not
   landed; 12 rays and 16 couplings; `light` a field ray of `field_of`
-  electron, positron and proton with release `[1, 4]`, its `spread` and
-  `source_sign` undecided
-  and decided by feature 12, `light` in the `field` of the three charged
+  electron, positron and proton with release `[1, 4]`, its `spread`
+  `[6, 1, 1, 1, 1, 1]` and its `source_sign` `releaser` (feature 12,
+  `field-spreading-v1`, 2026-09-17; in `worlds` the light lamp's ray is
+  therefore released again at (8,7,7) and is at (9,7,7) after two ticks as
+  a fresh field ray with no event, steps 1, whole since phase 3 selects the
+  forward entry), `light` in the `field` of the three charged
   families (the proton's since the helium-ion run, E4, whose fixed nucleus
   radiates it) and neither `electron_field` nor `positron_field` a ray
   (Highlights 3.5, 2026-09-17); every ray with
@@ -1642,9 +1819,9 @@ first run:
   feature 2b, their engine not landed, their defaults pass without a draw
   and transmission without a draw and their alternative `draw`
   (Highlights 5.4, 2026-09-17); both apparatus kinds landed;
-- `undecided`: 32 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
-  A10, A12, hypothesis 12, hypothesis 13, feature 2b, feature 8b, feature 12,
-  read from the
+- `undecided`: 30 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  A10, A12, hypothesis 12, hypothesis 13, feature 2b, feature 8b, read from
+  the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings
   of the hypotheses page and the `feature <n>` names of the ray-event model;
   the table of `CATALOG.md` equal to the file, path for path and decider for
