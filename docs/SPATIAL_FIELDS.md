@@ -827,6 +827,45 @@ none), beside `ray_meeting`, so a Renderer can draw the G rays faint from the
 per-Node `ray_count` and `value` of that family. A world that declares no
 `field_of` runs byte-identically.
 
+### Audits (`ray-event-audit-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.15; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order); issue #169, feature 10):
+every declared invariant is exact across every interaction and transfer, and
+the world audit is one exact ledger per completed tick for each conserved
+readout, amount per family, momentum (three integers) and charge, stated in
+[the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1).
+`Simulation.audit()` (`DisturbanceEngine.audit`, built by
+`core/ray_event_audit.py`) reads the ledger at the current tick from the
+readouts of this document:
+
+- `totals()` and `source_totals()` are the `current` and `sourced` lines of
+  every conserved field, `escaped_totals()` and `annulled_totals()` the
+  `escaped` and `annulled` lines, and `absorbed_totals()` the `absorbed`
+  line, zero until the external body (feature 7b) books its sinks;
+- `charge_totals()` reads charge x amount per ray family over the owners
+  `totals()` reads: the rays resident at active Nodes and in flight on Links
+  and, since this feature, the stock a record holds of the family, resident
+  or in transit (a lamp holding a charged quantum holds its charge);
+  `escaped_charge_totals()` is the charge x amount of every escaped ray, and
+  of stock a record carried out; the charge a family sourced, annulled or
+  absorbed is its charge per quantum times that amount;
+- a returning ray reads its momentum as its share on the event's heading
+  (`ray_momentum`, `detector-return-v1`) and its charge as charge x amount
+  like any ray, in every line.
+
+The runner records `ray_event_audit: "ray-event-audit-v1"`, the ledger of
+every completed tick under `audit` (so a Renderer's caption can show the
+lines tick by tick), and `conserved_at_every_completed_tick` as the ledger's
+identity, initial + sourced = current + escaped + annulled + absorbed for
+amount, momentum and charge at every completed tick, re-checked from the
+recorded integers (`audit_failure`). A `ray_interactions` rule with outputs
+whose family's charge differs from the charge of the inputs its amount comes
+from would change the total charge, and is rejected at validation. Nothing
+else changes: events, states and totals are byte for byte what they were,
+the audit adds readouts. `test_ray_event_audit.py`
+([expectations](TEST_EXPECTATIONS.md#ray-event-audit)) is the test.
+
 ### Funded emission and absorption
 
 A field whose emitting type also carries a scalar field of the same name may

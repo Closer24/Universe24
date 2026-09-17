@@ -299,7 +299,11 @@ def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_
         "momentum": [SHARE if annul else 0, 0, 0],
     }
     assert first_run["accounting_balanced_at_every_completed_tick"]
-    assert first_run["conserved_at_every_completed_tick"] == (not annul)
+    # Since ray-event-audit-v1 (2026-09-17) the flag is the world ledger's identity,
+    # initial + sourced = current + escaped + annulled + absorbed, so the annulled
+    # sink keeps it true; it read false in annul before feature 10.
+    assert first_run["conserved_at_every_completed_tick"]
+    assert first_run["ray_event_audit"] == "ray-event-audit-v1"
     assert first_run["final_totals"] == {
         "quanta": [SHARE if annul else AMOUNT],
         "momentum": [-SHARE if annul else 0, 0, 0],

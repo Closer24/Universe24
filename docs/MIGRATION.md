@@ -6,6 +6,34 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Ray-event audits on 2026-09-17 (`ray-event-audit-v1`)
+
+Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),
+[the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
+
+- `Simulation.audit()` returns the world ledger at the current tick; the
+  runner records one per completed tick under `audit` and
+  `ray_event_audit: "ray-event-audit-v1"`, and `tools/ray_viewer/extract.py`
+  carries `audit` in its `conservation` entry.
+- `conserved_at_every_completed_tick` changed meaning: it is the ledger's
+  identity, initial + sourced = current + escaped + annulled + absorbed, for
+  amount, momentum and charge at every completed tick. It read false after
+  an escape or an annulment before; escaped and annulled content are ledger
+  lines, not losses, so an open world with escapes now reads true, and a
+  dissipative world (schema 2) still reads false. Pins updated with a dated
+  note: `test_inverse_split.py` (`annul`), `test_ray_viewer.py`,
+  `test_ray_integration_guards.py`, `test_disturbance_application.py`
+  ([expectations](TEST_EXPECTATIONS.md#ray-event-audit)).
+- `charge_totals()` counts the stock a record holds of a charged family,
+  the owners `totals()` reads, beside the rays; `escaped_charge_totals()`
+  and `absorbed_totals()` are new readouts. The charge case of
+  `test_wave_ray_families.py` reads the lamps' charge before the first tick.
+- The local conservation audit measures charge as a fifth quantity when a
+  family declares one, reported as `charge` beside `energy` and `momentum`;
+  a world without a charged family reports as before.
+- A `ray_interactions` rule with outputs whose family's charge differs from
+  the charge of the inputs its amount comes from is rejected at validation.
+
 ## Historical particle candidates deleted on 2026-09-17
 
 The model owner's instruction of 2026-09-17, recorded in

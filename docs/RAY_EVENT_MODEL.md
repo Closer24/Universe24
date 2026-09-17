@@ -660,6 +660,17 @@ light family of step 6 follow with feature 9.
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
 
+The audits are feature 10 of issue #169 (done on 2026-09-17,
+`ray-event-audit-v1`): one world ledger per completed tick for each conserved
+readout (amount per family, momentum, charge), each line initial, sourced,
+current, escaped, annulled and absorbed with initial + sourced = current +
+escaped + annulled + absorbed exact, a returning ray reading its momentum as
+its event share and its charge as charge x amount, the runner's
+`conserved_at_every_completed_tick` that identity for all three readouts,
+the ledger recorded per tick under `audit`, the local audit reading the same
+charge, and a meeting that would change the total charge rejected at
+validation; see [audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1).
+
 **After feature 10 (decided 2026-09-17, Highlights 3.26 and 5.3).** The ten
 features of [issue #169](https://github.com/Closer24/Universe24/issues/169)
 (ray state, the Node Detector bit, the return, the inverse split, layers, the

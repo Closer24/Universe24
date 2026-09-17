@@ -34,7 +34,10 @@ def test_open_runner_reports_escape_separately_from_dissipation(ticks, tmp_path)
     assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [0]}
     assert metadata["localized_totals"] == {"strength": [0], "radiation": [56 if ticks else 0]}
     assert metadata["accounting_balanced_at_every_completed_tick"]
-    assert metadata["conserved_at_every_completed_tick"] == (ticks == 0)
+    # Since ray-event-audit-v1 (2026-09-17) the flag is the world ledger's identity,
+    # in which escaped inventory is a line, not a loss; it read false after an
+    # escape before feature 10.
+    assert metadata["conserved_at_every_completed_tick"]
     assert metadata["display"] == "none"
     if ticks:
         exits = [event for event in events if event["event"] == "escaped"]

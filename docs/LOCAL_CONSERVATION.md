@@ -159,6 +159,61 @@ The component `transformations` ledger describes changes in coordinates or
 components; it is not an energy source. Never define external supply as whatever
 residual is needed to make the comparison pass.
 
+## The world ledger (`ray-event-audit-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.15; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order); issue #169, feature 10):
+conservation is local accounting, and the world's audit is one exact ledger
+per completed tick for each conserved readout. `Simulation.audit()` returns
+the ledger at the current tick, read-only over the readouts the engine
+already keeps; the runner records one per completed tick under `audit`
+([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1)). The ledger has one
+line per conserved field (`fields`: the amount of every family and the
+momentum field's three integers) and one per ray family (`charge`), and
+every line reads six values and its identity:
+
+| Line | Reads |
+| --- | --- |
+| `initial` | What the world held before the first tick: the lamps' stock, seeded rays and populations |
+| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, an unfunded inverse split (`source_totals`) |
+| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`) |
+| `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`) |
+| `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
+| `absorbed` | What external bodies absorbed into their declared sinks (`external-body-v1`, feature 7b), 0 until that ledger exists |
+
+```text
+initial + sourced = current + escaped + annulled + absorbed
+```
+
+exactly, component by component; `balanced` on the line and on the ledger
+says whether it holds. A returning ray reads its momentum as its share on
+the event's heading, its own heading negated (`detector-return-v1`), and its
+charge as charge x amount like any ray; charge is per quantum, so the charge
+a family sourced, annulled or absorbed is its charge times that amount, and
+the world's and the escaped charge are read over their owners, the stock a
+record holds of a charged family included. Dissipation (schema 2) is a loss
+and no line: a dissipative world does not balance this ledger, and the
+spatial accounting's `balanced` keeps reading it.
+
+The runner's `conserved_at_every_completed_tick` is this identity at every
+completed tick for amount, momentum and charge together, re-checked from the
+recorded integers by `audit_failure` (`core/ray_event_audit.py`), which names
+the first tick, readout (`fields` or `charge`) and line that does not
+balance, so a record altered by hand after the run is reported by tick and
+line. Before feature 10 (2026-09-17) the flag compared only what stayed in
+the world with the initial totals plus sources and read false after an
+escape or an annulment; escaped and annulled content are ledger lines, not
+losses, so an open boundary with escapes now stays true.
+
+The local audit of this document measures the same readouts: a returning
+ray's momentum with the sign of its event heading, and, when a family
+declares a charge, charge x amount over rays and over the stock a record
+holds as a fifth measured quantity, reported as `charge` beside `energy` and
+`momentum` in its totals and residuals (a world without a charged family
+reports as before). Local and world audits therefore agree on what a ray
+owns; the local audit has no source term, so a world with a release cannot
+declare it, and the world ledger names the release as `sourced`.
+
 ## Independence, bounds and acceptance
 
 Measurement definitions are immutable configuration. Each owner expression uses

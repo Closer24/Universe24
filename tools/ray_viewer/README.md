@@ -48,7 +48,7 @@ state. Nothing under `tools/ray_viewer/` imports the simulator.
 
 | File | Used for |
 | --- | --- |
-| `run.json` | model, status, shape, boundary, completed ticks, fingerprints (`source_sha256`, `initialization_sha256`), `ray_state`, `detector_mark`, initial, final and escaped totals, the conservation report |
+| `run.json` | model, status, shape, boundary, completed ticks, fingerprints (`source_sha256`, `initialization_sha256`), `ray_state`, `detector_mark`, initial, final and escaped totals, the conservation report, and `audit`, the world ledger per completed tick (`ray-event-audit-v1`: amount, momentum and charge lines with initial, sourced, current, escaped, annulled and absorbed), carried into the `conservation` entry for the caption |
 | `events.jsonl` | `spatial_sent` (position, Port, arrival tick) and `spatial_received` (per-Port family amounts) build the Link transits; `spatial_escaped` the escapes; `spatial_cycle` deltas annotate emissions; `detector_click` the PASS markers; any other kind becomes a generic marker (`cycle_started`, `cycle_committed` and `spatial_cycle_started` are host timing and are skipped) |
 | `initialization.json` | families and which are ray fields (and fields of a family), sources (`seeds`), Detector marks (`detectors`), the declared couplings (`ray_interactions`, `spatial_couplings`) |
 | `ray-recording.json` (optional) | a per-tick ray listing written by a recording tool such as `examples/generic-ray-coupling/run_experiments.py`: phase per Link, and the ray-event fields `steps`, `outbound`, `event_ports`, `event_shares`, `detector` when the recording carries them |

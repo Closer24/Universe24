@@ -13,6 +13,7 @@ from event_universe.configuration_validation import (
     validate_observer_selection,
 )
 from event_universe.core.disturbance_state import InitialState
+from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     DETECTOR_RETURN,
@@ -123,9 +124,11 @@ def _execute_run(
             encoding="utf-8",
         )
     failure: Exception | None = None
-    conservation = True
     accounting = True
     completed = 0
+    # The world ledger per completed tick (ray-event-audit-v1); the conservation
+    # flag is true when every line of every completed tick balances.
+    audit: list[dict[str, object]] = []
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
@@ -148,11 +151,7 @@ def _execute_run(
                     losses = world.dissipation_totals()
                     escaped = world.escaped_totals()
                     annulled = world.annulled_totals()
-                    equal = all(
-                        totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
-                        for name, values in initial_totals.items()
-                    )
-                    conservation = conservation and equal
+                    audit.append(world.audit())
                     # The conservation line: initial + sources = current + dissipated
                     # + escaped + annulled at every completed tick.
                     balanced = all(
@@ -223,7 +222,9 @@ def _execute_run(
         "final_totals": world.totals(),
         "local_conservation": world.conservation_report(),
         "source_totals": world.source_totals(),
-        "conserved_at_every_completed_tick": conservation,
+        "conserved_at_every_completed_tick": audit_failure(audit) is None,
+        "ray_event_audit": RAY_EVENT_AUDIT,
+        "audit": audit,
         "dissipation_totals": world.dissipation_totals(),
         "localized_totals": world.localized_totals(),
         "escaped_totals": world.escaped_totals(),

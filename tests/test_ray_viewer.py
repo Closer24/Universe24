@@ -260,10 +260,14 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert [row["in_world"]["quanta"] for row in run["ticks_data"]] == [[6]] * 5 + [[0], [0]]
     assert [row["escaped"]["quanta"] for row in run["ticks_data"]] == [[0]] * 5 + [[6], [6]]
     assert run["conservation"]["status"] == "passed"
-    # The quanta left through the open boundary, so the runner's "conserved at
-    # every completed tick" is false while the accounting (with escapes) balances.
-    assert run["conservation"]["every_tick"] is False
+    # The quanta left through the open boundary: since ray-event-audit-v1
+    # (2026-09-17) the runner's "conserved at every completed tick" is the world
+    # ledger's identity, in which the escape is a line, so it is true (it was false
+    # before feature 10); the accounting (with escapes) balances, and the extracted
+    # conservation carries the recorded ledger.
+    assert run["conservation"]["every_tick"] is True
     assert run["conservation"]["balanced"] is True
+    assert [ledger["tick"] for ledger in run["conservation"]["audit"]] == list(range(1, 7))
     assert run["conservation"]["escaped_totals"] == {"quanta": [6], "momentum": [0, 0, 0]}
     assert run["record"]["ray_state"] == "ray-event-state-v1"
     assert run["record"]["detector_mark"] == "detector-mark-v1"

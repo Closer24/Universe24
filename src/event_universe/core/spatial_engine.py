@@ -108,6 +108,9 @@ class SpatialEngine:
         self.escaped = [[0] * field.components for field in initial.fields]
         # Content that left the world at an inverse split in annul mode.
         self.annulled = [[0] * field.components for field in initial.fields]
+        # The charge that left the world through an open boundary, per spatial
+        # field: charge x amount of every escaped ray (ray-event-audit-v1).
+        self.escaped_charge = [0] * len(initial.spatial_fields)
         meter = CostMeter(initial.operation_costs)
         if initial.spatial_computation_delay:
             components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
@@ -277,6 +280,9 @@ class SpatialEngine:
                 amounts[definition.field][0] = checked_work(
                     amounts[definition.field][0] + ray_stock(rays)
                 )
+                self.escaped_charge[index] = checked_work(
+                    self.escaped_charge[index] + ray_charge(rays, definition)
+                )
                 if definition.momentum_field is not None:
                     for axis, value in enumerate(ray_momentum(rays, definition)):
                         amounts[definition.momentum_field][axis] = checked_work(
@@ -411,6 +417,15 @@ class SpatialEngine:
                         total = checked_work(total + ray_charge(packet.rays[index], definition))
             result[self.initial.fields[definition.field].name] = total
         return result
+
+    def escaped_charge_totals(self) -> dict[str, int]:
+        """The charge that left the world through an open boundary, per ray field:
+        charge x amount summed over the escaped rays (ray-event-audit-v1)."""
+        return {
+            self.initial.fields[definition.field].name: self.escaped_charge[index]
+            for index, definition in enumerate(self.initial.spatial_fields)
+            if definition.rays
+        }
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:
         states = self.nodes[position].states if position in self.nodes else self._blank_states()

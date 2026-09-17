@@ -141,9 +141,11 @@ Limits found while building them:
   configuration's `normal_budget` must cover a conversion cycle (about eleven
   million for the annihilation rule) or the cycle is delayed by the ordinary
   timing law.
-- The runner's `conserved_at_every_completed_tick` excludes escaped quantity and
-  is false after the first escape in an open world; the balanced flag and the
-  audit include escapes.
+- The runner's `conserved_at_every_completed_tick` is, since
+  `ray-event-audit-v1` (2026-09-17), the world ledger's identity, in which
+  escaped quantity is a line; it excluded escapes and read false after the
+  first escape in an open world before that. The balanced flag and the local
+  audit include escapes as before.
 - Three axis-aligned photons with zero total momentum always share a Port on the
   cubic lattice, so the 2 -> 3 candidate requires a net momentum.
 

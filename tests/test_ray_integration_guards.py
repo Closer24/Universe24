@@ -53,9 +53,10 @@ def test_runner_counts_funded_ray_momentum_through_absorption_and_escape(tmp_pat
     metadata = json.loads((tmp_path / "run" / "run.json").read_text(encoding="utf-8"))
     assert metadata["status"] == "completed"
     assert metadata["completed_ticks"] == 12
-    # This legacy flag compares only in-domain totals; open escape changes them.
-    # The accounting flag and local event audit include the escaped inventory.
-    assert not metadata["conserved_at_every_completed_tick"]
+    # Since ray-event-audit-v1 (2026-09-17) the flag is the world ledger's identity,
+    # in which escaped inventory is a line, not a loss; it read false before
+    # feature 10, when it compared only in-domain totals.
+    assert metadata["conserved_at_every_completed_tick"]
     assert metadata["accounting_balanced_at_every_completed_tick"]
     audit = metadata["local_conservation"]
     assert audit["status"] == "passed"

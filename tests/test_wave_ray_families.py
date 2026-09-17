@@ -352,7 +352,10 @@ def test_every_ray_is_a_wave_ray(tmp_path):
     ) == (-2,)
     assert ray_charge((Ray(0, (0, 0, 0), 3), Ray(1, (0, 0, 0), 4)), initial.spatial_fields[1]) == -7
     world = Simulation(initial)
-    assert world.charge_totals() == {"plus": 0, "minus": 0}
+    # Since ray-event-audit-v1 (2026-09-17) the readout counts the stock a record
+    # holds of a charged family, the owners totals() reads; it read 0 and 0 before
+    # the first tick before feature 10, over rays alone.
+    assert world.charge_totals() == {"plus": 3, "minus": -5}
     for _tick in range(1, 7):
         world.step()
         assert world.charge_totals() == {"plus": 3, "minus": -5}

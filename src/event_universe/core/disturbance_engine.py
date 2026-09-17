@@ -20,12 +20,14 @@ from .disturbance_state import (
     unpack,
 )
 from .event_resolution import CommitResolver, EventResolver, Planner
+from .integer import checked_work
 from .node_boundary import validate_record
 from .node_conservation import NodeConservationGuard
 from .node_execution import NodeExecution
 from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
+from .ray_event_audit import ledger_line, world_ledger
 from .record_policy import RecordPolicy
 from .spatial_engine import (
     SpatialCoupler,
@@ -145,6 +147,10 @@ class DisturbanceEngine:
                 raise ValueError("initial disturbance capacity exceeded") from error
             records[slot] = seed.record
             node.records = tuple(records)
+
+        # The world ledger's initial lines (ray-event-audit-v1): what the world
+        # holds before the first tick, per conserved field and per ray family.
+        self._ledger_initial = (self.totals(), self.charge_totals())
 
     @property
     def _observer(self) -> EventSink | None:
@@ -572,9 +578,88 @@ class DisturbanceEngine:
         return {} if self._spatial is None else self._spatial.accounting()
 
     def charge_totals(self) -> dict[str, int]:
-        """The charge readout per ray field, charge x amount summed over its rays
-        (wave-ray-family-v1); read-only, like the other totals."""
-        return {} if self._spatial is None else self._spatial.charge_totals()
+        """The charge readout per ray field, charge x amount over the owners totals()
+        reads: the rays resident at active Nodes and in flight on Links
+        (wave-ray-family-v1) and, since ray-event-audit-v1, the stock of the
+        family a record holds, resident or in transit; read-only, like the other
+        totals."""
+        if self._spatial is None:
+            return {}
+        result = self._spatial.charge_totals()
+        records = [r for node in self._nodes.values() for r in node.records if r is not None]
+        records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
+        for definition in self.initial.spatial_fields:
+            if not definition.rays or definition.charge == 0:
+                continue
+            name = self.initial.fields[definition.field].name
+            for record in records:
+                stock = decode(record.values[definition.field][0])
+                result[name] = checked_work(result[name] + checked_work(stock * definition.charge))
+        return result
+
+    def escaped_charge_totals(self) -> dict[str, int]:
+        """The charge that left the world through an open boundary, per ray field:
+        charge x amount of every escaped ray, and of the stock of the family a
+        record carried out (ray-event-audit-v1)."""
+        if self._spatial is None:
+            return {}
+        result = self._spatial.escaped_charge_totals()
+        for definition in self.initial.spatial_fields:
+            if definition.rays and definition.charge:
+                name = self.initial.fields[definition.field].name
+                stock = self._escaped_totals[definition.field][0]
+                result[name] = checked_work(result[name] + checked_work(stock * definition.charge))
+        return result
+
+    def absorbed_totals(self) -> dict[str, tuple[int, ...]]:
+        """Content absorbed by external bodies into their declared sinks, per field:
+        the `absorbed` ledger of the spatial engine when external bodies exist
+        (external-body-v1, feature 7b), zero otherwise (ray-event-audit-v1)."""
+        absorbed = getattr(self._spatial, "absorbed", None)
+        return {
+            field.name: ((0,) * field.components if absorbed is None else tuple(absorbed[index]))
+            for index, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
+    def audit(self) -> dict[str, object]:
+        """The world ledger at the current tick (ray-event-audit-v1): one line per
+        conserved field (amount per family, momentum) and one per ray family
+        (charge), each reading initial, sourced, current, escaped, annulled and
+        absorbed with initial + sourced = current + escaped + annulled + absorbed
+        exact. Read-only, like the totals it is built from."""
+        initial_totals, initial_charge = self._ledger_initial
+        totals, sources = self.totals(), self.source_totals()
+        escaped, annulled, absorbed = (
+            self.escaped_totals(),
+            self.annulled_totals(),
+            self.absorbed_totals(),
+        )
+        fields = {
+            name: ledger_line(
+                values, sources[name], totals[name], escaped[name], annulled[name], absorbed[name]
+            )
+            for name, values in initial_totals.items()
+        }
+        current_charge, escaped_charge = self.charge_totals(), self.escaped_charge_totals()
+        charge = {}
+        for definition in self.initial.spatial_fields:
+            if not definition.rays:
+                continue
+            name = self.initial.fields[definition.field].name
+            # Charge is per quantum, so what a family sourced, annulled or absorbed
+            # reads as charge x that amount; the world's and the escaped charge are
+            # read over their owners.
+            per_quantum = definition.charge
+            charge[name] = ledger_line(
+                initial_charge[name],
+                checked_work(sources.get(name, (0,))[0] * per_quantum),
+                current_charge[name],
+                escaped_charge[name],
+                checked_work(annulled.get(name, (0,))[0] * per_quantum),
+                checked_work(absorbed.get(name, (0,))[0] * per_quantum),
+            )
+        return world_ledger(self.tick, fields, charge)
 
     @staticmethod
     def _bookkeeping(record: DisturbanceRecord) -> dict[str, object]:

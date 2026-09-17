@@ -27,9 +27,10 @@ from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
 from event_universe.fields.disturbances import evaluate
 
-Quantity = tuple[int, int, int, int]
+# Energy, the three momentum components and, since ray-event-audit-v1, charge.
+Quantity = tuple[int, int, int, int, int]
 PacketKey = tuple[str, Address3, int, int]
-ZERO: Quantity = (0, 0, 0, 0)
+ZERO: Quantity = (0, 0, 0, 0, 0)
 EVENTS = frozenset(
     {"spatial_cycle", "spatial_received", "cycle_committed", "received", "escaped", "spatial_escaped"}
 )
@@ -43,8 +44,11 @@ def _subtract(left: Quantity, right: Quantity) -> Quantity:
     return cast(Quantity, tuple(checked_work(a - b) for a, b in zip(left, right, strict=True)))
 
 
-def _plain(quantity: Quantity) -> dict[str, object]:
-    return {"energy": quantity[0], "momentum": quantity[1:]}
+def _plain(quantity: Quantity, charged: bool = False) -> dict[str, object]:
+    plain: dict[str, object] = {"energy": quantity[0], "momentum": quantity[1:4]}
+    if charged:
+        plain["charge"] = quantity[4]
+    return plain
 
 
 def validate_empty_measurement(initial: InitialState) -> None:
@@ -76,6 +80,15 @@ class LocalConservationAudit:
         self.annulled: Quantity = ZERO
         self._pending_annulled: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
+        # The charged ray families (ray-event-audit-v1): the audit measures their
+        # charge, charge x amount over rays and over held stock, beside energy and
+        # momentum, and reports it when any family declares a charge.
+        self._charges = {
+            definition.field: definition.charge
+            for definition in initial.spatial_fields
+            if definition.rays and definition.charge
+        }
+        self.charged = bool(self._charges)
         self._nodes, self._packets = self._measure(inventory())
         self.initial_total = self._total(self._nodes, self._packets)
         self.current_total = self.initial_total
@@ -88,12 +101,18 @@ class LocalConservationAudit:
         momentum = evaluate(expressions.momentum, values, values, meter)
         if len(energy) != 1 or len(momentum) != 3:
             raise ValueError("conservation measurements require scalar energy and vector momentum")
-        return (energy[0], momentum[0], momentum[1], momentum[2])
+        return (energy[0], momentum[0], momentum[1], momentum[2], 0)
 
     def _carrier(self, record: DisturbanceRecord) -> Quantity:
         for measurement in self.definition.carriers:
             if record.type_index in measurement.types:
-                return self._evaluate(measurement.quantities, record.values)
+                energy, px, py, pz, _ = self._evaluate(measurement.quantities, record.values)
+                # The stock a record holds of a charged family reads charge x stock.
+                charge = 0
+                for field, per_quantum in self._charges.items():
+                    stock = unpack(record.values[field])[0]
+                    charge = checked_work(charge + checked_work(stock * per_quantum))
+                return (energy, px, py, pz, charge)
         raise ValueError("conservation measurement missing for a disturbance layout")
 
     def _spatial(
@@ -112,6 +131,7 @@ class LocalConservationAudit:
             return ZERO
         values = [pack((0,) * field.components) for field in self.initial.fields]
         intrinsic = [0, 0, 0]
+        charge = 0
         for index, (definition, owned) in enumerate(
             zip(self.initial.spatial_fields, populations, strict=True)
         ):
@@ -123,20 +143,23 @@ class LocalConservationAudit:
                 for ray in rays[index]:
                     components[0] = checked_work(components[0] + ray.amount)
                     # A returning ray reads as its share on the event's heading, its
-                    # own heading negated (detector-return-v1).
+                    # own heading negated (detector-return-v1), and its charge as
+                    # charge x amount like any ray (ray-event-audit-v1).
                     heading = definition.headings[ray.heading]
                     sign = 1 if ray.outbound else -1
                     for axis in range(3):
                         intrinsic[axis] = checked_work(
                             intrinsic[axis] + sign * ray.amount * heading[axis]
                         )
+                    charge = checked_work(charge + checked_work(ray.amount * definition.charge))
             values[definition.field] = pack(tuple(components))
-        energy, px, py, pz = self._evaluate(self.definition.spatial, tuple(values))
+        energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
         return (
             energy,
             checked_work(px + intrinsic[0]),
             checked_work(py + intrinsic[1]),
             checked_work(pz + intrinsic[2]),
+            charge,
         )
 
     def _annulled(self, event: dict[str, object]) -> Quantity:
@@ -148,21 +171,24 @@ class LocalConservationAudit:
         annulled = cast(dict[str, tuple[int, ...]], event.get("annulled", {}))
         values = [pack((0,) * field.components) for field in self.initial.fields]
         intrinsic = [0, 0, 0]
+        charge = 0
         for definition in self.initial.spatial_fields:
             name = self.initial.fields[definition.field].name
             if definition.rays and name in annulled:
                 values[definition.field] = pack(tuple(annulled[name]))
+                charge = checked_work(charge + checked_work(annulled[name][0] * definition.charge))
                 if definition.momentum_field is not None:
                     momentum = annulled.get(self.initial.fields[definition.momentum_field].name)
                     if momentum is not None:
                         for axis in range(3):
                             intrinsic[axis] = checked_work(intrinsic[axis] + momentum[axis])
-        energy, px, py, pz = self._evaluate(self.definition.spatial, tuple(values))
+        energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
         return (
             energy,
             checked_work(px + intrinsic[0]),
             checked_work(py + intrinsic[1]),
             checked_work(pz + intrinsic[2]),
+            charge,
         )
 
     def _packet(self, packet: InventoryPacket) -> Quantity:
@@ -197,7 +223,7 @@ class LocalConservationAudit:
     ) -> Quantity:
         # Global accumulation is an unbounded host diagnostic, not local work.
         quantities = [*nodes.values(), *(amount for _, amount in packets.values())]
-        return cast(Quantity, tuple(sum(value[c] for value in quantities) for c in range(4)))
+        return cast(Quantity, tuple(sum(value[c] for value in quantities) for c in range(5)))
 
     def observe(self, event: dict[str, object]) -> None:
         if event.get("event") == "inverse_split" and event.get("mode") == "annul":
@@ -255,11 +281,11 @@ class LocalConservationAudit:
                     "tick": tick,
                     "event": event,
                     "position": position,
-                    "before": _plain(before),
-                    "after": _plain(after),
-                    "incoming": _plain(arrived),
-                    "outgoing": _plain(sent),
-                    "residual": _plain(residual),
+                    "before": _plain(before, self.charged),
+                    "after": _plain(after, self.charged),
+                    "incoming": _plain(arrived, self.charged),
+                    "outgoing": _plain(sent, self.charged),
+                    "residual": _plain(residual, self.charged),
                 }
                 raise ValueError(f"local energy/momentum conservation failed at {position}: {residual}")
         self.escaped = cast(Quantity, tuple(a + b for a, b in zip(self.escaped, escaped, strict=True)))
@@ -272,9 +298,9 @@ class LocalConservationAudit:
             "energy_units": self.definition.energy_units,
             "momentum_units": self.definition.momentum_units,
             "checked_node_events": self.checks,
-            "initial": _plain(self.initial_total),
-            "current": _plain(self.current_total),
-            "escaped": _plain(self.escaped),
-            "annulled": _plain(self.annulled),
+            "initial": _plain(self.initial_total, self.charged),
+            "current": _plain(self.current_total, self.charged),
+            "escaped": _plain(self.escaped, self.charged),
+            "annulled": _plain(self.annulled, self.charged),
             "failure": self.failure,
         }

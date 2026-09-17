@@ -849,6 +849,8 @@ def conservation(record: Record) -> dict[str, Any]:
         "final_totals": metadata.get("final_totals"),
         "escaped_totals": metadata.get("escaped_totals"),
         "source_totals": metadata.get("source_totals"),
+        # The world ledger per completed tick (ray-event-audit-v1), when recorded.
+        "audit": metadata.get("audit"),
     }
 
 
