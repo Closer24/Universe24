@@ -832,23 +832,29 @@ world whose rules select one layer meets the same owners in the same order.
 
 `test_ray_viewer.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
-the two unit-axial headings +X and -X) on an open 5 x 3 x 3 board with an
-8-step phase advancing 1 per Link, runs it for six ticks through
-`run_initialization` headless, and reads the record back with
-`tools/ray_viewer/extract.py` ([ray viewer](../tools/ray_viewer/README.md)),
-which never imports the simulator. Lamp A at (1,1,1) holds 3 quanta and
-emits 3 through +X with phase 0; lamp B at (3,1,1) holds 3 and emits 3
-through -X with phase 4; each recoils into its own momentum. The one declared
-coupling, `swap_headings`, fires when two rays with opposite headings whose
-phases sum to 6 meet (1 and 5, what the lamps' phases are after one Link),
-exchanges their headings and sets `delay` 1 on both; energy 6 and momentum
-(0,0,0) are its invariants. The phase condition is what makes it fire once:
-a first draft conditioned on opposite headings alone stayed true after the
-swap, re-fired every interval and held both rays at (2,1,1) for the whole run,
-which is the engine's binding behavior (a rule that keeps setting `delay` on
-its participants), not a defect. The Node (4,1,1) carries a Detector mark with
-setting 1/1 and seed 0, so every arrival there draws 1. Pinned before the
-first run, from the event stream alone (no per-tick recording, so no phase):
+the six unit-axial headings) on an open 5 x 3 x 3 board with an 8-step phase
+advancing 1 per Link, runs it for six ticks through `run_initialization`
+headless, and reads the record back with `tools/ray_viewer/extract.py`
+([ray viewer](../tools/ray_viewer/README.md)), which never imports the
+simulator. Lamp A at (1,1,1) holds 3 quanta and emits 3 through +X with phase
+0; lamp B at (3,1,1) holds 3 and emits 3 through -X with phase 4; each
+recoils into its own momentum. The one declared coupling, `swap_headings`,
+typed to two `quanta` participants, fires when two rays with opposite
+headings whose phases sum to 6 meet (1 and 5, what the lamps' phases are
+after one Link), exchanges their headings and sets `delay` 1 on both; energy
+6 and momentum (0,0,0) are its invariants. The phase condition is what makes
+it fire once: a first draft conditioned on opposite headings alone stayed true
+after the swap, re-fired every interval and held both rays at (2,1,1) for the
+whole run, which is the engine's binding behavior (a rule that keeps setting
+`delay` on its participants), not a defect. The Node (4,1,1) carries a
+Detector mark with setting 1/1 and seed 0, so every arrival there draws 1.
+Since 2026-09-17 (feature 7 merged) the world also declares `G`, the field of
+`quanta` with `release` 1/3 and phase advance 0
+([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)):
+every Node a quanta ray crosses releases, in the interval it departs, one G
+ray of amount floor(3/3) = 1 on each of the five other headings, booked as a
+source. Pinned before the first run, from the event stream alone (no per-tick
+recording, so no phase):
 
 - (a) the rays: four, each of family `quanta` and amount 3. Ray 0 leaves
   (1,1,1) through +X at tick 0 and ray 1 leaves (3,1,1) through -X at tick
@@ -870,19 +876,75 @@ first run, from the event stream alone (no per-tick recording, so no phase):
   coupling and both invariants, tick 2 the outputs leaving, tick 4 the
   Detector PASS with its bit, tick 5 the escapes; `in_world` quanta stays 6
   through tick 4 and is 0 from tick 5, when `escaped` is 6; the run's
-  conservation line reads `passed`, with
-  `accounting_balanced_at_every_completed_tick` true and
-  `conserved_at_every_completed_tick` true (since `ray-event-audit-v1`,
-  2026-09-17: the flag is the world ledger's identity and the 6 escaped
-  quanta are its `escaped` line, not a loss; the pin of the same day before
-  feature 10 read false, from the earlier flag that counted only what stayed
-  in the world), and the extracted `conservation` carries the recorded
-  `audit` ledger; the record carries `ray-event-state-v1`,
-  `detector-mark-v1` and no unknown event kind;
+  conservation line reads `passed` (the world declares the `conservation`
+  block again since `ray-event-audit-v1`, 2026-09-17: the local audit's
+  residual momentum (1, 0, 0) at lamp A's Node in the tick-3 cycle, reported
+  by the viewer as a suspected defect, was the momentum of the release the
+  single held ray made there, five field rays whose net momentum is minus
+  its own heading, booked as a source with no owner paying and unknown to
+  the local audit; the audit now reads every release as a `sourced` line at
+  its Node, [the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)),
+  with `accounting_balanced_at_every_completed_tick` true and
+  `conserved_at_every_completed_tick` true (since `ray-event-audit-v1`: the
+  flag is the world ledger's identity and the 6 escaped quanta are its
+  `escaped` line, not a loss; the pin of the same day before feature 10 read
+  false, from the earlier flag that counted only what stayed in the world),
+  and the extracted `conservation` carries the recorded `audit` ledger; the
+  record carries `ray-event-state-v1`, `detector-mark-v1` and no unknown
+  event kind;
 - (d) tolerance: the same record with one appended event of an unknown kind
   (`field_release` at tick 3 at (2,1,1)) extracts to the same rays and
-  events plus one generic marker of that kind at that Node and tick, and the
-  record reports `{"field_release": 1}` as unknown.
+  events plus one generic marker of that kind at that Node and tick (drawn,
+  not listed in the caption, which names only the kinds of the caption rule),
+  and the record reports `{"field_release": 1}` as unknown;
+- (e) the field (pinned 2026-09-17 before the first run with `G`, and
+  corrected after it, see below): the four quanta rays walk exactly as in
+  (a), their trails unbroken through the Nodes where they release; six
+  `release` events, each flagged `field`, each with the departing quanta rays
+  as inputs and one G ray of amount 1 per spoke as outputs: at (2,1,1) at
+  ticks 1 and 2 with six spokes each (the two rays' releases share the four
+  transverse Links, so those four G rays carry 2 each and the +X and -X ones
+  1 each, G 10 per release; the tick-1 release has no departing input, the
+  tick-2 one both meeting outputs), at (3,1,1) and (1,1,1) at tick 3 with
+  five spokes each (all but the ray's own +X, respectively -X; G 5 each), and
+  at (4,1,1) and (0,1,1) at tick 4 likewise; 32 G rays in all, so 36 rays; no
+  `split`, `crossing` or `deflection` event; the marked Node (4,1,1) draws
+  for G too, so the clicks are four: tick 3 G 1 (the +X G of the tick-1
+  release), tick 4 quanta 3 and tick 4 G 1 (the +X G of the tick-2 release,
+  arriving with the quanta ray) and tick 6 G 1 (the +X G released at (1,1,1)
+  at tick 3); field escapes, each flagged `field`: four at tick 3 (G 2 each,
+  the transverse rays of tick 1), six at tick 4 (the two axial rays of tick 1
+  and the four transverse of tick 2, G 10), ten at tick 5 (the eight
+  transverse rays of tick 3 and the two riding out with the quanta rays, G
+  10) and eight at tick 6 (the transverse rays of tick 4, G 8), G 36 in all;
+  the run's `source_totals` G 40, `escaped_totals` G 36, `final_totals` G 4
+  (the four axial G rays still inside at tick 6), and the derived per-tick
+  `in_world` G, initial plus the sources through the previous tick minus the
+  escapes, is 0, 0, 10, 12, 12, 12, 4 for ticks 0 to 6; captions never name a
+  release and list at most three events, so tick 3 reads the G click and
+  "field escaped: G 8", tick 4 the two Detector PASS lines and "field escaped:
+  G 10", tick 5 "escaped: quanta 6" and "field escaped: G 10", tick 6 the G
+  click and "field escaped: G 8"; `record.released_field` is
+  `released-field-v1`. The first pin had one release at (2,1,1), at tick 2
+  only, from the released-field text ("in the interval it departs"): the
+  first run showed the engine also releasing at tick 1, while both rays were
+  held at (2,1,1) by the coupling's `delay` (source G 40, not 30; a fourth
+  click at tick 3). That difference between the text and the implementation
+  for a retained ray is feature 7's to settle and is reported with this
+  fixture as the reproduction; this test pins what the record holds and what
+  the extractor reads from it, not the release rule;
+- (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
+  first run): a `run.json` listing one body of family `star`, amount 4096,
+  coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
+  and (2, 8,7,7), extracts to one body at (7,7,7) carrying those rows, so
+  the page draws its picture (chosen by family in `style.json`, `star` by
+  default) at (7,7,7) through tick 1 and at (8,7,7) from tick 2;
+- (f) the style: `tools/ray_viewer/style.json` is a `ray-viewer-style-v1`
+  object whose sections and keys are exactly the documented ones (the
+  renderer's `validate_style` accepts it and rejects an unknown key), the
+  page's built-in default equals it, and a style whose `ray_width_px` is 9
+  reaches the inlined page's `style` block while the default one stays in
+  its `style-default` block.
 
 The runs document is `ray-viewer-runs-v1`. A GIF or page rendered from it is
 a rendering of the fingerprinted record, not evidence by itself.
