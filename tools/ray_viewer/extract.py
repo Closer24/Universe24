@@ -1138,6 +1138,31 @@ def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any
     }
 
 
+def eye_document(events: list[Event], marks: list[dict[str, Any]]) -> dict[str, Any]:
+    """The physical picture (Highlights 5.4): the marked Nodes and the list of PASS clicks."""
+    clicks = [
+        {
+            "tick": event.tick,
+            "node": list(event.node),
+            "family": event.detail.get("family"),
+            "amount": event.detail.get("amount"),
+            "bit": event.detail.get("bit", 1),
+            "port": event.detail.get("port"),
+        }
+        for event in events
+        if event.kind == "click"
+    ]
+    hits: dict[str, int] = {}
+    for click in clicks:
+        key = ",".join(str(v) for v in click["node"])
+        hits[key] = hits.get(key, 0) + 1
+    return {
+        "marks": [{"pos": m["pos"], "setting": m["setting"]} for m in marks],
+        "clicks": clicks,
+        "hits": hits,
+    }
+
+
 def event_document(event: Event, chains: list[Chain]) -> dict[str, Any]:
     return {
         "id": event.identifier,
@@ -1218,6 +1243,7 @@ def extract_record(
         "event_kinds": kinds,
         "rays": [chain_document(c, flags) for c in resolution.chains],
         "events": [event_document(e, resolution.chains) for e in resolution.events],
+        "eye": eye_document(resolution.events, marks),
         "ticks_data": tick_captions(record, resolution, builder, ticks),
     }
 

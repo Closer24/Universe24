@@ -72,10 +72,14 @@ date) and emitted at an event by any source, a photon one quantum of it. Its
 reaches releases it again, the backward heading included, a quantum never
 waiting (feature 12, `field-spreading-v1`, 2026-09-17,
 [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
-`[6, 1, 1, 1, 1, 1]`, the first declared table, which A1 and A6 confront;
-its `source_sign` key, `releaser`, says that the sign of the releaser's
-charge travels on every light ray as a visible property, set by the engine
-at the release (Highlights 3.5, the field is matter's message about itself).
+`[6, 1, 1, 1, 1, 1]`, the first declared table, which A1 and A6 confront.
+Its `source_sign` key, `releaser`, is the sign of the releasing charge
+carried on the field ray as a visible property, like the Detector's bit
+(Highlights 3.5, "the field is matter's message about itself", 2026-09-17),
+set by the engine at the release, read by couplings and never the phase;
+feature 12 carries it, and `electron_field_turn.opposite_charge` closes with
+it (A5). A field ray is a ray with an empty event record, rest rate 0 and
+charge 0, and nothing else.
 A `bound_group` adds `members` (ray id to count), `binding` (the coupling that
 holds it) and, if it can decay, `decay` (the conversion and the mark's
 setting). A property read only at a meeting (`colour`, `spin`,
@@ -111,6 +115,8 @@ carries (Highlights 5.4, model owner, 2026-09-17; feature 2b, after feature
 passes without a draw; `on_bit_0`, a ray carrying 0 is a transmission and is
 never drawn; only a ray carrying no bit is drawn, and the key by which a
 mark declares another behaviour is undecided until the feature lands.
+Each lists `draw`, the draw on every arrival as before, as its declarable
+alternative; feature 2b implements both.
 
 `layers` is a note only: layers are derived from the couplings
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), never declared.
@@ -142,7 +148,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `rays.neutron.rest_rate` | The neutron's retained content | hypothesis 12 |
 | `rays.mass_field.release` | The release ratio of the computation field | A6 |
 | `couplings.electron_field_turn.strength_table` | The integer table over field content and charge product | A5 |
-| `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign | A5 |
+| `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign; closes with `rays.light.source_sign`, the sign carried on the field ray (feature 12) | A5 |
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
 | `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |
@@ -155,8 +161,8 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `couplings.beam_splitter.outputs.table` | The split ratio of the splitter | A2 |
 | `couplings.slit.outputs.shares` | The share per forward heading of a slit | A1 |
 | `couplings.polarizer.outputs.table` | The polarizer's cos² table in N-ths (feature 11) | A12 |
-| `apparatus.detector.couplings.on_bit_1.world_key` | The key by which a mark declares what it does with a ray carrying 1, the default being to pass it without a draw (Highlights 5.4, 2026-09-17) | feature 2b |
-| `apparatus.detector.couplings.on_bit_0.world_key` | The key by which a mark declares what it does with a ray carrying 0, the default being a transmission that is never drawn | feature 2b |
+| `apparatus.detector.couplings.on_bit_1.world_key` | The key by which a mark declares what it does with a ray carrying 1, the default being to pass it without a draw (Highlights 5.4, 2026-09-17) and the alternative `draw`, the draw on every arrival as before, declarable | feature 2b |
+| `apparatus.detector.couplings.on_bit_0.world_key` | The key by which a mark declares what it does with a ray carrying 0, the default being a transmission that is never drawn and the alternative `draw` declarable | feature 2b |
 
 ## How a world selects rays from the catalog
 

@@ -1042,6 +1042,42 @@ the record is unchanged.
   drawing paths; `render_gif.py` the supersampled capture and the keys; the
   test pins the defaults.
 
+## Ray viewer: the eye view of clicks beside the board, 2026-09-17
+
+By the model owner's decision on [Highlights](HIGHLIGHTS.md) 5.4
+("everything begins and is realized at a marked Node"), the physical
+picture is the list of PASS clicks and the board rendering is the record's
+view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+
+- `extract.py` adds an `eye` block to every run: the marked Nodes, the
+  list of PASS clicks (tick, Node, family, amount, bit, Port) and the hits
+  per Node.
+- `style.json` gains `draw.view` (`board`, the default, everything as
+  before; `eye`, only the marked Nodes as dim spheres and each click as a
+  flash of its family's colour at its Node, sized by amount, fading over
+  `click_flash_ticks` and leaving a persistent dim dot, like a screen
+  accumulating hits; no rays, fields or other markers; title, tick and the
+  camera fit as before) with `click_flash_px_per_quantum`,
+  `click_flash_min_px`, `click_dot_px`, `click_dot_alpha` and `mark_alpha`.
+- `render_gif.py` gains `--view` (overrides the style) and
+  `--side-by-side` (the board view and the eye view as two panels, left and
+  right, in one GIF and one contact sheet); `viewer.html` gains the eye
+  drawing path and a runtime `window.__setStyle` hook the renderer uses to
+  switch views. The test pins the eye extraction and the defaults.
+- In the eye view a mark is drawn without depth writing and without glow,
+  the flash and the dot on top of it, so hits inside a mark's sphere show;
+  the persistent dot's area grows with the hits at its Node (radius
+  `click_dot_px` x the square root of the count), a spot on a screen.
+- `examples/nature/screen.json` (Highlights 5.5, a demonstration made once,
+  never a test; its section of the
+  [nature README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks)
+  holds the record's fingerprints and the render lines): an electron at
+  rest, the bound group of two `electron` rays of 4, releasing `light` on
+  its six axis lines, and a screen of seven Detector marks at distance 6
+  along +X. Before feature 12 one mark clicks, the on-axis one, eighteen
+  times; after it the whole screen. The test pins the world file's
+  integers, not its run.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

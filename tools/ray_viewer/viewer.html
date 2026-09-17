@@ -219,6 +219,12 @@
     "marker_alpha": 0.8,
     "escape_dot_radius": 0.09,
     "escape_alpha": 0.45,
+    "click_flash_ticks": 4,
+    "click_flash_px_per_quantum": 3,
+    "click_flash_min_px": 6,
+    "click_dot_px": 4,
+    "click_dot_alpha": 0.5,
+    "mark_alpha": 0.35,
     "source_size": 0.4,
     "detector_size": 0.8,
     "body_size": 0.7,
@@ -236,6 +242,7 @@
     "box_alpha": 0.35
   },
   "draw": {
+    "view": "board",
     "markers": [
       "emission",
       "meeting",
@@ -745,6 +752,7 @@
       item.mat.roughness = sz.sphere_roughness == null ? 0.35 : sz.sphere_roughness;
       item.mat.metalness = sz.sphere_metalness == null ? 0.15 : sz.sphere_metalness;
       item.mat.opacity = alpha;
+      item.mat.depthTest = true; item.mat.depthWrite = true; item.obj.renderOrder = 0;
       item.glow = placeGlow(position, color, 1, (sz.glow_alpha == null ? 0.5 : sz.glow_alpha) * alpha);
       if (pxRadius) {
         item.px = pxRadius; item.shape = "sphere";
@@ -976,6 +984,45 @@
       return world(segment.from).add(tmp2.set(segment.heading[0], segment.heading[1], segment.heading[2]).multiplyScalar(0.85));
     }
 
+    // The eye view (Highlights 5.4): the physical picture is the list of PASS clicks.
+    // Only the marked Nodes as dim spheres and each click as a flash of its family's
+    // colour, sized by amount, fading over click_flash_ticks and leaving a dim dot,
+    // like a screen accumulating hits. No rays, fields or other markers. A mark is
+    // drawn without depth writing and without glow, the flash and the dot on top of
+    // it, so hits inside its sphere show; the dot's area grows with the hits at its
+    // Node (radius click_dot_px x the square root of the count), a spot on a screen.
+    function onTop(item) {
+      item.mat.depthTest = false; item.obj.renderOrder = 30;
+      if (item.glow) item.glow.obj.visible = false;
+      return item;
+    }
+    function applyEye() {
+      var s = S(), sz = s.sizes;
+      var t = state.tick;
+      var fam = {}; run.families.forEach(function (f) { fam[f.name] = f; });
+      var eye = run.eye || { marks: run.detectors || [], clicks: [] };
+      (eye.marks || []).forEach(function (mark) {
+        var mark_item = placeSphere(world(mark.pos), s.colors.detector, sz.detector_size / 2, sz.mark_alpha == null ? 0.35 : sz.mark_alpha, 0);
+        mark_item.mat.depthWrite = false;
+        if (mark_item.glow) mark_item.glow.obj.visible = false;
+      });
+      var hits = {};
+      (eye.clicks || []).forEach(function (click) {
+        if (click.tick > t) return;
+        var f = fam[click.family] || { name: click.family, field: false };
+        var color = rayColor(f, null, "ray");
+        var age = t - click.tick;
+        var amount = Math.abs((click.amount && click.amount.length ? click.amount[0] : click.amount) || 1);
+        if (age < sz.click_flash_ticks) {
+          var px = Math.max(sz.click_flash_min_px, amount * sz.click_flash_px_per_quantum);
+          onTop(placeSphere(world(click.node), color, 0, 1 - age / sz.click_flash_ticks, px));
+        }
+        var key = click.node.join(",");
+        hits[key] = (hits[key] || 0) + 1;
+        onTop(placeSphere(world(click.node), color, 0, Math.min(1, sz.click_dot_alpha * (0.7 + 0.3 * hits[key])), sz.click_dot_px * Math.sqrt(hits[key])));
+      });
+    }
+
     function apply() {
       if (!run) return;
       var s = S(), sz = s.sizes, dr = s.draw;
@@ -983,6 +1030,14 @@
       var fam = {}; run.families.forEach(function (f) { fam[f.name] = f; });
       var nSeg = 0, nHead = 0, nLabel = 0, nMarker = 0, nLamp = 0, nDet = 0, nBody = 0;
       placed = []; nGlow = 0; nSphere = 0;
+      if (dr.view === "eye") {
+        segs.hide(0); heads.hide(0); markers.hide(0); lamps.hide(0); detectors.hide(0); bodies.hide(0);
+        labels.forEach(function (l) { l.wanted = false; });
+        applyEye();
+        spheres.hide(nSphere); glows.hide(nGlow);
+        state.dirty = true;
+        return;
+      }
       labels.forEach(function (l) { l.wanted = false; });
       run.rays.forEach(function (ray) {
         var f = fam[ray.family] || { name: ray.family, field: ray.field };
@@ -1214,6 +1269,13 @@
   window.__resume = function () { if (!state.frozen) return; state.frozen = false; if (scene3d) scene3d.start(); };
   window.__labels = function () { return scene3d ? scene3d.labels() : []; };
   window.__style = function () { return state.style; };
+  // Merge a partial style at runtime (the GIF renderer switches the view with it).
+  window.__setStyle = function (partial) {
+    applyStyle(merge(state.style, partial || {}));
+    if (state.data) setTick(state.tick);
+    if (scene3d) { scene3d.resize(); scene3d.render(); }
+    return state.style;
+  };
   window.__load = loadData;
 
   // ---------- start ----------

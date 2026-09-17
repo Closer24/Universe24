@@ -201,7 +201,7 @@
       "strength_table": "undecided",
       "opposite_charge": "undecided",
       "decided_by": {"strength_table": "A5", "opposite_charge": "A5"},
-      "note": "Repulsion through the released field, as tests/test_released_field.py declares it: an electron that meets a light ray, the field of a charge (Highlights 3.5, 2026-09-17; the family electron_field until that date), leaves on the field ray's heading, away from the line that released it, with its amount and phase, and the field ray returns reversed as the recoil, the opposite momentum walking back to the releaser at finite speed (Highlights 3.5, 3.14). The declared integer table over the arriving field content and the charge product, which sets how much of the electron turns, and the heading rule for opposite charges (a positron meeting the light an electron released, an electron meeting a positron's) are written before A5's run."
+      "note": "Repulsion through the released field, as tests/test_released_field.py declares it: an electron that meets a light ray, the field of a charge (Highlights 3.5, 2026-09-17; the family electron_field until that date), leaves on the field ray's heading, away from the line that released it, with its amount and phase, and the field ray returns reversed as the recoil, the opposite momentum walking back to the releaser at finite speed (Highlights 3.5, 3.14). The declared integer table over the arriving field content and the charge product, which sets how much of the electron turns, and the heading rule for opposite charges (a positron meeting the light an electron released, an electron meeting a positron's) are written before A5's run. The opposite_charge entry closes with source_sign, the sign of the releasing charge carried on the field ray as a visible property (Highlights 3.5, 2026-09-17, feature 12): the coupling reads the sign from the field ray, never from its phase."
     },
     "recoil_return": {
       "status": "open",
@@ -410,7 +410,8 @@
           "decided_by": "feature 2b",
           "reads": {"bit": 1},
           "default": "pass without a draw",
-          "note": "What a marked Node does with a ray carrying 1 (Highlights 5.4, model owner, 2026-09-17): the ray is already realized and passes without a draw, as a measurement repeated in the same basis repeats its result, and it enters the declared coupling or continues on its line exactly as a pass does; the key by which a mark declares another behaviour is undecided until feature 2b lands, and the default is this entry."
+          "alternative": "draw",
+          "note": "What a marked Node does with a ray carrying 1 (Highlights 5.4, model owner, 2026-09-17): the ray is already realized and passes without a draw, as a measurement repeated in the same basis repeats its result, and it enters the declared coupling or continues on its line exactly as a pass does; the key by which a mark declares another behaviour is undecided until feature 2b lands, and the default is this entry; the declarable alternative is draw, the draw on every arrival as before, and feature 2b implements both."
         },
         "on_bit_0": {
           "status": "open",
@@ -419,7 +420,8 @@
           "decided_by": "feature 2b",
           "reads": {"bit": 0},
           "default": "transmission, no draw",
-          "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; the key by which a mark declares another behaviour is undecided until feature 2b lands, and the default is this entry. A ray carrying no bit is drawn as the does above says."
+          "alternative": "draw",
+          "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; the key by which a mark declares another behaviour is undecided until feature 2b lands, and the default is this entry. A ray carrying no bit is drawn as the does above says; the declarable alternative is draw, the draw on every arrival as before, and feature 2b implements both."
         }
       },
       "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its mark's setting is its decay ratio (weak_conversion). A passive Recorder or Renderer is not a Detector."

@@ -404,6 +404,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                 "feature 2b",
             ), name
             assert entry["engine"]["landed"] is False, name
+            assert entry["alternative"] == "draw", name
         assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
             {"bit": 1},
             "pass without a draw",
