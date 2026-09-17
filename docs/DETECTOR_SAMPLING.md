@@ -239,8 +239,9 @@ heading negated).
   annulled at every completed tick (the runner's
   `accounting_balanced_at_every_completed_tick`, the spatial accounting's
   `balanced` and the local conservation audit's per-Node residual all read
-  the sink; `conserved_at_every_completed_tick` is false once content has
-  left, as at an open boundary). Its information survives only in the
+  the sink; since `ray-event-audit-v1` (2026-09-17) the runner's
+  `conserved_at_every_completed_tick` reads the sink as a ledger line and
+  stays true, as at an open boundary). Its information survives only in the
   record.
 
 **The emission-event case.** If the event's input is still at the Node, the

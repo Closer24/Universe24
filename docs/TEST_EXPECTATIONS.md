@@ -56,6 +56,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
 | `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
+| `test_ray_event_audit.py` | 3 | 0.90 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release, an escape and an external body's sink (`ray-event-audit-v1`) |
 | `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
 | `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
 | `test_ray_integration_guards.py` | 22 | 0.36 | Ray integration boundaries (running branch, untouched) |
@@ -750,10 +751,14 @@ return](#detector-return)); arm B is free. Pinned before the first run:
   "inverse-split-v1"` and `return_mode` beside `detector_return`,
   `annulled_totals` (quanta 4 and momentum (4,0,0) in `annul`, zero
   otherwise), `accounting_balanced_at_every_completed_tick` true in every
-  mode and `conserved_at_every_completed_tick` true in `siblings` and
-  `straight` and false in `annul` (content left the world, as at an open
-  boundary); a second run writes the same `events.jsonl` byte for byte; a
-  document with `return_mode` `"none"` is rejected before a world exists.
+  mode and `conserved_at_every_completed_tick` true in every mode (since
+  `ray-event-audit-v1`, 2026-09-17: the flag is the world ledger's identity,
+  initial + sourced = current + escaped + annulled + absorbed, and the
+  annulled sink is a ledger line, not a loss; the pin of the same day
+  before feature 10 read false in `annul`, from the earlier flag that
+  compared only what stayed in the world); a second run writes the same
+  `events.jsonl` byte for byte; a document with `return_mode` `"none"` is
+  rejected before a world exists.
 
 Pinned consequences in existing tests: the returned ray of
 `test_detector_return.py` (a one-line event, no sibling line) is restored
@@ -877,19 +882,22 @@ from the event stream alone (no per-tick recording, so no phase):
   3, 4 and 6 beside the field escapes, see (e)), tick 5 the escapes;
   `in_world` quanta stays 6
   through tick 4 and is 0 from tick 5, when `escaped` is 6; the run's
-  conservation line reads `not_configured` (the world declares no
-  `conservation` block: with the field G declared, the local audit counted a G
-  ray resident at lamp A's Node in the Node's momentum before the tick-3 cycle
-  but not in the packet that carried it away, and failed with residual
-  momentum (1, 0, 0); that is a suspected defect of the audit under
-  `released-field-v1`, reported and not worked around, so the fixture leaves
-  the audit unconfigured; until 2026-09-17 the world declared it and the line
-  read `passed`), with `accounting_balanced_at_every_completed_tick` true and
-  `conserved_at_every_completed_tick` false because the 6 quanta left through
-  the open boundary and the runner's escaped totals hold them (the first
-  draft of this pin expected true there and had misread that flag, which
-  counts only what stays in the world); the record carries
-  `ray-event-state-v1`, `detector-mark-v1` and no unknown event kind;
+  conservation line reads `passed` (the world declares the `conservation`
+  block again since `ray-event-audit-v1`, 2026-09-17: the local audit's
+  residual momentum (1, 0, 0) at lamp A's Node in the tick-3 cycle, reported
+  by the viewer as a suspected defect, was the momentum of the release the
+  single held ray made there, five field rays whose net momentum is minus
+  its own heading, booked as a source with no owner paying and unknown to
+  the local audit; the audit now reads every release as a `sourced` line at
+  its Node, [the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)),
+  with `accounting_balanced_at_every_completed_tick` true and
+  `conserved_at_every_completed_tick` true (since `ray-event-audit-v1`: the
+  flag is the world ledger's identity and the 6 escaped quanta are its
+  `escaped` line, not a loss; the pin of the same day before feature 10 read
+  false, from the earlier flag that counted only what stayed in the world),
+  and the extracted `conservation` carries the recorded `audit` ledger; the
+  record carries `ray-event-state-v1`, `detector-mark-v1` and no unknown
+  event kind;
 - (d) tolerance: the same record with one appended event of an unknown kind
   (`field_release` at tick 3 at (2,1,1)) extracts to the same rays and
   events plus one generic marker of that kind at that Node and tick (drawn,
@@ -1032,7 +1040,8 @@ parametrized over the cases `four` (d = 0), `table_0`, `table_4`, `table_2`,
   and the `momentum` source total are both (0, 10, 0) for d = 0,
   (0, -10, 0) for d = 4, (0, 0, 0) for d = 2 and (0, 6, 0) for d = 1, and
   (0, 0, 0) at ticks 1 and 2. The table worlds declare no local
-  energy/momentum audit (its per-Node residual has no source term) and
+  energy/momentum audit (its per-Node residual read no source term until
+  `ray-event-audit-v1`, which reads every release as a source) and
   their conservation report reads `not_configured`; the `four` world
   declares it and its meeting keeps the rays' momentum at (0, 0, 0);
 - in every case, at every tick 1 to 4, the `a` total is 10 with source 0,
@@ -1229,6 +1238,136 @@ n (arrivals, the sink). The test is parametrized over `sink`, `stars`,
 
 A world without `external_bodies` is unchanged: no body Node exists, no
 token is added, no source is booked and the sink line is zero.
+
+## Ray-event audit
+
+`test_ray_event_audit.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on an open
+9 x 5 x 5 lattice, one world per `return_mode` (`annul`, `siblings`) and a
+third, `body`, in `annul` with one external body, nine ticks
+([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1), [the world
+ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)). The
+charged pair lamp stands at X = (4,2,2) holding 1 quantum of `plus` (charge
++1) and 1 of `minus` (charge -1), and emits them once at tick 0 as two
+funded one-line events recoiling into its `momentum`: the plus arm on +X
+(u = (1,0,0)) and the minus arm on -X. The Node M = (7,2,2) on the plus arm
+carries the one mark, setting `[1, 2]` and seed 3 (one draw: state 144814,
+bit 0, as in [Detector return](#detector-return)). The electron lamp stands
+at the corner E = (0,4,0) holding 4 quanta of `electron` (charge 0), emitted
+once at tick 0 on +Z, funded, recoiling into the same `momentum`; the family
+`G` (charge 0) is the field of `electron` with release `[1, 4]`, so every
+crossing releases five G rays of amount 1, one per Port heading but +Z. Every
+family has an 8-step phase with rest rate 0 and emission phase 0. Pinned
+before the first run:
+
+- (a) before the first tick `charge_totals()` reads `plus` 1, `minus` -1,
+  `electron` 0 and `G` 0 (the stock a record holds of a charged family
+  counts, as its amount counts in `totals()`), `escaped_charge_totals()`
+  zero for every family, and the ledger at tick 0 has every line's current
+  equal to its initial: `plus` (1), `minus` (1), `electron` (4), `G` (0),
+  `momentum` (0,0,0), charge `plus` 1, `minus` -1, `electron` 0, `G` 0;
+- (b) the ledger after each tick t from 1 to 9, every line balanced with
+  sourced, escaped, annulled and absorbed 0 unless stated: `plus` initial 1,
+  current 1 (in `annul` current 0 and annulled 1 from tick 7, the share
+  annulled in the cycle labelled 6 after the plus arm, returned at M at tick
+  3, reached X at tick 6; in `siblings` the one-line event has no sibling
+  line, the share is restored to the lamp in that cycle and emitted again in
+  the cycle labelled 7, one Link out after tick 8, two after tick 9, so
+  current stays 1); `minus` initial 1, current 1 through tick 4, then
+  current 0 and escaped 1 (at (0,2,2) after tick 4, out through -X at tick
+  5); `electron` initial 4, current 4 through tick 4, then current 0 and
+  escaped 4 (at (0,4,4) after tick 4, out through +Z at tick 5); `G` initial
+  0, sourced 0, 5, 10, 15, 20, 20, 20, 20, 20 (five per crossing of
+  (0,4,1), (0,4,2), (0,4,3) and (0,4,4), released in the cycles labelled 1
+  to 4), escaped 0, 2, 5, 7, 10, 11, 13, 14, 16 (at every crossing the -X
+  and +Y rays leave the world in the next tick; the -Z ray of the crossing
+  at z = c walks back to E and out at tick 2c + 1; the -Y ray walks to y = 0
+  and out at tick c + 5; the four +X rays are still in the world after tick
+  9) and current sourced minus escaped: 0, 3, 5, 8, 10, 9, 7, 6, 4;
+  `momentum` initial (0,0,0), current (0,0,0) through tick 4 (the two lamps'
+  recoils against their rays), (1,0,-4) after ticks 5 and 6 (the plus arm
+  reads +1u while returning, its share on the event's heading; the electron
+  lamp keeps (0,0,-4)), then in `annul` (0,0,-4) with annulled (1,0,0) from
+  tick 7 (the sink takes the share's reading, the lamp is unchanged) and in
+  `siblings` (1,0,-4) (the restored share's recoil undone in the lamp, then
+  the re-emitted ray), with escaped (-1,0,4) from tick 5; charge `plus`
+  initial 1, current 1 (in `annul` current 0 and annulled 1 from tick 7),
+  `minus` initial -1, current -1 through tick 4, then current 0 and escaped
+  -1, `electron` and `G` every line 0; `escaped_charge_totals()` reads
+  `minus` -1 from tick 5 and 0 otherwise; the spatial accounting balances at
+  every tick;
+- (c) one `detector_return` at tick 3 at M for family `plus`, no click, and
+  one `inverse_split` in the cycle labelled 6 at X with the mode, its
+  `annulled` {plus: (1,), momentum: (1,0,0)} in `annul` and {} in
+  `siblings`;
+- (d) the runner on the same document records `ray_event_audit:
+  "ray-event-audit-v1"` and `audit`, the nine ledgers of (b) as written by
+  `json`, `conserved_at_every_completed_tick` true and
+  `accounting_balanced_at_every_completed_tick` true in both modes,
+  `completed_ticks` 9, `audit_failure` none; a second run writes the same
+  `events.jsonl` and `run.json` (but `elapsed_seconds`);
+- (e) the recorded ledger with the plus line's current charge at tick 3
+  raised by 1 is reported as `{"tick": 3, "readout": "charge", "line":
+  "plus"}`, and with G's escaped amount at tick 9 set to 15 as `{"tick": 9,
+  "readout": "fields", "line": "G"}`, from the integers alone;
+- (f) the document with a `ray_interactions` rule `flip` (participants
+  `plus` and `minus`, outputs `plus` of input 0 and `plus` of input 1) is
+  rejected at validation with "would change the total charge";
+- (g) the pair alone (no electron lamp, no G) under a `conservation` block
+  (carriers: energy `plus` + `minus`, momentum `momentum`; spatial: energy
+  the two fields' right sides added, momentum (0,0,0)) runs nine ticks with
+  the local audit `passed`, its ledger the lines of (b) for `plus`, `minus`
+  and `momentum` (momentum current (1,0,0) from tick 5, (0,0,0) in `annul`
+  from tick 7), and the local audit's `initial`, `current`, `escaped` and
+  `annulled` read the ledger's lines summed over the two families: energy
+  2, 0 (`annul`) or 1 (`siblings`), 1, 1 or 0; momentum (0,0,0), (0,0,0)
+  or (1,0,0), (-1,0,0), (1,0,0) or (0,0,0); charge 0, 0 or 1, -1, 1 or 0;
+  the report's `sourced` line is 0 there;
+- (i) the whole `annul` world (the electron lamp and G included) under a
+  `conservation` block (a second carrier row for the electron lamp, the
+  spatial energy the four families' right sides added) runs nine ticks with
+  the local audit `passed`, since the audit reads every release as a source
+  at its Node (the five field rays a crossing releases have net momentum
+  minus the ray's own heading, (0,0,-1) here, and no owner pays for them):
+  its report at tick 9 reads initial energy 6, momentum (0,0,0), charge 0;
+  sourced 20, (0,0,-4), 0; current 4, (4,0,-4), 0 (the four +X field rays
+  and the electron lamp's recoil); escaped 21, (-5,0,0), -1 (the minus arm,
+  the electron and sixteen field rays); annulled 1, (1,0,0), 1;
+- (h) every ledger carries the bodies' own lines beside the identity:
+  `count`, `momentum` (the exact sum over the bodies), `charge` (the sum of
+  their declared charges) and `sink` (their sinks per field, the `absorbed`
+  line of every field); without a body count 0, momentum (0,0,0), charge 0
+  and every sink 0. The `body` world is the `annul` world with a fifth
+  family `star` (charge 0, no lamp) and one external body at B = (1,2,2) of
+  family `star`, amount 100, charge 3, coupling `sink`, at rest, no momentum
+  table: the minus arm arrives at B at tick 3 and ends in the sink, so from
+  tick 3 `minus` reads current 0 and absorbed 1 (never escaped), charge
+  `minus` current 0 and absorbed -1, `momentum` absorbed (-1,0,0) with
+  current (1,0,0) after ticks 3 and 4, (1,0,-4) after 5 and 6 and (0,0,-4)
+  from tick 7, escaped (0,0,4) from tick 5 (the electron alone) and annulled
+  (1,0,0) from tick 7; `star` every line 0; `escaped_charge_totals()` reads
+  0 for every family; `external_bodies()` lists the one body at B, not
+  stepping, momentum (0,0,0), accumulators (0,0,0), sink {} through tick 2
+  and {minus: 1} from tick 3; the bodies' lines read count 1, momentum
+  (0,0,0), charge 3 and sink `minus` (1,) and `momentum` (-1,0,0) from tick
+  3; every other line as in (b) to (f), and the runner's
+  `external_body_totals` equals the last ledger's sink.
+
+Pinned consequences in existing tests (2026-09-17, `ray-event-audit-v1`):
+`conserved_at_every_completed_tick` is the world ledger's identity, so it
+reads true wherever content left through an open boundary or into the
+annulled sink and every line balances: `test_inverse_split.py` in `annul`
+([Inverse split](#inverse-split)), the two escapes of the
+[ray viewer extraction](#ray-viewer-extraction), the five escaped +y rays of
+`test_ray_integration_guards.py` (funded momentum through absorption and
+escape) and the open world of `test_disturbance_application.py` (escape
+without dissipation, 72 `strength` and 16 `radiation` escaped, localized
+stock counted in the totals); each of those pins read false before feature
+10. `charge_totals()` counts the stock a record holds of a charged family,
+so the charge case of `test_wave_ray_families.py` reads `plus` 3 and
+`minus` -5 before the first tick as well as after it (it read 0 and 0 before
+feature 10, over rays alone).
 
 ## Detector-owned sampling admission
 

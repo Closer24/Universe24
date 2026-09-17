@@ -34,6 +34,20 @@ them) describe the current code until the ray-event migration in
 Bell results recorded with the former shared resource remain historical
 evidence about that profile, not evidence for the current model.
 
+## Conservation as local accounting - 2026-09-17 (`ray-event-audit-v1`)
+
+Issue #169, feature 10, implements the audit of section 3.15
+([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1), [the world
+ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
+
+| Highlights | Implementation |
+| --- | --- |
+| 3.15, exact accounting across all actual owners: retained participants, products, recoil, fields, apparatus, in-flight values and remainders | One ledger per completed tick per conserved readout (amount per family, momentum, charge), each line initial, sourced, current, escaped, annulled, absorbed with initial + sourced = current + escaped + annulled + absorbed exact; `current` reads rays, records and their stock, populations and in-flight packets |
+| 3.15, a gain requires a loss, a transfer or an explicitly accounted source | `sourced` names the releases, sourced emissions and split bookings; `escaped`, `annulled` and `absorbed` name the sinks; dissipation is no line and does not balance |
+| 3.15, reconstruction: a returning ray holds its event to undo it exactly | A returning ray reads its momentum as its share on the event's heading and its charge as charge x amount, in the world ledger and in the local audit alike, so the return and the inverse split leave every line exact |
+| 3.19, the external body's sinks and momentum | The `absorbed` line is what the bodies' sinks took (`external_body_totals`); the bodies' count, momentum, charge and sinks are their own lines beside the identity |
+| 3.26, the engine validates without inventing | A meeting whose outputs would change the total charge is rejected at validation; the runner's `conserved_at_every_completed_tick` is the ledger's identity re-checked from the recorded integers, and a record altered by hand is reported by tick and line |
+
 ## Binding and gravity by delay - 2026-09-17 (`ray-binding-v1`)
 
 Issue #169, feature 8, implements the bound group of section 3.4 and gravity

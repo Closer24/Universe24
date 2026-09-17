@@ -1887,6 +1887,10 @@ def _ray_meeting(
     tables: dict[int, tuple[int, ...]] = {}
     tables_source: dict[int, tuple[int, tuple[int, int]]] = {}
     rests: dict[int, int] = {}
+    # The inputs whose amount each output takes (ray-event-audit-v1): an output
+    # of a family whose charge differs from its source's changes the total charge.
+    amount_sources: dict[int, tuple[int, ...]] = {}
+    every_input = tuple(range(len(selections)))
     lags: list[LagTable] = []
     for position, raw in enumerate(raw_outputs):
         item = _object(
@@ -1938,8 +1942,10 @@ def _ray_meeting(
                     raise ValueError("output.amount.of exceeds the declared roles")
             tables[position] = table
             tables_source[position] = (shared, between)
+            amount_sources[position] = every_input if shared < 0 else (shared,)
         else:
             spec = _object(amount, "output.amount", {"of"}, {"of"})
+            amount_sources[position] = every_input
             if spec["of"] == "sum":
                 amount_expression = ref("amount", 0)
                 for participant in range(1, len(selections)):
@@ -1952,6 +1958,7 @@ def _ray_meeting(
                 if of_index >= len(selections):
                     raise ValueError("output.amount.of exceeds the declared roles")
                 amount_expression = ref("amount", of_index)
+                amount_sources[position] = (of_index,)
             assignments.append(Assignment(position, 0, parser.parse(amount_expression, 1)))
         heading = item["heading"]
         if heading == "same":
@@ -2011,6 +2018,21 @@ def _ray_meeting(
         assignments.append(Assignment(position, 6, parser.parse(definition.charge, 1)))
     if any(target not in tables for target in rests.values()):
         raise ValueError("rest_of requires an output split by a table")
+    # ray-event-audit-v1: a meeting cannot change the total charge. Every output
+    # carries its family's charge per quantum on the amount it takes from its
+    # source inputs, so that charge must equal every source family's; a literal
+    # amount takes nothing from an input and requires an uncharged family.
+    for position, kind in enumerate(outputs):
+        sources = amount_sources.get(rests.get(position, position), ())
+        charges = {spatial[k].charge for i in sources for k in selections[i]}
+        if position not in amount_sources and position not in rests:
+            charges = {0}
+        if charges != {spatial[kind].charge}:
+            raise ValueError(
+                f"ray meeting output {position} of family {definitions[kind].name} (charge "
+                f"{spatial[kind].charge}) would change the total charge: its amount comes "
+                "from inputs of another charge"
+            )
     splits: list[TableSplit] = []
     for first, table in tables.items():
         partners = [second for second, target in rests.items() if target == first]

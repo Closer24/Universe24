@@ -662,8 +662,10 @@ every such set; Highlights 3.20 is the text to follow.
    field ray returning reversed with the opposite momentum to the heavy
    Node. (Done on 2026-09-17, issue #169 feature 7, `released-field-v1`: a
    ray field with `field_of` and `release` is the field of a family,
-   released at every Node a ray of the family departs as one ray per Port
-   heading except the ray's own, which at link speed is the ray itself,
+   released at every Node a ray of the family is at, in every interval it
+   is there and not only the one it departs in (the release does not wait
+   for the clock, Highlights 3.5), as one ray per Port heading except the
+   ray's own, which at link speed is the ray itself,
    with the ray's phase and no event, booked as a source so the ray pays
    nothing; resident content releases on all six headings once per
    interval; the recoil is the declared rule's output with heading
@@ -768,6 +770,17 @@ wave-ray phase rule and the light family of step 6 follow with feature 9.
 
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
+
+The audits are feature 10 of issue #169 (done on 2026-09-17,
+`ray-event-audit-v1`): one world ledger per completed tick for each conserved
+readout (amount per family, momentum, charge), each line initial, sourced,
+current, escaped, annulled and absorbed with initial + sourced = current +
+escaped + annulled + absorbed exact, a returning ray reading its momentum as
+its event share and its charge as charge x amount, the runner's
+`conserved_at_every_completed_tick` that identity for all three readouts,
+the ledger recorded per tick under `audit`, the local audit reading the same
+charge, and a meeting that would change the total charge rejected at
+validation; see [audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1).
 
 **After feature 10 (decided 2026-09-17, Highlights 3.26 and 5.3).** The ten
 features of [issue #169](https://github.com/Closer24/Universe24/issues/169)

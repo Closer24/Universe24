@@ -177,10 +177,24 @@ def document():
                 ],
             }
         ],
-        # No `conservation` block: with the released field G, the local audit counts
-        # a G ray resident at a lamp Node in the Node's momentum but not in the
-        # packet that carries it away, and fails; the runner's own accounting flags
-        # still cover the run (reported as a suspected audit defect, not fixed here).
+        # The `conservation` block is declared again since ray-event-audit-v1
+        # (2026-09-17): the local audit reads every release as a source at its Node.
+        "conservation": {
+            "name": "quanta",
+            "energy_units": "quantum",
+            "momentum_units": "quantum times heading",
+            "carriers": [
+                {
+                    "requires": ["quanta", "momentum"],
+                    "energy": {"field": "quanta"},
+                    "momentum": {"field": "momentum"},
+                }
+            ],
+            "spatial": {
+                "energy": {"field": "quanta", "side": "right"},
+                "momentum": {"op": "vector", "args": [0, 0, 0]},
+            },
+        },
     }
 
 
@@ -326,11 +340,15 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert [row["in_world"]["G"] for row in rows] == [[0], [0], [12], [14], [12], [12], [4]]
     assert [row["escaped"]["quanta"] for row in rows] == [[0]] * 5 + [[6], [6]]
     assert [row["releases"] for row in rows] == [0, 1, 1, 2, 2, 0, 0]
-    assert run["conservation"]["status"] == "not_configured"
-    # The quanta left through the open boundary, so the runner's "conserved at
-    # every completed tick" is false while the accounting (with escapes) balances.
-    assert run["conservation"]["every_tick"] is False
+    assert run["conservation"]["status"] == "passed"
+    # The quanta left through the open boundary: since ray-event-audit-v1
+    # (2026-09-17) the runner's "conserved at every completed tick" is the world
+    # ledger's identity, in which the escape is a line, so it is true (it was false
+    # before feature 10); the accounting (with escapes) balances, and the extracted
+    # conservation carries the recorded ledger.
+    assert run["conservation"]["every_tick"] is True
     assert run["conservation"]["balanced"] is True
+    assert [ledger["tick"] for ledger in run["conservation"]["audit"]] == list(range(1, 7))
     assert run["record"]["ray_state"] == "ray-event-state-v1"
     assert run["record"]["detector_mark"] == "detector-mark-v1"
     assert run["record"]["unknown_event_kinds"] == {}
