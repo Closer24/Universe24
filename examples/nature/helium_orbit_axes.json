@@ -122,7 +122,7 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 8,
+      "ray_slots": 4,
       "metric": "links",
       "pace": [
         1,
@@ -171,7 +171,7 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 8,
+      "ray_slots": 24,
       "metric": "links",
       "pace": [
         1,
@@ -225,7 +225,7 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 8,
+      "ray_slots": 2,
       "metric": "links",
       "pace": [
         1,
@@ -274,7 +274,7 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 8,
+      "ray_slots": 2,
       "metric": "links",
       "pace": [
         1,
