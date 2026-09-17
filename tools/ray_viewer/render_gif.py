@@ -60,6 +60,7 @@ STYLE_KEYS = {
     ),
     "sizes": (
         "ray_width_px",
+        "head_links",
         "arrowhead_px",
         "momentum_arrow_px_per_quantum",
         "momentum_arrow_width_px",

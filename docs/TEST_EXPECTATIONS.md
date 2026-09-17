@@ -977,11 +977,13 @@ from the event stream alone (no per-tick recording, so no phase):
   `trail_links` 10 with `trail_fade` [0.35, 0.0] and `colors.trail`
   `#ffffff` (the ray bright at its Link in its family colour and a faint
   white wake fading to nothing over ten Links, one opacity per Link, no hard
-  cut), `ray_width_px` and `trail_width_px` 6, `draw.momentum_arrow` true
-  with `momentum_arrow_px_per_quantum` 6 and `colors.momentum_arrow`
-  `#7fd7ff` (an arrow at the head in the ray's heading, amount x 6 px long,
-  48 px for an electron of 8, carrying the arrowhead), a fixed matter colour
-  with `hue_by_phase` on the arrowhead only, of the `page_text` flags
+  cut), `trail_width_px` 6, a small head (`ray_width_px` 3 over
+  `head_links` 0.5, half a Link from the ray's Node along its heading) and
+  `draw.momentum_arrow` true with `momentum_arrow_px_per_quantum` 1.75,
+  `momentum_arrow_width_px` 1.5, `arrowhead_px` 5 and `colors.momentum_arrow`
+  `#7fd7ff` (a tiny arrow at the head in the ray's heading, amount x 1.75 px
+  long, 14 px for an electron of 8, carrying the arrowhead), a fixed matter
+  colour with `hue_by_phase` on the arrowhead only, of the `page_text` flags
   only `header` (the run's title) and `tick_counter` true, every `labels`
   flag false, and `autoplay` and `loop` true.
 

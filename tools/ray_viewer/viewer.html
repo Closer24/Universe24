@@ -183,10 +183,11 @@
     "external_body": "#f5d76e"
   },
   "sizes": {
-    "ray_width_px": 6,
-    "arrowhead_px": 10,
-    "momentum_arrow_px_per_quantum": 6,
-    "momentum_arrow_width_px": 2,
+    "ray_width_px": 3,
+    "head_links": 0.5,
+    "arrowhead_px": 5,
+    "momentum_arrow_px_per_quantum": 1.75,
+    "momentum_arrow_width_px": 1.5,
     "trail_links": 10,
     "trail_width_px": 6,
     "trail_fade": [
@@ -846,9 +847,13 @@
           var phase = seg.phase != null ? seg.phase : seg.arrival_phase;
           var color = rayColor(f, phase, "ray");
           if (seg.tick === t) {
-            var a = world(seg.from), b = endOf(seg);
+            // The head: a short segment from the ray's Node along its heading
+            // (sizes.head_links of the Link; 1 draws the whole Link).
+            var a = world(seg.from), bEnd = endOf(seg);
+            var dirSeg = tmp.copy(bEnd).sub(a).normalize().clone();
+            var headLinks = isField ? 1 : (sz.head_links > 0 ? Math.min(sz.head_links, 1) : 1);
+            var b = a.clone().addScaledVector(dirSeg, a.distanceTo(bEnd) * headLinks);
             placeSegment(segs.take(nSeg++), a, b, width, color, alpha);
-            var dirSeg = tmp.copy(b).sub(a).normalize().clone();
             if (!isField && dr.momentum_arrow) {
               // The momentum arrow carries the arrowhead: amount x heading, in pixels.
               placeArrow(segs.take(nSeg++), heads.take(nHead++), b, dirSeg, Math.abs(seg.amount[0]) * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
@@ -872,10 +877,11 @@
           var dir = tmp2.set(last.heading[0], last.heading[1], last.heading[2]).clone();
           var heldPhase = last.arrival_phase != null ? last.arrival_phase : last.phase;
           var color = rayColor(f, heldPhase, "ray");
-          placeSegment(segs.take(nSeg++), p.clone().addScaledVector(dir, -0.3), p.clone().addScaledVector(dir, 0.3), width, color, alpha);
+          var half = (sz.head_links > 0 ? Math.min(sz.head_links, 1) : 1) / 2;
+          placeSegment(segs.take(nSeg++), p.clone().addScaledVector(dir, -half), p.clone().addScaledVector(dir, half), width, color, alpha);
           if (!isField && dr.momentum_arrow) {
-            placeArrow(segs.take(nSeg++), heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, Math.abs(ray.amount[0]) * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
-          } else if (!isField || sz.field_arrowhead) placeHead(heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, sz.arrowhead_px, rayColor(f, heldPhase, "head"), alpha);
+            placeArrow(segs.take(nSeg++), heads.take(nHead++), p.clone().addScaledVector(dir, half), dir, Math.abs(ray.amount[0]) * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
+          } else if (!isField || sz.field_arrowhead) placeHead(heads.take(nHead++), p.clone().addScaledVector(dir, half), dir, sz.arrowhead_px, rayColor(f, heldPhase, "head"), alpha);
           if (wantLabel) setLabel(label(nLabel++), template(dr.label_text, { family: ray.family, amount: vec(ray.amount), phase: "" }), "#" + color.getHexString(), sz.label_font_px, p);
         });
       });

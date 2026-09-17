@@ -48,10 +48,11 @@
     "external_body": "#f5d76e"
   },
   "sizes": {
-    "ray_width_px": 6,
-    "arrowhead_px": 10,
-    "momentum_arrow_px_per_quantum": 6,
-    "momentum_arrow_width_px": 2,
+    "ray_width_px": 3,
+    "head_links": 0.5,
+    "arrowhead_px": 5,
+    "momentum_arrow_px_per_quantum": 1.75,
+    "momentum_arrow_width_px": 1.5,
     "trail_links": 10,
     "trail_width_px": 6,
     "trail_fade": [

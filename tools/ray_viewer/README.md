@@ -11,16 +11,18 @@ here that touches the engine.
 
 ## What it shows
 
-- Dark background. A ray is a ray, not a particle: a bright segment about
-  6 px wide on the Link it is crossing in its family colour, a momentum
-  arrow at its head in its heading whose length is its amount times
-  `sizes.momentum_arrow_px_per_quantum` (6 px, so 48 px for an electron of
-  8; `draw.momentum_arrow`, `colors.momentum_arrow`; with the flag off a
-  small arrowhead of `arrowhead_px` remains), and a faint white wake of the
-  same width fading smoothly to nothing over the last ten Links, one opacity
-  per Link, so the path is understood without a hard cut (`colors.trail`,
-  `sizes.trail_links` 10 and `trail_fade` [0.35, 0.0]; 0 draws the whole
-  path since the ray's event).
+- Dark background. A ray is a ray, not a particle: a small bright head in
+  its family colour, a short segment from its Node along its heading
+  (`sizes.head_links` 0.5 of the Link, `ray_width_px` 3; `head_links` 1
+  draws the whole Link), a tiny momentum arrow at the head in its heading
+  whose length is its amount times `sizes.momentum_arrow_px_per_quantum`
+  (1.75 px, so 14 px for an electron of 8, with an `arrowhead_px` 5 head;
+  `draw.momentum_arrow`, `colors.momentum_arrow`; with the flag off the
+  small arrowhead alone remains), and a faint white wake 6 px wide fading
+  smoothly to nothing over the last ten Links, one opacity per Link, so the
+  path is understood without a hard cut (`colors.trail`, `sizes.trail_links`
+  10 and `trail_fade` [0.35, 0.0]; 0 draws the whole path since the ray's
+  event).
   Matter families have a fixed high-contrast colour and the phase hue shows
   on the arrowhead (`draw.hue_by_phase`: `arrowhead`, `ray` or `none`; grey
   when the record carries no phase). A label per ray, family and amount,
@@ -78,7 +80,7 @@ never a code change. Its sections and keys, all of them, are:
 | Section | Keys |
 | --- | --- |
 | `colors` | `background`, `surface`, `scene`, `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
-| `sizes` | `ray_width_px`, `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `escape_dot_radius`, `source_size`, `detector_size`, `body_size`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `lattice_alpha`, `box_alpha` |
+| `sizes` | `ray_width_px`, `head_links` (the head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `escape_dot_radius`, `source_size`, `detector_size`, `body_size`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `lattice_alpha`, `box_alpha` |
 | `draw` | `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
 | `caption` | `kinds` (the event kinds listed), `max_per_tick`, `more`, `emissions`, `escapes`, `field_escapes`, `empty`, `totals` (`{family}`, `{in_world}`, `{escaped}`, `{on_links}`, `{held}`, `{sourced}`), `conservation` (`{status}`, `{balanced}`, `{every_tick}`) |
 | `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `contact_stills`, `elevation_deg`, `start_angle_deg` |
