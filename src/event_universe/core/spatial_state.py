@@ -734,19 +734,20 @@ class SpatialPlan:
 class InverseSplit:
     """The record of one inverse split for the Node to publish (inverse-split-v1).
 
-    Plain bounded data: the spatial field, the mode, the Ports transmitted to with
+    Plain bounded integers, as the Node state contract requires: the spatial
+    field, the mode as its index in RETURN_MODES, the Ports transmitted to with
     the amount per Port, the returned share, the ray's Detector bit (0 or 1, or -1
-    for none), whether the share was first restored to the event's input at the
+    for none), 1 when the share was first restored to the event's input at the
     Node, and, in annul mode, the per-field content that left the world.
     """
 
     field: int
-    mode: str
+    mode: int
     ports: tuple[int, ...]
     amounts: tuple[int, ...]
     amount: int
     bit: int
-    restored: bool
+    restored: int
     annulled: Values = ()
 
 

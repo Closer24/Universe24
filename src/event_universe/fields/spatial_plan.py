@@ -429,12 +429,12 @@ class SpatialLaw:
             splits.append(
                 InverseSplit(
                     index,
-                    self.return_mode,
+                    RETURN_MODES.index(self.return_mode),
                     ports,
                     amounts,
                     ray.amount,
                     {DETECTOR_BIT_0: 0, DETECTOR_BIT_1: 1}.get(ray.detector, -1),
-                    slot is not None,
+                    int(slot is not None),
                     tuple(tuple(v) for v in annulled_now) if self.return_mode == "annul" else (),
                 )
             )
@@ -782,7 +782,7 @@ class SpatialLaw:
                 for split in splits:
                     if split.restored:
                         absorbed = checked_work(absorbed + split.amount)
-                    if split.mode == "annul":
+                    if RETURN_MODES[split.mode] == "annul":
                         absorbed = checked_work(absorbed + split.amount)
                 if ray_hold:
                     ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)

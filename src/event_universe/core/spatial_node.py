@@ -38,6 +38,7 @@ from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
+    RETURN_MODES,
     FieldInteractionGuard,
     Rays,
     SpatialBundle,
@@ -551,12 +552,12 @@ class SpatialNode(SpatialNodeState):
                 services,
                 notifications=notifications,
                 family=services.initial.fields[definition.field].name,
-                mode=split.mode,
+                mode=RETURN_MODES[split.mode],
                 ports=split.ports,
                 amounts=split.amounts,
                 amount=split.amount,
                 bit=None if split.bit < 0 else split.bit,
-                restored=split.restored,
+                restored=bool(split.restored),
                 annulled={
                     field.name: split.annulled[i]
                     for i, field in enumerate(services.initial.fields)
