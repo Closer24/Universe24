@@ -400,7 +400,7 @@ every such set; Highlights 3.20 is the text to follow.
   its field meets something, a traveling ray pays nothing for it.
 - Matter as bound rays satisfies Highlights 3.4: mass is the retained energy of
   a bound group, not a stored property; the group's phase advance is its own
-  clock, which the [light-clock measurement](../examples/research/anomalies/README.md)
+  clock, which the light-clock measurement (`examples/research/anomalies/`, deleted on 2026-09-17)
   says slows with the hop time. A bound group has no lifetime of its own and
   is unbound only when an arriving ray's declared coupling produces events
   that leave; nothing else creates or destroys matter.

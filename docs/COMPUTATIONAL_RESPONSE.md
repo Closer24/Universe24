@@ -24,7 +24,7 @@ each use that same local level, as explicitly configured.
 
 ## Candidate contract
 
-[The moving-pair initialization](../examples/computational-response/moving-pair.json)
+The moving-pair initialization (`examples/computational-response/moving-pair.json`, deleted on 2026-09-17)
 defines one reusable body and two seeds. This is an explicit candidate, not a
 derived gravitational law or a realistic particle model.
 
@@ -60,9 +60,9 @@ test the corresponding energy/readout definitions and constitutive rules.
 
 ## Validation and memory
 
-`tests/test_node_work_emission.py` checks zero startup, pending versus committed
+`tests/test_node_work_emission.py` (deleted on 2026-09-17) checks zero startup, pending versus committed
 cost, a moving emitter entering a fresh Node, invalid/missing/out-of-scope reads,
-integer arithmetic and legacy emission behavior. `tests/test_computational_response.py`
+integer arithmetic and legacy emission behavior. `tests/test_computational_response.py` (deleted on 2026-09-17)
 checks causal input/output for each of six ports, opposite reactions, transient
 trigger consumption, cancellation, disabled coupling and name independence.
 

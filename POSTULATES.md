@@ -302,11 +302,11 @@ isolated particles: their momentum and impulse remainders must not change due
 to their own field. Baseline failures remain evidence, not approved corrections.
 The generic engine's default clock fails this requirement for a value-driven
 exchange response: a carrier and the field it emits in its departure interval
-cross one link together, and `tests/test_field_phase_first.py` records that
+cross one link together, and `tests/test_field_phase_first.py` (deleted on 2026-09-17) records that
 baseline. The opt-in `field_phase_first` and `arrival_port_blind` policies in
 [spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering) satisfy
 it for straight motion by ordering alone; the flux-driven rotation law satisfies
-it under the default clock by geometry, as `tests/test_rotation_self_interaction.py`
+it under the default clock by geometry, as `tests/test_rotation_self_interaction.py` (deleted on 2026-09-17)
 shows. None of these selects a self-force law under acceleration.
 The historical `causal-octant-stream-v1` candidate, deleted on 2026-09-17, tested
 this through outward one-link transport before the particle response, with no

@@ -1,5 +1,26 @@
 # Validation evidence
 
+## Test suite reduced to one test per rule - 2026-09-17
+
+Base: main `5df25f3` (after PR #184), branch `cleanup/prune-tests`. Decision
+of the model owner, 2026-09-17: one module per generic rule and one per feature
+of the ray-event model; see the
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule)
+for the deleted modules and studies. Python 3.14.0rc2 on Linux, headless,
+single-process, `-p no:cacheprovider`, on a host shared with two other test
+runs.
+
+| Check | Result |
+| --- | --- |
+| Whole suite before the reduction | 108 modules; 2,191 passed, 3 visual-only skipped in 622 seconds (the same suite runs about 15 minutes in CI) |
+| Whole suite after the reduction | 39 modules; 1,008 passed in 35 seconds; the slowest modules are `test_ray_delay.py` (13 s), `test_kerengonen.py` (7 s) and `test_repository_language.py` (5 s) |
+| Documentation gates (`test_repository_navigation.py`, `test_repository_language.py`, `test_repository_hygiene.py`, `test_json_documents.py`) | 80 passed before and after |
+| `python tools/check.py` against `origin/main` | ruff lint and format, mypy on the changed tool, and the affected kept modules passed |
+
+The dated records below keep their original scope: a module they name that is
+absent from the [suite inventory](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17)
+was deleted on 2026-09-17, and its numbers remain evidence about that revision.
+
 ## Integrated ray ownership and local Focus - 2026-09-14
 
 Reviewed integration input: PR #116 at `b517590b4011f1e2ff9a53be7b61fe76b50f7b08`,
@@ -1930,7 +1951,7 @@ Base: `ca51869` on this branch. `"transport": "ray"` (`isotropic-ray-field-v1`)
 adds straight-moving rays that carry an integer heading and three accumulators,
 a per-Node ray slot capacity, emission over a configured heading sequence, and
 attenuation, deposits, escape and flux samples through the existing accounting.
-The [probe](../examples/inverse-square/README.md) measured it as a read-only
+The probe (`examples/inverse-square/`, deleted on 2026-09-17) measured it as a read-only
 world/event audit at host Euclidean distance, not as an operational observer.
 
 | Check | Result |
@@ -1951,7 +1972,7 @@ large radius is finite direction sampling.
 Base: `cc042ce` (main after PR #92). Configuration only, plus one engine fix:
 a coupling reaction that amends a departing packet now keeps the rays on that
 port, so rays pass through Nodes whose carriers respond to them (previously they
-were dropped there). The [probe](../examples/gravity-probe/README.md) couples
+were dropped there). The probe (`examples/gravity-probe/`, deleted on 2026-09-17) couples
 held and moving bodies to the ray flux with `mass x flux / D`, `D = 16`, and
 reads the result as a read-only world/event audit at host Euclidean distance.
 

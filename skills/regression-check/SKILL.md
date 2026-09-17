@@ -7,8 +7,8 @@ description: Check Universe24 regressions and daily genericity across the active
 
 ## Formula-free node check for the daily audit
 
-Include `tests/test_node_state_contract.py` and `tests/test_local_lorentz_field.py`
-in the authorized daily genericity audit, alongside its existing baseline.
+Include `tests/test_node_state_contract.py` in the authorized daily genericity
+audit, alongside its existing baseline.
 Follow [the node-state ownership contract](../../docs/LOCAL_LORENTZ_FIELD.md).
 Inspect transitive evolving state, pending proposals and packets for embedded
 formulas, expression trees, definitions or executable laws. Shared immutable
@@ -16,13 +16,16 @@ initialization definitions and generic evaluators remain permitted outside nodes
 Check local causal field response and paired field reaction; a keyword scan or
 global source reconstruction behind a local accessor does not satisfy this rule.
 For the opt-in [integer Node profile](../../docs/NODE_VECTOR_PROCESSOR.md), include
-`tests/test_node_runtime.py`, `tests/test_node_guard_boundaries.py` and
-`tests/test_node_vector_integration.py`. Keep explicit k timing separate from
-operation cost, and check actual pending/packet owners before accepting a balance.
-When that revision supports joint indexed reactions or persistent conditions,
-include `tests/test_joint_node_reactions.py`, `tests/test_joint_reaction_configuration.py`
-and `tests/test_field_commit_guards.py`; follow the delayed-rule review in
+`tests/test_node_rule_contract.py` and `tests/test_node_conservation.py`. Keep
+explicit k timing separate from operation cost, and check actual pending/packet
+owners before accepting a balance. For joint indexed reactions and persistent
+conditions, include `tests/test_spatial_interactions.py`; follow the delayed-rule
+review in
 [physics validation](../physics-rule-validation/SKILL.md#review-the-declared-rules).
+The suite was reduced on 2026-09-17 to one module per generic rule
+([inventory](../../docs/TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17)); a
+module named by an older audit record and absent from the inventory was deleted
+that day, not lost.
 Aggregation metadata must match each carrier and spatial receipt implementation;
 a supported metadata name alone does not establish a supported merge policy.
 Report missing checks in the audited revision as incomplete coverage. Preserve
@@ -78,13 +81,12 @@ Use the existing project interpreter and set PYTHONPATH to that checkout's src.
 Run the bounded baseline from the repository root:
 
 ```text
-python -m pytest tests/test_generic_identity.py tests/test_architecture.py tests/test_workspace.py tests/test_workspace_integration.py tests/test_recorded_movie.py tests/test_local_field_rules.py tests/test_spatial_interactions.py
+python -m pytest tests/test_architecture.py tests/test_locality.py tests/test_initialization.py tests/test_disturbance_application.py tests/test_local_field_rules.py tests/test_spatial_interactions.py
 ```
 
-Ensure Node is available and the headless JavaScript checks actually execute.
-The two explicitly visual movie checks may skip; missing runtimes or other
-unexpected skips are coverage gaps, not a clean audit. No compilation, dependency
-reinstallation, long simulation or visualization is needed for an ordinary audit.
+Missing runtimes or unexpected skips are coverage gaps, not a clean audit. No
+compilation, dependency reinstallation, long simulation or visualization is
+needed for an ordinary audit.
 
 Review new code and dynamic consumers beyond the baseline. Inspect initialization,
 field arithmetic, coupling and scheduling, runner metadata, diagnostic rendering,

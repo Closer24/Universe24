@@ -222,7 +222,7 @@ elementary emergence probes in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
 Field, type, model and unit labels are data. Reordering field/type declarations
 must preserve the same resolved behavior; declared update/coupling order and
 spatial axes can be meaningful and are not interchangeable. The executable
-cross-layer checks live in `tests/test_generic_identity.py`. Genericity is scoped
+cross-layer checks live in `tests/test_generic_identity.py` (deleted on 2026-09-17). Genericity is scoped
 to the supported integer scalar/vector schema, three-dimensional six-port
 geometry, fixed capacities and declared operation set; it does not imply an
 arbitrary equation interpreter.
