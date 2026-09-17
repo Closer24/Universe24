@@ -19,12 +19,11 @@ from .disturbance_state import (
     unpack,
 )
 from .integer import checked_work
-from .node_boundary import validate_spatial_bundle, validate_spatial_states
+from .node_boundary import validate_spatial_bundle
 from .node_conservation import NodeConservationGuard
 from .node_execution import NodeExecution
 from .node_ports import PortTable
 from .node_services import NodeEvents
-from .source_emission import SourceDeposit
 from .spatial_node import NodeActivity, SpatialAccounting, SpatialNode, SpatialServices
 from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
@@ -62,65 +61,6 @@ RecordCommit = Callable[[Address3, tuple[DisturbanceRecord | None, ...]], None]
 
 
 class SpatialEngine:
-    def commit_source(
-        self, position: Address3, tick: int, proposal: SourceDeposit
-    ) -> list[dict[str, object]]:
-        """Install a preflighted colocated source before the ordinary field cycle."""
-        validate_spatial_states(self.initial, proposal.states)
-        if len(proposal.source_delta) != len(self.initial.fields):
-            raise ValueError("source accounting layout differs from the fields")
-        node = self._at(position)
-        actual = [[0] * field.components for field in self.initial.fields]
-        for old, new, definition in zip(
-            node.states, proposal.states, self.initial.spatial_fields, strict=True
-        ):
-            if (old.allocation_phases, old.delivered, old.received_mask) != (
-                new.allocation_phases,
-                new.delivered,
-                new.received_mask,
-            ):
-                raise ValueError("source deposit may only add local field populations")
-            for before, after in zip(old.populations, new.populations, strict=True):
-                for component, (a, b) in enumerate(zip(unpack(before), unpack(after), strict=True)):
-                    actual[definition.field][component] = checked_work(
-                        actual[definition.field][component] + b - a
-                    )
-        for index, field in enumerate(self.initial.fields):
-            if len(proposal.source_delta[index]) != field.components:
-                raise ValueError("source accounting component count differs from the field")
-            for value in proposal.source_delta[index]:
-                checked_work(value)
-        if tuple(tuple(values) for values in actual) != proposal.source_delta:
-            raise ValueError("source accounting differs from its local population change")
-        notifications: list[dict[str, object]] = []
-        self._event(
-            "spatial_envelope_source",
-            tick,
-            position,
-            notifications=notifications,
-            source_delta={
-                field.name: proposal.source_delta[i]
-                for i, field in enumerate(self.initial.fields)
-                if any(proposal.source_delta[i])
-            },
-        )
-        node.states = proposal.states
-        external = proposal.source_delta
-        if proposal.funded_delta:
-            if len(proposal.funded_delta) != len(proposal.source_delta):
-                raise ValueError("funded accounting layout differs from the fields")
-            external = tuple(
-                tuple(checked_work(value - paid) for value, paid in zip(values, funded, strict=True))
-                for values, funded in zip(proposal.source_delta, proposal.funded_delta, strict=True)
-            )
-        self._services.accounting.record_sources(external)
-        if proposal.funded_delta:
-            # Stock the wave paid into the field is an internal transfer, like a
-            # funded carrier emission, so the per-field audit stays balanced.
-            self._services.accounting.record_reactions(proposal.funded_delta)
-        self._active.add(position)
-        return notifications
-
     @property
     def observer(self) -> EventSink | None:
         return self._event_observer

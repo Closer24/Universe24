@@ -47,25 +47,6 @@ class NodeEvents:
         """Replace the host notification sink without exposing a read interface."""
         self.__observer = observer
 
-    # Compatibility for core/source_envelope_node.py, which still reserves ledger
-    # room and passes provenance identities. Both go with issue #164 bucket B.3.
-    def require_room(self, count: int) -> None:
-        bounded(count)
-
-    def record(
-        self,
-        event: str,
-        tick: int,
-        position: Address3,
-        cause: int | None = None,
-        *,
-        causes: tuple[int, ...] = (),
-        event_cost: int = 0,
-        owner: str = "",
-        **data: object,
-    ) -> tuple[None, dict[str, object]]:
-        return None, self.message(event, tick, position, **data)
-
 
 @dataclass(slots=True)
 class WorkLedger:

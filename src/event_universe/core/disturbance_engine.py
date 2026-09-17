@@ -19,7 +19,7 @@ from .disturbance_state import (
     decode,
     unpack,
 )
-from .event_resolution import CausalSourceResolver, CommitResolver, EventResolver, Planner
+from .event_resolution import CommitResolver, EventResolver, Planner
 from .node_boundary import validate_record
 from .node_conservation import NodeConservationGuard
 from .node_execution import NodeExecution
@@ -145,9 +145,6 @@ class DisturbanceEngine:
                 raise ValueError("initial disturbance capacity exceeded") from error
             records[slot] = seed.record
             node.records = tuple(records)
-        if isinstance(resolver, CausalSourceResolver):
-            for position, source_node in resolver.source_nodes().items():
-                self._at(position).source_envelope = source_node
 
     @property
     def _observer(self) -> EventSink | None:
@@ -420,25 +417,6 @@ class DisturbanceEngine:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
-            readings: dict[Address3, dict[str, dict[str, object]]] | None = None
-            if isinstance(self._resolver, CausalSourceResolver):
-                if self._spatial is None:
-                    raise ValueError("causal source owner requires spatial fields")
-                # The local field values present at the start of this cycle;
-                # a field-dependent gate scheduled this tick reads only these.
-                readings = {
-                    position: self._spatial.values(position)
-                    for position in self._resolver.source_nodes()
-                }
-                for position in self._resolver.source_nodes():
-                    spatial_node = self._spatial._at(position)
-                    proposal = self._resolver.prepare_source(
-                        position, self.tick, spatial_node.states, self._nodes[position].last_cost
-                    )
-                    if proposal is not None:
-                        notifications = self._spatial.commit_source(position, self.tick, proposal)
-                        self._resolver.commit_source(position, self.tick)
-                        self._spatial._notify(notifications)
             if self._spatial is not None and not self.initial.spatial_computation_delay:
                 self._spatial.begin(
                     self.tick,
@@ -482,10 +460,6 @@ class DisturbanceEngine:
                         self._refresh_output(position)
                         raise
             self._sleep_carriers(ordered)
-            if isinstance(self._resolver, CausalSourceResolver):
-                self._resolver.start_sources(
-                    self.tick, None if readings is None else readings.__getitem__
-                )
             if self.initial.arrival_port_blind:
                 # The entry-port exclusion applies only to the arrival interval's sample.
                 for node in self._nodes.values():

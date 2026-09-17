@@ -78,20 +78,45 @@ alternative is an event on the board.
   `test_active_node_contracts.py`, `test_null_notices.py` and
   `test_event_links.py`.
 
-There is no replacement API. `core/event_resolution.py`, the source-envelope
-modules, the bond registry, claim/gather and `fields/record_operations.py` stay
-until buckets B.3, B.5 and B.6 of the same issue.
+There is no replacement API. `core/event_space.py`, `core/event_links.py`,
+`core/event_resolution.py`, the source-envelope modules, the bond registry,
+claim/gather and `fields/record_operations.py` stay until buckets B.3 to B.6
+of the same issue. The source-envelope modules and the causal event ledger
+were deleted in the next steps, below.
+
+## Source envelopes deleted on 2026-09-17
+
+Under the same instruction, issue #164 bucket B.3 removed the source
+envelopes, following [HIGHLIGHTS.md](HIGHLIGHTS.md) section 3.5 and
+[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 5 (row R5) and section 6,
+step 7: a field is the ray's own information spreading in ray form to the
+Nodes around it, and no Node retains a source envelope.
+
+- `core/source_envelope_node.py`, `core/source_envelope_state.py`,
+  `core/source_emission.py`, `core/source_emission_node.py`,
+  `fields/source_envelope.py` and `fields/source_emission.py` are gone, with
+  the `CausalSourceResolver` protocol of `core/event_resolution.py`,
+  `SpatialEngine.commit_source` and its `spatial_envelope_source` event, the
+  `source_envelope` member of the disturbance NodeState and the envelope
+  records of the formula-free state audit in `diagnostics/node_contract.py`.
+- `tests/test_source_envelope.py` and `tests/test_null_notices.py` are gone;
+  the envelope cases of `test_active_node_contracts.py` and
+  `test_node_state_contract.py` and the envelope rows of the architecture
+  gate went with them. No example declared an envelope source, so no example
+  or `tools/check.py` consumer row changed.
 
 ## Causal event ledger deleted on 2026-09-17
 
 `core/event_space.py`, `core/event_links.py` and `tests/test_event_links.py`
-were deleted on 2026-09-17 under issue #164 bucket B.4 (Highlights 3.20: the
-origin Node keeps nothing and there is no register). There is no replacement.
+were deleted on 2026-09-17 under issue #164 bucket B.4, following
+[HIGHLIGHTS.md](HIGHLIGHTS.md) section 3.20 and the "Where is state stored"
+row of [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md): all the information is on
+the rays, the origin Node keeps nothing and there is no register.
 
 - `DisturbanceEngine` and `SpatialEngine` no longer accept `event_space=`.
   `NodeEvents(observer)` takes the observer alone; `message()` builds the
-  observer message that `publish()` sends. Observer messages carry no
-  `event_id` or `parents`.
+  observer message that `publish()` sends, and `record()`, `require_room()`
+  and `enabled` are gone. Observer messages carry no `event_id` or `parents`.
 - `Packet`, `LocalPlan`, `PendingCycle`, `SpatialPacket` and
   `PendingSpatialCycle` lost `cause_id`; `SpatialNodeState` lost `cause_id`,
   `sample_cause_id` and `cost_cause_id`; `DisturbanceNodeState` lost
@@ -100,12 +125,12 @@ origin Node keeps nothing and there is no register). There is no replacement.
 - `computation_report()` no longer reports `causal_events`,
   `causal_event_capacity`, `event_ledger_cost` or
   `carrier_model_operations_cost`; `state.json` and recorded frames carry no
-  `event_support`, and the playback page draws none.
-- A source-envelope null that sends notices took its notice identity from the
-  ledger and now raises; its Node-level cases left `test_null_notices.py` and
-  `test_active_node_contracts.py` with the ledger. `NodeEvents.record()` and
-  `NodeEvents.require_room()` remain only for `core/source_envelope_node.py`
-  until bucket B.3.
+  `event_support`, and the playback page draws none. The profile tool reports
+  no `event_history_enabled`.
+
+There is no replacement API. `core/event_resolution.py`, the bond registry,
+claim/gather and `fields/record_operations.py` stay until buckets B.5 and B.6
+of the same issue.
 
 ## Primary initialization-based API
 

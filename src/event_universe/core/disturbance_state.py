@@ -8,7 +8,6 @@ from .sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
     from .node_conservation import NodeConservationDefinition
-    from .source_emission_node import EmittingEnvelopeNode
     from .spatial_state import (
         EmissionDefinition,
         FieldGroupDefinition,
@@ -435,7 +434,6 @@ class DisturbanceNodeState:
     last_cost: int = 0
     # Per slot: 0, or travel port + 1 of a record that arrived in the current interval.
     arrival_port_codes: tuple[int, ...] = ()
-    source_envelope: EmittingEnvelopeNode | None = None
 
 
 @dataclass(frozen=True, slots=True)
