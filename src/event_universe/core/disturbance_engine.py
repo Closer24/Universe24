@@ -565,6 +565,27 @@ class DisturbanceEngine:
             if field.conserved
         }
 
+    def external_body_totals(self) -> dict[str, tuple[int, ...]]:
+        """Content that ended in an external body's sink (external-body-v1), per family:
+        an explicitly accounted sink, initial + sources = current + dissipated +
+        escaped + annulled + absorbed_by_bodies, the sources holding what the bodies
+        released."""
+        return {
+            field.name: (
+                (0,) * field.components if self._spatial is None else tuple(self._spatial.absorbed[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
+    def external_bodies(self) -> list[dict[str, object]]:
+        """Every external body with its Node, momentum, accumulators and sink."""
+        return [] if self._spatial is None else self._spatial.external_bodies()
+
+    def external_body_momentum(self) -> tuple[int, int, int]:
+        """The bodies' momentum line of the audit."""
+        return (0, 0, 0) if self._spatial is None else self._spatial.external_body_momentum()
+
     def spatial_accounting(self) -> dict[str, dict[str, object]]:
         return {} if self._spatial is None else self._spatial.accounting()
 
