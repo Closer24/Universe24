@@ -571,7 +571,12 @@ states "exactly" and means integer equality at every tick.
 - **Status.** planned; after feature 14, binding as a loop (Highlights 3.4,
   2026-09-17): the rungs it counts are the contents that close a loop under
   the declared tables, which the held-ray binding of feature 8, holding any
-  content, cannot show.
+  content, cannot show. The counting procedure, ring by ring over the
+  corner table, is written in
+  [loop binding](LOOP_BINDING.md#7-the-ladder-and-how-a10-counts-it)
+  (design of 2026-09-17), with its finding that the Port-form corner and
+  the Born table give no content ladder and that the ladder needs the
+  ring's turn produced by its own field.
 
 ### A11. The wide-phase run at the real N
 
@@ -927,6 +932,10 @@ unlocks; an entry runs when the last feature it names has landed.
 11. Feature 11, polarization: A12, A13.
 12. Feature 12, field spreading (Highlights 3.5, 2026-09-17): A1, A2 and the
     diagonal series of A6.
+13. Feature 14, binding as a loop (Highlights 3.4, 2026-09-17; design done
+    on 2026-09-17, [loop binding](LOOP_BINDING.md); implementation after
+    feature 8b): E5, the ladder count of A10 in its loop form, and A14 once
+    a moving loop exists.
 
 ## D. What is deleted
 
@@ -1149,3 +1158,57 @@ sign rule, and its other couplings are catalog entries.
   initialization `3a72a69f4443222ee0280bb5815f55f4d051b76beb9e8d26f016d582b4fb6d98`;
   outcome: no closed orbit, the fall and the two-Link cage as stated, exact
   at every tick.
+
+### E5. The ring: an electron at rest as a loop
+
+- **Claim.** Highlights 3.4 (model owner, 2026-09-17): "Binding is a
+  periodic orbit of the meeting rule": a ray never stops, a bound group is
+  a set of rays whose meetings, under the ordinary coupling table, reproduce
+  the rays that entered them, the smallest loop on the cubic lattice is a
+  unit square of four Nodes with rays circulating both ways, each corner
+  meeting every interval two rays that leave through each other's Ports,
+  and a pattern whose meeting does not close disperses; 3.28: the group's
+  mass is its content and its clock the period of its loop.
+- **Features.** 1, 5, 6, 9, 10 for the meetings; 14 for the feature the
+  worlds are the design of (the removal of the held form, the record's
+  reading of a group), after 8b.
+- **Run.** `examples/nature/ring.json`: board 12 x 12 x 11, open, N = 8,
+  no Detector, 16 ticks; eight `electron` rays of amount 1 (charge -3, rest
+  rate 2) from eight lamps at the corners P0 = (5,5,5), P1 = (6,5,5),
+  P2 = (6,6,5), P3 = (5,6,5), four circulating each way, one of each sense
+  at every corner in every interval; the one rule `corner` over
+  `[electron, electron]`, each input's amount and phase leaving through the
+  Port the other input came in by (the Port form of the corner table).
+  `examples/nature/ring_open.json`: the same with the catalog's Born table
+  (`born_steering`) at the corner and the senses in phase, the control that
+  disperses. The dictionary and the tick-by-tick states are in the
+  [README](../examples/nature/README.md#the-ring-an-electron-at-rest-as-a-loop);
+  the rule, the closure condition and the open points in
+  [loop binding](LOOP_BINDING.md).
+- **Computed.** The closure of the unit square as integer equalities: a
+  partner at every corner (two rays per sense at opposite corners at
+  least, content 4; eight for every corner every interval), the headings by
+  geometry, the amounts by the table (every amount under the Port form;
+  equal senses at d = N/4 or 3N/4 under the Born table), and the phase
+  `4 r = 0 (mod N)` for one circuit, r = 2 at N = 8; at the catalog's r =
+  1 the state repeats after two circuits. A general rectangle a x b closes
+  with `(a + b) / gcd(a, b)` rays per sense and `2 (a + b) r = 0 (mod N)`.
+  The phase difference at a corner is a constant of the motion, so the rate
+  is read at no meeting of one family; the Port form gives no ladder.
+- **Shows (pinned, to be run once when the feature lands).** `ring.json`:
+  from tick 2 every corner holds one ray of each sense, amount 1, steps 1,
+  phase 2t mod 8, stamped by the corner it last left; the state after tick
+  t + 4 is the state after tick t; each corner books the momentum of its two
+  quarter turns as its source, (2, 2, 0) at P0 and the like, the four
+  summing to zero; electron 8, momentum (0, 0, 0), the charge line -24,
+  every ledger line balanced, `bound_groups` empty, no `bound_tick`.
+  `ring_open.json`: after tick 2 one ray of amount 2 at each corner,
+  walking +Y or -Y off the square, the board empty from tick 8, 8 escaped,
+  every line balanced. The integers are pinned in
+  [test expectations](TEST_EXPECTATIONS.md#loop-binding) beside the
+  rate-1, four-ray and quadrature cases. A check run on `main` at
+  `c21e03e` (2026-09-17, not this demonstration) agreed with every pinned
+  line: today's engine already holds the ring under the Port form.
+- **Status.** planned, feature 14 (design done on 2026-09-17; the
+  demonstration is made once the held form is removed and the record reads
+  the group).
