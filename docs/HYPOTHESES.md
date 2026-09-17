@@ -300,3 +300,40 @@ temperature scaling as `1 + z`; and a stretch quantized in steps of
 `1 / k_e` per gap, unobservable at any real scale. Line 3 is what the
 third manuscript can turn into a result; line 1 then becomes a law with a
 number, `H_0` from `lambda / B`.
+
+## 10. Rest phase as the self-field
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3 and 3.5) a ray's
+phase advances each step at a rate its family declares, and a ray's field is
+not released ahead of it along its own line, so a ray never meets its own
+field. The hypothesis is that the second rule could be relaxed for the
+phase alone and the first rule then derived: a ray with mass is slower than
+its field ([Highlights](HIGHLIGHTS.md) 3.28), so field released behind it on
+its own line would catch it from behind, and the field's presence at the
+ray's Node is an interaction that makes no event (3.5). If that meeting
+advanced the ray's phase and changed nothing else (no heading, no momentum,
+no energy, so no self-force and no cost to a free ray), the phase gained per
+step would grow with the ray's slowness, that is with its mass: a rest
+frequency derived from the strength of the field and the output-clock delay
+instead of declared per family, the model's own `E = m c^2`. A ray with no
+mass and no charge would gain nothing, as light should. The hypothesis is
+raised by the model owner on 2026-09-17 and is not a law: 3.3 keeps the
+declared rate.
+
+What it would cost, stated so that it can fail: the field ray would have to
+carry the identity of its source (the information of its last event) and
+the rule would have to read it, since a field arriving from behind on the
+same line may belong to another ray traveling behind; today no rule reads
+that hidden variable ([Highlights](HIGHLIGHTS.md) 5.4). A neutral ray with
+mass but no charge field would gain no rest phase from this mechanism alone
+and would need another field to supply it. And the phase gained per
+self-meeting is one more number to fix.
+
+What can be tested, once the ray-event engine runs: one ray with an
+output-clock delay and a charge field, no declared phase rate, on a straight
+line on a small board; measure the phase gained per step as a function of the
+delay `k_out`. Three outcomes: a fixed ratio that depends only on the delay
+(the hypothesis lives and the declared rate of 3.3 becomes derivable), a
+ratio that needs tuning per family (the parameter has only moved), or no
+stable ratio (the hypothesis fails). The same run with a massless ray must
+gain nothing.
