@@ -47,6 +47,9 @@ Since 2026-09-17, by the model owner's decision, the Highlights text is [docs/HI
 
 Since 2026-09-17, by the model owner's decision, an implementation specialist does not run the full test suite locally: it runs the documentation gates, its own test module and the test modules that import the files it changed, then pushes; the full suite runs once in CI (`tools/check.py`, in parallel with `pytest -n auto`) and a CI failure comes back to the same specialist to fix. Boss opens the pull request and merges when CI is green.
 
+**Pacing of a feature chain (model owner, 2026-09-17).** The time of a chain is the writing time of its features, never the waiting time: (1) dependent features are stacked, the next one starts on the previous one's branch as soon as that branch is pushed, before its CI and merge; pull requests are merged in order, each after its own CI, and a later branch merges `origin/main` before it pushes; (2) independent lanes run in parallel, up to the machine's cores (each specialist may run one targeted pytest at a time); (3) a brief names the exact files, functions and documents the specialist needs, so it does not spend its first ten minutes searching; (4) no specialist runs the full suite, CI runs the affected selection in parallel, and the suite stays one test per rule; (5) a research run, a rendering or a document never blocks a feature: they get their own specialist and their own branch. Boss re-reads this paragraph whenever a feature takes more than thirty minutes from dispatch to push.
+
+
 For durable integration, reconcile relevant specification changes, current main, open work and affected contracts. Do not treat a dated status snapshot as live evidence. Preserve user-defined physical names as data and do not dispatch laws by entity names.
 
 ## Choose the lightest execution lane
