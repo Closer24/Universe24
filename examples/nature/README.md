@@ -22,7 +22,10 @@ and (I) the screen of (E) with the ring of (F) as its source, rays of amount
 and (J) the worlds of experiment A5s, two charges at rest as external
 bodies, the force between them through their spreading fields, in
 `a5_static/`,
-[below](#a5s-coulombs-force-law-between-two-charges-at-rest).
+[below](#a5s-coulombs-force-law-between-two-charges-at-rest),
+and (K) the worlds of experiment A12, Malus's law and the three-polarizer
+chain, a polarized beam through polarizer bodies, in `a12_malus/`,
+[below](#a12-maluss-law-and-the-three-polarizer-chain).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
@@ -31,7 +34,7 @@ with its records kept,
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
-((E) in its section here), never repeated as tests, and (G) and (J) are
+((E) in its section here), never repeated as tests, and (G), (J) and (K) are
 confrontation runs of section A of the register. Nothing here is a law of
 nature; every number is a declaration written before the run.
 
@@ -1479,3 +1482,99 @@ The records stay outside the tree (one directory per world, siblings, since
 the retention registry refuses a record nested under another); the
 fingerprints in the register's entry are their register line, and
 `record.json` holds the integers the test pins.
+
+## A12: Malus's law and the three-polarizer chain
+
+`a12_malus/` holds the worlds of experiment
+[A12](../../docs/EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11)
+of the register, run on 2026-09-17 on the branch of feature 11
+(`ray-polarization-v1`, [polarization](../../docs/SPATIAL_FIELDS.md#polarization-ray-polarization-v1))
+merged with `main` after PR #248: a marked source sends a beam of light
+polarized along +Y through one polarizer, or a chain of them, to a marked
+Node behind the last one; every polarizer is an external body under the
+polarizer coupling, which splits each arriving ray by the declared table at
+the difference between the body's angle and the ray's polarization, the pass
+share leaving with the body's angle as its polarization, the rest ending in
+the body's sink and the shares below one quantum owned by the body's
+registers until they reach one. Eight world files, written by
+`make_worlds.py` beside them and never by hand: `single_{0,22,45,67,90}.json`
+(one polarizer at 0°, 22.5°, 45°, 67.5°, 90°), `chain_90.json` (y, 90°),
+`chain_45_90.json` (y, 45°, 90°) and `chain_22_45_67_90.json` (y, 22.5°,
+45°, 67.5°, 90°). `analyze.py` reads the records and evaluates the
+criterion clause by clause; `record.json` is its small committed record.
+The measured outcome is in the register's entry and summarized
+[below](#what-the-malus-runs-show).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| A polarized beam of light | A lamp (`source`, holding 2048 quanta) on a marked Node (`detectors`, setting [1, 1], a source is a Detector) at (2, 4, 4), emitting 256 quanta per interval along +X for eight intervals at phase 0, `polarization` 0 on the emission; `light` declares no `spread`, so the beam stays on its line | [Polarization](../../docs/SPATIAL_FIELDS.md#polarization-ray-polarization-v1), "where it comes from"; A12, "Run" and deviation (v) |
+| Polarization along y | The step 0 of light's polarization circle: the first transverse lattice axis of the heading +X in Port order, +Y; the circle has 2^`phase_bits` = 256 steps per half turn (the default, no `polarization_bits` written), 180/256 degrees each, so 22.5°, 45°, 67.5°, 90° are the steps 32, 64, 96, 128 | the same, "the property"; catalog, `light.polarization` |
+| A polarizer at angle theta | An external body (`external_bodies`) of the family `apparatus`, amount 1, `coupling` `"polarizer"`, `polarizer` {`family` light, `angle` theta in steps, `pass` [1, 0, 0], `table`}; a declaration, not physics; at x = 12, 22, 32, 42 on the beam's line | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); [polarization](../../docs/SPATIAL_FIELDS.md#polarization-ray-polarization-v1), "the polarizer"; Highlights 3.19 |
+| Malus's law, I = I₀ cos²(theta − theta_ray) | The body's `table`: entry d is round(256 cos²(d × 180 / 256 degrees)), the pass share in 256-ths at the difference d = (angle − polarization) mod 256; the engine only splits by the table, floor(amount × T[d] / 256) passing | catalog, `polarizer`; A12, deviation (ii) |
+| The transmitted beam | The pass ray: a fresh event of the body's Node on +X with the passed amount, the ray's phase and the body's angle as its polarization, one Link on with the residents | the same, "the polarizer" |
+| The absorbed part | The rest, floor(amount × (256 − T[d]) / 256), in the body's sink counter for `light`, the audit's `absorbed_by_bodies` line, one `external_body_absorbed` record per arrival | the same; [audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1) |
+| The fraction below one photon | The two shares below one quantum, in 256-ths, in the body's registers (`held`, pass and sink per source sign), one quantum in total, released whole to the pass Port or the sink when a register reaches 256; counted as current content by the ledger | the same; Highlights 3.17; feature 12b's rule |
+| The photodetector behind the polarizer | The marked Node at (52, 4, 4), setting [1, 1]: every arrival passes and clicks (`detector_click`), the content that clicks is the transmitted intensity; what passes escapes through the open face at x = 64 | [Detector mark](../../docs/DETECTOR_SAMPLING.md); A12, "Recorded" |
+| The chain | Two or four polarizer bodies ten Links apart on the beam, each reading the polarization the previous one set | A12, "Run" |
+| Intensity exact | The world ledger: initial + sourced = current + escaped + absorbed at every tick, the registers on the `current` line; every `polarizer` record: amount = passed + sunk + the whole quantum its two fractions make | [Audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1); Highlights 3.15 |
+| The board | [65, 9, 9] Nodes, open boundary, the beam on the axis y = 4, z = 4, `phase_bits` 8 (the phase is read nowhere), `link_ticks` 1, 72 ticks | A12, "Run" and deviation (vi) |
+
+### What the Malus runs show
+
+Made on 2026-09-17 at commit `54d1593` (the feature's `cd4d971` merged with
+`main` at `b64de24`; the source fingerprint and the eight initialization
+fingerprints are in the register's entry). The content that clicked behind
+the polarizer of 2048 emitted, against the table's exact integer rule
+(computed by `analyze.py` from the world file alone) and Malus's cos² in
+floating point:
+
+| World | Angles | Clicked | Fraction | Table rule | Malus | Sunk | Held at the end |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `single_0` | 0° | 2048 | 1.0000 | 2048 | 2048.0 | 0 | 0 |
+| `single_22` | 22.5° | 1752 | 0.8555 | 1752 | 1748.1 | 296 | 0 |
+| `single_45` | 45° | 1024 | 0.5000 | 1024 | 1024.0 | 1024 | 0 |
+| `single_67` | 67.5° | 296 | 0.1445 | 296 | 299.9 | 1752 | 0 |
+| `single_90` | 90° | 0 | 0.0000 | 0 | 0.0 | 2048 | 0 |
+| `chain_90` | y, 90° | 0 | 0.0000 | 0 | 0.0 | 2048 | 0 |
+| `chain_45_90` | y, 45°, 90° | 512 | 0.2500 | 512 | 512.0 | 1536 | 0 |
+| `chain_22_45_67_90` | y, 22.5°, 45°, 67.5°, 90° | 1095 | 0.5347 | 1095 | 1087.1 | 950 | 3 |
+
+The table's entries at 22.5°, 45°, 67.5° and 90° are 219, 128, 37 and 0 in
+256-ths (0.8555, 0.5, 0.1445, 0 against cos² 0.8536, 0.5, 0.1464, 0: the
+rounding of the declared table, of a quantum in 256, is the whole distance
+between the singles and Malus). Every pulse is 256 quanta, a multiple of the
+table's denominator, so a single polarizer splits exactly and its registers
+stay empty; from the second polarizer of a chain on, the amounts are not
+multiples and the remainder rule works: in the chain of four the polarizers
+passed 1752, 1498, 1281 and 1095 and sank 296, 253, 216 and 185, their
+registers releasing 2 + 5, 7 + 0 and 5 + 2 whole quanta to the pass Port and
+the sink over the eight pulses and holding, at the end, 200 + 56, 126 + 130
+and 219 + 37 in 256-ths, one quantum each, so 1095 + 950 + 3 = 2048. The
+chain's fraction 0.5347 lies between cos⁸(22.5°) = 0.5308 and the table's
+compounded (219/256)⁴ = 0.5356, the floors withholding the difference: it is
+the table's value to the quantum, and the rounding of cos² to 219/256,
+compounded four times, is the whole distance from Malus. The chain y, 45°,
+90° passes a quarter exactly, neither 0 nor a half: the polarization a ray
+carries is the direction the last polarizer set, and the intermediate
+polarizer's angle is carried through the chain. Every ledger line balances
+at every tick of every world and every `polarizer` record is exact. The
+polarization of every ray leaving each polarizer is the body's angle, on
+every segment of the viewer documents. Run times 0.08 to 0.34 s per world.
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/a12_malus/make_worlds.py
+for w in single_0 single_22 single_45 single_67 single_90 chain_90 chain_45_90 chain_22_45_67_90; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/a12_malus/$w.json'), Path('runs/a12/$w'))"
+  PYTHONPATH=src python tools/ray_viewer/record_sidecar.py runs/a12/$w
+  python tools/ray_viewer/extract.py runs/a12/$w --label "$w" --out runs/a12/$w/viewer/runs.json
+done
+python examples/nature/a12_malus/analyze.py runs/a12/single_* runs/a12/chain_* --out runs/a12/summary.json --record examples/nature/a12_malus/record.json
+```
+
+The sidecar (`ray-recording.json`) gives the viewer each ray's polarization;
+the records stay outside the tree, the fingerprints in the register's entry
+are their register line, and `record.json` holds the integers.

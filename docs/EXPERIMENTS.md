@@ -1091,7 +1091,95 @@ states "exactly" and means integer equality at every tick.
   two-state property does not carry the intermediate angle and the catalog
   needs a transverse direction, as 3.26 allows for the circular case), or
   any inexact split.
-- **Status.** planned.
+- **Deviations from the plan above, each stated before the run.** (i) The
+  property landed as the transverse direction itself, not as a two-state
+  property that would then be found wanting: feature 11
+  (`ray-polarization-v1`, [polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1))
+  gives every light ray an integer step of a circle of 2^`polarization_bits`
+  steps per half turn, the phase width by default, whose steps 0 and half
+  the circle are the two lattice axes of Highlights 3.26 and whose other
+  steps are the direction the circular case would turn, without its
+  handedness bit; a polarizer sets the passed ray's polarization to its own
+  angle, so the question the entry asks, whether the intermediate angle is
+  carried through the chain, is answered by construction and the run
+  confirms it in the engine's integers rather than deciding it. (ii) N =
+  2^8 is the polarization circle (256 steps per half turn, 22.5°, 45°,
+  67.5° and 90° the steps 32, 64, 96 and 128 exactly) and the table is
+  cos²(d × 180 / 256 degrees) in 256-ths, rounded, written by
+  `make_worlds.py`; the phase is 2^8 too and read nowhere. (iii) The
+  polarizer's sink is the body's sink counter (the `absorbed_by_bodies`
+  line), not a second Port: the rest of the content ends in the body, as a
+  sheet polarizer absorbs it; the two-channel form A13 names is not
+  declared. (iv) The remainder below one quantum is owned by the body's
+  registers exactly as a spread's is owned by the Node's (feature 12b), and
+  since every pulse is 256 quanta, a multiple of D, the single-polarizer
+  splits are exact and the remainder rule is exercised only in the chains
+  from the second polarizer on. (v) The source is a beam: a lamp on a
+  marked Node (setting 1) at (2, 4, 4) emitting 256 quanta per interval
+  along +X for eight intervals, 2048 in all, polarized along +Y (step 0),
+  and light declares no `spread`; a polarizer confrontation needs a beam
+  (a spreading field would reach the polarizer on every heading and the
+  screen from everywhere), so "the field spreads" (Highlights 3.5) is set
+  aside here, the one Malus geometry needs a collimated source, and the
+  spread of polarized content is tested in isolation
+  (`test_ray_polarization.py`, its axial-mean rule) and not by this run.
+  (vi) The polarizers stand ten Links apart at x = 12, 22, 32, 42 and the
+  marked Node (setting [1, 1]) at x = 52 in every world, so that every world
+  has the same geometry; the passed content clicks there and escapes
+  through the open face at x = 64; 72 ticks let every quantum click, sink,
+  wait or escape. Made as `examples/nature/a12_malus/`: eight worlds
+  written by `make_worlds.py`, the records read by `analyze.py`, its
+  integers in `record.json`, the dictionary in the
+  [README](../examples/nature/README.md#a12-maluss-law-and-the-three-polarizer-chain).
+- **Status.** measured on 2026-09-17, commit
+  `54d159390071534de4409647b928ca9139f298f9` (the feature's commit
+  `cd4d971` merged with `main` at `b64de24`), source
+  `aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705`;
+  initialization fingerprints, one polarizer at 0°, 22.5°, 45°, 67.5°,
+  90°:
+  `7cfc9c0d64925654af6b649b02d8184bd7d343457a1a0f752d2c1dce433cf902`,
+  `16985a3fdb8034c1d99930ccd72ec74ae54358b8c261769d0beb2ce95c762efc`,
+  `98e9c1384d08ec0a2a73fb4f2a7366736dd7cb7708bcffd477c03c4fc6b0f406`,
+  `7724631239265cf1f10401660fd0eac67d0ab37bb8fa06b778d7a0cd8225c282`,
+  `35bdcf336aff8f559a2eb812e0c7bc3896e922340a51f17994b3243c6e76fbcc`;
+  the chains y, 90°; y, 45°, 90°; y, 22.5°, 45°, 67.5°, 90°:
+  `7ec4d8e3f359eb752e93d46d095d1a218193bc868a26acd755c7290290fc1626`,
+  `b1e0a394497642ebf20905e771fd8c1c1baa2dde07f884f2184350f20eadf906`,
+  `757144db2eb8d7a6772cb042fc24835bd5aa1a00910b60257c1d320d181d359c`;
+  outcome: pass, every clause: (1) one polarizer passes the table's share
+  exactly, 2048, 1752, 1024, 296 and 0 of 2048 at 0°, 22.5°, 45°, 67.5°,
+  90° (the table's entries 256, 219, 128, 37, 0 in 256-ths; Malus's cos²
+  gives 2048, 1748.1, 1024, 299.9, 0, the difference the table's rounding,
+  219/256 = 0.8555 for cos² 22.5° = 0.8536), every `polarizer` record
+  exact and no register ever nonzero, the remainder rule not exercised in
+  the singles (every pulse a multiple of D); (2) the chain y, 90° passes 0;
+  (3) the chain y, 45°, 90° passes 512, exactly a quarter (1024 after the
+  first polarizer, half of it after the second), neither 0 nor 1/2, so the
+  intermediate angle is carried; (4) the chain of four passes 1095 of
+  2048, 0.5347, against cos⁸(22.5°) × 2048 = 1087.1 (0.5308): the table's
+  own compounded value is (219/256)⁴ = 0.5356, 1096.9, and the exact
+  integer rule with the registers gives 1095 clicked with 3 quanta still
+  held at the end (one in each of the last three polarizers' registers,
+  200 + 56, 126 + 130 and 219 + 37 in 256-ths), which the run reproduces
+  to the quantum; the distance from cos⁸, 7.9 quanta, is the table's
+  rounding (9.8) less what the floors withhold; the four polarizers passed
+  1752, 1498, 1281, 1095 and sank 296, 253, 216, 185, their registers
+  releasing 2 + 5, 7 + 0 and 5 + 2 whole quanta to the pass Port and the
+  sink over the eight pulses; (5) every ledger line balanced and
+  `conserved_at_every_completed_tick` true in all eight worlds, every
+  arriving ray's record exact (amount = passed + sunk + the whole quantum
+  its two fractions make), and clicked + sunk + held = 2048 in every world
+  (the chain of four: 1095 + 950 + 3). The polarization of every ray
+  leaving each polarizer is the body's angle (32, 64, 96, 128 in the chain
+  of four), read from the `polarizer` records and carried on every segment
+  of the viewer documents. Run times 0.08 to 0.34 s per world; the records
+  and the viewer documents (`ray-recording.json`, `viewer/runs.json` per
+  world) stay outside the tree, `record.json` holds the integers and the
+  [README](../examples/nature/README.md#what-the-malus-runs-show) the
+  tables. Nothing was tuned after the first look: the eight worlds were run
+  once on the feature's commit and once more on the merge with `main`
+  (PRs #246 to #248, records byte for byte the same in every number that
+  the analysis reads), and the second run is the one recorded.
 
 ### A13. Bell test with polarization settings (after feature 11)
 

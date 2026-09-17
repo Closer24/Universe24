@@ -1,0 +1,1171 @@
+{
+ "runs": [
+  {
+   "model": "a12-malus-single-0",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "7cfc9c0d64925654af6b649b02d8184bd7d343457a1a0f752d2c1dce433cf902",
+   "elapsed_seconds": 0.2473080560012022,
+   "ticks": 72,
+   "angles": [
+    0
+   ],
+   "degrees": [
+    0.0
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 2048,
+   "clicks": 8,
+   "clicked_fraction": 1.0,
+   "table_expected": 2048,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 2048,
+     "sunk": 0
+    }
+   ],
+   "malus_fraction": 1.0,
+   "malus_expected": 2048.0,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 0,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 2048,
+     "sunk": 0,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 0,
+     "differences": [
+      0
+     ],
+     "shares": [
+      256
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     2048
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-single-22",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "16985a3fdb8034c1d99930ccd72ec74ae54358b8c261769d0beb2ce95c762efc",
+   "elapsed_seconds": 0.24788854700454976,
+   "ticks": 72,
+   "angles": [
+    32
+   ],
+   "degrees": [
+    22.5
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 1752,
+   "clicks": 8,
+   "clicked_fraction": 0.85546875,
+   "table_expected": 1752,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 1752,
+     "sunk": 296
+    }
+   ],
+   "malus_fraction": 0.8535533905932737,
+   "malus_expected": 1748.0773439350246,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 32,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 1752,
+     "sunk": 296,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 32,
+     "differences": [
+      32
+     ],
+     "shares": [
+      219
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     296
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     1752
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-single-45",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "98e9c1384d08ec0a2a73fb4f2a7366736dd7cb7708bcffd477c03c4fc6b0f406",
+   "elapsed_seconds": 0.2479219649976585,
+   "ticks": 72,
+   "angles": [
+    64
+   ],
+   "degrees": [
+    45.0
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 1024,
+   "clicks": 8,
+   "clicked_fraction": 0.5,
+   "table_expected": 1024,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 1024,
+     "sunk": 1024
+    }
+   ],
+   "malus_fraction": 0.5000000000000001,
+   "malus_expected": 1024.0000000000002,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 64,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 1024,
+     "sunk": 1024,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 64,
+     "differences": [
+      64
+     ],
+     "shares": [
+      128
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     1024
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     1024
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-single-67",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "7724631239265cf1f10401660fd0eac67d0ab37bb8fa06b778d7a0cd8225c282",
+   "elapsed_seconds": 0.24631451000459492,
+   "ticks": 72,
+   "angles": [
+    96
+   ],
+   "degrees": [
+    67.5
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 296,
+   "clicks": 8,
+   "clicked_fraction": 0.14453125,
+   "table_expected": 296,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 296,
+     "sunk": 1752
+    }
+   ],
+   "malus_fraction": 0.1464466094067263,
+   "malus_expected": 299.92265606497546,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 96,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 296,
+     "sunk": 1752,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 96,
+     "differences": [
+      96
+     ],
+     "shares": [
+      37
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     1752
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     296
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-single-90",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "35bdcf336aff8f559a2eb812e0c7bc3896e922340a51f17994b3243c6e76fbcc",
+   "elapsed_seconds": 0.07790724000369664,
+   "ticks": 72,
+   "angles": [
+    128
+   ],
+   "degrees": [
+    90.0
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 0,
+   "clicks": 0,
+   "clicked_fraction": 0.0,
+   "table_expected": 0,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 0,
+     "sunk": 2048
+    }
+   ],
+   "malus_fraction": 3.749399456654644e-33,
+   "malus_expected": 7.678770087228711e-30,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 128,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 0,
+     "sunk": 2048,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 128,
+     "differences": [
+      128
+     ],
+     "shares": [
+      0
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     2048
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-chain-90",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "7ec4d8e3f359eb752e93d46d095d1a218193bc868a26acd755c7290290fc1626",
+   "elapsed_seconds": 0.08232234200113453,
+   "ticks": 72,
+   "angles": [
+    128
+   ],
+   "degrees": [
+    90.0
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 0,
+   "clicks": 0,
+   "clicked_fraction": 0.0,
+   "table_expected": 0,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 0,
+     "sunk": 2048
+    }
+   ],
+   "malus_fraction": 3.749399456654644e-33,
+   "malus_expected": 7.678770087228711e-30,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 128,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 0,
+     "sunk": 2048,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 128,
+     "differences": [
+      128
+     ],
+     "shares": [
+      0
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     2048
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-chain-45-90",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "b1e0a394497642ebf20905e771fd8c1c1baa2dde07f884f2184350f20eadf906",
+   "elapsed_seconds": 0.28413683300459525,
+   "ticks": 72,
+   "angles": [
+    64,
+    128
+   ],
+   "degrees": [
+    45.0,
+    90.0
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 512,
+   "clicks": 8,
+   "clicked_fraction": 0.25,
+   "table_expected": 512,
+   "table_expected_held": 0,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 1024,
+     "sunk": 1024
+    },
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 512,
+     "sunk": 512
+    }
+   ],
+   "malus_fraction": 0.2500000000000001,
+   "malus_expected": 512.0000000000002,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 64,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 1024,
+     "sunk": 1024,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 64,
+     "differences": [
+      64
+     ],
+     "shares": [
+      128
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    },
+    {
+     "position": [
+      22,
+      4,
+      4
+     ],
+     "angle": 128,
+     "arrivals": 8,
+     "amount_in": 1024,
+     "passed": 512,
+     "sunk": 512,
+     "polarizations_in": [
+      64
+     ],
+     "polarization_out": 128,
+     "differences": [
+      64
+     ],
+     "shares": [
+      128
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     1536
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 0,
+   "escaped_totals": {
+    "light": [
+     512
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     0
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  },
+  {
+   "model": "a12-malus-chain-22-45-67-90",
+   "status": "completed",
+   "error": null,
+   "source_sha256": "aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705",
+   "initialization_sha256": "757144db2eb8d7a6772cb042fc24835bd5aa1a00910b60257c1d320d181d359c",
+   "elapsed_seconds": 0.34320853799727047,
+   "ticks": 72,
+   "angles": [
+    32,
+    64,
+    96,
+    128
+   ],
+   "degrees": [
+    22.5,
+    45.0,
+    67.5,
+    90.0
+   ],
+   "steps": 256,
+   "emitted": 2048,
+   "pulses": 8,
+   "clicked": 1095,
+   "clicks": 8,
+   "clicked_fraction": 0.53466796875,
+   "table_expected": 1095,
+   "table_expected_held": 3,
+   "table_bodies": [
+    {
+     "pass_register": 0,
+     "sink_register": 0,
+     "passed": 1752,
+     "sunk": 296
+    },
+    {
+     "pass_register": 200,
+     "sink_register": 56,
+     "passed": 1498,
+     "sunk": 253
+    },
+    {
+     "pass_register": 126,
+     "sink_register": 130,
+     "passed": 1281,
+     "sunk": 216
+    },
+    {
+     "pass_register": 219,
+     "sink_register": 37,
+     "passed": 1095,
+     "sunk": 185
+    }
+   ],
+   "malus_fraction": 0.5307900429449552,
+   "malus_expected": 1087.0580079512683,
+   "polarizers": [
+    {
+     "position": [
+      12,
+      4,
+      4
+     ],
+     "angle": 32,
+     "arrivals": 8,
+     "amount_in": 2048,
+     "passed": 1752,
+     "sunk": 296,
+     "polarizations_in": [
+      0
+     ],
+     "polarization_out": 32,
+     "differences": [
+      32
+     ],
+     "shares": [
+      219
+     ],
+     "registers_final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "register_ever_nonzero": false,
+     "released": [
+      0,
+      0
+     ],
+     "every_record_exact": true
+    },
+    {
+     "position": [
+      22,
+      4,
+      4
+     ],
+     "angle": 64,
+     "arrivals": 8,
+     "amount_in": 1752,
+     "passed": 1498,
+     "sunk": 253,
+     "polarizations_in": [
+      32
+     ],
+     "polarization_out": 64,
+     "differences": [
+      32
+     ],
+     "shares": [
+      219
+     ],
+     "registers_final": [
+      0,
+      0,
+      200,
+      56,
+      0,
+      0
+     ],
+     "register_ever_nonzero": true,
+     "released": [
+      2,
+      5
+     ],
+     "every_record_exact": true
+    },
+    {
+     "position": [
+      32,
+      4,
+      4
+     ],
+     "angle": 96,
+     "arrivals": 8,
+     "amount_in": 1498,
+     "passed": 1281,
+     "sunk": 216,
+     "polarizations_in": [
+      64
+     ],
+     "polarization_out": 96,
+     "differences": [
+      32
+     ],
+     "shares": [
+      219
+     ],
+     "registers_final": [
+      0,
+      0,
+      126,
+      130,
+      0,
+      0
+     ],
+     "register_ever_nonzero": true,
+     "released": [
+      7,
+      0
+     ],
+     "every_record_exact": true
+    },
+    {
+     "position": [
+      42,
+      4,
+      4
+     ],
+     "angle": 128,
+     "arrivals": 8,
+     "amount_in": 1281,
+     "passed": 1095,
+     "sunk": 185,
+     "polarizations_in": [
+      96
+     ],
+     "polarization_out": 128,
+     "differences": [
+      32
+     ],
+     "shares": [
+      219
+     ],
+     "registers_final": [
+      0,
+      0,
+      219,
+      37,
+      0,
+      0
+     ],
+     "register_ever_nonzero": true,
+     "released": [
+      5,
+      2
+     ],
+     "every_record_exact": true
+    }
+   ],
+   "sink_totals": {
+    "light": [
+     950
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "held_final": 3,
+   "escaped_totals": {
+    "light": [
+     1095
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     3
+    ],
+    "apparatus": [
+     0
+    ]
+   },
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "ray_polarization": "ray-polarization-v1"
+  }
+ ],
+ "clauses": [
+  {
+   "clause": "one polarizer passes the table's cos^2 of the content exactly, the remainder owned",
+   "pass": true,
+   "numbers": {
+    "a12-malus-single-0": {
+     "degrees": 0.0,
+     "clicked": 2048,
+     "table_expected": 2048,
+     "malus_expected": 2048.0,
+     "clicked_fraction": 1.0,
+     "malus_fraction": 1.0,
+     "exact": true,
+     "remainder_rule_exercised": false
+    },
+    "a12-malus-single-22": {
+     "degrees": 22.5,
+     "clicked": 1752,
+     "table_expected": 1752,
+     "malus_expected": 1748.0773439350246,
+     "clicked_fraction": 0.85546875,
+     "malus_fraction": 0.8535533905932737,
+     "exact": true,
+     "remainder_rule_exercised": false
+    },
+    "a12-malus-single-45": {
+     "degrees": 45.0,
+     "clicked": 1024,
+     "table_expected": 1024,
+     "malus_expected": 1024.0000000000002,
+     "clicked_fraction": 0.5,
+     "malus_fraction": 0.5000000000000001,
+     "exact": true,
+     "remainder_rule_exercised": false
+    },
+    "a12-malus-single-67": {
+     "degrees": 67.5,
+     "clicked": 296,
+     "table_expected": 296,
+     "malus_expected": 299.92265606497546,
+     "clicked_fraction": 0.14453125,
+     "malus_fraction": 0.1464466094067263,
+     "exact": true,
+     "remainder_rule_exercised": false
+    },
+    "a12-malus-single-90": {
+     "degrees": 90.0,
+     "clicked": 0,
+     "table_expected": 0,
+     "malus_expected": 7.678770087228711e-30,
+     "clicked_fraction": 0.0,
+     "malus_fraction": 3.749399456654644e-33,
+     "exact": true,
+     "remainder_rule_exercised": false
+    }
+   }
+  },
+  {
+   "clause": "the chain y, 90 passes 0",
+   "pass": true,
+   "numbers": {
+    "clicked": 0
+   }
+  },
+  {
+   "clause": "the chain y, 45, 90 passes 1/4 of the content within the table's rounding",
+   "pass": true,
+   "numbers": {
+    "clicked": 512,
+    "quarter": 512.0,
+    "table_expected": 512,
+    "band": 2.0,
+    "fail_zero_or_half": false
+   }
+  },
+  {
+   "clause": "the chain of four passes cos^8(22.5) = 0.531 within the rounding",
+   "pass": true,
+   "numbers": {
+    "clicked": 1095,
+    "clicked_fraction": 0.53466796875,
+    "cos8": 0.5307900429449552,
+    "cos8_expected": 1087.0580079512683,
+    "table_fraction": 0.5355704391840845,
+    "table_expected": 1095,
+    "rounding_of_the_table": 9.79025149773679,
+    "band": 13.79025149773679,
+    "held_final": 3
+   }
+  },
+  {
+   "clause": "content exact at every tick, every split exact",
+   "pass": true,
+   "numbers": {
+    "a12-malus-single-0": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {},
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-single-22": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 296
+     },
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-single-45": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 1024
+     },
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-single-67": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 1752
+     },
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-single-90": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 2048
+     },
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-chain-90": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 2048
+     },
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-chain-45-90": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 1536
+     },
+     "held_final": 0,
+     "table_expected_held": 0
+    },
+    "a12-malus-chain-22-45-67-90": {
+     "all_balanced": true,
+     "conserved": true,
+     "status": "completed",
+     "every_record_exact": true,
+     "clicked_plus_sunk_plus_held_plus_escaped": 2048,
+     "emitted": 2048,
+     "sunk": {
+      "light": 950
+     },
+     "held_final": 3,
+     "table_expected_held": 3
+    }
+   }
+  }
+ ]
+}

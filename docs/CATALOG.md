@@ -6,7 +6,8 @@ the model owner's decision of 2026-09-17 ([Highlights](HIGHLIGHTS.md) 3.26 and
 3.30). It is exactly two things:
 
 - the **rays** of nature: every family as a ray record (rest rate, charge,
-  phase width, its field family and release, later colour and polarization);
+  phase width, its field family and release, polarization since feature 11,
+  later colour);
   matter, light and fields are all ray records; beneath them the
   **couplings**, what happens when ray A meets ray B, one table each;
 - the **apparatus**: the Detector and the external body, the declarations an
@@ -83,7 +84,21 @@ carried on the field ray as a visible property, like the Detector's bit
 set by the engine at the release, read by couplings and never the phase;
 feature 12 carries it, and `electron_field_turn.opposite_charge` closes with
 it (A5). A field ray is a ray with an empty event record, rest rate 0 and
-charge 0, and nothing else.
+charge 0, and nothing else. Its `polarization` key, `transverse`, and
+`polarization_bits`, `"default"` (feature 11, `ray-polarization-v1`,
+2026-09-17; decided by A12): every light ray carries a transverse direction
+modulo a half turn, an integer step of a circle of 2^`polarization_bits`
+steps per half turn (the world key `polarization_bits` on the family, the
+phase width by default), or none; 0 and half the circle are the two lattice
+axes of Highlights 3.26 and the steps between them the direction of the
+circular case without its handedness bit; a lamp declares it on its
+emission (`polarization`), rays merge only at equal polarization, a
+meeting's outputs carry their source input's unless they declare one, a
+spread carries the axial mean, and the polarizer reads it
+([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)). The
+electron's and the positron's `polarization_bits` 1 is spin as the same
+property at one bit; what `spin` stands undecided for is the table of
+`pauli_exclusion` (hypothesis 12).
 A `bound_group` adds `members` (ray id to count), `binding` (the corner table
 whose loop its rays close, loop-binding-v1, 2026-09-17) and, if it can decay,
 `decay` (the conversion and the setting its rule draws with: the `draw` of
@@ -105,7 +120,15 @@ rays, in the format of a `ray_interactions` rule when decided, or
 over inputs and outputs; `charge × amount` is appended by the engine) and
 `note`. In an external-body coupling `"any"` and `"same"` stand for the met
 family, `"body"` for the body's family and `"setting"` for the body's
-offset; a world writes the names. A binding coupling
+offset; a world writes the names. The `polarizer` (decided 2026-09-17,
+`external-body-v1` with `ray-polarization-v1`) is declared on the body,
+not as a rule over a token: its `outputs` state the split by the declared
+table at the difference between the body's angle and the ray's
+polarization, the pass share on the pass Port with the body's angle, the
+rest into the body's sink counter and the remainder below one quantum in
+the body's registers; its `table` is the reference table at three bits,
+`[8, 7, 4, 1, 0, 1, 4, 7]`, cos^2 in eighths rounded, and a world writes its
+own D entries for its circle (`rule`); `unpolarized` is the table's mean. A binding coupling
 (`electron_proton_binding`, `quark_binding`, `gluon_gluon_binding`,
 `pauli_exclusion`) is a **corner table** since 2026-09-17 (feature 14,
 [loop binding](LOOP_BINDING.md), `loop-binding-v1`): an ordinary outputs
@@ -149,7 +172,6 @@ the file, path for path and decider for decider. A decider is an entry of the
 | Entry | What is undecided | Decided by |
 | --- | --- | --- |
 | `lag_bits.world_key` | The key that declares the lag modulus per family for the delay on the ray's own axis, the N of hypothesis 14 on the lag register and not on the phase; the turn is the momentum register of feature 8b since 2026-09-17; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17) | feature 8b, hypothesis 16 |
-| `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
 | `rays.muon.rest_rate` | The muon's rung on the ladder, k × 206.768 28 | A10 |
@@ -175,7 +197,6 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `couplings.transmission_meets_held_share.outputs` | The table between the transmission and the share waiting under its delay output, and where the two meet (a ray waiting at its event Node is met by nothing there since loop-binding-v1) | A3 |
 | `couplings.beam_splitter.outputs.table` | The split ratio of the splitter | A2 |
 | `couplings.slit.outputs.shares` | The share per forward heading of a slit | A1 |
-| `couplings.polarizer.outputs.table` | The polarizer's cos² table in N-ths (feature 11) | A12 |
 
 ## How a world selects rays from the catalog
 
@@ -191,10 +212,11 @@ it uses; the layers follow.
 | `rest_rate` | `spatial_fields[].kerengonen.phase_advance` |
 | `charge` | `spatial_fields[].charge` |
 | `phase_bits` | `spatial_fields[].phase_bits`, the same for every ray of the world |
+| `polarization` and `polarization_bits` | `spatial_fields[].polarization_bits` (the phase width when absent), `emissions[].polarization` on a lamp, `polarization` on a meeting's output; the electron's `polarization_bits` 1 is spin |
 | A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release`; a world that holds both charged families declares the light family once per releaser, as it does the mass field, and a world whose light no charge releases writes neither key |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
 | `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, the optional `on_bit_1` and `on_bit_0` (`"pass"` or `"draw"`, the couplings on the bit a ray carries, `detector-bit-property-v1`), and the world's `return_mode`; a coupling's `bit` (`"highest"`, `"none"`, `{"of": i}`) is the `bit` key of its `ray_interactions` rule |
-| `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once |
+| `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"`, `"polarizer"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once; a polarizer body writes `polarizer` (`family`, `angle`, `pass`, `table`, `unpolarized`) beside `coupling` ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)) |
 | A bound group | A loop: rays circulating on a ring of Nodes under the corner table, one `ray_interactions` rule with outputs per binding coupling, as `examples/nature/ring.json` declares the unit-square electron ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop binding](LOOP_BINDING.md); Highlights 3.4, 2026-09-17); nothing holds and no key names the group, which a reader finds in the record. The held form (a rule without outputs assigning `delay` 1, `ray_delay`) was removed by feature 14 on 2026-09-17 |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 | A bound group's decay | `draw: [n, d]` (the group's `decay.setting`) and `seed` on the conversion's `ray_interactions` rule, declared before the group's corner table: the meeting draws once from the Node's ticket stream and fires the conversion on 1, the Node marked by the declaration for that draw ([a decaying group draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1), `decay-draw-v1`, 2026-09-17) |
@@ -202,9 +224,10 @@ it uses; the layers follow.
 A bound group's decay draw has its world key since 2026-09-17 (`draw` and
 `seed` on the conversion's rule, `decay-draw-v1`; the neutron's ring under
 `quark_binding` is not yet declared, so `weak_conversion` stays open);
-colour and the properties of feature 11 have no world key yet; their
-catalog records wait for them, and no engine rule is added for them
+colour has no world key yet; its catalog records wait for it, and no
+engine rule is added for it
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
+Polarization has its keys since feature 11 (2026-09-17, above).
 The split table of feature 12 has its world key, `spread` on a ray spatial
 field, and the light family declares it (`field-spreading-v1`,
 2026-09-17), with `source_sign` the sign the engine puts on every released
@@ -232,7 +255,7 @@ the register's, builds a world from the file for every ray a world can select
 today, for every release a world can declare today (light by the electron
 and by the positron) and for every decided coupling the engine runs today
 (the Born steering, the electron's turn at a field ray, and an external body
-under the absorber, the mirror and the phase plate), runs each for two ticks against
+under the absorber, the mirror, the phase plate and the polarizer), runs each for two ticks against
 pinned integers, and checks that a Detector mark parses. `tools/check.py` selects it when the catalog, this
 document, the register or the hypotheses change. Passing it establishes the
 file's contract, not any agreement with nature: that is the register's.

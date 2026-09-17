@@ -234,6 +234,16 @@ class InteractionDefinition:
     # bit they carry; `bit_declared` when the world file wrote the `bit` key.
     bit: int = -1
     bit_declared: bool = False
+    # Whether the rule names the polarization of a ray (ray-polarization-v1): a
+    # guard or an invariant reading it, or an output declaring it. A meeting whose
+    # layer holds no such rule reads the view of detector-bit-property-v1 and is
+    # charged what it was charged before feature 11.
+    polarization_declared: bool = False
+    # The polarization each output of a meeting of rays carries
+    # (ray-polarization-v1), one pair per output: (0, i) the polarization of
+    # input i (its source input by default), (1, v) the value v (-1 none, or a
+    # step of the output field's circle). Empty for a rule without outputs.
+    output_polarization: tuple[tuple[int, int], ...] = ()
     # The decay setting of a conversion (decay-draw-v1): the pass share [n, d] of
     # the one draw its meeting takes from the Node's ticket stream, None for a
     # rule that fires without a draw; `seed` starts the stream of a Node the

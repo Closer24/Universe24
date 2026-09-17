@@ -7,6 +7,7 @@ from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     MAX_HEADINGS,
     MAX_RAY_SLOTS,
+    POLARIZATION_NONE,
     Ray,
     Rays,
     SpatialFieldDefinition,
@@ -47,11 +48,13 @@ def emit_rays(
     phase: int = 0,
     advance: int = -1,
     heading: int | None = None,
+    polarization: int = POLARIZATION_NONE,
 ) -> tuple[Rays, int]:
     """Share one emitted amount over the next rays_per_tick headings of the sequence.
 
     One emission is one event: every ray it creates is stamped with the mask of
-    the Ports the emission sends to and the amount sent through each.
+    the Ports the emission sends to and the amount sent through each, and carries
+    the emission's declared polarization, none by default (ray-polarization-v1).
     """
     count = definition.rays_per_tick
     headings = len(definition.headings)
@@ -61,6 +64,13 @@ def emit_rays(
         raise ValueError("ray emission phase must be below the field's phase width")
     if type(advance) is not int or not -1 <= advance < definition.phase_modulus:
         raise ValueError("ray emission advance must be -1 or below the field's phase width")
+    if type(polarization) is not int or not (
+        polarization == POLARIZATION_NONE or 0 <= polarization < definition.polarization_modulus
+    ):
+        raise ValueError(
+            "ray emission polarization must be none (-1) or a step below the family's "
+            "polarization circle"
+        )
     magnitude, sign = abs(bounded(amount)), -1 if amount < 0 else 1
     if heading is not None:
         if type(heading) is not int or not 0 <= heading < headings:
@@ -68,7 +78,7 @@ def emit_rays(
         if not amount:
             return (), cursor
         meter.charge("route")
-        directed = (Ray(heading, (0, 0, 0), amount, phase, advance),)
+        directed = (Ray(heading, (0, 0, 0), amount, phase, advance, polarization=polarization),)
         return stamp_event(directed, (definition.headings[heading],)), cursor
     base, extra = divmod(magnitude, count)
     meter.charge("read")
@@ -77,7 +87,16 @@ def emit_rays(
     for offset in range(count):
         share = base + int(offset < extra)
         if share:
-            rays.append(Ray((cursor + offset) % headings, (0, 0, 0), sign * share, phase, advance))
+            rays.append(
+                Ray(
+                    (cursor + offset) % headings,
+                    (0, 0, 0),
+                    sign * share,
+                    phase,
+                    advance,
+                    polarization=polarization,
+                )
+            )
     stamped = stamp_event(tuple(rays), tuple(definition.headings[ray.heading] for ray in rays))
     # An amount below the sweep count fills only `extra` headings; the cursor then
     # moves on by those, so a small stock still sweeps the whole sequence in turn.

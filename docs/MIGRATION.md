@@ -6,6 +6,40 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Polarization landed on 2026-09-17 (`ray-polarization-v1`)
+
+Issue #169, feature 11 ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1);
+Highlights 3.26 and 3.19). New keys, no existing key changes:
+
+- `spatial_fields[].polarization_bits` (ray transport only): the family's
+  polarization circle, 2^bits steps per half turn; absent, the phase width.
+- `emissions[].polarization`: `"none"` (the default) or a step of the
+  field's circle, the polarization of every ray the lamp emits.
+- `polarization` on a ray meeting's output: `"same"` (the default, the
+  source input's), `{"of": i}`, `"none"` or a step.
+- `external_bodies[].coupling` takes `"polarizer"`, with
+  `external_bodies[].polarizer` (`family`, `angle`, `pass`, `table`,
+  `unpolarized`).
+- `Ray.polarization` (-1 none) on every ray, last in `ray_merge_key`;
+  `RAY_PROPERTIES` gains the read-only view `polarization` (index 8) and
+  `InteractionDefinition` the fields `polarization_declared` and
+  `output_polarization`; `ExternalBody` gains `polarizer`, `held` and
+  `held_phases`; `emit_rays` takes `polarization`.
+- Records: a `polarizer` event per arriving ray at a polarizer body, the
+  body's `held` and `held_phases` in `external_bodies()`, its `polarizer`
+  declaration in the runner's `external_bodies` entry, and
+  `ray_polarization: "ray-polarization-v1"` in `run.json` when the world
+  declares the property anywhere. The viewer's `runs.json` segments carry
+  `polarization`. A world that declares none is byte-identical, its costs
+  included: a rule that does not name the property reads the view it read
+  before and its outputs carry their source input's polarization without an
+  assignment.
+- The catalog decides `rays.light.polarization` (`transverse`, with
+  `polarization_bits` `"default"`), the electron's and the positron's
+  `polarization_bits` 1 (spin), and the `polarizer` coupling with its
+  reference table; the undecided table loses those two rows. A12 is
+  measured (`examples/nature/a12_malus/`).
+
 ## A spatial plan is validated once, when it is made, on 2026-09-17
 
 The second of the two levers scheduled in

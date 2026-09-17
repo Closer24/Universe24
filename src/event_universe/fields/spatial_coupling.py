@@ -277,7 +277,9 @@ class SpatialCouplingLaw:
             amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
             if not amount:
                 continue
-            rays, _ = emit_rays(amount, cursor, definition, meter, phase, advance, rule.heading)
+            rays, _ = emit_rays(
+                amount, cursor, definition, meter, phase, advance, rule.heading, rule.polarization
+            )
             own = 0
             own_rays = []
             for ray in rays:

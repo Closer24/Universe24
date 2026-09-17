@@ -946,6 +946,17 @@ coupling (feature 8) that does not fire for two electrons in the same state
 with the same spin. The Bell prediction of
 [hypothesis 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail)
 is testable before this feature, in its phase form.
+(Done on 2026-09-17, issue #169 feature 11, `ray-polarization-v1`: the ray
+property `polarization`, a transverse direction modulo a half turn in steps
+of the family's circle (`polarization_bits`, the phase width by default) or
+none, whose two states 0 and half the circle are the two lattice axes and
+whose other steps are the direction the circular case would turn, without
+the handedness bit; declared by a lamp, part of the merge identity, carried
+by a meeting's outputs, a spread, the return and the inverse split, read by
+a guard and by the polarizer, the external body's coupling `polarizer`
+splitting by a declared table with the rest in the sink and the remainder in
+the body's registers; spin the same property at one bit; A12 measured; see
+[polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1).)
 
 **Feature 12, field spreading (model owner, 2026-09-17; Highlights 3.5).**
 One catalog entry of the light family, its `spread` table, not an engine
