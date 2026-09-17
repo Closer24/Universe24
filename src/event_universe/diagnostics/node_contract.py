@@ -19,6 +19,7 @@ from event_universe.core.spatial_state import (
     DetectorMark,
     FieldInteractionGuard,
     FieldRuleGuard,
+    InverseSplit,
     Ray,
     SpatialNodeState,
     SpatialPacket,
@@ -45,6 +46,7 @@ STATE_RECORDS = (
     SpatialPlan,
     SpatialState,
     DetectorMark,
+    InverseSplit,
 )
 
 

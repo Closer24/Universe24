@@ -258,7 +258,8 @@ the key selects the default localizing residue.
 | `test_kerengonen.py` | A phase advances by the field's step on every link and wraps, a plain field leaves it alone, and rays merge only with equal phase; the cosine table for four steps is (256, 0, -256, 0), equal phases give coherence exactly one, opposite equal amounts exactly zero and a quarter turn one half; two lamps three links from a Node fire 2-quantum rays at each other and the sampled values along the line are 4, 0, 4, 0, 4 with four steps and 4, 2, 0 with eight, while the plain field reads 4 everywhere and the audit closes on 800 quanta; an absorber between the lamps takes 4 quanta before the opposite pair arrives and nothing after, takes 20 at the in-phase Node, and 20 at the dark Node when the second lamp is offset two steps; the runner records `kerengonen-ray-field-v1` and rejects one phase step, an advance equal to the steps, a missing advance, an emission phase beyond the steps, a phase without the key and the key without ray transport; the double-slit probe composes and closes; the bounded ticket rule advances and squares as specified and no absorber draws from it, the share rule takes 2 whole single quanta at a quarter turn where a half share truncates to nothing (closed on 800 quanta), and an unknown capture, the deleted lottery capture and a capture seed are rejected; a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), and partial at a fixed re-emission phase (3), and a carried phase without an absorb rule is rejected; a ray with its own advance ignores the field's, rays of different advance do not merge, beams of momentum 16 and 32 at advance |p|/4 carry advances 4 and 8 with phases in ratio two after the same links, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance so readings are 2, 4, 0 for lamp offsets 0, 16, 48 on a 64-step field; a mirror sends a lamp's wave back along -x with the carried phase, holds 4 quanta and the reversed momentum, closes on 400 quanta, and the line reads 0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5 at advance 4 (period 8) and 6, 1, 1, 6 repeating at advance 8 (period 4); a mirror without every image heading, without a recoil field, on an unknown axis or without an absorb rule is rejected; a three-layer screen's first layer absorbs exactly what a one-layer screen does and the layers behind add to it, both worlds closed; a dissolving record of 10 quanta with after 3 and over 4 holds 10, 10, 10, 7, 4, 1, 0 and a moving one flies while it holds quanta and stops at x = 2 when empty, both closed; dissolution on a sourced emission, an emission without amount or dissolve, and over_ticks 0 are rejected; on the Euclidean metric the integer square root is exact at 0, 1, 2, 3, 4, 15, 16, 17 and a million, the paces of an axis, face and body diagonal are 2364/4096, 2364/2896 and equal, twelve ticks carry the first axis ray 6 links, the face diagonal 9 and the body diagonal 12, the world closes on 400 quanta and an unknown metric is rejected; a diagonal `xy` mirror returns the +x ray along +y with nothing back along -x, and a quarter-fraction mirror passes 3 of every 4 quanta and returns 1, closed; a directed emitter with `heading` fires every ray along -x and closes, and a heading outside the field's list or combined with a mirror is rejected |
 | `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward, is kept resident at steps 0 and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
 | `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the two rays that drew 1 leave with `detector` 2 and continue unchanged while the four that drew 0 leave with `detector` 1 reversed and rest at their lamps from tick 2 on, the marked and the unmarked control world agree on totals, momentum and lamps at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
-| `test_detector_return.py` | A draw of 0 returns the ray ([Detector return](#detector-return)): for each of the six unit-axial headings a lamp's ray of 8 is halved by an absorber one Link before the marked Node, drawn 0 there at tick 3 (seed 3, setting 1/2), reversed with `outbound` 0 and no click, walks back one Link per tick with steps 3, 2, 1, 0 and phase 3, 2, 1, 0, crosses the absorber untouched, rests at the lamp with the phase it left with, 8 quanta and zero momentum every tick, one `detector_return` event, the runner recording `detector-return-v1`, and a returning ray at an open boundary refused |
+| `test_detector_return.py` | A draw of 0 returns the ray ([Detector return](#detector-return)): for each of the six unit-axial headings a lamp's ray of 8 is halved by an absorber one Link before the marked Node, drawn 0 there at tick 3 (seed 3, setting 1/2), reversed with `outbound` 0 and no click, walks back one Link per tick with steps 3, 2, 1, 0 and phase 3, 2, 1, 0, crosses the absorber untouched, reaches the lamp at tick 6 with the phase it left with and, since `inverse-split-v1`, is restored to the lamp (a one-line event has no sibling line; the lamp holds 4 and momentum -4u after tick 7) and emitted again by it as a new event of 4 after tick 8, 8 quanta and zero momentum every tick, one `detector_return` and one `inverse_split` event, the runner recording `detector-return-v1` and `inverse-split-v1`, and a returning ray at an open boundary refused |
+| `test_inverse_split.py` | A returned ray at its event Node performs the inverse split by the world's `return_mode` ([Inverse split](#inverse-split)): a pair lamp at X sends 4 quanta each way on one line, arm A's ray is returned at a marked Node three Links out and reaches X at tick 6; at tick 7 in `siblings` and `straight` a transmission of 4 with A's phase 0 and bit 0 leaves X on arm B's line and never shares a Node with B (B is 6 Links ahead, the round trip), the lamp holding 0 quanta and momentum 8u; in `annul` the share ends at X, the lamp unchanged and `annulled_totals()` 4 quanta and momentum 4u; totals, momentum, the spatial accounting and the conservation report exact at every tick, one `inverse_split` event, the runner recording `inverse-split-v1` and the mode, and an unknown mode rejected |
 | `test_ray_layers.py` | Rules of different layers fire in one interval and an unruled family crosses ([ray layers](#ray-layers)): five rays of families a, a, b, b, c meet at one Node after tick 2; after tick 3 the a rays have swapped headings (mask 3, shares (5, 5, 0, 0, 0, 0), steps 1), the b rays have turned to +Z and -Z at phase 7 (mask 48, shares (0, 0, 0, 0, 5, 5), steps 1) and the c ray is one Link past the Node unchanged (mask 16, steps 3, phase 3); the derived layers are (a), (b), (c) whether or not the b rule is declared, and without it the b rays cross like c; totals 10, 10, 5 and zero momentum every tick with the audit passed, the runner recording `ray-layers-v1` and the layer families |
 | `test_ray_meeting_conversion.py` | A meeting replaces its rays by declared outputs ([ray meetings with outputs](#ray-meetings-with-outputs)): two rays of 5 meet at one Node after tick 2; with four declared outputs the meeting returns four new rays on Ports 2 to 5 with amounts 2, 2, 3, 3, steps 0, mask 60 and shares (0, 0, 2, 2, 3, 3), and nothing stays at the Node; with the table [8, 7, 4, 1, 0, 1, 4, 7] the shared 10 goes 10:0, 0:10, 5:5 and 8:2 to the two Ports at phase differences 0, 4, 2 and 1, the rest output owning the remainder and the moved momentum booked as a source; outputs that break the amount or the momentum invariant are rejected before any owner changes, malformed tables at initialization; the runner records `ray-meeting-conversion-v1` |
 
@@ -692,6 +693,83 @@ first draw of [Node Detector bit](#node-detector-bit)):
   escape is refused by the engine with a validation error ("event Node")
   and records no escape.
 
+## Inverse split
+
+`test_inverse_split.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on a
+periodic 15^3 lattice with an 8-step phase advancing 1 per Link
+([Inverse split](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1)),
+one world per `return_mode` (`siblings`, `straight`, `annul`). The pair
+lamp stands at X = (7,7,7), holds 8 quanta and emits them once at tick 0 as
+a sweep of two headings (`rays_per_tick` 2, cursor 0: +X and -X), funded,
+emission phase 0, recoiling into its own momentum: one event with mask 3 and
+shares (4, 4, 0, 0, 0, 0), arm A the ray on +X (u = (1,0,0)) and arm B the
+ray on -X. The Node M = (10,7,7) on arm A carries the one mark, setting
+`[1, 2]` and seed 3 (one draw: state 144814, bit 0, as in [Detector
+return](#detector-return)); arm B is free. Pinned before the first run:
+
+- (a) the rays of the world after each tick (position, heading index,
+  amount, `steps`, `outbound`, phase, `detector`), the same in every mode
+  through tick 6: arm A at (7 + t, 7, 7), 0, 4, t, 1, t, 0 after ticks 1 and
+  2, returned at M after tick 3 as (10,7,7), 1, 4, 3, 0, 3, 1, then
+  (9,7,7), 1, 4, 2, 0, 2, 1 after tick 4, (8,7,7), 1, 4, 1, 0, 1, 1 after
+  tick 5 and (7,7,7), 1, 4, 0, 0, 0, 1 after tick 6, at X; arm B at
+  (7 - t mod 15, 7, 7), 1, 4, t, 1, t mod 8, 0 after every tick t from 1 to
+  10 (at (0,7,7) after tick 7, (14,7,7) after tick 8), never sharing a Node
+  with the transmission; every ray's `event_ports` is 3 and `event_shares`
+  (4, 4, 0, 0, 0, 0) through tick 6;
+- (b) at tick 7, in the cycle after arm A's ray reached X, the inverse
+  split: in `siblings` (arm A's own Port is 0, the one sibling Port is 1)
+  and in `straight` (the one Port opposite Port 0 is 1) one transmission
+  leaves X on arm B's line and is at (7 - (t - 6), 7, 7), 1, 4, t - 6, 1,
+  t - 6, 1 after every tick t from 7 to 10, a new event ray with
+  `event_ports` 2 and `event_shares` (0, 4, 0, 0, 0, 0), arm A's phase 0
+  at X and its bit 0; in `annul` no ray is at X and none leaves;
+- (c) the lamp holds 0 quanta and momentum (0,0,0) after ticks 1 to 6 in
+  every mode (its two recoils cancel); from tick 7 it holds 0 quanta and
+  momentum (8,0,0) in `siblings` and `straight` (the returned share
+  restored, 4u, then the transmission funded from it, another 4u) and 0
+  quanta and momentum (0,0,0) in `annul` (restored, then paid into the
+  sink); the lamp keeps nothing of the returned share in any mode;
+- (d) the totals are 8 quanta and momentum (0,0,0) at every tick in
+  `siblings` and `straight`; in `annul` 8 quanta and (0,0,0) through tick 6
+  and 4 quanta and momentum (-4,0,0) from tick 7, with `annulled_totals()`
+  4 quanta and (4,0,0) from tick 7 (zero before), so initial = current +
+  escaped + annulled; the spatial accounting balances and the conservation
+  report passes at every tick in every mode, its `annulled` entry reading
+  energy 4 and momentum (4,0,0) from tick 7 in `annul`;
+- (e) exactly one `inverse_split` event, in the cycle labelled tick 6 (the
+  cycle whose packets arrive at tick 7; the lamp's emission cycle is
+  labelled 0), position (7,7,7),
+  family `quanta`, the mode, `ports` (1,) and `amounts` (4,) in `siblings`
+  and `straight` and () and () in `annul`, `amount` 4, `bit` 0, `restored`
+  true, `annulled` {} in `siblings` and `straight` and {quanta: (4,),
+  momentum: (4,0,0)} in `annul`; one `detector_return` at tick 3 and no
+  click;
+- (f) the runner on the same document records `inverse_split:
+  "inverse-split-v1"` and `return_mode` beside `detector_return`,
+  `annulled_totals` (quanta 4 and momentum (4,0,0) in `annul`, zero
+  otherwise), `accounting_balanced_at_every_completed_tick` true in every
+  mode and `conserved_at_every_completed_tick` true in `siblings` and
+  `straight` and false in `annul` (content left the world, as at an open
+  boundary); a second run writes the same `events.jsonl` byte for byte; a
+  document with `return_mode` `"none"` is rejected before a world exists.
+
+Pinned consequences in existing tests: the returned ray of
+`test_detector_return.py` (a one-line event, no sibling line) is restored
+to its lamp in the cycle labelled 6: after tick 7 no ray is in the world and
+the lamp holds 4 quanta and momentum -4u (recoil for 8, 4u back with the
+restore); the lamp, a source that emits what it holds, then emits the 4
+again as a new one-line event on the cycle after the restored record
+reaches the field plan: after tick 8 the ray is one Link out with steps 1,
+phase 1, `event_shares` 4 on Port p and no Detector bit, the lamp at 0
+quanta and momentum -8u; totals and momentum unchanged; the four returned rays
+of `test_detector_mark.py` are restored to their lamps in the cycle
+labelled 2, the lamps holding their share again with its recoil undone from
+tick 3 ([Node Detector bit](#node-detector-bit)), and that test runs three
+ticks, because at the fourth the restored lamps would emit again into the
+mark and draw again.
 ## Ray layers
 
 `test_ray_layers.py` builds its board inline under the shared Detector

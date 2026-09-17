@@ -40,6 +40,7 @@ class Simulation(DisturbanceEngine):
             computation_field=initial.computation_field,
             least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
             sampling_profile=initial.sampling_profile,
+            return_mode=initial.return_mode,
         )
         super().__init__(
             initial,
