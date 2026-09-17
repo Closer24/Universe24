@@ -128,6 +128,60 @@ matter, the same integers:
   Node that holds one fails closed), absorption of a field ray into a group
   (the table returns it reversed), and the local audit's source term for
   the push (booked to the world ledger only, as the momentum a split moves).
+## The Node owns the sub-quantum remainder on 2026-09-17 (`field-remainder-v1`)
+
+Feature 12b of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+the model owner's decision of 2026-09-17 in Highlights 3.5 and 3.17 (the
+split and the remainder in [field
+spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)), which
+supersedes the phase-selected heading of `field-spreading-v1`:
+
+- In the spread step the whole quanta per heading leave as before; the share
+  below one quantum, content x weight mod S in units of 1/S (S the table's
+  total), goes to the Node's remainder register of that family, source sign
+  and Port, eighteen per spreading family, the register's phase combined
+  with the share's by `phase_of_sum` weighted by amount; a register that
+  reaches S releases the whole quanta it holds (k for kS) through its Port
+  in the same interval, with the register's phase and sign, as a fresh
+  eventless field ray, and keeps the rest. A Node with a nonzero register
+  stays active until it is empty. A quantum of amount 1 no longer turns by
+  its phase: it fills the forward register by 6/11 per arrival and the
+  others by 1/11.
+- New in `core/spatial_state.py`: `FIELD_REMAINDER`, `REMAINDER_SIGNS`,
+  `REMAINDER_SLOTS`, the type `Remainders`, `remainder_slot`,
+  `blank_remainders`, `validate_remainders` and `remainder_stock`;
+  `SpatialNodeState.remainders` and `remainder_phases` (one block of
+  eighteen per spreading family, `()` for the rest), `SpatialPlan.remainders`
+  and `remainder_phases`, `SpatialPlanningInput.remainders` and
+  `remainder_phases` (part of the plan-reuse key), `InventoryNode.remainders`;
+  `spread_content` takes the registers and their phases and returns the
+  departures, the record and both after the step; `spread_remainder_entry`
+  is deleted. `FieldSpread` and the `field_spread` record replace
+  `remainders` by `released` (the quanta the registers released per Port),
+  `stored` (the whole quanta the registers gained net of the releases) and
+  `registers` and `register_phases` (the eighteen after the step,
+  sign-major -1, 0, 1 then Port); `amounts` includes the releases.
+- The snapshot (`state.json`, the viewer's frames) carries `field_remainders`
+  when a family spreads: every nonzero block, with `position`, `family`,
+  `sign`, six `registers`, six `phases` and `total`. The world ledger counts
+  the registers as current content: `totals` and `charge_totals` add a
+  Node's registers of a family as their sum over S, exact because the
+  weights sum to S (`remainder_stock` rejects any other block), with no
+  momentum; the local audit reads the same registers and the record's
+  `stored`, so its residual stays zero. A register never escapes.
+- The runner records `field_remainder: "field-remainder-v1"` beside
+  `field_spreading` only when a family declares `spread`; a world that
+  declares none runs byte-identically (the `unchanged` case still pins the
+  hashes of main `f3809be`). `test_field_spreading.py` is repinned
+  ([expectations](TEST_EXPECTATIONS.md#field-spreading)): the `quantum` case
+  becomes `stream` (a ray of amount 1 fills the forward register by 6/11 per
+  arrival and the transverse by 1/11; the second quantum releases forward
+  after two arrivals, a transverse quantum after eleven), the Detector of
+  the `returned` case moves to (7,7,7), and every case checks the ledger at
+  every tick. The screen run `examples/nature/screen_spread.json` was rerun
+  (E6): see the
+  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+
 ## Field spreading added on 2026-09-17 (`field-spreading-v1`)
 
 Feature 12 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
@@ -142,19 +196,22 @@ spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
   the family reaches releases it again by the table, after the marks and
   the meetings of the interval and before the departures: amounts add per
   arriving heading, the phase is the phase of the coherent sum, whole quanta
-  by the table, the remainder whole through the entry the phase selects. A
+  by the table, the remainder whole through the entry the phase selects
+  (until `field-remainder-v1`, above). A
   world that declares no `spread` runs byte-identically, its run record
   included (`test_field_spreading.py`, `unchanged`, pins the record hashes of
   the released-field world on main `f3809be`).
 - New in `core/spatial_state.py`: `FIELD_SPREADING`, the definition key
   `spread`, `FieldSpread` (the plan's record, in `STATE_RECORDS`),
   `validate_spread_table`, `validate_spread_fields`,
-  `validate_spread_admission`, `relative_ports`, `spread_remainder_entry`,
+  `validate_spread_admission`, `relative_ports`, `spread_remainder_entry`
+  (deleted by `field-remainder-v1`),
   `spread_phase`, `spread_content` and `spreading_field_names`;
   `SpatialPlan.spreads`. The spatial law's `_spread` runs per ray field after
   the inverse split and before forwarding.
 - A new record kind, `field_spread`, per Node, interval and family (`family`,
-  `amount`, `arrived`, `amounts`, `remainders`, `phase`, `coherence`),
+  `amount`, `arrived`, `amounts`, `remainders`, `phase`, `coherence`;
+  `remainders` replaced by `field-remainder-v1`),
   published before the cycle's `spatial_cycle` record; the ray viewer's
   extractor lists it among its silent kinds and shows the spread as a
   release. The momentum a spread moves is an explicitly accounted source of

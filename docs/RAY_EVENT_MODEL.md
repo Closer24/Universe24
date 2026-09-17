@@ -327,8 +327,10 @@ in the end, a quantum waiting at a Node for that while the front of a strong
 field moves at the causal speed (chosen by the model owner on 2026-09-17
 over a phase-selected heading, which the screen run (E6)
 showed sends a single quantum along one fixed line and leaves every Node off
-the axis dark; feature 12b implements it, `field-spreading-v1` selecting the
-remainder's heading by phase until then), so the wave shows in intensities
+the axis dark; feature 12b, `field-remainder-v1`, done 2026-09-17, the
+Node's remainder registers per family, sign and heading, counted as current
+content; `field-spreading-v1` selected the remainder's heading by phase until
+then), so the wave shows in intensities
 and the Detector decides where a quantum is realized. The field of a static
 charge filling space with its net momentum through a Node falling as 1/r²
 (Gauss), isotropy at large scale with the lattice's residue for A6, the
@@ -957,8 +959,10 @@ a quantum waiting at a Node for that while the front of a strong field moves
 at the causal speed (chosen by the model owner on 2026-09-17 over a
 phase-selected heading, which the screen run (E6) showed
 sends a single quantum along one fixed line and leaves every Node off the
-axis dark; feature 12b implements it, `field-spreading-v1` selecting the
-remainder's heading by phase until then). It also carries the sign of the
+axis dark; feature 12b, `field-remainder-v1`, done 2026-09-17, the Node's
+remainder registers per family, sign and heading, counted as current
+content; `field-spreading-v1` selected the remainder's heading by phase until
+then). It also carries the sign of the
 source's charge on the field ray as a visible property (`source_sign`;
 Highlights 3.5, "the field is matter's message about itself", 2026-09-17),
 read by the coupling that meets it and never encoded in the phase, which is
@@ -978,8 +982,8 @@ positive and the four transverse equal, the light family's `[6, 1, 1, 1, 1,
 meetings, amounts adding per arriving heading and sign and the phase being
 the phase of the coherent sum (3.20); each heading's content is shared in
 whole quanta by the table and the remainder leaves whole through the entry
-the phase selects (3.17), the interim rule that feature 12b replaces with
-the Node-owned remainder, so the wave shows in intensities; the departures
+the phase selects (3.17), the interim rule that feature 12b replaced the
+same day with the Node-owned remainder registers, `field-remainder-v1`, so the wave shows in intensities; the departures
 are fresh field rays with no event carrying their sign, the total is exact
 and the momentum a spread moves is booked as a source of the bound momentum
 field, the ledger of feature 10 exact; one `field_spread` record per Node,

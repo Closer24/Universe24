@@ -10,7 +10,7 @@
   "slots_per_node": 2,
   "link_ticks": 1,
   "normal_budget": 100000,
-  "ticks": 24,
+  "ticks": 48,
   "operation_costs": {
     "receive": 1,
     "read": 1,

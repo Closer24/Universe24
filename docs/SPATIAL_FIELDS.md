@@ -1116,61 +1116,94 @@ amount is exact: the coherence of the arrivals (`coherence`, the ratio a
 reader or an absorber sees) is recorded and never applied to the amount,
 since nothing but a sink ends a quantum.
 
-Superseded (model owner, 2026-09-17, Highlights 3.5): the remainder below
-the table's whole quanta is owned by the Node per family and heading
-(Highlights 3.17), its phase combined by the coherence rule, and leaves as
-one whole quantum through that heading when it reaches one, a quantum
-waiting at a Node for that while the front of a strong field moves at the
-causal speed, so the phase-selected heading this slice implements is
-superseded by feature 12b, the screen run (E6) having shown
-that it sends a single quantum along one fixed line and leaves every Node
-off the axis dark.
-
-**The split.** Each arriving heading's content A is shared over the six
-relative headings in whole quanta, floor(A x w_i / S), S the table's total.
-The quanta the floors leave, at most five per heading, are the remainder of
-Highlights 3.17, and it leaves whole through the heading the phase selects,
-as the steering table places a whole quantum by a phase: the phase p, as a
-share of the turn, laid against the weights end to end, selects the smallest
-entry i with m x (w_0 + ... + w_i) > p x S, m the phase modulus
-(2^`phase_bits`; with no width p is 0 and the first entry with a weight is
-selected). With the table `[6, 1, 1, 1, 1, 1]` and eight phase steps, phases
-0 to 4 select forward, 5 backward, 6 the second transverse and 7 the third.
-So over all phases the remainders follow the table and the wave shows in
-intensities; a single quantum cannot split and never waits: a ray of amount
-1 keeps moving at one Link per interval on the path its phase sets, turning
-the same way relative to its heading at every Node. Departures on one Port
-merge. Each departure is a fresh field ray: the Port's heading, accumulators
-(0, 0, 0), the combined phase, the family's rate, no wait, no delay, no lag,
-`steps` 0, `outbound` 1, no event (mask 0, shares all zero), the combined
-bit and its source sign; it walks one Link with this interval's residents
-and is spread again at the next Node.
+**The split and the remainder (`field-remainder-v1`; Highlights 3.5 and
+3.17, model owner, 2026-09-17; feature 12b).** Each arriving heading's
+content A is shared over the six relative headings: the whole quanta
+floor(A x w_i / S), S the table's total, leave through heading i, and the
+share below one quantum, A x w_i mod S in units of 1/S, is the Node's. It
+goes to the Node's remainder register of that family, source sign and
+Port (eighteen registers per spreading family, sign-major -1, 0, 1 then
+Port, `SpatialNodeState.remainders`, with a phase each,
+`remainder_phases`), and the register's phase becomes the phase of the
+coherent sum of what it held at its phase and the share at the spread's
+phase (`phase_of_sum` over the two, weighted by their amounts in 1/S; an
+empty register takes the share's phase; a family without a phase width
+keeps 0). Then every register that has reached S releases the whole quanta
+it holds, k for kS, through its Port in the same interval, with the
+register's phase and its sign, as a departure like the others, and keeps
+the rest, its phase reset to 0 when it empties. So a quantum of amount 1
+does not turn: it fills the forward register by 6/11 and each other one by
+1/11 per arrival; the second arrival releases a quantum forward, the
+eleventh releases one through every heading, and a weak field reaches
+every Node in the end, a quantum waiting at a Node for that while the front
+of a strong field moves at the causal speed; the average intensities follow
+the table exactly and the wave shows in them. Since the weights sum to S,
+one spread adds a multiple of S to a Node's registers of a family and a
+release takes a multiple of S, so a Node's registers of a family always
+hold whole quanta in total (`remainder_stock`), and the record's `stored`
+is that gain net of the releases. A Node with a nonzero register is active
+until it is empty: it cycles every interval as a Node holding a ray does,
+and the registers are read and written by the planner as plain bounded
+integers of the Node state contract, part of the plan-reuse key. The model
+owner chose this on 2026-09-17 over the phase-selected heading
+`field-spreading-v1` first implemented (the remainder leaving whole through
+the entry the phase selects, so that a quantum never waited), which the
+screen run (E6) showed sends a single quantum along one fixed line and
+leaves every Node off the axis dark. Departures on one Port merge. Each
+departure is a fresh field ray: the Port's heading, accumulators (0, 0, 0),
+the combined phase (a register's release, the register's), the family's
+rate, no wait, no delay, no lag, `steps` 0, `outbound` 1, no event (mask 0,
+shares all zero), the combined bit of this interval's arrivals and its
+source sign; it walks one Link with this interval's residents and is spread
+again at the next Node.
 
 **The booking.** The total is exact, so the amount has no source and the
-world ledger of feature 10 is unchanged by a spread. A spread changes the
-momentum of field content, amount x heading: a ray heading +X becomes six
-rays, and the difference, amount x heading summed over the departures less
-the same sum over what arrived, is booked as an explicitly accounted source
-of the family's momentum field when one is bound (Highlights 3.15), exactly
-as the release of feature 7 and the table split of feature 6 are booked;
-`source_totals` and the per-tick `source_delta` name it, and
-`conserved_at_every_completed_tick` stays the ledger's identity. The local
-audit (`diagnostics/local_conservation.py`) measures the departures as it
-measures a release, a source at the Node, and reads the `field_spread`
-record to give back what the Node itself held, so its `sourced` line gains
-the momentum difference and nothing else
+world ledger of feature 10 is unchanged by a spread. The registers are
+current content (`field-remainder-v1`): the ledger's `current` line
+(`totals`, `charge_totals`) counts a Node's registers of a family as their
+sum over S, whole quanta exactly by the paragraph above, with the family's
+charge and no momentum, a share in a register having none until it leaves;
+`sourced`, `escaped`, `annulled` and `absorbed` are untouched by them, so
+initial + sourced = current + escaped + annulled + absorbed holds at every
+completed tick with a register's content on the `current` line until a
+release moves it onto a ray. A register never escapes: content leaves a
+register only by a release, and only the released quantum walks a Link, so
+the open boundary sees rays alone. A spread changes the momentum of field
+content, amount x heading: a ray heading +X becomes six rays, and the
+difference, amount x heading summed over the departures (the registers'
+releases included) less the same sum over what arrived, is booked as an
+explicitly accounted source of the family's momentum field when one is
+bound (Highlights 3.15), exactly as the release of feature 7 and the table
+split of feature 6 are booked; `source_totals` and the per-tick
+`source_delta` name it, and `conserved_at_every_completed_tick` stays the
+ledger's identity. The local audit (`diagnostics/local_conservation.py`)
+measures the departures as it measures a release, a source at the Node,
+measures the registers as content of the family at the Node before and
+after the step, and reads the `field_spread` record to give back what the
+Node itself held and the whole quanta its registers gained (`stored`), so
+its `sourced` line gains the momentum difference and nothing else
 ([local conservation](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)).
 
 **The record.** One `field_spread` record per Node, interval and family:
 `family`, `amount` (what was taken), `arrived` (the amount per arriving
 heading, six entries by the heading's Port index), `amounts` (the departure
-per Port), `remainders` (the remainder quanta placed per Port), `phase` (the
-combined phase) and `coherence` (the reduced ratio of the arrivals'
-coherence). It is published before the interval's `spatial_cycle` record,
-like `inverse_split`. `FieldSpread` (`core/spatial_state.py`) is the plan's
+per Port, the registers' releases included), `released` (the quanta the
+registers released per Port), `stored` (the whole quanta the registers
+gained net of the releases, negative when the releases exceed the gain),
+`registers` and `register_phases` (the Node's eighteen registers of the
+family and their phases after the step, sign-major -1, 0, 1 then Port, in
+units of 1/S), `phase` (the combined phase), `coherence` (the reduced ratio
+of the arrivals' coherence) and `signs` (the source signs taken). It is
+published before the interval's `spatial_cycle` record, like
+`inverse_split`. `FieldSpread` (`core/spatial_state.py`) is the plan's
 record, registered in the Node state contract; `spread_content` is the pure
-function, `relative_ports` the relative Port order and
-`spread_remainder_entry` the phase's choice.
+function (the departures, the record, the registers and their phases after
+the step), `relative_ports` the relative Port order, `remainder_slot`,
+`blank_remainders`, `validate_remainders` and `remainder_stock` the
+registers' helpers. The snapshot (`state.json`, the viewer's frames) lists
+every nonzero block as `field_remainders` (`position`, `family`, `sign`,
+six `registers`, six `phases`, `total`) when a family spreads, and the
+inventory view carries `InventoryNode.remainders`.
 
 **The sign of the source (Highlights 3.5, the field is matter's message
 about itself; model owner, 2026-09-17).** The sign of the source's charge
@@ -1220,8 +1253,9 @@ inverse split of feature 4 unchanged.
 
 **Consequences, none inserted.** With the released field of feature 7
 declared with `spread`, a charge's field fills the board: five rays per Node
-crossed, each spread again at the next Node, whole quanta wandering by
-phase. A recoil, the reversed output of a meeting, departs on its line and
+crossed, each spread again at the next Node, whole quanta released where
+the registers fill and the shares below one quantum waiting in them, a Node
+with a register cycling until it empties (feature 12b). A recoil, the reversed output of a meeting, departs on its line and
 spreads from the next Node like every field content: what walks back toward
 the source is the net momentum of the spread, forward less backward on the
 line, not one whole ray; a world that wants the recoil whole declares no
@@ -1240,9 +1274,10 @@ the shared Detector admission
 interactions or couplings on the family); a table of another length, a
 negative weight, a zero backward weight or unequal transverse weights is
 rejected at initialization. The runner records `field_spreading:
-"field-spreading-v1"` and `spreading_fields` (each family with its table)
-only when a family declares `spread`; a world that declares none runs
-byte-identically, records included. `test_field_spreading.py`
+"field-spreading-v1"`, `field_remainder: "field-remainder-v1"` and
+`spreading_fields` (each family with its table) only when a family declares
+`spread`; a world that declares none runs byte-identically, records
+included. `test_field_spreading.py`
 ([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
 
 ### Audits (`ray-event-audit-v1`)

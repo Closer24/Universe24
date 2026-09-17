@@ -1242,7 +1242,8 @@ sign rule, and its other couplings are catalog entries.
   front of a screen of Detector marks is seen as clicks, and the remainder
   rule of the split decides whether one mark or the whole screen is lit.
 - **Features.** 1, 2, 7, 8, 9, 10 for the first record; 12
-  (`field-spreading-v1`) for the second.
+  (`field-spreading-v1`) for the second; 12b (`field-remainder-v1`) for the
+  third.
 - **Run.** `examples/nature/screen.json`: board 12 × 11 × 11, open, N = 8
   (`phase_bits` 3), 24 ticks; the electron at rest is the bound group of the
   dictionary, two `electron` lamps of amount 4 meeting at (1, 5, 5) at tick
@@ -1251,7 +1252,9 @@ sign rule, and its other couplings are catalog entries.
   released on all six headings every interval; the screen is seven marks at
   (7, 2, 5) through (7, 8, 5), setting [1, 1], at distance 6 along +X.
   `examples/nature/screen_spread.json`: the same with `spread` `[6, 1, 1, 1,
-  1, 1]` declared on `light`, the catalog's table, and nothing else changed.
+  1, 1]` declared on `light`, the catalog's table, and nothing else changed;
+  since feature 12b it runs 48 ticks (`ticks` raised from 24 on 2026-09-17,
+  24 showing nothing off the axis).
   The dictionary and the eye view are in the
   [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
 - **Shows.** Before spreading the field lives on the six axis lines of the
@@ -1271,8 +1274,20 @@ sign rule, and its other couplings are catalog entries.
   line and leaves every Node off the axis dark, the reason for the model
   owner's decision of 2026-09-17 that the Node owns the remainder per family
   and heading and lets it leave whole when it reaches one quantum
-  (Highlights 3.5, feature 12b). After feature 12b the whole screen is
-  expected to click.
+  (Highlights 3.5, feature 12b). With the Node owning the remainder
+  (`field-remainder-v1`, 2026-09-17) the field is whole quanta released
+  where the registers fill, six of eleven parts forward per arrival at every
+  Node: in 48 ticks the on-axis mark (7, 5, 5) clicks four times, at ticks
+  19, 30, 39 and 48, amount 1 each, and the six other marks not yet (a
+  transverse release takes eleven arrivals at one Node, then five forward
+  ones); light released 564, 112 escaped, 452 in the world (376 in the
+  registers), electron 8, momentum (0, 0, 0), every ledger line balanced.
+  Run for 240 ticks outside the record (exploratory, not fingerprinted) the
+  same world clicks all seven marks, symmetric about the axis and the
+  on-axis mark most: 27 at (7, 5, 5) from tick 19, 6 each at (7, 4, 5) and
+  (7, 6, 5) from tick 82, 3 each at (7, 3, 5) and (7, 7, 5) from tick 122,
+  1 each at (7, 2, 5) and (7, 8, 5) at tick 193: the whole screen lit by
+  the field of a charge at rest.
 - **Status.** measured, 2026-09-17: `screen.json`, source
   `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
   initialization
@@ -1282,7 +1297,14 @@ sign rule, and its other couplings are catalog entries.
   initialization
   `34ce343eeb204d9a8b7b1b0c6e6b5c79a21eeb799f717b76d13514a18718fa2d`;
   outcome: one mark clicks in both records, eighteen times before spreading
-  and twelve times with the split table, the single-quantum finding; the
+  and twelve times with the split table, the single-quantum finding;
+  `screen_spread.json` at 48 ticks after feature 12b (`field-remainder-v1`,
+  2026-09-17), source
+  `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`,
+  initialization
+  `9b0473248483faf4e0bcc97100e40e411674c5846df130973ac503338c3983b8`;
+  outcome: the on-axis mark clicks four times, the others not yet, and all
+  seven click in an exploratory 240-tick run, the on-axis mark most; the
   records stay outside the tree.
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
