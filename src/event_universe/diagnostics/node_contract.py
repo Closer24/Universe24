@@ -17,6 +17,7 @@ from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
     DetectorMark,
+    ExternalBody,
     FieldInteractionGuard,
     FieldRuleGuard,
     InverseSplit,
@@ -47,6 +48,7 @@ STATE_RECORDS = (
     SpatialState,
     DetectorMark,
     InverseSplit,
+    ExternalBody,
 )
 
 

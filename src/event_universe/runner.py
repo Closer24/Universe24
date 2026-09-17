@@ -17,12 +17,14 @@ from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     DETECTOR_RETURN,
+    EXTERNAL_BODY,
     INVERSE_SPLIT,
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
+    external_body_names,
     ray_layer_names,
     released_field_names,
 )
@@ -139,6 +141,12 @@ def _execute_run(
 
         with Simulation(initial, observer=record, node_workers=node_workers) as world:
             initial_totals = world.totals()
+            # The external bodies' positions per tick (external-body-v1), tick 0 first.
+            trajectories: list[list[list[int]]] = [[] for _ in initial.external_bodies]
+            for item in world.external_bodies():
+                index = item["index"]
+                assert isinstance(index, int)
+                trajectories[index].append([world.tick, *item["position"]])  # type: ignore[misc]
             if visualize:
                 frames.append(world.snapshot())
             if probe is not None:
@@ -151,17 +159,20 @@ def _execute_run(
                     losses = world.dissipation_totals()
                     escaped = world.escaped_totals()
                     annulled = world.annulled_totals()
+                    absorbed = world.external_body_totals()
                     audit.append(world.audit())
                     # The conservation line: initial + sources = current + dissipated
-                    # + escaped + annulled at every completed tick.
+                    # + escaped + annulled + absorbed_by_bodies at every completed
+                    # tick, the sources holding what the bodies released.
                     balanced = all(
                         tuple(
-                            value + loss + out + gone
-                            for value, loss, out, gone in zip(
+                            value + loss + out + gone + sunk
+                            for value, loss, out, gone, sunk in zip(
                                 totals[name],
                                 losses[name],
                                 escaped[name],
                                 annulled[name],
+                                absorbed[name],
                                 strict=True,
                             )
                         )
@@ -174,6 +185,10 @@ def _execute_run(
                             "declared quantity conservation, dissipation or escape accounting failed"
                         )
                     completed += 1
+                    for item in world.external_bodies():
+                        index = item["index"]
+                        assert isinstance(index, int)
+                        trajectories[index].append([world.tick, *item["position"]])  # type: ignore[misc]
                     if visualize and world.tick % frame_stride == 0:
                         frames.append(world.snapshot())
                     if world.tick % frame_stride == 0:
@@ -183,6 +198,7 @@ def _execute_run(
             except Exception as error:
                 failure = error
             final = world.snapshot()
+            final_bodies = {item["index"]: item for item in world.external_bodies()}
             if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
                 frames.append(final)
             if probe is not None and (sampled_tick != world.tick or failure is not None):
@@ -210,6 +226,13 @@ def _execute_run(
         "ray_meeting": RAY_MEETING,
         "released_field": RELEASED_FIELD,
         "released_fields": released_field_names(initial.fields, initial.spatial_fields),
+        "external_body": EXTERNAL_BODY,
+        "external_bodies": [
+            declared | {"positions": trajectories[index], "final": final_bodies.get(index)}
+            for index, declared in enumerate(external_body_names(initial))
+        ],
+        "external_body_totals": world.external_body_totals(),
+        "external_body_momentum": world.external_body_momentum(),
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

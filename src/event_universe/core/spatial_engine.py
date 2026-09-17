@@ -29,6 +29,7 @@ from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
 from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
+    ExternalBody,
     Rays,
     SpatialBundle,
     SpatialPacket,
@@ -96,6 +97,9 @@ class SpatialEngine:
         # The Detector marks by position, installed on each marked Node when it is
         # created; a Node without a mark never draws.
         self._marks = {mark.position: mark for mark in initial.detectors}
+        # The external bodies by declared position, installed on their Nodes when
+        # they are created; a body that steps carries its mark to the next Node.
+        self._bodies = {body.position: body for body in initial.external_bodies}
         # Host scheduling index only: retain physical registers in self.nodes.
         self._active: set[Address3] = set()
         self._field_tick = -1
@@ -111,6 +115,8 @@ class SpatialEngine:
         # The charge that left the world through an open boundary, per spatial
         # field: charge x amount of every escaped ray (ray-event-audit-v1).
         self.escaped_charge = [0] * len(initial.spatial_fields)
+        # Content that ended in an external body's sink (external-body-v1).
+        self.absorbed = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
         if initial.spatial_computation_delay:
             components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
@@ -131,6 +137,7 @@ class SpatialEngine:
                 self.transformations,
                 self.localized,
                 self.annulled,
+                self.absorbed,
             ),
             balance_guard,
             field_guard,
@@ -144,6 +151,9 @@ class SpatialEngine:
             )
             node.states = tuple(states)
             self.values(seed.position)
+        for body in initial.external_bodies:
+            # A body's Node exists and is active from the start: it radiates.
+            self._at(body.position)
         self._initial_totals = self.totals()
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
@@ -172,6 +182,7 @@ class SpatialEngine:
                 rays=tuple(() for _ in self.initial.spatial_fields),
                 detector=mark,
                 detector_ticket=0 if mark is None else mark.seed,
+                body=self._bodies.pop(position, None),
             )
             self._active.add(position)
         elif position not in self._active:
@@ -263,6 +274,8 @@ class SpatialEngine:
         """
         if any(not ray.outbound for rays in packet.rays for ray in rays):
             raise ValueError("a returning ray cannot escape: its event Node is not in the world")
+        if packet.body is not None:
+            raise ValueError("an external body cannot leave the world: its Node must exist")
         amounts = [[0] * field.components for field in self.initial.fields]
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:
@@ -466,8 +479,8 @@ class SpatialEngine:
         for definition in self.initial.spatial_fields:
             index = definition.field
             expected = tuple(
-                start + source + reaction + transformed - loss - escaped - annulled
-                for start, source, reaction, transformed, loss, escaped, annulled in zip(
+                start + source + reaction + transformed - loss - escaped - annulled - absorbed
+                for start, source, reaction, transformed, loss, escaped, annulled, absorbed in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
@@ -475,6 +488,7 @@ class SpatialEngine:
                     self.dissipation[index],
                     self.escaped[index],
                     self.annulled[index],
+                    self.absorbed[index],
                     strict=True,
                 )
             )
@@ -487,6 +501,7 @@ class SpatialEngine:
                 "localized": tuple(self.localized[index]),
                 "escaped": tuple(self.escaped[index]),
                 "annulled": tuple(self.annulled[index]),
+                "absorbed_by_bodies": tuple(self.absorbed[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(
                     {"transformations": tuple(self.transformations[index])}
@@ -495,6 +510,47 @@ class SpatialEngine:
                 ),
             }
         return result
+
+    def external_bodies(self) -> list[dict[str, object]]:
+        """Every external body (external-body-v1), in declaration order: the Node it is
+        at, or the Node it is stepping to while on a Link, its momentum, its
+        accumulators and its sink per family."""
+        found: dict[int, dict[str, object]] = {}
+        located: list[tuple[ExternalBody | None, Address3 | None, bool]] = [
+            (node.body, position, False) for position, node in self.nodes.items()
+        ]
+        located.extend(
+            (packet.body, self._neighbor(packet.origin, packet.port), True)
+            for packets in self.links.values()
+            for packet in packets
+            if packet is not None and packet.body is not None
+        )
+        for body, position, stepping in located:
+            if body is None or position is None:
+                continue
+            found[body.index] = {
+                "index": body.index,
+                "position": list(position),
+                "stepping": stepping,
+                "momentum": list(body.momentum),
+                "accumulators": list(body.accumulators),
+                "sink": {
+                    self.initial.fields[definition.field].name: body.sink[i]
+                    for i, definition in enumerate(self.initial.spatial_fields)
+                    if body.sink[i]
+                },
+            }
+        return [found[index] for index in sorted(found)]
+
+    def external_body_momentum(self) -> tuple[int, int, int]:
+        """The bodies' momentum line of the audit: the exact sum over every body."""
+        total = [0, 0, 0]
+        for item in self.external_bodies():
+            momentum = item["momentum"]
+            assert isinstance(momentum, list)
+            for axis in range(3):
+                total[axis] = checked_work(total[axis] + momentum[axis])
+        return (total[0], total[1], total[2])
 
     def snapshot(self) -> dict[str, object]:
         return {

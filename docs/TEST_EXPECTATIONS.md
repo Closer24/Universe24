@@ -1057,6 +1057,91 @@ and `rejected`. Pinned before the first run:
 A world that declares no `field_of` runs byte-identically: the suite is the
 regression, and its run record carries `released_fields: []`.
 
+## External body
+
+`test_external_body.py` builds its boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order) on a periodic 15^3 lattice
+([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)). The
+family `star` is a conserved scalar with an 8-step phase advancing 0 and
+`G`, where declared, is its field, `field_of: "star"`; `light` advances 0 and
+`electron` 1 per Link; every lamp holds its amount and emits it once, funded
+and directed, at phase 0. A tick n is one `step()`: the cycle of interval
+n - 1 (release, meetings, accumulators, departures) and the delivery of tick
+n (arrivals, the sink). The test is parametrized over `sink`, `stars`,
+`uniform`, `mirror` and `rejected`. Pinned before the first run:
+
+- (a) `sink`: a star at (7,7,7) of amount 4096 at rest, momentum table
+  `{"G": -1}`, `G` released at `[1, 2048]`: floor(4096 x 1 / 2048) = 2 per
+  heading, six headings, 12 per tick, booked as a source. A light lamp at
+  (8,5,7) emits 5 along +Y, an electron lamp at (7,7,4) emits 3 along +Z;
+  the rule `turn`, light x G with outputs the light on the G ray's heading
+  and the G ray reversed. After tick n the released G ray of heading h at
+  distance d (1 to n) from the star is at the star plus d x h with amount 2,
+  phase 0, steps d, no event; the light is at (8, 5+n, 7) after ticks 1 and
+  2 with heading 2, steps n, mask 4 and shares (0, 0, 5, 0, 0, 0). In the
+  interval of tick 3 the light meets the +X ray released in the interval of
+  tick 2 at (8,7,7): the light leaves on +X (heading 0, mask 3, shares (5,
+  2, 0, 0, 0, 0), steps n - 2 after tick n, at (6+n, 7, 7)) and the G ray
+  returns reversed, arrives at the star at tick 3 and ends in its sink:
+  sink G 2, momentum (2, 0, 0) (-1 x 2 x (-1, 0, 0), toward the light), so
+  the +X ray at distance n - 1 is missing from tick 3 on. The electron
+  arrives at the star at tick 3 and ends in the sink: sink electron 3, no
+  momentum (the table does not name it). Totals after tick n: G 12n minus
+  2 from tick 3, electron 3 then 0 from tick 3, light 5; source G 12n;
+  `external_body_totals` G 2 and electron 3 from tick 3; the body at (7,7,7)
+  throughout with accumulators (2(n - 3), 0, 0) from tick 3 (2 per interval
+  over 4096: no Link); the bodies' momentum line (2, 0, 0) from tick 3;
+  two `external_body_absorbed` records at tick 3 and no step. The runner
+  writes `external_body: "external-body-v1"`, `external_body_totals` G [2]
+  and electron [3], `external_body_momentum` [2, 0, 0], final totals G 70,
+  and the body's positions [[t, 7, 7, 7] for t = 0..6], final momentum
+  [2, 0, 0] and accumulators [6, 0, 0];
+- (b) `stars`: three stars, `G` released at `[1, 8]`, no lamps and no rule.
+  Star 0 at (4,7,7) and star 1 at (10,7,7), amount 16 (2 per heading, 12
+  per tick), at rest; star 2 at (7,7,2), amount 8 (1 per heading), initial
+  momentum heading +X at pace 1/4, momentum (2, 0, 0); every table
+  `{"G": -1}`. Star 2's accumulator x after tick n is 2n mod 8: 2, 4, 6, 0,
+  2, 4, 6, 0; it steps +X in the intervals of ticks 4 and 8 (`external_body_step`
+  at ticks 3 and 7, Port 0) and is at (7,7,2) through tick 3, (8,7,2)
+  through tick 7 and (9,7,2) at tick 8; in a stepping interval it releases
+  five rays, not the +X one (its own line ahead). Star 0's +X ray and star
+  1's -X ray of the first interval arrive at the other star at tick 6, and
+  one more each tick: from tick 6 each sink holds 2(n - 5), star 0's
+  momentum is (2(n - 5), 0, 0) and star 1's the opposite; accumulators
+  after ticks 6, 7 and 8: 0, 2, 6 for star 0 and 0, -2, -6 for star 1 (no
+  Link over 16). Source G after tick n: 30n - [n >= 4] - [n >= 8], that is
+  30, 60, 90, 119, 149, 179, 209, 238; absorbed 4(n - 5) from tick 6: 4, 8,
+  12; current G: 30, 60, 90, 119, 149, 175, 201, 226. The bodies' momentum
+  line is (2, 0, 0) at every tick and the rays' momentum, amount x heading
+  summed over every G ray, is (-[n >= 4] - [n >= 8], 0, 0), the momentum
+  of the releases (the two skipped +X rays) less that of the absorbed rays
+  (equal and opposite): exact at every tick. No star's Node holds a G ray
+  after any tick;
+- (c) `uniform`: a body at (3,7,7) of amount 6, no field declared, initial
+  momentum heading +Y at pace 1/2: momentum (0, 3, 0). Accumulator y after
+  tick n: 3, 0, 3, 0, 3, 0; steps in the intervals of ticks 2, 4 and 6
+  (`external_body_step` at ticks 1, 3 and 5, Port 2, arrival ticks 2, 4 and
+  6); position (3, 7 + floor(n / 2), 7); totals and sources 0;
+- (d) `mirror`: a body at (7,7,7) of amount 4, family `star` with no field,
+  coupling `mirror`, light x star with outputs the light reversed on its own
+  line and the star returned unchanged; a light lamp at (7,7,3) emits 5
+  along +Z. After ticks 1 to 4 the light is at (7,7,3+n) with heading 4,
+  steps n, mask 16 and shares (0, 0, 0, 0, 5, 0), at tick 4 resident at the
+  body's Node; in the interval of tick 5 the rule fires and the light
+  leaves on -Z (heading 5), amount 5, phase 0, steps n - 4 at (7, 7, 11 - n)
+  after tick n, a new event whose record counts the body's token as one
+  quantum on +X: mask 33 and shares (1, 0, 0, 0, 0, 5). The body is
+  unchanged at every tick (momentum 0, sink empty), no `star` ray exists at
+  any Node, light stays 5 with source 0 and nothing absorbed;
+- (e) `rejected`: amount 0, a family that is a field (`G`), a coupling
+  that names no declared rule, a momentum-table sign 2, two bodies at one
+  Node, a coupling naming a rule in which no role is the body, and a pace
+  above one Link per interval are each rejected at initialization.
+
+A world without `external_bodies` is unchanged: no body Node exists, no
+token is added, no source is booked and the sink line is zero.
+
 ## Ray-event audit
 
 `test_ray_event_audit.py` builds its board inline under the shared Detector

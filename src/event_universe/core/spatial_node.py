@@ -36,6 +36,7 @@ from .node_execution import (
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
+    BODY_SINK,
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
     RETURN_MODES,
@@ -48,12 +49,19 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    advance_ray,
     attenuate_rays,
+    body_absorb,
+    body_coupled_families,
+    body_release,
+    body_step,
+    body_token,
     coherent_stock,
     detector_draw,
     holds_source_stock,
     merge_rays,
     ray_merge_key,
+    ray_momentum,
     ray_stock,
     return_ray,
     validate_rays,
@@ -189,11 +197,13 @@ class SpatialAccounting:
         transformations: list[list[int]],
         localized: list[list[int]] | None = None,
         annulled: list[list[int]] | None = None,
+        absorbed: list[list[int]] | None = None,
     ) -> None:
         self.__sources, self.__dissipation = sources, dissipation
         self.__reactions, self.__transformations = reactions, transformations
         self.__localized = [] if localized is None else localized
         self.__annulled = [] if annulled is None else annulled
+        self.__absorbed = [] if absorbed is None else absorbed
 
     def record_sources(self, values: Values) -> None:
         add_audit_delta(self.__sources, values)
@@ -214,6 +224,10 @@ class SpatialAccounting:
     def record_annulled(self, values: Values) -> None:
         """Content that left the world at an inverse split in annul mode (inverse-split-v1)."""
         add_audit_delta(self.__annulled, values)
+
+    def record_absorbed(self, values: Values) -> None:
+        """Content that ended in an external body's sink (external-body-v1)."""
+        add_audit_delta(self.__absorbed, values)
 
 
 @dataclass(slots=True)
@@ -342,9 +356,11 @@ class SpatialNode(SpatialNodeState):
             for record in records
             for index, rule in enumerate(services.initial.emissions)
         )
-        active_field = any(
-            any(unpack(payload)) for state in states for payload in state.populations
-        ) or any(self.rays)
+        active_field = (
+            any(any(unpack(payload)) for state in states for payload in state.populations)
+            or any(self.rays)
+            or self.body is not None
+        )
         # An exhausted source still clears its last emission before a later move.
         active_source = active_source or any(
             any(any(unpack(row)) for row in record.emission_last)
@@ -370,6 +386,14 @@ class SpatialNode(SpatialNodeState):
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
         resident_rays: tuple[Rays, ...] = self.rays
+        if self.body is not None and self.body.coupling != BODY_SINK:
+            # The body takes part in its coupling rule as the participant that
+            # never changes: one token of its family beside what arrived.
+            bundles = list(self.rays) or [() for _ in services.initial.spatial_fields]
+            bundles[self.body.family] = merge_rays(
+                tuple(bundles[self.body.family]) + (body_token(self.body),)
+            )
+            resident_rays = tuple(bundles)
         ray_hold, next_ray_wait = 0, self.ray_wait
         if services.initial.ray_delay and any(self.rays):
             # Rays wait the intervals the Node's computation load alone would add to
@@ -392,6 +416,8 @@ class SpatialNode(SpatialNodeState):
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
+        if self.body is not None:
+            plan = self._body_cycle(plan, services)
         validate_spatial_plan(services.initial, plan, len(records), records)
         services.validate_field_guards(self.states, plan)
         cost = bounded(checked_work(plan.cost + self.received_decay_cost))
@@ -430,6 +456,102 @@ class SpatialNode(SpatialNodeState):
         )
         self.sample_received_masks = sample_received_masks
         self._commit_plan(tick, carrier, services, plan, cost, next_ray_wait=next_ray_wait)
+
+    def _body_cycle(self, plan: SpatialPlan, services: SpatialServices) -> SpatialPlan:
+        """The external body's part of one cycle (external-body-v1), after the ordinary
+        law has met what arrived: the token of a coupled body is stripped from what
+        leaves, returned unchanged or the cycle fails; the body releases the field of
+        its family on all six headings, one Link on with the residents, booked as an
+        explicitly accounted source; and its accumulators advance by its momentum,
+        stepping it through one Port when a whole amount has accumulated."""
+        body = self.body
+        assert body is not None
+        initial = services.initial
+        rays: list[list[Rays]] = (
+            [list(port_rays) for port_rays in plan.rays]
+            if plan.rays
+            else [[() for _ in initial.spatial_fields] for _ in range(6)]
+        )
+        source = [list(values) for values in plan.source_delta]
+        if body.coupling != BODY_SINK:
+            tokens = [ray for port in range(6) for ray in rays[port][body.family]]
+            tokens.extend(plan.kept_rays[body.family] if plan.kept_rays else ())
+            if len(tokens) != 1 or tokens[0].amount != 1 or tokens[0].phase != body.phase:
+                raise ValueError("an external body coupling must return the body unchanged")
+            for port in range(6):
+                rays[port][body.family] = ()
+            if plan.kept_rays:
+                kept = list(plan.kept_rays)
+                kept[body.family] = ()
+                plan = replace(plan, kept_rays=tuple(kept))
+        port, stepped = body_step(body)
+        if body.field >= 0:
+            definition = initial.spatial_fields[body.field]
+            released = body_release(body, definition, port)
+            for ray in released:
+                out, moved = advance_ray(
+                    ray,
+                    definition.headings[ray.heading],
+                    definition.phase_modulus,
+                    definition.phase_advance,
+                )
+                rays[out][body.field] = merge_rays(tuple(rays[out][body.field]) + (moved,))
+            source[definition.field][0] = checked_work(source[definition.field][0] + ray_stock(released))
+            if definition.momentum_field is not None:
+                for axis, value in enumerate(ray_momentum(released, definition)):
+                    source[definition.momentum_field][axis] = checked_work(
+                        source[definition.momentum_field][axis] + value
+                    )
+        return replace(
+            plan,
+            rays=tuple(tuple(port_rays) for port_rays in rays),
+            source_delta=tuple(tuple(values) for values in source),
+            body=stepped,
+            body_port=port,
+        )
+
+    def _body_meet(
+        self,
+        index: int,
+        rays: Rays,
+        port: int,
+        tick: int,
+        services: SpatialServices,
+        absorbed: list[list[int]],
+        notes: list[dict[str, object]],
+    ) -> Rays:
+        """What arrives at an external body is met by its declared coupling: a family
+        the coupling rule meets stays for the rule; everything else, and every
+        returning ray, ends in the body's sink (external-body-v1). The body's content
+        never changes; a field ray of a family its momentum table names moves it."""
+        assert self.body is not None
+        definition = services.initial.spatial_fields[index]
+        coupled = body_coupled_families(self.body, services.initial)
+        kept = tuple(ray for ray in rays if ray.outbound and index in coupled)
+        taken = tuple(ray for ray in rays if not (ray.outbound and index in coupled))
+        if not taken:
+            return kept
+        self.body = body_absorb(self.body, index, taken, definition)
+        amount = ray_stock(taken)
+        absorbed[definition.field][0] = checked_work(absorbed[definition.field][0] + amount)
+        if definition.momentum_field is not None:
+            for axis, value in enumerate(ray_momentum(taken, definition)):
+                absorbed[definition.momentum_field][axis] = checked_work(
+                    absorbed[definition.momentum_field][axis] + value
+                )
+        notes.append(
+            services.events.message(
+                "external_body_absorbed",
+                tick,
+                self.position,
+                body=self.body.index,
+                port=port,
+                family=services.initial.fields[definition.field].name,
+                amount=amount,
+                momentum=self.body.momentum,
+            )
+        )
+        return kept
 
     def commit_ready(
         self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices
@@ -483,7 +605,12 @@ class SpatialNode(SpatialNodeState):
         arrival = bounded(tick + services.initial.link_ticks - int(services.initial.field_phase_first))
         for port, bundle in enumerate(plan.outgoing):
             port_rays = plan.rays[port] if plan.rays else ()
-            if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
+            stepping = plan.body if plan.body_port == port else None
+            if (
+                any(any(unpack(payload)) for field in bundle for payload in field)
+                or any(port_rays)
+                or stepping is not None
+            ):
                 packets[port] = SpatialPacket(
                     arrival,
                     self.position,
@@ -491,6 +618,7 @@ class SpatialNode(SpatialNodeState):
                     bundle,
                     rays=port_rays if any(port_rays) else (),
                     phases=plan.outgoing_phases[port] if plan.outgoing_phases else (),
+                    body=stepping,
                 )
         # All physical calculations and validation precede the local commit.
         self.require_free_links()
@@ -515,6 +643,9 @@ class SpatialNode(SpatialNodeState):
                 initial=services.initial,
             )
         self.states = plan.states
+        if self.body is not None:
+            # The body's mark moves with it: it is on the Link while it steps.
+            self.body = None if plan.body_port >= 0 else plan.body
         if self.rays:
             # Every resident ray that was due left along its own line; on a
             # Euclidean pace the rays not yet due stay.
@@ -543,6 +674,18 @@ class SpatialNode(SpatialNodeState):
         if plan.annulled:
             services.accounting.record_annulled(plan.annulled)
         notifications: list[dict[str, object]] = []
+        if plan.body is not None and plan.body_port >= 0:
+            self._event(
+                "external_body_step",
+                tick,
+                services,
+                notifications=notifications,
+                body=plan.body.index,
+                port=plan.body_port,
+                arrival_tick=arrival,
+                momentum=plan.body.momentum,
+                accumulators=plan.body.accumulators,
+            )
         # The inverse splits of this cycle precede the cycle record, so that an
         # audit reading the annulled content has it before it measures the Node.
         for split in plan.inverse_splits:
@@ -1083,6 +1226,15 @@ class SpatialNode(SpatialNodeState):
         ray_arrivals = [[0] * 6 for _ in services.initial.spatial_fields]
         clicks: list[dict[str, object]] = []
         returns: list[dict[str, object]] = []
+        absorbed = [[0] * field.components for field in services.initial.fields]
+        for packet in arrivals:
+            if packet.body is None:
+                continue
+            # The body arrives whole with this interval's packets and meets every
+            # ray that arrives at this Node in the same interval.
+            if self.body is not None or self.detector is not None:
+                raise ValueError("a Node holds one external body and no Detector mark beside it")
+            self.body = replace(packet.body, position=self.position)
         # A marked Node draws in the order of the Ports the rays came in through.
         for packet in sorted(arrivals, key=lambda packet: packet.port ^ 1):
             for index, packet_rays in enumerate(packet.rays):
@@ -1107,6 +1259,11 @@ class SpatialNode(SpatialNodeState):
                     arriving = self._draw_arrivals(
                         arriving, packet.port ^ 1, definition, tick, services, clicks, returns
                     )
+                if self.body is not None and (arriving or returning):
+                    arriving = self._body_meet(
+                        index, arriving + returning, packet.port ^ 1, tick, services, absorbed, returns
+                    )
+                    returning = ()
                 ray_arrivals[index][packet.port] = checked_work(
                     ray_arrivals[index][packet.port]
                     + ray_stock(tuple(ray for ray in arriving if ray.outbound))
@@ -1221,6 +1378,8 @@ class SpatialNode(SpatialNodeState):
         services.accounting.record_dissipation(tuple(tuple(values) for values in losses))
         if any(any(values) for values in deposited):
             services.accounting.record_localized(tuple(tuple(values) for values in deposited))
+        if any(any(values) for values in absorbed):
+            services.accounting.record_absorbed(tuple(tuple(values) for values in absorbed))
         # Read-only, post-commit summaries. State.delivered uses travel ports;
         # a receiver sees the opposite side. Retain zero readings on used
         # ports so cancellation is distinct from no completed reception.

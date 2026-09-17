@@ -35,11 +35,13 @@ state. Nothing under `tools/ray_viewer/` imports the simulator.
   rendering every external body carries its own identifying picture (a star,
   a mirror, a wall), so it is never mistaken for matter." That picture is
   distinct from matter and from the Detector mark; a splitter, a phase plate
-  and a screen get theirs as well. The record does not carry external bodies
-  yet (`external-body-v1` is feature 7b); once the runner writes
-  `external_bodies` into the record, the viewer draws each one at its Node
-  with such a marker. Until then, a record kind the extractor does not know,
-  an external body's events included, is drawn as a generic marker.
+  and a screen get theirs as well. Since 2026-09-17 (`external-body-v1`,
+  feature 7b) the runner writes `external_bodies` into `run.json`, each body
+  with its declaration, its `positions` per tick (`[tick, x, y, z]`) and its
+  final momentum, accumulators and sink, so the viewer can draw each one at
+  its Node; until the extractor reads that key, an external body and its
+  records (`external_body_absorbed`, `external_body_step`) are drawn as
+  generic markers.
 - Text is at least 14 px; the page works at 400 px width.
 
 ## What the record must contain
