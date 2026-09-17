@@ -560,6 +560,11 @@ class DisturbanceEngine:
     def spatial_accounting(self) -> dict[str, dict[str, object]]:
         return {} if self._spatial is None else self._spatial.accounting()
 
+    def charge_totals(self) -> dict[str, int]:
+        """The charge readout per ray field, charge x amount summed over its rays
+        (wave-ray-family-v1); read-only, like the other totals."""
+        return {} if self._spatial is None else self._spatial.charge_totals()
+
     @staticmethod
     def _bookkeeping(record: DisturbanceRecord) -> dict[str, object]:
         """Expose carried fractions separately from physical inventory for inspection."""

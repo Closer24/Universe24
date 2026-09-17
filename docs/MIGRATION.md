@@ -352,6 +352,52 @@ directories removed the same day; their dated results stay in the
 [documentation index](README.md) routes to the register and the
 [hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
 runtime behavior changes.
+## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
+
+Issue #169, feature 9, the wave-ray part of
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) migration step 6
+under [Highlights](HIGHLIGHTS.md) 3.3 and 5.1: every ray is a wave ray, a
+plain ray the special case with rest rate 0, light a family with rest rate 0
+that carries its emitter's phase unchanged, and the phase the one value with
+its own declared width
+([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+
+- `spatial_fields[i]` (ray transport) admits `phase_bits` (the phase width;
+  default 0, or log2 of `kerengonen.phase_steps`) and `charge` (per quantum,
+  default 0). In the `kerengonen` object `phase_advance` (the rest rate) is
+  required and `phase_steps` (the coherence table) optional; `phase_steps`
+  must be a power of two (every existing world's is: 4, 8, 64), and
+  `phase_advance` is bounded by the width, not by `MAX_VALUE`.
+- `SpatialFieldDefinition` (`core/spatial_state.py`) gains `phase_bits`,
+  `charge` and the properties `coherent`, `phase_modulus` and `phase_mask`;
+  `kerengonen` now means a declared phase rule (a table or a nonzero rate);
+  `advance_ray(ray, heading, phase_modulus, phase_advance)` takes the modulus,
+  a power of two (a Kerengonen world's `phase_steps`), and masks; `phase_mask`,
+  `ray_charge`, `charge_invariant`, `RAY_WRITABLE`, `RAY_VIEW_COMPONENTS`,
+  `CHARGE_INVARIANT`, `WAVE_RAY_FAMILY`, `MAX_TABLE_BITS` and
+  `MAX_STORED_PHASE_BITS` are added. Every `% phase_steps` in the engine became
+  a mask.
+- `RAY_PROPERTIES` gains read-only `family` and `charge`; a ray interaction's
+  view reads nine components per participant (`read` cost 9 instead of 7), and
+  the parser appends the `charge` invariant to every `ray_interactions` rule.
+  `Simulation.charge_totals()` reads `charge x amount` per ray field.
+- `kerengonen_phase` on an emission requires a ray field of sufficient width,
+  not the `kerengonen` key (a plain field without a width admits phase 0
+  only); a carried phase and `kerengonen_mirror` require the coherence table;
+  `ray_phase_per_tick` and `hold_rays` follow the declared phase rule.
+- Not admitted in this slice: `self_exclusion` or `ray_interactions` on a
+  family wider than 30 bits, a coherence table wider than 12 bits
+  (`phase_steps` above 4096), and a non-power-of-two `phase_steps` in a field
+  definition (the table builders `phase_cosines` and `phase_sines` still take
+  any count from 2 to 4096).
+- The runner records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
+
+Existing worlds run unchanged: a plain field has width 0 and rate 0, a
+Kerengonen field the width of its `phase_steps`; the metered `read` cost of a
+ray interaction is the one recorded difference. Tests adapted:
+`test_kerengonen.py` (a nonzero phase before the plain-field rejection) and
+`test_ray_integration_guards.py` (odd table sizes through the builders, 32
+phase steps in the table-construction guard).
 
 ## Primary initialization-based API
 
