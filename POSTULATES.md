@@ -821,6 +821,20 @@ of the returns and of the bounded lifetime at the origin, not of a shared
 owner, and it is accepted that a sibling can be realized at a second Detector
 before a return from the first arrives.
 
+An event is a splitting of information. The interaction splits the piece of
+information that arrived into the pieces that leave, at most six, and each
+leaving piece is a ray. Because nothing is added or lost on a line, the
+information of the event is recoverable: when its rays return to the same
+event, the pieces reassemble and the event's information is complete again,
+as if it had not split. A Detector that returns a ray is telling the event
+which piece it gives back. Since the event is its information and not a
+place, the event can be moved: the open piece kept at the origin may be
+displaced along the trajectory line, and a returning ray, which walks that
+line, still meets it. The displacement mechanism (the occupied-channel rule
+of the central specification, section 5.1, which pushes a saved event toward
+its origin along the same path without capacity waiting) is to be specified
+in the design document before implementation.
+
 The design candidate in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
 carries this section's consequences for Node state (a bounded register of
 open alternatives at each interaction node) and for the acceptance criteria.

@@ -87,6 +87,24 @@ with the bounded lifetime of the register or with a later return. Sibling
 events of one interaction are independent rays, each meeting its own fate;
 nothing erases a sibling except its own return.
 
+**Splitting and reconstruction.** An event is a splitting of information:
+the interaction splits the piece that arrived into the pieces that leave, at
+most six, each a ray. Because nothing is added or lost on a line, the event's
+information is recoverable: when its rays return to the same event the
+pieces reassemble and the event is complete again, as if it had not split. A
+Detector that returns a ray is telling the event which piece it gives back;
+the piece is the whole ray, since the Detector's outcome is binary per ray.
+
+**Moving an event.** The event is its information, not a place. The open
+piece kept at the origin may be displaced along the trajectory line of the
+rays it is waiting for, and a returning ray, which walks that line, still
+meets it. This is the occupied-channel displacement rule of the central
+specification (section 5.1): a saved event is pushed along the same path
+without capacity waiting. Its exact resolution (which neighbor, what happens
+when two pushes meet, how the step count of a returning ray accounts for the
+displacement) is a decision this document must record before step 4 of the
+migration is implemented.
+
 **Field.** A ray that travels releases a field, and the field is itself made
 of rays: family-declared outward emission along the six headings, one Link
 per interval, with its own conserved quantity and the ordinary dilution or
@@ -261,6 +279,11 @@ and evidence, under the ordinary gates.
   may realize one before a return from the first arrives. Remaining choice:
   the bounded lifetime of an open alternative at the origin, and what the
   origin does when the register is full.
+- Moving an event: the displacement of the open piece along the trajectory
+  line (which neighbor, meeting pushes, the returning ray's step count) is to
+  be resolved here before step 4 is implemented.
+- Whether the reassembly of all returned pieces at an event restores it as an
+  interaction that can split again (re-emission), or only closes it.
 - What exactly the returning ray carries: its own outcome only, or the full
   drawn number.
 - Whether a field ray alone can change a ray's trajectory (a lens,
