@@ -806,10 +806,13 @@ places the event sent to, the partner ray's line among them, so the
 partner's Detector is not missing it. Pair identity is the trajectory, not
 the birth node and tick.
 
-A ray has a field: a traveling ray releases it, and the field is itself made
-of rays; a field ray is not a second kind. The field's presence at a node is
-an interaction that makes no event: a field never makes an event unless it
-meets something it changes. Where a field ray meets a ray whose declared
+A ray has a field: the field is the ray's own information spreading in ray
+form to the nodes around it, without an event; a field ray is not a second
+kind and is not born at an event. The field's presence at a node is an
+interaction that makes no event. A field never makes an event unless it
+meets something it changes; the first event a field is involved in is that
+meeting, and the returning ray that carries the recoil is split off from
+it, like every ray from its event. Where a field ray meets a ray whose declared
 coupling responds, the meeting is an ordinary interaction and its events
 change that ray's trajectory; everywhere else the field crosses without an
 event. One of those events is the field ray itself returning reversed: the
@@ -852,7 +855,9 @@ event is a splitting of information: the interaction splits what arrived
 into the rays that leave, at most six, and each ray carries its own share of
 what happened at the event away from it, along its line, one node per
 interval. All the information is on the rays; the origin node keeps nothing,
-and there is no register of any kind at the origin. Every ray carries the
+and there is no register of any kind at the origin, no occupied channel and
+no capacity rule: rays cross, meet or bind by their declared couplings, and
+nothing is pushed back or made to wait for room. Every ray carries the
 information of the last event it was involved in; if that event was at a
 Detector, the ray records that it was a Detector event and the bit drawn,
 1 or 0, and the bit is all the Detector adds. An event cannot be moved;

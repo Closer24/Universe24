@@ -14,8 +14,10 @@ ray; every ray a wave ray carrying a phase, its step count and the information
 of its last event, with the bit if that event was at a Detector; the Detector
 as a marked Node that draws once per arriving transfer and returns the ray
 unchanged by its step count; the return as the inverse split of that ray's
-share at its event Node, with no register at the origin; a field ray as the
-same ray, making no event unless it meets something it changes, and returning
+share at its event Node, with no register at the origin, no occupied channel
+and no capacity rule (the displacement rule of 5.1 deleted); a field ray as
+the ray's own information in ray form, making no event unless it meets
+something it changes, and returning
 reversed as the emitter's recoil; a bound group with no lifetime of its own)
 and deletes section 3.18, the shared quantum resource.
 [POSTULATES.md](../POSTULATES.md) (sections 1, 4, 22, 23 and 24, with a note

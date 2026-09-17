@@ -100,8 +100,9 @@ event, unchanged. An event cannot be moved; there is no such thing. It
 happened at its Node, and on a fixed lattice the returning ray reaches that
 Node with certainty. The return is the ray itself, not a message and not a
 separate carrier; it carries what the ray already carries (family properties,
-phase, its step count, its share of what happened at the event, and the bit
-of its Detector event, nothing larger). At the event Node it performs the
+phase, heading, the number of steps it has made since its event, the
+information of its last event and, if that was a Detector event, its bit;
+nothing larger). At the event Node it performs the
 inverse split with its information: it transmits it, with its bit, to the
 same places the event sent to, so that it cancels what was already there.
 This turns time back for that ray's share only; the other shares are
@@ -144,13 +145,17 @@ share walks its line backward and the event is undone by exactly what that
 share carried, and only that. The lattice's exact integer arithmetic is what
 makes the undoing exact rather than approximate.
 
-**Field.** A ray has a field: a ray that travels releases a field, and the
-field is itself made of rays, family-declared outward emission along the six
-headings, one Link per interval, with the ordinary dilution or declared
+**Field.** A ray has a field: the field is the ray's own information
+spreading in ray form to the Nodes around it, without an event, along the
+six headings, one Link per interval, with the ordinary dilution or declared
 attenuation of an outward field. Every ray is the same ray; a field ray is
-not a second kind. The field's presence at a Node is an interaction that
-makes no event: a field never makes an event unless it meets something it
-changes. Where a field ray meets a ray whose declared coupling responds, the
+not a second kind, and field rays are not born at events: they are the
+ray's information in ray form. The field's presence at a Node is an
+interaction that makes no event. A field never makes an event unless it
+meets something it changes; the first event a field is involved in is that
+meeting, and the returning ray that carries the recoil is split off from
+it, like every ray from its event. Where a field ray meets a ray whose
+declared coupling responds, the
 meeting is an ordinary interaction and its events change that ray's
 trajectory; everywhere else the field crosses without an event. One of those
 events is the field ray itself returning reversed: the return is the opposite
@@ -213,7 +218,7 @@ The rule in the form Highlights 3.27 requires:
 
 | Question | Answer under this model |
 | --- | --- |
-| Where is state stored | On the ray: family properties, phase (every ray is a wave ray), heading, the number of steps it has made since its event, the information of its last event (its share of what happened there) and, if that was a Detector event, its bit; all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed). The origin Node of an event keeps nothing; there is no register of any kind |
+| Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
 | What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
 | What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, the kind of ray making no difference since every ray is a wave ray; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
@@ -245,19 +250,23 @@ on 16 September 2026.
 
 ## 4. Why this is consistent
 
-- One kind of entity (an event trajectory with family properties, a phase
-  and its step count), one kind of interaction (a meeting at a Node, declared per
+- One kind of entity (an event trajectory with the state of Highlights 5.1:
+  family properties, phase, heading, the number of steps since its event,
+  the information of its last event and, for a Detector event, its bit),
+  one kind of interaction (a meeting at a Node, declared per
   family set, exactly conserved, at most six events out), one door for
   randomness (the Detector draw, one per transfer arriving at a marked Node). Postulates 1 to 4 hold
   without exception; the registry exception of postulate 4 is withdrawn and
   Highlights section 3.18, which described the shared resource, is deleted
   (2026-09-17).
 - Fields as rays satisfies Highlights 3.5 and 3.28 directly: a field is a
-  local description of ray state, a field ray is not a second kind, its
-  presence at a Node makes no event unless it meets something it changes, and
-  the computation field is a propagating property. Highlights 3.14 is
-  satisfied by a ray: when a field ray changes another ray's trajectory it
-  returns reversed along its own line, and the ray that released it recoils
+  local description of ray state, the ray's own information spreading in ray
+  form without an event; a field ray is not a second kind and is not born at
+  an event; its presence at a Node makes no event unless it meets something
+  it changes; and the computation field is a propagating property.
+  Highlights 3.14 is satisfied by a ray: when a field ray changes another
+  ray's trajectory it returns reversed along its own line, a ray born at
+  that meeting, and the ray that released it recoils
   by the opposite momentum when the return arrives, at finite speed; until
   its field meets something, a traveling ray pays nothing for it.
 - Matter as bound rays satisfies Highlights 3.4: mass is the retained energy of
@@ -286,7 +295,7 @@ on 16 September 2026.
 | The shared quantum resource (Q-ORACLE-1, bond registry) is an accepted exception to locality | Deleted by the model owner on 2026-09-17 (Highlights section 3.18): no owner answers at a distance; the marked-Node lottery and the returning ray are the whole quantum mechanism |
 | The photon is a record of a family; conversion products are records | Every ray is a wave ray with a phase; light is a wave ray with no mass and no charge; conversion products are events leaving the interaction |
 | A bonded pair is answered by a global registry keyed by (Node, tick) | The first draw's outcome travels back and forward on the ray itself; pair identity is the trajectory |
-| Records emit fields; rays do not | A traveling ray of an emitting family releases field rays along its line; a field ray is not a second kind, and its return reversed is the emitter's recoil |
+| Records emit fields; rays do not | A traveling ray's own information spreads in ray form to the Nodes around it, without an event; a field ray is not a second kind and is not born at an event, and its return reversed, born at the meeting it changes, is the emitter's recoil |
 | A record can hold, wait at zero cost and be updated in place | Nothing holds except a bound group under a declared binding coupling |
 | An event is any local change at a Node | An event is a change of trajectory leaving an interaction; crossing a Node is not an event |
 | Alternatives live in a separate quantum owner (deferred graph, event network) | Alternatives are the up-to-six events of each interaction, all on the board |
@@ -300,12 +309,13 @@ on 16 September 2026.
    in [TERMINOLOGY.md](TERMINOLOGY.md) (Event, Ray, Interaction, Detector)
    and in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) (the bonded profile becomes
    historical).
-2. Ray state: the number of steps made since its event, the information of
-   its last event (its share of what happened there) and, for a Detector
-   event, the bit drawn added to the ray; heading and phase exist, and the
-   phase is carried by every ray, since every ray is a wave ray. No origin
-   reference is stored: the count suffices on a straight line, and no Node
-   keeps anything about the event.
+2. Ray state, the list of Highlights 5.1: family properties, phase, heading,
+   the number of steps it has made since its event, the information of its
+   last event and, if that was a Detector event, its bit. The step count, the
+   last event's information and the bit are added; heading and phase exist,
+   and the phase is carried by every ray, since every ray is a wave ray. No
+   origin reference is stored: the count suffices on a straight line, and no
+   Node keeps anything about the event.
 3. Detector as a Node bit in the initialization (position, setting, ticket
    seed): each transfer through a marked Node draws 1 or 0 from the mark's
    ticket sequence, 1 ordinary behavior, 0 return on the same line reversed;
