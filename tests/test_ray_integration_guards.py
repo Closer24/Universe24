@@ -129,8 +129,10 @@ def test_self_exclusion_distinguishes_a_foreign_wave_phase_on_the_same_line():
         channel_code=2,
         emission_departed=(pack((4, 0, 0, -1)), pack((0, 0, 0, 0))),
     )
-    own = Ray(0, (0, 0, 0), 2, 1)
-    foreign = Ray(0, (0, 0, 0), 2, 2)
+    # The own ray carries its emission event (2 through +X and 2 through -X) and
+    # one Link walked; the foreign ray differs in its wave phase only.
+    own = Ray(0, (0, 0, 0), 2, 1, steps=1, event_ports=0b000011, event_shares=(2, 2, 0, 0, 0, 0))
+    foreign = replace(own, phase=2)
     residents, records = [own, foreign], [record]
     taken = _law(initial)._absorb(0, residents, records, CostMeter(initial.operation_costs))
     # The two wave phases differ by a quarter turn: coherence is one half.
@@ -156,8 +158,8 @@ def test_self_exclusion_keeps_the_departed_advance_and_distinguishes_a_foreign_o
         channel_code=2,
         emission_departed=(pack((4, 0, 0, 3)), pack((0, 0, 0, 0))),
     )
-    own = Ray(0, (0, 0, 0), 2, 3, 3)
-    foreign = Ray(0, (0, 0, 0), 2, 3, 5)
+    own = Ray(0, (0, 0, 0), 2, 3, 3, steps=1, event_ports=0b000011, event_shares=(2, 2, 0, 0, 0, 0))
+    foreign = replace(own, advance=5)
     residents, records = [own, foreign], [record]
     taken = _law(initial)._absorb(0, residents, records, CostMeter(initial.operation_costs))
     # Both rays have the same phase here, so coherence is one. The emitter's

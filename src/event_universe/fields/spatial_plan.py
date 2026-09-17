@@ -34,6 +34,7 @@ from event_universe.core.spatial_state import (
     phase_of_sum,
     ray_momentum,
     ray_stock,
+    stamp_event,
     validate_ray_participants,
     validate_rays,
 )
@@ -480,7 +481,11 @@ class SpatialLaw:
                         if absorbed_heading >= 0 and unpack(amount)[0]:
                             meter.charge("route")
                             image = self._mirrored_heading(absorbed_heading, rule.mirror, definition)
-                            new_rays = (Ray(image, (0, 0, 0), unpack(amount)[0], phase, advance),)
+                            # The reflection is one event on the image's first Port.
+                            new_rays = stamp_event(
+                                (Ray(image, (0, 0, 0), unpack(amount)[0], phase, advance),),
+                                (definition.headings[image],),
+                            )
                     else:
                         new_rays, cursor = emit_rays(
                             unpack(amount)[0],

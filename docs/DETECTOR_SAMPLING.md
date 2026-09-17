@@ -57,7 +57,7 @@ The following definitions are still open before an implementation:
 | --- | --- | --- |
 | Physics | Action-bit distribution and allowed dependence on causal settings/input; the distribution is not assumed 50/50 | Predetermined action counts and probabilities; no implicit fair coin or deterministic replacement |
 | Physics and architecture | Repeat and simultaneous encounters (up to six arrivals in one interval, one independent draw each) and the mark's ticket seed | Symmetric Detector identities, declared retries/conflicts and unchanged returned content |
-| Architecture, then field developer | The carried step count, the inverse split at the birth event and the cancellation arithmetic where the returning ray meets the delayed share | One-Link-at-a-time return; no remote/global erase; complete retained/transferred amounts and remainders |
+| Architecture, then field developer | The inverse split at the birth event and the cancellation arithmetic where the returning ray meets the delayed share; the carried step count, the event's Ports and shares and the Detector bit are on every ray since `ray-event-state-v1` ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)), unread | One-Link-at-a-time return; no remote/global erase; complete retained/transferred amounts and remainders |
 | Architecture, then engine developer | Detector/model clock mapping, bounded transaction capacity and output-clock composition | Fixed neighbor transit H plus defined output delay, atomic once-only publication and rejected overflow |
 
 An opposite-going ray alone does not define cancellation. An ordinary absorber

@@ -13,6 +13,8 @@ from event_universe.core.spatial_state import (
     advance_ray,
     heading_pace,
     merge_rays,
+    ray_phase_step,
+    stamp_event,
     validate_heading,
 )
 
@@ -46,7 +48,11 @@ def emit_rays(
     advance: int = -1,
     heading: int | None = None,
 ) -> tuple[Rays, int]:
-    """Share one emitted amount over the next rays_per_tick headings of the sequence."""
+    """Share one emitted amount over the next rays_per_tick headings of the sequence.
+
+    One emission is one event: every ray it creates is stamped with the mask of
+    the Ports the emission sends to and the amount sent through each.
+    """
     count = definition.rays_per_tick
     headings = len(definition.headings)
     if not 0 <= bounded(cursor) < headings:
@@ -62,7 +68,8 @@ def emit_rays(
         if not amount:
             return (), cursor
         meter.charge("route")
-        return (Ray(heading, (0, 0, 0), amount, phase, advance),), cursor
+        directed = (Ray(heading, (0, 0, 0), amount, phase, advance),)
+        return stamp_event(directed, (definition.headings[heading],)), cursor
     base, extra = divmod(magnitude, count)
     meter.charge("read")
     meter.charge("split", count)
@@ -71,9 +78,10 @@ def emit_rays(
         share = base + int(offset < extra)
         if share:
             rays.append(Ray((cursor + offset) % headings, (0, 0, 0), sign * share, phase, advance))
+    stamped = stamp_event(tuple(rays), tuple(definition.headings[ray.heading] for ray in rays))
     # An amount below the sweep count fills only `extra` headings; the cursor then
     # moves on by those, so a small stock still sweeps the whole sequence in turn.
-    return tuple(rays), (cursor + (count if base else extra)) % headings
+    return stamped, (cursor + (count if base else extra)) % headings
 
 
 def forward_rays(
@@ -83,7 +91,8 @@ def forward_rays(
 
     On the links metric every ray is due every tick and the Node keeps none. On
     the Euclidean metric a ray hops when its wait passes its heading's pace; a
-    ray that waits stays resident, and its phase still advances with the tick.
+    ray that waits stays resident, and its phase still advances with the tick,
+    forward while outbound and backward on the walk back.
     """
     outgoing: list[list[Ray]] = [[] for _ in range(6)]
     kept: list[Ray] = []
@@ -93,17 +102,17 @@ def forward_rays(
         if ray.interaction_delay:
             if bounded(ray.interaction_delay) < 0:
                 raise ValueError("ray interaction delay must be nonnegative")
-            step = ray.advance if ray.advance >= 0 else definition.phase_advance
-            phase = (ray.phase + step) % definition.phase_steps if definition.phase_steps else ray.phase
-            kept.append(replace(ray, interaction_delay=ray.interaction_delay - 1, phase=phase))
+            kept.append(
+                replace(
+                    ray, interaction_delay=ray.interaction_delay - 1, phase=_held_phase(ray, definition)
+                )
+            )
             meter.charge("update", 2)
             continue
         numerator, denominator = heading_pace(definition, ray.heading)
         wait = checked_work(ray.wait + numerator)
         if wait < denominator:
-            step = ray.advance if ray.advance >= 0 else definition.phase_advance
-            phase = (ray.phase + step) % definition.phase_steps if definition.phase_steps else ray.phase
-            kept.append(replace(ray, wait=bounded(wait), phase=phase))
+            kept.append(replace(ray, wait=bounded(wait), phase=_held_phase(ray, definition)))
             continue
         port, moved = advance_ray(
             replace(ray, wait=wait - denominator),
@@ -125,13 +134,12 @@ def hold_rays(
     if not advance_phase or not definition.phase_steps:
         return rays
     meter.charge("update", len(rays))
-    return merge_rays(
-        tuple(
-            replace(
-                ray,
-                phase=(ray.phase + (ray.advance if ray.advance >= 0 else definition.phase_advance))
-                % definition.phase_steps,
-            )
-            for ray in rays
-        )
-    )
+    return merge_rays(tuple(replace(ray, phase=_held_phase(ray, definition)) for ray in rays))
+
+
+def _held_phase(ray: Ray, definition: SpatialFieldDefinition) -> int:
+    """The phase of a ray that spends this tick at its Node: one signed step, or unchanged
+    on a plain field."""
+    if not definition.phase_steps:
+        return ray.phase
+    return (ray.phase + ray_phase_step(ray, definition.phase_advance)) % definition.phase_steps

@@ -147,7 +147,9 @@ def test_directed_self_exclusion_uses_the_emitted_heading_and_full_ray_identity(
         channel_code=3,
         emission_departed=(pack((4, 0, 0, -1)), pack((0, 0, 0, 0))),
     )
-    own = Ray(1, (0, 0, 0), 4, 1)
+    # The own ray is the one the departure record reconstructs: one Link walked
+    # since its emission event, which sent 4 through -X only.
+    own = Ray(1, (0, 0, 0), 4, 1, steps=1, event_ports=0b000010, event_shares=(0, 4, 0, 0, 0, 0))
     foreign = replace(own, advance=2)
     residents, records = [own, foreign], [record]
     taken = _law(initial)._absorb(0, residents, records, CostMeter(initial.operation_costs))

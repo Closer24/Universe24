@@ -64,6 +64,16 @@ MAX_HEADINGS = 65536
 MAX_HEADING_COMPONENT = 4096
 MAX_RAY_SLOTS = 4096
 
+# Ray-event state (Highlights 3.3, 3.19, 3.20 and 5.1): every ray carries the
+# number of Links it has walked since its event and the information of that
+# event. The fields are hidden variables in this slice: no rule reads them.
+RAY_EVENT_STATE = "ray-event-state-v1"
+EventShares = tuple[int, int, int, int, int, int]
+NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
+# The Detector bit carried by a ray: no Detector event, or a Detector event
+# that drew 0 or 1. No Detector exists yet, so every ray carries 0.
+DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
+
 
 @dataclass(frozen=True, slots=True)
 class Ray:
@@ -85,6 +95,17 @@ class Ray:
     wait: int = 0
     # Generic local coupling residence; independent of the pacing remainder.
     interaction_delay: int = 0
+    # Ray-event state, carried and never read by a rule (ray-event-state-v1):
+    # Links walked since the ray's event, counted up while outbound and down on
+    # the walk back; 1 while the ray travels on its event's heading, 0 once it
+    # is reversed on its line; the six-bit mask of the Ports the event sent to
+    # and the amount it sent through each (six fixed entries, port order, zero
+    # where the mask bit is zero); the Detector bit of the event, 0 for none.
+    steps: int = 0
+    outbound: int = 1
+    event_ports: int = 0
+    event_shares: EventShares = NO_EVENT_SHARES
+    detector: int = DETECTOR_NONE
 
 
 Rays = tuple[Ray, ...]
@@ -538,30 +559,114 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray wait must stay below its heading's pace denominator")
         if bounded(ray.interaction_delay) < 0:
             raise ValueError("ray interaction delay must be nonnegative")
+        validate_ray_event_state(ray)
+
+
+def validate_ray_event_state(ray: Ray) -> None:
+    """The carried event state is bounded: a count, a bit, a Port mask, six shares, a bit pair."""
+    if bounded(ray.steps) < 0:
+        raise ValueError("ray steps since its event must be nonnegative")
+    if type(ray.outbound) is not int or ray.outbound not in (0, 1):
+        raise ValueError("ray outbound must be 1 on the event's heading or 0 reversed")
+    if type(ray.event_ports) is not int or not 0 <= ray.event_ports < 64:
+        raise ValueError("ray event ports must be a six-bit port mask")
+    if type(ray.event_shares) is not tuple or len(ray.event_shares) != 6:
+        raise ValueError("ray event shares require one bounded entry per port")
+    for port, share in enumerate(ray.event_shares):
+        if bounded(share) and not ray.event_ports >> port & 1:
+            raise ValueError("ray event shares must be zero where the event sent nothing")
+    if ray.detector not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1):
+        raise ValueError("ray detector must be 0 (none), 1 (bit 0) or 2 (bit 1)")
+
+
+def dda_step(accumulators: tuple[int, int, int], heading: Heading) -> tuple[int, tuple[int, int, int]]:
+    """One Link along the axis furthest behind the heading; ties take the lowest axis."""
+    length = validate_heading(heading)
+    advanced = [a + abs(h) for a, h in zip(accumulators, heading, strict=True)]
+    axis = max(range(3), key=lambda i: (advanced[i], -i))
+    advanced[axis] -= length
+    port = 2 * axis + (0 if heading[axis] > 0 else 1)
+    return port, (advanced[0], advanced[1], advanced[2])
+
+
+def ray_phase_step(ray: Ray, phase_advance: int) -> int:
+    """The signed phase step of one Link: the ray's own advance or the field's, forward
+    while outbound and backward on the walk back, so a returned ray reaches its event
+    Node with the phase it left with."""
+    step = ray.advance if ray.advance >= 0 else phase_advance
+    return step if ray.outbound else -step
 
 
 def advance_ray(
     ray: Ray, heading: Heading, phase_steps: int = 0, phase_advance: int = 0
 ) -> tuple[int, Ray]:
-    """Choose the port of the axis furthest behind the heading; ties take the lowest axis.
+    """Walk one Link: the DDA port, the step count and, for a Kerengonen ray, the phase.
 
-    A Kerengonen ray also advances its phase by the field's steps per link.
+    An outbound ray counts its steps up and its phase forward; a returning ray counts
+    both down. A returning ray with no steps left is at its event Node, and what it
+    does there is not defined in this slice, so walking it further is refused.
     """
-    length = validate_heading(heading)
-    accumulators = [a + abs(h) for a, h in zip(ray.accumulators, heading, strict=True)]
-    axis = max(range(3), key=lambda i: (accumulators[i], -i))
-    accumulators[axis] -= length
-    port = 2 * axis + (0 if heading[axis] > 0 else 1)
-    step = ray.advance if ray.advance >= 0 else phase_advance
-    phase = (ray.phase + step) % phase_steps if phase_steps else ray.phase
-    return port, replace(
-        ray, accumulators=(accumulators[0], accumulators[1], accumulators[2]), phase=phase
+    port, accumulators = dda_step(ray.accumulators, heading)
+    if ray.outbound:
+        steps = bounded(checked_work(ray.steps + 1))
+    elif ray.steps > 0:
+        steps = ray.steps - 1
+    else:
+        raise ValueError("a returning ray with no steps left is at its event Node")
+    phase = (ray.phase + ray_phase_step(ray, phase_advance)) % phase_steps if phase_steps else ray.phase
+    return port, replace(ray, accumulators=accumulators, phase=phase, steps=steps)
+
+
+def event_stamp(rays: Rays, headings: tuple[Heading, ...]) -> tuple[int, EventShares]:
+    """The mask of Ports one event sends to and the amount per Port, read from its rays.
+
+    Each ray leaves through the Port of its first DDA step. Rays on different
+    headings that share a first Port are one event on that Port, so their amounts
+    add; a share is bounded like any stored value.
+    """
+    mask, shares = 0, [0] * 6
+    for ray, heading in zip(rays, headings, strict=True):
+        port, _ = dda_step(ray.accumulators, heading)
+        mask |= 1 << port
+        shares[port] = checked_work(shares[port] + ray.amount)
+    return mask, (
+        bounded(shares[0]),
+        bounded(shares[1]),
+        bounded(shares[2]),
+        bounded(shares[3]),
+        bounded(shares[4]),
+        bounded(shares[5]),
+    )
+
+
+def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
+    """Make the given rays the events of one interaction: fresh outbound trajectories
+    with no steps walked, each carrying the mask and shares of that interaction. No
+    Detector exists in this slice, so the Detector bit is none."""
+    mask, shares = event_stamp(rays, headings)
+    return tuple(
+        replace(
+            ray,
+            steps=0,
+            outbound=1,
+            event_ports=mask,
+            event_shares=shares,
+            detector=DETECTOR_NONE,
+        )
+        for ray in rays
     )
 
 
 def merge_rays(rays: Rays) -> Rays:
-    """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int], int] = {}
+    """Combine rays that share heading, lattice phase, wave phase and event: one line, so exact.
+
+    Rays of different events never merge, whatever their heading and phase: the
+    event state is part of the identity, so each ray keeps the information of
+    its own event.
+    """
+    combined: dict[
+        tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int], int
+    ] = {}
     for ray in rays:
         key = (
             ray.heading,
@@ -570,11 +675,41 @@ def merge_rays(rays: Rays) -> Rays:
             ray.advance,
             ray.wait,
             ray.interaction_delay,
+            ray.steps,
+            ray.outbound,
+            ray.event_ports,
+            ray.event_shares,
+            ray.detector,
         )
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase, advance, wait, delay)
-        for (heading, accumulators, phase, advance, wait, delay), amount in sorted(combined.items())
+        Ray(
+            heading,
+            accumulators,
+            bounded(amount),
+            phase,
+            advance,
+            wait,
+            delay,
+            steps=steps,
+            outbound=outbound,
+            event_ports=ports,
+            event_shares=shares,
+            detector=detector,
+        )
+        for (
+            heading,
+            accumulators,
+            phase,
+            advance,
+            wait,
+            delay,
+            steps,
+            outbound,
+            ports,
+            shares,
+            detector,
+        ), amount in sorted(combined.items())
         if amount
     )
 

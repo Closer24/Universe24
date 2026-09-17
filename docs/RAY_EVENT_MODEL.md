@@ -4,8 +4,9 @@
 
 This is a design candidate, model identity `ray-event-model-v1`. It records
 Alon Gonen's decisions of 16 and 17 September 2026 in the coordinator's words,
-for review before any implementation. It is not implemented, not a measured
-result and not a claim about nature. Where it contradicts an existing
+for review before any implementation. Its migration is in progress (section 6
+records which steps are done); it is not a measured result and not a claim
+about nature. Where it contradicts an existing
 implementation contract, the contradiction is listed in the migration section;
 nothing here changes runtime behavior until an implementation is published
 against this document under the [published-design rule](../skills/workflow.md#implement-from-a-published-design).
@@ -427,7 +428,11 @@ bond registry).
    exist,
    and the phase is carried by every ray, since every ray is a wave ray. No
    origin reference is stored: the count suffices on a straight line, and no
-   Node keeps anything about the event.
+   Node keeps anything about the event. (Done on 2026-09-17, issue #169
+   feature 1, `ray-event-state-v1`: `Ray` carries `steps`, `outbound`,
+   `event_ports`, `event_shares` and `detector`, stamped by emissions and ray
+   interactions, part of the merge identity, counted down on the walk back,
+   read by no rule; see [ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1).)
 3. Detector as a Node bit in the initialization (position, setting, ticket
    seed): each transfer through a marked Node draws 1 or 0 from the mark's
    ticket sequence, 1 ordinary behavior, 0 return on the same line reversed;
