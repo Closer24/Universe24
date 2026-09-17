@@ -12,11 +12,16 @@ here that touches the engine.
 ## What it shows
 
 - Dark background. A ray is a ray, not a particle: a bright segment about
-  4 px wide on the Link it is crossing, an arrowhead about 10 px long in its
-  heading, and a trail fading over the last six Links it walked since its
-  event. Hue is the phase when the record carries one (grey when it does
-  not). One short label per ray, family and amount, placed only where it is
-  at least 24 px from every other label and overlaps none; otherwise dropped.
+  6 px wide on the Link it is crossing, an arrowhead about 10 px long in its
+  heading, and its whole path since its event as one line of the same width,
+  nearly as bright, so a matter ray reads as one continuous line across the
+  board (`sizes.trail_links` 0; a positive value keeps only that many Links).
+  Matter families have a fixed high-contrast colour and the phase hue shows
+  on the arrowhead (`draw.hue_by_phase`: `arrowhead`, `ray` or `none`; grey
+  when the record carries no phase). A label per ray, family and amount,
+  placed only where it is at least 24 px from every other label and overlaps
+  none, is available (`draw.labels.rays`) and off by default, so that nothing
+  on the board reads as text.
 - A family declared as a field (`field_of` in its `spatial_fields` entry,
   feature 7) is drawn faint and thin, with a short trail, no arrowhead and no
   label. A release, the field rays leaving a Node with the ray that crosses
@@ -50,7 +55,12 @@ here that touches the engine.
   style file (`star`, `plane`, `slab`; `star` by default) and standing at
   the position the record gives for the tick shown. None of them carries
   text.
-- Text is at least 14 px; the page works at 400 px width.
+- Text is at least 14 px; the page works at 400 px width. By default the
+  page shows the board alone: every block of text around it (header, record
+  line, legend, captions, totals, tick counter, controls) is off in
+  `draw.page_text` and switched on there when wanted; playback starts on load
+  with the slow rotation and loops (`motion.autoplay`, `motion.loop`), and
+  the space key pauses and resumes.
 
 ## The look lives in `style.json`
 
@@ -62,10 +72,10 @@ never a code change. Its sections and keys, all of them, are:
 | Section | Keys |
 | --- | --- |
 | `colors` | `background`, `surface`, `scene`, `ink`, `muted`, `line`, `accent`, `lattice`, `box`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
-| `sizes` | `ray_width_px`, `arrowhead_px`, `trail_links`, `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `escape_dot_radius`, `source_size`, `detector_size`, `body_size`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `lattice_alpha`, `box_alpha` |
-| `draw` | `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `silent_field_events` |
+| `sizes` | `ray_width_px`, `arrowhead_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `escape_dot_radius`, `source_size`, `detector_size`, `body_size`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `lattice_alpha`, `box_alpha` |
+| `draw` | `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
 | `caption` | `kinds` (the event kinds listed), `max_per_tick`, `more`, `emissions`, `escapes`, `field_escapes`, `empty`, `totals` (`{family}`, `{in_world}`, `{escaped}`, `{on_links}`, `{held}`, `{sourced}`), `conservation` (`{status}`, `{balanced}`, `{every_tick}`) |
-| `motion` | `rotation_seconds_per_turn`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `contact_stills`, `elevation_deg`, `start_angle_deg` |
+| `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `contact_stills`, `elevation_deg`, `start_angle_deg` |
 
 `viewer.html` reads the style from its inlined `<script type="application/json"
 id="style">` block when the renderer filled it, else from `?style=URL`, else

@@ -11,8 +11,23 @@
     "lattice": "#3f4c59",
     "box": "#7e8c99",
     "families": {
-      "default": {"hue": "phase", "color": "#d5dde5", "saturation": 0.9, "lightness": 0.62, "alpha": 1.0},
-      "field": {"hue": "fixed", "color": "#62b8d3", "alpha": 0.3}
+      "default": {
+        "hue": "fixed",
+        "color": "#ffd166",
+        "saturation": 0.9,
+        "lightness": 0.62,
+        "alpha": 1.0
+      },
+      "field": {
+        "hue": "fixed",
+        "color": "#62b8d3",
+        "alpha": 0.3
+      },
+      "electron": {
+        "hue": "fixed",
+        "color": "#ffd166",
+        "alpha": 1.0
+      }
     },
     "markers": {
       "emission": "#62b8d3",
@@ -31,11 +46,14 @@
     "external_body": "#f5d76e"
   },
   "sizes": {
-    "ray_width_px": 4,
+    "ray_width_px": 6,
     "arrowhead_px": 10,
-    "trail_links": 6,
-    "trail_width_px": 3,
-    "trail_fade": [0.75, 0.08],
+    "trail_links": 0,
+    "trail_width_px": 6,
+    "trail_fade": [
+      1.0,
+      0.75
+    ],
     "field_width_px": 1.5,
     "field_trail_links": 3,
     "field_arrowhead": false,
@@ -51,7 +69,16 @@
     "box_alpha": 0.55
   },
   "draw": {
-    "markers": ["emission", "meeting", "deflection", "conversion", "click", "return", "arrival", "split"],
+    "markers": [
+      "emission",
+      "meeting",
+      "deflection",
+      "conversion",
+      "click",
+      "return",
+      "arrival",
+      "split"
+    ],
     "marker_shapes": {
       "emission": "diamond",
       "meeting": "ring",
@@ -64,18 +91,48 @@
       "escape": "dot",
       "other": "diamond"
     },
-    "labels": {"rays": true, "fields": false, "markers": false, "sources": false, "detectors": false},
+    "labels": {
+      "rays": false,
+      "fields": false,
+      "markers": false,
+      "sources": false,
+      "detectors": false
+    },
     "label_text": "{family} {amount}",
     "escapes": "matter",
     "sources": true,
     "detectors": true,
     "external_bodies": true,
-    "apparatus": {"default": "star", "mirror": "plane", "splitter": "plane", "wall": "slab", "screen": "slab"},
+    "apparatus": {
+      "default": "star",
+      "mirror": "plane",
+      "splitter": "plane",
+      "wall": "slab",
+      "screen": "slab"
+    },
     "trails": true,
-    "silent_field_events": true
+    "hue_by_phase": "arrowhead",
+    "silent_field_events": true,
+    "page_text": {
+      "header": false,
+      "record": false,
+      "legend": false,
+      "captions": false,
+      "totals": false,
+      "tick_counter": false,
+      "controls": false
+    }
   },
   "caption": {
-    "kinds": ["meeting", "deflection", "conversion", "click", "return", "arrival", "split"],
+    "kinds": [
+      "meeting",
+      "deflection",
+      "conversion",
+      "click",
+      "return",
+      "arrival",
+      "split"
+    ],
     "max_per_tick": 3,
     "more": "and {n} more",
     "emissions": true,
@@ -87,6 +144,8 @@
   },
   "motion": {
     "rotation_seconds_per_turn": 120,
+    "autoplay": true,
+    "loop": true,
     "page_ticks_per_second": 4,
     "gif_degrees_per_frame": 5,
     "gif_frames": null,

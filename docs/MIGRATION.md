@@ -794,6 +794,30 @@ draws; the record is unchanged.
   engine released from two rays held by a coupling in the interval they were
   held, which the released-field text does not say (reported to feature 7).
 
+## Ray viewer: clear matter lines, textless autoplay page, 2026-09-17
+
+Model owner's feedback on the second render, applied as defaults of
+`tools/ray_viewer/style.json` so that no change of look needs a code change
+([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+
+- `sizes.trail_links` 0 means the whole path since the ray's event and is
+  the default for matter rays; the trail is as wide (6 px) and nearly as
+  bright as the ray (`trail_fade` [1.0, 0.75]); matter families have a
+  fixed high-contrast colour (`colors.families.default`, `electron` as the
+  example override) and `draw.hue_by_phase` (`arrowhead`, `ray` or `none`)
+  says where the phase hue shows; field rays stay faint.
+- `draw.page_text` holds one boolean per block of text around the board
+  (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`,
+  `controls`), all false by default, and the ray labels (`draw.labels.rays`)
+  are off by default too, so the published page shows the board alone with
+  nothing that reads as text; markers keep their shapes.
+- `motion.autoplay` and `motion.loop`, both true by default: playback starts
+  on load with the slow rotation and wraps at the end; the space key pauses
+  and resumes, undocumented on the page.
+- `render_gif.py` validates the new keys; the page's built-in default stays
+  equal to the file, checked by `tests/test_ray_viewer.py`, which pins these
+  defaults.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

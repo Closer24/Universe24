@@ -936,7 +936,12 @@ recording, so no phase):
   renderer's `validate_style` accepts it and rejects an unknown key), the
   page's built-in default equals it, and a style whose `ray_width_px` is 9
   reaches the inlined page's `style` block while the default one stays in
-  its `style-default` block.
+  its `style-default` block; its defaults (model owner, 2026-09-17) are
+  `trail_links` 0 (the whole path since the ray's event), `ray_width_px` and
+  `trail_width_px` 6, `trail_fade` [1.0, 0.75], a fixed matter colour with
+  `hue_by_phase` on the arrowhead only, every `page_text` flag (`header`,
+  `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`) and
+  every `labels` flag false, and `autoplay` and `loop` true.
 
 The runs document is `ray-viewer-runs-v1`. A GIF or page rendered from it is
 a rendering of the fingerprinted record, not evidence by itself.

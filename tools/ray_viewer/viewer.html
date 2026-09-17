@@ -73,6 +73,7 @@
   .sw.octa { transform: rotate(45deg); width: 9px; height: 9px; }
   .sw.star { background: transparent !important; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 11px solid currentColor; border-radius: 0; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  [hidden] { display: none !important; }
   /* Capture mode, set by the GIF renderer through window.__capture(mode). */
   :root[data-capture] .controls, :root[data-capture] .runs, :root[data-capture] .loader { display: none; }
   :root[data-capture] .stage { height: auto; aspect-ratio: 640 / 380; border-radius: 4px; }
@@ -145,8 +146,23 @@
     "lattice": "#3f4c59",
     "box": "#7e8c99",
     "families": {
-      "default": {"hue": "phase", "color": "#d5dde5", "saturation": 0.9, "lightness": 0.62, "alpha": 1.0},
-      "field": {"hue": "fixed", "color": "#62b8d3", "alpha": 0.3}
+      "default": {
+        "hue": "fixed",
+        "color": "#ffd166",
+        "saturation": 0.9,
+        "lightness": 0.62,
+        "alpha": 1.0
+      },
+      "field": {
+        "hue": "fixed",
+        "color": "#62b8d3",
+        "alpha": 0.3
+      },
+      "electron": {
+        "hue": "fixed",
+        "color": "#ffd166",
+        "alpha": 1.0
+      }
     },
     "markers": {
       "emission": "#62b8d3",
@@ -165,11 +181,14 @@
     "external_body": "#f5d76e"
   },
   "sizes": {
-    "ray_width_px": 4,
+    "ray_width_px": 6,
     "arrowhead_px": 10,
-    "trail_links": 6,
-    "trail_width_px": 3,
-    "trail_fade": [0.75, 0.08],
+    "trail_links": 0,
+    "trail_width_px": 6,
+    "trail_fade": [
+      1.0,
+      0.75
+    ],
     "field_width_px": 1.5,
     "field_trail_links": 3,
     "field_arrowhead": false,
@@ -185,7 +204,16 @@
     "box_alpha": 0.55
   },
   "draw": {
-    "markers": ["emission", "meeting", "deflection", "conversion", "click", "return", "arrival", "split"],
+    "markers": [
+      "emission",
+      "meeting",
+      "deflection",
+      "conversion",
+      "click",
+      "return",
+      "arrival",
+      "split"
+    ],
     "marker_shapes": {
       "emission": "diamond",
       "meeting": "ring",
@@ -198,18 +226,48 @@
       "escape": "dot",
       "other": "diamond"
     },
-    "labels": {"rays": true, "fields": false, "markers": false, "sources": false, "detectors": false},
+    "labels": {
+      "rays": false,
+      "fields": false,
+      "markers": false,
+      "sources": false,
+      "detectors": false
+    },
     "label_text": "{family} {amount}",
     "escapes": "matter",
     "sources": true,
     "detectors": true,
     "external_bodies": true,
-    "apparatus": {"default": "star", "mirror": "plane", "splitter": "plane", "wall": "slab", "screen": "slab"},
+    "apparatus": {
+      "default": "star",
+      "mirror": "plane",
+      "splitter": "plane",
+      "wall": "slab",
+      "screen": "slab"
+    },
     "trails": true,
-    "silent_field_events": true
+    "hue_by_phase": "arrowhead",
+    "silent_field_events": true,
+    "page_text": {
+      "header": false,
+      "record": false,
+      "legend": false,
+      "captions": false,
+      "totals": false,
+      "tick_counter": false,
+      "controls": false
+    }
   },
   "caption": {
-    "kinds": ["meeting", "deflection", "conversion", "click", "return", "arrival", "split"],
+    "kinds": [
+      "meeting",
+      "deflection",
+      "conversion",
+      "click",
+      "return",
+      "arrival",
+      "split"
+    ],
     "max_per_tick": 3,
     "more": "and {n} more",
     "emissions": true,
@@ -221,6 +279,8 @@
   },
   "motion": {
     "rotation_seconds_per_turn": 120,
+    "autoplay": true,
+    "loop": true,
     "page_ticks_per_second": 4,
     "gif_degrees_per_frame": 5,
     "gif_frames": null,
@@ -275,7 +335,22 @@
     els.speed.value = String(state.speed);
     els.orbitLabel.textContent = "Rotate (one turn per " + state.style.motion.rotation_seconds_per_turn + " s)";
     buildLegend();
+    applyPageText();
     if (scene3d) { scene3d.restyle(); }
+  }
+  // draw.page_text: each block of text around the board is shown only when its flag is true.
+  function applyPageText() {
+    var pt = state.style.draw.page_text || {};
+    document.querySelector("header").hidden = !pt.header && !pt.record;
+    els.title.hidden = !pt.header; els.boardLabel.hidden = !pt.header;
+    els.recordLabel.hidden = !pt.record;
+    els.legend.hidden = !pt.legend;
+    els.note.hidden = !pt.captions;
+    els.totals.hidden = !pt.totals;
+    document.querySelector(".status").hidden = !pt.captions && !pt.totals;
+    els.hudTick.hidden = !pt.tick_counter;
+    document.querySelector(".controls").hidden = !pt.controls;
+    els.runs.hidden = !pt.controls || !(state.data && state.data.runs.length > 1);
   }
   function buildLegend() {
     var s = state.style, c = s.colors;
@@ -325,9 +400,10 @@
       b.addEventListener("click", function () { setRun(i); });
       els.runs.appendChild(b);
     });
-    els.runs.hidden = data.runs.length < 2;
     if (!scene3d && window.THREE) scene3d = buildScene();
     setRun(0);
+    applyPageText();
+    if (state.style.motion.autoplay && !state.frozen) setPlaying(true);
   }
   function tryInline(id) {
     var text = document.getElementById(id).textContent.trim();
@@ -434,6 +510,14 @@
   els.orbit.addEventListener("change", function () { state.autoRotate = els.orbit.checked; state.dirty = true; });
   els.trails.addEventListener("change", function () { state.trails = els.trails.checked; if (scene3d) scene3d.apply(); });
   els.orbit.checked = state.autoRotate;
+  document.addEventListener("keydown", function (e) {
+    var tag = (e.target && e.target.tagName) || "";
+    if (e.key === " " && tag !== "INPUT" && tag !== "SELECT" && tag !== "BUTTON" && state.data && !state.frozen) {
+      e.preventDefault();
+      if (!state.playing && state.tick >= state.data.runs[state.run].ticks) setTick(0);
+      setPlaying(!state.playing);
+    }
+  });
 
   // ---------- 3D ----------
   function buildScene() {
@@ -688,9 +772,12 @@
       if (own) return merge(fam.field ? fs.field : fs["default"], own);
       return fam.field ? fs.field : fs["default"];
     }
-    function rayColor(fam, phase) {
+    function rayColor(fam, phase, part) {
       var fs = familyStyle(fam);
-      if (fs.hue === "phase" && phase != null) {
+      var mode = S().draw.hue_by_phase || "ray";
+      var byPhase = fs.hue === "phase" || (part === "head" && mode === "arrowhead") || mode === "ray";
+      if (mode === "none" || fam.field) byPhase = fs.hue === "phase" && mode !== "none";
+      if (byPhase && phase != null) {
         var steps = fam.phase_steps || 8;
         var c = new THREE.Color();
         c.setHSL(((phase % steps) + steps) % steps / steps, fs.saturation == null ? 0.9 : fs.saturation, fs.lightness == null ? 0.62 : fs.lightness);
@@ -718,22 +805,25 @@
         var alpha = fs.alpha == null ? 1 : fs.alpha;
         var width = isField ? sz.field_width_px : sz.ray_width_px;
         var trailLinks = isField ? sz.field_trail_links : sz.trail_links;
+        // trail_links 0: the whole path since the ray's event, fading over its length.
+        var span = trailLinks > 0 ? trailLinks : Math.max(1, t - ray.origin.tick + 1);
         var wantLabel = isField ? dr.labels.fields : dr.labels.rays;
         ray.segments.forEach(function (seg) {
-          var color = rayColor(f, seg.phase != null ? seg.phase : seg.arrival_phase);
+          var phase = seg.phase != null ? seg.phase : seg.arrival_phase;
+          var color = rayColor(f, phase, "ray");
           if (seg.tick === t) {
             var a = world(seg.from), b = endOf(seg);
             placeSegment(segs.take(nSeg++), a, b, width, color, alpha);
             if (!isField || sz.field_arrowhead) {
-              placeHead(heads.take(nHead++), b, tmp.copy(b).sub(a).normalize().clone(), sz.arrowhead_px, color, alpha);
+              placeHead(heads.take(nHead++), b, tmp.copy(b).sub(a).normalize().clone(), sz.arrowhead_px, rayColor(f, phase, "head"), alpha);
             }
             if (wantLabel) {
               var text = template(dr.label_text, { family: ray.family, amount: vec(seg.amount), phase: seg.phase == null ? "" : seg.phase });
               setLabel(label(nLabel++), text, "#" + color.getHexString(), sz.label_font_px, a.clone().add(b).multiplyScalar(0.5));
             }
-          } else if (state.trails && dr.trails && seg.arrival <= t && (t - seg.arrival) < trailLinks) {
+          } else if (state.trails && dr.trails && seg.arrival <= t && (trailLinks === 0 || (t - seg.arrival) < trailLinks)) {
             var age = t - seg.arrival;
-            var fade = sz.trail_fade[0] + (sz.trail_fade[1] - sz.trail_fade[0]) * (trailLinks > 1 ? age / (trailLinks - 1) : 0);
+            var fade = sz.trail_fade[0] + (sz.trail_fade[1] - sz.trail_fade[0]) * (span > 1 ? Math.min(age, span - 1) / (span - 1) : 0);
             placeSegment(segs.take(nSeg++), world(seg.from), endOf(seg), isField ? width : sz.trail_width_px, color, alpha * fade);
           }
         });
@@ -742,9 +832,10 @@
           var last = ray.segments[ray.segments.length - 1];
           var p = world(h.node);
           var dir = tmp2.set(last.heading[0], last.heading[1], last.heading[2]).clone();
-          var color = rayColor(f, last.arrival_phase != null ? last.arrival_phase : last.phase);
+          var heldPhase = last.arrival_phase != null ? last.arrival_phase : last.phase;
+          var color = rayColor(f, heldPhase, "ray");
           placeSegment(segs.take(nSeg++), p.clone().addScaledVector(dir, -0.3), p.clone().addScaledVector(dir, 0.3), width, color, alpha);
-          if (!isField || sz.field_arrowhead) placeHead(heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, sz.arrowhead_px, color, alpha);
+          if (!isField || sz.field_arrowhead) placeHead(heads.take(nHead++), p.clone().addScaledVector(dir, 0.3), dir, sz.arrowhead_px, rayColor(f, heldPhase, "head"), alpha);
           if (wantLabel) setLabel(label(nLabel++), template(dr.label_text, { family: ray.family, amount: vec(ray.amount), phase: "" }), "#" + color.getHexString(), sz.label_font_px, p);
         });
       });
@@ -869,7 +960,11 @@
       if (state.playing && state.data) {
         state.acc += dt * state.speed;
         var T = state.data.runs[state.run].ticks;
-        while (state.acc >= 1) { state.acc -= 1; setTick(state.tick >= T ? 0 : state.tick + 1); }
+        while (state.acc >= 1) {
+          state.acc -= 1;
+          if (state.tick >= T) { if (S().motion.loop) setTick(0); else { setPlaying(false); break; } }
+          else setTick(state.tick + 1);
+        }
       }
       if (state.autoRotate && !reduced && now - state.lastInput > 4000) {
         state.theta += dt * (2 * Math.PI / (S().motion.rotation_seconds_per_turn || 120));
