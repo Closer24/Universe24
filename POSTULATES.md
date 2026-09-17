@@ -932,6 +932,39 @@ which is drawn toward the ray. Gravity is this bending by delay; it is not
 inserted as a force, nothing is absorbed, and momentum is exact. Held source records remain an explicitly labeled interim
 device until the binding couplings exist.
 
+Addition (model owner, 2026-09-17; Highlights 3.26 and 5.3): forces and
+polarization are catalog entries, not engine mechanisms. The engine performs
+only the simple operations: a step on a Link, a phase advance, a split by a
+declared table, a sum, and the one draw at a marked node. Anything that does
+not change how a ray moves between events is therefore a family property in
+the catalog or a coupling table, read only at a meeting, exactly as charge
+is, and no new engine mechanism is added for it. Polarization is such a
+property: a transverse mode perpendicular to the heading, two states for
+light (the two lattice axes perpendicular to an axial heading) and two for
+the electron family (spin), read by the declared couplings at a meeting; a
+circular polarization is not defined and, if wanted, would be a transverse
+direction that turns with the phase plus one handedness bit, again a catalog
+choice. Pauli exclusion is a binding coupling that does not fire for two
+electrons in the same state with the same spin. Polarization is feature 11
+of the ray-event migration (issue #169), after its ten features; none of
+them needs it. The strong interaction is the same pattern: quark families,
+colour a property with three values, the gluon the quark's own field in ray
+form, the binding of three quarks a binding coupling; its short range and
+its growth with distance are expected from one more declared coupling, the
+quark's field rays binding to each other, and whether that yields
+confinement is a research question
+([hypothesis 13](docs/HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other)),
+not an engine decision. The weak interaction is a change of family: an
+N-to-M conversion at an event with its declared invariants (charge, energy,
+momentum). A free particle never decays, because there is no event without
+a meeting and a straight ray does not change; a neutron is a bound group
+whose ticks are events, and a bound group that can decay is a source, and a
+source is a Detector (Highlights 3.19): at each tick it draws with its
+declared ratio as the setting, 1 = the conversion fires, 0 = the group ticks
+on unchanged, so half-life follows. That draw is the one draw of section 22,
+at a node whose Detector bit is set; nothing else in the world draws. None
+of this adds anything to the engine; all of it comes after feature 10.
+
 Postulates 1 to 4 hold under this model without exception; the registry
 exception of postulate 4 and the shared query of section 14 lapsed with
 Highlights section 3.18, deleted on 2026-09-17, and the price stated in

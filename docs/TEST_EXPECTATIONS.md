@@ -55,10 +55,10 @@ not a claim of linear host work.
 
 `test_active_node_contracts.py` exercises receipt and completion at all six Ports
 for the active carrier Node and spatial Node. For the same
-local payload and fixed capacity it varies world extent, unrelated resident/event
+local payload and fixed capacity it varies world extent, unrelated resident
 counts (0, 8, 128) and elapsed model ticks. The measured production-path line counts,
-modeled carrier cost, local event count and recursively retained payload size must
-stay equal. Host world indexes are made unreadable during each local transition.
+modeled carrier cost and recursively retained payload size must stay equal.
+Host world indexes are made unreadable during each local transition.
 Expected outputs remain explicit: one carrier crosses one Link and spatial stock
 64 is owned locally or in outgoing packets.
 These are bounded-work regressions plus state/locality guards, not a timing-based
@@ -598,13 +598,9 @@ cases; the check selector maps every lab source/configuration change to it.
 
 ## Causal event ledger
 
-`test_event_links.py` checks immutable event spacetime through a split/join,
-direct event lookup without separate predecessor lists, current-head updates,
-foreign and forged handle rejection, failed-append atomicity, fixed capacity,
-and that a dependency edge is not a physical link while a capacity failure
-leaves the identity counter unchanged. The quantum event network, the origin
-cells and their suites were deleted on 2026-09-17; the ledger stays until
-issue #164 bucket B.4.
+`test_event_links.py` and the ledger it checked were deleted on 2026-09-17
+under issue #164 bucket B.4 (Highlights 3.20: there is no register), after the
+quantum event network, the origin cells and their suites went the same day.
 
 
 ## Local field impulse and node ownership

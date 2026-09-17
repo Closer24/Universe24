@@ -445,3 +445,47 @@ hold, falsifies the declared couplings or the model. This test waits for
 issue #169 feature 8 and for the strong binding as a declared table; its
 cost is a full coupling table and long runs, and its first target is the
 lightest cases (a two-nucleon bound state and its absence for two protons).
+
+## 13. Confinement from the quark's field rays binding to each other
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.4, 3.5, 3.26) the
+strong interaction is catalog work on the same engine, after feature 10 of
+issue #169: quark families, colour a property with three values, the gluon
+the quark's own field in ray form, the binding of three quarks a binding
+coupling, and no new engine mechanism. The hypothesis raised by the model
+owner on 2026-09-17, open and not measured: one more declared coupling, the
+quark's field rays binding to each other, yields confinement, that is the
+short range of the strong interaction and its growth with distance.
+Highlights expects both from that coupling and leaves whether it holds to a
+run; nothing in the engine decides it.
+
+What the model predicts if the hypothesis holds, with the quark families, the
+colour property, the three-quark binding coupling and the field-to-field
+binding coupling all declared as tables and nothing else changed:
+
+1. Short range: the field rays of a bound group of quarks bind to each other
+   near the group instead of spreading in all directions, so a second group
+   beyond a declared distance is crossed without a meeting, while a charge's
+   field is met at every distance under the same rules.
+2. Growth with distance: the content the bound field rays hold between two
+   quarks grows with their separation instead of falling off as the released
+   field of a charge does.
+3. No free quark: pulling a quark ray away from its group costs content that
+   grows with distance until a meeting produces new events, bound groups
+   again, and no run ends with one quark ray alone on a straight line.
+
+The test: the bound group under load (issue #169, feature 8, then the
+composite of
+[hypothesis 12](#12-one-mass-ladder-and-the-composite-spectrum-from-binding))
+with the field-to-field coupling as one more declared table; measure the
+content held between two quarks against their separation, the distance at
+which a second group is met, and whether a quark ray is ever counted alone,
+with pinned expectations written before the first run. Three outcomes: the
+content grows with separation, the range is short and no lone quark appears
+(the hypothesis stands as stated); the content falls off with distance as
+for charge (the coupling as declared gives no confinement, and a different
+table must be stated before it is run, or the question stays open); or the
+group does not stay bound once the extra coupling is declared (the table is
+wrong, not the engine). Status: open. This hypothesis waits for feature 8
+and for the catalog entries of Highlights 3.26; it moves off this page only
+with a measured result and a fingerprint.

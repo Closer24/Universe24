@@ -81,8 +81,8 @@ alternative is an event on the board.
 There is no replacement API. `core/event_space.py`, `core/event_links.py`,
 `core/event_resolution.py`, the source-envelope modules, the bond registry,
 claim/gather and `fields/record_operations.py` stay until buckets B.3 to B.6
-of the same issue. The source-envelope modules were deleted in the next step,
-below.
+of the same issue. The source-envelope modules, the causal event ledger and
+the bond registry were deleted in the next steps, below.
 
 ## Source envelopes deleted on 2026-09-17
 
@@ -105,9 +105,31 @@ Nodes around it, and no Node retains a source envelope.
   gate went with them. No example declared an envelope source, so no example
   or `tools/check.py` consumer row changed.
 
-There is no replacement API. `core/event_space.py`, `core/event_links.py`,
-`core/event_resolution.py`, the bond registry, claim/gather and
-`fields/record_operations.py` stay until buckets B.4 to B.6 of the same issue.
+## Causal event ledger deleted on 2026-09-17
+
+`core/event_space.py`, `core/event_links.py` and `tests/test_event_links.py`
+were deleted on 2026-09-17 under issue #164 bucket B.4, following
+[HIGHLIGHTS.md](HIGHLIGHTS.md) section 3.20 and the "Where is state stored"
+row of [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md): all the information is on
+the rays, the origin Node keeps nothing and there is no register.
+
+- `DisturbanceEngine` and `SpatialEngine` no longer accept `event_space=`.
+  `NodeEvents(observer)` takes the observer alone; `message()` builds the
+  observer message that `publish()` sends, and `record()`, `require_room()`
+  and `enabled` are gone. Observer messages carry no `event_id` or `parents`.
+- `Packet`, `LocalPlan`, `PendingCycle`, `SpatialPacket` and
+  `PendingSpatialCycle` lost `cause_id`; `SpatialNodeState` lost `cause_id`,
+  `sample_cause_id` and `cost_cause_id`; `DisturbanceNodeState` lost
+  `cause_id`, `event_cursors` and `event_references`; `NodeView` lost
+  `event_heads` and `event_origins`; `LocalContext` lost `cause`.
+- `computation_report()` no longer reports `causal_events`,
+  `causal_event_capacity`, `event_ledger_cost` or
+  `carrier_model_operations_cost`; `state.json` and recorded frames carry no
+  `event_support`, and the playback page draws none. The profile tool reports
+  no `event_history_enabled`.
+
+There is no replacement API. `core/event_resolution.py` and
+`fields/record_operations.py` stay until bucket B.6 of the same issue.
 
 ## Bond registry, claim-gather, lottery capture and occupied-links guard deleted on 2026-09-17
 
@@ -144,10 +166,10 @@ answered at a distance, kept a register at a Node or made a ray wait for room
 There is no replacement API: `capture` is `share` or `threshold`, and the
 Detector mark of Highlights 3.19 (issue #169, feature 2) will own the ticket
 sequence that `core/spatial_state.py` keeps (`TICKET_MODULUS`, `next_ticket`,
-`ticket_draw`, `phase_cosines`). `core/event_space.py`, `core/event_links.py`,
-`core/event_resolution.py` and `fields/record_operations.py` stay until
-buckets B.4 and B.6; the source-envelope modules went with bucket B.3 on the
-same day.
+`ticket_draw`, `phase_cosines`). `core/event_resolution.py` and
+`fields/record_operations.py` stay until bucket B.6; the source-envelope
+modules went with bucket B.3 and the causal event ledger with bucket B.4 on
+the same day.
 
 ## Ray hidden state added on 2026-09-17 (`ray-event-state-v1`)
 

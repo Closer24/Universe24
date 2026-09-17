@@ -9,7 +9,6 @@ import pytest
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import Packet, pack, unpack
-from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.node_services import NodeEvents
 from event_universe.core.spatial_state import SpatialPacket
 from event_universe.core.topology import neighbor_address
@@ -79,10 +78,7 @@ def fixture(owner, port, remote_count):
     initial = parse_initial_state(raw)
     world = Simulation(initial)
     assert len(world.nodes) == remote_count + 1
-    ledger = CausalEventSpace(remote_count + 32)
-    for index in range(remote_count):
-        ledger.append(tick=0, addresses=((20 + index, 20, 20),), owner="state", kind="source")
-    events = NodeEvents(ledger, None)
+    events = NodeEvents(None)
     origin = neighbor_address(SOURCE, port ^ 1, initial.shape, initial.boundary)
 
     if owner == "carrier":
@@ -105,7 +101,7 @@ def fixture(owner, port, remote_count):
                 tick + 1,
                 (1,),
             )
-            return node.last_cost, retained_slots(node), len(ledger.events) - remote_count
+            return node.last_cost, retained_slots(node)
 
     else:
         node = world._spatial._at(SOURCE)
@@ -124,7 +120,7 @@ def fixture(owner, port, remote_count):
                 unpack(value)[0] for packet in packets for row in packet.fields for value in row
             )
             assert local + outgoing == 64
-            return retained_slots(node), len(ledger.events) - remote_count
+            return retained_slots(node)
 
     # The same real services still run; only prohibited host read paths are poisoned.
     world._nodes = world._links = ForbiddenWorld()
@@ -135,7 +131,7 @@ def fixture(owner, port, remote_count):
 
 @pytest.mark.parametrize("owner", ["carrier", "spatial"])
 @pytest.mark.parametrize("port", range(6))
-def test_active_local_transition_is_independent_of_remote_world_and_event_growth(owner, port):
+def test_active_local_transition_is_independent_of_remote_world_size(owner, port):
     observations = []
     for remote_count in (0, 8, 128):
         node, action, result = fixture(owner, port, remote_count)

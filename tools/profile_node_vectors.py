@@ -138,7 +138,6 @@ def state_metrics(world):
         + sys.getsizeof(world._spatial.links._banks)
         + sys.getsizeof(world._spatial._active),
         "shared_initialization_graph_bytes": deep_size(world.initial),
-        "event_history_enabled": world.event_space is not None,
         "model_cost": world.computation_report()["model_operations_cost"],
     }
 

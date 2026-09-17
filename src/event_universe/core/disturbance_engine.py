@@ -2,10 +2,9 @@
 
 from collections.abc import Callable, Mapping
 from dataclasses import replace
-from functools import wraps
 from threading import Lock
 from types import MappingProxyType
-from typing import Concatenate, Self
+from typing import Self
 
 from .conservation_state import InventoryNode, InventoryPacket, InventoryView
 from .coupling_selectors import selected_type_set
@@ -21,7 +20,6 @@ from .disturbance_state import (
     unpack,
 )
 from .event_resolution import CommitResolver, EventResolver, Planner
-from .event_space import CausalEventSpace
 from .node_boundary import validate_record
 from .node_conservation import NodeConservationGuard
 from .node_execution import NodeExecution
@@ -38,20 +36,6 @@ from .spatial_engine import (
 )
 from .spatial_node import SpatialNode
 from .topology import neighbor_address
-
-
-def _consistent_read[**P, T](
-    method: Callable[Concatenate[DisturbanceEngine, P], T],
-) -> Callable[Concatenate[DisturbanceEngine, P], T]:
-    @wraps(method)
-    def read(self: DisturbanceEngine, /, *args: P.args, **kwargs: P.kwargs) -> T:
-        if self.event_space is None:
-            return method(self, *args, **kwargs)
-        with self.event_space.transaction():
-            return method(self, *args, **kwargs)
-
-    return read
-
 
 EventSink = Callable[[dict[str, object]], None]
 
@@ -74,7 +58,6 @@ class DisturbanceEngine:
         spatial_decayer: SpatialDecayer | None = None,
         *,
         record_policy: RecordPolicy,
-        event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
         node_workers: int = 1,
         balance_guard: NodeConservationGuard | None = None,
@@ -97,11 +80,6 @@ class DisturbanceEngine:
         self._step_lock = Lock()
         if self._execution.parallel and resolver is not None:
             raise ValueError("parallel Node execution does not support an event program")
-        if resolver is not None and event_space is None:
-            raise ValueError("an event resolver requires a shared event space")
-        self.event_space = event_space
-        if event_space is not None:
-            event_space.seal_streams()
         self._resolver = resolver
         self._work = WorkLedger()
         self._planner = planner
@@ -132,11 +110,6 @@ class DisturbanceEngine:
             raise ValueError("spatial couplings require an explicitly composed response law")
         if initial.schema_version == 2 and initial.spatial_fields and spatial_decayer is None:
             raise ValueError("schema 2 spatial fields require an explicitly composed decay law")
-        if self.event_space is not None:
-            self.event_space.require_room(
-                len({s.position for s in initial.seeds})
-                + len({s.position for s in initial.spatial_seeds})
-            )
         self._spatial = (
             None
             if spatial_planner is None or not initial.spatial_fields
@@ -146,7 +119,6 @@ class DisturbanceEngine:
                 observer,
                 spatial_coupler,
                 spatial_decayer,
-                event_space=event_space,
                 balance_guard=balance_guard,
                 field_guard=field_guard,
                 execution_planner=field_planner,
@@ -156,7 +128,7 @@ class DisturbanceEngine:
             replace(initial, seeds=(), spatial_seeds=()),
             carrier_planner,
             record_policy,
-            NodeEvents(event_space, observer),
+            NodeEvents(observer),
             NodeAccounting(self._work, self._source_totals),
             self._coupled_types,
             (0,) * 6,
@@ -173,14 +145,6 @@ class DisturbanceEngine:
                 raise ValueError("initial disturbance capacity exceeded") from error
             records[slot] = seed.record
             node.records = tuple(records)
-        if self.event_space is not None:
-            self.event_space.require_room(len(self._nodes))
-            for position in sorted(self._nodes):
-                self._emit("source", position)
-            # Quantum-only Nodes own the same bounded local handles, without
-            # inventing carrier source events or activating ordinary cycles.
-            for position in self.event_space.stream_addresses:
-                self._at(position)
 
     @property
     def _observer(self) -> EventSink | None:
@@ -193,7 +157,6 @@ class DisturbanceEngine:
             self._services.events.set_observer(observer)
 
     @property
-    @_consistent_read
     def nodes(self) -> Mapping[Address3, NodeView]:
         return MappingProxyType(
             {
@@ -207,14 +170,11 @@ class DisturbanceEngine:
                     node.arrival_mask,
                     node.delay_counts,
                     node.committed_cost,
-                    tuple((cursor.stream_id, cursor.head) for cursor in node.event_cursors),
-                    () if node.event_references is None else node.event_references.origins,
                 )
                 for position, node in self._nodes.items()
             }
         )
 
-    @_consistent_read
     def inventory_view(self) -> InventoryView:
         """Expose immutable actual owners for host audits, excluding proposal views."""
         spatial = self._spatial
@@ -277,10 +237,6 @@ class DisturbanceEngine:
                 output=self._links.bank(position),
                 arrival_mask=(0,) * 6,
                 delay_counts=(0,) * 6,
-                event_cursors=() if self.event_space is None else self.event_space.cursors_at(position),
-                event_references=None
-                if self.event_space is None
-                else self.event_space.references_at(position),
             )
         return self._nodes[position]
 
@@ -292,53 +248,22 @@ class DisturbanceEngine:
         event: str,
         position: Address3,
         *,
-        causes: tuple[int, ...] = (),
-        event_cost: int = 0,
         notifications: list[dict[str, object]] | None = None,
         **data: object,
-    ) -> int | None:
-        identity = None
-        if self.event_space is not None:
-            node = self._at(position)
-            parents = causes if node.cause_id is None else (*causes, node.cause_id)
-            entry = self.event_space.append(
-                tick=self.tick,
-                addresses=(position,),
-                owner="disturbance",
-                kind=event,
-                physical_parents=parents,
-                model_cost=event_cost,
-            )
-            identity = node.cause_id = entry.id
-            data = {**data, "event_id": identity, "parents": entry.parents}
+    ) -> None:
         if self._observer is not None:
             message = {"event": event, "tick": self.tick, "position": position, **data}
             if notifications is None:
                 self._observer(message)
             else:
                 notifications.append(message)
-        return identity
 
-    def _record_cause(self, position: Address3) -> int | None:
-        node = self._nodes.get(position)
-        return None if node is None else node.cause_id
-
-    def _commit_emission_cause(self, position: Address3, cause: int) -> None:
-        self._nodes[position].cause_id = cause
-
-    @_consistent_read
     def computation_report(self) -> dict[str, object]:
         """Every begun local cycle is charged once, even while waiting or in flight."""
         report: dict[str, object] = {
             "model_operations_cost": self._work.work,
             "local_cycles_started": self._work.cycles,
         }
-        if self.event_space is not None:
-            report["carrier_model_operations_cost"] = self._work.work
-            report["model_operations_cost"] = self.event_space.model_cost
-            report["causal_events"] = self.event_space.next_id
-            report["causal_event_capacity"] = self.event_space.capacity
-            report["event_ledger_cost"] = self.event_space.model_cost
         if self._resolver is not None:
             report["resolver"] = self._resolver.report()
         return report
@@ -431,8 +356,6 @@ class DisturbanceEngine:
 
     def _escape(self, origin: Address3, slot: int, packet: Packet) -> None:
         """Complete one already validated terminal link; unused allowances are not stock."""
-        if self.event_space is not None:
-            self.event_space.require_room(1)
         values = self.record_values(packet.record)
         for index, payload in enumerate(packet.record.values):
             for component, value in enumerate(unpack(payload)):
@@ -443,7 +366,6 @@ class DisturbanceEngine:
         self._emit(
             "escaped",
             origin,
-            causes=() if packet.cause_id is None else (packet.cause_id,),
             port=packet.port,
             disturbance=self.initial.disturbances[packet.record.type_index].name,
             values=values,
@@ -465,8 +387,6 @@ class DisturbanceEngine:
                         # The receiving Node validates each delivered record once.
                         ready.setdefault(target, []).append((origin, slot, packet))
         for position, deliveries in sorted(ready.items()):
-            if self.event_space is not None:
-                self.event_space.require_room(len(deliveries))
             node = self._at(position)
             batch = tuple(packet for _, _, packet in deliveries)
             node.receive(
@@ -486,11 +406,7 @@ class DisturbanceEngine:
         if not self._step_lock.acquire(blocking=False):
             raise RuntimeError("only one caller may advance a simulation tick")
         try:
-            if self.event_space is None:
-                self._step()
-            else:
-                with self.event_space.transaction():
-                    self._step()
+            self._step()
         finally:
             self._step_lock.release()
 
@@ -571,7 +487,6 @@ class DisturbanceEngine:
             for i in self.initial.disturbances[record.type_index].fields
         }
 
-    @_consistent_read
     def totals(self) -> dict[str, tuple[int, ...]]:
         """Read-only totals include resident originals during waits and link-owned packets."""
         values = (
@@ -595,7 +510,6 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    @_consistent_read
     def source_totals(self) -> dict[str, tuple[int, ...]]:
         return {
             field.name: tuple(
@@ -606,14 +520,12 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    @_consistent_read
     def spatial_values(self, position: Address3) -> dict[str, dict[str, object]]:
         """Read the independent spatial state without inferring source identity."""
         if any(not 0 <= v < n for v, n in zip(position, self.initial.shape, strict=True)):
             raise ValueError("spatial sample position must be within shape")
         return {} if self._spatial is None else self._spatial.values(position)
 
-    @_consistent_read
     def dissipation_totals(self) -> dict[str, tuple[int, ...]]:
         """Signed loss from tracked fields; this diagnostic is not physical inventory."""
         return {
@@ -624,7 +536,6 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    @_consistent_read
     def localized_totals(self) -> dict[str, tuple[int, ...]]:
         """Stationary stock deposited by localizing decay; it is counted in totals()."""
         return {
@@ -635,7 +546,6 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    @_consistent_read
     def escaped_totals(self) -> dict[str, tuple[int, ...]]:
         """Read quantities that completed an open exit, excluding internal bookkeeping."""
         return {
@@ -647,7 +557,6 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    @_consistent_read
     def spatial_accounting(self) -> dict[str, dict[str, object]]:
         return {} if self._spatial is None else self._spatial.accounting()
 
@@ -676,7 +585,6 @@ class DisturbanceEngine:
             extra["movement_credit"] = (record.rate_remainder_code - 1, record.rate_credit_denominator)
         return {"bookkeeping": extra} if extra else {}
 
-    @_consistent_read
     def snapshot(self) -> dict[str, object]:
         """Plain data for headless reports or an explicitly requested renderer."""
         return {
@@ -705,27 +613,7 @@ class DisturbanceEngine:
                     ],
                 }
                 for position, node in sorted(self._nodes.items())
-                if not node.event_cursors or node.cause_id is not None
             ],
-            **(
-                {
-                    "event_support": [
-                        {"position": position, "origins": origins}
-                        for position, node in sorted(self._nodes.items())
-                        if node.event_references is not None
-                        and (
-                            origins := tuple(
-                                origin
-                                for origin in node.event_references.origins
-                                if self.event_space.resolution(origin) is None
-                            )
-                        )
-                    ]
-                }
-                if self.event_space is not None
-                and any(node.event_references is not None for node in self._nodes.values())
-                else {}
-            ),
             "transfers": [
                 {
                     "origin": p.origin,
