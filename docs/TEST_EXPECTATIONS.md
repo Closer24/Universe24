@@ -54,21 +54,18 @@ not a claim of linear host work.
 ## Active contract coverage and shared execution
 
 `test_active_node_contracts.py` exercises receipt and completion at all six Ports
-for the active carrier Node, spatial Node and source-envelope Node. For the same
+for the active carrier Node and spatial Node. For the same
 local payload and fixed capacity it varies world extent, unrelated resident/event
 counts (0, 8, 128) and elapsed model ticks. The measured production-path line counts,
 modeled carrier cost, local event count and recursively retained payload size must
 stay equal. Host world indexes are made unreadable during each local transition.
-Expected outputs remain explicit: one carrier crosses one Link, spatial stock 64
-is owned locally or in outgoing packets, and the source mixer yields amplitude 3/5.
+Expected outputs remain explicit: one carrier crosses one Link and spatial stock
+64 is owned locally or in outgoing packets.
 These are bounded-work regressions plus state/locality guards, not a timing-based
 proof for arbitrary callbacks, whole-world scheduling or remote evaluation.
-The same suite keeps the source-envelope Node's own gate and terminal
-transitions: a null during a frozen pair keeps both operands, mixing
-`(3/5, 4/5)` gives `(-7/25, 24/25)` and the inverse restores the pair; a
-duplicate terminal is charged receive plus read (10) without restarting or
-forwarding; a terminal commits before a later amplitude and prevents
-resurrection.
+The source-envelope Node's cases of this suite (its six-Port transition and its
+gate and terminal transitions) were deleted on 2026-09-17 with the envelope
+modules (issue #164, bucket B.3).
 
 Shared builders live in narrowly scoped `tests/support/` modules. Their imports
 remain dependencies of every consuming test. They do not contain alternate
@@ -95,37 +92,17 @@ preserve exact blobs, including empty files and deleted providers. Old and curre
 dependency selections, dynamic resource consumers and failure evidence remain
 part of the gate; batching does not authorize dropping related tests.
 
-## Source envelopes
+## Source envelopes and null notices (deleted on 2026-09-17)
 
-`test_source_envelope.py` owns the exact 3:4 mixing and inverse interference,
-signed full emission `-25` producing requests `-9` and `-16`, rational complex
-vacuum normalization, changing-denominator residue, finite allowance exhaustion
-and explicit overflow rejection. The integration acceptance of the causal
-contact fields (`test_causal_contact_fields.py`, `test_causal_source_commit.py`,
-`test_funded_envelope.py`, `test_field_phase.py`) was deleted on 2026-09-17
-with the integration layer; the envelope modules stay until issue #164
-bucket B.3.
-
-## Null notices
-
-`test_null_notices.py` owns the Node-level null-notice arithmetic of the source
-envelope: factor 25/9 from a 16/25 null and `None` for vacuum or certain
-occupation; scaled weight clipped at one; notice packets require a factor of at
-least one and an event identity; a null without the option sends nothing and
-keeps scale one; a null with it scales itself and fills one notice slot per
-Port; a received notice waits the control delay, applies, forwards away from
-its arrival Port and is ignored when repeated or at a retired Node; the
-applied bank keeps six identities. Crossing nulls: the correction of a 256/625
-null after a delivered 625/481 is 19721/15625 and completes 625/481 x 625/369
-to 25/9, two corrections telescope to one, a weight that would reach one gives
-none, and a factor below one or a weight above one is rejected; notice packets
-carry an optional (tick, position) key that requires both parts; at the Node
-level a null with the weight law keeps the record (4, 16/25, 1), an
-earlier-ordered notice produces one correction in the correction bank under
-the Node's own key, a later-ordered one produces none, a null without the
-weight law keeps no record, and more than six queued corrections are rejected.
-The world-level cases (the two-arm world, the crossing-null probe and the
-headless run) were deleted on 2026-09-17 with the integration layer.
+`test_source_envelope.py` (the exact 3:4 mixing and inverse interference,
+signed full emission, rational complex vacuum normalization,
+changing-denominator residue, finite allowance exhaustion and overflow
+rejection) and `test_null_notices.py` (the Node-level null-notice arithmetic,
+notice transport, the applied bank and crossing-null corrections) were deleted
+on 2026-09-17 with the source-envelope modules under Highlights section 3.5
+(issue #164, bucket B.3); their integration acceptance had gone with the
+integration layer on the same day. The dated results stay in
+[validation](VALIDATION.md).
 
 
 ## Computational response
