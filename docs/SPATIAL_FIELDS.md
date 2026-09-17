@@ -338,6 +338,7 @@ delay:
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every created ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)), and no rule reads it |
+| `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
@@ -593,7 +594,7 @@ no `assignments`: it assigns through its outputs.
 | `amount` | An integer of at least 1; `{"of": i}`, input i's amount; `{"of": "sum"}`, the sum over the inputs; a split by a table (below); `{"rest_of": j}`, the rest of the content that output j's table splits |
 | `heading` | A Port index 0 to 5 (the unit-axial heading in Port order, which the field's heading table must contain), `"same"` (the source input's heading) or `"reversed"` (its negation) |
 | `phase` | Optional, default `"same"`, the source input's phase; an integer offset k below the phase modulus, the source input's phase plus k; `{"of": i, "offset": k}`, input i's phase plus k; read modulo the field's phase steps |
-| `delay` | Optional nonnegative interaction delay, default 0 |
+| `delay` | Optional nonnegative interaction delay, default 0; or `{"of": i, "table": [six], "per": u}`, a delay by a declared table per the Port input i came through ([binding](#binding-and-gravity-by-delay-ray-binding-v1)) |
 | `input` | Optional source input index, default 0: the input whose heading and phase the output reads by default; every output carries its source input's advance |
 
 The rule's `invariants` are per-ray readouts (`{"field": "amount"}`,
@@ -756,7 +757,16 @@ nothing owned is destroyed and no remainder needs an owner (Highlights
 in the same interval as the F ray, with the residents; the release is a
 departure, not an arrival, so it is no meeting. A ray of a family that has a
 meeting rule releases after the interval's meetings, from the trajectory
-that departs. A G ray crosses Nodes like any ray and releases nothing: a
+that departs. The release does not wait for the clock (Highlights 3.5,
+model owner, 2026-09-17): a field release is information, not a departure
+of matter, so a ray held at a Node by an output-clock delay (`ray_delay`,
+feature 8) is content resident there and releases every interval it is
+held, on all six headings as resident content does, while the clock delays
+only its departure as matter; this slice releases from the departure, which
+at pace 1/1 with no delay is every interval, and a held ray releases on all
+six headings every interval it is held
+([binding](#binding-and-gravity-by-delay-ray-binding-v1)). A G ray crosses
+Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
 lattice alone. A G ray that reaches an open boundary escapes like any ray.
 `release_field` (`core/spatial_state.py`) is the pure function, called by the
@@ -827,6 +837,229 @@ each field ray family with the family it is the field of and its ratio
 none), beside `ray_meeting`, so a Renderer can draw the G rays faint from the
 per-Node `ray_count` and `value` of that family. A world that declares no
 `field_of` runs byte-identically.
+
+### Binding and gravity by delay (`ray-binding-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.4, 3.17 and 3.28; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8; issue #169,
+feature 8): matter is a bound group, binding is the interaction whose result
+is zero events, a bound group is unbound by an arriving ray, and gravity is
+bending by delay. `test_ray_binding.py`
+([expectations](TEST_EXPECTATIONS.md#ray-binding)) is the test.
+
+**Binding.** A `ray_interactions` rule without outputs whose assignments set
+`delay` 1 on its participants binds them: the rays stay resident at the Node
+as a bound group and the rule fires again every interval. The first firing is
+the meeting that forms the group, recorded as every meeting is; each later
+firing, on rays the rule already holds, is the group's tick, an event: the
+participants are stamped as one event on the Ports of their headings
+(`steps` 0, the mask and shares of the group), the Node publishes a
+`bound_tick` record (position, families, amounts, phases, `ray_delay`), and
+each participant's phase advances once per interval by its family's rest
+rate ([wave-ray families](#wave-ray-families-wave-ray-family-v1)), the
+group's clock. A rule that holds its participants once and does not fire
+again (a guarded bounce) forms no lasting group and publishes no tick. The group is matter: a held ray occupies no line ahead of
+it, so it releases its field on all six headings once per interval
+(`release_field`, [released field](#field-as-the-rays-information-released-field-v1)),
+booked as a source like every release. The Node keeps nothing beyond its
+rays: `bound_group` reads the group from them (the outbound rays at their
+event Node with no delay or wait pending, which under this admission are
+exactly the rays a rule holds there), the snapshot lists `bound_groups`
+(position, families, amounts, phases, `ray_delay`) for a Renderer to draw
+matter, and the runner records `ray_binding: "ray-binding-v1"` beside
+`released_field`. A rule assigning a delay above 1 holds its group and ticks
+once per that many intervals; a returned ray resident at its event Node joins
+no binding rule before its inverse split.
+
+**Unbinding.** An earlier declared rule with outputs
+([meetings with outputs](#meetings-with-outputs-ray-meeting-conversion-v1))
+that names a bound participant and an arriving ray fires when such a ray
+arrives, in declared order before the binding rule: its outputs replace the
+participants and leave the Node as new event rays, and the binding rule, with
+its participants gone, no longer fires. Nothing else creates or destroys a
+group; a family with no coupling to the group's families crosses it
+([layers](#layers-ray-layers-v1)).
+
+**Mass as output-clock delay.** A binding rule may declare `"ray_delay": k`,
+the output-clock delay of the Node that holds its group: while the rule
+fires there, every ray of a matter family arriving at that Node waits `k`
+intervals (`interaction_delay` plus `k` on arrival, its phase moving by its
+rate per waiting interval) before it meets anything or departs, so every
+departure of matter from the Node is `k` intervals later than it would be.
+A field ray (a family with `field_of`) is information, not matter: it is
+never delayed by a clock (Highlights 3.5), neither the group's own release,
+which leaves every interval, nor a field ray crossing the Node. This one
+Node-wide wait approximates the six per-face output clocks of Highlights
+3.28 in this slice: one `k` for every face, the register `bound_delay` on
+the Node set by the plan of the cycle in which the rule fired and 0 once
+the group is unbound. The outputs of the unbinding leave in their own
+interval. The world key `ray_delay` of the computation-field hold is a
+different rule and is not admitted with ray interactions.
+
+**Gravity as bending by delay.** A coupling of a light ray with the field of a
+bound family (`light x G`) is an outputs rule whose light output keeps the
+light ray's amount and phase (`heading` `"same"`, `phase` `"same"`) and
+declares `"delay": {"of": 1, "table": [t0, t1, t2, t3, t4, t5], "per": u}`:
+the delay is the whole quanta of `amount_G x t[p] / u` phase steps, `p` the
+Port the field ray came in through (the Port opposite its heading), and the
+rule returns the field ray reversed (the recoil). The engine applies the
+table; the physics is the table. A delay in phase steps is a delay of the
+output-face clock on the side of Port `p` in units of the phase step, the
+smallest time (`k_out x delta_t_min` of Highlights 3.28, `delta_t_min` the
+interval over the phase modulus N), and the ray carries it as `lag`, one
+signed integer per axis toward the lagging side. The fraction the floor
+leaves is a fraction of a clock count, not of content; nothing owned is
+divided. At every departure after the ray has left its event Node through its
+event's Port, a transverse lag that has reached N, one full interval of
+delay on that side, is spent as one Link toward the lagging side, the ray's
+steps up by one, its phase moved by its rate and its heading and event record
+unchanged; a lag on the ray's own axis is spent as one interval of wait. The
+side nearer the heavy Node is where its field comes from, so the light ray's
+line is delayed more on that side and turns toward the mass over the Nodes
+that follow: bending by delay, no formula in the engine. The recoil walks
+back along the field ray's line to the group's Node; what it does there is
+not declared in this slice (a family with no coupling to G crosses it), so
+the momentum the turn moves is booked at the meeting as the meeting's source
+of the momentum field, as for any meeting, and `ray_momentum` reads `amount x
+heading` alone: the transverse momentum of a lag below N is not read out.
+The declared coupling of the recoil to the group (the heavy Node drawn
+toward the ray) is open.
+
+```json
+{"name": "gravity", "participants": [{"type": "light"}, {"type": "G"}],
+ "outputs": [
+   {"field": "light", "amount": {"of": 0}, "heading": "same", "phase": "same",
+    "delay": {"of": 1, "table": [4, 4, 4, 4, 4, 4], "per": 1}},
+   {"field": "G", "amount": {"of": 1}, "heading": "reversed", "input": 1}],
+ "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
+```
+
+**G_eff across the phase width.** With the mass of a group in phase units
+(the sum of its participants' rest rates, m_0 = 1 phase step per interval)
+a fixed fraction of N, the field amount fixed by the content and the table
+fixed, the delay in phase steps is the same integer at every N, the shift of
+the light's line is that integer over N Links, and G_eff = alpha x b / (4 M)
+falls as 1/N^2: the test pins G_eff x N^2 = 64 over N = 2^8, 2^10, 2^12 and
+2^16 at b = 4 (hypothesis 14 of [HYPOTHESES.md](HYPOTHESES.md)). The
+constancy follows from the delay table acting on the field amount and being
+counted in phase steps; a table acting on the rate would give G_eff x N^2
+growing with N.
+
+Admission: `ray_delay` on a rule without outputs only, a nonnegative bounded
+integer; a delay table on an output of a meeting only, naming one input and
+one output, six entries from 0 through `MAX_VALUE` and a unit from 1, the
+input's field unit-axial as every selected field is. No draw, no new
+arithmetic beyond the table's product and floor; a world without a binding
+rule, a `ray_delay` or a delay table runs byte-identically.
+
+### The external body (`external-body-v1`)
+
+The second declared element of a world beside the Detector mark
+([Highlights](HIGHLIGHTS.md) 3.19, model owner 2026-09-17; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 7b; issue #169): a
+Node declared to hold a family with an amount of any width, standing for a
+star, a fixed proton, a large charge or a piece of apparatus. Like the
+Detector it is a declaration, not physics, and bounded Node metadata: the
+kind of mark, the declaration, the momentum with its three accumulators and
+one exact sink counter per family; no rays, no history.
+
+```json
+{"external_bodies": [
+  {"position": [7, 7, 7], "family": "star", "amount": 4096, "charge": 0,
+   "initial_momentum": {"heading": [1, 0, 0], "pace": [1, 4]},
+   "coupling": "sink", "momentum_table": {"G": -1}, "phase": 0}
+]}
+```
+
+**The declaration.** `position`, `family` (a ray spatial field that is not
+itself a field of anything, unit-axial, on the links metric at pace 1, no
+decay) and `amount` (a positive integer of any width: it enters no sum, it
+only sets how much field leaves per interval) are required; `charge` (a
+bounded integer, read by couplings as the family's charge is), `phase` (the
+phase its field rays carry, below the family's width), `initial_momentum`
+(a unit-axial `heading` and a rational `pace` `[n, d]` of Links per interval,
+n at most d; the momentum is the whole quanta of amount x n / d on that
+axis, signed; zero, the default, for a body at rest), `coupling` (`"sink"`,
+the default, or the name of a declared ray interaction) and
+`momentum_table` (family name to sign, -1 attraction toward the source of an
+arriving field ray, 1 repulsion) are optional. One body per Node, never on a
+Detector; a body is never a field family. A world with a body runs under the
+shared Detector admission (schema 1, `link_ticks` 1, the default fixed
+clock, no field rules, spatial interactions or couplings).
+
+**The release.** Every interval the body releases the field of its family,
+the ray field declared `field_of` its family, on all six Port headings: one
+ray per heading of amount `floor(amount x n / d)` by that field's `release`,
+with the body's declared phase, no event, one Link on with the residents.
+The released stock is booked as an explicitly accounted source of the field
+(and of its momentum field when one is bound), exactly as a bound group's
+release of resident content (`release_stock`); the body's amount never
+changes. In an interval the body steps through a Port, that heading is its
+own line ahead of it, which its ray occupies, and it releases nothing there
+(no self-field, Highlights 3.5). A body whose family has no `field_of`
+radiates nothing. A body's Node exists and is active from the start.
+
+**It does not spread.** The body never splits, binds, unbinds, converts or
+decays: it is one flag in the Node's law, and every other step (the
+arrivals, the meetings by table, the stamping, the departures of what
+leaves) is unchanged. No ray of its family exists at its Node.
+
+**The sink.** Whatever arrives at the body's Node is met by its declared
+coupling. Under `"sink"`, every arriving ray, outbound or returning, ends in
+the body's exact sink counter for its family in the arrival interval and is
+booked on the audit's `absorbed_by_bodies` line per field
+(`external_body_totals()`, with the momentum field's components when one is
+bound), an `external_body_absorbed` record naming the body, the Port, the
+family, the amount and the body's momentum after it. The conservation line
+becomes initial + sources = current + dissipated + escaped + annulled +
+absorbed_by_bodies at every completed tick, the sources holding what the
+bodies released; `conserved_at_every_completed_tick` (initial + sources =
+current) is therefore false once a sink has taken anything, as under
+`annul`. A wall, a screen and a beam stop are this default.
+
+**A declared coupling.** Under the name of a declared meeting with outputs
+([meetings](#meetings-with-outputs-ray-meeting-conversion-v1)), the body is
+the participant that never changes: the rule has one role that selects the
+body's family alone and returns it once among its outputs, and the other
+roles name the families it meets. Each interval the Node adds one token of
+the body's family (amount 1, heading +X, the body's phase, no event) to the
+residents, the rule fires over the token and the arriving rays of the
+families it names as an ordinary meeting, and the Node strips the token's
+output before anything leaves, requiring it back unchanged (amount 1, the
+body's phase) or the cycle fails. The event record of the rule's other
+outputs therefore counts the token as one quantum on its Port, +X. A family
+the rule does not name, and every returning ray, ends in the sink as under
+the default. A reversed heading of the arriving ray is a mirror, a split by
+a declared table a beam splitter, a phase offset a phase plate; a
+polarization read is a polarizer once feature 11 exists.
+
+**Motion by fields only.** The body starts with its declared momentum. A
+field ray of a family its `momentum_table` names that ends in its sink
+changes its momentum by sign x amount x heading of the arriving ray, an
+integer vector (-1: toward the source, which lies opposite the arriving
+heading); nothing else moves it, since matter that arrives is absorbed
+without a push, and a coupled family is met by the rule, not the table. Its
+velocity is its momentum over its amount, kept exactly: every interval each
+axis accumulator adds the momentum component, and the body steps one Link
+through the Port of the first axis (x before y before z) whose accumulator
+has reached a whole amount, subtracting the amount; at most one Link per
+interval, never faster than a ray, and a momentum that would exceed the
+amount fails the cycle. The step is a departure like a ray's: the body
+leaves on the packet of that Port (`external_body_step`, with the arrival
+tick), is on the Link for the interval, and the next Node holds all of it
+from the arrival tick, meeting every ray that arrives there in the same
+interval; a body cannot leave an open world. So a small momentum over a huge
+amount moves it rarely and exactly, against an electron it stands still,
+and two stars turn each other over long times.
+
+**The audit.** `external_bodies()` lists every body in declaration order
+with its Node (the Node it steps to while on a Link, `stepping` true), its
+momentum, its accumulators and its sink per family; `external_body_momentum()`
+is the bodies' momentum line, the exact sum. The runner records
+`external_body: "external-body-v1"`, `external_bodies` (each declaration
+with its `positions` per completed tick, `[tick, x, y, z]`, and its final
+state), `external_body_totals` and `external_body_momentum`. A world that
+declares no `external_bodies` runs byte-identically.
 
 ### Funded emission and absorption
 

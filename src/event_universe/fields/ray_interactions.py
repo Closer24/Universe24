@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
+    PORT_HEADINGS,
     RAY_PROPERTIES,
     RAY_VIEW_COMPONENTS,
     Layers,
@@ -117,10 +118,24 @@ def _convert(
         # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
         if unpack(values[5]) != (kind,) or unpack(values[6]) != (definitions[kind].charge,):
             raise ValueError("ray meeting outputs carry the family and charge of their field")
-    produced = tuple(
+    produced = [
         (kind, _output(values, definitions[kind]))
         for kind, values in zip(rule.outputs, converted[0], strict=True)
-    )
+    ]
+    for lag in rule.lags:
+        # ray-binding-v1, Highlights 3.28: the delay by the declared table, per the
+        # Port the source input came through, the whole quanta of amount x entry /
+        # unit in phase steps, laid on the output's face clock on that side.
+        kind, source = inputs[lag.source]
+        port = PORT_HEADINGS.index(definitions[kind].headings[source.heading]) ^ 1
+        delay = checked_work(source.amount * lag.table[port]) // lag.per
+        meter.charge("evaluate")
+        axis, negative = divmod(port, 2)
+        target, ray = produced[lag.output]
+        clocks = list(ray.lag)
+        clocks[axis] = checked_work(clocks[axis] + (-delay if negative else delay))
+        produced[lag.output] = (target, replace(ray, lag=(clocks[0], clocks[1], clocks[2])))
+        meter.charge("update")
     stock: dict[int, int] = {}
     for kind, ray in inputs:
         stock[kind] = checked_work(stock.get(kind, 0) + ray.amount)
@@ -145,10 +160,13 @@ def _meet(
     fields: tuple[FieldDefinition, ...],
     meter: CostMeter,
     costs: OperationCosts,
+    bound: list[int] | None = None,
 ) -> None:
     """The meeting inside one layer: its rules fire over its rays alone, in declared
     order, each group once; the events are written to the candidate bundles. A rule
-    with outputs removes its participants and appends its new event rays."""
+    with outputs removes its participants and appends its new event rays. A rule
+    without outputs that fires and declares `ray_delay` reports it through `bound`
+    (ray-binding-v1): the Node's output-clock delay while its group is held."""
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
@@ -201,6 +219,8 @@ def _meet(
                 candidate[index][slot] = replacement
                 meter.charge("update", 5)
             used.update(group)
+            if bound is not None and rule.ray_delay:
+                bound.append(rule.ray_delay)
 
 
 def apply_ray_interactions(
@@ -211,6 +231,7 @@ def apply_ray_interactions(
     meter: CostMeter,
     costs: OperationCosts,
     layers: Layers | None = None,
+    bound: list[int] | None = None,
 ) -> tuple[Rays, ...]:
     """Build one complete proposal; no physical owner changes before all guards pass.
 
@@ -220,7 +241,8 @@ def apply_ray_interactions(
     unchanged. The layers are derived once by the caller or here from the rules.
     A rule with declared outputs (ray-meeting-conversion-v1) replaces its
     participants by its outputs, new event rays at this Node, with every family's
-    stock exact; nothing is left at the Node.
+    stock exact; nothing is left at the Node. `bound`, when given, collects the
+    `ray_delay` of every binding rule that fired (ray-binding-v1).
     """
     if not rules:
         return rays
@@ -237,7 +259,7 @@ def apply_ray_interactions(
         layer_rules = tuple(
             rule for rule in rules if all(kind in layer for role in rule.participants for kind in role)
         )
-        _meet(layer, layer_rules, rays, candidate, definitions, fields, meter, costs)
+        _meet(layer, layer_rules, rays, candidate, definitions, fields, meter, costs, bound)
     result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
     for index, bundle in enumerate(result):
         if len(bundle) > definitions[index].ray_slots:

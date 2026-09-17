@@ -457,8 +457,9 @@ class SpatialLaw:
         Every resident ray of a family that has a released field releases, at the
         Node it departs from, one field ray per Port heading except its own, each
         carrying the whole quanta of its amount times the release ratio and its
-        phase; resident content (a record holding stock of the family after this
-        interval's emission) releases on all six headings once per interval. The
+        phase; a ray held at the Node (a bound group, ray-binding-v1) and resident
+        content (a record holding stock of the family after this interval's
+        emission) release on all six headings once per interval. The
         released rays leave this interval with the residents. They are booked as an
         explicitly accounted source of their field, and of its momentum field when
         one is bound, so the source ray pays nothing: its amount, phase and heading
@@ -604,6 +605,9 @@ class SpatialLaw:
         # the field ray of feature 7, does not exist yet, so the change is booked as
         # an explicitly accounted source of the momentum field (Highlights 3.15).
         meeting_momentum: list[tuple[int, tuple[int, int, int]]] = []
+        # The output-clock delay of a bound group held here (ray-binding-v1): the
+        # largest ray_delay of the binding rules that fired this cycle.
+        bound: list[int] = []
         if self.ray_interactions:
             met = apply_ray_interactions(
                 tuple(tuple(bundle) for bundle in resident_rays),
@@ -613,6 +617,7 @@ class SpatialLaw:
                 meter,
                 self.costs,
                 self.layers,
+                bound,
             )
             for index, definition in enumerate(self.definitions):
                 if definition.rays and definition.momentum_field is not None:
@@ -939,4 +944,5 @@ class SpatialLaw:
             kept_rays=tuple(kept_rays) if has_rays and any(kept_rays) else (),
             inverse_splits=tuple(inverse_splits),
             annulled=tuple(tuple(v) for v in annulled) if any(any(v) for v in annulled) else (),
+            bound_delay=max(bound, default=0),
         )

@@ -71,19 +71,27 @@ the register quotes for comparison, never a lattice value.
 
 **A coupling** (`couplings.<id>`): `status` (`decided`: everything needed to
 run it is fixed; `open`: a value needed to run it is not), `engine` (the
-identity or the feature of issue #169 that runs it, and whether that has
-`landed` on `main`), `participants` (the ray ids that meet, `"any"` for every
-ray, or `{"apparatus": "external_body"}`), one of `outputs` (the event rays,
-in the format of a `ray_interactions` rule when decided, or the shape of the
-table when not), `binds` (the rays held at the Node, zero events) or `sink`
-(absorption into the accounted sink), `invariants` (the exact sums over inputs
-and outputs; `charge × amount` is appended by the engine) and `note`.
+identity that runs it, and `landed`: true when every mechanism it needs is on
+`main`, false when a feature or a property it needs, colour, spin, the
+group's draw, is not), `participants` (the ray ids that meet, `"any"` for
+every ray, or `{"apparatus": "external_body"}`), one of `outputs` (the event
+rays, in the format of a `ray_interactions` rule when decided, or the shape
+of the table when not), `binds` (the rays held at the Node, zero events) or
+`sink` (absorption into the accounted sink), `invariants` (the exact sums
+over inputs and outputs; `charge × amount` is appended by the engine) and
+`note`. In an external-body coupling `"any"` and `"same"` stand for the met
+family, `"body"` for the body's family and `"setting"` for the body's
+offset; a world writes the names.
 
 **The apparatus** (`apparatus.detector`, `apparatus.external_body`):
 `world_key`, `engine`, `declaration` (the keys a world writes), `does` and
-`note`. The Detector is landed (`detector-mark-v1`, `detector-return-v1`,
-`inverse-split-v1`); the external body is feature 7b, not landed, and the
-parser refuses its key today, which the test checks.
+`note`. Both are landed: the Detector (`detector-mark-v1`,
+`detector-return-v1`, `inverse-split-v1`) and the external body
+(`external-body-v1`, feature 7b), whose record also states the coupling form
+(the body is the participant that never changes, its token returned once
+among the outputs) and the `apparatus_family` a world gives a mirror, a
+splitter or a plate under a declared coupling: rest rate 0, since the token
+must come back with the body's phase, no charge, no field.
 
 `layers` is a note only: layers are derived from the couplings
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), never declared.
@@ -114,7 +122,7 @@ the file, path for path and decider for decider.
 | `couplings.electron_field_turn.strength_table` | The integer table over field content and charge product | A5 |
 | `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign | A5 |
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
-| `couplings.mass_field_delay.outputs.met_ray.delay` | The delay per field amount per Port | A6 |
+| `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |
 | `couplings.quark_binding.table` | The three-quark binding table | hypothesis 12 |
 | `couplings.gluon_gluon_binding.table` | The field-to-field binding table | hypothesis 13 |
@@ -143,12 +151,13 @@ it uses; the layers follow.
 | A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release` |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
 | `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, and the world's `return_mode` |
-| `apparatus.external_body` | `external_bodies[]`, after feature 7b |
+| `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once |
+| A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 
-A bound group (feature 8), a bound group's decay draw and the properties of
-feature 11 have no world key yet; their catalog records wait for those
-features, and no engine rule is added for them
+A bound group's decay draw (the mark drawing at the group's tick), colour and
+the properties of feature 11 have no world key yet; their catalog records
+wait for them, and no engine rule is added for them
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
 
 ## What the catalog is not
@@ -170,9 +179,9 @@ criterion; this file only lists, per entry, the ids it uses.
 under the strict decoder, checks every record and reference, holds the
 undecided table above equal to the file, holds the experiment ids equal to
 the register's, builds a world from the file for every ray a world can select
-today and for every decided coupling the engine runs today (the Born steering
-and the electron's turn at a field ray), runs each for two ticks against
-pinned integers, and checks that a Detector mark parses while the external
-body's key is refused. `tools/check.py` selects it when the catalog, this
+today and for every decided coupling the engine runs today (the Born
+steering, the electron's turn at a field ray, and an external body under the
+absorber, the mirror and the phase plate), runs each for two ticks against
+pinned integers, and checks that a Detector mark parses. `tools/check.py` selects it when the catalog, this
 document, the register or the hypotheses change. Passing it establishes the
 file's contract, not any agreement with nature: that is the register's.

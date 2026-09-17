@@ -508,13 +508,22 @@ Recorded 2026-09-17 from the model owner's statement of that day; open.
 
 **What would falsify it.** A bending that does not fall as 1/N², or that depends on the board size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the board allows.
 
-**Status.** Open. Needs features 7, 7b (the external body) and 8 of issue #169.
+**Status.** Open. Feature 8 (`ray-binding-v1`, 2026-09-17) ran the owner's
+acceptance criterion as `test_ray_binding.py` on a 21^3 board with an
+ordinary bound group of mass N / 4 phase steps per interval in place of the
+external body, b = 4, the delay table `[4, 4, 4, 4, 4, 4]` per unit of the
+field amount: the delay is 16 phase steps at every N, G_eff = 64 / N^2 and
+G_eff x N^2 = 64 exactly for N = 2^8, 2^10, 2^12, 2^16. The constancy follows
+from the delay being counted in phase steps of the field amount, which is
+content and does not scale with N, while the mass does; a table acting on
+the rate would give G_eff x N^2 growing with N. Experiment A6 (the five b,
+the exponent, the linearity in M, feature 7b) is still to run.
 
 ## 15. Time dilation from transit: a moving bound group's clock runs at 1 − v
 
 Recorded 2026-09-17 from the model owner's statement of that day ("speed is a clock slowing, otherwise everything would move at c"); open.
 
-**Statement.** In the ray-event model everything moves at one Link per interval; matter is slower only because the output clock of its bound group delays its departures (Highlights 3.4, 3.28). A bound group that moves one Link every k intervals therefore has speed v = 1/k in units of c, and its internal clock, the binding rule that fires once per resident interval (its tick), fires only while the group is resident: of every k intervals one is spent on a Link with no tick. To first order the moving group's clock rate is (k − 1)/k = 1 − v relative to a group at rest.
+**Statement.** In the ray-event model everything moves at one Link per interval; matter is slower only because the output clock of its bound group delays its departures (Highlights 3.4, 3.28). A bound group that moves one Link every k intervals therefore has speed v = 1/k in units of c, and its internal clock, the binding rule that fires once per resident interval (its tick), fires only while the group is resident: of every k intervals one is spent on a Link with no tick. To first order the moving group's clock rate is (k − 1)/k = 1 − v relative to a group at rest. Highlights 3.28 states the premise as the model's rule ("speed is a clock slowing", model owner, 2026-09-17): there is no kinematic rule in the engine, so the dilation, if it appears, must emerge from this transit and from nothing else.
 
 **Prediction.** Nature measures the rate √(1 − v²) (the Lorentz factor; the muon lifetime in flight). The model as stated predicts 1 − v for a single hop per k intervals; a group whose rays share the transit between them, or whose delay is per face (the six clocks of 3.28), may give a different curve. The run decides: measure the tick count of a bound group at rest and at v = 1/2, 1/3, 1/4, 1/8 over the same number of intervals and compare the ratio with both 1 − v and √(1 − v²).
 

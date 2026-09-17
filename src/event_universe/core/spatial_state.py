@@ -8,6 +8,7 @@ from .disturbance_state import (
     MAX_COMPONENTS,
     MAX_RULES,
     MAX_SLOTS,
+    MAX_VALUE,
     Address3,
     Assignment,
     CostMeter,
@@ -91,6 +92,15 @@ RAY_MEETING = "ray-meeting-conversion-v1"
 # a meeting of a field ray is an ordinary declared rule whose outputs return it
 # reversed as the recoil. A field has no field.
 RELEASED_FIELD = "released-field-v1"
+# Binding and gravity by delay (Highlights 3.4 and 3.28, ray-binding-v1): a rule
+# without outputs whose assignment sets delay 1 binds its participants as a bound
+# group that stays at the Node, ticks every interval and releases its field on all
+# six headings; an earlier outputs rule that names a bound participant and an
+# arriving ray unbinds it; a binding rule may declare the Node's output-clock
+# delay (ray_delay); a meeting output may carry a delay by a declared table per
+# the Port the field ray came through, a lag of the output's face clock in phase
+# steps that turns the ray toward the lagging side one Link per phase modulus.
+RAY_BINDING = "ray-binding-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -127,6 +137,16 @@ DETECTOR_RETURN = "detector-return-v1"
 # ends there into an explicitly accounted sink (annul).
 INVERSE_SPLIT = "inverse-split-v1"
 RETURN_MODES = ("siblings", "straight", "annul")
+# The external body (Highlights 3.19, external-body-v1): the second declared
+# element of a world beside the Detector mark, a Node declared to hold a family
+# with an amount of any width, a charge and a momentum. It radiates the field of
+# its family on all six headings once per interval, booked as a source; it never
+# spreads; whatever arrives is met by its declared coupling, the sink by default;
+# only field rays named by its momentum table move it, one Link per axis when a
+# whole amount has accumulated.
+EXTERNAL_BODY = "external-body-v1"
+MAX_EXTERNAL_BODIES = 4096
+BODY_SINK = -1
 
 
 @dataclass(frozen=True, slots=True)
@@ -154,6 +174,61 @@ class DetectorMark:
             raise ValueError("a Detector setting must be a rational from 0 through 1")
         if type(self.seed) is not int or not 0 <= self.seed < TICKET_MODULUS:
             raise ValueError("a Detector seed must stay below the ticket modulus")
+
+
+@dataclass(frozen=True, slots=True)
+class ExternalBody:
+    """The external body mark of a Node (external-body-v1): bounded Node metadata.
+
+    The declaration (position, family as a spatial field index, amount of any
+    width, charge, the released field's index or -1, the coupling as a ray
+    interaction index or BODY_SINK, the released phase, the momentum table as one
+    sign per spatial field), the momentum with its three exact accumulators, and
+    one exact sink counter per spatial field. No rays, no history.
+    """
+
+    index: int
+    position: Address3
+    family: int
+    amount: int
+    charge: int = 0
+    field: int = -1
+    coupling: int = BODY_SINK
+    phase: int = 0
+    signs: tuple[int, ...] = ()
+    momentum: tuple[int, int, int] = (0, 0, 0)
+    accumulators: tuple[int, int, int] = (0, 0, 0)
+    sink: tuple[int, ...] = ()
+
+    def __post_init__(self) -> None:
+        if type(self.index) is not int or not 0 <= self.index < MAX_EXTERNAL_BODIES:
+            raise ValueError("an external body index must stay below the body capacity")
+        if type(self.position) is not tuple or len(self.position) != 3:
+            raise ValueError("an external body requires a three-integer position")
+        if any(type(c) is not int or bounded(c) < 0 for c in self.position):
+            raise ValueError("an external body position must be nonnegative bounded integers")
+        if type(self.amount) is not int or self.amount < 1:
+            raise ValueError("an external body amount must be a positive integer")
+        if type(self.family) is not int or self.family < 0:
+            raise ValueError("an external body family must be a spatial field index")
+        if type(self.field) is not int or self.field < -1:
+            raise ValueError("an external body field must be a spatial field index or -1")
+        if type(self.coupling) is not int or self.coupling < BODY_SINK:
+            raise ValueError("an external body coupling must be a rule index or the sink")
+        if type(self.phase) is not int or self.phase < 0:
+            raise ValueError("an external body phase must be a nonnegative integer")
+        bounded(self.charge)
+        for vector in (self.momentum, self.accumulators):
+            if type(vector) is not tuple or len(vector) != 3:
+                raise ValueError("an external body momentum requires three integers")
+            for value in vector:
+                checked_work(value)
+        if any(abs(value) >= self.amount for value in self.accumulators):
+            raise ValueError("an external body accumulator stays below its amount")
+        if type(self.signs) is not tuple or any(sign not in (-1, 0, 1) for sign in self.signs):
+            raise ValueError("an external body momentum table holds signs -1, 0 or 1")
+        if type(self.sink) is not tuple or any(type(v) is not int or v < 0 for v in self.sink):
+            raise ValueError("an external body sink holds nonnegative counters")
 
 
 @dataclass(frozen=True, slots=True)
@@ -187,6 +262,12 @@ class Ray:
     event_ports: int = 0
     event_shares: EventShares = NO_EVENT_SHARES
     detector: int = DETECTOR_NONE
+    # Bending by delay (ray-binding-v1, Highlights 3.28): the lag of the ray's
+    # output-face clocks in phase steps, one signed integer per axis, positive
+    # toward the +axis Port. A transverse lag that reaches the phase modulus is
+    # spent as one Link toward the lagging side at the next departure; a lag on
+    # the ray's own axis as one interval of wait. Zero on every created ray.
+    lag: tuple[int, int, int] = (0, 0, 0)
 
 
 Rays = tuple[Ray, ...]
@@ -296,10 +377,30 @@ def validate_ray_participants(
                 for split in rule.splits
             ):
                 raise ValueError("ray meeting table split requires two outputs and the phase modulus")
+            if bounded(rule.ray_delay):
+                raise ValueError("ray_delay is declared by a binding rule, one without outputs")
+            for lag in rule.lags:
+                # ray-binding-v1: a delay by a table per Port on one output, read from
+                # the amount and the Port of one input.
+                if (
+                    not 0 <= lag.output < len(rule.outputs)
+                    or not 0 <= lag.source < len(rule.participants)
+                    or len(lag.table) != 6
+                    or any(type(v) is not int or bounded(v) < 0 for v in lag.table)
+                    or type(lag.per) is not int
+                    or not 1 <= lag.per <= MAX_VALUE
+                ):
+                    raise ValueError(
+                        "a delay table names an output and an input, six Port entries and a unit"
+                    )
         elif rule.splits:
             raise ValueError("a table split requires a meeting with outputs")
+        elif rule.lags:
+            raise ValueError("a delay table requires a meeting with outputs")
         elif any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
+        elif type(rule.ray_delay) is not int or bounded(rule.ray_delay) < 0:
+            raise ValueError("a binding rule's ray_delay is a nonnegative bounded integer")
     for layer in ray_layers(definitions, rules):
         # The indexed selector's capacity bounds one meeting, and a meeting exists
         # only inside a layer: fields of different layers never share it.
@@ -501,14 +602,31 @@ def release_field(
     each with the released amount and the source's phase, no event (mask 0,
     steps 0). The heading the source travels on is the source's own line ahead of
     it, which at link speed the source itself occupies, so it releases nothing
-    there and a straight ray never shares a Node with its own field."""
+    there and a straight ray never shares a Node with its own field. A ray held
+    at the Node by its interaction delay (a bound group, ray-binding-v1) occupies
+    no line ahead of it and releases on all six headings, once per interval."""
     released: list[Ray] = []
     for ray in rays:
         amount = release_amount(ray.amount, definition)
         if amount <= 0:
             continue
-        released.extend(_released(amount, ray.phase, definition, origin.headings[ray.heading]))
+        skip = None if ray.interaction_delay else origin.headings[ray.heading]
+        released.extend(_released(amount, ray.phase, definition, skip))
     return tuple(released)
+
+
+def bound_group(rays: tuple[Rays, ...]) -> tuple[tuple[int, Ray], ...]:
+    """The bound group resident at a Node (ray-binding-v1, Highlights 3.4): the
+    outbound rays at their event Node with no delay or wait pending, as (spatial
+    field, ray) pairs in field and merge-key order. A ray is at its event Node with
+    `steps` 0 only while a rule holds it there and ticks again; every other resident
+    ray has walked a Link, is waiting, or is returned. The Node keeps nothing else."""
+    return tuple(
+        (index, ray)
+        for index, bundle in enumerate(rays)
+        for ray in sorted(bundle, key=ray_merge_key)
+        if ray.outbound and ray.steps == 0 and not ray.interaction_delay and not ray.wait
+    )
 
 
 def release_stock(stock: int, definition: SpatialFieldDefinition) -> Rays:
@@ -859,6 +977,12 @@ class SpatialNodeState:
     # state: seeded from the mark, advanced by one unsalted step per arriving ray.
     detector: DetectorMark | None = None
     detector_ticket: int = 0
+    # The external body this Node holds, whole, when one is declared or has
+    # stepped here (external-body-v1); None at every other Node.
+    body: ExternalBody | None = None
+    # The output-clock delay of the bound group held here (ray-binding-v1): the
+    # intervals every arriving ray waits before it meets or departs; 0 without.
+    bound_delay: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -880,10 +1004,16 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
+    # The output-clock delay declared by the binding rule that fired this cycle.
+    bound_delay: int = 0
     # The inverse splits of this cycle, one per returned ray at its event Node,
     # and the content they annulled per field (inverse-split-v1).
     inverse_splits: tuple[InverseSplit, ...] = ()
     annulled: Values = ()
+    # The external body after this cycle and the Port it steps through, or -1
+    # when it stays (external-body-v1); None at a Node without a body.
+    body: ExternalBody | None = None
+    body_port: int = -1
 
 
 @dataclass(frozen=True, slots=True)
@@ -915,6 +1045,8 @@ class SpatialPacket:
     fields: SpatialBundle
     rays: tuple[Rays, ...] = ()
     phases: SpatialBundle = ()
+    # An external body stepping one Link through this Port (external-body-v1).
+    body: ExternalBody | None = None
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -970,6 +1102,10 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray wait must stay below its heading's pace denominator")
         if bounded(ray.interaction_delay) < 0:
             raise ValueError("ray interaction delay must be nonnegative")
+        if type(ray.lag) is not tuple or len(ray.lag) != 3 or any(type(v) is not int for v in ray.lag):
+            raise ValueError("a ray requires three integer face-clock lags")
+        for value in ray.lag:
+            bounded(value)
         validate_ray_event_state(ray)
 
 
@@ -1085,7 +1221,8 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     """The same wave ray reversed on its line (detector-return-v1).
 
     The heading index becomes the index of the negated heading, outbound becomes 0
-    and the transport accumulators (DDA, pace wait, interaction delay) are reset;
+    and the transport accumulators (DDA, pace wait, interaction delay, face-clock
+    lag) are reset;
     amount, phase, steps, event Ports, event shares and Detector bit are exactly
     what arrived. The Detector admission guarantees the negated heading is in the
     sequence; a field where it is not fails closed.
@@ -1100,6 +1237,7 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         accumulators=(0, 0, 0),
         wait=0,
         interaction_delay=0,
+        lag=(0, 0, 0),
         outbound=0,
     )
 
@@ -1172,7 +1310,9 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
     return tuple(replace(r, detector=ray.detector) for r in stamped), ports
 
 
-RayMergeKey = tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int]
+RayMergeKey = tuple[
+    int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int, tuple[int, int, int]
+]
 
 
 def ray_merge_key(ray: Ray) -> RayMergeKey:
@@ -1189,6 +1329,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.event_ports,
         ray.event_shares,
         ray.detector,
+        ray.lag,
     )
 
 
@@ -1217,6 +1358,7 @@ def merge_rays(rays: Rays) -> Rays:
             event_ports=ports,
             event_shares=shares,
             detector=detector,
+            lag=lag,
         )
         for (
             heading,
@@ -1230,6 +1372,7 @@ def merge_rays(rays: Rays) -> Rays:
             ports,
             shares,
             detector,
+            lag,
         ), amount in sorted(combined.items())
         if amount
     )
@@ -1552,3 +1695,183 @@ def heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], 
 
 def heading_pace(definition: SpatialFieldDefinition, heading: int) -> tuple[int, int]:
     return heading_paces(definition)[heading]
+
+
+# The external body (external-body-v1). Every rule here reads the body's own mark
+# and the rays that arrived at its Node; nothing reads another Node.
+
+
+def body_release(body: ExternalBody, definition: SpatialFieldDefinition, port: int = -1) -> Rays:
+    """The field rays a body releases once per interval: one per Port heading, each
+    the whole quanta of amount x n / d, with the body's declared phase, no event;
+    booked as a source by the Node. In an interval the body steps through a Port,
+    that heading is its own line ahead of it, which its ray occupies, and it
+    releases nothing there (no self-field, Highlights 3.5). The amount enters no
+    sum: the product is a Python integer and only the released ray amount is bounded."""
+    amount = (body.amount * definition.release_numerator) // definition.release_denominator
+    if amount <= 0:
+        return ()
+    skip = PORT_HEADINGS[port] if port >= 0 else None
+    return _released(bounded(amount), body.phase & definition.phase_mask, definition, skip)
+
+
+def body_absorb(
+    body: ExternalBody, index: int, rays: Rays, definition: SpatialFieldDefinition
+) -> ExternalBody:
+    """The sink: the arriving rays of one family end in the body's exact counter for
+    that family, and a field ray of a family the momentum table names changes the
+    momentum by sign x amount x heading (-1 is attraction toward the source, which
+    lies opposite the arriving heading). The body's content never changes."""
+    sink = list(body.sink)
+    momentum = list(body.momentum)
+    sign = body.signs[index] if index < len(body.signs) else 0
+    for ray in rays:
+        sink[index] = checked_work(sink[index] + ray.amount)
+        if sign:
+            heading = definition.headings[ray.heading]
+            for axis in range(3):
+                momentum[axis] = checked_work(momentum[axis] + sign * ray.amount * heading[axis])
+    return replace(body, sink=tuple(sink), momentum=(momentum[0], momentum[1], momentum[2]))
+
+
+def body_step(body: ExternalBody) -> tuple[int, ExternalBody]:
+    """One interval of the body's motion: each axis accumulator adds the momentum
+    component, and the body steps one Link through the Port of the first axis
+    (x before y before z) whose accumulator has reached a whole amount, subtracting
+    the amount; at most one Link per interval, never faster than a ray. Returns
+    the Port, or -1 when it stays, and the body with its new accumulators."""
+    accumulators = [a + m for a, m in zip(body.accumulators, body.momentum, strict=True)]
+    port = -1
+    for axis in range(3):
+        if accumulators[axis] >= body.amount:
+            accumulators[axis] -= body.amount
+            port = 2 * axis
+            break
+        if accumulators[axis] <= -body.amount:
+            accumulators[axis] += body.amount
+            port = 2 * axis + 1
+            break
+    for axis in range(3):
+        # An accumulator only grows past the amount while the body waits its turn
+        # on another axis; it is capped so the mark stays bounded metadata.
+        if accumulators[axis] > 2 * body.amount:
+            raise ValueError("an external body momentum exceeds its amount: faster than a ray")
+        if accumulators[axis] < -2 * body.amount:
+            raise ValueError("an external body momentum exceeds its amount: faster than a ray")
+    return port, replace(body, accumulators=(accumulators[0], accumulators[1], accumulators[2]))
+
+
+def body_coupled_families(body: ExternalBody, initial: InitialState) -> frozenset[int]:
+    """The spatial fields the body's declared coupling rule meets: every role of the
+    rule that does not select the body's family; empty for the sink."""
+    if body.coupling == BODY_SINK:
+        return frozenset()
+    rule = initial.ray_interactions[body.coupling]
+    return frozenset(kind for role in rule.participants for kind in role if kind != body.family)
+
+
+def body_token(body: ExternalBody) -> Ray:
+    """The body as the participant of its coupling rule that never changes: one
+    quantum of its family at the Node, heading 0, no event; the Node strips the
+    rule's unchanged output of it before anything leaves."""
+    return Ray(0, (0, 0, 0), 1, phase=body.phase)
+
+
+def validate_external_bodies(initial: InitialState) -> None:
+    """The admission of external bodies (external-body-v1): the shared Detector
+    admission, one body per Node, never on a Detector, a unit-axial links-metric
+    ray family at pace 1, the family's released field when one is declared, a
+    coupling that is the sink or a declared meeting with outputs in which one role
+    selects the body's family alone and the body is returned unchanged."""
+    if type(initial.external_bodies) is not tuple or len(initial.external_bodies) > MAX_EXTERNAL_BODIES:
+        raise ValueError("external bodies exceed their fixed capacity")
+    if not initial.external_bodies:
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+        or initial.spatial_couplings
+    ):
+        raise ValueError("an external body requires the default fixed H=1 spatial clock")
+    positions = {mark.position for mark in initial.detectors}
+    for expected, body in enumerate(initial.external_bodies):
+        if type(body) is not ExternalBody:
+            raise ValueError("external_bodies require ExternalBody entries")
+        if body.index != expected:
+            raise ValueError("external bodies are indexed in declaration order")
+        if any(c >= length for c, length in zip(body.position, initial.shape, strict=True)):
+            raise ValueError("an external body position must be within shape")
+        if body.position in positions:
+            raise ValueError("a Node carries one external body and no Detector mark beside it")
+        positions.add(body.position)
+        if body.family >= len(initial.spatial_fields) or body.field >= len(initial.spatial_fields):
+            raise ValueError("an external body family must name a ray spatial field")
+        family = initial.spatial_fields[body.family]
+        if family.field_of is not None:
+            raise ValueError("an external body holds a family, not a field")
+        if (
+            not family.rays
+            or family.euclidean
+            or family.pace_numerator != family.pace_denominator
+            or family.decay is not None
+            or any(sum(abs(c) for c in heading) != 1 for heading in family.headings)
+            or any(heading not in family.headings for heading in PORT_HEADINGS)
+        ):
+            raise ValueError("an external body requires a unit-axial unpaced ray family")
+        released = [i for i, d in enumerate(initial.spatial_fields) if d.field_of == body.family]
+        if body.field != (released[0] if released else -1):
+            raise ValueError("an external body radiates the released field of its family")
+        if body.phase >= family.phase_modulus:
+            raise ValueError("an external body phase must be below its family's phase width")
+        if len(body.signs) != len(initial.spatial_fields) or len(body.sink) != len(
+            initial.spatial_fields
+        ):
+            raise ValueError("an external body holds one sign and one sink counter per spatial field")
+        if any(sign and not initial.spatial_fields[i].rays for i, sign in enumerate(body.signs)):
+            raise ValueError("an external body momentum table names ray families")
+        if body.coupling == BODY_SINK:
+            continue
+        if body.coupling >= len(initial.ray_interactions):
+            raise ValueError("an external body coupling names a declared ray interaction")
+        rule = initial.ray_interactions[body.coupling]
+        own = [role for role in rule.participants if role == (body.family,)]
+        if (
+            not rule.outputs
+            or len(own) != 1
+            or any(body.family in role for role in rule.participants if role != (body.family,))
+        ):
+            raise ValueError(
+                "an external body coupling is a meeting with outputs in which one role is the body"
+            )
+        if rule.outputs.count(body.family) != 1:
+            raise ValueError("an external body coupling returns the body once, unchanged")
+
+
+def external_body_names(initial: InitialState) -> list[dict[str, object]]:
+    """The declared bodies for the run record, in declaration order."""
+    return [
+        {
+            "index": body.index,
+            "family": initial.fields[initial.spatial_fields[body.family].field].name,
+            "amount": body.amount,
+            "charge": body.charge,
+            "field": (
+                None if body.field < 0 else initial.fields[initial.spatial_fields[body.field].field].name
+            ),
+            "coupling": (
+                "sink" if body.coupling == BODY_SINK else initial.ray_interactions[body.coupling].name
+            ),
+            "initial_position": list(body.position),
+            "initial_momentum": list(body.momentum),
+        }
+        for body in initial.external_bodies
+    ]

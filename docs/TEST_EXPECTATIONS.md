@@ -828,23 +828,29 @@ world whose rules select one layer meets the same owners in the same order.
 
 `test_ray_viewer.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
-the two unit-axial headings +X and -X) on an open 5 x 3 x 3 board with an
-8-step phase advancing 1 per Link, runs it for six ticks through
-`run_initialization` headless, and reads the record back with
-`tools/ray_viewer/extract.py` ([ray viewer](../tools/ray_viewer/README.md)),
-which never imports the simulator. Lamp A at (1,1,1) holds 3 quanta and
-emits 3 through +X with phase 0; lamp B at (3,1,1) holds 3 and emits 3
-through -X with phase 4; each recoils into its own momentum. The one declared
-coupling, `swap_headings`, fires when two rays with opposite headings whose
-phases sum to 6 meet (1 and 5, what the lamps' phases are after one Link),
-exchanges their headings and sets `delay` 1 on both; energy 6 and momentum
-(0,0,0) are its invariants. The phase condition is what makes it fire once:
-a first draft conditioned on opposite headings alone stayed true after the
-swap, re-fired every interval and held both rays at (2,1,1) for the whole run,
-which is the engine's binding behavior (a rule that keeps setting `delay` on
-its participants), not a defect. The Node (4,1,1) carries a Detector mark with
-setting 1/1 and seed 0, so every arrival there draws 1. Pinned before the
-first run, from the event stream alone (no per-tick recording, so no phase):
+the six unit-axial headings) on an open 5 x 3 x 3 board with an 8-step phase
+advancing 1 per Link, runs it for six ticks through `run_initialization`
+headless, and reads the record back with `tools/ray_viewer/extract.py`
+([ray viewer](../tools/ray_viewer/README.md)), which never imports the
+simulator. Lamp A at (1,1,1) holds 3 quanta and emits 3 through +X with phase
+0; lamp B at (3,1,1) holds 3 and emits 3 through -X with phase 4; each
+recoils into its own momentum. The one declared coupling, `swap_headings`,
+typed to two `quanta` participants, fires when two rays with opposite
+headings whose phases sum to 6 meet (1 and 5, what the lamps' phases are
+after one Link), exchanges their headings and sets `delay` 1 on both; energy
+6 and momentum (0,0,0) are its invariants. The phase condition is what makes
+it fire once: a first draft conditioned on opposite headings alone stayed true
+after the swap, re-fired every interval and held both rays at (2,1,1) for the
+whole run, which is the engine's binding behavior (a rule that keeps setting
+`delay` on its participants), not a defect. The Node (4,1,1) carries a
+Detector mark with setting 1/1 and seed 0, so every arrival there draws 1.
+Since 2026-09-17 (feature 7 merged) the world also declares `G`, the field of
+`quanta` with `release` 1/3 and phase advance 0
+([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)):
+every Node a quanta ray crosses releases, in the interval it departs, one G
+ray of amount floor(3/3) = 1 on each of the five other headings, booked as a
+source. Pinned before the first run, from the event stream alone (no per-tick
+recording, so no phase):
 
 - (a) the rays: four, each of family `quanta` and amount 3. Ray 0 leaves
   (1,1,1) through +X at tick 0 and ray 1 leaves (3,1,1) through -X at tick
@@ -866,8 +872,14 @@ first run, from the event stream alone (no per-tick recording, so no phase):
   coupling and both invariants, tick 2 the outputs leaving, tick 4 the
   Detector PASS with its bit, tick 5 the escapes; `in_world` quanta stays 6
   through tick 4 and is 0 from tick 5, when `escaped` is 6; the run's
-  conservation line reads `passed`, with
-  `accounting_balanced_at_every_completed_tick` true and
+  conservation line reads `not_configured` (the world declares no
+  `conservation` block: with the field G declared, the local audit counted a G
+  ray resident at lamp A's Node in the Node's momentum before the tick-3 cycle
+  but not in the packet that carried it away, and failed with residual
+  momentum (1, 0, 0); that is a suspected defect of the audit under
+  `released-field-v1`, reported and not worked around, so the fixture leaves
+  the audit unconfigured; until 2026-09-17 the world declared it and the line
+  read `passed`), with `accounting_balanced_at_every_completed_tick` true and
   `conserved_at_every_completed_tick` false because the 6 quanta left through
   the open boundary and the runner's escaped totals hold them (the first
   draft of this pin expected true there and had misread that flag, which
@@ -875,8 +887,57 @@ first run, from the event stream alone (no per-tick recording, so no phase):
   `ray-event-state-v1`, `detector-mark-v1` and no unknown event kind;
 - (d) tolerance: the same record with one appended event of an unknown kind
   (`field_release` at tick 3 at (2,1,1)) extracts to the same rays and
-  events plus one generic marker of that kind at that Node and tick, and the
-  record reports `{"field_release": 1}` as unknown.
+  events plus one generic marker of that kind at that Node and tick (drawn,
+  not listed in the caption, which names only the kinds of the caption rule),
+  and the record reports `{"field_release": 1}` as unknown;
+- (e) the field (pinned 2026-09-17 before the first run with `G`, and
+  corrected after it, see below): the four quanta rays walk exactly as in
+  (a), their trails unbroken through the Nodes where they release; six
+  `release` events, each flagged `field`, each with the departing quanta rays
+  as inputs and one G ray of amount 1 per spoke as outputs: at (2,1,1) at
+  ticks 1 and 2 with six spokes each (the two rays' releases share the four
+  transverse Links, so those four G rays carry 2 each and the +X and -X ones
+  1 each, G 10 per release; the tick-1 release has no departing input, the
+  tick-2 one both meeting outputs), at (3,1,1) and (1,1,1) at tick 3 with
+  five spokes each (all but the ray's own +X, respectively -X; G 5 each), and
+  at (4,1,1) and (0,1,1) at tick 4 likewise; 32 G rays in all, so 36 rays; no
+  `split`, `crossing` or `deflection` event; the marked Node (4,1,1) draws
+  for G too, so the clicks are four: tick 3 G 1 (the +X G of the tick-1
+  release), tick 4 quanta 3 and tick 4 G 1 (the +X G of the tick-2 release,
+  arriving with the quanta ray) and tick 6 G 1 (the +X G released at (1,1,1)
+  at tick 3); field escapes, each flagged `field`: four at tick 3 (G 2 each,
+  the transverse rays of tick 1), six at tick 4 (the two axial rays of tick 1
+  and the four transverse of tick 2, G 10), ten at tick 5 (the eight
+  transverse rays of tick 3 and the two riding out with the quanta rays, G
+  10) and eight at tick 6 (the transverse rays of tick 4, G 8), G 36 in all;
+  the run's `source_totals` G 40, `escaped_totals` G 36, `final_totals` G 4
+  (the four axial G rays still inside at tick 6), and the derived per-tick
+  `in_world` G, initial plus the sources through the previous tick minus the
+  escapes, is 0, 0, 10, 12, 12, 12, 4 for ticks 0 to 6; captions never name a
+  release and list at most three events, so tick 3 reads the G click and
+  "field escaped: G 8", tick 4 the two Detector PASS lines and "field escaped:
+  G 10", tick 5 "escaped: quanta 6" and "field escaped: G 10", tick 6 the G
+  click and "field escaped: G 8"; `record.released_field` is
+  `released-field-v1`. The first pin had one release at (2,1,1), at tick 2
+  only, from the released-field text ("in the interval it departs"): the
+  first run showed the engine also releasing at tick 1, while both rays were
+  held at (2,1,1) by the coupling's `delay` (source G 40, not 30; a fourth
+  click at tick 3). That difference between the text and the implementation
+  for a retained ray is feature 7's to settle and is reported with this
+  fixture as the reproduction; this test pins what the record holds and what
+  the extractor reads from it, not the release rule;
+- (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
+  first run): a `run.json` listing one body of family `star`, amount 4096,
+  coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
+  and (2, 8,7,7), extracts to one body at (7,7,7) carrying those rows, so
+  the page draws its picture (chosen by family in `style.json`, `star` by
+  default) at (7,7,7) through tick 1 and at (8,7,7) from tick 2;
+- (f) the style: `tools/ray_viewer/style.json` is a `ray-viewer-style-v1`
+  object whose sections and keys are exactly the documented ones (the
+  renderer's `validate_style` accepts it and rejects an unknown key), the
+  page's built-in default equals it, and a style whose `ray_width_px` is 9
+  reaches the inlined page's `style` block while the default one stays in
+  its `style-default` block.
 
 The runs document is `ray-viewer-runs-v1`. A GIF or page rendered from it is
 a rendering of the fingerprinted record, not evidence by itself.
@@ -1051,6 +1112,91 @@ and `rejected`. Pinned before the first run:
 A world that declares no `field_of` runs byte-identically: the suite is the
 regression, and its run record carries `released_fields: []`.
 
+## External body
+
+`test_external_body.py` builds its boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order) on a periodic 15^3 lattice
+([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)). The
+family `star` is a conserved scalar with an 8-step phase advancing 0 and
+`G`, where declared, is its field, `field_of: "star"`; `light` advances 0 and
+`electron` 1 per Link; every lamp holds its amount and emits it once, funded
+and directed, at phase 0. A tick n is one `step()`: the cycle of interval
+n - 1 (release, meetings, accumulators, departures) and the delivery of tick
+n (arrivals, the sink). The test is parametrized over `sink`, `stars`,
+`uniform`, `mirror` and `rejected`. Pinned before the first run:
+
+- (a) `sink`: a star at (7,7,7) of amount 4096 at rest, momentum table
+  `{"G": -1}`, `G` released at `[1, 2048]`: floor(4096 x 1 / 2048) = 2 per
+  heading, six headings, 12 per tick, booked as a source. A light lamp at
+  (8,5,7) emits 5 along +Y, an electron lamp at (7,7,4) emits 3 along +Z;
+  the rule `turn`, light x G with outputs the light on the G ray's heading
+  and the G ray reversed. After tick n the released G ray of heading h at
+  distance d (1 to n) from the star is at the star plus d x h with amount 2,
+  phase 0, steps d, no event; the light is at (8, 5+n, 7) after ticks 1 and
+  2 with heading 2, steps n, mask 4 and shares (0, 0, 5, 0, 0, 0). In the
+  interval of tick 3 the light meets the +X ray released in the interval of
+  tick 2 at (8,7,7): the light leaves on +X (heading 0, mask 3, shares (5,
+  2, 0, 0, 0, 0), steps n - 2 after tick n, at (6+n, 7, 7)) and the G ray
+  returns reversed, arrives at the star at tick 3 and ends in its sink:
+  sink G 2, momentum (2, 0, 0) (-1 x 2 x (-1, 0, 0), toward the light), so
+  the +X ray at distance n - 1 is missing from tick 3 on. The electron
+  arrives at the star at tick 3 and ends in the sink: sink electron 3, no
+  momentum (the table does not name it). Totals after tick n: G 12n minus
+  2 from tick 3, electron 3 then 0 from tick 3, light 5; source G 12n;
+  `external_body_totals` G 2 and electron 3 from tick 3; the body at (7,7,7)
+  throughout with accumulators (2(n - 3), 0, 0) from tick 3 (2 per interval
+  over 4096: no Link); the bodies' momentum line (2, 0, 0) from tick 3;
+  two `external_body_absorbed` records at tick 3 and no step. The runner
+  writes `external_body: "external-body-v1"`, `external_body_totals` G [2]
+  and electron [3], `external_body_momentum` [2, 0, 0], final totals G 70,
+  and the body's positions [[t, 7, 7, 7] for t = 0..6], final momentum
+  [2, 0, 0] and accumulators [6, 0, 0];
+- (b) `stars`: three stars, `G` released at `[1, 8]`, no lamps and no rule.
+  Star 0 at (4,7,7) and star 1 at (10,7,7), amount 16 (2 per heading, 12
+  per tick), at rest; star 2 at (7,7,2), amount 8 (1 per heading), initial
+  momentum heading +X at pace 1/4, momentum (2, 0, 0); every table
+  `{"G": -1}`. Star 2's accumulator x after tick n is 2n mod 8: 2, 4, 6, 0,
+  2, 4, 6, 0; it steps +X in the intervals of ticks 4 and 8 (`external_body_step`
+  at ticks 3 and 7, Port 0) and is at (7,7,2) through tick 3, (8,7,2)
+  through tick 7 and (9,7,2) at tick 8; in a stepping interval it releases
+  five rays, not the +X one (its own line ahead). Star 0's +X ray and star
+  1's -X ray of the first interval arrive at the other star at tick 6, and
+  one more each tick: from tick 6 each sink holds 2(n - 5), star 0's
+  momentum is (2(n - 5), 0, 0) and star 1's the opposite; accumulators
+  after ticks 6, 7 and 8: 0, 2, 6 for star 0 and 0, -2, -6 for star 1 (no
+  Link over 16). Source G after tick n: 30n - [n >= 4] - [n >= 8], that is
+  30, 60, 90, 119, 149, 179, 209, 238; absorbed 4(n - 5) from tick 6: 4, 8,
+  12; current G: 30, 60, 90, 119, 149, 175, 201, 226. The bodies' momentum
+  line is (2, 0, 0) at every tick and the rays' momentum, amount x heading
+  summed over every G ray, is (-[n >= 4] - [n >= 8], 0, 0), the momentum
+  of the releases (the two skipped +X rays) less that of the absorbed rays
+  (equal and opposite): exact at every tick. No star's Node holds a G ray
+  after any tick;
+- (c) `uniform`: a body at (3,7,7) of amount 6, no field declared, initial
+  momentum heading +Y at pace 1/2: momentum (0, 3, 0). Accumulator y after
+  tick n: 3, 0, 3, 0, 3, 0; steps in the intervals of ticks 2, 4 and 6
+  (`external_body_step` at ticks 1, 3 and 5, Port 2, arrival ticks 2, 4 and
+  6); position (3, 7 + floor(n / 2), 7); totals and sources 0;
+- (d) `mirror`: a body at (7,7,7) of amount 4, family `star` with no field,
+  coupling `mirror`, light x star with outputs the light reversed on its own
+  line and the star returned unchanged; a light lamp at (7,7,3) emits 5
+  along +Z. After ticks 1 to 4 the light is at (7,7,3+n) with heading 4,
+  steps n, mask 16 and shares (0, 0, 0, 0, 5, 0), at tick 4 resident at the
+  body's Node; in the interval of tick 5 the rule fires and the light
+  leaves on -Z (heading 5), amount 5, phase 0, steps n - 4 at (7, 7, 11 - n)
+  after tick n, a new event whose record counts the body's token as one
+  quantum on +X: mask 33 and shares (1, 0, 0, 0, 0, 5). The body is
+  unchanged at every tick (momentum 0, sink empty), no `star` ray exists at
+  any Node, light stays 5 with source 0 and nothing absorbed;
+- (e) `rejected`: amount 0, a family that is a field (`G`), a coupling
+  that names no declared rule, a momentum-table sign 2, two bodies at one
+  Node, a coupling naming a rule in which no role is the body, and a pace
+  above one Link per interval are each rejected at initialization.
+
+A world without `external_bodies` is unchanged: no body Node exists, no
+token is added, no source is booked and the sink line is zero.
+
 ## Detector-owned sampling admission
 
 [Detector sampling tests](../tests/test_detector_sampling_contract.py) accept only
@@ -1151,6 +1297,104 @@ are checked through `phase_cosines` and `phase_sines` directly, a field
 admitting only a power of two (the table-construction guard world uses 32
 phase steps instead of 37).
 
+## Ray binding
+
+`test_ray_binding.py` builds its boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order) on an open 21^3 lattice
+([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
+The family `n` has rest rate 1 on a 3-bit phase (8 steps); `G` is its
+field, `field_of: "n"` with `release: [1, 4]`, rate 0, 16 ray slots;
+`light`, `x` and `p` are families of rate 0 with 8 ray slots. Two lamps at
+(9,10,10) and (11,10,10) hold 8 of `n` each and emit it once, funded and
+directed, toward each other at phase 0, so the two rays meet at the center
+(10,10,10) after tick 1. The binding rule `bind` is `n x n` without outputs,
+assigning `delay` 1 to both participants, invariant energy. The test is
+parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
+`criterion`. Pinned before the first run:
+
+- (a) `binding`: after tick 1 the two `n` rays are at the center with
+  headings 0 and 1, amount 8, phase 1, steps 1, masks 1 and 2 and shares
+  (8, 0, 0, 0, 0, 0) and (0, 8, 0, 0, 0, 0). From tick 2 the rule fires
+  every interval: after tick t (2 to 6) both rays are at the center with
+  steps 0, delay 0, phase t (advanced once per interval by the rest rate
+  1), mask 3 and shares (8, 8, 0, 0, 0, 0), the group's tick being one event
+  on both Ports; `bound_group` reads them, and the snapshot's
+  `bound_groups` is one entry, position (10,10,10), families
+  `["n", "n"]`, amounts `[8, 8]`, phases `[t, t]`, `ray_delay` 0. In the
+  interval of every tick t from 2 the held rays release on all six
+  headings: two rays of amount floor(8 x 1 / 4) = 2 per heading with equal
+  phase merge to one G ray of amount 4 per heading, phase t - 1, steps 0,
+  mask 0, so after tick t the G ray released at tick s (2 to t) is at
+  distance t - s + 1 from the center along every axis with steps t - s + 1
+  and phase s - 1. The G total and the G source total after tick t are both
+  24 (t - 1): 0, 24, 48, 72, 96, 120; the `n` total is 16 with source 0;
+  the spatial accounting balances. The runner records
+  `ray_binding: "ray-binding-v1"` beside `released_field`, and a run of 6
+  ticks writes four `bound_tick` events, one per cycle of ticks 2 to 5 (a
+  cycle record carries the tick it started at; the cycle of tick t completes
+  tick t + 1; the cycle of tick 1 is the meeting that forms the group, not a
+  tick), each with position (10,10,10), families `["n", "n"]`, amounts
+  `[8, 8]`, phases `[t + 1, t + 1]` and `ray_delay` 0;
+- (b) `unbinding`: the rule `ionize`, declared before `bind`, is
+  `n x n x x` with outputs `n` on Port 2 (amount and phase of input 0), `n`
+  on Port 3 (of input 1) and `x` on `"same"` of input 2, invariant energy.
+  A lamp at (10,6,10) emits an `x` ray of amount 3 along +Y: it is at
+  (10,6+t,10) after tick t (1 to 4) and at the center after tick 4, the
+  group intact through tick 4 (G total 72). At tick 5 `ionize` fires and
+  `bind` has no participants left: after tick 5 the `n` rays are at
+  (10,11,10) (heading 2) and (10,9,10) (heading 3), amount 8, phase 5,
+  steps 1, mask 12, shares (0, 0, 11, 8, 0, 0); the `x` ray is at
+  (10,11,10), heading 2, amount 3, phase 0, steps 1, the same mask and
+  shares; `bound_groups` is empty from tick 5 and nothing is left at the
+  center. The departing `n` rays release five headings each in the interval
+  of tick 5 and after: the G total after tick t (5 to 8) is 72 + 20 (t - 4):
+  92, 112, 132, 152, equal to the source; the `n` total is 16 and `x` 3;
+- (c) `ray_delay`: `bind` declares `ray_delay` 2. A lamp at (10,7,10) emits
+  a `p` ray of amount 3 along +Y (a family with no rule, its own layer). It
+  reaches the center after tick 3 with `interaction_delay` 2 and steps 3,
+  is still there after ticks 4 (delay 1) and 5 (delay 0), leaves at tick 6
+  and is at (10,11,10) after tick 6 with steps 4 and at (10,14,10) after
+  tick 9 with steps 7: every departure from the Node waits the declared two
+  intervals. `bound_groups` reports `ray_delay` 2 from tick 2. Without the
+  key the `p` ray is at (10,11,10) after tick 4;
+- (d) `gravity`: the rule `gravity`, declared before `bind`, is `light x G`
+  with outputs `light` (amount of input 0, heading `"same"`, phase
+  `"same"`, `delay` `{"of": 1, "table": [4, 4, 4, 4, 4, 4], "per": 1}`)
+  and `G` (amount of input 1, heading `"reversed"` of input 1), invariant
+  energy. A lamp at (4,14,10) emits a light ray of amount 6 along +X at
+  impact parameter b = 4 above the center. The light is at (4+t,14,10)
+  after tick t (1 to 6), heading 0, steps t, phase 0, mask 1, shares
+  (6, 0, 0, 0, 0, 0), lag (0, 0, 0). At tick 7 it meets at (10,14,10) the G
+  ray released at tick 3 (amount 4, phase 2, steps 4, heading 2, which
+  came in through Port 3): the delay is floor(4 x 4 / 1) = 16 phase steps
+  on the -Y side, 2 full intervals at N = 8. After tick 7 the light is at
+  (11,14,10), steps 1, mask 9, shares (6, 0, 0, 4, 0, 0), lag (0, -16, 0),
+  having left its event Node through its event's Port; after tick 8 at
+  (11,13,10), steps 2, lag (0, -8, 0); after tick 9 at (11,12,10), steps 3,
+  lag (0, 0, 0): turned toward the group by 2 Links; after ticks 10 and 11
+  at (12,12,10) and (13,12,10), steps 4 and 5, on its new line. The recoil,
+  the G ray reversed (heading 3, amount 4, phase 2, mask 9, shares
+  (6, 0, 0, 4, 0, 0)), is at (10,13,10) after tick 7 with steps 1,
+  (10,12,10) after 8, (10,11,10) after 9, at the group's Node (10,10,10)
+  after tick 10 with steps 4, and, crossing it (no coupling of `n` with `G`
+  is declared), at (10,9,10) after tick 11. The G total and source are
+  24 (t - 1) after every tick t of the 11 (the first release of tick 2
+  reaches the open boundary at tick 12); the light total is 6, `n` 16; the
+  accounting balances;
+- (e) `criterion`: the board of (d) with the phase width N = 2^8, 2^10,
+  2^12 and 2^16 (`phase_bits` 8, 10, 12, 16 on every family, no coherence
+  table), the rest rate of `n` scaled to N / 8 so that the group's mass in
+  phase units, M = 2 x N / 8 = N / 4 (the sum of its participants' rates in
+  units of m_0 = 1 phase step per interval), is the same fraction of N:
+  M = 64, 256, 1024, 16384. Everything else is fixed: the light ray, b = 4,
+  the release, the table. After tick 8 the light is at (12,14,10), steps 2,
+  heading 0, with lag (0, -16, 0): the delay is 16 phase steps at every N,
+  below the modulus, so no Link is completed and the lag stays on the ray
+  as its owner. The bending is alpha = 16 / N (Links of shift per Node of
+  passage, exact), G_eff = alpha x b / (4 M) = 64 / N^2 (1/1024, 1/16384,
+  1/262144, 1/67108864), and G_eff x N^2 = 64 for all four N, exactly.
+
 ## Catalog of nature
 
 `test_nature_catalog.py` reads [`catalog/nature.json`](../catalog/nature.json)
@@ -1160,10 +1404,12 @@ boards inline from the file under the shared Detector admission (schema 1,
 headings in Port order) on a periodic 15^3 lattice at the reference width
 (`phase_bits` 3, N = 8): every ray's `phase_advance` and `charge` are its
 catalog record's `rest_rate` and `charge`, a field ray's `field_of` and
-`release` are its record's, and every rule's `participants`, `outputs` and
-`invariants` are its coupling record's. The test is parametrized over
-`records`, `undecided`, `experiments` and `worlds`. Pinned before the first
-run:
+`release` are its record's, every rule's `participants`, `outputs` and
+`invariants` are its coupling record's, and an external-body rule has the
+met family written for `"any"` and `"same"`, the body's family for the
+apparatus role and `"body"`, and 3 for `"setting"`. The test is parametrized
+over `records`, `undecided`, `experiments` and `worlds`. Pinned before the
+first run:
 
 - `records`: the eleven sections; 14 rays and 16 couplings; every ray with
   `kind`, `rest_rate`, `charge`, `phase_bits`, `field` and `note`, a field ray
@@ -1174,10 +1420,11 @@ run:
   `status`, `engine`, `participants` (one to six, each a ray id, a list of
   ray ids, `"any"` or the external body), `invariants` and one of `outputs`,
   `binds`, `sink`; a decided coupling with nothing undecided in its result and
-  landed exactly when it names no apparatus; the external body listing exactly
-  the couplings that name it, `absorber` its default; the Detector's
-  declaration exactly `position`, `setting`, `seed`; the Detector landed, the
-  external body not;
+  its engine landed; the external body listing exactly the couplings that
+  name it, `absorber` its default, its declaration exactly the eight keys of
+  `external-body-v1` and its apparatus family of rest rate 0, charge 0 and no
+  field, not a ray of the catalog; the Detector's declaration exactly
+  `position`, `setting`, `seed`; both apparatus kinds landed;
 - `undecided`: 28 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
   A10, A11, A12, hypothesis 12, hypothesis 13, read from the `### A<n>.` and
   `### B<n>.` headings of the register and the `## <n>.` headings of the
@@ -1200,25 +1447,40 @@ run:
   source total of 5; the charge totals are 5 × charge, −15 for the electron
   and +15 for the positron, 0 for light and for a field; the accounting
   balances at every tick. The couplings the engine runs today are
-  `born_steering` and `electron_field_turn`, in that order. `born_steering`:
-  two light lamps holding 8, at (6,7,7) emitting along +X at phase 0 and at
-  (8,7,7) along −X at phase d, meet at (7,7,7) after tick 1 and are steered
-  at tick 2: at d = 0, 1, 2, 4 the +Y output at (7,8,7) is 16, 14, 8, 0 with
-  phase 0 and the −Y output at (7,6,7) is 0, 2, 8, 16 with phase d, each an
-  event of mask 4, 12, 12, 8 and shares (0, 0, +Y amount, −Y amount, 0, 0)
-  with steps 1, an output of 0 being no ray; nothing is left at (7,7,7); the
-  total is 16 and the source total 0. `electron_field_turn`: an electron lamp
-  holding 5 at (6,7,7) emitting along +X at phase 0 and an `electron_field`
-  lamp holding 1 at (7,8,7) emitting along −Y at phase 0 meet at (7,7,7)
-  after tick 1; at tick 2 the electron leaves on the field ray's heading −Y
-  to (7,6,7) with amount 5, phase 2, steps 1, mask 12 and shares
-  (0, 0, 1, 5, 0, 0), the field ray returns reversed to (7,8,7) with amount
-  1, phase 0, steps 1 and the same mask and shares, and the electron's
-  departure from (7,7,7) releases five field rays of amount 1, phase 1, steps
-  1 and no event, at (8,7,7) heading 0, (6,7,7) heading 1, (7,8,7) heading 2
-  (beside the reversed ray), (7,7,8) heading 4 and (7,7,6) heading 5; the
-  totals are electron 5 and `electron_field` 6, the source totals 0 and 5,
-  the charge totals −15 and 0; nothing is left at (7,7,7). A `detectors` mark
-  at (9,7,7) with setting [1, 1] and seed 0 parses on the light world; an
-  `external_bodies` entry on the same world is refused by the parser as an
-  unknown key.
+  `born_steering`, `electron_field_turn`, `absorber`, `mirror` and
+  `phase_plate`, in that order. `born_steering`: two light lamps holding 8,
+  at (6,7,7) emitting along +X at phase 0 and at (8,7,7) along −X at phase
+  d, meet at (7,7,7) after tick 1 and are steered at tick 2: at d = 0, 1, 2,
+  4 the +Y output at (7,8,7) is 16, 14, 8, 0 with phase 0 and the −Y output
+  at (7,6,7) is 0, 2, 8, 16 with phase d, each an event of mask 4, 12, 12, 8
+  and shares (0, 0, +Y amount, −Y amount, 0, 0) with steps 1, an output of 0
+  being no ray; nothing is left at (7,7,7); the total is 16 and the source
+  total 0. `electron_field_turn`: an electron lamp holding 5 at (6,7,7)
+  emitting along +X at phase 0 and an `electron_field` lamp holding 1 at
+  (7,8,7) emitting along −Y at phase 0 meet at (7,7,7) after tick 1; at tick
+  2 the electron leaves on the field ray's heading −Y to (7,6,7) with amount
+  5, phase 2, steps 1, mask 12 and shares (0, 0, 1, 5, 0, 0), the field ray
+  returns reversed to (7,8,7) with amount 1, phase 0, steps 1 and the same
+  mask and shares, and the electron's departure from (7,7,7) releases five
+  field rays of amount 1, phase 1, steps 1 and no event, at (8,7,7) heading
+  0, (6,7,7) heading 1, (7,8,7) heading 2 (beside the reversed ray), (7,7,8)
+  heading 4 and (7,7,6) heading 5; the totals are electron 5 and
+  `electron_field` 6, the source totals 0 and 5, the charge totals −15 and
+  0; nothing is left at (7,7,7). The three external-body couplings share one
+  light lamp holding 5 at (7,7,7) emitting along +X at phase 1 and one body
+  at (8,7,7) of amount 4096 at rest. `absorber`: the body is of the electron
+  family, charge −3, coupling `"sink"`; the ray ends in its sink in its
+  arrival interval, tick 1: after ticks 1 and 2 no ray is on the board, the
+  totals are light 0 and electron 0, `external_body_totals` light 5 and
+  electron 0, the one body at (8,7,7) with momentum and accumulators zero,
+  not stepping, sink light 5, and the bodies' momentum (0, 0, 0). `mirror`
+  and `phase_plate`: the body is of the apparatus family; after tick 1 the
+  ray is resident at (8,7,7) and at tick 2 the rule fires over it and the
+  body's token: under the mirror the ray is at (7,7,7) after tick 2, heading
+  1, amount 5, phase 1, steps 1, mask 3 and shares (1, 5, 0, 0, 0, 0), the
+  token's quantum on +X beside its own; under the phase plate with setting 3
+  it is at (9,7,7), heading 0, amount 5, phase 4, steps 1, mask 1 and shares
+  (6, 0, 0, 0, 0, 0); nothing is left at (8,7,7), the totals are light 5 and
+  apparatus 0, the body's sink is empty and `external_body_totals` is 0 per
+  family. A `detectors` mark at (9,7,7) with setting [1, 1] and seed 0 parses
+  on the light world. The accounting balances at every tick of every world.

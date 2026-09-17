@@ -7,8 +7,7 @@ the experiment or hypothesis that decides it and is listed in docs/CATALOG.md;
 the register's confrontation entries and the catalog's agree; every ray a world
 can select and every decided coupling the engine runs today is built from the
 file into a minimal inline world, parsed and run for two ticks against pinned
-integers; and the apparatus the catalog says has not landed is refused by the
-parser.
+integers, an external body under each of its decided couplings among them.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Catalog of nature")
 before the first run.
@@ -56,7 +55,10 @@ EXPERIMENT_KEYS = {"rays", "couplings", "apparatus", "note"}
 # The rays a world can select today, in catalog order, and the couplings the engine
 # runs today: a newly decided entry must join these lists and get a world below.
 RUNNABLE_RAYS = ["light", "electron", "positron", "electron_field", "positron_field"]
-RUNNABLE_COUPLINGS = ["born_steering", "electron_field_turn"]
+RUNNABLE_COUPLINGS = ["born_steering", "electron_field_turn", "absorber", "mirror", "phase_plate"]
+# The names a world writes into an external-body coupling of the catalog: the met
+# family for "any" and "same", the body's family for "body", the offset for "setting".
+BODY_NAMES: dict[str, str | int] = {"any": "light", "same": "light", "body": "apparatus", "setting": 3}
 # The Born split of 16 quanta at phase difference d: the +Y and the -Y amounts.
 STEERED = {0: (16, 0), 1: (14, 2), 2: (8, 8), 4: (0, 16)}
 
@@ -132,9 +134,9 @@ def scalar(name: str) -> JsonObject:
     }
 
 
-def spatial_field(rays: JsonObject, name: str) -> JsonObject:
+def spatial_field(records: JsonObject, name: str) -> JsonObject:
     """The world's `spatial_fields` entry for one catalog ray, at the reference width."""
-    ray = rays[name]
+    ray = records[name]
     entry = {
         "field": name,
         "baseline": 0,
@@ -148,15 +150,22 @@ def spatial_field(rays: JsonObject, name: str) -> JsonObject:
         "kerengonen": {"phase_advance": ray["rest_rate"]},
         "charge": ray["charge"],
     }
-    if ray["kind"] == "field":
+    if ray.get("kind") == "field":
         (source,) = ray["field_of"]
         entry |= {"field_of": source, "release": ray["release"]}
     return entry
 
 
-def board(rays: JsonObject, names: list[str], lamps: list[Lamp], rules: list[JsonObject]) -> JsonObject:
-    """A periodic 15^3 board of the named catalog rays; `lamps` are (position, ray,
-    amount, heading index, phase), each a holding lamp that emits once, funded."""
+def board(
+    records: JsonObject,
+    names: list[str],
+    lamps: list[Lamp],
+    rules: list[JsonObject],
+    bodies: list[JsonObject] | None = None,
+) -> JsonObject:
+    """A periodic 15^3 board of the named catalog rays (or the apparatus family);
+    `lamps` are (position, ray, amount, heading index, phase), each a holding lamp
+    that emits once, funded; `bodies` are external-body declarations."""
     return {
         "schema_version": 1,
         "model_id": "nature-catalog-test-v1",
@@ -190,7 +199,7 @@ def board(rays: JsonObject, names: list[str], lamps: list[Lamp], rules: list[Jso
             }
             for index, (_, name, amount, _, _) in enumerate(lamps)
         ],
-        "spatial_fields": [spatial_field(rays, name) for name in names],
+        "spatial_fields": [spatial_field(records, name) for name in names],
         "emissions": [
             {
                 "type": f"lamp_{index}",
@@ -208,6 +217,7 @@ def board(rays: JsonObject, names: list[str], lamps: list[Lamp], rules: list[Jso
             for index, (position, _, _, _, _) in enumerate(lamps)
         ],
         "ray_interactions": rules,
+        **({} if bodies is None else {"external_bodies": bodies}),
     }
 
 
@@ -219,6 +229,23 @@ def rule(name: str, coupling: JsonObject) -> JsonObject:
         "outputs": coupling["outputs"],
         "invariants": coupling["invariants"],
     }
+
+
+def with_names(value: Any) -> Any:
+    """The same rule with the world's names written in: the external body's role
+    becomes its family, and the `field`, `type` and `offset` placeholders their names."""
+    if isinstance(value, dict):
+        if value == {"apparatus": "external_body"}:
+            return {"type": BODY_NAMES["body"]}
+        return {
+            key: BODY_NAMES.get(item, item)
+            if key in ("field", "type", "offset") and isinstance(item, str)
+            else with_names(item)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [with_names(item) for item in value]
+    return value
 
 
 def run(document: JsonObject) -> Simulation:
@@ -320,7 +347,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert all(kind in rays for kind in coupling.get("binds", [])), name
             if coupling["status"] == "decided":
                 assert not undecided({key: coupling[key] for key in results}), name
-                assert engine["landed"] == (name not in external), name
+                assert engine["landed"], name
             else:
                 assert undecided(coupling), name
         for name, item in apparatus.items():
@@ -331,8 +358,21 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert set(apparatus["detector"]["declaration"]) == {"position", "setting", "seed"}
         assert set(apparatus["external_body"]["couplings"]) == external
         assert apparatus["external_body"]["default_coupling"] in external
+        assert set(apparatus["external_body"]["declaration"]) == {
+            "position",
+            "family",
+            "amount",
+            "charge",
+            "phase",
+            "initial_momentum",
+            "coupling",
+            "momentum_table",
+        }
+        piece = apparatus["external_body"]["apparatus_family"]
+        assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
+        assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
-        assert not apparatus["external_body"]["engine"]["landed"]
+        assert apparatus["external_body"]["engine"]["landed"]
         assert len(rays) == 14 and len(couplings) == 16
     elif case == "undecided":
         # (b) Every "undecided" names, in its own record, an entry of the register or
@@ -455,24 +495,55 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert simulation.totals() == {"electron": (5,), "electron_field": (6,)}
         assert simulation.source_totals() == {"electron": (0,), "electron_field": (5,)}
         assert simulation.charge_totals() == {"electron": -15, "electron_field": 0}
-        # The apparatus: a Detector mark parses under the admission these worlds
-        # share; the external body's key is refused while feature 7b has not landed.
-        document = board(rays, ["light"], [((7, 7, 7), "light", 5, 0, 3)], [])
+        # The apparatus. A Detector mark parses under the admission these worlds
+        # share. An external body at (8,7,7) meets a light ray of 5 emitted at
+        # (7,7,7) along +X at phase 1: under the absorber (the sink, a body of the
+        # electron family, a large charge) the ray ends in the body's sink in its
+        # arrival interval; under the mirror and the phase plate (a body of the
+        # apparatus family) it is met at tick 2 and leaves reversed on its line, or
+        # continues with its phase plus the setting, the token counted as one
+        # quantum on +X in the event's shares.
+        body = apparatus["external_body"]
+        piece = body["apparatus_family"]
+        records = rays | {piece["name"]: piece}
+        lamps = [((7, 7, 7), "light", 5, 0, 1)]
+        document = board(records, ["light"], lamps, [])
         document[apparatus["detector"]["world_key"]] = [
             {"position": [9, 7, 7], "setting": [1, 1], "seed": 0}
         ]
         assert len(parse_initial_state(document).detectors) == 1
-        body = apparatus["external_body"]
-        document = board(rays, ["light"], [((7, 7, 7), "light", 5, 0, 3)], [])
-        document[body["world_key"]] = [
-            {
-                "position": [9, 7, 7],
-                "family": "light",
-                "amount": 1,
-                "charge": 0,
-                "initial_momentum": 0,
-                "coupling": body["default_coupling"],
-            }
-        ]
-        with pytest.raises(ValueError, match="unknown keys"):
-            parse_initial_state(document)
+        at_rest = {
+            "index": 0,
+            "position": [8, 7, 7],
+            "stepping": False,
+            "momentum": [0, 0, 0],
+            "accumulators": [0, 0, 0],
+        }
+        sink = {"position": [8, 7, 7], "family": "electron", "amount": 4096, "charge": -3}
+        sink["coupling"] = couplings[body["default_coupling"]]["world_name"]
+        simulation = run(board(records, ["light", "electron"], lamps, [], [sink]))
+        assert simulation.totals() == {"light": (0,), "electron": (0,)}
+        assert not any(any(node.rays) for node in simulation.inventory_view().nodes)
+        assert simulation.external_body_totals() == {"light": (5,), "electron": (0,)}
+        assert simulation.external_bodies() == [at_rest | {"sink": {"light": 5}}]
+        assert simulation.external_body_momentum() == (0, 0, 0)
+        for name, position, product in (
+            ("mirror", (7, 7, 7), event_ray(1, 5, 1, 3, (1, 5, 0, 0, 0, 0))),
+            ("phase_plate", (9, 7, 7), event_ray(0, 5, 4, 1, (6, 0, 0, 0, 0, 0))),
+        ):
+            assert [types_of(p) for p in couplings[name]["participants"][:1]] == [["any"]]
+            declared = {"position": [8, 7, 7], "family": piece["name"], "amount": 4096, "coupling": name}
+            simulation = run(
+                board(
+                    records,
+                    ["light", piece["name"]],
+                    lamps,
+                    [with_names(rule(name, couplings[name]))],
+                    [declared],
+                )
+            )
+            assert rays_at(simulation, position) == [product]
+            assert rays_at(simulation, (8, 7, 7)) == []
+            assert simulation.totals() == {"light": (5,), piece["name"]: (0,)}
+            assert simulation.external_body_totals() == {"light": (0,), piece["name"]: (0,)}
+            assert simulation.external_bodies() == [at_rest | {"sink": {}}]

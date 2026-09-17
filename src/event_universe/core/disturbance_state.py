@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from .spatial_state import (
         DetectorMark,
         EmissionDefinition,
+        ExternalBody,
         FieldGroupDefinition,
         FieldInteractionGuard,
         NodeFieldRuleDefinition,
@@ -188,6 +189,20 @@ class TableSplit:
 
 
 @dataclass(frozen=True, slots=True)
+class LagTable:
+    """A delay assigned to one output of a meeting of rays by a declared integer table,
+    per the Port the source input came through (ray-binding-v1, Highlights 3.28): the
+    whole quanta of `amount x table[port] / per` phase steps of the output's face
+    clock on the side of that Port. The engine applies the table; the physics is the
+    table."""
+
+    output: int
+    source: int
+    table: tuple[int, int, int, int, int, int]
+    per: int = 1
+
+
+@dataclass(frozen=True, slots=True)
 class InteractionDefinition:
     name: str
     left_type: int
@@ -206,6 +221,11 @@ class InteractionDefinition:
     outputs: tuple[int, ...] = ()
     # Splits by a declared table among the outputs, applied after the assignments.
     splits: tuple[TableSplit, ...] = ()
+    # Delays by a declared table per Port, on the outputs of a meeting of rays
+    # (ray-binding-v1), and the output-clock delay a binding rule declares for the
+    # Node that holds its bound group: every arrival there waits this many intervals.
+    lags: tuple[LagTable, ...] = ()
+    ray_delay: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -321,11 +341,15 @@ class InitialState:
     # What a returned ray does at its event Node (inverse-split-v1): siblings,
     # straight or annul; a world without a mark never reads it.
     return_mode: str = "siblings"
+    # The external bodies of the world (external-body-v1): declared marks, one per
+    # Node, in declaration order; a world without one is unchanged.
+    external_bodies: tuple[ExternalBody, ...] = ()
 
     def __post_init__(self) -> None:
         from .spatial_state import (
             RETURN_MODES,
             validate_detector_marks,
+            validate_external_bodies,
             validate_ray_coupling,
             validate_released_field_admission,
         )
@@ -336,6 +360,7 @@ class InitialState:
         validate_ray_coupling(self)
         validate_released_field_admission(self)
         validate_detector_marks(self)
+        validate_external_bodies(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

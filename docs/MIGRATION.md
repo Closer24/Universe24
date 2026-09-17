@@ -610,6 +610,29 @@ record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
 No engine, schema or record change. The prototype under the session
 scratchpad (`gif-electrons-3d`) is superseded by the tool.
 
+## Binding and gravity by delay added on 2026-09-17 (`ray-binding-v1`)
+
+Issue #169, feature 8 ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1);
+Highlights 3.4 and 3.28). A `ray_interactions` rule without outputs whose
+assignments set `delay` 1 binds its participants as a bound group: the rays
+stay at the Node, the rule fires again every interval (the group's tick,
+published as the `bound_tick` record), each phase advances once per interval
+by its rest rate, and a held ray releases its field on all six headings. An
+earlier declared outputs rule naming a bound participant and an arriving ray
+unbinds the group. New keys: `ray_delay` on a binding rule, the Node's
+output-clock delay while it holds the group (every arrival of matter waits
+it, a field ray never, one Node-wide wait for the six per-face clocks), and
+a meeting output's `delay`
+as `{"of": i, "table": [six], "per": u}`, a delay per the Port input i came
+through, carried as the ray's new `lag` field (three signed integers, part
+of the merge key, reset by a return) and spent one Link toward the lagging
+side per phase modulus: gravity as bending by delay. New registers:
+`SpatialPlan.bound_delay`, `SpatialNodeState.bound_delay`; the snapshot lists
+`bound_groups`; the runner records `ray_binding: "ray-binding-v1"`.
+`test_ray_binding.py` pins the acceptance criterion G_eff x N^2 = 64 over
+N = 2^8, 2^10, 2^12, 2^16. Worlds without a binding rule, a `ray_delay` or a
+delay table run byte-identically.
+
 ## Field as the ray's information added on 2026-09-17 (`released-field-v1`)
 
 Issue #169, feature 7, under [Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.15,
@@ -642,6 +665,38 @@ at every Node a ray of the family crosses
   `released_fields` beside `ray_meeting`.
 - Existing worlds without `field_of` run byte-identically; their run record
   carries `released_fields: []`.
+
+## External body added on 2026-09-17 (`external-body-v1`)
+
+Issue #169, feature 7b, Highlights 3.19 (model owner, 2026-09-17; the
+"fixed body" of earlier that day): the world key `external_bodies` declares
+the second apparatus element beside the Detector mark, a Node holding a
+family with an amount of any width, a charge, a phase, an initial momentum
+(heading and pace), a coupling (`"sink"` or a declared ray interaction) and
+a momentum table ([external
+body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)).
+
+- `ExternalBody` in `core/spatial_state.py` (position, family, amount,
+  charge, field, coupling, phase, signs, momentum, accumulators, sink), with
+  `body_release`, `body_absorb`, `body_step`, `body_token`,
+  `body_coupled_families`, `validate_external_bodies` and
+  `external_body_names`; `InitialState.external_bodies`;
+  `SpatialNodeState.body`, `SpatialPlan.body` and `body_port`,
+  `SpatialPacket.body`; the record type registered in `STATE_RECORDS`.
+- `core/spatial_node.py`: a body Node stays active; the body's cycle
+  (`_body_cycle`) strips a coupled body's token, releases its field on six
+  headings booked as a source and steps it by its accumulators; arrivals at
+  a body are met by its coupling (`_body_meet`), the sink by default; the
+  new records `external_body_absorbed` and `external_body_step`.
+- The audit: `SpatialAccounting.record_absorbed`, the engine's
+  `absorbed_by_bodies` line, `external_body_totals()`, `external_bodies()`
+  and `external_body_momentum()` on the engine; the runner's conservation
+  line gains `+ absorbed_by_bodies` and the run record `external_body`,
+  `external_bodies` (with positions per tick), `external_body_totals` and
+  `external_body_momentum`; a body cannot leave an open world.
+- Worlds without `external_bodies` are byte-identical. New test module
+  `tests/test_external_body.py` (sink, stars, uniform, mirror, rejected),
+  pinned in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md#external-body).
 
 ## Records as owners deleted on 2026-09-17
 
@@ -726,14 +781,59 @@ exists on the board.
   record and reference, holds every undecided entry to the register and the
   hypotheses and to the table in `CATALOG.md`, builds a world from the file
   for every ray a world can select and every decided coupling the engine runs
-  today and runs it for two ticks against pinned integers, and checks that the
-  parser refuses the external body's key while feature 7b has not landed.
-  `tools/check.py` selects it when the catalog, its document, the register or
-  the hypotheses change; `MANIFEST.in` ships the catalog with the tests.
+  today and runs it for two ticks against pinned integers, an external body
+  under each of its decided couplings among them. `tools/check.py` selects it
+  when the catalog, its document, the register or the hypotheses change;
+  `MANIFEST.in` ships the catalog with the tests.
+- Written against features 7b (`external-body-v1`) and 8 (`ray-binding-v1`),
+  which landed the same day: the absorber, the mirror and the phase plate are
+  decided and run, the external body's record states the eight keys of its
+  declaration, its coupling form and the apparatus family a coupled body
+  needs, and the binding and gravity couplings name `ray-binding-v1` as their
+  engine with their tables open.
 - Documentation: [the catalog of nature](CATALOG.md), a row in the
   [documentation index](README.md), a sentence in the
   [register](EXPERIMENTS.md), the expectations in
   [test expectations](TEST_EXPECTATIONS.md#catalog-of-nature).
+## Ray viewer: releases, fields, style file and sidecar, 2026-09-17
+
+The first render of a feature 7 run and the model owner's reading of the
+page on a phone (2026-09-17) changed what the [ray viewer](../tools/ray_viewer/README.md)
+draws; the record is unchanged.
+
+- `extract.py` resolves rays per family: a field family (`field_of`) passes
+  Nodes in silence, leaves a Node with a departing matter ray as a `release`
+  (its own event kind, flagged `field`, never a marker or a caption line, the
+  source ray's trail unbroken), and makes a meeting only where it leaves a
+  Node changed; escapes and field-only events carry a `field` flag; a body's
+  `external_body_absorbed` ends the rays it took; the per-tick `in_world`
+  figure now adds the sources recorded by `spatial_cycle` through the
+  previous tick, which equals a recording's totals tick by tick (the earlier
+  figure ignored sources and could fall below the amount on the Links);
+  captions list only meetings, Detector events and inverse splits, at most
+  three per tick, then the escapes once; `--sidecar` names a recording per
+  record, and a recording whose fingerprints differ from the run's is refused;
+  `external_bodies` are read from `run.json` with their `positions` per tick.
+- `viewer.html` draws no text on the board except one `family amount` label
+  per matter ray, placed only where it is at least 24 px from every other
+  label and overlaps none; rays about 4 px wide with a 10 px arrowhead and a
+  trail fading over six Links; event kinds by marker shape and colour with a
+  legend under the canvas; matter escapes as a dot, field escapes as
+  nothing; sources, Detector marks and external bodies as shapes without
+  text, a body's picture chosen by family and moving with its recorded
+  position; captions clamped to two lines at phone width.
+- `style.json` (`ray-viewer-style-v1`) holds every colour, size, drawing,
+  caption and motion rule, by the model owner's decision that a change of
+  look is a file edit and a re-render; the page inlines or fetches it,
+  `render_gif.py --style` inlines it and takes its defaults from it.
+- `record_sidecar.py` writes `ray-recording.json` beside a record by
+  replaying it on the run's own source tree, refusing any other.
+- `tests/test_ray_viewer.py` pins the widened world (a released field, the
+  body positions and the style file); the fixture no longer declares a
+  `conservation` block, because the local audit failed on a field ray at a
+  lamp Node (reported, not worked around), and its pins record that the
+  engine released from two rays held by a coupling in the interval they were
+  held, which the released-field text does not say (reported to feature 7).
 
 ## Primary initialization-based API
 
