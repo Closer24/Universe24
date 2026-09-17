@@ -95,6 +95,18 @@ pieces reassemble and the event is complete again, as if it had not split. A
 Detector that returns a ray is telling the event which piece it gives back;
 the piece is the whole ray, since the Detector's outcome is binary per ray.
 
+**Conservation as reconstructability.** The conservation laws are the
+condition of reconstruction. Energy, momentum component by component,
+charge and every other declared invariant are exact across an interaction so
+that the event can be rebuilt from its pieces: the pieces are the
+information, and the conserved totals are the check that nothing was added
+or lost when they split and when they reassemble. Sums alone do not identify
+an input, so what makes reconstruction exact is that each piece is preserved
+on its line, and the invariants verify the whole. A Detector that returns a
+ray is returning an event in time: the piece walks its line backward and the
+event is undone by exactly what that piece carried. The lattice's exact
+integer arithmetic is what makes the undoing exact rather than approximate.
+
 **Moving an event.** The event is its information, not a place. The open
 piece kept at the origin may be displaced along the trajectory line of the
 rays it is waiting for, and a returning ray, which walks that line, still
@@ -196,7 +208,10 @@ on 16 September 2026.
   candidate cannot occur: no Node owns intermediate stock; an interaction is
   one transaction at the Node where the rays actually are.
 - Reversibility is testable: replaying any ray backward between two
-  interactions must reproduce its forward trajectory exactly.
+  interactions must reproduce its forward trajectory exactly, and returning
+  every piece of an interaction to its origin must reassemble the input
+  piece exactly, with every declared invariant equal before the split and
+  after the reassembly.
 - The six-event bound is the causal bound of the lattice, the same bound the
   N-to-M contract already enforces; no interaction can create more
   alternatives than the Node has Ports.

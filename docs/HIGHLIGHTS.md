@@ -100,6 +100,8 @@ An isolated closed physical structure cannot create net momentum from its own in
 
 Whenever a quantity is declared conserved, every local interaction and transfer must account for it exactly across all actual owners, including retained participants, products, recoil, fields, apparatus, in-flight values and remainders. A gain requires a corresponding loss, transfer or explicitly accounted source. Family and coupling definitions supply the physical readouts; the engine validates them without inventing energy or momentum from a label or computation-cost scalar.
 
+Revision 2026-09-17: the conservation laws are the condition of reconstruction. Every declared invariant is exact across an interaction so that the event can be rebuilt from its pieces when they return; a Detector that returns a ray is returning an event in time, undoing it by exactly what that piece carried. Exact integer arithmetic is what makes the undoing exact.
+
 ## 3.16 Momentum is directional
 
 Momentum and other vector quantities are conserved component by component. Preserving only speed or vector magnitude is not sufficient.

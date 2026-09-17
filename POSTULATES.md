@@ -835,6 +835,16 @@ of the central specification, section 5.1, which pushes a saved event toward
 its origin along the same path without capacity waiting) is to be specified
 in the design document before implementation.
 
+The conservation laws exist for this. Energy, momentum component by
+component, charge and every other declared invariant are conserved exactly
+across an interaction so that the event can be reconstructed from its pieces:
+the pieces are the information, and the conserved totals are the check that
+nothing was added or lost when they split and when they reassemble. A
+Detector that returns a ray is therefore returning an event in time: the
+piece walks its line backward and the event is undone by exactly the amount
+that piece carried. Exact integer conservation on the lattice is what makes
+this undoing exact rather than approximate.
+
 The design candidate in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
 carries this section's consequences for Node state (a bounded register of
 open alternatives at each interaction node) and for the acceptance criteria.
