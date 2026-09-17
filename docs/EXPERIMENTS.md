@@ -40,9 +40,16 @@ setting, ticket seed; done on 2026-09-17, `detector-mark-v1`, the
 `detectors` key with `position`, `setting` `[n, d]` and `seed`); 3 the
 return; 4 the inverse split with `return_mode`
 (siblings, straight, annul); 5 layers; 6 the meeting of rays with N-to-M
-conversion; 7 the field as the ray's own information in ray form; 8 binding
-and gravity by delay; 9 every ray a wave ray with family, charge and
-`phase_bits`; 10 the audits; 11 polarization (after the ten).
+conversion; 7 the field as the ray's own information in ray form; 7b the
+external body, after 7 (Highlights 3.19, `external-body-v1`; named "fixed
+body" earlier on 2026-09-17): a Node declared to hold a family with an
+amount and, if wanted, a charge and a trajectory, radiating by the field
+rule, never spreading and never pushed, every arrival met by the declared
+coupling of its family, absorption into an explicitly accounted sink by
+default (a wall, a screen, a beam stop) and otherwise a mirror, a beam
+splitter, a phase plate or, after 11, a polarizer; 8 binding and gravity by
+delay; 9 every ray a wave ray with family, charge and `phase_bits`; 10 the
+audits; 11 polarization (after the ten).
 
 **Status values.** `planned` (this page, criterion fixed, not run);
 `measured` with date, commit and fingerprint, and the outcome in one word
@@ -77,7 +84,7 @@ states "exactly" and means integer equality at every tick.
   rate is zero; the Detector reads none of this and click intensity is the
   content that arrived. The fringe period is therefore λ = N/r Links for an
   emitter of rate r steps per interval.
-- **Features.** 1, 2, 5, 6, 9, 10.
+- **Features.** 1, 2, 5, 6, 7b, 9, 10.
 - **Run.** A slab of 129 × 65 × 3 Nodes, open boundary. One emitter, a bound
   clock of rate r = 32 at N = 2^8 (λ = 8 Links, so that the integer path
   differences of the screen hit the table's exact zero), a marked Node with
@@ -88,7 +95,9 @@ states "exactly" and means integer equality at every tick.
   behind the slits: at each screen Node the meeting of the two slit rays is
   steered by the declared table between the Port toward a marked Node behind
   the screen (setting 1, its click the record) and the sideways Port (a
-  declared sink). No returns in the main run; a second run with the screen
+  declared sink: an external body, feature 7b, `external-body-v1`,
+  Highlights 3.19, at its default coupling, absorption into an explicitly
+  accounted sink). No returns in the main run; a second run with the screen
   Detectors at setting 1/2 and `return_mode` siblings (features 3 and 4) as
   the control that returns change the normalization only. Recorded: per
   screen column, the content that clicked over 2^12 intervals; the path
@@ -122,15 +131,18 @@ states "exactly" and means integer equality at every tick.
   the first Detector's value reaches the other only after the round trip
   through the birth event, so S ≤ 2 for symmetric spacelike settings; the
   passed pairs are a fair sample because the draw reads nothing.
-- **Features.** 1, 2, 3, 4, 5, 6, 9, 10. No polarization (feature 11) is
+- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10. No polarization (feature 11) is
   needed: the settings are phases.
 - **Run.** A board of 161 × 17 × 17 Nodes, open boundary; the pair source at
   the center, a marked Node with setting 1, emitting one pair per 8 intervals
   as two light rays of one birth event on opposite headings ±x carrying the
-  source clock's phase. Each arm at 64 Links: a splitter event with two
-  outputs, a long path ΔL = 8 Links longer than the short one, a phase plate
-  on the long path (a declared coupling adding the setting to the phase),
-  and a recombiner meeting steered by the table between a + Port and a − Port,
+  source clock's phase. Each arm at 64 Links: a splitter with two outputs
+  (an external body, feature 7b, `external-body-v1`, Highlights 3.19, with
+  the beam-splitter coupling, a split by a declared table), a long path
+  ΔL = 8 Links longer than the short one, a phase plate on the long path (an
+  external body with the phase-plate coupling, a phase offset adding the
+  setting to the phase), and a recombiner meeting steered by the table
+  between a + Port and a − Port,
   each leading to a marked Detector Node with setting 1/2, `return_mode`
   siblings. Settings at N = 2^8 from a declared per-pair list switched in the
   interval before the ray arrives: Alice 0 and 64, Bob 32 and 96 (0°, 90°,
@@ -165,9 +177,10 @@ states "exactly" and means integer equality at every tick.
   trip through the first Detector; then the first Detector's value, carried
   through the birth event by the inverse split, meets the delayed share, and
   the declared coupling of that meeting can give the quantum value.
-- **Features.** 1, 2, 3, 4, 5, 6, 9, 10, and an output-clock delay on Bob's
-  line (Highlights 3.28, existing). The coupling between the transmission and
-  the held ray is a declared table, written before the run, and its exact
+- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10, and an output-clock delay on
+  Bob's line (Highlights 3.28, existing). The coupling between the
+  transmission and the held ray is a declared table, written before the run,
+  and its exact
   expectation on the 256-step circle is computed independently before the
   run.
 - **Run.** The board of A2 with one change: Bob's ray is held by an
@@ -287,10 +300,17 @@ states "exactly" and means integer equality at every tick.
   lattice units scales as 1/N²: G_eff · N² is constant across the phase
   width. This statement is not yet in Highlights or on the hypotheses page;
   the run pins it as stated.
-- **Features.** 1, 2, 5, 6, 7, 8, 9, 10.
-- **Run.** A board of 65 × 65 × 9 Nodes, open boundary. A bound group of
-  declared families with retained content M at the center (feature 8), its
-  computation field released in all directions (3.28); a light source
+- **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
+- **Run.** A board of 65 × 65 × 9 Nodes, open boundary. The star at the
+  center: an external body (feature 7b, `external-body-v1`, Highlights 3.19)
+  of declared family and amount M, no charge, no trajectory, at its default
+  coupling, absorption into its explicitly accounted sink (the mirror,
+  beam-splitter, phase-plate and polarizer couplings are not used here), so
+  that it never moves and every recoil field ray that returns to it is
+  booked in its sink counter; its computation field released in all
+  directions (3.28); one control series with the same M declared instead as
+  an ordinary bound group of declared families with retained content M
+  (feature 8), when the star's recoil is wanted; a light source
   (marked, setting 1) launching one light ray on a line parallel to x at
   impact parameter b = 4, 6, 8, 12 and 16, one ray per run, on both sides
   of the group; a slow massive ray (rate r, content equal to the light ray's)
@@ -301,12 +321,14 @@ states "exactly" and means integer equality at every tick.
   field is a declared integer table written before the run. Recorded: the
   ray's heading and momentum components before and after the pass (the
   deflection α from the integer heading), the delay k_out incurred per Node,
-  the returning field ray's momentum delivered to the group, the group's
-  momentum per tick, the audits. G_eff(N) := α b /(4 M) with M in units of
+  the returning field rays' momentum absorbed by the body (its sink counter
+  per tick; in the bound-group series, the group's momentum per tick), the
+  audits. G_eff(N) := α b /(4 M) with M in units of
   m₀ and α in radians from the heading change.
 - **Criterion.** Pass, all of: momentum exact at every tick over the ray, the
-  group and every field ray; the control goes straight; the ray bends toward
-  the group on both sides; the log-log exponent of α over the five b is
+  body's sink (the group, in the bound-group series) and every field ray; the
+  control goes straight; the ray bends toward the body on both sides; the
+  log-log exponent of α over the five b is
   −1.0 ± 0.1; α at 2M is 2α at M within 1/16 relative; G_eff(N) · N² is
   constant over the five N within 1/16 relative of its value at N = 2^12.
   Reported and not pinned: the ratio of the light ray's α to the slow ray's
@@ -365,11 +387,19 @@ states "exactly" and means integer equality at every tick.
   structure is stated anywhere: whether bound orbits exist only at discrete
   retained energies, and which clock an emitted light ray carries, the
   group's rest rate or the orbit's, is what the run decides.
-- **Features.** 1, 2, 5, 6, 7, 8, 9, 10.
-- **Run.** A board of 33 × 33 × 33 Nodes, open boundary, N = 2^12. A proton
-  group (charge +1, retained content M_p, marked as a source with setting 1)
-  at the center; an electron ray (charge −1, rate r_e) launched at distances
-  d = 2 to 8 Links with transverse momentum p = 1 to 8 units, one run per
+- **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
+- **Run.** A board of 33 × 33 × 33 Nodes, open boundary, N = 2^12. The fixed
+  proton at the center: an external body (feature 7b, `external-body-v1`,
+  Highlights 3.19) of the proton family, charge +1, amount M_p, no
+  trajectory, at its default coupling, absorption into its explicitly
+  accounted sink (the mirror, beam-splitter, phase-plate and polarizer
+  couplings are not used here), so that it never moves and its whole content
+  stays at one Node, marked as a source with setting 1; when the proton's
+  recoil is wanted, the same proton is declared instead as an ordinary bound
+  group (charge +1, retained content M_p, feature 8), and then it spreads and
+  is pushed like all matter; an electron ray (charge −1, rate r_e) launched
+  at distances d = 2 to 8 Links with transverse momentum p = 1 to 8 units,
+  one run per
   (d, p), 2^14 intervals each, the field coupling of A5 and the binding
   coupling of feature 8 as declared tables. A second series: onto each bound
   state found, a light ray of content E from a marked source, E swept from 1
@@ -509,11 +539,13 @@ states "exactly" and means integer equality at every tick.
   the declared couplings at a meeting; a polarizer is then a coupling table.
   Whether a two-state property carries the intermediate polarizer's angle
   through the chain is what the run decides; Highlights states no more.
-- **Features.** 1, 2, 5, 6, 9, 10, 11.
+- **Features.** 1, 2, 5, 6, 7b, 9, 10, 11.
 - **Run.** A board of 65 × 9 × 9 Nodes, open boundary, N = 2^8. A source
-  (marked, setting 1) of light rays polarized along y; a polarizer as a
-  declared coupling of a bound group at a Node, splitting content between the
-  pass Port and a declared sink by the table cos²(θ − θ_ray) for θ = 0,
+  (marked, setting 1) of light rays polarized along y; a polarizer as an
+  external body (feature 7b, `external-body-v1`, Highlights 3.19) with the
+  polarizer coupling, a polarization read once feature 11 exists, splitting
+  content between the pass Port and its declared sink by the table
+  cos²(θ − θ_ray) for θ = 0,
   22.5, 45, 67.5 and 90 degrees, one run each, a marked Node (setting 1)
   behind it; then chains: y, 90°; y, 45°, 90°; y, 22.5°, 45°, 67.5°, 90°.
   Recorded: the content that clicks behind the last polarizer per run; the
@@ -540,7 +572,7 @@ states "exactly" and means integer equality at every tick.
   geometry (hypothesis 11 line 1), the joint law's value only in the delayed
   geometry (line 2); polarization changes the settings' form, not the
   mechanism (3.26).
-- **Features.** 1, 2, 3, 4, 5, 6, 9, 10, 11.
+- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10, 11.
 - **Run.** The board and counts of A2 with each analyzer a polarizer of A12
   at the setting, its pass Port and sink Port each leading to a marked
   Detector at setting 1/2, the pair source emitting two light rays of one
@@ -777,7 +809,10 @@ unlocks; an entry runs when the last feature it names has landed.
 5. Feature 5, layers: B4.
 6. Feature 6, the meeting with N-to-M conversion: B5 (its charge column
    after 9), B9 (its table at N = 2^12 today; the sweep after 9).
-7. Feature 7, the field: B6, B7.
+7. Feature 7, the field: B6, B7. Feature 7b, the external body, after it:
+   no run by itself; the sinks, splitters, phase plates and polarizers of
+   A1, A2, A3, A12 and A13 and the bodies of A6 and A8 are external bodies
+   and wait for 9 or 11.
 8. Feature 8, binding and gravity by delay: B8, A7.
 9. Feature 9, every ray a wave ray with charge and `phase_bits`: A1, A2, A3,
    A5, A6, A8, A9, A10, A11, B10, B11.

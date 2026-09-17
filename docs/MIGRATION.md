@@ -425,6 +425,32 @@ ray interaction is the one recorded difference. Tests adapted:
 `test_ray_integration_guards.py` (odd table sizes through the builders, 32
 phase steps in the table-construction guard).
 
+## Fixed body renamed external body on 2026-09-17
+
+Fixed body renamed external body, 2026-09-17, same specification extended.
+By the model owner's statement of that day, the declared element named
+"fixed body" earlier the same day is the external body: a Node declared to
+hold a family with an amount and, if wanted, a charge and a trajectory,
+standing for a star, a neutron star, a fixed proton, a large charge or a
+piece of apparatus; it radiates by the one field rule, does not spread and
+is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+text; the [postulates](../POSTULATES.md) section 23, the
+[ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
+migration step 7b (`external-body-v1`, after feature 7), the
+[experiments register](EXPERIMENTS.md) (A1, A2, A3, A6, A8, A12, A13 and
+section C), the [terminology](TERMINOLOGY.md) (External body, Apparatus)
+and section 14 of the [hypotheses page](HYPOTHESES.md) restate it. What the
+extension adds: the amount is finite and of any width, since it enters no
+sum; absorption into an explicitly accounted sink is the default coupling of
+the body's family and the other couplings make the apparatus (a reversed
+heading a mirror, a split by a declared table a beam splitter, a phase
+offset a phase plate, a polarization read a polarizer once feature 11
+exists; a wall, a screen and a beam stop the default); on the Node the body
+is bounded metadata like the Detector mark, with one exact counter, the
+sink totals per family; and where the back-reaction is wanted an ordinary
+bound group with a large amount is declared instead. No initialization key,
+API or runtime behavior changes; `external-body-v1` is not yet in the code.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an
