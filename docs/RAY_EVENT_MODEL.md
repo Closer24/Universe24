@@ -87,10 +87,14 @@ Node draws once for each arrival, independently: the arrivals that drew 1
 enter the ordinary interaction together, exactly as at an unmarked Node, and
 each arrival that drew 0 is returned on its own line. The Detector does not read,
 change, absorb or add anything; it needs to know nothing about what passed.
-It is the same ray in both outcomes: not absorbed, not split, no stock taken.
-The click is the record of the bit drawn, and the bit is all the Detector
-adds: a ray leaving a marked Node records that its last event was a Detector
-event and the bit drawn, nothing larger. Because a marked Node is a Node
+A Detector sees nothing of the ray, on 1 or on 0: it sees only its own
+value, the bit it drew. It is the same ray in both outcomes: not absorbed,
+not split, no stock taken. The click is the record of the bit drawn, and the
+bit is all the Detector adds: a ray leaving a marked Node records that its
+last event was a Detector event and the bit drawn, nothing larger. When it
+returned a ray with 0, that value travels with the ray through the inverse
+split to the partner's line, and the second Detector of the pair receives it
+on the ray that reaches it. Because a marked Node is a Node
 like any other, everything else about it (rays crossing, interactions of
 other families, fields) is unchanged.
 
@@ -243,10 +247,11 @@ walks back exactly its step count to the birth interaction and there performs
 the inverse split of its share: it transmits what happened at the event, with
 its bit (the outcome of the first draw, all the Detector added), to the same
 places the event sent to, the partner ray's line among them, so the partner's
-Detector is not missing it. If that transmission reaches the second Detector
-before the second ray is drawn, the second draw reads it and the pair agrees
-by the configured joint law; if the second ray was already drawn, the
-transmission is recorded and ignored.
+Detector is not missing it: the first Detector saw only its own value, and
+the second Detector receives that value on the ray that reaches it. If that
+transmission reaches the second Detector before the second ray is drawn, the
+second draw reads it and the pair agrees by the configured joint law; if the
+second ray was already drawn, the transmission is recorded and ignored.
 
 This replaces the shared registry of the historical bonded profile with a
 carried bit, so the model has no owner that answers at a distance. The
@@ -374,8 +379,9 @@ and evidence, under the ordinary gates.
   an unmarked Node, each that drew 0 is returned on its own line, and the
   totals of the two groups together equal the totals that arrived.
 - One bit per transfer arriving at a marked Node, and the bit is all the
-  Detector adds: a ray leaving it carries its share, that its last event was
-  a Detector event and the bit, nothing larger; replay with the same seed
+  Detector adds: a Detector sees nothing of the ray, only its own value; a
+  ray leaving it carries its share, that its last event was a Detector event
+  and the bit, nothing larger; replay with the same seed
   reproduces every click; changing one Detector's bit changes the world only
   inside the forward light cone of that interaction.
 - An interaction never emits more than six events and never two on one Port;

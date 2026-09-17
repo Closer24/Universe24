@@ -683,7 +683,9 @@ arriving transfer, and the bit is all the Detector adds
 [section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
-at the birth event to the partner ray's line; no owner answers at a distance.
+at the birth event to the partner ray's line, and the second Detector
+receives it on the ray that reaches it; a Detector sees nothing of the ray,
+only its own value, and no owner answers at a distance.
 For two Detectors at equal distance from the birth the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below
@@ -798,13 +800,17 @@ with. Up to six transfers can arrive in one interval, one per Port, and
 the node draws once for each, independently: the arrivals that drew 1 enter
 the ordinary interaction together, each arrival that drew 0 is returned on
 its own line. The Detector reads, changes,
-absorbs and adds nothing; the click is the record of the bit drawn.
+absorbs and adds nothing; the click is the record of the bit drawn. A
+Detector sees nothing of the ray, on 1 or on 0: it sees only its own value.
+When it returned a ray with 0, that value travels with the ray, and the
+second Detector of the pair receives it on the ray that reaches it.
 A returning ray retraces its own trajectory by its step count, reaches its
 birth interaction with certainty and there performs the inverse split of its
 share: it transmits what happened at the event, with its bit, to the same
 places the event sent to, the partner ray's line among them, so the
-partner's Detector is not missing it. Pair identity is the trajectory, not
-the birth node and tick.
+partner's Detector is not missing it: it receives that value on the ray
+that reaches it. Pair identity is the trajectory, not the birth node and
+tick.
 
 A ray has a field: the field is the ray's own information spreading in ray
 form to the nodes around it, without an event; a field ray is not a second
