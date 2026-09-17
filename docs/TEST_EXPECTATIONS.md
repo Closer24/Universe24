@@ -61,6 +61,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
+| `test_ray_viewer.py` | 1 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, pinned below (no browser) |
 | `test_record_operations.py` | 19 | 0.00 | Record merge by type and channel, reserved slots and capacity policy |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
@@ -667,6 +668,62 @@ or `a_swap` alone. Pinned before the first run:
 
 Existing worlds keep their amounts, phases, totals, audits and charges: a
 world whose rules select one layer meets the same owners in the same order.
+## Ray viewer extraction
+
+`test_ray_viewer.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the two unit-axial headings +X and -X) on an open 5 x 3 x 3 board with an
+8-step phase advancing 1 per Link, runs it for six ticks through
+`run_initialization` headless, and reads the record back with
+`tools/ray_viewer/extract.py` ([ray viewer](../tools/ray_viewer/README.md)),
+which never imports the simulator. Lamp A at (1,1,1) holds 3 quanta and
+emits 3 through +X with phase 0; lamp B at (3,1,1) holds 3 and emits 3
+through -X with phase 4; each recoils into its own momentum. The one declared
+coupling, `swap_headings`, fires when two rays with opposite headings whose
+phases sum to 6 meet (1 and 5, what the lamps' phases are after one Link),
+exchanges their headings and sets `delay` 1 on both; energy 6 and momentum
+(0,0,0) are its invariants. The phase condition is what makes it fire once:
+a first draft conditioned on opposite headings alone stayed true after the
+swap, re-fired every interval and held both rays at (2,1,1) for the whole run,
+which is the engine's binding behavior (a rule that keeps setting `delay` on
+its participants), not a defect. The Node (4,1,1) carries a Detector mark with
+setting 1/1 and seed 0, so every arrival there draws 1. Pinned before the
+first run, from the event stream alone (no per-tick recording, so no phase):
+
+- (a) the rays: four, each of family `quanta` and amount 3. Ray 0 leaves
+  (1,1,1) through +X at tick 0 and ray 1 leaves (3,1,1) through -X at tick
+  0, one segment each with `steps` 1, both ending at tick 1 at (2,1,1) in
+  the meeting; rays 2 and 3 start at (2,1,1) at tick 2 (the meeting's
+  outputs, `delay` 1 held them one interval): the +X ray walks (2,1,1),
+  (3,1,1), (4,1,1) and leaves the board through +X, the -X ray walks (2,1,1),
+  (1,1,1), (0,1,1) and leaves through -X, three segments each with `steps`
+  1, 2, 3 and `outbound` 1, escaped at tick 5;
+- (b) the events, in board order: two emissions at tick 0 with one spoke
+  each (+X at (1,1,1), -X at (3,1,1)); one meeting at tick 1 at (2,1,1) with
+  inputs rays 0 and 1, outputs rays 2 and 3, spokes +X and -X, `output_tick`
+  2, `held_ticks` 1, amount in `quanta` 6, momentum in (0,0,0), amount out
+  6, momentum out (0,0,0), coupling `swap_headings`; one Detector PASS click
+  at tick 4 at (4,1,1) through Port -X (family `quanta`, amount 3, bit 1)
+  on the +X ray; two escapes at tick 5, at (0,1,1) through -X and at (4,1,1)
+  through +X; no crossing, split, deflection or return;
+- (c) the captions: tick 0 names both emissions, tick 1 the meeting with the
+  coupling and both invariants, tick 2 the outputs leaving, tick 4 the
+  Detector PASS with its bit, tick 5 the escapes; `in_world` quanta stays 6
+  through tick 4 and is 0 from tick 5, when `escaped` is 6; the run's
+  conservation line reads `passed`, with
+  `accounting_balanced_at_every_completed_tick` true and
+  `conserved_at_every_completed_tick` false because the 6 quanta left through
+  the open boundary and the runner's escaped totals hold them (the first
+  draft of this pin expected true there and had misread that flag, which
+  counts only what stays in the world); the record carries
+  `ray-event-state-v1`, `detector-mark-v1` and no unknown event kind;
+- (d) tolerance: the same record with one appended event of an unknown kind
+  (`field_release` at tick 3 at (2,1,1)) extracts to the same rays and
+  events plus one generic marker of that kind at that Node and tick, and the
+  record reports `{"field_release": 1}` as unknown.
+
+The runs document is `ray-viewer-runs-v1`. A GIF or page rendered from it is
+a rendering of the fingerprinted record, not evidence by itself.
 
 ## Ray meetings with outputs
 
