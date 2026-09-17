@@ -822,6 +822,15 @@ states "exactly" and means integer equality at every tick.
   equal.
 - **Status.** planned.
 
+### A14. Kinematic time dilation of a moving bound group
+
+- **Confronts:** the Lorentz factor, clock rate √(1 − v²) (the muon lifetime in flight, 2.2 µs at rest, longer by γ in flight; Rossi–Hall 1941 and every accelerator since).
+- **Model's prediction today:** hypothesis 15: everything moves at c, matter is slow only by its output clock, and a bound group's tick fires only while it is resident, so a group moving one Link every k intervals ticks at (k − 1)/k = 1 − v to first order; the per-face clocks of Highlights 3.28 may change the curve.
+- **Features required:** 8 (binding, `ray_delay`), 9 (rest rate as the tick's phase advance).
+- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a board long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
+- **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a lattice anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
+- **Status:** planned (after feature 8).
+
 ## C. Order
 
 The features land in the order 1 to 11. Each line names what its feature
