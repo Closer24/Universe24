@@ -18,6 +18,7 @@ from event_universe.core.spatial_state import (
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
+    WAVE_RAY_FAMILY,
     ray_layer_names,
 )
 from event_universe.disturbance_api import Simulation
@@ -196,6 +197,7 @@ def _execute_run(
             )
         ],
         "ray_meeting": RAY_MEETING,
+        "wave_ray": WAVE_RAY_FAMILY,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

@@ -96,7 +96,9 @@ six-to-one, conservation, capacity, Port and delayed-owner coverage.
 
 The Kerengonen integration regressions in `test_ray_integration_guards.py` cover
 ordinary runner momentum accounting through absorption and escape, frozen phase
-tables after host-cache eviction, independent trigonometric reference entries,
+tables after host-cache eviction (a 32-step world), independent trigonometric
+reference entries (3 and 37 through the table builders, 4096 through a field:
+a field declares a power of two, [wave-ray families](#wave-ray-families)),
 distinguishable external phases and advances under self-exclusion, frozen
 departure metadata after emitter changes, largest-share carried advance with
 explicit-zero and field-fallback cases, per-field threshold captures that
@@ -761,3 +763,83 @@ instrument/contact fixtures with the integration layer. PASS and the draw are
 implemented by the Detector mark (`detector-mark-v1`,
 [Node Detector bit](#node-detector-bit)); the return on 0 and output-clock
 composition remain blocked by the contract's owner/acceptance table.
+
+## Wave-ray families
+
+`test_wave_ray_families.py` builds four boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay, the
+six unit-axial headings in Port order, closed under negation), periodic, one
+conserved scalar per family and one holding lamp per family that pays its
+whole stock into one directed or swept emission
+([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+Pinned before the first run:
+
+- (a) on 7^3 a lamp at (3,3,3) with stock 30 sweeps 15 per tick over the six
+  headings at emission phase 5, on a plain field with `phase_bits` 3 and on the
+  same field with `kerengonen` `phase_steps` 8, `phase_advance` 0 (both width
+  3, modulus 8, rate 0), each world held to the same integers (no world is
+  compared with another, [Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)):
+  after tick t (1 to 4) the first emission's six rays are at (3,3,3) + t x
+  unit, modulo 7, one per Port, amounts 3, 3, 3, 2, 2, 2, phase 5, steps t,
+  mask 63, shares (3, 3, 3, 2, 2, 2), alone at their Nodes except after tick
+  4, when each such Node also holds the second emission's ray coming the
+  opposite way (steps 3), the two meeting around the 7-ring; the world holds
+  6, 12, 12, 12 rays, all of phase 5 and no own advance, steps t and t - 1,
+  totals 30 and the accounting balanced; Node (4,3,3),
+  one Link from the lamp along +X, reads value 3 after ticks 1 and 2 and 0
+  after ticks 3 and 4 (the pin first written as 3 after tick 4 was a
+  derivation slip corrected before the expectation was held). Rejected at
+  parsing: phase 5 on a plain field
+  without a width, `phase_bits` 4 beside `phase_steps` 8, `phase_steps` 12,
+  `phase_advance` 8 at width 3, `capture` without a table, a carried phase
+  without a table, `phase_bits` -1, and `charge` on an outward field;
+- (b) on 25 x 5 x 5 a light family (plain, `phase_bits` 8) and a massive
+  family (`phase_steps` 256, `phase_advance` 13), each with a lamp of stock 4
+  emitting 4 along +X at phase 77, from (2,2,2) and (2,3,3): after tick t (1
+  to 20) the light ray at (2 + t, 2, 2) has phase 77, steps t, mask 1, shares
+  (4, 0, 0, 0, 0, 0); the massive ray at (2 + t, 3, 3) has phase (77 + 13 t)
+  mod 256: 90, 103, 116, 129, 142, 155, 168, 181, 194, 207, 220, 233, 246, 3,
+  16, 29, 42, 55, 68, 81; totals 4 and 4;
+- (c) on 9 x 5 x 5 the families `plus` (charge 1) and `minus` (charge -1),
+  lamps of stock 3 at (2,2,2) emitting along +X and stock 5 at (6,2,2)
+  emitting along -X, and a `ray_interactions` rule `reflect` that negates both
+  headings with a declared `amount` invariant: the `RAY_PROPERTIES` names are
+  amount, heading, phase, advance, delay, family, charge; the parsed rule's
+  invariants are `amount` then `charge`, and the charge invariant evaluates
+  to -2 over the views (3, +X, family 0, charge 1) and (5, -X, family 1,
+  charge -1); `ray_charge` of amounts 3 and 4 at charge -1 is -7;
+  `charge_totals()` is {plus 0, minus 0} before the first tick and {plus 3,
+  minus -5}, sum -2, after every tick 1 to 6, with totals 3 and 5; the rays
+  meet at (4,2,2) in tick 3, and after tick 6 the plus ray is at (0,2,2) on
+  -X and the minus ray at (8,2,2) on +X, both steps 4, mask 3, shares
+  (5, 3, 0, 0, 0, 0). Rejected at parsing: an assignment to `charge` or
+  `family` (read-only) and a declared invariant named `charge`;
+- (d) on 7 x 5 x 5 a family with `phase_bits` 128 and `phase_advance` 2^70
+  (modulus 2^128, mask 2^128 - 1, no coherence table, Kerengonen identity), a
+  lamp at (2,2,2) of stock 2 emitting 2 along +X at phase 2^128 - 3 x 2^70 =
+  340282366920938459921599745279534301184: after tick t (1 to 100) the one ray,
+  at ((2 + t) mod 7, 2, 2) with steps t and amount 2, has phase (t - 3) x 2^70
+  mod 2^128: after tick 1 2^128 - 2^71 = 340282366920938461102191365996945604608,
+  after tick 2 2^128 - 2^70, after tick 3 exactly 0, after tick 4 2^70, after
+  tick 100 97 x 2^70 = 114517387209588896432128; totals 2 and accounting
+  balanced at every tick. The ray reversed on its line (`outbound` 0, the
+  return of feature 3 not being on main), forwarded 100 times, leaves through
+  Port 0 each time with steps 99 down to 0 and the phase it had at the same
+  step count on the way out, ending at 2^128 - 3 x 2^70 with steps 0; a 101st
+  Link is refused; the case runs in about one second (the test allows twenty).
+  Rejected: a modulus of 12 in `advance_ray`, `self_exclusion` or a ray
+  interaction on the wide family (`phase_bits` at most 30), `phase_steps` 8
+  beside `phase_bits` 128, and an emission phase of 2^128. The runner completes
+  100 ticks of the wide world and records `wave_ray: "wave-ray-family-v1"`
+  beside `ray_state: "ray-event-state-v1"`, `spatial_policy:
+  "kerengonen-ray-field-v1"`, `conserved_at_every_completed_tick` true and
+  final matter 2.
+
+Existing worlds keep their amounts, phases, totals and audits: a plain field
+has width 0 and rate 0, a Kerengonen field the width of its `phase_steps`. Two
+test adaptations: `test_kerengonen.py` sets a nonzero emission phase before
+expecting the rejection on a plain field without a width (phase 0 is admissible
+there), and the odd table sizes 3 and 37 of `test_ray_integration_guards.py`
+are checked through `phase_cosines` and `phase_sines` directly, a field
+admitting only a power of two (the table-construction guard world uses 32
+phase steps instead of 37).

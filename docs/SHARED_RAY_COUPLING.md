@@ -47,10 +47,14 @@ capacity; rays are met layer by layer
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), so fields of different
 layers do not share that capacity.
 A participant's configured spatial-field type or
-required structural properties selects its non-owning view. Initial projection
-properties are `amount`, `heading`, `phase`, `advance` and `delay`; `delay` maps
-to native `interaction_delay`. Only heading, phase and delay are writable in
-this first interface. Amount and advance are read-only. The shared value-level
+required structural properties selects its non-owning view. The projection
+properties are `amount`, `heading`, `phase`, `advance`, `delay`, `family` and
+`charge` (`RAY_PROPERTIES`); `delay` maps to native `interaction_delay`,
+`family` is the index of the ray's spatial field and `charge` its family's
+charge per quantum ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+Only heading, phase and delay are writable in this first interface. Amount,
+advance, family and charge are read-only, and `charge x amount` summed over the
+participants is an invariant appended to every rule. The shared value-level
 evaluator is also the carrier path's evaluator, not a copied implementation.
 Native ray operations without outputs preserve the number and identity of
 complete owners. They reject `output_types`, including typed initialization and

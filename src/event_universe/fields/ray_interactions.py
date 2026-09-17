@@ -18,6 +18,7 @@ from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     RAY_PROPERTIES,
     Layers,
+    RAY_VIEW_COMPONENTS,
     Ray,
     Rays,
     SpatialFieldDefinition,
@@ -30,20 +31,26 @@ from event_universe.core.spatial_state import (
 from .disturbances import convert_values, interact_values
 
 
-def _view(ray: Ray, definition: SpatialFieldDefinition) -> Values:
+def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
+    """The RAY_PROPERTIES view of one ray: its family is the index of its spatial field
+    and its charge per quantum is the family's (wave-ray-family-v1)."""
     return (
         pack((ray.amount,)),
         pack(definition.headings[ray.heading]),
         pack((ray.phase,)),
         pack((ray.advance,)),
         pack((ray.interaction_delay,)),
+        pack((family,)),
+        pack((definition.charge,)),
     )
 
 
-def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition) -> Ray:
+def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition, family: int) -> Ray:
     """One output of an interaction: the ray on its new line, before the event stamp."""
     if unpack(values[0]) != (ray.amount,) or unpack(values[3]) != (ray.advance,):
         raise ValueError("ray coupling amount and advance are read-only")
+    if unpack(values[5]) != (family,) or unpack(values[6]) != (definition.charge,):
+        raise ValueError("ray coupling family and charge are read-only")
     vector = unpack(values[1])
     if vector == definition.headings[ray.heading]:
         heading = ray.heading
@@ -85,7 +92,7 @@ def _output(values: Values, definition: SpatialFieldDefinition) -> Ray:
         heading,
         (0, 0, 0),
         unpack(values[0])[0],
-        phase=unpack(values[2])[0] % max(definition.phase_steps, 1),
+        phase=unpack(values[2])[0] & definition.phase_mask,
         advance=unpack(values[3])[0],
         interaction_delay=unpack(values[4])[0],
     )
@@ -102,10 +109,14 @@ def _convert(
     the events of the meeting, or None when the guard is false. The stock of every
     family is exact across the event: the sum over the inputs of one field equals the
     sum over its outputs, beside the rule's own declared invariants."""
-    before = tuple(_view(ray, definitions[kind]) for kind, ray in inputs)
+    before = tuple(_view(ray, definitions[kind], kind) for kind, ray in inputs)
     converted = convert_values(rule, before, RAY_PROPERTIES, meter, costs)
     if converted is None:
         return None
+    for kind, values in zip(rule.outputs, converted[0], strict=True):
+        # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
+        if unpack(values[5]) != (kind,) or unpack(values[6]) != (definitions[kind].charge,):
+            raise ValueError("ray meeting outputs carry the family and charge of their field")
     produced = tuple(
         (kind, _output(values, definitions[kind]))
         for kind, values in zip(rule.outputs, converted[0], strict=True)
@@ -141,7 +152,7 @@ def _meet(
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
-    meter.charge("read", 7 * len(owners))
+    meter.charge("read", RAY_VIEW_COMPONENTS * len(owners))
     for index in layer:
         validate_rays(rays[index], definitions[index], fields[definitions[index].field])
         if any(ray.amount <= 0 for ray in rays[index]):
@@ -151,7 +162,7 @@ def _meet(
     views: tuple[DisturbanceRecord | None, ...] = tuple(
         None
         if rays[index][slot].interaction_delay
-        else DisturbanceRecord(index, _view(rays[index][slot], definitions[index]), ())
+        else DisturbanceRecord(index, _view(rays[index][slot], definitions[index], index), ())
         for index, slot in owners
     )
     used: set[int] = set()
@@ -180,7 +191,7 @@ def _meet(
             if after is before:
                 continue
             outputs = tuple(
-                (_replacement(rays[index][slot], values, definitions[index]), definitions[index])
+                (_replacement(rays[index][slot], values, definitions[index], index), definitions[index])
                 for (index, slot), values in zip((owners[o] for o in group), after, strict=True)
             )
             for owner, replacement in zip(group, _events(outputs), strict=True):
