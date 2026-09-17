@@ -532,7 +532,8 @@ def resolve(
                 event.detail["held_ticks"] = tick - event.tick
         started = []
         # The outputs carry the highest bit among the inputs (detector-bit-property-v1).
-        inherited = max((chains[i].bit for i in event.inputs if chains[i].bit is not None), default=None)
+        known_bits = [bit for bit in (chains[i].bit for i in event.inputs) if bit is not None]
+        inherited = max(known_bits) if known_bits else None
         for unit in outs:
             chain = new_chain(unit, tick, node, event)
             chain.bit = inherited
