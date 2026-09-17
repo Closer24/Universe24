@@ -136,7 +136,12 @@ states "exactly" and means integer equality at every tick.
   field quantum returned with 0 does once the field spreads is an open
   decision of the model owner before this run (Highlights 5.5, 2026-09-17);
   until it is decided feature 12 implements the proposal, a walk back on the
-  line of arrival with no inverse split, and says so.
+  line of arrival with no inverse split, and says so. The sub-quantum
+  remainder of a spread is owned by the Node per family and heading and
+  leaves whole when it reaches one quantum (Highlights 3.5, decided
+  2026-09-17 over the phase-selected heading; feature 12b), so the fringes
+  are where whole quanta are realized after the Node's remainders have grown
+  to one.
 
 ### A2. Bell test in phase form, symmetric geometry
 
