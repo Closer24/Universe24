@@ -13,7 +13,12 @@ from event_universe.configuration_validation import (
     validate_observer_selection,
 )
 from event_universe.core.disturbance_state import InitialState
-from event_universe.core.spatial_state import DETECTOR_MARK, DETECTOR_RETURN, RAY_EVENT_STATE
+from event_universe.core.spatial_state import (
+    DETECTOR_MARK,
+    DETECTOR_RETURN,
+    INVERSE_SPLIT,
+    RAY_EVENT_STATE,
+)
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
@@ -136,18 +141,22 @@ def _execute_run(
                     totals, sources = world.totals(), world.source_totals()
                     losses = world.dissipation_totals()
                     escaped = world.escaped_totals()
+                    annulled = world.annulled_totals()
                     equal = all(
                         totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
                         for name, values in initial_totals.items()
                     )
                     conservation = conservation and equal
+                    # The conservation line: initial + sources = current + dissipated
+                    # + escaped + annulled at every completed tick.
                     balanced = all(
                         tuple(
-                            value + loss + out
-                            for value, loss, out in zip(
+                            value + loss + out + gone
+                            for value, loss, out, gone in zip(
                                 totals[name],
                                 losses[name],
                                 escaped[name],
+                                annulled[name],
                                 strict=True,
                             )
                         )
@@ -183,6 +192,8 @@ def _execute_run(
         "ray_state": RAY_EVENT_STATE,
         "detector_mark": DETECTOR_MARK,
         "detector_return": DETECTOR_RETURN,
+        "inverse_split": INVERSE_SPLIT,
+        "return_mode": initial.return_mode,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",
@@ -199,6 +210,7 @@ def _execute_run(
         "dissipation_totals": world.dissipation_totals(),
         "localized_totals": world.localized_totals(),
         "escaped_totals": world.escaped_totals(),
+        "annulled_totals": world.annulled_totals(),
         "accounting_balanced_at_every_completed_tick": accounting,
         "fields": [field.name for field in initial.fields],
         "disturbance_types": [kind.name for kind in initial.disturbances],

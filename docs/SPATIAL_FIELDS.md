@@ -330,7 +330,7 @@ delay:
 
 | Field | Values | Rule |
 | --- | --- | --- |
-| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node: it stays resident there, inert, for the inverse split (feature 4 of issue #169); no Link is planned for it and a Link beyond its event Node is refused |
+| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node: it stays resident there until the next cycle's inverse split ([below](#inverse-split-inverse-split-v1)); no Link is planned for it and a Link beyond its event Node is refused |
 | `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. Every created ray is outbound; a draw of 0 at a marked Node sets `0` ([Detector return](#detector-return-detector-return-v1)) |
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
@@ -356,7 +356,11 @@ the event's mask and shares as a fresh outbound trajectory with `steps 0`:
 - a ray interaction (`ray_interactions`) is one event per group that fires: its
   outputs, whether their heading changed or not, carry the mask and shares of
   all the group's outputs. A group that does not fire leaves its rays, and
-  their event state, untouched.
+  their event state, untouched;
+- the inverse split of a returned ray at its event Node is one event: its
+  transmissions carry the mask of the lines transmitted to and the amount per
+  line, and the returned ray's Detector bit
+  ([inverse split](#inverse-split-inverse-split-v1)).
 
 Merge identity: `merge_rays` combines rays that agree in heading, lattice
 accumulators, wave phase, advance, wait, interaction delay, steps, outbound,
@@ -439,9 +443,9 @@ On the walk back a ray with `outbound` 0:
 
 At `steps` 0 it is at its event Node and stops: `forward_rays` keeps it as a
 resident ray with `outbound` 0 and does not move its phase, and `advance_ray`
-refuses a Link for it. A resident returned ray is inert until the inverse
-split (feature 4): it carries exactly the phase, amount and event record it
-left the event with, and the Node keeps nothing else.
+refuses a Link for it. It carries exactly the phase, amount and event record
+it left the event with, the Node keeps nothing else, and in the next cycle it
+performs the inverse split ([below](#inverse-split-inverse-split-v1)).
 
 `ray_momentum` reads a ray with `outbound` 0 as amount times its heading
 negated, its share of the event on the event's heading, in the totals, the
@@ -451,6 +455,75 @@ packet that would leave an open boundary is a validation error (its event
 Node is not in the world), never an escape. The runner records
 `detector_return: "detector-return-v1"`, and a world without a mark has no
 returning ray and runs byte for byte as before.
+
+### Inverse split (`inverse-split-v1`)
+
+The rule is stated in [Detector-owned sampling](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1)
+([Highlights](HIGHLIGHTS.md) 3.20 and 5.4; migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), second half;
+issue #169, feature 4). This section is the transmission as an event ray and
+the restore-and-refund bookkeeping. The world key:
+
+```json
+"return_mode": "siblings"
+```
+
+| Value | What a returned ray does at its event Node |
+| --- | --- |
+| `siblings` (default) | Transmits its amount, phase and bit to every Port of its event's mask except its own, the amount shared exactly with the remainder to the first Ports in Port order |
+| `straight` | Continues on the one Port opposite its own with its whole amount, phase and bit |
+| `annul` | Ends there; amount and momentum reading into the annulled sink |
+
+Any other value is rejected before a world is constructed. The key is read
+only for a returned ray, so a world without a mark runs byte for byte as
+before.
+
+**The transmission.** In `SpatialLaw.__call__`, for each ray field after
+`_absorb` and before `forward_rays`, `_inverse_split` takes every resident
+ray with `outbound` 0 and `steps` 0 out of the residents and calls
+`transmit` (`core/spatial_state.py`): the Ports (`split_ports`: the mask
+minus the own Port, the opposite Port, or none), the amounts
+(`split_amounts`, Highlights 3.17), one `Ray` per Port on the unit-axial
+heading that leaves through it (`port_heading`; a field without that line
+fails closed), accumulators `(0, 0, 0)`, the returned ray's phase and
+advance, stamped as one event (`stamp_event`: `steps` 0, `outbound` 1,
+`event_ports` the mask of those Ports, `event_shares` the amount per Port)
+with the returned ray's `detector` copied on. The transmissions join this
+cycle's emitted rays, so they leave on this cycle with the residents, one
+Link per tick, and merge with nothing of another event. A one-line event
+in `siblings` transmits nothing; with no input at the Node that is a
+validation error.
+
+**Restore and refund.** When a record with a funded emission rule into the
+field is at the Node (the event's input, the first such record in slot
+order), `_refund` first adds the returned share to the record's stock of
+the field and, if the rule has a `recoil_field`, share x event heading to
+its recoil (the returned ray's `ray_momentum`), the exact inverse of the
+funded-emission bookkeeping; then it takes the transmitted amounts (or the
+annulled amount) out of the stock and amount x heading per transmission (or
+the annulled momentum) out of the recoil. Both are booked in the cycle's
+`transfer_delta` (restore as absorbed, funding as funded), so the spatial
+accounting's reactions move by zero net and the record's values validate at
+each step; a stock or recoil the field cannot hold fails closed with a
+clear error. The plan's ray conservation check counts a restored or
+annulled share as taken out of the residents. Without such a record the
+share's momentum reading and the transmission's momentum are booked in the
+source ledger, as a sourced emission's rays are.
+
+**The sink.** `SpatialPlan.annulled` carries the per-field content annulled
+by the cycle; the Node books it through `SpatialAccounting.record_annulled`
+into `SpatialEngine.annulled`, read by `annulled_totals()`, by the spatial
+accounting (`balanced` subtracts it) and by the runner's conservation line.
+The `inverse_split` record (position, tick, family, mode, ports, amounts,
+amount, bit, restored, annulled) carries the same per-field values, and the
+local conservation audit adds them to the Node's residual, so a world under
+the audit passes with content annulled.
+
+**Momentum.** The transmission reads as amount times its heading, a ray like
+any other. In `siblings` and `straight` through a lamp, the lamp's recoil
+takes the returned share's momentum back and gives the transmission's, so
+the momentum total is unchanged; in `annul` the sink takes the share's
+reading and the lamp is unchanged.
 
 ### Funded emission and absorption
 

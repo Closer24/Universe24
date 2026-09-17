@@ -282,6 +282,52 @@ and the returning ray of `test_ray_hidden_state.py` is kept resident at
 A document without `detectors` has no returning ray and runs byte for byte
 as before.
 
+## Inverse split added on 2026-09-17 (`inverse-split-v1`)
+
+Issue #169, feature 4, the second half of migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+[Highlights](HIGHLIGHTS.md) 3.20 and 5.4 and the model owner's decisions of
+2026-09-17: a returned ray at its event Node performs the inverse split of
+its own share by the world's `return_mode`
+([the inverse split](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1),
+[transport and bookkeeping](SPATIAL_FIELDS.md#inverse-split-inverse-split-v1)).
+
+- The initialization key `return_mode` (`siblings`, the default, `straight`
+  or `annul`; any other value rejected), `InitialState.return_mode`,
+  `SpatialLaw.return_mode`, `RETURN_MODES` and `INVERSE_SPLIT` in
+  `core/spatial_state.py`.
+- `transmit`, `split_ports`, `split_amounts`, `event_port` and
+  `port_heading` in `core/spatial_state.py`: the transmission as new event
+  rays with the returned ray's phase, advance and Detector bit, the mask of
+  the lines transmitted to and the amount per line, remainder by Highlights
+  3.17.
+- `SpatialLaw._inverse_split` and `_refund` in `fields/spatial_plan.py`,
+  after absorption and before forwarding: the returned share restored to
+  the event's input (a record with a funded emission rule into the field)
+  and the transmission funded from it in the same interval, both booked in
+  `transfer_delta`; with no input, the momentum booked in the source ledger;
+  `annul` into `SpatialPlan.annulled`.
+- `SpatialPlan.inverse_splits` and `annulled`, `InverseSplit`, the
+  `inverse_split` event (position, tick, family, mode, ports, amounts,
+  amount, bit, restored, annulled) published before the cycle's
+  `spatial_cycle`, `SpatialAccounting.record_annulled`,
+  `SpatialEngine.annulled`, the `annulled` entry of the spatial accounting,
+  `annulled_totals()` on the engine, and the local conservation audit
+  reading the annulled content of a Node into its residual and reporting
+  `annulled`.
+- The runner's conservation line: initial + sources = current + dissipated
+  + escaped + annulled at every completed tick
+  (`accounting_balanced_at_every_completed_tick`), `annulled_totals`,
+  `inverse_split: "inverse-split-v1"` and `return_mode` in `run.json`.
+
+Pinned consequences in existing tests: the returned ray of
+`test_detector_return.py` (a one-line event) is restored to its lamp and
+emitted again by it, and the four returned rays of `test_detector_mark.py`
+are restored to their lamps, which then hold their share with its recoil
+undone, that test running three ticks
+([expectations](TEST_EXPECTATIONS.md#inverse-split)). A world without a mark
+has no returned ray and runs byte for byte as before.
+
 ## Experiments register added on 2026-09-17
 
 By the model owner's decision of 2026-09-17, the research runs of the

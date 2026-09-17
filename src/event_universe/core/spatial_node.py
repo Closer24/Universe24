@@ -186,10 +186,12 @@ class SpatialAccounting:
         reactions: list[list[int]],
         transformations: list[list[int]],
         localized: list[list[int]] | None = None,
+        annulled: list[list[int]] | None = None,
     ) -> None:
         self.__sources, self.__dissipation = sources, dissipation
         self.__reactions, self.__transformations = reactions, transformations
         self.__localized = [] if localized is None else localized
+        self.__annulled = [] if annulled is None else annulled
 
     def record_sources(self, values: Values) -> None:
         add_audit_delta(self.__sources, values)
@@ -206,6 +208,10 @@ class SpatialAccounting:
 
     def record_transformations(self, values: Values) -> None:
         add_audit_delta(self.__transformations, values)
+
+    def record_annulled(self, values: Values) -> None:
+        """Content that left the world at an inverse split in annul mode (inverse-split-v1)."""
+        add_audit_delta(self.__annulled, values)
 
 
 @dataclass(slots=True)
@@ -532,7 +538,31 @@ class SpatialNode(SpatialNodeState):
         services.accounting.record_transformations(plan.rule_delta)
         if plan.transfer_delta:
             services.accounting.record_reactions(plan.transfer_delta)
+        if plan.annulled:
+            services.accounting.record_annulled(plan.annulled)
         notifications: list[dict[str, object]] = []
+        # The inverse splits of this cycle precede the cycle record, so that an
+        # audit reading the annulled content has it before it measures the Node.
+        for split in plan.inverse_splits:
+            definition = services.initial.spatial_fields[split.field]
+            self._event(
+                "inverse_split",
+                tick,
+                services,
+                notifications=notifications,
+                family=services.initial.fields[definition.field].name,
+                mode=split.mode,
+                ports=split.ports,
+                amounts=split.amounts,
+                amount=split.amount,
+                bit=None if split.bit < 0 else split.bit,
+                restored=split.restored,
+                annulled={
+                    field.name: split.annulled[i]
+                    for i, field in enumerate(services.initial.fields)
+                    if split.annulled and any(split.annulled[i])
+                },
+            )
         self._event(
             "spatial_cycle",
             tick,

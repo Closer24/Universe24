@@ -498,8 +498,15 @@ every such set; Highlights 3.20 is the text to follow.
    tick through no coupling, no absorption and no draw, to rest inert at its
    event Node with the phase it left with; its momentum reads as its share
    on the event's heading; see
-   [the return](DETECTOR_SAMPLING.md#the-return-detector-return-v1). The
-   inverse split and `return_mode` are feature 4.)
+   [the return](DETECTOR_SAMPLING.md#the-return-detector-return-v1).
+   Inverse split done on 2026-09-17, issue #169 feature 4,
+   `inverse-split-v1`: the `return_mode` key with its three values, the
+   transmission as new event rays with the returned ray's phase and bit,
+   the restore of the share to the event's input and the funding of the
+   transmission from it in one interval, the annulled sink in the
+   conservation line and an `inverse_split` record; see
+   [the inverse split](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1).
+   The meeting rule where the transmission catches the share is feature 5.)
 5. Registry removal from the physical path (done on 2026-09-17, issue #164
    bucket B.5: the registry, the bonded profile, claim-gather, the lottery
    capture, the occupied-links guard and their tests and probes were deleted;

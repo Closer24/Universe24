@@ -1756,6 +1756,7 @@ def parse_initial_state(document: object) -> InitialState:
             "ray_phase_per_tick",
             "sampling_profile",
             "detectors",
+            "return_mode",
         },
         required,
     )
@@ -1836,6 +1837,7 @@ def parse_initial_state(document: object) -> InitialState:
         focus=_boolean(obj.get("focus", True), "focus"),
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
         detectors=_detectors(obj.get("detectors", [])),
+        return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")

@@ -104,6 +104,8 @@ class SpatialEngine:
         self.reactions = [[0] * field.components for field in initial.fields]
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
+        # Content that left the world at an inverse split in annul mode.
+        self.annulled = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
         if initial.spatial_computation_delay:
             components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
@@ -118,7 +120,12 @@ class SpatialEngine:
             decayer,
             NodeActivity(self._active),
             SpatialAccounting(
-                self.sources, self.dissipation, self.reactions, self.transformations, self.localized
+                self.sources,
+                self.dissipation,
+                self.reactions,
+                self.transformations,
+                self.localized,
+                self.annulled,
             ),
             balance_guard,
             field_guard,
@@ -423,14 +430,15 @@ class SpatialEngine:
         for definition in self.initial.spatial_fields:
             index = definition.field
             expected = tuple(
-                start + source + reaction + transformed - loss - escaped
-                for start, source, reaction, transformed, loss, escaped in zip(
+                start + source + reaction + transformed - loss - escaped - annulled
+                for start, source, reaction, transformed, loss, escaped, annulled in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
                     self.transformations[index],
                     self.dissipation[index],
                     self.escaped[index],
+                    self.annulled[index],
                     strict=True,
                 )
             )
@@ -442,6 +450,7 @@ class SpatialEngine:
                 "dissipated": tuple(self.dissipation[index]),
                 "localized": tuple(self.localized[index]),
                 "escaped": tuple(self.escaped[index]),
+                "annulled": tuple(self.annulled[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(
                     {"transformations": tuple(self.transformations[index])}

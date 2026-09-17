@@ -4,7 +4,9 @@ Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Detector return")
 before the first run: one world per unit-axial heading, a lamp three Links
 before a marked Node with setting 1/2 and seed 3 (one draw, bit 0), a sail one
 Link before it absorbing half of what passes outbound, and the exact tick table
-of the one ray from emission through the return to steps 0 at its event Node.
+of the one ray from emission through the return to steps 0 at its event Node,
+where the inverse split of a one-line event restores it to the lamp
+(inverse-split-v1).
 """
 
 import json
@@ -32,16 +34,20 @@ HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 # The one draw of the world, seed 3 at setting 1/2: the first draw of the mark test.
 TICKET_AFTER_DRAW = 144814
 # After tick t: Links from the lamp, heading index offset (0 the emitted heading, 1 its
-# negation), amount, steps, outbound, phase, Detector bit.
+# negation), amount, steps, outbound, phase, Detector bit, the share of the ray's event.
 TICK_TABLE = {
-    1: (1, 0, 8, 1, 1, 1, DETECTOR_NONE),
-    2: (2, 0, 8, 2, 1, 2, DETECTOR_NONE),
-    3: (3, 1, 4, 3, 0, 3, DETECTOR_BIT_0),
-    4: (2, 1, 4, 2, 0, 2, DETECTOR_BIT_0),
-    5: (1, 1, 4, 1, 0, 1, DETECTOR_BIT_0),
-    6: (0, 1, 4, 0, 0, 0, DETECTOR_BIT_0),
-    7: (0, 1, 4, 0, 0, 0, DETECTOR_BIT_0),
-    8: (0, 1, 4, 0, 0, 0, DETECTOR_BIT_0),
+    1: (1, 0, 8, 1, 1, 1, DETECTOR_NONE, 8),
+    2: (2, 0, 8, 2, 1, 2, DETECTOR_NONE, 8),
+    3: (3, 1, 4, 3, 0, 3, DETECTOR_BIT_0, 8),
+    4: (2, 1, 4, 2, 0, 2, DETECTOR_BIT_0, 8),
+    5: (1, 1, 4, 1, 0, 1, DETECTOR_BIT_0, 8),
+    6: (0, 1, 4, 0, 0, 0, DETECTOR_BIT_0, 8),
+    # The inverse split of a one-line event: no sibling line, the share restored to
+    # the lamp in the cycle after its arrival (inverse-split-v1); the lamp, a source
+    # that emits what it holds, then emits the 4 again as a new one-line event on
+    # the cycle after the restored record reaches the field plan.
+    7: None,
+    8: (1, 0, 4, 1, 1, 1, DETECTOR_NONE, 4),
 }
 
 
@@ -204,39 +210,53 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
     events = []
     world = Simulation(
         initial,
-        observer=lambda event: events.append(event) if event["event"].startswith("detector_") else None,
+        observer=lambda event: (
+            events.append(event)
+            if event["event"].startswith("detector_") or event["event"] == "inverse_split"
+            else None
+        ),
     )
     for tick in range(1, 9):
         world.step()
-        links, reversed_, amount, steps, outbound, phase, bit = TICK_TABLE[tick]
         # (a) The one ray of the world follows the pinned tick table: out to the mark,
         # reversed there on its line in the arrival interval, back one Link per tick
-        # with steps and phase counting down, resident at its event Node from tick 6.
-        assert rays_in(world) == [
-            (
-                along(port, links),
-                Ray(
-                    port ^ reversed_,
-                    (0, 0, 0),
-                    amount,
-                    phase=phase,
-                    advance=-1,
-                    wait=0,
-                    interaction_delay=0,
-                    steps=steps,
-                    outbound=outbound,
-                    event_ports=1 << port,
-                    event_shares=tuple(AMOUNT if p == port else 0 for p in range(6)),
-                    detector=bit,
-                ),
-            )
-        ]
+        # with steps and phase counting down, at its event Node at tick 6, restored
+        # to the lamp by the inverse split and emitted again as a new event from
+        # tick 7.
+        entry = TICK_TABLE[tick]
+        links, reversed_, amount, steps, outbound, phase, bit, share = entry or (0,) * 8
+        assert rays_in(world) == (
+            []
+            if entry is None
+            else [
+                (
+                    along(port, links),
+                    Ray(
+                        port ^ reversed_,
+                        (0, 0, 0),
+                        amount,
+                        phase=phase,
+                        advance=-1,
+                        wait=0,
+                        interaction_delay=0,
+                        steps=steps,
+                        outbound=outbound,
+                        event_ports=1 << port,
+                        event_shares=tuple(share if p == port else 0 for p in range(6)),
+                        detector=bit,
+                    ),
+                )
+            ]
+        )
         # (b) The sail took half of the outbound ray and nothing of the returning one;
         # the lamp recoiled once; totals and the audits are exact at every tick, the
         # returning ray's momentum reading as its share on the event's heading.
         absorbed = 4 if tick >= 3 else 0
         assert record(world, 1) == {"quanta": (absorbed,), "momentum": scaled(port, absorbed)}
-        assert record(world, 0) == {"quanta": (0,), "momentum": scaled(port, -AMOUNT)}
+        # The lamp recoiled once for 8, holds the 4 back with its recoil undone after
+        # tick 7 and recoiled again for the 4 it emitted anew from tick 8.
+        held = 4 if tick == 7 else 0
+        assert record(world, 0) == {"quanta": (held,), "momentum": scaled(port, -AMOUNT + held)}
         assert world.totals() == {"quanta": (AMOUNT,), "momentum": (0, 0, 0)}
         report = world.conservation_report()
         assert report["status"] == "passed"
@@ -246,12 +266,13 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
             for rays in node.rays:
                 for axis, value in enumerate(ray_momentum(rays, definition)):
                     in_flight[axis] += value
-        assert tuple(in_flight) == scaled(port, AMOUNT - absorbed)
+        assert tuple(in_flight) == scaled(port, AMOUNT - absorbed - held)
         if tick == 3:
             assert world.spatial_values(MARK)["quanta"]["ray_count"] == 1
         if tick == 4:
             assert world.spatial_values(along(port, 2))["quanta"]["ray_count"] == 1
-    # (c) No click, one return: at tick 3, through the Port the ray came in by.
+    # (c) No click, one return: at tick 3, through the Port the ray came in by; one
+    # inverse split at the lamp in the cycle labelled 6, to no sibling line.
     assert events == [
         {
             "event": "detector_return",
@@ -260,7 +281,20 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
             "port": port ^ 1,
             "family": "quanta",
             "amount": 4,
-        }
+        },
+        {
+            "event": "inverse_split",
+            "tick": 6,
+            "position": along(port, 0),
+            "family": "quanta",
+            "mode": "siblings",
+            "ports": (),
+            "amounts": (),
+            "amount": 4,
+            "bit": 0,
+            "restored": True,
+            "annulled": {},
+        },
     ]
     assert world._spatial.nodes[MARK].detector_ticket == TICKET_AFTER_DRAW
     # (d) The runner records the identity and replays byte for byte.
@@ -281,6 +315,7 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
         {**events[0], "position": list(MARK)}
     ]
     assert first_run["detector_return"] == DETECTOR_RETURN == "detector-return-v1"
+    assert first_run["inverse_split"] == "inverse-split-v1"
     assert first_run["detector_mark"] == "detector-mark-v1"
     assert first_run["sampling_profile"] == "detector-only-v1"
     assert first_run["ray_state"] == "ray-event-state-v1"
