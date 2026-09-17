@@ -20,6 +20,7 @@ from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     DETECTOR_RETURN,
     EXTERNAL_BODY,
+    FIELD_REMAINDER,
     FIELD_SPREADING,
     INVERSE_SPLIT,
     RAY_BINDING,
@@ -301,6 +302,7 @@ def _execute_run(
         # Field spreading (field-spreading-v1): recorded only when a family declares
         # `spread`, so the record of every existing world is byte for byte the same.
         metadata["field_spreading"] = FIELD_SPREADING
+        metadata["field_remainder"] = FIELD_REMAINDER
         metadata["spreading_fields"] = spreading
     if initial.spatial_fields:
         metadata.update(

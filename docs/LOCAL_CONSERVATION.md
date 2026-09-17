@@ -176,7 +176,7 @@ every line reads six values and its identity:
 | --- | --- |
 | `initial` | What the world held before the first tick: the lamps' stock, seeded rays and populations |
 | `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, the momentum a spread moves (`field-spreading-v1`), an unfunded inverse split (`source_totals`), the push a binding rule's momentum table gives a bound group and the difference booked when a pushed group dissolves (`bound-group-motion-v1`), the push a coupling's table gives a free ray with the reversal of the field ray (`ray-momentum-turn-v1`) |
-| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`); a bound group's momentum by its register, not by its rays' headings (`bound-group-motion-v1`); a free ray's by its momentum register where a push set one (`ray-momentum-turn-v1`) |
+| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`); a bound group's momentum by its register, not by its rays' headings (`bound-group-motion-v1`); a free ray's by its momentum register where a push set one (`ray-momentum-turn-v1`); a Node's remainder registers of a spreading family as their sum over the table's total, whole quanta with no momentum (`field-remainder-v1`) |
 | `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`), a bound group with its content and its register |
 | `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
 | `absorbed` | What the external bodies' sinks took (`external_body_totals`, the `absorbed_by_bodies` line of `external-body-v1`), the momentum field's components included when one is bound |
@@ -249,7 +249,14 @@ the departures of a spreading family, field rays with no event and one Link
 walked, are measured as a release at the Node, and the content the record
 says arrived (amount per heading, measured like resident rays) is given
 back, so the Node's residual is zero and the `sourced` line gains exactly
-the momentum the spread moved, as the world ledger books it. A returned
+the momentum the spread moved, as the world ledger books it. Since
+`field-remainder-v1` (2026-09-17) the Node's remainder registers are
+measured as content of the family at the Node, their sum over the table's
+total with no momentum, before and after the step, and the record's
+`stored` (the whole quanta the registers gained net of their releases) is
+given back with the arrivals, so the residual stays zero and the `sourced`
+line still gains only the momentum the spread moved, the registers'
+releases included among the departures. A returned
 field quantum that a Node ends without an owner to give it to (the
 `field_returned` record with `restored` false, its release unbooked as a
 negative source) is given back the same way, measured as the returning ray

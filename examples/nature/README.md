@@ -442,7 +442,40 @@ all, from tick 7, the six other marks never; light released 276, 207
 escaped, 69 in the world at tick 24, electron 8, momentum (0, 0, 0), every
 ledger line balanced. The whole screen clicking waits for a table and a
 phase width in which the turned quanta reach it, which experiment A1
-confronts.
+confronts; the model owner replaced the phase-selected remainder the same
+day (feature 12b, below).
+
+**After feature 12b (2026-09-17, `field-remainder-v1`): in 48 ticks the
+on-axis mark clicks four times and the six others not yet; in 240 the whole
+screen clicks, the on-axis mark most.** `screen_spread.json` now runs 48
+ticks (`ticks` raised from 24 on 2026-09-17, because 24 ticks show nothing
+off the axis: one click at (7, 5, 5) at tick 19), run once
+(`initialization_sha256`
+`9b0473248483faf4e0bcc97100e40e411674c5846df130973ac503338c3983b8`,
+`source_sha256`
+`4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`). The
+Node owns the sub-quantum remainder ([the split and the
+remainder](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
+a released ray of 2 gives 1 forward by the table and leaves 1/11 in the
+forward register and 2/11 in each other register of the first Node, and
+every Node on fills the same way, six of eleven parts forward per arrival,
+so the field is whole quanta released where registers fill and nothing turns
+by phase: at distance 6 the on-axis mark (7, 5, 5) clicks at ticks 19, 30,
+39 and 48, amount 1 each, four clicks, and the six other marks, which need a
+transverse release (1/11 per arrival) and then five forward ones, are still
+dark at tick 48; light released 564, 112 escaped, 452 in the world (376 of
+them in the registers of 153 Node-and-sign blocks, 76 on rays), electron 8,
+momentum (0, 0, 0), every ledger line balanced,
+`conserved_at_every_completed_tick` true. The same world run for 240 ticks
+outside the record (`ticks` 240, exploratory, not fingerprinted here)
+clicks all seven marks, symmetric about the axis and the on-axis mark most:
+(7, 5, 5) 27 times from tick 19, (7, 4, 5) and (7, 6, 5) 6 each from tick
+82, (7, 3, 5) and (7, 7, 5) 3 each from tick 122, (7, 2, 5) and (7, 8, 5)
+once each at tick 193, light 1710 in the world and 1158 escaped, the ledger
+exact at every tick: the whole screen lit by the field of a charge at rest,
+which A1 confronts with a source, two slits and the Born table. The phone
+GIF of the 48-tick record (`render_gif.py --preset phone --side-by-side`,
+15 frames) is 896,163 bytes.
 
 **Resident content.** The simpler form, one lamp holding 8 as resident
 content and releasing from its stock ([released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1),

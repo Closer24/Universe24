@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .disturbance_state import Address3, DisturbanceRecord, Expression
-    from .spatial_state import BoundMotion, Rays, SpatialPopulations, SpatialState
+    from .spatial_state import BoundMotion, Rays, Remainders, SpatialPopulations, SpatialState
 
 
 @dataclass(frozen=True, slots=True)
@@ -38,6 +38,8 @@ class InventoryNode:
     rays: tuple[Rays, ...] = ()
     # The momentum register of the bound group held here (bound-group-motion-v1).
     group: BoundMotion | None = None
+    # The remainder registers of the spreading families (field-remainder-v1).
+    remainders: Remainders = ()
 
 
 @dataclass(frozen=True, slots=True)

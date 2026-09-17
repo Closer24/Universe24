@@ -198,6 +198,18 @@ BODY_SINK = -1
 FIELD_SPREADING = "field-spreading-v1"
 SPREAD_ENTRIES = 6
 SPREAD_BACKWARD = 1
+# The Node owns the sub-quantum remainder (Highlights 3.5 and 3.17, model owner
+# 2026-09-17; field-remainder-v1): the shares the table gives a heading below
+# one quantum are kept at the Node in a remainder register per spreading family,
+# source sign and Port, in units of 1/S where S is the table's total, with the
+# register's phase combined with each share's by the coherence rule; when a
+# register reaches S it releases one whole quantum through its heading in that
+# interval, more if it reached kS, as a fresh eventless field ray. Since the
+# weights sum to S, a Node's registers of one family hold whole quanta in
+# total, and the ledger counts them as content.
+FIELD_REMAINDER = "field-remainder-v1"
+REMAINDER_SIGNS = (-1, 0, 1)
+REMAINDER_SLOTS = 18
 
 
 @dataclass(frozen=True, slots=True)
@@ -368,6 +380,10 @@ class Ray:
 
 
 Rays = tuple[Ray, ...]
+# The remainder registers of a Node (field-remainder-v1): per spatial field, 18
+# integers in units of 1/S, sign-major (-1, 0, 1) then Port, or () for a family
+# that does not spread; the phases likewise.
+Remainders = tuple[tuple[int, ...], ...]
 
 # Structural non-owning projections used by the ordinary indexed evaluator.
 RAY_PROPERTIES = (
@@ -926,7 +942,13 @@ class FieldSpread:
     amount: int
     arrived: tuple[int, ...]
     amounts: tuple[int, ...]
-    remainders: tuple[int, ...]
+    # The quanta the remainder registers released per Port, the whole quanta the
+    # registers gained net of those releases, and the registers with their phases
+    # after the step (field-remainder-v1).
+    released: tuple[int, ...]
+    stored: int
+    registers: tuple[int, ...]
+    register_phases: tuple[int, ...]
     phase: int
     coherence: tuple[int, int]
     # The distinct source signs of the content taken, in order (field-spreading-v1).
@@ -1038,20 +1060,56 @@ def relative_ports(port: int) -> tuple[int, ...]:
     return (port, port ^ 1, *(other for other in range(6) if other >> 1 != port >> 1))
 
 
-def spread_remainder_entry(phase: int, phase_modulus: int, table: tuple[int, ...]) -> int:
-    """The entry of the table the phase selects for the remainder (Highlights 3.17
-    and 3.20, the steering table's rule for a whole quantum): the phase, as a
-    share of the turn, laid against the weights end to end; the smallest entry i
-    with modulus x (w_0 + ... + w_i) > phase x total. At phase 0 the first entry
-    with a weight; over all phases the remainders follow the table."""
-    total = sum(table)
-    target = checked_work(phase * total)
-    cumulative = 0
-    for entry, weight in enumerate(table):
-        cumulative = checked_work(cumulative + weight)
-        if checked_work(phase_modulus * cumulative) > target:
-            return entry
-    raise ValueError("a spread phase must be below the family's phase width")
+def remainder_slot(sign: int, port: int) -> int:
+    """The register of one source sign and Port in a family's block of eighteen."""
+    if sign not in REMAINDER_SIGNS or type(port) is not int or not 0 <= port < 6:
+        raise ValueError("a remainder register is named by a source sign and a Port")
+    return (sign + 1) * 6 + port
+
+
+def blank_remainders(definitions: tuple[SpatialFieldDefinition, ...]) -> Remainders:
+    """Empty registers: a block of eighteen zeros per spreading family, () otherwise."""
+    return tuple((0,) * REMAINDER_SLOTS if definition.spread else () for definition in definitions)
+
+
+def validate_remainders(
+    remainders: Remainders, phases: Remainders, definitions: tuple[SpatialFieldDefinition, ...]
+) -> None:
+    """One block per spatial field: eighteen nonnegative bounded integers and as many
+    phases below the family's width for a spreading family, nothing for the rest."""
+    if (
+        type(remainders) is not tuple
+        or type(phases) is not tuple
+        or len(remainders) != len(definitions)
+        or len(phases) != len(definitions)
+    ):
+        raise ValueError("remainder registers require one block per spatial field")
+    for definition, block, block_phases in zip(definitions, remainders, phases, strict=True):
+        if not definition.spread:
+            if block or block_phases:
+                raise ValueError("only a spreading family owns remainder registers")
+            continue
+        if (
+            type(block) is not tuple
+            or type(block_phases) is not tuple
+            or len(block) != REMAINDER_SLOTS
+            or len(block_phases) != REMAINDER_SLOTS
+            or any(type(v) is not int or bounded(v) < 0 for v in block)
+            or any(type(p) is not int or not 0 <= p < definition.phase_modulus for p in block_phases)
+        ):
+            raise ValueError("a remainder block holds eighteen registers and eighteen phases")
+
+
+def remainder_stock(block: tuple[int, ...], total: int) -> int:
+    """The whole quanta a Node's registers of one family hold: their sum over the
+    table's total, exact because the weights sum to the total (the shares one
+    spread adds are a multiple of it) and a release takes a multiple of it."""
+    held = 0
+    for value in block:
+        held = checked_work(held + value)
+    if held % total:
+        raise ValueError("a Node's remainder registers hold whole quanta in total")
+    return held // total
 
 
 def spread_tables(
@@ -1090,24 +1148,37 @@ def spread_coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[in
 
 
 def spread_content(
-    index: int, rays: Rays, definition: SpatialFieldDefinition
-) -> tuple[Rays, FieldSpread]:
-    """The spread of one family's content at a Node (field-spreading-v1): the
-    departures, one fresh field ray per Port and source sign with content, in
-    Port then sign order, and the record. The rays are the outbound content that
-    arrived (at least one Link walked). Amounts add per arriving heading and
-    source sign, content of opposite signs at one Node combining by phase as
-    content does and keeping its sign per ray; the phase of the whole is the
-    phase of the coherent sum and its Detector bit the catalog default, 1
-    outranks 0 outranks none; each heading's content is shared over the six
-    relative headings in whole quanta, floor(content x weight / total), and the
-    quanta the floors leave, at most five per heading and sign, leave whole
-    through the entry the phase selects. Each departure carries the Port's
-    heading, accumulators (0, 0, 0), the combined phase, the family's rate, no
-    wait, delay or lag, steps 0, outbound 1, no event and its sign. The total
-    is exact."""
+    index: int,
+    rays: Rays,
+    definition: SpatialFieldDefinition,
+    registers: tuple[int, ...] = (),
+    register_phases: tuple[int, ...] = (),
+) -> tuple[Rays, FieldSpread, tuple[int, ...], tuple[int, ...]]:
+    """The spread of one family's content at a Node (field-spreading-v1,
+    field-remainder-v1): the departures, one fresh field ray per Port, source
+    sign and phase with content, the record, and the Node's registers and their
+    phases after the step. The rays are the outbound content that arrived (at
+    least one Link walked). Amounts add per arriving heading and source sign,
+    content of opposite signs at one Node combining by phase as content does and
+    keeping its sign per ray; the phase of the whole is the phase of the coherent
+    sum and its Detector bit the catalog default, 1 outranks 0 outranks none.
+    Each heading's content is shared over the six relative headings: the whole
+    quanta of content x weight / total leave, and the share below one quantum,
+    content x weight mod total in units of 1/total, is added to the Node's
+    register of that sign and Port, the register's phase combined with the
+    share's by the coherence rule; a register that reaches the total releases
+    the whole quanta it holds through its Port, with its phase, and keeps the
+    rest. Each departure carries the Port's heading, accumulators (0, 0, 0), its
+    phase, the family's rate, no wait, delay or lag, steps 0, outbound 1, no
+    event and its sign. The total is exact: what arrived equals what leaves plus
+    the whole quanta the registers gained."""
     table = definition.spread
     total = validate_spread_table(table)
+    held = list(registers) if registers else [0] * REMAINDER_SLOTS
+    held_phases = list(register_phases) if register_phases else [0] * REMAINDER_SLOTS
+    if len(held) != REMAINDER_SLOTS or len(held_phases) != REMAINDER_SLOTS:
+        raise ValueError("a remainder block holds eighteen registers and eighteen phases")
+    before = sum(held)
     arrived = [0] * 6
     by_sign: dict[tuple[int, int], int] = {}
     for ray in rays:
@@ -1121,46 +1192,73 @@ def spread_content(
         key = (port, ray.source_sign)
         by_sign[key] = checked_work(by_sign.get(key, 0) + ray.amount)
     phase = spread_phase(rays, definition)
-    entry = spread_remainder_entry(phase, definition.phase_modulus, table)
-    amounts, remainders = [0] * 6, [0] * 6
-    departing: dict[tuple[int, int], int] = {}
+    tables = spread_tables(definition)
+    amounts, released = [0] * 6, [0] * 6
+    departing: dict[tuple[int, int, int], int] = {}
     for (port, sign), content in sorted(by_sign.items()):
-        ports = relative_ports(port)
-        placed = 0
-        for weight, target in zip(table, ports, strict=True):
-            share = checked_work(content * weight) // total
-            amounts[target] = checked_work(amounts[target] + share)
-            departing[(target, sign)] = checked_work(departing.get((target, sign), 0) + share)
-            placed = checked_work(placed + share)
-        rest = content - placed
-        target = ports[entry]
-        amounts[target] = checked_work(amounts[target] + rest)
-        remainders[target] = checked_work(remainders[target] + rest)
-        departing[(target, sign)] = checked_work(departing.get((target, sign), 0) + rest)
+        for weight, target in zip(table, relative_ports(port), strict=True):
+            whole, fraction = divmod(checked_work(content * weight), total)
+            if whole:
+                amounts[target] = checked_work(amounts[target] + whole)
+                sent = (target, sign, phase)
+                departing[sent] = checked_work(departing.get(sent, 0) + whole)
+            if fraction:
+                slot = remainder_slot(sign, target)
+                if tables is None:
+                    held_phases[slot] = 0
+                elif held[slot]:
+                    held_phases[slot] = _phase_of_sum(
+                        ((held[slot], held_phases[slot]), (fraction, phase)),
+                        tables[0],
+                        tables[1],
+                        definition.phase_modulus,
+                    )
+                else:
+                    held_phases[slot] = phase
+                held[slot] = checked_work(held[slot] + fraction)
+    for sign in REMAINDER_SIGNS:
+        for target in range(6):
+            slot = remainder_slot(sign, target)
+            whole, rest = divmod(held[slot], total)
+            if not whole:
+                continue
+            held[slot] = rest
+            amounts[target] = checked_work(amounts[target] + whole)
+            released[target] = checked_work(released[target] + whole)
+            sent = (target, sign, held_phases[slot])
+            departing[sent] = checked_work(departing.get(sent, 0) + whole)
+            if not rest:
+                held_phases[slot] = 0
     bit = max(ray.detector for ray in rays)
     departures = tuple(
         Ray(
             definition.headings.index(PORT_HEADINGS[port]),
             (0, 0, 0),
             bounded(amount),
-            phase=phase,
+            phase=departure_phase,
             detector=bit,
             source_sign=sign,
         )
-        for (port, sign), amount in sorted(departing.items())
+        for (port, sign, departure_phase), amount in sorted(departing.items())
         if amount
     )
+    stored, fraction = divmod(sum(held) - before, total)
+    if fraction:
+        raise ValueError("a spread stores whole quanta in the Node's registers in total")
     record = FieldSpread(
         index,
         bounded(sum(arrived)),
         tuple(arrived),
         tuple(amounts),
-        tuple(remainders),
+        tuple(released),
+        stored,
+        tuple(held),
+        tuple(held_phases),
         phase,
         spread_coherence(rays, definition),
         tuple(sorted({ray.source_sign for ray in rays})),
     )
-    return departures, record
+    return departures, record, tuple(held), tuple(held_phases)
 
 
 def spreading_field_names(
@@ -1500,6 +1598,10 @@ class SpatialNodeState:
     # The momentum register of the bound group held here (bound-group-motion-v1):
     # its momentum and accumulators; None at a Node without a group.
     bound_motion: BoundMotion | None = None
+    # The remainder registers of the spreading families and their phases
+    # (field-remainder-v1): one block of eighteen per spreading family.
+    remainders: Remainders = ()
+    remainder_phases: Remainders = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -1540,6 +1642,9 @@ class SpatialPlan:
     # and the returned field quanta that ended here (field-spreading-v1).
     spreads: tuple[FieldSpread, ...] = ()
     returned: tuple[ReturnedField, ...] = ()
+    # The remainder registers after this cycle (field-remainder-v1).
+    remainders: Remainders = ()
+    remainder_phases: Remainders = ()
     # The pushes of free rays this cycle, one per field ray met by a coupling's
     # momentum table (ray-momentum-turn-v1).
     ray_pushes: tuple[RayPush, ...] = ()

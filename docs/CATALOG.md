@@ -71,8 +71,9 @@ date) and emitted at an event by any source, a photon one quantum of it. Its
 `spread` key is the six-heading split table by which every Node that light
 reaches releases it again, the backward heading included, the remainder
 below a quantum owned by the Node per family and heading and leaving whole
-when it reaches one (Highlights 3.5, model owner, 2026-09-17, feature 12b;
-`field-spreading-v1` selects the remainder's heading by phase until then)
+when it reaches one (Highlights 3.5, model owner, 2026-09-17, feature 12b,
+`field-remainder-v1`; `field-spreading-v1` selected the remainder's heading
+by phase until then)
 (feature 12, `field-spreading-v1`, 2026-09-17, [field
 spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)): `[6, 1,
 1, 1, 1, 1]`, the first declared table, which A1 and A6 confront.
