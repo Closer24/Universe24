@@ -771,7 +771,12 @@ six headings every interval it is held
 ([binding](#binding-and-gravity-by-delay-ray-binding-v1)). A G ray crosses
 Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
-lattice alone. A G ray that reaches an open boundary escapes like any ray.
+lattice alone. Until feature 12, field spreading (Highlights 3.5, model
+owner, 2026-09-17), a G ray therefore stays on its line and the field of a
+source lives on the six axis lines of the Nodes it crosses; with it every
+Node that field content reaches releases it again by the family's declared
+split table, and light, the field of a charge, is one such family. A G ray
+that reaches an open boundary escapes like any ray.
 `release_field` (`core/spatial_state.py`) is the pure function, called by the
 spatial law after its emissions and before forwarding.
 

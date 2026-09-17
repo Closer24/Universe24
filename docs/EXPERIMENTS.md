@@ -24,7 +24,7 @@ specialist may propose an entry or a criterion; the register changes only by
 the model owner's decision, dated.
 
 **The rule of every entry.** Before its run, an entry names the features it
-needs (numbers 1 to 11 below), the board, the families, the Detector marks
+needs (numbers 1 to 12 below), the board, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
 and its pass or fail criterion as an exact statement. The families and
 couplings it names are entries of the [catalog of nature](CATALOG.md)
@@ -35,8 +35,8 @@ against the result and no criterion is redefined after a failure
 A failed confrontation is recorded as the model's stated limit; it does not
 reopen an adopted decision and does not authorize a new law.
 
-**Features.** The numbers are the ten features of issue #169 and the eleventh
-of Highlights 3.26, in the order they land
+**Features.** The numbers are the ten features of issue #169, the eleventh
+of Highlights 3.26 and the twelfth of Highlights 3.5, in the order they land
 ([ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)): 1 ray state
 (done on 2026-09-17, `ray-event-state-v1`); 2 the Node Detector bit (mark,
 setting, ticket seed; done on 2026-09-17, `detector-mark-v1`, the
@@ -57,7 +57,13 @@ an explicitly accounted sink by default (a wall, a screen, a beam stop) and
 otherwise a mirror, a beam splitter, a phase plate or, after 11, a
 polarizer; 8 binding and gravity by
 delay; 9 every ray a wave ray with family, charge and `phase_bits`; 10 the
-audits; 11 polarization (after the ten).
+audits; 11 polarization (after the ten); 12 field spreading (Highlights 3.5,
+model owner, 2026-09-17): light and the field of a charge one family of the
+catalog, and every Node that field content reaches releasing it again in all
+six headings by the family's declared split table, the backward heading
+included, a quantum never waiting; until it lands the field lives on the six
+axis lines of its source and light goes straight, and its cost is measured
+before adoption.
 
 **Status values.** `planned` (this page, criterion fixed, not run);
 `measured` with date, commit and fingerprint, and the outcome in one word
@@ -93,7 +99,7 @@ states "exactly" and means integer equality at every tick.
   rate is zero; the Detector reads none of this and click intensity is the
   content that arrived. The fringe period is therefore λ = N/r Links for an
   emitter of rate r steps per interval.
-- **Features.** 1, 2, 5, 6, 7b, 9, 10.
+- **Features.** 1, 2, 5, 6, 7b, 9, 10, 12.
 - **Run.** A slab of 129 × 65 × 3 Nodes, open boundary. One emitter, a bound
   clock of rate r = 32 at N = 2^8 (λ = 8 Links, so that the integer path
   differences of the screen hit the table's exact zero), a marked Node with
@@ -122,7 +128,11 @@ states "exactly" and means integer equality at every tick.
   any column off the table, a maximum or minimum displaced by more than one
   Node, visibility below 1 − 4/N, or content in unequal to content out at
   any tick.
-- **Status.** planned.
+- **Status.** planned; waits for feature 12, field spreading (Highlights
+  3.5, 2026-09-17): light is the field and spreads by the split table of its
+  family, so a slit is a gap in a wall that absorbs and the fringes are
+  where a whole quantum, which never waits, is realized by the Detector;
+  until it lands light goes straight and the slit coupling re-emits.
 
 ### A2. Bell test in phase form, symmetric geometry
 
@@ -140,8 +150,8 @@ states "exactly" and means integer equality at every tick.
   the first Detector's value reaches the other only after the round trip
   through the birth event, so S ≤ 2 for symmetric spacelike settings; the
   passed pairs are a fair sample because the draw reads nothing.
-- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10. No polarization (feature 11) is
-  needed: the settings are phases.
+- **Features.** 1, 2, 3, 4, 5, 6, 7b, 9, 10, 12. No polarization (feature 11)
+  is needed: the settings are phases.
 - **Run.** A board of 161 × 17 × 17 Nodes, open boundary; the pair source at
   the center, a marked Node with setting 1, emitting one pair per 8 intervals
   as two light rays of one birth event on opposite headings ±x carrying the
@@ -173,7 +183,11 @@ states "exactly" and means integer equality at every tick.
   with the other side's setting by less than 3 standard errors
   (no-signalling; a larger shift is a fail whatever S is), and every pair
   with a return must be counted unpaired, not dropped.
-- **Status.** planned.
+- **Status.** planned; waits for feature 12, field spreading (Highlights
+  3.5, 2026-09-17): the pair's light rays are field content, spreading by
+  the split table of their family and combining by phase where they meet,
+  and the arms run on that spreading family; until it lands light goes
+  straight.
 
 ### A3. Bell test in phase form, delayed geometry
 
@@ -309,7 +323,7 @@ states "exactly" and means integer equality at every tick.
   lattice units scales as 1/N²: G_eff · N² is constant across the phase
   width. This statement is not yet in Highlights or on the hypotheses page;
   the run pins it as stated.
-- **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
+- **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10, 12.
 - **Run.** A board of 65 × 65 × 9 Nodes, open boundary. The star at the
   center: an external body (feature 7b, `external-body-v1`, Highlights 3.19)
   of declared family and amount M, no charge, at rest (`initial_momentum`
@@ -362,7 +376,12 @@ states "exactly" and means integer equality at every tick.
   the unit of action in the derivation, not the engine); a diagonal α
   outside its band (the lattice, Highlights 3.5, recorded under 3.23), each
   stated as which.
-- **Status.** planned. The N-scan part of the criterion ran on 2026-09-17 as
+- **Status.** planned; waits for feature 12, field spreading (Highlights
+  3.5, 2026-09-17): until it lands the field lives on the six axis lines of
+  its source, so the diagonal passes meet no field and the clause comparing
+  the axis with the diagonal measures nothing; with it the field fills the
+  board and the lattice's anisotropy is the residue this entry measures. The
+  N-scan part of the criterion ran on 2026-09-17 as
   the acceptance test of feature 8 (`test_ray_binding.py`, a test, not this
   experiment): a bound group of mass N / 4 phase steps per interval, b = 4,
   the delay table `[4, 4, 4, 4, 4, 4]` per unit of field amount, gave
@@ -858,7 +877,7 @@ states "exactly" and means integer equality at every tick.
 
 ## C. Order
 
-The features land in the order 1 to 11. Each line names what its feature
+The features land in the order 1 to 12. Each line names what its feature
 unlocks; an entry runs when the last feature it names has landed.
 
 1. Feature 1, ray state (done on 2026-09-17): unlocks no run by itself; every
@@ -880,6 +899,8 @@ unlocks; an entry runs when the last feature it names has landed.
 10. Feature 10, the audits: B1, and the exactness clauses of every entry
     above in their final form.
 11. Feature 11, polarization: A12, A13.
+12. Feature 12, field spreading (Highlights 3.5, 2026-09-17): A1, A2 and the
+    diagonal series of A6.
 
 ## D. What is deleted
 
@@ -909,8 +930,8 @@ which stays `planned`: B8 holds its group for 2^12 intervals and pins the
 threshold criterion, while these runs show the events over a dozen ticks.
 The families are catalog rays (`light`, `electron`, `proton`, `neutron`, the
 charge unit e/3, the electron's rest rate 1); the two couplings are the
-worlds' own declarations, since the catalog holds no photon-absorption and no
-photofission coupling, and the proton's and the neutron's rest rates,
+worlds' own declarations, since the catalog holds no photon-absorption, no
+photon-emission and no photofission coupling, and the proton's and the neutron's rest rates,
 undecided in the catalog, are set to 1 for the picture.
 
 ### E1. A photon absorbed by a bound electron
@@ -977,3 +998,45 @@ undecided in the catalog, are set to 1 for the picture.
   initialization `7f8a490db98a1658860c54d3a6b0bb03781366122de31a7a1421dcc65f83bf7f`;
   outcome: the control crosses and the split happens as stated, exact at
   every tick.
+
+### E3. Absorption and emission: the photon held inside a bound electron and released
+
+- **Claim.** Highlights 3.4 (binding is zero events; a group is unbound by
+  the coupling declared for the families present) and 3.3 (a light ray
+  carries the phase of the clock that emitted it): the light ray bound into
+  the group leaves again when the group's clock reaches a declared phase, on
+  a new heading and with the group's phase at emission, and the ground group
+  re-forms.
+- **Features.** 1, 5, 6, 8, 9, 10.
+- **Run.** `examples/nature/absorption_emission.json`: board 11^3, open,
+  N = 8, no Detector, 14 ticks; two electron rays of amount 4 bound at
+  (5, 5, 5) by `bind` (`ray_delay` 1); a light ray of amount 4 from
+  (5, 2, 5) heading +Y; `emit`, declared first, an outputs rule over
+  `[electron, electron, light]` with the guard `eq(phase of the electron, 1)`
+  whose outputs are the light through Port +X with the electron's phase and
+  the two electrons with `delay` 1; `excite` (`ray_delay` 3) second; `bind`
+  third. The light's amount equals an electron's so that one electron
+  heading carries the recoil exactly.
+- **Shows.** Tick 2: the ground group [4, 4]. Tick 3: the light arrives and
+  waits the group's clock. Ticks 5 to 9: the group `[electron, electron,
+  light]`, amounts [4, 4, 4], `ray_delay` 3, the electron phases 5, 6, 7, 0,
+  1 and the light's 0 (the `bound_tick` records of cycles 4 to 8). Cycle 9:
+  the phase reads 1 and `emit` fires, the record's one departure from the
+  center, through +X. Tick 10: the light at (6, 5, 5) with phase 1 and
+  `steps` 1; the electrons at the Node with `ray_delay` 0 for that tick.
+  Tick 11 on: the ground group [4, 4], `ray_delay` 1 (the `bound_tick`
+  records of cycles 10 to 13), one electron on +Y holding the recoil; the
+  light walks to (10, 5, 5) at tick 14. At every tick: totals electron 8,
+  light 4, momentum (0, 0, 0), the charge line electron -24, every audit
+  line balanced, `conserved_at_every_completed_tick` true.
+- **The lifetime is declared.** Five intervals, one integer. The half-life
+  draw of Highlights 3.26 (a decaying group as a source, a source as a
+  Detector drawing at each tick) is not in the engine, whose Detector mark
+  draws on arrivals through Ports only; that draw at a `bound_tick` is the
+  missing rule for a random lifetime, stated in the dictionary and not added
+  by this run.
+- **Status.** measured on 2026-09-17, commit `84854f95da55ca3fc6dd6a43a7e7104bf94ad89e`,
+  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization `b0ba05326c876703651bbd80b25f09fa42efd562b057824c03ef5fe28f8eb8bf`;
+  outcome: photon in, held five intervals, photon out on a new heading, the
+  group back in its ground state, exact at every tick.
