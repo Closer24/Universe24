@@ -370,6 +370,13 @@ class SpatialNode(SpatialNodeState):
             for record in records
             if record is not None
         )
+        # Resident stock of a family with a released field releases every interval
+        # (released-field-v1, Highlights 3.5), so the Node cycles for it; until
+        # 2026-09-17 the idle exit below came first and such a record released
+        # nothing (a defect fixed with field-spreading-v1).
+        active_source = active_source or any(
+            holds_source_stock(record, services.initial.spatial_fields) for record in records
+        )
         if not active_source and not active_field and self.received_count == 0:
             self.states = tuple(
                 replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6, received_mask=0)
@@ -716,6 +723,43 @@ class SpatialNode(SpatialNodeState):
                     for i, field in enumerate(services.initial.fields)
                     if split.annulled and any(split.annulled[i])
                 },
+            )
+        # The spreads of this cycle precede the cycle record as well (field-spreading-v1):
+        # the local audit reads what each spread took off the Node before it measures it.
+        for spread in plan.spreads:
+            definition = services.initial.spatial_fields[spread.field]
+            self._event(
+                "field_spread",
+                tick,
+                services,
+                notifications=notifications,
+                family=services.initial.fields[definition.field].name,
+                amount=spread.amount,
+                arrived=spread.arrived,
+                amounts=spread.amounts,
+                remainders=spread.remainders,
+                phase=spread.phase,
+                coherence=spread.coherence,
+                signs=spread.signs,
+            )
+        for item in plan.returned:
+            # A returned field quantum that ended here (field-spreading-v1, the
+            # proposal of Highlights 5.5): restored to its emitter or unbooked.
+            definition = services.initial.spatial_fields[item.field]
+            self._event(
+                "field_returned",
+                tick,
+                services,
+                notifications=notifications,
+                family=services.initial.fields[definition.field].name,
+                amount=item.amount,
+                port=item.port,
+                by=(
+                    None
+                    if item.by < 0
+                    else services.initial.fields[services.initial.spatial_fields[item.by].field].name
+                ),
+                restored=bool(item.restored),
             )
         group = bound_group(plan.kept_rays)
         if group and held_before:

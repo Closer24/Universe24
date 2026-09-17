@@ -150,6 +150,13 @@ def _convert(
         stock[kind] = checked_work(stock.get(kind, 0) - ray.amount)
     if any(stock.values()):
         raise ValueError(f"ray meeting {rule.name} changes the stock of a family")
+    # An output carries the source sign of the first input of its own family (the
+    # recoil keeps its field's sign, field-spreading-v1); a family the inputs do
+    # not hold starts at 0.
+    signs: dict[int, int] = {}
+    for kind, ray in inputs:
+        signs.setdefault(kind, ray.source_sign)
+    produced = [(kind, replace(ray, source_sign=signs.get(kind, 0))) for kind, ray in produced]
     products = tuple((kind, ray) for kind, ray in produced if ray.amount)
     stamped = stamp_event(
         tuple(ray for _, ray in products),

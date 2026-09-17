@@ -19,6 +19,7 @@ from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     DETECTOR_RETURN,
     EXTERNAL_BODY,
+    FIELD_SPREADING,
     INVERSE_SPLIT,
     RAY_BINDING,
     RAY_EVENT_STATE,
@@ -30,6 +31,7 @@ from event_universe.core.spatial_state import (
     external_body_names,
     ray_layer_names,
     released_field_names,
+    spreading_field_names,
 )
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
@@ -272,6 +274,12 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
+    spreading = spreading_field_names(initial.fields, initial.spatial_fields)
+    if spreading:
+        # Field spreading (field-spreading-v1): recorded only when a family declares
+        # `spread`, so the record of every existing world is byte for byte the same.
+        metadata["field_spreading"] = FIELD_SPREADING
+        metadata["spreading_fields"] = spreading
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],

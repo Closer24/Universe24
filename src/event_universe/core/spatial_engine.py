@@ -271,10 +271,14 @@ class SpatialEngine:
 
         A returning ray never reaches the boundary before its event Node, which its
         steps bound; one that would escape has no event Node in the world, and the
-        engine fails closed instead of recording an escape (detector-return-v1).
+        engine fails closed instead of recording an escape (detector-return-v1). A
+        returned field quantum of a spreading family has no event Node: it walks
+        back until something takes it, and escapes like any ray otherwise
+        (field-spreading-v1, the proposal of Highlights 5.5).
         """
-        if any(not ray.outbound for rays in packet.rays for ray in rays):
-            raise ValueError("a returning ray cannot escape: its event Node is not in the world")
+        for definition, rays in zip(self.initial.spatial_fields, packet.rays or (), strict=False):
+            if any(not ray.outbound and (ray.event_ports or not definition.spread) for ray in rays):
+                raise ValueError("a returning ray cannot escape: its event Node is not in the world")
         if packet.body is not None:
             raise ValueError("an external body cannot leave the world: its Node must exist")
         amounts = [[0] * field.components for field in self.initial.fields]

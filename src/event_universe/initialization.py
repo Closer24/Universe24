@@ -78,6 +78,7 @@ from .core.spatial_state import (
     ray_participant_definitions,
     validate_heading,
     validate_released_fields,
+    validate_spread_fields,
 )
 from .json_documents import parse_json_document as parse_json_document
 from .observer_configuration import ObserverDefinition
@@ -1069,6 +1070,7 @@ def _spatial_fields(
                 "flux_projection",
                 "field_of",
                 "release",
+                "spread",
                 "phase_bits",
                 "charge",
             }
@@ -1098,6 +1100,7 @@ def _spatial_fields(
         flux_projection = "ports"
         field_of: str | None = None
         release_numerator, release_denominator = 0, 1
+        spread: tuple[int, ...] = ()
         if transport == "ray":
             flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
             if ("field_of" in obj) != ("release" in obj):
@@ -1112,6 +1115,13 @@ def _spatial_fields(
                 release_numerator, release_denominator = release
                 if release_numerator > release_denominator:
                     raise ValueError("release must not exceed the source's amount")
+            if "spread" in obj:
+                # Field spreading (field-spreading-v1): the split table, six weights
+                # in Port order relative to the arriving heading; the definition
+                # validates its shape and the resolved fields its admission.
+                spread = tuple(
+                    _integer(v, "spread weight", 0) for v in _array(obj["spread"], "spread", 6, 6)
+                )
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             # Every ray is a wave ray (wave-ray-family-v1): the family declares the
             # width of its phase, 2^phase_bits values, and its charge per quantum.
@@ -1189,11 +1199,12 @@ def _spatial_fields(
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
-            | {"phase_bits", "charge", "field_of", "release"}
+            | {"phase_bits", "charge", "field_of", "release", "spread"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "flux_projection, phase_bits, charge, field_of and release require ray transport"
+                "flux_projection, phase_bits, charge, field_of, release and spread require ray "
+                "transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1233,6 +1244,7 @@ def _spatial_fields(
                 release_denominator=release_denominator,
                 phase_bits=phase_bits,
                 charge=charge,
+                spread=spread,
             )
         )
         sources.append(field_of)
@@ -1248,6 +1260,7 @@ def _spatial_fields(
             raise ValueError("field_of must name a ray spatial field")
         resolved.append(replace(definition, field_of=origin))
     validate_released_fields(tuple(resolved), fields)
+    validate_spread_fields(tuple(resolved), fields)
     return tuple(resolved)
 
 

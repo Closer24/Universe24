@@ -358,6 +358,7 @@ class InitialState:
             validate_external_bodies,
             validate_ray_coupling,
             validate_released_field_admission,
+            validate_spread_admission,
         )
 
         if self.return_mode not in RETURN_MODES:
@@ -365,6 +366,7 @@ class InitialState:
         validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
         validate_ray_coupling(self)
         validate_released_field_admission(self)
+        validate_spread_admission(self)
         validate_detector_marks(self)
         validate_external_bodies(self)
         if self.node_execution and self.spatial_computation_delay:
