@@ -163,7 +163,7 @@ the double slit needs no second lamp. Two limits are visible in the numbers. Int
 of both lamps at one Node on one tick, so ticks on which only one lamp's rays
 are present pass ungated; and the pattern follows Manhattan path difference on
 this lattice's links metric, while the
-[Euclidean pace](../euclidean-pace/README.md) gives the Euclidean one at the
+Euclidean pace (`examples/euclidean-pace/`, deleted on 2026-09-17) gives the Euclidean one at the
 price of rays that wait. Quanta that cancel are not redistributed to the
 bright fringes; they continue, and a thick screen absorbs them behind the
 first layer, which keeps the rule local and the total exact but differs from

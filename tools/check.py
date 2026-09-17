@@ -10,6 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
+# Rows whose consumer was deleted on 2026-09-17 stay while tests/test_check_scope.py
+# (edited on a running branch) asserts them; main() skips tests that do not exist.
 RESOURCE_CONSUMERS = {
     "examples/generic-ray-coupling/finite-residence.json": ("tests/test_native_ray_coupling.py",),
     "examples/generic-ray-coupling/field-sampling.json": ("tests/test_ray_heading_flux.py",),
@@ -17,63 +19,21 @@ RESOURCE_CONSUMERS = {
     "examples/generic-ray-coupling/render_gif.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/run_experiments.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/compare_controls.py": ("tests/test_ray_coupling_evidence.py",),
-    "examples/known-entities/physical-units.json": ("tests/test_reference_units.py",),
-    "examples/gallery/particle_gallery.py": ("tests/test_particle_gallery.py",),
-    "examples/gallery/lepton_reactions.json": ("tests/test_particle_gallery.py",),
-    "examples/isotropy-probe/run_experiments.py": ("tests/test_isotropy_probe.py",),
-    "examples/particle-contracts/electron-positron.json": ("tests/test_particle_gallery.py",),
-    "examples/family-conversion/build.py": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/expectations.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/annihilation.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/pair-production.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/pair-production-control.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/compton.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/bindings.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/three-photon.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/three-photon-capacity-control.json": (
-        "tests/test_family_conversion.py",
-    ),
-    "examples/family-conversion/three-photon-port-control.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/four-body.json": ("tests/test_family_conversion.py",),
-    "examples/family-conversion/four-body-three-arrive-control.json": (
-        "tests/test_family_conversion.py",
-    ),
-    "examples/family-conversion/four-body-port-control.json": ("tests/test_family_conversion.py",),
-    "examples/node-vector/six-records.json": (
-        "tests/test_node_vector_examples.py",
-        "tests/test_node_vector_integration.py",
-    ),
-    "examples/node-vector/two-fields.json": (
-        "tests/test_node_vector_examples.py",
-        "tests/test_node_vector_integration.py",
-    ),
     "examples/known-entities/property-coupling-probes.json": ("tests/test_property_entity_profiles.py",),
     "examples/coupled-excitations/law.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/definition.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/experiments.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/prepare.py": ("tests/test_coupled_excitations.py",),
-    "examples/inverse-square/run_experiments.py": ("tests/test_inverse_square_experiments.py",),
-    "examples/gravity-probe/run_experiments.py": ("tests/test_gravity_probe.py",),
-    "examples/particle-interactions/run_experiments.py": ("tests/test_particle_interactions.py",),
     "examples/kerengonen-double-slit/run_experiments.py": ("tests/test_kerengonen.py",),
-    "examples/de-broglie/run_experiments.py": ("tests/test_de_broglie.py",),
-    "examples/matter-wave/run_experiments.py": ("tests/test_matter_wave.py",),
-    "examples/kerengonen-mirror/run_experiments.py": ("tests/test_kerengonen_mirror.py",),
-    "examples/euclidean-pace/run_experiments.py": ("tests/test_euclidean_pace.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/prepare.py": ("tests/test_directional_wave.py",),
     "examples/directional-wave/observe.py": ("tests/test_directional_wave.py",),
-    "examples/maxwell/configuration.py": ("tests/test_maxwell_configuration.py",),
-    "examples/maxwell/measurements.py": ("tests/test_maxwell_configuration.py",),
     "examples/local_lorentz_field.json": (
         "tests/test_node_state_contract.py",
         "tests/test_local_lorentz_field.py",
     ),
-    "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
-    "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
-    "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
     "examples/known-entities/catalog.json": (
         "tests/test_property_entity_profiles.py",
         "tests/test_entity_catalog.py",
@@ -87,19 +47,12 @@ RESOURCE_CONSUMERS = {
         "tests/test_entity_compiler.py",
         "tests/test_small_space_experiments.py",
     ),
-    "examples/known-entities/discrete-pair.json": ("tests/test_small_space_experiments.py",),
+    "examples/known-entities/run_reference_checks.py": ("tests/test_reference_examples.py",),
     "examples/basic.json": ("tests/test_generic_identity.py",),
     "examples/exchange.json": ("tests/test_generic_identity.py",),
     "examples/finite_fields.json": ("tests/test_generic_identity.py",),
     "examples/open_world.json": ("tests/test_generic_identity.py",),
     "examples/spatial_turning.json": ("tests/test_generic_identity.py",),
-    "examples/04-unequal-mass-collision.json": ("tests/test_reference_examples.py",),
-    "examples/three_mass_finite.json": ("tests/test_reference_examples.py",),
-    "examples/known-entities/three-masses-low-budget.json": ("tests/test_reference_examples.py",),
-    "examples/known-entities/boundary-periodic.json": ("tests/test_reference_examples.py",),
-    "examples/known-entities/boundary-open.json": ("tests/test_reference_examples.py",),
-    "examples/known-entities/run_reference_checks.py": ("tests/test_reference_examples.py",),
-    "examples/known-entities/run_reference_checks.ps1": ("tests/test_reference_examples.py",),
 }
 
 

@@ -240,6 +240,101 @@ is otherwise an ordinary Node
 A document without `detectors` has no marked Node, calls the ticket rule
 nowhere and runs exactly as before.
 
+## Test suite reduced on 2026-09-17: one test per rule
+
+Decision of the model owner, 2026-09-17: the engine is generic, so the test
+suite keeps one module per generic rule, each exercising that rule in isolation
+on a minimal board, and one module per feature of the
+[ray-event model](RAY_EVENT_MODEL.md) (issue #169); modules that pin the numbers
+of an example world, combine several rules to reach a pinned number, duplicate a
+kept rule under another world, or exist for a study, a gallery, a probe, a
+comparison of worlds, rendering or playback were deleted, and so were the dated
+research studies and every `examples/` directory that no kept test loads and
+`tools/check.py` does not need. Before: 108 modules, 2,194 tests (2,191 passed,
+3 visual-only skipped) in 622 seconds single-process on the recording host
+(about 15 minutes in CI). After: 40 modules with `test_detector_mark.py` of
+the merged PR #186, 1,009 tests, 35 seconds on the same host. The kept
+modules and the rule each isolates are the
+[suite inventory](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17).
+
+Deleted test modules (69):
+
+- world-specific probes and studies:
+  `test_atomic_interactions.py`, `test_computational_response.py`,
+  `test_coupled_excitations.py`, `test_de_broglie.py`,
+  `test_directional_wave.py`, `test_euclidean_pace.py`,
+  `test_family_conversion.py`, `test_generic_identity.py`,
+  `test_gravity_probe.py`, `test_inverse_square_experiments.py`,
+  `test_isotropy_probe.py`, `test_kerengonen_mirror.py`,
+  `test_local_lorentz_field.py`, `test_lorentz_response_physics.py`,
+  `test_matter_wave.py`, `test_maxwell_configuration.py`,
+  `test_particle_gallery.py`, `test_particle_interactions.py`,
+  `test_radiation_scattering.py`, `test_ray_heading_flux.py`,
+  `test_redshift_sweep.py`, `test_reference_examples.py`,
+  `test_small_space_experiments.py`;
+- computational curvature and self-field scenarios:
+  `test_arrival_port_blind.py`, `test_carried_allocation_phase.py`,
+  `test_computation_field_delay.py`, `test_delay_direction.py`,
+  `test_field_phase_first.py`, `test_least_delay_routing.py`,
+  `test_node_work_emission.py`, `test_rotation_self_interaction.py`;
+- catalog and profile data:
+  `test_entity_catalog.py`, `test_entity_compiler.py`,
+  `test_physical_entities.py`, `test_profile_validation.py`,
+  `test_property_couplings.py`, `test_property_entity_profiles.py`,
+  `test_reference_units.py`;
+- duplicates of a kept rule:
+  `test_active_node_contracts.py`, `test_active_ports.py`,
+  `test_dissipative_initialization.py`, `test_emission_residuals.py`,
+  `test_exchange_residuals.py`, `test_field_commit_guards.py`,
+  `test_finite_spatial_engine.py`, `test_generic_vector_lab.py`,
+  `test_interaction_spatial_integration.py`, `test_joint_node_reactions.py`,
+  `test_joint_reaction_configuration.py`,
+  `test_node_conservation_configuration.py`, `test_node_guard_boundaries.py`,
+  `test_node_runtime.py`, `test_node_terminology.py`,
+  `test_node_vector_examples.py`, `test_node_vector_integration.py`,
+  `test_open_boundaries.py`, `test_parallel_node_execution.py`,
+  `test_spatial_computation_delay.py`, `test_spatial_coupling_budget.py`,
+  `test_spatial_engine.py`, `test_spatial_scheduling.py`,
+  `test_spatial_seed_bounds.py`, `test_zero_carrier.py`;
+- observer, playback, workspace and visualization:
+  `test_local_observer.py`, `test_observer_playback.py`,
+  `test_recorded_movie.py`, `test_workspace.py`,
+  `test_workspace_integration.py`, `test_workspace_retention.py`.
+
+The helper `tests/support/identity.py` went with `test_generic_identity.py`.
+Deleted example directories (20), with their READMEs, configurations, scripts
+and recorded results: `examples/charged-pair/`, `examples/collisions/`, `examples/computational-curvature/`, `examples/computational-response/`, `examples/de-broglie/`, `examples/euclidean-pace/`, `examples/family-conversion/`, `examples/gallery/`, `examples/gravity-probe/`, `examples/inverse-square/`, `examples/isotropy-probe/`, `examples/kerengonen-mirror/`, `examples/matter-wave/`, `examples/maxwell/`, `examples/observer/`, `examples/particle-interactions/`, `examples/radiation-scattering/`, `examples/relativity-probes/`, `examples/research/`, `examples/small-space/`.
+The six research studies of 2026-09-16 under `examples/research/` (Bell and
+postulate 22, already deleted with bucket B.5; anomalies; ray form; entity
+audit; electron-photon scatter; ray gallery) are among them. Links to the
+deleted paths in the documents became plain text with this date; the
+hypotheses they informed stay stated in [HYPOTHESES.md](HYPOTHESES.md) and
+their dated results in [VALIDATION.md](VALIDATION.md).
+
+`tools/check.py` `RESOURCE_CONSUMERS` lost the rows of deleted examples and of
+deleted consumers, except the rows that `tests/test_check_scope.py` (edited on
+a running branch, left untouched) asserts: those rows still name
+`test_ray_heading_flux.py`, `test_local_lorentz_field.py`,
+`test_directional_wave.py`, `test_coupled_excitations.py`,
+`test_property_entity_profiles.py`, `test_entity_catalog.py`,
+`test_entity_compiler.py`, `test_physical_entities.py`,
+`test_profile_validation.py`, `test_small_space_experiments.py`,
+`test_reference_examples.py` and `test_generic_identity.py`, and the selector
+still names `test_generic_vector_lab.py`, `test_workspace.py` and
+`test_recorded_movie.py`; `main()` skips a selected test that does not exist.
+The examples those rows name (`examples/directional-wave/`,
+`examples/coupled-excitations/`, `examples/known-entities/`,
+`examples/generic-ray-coupling/field-sampling.json` and the root example
+inputs) stay for that reason and for the kept tests that load them. The
+modules of running feature branches (`test_energy_audit.py`,
+`test_kerengonen.py`, `test_ray_integration_guards.py`,
+`test_native_ray_coupling.py`, `test_ray_merge_contracts.py`,
+`test_plan_reuse.py`, `test_ray_coupling_evidence.py`,
+`test_detector_sampling_contract.py`, `test_check_scope.py`) were left as they
+were; `test_ray_delay.py` and `test_local_focus.py` stay as their import
+dependencies and as the output-clock and Local Focus modules. There is no
+replacement: a rule that needs a new check gets one focused module.
+
 ## Experiments register added on 2026-09-17
 
 By the model owner's decision of 2026-09-17, the research runs of the
@@ -284,7 +379,6 @@ Use Git commits and tags for source versions. Each run records
 a SHA-256 fingerprint of the active package files, so source identity survives
 installation from a ZIP or wheel without a Git checkout.
 
-
 ## Explicit historical component names
 
 The 2026-09-12 consistency cleanup made the active generic engine distinct from
@@ -307,7 +401,6 @@ The reference command resolves its logical `collision` experiment to that file;
 other reference inputs retain their separate configuration and expectations.
 Earlier validation records retain their original paths and hashes; use this
 table to locate the current owner.
-
 
 ## Duration-only reference configuration
 
