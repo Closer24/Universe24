@@ -315,16 +315,146 @@ states "exactly" and means integer equality at every tick.
   record). Fail: any one; an exponent outside the band is a fail of the
   outward dilution or of the declared table against Coulomb, stated as
   which.
-- **Status.** planned. Reading of 2026-09-17 (Highlights 3.5, the field is
-  matter's message about itself): the sign of the releasing charge travels
-  on the field ray as a visible property (`source_sign`, feature 12), never
-  in the phase, and the attraction of opposite charges (`opposite_charge`)
-  closes with it. Under Highlights 5.5 (2026-09-17) the release ratio and
-  the strength table are inputs until hypothesis 17 says what fixes them:
-  this entry confronts the form of Coulomb's law, the exponent -1 in b, and
-  not the value of the coupling. Runnable after feature 8b
-  (`ray-momentum-turn-v1`, 2026-09-17), which turns a free ray gradually by
-  the momentum of every field ray it meets under a coupling's
+- **Made.** 2026-09-17, on `main` at `6f35705` (feature 12b,
+  `field-remainder-v1`, in it), as `examples/nature/a5_coulomb/`: thirteen
+  worlds written by `make_worlds.py`, the records read by `analyze.py`, its
+  integers in `record.json`, the dictionary in the
+  [README](../examples/nature/README.md#a5-coulombs-law-through-the-spreading-field).
+  The world: board 97 × 49 × 49, open, N = 2^12; ray a of amount 64 from
+  (0, 24 − b/2, 24) heading +X and ray b of amount 64 from (96, 24 + b/2, 24)
+  heading −X, closest approach at x = 48 at tick 48, the read-off at tick
+  48 + 3b; each ray's field `light` declared `field_of` it with `release`
+  [1, 4] (16 per heading), `spread` [6, 1, 1, 1, 1, 1] and the engine's
+  `source_sign`; `electron_field_turn` as the momentum table of
+  ray-momentum-turn-v1, sign +1 in the electron-electron worlds and −1 in the
+  electron-positron worlds. Deviations from the run planned above, each
+  stated: (i) the x extent is 97, not 49, so that both rays are on the board
+  3b past closest approach at b = 16 (the transverse extents are 49); (ii)
+  the two rays are two families of identical properties, `electron_a` and
+  `electron_b` (charge −3, rest rate 1; +3 for the positron; 0 for the
+  control), because the engine names one light family per releaser, so each
+  ray's field is its own family, `light_a` and `light_b`; (iii) the sign of
+  the releasing charge reaches the coupling through the family, not through
+  a guard: the engine gives a `when` guard no view of `source_sign`
+  (`RAY_PROPERTIES` holds amount, heading, phase, advance, delay, family,
+  charge and detector), so the table names the family that carries the sign
+  and its entry is the sign of the charge product, written before the run;
+  the phase is read nowhere; (iv) the electron amount is 64, the smallest
+  at which the release gives 16 per heading and the register resolves one
+  quantum in 64 (256 costs 4.8 times more at 24 ticks and would have put
+  each run far over ten minutes); (v) each coupling names the other ray's
+  field only, and the self-meeting clause is read from the record as a ray
+  arriving at a Node together with content of its own light family
+  (`spatial_received`); (vi) the runs continue 8 ticks past the read-off
+  for b ≤ 12 to see whether the transfer is complete, and end at the
+  read-off for b = 16 (ray a is then at the board's last Node); (vii) the
+  neutral control (`nn_b4.json`, b = 4) keeps the released field, so it
+  differs from `ee_b4.json` by the charge and the coupling alone; (viii)
+  a check without `spread` at b = 4 and 16 (`ee_b{4,16}_nospread.json`),
+  the E6 geometry, is recorded beside the series. Run times under two to
+  four runs in parallel on four cores: 176, 167, 183, 266 and 255 s
+  for the electron-electron worlds at b = 4, 6, 8, 12, 16, the same within
+  two seconds for the electron-positron worlds, 143 s for the control, 21
+  and 35 s without spread.
+- **Shows.** Δp(b), the change of each ray's momentum register at the
+  read-off and at the end alike, in quanta on the impact axis y: at b = 4,
+  (0, −3, 0) for ray a and (0, 3, 0) for ray b in the electron-electron
+  world (apart), (0, 3, 0) and (0, −3, 0) in the electron-positron world
+  (together), from two pushes each, at tick 50 by 2 quanta and at tick 53
+  by 1 quantum, the field ray heading ±y and returned reversed; at b = 6,
+  8, 12 and 16, (0, 0, 0) for both rays in both charge pairs, no push at
+  all. Without `spread` the transfer is one whole meeting
+  of 16 at tick 48 + b/2 for every b (the E6 geometry: the field on the six
+  axis lines of its source). The field in flight of a ray at c is a steady
+  wake that moves with it: on the line at transverse distance 4 the +y
+  content of ray a is 2 quanta at x = t − 4 and 1 quantum at x = t − 10 at
+  every tick t of the pass, ray b sweeps through each column once, and
+  Δp(4) = 3 is that wake's amplitude; in the control's record the +y quanta
+  of ray a over ticks 40 to 68 are 667, 464, 290, 87 and 29 at distances 1
+  to 5 and none beyond, the release of 16 thinned by floor(A × 6/11) at
+  every Link (16, 8, 4, 2, 1, 0) and the rest owned by the Nodes: at tick
+  96 of the b = 16 world 7572 quanta of `light_a` are in the world, 310 of
+  them rays in flight (the same 310 at every tick from tick 16) and 7262 in
+  remainder registers, which fill by 1/11 or 6/11 per arrival and do not
+  release during a pass. No return ever reaches a releaser: a ray at one
+  Link per interval outruns its recoil (the recoil's Manhattan distance to
+  the ray is at least 2b at the push and grows by one per interval while
+  the ray stays on its line), so the recoils walk back to the line the ray
+  left 2b intervals earlier and spread there. A turned ray does share Nodes
+  with its own field: at b = 4 ray a, on the register (64, −3, 0), takes
+  its first −y Link at tick 65 and arrives with 18 quanta of `light_a`
+  (its own −y release of 16 from the Node it left, which skips the
+  dominant-axis line only, plus 2), then with 2 and 1 at ticks 66 and 67
+  (its earlier transverse releases spread forward along the new line, one
+  Link behind the x it gave up); six co-arrivals per b = 4 world, none at
+  b ≥ 6 (no turn) and none in the control; without `spread` the same at
+  every fifth Link, with the 16-quantum release. In these worlds they are
+  crossings; under the catalog's single `light` family the same co-arrival
+  is a push by the ray's own field. Every ledger line balanced at every
+  tick of every world, `conserved_at_every_completed_tick` true, the
+  momentum sourced (0, 0, 0) at every tick by the pair's symmetry (each
+  ray's release and spread sources cancel the other's).
+- **Outcome per clause.** (1) Pass: the sum over matter rays, field rays
+  and returns is (0, 0, 0) at every tick of every world, exactly, and
+  initial + sourced = current + escaped holds; (2) pass: after the last
+  push Δp is equal and opposite exactly, (0, ∓3, 0) at b = 4 and zero
+  elsewhere, and the imbalance equals the momentum of the field rays in
+  flight at every tick, both being (0, 0, 0) by the symmetry, so this
+  geometry does not test the clause beyond zero; (3) fail, the named
+  alternative: no first return, the recoil never reaches a releaser moving
+  at c (the transit of the axis field ray is b, the recoil would be due at
+  tick 48 + 3b/2 at a releaser at rest, and the first co-arrival with own
+  field, tick 65 at b = 4, is the turned ray's own release, not the
+  recoil); (4) fail: |Δp(b)| = 3, 0, 0, 0, 0 over b = 4, 6, 8, 12, 16 for
+  both rays in both charge pairs, no logarithm of four zeros and no
+  exponent, a fail of the outward dilution of the declared table against
+  Coulomb, stated as such: floor(A × 6/11) per Link empties a release of 16
+  into the Nodes' registers within five Links, so nothing in flight reaches
+  b ≥ 6 during a pass, and the fall is geometric, not 1/b; (5) fail as
+  written: like charges apart and the electron-positron pair together at
+  b = 4, the signs as Coulomb's, and no deflection either way at b ≥ 6,
+  where the clause asks for one; (6) pass: the
+  control's rays go straight, no push, register unchanged; (7) fail for a
+  turned ray: six co-arrivals with its own field per b = 4 world after the
+  turn, by the lattice geometry of the turn (the release skips the
+  dominant-axis line only), none for a straight ray. The result is the
+  model's stated limit under this table and this amount; nothing was
+  retuned. The model owner may want to read (3) and (7) against Highlights
+  3.5 (the recoil "arrives at finite speed", the field never met by its
+  own ray): for a free ray at c the recoil is never delivered and the
+  turned ray meets its own release.
+- **Status.** measured on 2026-09-17, commit
+  `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`, source
+  `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`;
+  initialization fingerprints, electron-electron b = 4, 6, 8, 12, 16:
+  `2bd610daaf5706bb22f0cf96e195a4d0f66d955192834742fa6266357dc7af31`,
+  `435bc94e6b25dc34b176fc5ac70f7d03e36fc2714a0c926d5ae8dbfc03c6f95e`,
+  `f5b459b4b328d6c4a94729a25344935de4ce482a98138551ebd008f82d3b7c06`,
+  `4c6d9a0eb0aff4012ee0a1ba4164433079d552eb1c7efcbda91003922ed48194`,
+  `44e9ac92c9894b9262aa9fdb2be2d9da5122409a7ab603c5c84a19919eafee0b`;
+  electron-positron b = 4, 6, 8, 12, 16:
+  `eee0b52036ebc7efb85b2c0ee1add0cfddd327ba0d1de0e2a71cd961f520f94e`,
+  `40d1ea11b19cf6c76755eae9474edadf04f82582b4a7922d1fb8e5a02a5285ee`,
+  `286e18a60aae4f6658a3277d065c51c6250a05a06c4c5287ddb6020bc960552b`,
+  `09e82044c2df5845072463ef3dd6497ea5c79b9f8637f005fa5822468c4dc9a2`,
+  `1f5b00f392a8ec65c647428dc0c3858ef6f65806c70ce6bb88716e79ef46a26e`;
+  the control
+  `27a8b3cca5764501a33a289a977a64f74f8e724c9a1e1ccbdf9fa8123fb6eeb5`;
+  without spread, b = 4 and 16,
+  `d34f56206ec9e36201971ed2ba5cad45b436c9d8987582b43aca44de6679b5e0` and
+  `9b597d2e49842ba504ab1473d416e6d7e80440248e847e876eed67d406717be0`;
+  outcome: fail, the exponent clause (4), by the outward dilution of the
+  declared table, with (3), (5) and (7) failing as stated and (1), (2) and
+  (6) passing; the records stay outside the tree. Earlier reading of
+  2026-09-17 (before the run, kept): the sign of the releasing charge
+  travels on the field ray as a visible property (`source_sign`, feature
+  12), never in the phase, and the attraction of opposite charges
+  (`opposite_charge`) closes with it. Under Highlights 5.5 (2026-09-17)
+  the release ratio and the strength table are inputs until hypothesis 17
+  says what fixes them: this entry confronts the form of Coulomb's law,
+  the exponent -1 in b, and not the value of the coupling. Runnable after
+  feature 8b (`ray-momentum-turn-v1`, 2026-09-17), which turns a free ray
+  gradually by the momentum of every field ray it meets under a coupling's
   `momentum_table`, so Δp(b) is a register the audit reads and not a count
   of whole Ports.
 
@@ -1345,12 +1475,16 @@ sign rule, and its other couplings are catalog entries.
   transverse release takes eleven arrivals at one Node, then five forward
   ones); light released 564, 112 escaped, 452 in the world (376 in the
   registers), electron 8, momentum (0, 0, 0), every ledger line balanced.
-  Run for 240 ticks outside the record (exploratory, not fingerprinted) the
-  same world clicks all seven marks, symmetric about the axis and the
-  on-axis mark most: 27 at (7, 5, 5) from tick 19, 6 each at (7, 4, 5) and
-  (7, 6, 5) from tick 82, 3 each at (7, 3, 5) and (7, 7, 5) from tick 122,
-  1 each at (7, 2, 5) and (7, 8, 5) at tick 193: the whole screen lit by
-  the field of a charge at rest.
+  Run for 240 ticks (the same world under the runner's `ticks` override,
+  the record registered below) it clicks all seven marks, symmetric about
+  the axis and the on-axis mark most: 27 at (7, 5, 5) from tick 19, 6 each
+  at (7, 4, 5) and (7, 6, 5) from tick 82, 3 each at (7, 3, 5) and (7, 7,
+  5) from tick 122, 1 each at (7, 2, 5) and (7, 8, 5) at tick 193, 47
+  clicks of amount 1 and 10 passes (4 on the axis, 2 at each of the next
+  pair, 1 at each of the pair after, none at the ends); light 1710 in the
+  world and 1158 escaped at tick 240, electron 8, momentum (0, 0, 0), every
+  ledger line balanced: the whole screen lit by the field of a charge at
+  rest.
 - **Status.** measured, 2026-09-17: `screen.json`, source
   `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
   initialization
@@ -1366,9 +1500,12 @@ sign rule, and its other couplings are catalog entries.
   `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`,
   initialization
   `9b0473248483faf4e0bcc97100e40e411674c5846df130973ac503338c3983b8`;
-  outcome: the on-axis mark clicks four times, the others not yet, and all
-  seven click in an exploratory 240-tick run, the on-axis mark most; the
-  records stay outside the tree. Retired on 2026-09-17 with feature 14
+  outcome: the on-axis mark clicks four times, the others not yet; the same
+  world for 240 ticks (`ticks` override of the runner, `requested_ticks`
+  240, the same two fingerprints, 33 s), commit
+  `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`; outcome: all seven marks
+  click, 27, 6, 6, 3, 3, 1, 1 from the axis outward, the whole screen lit;
+  the records stay outside the tree. Retired on 2026-09-17 with feature 14
   (`loop-binding-v1`): the three records ran under the interim held form
   (`bind`, `delay` 1, `ray_delay` 1), the last at commit `6f35705`, and the
   world files `screen.json` and `screen_spread.json` are removed from the
