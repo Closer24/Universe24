@@ -2,17 +2,22 @@
 
 This file is a verbatim snapshot of the Google Doc
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit),
-taken on 2026-09-16 from the document revision modified at 11:45 UTC that day.
-The live document remains the authoritative summary and may change after this
-snapshot; the central model specification named in section 1 owns model
-definitions, and [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) records
-what the repository implements. Section numbering and wording below are the
-document's own.
+taken on 2026-09-17 from the document revision modified on 2026-09-16 at
+11:57 UTC. The live document remains the authoritative summary and may change
+after this snapshot; the central model specification named in section 1 owns
+model definitions, and [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md)
+records what the repository implements. Section numbering and wording below
+are the document's own.
 
 Proposed revision of 2026-09-17 (model owner's decisions on the ray-event
 model): the paragraphs marked "Revision 2026-09-17" below are proposed for
 the live document and are not yet in it. Their full statement is
-[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) and postulate 23.
+[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) and postulate 23. Where a proposed
+paragraph contradicts the live text (sections 3.18 and 5.4, the shared
+quantum resource), the live text stands until the central specification
+adopts the revision; the document's own rule is that the latest explicit user
+decision supersedes older prose, and that decision is recorded here for the
+owner to carry into the live document.
 
 ---
 
@@ -22,9 +27,9 @@ the live document and are not yet in it. Their full statement is
 
 # 1. Purpose and navigation
 
-This document merges the Highlights material into one English-only summary. It is a summary of the central model specification, not a parallel source of physical laws. Full definitions and adopted model decisions belong in the central model specification. An explicit user decision overrides older text; an approved decision must not be changed, and a missing physical law must not be invented while documenting the project.
+This English-language Highlights document summarizes the central model specification; it is not a competing source of physical laws. Section 3 restates the adopted principles at summary level. The central specification owns their full definitions, exceptions and acceptance criteria. Latest explicit user decisions supersede older prose. Adopted requirements, proposed numerical profiles, implemented mechanisms and tested results must remain distinct. An implementation gap does not reopen an adopted decision, and documentation must not invent a missing physical law.
 
-Central model specification: Universe24 — Unified Node Theory: a unifying schema for rays, fields and interactions.
+[Central model specification: Universe24 — Unified Node Theory: a unifying schema for rays, fields and interactions.](https://docs.google.com/document/d/1jPBMb-1BoCH8Qo6y5E-j0H0ANWzbHmkO9l-9t2pxSOQ/edit)
 
 # 2. Intuitive picture: multidimensional Snake
 
@@ -34,11 +39,11 @@ Think of Universe24 as a kind of multidimensional Snake game with obstacles and 
 
 ## 3.1 Discrete local space
 
-Reality is represented by a connected discrete space. The elementary spatial unit is a local Node connected only to neighboring Nodes.
+The adopted board is a connected three-dimensional cubic network. Each local Node connects to six neighboring Nodes through directional Ports and Links. The selected layout is periodic; boundary choices belong to explicit experiment configuration. NodeState is the unit of local state. No fixed private-register decomposition or 36-register layer is required.
 
-## 3.2 Only local information exists physically
+## 3.2 Ordinary Node dynamics are local
 
-A Node can act only on its own state and on information that has physically arrived through its links. No physical influence can jump directly to a distant Node.
+An ordinary Node operation uses only its own bounded state and information that has causally arrived through its Links. It cannot read another Node's live state or apply an instantaneous distant field, movement or inventory update. The explicitly accepted shared quantum-resource exception is described in section 3.18; it is not a hidden extension of ordinary local access.
 
 ## 3.3 Ray-form propagation is fundamental
 
@@ -48,7 +53,7 @@ Revision 2026-09-17: an interaction is a meeting of rays at a Node, decided by t
 
 ## 3.4 Matter is emergent
 
-Particles, mass and the ordinary appearance of solid matter are stable interaction patterns of rays. They are not fundamental ingredients added to the model.
+Particles, mass and the ordinary appearance of solid matter are intended to emerge as stable patterns of Node properties and their ray-form propagation and interactions. They are not additional fundamental substances. This is a research objective, not a claim that calibrated particle dynamics, mass or stable matter have already been derived.
 
 Revision 2026-09-17: there is no matter in the model at this stage. Matter is the name for rays bound in one Node by a declared binding coupling (a neutron ray and a proton ray held together by the strong binding, an electron ray around them whose trajectory is changed at every step by the field rays the bound pair releases). Binding is the interaction whose result is zero events: the rays stay at the Node and interact again every interval. Mass is the retained energy of a bound group; the group's phase advance is its clock. Everything is the same generic ray with the same generic interaction; what remains is to close the binding couplings.
 
@@ -58,7 +63,7 @@ A field is a local description of ray state, flux or interaction structure. It i
 
 ## 3.6 One underlying physics
 
-Classical, quantum and field behavior must arise from the same underlying local system. The model must not introduce separate fundamental classical and quantum worlds.
+Classical, quantum and field descriptions concern one modeled system of Node properties, events and Links, not separate material worlds. The accepted shared quantum owner is an explicit computational and measurement mechanism within that description. A common framework and selected coupled experiments do not yet establish a complete derived unification of matter and fields.
 
 ## 3.7 Universal local laws
 
@@ -66,7 +71,7 @@ Equivalent local states with equivalent received inputs obey the same local rule
 
 ## 3.8 Causality has a finite speed
 
-Physical influence propagates through adjacent links at a finite causal speed c. A new physical event cannot instantaneously modify distant physical state.
+Ordinary physical propagation and transport cross adjacent Links at the finite causal speed bound c. A new event cannot instantaneously move stock, change a distant ordinary field or erase a remote path. The named shared quantum resource does not waive ordinary Node processing, output readiness or Link transit.
 
 ## 3.9 Fundamental propagation is local and stepwise
 
@@ -74,15 +79,15 @@ A physical ray advances only through connected neighboring Nodes. No physical tr
 
 ## 3.10 Time is physical ordering
 
-Physical time is the ordered progression of local events and propagation. Computation or interaction that requires additional physical steps requires additional model time; bookkeeping outside the physical world does not.
+Model time orders local events and propagation in integer multiples of the minimum interval delta_t_min; no numerical SI value is assigned. Additional physical processing, output delay and Link transit have declared model durations. Host bookkeeping is measured separately. The zero query-delay convention of Q-ORACLE-1 applies only to the permitted quantum query, not to ordinary transport or waiting.
 
 ## 3.11 Discrete physical state
 
-All physical state is discrete. The physical core uses integer-representable state and exact discrete operations rather than continuous floating-point physical variables.
+The adopted storage design uses bounded nonnegative integers, including zero, for values stored within a Node. Signed mathematical values require an explicit exact encoding; stored codes must not be confused with the values they represent. Ordinary core operations and their intermediates use bounded integers, without floating point, roots or trigonometry. The particular encoding is profile-specific; whether all working intermediates must also be nonnegative remains open.
 
 ## 3.12 Local bounded processing
 
-Each elementary physical update uses bounded local state, bounded local inputs and bounded local work. No local rule may depend on world size or an unbounded search through distant state.
+Each Node performs one bounded local update per tick using fixed-capacity channels, bounded payloads and identifiers, and six adjacent connections. Per-Node work and storage must not grow with world size or elapsed history. No growing queue, remote search or same-tick multi-Link push cascade is allowed. These are accepted requirements; their complete displacement and encounter implementation still needs verification. Shared quantum/history storage and total host work are accounted separately.
 
 ## 3.13 Interactions create observable properties
 
@@ -94,7 +99,7 @@ An isolated closed physical structure cannot create net momentum from its own in
 
 ## 3.15 Conservation is local accounting
 
-Whenever a quantity is declared conserved, every local interaction and transfer must account for it exactly. A gain by one physical owner requires the corresponding loss or transfer from another owner or a declared source.
+Whenever a quantity is declared conserved, every local interaction and transfer must account for it exactly across all actual owners, including retained participants, products, recoil, fields, apparatus, in-flight values and remainders. A gain requires a corresponding loss, transfer or explicitly accounted source. Family and coupling definitions supply the physical readouts; the engine validates them without inventing energy or momentum from a label or computation-cost scalar.
 
 ## 3.16 Momentum is directional
 
@@ -102,21 +107,23 @@ Momentum and other vector quantities are conserved component by component. Prese
 
 ## 3.17 Remainders are physical bookkeeping
 
-Discrete division or allocation must not silently destroy information or conserved quantity. Any indivisible remainder remains explicitly owned until a later local operation resolves it.
+Discrete division or allocation must not silently destroy information or conserved quantity. Every indivisible remainder has an explicit bounded owner and lifecycle. An overflow or unsupported numerical representation rejects the operation before mutation; it must not silently round, clamp or drop an owner. Numerical rejection is distinct from the adopted occupied-channel displacement rule, which does not authorize capacity waiting.
 
-## 3.18 No hidden nonlocal physics
+## 3.18 Local dynamics and the explicit shared quantum exception
 
-Global summaries, diagnostics, quantum dependency graphs and Focus-style computational shortcuts may organize calculation, but they cannot provide a physical Node with instantaneous access to remote physical state.
+Q-ORACLE-1 and the named shared quantum profiles are already accepted project mechanisms. A permitted quantum query costs one model operation and zero query-delay model time; shared-state storage and host work are measured separately and need not be O(1). Only the declared quantum interface may use that shared state. It supplies no hidden remote input to ordinary fields, forces, movement or geometry, and no autonomous draw authority. Focus and diagnostics do not alter those boundaries. This is an explicit exception to Bell-local factorization, not a local hidden-variable derivation; no-signalling and symmetry must be checked separately.
+
+Revision 2026-09-17 (proposed, contradicts the paragraph above): under the ray-event model no owner answers at a distance. The first draw's outcome travels on the returning ray itself, through the birth interaction to the partner, and ordinary locality holds without exception. The accepted price is that two Detectors at equal distance from the birth draw independently (CHSH at most 2 for spacelike settings). The shared quantum resource stays as written until the central specification adopts the revision.
 
 ## 3.19 Measurement is an interaction
 
-A physical measurement is itself a local interaction. It does not merely read a globally available hidden value; the observable result must arise from the state and interaction that reached the measuring system.
+A measurement requires an actual encounter with the external Detector through its declared causal interface. Only that Detector may authorize a draw under the declared measurement or exchange law. Ordinary Node creation, propagation, coherent interactions and emissions do not sample autonomously. The quantum owner may deterministically prepare states, operators, weights and conditional updates. A passive Recorder or Renderer does not perform a measurement or acquire sampling authority.
 
 Revision 2026-09-17: a Detector is an interaction with a simple binary lottery on a wave ray, the only lottery in the model. The same ray either continues on its line or reverses by a half turn; it is not absorbed and no stock is taken; the click is the record that it passed or returned. A non-wave ray is not drawn.
 
-## 3.20 Quantum alternatives remain physical possibilities until an event resolves them
+## 3.20 Coherent alternatives and Detector-authorized outcomes
 
-The ray-based state may encode multiple coherent alternatives before a recorded event resolves an observable outcome. These alternatives are not a separate physical substance or nonlocal matter layer. A recorded outcome does not rewrite the past, and later calculation must remain consistent with already recorded events.
+The state may retain coherent alternatives and joint correlations during deterministic evolution. Determinism does not assign a sharp hidden value to every unmeasured observable or select a classical trajectory. A new ordinary event does not authorize sampling. An actual Detector measurement applies its specified conditional update; PASS/RETURN exchange is not automatically that quantum measurement. Replaying one committed Detector decision returns the same result without another draw, emission or inventory charge. Later calculation must preserve recorded history, not rewrite the past.
 
 ## 3.21 Emergence, not insertion
 
@@ -148,13 +155,13 @@ The design chain is: generic schema → symmetry requirements → scalar/vector 
 
 ## 3.28 The computation field is a propagating property
 
-In this model, computation-field state is a property of Nodes, like other represented field properties, not an external scheduler instruction or an additional material substance. It propagates in ray form through the same neighboring Links. Once it arrives and interacts locally, it can change the receiving Node's own modeled computation or interaction duration.
+The computation field is a Node property that propagates in ray form through ordinary neighboring Links, not an external scheduler instruction or additional substance. Once causally received, it may affect output timing through the declared local family rule. Each Node has six independent output-face clocks and no input clock delay. A split or emitted branch waits for its own output-face readiness; equal face values do not turn these into one shared Node clock.
 
 ```text
-tau_v = Delay(computation_state_v, local_state_v, arrived_inputs_v)
+tau_out(v,d) = k_out(v,d) * delta_t_min; d in {+x, -x, +y, -y, +z, -z}
 ```
 
-Delay is a shared bounded-integer local rule whose precise formula, timing of application and effect on an ongoing operation must be defined. Symmetry-equivalent inputs must produce equivalent timing. This physical duration is distinct from host CPU work; it cannot read a global load estimate, bypass causal transit or rewrite past events. The field's transport, interaction and any declared conserved inventory use the same generic accounting as other properties.
+The bounded integer output count k_out is supplied by a declared local family/profile rule, including its application time and pending-output policy. Fixed neighboring Link transit H is separate: total travel time is the output delay plus H, without an input delay, double counting or same-tick multi-Link relay. Symmetry-equivalent inputs and directions require equivalent timing. Neither host CPU load nor a rest-phase formula defines this delay. Field transport, emission funding and remainders retain the same explicit ownership as other properties.
 
 ## 3.29 Observation is a frame-dependent representation of board reality
 
@@ -164,7 +171,7 @@ What an observer sees is a representation of the same underlying Node states and
 observed_description = Transform_frame(Readout(local_measurement_records))
 ```
 
-Changing coordinates or basis changes the description of an event; performing a physical measurement is an interaction that can change the state and record an outcome. These are distinct operations. Equivalent descriptions must preserve the model's declared invariants and consistent records, while different measurement interactions can reveal different properties. The observer, detector and their timing are themselves represented on the same board; a host visualization is not an extra physical observer.
+Changing coordinates or basis changes an event's description; a measurement interaction may change state and record an outcome. These are distinct operations. Equivalent descriptions preserve declared invariants and consistent records. The current adopted Detector is external to the ordinary board and acts only through its defined causal interface. Detector clock mapping remains open. A material eye or observer emerging on the board is a research goal, not a completed implementation. Detector, passive Recorder and Renderer remain distinct; a global audit display is not a physical observer.
 
 ## 3.30 One property engine, from abstract structure to detector experience
 
@@ -174,43 +181,43 @@ The purpose of Universe24 is to turn abstract mathematical descriptions of group
 property definitions + symmetry representations → Node state → propagation and interaction → detector records → observer-dependent display
 ```
 
-At each Node, the shared engine reads resident properties and arrived inputs, applies the permitted transformations and interactions, accounts for declared conserved quantities, records an outcome only when the interaction requires one, advances modeled local time and transfers outgoing properties through Links. A detector, including a modeled eye, participates through the same property-and-interaction schema. The display is derived from its records; visualization alone does not establish that the chosen dynamics reproduce nature.
+At each Node, separately implemented generic operations evaluate owned properties and arrived inputs under immutable family/coupling definitions. The engine schedules, transports and validates; NodeState stores bounded data rather than physical formulas or executable expressions. Ordinary evolution is deterministic, while only an actual external Detector encounter authorizes a draw. A Recorder stores evidence and a Renderer presents it. The material-eye and full species-dynamics goals remain separate from supported profiles; a visualization does not establish agreement with nature.
 
 # 4. Central statement
 
-Universe24 starts from local discrete Node states whose propagation takes ray form. There is no fundamental matter layer, mass substance or separate ray substance. What we call matter, particles and mass are emergent stable patterns of local state and interactions. Known symmetry structures constrain the generic property representations and operations; every proposed mechanism must end in an explicit account of Node state, local events, Link transfers and modeled time. The purpose is to test what behavior follows without inserting the desired macroscopic laws.
+Universe24 investigates one discrete Node-and-Link world in which properties propagate in ray form and matter, particles and mass are intended to emerge as stable patterns. Ordinary dynamics are local and deterministic; the accepted shared quantum resource and external Detector interface are explicit mechanisms, not hidden ordinary access or a second material world. Symmetry representations constrain generic property operations. Every mechanism must specify local state, arrivals, operations, owners, output clocks and causal transfers. The aim is to derive and test effective behavior without inserting the desired macroscopic laws. A defined contract or configured experiment is not yet a complete derived theory of nature.
 
 # 5. Reading map
 
 ## 5.1 Node state and ray form
 
-NodeState, ownership, neighborhood, postulates and property representation. Work happens at the Node; this summary does not define a separate 36-register layer.
+NodeState, six-neighbor topology and fixed K channels: each channel retains at most one active event ID with its complete property bundle. The adopted occupied-channel rule pushes the saved event toward its origin along the same path while the counter-signal travels the other way; it does not use capacity waiting. Presence of the same event at the current and adjacent upstream Node must prevent missed encounters, with one actual inventory owner and one committed effect. Exact simultaneous-update, overlap-retirement and finite-identity handling require implementation evidence; the principles are already adopted.
 
 Revision 2026-09-17: the state that moves is the ray (family properties, phase, heading, step count since the last interaction, one bounded outcome register); a Node holds nothing but the rays resident this interval and, under a declared binding coupling, a bounded bound group. At a meeting of rays the declared coupling between their families decides no interaction, a deterministic interaction with exact invariants and at most six events out, or a Detector interaction.
 
 ## 5.2 Generic operations at a Node
 
-Arrived input, local encounter, proposal and atomic commit. A separate operations package is a code-separation choice, not an additional physical place; the engine schedules, and the state itself does not contain formulas.
+Arrived input, one bounded local update per tick, a local proposal and atomic commit. Physical execution is at the Node; the separate generic operations package is code organization, not another physical place. Immutable family and coupling definitions own physical transformations and conserved readouts. The engine schedules, transports and validates, while NodeState contains bounded data and ownership, not physical formulas.
 
 ## 5.3 Couplings, fields and timing
 
-Propagation, emission funding, remainders, transit time and waiting. The representations of mass, phase and computation time remain distinct concepts.
+Propagation, funded emission, remainders, six independent output clocks, no input delay and fixed neighboring Link transit H. Mass representation, rest phase and computation delay are distinct. Preserve existing free-ray self-field exclusion; newly output-delayed moving emitters remain unsupported until their composition is defined and tested. The strong-interaction long-residence and computation-field-emission idea is a research hypothesis, not proof of nuclear binding; weak conversion channels need their own explicit operators. Physical interaction delay is not occupied-capacity waiting.
 
 ## 5.4 Quantum action and Detector
 
-The state transformation is defined, but only an actual external Detector encounter may generate a draw. Ordinary propagation and interactions remain deterministic; a new event alone grants no sampling authority. Replaying the same committed Detector event never redraws or emits again. Pair profiles, general shared state and external PASS/RETURN exchange have distinct integration boundaries.
+The shared quantum action and resource exception are already accepted; profile integration is separate. Only an actual external Detector encounter may draw, and replay never redraws or re-emits. Its separate exchange interface uses 1 = PASS and 0 = RETURN/CANCEL. PASS can follow an action draw but preserves received content and provenance without another content draw; passing Detector-generated content adopts it under LOCK. RETURN generates under its declared law and proceeds backward along the selected branch in space, forward in time, without erasing history. The action distribution is not assumed to be 50/50. Return-content/phase laws, LOCK lifecycle, clock mapping and complete bounded cancellation handling remain open. Pair profiles, general shared state and PASS/RETURN are not interchangeable.
 
-Revision 2026-09-17: PASS is the ray continuing on its line and RETURN is the same ray reversing by a half turn. A returning ray retraces its own trajectory by its step count, reaches its birth event with certainty and continues straight toward the partner ray, carrying the number the partner's Detector was missing. No registry answers at a distance; pair identity is the trajectory. The accepted price: two Detectors at equal distance from the birth draw independently and the CHSH value for spacelike settings is at most 2; the joint law's value appears only when the second ray's path exceeds the round trip through the first Detector.
+Revision 2026-09-17: PASS is the ray continuing on its line and RETURN is the same ray reversing by a half turn. A returning ray retraces its own trajectory by its step count, reaches its birth interaction with certainty and continues straight toward the partner ray, carrying the number the partner's Detector was missing. No registry answers at a distance; pair identity is the trajectory. The accepted price: two Detectors at equal distance from the birth draw independently and the CHSH value for spacelike settings is at most 2; the joint law's value appears only when the second ray's path exceeds the round trip through the first Detector. This proposal makes PASS/RETURN the quantum measurement itself and withdraws the separate shared resource, which the paragraph above keeps distinct.
 
 ## 5.5 Acceptance tests and open decisions
 
-Every operation has an input, expected result and failure condition; tests apply to Nodes and Links. The distinction between an adopted law, a mathematical candidate, a missing implementation connection and a measured result must be preserved.
+Every supported operation needs declared initial ownership, input, operator, expected output and model time, conserved readouts, edge cases and failure conditions. Accepted principles are not reopened by missing code or tests. Numerical family rules and Detector distributions need explicit closure where still undefined. The no-capacity-wait displacement, bounded two-Node presence and once-only encounter requirements need independent tick traces and implementation evidence. A stated acceptance requirement is not a passing test.
 
 # 6. History, implementation and evidence
 
-The Evidence and references tab in the central specification collects code anchors and previous results. Event history and wave-source history are preserved; this is not permission for a Node to read remote history. The contract for locating or stopping a local cancellation message is a separate gap from the requirement to preserve history.
+The Evidence and references tab in the central specification collects code anchors and scoped previous results. Immutable event and wave-origin history is distinct from a Node's bounded active references and does not authorize remote history reads. Cancellation must follow the selected branch causally without deleting past records, unrelated paths or spatial topology. Exact bounded lookup, stopping, conflicting-notice and future-packet handling still require closure. Moving an active event is not rewriting its recorded history.
 
-Git documents describe software interfaces, profiles and defined experiments. The candidate operations appendix proposes implementation examples and tests; it does not replace the central definitions and does not prove that the laws of physics have already been derived.
+Git documents and source code describe particular software interfaces and experimental profiles; each result applies only to its identified source revision and tested scope. Existing generic-contact or capture samplers do not by themselves satisfy the latest external-Detector-only rule. Older shared-clock profiles and an incomplete six-output-clock candidate do not establish the complete adopted engine contract. Candidate annexes support implementation review but cannot silently replace adopted definitions. Bell results using the admitted shared resource are not evidence of a Bell-local derivation, and communicated PASS/RETURN values do not by themselves establish entanglement or spacelike Bell correlations. This documentation review adds no simulator execution or new passing result.
 
 # 7. Working method
 
@@ -218,7 +225,7 @@ Only developers write or modify runtime code and tests. The architect coordinate
 
 # 8. Documentation integrity check
 
-The central specification must contain all adopted model decisions, the defined quantum action, and Node/Link acceptance with explicit open items. This summary must point to that owner rather than repeat full laws. A candidate, unsupported profile or historical result must never silently override an adopted definition.
+The central specification owns adopted model decisions, the defined quantum action and Node/Link acceptance, with open items identified explicitly. This document summarizes that owner rather than maintaining competing detailed laws. Review ordinary locality together with the named quantum exception, external Detector-only sampling, six-output timing, exact ownership and the no-capacity-wait requirement. Distinguish unresolved numerical choices, engineering gaps and unproved emergence from already adopted principles. A candidate, unsupported profile or historical result must never silently override an adopted definition.
 
 # 9. Assistant working instruction
 
