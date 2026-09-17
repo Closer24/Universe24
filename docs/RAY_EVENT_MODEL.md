@@ -238,7 +238,18 @@ ahead of the ray or away from it, and the ray is never faster than its
 field, at any output-clock delay; no exclusion rule is needed. Only after a
 change of trajectory can a ray cross field it released earlier, and that is
 a meeting like any other. A ray's phase per interval comes from its family's
-rest rate alone, not from its own field.
+rest rate alone, not from its own field. The computation field (Highlights
+3.28) is the same kind of field ray, obeying this one field rule with no rule
+of its own: the retained content of a Node, its mass, is what makes it slow, and the
+information that a Node is heavy spreads from it in ray form in all
+directions. Where such a field ray meets a ray whose declared coupling
+responds, there is an event with two effects: the ray that was met is
+delayed, its output clock grows, and the field ray returns reversed to the
+heavy Node. The delay is larger on the side nearer the heavy Node, so the
+ray bends toward it; that bending is a change of momentum, and the
+returning field ray carries the opposite momentum back to the heavy Node,
+which is drawn toward the ray. Gravity is this bending by delay; it is not
+inserted as a force, nothing is absorbed, and momentum is exact.
 
 **Matter.** There is no matter in the model at this stage. Matter is the name
 for rays bound in one Node: for example a neutron ray and a proton ray held
@@ -454,13 +465,20 @@ on 16 September 2026.
    released in all directions and a ray traveling straight never meets its
    own field, since the field leaves at the causal speed ahead of it or away
    from it and the ray is never faster (no exclusion rule); its phase per
-   interval comes from its family's rest rate alone.
+   interval comes from its family's rest rate alone; the computation field
+   is the same kind of field ray under this one rule, the information that a
+   Node is heavy spreading in ray form in all directions, a met ray whose
+   declared coupling responds being delayed (its output clock grows) and the
+   field ray returning reversed with the opposite momentum to the heavy
+   Node.
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
    create together, unbound by an arriving ray's declared coupling; then
    the orbit: a ray whose trajectory is changed at every step by the field
-   rays of a bound group.
+   rays of a bound group; the heavy Node's field delaying a passing ray more
+   on its nearer side so that it bends toward the Node, gravity as bending
+   by delay, not an inserted force, momentum exact.
 9. Tests and experiments: reversibility replay; the light cone of the carried
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two
@@ -537,6 +555,10 @@ and evidence, under the ordinary gates.
   own field on any seed, with the field released in all directions, while a
   second ray on a parallel line is met; the first ray's phase advances at
   its family's rest rate alone.
+- A ray passing a heavy Node on a parallel line is delayed more on its
+  nearer side and leaves bent toward the Node; the field ray it met returns
+  reversed to the heavy Node carrying the opposite momentum, with exact
+  totals; a control run with no heavy Node goes straight.
 
 ## 8. Open decisions
 
