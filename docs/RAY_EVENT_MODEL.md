@@ -70,14 +70,22 @@ layer: events in different layers at the same Node do not communicate. A
 wave ray between two
 interactions is one line; at an interaction it becomes up to six lines.
 
-**Wave ray.** Every ray is a wave ray and carries a phase that advances along
-the line, together with its quantities (energy, momentum, charge, family
+**Wave ray.** Every ray is a wave ray and carries a phase (advancing along
+the line for a massive ray, constant for light), together with its quantities (energy, momentum, charge, family
 properties); a plain ray is a special case of the wave ray, not a second kind.
 Light is a wave ray with no mass and no charge: it is an event moving in time,
 exactly as defined above, not a separate photon object. Three things change
-a phase and nothing else: each step advances it at the rate its family
-declares, the ray's energy; an interaction changes it as the declared
-coupling says; a bound group advances it once per interval it is held. There
+a phase and nothing else: each interval advances it at the rest rate its
+family declares, which is the ray's mass as a clock, and that rate is zero
+for light, whose phase does not advance along its own line; an interaction
+changes it as the declared coupling says; a bound group advances it once per
+interval it is held. A light ray carries the phase of the clock that emitted
+it at the moment of emission and delivers it unchanged, so the frequency of
+light is the rate of its emitter's clock. Interference of light follows from
+this alone: two paths of different length reach one place at one time only
+if their rays were emitted at different times, so they carry different
+emission phases, and the difference is the emitter's rate times the
+difference in path length; nothing is accumulated on the way. There
 is no amplitude as a number and no probability field: the phase and the
 ray's conserved content together are the discrete stand-in for the quantum
 amplitude, the phase as its angle and the conserved content as its size.
@@ -216,8 +224,8 @@ field: the field is born where the ray is and leaves at the causal speed,
 ahead of the ray or away from it, and the ray is never faster than its
 field, at any output-clock delay; no exclusion rule is needed. Only after a
 change of trajectory can a ray cross field it released earlier, and that is
-a meeting like any other. A ray's phase per step comes from its family rate
-alone, not from its own field.
+a meeting like any other. A ray's phase per interval comes from its family's
+rest rate alone, not from its own field.
 
 **Matter.** There is no matter in the model at this stage. Matter is the name
 for rays bound in one Node: for example a neutron ray and a proton ray held
@@ -406,8 +414,10 @@ on 16 September 2026.
    event's output lines.
 5. Registry removal from the physical path; the historical bonded profile and
    its tests are retained as history, not as the active law.
-6. Light as a wave ray with no mass and no charge, every ray being a wave
-   ray; conversion products emitted as events from the
+6. Light as a wave ray with no mass and no charge and rest rate zero, every
+   ray being a wave ray: its phase does not advance along its line; it
+   carries its emitter's clock phase at emission and delivers it unchanged;
+   conversion products emitted as events from the
    interaction; the N-to-M mechanism invoked at a meeting of rays without a
    resident record, up to six events out.
 7. Field emission by traveling rays, with the outward dilution or declared
@@ -418,7 +428,7 @@ on 16 September 2026.
    released in all directions and a ray traveling straight never meets its
    own field, since the field leaves at the causal speed ahead of it or away
    from it and the ray is never faster (no exclusion rule); its phase per
-   step comes from its family rate alone.
+   interval comes from its family's rest rate alone.
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
@@ -428,7 +438,8 @@ on 16 September 2026.
 9. Tests and experiments: reversibility replay; the light cone of the carried
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two
-   Detectors instead of two mirrors; the bound group under load.
+   Detectors instead of two mirrors, the family's declared rate being a rest
+   rate, the mass as a clock, zero for light; the bound group under load.
 
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
@@ -483,10 +494,13 @@ and evidence, under the ordinary gates.
   leave through a different Port than the same two rays meeting with a
   phase difference of half a turn, with exact totals in both cases: the
   content that arrived is the content that left, and nothing is erased.
+- A light ray's phase is constant along its line and equals its emitter's
+  clock phase at emission, while a massive ray's phase advances by its
+  family's rest rate every interval, including the intervals it is held.
 - A ray with an output-clock delay traveling straight is never met by its
   own field on any seed, with the field released in all directions, while a
   second ray on a parallel line is met; the first ray's phase advances at
-  its family rate alone.
+  its family's rest rate alone.
 
 ## 8. Open decisions
 
