@@ -805,8 +805,14 @@ its size. Because every permitted trajectory happens, the intensity at a
 place is how much content arrived there, and interference is steering:
 where rays meet in one layer, the declared coupling reads their phase
 difference and decides through which Port the shared content leaves, with
-every invariant exact; nothing is erased. The Detector reads none of this;
-the probability of a click is already in how much content reached it.
+every invariant exact; nothing is erased. The basic steering coupling is the Born rule stated as a coupling: for a
+phase difference δ it splits the shared content between the two candidate
+Ports in the ratio cos²(δ/2) to sin²(δ/2), as a declared table of bounded
+integer ratios with the remainder owned as Highlights 3.17 requires, so that
+click intensities follow the Born rule with nothing read by any Detector. It
+is declared, not derived. The Detector reads
+none of this; the probability of a click is already in how much content
+reached it.
 
 At a node where rays meet, the declared coupling decides one of three things:
 no interaction, and the rays cross as if the other were not there; a
