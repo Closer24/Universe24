@@ -69,10 +69,13 @@ heading except the ray's own,
 their field (the families `electron_field` and `positron_field` until that
 date) and emitted at an event by any source, a photon one quantum of it. Its
 `spread` key is the six-heading split table by which every Node that light
-reaches releases it again, the backward heading included, a quantum never
-waiting (feature 12, `field-spreading-v1`, 2026-09-17,
-[field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
-`[6, 1, 1, 1, 1, 1]`, the first declared table, which A1 and A6 confront.
+reaches releases it again, the backward heading included, the remainder
+below a quantum owned by the Node per family and heading and leaving whole
+when it reaches one (Highlights 3.5, model owner, 2026-09-17, feature 12b;
+`field-spreading-v1` selects the remainder's heading by phase until then)
+(feature 12, `field-spreading-v1`, 2026-09-17, [field
+spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)): `[6, 1,
+1, 1, 1, 1]`, the first declared table, which A1 and A6 confront.
 Its `source_sign` key, `releaser`, is the sign of the releasing charge
 carried on the field ray as a visible property, like the Detector's bit
 (Highlights 3.5, "the field is matter's message about itself", 2026-09-17),

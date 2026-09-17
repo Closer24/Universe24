@@ -516,6 +516,19 @@ wrong, not the engine). Status: open. This hypothesis waits for feature 8
 and for the catalog entries of Highlights 3.26; it moves off this page only
 with a measured result and a fingerprint.
 
+Status (2026-09-17, Highlights 3.26 in the language of binding as a loop,
+3.4): the strong field differs from light by one catalog line, its rays
+couple to each other, so the field between quarks does not spread as a
+sphere but closes into loops of gluon rays along the line between them, a
+string whose content, and so whose mass, grows with the distance; only
+colour-neutral patterns close a loop, which is confinement as a closure
+condition; and a string stretched to the content at which a new loop closes
+with a quark and an antiquark breaks into two hadrons, which is
+hadronization. None of it is inserted: this hypothesis says whether the two
+catalog lines, the gluon as the quark's field and `gluon_gluon_binding`,
+produce it, in a research run after feature 14 (E7 of the register), and
+lines 1 to 3 above read in that language as the closure of gluon loops.
+
 ## 14. The gravitational constant from the lattice, G = ħc/(N m₀)²
 
 Recorded 2026-09-17 from the model owner's statement of that day; open.
@@ -535,7 +548,10 @@ G_eff x N^2 = 64 exactly for N = 2^8, 2^10, 2^12, 2^16. The constancy follows
 from the delay being counted in phase steps of the field amount, which is
 content and does not scale with N, while the mass does; a table acting on
 the rate would give G_eff x N^2 growing with N. Experiment A6 (the five b,
-the exponent, the linearity in M, feature 7b) is still to run.
+the exponent, the linearity in M, feature 7b) is still to run. The formula
+is a reparametrization of the input N until hypothesis 16 says what fixes
+the lag modulus (Highlights 5.5, 2026-09-17): until then the model predicts
+the form 1/N², not the value of G.
 
 **Reading (2026-09-17, Highlights 3.28).** N is the lag modulus: the finest
 lag a field can impress on the ray it meets, one part in N of a phase step,
@@ -561,3 +577,71 @@ Recorded 2026-09-17 from the model owner's statement of that day ("speed is a cl
 **What would falsify it.** A measured rate that follows neither curve, or a rate that depends on the direction of motion relative to the lattice axes beyond the remainder tolerance of Highlights 3.17 (an anisotropy the lattice would then show at the scale of Links). If the model gives 1 − v and nature √(1 − v²), the discrepancy is a real prediction against experiment (the muon lifetime), and the binding rule or the per-face clocks are where the model would have to change, not the engine.
 
 **Status.** Open. Needs feature 8 (binding) on `main`; experiment A14 of `docs/EXPERIMENTS.md`.
+
+## 16. What fixes the lag modulus N
+
+Recorded 2026-09-17 from Highlights 5.5 ("the constants: what is derived and
+what is an input"); open.
+
+**Statement.** The modulus N of the lag register (Highlights 3.28) is a
+declared width today, an input: the finest delay a field can impress on the
+ray it meets, one part in N of a phase step, and the N of hypothesis 14,
+whose G = ħc/(N m₀)² is a reparametrization until something fixes N. The
+hypothesis is that N is not free but fixed by one of three things: the top
+of the mass ladder (the largest loop-closing content of hypothesis 12, so
+that N m₀ is the Planck mass by construction), the resolution the spreading
+field needs (the finest share a split table can carry before the Node-owned
+remainder of Highlights 3.5 makes a quantum wait), or nothing, in which case
+N stays an input.
+
+**What confirms it.** One N from two runs: the largest loop-closing content
+at which the spectrum of A10 fits, put into hypothesis 14's formula with the
+measured m₀, returns the measured G within the accuracy the board allows
+(A11 at the real N); or the resolution the spreading field needs (A1, A6)
+and the lag width found equal at every phase width, one declared width
+serving both.
+
+**What refutes it.** A ladder whose top and a bending whose N disagree by
+more than the remainder tolerance of Highlights 3.17, or a spectrum that
+fits at every N alike, so that the ladder does not fix N; then N is an
+input, the third answer, and hypothesis 14 stays a reparametrization.
+
+**Status.** Open. Decided by experiments A10, A6 and A11, after feature 14
+(binding as a loop) and feature 8b (the lag modulus); the catalog's
+`lag_bits` entry names this hypothesis beside feature 8b, and until it is
+answered the model predicts the form 1/N² and not the value of G.
+
+## 17. What fixes the release ratio and the coupling table
+
+Recorded 2026-09-17 from Highlights 5.5 ("the constants: what is derived and
+what is an input"); open.
+
+**Statement.** The release ratio n/d of a field family (the share of its
+amount a charge releases per Port heading, `release` in the catalog, [1, 4]
+for light today) and the integer tables of the couplings that read a field
+(the Born table, the delay table, the strength table of the electron's turn)
+are declared today, inputs: the strength of the electric coupling is the
+ratio and the table, a reparametrization until something fixes them, as
+hypothesis 14's formula is for N. The hypothesis is that they are fixed by
+the symmetry of Highlights 3.27 (one rule for every Node, every Port and
+every family) and the path counting of 3.5 (the multinomial count of paths
+that makes the spread field a sphere at large scale and the same flux cross
+every shell), or by nothing, in which case they stay inputs.
+
+**What confirms it.** One ratio and one table written from the symmetry and
+the path count before the run, giving A5's Coulomb exponent and A1's fringes
+at every phase width without a fitted number, and the strength A5 measures,
+in the units of the ladder, agreeing with the measured fine-structure
+constant within the accuracy the board allows.
+
+**What refutes it.** A5 or A1 passing only with a ratio or a table that the
+symmetry and the path count do not single out, or two ratios fitting equally
+well; then n/d and the tables are inputs, the second answer, and the value
+of α is not predicted.
+
+**Status.** Open. Decided by experiments A5 and A1 (the release ratio and
+the tables) and A6 (the mass field's release), after feature 12b; the
+catalog's undecided release ratios (`rays.mass_field.release`,
+`rays.gluon.release`) name this hypothesis beside their runs, and until it
+is answered the model predicts the form 1/r² and not the values of the
+couplings.

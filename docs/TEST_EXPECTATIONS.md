@@ -68,7 +68,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
 | `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`) |
-| `test_ray_viewer.py` | 3 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file and the screen example world, pinned below (no browser) |
+| `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the screen example world, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -1091,6 +1091,27 @@ from the event stream alone (no per-tick recording, so no phase):
   every one with setting [1, 1] and seed 0; one rule, `bind`, with
   `ray_delay` 1. The on-axis mark (7,5,5) is the one that clicks before
   feature 12;
+- (j) the phone GIF preset (model owner, 2026-09-17: GIFs only, small enough
+  for the phone): `motion.gif_preset` is `phone` and `gif_presets` holds
+  `phone` and `full`; `phone` is 640 px wide, 480 px per panel side by
+  side, at most 20 frames (24 left the two-panel GIF above the target), 12
+  hold frames with the camera still (`gif_hold_still`), 128 colours,
+  supersample 1, six seconds, a target of 1000000 bytes and no stills;
+  `full` is uncapped, its hold turning on, supersample 2, 120 ms a frame,
+  16 stills. The frame schedule of a 24-tick
+  run capped at 24 frames is the ticks 0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 14,
+  16, 17, 18, 20, 21, 23, 24 and then six frames holding 24 (the run reaches
+  its end, a quarter of the frames hold); an uncapped 6-tick run is 0..6 and
+  twelve holds; 24 frames in six seconds is 250 ms a frame (the style's 120
+  ms when no seconds are set). An unknown preset name, a preset with an
+  unknown key and a `gif_preset` naming no preset are refused;
+- (k) a tick cap (`extract_record(..., ticks=3)` on the six-tick fixture):
+  the run's `ticks` is 3, `record.ticks_capped_from` is 6, no event is
+  later than tick 3 and `ticks_data` has four rows; a cap at or above the
+  recorded length (9) leaves `ticks_capped_from` None. The page's
+  `page_text` gains `runs` and `eye_toggle`, both true by default (the run
+  buttons for a document with several runs, the eye-view button for a run
+  with marked Nodes);
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
@@ -1130,9 +1151,11 @@ from the event stream alone (no per-tick recording, so no phase):
   body over the run, padded by one Link; `board` fits the whole board), and
   fixed colours for the families `electron`, `light`, `proton` and `neutron`,
   `draw.view` `board` (`eye` draws the marked Nodes and the PASS clicks alone,
-  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot), of the `page_text` flags
-  only `header` (the run's title) and `tick_counter` true, every `labels`
-  flag false, and `autoplay` and `loop` true.
+  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot),
+  `motion.gif_preset` `phone` ((j) above), of the `page_text` flags
+  only `header` (the run's title), `tick_counter`, `runs` and `eye_toggle`
+  true ((k) above), every `labels` flag false, and `autoplay` and `loop`
+  true.
 
 The runs document is `ray-viewer-runs-v1`. A GIF or page rendered from it is
 a rendering of the fingerprinted record, not evidence by itself.
@@ -2113,6 +2136,105 @@ Pinned before the first run:
   along -X from (16,10,10) at the center after tick 6 under `{"f": 1}`,
   the push 1 x 2 x (-1, 0, 0) = (-2, 0, 0) would make the register
   (0, 0, 0), and the seventh `step()` raises ("cannot stop a ray").
+
+## Loop binding
+
+`tests/test_loop_binding.py` is the test of feature 14, binding as a loop
+(`loop-binding-v1`, [loop binding](LOOP_BINDING.md)), pinned here on
+2026-09-17 before the module exists, as Highlights 5.5 requires; it is
+written when the feature is implemented, after feature 8b. It builds the
+unit-square ring of `examples/nature/ring.json` and `ring_open.json`
+inline (and does not load the example files): an open 12 x 12 x 11 board,
+`link_ticks` 1, `metric: "links"`, pace 1/1, the six unit-axial headings in
+Port order, the family `electron` (charge -3, 8 ray slots) on a 3-bit phase
+(8 steps) with rest rate 2, a vector field `momentum` bound through
+`recoil_field` on every emission, and eight lamps, two at each corner of
+the square P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5), P3 = (5,6,5), each
+holding 1 quantum and emitting it once, funded and directed, at phase 0 in
+the cycle of tick 0: the R lamps on +X at P0, +Y at P1, -X at P2, -Y at P3
+and the L lamps on +Y at P0, -X at P1, -Y at P2, +X at P3. The one rule
+`corner` is `electron x electron` with two outputs, each input's amount and
+phase through the Port the other input came in by (`heading` `"reversed"`
+of the other `input`), invariant energy; the `born` cases replace the
+amounts by the catalog's Born table on the sum (`[8, 7, 4, 1, 0, 1, 4, 7]`,
+`"of": "sum"`, `"index": "phase_difference"`) and `{"rest_of": 0}`. A tick
+t is one `step()`; the state after tick t is read from `inventory_view()`;
+a ray is written as (Node, heading index, amount, phase, steps, mask,
+shares). The test is parametrized over `ring`, `open`, `slow`, `half` and
+`quadrature`. The engine of `main` at `c21e03e` was run once on every case
+after the pins were written (the check the design allows): its column is
+identical to the hand column below in every line, so one column is given.
+Pinned before the first run:
+
+- (a) `ring` (`ring.json`, the Port form, r = 2): after tick 1 each corner
+  holds two rays of amount 1, phase 2, steps 1, each carrying its lamp's
+  emission stamp (mask `1 << h`, share 1 at Port h): P0 headings 1 (mask 2,
+  shares (0,1,0,0,0,0)) and 3 (mask 8, (0,0,0,1,0,0)); P1 headings 0 (mask
+  1) and 3 (mask 8); P2 headings 0 (mask 1) and 2 (mask 4); P3 headings 1
+  (mask 2) and 2 (mask 4). In the cycle of every tick t from 1 the rule
+  fires at all four corners and books the momentum the two quarter turns
+  move as the corner's source (`source_delta` of its `spatial_cycle`
+  record): (2, 2, 0) at P0, (-2, 2, 0) at P1, (-2, -2, 0) at P2,
+  (2, -2, 0) at P3, summing to (0, 0, 0). After every tick t from 2 to 16
+  the same eight lines hold with phase 2t mod 8 (4, 6, 0, 2, 4, ...) and
+  steps 1: at P0 heading 1, mask 6, shares (0,1,1,0,0,0) and heading 3,
+  mask 9, (1,0,0,1,0,0); at P1 heading 0, mask 5, (1,0,1,0,0,0) and
+  heading 3, mask 10, (0,1,0,1,0,0); at P2 heading 0, mask 9, (1,0,0,1,0,0)
+  and heading 2, mask 6, (0,1,1,0,0,0); at P3 heading 1, mask 10,
+  (0,1,0,1,0,0) and heading 2, mask 5, (1,0,1,0,0,0) (the stamp of the
+  corner each ray last left: P0's meeting is one event on Ports 0 and 2,
+  P1's on 1 and 2, P2's on 1 and 3, P3's on 0 and 3, share 1 each). The
+  state after tick t + 4 equals the state after tick t for every t from 2:
+  the loop closes in one circuit, 4 x 2 = 8 = 0 (mod 8). At every tick:
+  electron 8 in the world, none escaped, momentum (0, 0, 0) in the world
+  and in the sources (the lamps hold minus their rays' momentum, (-1,0,0),
+  (0,-1,0), (0,-1,0), (1,0,0), (1,0,0), (0,1,0), (0,1,0), (-1,0,0)), the
+  charge line electron -24, every ledger line balanced,
+  `conserved_at_every_completed_tick` true; the snapshot's `bound_groups`
+  is empty at every tick and no `bound_tick` is written; the runner records
+  `ray_meeting: "ray-meeting-conversion-v1"`;
+- (b) `open` (`ring_open.json`, the Born form in phase, d = 0): after tick
+  1 exactly the lines of (a). In the cycle of tick 1 input 0 at each corner
+  is the resident ray with the lower heading index (the L ray at P0 and P2,
+  the R ray at P1 and P3), d = 0 and the table output takes floor(2 x 8 /
+  8) = 2 through the Port input 1 came in by, the rest output being no ray:
+  P0 sends 2 on +Y (Port 2), P1 2 on +Y, P2 2 on -Y (Port 3), P3 2 on -Y;
+  the corners book (1, 3, 0), (-1, 3, 0), (-1, -3, 0), (1, -3, 0), summing
+  to zero. After tick 2 each corner holds one ray of amount 2, phase 4,
+  steps 1: heading 3, mask 8, shares (0,0,0,2,0,0) at P0 and P1, heading 2,
+  mask 4, (0,0,2,0,0,0) at P2 and P3. No rule fires again. After tick t
+  from 3 to 7 the four rays are at (5, 7 - t, 5) and (6, 7 - t, 5) heading
+  3 and at (5, 4 + t, 5) and (6, 4 + t, 5) heading 2, amount 2, phase 2t
+  mod 8, steps t - 1, the same masks and shares; after tick 8 and every
+  later tick the board is empty: electron 0 in the world, 8 escaped,
+  momentum (0, 0, 0), every ledger line balanced,
+  `conserved_at_every_completed_tick` true, `bound_groups` empty;
+- (c) `slow` (the Port form at the catalog's rate, r = 1): the Nodes,
+  headings, amounts, steps, masks and shares of (a) at every tick, with
+  phase t mod 8; the state after tick t + 8 equals the state after tick t
+  for every t from 2, and after tick t + 4 it differs in every phase by 4:
+  4 x 1 = 4 is not 0 (mod 8), the loop closes in two circuits, and nothing
+  disperses (electron 8, none escaped, through tick 9);
+- (d) `half` (the Port form, r = 2, the four rays of the two lamps at P0
+  and at P2 only): after tick 1 P1 holds headings 0 (mask 1) and 3 (mask 8)
+  and P3 headings 1 (mask 2) and 2 (mask 4), amount 1, phase 2, steps 1, P0
+  and P2 empty; after every even tick t from 2 the four rays are at P0
+  (headings 1 and 3, masks 6 and 9) and P2 (headings 0 and 2, masks 9 and
+  6) and after every odd tick from 3 at P1 (headings 0 and 3, masks 5 and
+  10) and P3 (headings 1 and 2, masks 10 and 5), with the shares of (a),
+  phase 2t mod 8, steps 1; two corners meet in every interval, the state
+  after tick t + 4 equals the state after tick t from t = 2, electron 4 in
+  the world, none escaped, momentum (0, 0, 0): the smallest loop, content
+  4;
+- (e) `quadrature` (the Born form with the four L lamps at phase 2, d = 2):
+  the Nodes, headings, amounts, steps, masks and shares of (a) at every
+  tick, the R rays with phase 2t mod 8 and the L rays with 2t + 2 mod 8
+  (after tick 1 the L rays, headings 1 at P0, 3 at P1, 0 at P2 and 2 at
+  P3, read 4 and the R rays 2); at every corner d = 2 or 6, T[d] = 4, the
+  table output takes floor(2 x 4 / 8) = 1 and the rest output 1, so the
+  amounts are reproduced and the corner bookings are those of (a); the
+  state after tick t + 4 equals the state after tick t from t = 2, electron
+  8, none escaped, through tick 6.
 
 ## Catalog of nature
 

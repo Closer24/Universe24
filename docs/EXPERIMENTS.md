@@ -136,7 +136,12 @@ states "exactly" and means integer equality at every tick.
   field quantum returned with 0 does once the field spreads is an open
   decision of the model owner before this run (Highlights 5.5, 2026-09-17);
   until it is decided feature 12 implements the proposal, a walk back on the
-  line of arrival with no inverse split, and says so.
+  line of arrival with no inverse split, and says so. The sub-quantum
+  remainder of a spread is owned by the Node per family and heading and
+  leaves whole when it reaches one quantum (Highlights 3.5, decided
+  2026-09-17 over the phase-selected heading; feature 12b), so the fringes
+  are where whole quanta are realized after the Node's remainders have grown
+  to one.
 
 ### A2. Bell test in phase form, symmetric geometry
 
@@ -571,7 +576,12 @@ states "exactly" and means integer equality at every tick.
 - **Status.** planned; after feature 14, binding as a loop (Highlights 3.4,
   2026-09-17): the rungs it counts are the contents that close a loop under
   the declared tables, which the held-ray binding of feature 8, holding any
-  content, cannot show.
+  content, cannot show. The counting procedure, ring by ring over the
+  corner table, is written in
+  [loop binding](LOOP_BINDING.md#7-the-ladder-and-how-a10-counts-it)
+  (design of 2026-09-17), with its finding that the Port-form corner and
+  the Born table give no content ladder and that the ladder needs the
+  ring's turn produced by its own field.
 
 ### A11. The wide-phase run at the real N
 
@@ -929,6 +939,10 @@ unlocks; an entry runs when the last feature it names has landed.
 11. Feature 11, polarization: A12, A13.
 12. Feature 12, field spreading (Highlights 3.5, 2026-09-17): A1, A2 and the
     diagonal series of A6.
+13. Feature 14, binding as a loop (Highlights 3.4, 2026-09-17; design done
+    on 2026-09-17, [loop binding](LOOP_BINDING.md); implementation after
+    feature 8b): E5, the ladder count of A10 in its loop form, and A14 once
+    a moving loop exists.
 
 ## D. What is deleted
 
@@ -1156,3 +1170,109 @@ sign rule, and its other couplings are catalog entries.
   initialization `3a72a69f4443222ee0280bb5815f55f4d051b76beb9e8d26f016d582b4fb6d98`;
   outcome: no closed orbit, the fall and the two-Link cage as stated, exact
   at every tick.
+
+### E5. The ring: an electron at rest as a loop
+
+- **Claim.** Highlights 3.4 (model owner, 2026-09-17): "Binding is a
+  periodic orbit of the meeting rule": a ray never stops, a bound group is
+  a set of rays whose meetings, under the ordinary coupling table, reproduce
+  the rays that entered them, the smallest loop on the cubic lattice is a
+  unit square of four Nodes with rays circulating both ways, each corner
+  meeting every interval two rays that leave through each other's Ports,
+  and a pattern whose meeting does not close disperses; 3.28: the group's
+  mass is its content and its clock the period of its loop.
+- **Features.** 1, 5, 6, 9, 10 for the meetings; 14 for the feature the
+  worlds are the design of (the removal of the held form, the record's
+  reading of a group), after 8b.
+- **Run.** `examples/nature/ring.json`: board 12 x 12 x 11, open, N = 8,
+  no Detector, 16 ticks; eight `electron` rays of amount 1 (charge -3, rest
+  rate 2) from eight lamps at the corners P0 = (5,5,5), P1 = (6,5,5),
+  P2 = (6,6,5), P3 = (5,6,5), four circulating each way, one of each sense
+  at every corner in every interval; the one rule `corner` over
+  `[electron, electron]`, each input's amount and phase leaving through the
+  Port the other input came in by (the Port form of the corner table).
+  `examples/nature/ring_open.json`: the same with the catalog's Born table
+  (`born_steering`) at the corner and the senses in phase, the control that
+  disperses. The dictionary and the tick-by-tick states are in the
+  [README](../examples/nature/README.md#the-ring-an-electron-at-rest-as-a-loop);
+  the rule, the closure condition and the open points in
+  [loop binding](LOOP_BINDING.md).
+- **Computed.** The closure of the unit square as integer equalities: a
+  partner at every corner (two rays per sense at opposite corners at
+  least, content 4; eight for every corner every interval), the headings by
+  geometry, the amounts by the table (every amount under the Port form;
+  equal senses at d = N/4 or 3N/4 under the Born table), and the phase
+  `4 r = 0 (mod N)` for one circuit, r = 2 at N = 8; at the catalog's r =
+  1 the state repeats after two circuits. A general rectangle a x b closes
+  with `(a + b) / gcd(a, b)` rays per sense and `2 (a + b) r = 0 (mod N)`.
+  The phase difference at a corner is a constant of the motion, so the rate
+  is read at no meeting of one family; the Port form gives no ladder.
+- **Shows (pinned, to be run once when the feature lands).** `ring.json`:
+  from tick 2 every corner holds one ray of each sense, amount 1, steps 1,
+  phase 2t mod 8, stamped by the corner it last left; the state after tick
+  t + 4 is the state after tick t; each corner books the momentum of its two
+  quarter turns as its source, (2, 2, 0) at P0 and the like, the four
+  summing to zero; electron 8, momentum (0, 0, 0), the charge line -24,
+  every ledger line balanced, `bound_groups` empty, no `bound_tick`.
+  `ring_open.json`: after tick 2 one ray of amount 2 at each corner,
+  walking +Y or -Y off the square, the board empty from tick 8, 8 escaped,
+  every line balanced. The integers are pinned in
+  [test expectations](TEST_EXPECTATIONS.md#loop-binding) beside the
+  rate-1, four-ray and quadrature cases. A check run on `main` at
+  `c21e03e` (2026-09-17, not this demonstration) agreed with every pinned
+  line: today's engine already holds the ring under the Port form.
+- **Status.** planned, feature 14 (design done on 2026-09-17; the
+  demonstration is made once the held form is removed and the record reads
+  the group).
+
+### E6. The screen: the field of an electron at rest on seven marks
+
+- **Claim.** Highlights 5.4 ("everything begins and is realized at a marked
+  Node": the picture of the world is the list of PASS clicks, the eye view)
+  and 3.5 (light is the field of a charge, and the field spreads by the
+  split table of its family): an electron at rest releasing its field in
+  front of a screen of Detector marks is seen as clicks, and the remainder
+  rule of the split decides whether one mark or the whole screen is lit.
+- **Features.** 1, 2, 7, 8, 9, 10 for the first record; 12
+  (`field-spreading-v1`) for the second.
+- **Run.** `examples/nature/screen.json`: board 12 × 11 × 11, open, N = 8
+  (`phase_bits` 3), 24 ticks; the electron at rest is the bound group of the
+  dictionary, two `electron` lamps of amount 4 meeting at (1, 5, 5) at tick
+  1 and held by `bind` (`delay` 1, `ray_delay` 1), content 8; `light` is its
+  field (`field_of` electron, `release` [1, 4], the catalog's ratio),
+  released on all six headings every interval; the screen is seven marks at
+  (7, 2, 5) through (7, 8, 5), setting [1, 1], at distance 6 along +X.
+  `examples/nature/screen_spread.json`: the same with `spread` `[6, 1, 1, 1,
+  1, 1]` declared on `light`, the catalog's table, and nothing else changed.
+  The dictionary and the eye view are in the
+  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+- **Shows.** Before spreading the field lives on the six axis lines of the
+  group, so the +X line reaches the on-axis mark (7, 5, 5) alone: one click
+  of amount 2 every tick from 7 to 24, eighteen clicks at that mark and none
+  at the six others; light released 12 per interval (276 by tick 24, 214
+  escaped at the open boundary, 62 in the world), electron 8, momentum (0,
+  0, 0), the charge line electron -24, every ledger line balanced. With the
+  split table the released rays of 2 spread at the first Node they reach, 1
+  forward by the table and the remainder 1 through the entry the group's
+  phase selects, and a single quantum then turns the same way at every Node,
+  so the +X line still feeds the on-axis mark alone: twelve clicks at (7, 5,
+  5), amount 24 in all, from tick 7, the six other marks never; light
+  released 276, 207 escaped, 69 in the world at tick 24, electron 8,
+  momentum (0, 0, 0), every ledger line balanced. The single-quantum
+  finding: a phase-selected remainder sends a single quantum along one fixed
+  line and leaves every Node off the axis dark, the reason for the model
+  owner's decision of 2026-09-17 that the Node owns the remainder per family
+  and heading and lets it leave whole when it reaches one quantum
+  (Highlights 3.5, feature 12b). After feature 12b the whole screen is
+  expected to click.
+- **Status.** measured, 2026-09-17: `screen.json`, source
+  `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization
+  `35dde6ad84145b5042285baadbb27810b5d30527554646cc67f5a69eac941cff`;
+  `screen_spread.json`, source
+  `3426aa1ddf25f30348d6238edb66b0454e484a237f40fcf9367bdb948d99c2c9`,
+  initialization
+  `34ce343eeb204d9a8b7b1b0c6e6b5c79a21eeb799f717b76d13514a18718fa2d`;
+  outcome: one mark clicks in both records, eighteen times before spreading
+  and twelve times with the split table, the single-quantum finding; the
+  records stay outside the tree.

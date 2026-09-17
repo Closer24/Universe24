@@ -389,6 +389,12 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert document_out["schema"] == "ray-viewer-runs-v1"
     assert [r["key"] for r in document_out["runs"]] == ["run", "later"]
 
+    # (k) A tick cap for a large record: the events through the cap alone are read.
+    capped = EXTRACT.extract_record(record, ticks=3)
+    assert capped["ticks"] == 3 and capped["record"]["ticks_capped_from"] == 6
+    assert max(e["tick"] for e in capped["events"]) <= 3 and len(capped["ticks_data"]) == 4
+    assert EXTRACT.extract_record(record, ticks=9)["record"]["ticks_capped_from"] is None
+
     # (g) External bodies (external-body-v1): the record's per-tick positions, read as
     # the runner writes them, so the page moves the body's picture with the record.
     bodies = EXTRACT.external_bodies(
@@ -451,6 +457,49 @@ def test_screen_example_world_is_the_pinned_geometry():
     )
 
 
+def test_phone_preset_schedules_the_frames():
+    style = RENDER.load_style(None)
+    motion = style["motion"]
+    assert motion["gif_preset"] == "phone" and set(motion["gif_presets"]) == {"phone", "full"}
+    phone = RENDER.preset_motion(motion, None)
+    assert (
+        phone["gif_width_px"],
+        phone["gif_panel_px"],
+        phone["gif_max_frames"],
+        phone["gif_hold_frames"],
+        phone["gif_hold_still"],
+        phone["gif_colors"],
+        phone["gif_supersample"],
+        phone["gif_seconds"],
+        phone["gif_target_bytes"],
+        phone["contact_stills"],
+    ) == (640, 480, 20, 12, True, 128, 1, 6, 1000000, 0)
+    full = RENDER.preset_motion(motion, "full")
+    assert (
+        full["gif_max_frames"],
+        full["gif_hold_still"],
+        full["gif_supersample"],
+        full["gif_frame_ms"],
+        full["contact_stills"],
+    ) == (None, False, 2, 120, 16)
+    assert (
+        RENDER.tick_schedule(24, 12, 24)
+        == [0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 14, 16, 17, 18, 20, 21, 23, 24] + [24] * 6
+    )
+    assert RENDER.tick_schedule(6, 12, None) == list(range(7)) + [6] * 12
+    assert RENDER.frame_duration_ms(6, 24, 120) == 250 and RENDER.frame_duration_ms(None, 24, 120) == 120
+    with pytest.raises(ValueError, match="unknown GIF preset"):
+        RENDER.preset_motion(motion, "tablet")
+    bad = copy.deepcopy(style)
+    bad["motion"]["gif_presets"]["phone"]["gif_dither"] = True
+    with pytest.raises(ValueError, match="gif_presets.phone"):
+        RENDER.validate_style(bad)
+    bad = copy.deepcopy(style)
+    bad["motion"]["gif_preset"] = "tablet"
+    with pytest.raises(ValueError, match="gif_preset"):
+        RENDER.validate_style(bad)
+
+
 def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     style = RENDER.load_style(None)
     assert style["schema"] == "ray-viewer-style-v1"
@@ -494,9 +543,11 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
         "totals",
         "tick_counter",
         "controls",
+        "runs",
+        "eye_toggle",
     }
     on = {k for k, v in style["draw"]["page_text"].items() if v}
-    assert on == {"header", "tick_counter"}
+    assert on == {"header", "tick_counter", "runs", "eye_toggle"}
     assert not any(style["draw"]["labels"].values())
     assert style["motion"]["autoplay"] is True and style["motion"]["loop"] is True
     bad = copy.deepcopy(style)

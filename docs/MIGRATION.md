@@ -50,6 +50,41 @@ feature 8c now belongs to every ray:
   group's), and two receivers at one Node in one interval (the first in
   slot order takes every field ray the table names).
 
+## Binding as a loop designed on 2026-09-17 (`loop-binding-v1`, design only)
+
+Issue #169, feature 14 ([loop binding](LOOP_BINDING.md); Highlights 3.4,
+"Binding is a periodic orbit of the meeting rule", model owner,
+2026-09-17). Documents and two world files only; no module, schema key,
+record or test changes with this note:
+
+- `docs/LOOP_BINDING.md` states the rule, the unit-square corner table in
+  today's schema, the closure condition (`L r = 0 (mod N)`, the presence
+  condition, the amounts by the table), dispersal, mass and clock, the
+  field of a loop, the ladder count for A10, the motion of a loop and the
+  mapping of the interim forms; `examples/nature/ring.json` and
+  `ring_open.json` are the unit-square electron and its dispersing control,
+  registered as E5 (planned) and in the nature README; the expected
+  integers of the future `tests/test_loop_binding.py` are pinned in
+  [test expectations](TEST_EXPECTATIONS.md#loop-binding).
+- When the feature is implemented, after feature 8b, the following are
+  removed with their own dated note here: the binding form of a
+  `ray_interactions` rule without outputs (assignments of `delay` 1 as a
+  hold), the `ray_delay` key and the Node's `bound_delay`, `bound_group`,
+  the snapshot's `bound_groups`, the `bound_tick` record, the six-heading
+  release of a held ray in `release_field`, and all of
+  `bound-group-motion-v1` (`BoundMotion`, `bound_motion`, `group_step`,
+  `carry_rays`, `bound_group_step`, `momentum_table` on binding rules,
+  `SpatialPacket.group`, the ledger's reading of a group by its register).
+  A `ray_interactions` rule with outputs, its `delay` output, the delay
+  table and the lag, the released field with `spread`, and the external
+  body are unchanged; the catalog's `binds` entries become corner tables,
+  and the nature examples that use the held form are rewritten as loops or
+  retired with their dated records kept.
+- The two world files run on today's engine unchanged (the check of
+  2026-09-17 on `main` at `c21e03e` agreed with every pinned line); the
+  run record's `ray_binding` identity and empty `bound_groups` are written
+  for them as for any world.
+
 ## Bound groups that move on 2026-09-17 (`bound-group-motion-v1`)
 
 Issue #169, feature 8c ([bound group
@@ -1209,6 +1244,47 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   along +X. Before feature 12 one mark clicks, the on-axis one, eighteen
   times; after it the whole screen. The test pins the world file's
   integers, not its run.
+
+## Ray viewer: several runs on one page, the eye toggle, a tick cap, 2026-09-17
+
+The model owner wants one HTML page with the nature runs, no GIF
+([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+
+- `style.json` gains `draw.page_text.runs` (the run buttons above the
+  board when the document holds several runs; a button starts its run
+  from tick 0 in the board view, playing when the style autoplays) and
+  `draw.page_text.eye_toggle` (an `eye view` button for a run with marked
+  Nodes, switching the page between the board and the eye view), both
+  true by default; the run buttons no longer depend on `controls`.
+- `extract.py --ticks N` caps a large record at N ticks: only the events
+  through N are read, the run's `ticks` is N and
+  `record.ticks_capped_from` keeps the recorded length. The test pins the
+  cap and the flags.
+
+## Ray viewer: phone GIF preset, 2026-09-17
+
+The model owner's GIFs do not always open on the phone, and he wants GIFs
+only ([ray viewer](../tools/ray_viewer/README.md)); the record is
+unchanged.
+
+- `style.json` gains `motion.gif_preset` (`phone`, the default) and
+  `motion.gif_presets`. `phone` renders 640 px wide (480 px per panel side
+  by side), at most 20 frames spread evenly over the run (`tick_schedule`:
+  the run still reaches its end, at most a quarter of the frames hold the
+  last tick with the camera still, `gif_hold_still`, so the hold is stored
+  once; the 24 frames the model owner allowed left the two-panel screen
+  GIF at 1.05 MB, 20 bring every GIF under the target), 128 colours, no
+  supersampling, a frame duration that makes
+  the GIF read in about six seconds (`gif_seconds`), a target of under 1 MB
+  (`gif_target_bytes`), no contact sheet and no stills. `full` holds the
+  earlier numbers: every tick and twelve hold frames, supersampled, 120 ms
+  a frame, a contact sheet of 16 stills.
+- `render_gif.py --preset phone|full` chooses one; `--frames N` now spreads
+  the run over N frames instead of cutting it. The summary records the byte
+  size, the preset and the tick of every frame, and the renderer prints the
+  size, with a note when it is above the target; it refuses nothing. The
+  nature README's render lines are unchanged and make phone GIFs now.
+- The test pins the presets and the schedule.
 
 ## Primary initialization-based API
 
