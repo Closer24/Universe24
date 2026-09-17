@@ -512,10 +512,12 @@ phase steps in the table-construction guard).
 Fixed body renamed external body, 2026-09-17, same specification extended.
 By the model owner's statement of that day, the declared element named
 "fixed body" earlier the same day is the external body: a Node declared to
-hold a family with an amount and, if wanted, a charge and a trajectory,
+hold a family with an amount, if wanted a charge, and an initial momentum
+(`initial_momentum`, in place of the declared trajectory of the first
+statement: its motion is caused by fields only, model owner, 2026-09-17),
 standing for a star, a neutron star, a fixed proton, a large charge or a
 piece of apparatus; it radiates by the one field rule, does not spread and
-is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+is not pushed by matter. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
 text; the [postulates](../POSTULATES.md) section 23, the
 [ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
 migration step 7b (`external-body-v1`, after feature 7), the
