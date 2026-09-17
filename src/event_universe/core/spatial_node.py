@@ -36,6 +36,8 @@ from .node_execution import (
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
+    DETECTOR_BIT_0,
+    DETECTOR_BIT_1,
     FieldInteractionGuard,
     Rays,
     SpatialBundle,
@@ -46,7 +48,9 @@ from .spatial_state import (
     SpatialState,
     attenuate_rays,
     coherent_stock,
+    detector_draw,
     merge_rays,
+    ray_merge_key,
     ray_stock,
     validate_rays,
     zero_spatial_state,
@@ -925,6 +929,42 @@ class SpatialNode(SpatialNodeState):
             slot_fluxes[slot] = tuple(fluxes)
         return slot_samples, slot_fluxes
 
+    def _draw_arrivals(
+        self,
+        rays: Rays,
+        port: int,
+        family: str,
+        tick: int,
+        services: SpatialServices,
+        clicks: list[dict[str, object]],
+    ) -> Rays:
+        """One unsalted draw per arriving ray from the mark's own stream (detector-mark-v1).
+
+        The rays of one Port are drawn in merge-key order. Each ray leaves with its
+        Detector bit set; a draw of 1 is recorded as a click and a draw of 0 records
+        nothing, because a return is no measurement. The draw reads nothing from the
+        ray. In this slice the ray continues unchanged on both outcomes; the return on
+        0 is not defined here.
+        """
+        assert self.detector is not None
+        drawn = []
+        for ray in sorted(rays, key=ray_merge_key):
+            self.detector_ticket, bit = detector_draw(self.detector_ticket, self.detector)
+            drawn.append(replace(ray, detector=DETECTOR_BIT_1 if bit else DETECTOR_BIT_0))
+            if bit:
+                clicks.append(
+                    services.events.message(
+                        "detector_click",
+                        tick,
+                        self.position,
+                        port=port,
+                        family=family,
+                        amount=ray.amount,
+                        bit=1,
+                    )
+                )
+        return tuple(drawn)
+
     def receive(
         self,
         arrivals: tuple[SpatialPacket, ...],
@@ -981,7 +1021,9 @@ class SpatialNode(SpatialNodeState):
                     losses[index][component] = checked_work(losses[index][component] + value)
         resident_rays = list(self.rays) or [() for _ in services.initial.spatial_fields]
         ray_arrivals = [[0] * 6 for _ in services.initial.spatial_fields]
-        for packet in arrivals:
+        clicks: list[dict[str, object]] = []
+        # A marked Node draws in the order of the Ports the rays came in through.
+        for packet in sorted(arrivals, key=lambda packet: packet.port ^ 1):
             for index, packet_rays in enumerate(packet.rays):
                 if not packet_rays:
                     continue
@@ -996,6 +1038,10 @@ class SpatialNode(SpatialNodeState):
                     losses[definition.field][0] = checked_work(losses[definition.field][0] + removed)
                     decay_cost = bounded(checked_work(decay_cost + meter.total))
                     arrival_cost = bounded(checked_work(arrival_cost + meter.total))
+                if self.detector is not None:
+                    incoming_rays = self._draw_arrivals(
+                        incoming_rays, packet.port ^ 1, field.name, tick, services, clicks
+                    )
                 ray_arrivals[index][packet.port] = checked_work(
                     ray_arrivals[index][packet.port] + ray_stock(incoming_rays)
                 )
@@ -1132,6 +1178,8 @@ class SpatialNode(SpatialNodeState):
             packets=len(arrivals),
             received_fields=received_fields,
         )
+        # The clicks of this arrival interval: one per draw of 1, in draw order.
+        notifications.extend(clicks)
         if services.decayer is not None:
             self._event(
                 "spatial_decayed",

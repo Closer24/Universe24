@@ -96,6 +96,7 @@ are illustrative data, not a list of recognized physical entities.
 | Transfer | A record owned by an outgoing link, with type, values, port and arrival time |
 | Coupling | Configured local exchange between records, or between a record and a spatial field |
 | Ray | One straight-moving share of a ray field: heading, amount, wave phase and the carried ray-event state (steps since its event, outbound, the event's Ports and shares, the Detector bit), owned by a Node between arrival and the next cycle or by a Link in transit ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)) |
+| Detector mark | A Node's Detector bit with its setting and ticket seed: bounded Node metadata, not a record and not stock; a marked Node draws one bit per arriving ray from its own stream and is otherwise an ordinary Node ([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)) |
 
 The six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
 of transport. A vector value still has three components; it is not automatically
@@ -139,6 +140,7 @@ separate carriers and their different directions.
 | `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`, each ray field a [wave-ray family](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) with optional `phase_bits`, `charge` and `kerengonen`; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
 | `spatial_seeds` | Optional initial octant populations at named lattice nodes |
+| `detectors` | Optional list of Detector marks, one per position, each with `position`, `setting` `[n, d]` and `seed`, all required and none defaulted ([Detector mark](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)); the only place a draw exists, under the shared Detector admission |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
@@ -175,9 +177,11 @@ is valid and retains the ordinary disturbance laws.
 The runner records this policy from `schema_version`; the user's `model_id`
 remains a free configured identity and cannot select behavior through its name.
 Every run also records `sampling_profile` (`detector-only-v1`, the
-[Detector-owned sampling](DETECTOR_SAMPLING.md) admission) and `ray_state`
+[Detector-owned sampling](DETECTOR_SAMPLING.md) admission), `ray_state`
 (`ray-event-state-v1`, the [ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)
-every ray carries).
+every ray carries) and `detector_mark` (`detector-mark-v1`, the
+[Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1) a Node
+may carry).
 See [spatial fields](SPATIAL_FIELDS.md) for per-completed-link decay and clipped
 emission allowances, and [spatial response](SPATIAL_COUPLINGS.md) for atomic
 whole-action allowances. Neither allowance is a conserved physical reservoir.

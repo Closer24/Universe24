@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
     from .node_conservation import NodeConservationDefinition
     from .spatial_state import (
+        DetectorMark,
         EmissionDefinition,
         FieldGroupDefinition,
         FieldInteractionGuard,
@@ -292,12 +293,16 @@ class InitialState:
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
     sampling_profile: str = DETECTOR_ONLY
+    # The Nodes whose Detector bit is set, each with its setting and ticket seed
+    # (detector-mark-v1): the only place a draw exists.
+    detectors: tuple[DetectorMark, ...] = ()
 
     def __post_init__(self) -> None:
-        from .spatial_state import validate_ray_coupling
+        from .spatial_state import validate_detector_marks, validate_ray_coupling
 
         validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
         validate_ray_coupling(self)
+        validate_detector_marks(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

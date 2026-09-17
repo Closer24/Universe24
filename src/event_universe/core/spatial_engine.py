@@ -92,6 +92,9 @@ class SpatialEngine:
         self.coupler = coupler
         self.decayer = decayer
         self.nodes: dict[Address3, SpatialNode] = {}
+        # The Detector marks by position, installed on each marked Node when it is
+        # created; a Node without a mark never draws.
+        self._marks = {mark.position: mark for mark in initial.detectors}
         # Host scheduling index only: retain physical registers in self.nodes.
         self._active: set[Address3] = set()
         self._field_tick = -1
@@ -147,6 +150,7 @@ class SpatialEngine:
 
     def _at(self, position: Address3) -> SpatialNode:
         if position not in self.nodes:
+            mark = self._marks.get(position)
             self.nodes[position] = SpatialNode(
                 self._blank_states(),
                 position=position,
@@ -155,6 +159,8 @@ class SpatialEngine:
                 delay_counts=(0,) * 6,
                 localized=self._blank_localized(),
                 rays=tuple(() for _ in self.initial.spatial_fields),
+                detector=mark,
+                detector_ticket=0 if mark is None else mark.seed,
             )
             self._active.add(position)
         elif position not in self._active:

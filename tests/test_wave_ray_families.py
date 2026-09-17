@@ -173,8 +173,9 @@ def reflect(charge_assignment=None, invariant_name="amount"):
 
 def test_every_ray_is_a_wave_ray(tmp_path):
     # (a) A plain family with a declared width and the same family declared with the
-    # kerengonen key at rest rate 0 give identical runs: the emitter's phase 5 is
-    # carried unchanged by every ray, and nothing else differs.
+    # kerengonen key at rest rate 0 are one rule: each world is held to the same
+    # pinned integers (no world is compared with another), the emitter's phase 5
+    # carried unchanged by every ray.
     lamp = {
         "type": "lamp",
         "field": "quanta",
@@ -208,21 +209,38 @@ def test_every_ray_is_a_wave_ray(tmp_path):
             0,
         )
     for tick in range(1, 5):
-        plain.step()
-        phased.step()
-        assert rays_of(plain) == rays_of(phased)
-        rays = [ray for bundles in rays_of(plain).values() for bundle in bundles for ray in bundle]
-        assert len(rays) == 6 * min(tick, 2)
-        assert {ray.phase for ray in rays} == {5} and {ray.advance for ray in rays} == {-1}
-        assert {ray.steps for ray in rays} == ({1} if tick == 1 else {tick, tick - 1})
-        assert sorted(ray.amount for ray in rays if ray.steps == tick) == [2, 2, 2, 3, 3, 3]
-        assert plain.totals() == phased.totals() == {"quanta": (30,)}
-        assert plain.spatial_accounting() == phased.spatial_accounting()
-        assert all(item["balanced"] for item in plain.spatial_accounting().values())
-        # One Link from the lamp along +X: the newest emission's ray of amount 3
-        # after ticks 1 and 2, nothing after ticks 3 and 4.
-        assert plain.spatial_values((4, 3, 3)) == phased.spatial_values((4, 3, 3))
-        assert plain.spatial_values((4, 3, 3))["quanta"]["value"] == ((3,) if tick <= 2 else (0,))
+        for world in (plain, phased):
+            world.step()
+            # The first emission's six rays, one per Port, t Links from the lamp on
+            # the 7-ring; after tick 4 each of those Nodes also holds the second
+            # emission's ray coming the opposite way (steps 3), the two meeting
+            # around the ring.
+            held = rays_of(world)
+            for port, (unit, amount) in enumerate(zip(HEADINGS, (3, 3, 3, 2, 2, 2), strict=True)):
+                position = tuple((c + tick * u) % 7 for c, u in zip((3, 3, 3), unit, strict=True))
+                (bundle,) = held[position]
+                assert (
+                    Ray(
+                        port,
+                        (0, 0, 0),
+                        amount,
+                        phase=5,
+                        steps=tick,
+                        event_ports=63,
+                        event_shares=(3, 3, 3, 2, 2, 2),
+                    )
+                    in bundle
+                )
+                assert len(bundle) == (2 if tick == 4 else 1)
+            rays = [ray for bundles in held.values() for bundle in bundles for ray in bundle]
+            assert len(rays) == 6 * min(tick, 2)
+            assert {ray.phase for ray in rays} == {5} and {ray.advance for ray in rays} == {-1}
+            assert {ray.steps for ray in rays} == ({1} if tick == 1 else {tick, tick - 1})
+            assert world.totals() == {"quanta": (30,)}
+            assert all(item["balanced"] for item in world.spatial_accounting().values())
+            # One Link from the lamp along +X: the newest emission's ray of amount 3
+            # after ticks 1 and 2, nothing after ticks 3 and 4.
+            assert world.spatial_values((4, 3, 3))["quanta"]["value"] == ((3,) if tick <= 2 else (0,))
     for extra, emission, message in (
         ({}, {"kerengonen_phase": 5}, "kerengonen_phase requires"),
         ({"phase_bits": 4, "kerengonen": {"phase_steps": 8, "phase_advance": 0}}, {}, "2 to the power"),

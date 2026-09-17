@@ -1,5 +1,16 @@
 # Validation evidence
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), this is
+the record of research runs and physical milestones: a phenomenon that several
+rules produce together, an example world's numbers, a comparison of two worlds
+or a known experiment is one run of the engine, made once, recorded with a
+source fingerprint and a date, and never repeated as a test. Tests and their
+expected integers are listed in [test expectations](TEST_EXPECTATIONS.md). A
+change is checked against the tests selected by the import graph; the whole
+suite runs together only when the shared core changes, and then once, in
+parallel. Entries below keep the scope they had when recorded.
+
 ## Integrated ray ownership and local Focus - 2026-09-14
 
 Reviewed integration input: PR #116 at `b517590b4011f1e2ff9a53be7b61fe76b50f7b08`,

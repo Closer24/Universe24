@@ -13,7 +13,7 @@ from event_universe.configuration_validation import (
     validate_observer_selection,
 )
 from event_universe.core.disturbance_state import InitialState
-from event_universe.core.spatial_state import RAY_EVENT_STATE, WAVE_RAY_FAMILY
+from event_universe.core.spatial_state import DETECTOR_MARK, RAY_EVENT_STATE, WAVE_RAY_FAMILY
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
@@ -181,6 +181,7 @@ def _execute_run(
         "schema_version": initial.schema_version,
         "sampling_profile": initial.sampling_profile,
         "ray_state": RAY_EVENT_STATE,
+        "detector_mark": DETECTOR_MARK,
         "wave_ray": WAVE_RAY_FAMILY,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,

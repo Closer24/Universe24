@@ -202,6 +202,61 @@ event, as hidden variables that no rule reads
 No initialization key changes. No rule, coupling, absorber, readout or
 Detector reads the new fields in this step.
 
+## Node Detector bit added on 2026-09-17 (`detector-mark-v1`)
+
+Issue #169, feature 2, migration step 3 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+[Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4: a Node marked in the
+initialization draws one bit per arriving ray from its own ticket stream and
+is otherwise an ordinary Node
+([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)).
+
+- New optional initialization key `detectors`: a list of marks, each with
+  `position`, `setting` `[n, d]` and `seed`, all required, no default rate,
+  one mark per position, admitted only under the shared Detector admission
+  (schema 1, `link_ticks` 1, ray fields on the links metric at pace 1/1
+  without decay, unit-axial headings closed under negation)
+  ([schema](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)).
+- `DetectorMark(position, pass_numerator, pass_denominator, seed)`,
+  `DETECTOR_MARK`, `MAX_DETECTORS`, `detector_draw` and `ray_merge_key` in
+  `core/spatial_state.py`; `InitialState.detectors`;
+  `SpatialNodeState.detector` and `detector_ticket`, installed by
+  `SpatialEngine` when a marked Node is created.
+- `SpatialNode.receive` draws once per arriving ray, unsalted
+  (`next_ticket(state, 0)`, `ticket_draw`, bit 1 when
+  `number x d < n x TICKET_MODULUS`), in Port then merge-key order, sets the
+  ray's `detector` to 2 on 1 and 1 on 0, and records a `detector_click` event
+  (position, tick, Port, family, amount, bit 1) on 1 only. In this slice the
+  ray continues unchanged on both outcomes; the return is feature 3.
+- The runner records `detector_mark: "detector-mark-v1"` in `run.json`
+  beside `sampling_profile` and `ray_state`.
+- The ticket rule keeps its signature (`next_ticket(state, salt)`); the mark
+  passes salt 0 and no other caller exists. `stamp_event` still stamps every
+  created ray with Detector bit 0.
+- `DetectorMark` is a registered formula-free state record of the Node
+  contract audit (`diagnostics/node_contract.py`, `STATE_RECORDS`): a
+  position and three bounded integers, no law and no reading of any ray.
+
+A document without `detectors` has no marked Node, calls the ticket rule
+nowhere and runs exactly as before.
+
+## Experiments register added on 2026-09-17
+
+By the model owner's decision of 2026-09-17, the research runs of the
+ray-event model are listed in one register,
+[docs/EXPERIMENTS.md](EXPERIMENTS.md): section A, the confrontations with
+known measurements in which the model can be falsified (A1 to A13); section
+B, the demonstrations the manuscript needs (B1 to B12); section C, the order
+in which the features of issue #169 unlock them; section D, what the register
+replaces. Every entry names the features it needs, its run design and its
+pass or fail criterion before the run, and runs once at one runtime source
+fingerprint under [Highlights](HIGHLIGHTS.md) 5.5; none is a test of the test
+suite. The register replaces the historical example worlds and study
+directories removed the same day; their dated results stay in the
+[validation log](VALIDATION.md) with their original scope. The
+[documentation index](README.md) routes to the register and the
+[hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
+runtime behavior changes.
 ## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
 
 Issue #169, feature 9, the wave-ray part of
