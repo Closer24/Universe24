@@ -2,21 +2,19 @@
 
 [Local Focus](LOCAL_FOCUS.md) defaults on: certified empty carrier Nodes sleep,
 and equal complete local planning inputs reuse immutable pure transition results.
-Host transport indexes occupied output banks in their original creation order.
-Mutable bond planners bypass plan reuse; shared field clocks retain the
-ordinary carrier scheduler. Model operation costs,
+Host transport indexes active output banks in their original creation order.
+Shared field clocks retain the ordinary carrier scheduler. Model operation costs,
 local commit timing, events and physical owners are unchanged. Measured savings
 and the low-repetition case without a benefit are in [performance](PERFORMANCE.md).
-The integrated ray policies now validate retained rays and incoming claims,
+The integrated ray policies validate retained rays and incoming ray bundles,
 retain funded emissions during load delay, and prepare bounded immutable pace
 tables. Exact share capture and whole-ray threshold funding have regression
 coverage. Unsupported self-exclusion compositions fail preflight. The bond
-registry is bounded and idempotent (at most 4096 open pairs, released at the
-second answer, one number per pair fixed by seed and birth code) and drives
-ordinary Simulation as the split of postulate 4 that the model owner withdrew
-as a model law on 2026-09-17, retained as the historical `bonded-ray-field-v1`
-profile; the explicit Q-ORACLE option was deleted on 2026-09-17 with
-[Highlights](HIGHLIGHTS.md) section 3.18 (issue #164, buckets B.1 and B.2).
+registry, claim-gather, the lottery capture and the occupied-links guard were
+deleted on 2026-09-17 (issue #164, bucket B.5) under
+[Highlights](HIGHLIGHTS.md) 3.18 (deleted), 3.19, 3.20, 5.1 and 5.4, after the
+explicit Q-ORACLE option went the same day with buckets B.1 and B.2; see the
+[migration note](MIGRATION.md#bond-registry-claim-gather-lottery-capture-and-occupied-links-guard-deleted-on-2026-09-17).
 See the exact submitted source and check results in the integration PR.
 
 The shared quantum resource and its integration layer, with the position-output
@@ -27,9 +25,10 @@ programs, were deleted on 2026-09-17 under Highlights sections 3.18 (deleted),
 [migration note](MIGRATION.md#shared-quantum-resource-and-integration-layer-deleted-on-2026-09-17).
 Their dated evidence stays in [validation](VALIDATION.md). The source-envelope
 modules were deleted on 2026-09-17 under Highlights section 3.5 (bucket B.3;
-see the [migration note](MIGRATION.md#source-envelopes-deleted-on-2026-09-17));
-the causal event ledger, the bond registry and claim/gather stay until buckets
-B.4 to B.6 of issue #164.
+see the [migration note](MIGRATION.md#source-envelopes-deleted-on-2026-09-17)),
+and the bond registry and claim/gather the same day with bucket B.5; the
+causal event ledger and the record operations stay until buckets B.4 and B.6
+of issue #164.
 
 
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
@@ -136,8 +135,8 @@ The [Kerengonen candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-r
 (`kerengonen-ray-field-v1`) gives rays a phase: rays that meet combine by phase,
 coherence gates absorption and sampling, and two sources in phase give a fringe
 in Manhattan path difference; the plain ray field is unchanged without the key.
-Optional whole-ray lottery capture and carried-phase re-emission also run through
-the same local ray owners. Prepared immutable phase tables and explicit ray
+The deterministic threshold capture and carried-phase re-emission also run through
+the same local ray owners; the whole-ray lottery capture was deleted on 2026-09-17. Prepared immutable phase tables and explicit ray
 momentum inventory support ordinary headless runs. Delayed funded/absorbed carrier
 plans and phased/attenuating self-exclusion with response couplings are explicitly unsupported;
 see the candidate contract rather than treating a passing probe as complete quantum
@@ -148,11 +147,12 @@ two slits gives the fringe, and rays may carry their own advance from the
 emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
 halves the fringe period each time the beam's momentum doubles in its measured
 range. The momentum-to-advance relation is supplied by configuration, not derived.
-The [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md)
-places the candidate: with the four CHSH settings of the former quantum owner
-(deleted on 2026-09-17) it measures 1.40 exactly, one half of that owner's
+The Bell test on the phased-ray field (`examples/kerengonen-bell/`, deleted on
+2026-09-17 with bucket B.5; its numbers stay in [validation](VALIDATION.md))
+placed the candidate: with the four CHSH settings of the former quantum owner
+(deleted the same day) it measured 1.40 exactly, one half of that owner's
 recorded 14/5 in every correlation, and the plain field 2, so the classical
-candidate stays inside the local bound.
+candidate stayed inside the local bound.
 halves the fringe period each time the beam's momentum doubles, and the
 [matter-wave probe](../examples/matter-wave/README.md) stops a moving particle,
 pays its matter out as a wave train and lands it on the screen with the fringe
@@ -163,20 +163,18 @@ reads the standing wave between a lamp and a mirror with period
 (`euclidean-ray-pace-v1`): rays wait at Nodes by their heading's pace so every
 heading covers equal Euclidean distance per tick, and the
 [Euclidean pace probe](../examples/euclidean-pace/README.md) reads a round
-front and a fringe in Euclidean path difference. A ray field with `claim`
-(`claim-gather-ray-field-v1`) gathers a captured train: the capturing Node's
-claim floods the world at link speed, rays of that train turn homeward along
-the flood's parent ports, and the record takes them whole; the
-[claim and gather probe](../examples/claim-gather/README.md) lands a whole
-particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
-two phased rays from one source through CHSH detectors built from the
-coherence and the lottery, and measures S below the local bound 2 for the
-lottery (1.48) and deterministic hidden variables (2.00); with bonded rays
-(`bonded-ray-field-v1`, the split of postulate 4 withdrawn on 2026-09-17) the bounded
-registry answers the pair's joint outcome from one number and S reaches the
-quantum value ([the contract](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)). The
-[gathered gravity probe](../examples/gathered-gravity/README.md) asks whether
-gathering a gravity train focuses the pull like unseen mass: it does not.
+front and a fringe in Euclidean path difference. The claim-and-gather rule
+(`claim-gather-ray-field-v1`, a claim flooding the world at link speed to
+gather a captured train), the Bell probe (`examples/bell-chsh/`, CHSH
+detectors built from the coherence with the lottery, threshold and bonded
+captures) and the gathered-gravity probe were deleted on 2026-09-17 with the
+bond registry (issue #164, bucket B.5): under [Highlights](HIGHLIGHTS.md)
+3.19, 3.20 and 5.4 the only draw is at a Node whose Detector bit is set, no
+registry answers at a distance, and pair identity is the trajectory. Their
+recorded results (S = 1.48 for the lottery, 2.00 for deterministic hidden
+variables and the quantum value with the registry; a gathered pull that
+focused quanta, not a force law) stay in [validation](VALIDATION.md) as
+evidence about the deleted rules.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

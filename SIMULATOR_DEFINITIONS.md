@@ -2,13 +2,14 @@
 
 ## Active generic disturbance model
 
-Initialization defaults to `sampling_profile: "detector-only-v1"` under the
-[Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md). Unbound ray
-lotteries, bonded rays and native instrument/contact bindings fail admission.
-Earlier autonomous sampling requires the explicit `historical-autonomous-v1`
-research profile, recorded in preflight/run metadata. Deterministic ordinary
-and coherent evolution remain available. This admission boundary does not
-implement PASS/RETURN or remove the output-clock composition restrictions.
+Initialization accepts only `sampling_profile: "detector-only-v1"` under the
+[Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md): an ordinary
+absorber never draws. The ray lottery, the bond registry and the
+`historical-autonomous-v1` research profile were deleted on 2026-09-17 (issue
+#164, bucket B.5), after the native instrument/contact bindings (buckets B.1
+and B.2). Deterministic ordinary and coherent evolution remain available. This
+admission boundary does not implement PASS/RETURN or remove the output-clock
+composition restrictions.
 
 The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the
 active engine with indexed bounded interactions, 1..32-component properties,
@@ -81,14 +82,14 @@ currently reject delayed carrier plans; phased/attenuating self-exclusion compos
 absorption only. See the exact [candidate bounds](docs/SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1).
 A ray field may set `"metric": "euclidean"` (`euclidean-ray-pace-v1`): rays
 wait at Nodes by their heading's pace, never faster than one link per tick, so
-every heading covers equal Euclidean distance per tick. A ray field with
-`claim` (`claim-gather-ray-field-v1`) gathers a captured train to the Node
-that captured it: a claim floods Node to Node at link speed, the train's rays
-turn homeward along its parent ports, and the capturing record takes them
-whole; the earlier of two claims wins where they meet. The historical global
-`bonded-ray-field-v1` reference supplies nonlocal outcomes and is rejected by
-ordinary initialization. The shared quantum resource (Q-ORACLE-1) was deleted
-on 2026-09-17; this reference is not an exception to locality.
+every heading covers equal Euclidean distance per tick. Historical (deleted on
+2026-09-17, issue #164 bucket B.5): a ray field with `claim`
+(`claim-gather-ray-field-v1`) gathered a captured train to the Node that
+captured it by a claim flooding Node to Node at link speed, and the global
+`bonded-ray-field-v1` reference supplied nonlocal outcomes through a bond
+registry. Both went with the shared quantum resource (Q-ORACLE-1): there is no
+register at any Node, no owner answers at a distance, and no occupied channel
+or capacity rule holds a ray back (Highlights 5.1 and 5.4).
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio

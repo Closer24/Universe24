@@ -97,7 +97,7 @@ QUICK = (
     ("control, no emission", 16, 0, BUDGET, BASELINE, 200),
 )
 # Global field order of the document: the eye's light and clock are read by these indices.
-FIELDS = ("mass", "clock", "train", "light", "computation")
+FIELDS = ("mass", "clock", "light", "computation")
 
 
 def op(name: str, *args: object) -> dict:
@@ -162,14 +162,6 @@ def document(
                 "extensive": False,
             },
             {
-                "name": "train",
-                "components": 1,
-                "units": "label",
-                "signed": False,
-                "conserved": False,
-                "extensive": False,
-            },
-            {
                 "name": "light",
                 "components": 1,
                 "units": "quantum",
@@ -195,8 +187,8 @@ def document(
             },
             {
                 "name": "lamp",
-                "fields": ["light", "train"],
-                "defaults": {"light": 1, "train": 0},
+                "fields": ["light"],
+                "defaults": {"light": 1},
                 "transport": {"mode": "hold"},
             },
             {
@@ -216,8 +208,6 @@ def document(
                 "headings": [[1, 0, 0]],
                 "rays_per_tick": 1,
                 "ray_slots": 16,
-                # Claims let every ray carry its lamp's train label, so rays never merge.
-                "claim": {"ticks": 4 * ticks, "slots": 4},
                 **(
                     {"kerengonen": {"phase_steps": phase_steps, "phase_advance": 1, "capture": "share"}}
                     if wave
@@ -239,15 +229,14 @@ def document(
                 "amount": 1,
                 "denominator": 1,
                 "source": False,
-                "train_field": "train",
                 "heading": [1, 0, 0],
             },
         ],
         "spatial_couplings": [
-            {"name": "eye_absorbs", "field": "light", "mode": "absorb", "claim": True, "type": "eye"}
+            {"name": "eye_absorbs", "field": "light", "mode": "absorb", "type": "eye"}
         ],
         "seeds": [{"position": [x, 0, 0], "type": "mass body"} for x in range(length)]
-        + [{"position": [i, 0, 0], "type": "lamp", "values": {"train": TRAIN - i}} for i in range(TRAIN)]
+        + [{"position": [i, 0, 0], "type": "lamp"} for i in range(TRAIN)]
         + [{"position": [length - 1, 0, 0], "type": "eye"}],
     }
     if wave or single:
@@ -258,8 +247,8 @@ def document(
             {
                 **lamp,
                 "name": f"lamp_{i}",
-                "fields": ["light", "train", "clock"],
-                "defaults": {"light": 1, "train": TRAIN - i, "clock": 0},
+                "fields": ["light", "clock"],
+                "defaults": {"light": 1, "clock": 0},
                 "updates": [{"field": "clock", "expression": op("add", {"field": "clock"}, 1)}],
             }
             for i in range(TRAIN)
@@ -290,13 +279,32 @@ def document(
 
 
 def observe(raw: dict) -> dict:
-    """The eye's absorptions on its own clock, the leading ray's hops, and the field's growth."""
+    """The eye's absorptions on its own clock, the leading ray's hops, and the field's growth.
+
+    Rays carry no label. The train is read by arrival order: on one line under a
+    load that only grows, rays never overtake one another, so the n-th ray
+    delivered to a Node is train n (train 1 leads) once the lamps seeded at or
+    ahead of that Node are counted, since a lamp's own ray leaves in the cycle it
+    is emitted and no ray of a lamp further along ever passes. An arrival is read
+    from the light the Node's ray field delivered through its +x travel Port in
+    the last interval (one quantum per ray). If two rays ever became resident at
+    one Node together the delivered stock would count both; the phase is then
+    read only when the newcomer can be told apart.
+    """
     world = Simulation(parse_initial_state(raw))
     names = [kind["name"] for kind in raw["disturbance_types"]]
     light, clock = FIELDS.index("light"), FIELDS.index("clock")
+    light_index = next(i for i, f in enumerate(raw["spatial_fields"]) if f["field"] == "light")
+    lamp_positions = [
+        seed["position"][0]
+        for seed in raw["seeds"]
+        if seed["type"] == "lamp" or seed["type"].startswith("lamp_")
+    ]
     length = raw["shape"][0]
     first_seen: dict[tuple[int, int], int] = {}
     phases: dict[tuple[int, int], int] = {}
+    arrivals: dict[int, int] = {}  # rays seen so far at Node x: the next train number
+    resident_before: dict[int, tuple] = {}
     absorptions: list[tuple[int, int, int]] = []  # (tick, eye clock, light absorbed so far)
     last_light = 0
     checkpoints: list[tuple[int, int]] = []
@@ -304,11 +312,22 @@ def observe(raw: dict) -> dict:
         world.step()
         view = world.inventory_view()
         for node in view.nodes:
-            if node.rays:
-                for ray in node.rays[1]:
-                    if (ray.train, node.position[0]) not in first_seen:
-                        first_seen[(ray.train, node.position[0])] = tick
-                        phases[(ray.train, node.position[0])] = ray.phase
+            x = node.position[0]
+            resident = tuple(node.rays[light_index]) if node.rays else ()
+            delivered = unpack(node.spatial[light_index].delivered[0])[0]
+            new_rays = [ray for ray in resident if ray not in resident_before.get(x, ())]
+            ahead = sum(1 for position in lamp_positions if position >= x)
+            for k in range(delivered):
+                arrivals[x] = arrivals.get(x, 0) + 1
+                train = arrivals[x] + ahead
+                if train > TRAIN:
+                    continue
+                first_seen[(train, x)] = tick
+                if len(new_rays) == delivered:
+                    phases[(train, x)] = new_rays[k].phase
+                elif len(resident) == 1:
+                    phases[(train, x)] = resident[0].phase
+            resident_before[x] = resident
             if node.position[0] == length - 1:
                 for record in node.records:
                     if record is not None and names[record.type_index] == "eye":

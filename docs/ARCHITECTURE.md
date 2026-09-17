@@ -152,12 +152,13 @@ generic engine. External floating-point or globally coupled reference prototypes
 are not compliant active-engine implementations, even if their GIFs look useful.
 
 Q-ORACLE-1, the explicitly scoped opt-in quantum exception, was deleted on
-2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2), and
-the source envelopes on the same day under Highlights section 3.5 (bucket
-B.3). No path in the package answers at a distance. The event-ledger and
-bond-registry modules that stay until buckets B.4 to B.6 are scope limits to
-report, not evidence that every repository path already satisfies the active
-local integer contract.
+2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2), the
+source envelopes on the same day under Highlights section 3.5 (bucket B.3),
+and the bond registry, claim-gather and the lottery capture the same day under
+Highlights sections 3.19, 3.20, 5.1 and 5.4 (bucket B.5). No path in the
+package answers at a distance. The event-ledger modules that stay until
+buckets B.4 and B.6 are scope limits to report, not evidence that every
+repository path already satisfies the active local integer contract.
 
 ## Generated output ownership
 
@@ -474,7 +475,7 @@ final-departure cause. The ledger stays until issue #164 bucket B.4
 pure transition results through the host `NodeExecution` service with bounded
 per-simulation caches. Full input equality is required; laws cannot read cache
 state. Local commits, guards, model charges and timing remain Node-owned.
-Mutable bond planners and event resolvers bypass reuse. `PortTable` indexes only
+Event resolvers bypass reuse. `PortTable` indexes only
 active transport banks and retains stable creation order; schedulers refresh
 changed banks without adding callbacks or world references to PortBank.
 The detailed limits, metrics and supercell boundary are in the Focus contract.
@@ -484,9 +485,9 @@ physical history or a new per-Node state type. Nodes certify dormancy from fixed
 local state; actual delivery wakes them. The spatial active index remains shared
 by both scheduling modes. Frozen field definitions own bounded immutable phase
 and pace tables prepared before any tick; no lazy pace cache grows across runs.
-New retained-ray and claim owners pass the same trusted pre-commit/receipt
-validation boundary as outgoing payloads. The global bond reference is excluded
-from ordinary initialization and planner composition.
+Retained-ray owners pass the same trusted pre-commit/receipt validation
+boundary as outgoing payloads. No global reference enters initialization or
+planner composition; the bond registry was deleted on 2026-09-17.
 
 ## Sampling admission ownership
 

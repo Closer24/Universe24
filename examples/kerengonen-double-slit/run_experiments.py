@@ -32,8 +32,7 @@ HEADING_SCALE = 16
 PER_RAY = 16
 PHASE_STEPS = 8
 TICKS = 48
-LOTTERY_TICKS = 96  # single quanta, whole or nothing: twice the ticks for the counts
-LOTTERY_SEEDS = (1, 2)
+SINGLE_QUANTA_TICKS = 96  # one quantum per ray: twice the ticks for the counts
 SOURCE_X = CENTER - 12  # the single lamp of the wall experiment
 WALL_X = CENTER - 4  # an absorbing wall with two re-emitting slits at y = +-3
 SOURCE_PER_RAY = 64
@@ -76,7 +75,6 @@ def document(
     phase_b: int = 0,
     audit: bool = False,
     screen_half: int = SCREEN_HALF,
-    capture_seed: int | None = None,
     layers: int = 1,
 ) -> dict:
     count = len(headings)
@@ -91,8 +89,6 @@ def document(
     }
     if phase_steps:
         field["kerengonen"] = {"phase_steps": phase_steps, "phase_advance": 1}
-        if capture_seed is not None:
-            field["kerengonen"].update({"capture": "lottery", "capture_seed": capture_seed})
     emission_b: dict = {
         "type": "lamp_b",
         "field": "quanta",
@@ -106,9 +102,7 @@ def document(
     raw: dict = {
         "schema_version": 1,
         "model_id": "kerengonen-double-slit-probe-v1",
-        "sampling_profile": "historical-autonomous-v1"
-        if capture_seed is not None
-        else "detector-only-v1",
+        "sampling_profile": "detector-only-v1",
         "shape": [SIZE, SIZE, 3],
         "boundary": "open",
         "slots_per_node": 2,
@@ -388,13 +382,11 @@ def main() -> None:
         }
         for layers in (1, 2, 4, 8)
     }
-    # Single quanta, whole or nothing: the lottery capture builds the fringe click by
-    # click. The share rule would truncate a lone quantum's half share to nothing.
-    lottery = {
-        f"seed_{seed}": run(document(LOTTERY_TICKS, headings, per_ray=1, capture_seed=seed))
-        for seed in LOTTERY_SEEDS
-    }
-    lottery["share_single_quanta"] = run(document(LOTTERY_TICKS, headings, per_ray=1))
+    # Single quanta under the share rule: a lone quantum's half share truncates to
+    # nothing, so only the fully coherent Nodes take it. (The whole-or-nothing
+    # lottery capture that once built the fringe click by click was deleted on
+    # 2026-09-17: an ordinary absorber does not draw.)
+    single_quanta = {"share_single_quanta": run(document(SINGLE_QUANTA_TICKS, headings, per_ray=1))}
     # One source behind a wall: the two slits are Huygens sources of the same wave.
     # A forward cone of headings keeps re-emitted rays off the wall plane.
     cone = cone_headings(WALL_HEADINGS, WALL_HEADING_SCALE)
@@ -415,7 +407,7 @@ def main() -> None:
             "kerengonen": runs["kerengonen"]["profile"].get(y, 0),
             "half_turn": runs["kerengonen_lamp_b_half_turn"]["profile"].get(y, 0),
             "plain": runs["plain"]["profile"].get(y, 0),
-            **{name: world["profile"].get(y, 0) for name, world in lottery.items()},
+            **{name: world["profile"].get(y, 0) for name, world in single_quanta.items()},
             **{f"wall_{name}": world["profile"].get(y, 0) for name, world in wall.items()},
         }
         for y in range(-SCREEN_HALF, SCREEN_HALF + 1)
@@ -430,10 +422,11 @@ def main() -> None:
         "ticks": TICKS,
         "fringe": fringe,
         "runs": {name: {k: v for k, v in run_.items() if k != "profile"} for name, run_ in runs.items()},
-        "lottery": {
-            name: {k: v for k, v in world.items() if k != "profile"} for name, world in lottery.items()
+        "single_quanta": {
+            name: {k: v for k, v in world.items() if k != "profile"}
+            for name, world in single_quanta.items()
         },
-        "lottery_ticks": LOTTERY_TICKS,
+        "single_quanta_ticks": SINGLE_QUANTA_TICKS,
         "wall": {
             name: {k: v for k, v in world.items() if k != "profile"} for name, world in wall.items()
         },
@@ -458,13 +451,12 @@ def main() -> None:
             row["kerengonen"],
             row["half_turn"],
             row["plain"],
-            "lottery",
-            [row[f"seed_{seed}"] for seed in LOTTERY_SEEDS],
+            "single quanta",
             row["share_single_quanta"],
             "wall",
             [row[f"wall_{name}"] for name in wall],
         )
-    print("lottery", result["lottery"])
+    print("single quanta", result["single_quanta"])
     for name, pair in thick.items():
         print(
             name,

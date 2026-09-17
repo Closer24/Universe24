@@ -44,19 +44,19 @@ gains two modes and the framework's claims are narrowed to what is measured.
   to a million pairs, with binomial standard errors; every lattice outcome
   equals the registry's answer from the same seed, and `S` converges to the
   table expectation `724/256 = 2.828125`. The first run's 2.889 was sampling
-  spread on correlated samples ([report](examples/bell-chsh/README.md#standard-errors-and-convergence-of-the-bonded-value)).
+  spread on correlated samples (report: `examples/bell-chsh/README.md`, deleted on 2026-09-17).
 - Which assumption of Bell's theorem each candidate breaks is measured at
   fixed hidden variable by `--causal`: the lottery and the threshold are
   parameter independent; the bonded pair is deterministic and
   measurement-independent and breaks parameter independence (Bob's answer
   moves with Alice's setting for 0.72 of the hidden variables at
   `b'`); the quantum owner breaks outcome independence
-  ([report](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks),
+  (report: `examples/bell-chsh/README.md`, deleted on 2026-09-17;
   coupling (`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17)).
 - The door of postulate 22 is measured half by half: `--source agreement`
   keeps the coin even and fixes the agreement half, giving S = 4 (the
   Popescu-Rohrlich box) with even marginals and no signal; no-signalling
-  bounds the coin, not the correlation ([report](examples/bell-chsh/README.md#the-door-of-postulate-22-a-number-source-outside-the-world)).
+  bounds the coin, not the correlation (report: `examples/bell-chsh/README.md`, deleted on 2026-09-17).
 - Postulates 4 and 22 name the broken assumption: the registry is a nonlocal
   resource in Bell's sense, its unmoved plus rates are no-signalling and not
   locality, and how a number is read (one end, both ends, or correlated with
@@ -116,8 +116,8 @@ below is recorded with its source fingerprint in [validation](docs/VALIDATION.md
   bonded pairs.
 - Bell's test on the ray with five captures on one scale: share 1.40 exact,
   lottery 1.48 and 1.38, threshold 2.00 exactly, bonded 2.89 against the
-  quantum 2.83, plain field 2 ([phased-ray Bell](examples/kerengonen-bell/README.md),
-  [ray Bell probe](examples/bell-chsh/README.md)).
+  quantum 2.83, plain field 2 (`examples/kerengonen-bell/` and `examples/bell-chsh/`,
+  both deleted on 2026-09-17).
 - An outside number source for bonded pairs: uniform is invisible, biased is
   a measured signal.
 - Signed-quanta gravity with a closed ledger, gathered gravity (no dark-matter

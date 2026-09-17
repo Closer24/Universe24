@@ -2443,7 +2443,7 @@ Base: `c3c39d0` on main after PR #98. A funded ray emission may name a fixed
 detectors on one field draw their own ticket sequences; and the lottery now
 draws the square of its ticket state, because the state is affine in its
 salts and two records that met the same rays drew numbers a fixed distance
-apart. The [Bell probe](../examples/bell-chsh/README.md) puts two phased rays
+apart. The Bell probe (`examples/bell-chsh/`, deleted on 2026-09-17) puts two phased rays
 from one source through plus/minus detectors whose capture probability is the
 Kerengonen coherence with a reference ray at the setting phase.
 

@@ -3,8 +3,8 @@
 The canonical runner's recording (run.html frames, state.json, run.json) carries,
 per Node and tick, the field value, octant populations and the ray count, but not
 each ray's heading, amount and phase. This script replays the identical
-initialization.json in-process (the engine is deterministic: seeded lotteries,
-seeded bond registry) and reads the inventory view every tick. It then checks
+initialization.json in-process (the engine is deterministic) and reads the
+inventory view every tick. It then checks
 that replay against the recorded frames Node by Node: every record's type and
 values, and every spatial Node's complete field readout (value, directions,
 populations, ray_count) and the escaped totals must match at every tick. Any
@@ -12,7 +12,7 @@ mismatch is reported, never hidden. The result is one JSON per panel with what
 the renderer draws; nothing is interpolated.
 
 Run:  PYTHONPATH=src python examples/research/ray-gallery/record_ticks.py --output DIR
-      (DIR/runs/<panel>/ must hold the eight recorded runs; see the README)
+      (DIR/runs/<panel>/ must hold the five recorded runs; see the README)
 """
 
 from __future__ import annotations
@@ -42,7 +42,6 @@ OCTANT_SIGNS = [
     (-1, -1),
     (-1, -1),
 ]  # (sx, sy) per octant
-PORT_VECTORS = [(1, 0), (-1, 0), (0, 1), (0, -1), (0, 0), (0, 0)]  # +x -x +y -y +z -z in the XY plane
 
 
 def _json(value):
@@ -148,34 +147,15 @@ def replay(panel: dict, out: Path, configs: Path) -> dict:
 
     def capture(tick: int) -> dict:
         view = world.inventory_view()
-        rays, records, claims, waits, cells = [], [], [], [], []
+        rays, records, waits, cells = [], [], [], []
         ray_total = 0
         record_total = 0
         for node in view.nodes:
             x, y, z = node.position
-            node_claims = node.claims[field_index] if node.claims else ()
-            parent_vec = None
-            for c in node_claims:
-                parent_vec = (0, 0) if c.parent < 0 else PORT_VECTORS[c.parent]
-                claims.append([x, y, c.parent, int(c.parent < 0), c.train, c.since])
             for r in node.rays[field_index] if node.rays else ():
                 hx, hy, hz = headings[r.heading]
                 ray_total += r.amount
-                rays.append(
-                    [
-                        x,
-                        y,
-                        hx,
-                        hy,
-                        r.amount,
-                        r.phase if phase_steps else None,
-                        r.homing,
-                        r.wait,
-                        r.bond,
-                        r.train,
-                        list(parent_vec) if (r.homing and parent_vec is not None) else None,
-                    ]
-                )
+                rays.append([x, y, hx, hy, r.amount, r.phase if phase_steps else None, r.wait])
             if node.position in world._spatial.nodes:
                 sp = world._spatial.nodes[node.position]
                 if sp.ray_wait:
@@ -206,7 +186,6 @@ def replay(panel: dict, out: Path, configs: Path) -> dict:
             "tick": tick,
             "rays": rays,
             "records": records,
-            "claims": claims,
             "waits": waits,
             "cells": cells,
             "totals": {
@@ -251,8 +230,6 @@ def replay(panel: dict, out: Path, configs: Path) -> dict:
                 "conserved_at_every_completed_tick",
                 "spatial_policy",
                 "spatial_transport",
-                "spatial_claims",
-                "spatial_bonds",
                 "spatial_metric",
                 "spatial_allocation",
                 "ray_delay",
@@ -306,66 +283,6 @@ def derive(panel: dict, raw: dict, frames: list[dict]) -> dict:
             "unloaded_first_click_source": "same document with emission 0, run in-process while tuning (not a recorded panel)",
             "max_wait_by_x": dict(sorted(max_wait.items(), key=lambda kv: int(kv[0]))),
         }
-    if key in ("4-bonded-pair", "8-lottery-detector"):
-        # A particle ray resident at a plus detector at tick t is passed on if it
-        # is resident at the minus detector one link further at t + 1, taken otherwise.
-        sides = {
-            "alice": {"plus": (4, 4), "minus": (3, 4), "heading": (-1, 0)},
-            "bob": {"plus": (10, 4), "minus": (11, 4), "heading": (1, 0)},
-        }
-        per_tick = []
-        taken = {"alice": 0, "bob": 0}
-        passed = {"alice": 0, "bob": 0}
-        outcomes: dict[int, dict] = {}
-        for t in range(len(frames) - 1):
-            now, nxt = frames[t]["rays"], frames[t + 1]["rays"]
-            for side, geo in sides.items():
-                at_plus = [
-                    r for r in now if (r[0], r[1]) == geo["plus"] and (r[2], r[3]) == geo["heading"]
-                ]
-                at_minus_next = [
-                    r for r in nxt if (r[0], r[1]) == geo["minus"] and (r[2], r[3]) == geo["heading"]
-                ]
-                present = sum(r[4] for r in at_plus)
-                went_on = sum(r[4] for r in at_minus_next)
-                passed[side] += went_on
-                taken[side] += present - went_on
-                for r in at_plus:
-                    if r[8]:
-                        outcomes.setdefault(r[8], {})[side] = (
-                            "-" if any(m[8] == r[8] for m in at_minus_next) else "+"
-                        )
-            per_tick.append(
-                {"tick": frames[t + 1]["tick"], "taken": dict(taken), "passed": dict(passed)}
-            )
-        result = {"per_tick": per_tick, "taken_final": taken, "passed_final": passed}
-        if key == "4-bonded-pair":
-            result["pair_outcomes"] = {str(k): v for k, v in outcomes.items()}
-        return result
-    if key == "5-claim-gather":
-        first_claim = next((f["tick"] for f in frames if f["claims"]), None)
-        gathered = next(
-            (
-                f["tick"]
-                for f in frames
-                if f["records"]
-                and any(r[2] == "screen" and r[3]["matter"][0] == 64 for r in f["records"])
-            ),
-            None,
-        )
-        return {
-            "first_claim_tick": first_claim,
-            "gathered_tick": gathered,
-            "per_tick": [
-                {
-                    "tick": f["tick"],
-                    "claims": len(f["claims"]),
-                    "homing": sum(r[4] for r in f["rays"] if r[6]),
-                    "free": sum(r[4] for r in f["rays"] if not r[6]),
-                }
-                for f in frames
-            ],
-        }
     if key == "6-mirror-cavity":
         holds = [
             (f["tick"], r[0])
@@ -384,7 +301,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
-        "--configs", type=Path, default=CONFIGS, help="directory of the eight panel configurations"
+        "--configs", type=Path, default=CONFIGS, help="directory of the five panel configurations"
     )
     args = parser.parse_args()
     ticks_dir = args.output / "ticks"

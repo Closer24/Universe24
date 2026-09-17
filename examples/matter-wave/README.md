@@ -72,6 +72,8 @@ schedule itself is the engine's `dissolve` parameter, not a clock in the
 configuration. What this is not: the matter lands spread over the
 screen as one particle's wave, not at one Node. Landing whole at one place
 needs a causal rule that retires the rest of the wave when one Node captures
-it: the quantum layer has one, and on the ray field the
-[claim and gather probe](../claim-gather/README.md) supplies it, with a
-landing that takes the claim's and the return's ticks.
+it: the quantum layer had one, and on the ray field the claim and gather probe
+(`examples/claim-gather/`) supplied it, with a landing that took the claim's
+and the return's ticks. Both were deleted on 2026-09-17 under
+[Highlights](../../docs/HIGHLIGHTS.md) 3.19 and 3.20: the whole landing is the
+Detector's pass-or-return on the ray itself, not a claim that floods the board.

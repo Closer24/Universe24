@@ -42,7 +42,13 @@ result are different claims. Revision-specific results are not a live status fee
 | [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact and configured annihilation, muon-pair and beta-decay conversions, rendered from recorded runs with names, charges and masses |
 | [Family conversion](../examples/family-conversion/README.md) | Generic N-to-M conversion between catalog families: electron-positron annihilation into two or three photons, a four-ray joint conversion, threshold two-photon pair production with a crossing control, and a Compton-like exchange as supplied integer laws in catalog keV units, with exact accounting up to 10 GeV on a 48-cubed board |
 | [Isotropy probe](../examples/isotropy-probe/README.md) | Directional ratio of the outward and straight-ray fields against the isotropic expectation: exact path counts, counting spread and the heading cost of isotropy |
-| [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md) | CHSH on the classical Kerengonen candidate: 1.40 exact against the 14/5 recorded by the former quantum owner at the same settings, plain field at the bound of 2 |
+
+The Bell probes (`examples/kerengonen-bell/`, `examples/bell-chsh/`,
+`examples/research/bell-postulate-22/`), the claim-and-gather and gathered-gravity
+probes and the bond registry were deleted on 2026-09-17 under
+[Highlights](HIGHLIGHTS.md) 3.18 (deleted), 3.19, 3.20, 5.1 and 5.4; see the
+[migration note](MIGRATION.md#bond-registry-claim-gather-lottery-capture-and-occupied-links-guard-deleted-on-2026-09-17).
+Their dated results stay in [validation](VALIDATION.md).
 
 The shared quantum resource, its integration layer and their twelve documents
 (`QUANTUM_EVENTS.md`, `NATIVE_QUANTUM_EVENTS.md`, `WAVE_ORIGINS.md`,

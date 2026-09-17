@@ -236,39 +236,36 @@ def test_delayed_funded_owner_is_rejected_before_a_stale_plan_can_commit(moving)
     assert world.conservation_report()["status"] == "passed"
 
 
-def test_each_absorption_field_uses_its_own_configured_ticket_seed():
+def test_each_absorption_field_takes_its_own_whole_rays_without_a_draw():
     raw = absorbing_document(headings=[[1, 0, 0]], rays_per_tick=1, absorber_position=[1, 0, 0])
-    raw["sampling_profile"] = "historical-autonomous-v1"
     del raw["conservation"]
     raw["fields"].append({**raw["fields"][0], "name": "other_quanta"})
     absorber = raw["disturbance_types"][1]
     absorber["fields"].append("other_quanta")
     absorber["defaults"]["other_quanta"] = 0
     raw["spatial_fields"].append({**raw["spatial_fields"][0], "field": "other_quanta"})
-    for field, seed in zip(raw["spatial_fields"], (7, 19), strict=True):
-        field["kerengonen"] = {
-            "phase_steps": 4,
-            "phase_advance": 1,
-            "capture": "lottery",
-            "capture_seed": seed,
-        }
+    for field in raw["spatial_fields"]:
+        field["kerengonen"] = {"phase_steps": 4, "phase_advance": 1, "capture": "threshold"}
     raw["spatial_couplings"].append(
         {**raw["spatial_couplings"][0], "name": "other_absorption", "field": "other_quanta"}
     )
     initial = parse_initial_state(raw)
     records = [_record(Simulation(initial), 1)]
     law = _law(initial)
-    for index in (0, 1):
+    names = [field.name for field in initial.fields]
+    for index, name in ((0, raw["spatial_fields"][0]["field"]), (1, "other_quanta")):
         rays = [Ray(0, (0, 0, 0), 1, 0)]
+        before = unpack(records[0].values[names.index(name)])[0]
         assert law._absorb(index, rays, records, CostMeter(initial.operation_costs)) == 1
         assert not rays
-    # Salt is 1 for this ray; the first configured ticket after seeds 7 and 19
-    # is respectively 337899 and 917151. Neither row borrows the other's seed.
-    assert tuple(unpack(row)[0] for row in records[0].absorb_tickets) == (337899, 917151)
+        # A lone ray is fully coherent, so the threshold takes it whole on its own
+        # field; the record keeps no ticket row because nothing here draws.
+        assert unpack(records[0].values[names.index(name)])[0] == before + 1
+    assert not hasattr(records[0], "absorb_tickets")
 
 
 @pytest.mark.parametrize("stock,remaining,momentum", [(0, 0, 0), (1, 1, 0), (2, 0, -2)])
-def test_negative_lottery_capture_takes_a_whole_funded_ray_or_nothing(stock, remaining, momentum):
+def test_negative_threshold_capture_takes_a_whole_funded_ray_or_nothing(stock, remaining, momentum):
     raw = absorbing_document(
         headings=[[1, 0, 0]],
         rays_per_tick=1,
@@ -278,12 +275,10 @@ def test_negative_lottery_capture_takes_a_whole_funded_ray_or_nothing(stock, rem
         signed=True,
         ticks=4,
     )
-    raw["sampling_profile"] = "historical-autonomous-v1"
     raw["spatial_fields"][0]["kerengonen"] = {
         "phase_steps": 4,
         "phase_advance": 1,
-        "capture": "lottery",
-        "capture_seed": 7,
+        "capture": "threshold",
     }
     world = Simulation(parse_initial_state(raw))
     for _ in range(4):
