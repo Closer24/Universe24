@@ -270,6 +270,25 @@ interaction, and everything follows from the generic transactions of the
 declared couplings; what remains is to close the binding couplings. Until
 they exist, held source records remain an explicitly labeled interim device.
 
+**Fixed body (model owner, 2026-09-17; Highlights 3.19).** Beside the
+Detector there is one more declared element of a world, and like the Detector
+it is a declaration, not physics: a Node declared to hold a family with a
+very large amount and, if wanted, a charge, standing for a star or a large
+charge. It radiates exactly as any bound group does, by the one field rule
+above and with the strength its amount gives, so its gravity and its electric
+field are the ordinary field rays of this document and every ray that meets
+them responds by its declared coupling. It never changes: whatever arrives at
+it, a recoil field ray or a ray that couples to it, is absorbed into an
+explicitly accounted sink, and it never splits, binds, unbinds, converts or
+decays; the audit books what it radiates as a source and what it absorbs as a
+sink, so conservation stays exact at every tick. It may move on a declared
+trajectory, and wherever it is, the Node it is at holds all of it; its motion
+is declared, never caused, because nothing on the board can push it. It is
+the approximation of infinite mass, used for the confrontation runs: light
+bending by a star, an electron near a large charge, a hydrogen-like spectrum
+around a fixed proton. It is feature 7b of the migration in section 6, after
+feature 7.
+
 ## 2. The single generic rule
 
 At a Node where two or more rays are resident in the same interval, the
@@ -510,6 +529,14 @@ every such set; Highlights 3.20 is the text to follow.
    declared coupling responds being delayed (its output clock grows) and the
    field ray returning reversed with the opposite momentum to the heavy
    Node.
+   Feature 7b, fixed body, after feature 7 (model owner, 2026-09-17,
+   Highlights 3.19): a Node declared to hold a family with a very large
+   amount and, if wanted, a charge, standing for a star or a large charge; it
+   radiates by this one field rule with the strength its amount gives, never
+   changes, absorbs whatever arrives at it into an explicitly accounted sink
+   that the audit books beside what it radiates as a source, may move on a
+   declared trajectory and is held whole by the Node it is at; the
+   approximation of infinite mass for the confrontation runs (section 1).
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
