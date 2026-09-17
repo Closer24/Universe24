@@ -619,6 +619,12 @@ every such set; Highlights 3.20 is the text to follow.
    every declared interaction; see [wave-ray
    families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1). The
    meeting with N-to-M conversion and the steering table remain feature 6.)
+   The width `phase_bits` is the family's choice of the resolution its
+   couplings need, since a phase is read only at a meeting and only as a
+   difference (decided 2026-09-17, Highlights 3.28): eight steps resolve the
+   Born table, a wider circle is allowed but never required, and the
+   weakness of gravity does not live in the phase but in the lag register of
+   feature 8b under step 8.
 7. Field emission by traveling rays, with the outward dilution or declared
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as
@@ -697,6 +703,14 @@ every such set; Highlights 3.20 is the text to follow.
    lagging side per phase modulus, the field ray returning reversed; the
    recoil's coupling to the group and the orbit are open; see
    [binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1).)
+   Feature 8b, lag modulus, after feature 10 (decided 2026-09-17, Highlights
+   3.28): the lag counted in its own modulus, declared per family, in place
+   of the phase steps of feature 8; the register is spent as one Link toward
+   the lagging side when it reaches that modulus, exactly as a heading is
+   carried with a resolution of one part in 2^30 through six Ports, and that
+   modulus, not the phase circle, is the N of hypothesis 14, of any width
+   because it enters no phase sum; the phase circle stays as small as the
+   family's couplings need.
 9. Tests and experiments: reversibility replay; the light cone of the carried
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two

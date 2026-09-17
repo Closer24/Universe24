@@ -853,8 +853,10 @@ Since 2026-09-17 (feature 7 merged) the world also declares `G`, the field of
 ([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)):
 every Node a quanta ray crosses releases, in the interval it departs, one G
 ray of amount floor(3/3) = 1 on each of the five other headings, booked as a
-source. Pinned before the first run, from the event stream alone (no per-tick
-recording, so no phase):
+source, and a ray held at a Node by the coupling's `delay` is resident
+content there and releases on all six headings every interval it is held
+(Highlights 3.5, feature 8, `ray-binding-v1`). Pinned before the first run,
+from the event stream alone (no per-tick recording, so no phase):
 
 - (a) the rays: four, each of family `quanta` and amount 3. Ray 0 leaves
   (1,1,1) through +X at tick 0 and ray 1 leaves (3,1,1) through -X at tick
@@ -870,11 +872,15 @@ recording, so no phase):
   2, `held_ticks` 1, amount in `quanta` 6, momentum in (0,0,0), amount out
   6, momentum out (0,0,0), coupling `swap_headings`; one Detector PASS click
   at tick 4 at (4,1,1) through Port -X (family `quanta`, amount 3, bit 1)
-  on the +X ray; two escapes at tick 5, at (0,1,1) through -X and at (4,1,1)
-  through +X; no crossing, split, deflection or return;
+  on the +X ray (the only click of family `quanta`; with `G` declared the
+  marked Node clicks five times, see (e)); two escapes at tick 5, at (0,1,1)
+  through -X and at (4,1,1) through +X; no crossing, split, deflection or
+  return;
 - (c) the captions: tick 0 names both emissions, tick 1 the meeting with the
   coupling and both invariants, tick 2 the outputs leaving, tick 4 the
-  Detector PASS with its bit, tick 5 the escapes; `in_world` quanta stays 6
+  Detector PASS with its bit (and, with `G` declared, the G clicks of ticks
+  3, 4 and 6 beside the field escapes, see (e)), tick 5 the escapes;
+  `in_world` quanta stays 6
   through tick 4 and is 0 from tick 5, when `escaped` is 6; the run's
   conservation line reads `passed` (the world declares the `conservation`
   block again since `ray-event-audit-v1`, 2026-09-17: the local audit's
@@ -897,42 +903,64 @@ recording, so no phase):
   events plus one generic marker of that kind at that Node and tick (drawn,
   not listed in the caption, which names only the kinds of the caption rule),
   and the record reports `{"field_release": 1}` as unknown;
-- (e) the field (pinned 2026-09-17 before the first run with `G`, and
-  corrected after it, see below): the four quanta rays walk exactly as in
-  (a), their trails unbroken through the Nodes where they release; six
-  `release` events, each flagged `field`, each with the departing quanta rays
-  as inputs and one G ray of amount 1 per spoke as outputs: at (2,1,1) at
-  ticks 1 and 2 with six spokes each (the two rays' releases share the four
-  transverse Links, so those four G rays carry 2 each and the +X and -X ones
-  1 each, G 10 per release; the tick-1 release has no departing input, the
-  tick-2 one both meeting outputs), at (3,1,1) and (1,1,1) at tick 3 with
-  five spokes each (all but the ray's own +X, respectively -X; G 5 each), and
-  at (4,1,1) and (0,1,1) at tick 4 likewise; 32 G rays in all, so 36 rays; no
+- (e) the field (pinned 2026-09-17 before the first run with `G`, corrected
+  after it, and corrected again on 2026-09-17 after #204, see below): the
+  four quanta rays walk exactly as in (a), their trails unbroken through the
+  Nodes where they release; six `release` events, each flagged `field`, each
+  with the departing quanta rays as inputs and one G ray of amount 1 per
+  spoke and per releasing ray as outputs: at (2,1,1) at tick 1 with six
+  spokes, from the two rays held there by the coupling's `delay` (content
+  held at a Node is resident and releases on all six headings, Highlights
+  3.5, feature 8), so every spoke carries G 2 and the release sources G 12
+  (the two held rays' G rays on one spoke leave in one packet, which the
+  record holds as one `spatial_received` reading of G 2, so the extractor
+  reads one G ray of amount 2 per spoke; the tick-1 release has no
+  departing input); at (2,1,1) at tick 2 with six spokes, the departure
+  release of both meeting outputs (each releases on the five headings other
+  than its own, so the four shared transverse G rays carry 2 each and the
+  +X and -X ones 1 each, G 10); at (3,1,1) and (1,1,1) at tick 3 with five
+  spokes each (all but the ray's own +X, respectively -X; G 5 each), and at
+  (4,1,1) and (0,1,1) at tick 4 likewise; 32 G rays in all, so 36 rays; no
   `split`, `crossing` or `deflection` event; the marked Node (4,1,1) draws
-  for G too, so the clicks are four: tick 3 G 1 (the +X G of the tick-1
-  release), tick 4 quanta 3 and tick 4 G 1 (the +X G of the tick-2 release,
-  arriving with the quanta ray) and tick 6 G 1 (the +X G released at (1,1,1)
-  at tick 3); field escapes, each flagged `field`: four at tick 3 (G 2 each,
-  the transverse rays of tick 1), six at tick 4 (the two axial rays of tick 1
-  and the four transverse of tick 2, G 10), ten at tick 5 (the eight
-  transverse rays of tick 3 and the two riding out with the quanta rays, G
-  10) and eight at tick 6 (the transverse rays of tick 4, G 8), G 36 in all;
-  the run's `source_totals` G 40, `escaped_totals` G 36, `final_totals` G 4
-  (the four axial G rays still inside at tick 6), and the derived per-tick
-  `in_world` G, initial plus the sources through the previous tick minus the
-  escapes, is 0, 0, 10, 12, 12, 12, 4 for ticks 0 to 6; captions never name a
-  release and list at most three events, so tick 3 reads the G click and
-  "field escaped: G 8", tick 4 the two Detector PASS lines and "field escaped:
-  G 10", tick 5 "escaped: quanta 6" and "field escaped: G 10", tick 6 the G
-  click and "field escaped: G 8"; `record.released_field` is
-  `released-field-v1`. The first pin had one release at (2,1,1), at tick 2
-  only, from the released-field text ("in the interval it departs"): the
-  first run showed the engine also releasing at tick 1, while both rays were
-  held at (2,1,1) by the coupling's `delay` (source G 40, not 30; a fourth
-  click at tick 3). That difference between the text and the implementation
-  for a retained ray is feature 7's to settle and is reported with this
-  fixture as the reproduction; this test pins what the record holds and what
-  the extractor reads from it, not the release rule;
+  for G too, once per ray in the arriving packet, so the clicks are five:
+  tick 3 G 1 twice (the two +X G rays of the tick-1 release, one per held
+  ray, both read against the one extracted G ray of amount 2), tick 4
+  quanta 3 and tick 4 G 1 (the +X G of the tick-2 release, arriving with
+  the quanta ray) and tick 6 G 1 (the +X G released at (1,1,1) at tick 3);
+  field escapes, each flagged `field`: four at tick 3 (G 2 each, the
+  transverse rays of tick 1, G 8), six at tick 4 (the two axial packets of
+  tick 1, G 2 each, and the four transverse of tick 2, G 12), ten at tick 5
+  (the eight transverse rays of tick 3 and the two riding out with the
+  quanta rays, G 10) and eight at tick 6 (the transverse rays of tick 4, G
+  8), G 38 in all; the run's `source_totals` G 42, `escaped_totals` G 38,
+  `final_totals` G 4 (the four axial G rays still inside at tick 6), and the
+  derived per-tick `in_world` G, initial plus the sources through the
+  previous tick minus the escapes, is 0, 0, 12, 14, 12, 12, 4 for ticks 0 to
+  6; captions never name a release and list at most three events, so tick 3
+  reads the two G clicks and "field escaped: G 8", tick 4 the two Detector
+  PASS lines and "field escaped: G 12", tick 5 "escaped: quanta 6" and
+  "field escaped: G 10", tick 6 the G click and "field escaped: G 8";
+  `record.released_field` is `released-field-v1`. The first pin had one
+  release at (2,1,1), at tick 2 only, from the released-field text ("in the
+  interval it departs"): the first run showed the engine also releasing at
+  tick 1, while both rays were held at (2,1,1) by the coupling's `delay`
+  (source G 40, not 30; a fourth click at tick 3). That difference between
+  the text and the implementation for a retained ray was reported with this
+  fixture as the reproduction and is settled by feature 8; this test pins
+  what the record holds and what the extractor reads from it, not the
+  release rule. Corrected 2026-09-17 after #204 (feature 8,
+  `ray-binding-v1`): the pin of #205 was taken before #204 merged, with the
+  tick-1 release on five headings per held ray (the shared transverse
+  spokes G 2, the axial spokes G 1, G 10); content held at a Node releases
+  on all six headings (Highlights 3.5, feature 8), so the tick-1 release
+  sources G 12 (was 10) with G 2 on every spoke (the axial spokes were 1),
+  the marked Node clicks twice at tick 3 (was once; five clicks, not four),
+  the tick-4 field escapes carry G 12 (was 10), `source_totals` G 42 (was
+  40), `escaped_totals` G 38 (was 36), `in_world` G 12 and 14 at ticks 2
+  and 3 (was 10 and 12), and the tick-3 and tick-4 captions read as above
+  (tick 3 named one G click, tick 4 ended "field escaped: G 10"); the
+  tick-2 departure release, the tick-3 and tick-4 releases, the escape
+  counts, the ray count and `final_totals` are unchanged;
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
