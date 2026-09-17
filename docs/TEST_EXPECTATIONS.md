@@ -80,6 +80,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
 | `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
+| `test_ring_self_field.py` | 1 | (first run) | The ring under its own field of E10 in isolation: the nine worlds byte for byte what `make_worlds.py` writes, and the content-32 worlds for 16 ticks: the coupling `electron_field_turn` (`ray-momentum-turn-v2`) declared beside the corner table (`loop-binding-v1`), the corner-first record the control's event for event with no push, the turn-first record's eight pushes at tick 2 with their registers, the ring off its Nodes at tick 3, the group readings and the world ledger exact |
 | `test_screen_loop.py` | 1 | 7.7 | The screen with a loop source of E9 in isolation: the unit-square ring of `loop-binding-v1` with rays of amount 4 releasing its light (`released-field-v1`) that spreads by the catalog's table with the Node-owned remainder (`field-spreading-v1`, `field-remainder-v1`) onto seven Detector marks, the ring read as one group of content 32 while it radiates, the first clicks and the world ledger exact |
 | `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
 | `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
@@ -2909,6 +2910,61 @@ tick 32: sourced 1240, current 1016 (rays and registers), escaped 224
 tick 24: 920, 784, 136); 2759 `field_spread` records; the group read from
 tick 1 to tick 31 over 248 electron rays, `ray_layer_families`
 `[["electron"], ["light"]]`.
+
+## The ring meets its own field
+
+`tests/test_ring_self_field.py` is the isolated test of the run E10
+([the ring meets its own field](../examples/nature/README.md#the-ring-meets-its-own-field),
+[E10](EXPERIMENTS.md#e10-the-ring-meets-its-own-field-the-loop-under-its-own-light-contents-32-to-128)),
+pinned here on 2026-09-17 before its first run, as Highlights 5.5 requires.
+It loads `examples/nature/e10_self_field/make_worlds.py` from its file and
+checks that the nine world files are byte for byte what `cases()` writes;
+then it takes the three content-32 worlds (`world(4, variant)`, the
+smallest: the unit square P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5), P3 =
+(5,6,5) in the plane z = 5 on a 12 x 12 x 12 open board, eight `electron`
+lamps of amount 4 at rest rate 1 on a 3-bit phase, `light` `field_of`
+`electron` with `release` [1, 4] and `spread` [6, 1, 1, 1, 1, 1], 24 ray
+slots, the rules `corner` alone, `corner` then `electron_field_turn`
+(`momentum_table` `{"light": 1}`), and the two in the other order) with
+`ticks` 16 and runs each through the runner, reading `run.json`,
+`events.jsonl` and the extractor with the recording of `record_sidecar.py`.
+One test.
+
+Written before the first run (all of it computed from the rules, the
+"Computed" item of E10): the control's record carries `ray_layer_families`
+`[["electron"], ["light"]]` and no `ray_momentum_turn`; both coupled records
+carry `[["electron", "light"]]` (the coupling names `light`, one layer);
+`loop_binding` `"loop-binding-v1"`, `released_field`, `field_spreading` and
+`field_remainder` as E9's. `corner_first`: no `ray_push` event, no
+`ray_momentum_turn` in `run.json`, and its `events.jsonl` equal byte for
+byte to the control's (the corner rule takes both electrons at every corner
+in every cycle and the turn rule finds none); the electron line 32 at every
+tick with no escape; the group read as E9's: ring `[P0, P1, P2, P3]`,
+content 32, `{"electron": 32}`, period 8, clock `{"electron": 1}`, from
+tick 1 to tick 15, every tick row from 1 to 15 bound `{"electron": [32]}`.
+`turn_first`: `ray_momentum_turn` `"ray-momentum-turn-v2"` in `run.json`;
+exactly eight `ray_push` events at tick 2, two per corner, family
+`electron`, amount 4, field `light`, field amount 1, in this order at each
+corner (the light rays in heading-index order): P0, before `[-4, 0, 0]`,
+field heading `[-1, 0, 0]`, after `[-5, 0, 0]`, then field heading
+`[0, -1, 0]`, after `[-5, -1, 0]`; P1, before `[4, 0, 0]`, `[1, 0, 0]` to
+`[5, 0, 0]`, then `[0, -1, 0]` to `[5, -1, 0]`; P2, before `[4, 0, 0]`,
+`[1, 0, 0]` to `[5, 0, 0]`, then `[0, 1, 0]` to `[5, 1, 0]`; P3, before
+`[0, 4, 0]`, `[-1, 0, 0]` to `[-1, 4, 0]`, then `[0, 1, 0]` to
+`[-1, 5, 0]`; no `ray_push` at a corner after tick 2 (the ring is gone),
+every later push at a Node off the ring; at tick 3 electron packets are
+received at Nodes off the ring and none at a corner (every ring ray crossed
+straight), and from tick 3 no electron packet arrives at a corner; the
+extractor reads no group (the states at the corners exist at ticks 1 and
+2 only, fewer than two periods); the momentum line (0, 0, 0) sourced and
+current after tick 2 (the four corners' pushes cancel). Every world:
+`conserved_at_every_completed_tick` true and every audit line balanced at
+every completed tick; the light line sourced 40 (t - 1) after tick t in the
+control and in `corner_first`.
+
+Read from the record of the first run of this board and pinned then, as
+the run's integers rather than computed by hand: entered below after the
+first run.
 
 ## Catalog of nature
 

@@ -25,12 +25,15 @@ bodies, the force between them through their spreading fields, in
 [below](#a5s-coulombs-force-law-between-two-charges-at-rest),
 and (K) the worlds of experiment A12, Malus's law and the three-polarizer
 chain, a polarized beam through polarizer bodies, in `a12_malus/`,
-[below](#a12-maluss-law-and-the-three-polarizer-chain).
+[below](#a12-maluss-law-and-the-three-polarizer-chain),
+and (L) the worlds of E10, the ring of (I) meeting its own field under the
+catalog's turn declared beside the corner table, at contents 32, 64 and
+128, in `e10_self_field/`, [below](#the-ring-meets-its-own-field).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
 [below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
-(A) to (F), (H) and (I) are demonstrations under
+(A) to (F), (H), (I) and (L) are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
@@ -1139,6 +1142,126 @@ python tools/ray_viewer/extract.py runs/screen_loop --sidecar runs/screen_loop/r
 
 The record stays outside the tree; the register entry E9 carries the
 fingerprints. No GIF was rendered for this record.
+
+## The ring meets its own field
+
+`e10_self_field/` holds the worlds of
+[E10](../../docs/EXPERIMENTS.md#e10-the-ring-meets-its-own-field-the-loop-under-its-own-light-contents-32-to-128),
+written by `make_worlds.py`: the ring of (I), the unit-square electron of
+(F) with rays of amount 4, 8 or 16 (content 32, 64, 128) radiating its
+light, on a 12 x 12 x 12 open board with no mark, and the catalog's
+`electron_field_turn` in its momentum-table form declared beside the corner
+table, so that a ring ray which meets a light ray, its own family's field,
+is pushed away from the light's source and the light returns reversed. It
+asks the open point of [loop binding](../../docs/LOOP_BINDING.md#6-the-field-of-a-loop)
+sections 6, 7 and 11: does a bound loop survive the field its own rays
+release, and does its content select which loops survive, the ladder of
+hypothesis 12. Three worlds per content: `control` (the corner table alone,
+E9's form), `corner_first` (the corner table declared first, the coupling
+second) and `turn_first` (the coupling first). The criterion is written in
+the register entry before the run; `tests/test_ring_self_field.py` pins the
+content-32 worlds for 16 ticks
+([expectations](../../docs/TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| An electron at rest, radiating | The ring of (F): eight `electron` rays (charge -3, rest rate 1, `phase_bits` 3) of amount 4, 8 or 16 on the unit square P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5), P3 = (5,6,5) in the plane z = 5, one of each sense at every corner in every interval, turned by `corner`, the Port form; content 32, 64 or 128; the lamps and headings of `ring.json` | [Binding as a loop](../../docs/SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1); Highlights 3.4 |
+| Its field, light | `light` `field_of` `electron`, `release` [1, 4], `spread` [6, 1, 1, 1, 1, 1], rest rate 0, charge 0, 24 ray slots, as (I) declares it: every ring ray releases q = a / 4 (1, 2 or 4) on the five headings other than the one it departs on at every corner it leaves, with its phase and the sign of its charge (`source_sign` -1), booked as a source; the light spreads at every Node it reaches with the Node-owned remainder | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); [field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1); Highlights 3.5 |
+| The ring meeting its own field | `electron_field_turn` over `[electron, light]` with `momentum_table` `{"light": 1}` (the catalog's entry in feature 8b's form, like charges repel): the electron is pushed by +1 x amount x heading of every light ray it meets, away from the line that released it, the register walked by the DDA, and each light ray is returned reversed as the recoil; on the ring the light met is the ring's own, released one interval earlier by the neighbouring corners | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2); Highlights 3.5, 3.14 |
+| One layer | The coupling names `light`, so `electron` and `light` are one layer and the runner records `ray_layer_families` `[["electron", "light"]]`; in the control `light` is a layer of its own (`[["electron"], ["light"]]`) | [Layers](../../docs/SPATIAL_FIELDS.md#layers-ray-layers-v1) |
+| The declared order | The rules of a layer fire in declared order over the Node's rays; a rule with outputs takes its participants out of the cycle, a momentum-table rule takes one receiver per rule per Node per interval and every light ray, and a ray one rule took is not available to a later rule in the same cycle; `corner_first` and `turn_first` are the two orders | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1); [a free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2) |
+| The register | `Ray.momentum`, three integers or the default amount x heading; a meeting's outputs are fresh rays with the default register and an empty walk, so a corner meeting resets a pushed register (computed below) | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2) |
+| The near field | The light met at a corner per interval: the two edge rays of amount q from the neighbouring corners from tick 2, the spread's whole quanta from tick 7, 5 and 4 (computed below) | [Loop binding](../../docs/LOOP_BINDING.md#6-the-field-of-a-loop) |
+| Mass | The content, 32, 64 or 128, exact at every tick while the ring closes | Highlights 3.4, 3.28 |
+| Momentum | Amount times heading; the two quarter turns of a corner move (2a, 2a, 0) at P0 and the like, booked as the corner's source, the four summing to zero; a push is booked as the meeting's source, the electron by the push (`light` binds no momentum field, so the reversal books nothing); the world's momentum stays (0, 0, 0) when the pushes cancel | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1); [a free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2) ("The identity") |
+| Charge | -3 per electron quantum, the ledger's electron line -96, -192, -384; light 0 | [Wave-ray families](../../docs/SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) |
+| Dispersal | A corner with one ray of the layer available to the corner rule fires no rule: the ray crosses on its line off the square and walks to the open boundary, escaped | [Loop binding](../../docs/LOOP_BINDING.md#4-when-it-does-not-close) |
+| The group in the record | The extractor's reading with the recording: a group is closed when it reads one group on the four corners with content C over a window covering the last 32 ticks (four periods of the rate-1 ring), and dispersed at the first tick a ring ray is received off the ring's Nodes | [Ray viewer](../../tools/ray_viewer/README.md); [binding as a loop](../../docs/SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1) ("The reading of a group") |
+
+### Computed before the run
+
+The five computations of the register entry, from the code and the tables
+(the entry's "Computed" item has them in full):
+
+1. **The corner resets the register.** `_output` in
+   `src/event_universe/fields/ray_interactions.py` builds every output of a
+   meeting as `Ray(heading, (0, 0, 0), amount, phase, ...)` with `momentum`
+   at its default `None` (the register amount x heading) and an empty
+   walk. A push a ring ray carries into a corner is erased by the corner's
+   outputs; on the unit square, whose every edge is one Link, a push could
+   accumulate along one Link only and would be erased at every corner.
+2. **The declared order.** `_meet` fires the layer's rules in declared
+   order; the corner rule takes both electrons of a corner out of the
+   cycle; the turn rule takes one receiver (the electron in the lower slot:
+   the L ray at P0 and P2, the R ray at P1 and P3, the resident with the
+   lower heading index) and every light ray at the Node, in heading-index
+   order, returning each reversed. On the unit square every ring Node is a
+   corner, so in every cycle a ring ray is met by the first declared rule
+   and never by the second: under `corner_first` no push ever happens and
+   the record is the control's event for event; under `turn_first` at tick
+   2, the first tick with light at the corners, one electron per corner is
+   pushed and taken, the corner does not fire, both rays cross straight and
+   the ring is off its Nodes at tick 3. The coupling is admitted beside the
+   corner table (all nine worlds pass initialization) but cannot act beside
+   it at a corner, and there is no other Node on the ring.
+3. **The near field.** Per corner per interval, the light received, read
+   from 16-tick runs of the three controls made for this computation (the
+   two edge Ports first, then the other four):
+
+   | Tick | Content 32 (q = 1) | Content 64 (q = 2) | Content 128 (q = 4) |
+   | --- | --- | --- | --- |
+   | 2 to 3 | 2 (1 + 1; 0) | 4 (2 + 2; 0) | 8 (4 + 4; 0) |
+   | 4 | 2 | 4 | 14 (5 + 5; 1, 1, 1, 1) |
+   | 5 | 2 | 10 (3 + 3; 1, 1, 1, 1) | 16 (6 + 6; 1, 1, 1, 1) |
+   | 6 | 2 | 6 (3 + 3; 0) | 16 |
+   | 7 | 4 (1 + 1; 1, 1, 0, 0) | 10 | 20 (6 + 6; 2, 2, 2, 2) |
+   | 8 | 6 (2 + 2; 0, 0, 1, 1) | 8 (3 + 3; 1, 1, 0, 0) | 18 |
+   | 9 to 16 | 4, 4, 6, 6, 6, 2, 4, 6 | 10, 8, 12, 10, 12, 10, 10, 12 | 20, 20, 20, 20, 22, 22, 24, 24 |
+
+   From tick 2 the forward beam alone: two rays of amount q on the two edge
+   headings, the release of the neighbouring corners' departing rays; the
+   spread adds from tick 7, 5 and 4. The largest amount on the two Ports of
+   one axis in one interval by tick 16: 3, 5 and 10, against a = 4, 8 and
+   16.
+4. **The push per interval.** Were a push to act at a corner, the two edge
+   rays would push the receiver by +q x (their headings), (-q, -q, 0) at
+   P0, (+q, -q, 0) at P1, (+q, +q, 0) at P2, (-q, +q, 0) at P3, outward
+   along the diagonal, the four summing to zero. Against a register of a on
+   the ray's axis, q = a / 4 per edge ray and at most 3, 5 and 10 per
+   interval from the whole near field is below a: no interval's push flips
+   the dominant axis, the DDA keeps the line and banks the transverse
+   component toward a Link that would come after a / q = 4 intervals of the
+   same push, which no edge of one Link gives. Under `turn_first` the eight
+   pushes of tick 2 are, per corner, the receiver's register from a x
+   heading through the first edge ray's push to the second's: P0, the L ray
+   heading -X, (-a, 0, 0) -> (-a - q, 0, 0) -> (-a - q, -q, 0); P1, the R
+   ray heading +X, (a, 0, 0) -> (a + q, 0, 0) -> (a + q, -q, 0); P2, the L
+   ray heading +X, (a, 0, 0) -> (a + q, 0, 0) -> (a + q, q, 0); P3, the R
+   ray heading +Y, (0, a, 0) -> (-q, a, 0) -> (-q, a + q, 0); eight recoils
+   of amount q.
+5. **The prediction.** `control` closed at every content; `corner_first`
+   closed at every content with 0 pushes, the control's record event for
+   event; `turn_first` dispersed at tick 3 at every content, 8 pushes at
+   tick 2 and more off the ring, no group read. No content selected: no
+   ladder from this coupling on the unit square, for a structural reason,
+   one rule per ring ray per cycle.
+
+### Run and render
+
+```bash
+python examples/nature/e10_self_field/make_worlds.py
+for c in c32 c64 c128; do for v in control corner_first turn_first; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/e10_self_field/${c}_${v}.json'), Path('runs-e10/${c}_${v}'))"
+  PYTHONPATH=src python tools/ray_viewer/record_sidecar.py runs-e10/${c}_${v}
+  python tools/ray_viewer/extract.py runs-e10/${c}_${v} --sidecar runs-e10/${c}_${v}/ray-recording.json --label "E10: content ${c#c}, ${v}" --out runs-e10/${c}_${v}/runs.json
+done; done
+python examples/nature/e10_self_field/analyze.py runs-e10/c*_* --record examples/nature/e10_self_field/record.json
+```
+
+The records stay outside the tree; the register entry E10 carries the
+fingerprints and `record.json` the readings. No GIF was rendered.
 
 ## A5: Coulomb's law through the spreading field
 
