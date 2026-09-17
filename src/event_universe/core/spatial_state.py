@@ -73,8 +73,25 @@ EventShares = tuple[int, int, int, int, int, int]
 NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # The Detector bit carried by a ray: no Detector event, or a Detector event
 # that drew 0 or 1. Every created ray carries 0; a marked Node sets 1 or 2 on
-# arrival (detector_draw) and no rule reads it.
+# arrival (detector_draw). The order of the three values is the order of the
+# inheritance below: 1 over 0 over none.
 DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
+# The Detector's bit as a property of the ray (Highlights 5.4, 2026-09-17,
+# detector-bit-property-v1): the bit travels with the ray like charge. A coupling
+# reads it at a meeting as the read-only ray property `detector`; the outputs of
+# every meeting a marked ray takes part in inherit it, the highest bit of the
+# inputs unless the rule declares `bit` (inherited_bit); and a marked Node reads
+# it: a ray carrying 1 is already realized and passes without a draw, a ray
+# carrying 0 is a transmission and is never drawn, only a ray carrying no bit is
+# drawn, each by the mark's declared coupling (on_bit_1, on_bit_0), pass being
+# the default and draw the draw of detector-mark-v1 on that arrival.
+DETECTOR_BIT_PROPERTY = "detector-bit-property-v1"
+# What a mark declares for a ray carrying a bit: pass it without a draw, or draw.
+BIT_PASS, BIT_DRAW = 0, 1
+BIT_COUPLINGS = ("pass", "draw")
+# What a meeting's outputs inherit: the highest of the inputs' bits (the default),
+# no bit, or the bit of input i (a nonnegative index, the participant's role).
+BIT_HIGHEST, BIT_NONE = -1, -2
 # Layers of event spacetime (Highlights 5.1): a layer is a set of families that
 # couple, and a meeting exists only inside a layer. Layers are derived, never
 # declared: the connected components of the ray fields over the participants
@@ -154,7 +171,12 @@ class DetectorMark:
     """A Node's Detector bit with its setting and ticket seed: bounded Node metadata.
 
     The setting is the pass share of the draw range, an explicit rational with no
-    default; the seed starts the mark's own ticket stream. Nothing here is a
+    default; the seed starts the mark's own ticket stream. What the mark does with
+    a ray that already carries a bit is its declared coupling
+    (detector-bit-property-v1): `on_bit_1` and `on_bit_0` are BIT_PASS (the
+    default: the ray passes without a draw) or BIT_DRAW (the draw of
+    detector-mark-v1 on that arrival); `bit_keys` is 1 when the world file wrote
+    either key, read by the runner's identity record alone. Nothing here is a
     record, stock or a reading of any ray.
     """
 
@@ -162,6 +184,9 @@ class DetectorMark:
     pass_numerator: int
     pass_denominator: int
     seed: int
+    on_bit_1: int = BIT_PASS
+    on_bit_0: int = BIT_PASS
+    bit_keys: int = 0
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -174,6 +199,10 @@ class DetectorMark:
             raise ValueError("a Detector setting must be a rational from 0 through 1")
         if type(self.seed) is not int or not 0 <= self.seed < TICKET_MODULUS:
             raise ValueError("a Detector seed must stay below the ticket modulus")
+        if any(value not in (BIT_PASS, BIT_DRAW) for value in (self.on_bit_1, self.on_bit_0)):
+            raise ValueError("a Detector mark meets a carried bit by pass or draw")
+        if self.bit_keys not in (0, 1):
+            raise ValueError("a Detector mark declares its bit keys as 0 or 1")
 
 
 @dataclass(frozen=True, slots=True)
@@ -283,8 +312,20 @@ RAY_PROPERTIES = (
     # that family's charge per quantum, read-only views for a coupling at a meeting.
     FieldDefinition("family", 1, "spatial field index", False, False),
     FieldDefinition("charge", 1, "charge per quantum", True, False),
+    # detector-bit-property-v1: the Detector bit the ray carries, as the engine
+    # stores it (0 none, 1 a draw of 0, 2 a draw of 1), a read-only view.
+    FieldDefinition("detector", 1, "Detector bit", False, False),
 )
-RAY_AMOUNT, RAY_HEADING, RAY_PHASE, RAY_ADVANCE, RAY_DELAY, RAY_FAMILY, RAY_CHARGE = range(7)
+(
+    RAY_AMOUNT,
+    RAY_HEADING,
+    RAY_PHASE,
+    RAY_ADVANCE,
+    RAY_DELAY,
+    RAY_FAMILY,
+    RAY_CHARGE,
+    RAY_DETECTOR,
+) = range(8)
 # A ray interaction may assign heading, phase and delay; the rest is read-only.
 RAY_WRITABLE = frozenset((RAY_HEADING, RAY_PHASE, RAY_DELAY))
 RAY_VIEW_COMPONENTS = sum(field.components for field in RAY_PROPERTIES)
@@ -1199,10 +1240,14 @@ def event_stamp(rays: Rays, headings: tuple[Heading, ...]) -> tuple[int, EventSh
     )
 
 
-def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
+def stamp_event(rays: Rays, headings: tuple[Heading, ...], detector: int = DETECTOR_NONE) -> Rays:
     """Make the given rays the events of one interaction: fresh outbound trajectories
-    with no steps walked, each carrying the mask and shares of that interaction. A
-    fresh event carries no Detector bit; a marked Node sets it on arrival."""
+    with no steps walked, each carrying the mask and shares of that interaction and
+    the Detector bit the event's outputs inherit (detector-bit-property-v1): none
+    for an emission, the bit the inputs hand down for a meeting (inherited_bit) and
+    the returned ray's bit for an inverse split."""
+    if detector not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1):
+        raise ValueError("an event stamps the Detector bit 0 (none), 1 (bit 0) or 2 (bit 1)")
     mask, shares = event_stamp(rays, headings)
     return tuple(
         replace(
@@ -1211,10 +1256,27 @@ def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
             outbound=1,
             event_ports=mask,
             event_shares=shares,
-            detector=DETECTOR_NONE,
+            detector=detector,
         )
         for ray in rays
     )
+
+
+def inherited_bit(bits: tuple[int, ...], rule: int = BIT_HIGHEST) -> int:
+    """The Detector bit the outputs of one meeting inherit from its inputs
+    (detector-bit-property-v1, Highlights 5.4): by default the highest bit among
+    the inputs in the order 1 over 0 over none, which is the order of the stored
+    values; BIT_NONE stamps no bit; a nonnegative rule is the index of the input
+    whose bit the outputs carry."""
+    if any(bit not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1) for bit in bits):
+        raise ValueError("a meeting inherits Detector bits 0 (none), 1 (bit 0) or 2 (bit 1)")
+    if rule == BIT_HIGHEST:
+        return max(bits, default=DETECTOR_NONE)
+    if rule == BIT_NONE:
+        return DETECTOR_NONE
+    if type(rule) is not int or not 0 <= rule < len(bits):
+        raise ValueError("a meeting's bit rule names an input by its role index")
+    return bits[rule]
 
 
 def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
@@ -1306,8 +1368,8 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
         for port, amount in zip(ports, amounts, strict=True)
         if amount
     )
-    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays))
-    return tuple(replace(r, detector=ray.detector) for r in stamped), ports
+    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays), ray.detector)
+    return stamped, ports
 
 
 RayMergeKey = tuple[
@@ -1586,6 +1648,16 @@ def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
         mark.pass_numerator * TICKET_MODULUS
     )
     return state, int(passes)
+
+
+def detector_bit_property_declared(initial: InitialState) -> bool:
+    """Whether the world declares the rule of detector-bit-property-v1 anywhere: a mark
+    that writes `on_bit_1` or `on_bit_0`, or a ray interaction that declares `bit`.
+    The runner records the identity when it does; a world that declares neither
+    runs the same rule with its defaults and its record is what it was."""
+    return any(mark.bit_keys for mark in initial.detectors) or any(
+        rule.bit_declared for rule in initial.ray_interactions
+    )
 
 
 def validate_detector_marks(initial: InitialState) -> None:

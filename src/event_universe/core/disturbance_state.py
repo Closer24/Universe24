@@ -226,6 +226,12 @@ class InteractionDefinition:
     # Node that holds its bound group: every arrival there waits this many intervals.
     lags: tuple[LagTable, ...] = ()
     ray_delay: int = 0
+    # The Detector bit the outputs of a meeting of rays inherit
+    # (detector-bit-property-v1, `inherited_bit` in spatial_state): -1 the highest
+    # bit of the inputs (the default), -2 none, or the index of the input whose
+    # bit they carry; `bit_declared` when the world file wrote the `bit` key.
+    bit: int = -1
+    bit_declared: bool = False
 
 
 @dataclass(frozen=True, slots=True)

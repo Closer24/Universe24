@@ -6,6 +6,52 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The Detector's bit as a property on 2026-09-17 (`detector-bit-property-v1`)
+
+Issue #169, feature 2b ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1),
+[the bit read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1);
+Highlights 5.4, model owner, 2026-09-17):
+
+- A marked Node reads the bit a ray carries before it draws: a ray carrying
+  1 passes without a draw and a ray carrying 0 (a transmission) is never
+  drawn, each recorded as a `detector_pass` event (position, tick, Port,
+  family, amount, `bit`), and only a ray carrying no bit is drawn. A mark
+  that wants the draw of `detector-mark-v1` on such arrivals writes
+  `on_bit_1` or `on_bit_0` as `"draw"` on its `detectors[]` entry; the
+  default is `"pass"`, and any other value is rejected. `DetectorMark`
+  gained `on_bit_1`, `on_bit_0` (`BIT_PASS` 0, `BIT_DRAW` 1) and `bit_keys`,
+  all defaulted, so a typed mark of three or four arguments parses and
+  compares as before.
+- The outputs of every ray interaction that fires, with outputs or with
+  assignments, inherit the Detector bit of its inputs: the highest by the
+  order 1 over 0 over none, unless the rule declares `bit` (`"highest"`,
+  `"none"` or `{"of": i}`); `stamp_event` takes the bit as a third argument
+  and `inherited_bit` is the rule. Before, a meeting's outputs carried no
+  bit; a world in which a marked ray met another ray changes there. An
+  external body's coupled token inherits the bit and is stripped as before;
+  a release carries none.
+- `RAY_PROPERTIES` gained the read-only view `detector` (0 none, 1 a draw
+  of 0, 2 a draw of 1), readable by a `when` guard or an invariant as
+  `charge` is; an assignment to it is rejected. A world with ray
+  interactions reads one more view component per participant (`read` cost
+  10 instead of 9, the cost line of its `spatial_cycle` records and its
+  `computation` report accordingly), as `wave-ray-family-v1` added two; the
+  pin of `RAY_PROPERTIES` in `test_wave_ray_families.py` lists it.
+- The runner records `detector_bit_property: "detector-bit-property-v1"`
+  when a mark writes either coupling key or a rule writes `bit`; a world
+  that declares neither is recorded as before, and its `events.jsonl` and
+  `run.json` are byte for byte what they were unless a marked ray reaches a
+  second mark or meets another ray (checked on the worlds of
+  `test_detector_mark.py`, `test_detector_return.py` and
+  `test_inverse_split.py`).
+- `tools/ray_viewer/extract.py` reads `detector_pass` as the event kind
+  `pass` (a marker like a click, in the captions) and carries each ray's
+  `bit` (`null`, 0 or 1) in `runs.json`; `style.json` and the page's default
+  style gained the kind.
+- `catalog/nature.json`: the Detector's couplings `on_bit_1` and `on_bit_0`
+  are decided, with their world keys and the engine identity, and
+  `docs/CATALOG.md` lists two undecided entries fewer (29).
+
 ## Ray-event audits on 2026-09-17 (`ray-event-audit-v1`)
 
 Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),

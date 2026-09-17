@@ -394,31 +394,33 @@
   "apparatus": {
     "detector": {
       "world_key": "detectors",
-      "engine": {"identity": "detector-mark-v1, with detector-return-v1 and inverse-split-v1", "landed": true},
+      "engine": {"identity": "detector-mark-v1, with detector-return-v1, inverse-split-v1 and detector-bit-property-v1", "landed": true},
       "declaration": {
         "position": "the marked Node, one mark per position",
         "setting": "[n, d], the pass share of the draw, 1 <= d, 0 <= n <= d; 1 is a source that always passes, 0 returns every arrival",
-        "seed": "the start of the mark's own ticket stream"
+        "seed": "the start of the mark's own ticket stream",
+        "on_bit_1": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 1 (the coupling on_bit_1 below)",
+        "on_bit_0": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 0 (the coupling on_bit_0 below)"
       },
-      "does": "For each transfer that arrives it draws 1 or 0, the only lottery in the model, once per arrival and independently for up to six in one interval. 1: the ray passes and that pass is the measurement, the click its record. 0: the ray is returned on its line unchanged, back the steps it has made, to its event Node, where it performs the inverse split by the world's return_mode (siblings, straight, annul). Its draw reads nothing else of the ray and obeys no table (Highlights 3.19, 5.4). Since 2026-09-17 (Highlights 5.4) it reads the bit a ray already carries: a ray carrying 1 passes without a draw, a ray carrying 0 is a transmission and is never drawn, and only a ray carrying no bit is drawn; how it meets each bit is its declared coupling below, with this as the default, feature 2b after feature 10, and until that lands the engine draws on every arrival.",
+      "does": "For each transfer that arrives carrying no bit it draws 1 or 0, the only lottery in the model, once per arrival and independently for up to six in one interval. 1: the ray passes and that pass is the measurement, the click its record. 0: the ray is returned on its line unchanged, back the steps it has made, to its event Node, where it performs the inverse split by the world's return_mode (siblings, straight, annul). Its draw reads nothing else of the ray and obeys no table (Highlights 3.19, 5.4). It reads the bit a ray already carries (Highlights 5.4, 2026-09-17; detector-bit-property-v1, feature 2b): a ray carrying 1 passes without a draw, a ray carrying 0 is a transmission and is never drawn, and only a ray carrying no bit is drawn; how it meets each bit is its declared coupling below, pass without a draw by default and draw on request, the pass recorded as a detector_pass event. The bit is a property of the ray like charge: a coupling reads it as the ray property detector (0 none, 1 a draw of 0, 2 a draw of 1), and the outputs of every meeting a marked ray takes part in inherit it, the highest bit of the inputs unless the coupling declares bit (highest, none, or of an input).",
       "couplings": {
         "on_bit_1": {
-          "status": "open",
-          "world_key": "undecided",
-          "engine": {"identity": "feature 2b of issue #169, the Detector reads the bit, after feature 10", "landed": false},
-          "decided_by": "feature 2b",
+          "status": "decided",
+          "world_key": "on_bit_1",
+          "engine": {"identity": "detector-bit-property-v1", "landed": true},
           "reads": {"bit": 1},
+          "values": {"pass": "the ray passes without a draw and a detector_pass event records it (the default)", "draw": "the draw of detector-mark-v1 on that arrival, as for a ray carrying no bit"},
           "default": "pass without a draw",
-          "note": "What a marked Node does with a ray carrying 1 (Highlights 5.4, model owner, 2026-09-17): the ray is already realized and passes without a draw, as a measurement repeated in the same basis repeats its result, and it enters the declared coupling or continues on its line exactly as a pass does; the key by which a mark declares another behaviour is undecided until feature 2b lands, and the default is this entry."
+          "note": "What a marked Node does with a ray carrying 1 (Highlights 5.4, model owner, 2026-09-17; landed 2026-09-17 as feature 2b of issue #169): the ray is already realized and passes without a draw, as a measurement repeated in the same basis repeats its result, and it enters the declared coupling or continues on its line exactly as a pass does; a mark that wants the draw of detector-mark-v1 on every arrival writes on_bit_1 draw on its detectors[] entry."
         },
         "on_bit_0": {
-          "status": "open",
-          "world_key": "undecided",
-          "engine": {"identity": "feature 2b of issue #169, the Detector reads the bit, after feature 10", "landed": false},
-          "decided_by": "feature 2b",
+          "status": "decided",
+          "world_key": "on_bit_0",
+          "engine": {"identity": "detector-bit-property-v1", "landed": true},
           "reads": {"bit": 0},
+          "values": {"pass": "the ray passes without a draw and a detector_pass event records it (the default)", "draw": "the draw of detector-mark-v1 on that arrival, as for a ray carrying no bit"},
           "default": "transmission, no draw",
-          "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; the key by which a mark declares another behaviour is undecided until feature 2b lands, and the default is this entry. A ray carrying no bit is drawn as the does above says."
+          "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17; landed 2026-09-17 as feature 2b of issue #169): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; a mark that wants the draw writes on_bit_0 draw. A ray carrying no bit is drawn as the does above says, and a ray on its walk back is not an arrival and is never drawn (detector-return-v1)."
         }
       },
       "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its mark's setting is its decay ratio (weak_conversion). A passive Recorder or Renderer is not a Detector."

@@ -53,6 +53,7 @@
       "deflection": "#f5d76e",
       "conversion": "#f5d76e",
       "click": "#ff7a59",
+      "pass": "#ffc27a",
       "return": "#c58cff",
       "arrival": "#c58cff",
       "split": "#c58cff",
@@ -107,6 +108,7 @@
       "deflection",
       "conversion",
       "click",
+      "pass",
       "return",
       "arrival",
       "split"
@@ -117,6 +119,7 @@
       "deflection": "ring",
       "conversion": "ring",
       "click": "ring",
+      "pass": "ring",
       "return": "ring",
       "arrival": "ring",
       "split": "ring",
@@ -167,6 +170,7 @@
       "deflection",
       "conversion",
       "click",
+      "pass",
       "return",
       "arrival",
       "split"

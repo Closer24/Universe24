@@ -372,7 +372,13 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert isinstance(item["declaration"], dict) and item["declaration"], name
             assert type(item["engine"]["landed"]) is bool, name
         assert set(apparatus) == {"detector", "external_body"}
-        assert set(apparatus["detector"]["declaration"]) == {"position", "setting", "seed"}
+        assert set(apparatus["detector"]["declaration"]) == {
+            "position",
+            "setting",
+            "seed",
+            "on_bit_1",
+            "on_bit_0",
+        }
         assert set(apparatus["external_body"]["couplings"]) == external
         assert apparatus["external_body"]["default_coupling"] in external
         assert set(apparatus["external_body"]["declaration"]) == {
@@ -389,17 +395,20 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
-        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two open couplings
-        # on the bit a ray carries, decided by feature 2b, with the decided default.
+        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two couplings on
+        # the bit a ray carries, decided and landed by feature 2b on 2026-09-17
+        # (detector-bit-property-v1), each with its world key on the mark and the
+        # values pass (the default) and draw.
         bits = apparatus["detector"]["couplings"]
         assert set(bits) == {"on_bit_1", "on_bit_0"}
         for name, entry in bits.items():
-            assert (entry["status"], entry["world_key"], entry["decided_by"]) == (
-                "open",
-                UNDECIDED,
-                "feature 2b",
+            assert (entry["status"], entry["world_key"], entry["engine"]) == (
+                "decided",
+                name,
+                {"identity": "detector-bit-property-v1", "landed": True},
             ), name
-            assert entry["engine"]["landed"] is False, name
+            assert set(entry["values"]) == {"pass", "draw"} and "decided_by" not in entry, name
+            assert not undecided(entry), name
         assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
             {"bit": 1},
             "pass without a draw",
@@ -432,7 +441,8 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        assert len(found) == 31
+        # 29 since 2026-09-17: feature 2b decided the two couplings of the Detector.
+        assert len(found) == 29
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
@@ -445,7 +455,6 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A12",
             "hypothesis 12",
             "hypothesis 13",
-            "feature 2b",
             "feature 8b",
             "feature 12",
         }

@@ -278,6 +278,11 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert all(e["detail"]["port"] == 1 and e["detail"]["bit"] == 1 for e in clicks)
     quanta_click = next(e for e in clicks if e["detail"]["family"] == "quanta")
     assert quanta_click["in"] == [plus["id"]]
+    # Each ray carries its Detector bit (detector-bit-property-v1, 2026-09-17): the
+    # +X ray realized by the click at (4,1,1), the others none; no pass without a
+    # draw in this world, since no ray carrying a bit reaches a second mark.
+    assert [rays[0]["bit"], rays[1]["bit"], plus["bit"], minus["bit"]] == [None, None, 1, None]
+    assert not any(e["kind"] == "pass" for e in events)
     escapes = [e for e in matter if e["kind"] == "escape"]
     assert escapes[0]["in"] == [minus["id"]] and escapes[1]["in"] == [plus["id"]]
     assert run["detectors"] == [{"pos": [4, 1, 1], "setting": [1, 1], "seed": 0}]
