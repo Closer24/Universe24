@@ -319,10 +319,14 @@ states "exactly" and means integer equality at every tick.
   matter's message about itself): the sign of the releasing charge travels
   on the field ray as a visible property (`source_sign`, feature 12), never
   in the phase, and the attraction of opposite charges (`opposite_charge`)
-  closes with it; runnable after feature 8b (`ray-momentum-turn-v1`,
-  2026-09-17), which turns a free ray gradually by the momentum of every
-  field ray it meets under a coupling's `momentum_table`, so Δp(b) is a
-  register the audit reads and not a count of whole Ports.
+  closes with it. Under Highlights 5.5 (2026-09-17) the release ratio and
+  the strength table are inputs until hypothesis 17 says what fixes them:
+  this entry confronts the form of Coulomb's law, the exponent -1 in b, and
+  not the value of the coupling. Runnable after feature 8b
+  (`ray-momentum-turn-v1`, 2026-09-17), which turns a free ray gradually by
+  the momentum of every field ray it meets under a coupling's
+  `momentum_table`, so Δp(b) is a register the audit reads and not a count
+  of whole Ports.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
@@ -401,17 +405,21 @@ states "exactly" and means integer equality at every tick.
   its source, so the diagonal passes meet no field and the clause comparing
   the axis with the diagonal measures nothing; with it the field fills the
   board and the lattice's anisotropy is the residue this entry measures. The
-  N-scan part of the criterion ran on 2026-09-17 as
-  the acceptance test of feature 8 (`test_ray_binding.py`, a test, not this
-  experiment): a bound group of mass N / 4 phase steps per interval, b = 4,
-  the delay table `[4, 4, 4, 4, 4, 4]` per unit of field amount, gave
-  G_eff · N² = 64 exactly for N = 2^8, 2^10, 2^12 and 2^16, by the
-  construction of the delay in phase steps of a content-fixed field amount
+  N-scan part of the criterion ran on 2026-09-17 as the acceptance test of
+  feature 8 (`test_ray_binding.py`, a test, not this experiment): a bound
+  group of mass N / 4 phase steps per interval, b = 4, the delay table `[4,
+  4, 4, 4, 4, 4]` per unit of field amount, gave G_eff · N² = 64 exactly for
+  N = 2^8, 2^10, 2^12 and 2^16, by the construction of the delay in phase
+  steps of a content-fixed field amount
   ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
   The five b, the exponent, the linearity in M and the external body remain
-  to be run here; runnable after feature 8b (`ray-momentum-turn-v1`,
-  2026-09-17), the gradual turn of a free ray by a coupling's
-  `momentum_table`, for the deflection measured as a momentum register.
+  to be run here. Under Highlights 5.5 (2026-09-17) the lag modulus N and
+  the mass field's release are inputs until hypotheses 16 and 17 say what
+  fixes them: this entry confronts the forms, the exponent -1 in b and G_eff
+  · N² constant, and not the value of G. Runnable after feature 8b
+  (`ray-momentum-turn-v1`, 2026-09-17), the gradual turn of a free ray by a
+  coupling's `momentum_table`, for the deflection measured as a momentum
+  register.
 
 ### A7. Newtonian attraction between two bound groups
 
@@ -1276,3 +1284,36 @@ sign rule, and its other couplings are catalog entries.
   outcome: one mark clicks in both records, eighteen times before spreading
   and twelve times with the split table, the single-quantum finding; the
   records stay outside the tree.
+
+### E7. The string: gluon loops between two quarks (after feature 14)
+
+- **Claim.** Highlights 3.26 in the language of binding as a loop (3.4,
+  model owner, 2026-09-17): the strong field differs from light by one
+  catalog line, its rays couple to each other (`gluon_gluon_binding`), so
+  the field between two quarks closes into loops of gluon rays along the
+  line between them, a string whose content, and so whose mass, grows with
+  the distance; only colour-neutral patterns close a loop, confinement as a
+  closure condition, and a string stretched to the content at which a new
+  loop closes with a quark and an antiquark breaks into two hadrons,
+  hadronization. Nothing is inserted: hypothesis 13 says whether the two
+  catalog lines produce it.
+- **Features.** 1, 5, 6, 9, 10, 12, 14, with the quark families, colour and
+  the couplings `quark_binding` and `gluon_gluon_binding` as declared tables
+  (catalog work after feature 10, hypothesis 13).
+- **Run.** Two quark rays of declared colours at a declared separation on a
+  small open board, their gluon field released and spreading by its family's
+  table, the field-to-field table declared before the run; the content held
+  between them read against the separation d = 2, 4, 8 and 16 Links; the
+  pull, one quark stepped away one Link per k intervals until the held
+  content reaches the content at which a new loop closes; the control, two
+  charges with light in place of the gluon under `electron_field_turn`.
+- **Shows (to be pinned before the run).** The content between the quarks
+  growing with d while the field off the line falls to nothing beyond a
+  declared distance, a string, against the control's 1/r; the loop closing
+  for colour-neutral pairs only; the string breaking into two colour-neutral
+  groups at the declared content, no quark ray alone on a straight line at
+  any tick; every ledger line exact.
+- **Status.** planned, hypothesis 13, after feature 14 (binding as a loop)
+  and the strong catalog entries; its outcomes are those of hypothesis 13:
+  the content grows and no lone quark appears, or it falls off as for a
+  charge, or the pattern does not close.

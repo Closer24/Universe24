@@ -2281,9 +2281,9 @@ first run:
   feature 2b, their engine not landed, their defaults pass without a draw
   and transmission without a draw and their alternative `draw`
   (Highlights 5.4, 2026-09-17); both apparatus kinds landed;
-- `undecided`: 30 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
-  A10, A12, hypothesis 12, hypothesis 13, feature 2b, feature 8b, read from
-  the
+- `undecided`: 28 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  A10, A12, hypothesis 12, hypothesis 13, hypothesis 16, hypothesis 17,
+  feature 8b, read from the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings
   of the hypotheses page and the `feature <n>` names of the ray-event model;
   the table of `CATALOG.md` equal to the file, path for path and decider for

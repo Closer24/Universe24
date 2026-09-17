@@ -1002,17 +1002,17 @@ Design done on 2026-09-17 ([loop binding](LOOP_BINDING.md),
 as integer equalities, the unit-square electron as the world
 `examples/nature/ring.json` with its dispersing control `ring_open.json`,
 register entry E5, and the expected integers of `tests/test_loop_binding.py`
-pinned before any run); implementation after feature 8b, features 12, 8c
-and 2b having landed on 2026-09-17. A ray never stops, and "bound"
-does not mean "resident": a bound group is a set of rays whose meetings,
-under the ordinary coupling table, reproduce the rays that entered them: the
-outputs leave, walk their Links, meet again, and the meeting gives the same
-amounts, the same phases modulo the circle and the same headings, so the
-pattern repeats forever; a pattern whose meeting does not close disperses.
-There is no binding rule: a bound group is a fixed point of the ordinary
-meeting table over a loop, the only declared thing is the table, and step 3
-of the Node's law is untouched, since the loop uses the ordinary meeting. On
-the cubic lattice the smallest loop is a unit square of four Nodes with rays
+pinned before any run); implementation after feature 8b, features 12, 8c and
+2b having landed on 2026-09-17. A ray never stops, and "bound" does not mean
+"resident": a bound group is a set of rays whose meetings, under the
+ordinary coupling table, reproduce the rays that entered them: the outputs
+leave, walk their Links, meet again, and the meeting gives the same amounts,
+the same phases modulo the circle and the same headings, so the pattern
+repeats forever; a pattern whose meeting does not close disperses. There is
+no binding rule: a bound group is a fixed point of the ordinary meeting
+table over a loop, the only declared thing is the table, and step 3 of the
+Node's law is untouched, since the loop uses the ordinary meeting. On the
+cubic lattice the smallest loop is a unit square of four Nodes with rays
 circulating both ways, each corner meeting every interval two rays that
 leave through each other's Ports; a group lives on a ring of Nodes, not at
 one Node, its size is the ring, its clock is the period of the loop, its
@@ -1023,17 +1023,20 @@ is the set of contents and phases that close a loop under the table, which
 experiment A10 counts once this feature lands; the held-ray binding of
 feature 8 and the register-driven motion of feature 8c are its interim
 forms, and a binding coupling of the catalog is then an ordinary meeting
-table whose loop closes. What the design found by following the tables:
-the corner table of the unit square is an outputs rule of today's schema
-(each input's amount and phase through the Port the other came in by), the
-phase closes in one circuit when `L r = 0 (mod N)` (`4 r = 0 (mod N)` on
-the unit square), the phase difference at a corner is a constant of the
-motion for one family so no rate is read at any meeting of the ring, the
-Port-form corner holds every content and every rate and so gives no ladder
-by itself, the ladder needs the ring's turn to be produced by the group's
-own field (open), and the engine of `main` already holds the ring under the
-Port form, so the implementation begins with the removal of the interim
-forms and the record's reading of a group.
+table whose loop closes. What the design found by following the tables: the
+corner table of the unit square is an outputs rule of today's schema (each
+input's amount and phase through the Port the other came in by), the phase
+closes in one circuit when `L r = 0 (mod N)` (`4 r = 0 (mod N)` on the unit
+square), the phase difference at a corner is a constant of the motion for
+one family so no rate is read at any meeting of the ring, the Port-form
+corner holds every content and every rate and so gives no ladder by itself,
+the ladder needs the ring's turn to be produced by the group's own field
+(open), and the engine of `main` already holds the ring under the Port form,
+so the implementation begins with the removal of the interim forms and the
+record's reading of a group. The strong loops of Highlights 3.26, a string
+of gluon rays between quarks whose colour-neutral closure is confinement,
+are this feature's reading of the gluon couplings, hypothesis 13's research
+run after it.
 
 **The strong interaction, catalog work after feature 10.** Quark families,
 colour a property with three values (a family property like charge, feature
@@ -1041,9 +1044,19 @@ colour a property with three values (a family property like charge, feature
 the binding of three quarks a binding coupling (feature 8, Highlights 3.4),
 and one more declared coupling, the quark's field rays binding to each
 other, from which the short range and the growth with distance are expected.
-Whether that yields confinement is
-[hypothesis 13](HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other),
-a research question for a run, not an engine decision.
+Whether that yields confinement is [hypothesis
+13](HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other),
+a research question for a run, not an engine decision. In the language of
+binding as a loop (feature 14; Highlights 3.26, 2026-09-17): the strong
+field differs from light by one catalog line, its rays couple to each other,
+so the field between quarks does not spread as a sphere but closes into
+loops of gluon rays along the line between them, a string whose content, and
+so whose mass, grows with the distance; only colour-neutral patterns close a
+loop, which is confinement as a closure condition; and a string stretched to
+the content at which a new loop closes with a quark and an antiquark breaks
+into two hadrons, which is hadronization; none of it inserted, hypothesis 13
+saying whether the two catalog lines produce it in a research run after
+feature 14 (E7 of the register).
 
 **The weak interaction and decay, catalog work after feature 10.** A change
 of family: an N-to-M conversion at an event (feature 6) with its declared

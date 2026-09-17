@@ -37,9 +37,9 @@
   "lag_bits": {
     "status": "open",
     "world_key": "undecided",
-    "engine": {"identity": "feature 8b of issue #169: the turn landed as the momentum register (ray-momentum-turn-v1, 2026-09-17); the lag's own modulus for the delay is open", "landed": false},
-    "decided_by": "feature 8b",
-    "note": "The width of the lag register (Highlights 3.28, 2026-09-17): the delay a field ray lays on the ray it meets is carried in a lag register with its own declared modulus per family, spent as one interval of wait when it reaches that modulus. That modulus, not the phase circle, is the N of hypothesis 14 on the delay, of any width because it enters no phase sum; a world declares it per family as it declares phase_bits, the runs of hypothesis 14 and A6 declaring their four N on it. The transverse part of the lag, the turn, is since feature 8b the momentum register of the ray (ray-momentum-turn-v1): integers of any width walked by the DDA, a resolution of one part in the ray's amount and no modulus, exactly as a heading is carried with a resolution of one part in 2^30 through six Ports. The engine counts the delay in phase steps (ray-binding-v1), so the two moduli are one for the delay and those runs set them equal; the world key stays open under feature 8b until a run needs a finer delay."
+    "engine": {"identity": "feature 8b of issue #169: the turn landed as the momentum register (ray-momentum-turn-v1, 2026-09-17); the lag's own modulus for the delay is open, after feature 10", "landed": false},
+    "decided_by": ["feature 8b", "hypothesis 16"],
+    "note": "The width of the lag register (Highlights 3.28, 2026-09-17): the delay a field ray lays on the ray it meets is carried in a lag register with its own declared modulus per family, spent as one interval of wait when it reaches that modulus. That modulus, not the phase circle, is the N of hypothesis 14 on the delay, of any width because it enters no phase sum; a world declares it per family as it declares phase_bits, the runs of hypothesis 14 and A6 declaring their four N on it. The transverse part of the lag, the turn, is since feature 8b the momentum register of the ray (ray-momentum-turn-v1): integers of any width walked by the DDA, a resolution of one part in the ray's amount and no modulus, exactly as a heading is carried with a resolution of one part in 2^30 through six Ports. The engine counts the delay in phase steps (ray-binding-v1), so the two moduli are one for the delay and those runs set them equal; the world key stays open under feature 8b until a run needs a finer delay. What fixes N, the top of the mass ladder, the resolution the spreading field needs, or nothing, is hypothesis 16 (Highlights 5.5, 2026-09-17); until it is answered N is an input and the model predicts the form 1/N^2, not the value of G."
   },
   "rays": {
     "light": {
@@ -133,8 +133,8 @@
       "phase_bits": "default",
       "field": [],
       "colour": "undecided",
-      "decided_by": {"release": "hypothesis 13", "colour": "hypothesis 13"},
-      "note": "The quark's own field in ray form (Highlights 3.26, 3.5), released by up and down as light is by the electron. Its release ratio, and how a gluon ray carries its releaser's colour (a property of the ray, or one field family per colour; the engine names one family per field_of today), are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding."
+      "decided_by": {"release": ["hypothesis 13", "hypothesis 17"], "colour": "hypothesis 13"},
+      "note": "The quark's own field in ray form (Highlights 3.26, 3.5), released by up and down as light is by the electron. Its release ratio, and how a gluon ray carries its releaser's colour (a property of the ray, or one field family per colour; the engine names one family per field_of today), are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding. What fixes a release ratio, the symmetry of Highlights 3.27 and the path counting of 3.5, or nothing, is hypothesis 17 (Highlights 5.5, 2026-09-17); until it is answered the ratio is an input and the model predicts the form 1/r^2, not the value of the coupling."
     },
     "proton": {
       "kind": "bound_group",
@@ -172,8 +172,8 @@
       "charge": 0,
       "phase_bits": "default",
       "field": [],
-      "decided_by": {"release": "A6"},
-      "note": "The computation field (Highlights 3.28): the information that a Node is heavy, spreading in ray form in all directions under the one field rule of 3.5, released by every massive ray and, from its retained content, by every bound group and every external body. Gravity is bending by delay: where a mass_field ray meets a ray whose coupling responds (mass_field_delay) the met ray's output clock grows and the field ray returns reversed with the opposite momentum. Its release ratio is A6's declaration, written before its run, and A6 pins that G_eff x N^2 is constant over the phase width (hypothesis 14). The engine names one family per field_of, so a world declares one mass field per massive family it holds; an external body radiates the field declared field_of its family."
+      "decided_by": {"release": ["A6", "hypothesis 17"]},
+      "note": "The computation field (Highlights 3.28): the information that a Node is heavy, spreading in ray form in all directions under the one field rule of 3.5, released by every massive ray and, from its retained content, by every bound group and every external body. Gravity is bending by delay: where a mass_field ray meets a ray whose coupling responds (mass_field_delay) the met ray's output clock grows and the field ray returns reversed with the opposite momentum. Its release ratio is A6's declaration, written before its run, and A6 pins that G_eff x N^2 is constant over the phase width (hypothesis 14). The engine names one family per field_of, so a world declares one mass field per massive family it holds; an external body radiates the field declared field_of its family. What fixes a release ratio, the symmetry of Highlights 3.27 and the path counting of 3.5, or nothing, is hypothesis 17 (Highlights 5.5, 2026-09-17); until it is answered the ratio is an input and the model predicts the form 1/r^2, not the value of the coupling."
     }
   },
   "couplings": {
@@ -267,7 +267,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it. Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), an ordinary meeting table whose loop closes."
+      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it. Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), an ordinary meeting table whose loop closes. In the language of binding as a loop (Highlights 3.26, 2026-09-17): the strong field differs from light by one catalog line, its rays couple to each other, so the field between quarks does not spread as a sphere but closes into loops of gluon rays along the line between them, a string whose content, and so whose mass, grows with the distance; only colour-neutral patterns close a loop, which is confinement as a closure condition; and a string stretched to the content at which a new loop closes with a quark and an antiquark breaks into two hadrons, which is hadronization; nothing inserted, hypothesis 13 in the research run E7 after feature 14."
     },
     "weak_conversion": {
       "status": "open",

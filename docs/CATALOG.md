@@ -51,7 +51,7 @@ rule already takes. A test pins the file's contract
 | m₀, the rest rate | One phase step per interval, the rest rate of the electron ([hypothesis 12](HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding), hypothesis 14); every rest rate is an integer multiple of it and light is 0; a rest rate is the ray's mass as a clock (Highlights 3.3) | `kerengonen.phase_advance` |
 | e/3, the charge unit 3 | Every charge is an integer number of thirds of the elementary charge e, so that quarks are integers: up +2, down −1, electron −3, positron +3, proton +3, neutron 0; `charge × amount` summed over a meeting's rays is the invariant the engine appends to every coupling | `charge`, per quantum |
 | The phase width | 2^`phase_bits` steps per turn; a phase is an integer from 0 below that, an advance or a difference a mask with it less one. A phase is read only at a meeting and only as a difference, so the width is the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): eight steps resolve the Born table, the register's boards use 8 (256 steps), the reference table is written at 3 (8 steps), and a wider circle is allowed but never required; A11's 75-bit phase is a check that a wide width leaks into no coupling | `phase_bits`, one width per world |
-| The lag width | The modulus of the lag register in which a field ray's delay is carried and spent as one interval of wait when it reaches that modulus; declared per family, of any width because it enters no phase sum; it, not the phase circle, is the N of hypothesis 14 on the delay. Open under feature 8b: the turn, the transverse part of the lag, landed on 2026-09-17 as the momentum register of a free ray (`ray-momentum-turn-v1`, a resolution of one part in the ray's amount, no modulus), and the delay is counted in phase steps until a run needs its own modulus | the `lag_bits` entry: world key open |
+| The lag width | The modulus of the lag register in which a field ray's delay is carried and spent as one interval of wait when it reaches that modulus; declared per family, of any width because it enters no phase sum; it, not the phase circle, is the N of hypothesis 14 on the delay. Open under feature 8b: the turn, the transverse part of the lag, landed on 2026-09-17 as the momentum register of a free ray (`ray-momentum-turn-v1`, a resolution of one part in the ray's amount, no modulus), and the delay is counted in phase steps until a run needs its own modulus; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17), until which N is an input | the `lag_bits` entry: world key open |
 | The quantum | The content of a ray, a bounded integer; the energy of the invariants is the amount, the momentum is amount × heading | `amount` |
 
 ## The records
@@ -139,7 +139,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 
 | Entry | What is undecided | Decided by |
 | --- | --- | --- |
-| `lag_bits.world_key` | The key that declares the lag modulus per family for the delay on the ray's own axis, the N of hypothesis 14 on the lag register and not on the phase; the turn is the momentum register of feature 8b since 2026-09-17 | feature 8b |
+| `lag_bits.world_key` | The key that declares the lag modulus per family for the delay on the ray's own axis, the N of hypothesis 14 on the lag register and not on the phase; the turn is the momentum register of feature 8b since 2026-09-17; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17) | feature 8b, hypothesis 16 |
 | `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
@@ -148,18 +148,18 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `rays.antineutrino.rest_rate` | The antineutrino's rung | hypothesis 12 |
 | `rays.up.rest_rate` | The up quark's rung | hypothesis 12 |
 | `rays.down.rest_rate` | The down quark's rung | hypothesis 12 |
-| `rays.gluon.release` | The release ratio of the quark's field | hypothesis 13 |
+| `rays.gluon.release` | The release ratio of the quark's field; what fixes a release ratio is hypothesis 17 | hypothesis 13, hypothesis 17 |
 | `rays.gluon.colour` | How a gluon ray carries its releaser's colour | hypothesis 13 |
 | `rays.proton.rest_rate` | The proton's rung, k × 1836.152 67 | A10 |
 | `rays.neutron.rest_rate` | The neutron's retained content | hypothesis 12 |
-| `rays.mass_field.release` | The release ratio of the computation field | A6 |
+| `rays.mass_field.release` | The release ratio of the computation field; what fixes a release ratio is hypothesis 17 (Highlights 5.5, 2026-09-17) | A6, hypothesis 17 |
 | `couplings.electron_field_turn.strength_table` | The integer table over field content and charge product; with a `momentum_table` in place of the outputs (`ray-momentum-turn-v1`, feature 8b) the turn is gradual, sign x amount x heading of every field ray met, and the table's role is the field's amount | A5 |
 | `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign; closes with `rays.light.source_sign`, the sign carried on the field ray (feature 12) | A5 |
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
 | `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |
 | `couplings.quark_binding.table` | The three-quark binding table | hypothesis 12 |
-| `couplings.gluon_gluon_binding.table` | The field-to-field binding table | hypothesis 13 |
+| `couplings.gluon_gluon_binding.table` | The field-to-field binding table, the one catalog line by which gluon rays close into a string between quarks (Highlights 3.26, 2026-09-17) | hypothesis 13 |
 | `couplings.weak_conversion.shares` | The neutron's content shared among proton, electron and antineutrino | A9 |
 | `couplings.weak_conversion.headings` | The headings of the three products | A9 |
 | `couplings.pauli_exclusion.table` | What two electrons of opposite spin bind to (feature 11) | hypothesis 12 |
