@@ -209,6 +209,8 @@ def held(phase):
 
 
 def group_entry(phase, ray_delay=0):
+    """The snapshot entry of the head-on pair: at rest, its register (0, 0, 0) and its
+    accumulators (0, 0, 0) at every tick (bound-group-motion-v1, 2026-09-17)."""
     return [
         {
             "position": CENTER,
@@ -216,6 +218,8 @@ def group_entry(phase, ray_delay=0):
             "amounts": [8, 8],
             "phases": [phase, phase],
             "ray_delay": ray_delay,
+            "momentum": (0, 0, 0),
+            "accumulators": (0, 0, 0),
         }
     ]
 

@@ -15,6 +15,8 @@ from event_universe.configuration_validation import (
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
+    BOUND_GROUP_MOTION,
+    DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
     EXTERNAL_BODY,
@@ -26,6 +28,7 @@ from event_universe.core.spatial_state import (
     RAY_MEETING,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
+    detector_bit_property_declared,
     external_body_names,
     ray_layer_names,
     released_field_names,
@@ -134,11 +137,16 @@ def _execute_run(
     # The world ledger per completed tick (ray-event-audit-v1); the conservation
     # flag is true when every line of every completed tick balances.
     audit: list[dict[str, object]] = []
+    # Whether any bound group stepped (bound-group-motion-v1).
+    moved = False
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
         def record(event: dict[str, object]) -> None:
+            nonlocal moved
             stream.write(json.dumps(event) + "\n")
+            if event.get("event") == "bound_group_step":
+                moved = True
             if probe is not None:
                 probe.receive(event)
 
@@ -218,6 +226,14 @@ def _execute_run(
         "detector_return": DETECTOR_RETURN,
         "inverse_split": INVERSE_SPLIT,
         "return_mode": initial.return_mode,
+        # The Detector's bit as a property (detector-bit-property-v1): recorded when
+        # the world declares the rule anywhere (a mark's on_bit keys, a rule's bit);
+        # a world that declares neither runs the defaults and its record is unchanged.
+        **(
+            {"detector_bit_property": DETECTOR_BIT_PROPERTY}
+            if detector_bit_property_declared(initial)
+            else {}
+        ),
         "wave_ray": WAVE_RAY_FAMILY,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [
@@ -264,6 +280,9 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
+    if moved or any(any(rule.momentum_table) for rule in initial.ray_interactions):
+        # A world where no group ever has a nonzero register records nothing here.
+        metadata["bound_group_motion"] = BOUND_GROUP_MOTION
     spreading = spreading_field_names(initial.fields, initial.spatial_fields)
     if spreading:
         # Field spreading (field-spreading-v1): recorded only when a family declares

@@ -363,6 +363,18 @@ destroys matter. Everything is the same generic ray with the same generic
 interaction, and everything follows from the generic transactions of the
 declared couplings; what remains is to close the binding couplings. Until
 they exist, held source records remain an explicitly labeled interim device.
+Binding is a periodic orbit of the meeting rule (model owner, 2026-09-17,
+Highlights 3.4): a ray never stops, and "bound" means back at the same place
+in the same state; a bound group is a set of rays whose meetings, under the
+ordinary coupling table, reproduce the rays that entered them: the outputs
+leave, walk their Links, meet again, and the meeting gives the same amounts,
+the same phases modulo the circle and the same headings, so the pattern
+repeats forever; a pattern whose meeting does not close disperses. There is
+no binding rule, only the table, of which a bound group is a fixed point
+over a loop; a group lives on a ring of Nodes, not at one Node, its clock is
+the period of the loop and its mass is its content. The held rays of feature
+8 and the register-driven motion of feature 8c are the interim form,
+superseded by feature 14, binding as a loop (section 6).
 
 **External body (model owner, 2026-09-17; Highlights 3.19; named "fixed
 body" earlier that day).** Beside the Detector there is one more declared
@@ -656,14 +668,20 @@ every such set; Highlights 3.20 is the text to follow.
    same basis repeats its result, a ray carrying 0 is a transmission and is
    never drawn, and only a ray carrying no bit is drawn; how a marked Node
    meets each bit is its declared coupling in the catalog with this as the
-   default and the draw on every arrival, as before, the declarable
-   alternative (`apparatus.detector.couplings` of `catalog/nature.json`, two
-   open entries decided by this feature, each with its default and its
-   alternative `draw`), a table entry and not an engine mechanism
-   (Highlights 3.26), this feature implementing both; until it lands the
-   engine draws on every arrival, and the price of section 3 is to be
-   re-derived under this rule by hypothesis 11 and experiment A13 before it
-   is quoted again.
+   default (`apparatus.detector.couplings` of `catalog/nature.json`, two
+   entries decided by this feature), a table entry and not an engine
+   mechanism (Highlights 3.26); the price of section 3 is to be re-derived
+   under this rule by hypothesis 11 and experiment A13 before it is quoted
+   again. (Done on 2026-09-17, issue #169 feature 2b,
+   `detector-bit-property-v1`: the outputs of every ray interaction that
+   fires inherit the highest bit of its inputs unless the rule declares
+   `bit`, the read-only ray property `detector` for a `when` guard, the
+   marks' `on_bit_1` and `on_bit_0` keys with `pass` as the default and
+   `draw` as the alternative, a `detector_pass` record for each pass without
+   a draw, the identity recorded when a world declares a key, the viewer's
+   `pass` kind and per-ray `bit`, the catalog entries decided; see [the bit
+   read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1) and
+   [the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1).)
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
@@ -802,6 +820,28 @@ every such set; Highlights 3.20 is the text to follow.
    lagging side per phase modulus, the field ray returning reversed; the
    recoil's coupling to the group and the orbit are open; see
    [binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1).)
+   Feature 8c, bound groups that move, `bound-group-motion-v1` (done on
+   2026-09-17, issue #169; the gap the helium-ion run E4 found): a bound
+   group carries a momentum register and three accumulators, set at its
+   formation as the sum of amount x heading of its rays, and steps one Link
+   through the Port of the first axis whose accumulator has reached its
+   content, exactly as the external body of feature 7b steps, its rays
+   carried with their phases, its register and its clock and the binding
+   rule firing again at the neighbour on arrival; a binding rule's
+   `momentum_table` lets the field rays it names push the group by sign x
+   amount x heading, the field ray returned reversed as the recoil; the
+   ledger reads a group by its register and a group leaving an open
+   boundary is booked as escaped with its content and momentum; speed is
+   momentum over content, one Link every k intervals, Highlights 3.28 with
+   no kinematic rule; see [bound group
+   motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1).
+   Two groups at one Node and the absorption of a field ray into a group
+   are not in that slice.
+   Interim (model owner, 2026-09-17, Highlights 3.4): the held-ray binding
+   of this feature, a rule with delay 1 and no outputs and its `ray_delay`
+   wait, holds any content and therefore has no ladder, and the
+   register-driven motion of a group (feature 8c) is the interim form of its
+   motion; both are superseded by feature 14, binding as a loop, below.
    Feature 8b, lag modulus, after feature 10 (decided 2026-09-17, Highlights
    3.28): the lag counted in its own modulus, declared per family, in place
    of the phase steps of feature 8; the register is spent as one Link toward
@@ -924,6 +964,45 @@ see [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).)
 It unlocks A1, A2 and the diagonal series of A6 in the
 [experiments register](EXPERIMENTS.md).
 
+**Feature 14, binding as a loop (model owner, 2026-09-17; Highlights 3.4).**
+Design done on 2026-09-17 ([loop binding](LOOP_BINDING.md),
+`loop-binding-v1`: the rule in the model's language, the closure condition
+as integer equalities, the unit-square electron as the world
+`examples/nature/ring.json` with its dispersing control `ring_open.json`,
+register entry E5, and the expected integers of `tests/test_loop_binding.py`
+pinned before any run); implementation after feature 8b, features 12, 8c
+and 2b having landed on 2026-09-17. A ray never stops, and "bound"
+does not mean "resident": a bound group is a set of rays whose meetings,
+under the ordinary coupling table, reproduce the rays that entered them: the
+outputs leave, walk their Links, meet again, and the meeting gives the same
+amounts, the same phases modulo the circle and the same headings, so the
+pattern repeats forever; a pattern whose meeting does not close disperses.
+There is no binding rule: a bound group is a fixed point of the ordinary
+meeting table over a loop, the only declared thing is the table, and step 3
+of the Node's law is untouched, since the loop uses the ordinary meeting. On
+the cubic lattice the smallest loop is a unit square of four Nodes with rays
+circulating both ways, each corner meeting every interval two rays that
+leave through each other's Ports; a group lives on a ring of Nodes, not at
+one Node, its size is the ring, its clock is the period of the loop, its
+mass is its content (Highlights 3.28), its field is released by rays in
+motion, five headings each (Highlights 3.5), and its motion as a whole is
+its corners shifting, not a register on a Node. The ladder of hypothesis 12
+is the set of contents and phases that close a loop under the table, which
+experiment A10 counts once this feature lands; the held-ray binding of
+feature 8 and the register-driven motion of feature 8c are its interim
+forms, and a binding coupling of the catalog is then an ordinary meeting
+table whose loop closes. What the design found by following the tables:
+the corner table of the unit square is an outputs rule of today's schema
+(each input's amount and phase through the Port the other came in by), the
+phase closes in one circuit when `L r = 0 (mod N)` (`4 r = 0 (mod N)` on
+the unit square), the phase difference at a corner is a constant of the
+motion for one family so no rate is read at any meeting of the ring, the
+Port-form corner holds every content and every rate and so gives no ladder
+by itself, the ladder needs the ring's turn to be produced by the group's
+own field (open), and the engine of `main` already holds the ring under the
+Port form, so the implementation begins with the removal of the interim
+forms and the record's reading of a group.
+
 **The strong interaction, catalog work after feature 10.** Quark families,
 colour a property with three values (a family property like charge, feature
 9), the gluon the quark's own field in ray form (feature 7, Highlights 3.5),
@@ -972,8 +1051,11 @@ bit is set; nothing else in the world draws, and no second lottery is added.
   counting error; the joint law's value appears only when the second ray's
   path exceeds the round trip through the first Detector, and no Detector
   reads the carried value: the second Detector draws its own bit and reads
-  nothing from the ray. The pair test counts coincidences of clicks within a
-  declared time window; a pair with one return is unpaired. The test reports
+  nothing from the ray (as stated before 2026-09-17; since feature 2b a
+  Detector reads the bit a ray carries and draws only for a ray carrying
+  none, and hypothesis 11 re-derives the price under that rule). The pair
+  test counts coincidences of clicks within a declared time window; a pair
+  with one return is unpaired. The test reports
   CHSH in the symmetric geometry and in the delayed geometry; what each
   outcome means is stated in
   [HYPOTHESES.md section 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail).

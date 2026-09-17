@@ -29,9 +29,11 @@ Feature tests of issue #169 join this table as they land.
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
+| `test_bound_group_motion.py` | 5 | 0.90 | Issue #169 feature 8c: a bound group carries a momentum register and steps one Link when a whole content has accumulated on an axis, pushed by the field rays its binding rule's table names (`bound-group-motion-v1`) |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
+| `test_detector_bit_property.py` | 13 | 0.44 | Issue #169 feature 2b: a marked Node reads the bit a ray carries and passes it without a draw unless the mark declares `draw`, the outputs of a meeting inherit the bit, a guard reads it (`detector-bit-property-v1`) |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
 | `test_detector_sampling_contract.py` | 18 | 0.00 | Detector-only sampling admission (running branch, untouched) |
@@ -65,7 +67,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
-| `test_ray_viewer.py` | 3 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file and the screen example world, pinned below (no browser) |
+| `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the screen example world, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -776,6 +778,116 @@ labelled 2, the lamps holding their share again with its recoil undone from
 tick 3 ([Node Detector bit](#node-detector-bit)), and that test runs three
 ticks, because at the fourth the restored lamps would emit again into the
 mark and draw again.
+## Detector bit as a property
+
+`test_detector_bit_property.py` builds its boards inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order, closed under negation)
+on a periodic 15^3 lattice with an 8-step phase advancing 1 per Link
+([the bit read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1),
+[the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
+Every lamp holds exactly what it emits once at tick 0, funded, at phase 0,
+recoiling into its own momentum. Pinned before the first run from the
+published ticket rule (`state = (state x 48271 + 1) mod 1073741789`,
+`number = state^2 mod 1073741789`, bit 1 when `number x d < n x
+1073741789`): one draw from seed 3 at setting 1/2 gives state 144814 and bit
+0 (as in [Node Detector bit](#node-detector-bit)); one draw from seed 0 at
+1/1 gives state 1 and bit 1; one draw from seed 5 at 1/1 gives state 241356
+and bit 1, a second 913077587 and bit 1; seed 7 undrawn stays 7.
+
+- (a) a lamp at (4,7,7) sends 8 quanta along +X (one directed emission).
+  Mark A at (5,7,7), setting 1/1 and seed 0, draws the ray at tick 1: one
+  `detector_click` (position (5,7,7), Port 1, family `quanta`, amount 8, bit
+  1), the ray's `detector` 2, A's ticket 1 for the rest of the run. Mark B
+  at (9,7,7), setting 1/2 and seed 3, receives the ray at tick 5 carrying
+  bit 1. With no `on_bit_1` key, and with `on_bit_1: "pass"`, B does not
+  draw: its ticket stays 3 through tick 6, one `detector_pass` (position
+  (9,7,7), tick 5, Port 1, `quanta`, 8, `bit` 1) follows the click in the
+  event stream, and after every tick t from 1 to 6 the one ray of the world
+  is at (4 + t, 7, 7), heading index 0, amount 8, `steps` t, phase t,
+  `outbound` 1, `detector` 2. With `on_bit_1: "draw"` B draws at tick 5,
+  seed 3 at 1/2 drawing 0: one `detector_return` (position (9,7,7), tick 5,
+  Port 1, `quanta`, 8) instead of the pass, B's ticket 144814, and after
+  ticks 5 and 6 the ray is at (14 - t, 7, 7), heading index 1, amount 8,
+  `steps` 10 - t, phase 10 - t, `outbound` 0, `detector` 1. In every case
+  the totals are 8 quanta and momentum (0,0,0) and the conservation report
+  passes at every tick; the runner writes the same two `detector_` lines
+  and records `detector_bit_property: "detector-bit-property-v1"` exactly
+  when the key was written (absent with no key), with
+  `conserved_at_every_completed_tick` true and final quanta 8;
+- (b) a pair lamp at X = (7,7,7) holds 8 and emits a sweep of two headings
+  (`rays_per_tick` 2, cursor 0: +X and -X), 4 each way, one event with mask
+  3 and shares (4, 4, 0, 0, 0, 0); X itself carries mark C, setting 1/1 and
+  seed 7 (a source is a Detector); mark A at (10,7,7), setting 0/1 and seed
+  3; mark D at (4,7,7), setting 1/1 and seed 5; ten ticks, `return_mode`
+  siblings. Arm B (-X) reaches D at tick 3: one `detector_click` (position
+  (4,7,7), Port 0, `quanta`, 4, bit 1), D's ticket 241356, and arm B is at
+  ((7 - t) mod 15, 7, 7), heading index 1, amount 4, `steps` t, phase t mod
+  8, `outbound` 1, `detector` 0 through tick 2 and 2 from tick 3, after
+  every tick t. Arm A (+X) reaches A at tick 3: one `detector_return`
+  (position (10,7,7), Port 1, `quanta`, 4), A's ticket 144814, and arm A is
+  at (7 + t, 7, 7), 0, 4, t, t, 1, 0 after ticks 1 and 2 and at (13 - t, 7,
+  7), 1, 4, 6 - t, 6 - t, 0, 1 after ticks 3 to 6; it walks back through no
+  other mark and arrives at X, mark C, at tick 6 undrawn: C's ticket is 7 at
+  every tick, C clicks, passes and returns nothing. One `inverse_split` in
+  the cycle labelled 6 (position (7,7,7), `quanta`, `siblings`, `ports`
+  (1,), `amounts` (4,), `amount` 4, `bit` 0, `restored` true, `annulled`
+  {}) transmits 4 on arm B's line with bit 0, undrawn by C: the transmission
+  is at (13 - t, 7, 7), 1, 4, t - 6, t - 6, 1, 1 after ticks 7 and 8 and
+  reaches D at tick 9 carrying bit 0. With no `on_bit_0` key D does not
+  draw: one `detector_pass` (position (4,7,7), tick 9, Port 0, `quanta`, 4,
+  `bit` 0), D's ticket 241356 through tick 10, the transmission at (3,7,7),
+  1, 4, 4, 4, 1, 1 after tick 10. With `on_bit_0: "draw"` D draws it at
+  tick 9, seed 5's second draw at 1/1 giving 1: a `detector_click`
+  (position (4,7,7), tick 9, Port 0, `quanta`, 4, bit 1) instead, D's
+  ticket 913077587, the transmission's `detector` 2 from tick 9. The event
+  stream is the D click, the A return, the split, then the D event; the
+  totals are 8 quanta and momentum (0,0,0) and the conservation report
+  passes at every tick;
+- (c) lamp 0 at (5,7,7) sends 5 quanta along +X, lamp 1 at (9,7,7) sends 5
+  along -X; mark M at (6,7,7), setting 1/1 and seed 0, realizes lamp 0's ray
+  at tick 1 (one `detector_click`, position (6,7,7), Port 1, `quanta`, 5,
+  bit 1; `detector` 2); the declared rule `meeting` (two `quanta`
+  participants, no guard, energy and momentum invariants) replaces the two
+  rays that meet at (7,7,7) at tick 2 by two outputs of 5: `{"of": 0}` on
+  Port 2 (+Y) and `{"of": 1}` on Port 3 (-Y) with `input` 1. After tick 1
+  the rays are at (6,7,7), 0, 5, 1, 1, 1, 2 and (8,7,7), 1, 5, 1, 1, 1, 0;
+  after tick 2 both at (7,7,7) with `steps` 2 and phase 2; after ticks 3
+  and 4 the outputs are at (7, 5 + t, 7), 2, 5, t - 2, t, 1, b and (7, 9 -
+  t, 7), 3, 5, t - 2, t, 1, b with `event_ports` 12 and `event_shares` (0,
+  0, 5, 5, 0, 0), where b is the inherited bit: 2 with no `bit` key, with
+  `bit: "highest"` and with `bit: {"of": 0}` (lamp 0's ray, heading index 0,
+  is participant 0 in merge order); 0 with `bit: "none"` and with `bit:
+  {"of": 1}`. The parsed rule carries `bit` -1 (`BIT_HIGHEST`) and
+  `bit_declared` false with no key, -1 and true for `"highest"`, -2
+  (`BIT_NONE`) and true for `"none"`, 0 or 1 and true for `{"of": i}`. The
+  totals are 10 quanta and momentum (0,0,0) at every tick, the report
+  passes, and the runner records the identity exactly when the key was
+  written;
+- (d) the meeting of (c) guarded by `when` equal to 1 when the `max` of the
+  two participants' `detector` equals 2: with the mark it fires and after
+  tick 3 the outputs are at (7,6,7), 3, 5, 1, 3, 1, 2 and (7,8,7), 2, 5, 1,
+  3, 1, 2 with one click recorded; without the mark the guard is false, no
+  event is recorded and the rays cross: after tick 3 at (6,7,7), 1, 5, 3, 3,
+  1, 0 and (8,7,7), 0, 5, 3, 3, 1, 0; 10 quanta and momentum (0,0,0) in both;
+- (e) `parse_initial_state` rejects `on_bit_1: "maybe"`, `on_bit_0: 1`,
+  `bit: "sometimes"`, `bit: {"of": 2}` on a two-role rule, `bit: {"of":
+  -1}` and an assignment to `detector`; `validate_configuration` reports
+  the same documents invalid; `DetectorMark` with `on_bit_1` 5 is rejected
+  and a mark of four arguments equals one with the three defaults 0;
+  `inherited_bit` gives 2 for (0, 2), 1 for (1, 0), 2 for (2, 1) by default,
+  0 for (2, 1) under `BIT_NONE`, 1 for (2, 1) with rule 1, 0 for no inputs,
+  and rejects a role index beyond the inputs and a bit of 3.
+
+Pinned consequences in existing tests: none change. The worlds of
+`test_detector_mark.py`, `test_detector_return.py` and
+`test_inverse_split.py` write the same `events.jsonl` and `run.json` as
+before the feature (no marked ray reaches a second mark or meets another
+ray there); the worlds of `test_ray_viewer.py` and
+`test_ray_meeting_conversion.py` differ in their recorded cost alone (one
+more view component per participant, `read` 10 instead of 9), and
+`test_wave_ray_families.py` pins `detector` as the eighth ray property.
+
 ## Ray layers
 
 `test_ray_layers.py` builds its board inline under the shared Detector
@@ -978,12 +1090,33 @@ from the event stream alone (no per-tick recording, so no phase):
   every one with setting [1, 1] and seed 0; one rule, `bind`, with
   `ray_delay` 1. The on-axis mark (7,5,5) is the one that clicks before
   feature 12;
+- (j) the phone GIF preset (model owner, 2026-09-17: GIFs only, small enough
+  for the phone): `motion.gif_preset` is `phone` and `gif_presets` holds
+  `phone` and `full`; `phone` is 640 px wide, 480 px per panel side by
+  side, at most 20 frames (24 left the two-panel GIF above the target), 12
+  hold frames with the camera still (`gif_hold_still`), 128 colours,
+  supersample 1, six seconds, a target of 1000000 bytes and no stills;
+  `full` is uncapped, its hold turning on, supersample 2, 120 ms a frame,
+  16 stills. The frame schedule of a 24-tick
+  run capped at 24 frames is the ticks 0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 14,
+  16, 17, 18, 20, 21, 23, 24 and then six frames holding 24 (the run reaches
+  its end, a quarter of the frames hold); an uncapped 6-tick run is 0..6 and
+  twelve holds; 24 frames in six seconds is 250 ms a frame (the style's 120
+  ms when no seconds are set). An unknown preset name, a preset with an
+  unknown key and a `gif_preset` naming no preset are refused;
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
   and (2, 8,7,7), extracts to one body at (7,7,7) carrying those rows, so
   the page draws its picture (chosen by family in `style.json`, `star` by
   default) at (7,7,7) through tick 1 and at (8,7,7) from tick 2;
+- (h) the ray's bit (`detector-bit-property-v1`, pinned 2026-09-17 before
+  the first run): every ray of `runs.json` carries `bit`, `null` for none,
+  0 or 1, set by a click, a pass or a Detector RETURN and inherited by the
+  outputs of an event from its inputs (the highest); here rays 0 and 1 and
+  the -X output carry `null` and the +X output, clicked at (4,1,1) at tick
+  4, carries 1, and no event of kind `pass` exists, since no ray carrying a
+  bit reaches a second mark;
 - (f) the style: `tools/ray_viewer/style.json` is a `ray-viewer-style-v1`
   object whose sections and keys are exactly the documented ones (the
   renderer's `validate_style` accepts it and rejects an unknown key), the
@@ -1010,7 +1143,8 @@ from the event stream alone (no per-tick recording, so no phase):
   body over the run, padded by one Link; `board` fits the whole board), and
   fixed colours for the families `electron`, `light`, `proton` and `neutron`,
   `draw.view` `board` (`eye` draws the marked Nodes and the PASS clicks alone,
-  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot), of the `page_text` flags
+  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot),
+  `motion.gif_preset` `phone` ((j) above), of the `page_text` flags
   only `header` (the run's title) and `tick_counter` true, every `labels`
   flag false, and `autoplay` and `loop` true.
 
@@ -1773,6 +1907,214 @@ parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
   as its owner. The bending is alpha = 16 / N (Links of shift per Node of
   passage, exact), G_eff = alpha x b / (4 M) = 64 / N^2 (1/1024, 1/16384,
   1/262144, 1/67108864), and G_eff x N^2 = 64 for all four N, exactly.
+
+## Bound group motion
+
+`test_bound_group_motion.py` builds its boards inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
+([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)).
+The family `n` has rest rate 1 on a 3-bit phase (8 steps), 8 ray slots; `G`,
+where declared, is its field, `field_of: "n"` with `release: [1, 4]`, rate 0,
+16 ray slots; `f` is a plain family of rate 0 (the field ray of (c) with no
+release around it). A vector field `momentum` (three signed components) is
+bound to every ray family through `recoil_field` on every emission, so the
+world ledger carries a momentum line and every lamp keeps the recoil of what
+it emits. Every lamp holds its amount and emits it once, funded and directed,
+at phase 0, in the cycle of tick 0. The binding rule `bind` is `n x n`
+without outputs, assigning `delay` 1 to both participants, invariant energy,
+with `"momentum_table": {family: -1}` where a case says so. A tick t is one
+`step()`: the cycle of interval t - 1 and the delivery of tick t; a record
+carries the tick its cycle started at. The test is parametrized over
+`uniform`, `push`, `escape`, `rest` and `rejected`. Pinned before the first
+run:
+
+- (a) `uniform`: lamps at (9,10,10) and (11,10,10) emit `n` 6 along +X and
+  `n` 2 along -X; the rays meet at the center (10,10,10) after tick 1
+  (headings 0 and 1, phase 1, steps 1). The cycle of tick 1 forms the group:
+  register (4, 0, 0) (6 x (1,0,0) + 2 x (-1,0,0)), accumulators (0, 0, 0),
+  content 8, one event on both Ports (mask 3, shares (6, 2, 0, 0, 0, 0)).
+  From the cycle of tick 2 the accumulator x adds 4 per interval: 4 after
+  the cycle of tick 2, 8 in the cycle of tick 3, a step through Port 0 with
+  the accumulator back to 0, and so on: the group steps in the cycles of
+  ticks 3, 5, 7, 9 and 11 (`bound_group_step` at those ticks, Port 0,
+  arrival ticks 4, 6, 8, 10, 12, momentum (4, 0, 0), accumulators (0, 0, 0),
+  content 8), one Link every two intervals, speed 1/2. After tick t (2 to
+  12) the group is at (10 + floor((t - 2) / 2), 10, 10) with accumulators
+  (4 x ((t - 2) mod 2), 0, 0), its rays at steps 0, delay 0, phases t mod 8
+  (advanced once per interval by the rest rate on the move as at rest),
+  mask 3 and shares (6, 2, 0, 0, 0, 0); the snapshot's `bound_groups` is
+  that one entry with `momentum` (4, 0, 0). `bound_tick` is published at
+  every tick 2 to 11, at the Node the group was at (ticks 2 and 3 at
+  x = 10, 4 and 5 at x = 11, ..., 10 and 11 at x = 14). The held 6-ray
+  releases G of amount floor(6 / 4) = 1 per heading (the 2-ray releases
+  0), six headings in a resting interval and five in a stepping one (not
+  +X, its line ahead): G sourced after tick t is 6 (t - 1) - floor((t - 2)
+  / 2) for t from 2 (6, 12, 17, 23, 28, 34, 39, 45, 50, 56, 61), the six
+  rays of the cycle of tick 1 escaping at tick 12 (current 55, escaped 6).
+  `n` stays 8. The momentum line reads (0, 0, 0) initial, sourced and
+  current at every tick, the lamps holding (-6, 0, 0) and (2, 0, 0) against
+  the register (4, 0, 0); every ledger balances, and the runner's
+  `conserved_at_every_completed_tick` is true with `bound_group_motion:
+  "bound-group-motion-v1"`;
+- (b) `push`: lamps at (9,10,10) and (11,10,10) emit `n` 4 along +X and
+  along -X (a head-on pair at rest, register (0, 0, 0), content 8), and a
+  lamp at (5,10,10) emits a `G` ray of amount 2 along +X, the field ray from
+  the -X side; `bind` declares `momentum_table` `{"G": -1}`. The G ray is
+  at (5 + t, 10, 10) after tick t and resident at the center after tick 5
+  (steps 5, mask 1, shares (2, 0, 0, 0, 0, 0)). In the cycle of tick 5 the
+  rule fires and the table meets it: the register becomes (-2, 0, 0) (-1 x
+  2 x (1, 0, 0), toward the source) with accumulators (0, 0, 0), and the G
+  ray returns reversed as a new event: heading 1, amount 2, phase 0, mask
+  2, shares (0, 2, 0, 0, 0, 0), at (15 - t, 10, 10) after tick t from 6
+  with steps t - 5. The accumulator x then adds -2 per interval and reaches
+  -8 in the cycles of ticks 9 and 13: the group steps through Port 1 at
+  those ticks (`bound_group_step`, momentum (-2, 0, 0), accumulators
+  (0, 0, 0), content 8, arrival ticks 10 and 14), one Link every four
+  intervals toward the source, speed 1/4. After tick t (6 to 14) the group
+  is at (10 - floor((t - 6) / 4), 10, 10) with accumulators (-2 x ((t - 6)
+  mod 4), 0, 0). The momentum line: sourced (-6, 0, 0) after tick 6 (the
+  reversal of the G ray, -4, and the push, -2), then +2 at each stepping
+  cycle (the release skips -X, two rays of amount 1 merged): (-4, 0, 0)
+  after tick 10, (-2, 0, 0) after tick 14; the current line equals it at
+  every tick (the lamps (-4, 0, 0), (4, 0, 0), (-2, 0, 0), the register and
+  the rays), every ledger balanced. G: initial 2 (the lamp's stock), 12
+  released per cycle from the cycle of tick 1 (2 per heading), 10 in a
+  stepping cycle, the six rays of a resting cycle at the center escaping
+  together from tick 12 (12 per tick): current after tick t is 2 + 12 (t -
+  1) - 2 [t >= 10] - 2 [t >= 14] - 12 max(0, t - 11), that is 118 after
+  tick 14, escaped momentum (0, 0, 0) through tick 14;
+- (c) `escape`: lamps at (17,10,10) and (19,10,10) emit `n` 4 along +X and
+  along -X, meeting at (18,10,10) after tick 1, and a lamp at (20,10,10)
+  emits an `f` ray of amount 3 along -X; no G; `bind` declares
+  `momentum_table` `{"f": -1}`. The f ray is resident at the group's Node
+  after tick 2, and the cycle of tick 2 pushes the group to (3, 0, 0)
+  (toward the +X side it came from) and returns the f ray reversed
+  (heading 0, amount 3, mask 1, shares (3, 0, 0, 0, 0, 0)): at (19,10,10)
+  after tick 3, (20,10,10) after tick 4, escaped at tick 5. The
+  accumulator x adds 3 per interval over content 8 from the cycle of tick
+  3 (the step decision of the push cycle reads the register before the
+  push): 3, 6, 9 -> step (cycle of tick 5, accumulator 1), 4, 7, 10 -> step
+  (cycle of tick 8, accumulator 2), 5, 8 -> step (cycle of tick 10,
+  accumulator 0), that is 0, 0, 3, 6, 1, 4, 7, 2, 5 after ticks 2 to 10; the
+  group is at (18,10,10) through tick 5, (19,10,10) through tick 8,
+  (20,10,10) through tick 10, and the step of the cycle of tick 10 leaves
+  the world: `spatial_escaped` at tick 11 from (20,10,10), Port 0, escaped
+  `n` (8,) and `momentum` (3, 0, 0), `bound_group` families `["n", "n"]`,
+  amounts `[4, 4]`, content 8, momentum (3, 0, 0); `bound_groups` empty
+  after tick 11. Escaped totals after tick 11: `n` 8, `f` 3, momentum
+  (6, 0, 0) (the f ray's 3 and the group's 3); sourced momentum (9, 0, 0)
+  from tick 3 (the reversal 6 and the push 3); current (3, 0, 0) after tick
+  11, the lamps' recoil; every ledger balanced, the runner's flag true;
+- (d) `rest`: the head-on pair of `ray-binding-v1` (8 and 8 at (9,10,10)
+  and (11,10,10), no table) for 6 ticks: register (0, 0, 0) and
+  accumulators (0, 0, 0) at every tick, the group at the center, no
+  `bound_group_step` record, `bound_tick` at ticks 2 to 5 with exactly the
+  keys of `ray-binding-v1`, the runner writing no `bound_group_motion`
+  key: byte for byte the events and run record of the feature 8 case, the
+  snapshot's entries carrying the two zero vectors;
+- (e) `rejected`: a `momentum_table` on a rule with outputs, one naming a
+  participant family, one naming an unknown family, a sign of 2 and a table
+  on a rule that assigns no delay are each rejected at initialization.
+
+## Loop binding
+
+`tests/test_loop_binding.py` is the test of feature 14, binding as a loop
+(`loop-binding-v1`, [loop binding](LOOP_BINDING.md)), pinned here on
+2026-09-17 before the module exists, as Highlights 5.5 requires; it is
+written when the feature is implemented, after feature 8b. It builds the
+unit-square ring of `examples/nature/ring.json` and `ring_open.json`
+inline (and does not load the example files): an open 12 x 12 x 11 board,
+`link_ticks` 1, `metric: "links"`, pace 1/1, the six unit-axial headings in
+Port order, the family `electron` (charge -3, 8 ray slots) on a 3-bit phase
+(8 steps) with rest rate 2, a vector field `momentum` bound through
+`recoil_field` on every emission, and eight lamps, two at each corner of
+the square P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5), P3 = (5,6,5), each
+holding 1 quantum and emitting it once, funded and directed, at phase 0 in
+the cycle of tick 0: the R lamps on +X at P0, +Y at P1, -X at P2, -Y at P3
+and the L lamps on +Y at P0, -X at P1, -Y at P2, +X at P3. The one rule
+`corner` is `electron x electron` with two outputs, each input's amount and
+phase through the Port the other input came in by (`heading` `"reversed"`
+of the other `input`), invariant energy; the `born` cases replace the
+amounts by the catalog's Born table on the sum (`[8, 7, 4, 1, 0, 1, 4, 7]`,
+`"of": "sum"`, `"index": "phase_difference"`) and `{"rest_of": 0}`. A tick
+t is one `step()`; the state after tick t is read from `inventory_view()`;
+a ray is written as (Node, heading index, amount, phase, steps, mask,
+shares). The test is parametrized over `ring`, `open`, `slow`, `half` and
+`quadrature`. The engine of `main` at `c21e03e` was run once on every case
+after the pins were written (the check the design allows): its column is
+identical to the hand column below in every line, so one column is given.
+Pinned before the first run:
+
+- (a) `ring` (`ring.json`, the Port form, r = 2): after tick 1 each corner
+  holds two rays of amount 1, phase 2, steps 1, each carrying its lamp's
+  emission stamp (mask `1 << h`, share 1 at Port h): P0 headings 1 (mask 2,
+  shares (0,1,0,0,0,0)) and 3 (mask 8, (0,0,0,1,0,0)); P1 headings 0 (mask
+  1) and 3 (mask 8); P2 headings 0 (mask 1) and 2 (mask 4); P3 headings 1
+  (mask 2) and 2 (mask 4). In the cycle of every tick t from 1 the rule
+  fires at all four corners and books the momentum the two quarter turns
+  move as the corner's source (`source_delta` of its `spatial_cycle`
+  record): (2, 2, 0) at P0, (-2, 2, 0) at P1, (-2, -2, 0) at P2,
+  (2, -2, 0) at P3, summing to (0, 0, 0). After every tick t from 2 to 16
+  the same eight lines hold with phase 2t mod 8 (4, 6, 0, 2, 4, ...) and
+  steps 1: at P0 heading 1, mask 6, shares (0,1,1,0,0,0) and heading 3,
+  mask 9, (1,0,0,1,0,0); at P1 heading 0, mask 5, (1,0,1,0,0,0) and
+  heading 3, mask 10, (0,1,0,1,0,0); at P2 heading 0, mask 9, (1,0,0,1,0,0)
+  and heading 2, mask 6, (0,1,1,0,0,0); at P3 heading 1, mask 10,
+  (0,1,0,1,0,0) and heading 2, mask 5, (1,0,1,0,0,0) (the stamp of the
+  corner each ray last left: P0's meeting is one event on Ports 0 and 2,
+  P1's on 1 and 2, P2's on 1 and 3, P3's on 0 and 3, share 1 each). The
+  state after tick t + 4 equals the state after tick t for every t from 2:
+  the loop closes in one circuit, 4 x 2 = 8 = 0 (mod 8). At every tick:
+  electron 8 in the world, none escaped, momentum (0, 0, 0) in the world
+  and in the sources (the lamps hold minus their rays' momentum, (-1,0,0),
+  (0,-1,0), (0,-1,0), (1,0,0), (1,0,0), (0,1,0), (0,1,0), (-1,0,0)), the
+  charge line electron -24, every ledger line balanced,
+  `conserved_at_every_completed_tick` true; the snapshot's `bound_groups`
+  is empty at every tick and no `bound_tick` is written; the runner records
+  `ray_meeting: "ray-meeting-conversion-v1"`;
+- (b) `open` (`ring_open.json`, the Born form in phase, d = 0): after tick
+  1 exactly the lines of (a). In the cycle of tick 1 input 0 at each corner
+  is the resident ray with the lower heading index (the L ray at P0 and P2,
+  the R ray at P1 and P3), d = 0 and the table output takes floor(2 x 8 /
+  8) = 2 through the Port input 1 came in by, the rest output being no ray:
+  P0 sends 2 on +Y (Port 2), P1 2 on +Y, P2 2 on -Y (Port 3), P3 2 on -Y;
+  the corners book (1, 3, 0), (-1, 3, 0), (-1, -3, 0), (1, -3, 0), summing
+  to zero. After tick 2 each corner holds one ray of amount 2, phase 4,
+  steps 1: heading 3, mask 8, shares (0,0,0,2,0,0) at P0 and P1, heading 2,
+  mask 4, (0,0,2,0,0,0) at P2 and P3. No rule fires again. After tick t
+  from 3 to 7 the four rays are at (5, 7 - t, 5) and (6, 7 - t, 5) heading
+  3 and at (5, 4 + t, 5) and (6, 4 + t, 5) heading 2, amount 2, phase 2t
+  mod 8, steps t - 1, the same masks and shares; after tick 8 and every
+  later tick the board is empty: electron 0 in the world, 8 escaped,
+  momentum (0, 0, 0), every ledger line balanced,
+  `conserved_at_every_completed_tick` true, `bound_groups` empty;
+- (c) `slow` (the Port form at the catalog's rate, r = 1): the Nodes,
+  headings, amounts, steps, masks and shares of (a) at every tick, with
+  phase t mod 8; the state after tick t + 8 equals the state after tick t
+  for every t from 2, and after tick t + 4 it differs in every phase by 4:
+  4 x 1 = 4 is not 0 (mod 8), the loop closes in two circuits, and nothing
+  disperses (electron 8, none escaped, through tick 9);
+- (d) `half` (the Port form, r = 2, the four rays of the two lamps at P0
+  and at P2 only): after tick 1 P1 holds headings 0 (mask 1) and 3 (mask 8)
+  and P3 headings 1 (mask 2) and 2 (mask 4), amount 1, phase 2, steps 1, P0
+  and P2 empty; after every even tick t from 2 the four rays are at P0
+  (headings 1 and 3, masks 6 and 9) and P2 (headings 0 and 2, masks 9 and
+  6) and after every odd tick from 3 at P1 (headings 0 and 3, masks 5 and
+  10) and P3 (headings 1 and 2, masks 10 and 5), with the shares of (a),
+  phase 2t mod 8, steps 1; two corners meet in every interval, the state
+  after tick t + 4 equals the state after tick t from t = 2, electron 4 in
+  the world, none escaped, momentum (0, 0, 0): the smallest loop, content
+  4;
+- (e) `quadrature` (the Born form with the four L lamps at phase 2, d = 2):
+  the Nodes, headings, amounts, steps, masks and shares of (a) at every
+  tick, the R rays with phase 2t mod 8 and the L rays with 2t + 2 mod 8
+  (after tick 1 the L rays, headings 1 at P0, 3 at P1, 0 at P2 and 2 at
+  P3, read 4 and the R rays 2); at every corner d = 2 or 6, T[d] = 4, the
+  table output takes floor(2 x 4 / 8) = 1 and the rest output 1, so the
+  amounts are reproduced and the corner bookings are those of (a); the
+  state after tick t + 4 equals the state after tick t from t = 2, electron
+  8, none escaped, through tick 6.
 
 ## Catalog of nature
 

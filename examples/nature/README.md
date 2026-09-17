@@ -1,15 +1,18 @@
 # Two events of nature in the engine's language
 
-Five world files that show, on the one generic engine and with the rules
+Eight world files that show, on the one generic engine and with the rules
 that exist today, (A) a photon absorbed by an electron at rest, (B) a nucleus
 split by a high-energy photon, with a low-energy photon that does not split it
 as the control, (C) the photon of (A) held inside the group while its
 clock runs and then emitted on a new heading, the group back in its ground
 state, (D) the helium ion, a nucleus of charge +2 with one electron,
-[below](#the-helium-ion-one-electron-at-a-nucleus-of-charge-2), and (E) the
+[below](#the-helium-ion-one-electron-at-a-nucleus-of-charge-2), (E) the
 field of an electron at rest on a screen of seven Detector marks, the eye
 view's first picture,
-[below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks). They are demonstrations under
+[below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks), and
+(F) the ring, an electron at rest as a loop of rays on a unit square, with
+the control that disperses, the design world of feature 14,
+[below](#the-ring-an-electron-at-rest-as-a-loop). They are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
@@ -345,6 +348,12 @@ an orbit either: it shifts the line one Link with the heading unchanged, and
 on the axis the next Node lays the next lag, a runaway into the nucleus once
 the lag per crossing reaches N and nothing at all below it. A bound group
 cannot be the electron at 1/k: it is held at its Node and does not move.
+(Closed later on 2026-09-17 by feature 8c, `bound-group-motion-v1`: a bound
+group carries a momentum register and steps one Link when a whole content
+has accumulated on an axis, and the field rays a binding rule's
+`momentum_table` names push it; see [bound group
+motion](../../docs/SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1).
+This run was made before it and is not re-made here.)
 
 **The missing rules, smallest generic additions.** (i) The field off the
 axes: a ray of the nucleus's light at a Node re-releasing its information on
@@ -405,9 +414,9 @@ reaches the on-axis mark (7, 5, 5) alone: the first release leaves (1, 5, 5)
 in the interval after `bind` fires and arrives at tick 7, and one click of
 amount 2 follows every tick from 7 to 24, eighteen clicks at one mark and
 none at the six others. The eye panel shows one spot at that mark, growing
-with its hits. With the split table of feature 12 the released light reaches
-every Node of the screen and the whole screen clicks; the world file does
-not change for that, only the catalog's `spread` entry and the engine. The
+with its hits. With the split table of feature 12 the released light can
+reach every Node of the screen; a world declares it with `spread` on
+`light`, `screen_spread.json` below. The
 record, made once: `source_sha256`
 `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
 `initialization_sha256`
@@ -417,14 +426,32 @@ interval (276 by tick 24, 214 escaped at the open boundary, 62 in the
 world), momentum (0, 0, 0), the charge ledger electron -24, every audit line
 balanced, `conserved_at_every_completed_tick` true.
 
-**Not shown.** The simpler form, one lamp holding 8 as resident content and
-releasing from its stock ([released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1),
-"Resident content"), releases nothing on `main` today: `SpatialEngine.begin`
-schedules a Node whose record holds stock of a source family, but
-`SpatialNode.plan_cycle` returns before planning at a Node with no active
-source, no field content and nothing received, and no test covers
-`release_stock`. The bound group is used instead, the electron at rest of
-this README's dictionary.
+**After feature 12 (2026-09-17, `field-spreading-v1`): one of the seven
+marks clicks, the on-axis one, twelve times.** `screen_spread.json` is
+`screen.json` with `spread` `[6, 1, 1, 1, 1, 1]` declared on `light` (the
+catalog's table) and nothing else changed, run once for 24 ticks
+(`initialization_sha256`
+`34ce343eeb204d9a8b7b1b0c6e6b5c79a21eeb799f717b76d13514a18718fa2d`, `source_sha256`
+`3426aa1ddf25f30348d6238edb66b0454e484a237f40fcf9367bdb948d99c2c9`). The released rays of 2 spread at the
+first Node they reach: 2 gives 1 forward by the table and the remainder 1
+through the entry the group's phase selects, forward at phases 0 to 4,
+backward at 5, transverse at 6 and 7, and a single quantum then turns the
+same way at every Node, so in 24 ticks the +X line still feeds the on-axis
+mark alone, with less: (7, 5, 5) clicks 12 times, amount 24 in
+all, from tick 7, the six other marks never; light released 276, 207
+escaped, 69 in the world at tick 24, electron 8, momentum (0, 0, 0), every
+ledger line balanced. The whole screen clicking waits for a table and a
+phase width in which the turned quanta reach it, which experiment A1
+confronts.
+
+**Resident content.** The simpler form, one lamp holding 8 as resident
+content and releasing from its stock ([released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1),
+"Resident content"), released nothing before feature 12: `SpatialEngine.begin`
+scheduled a Node whose record holds stock of a source family, but
+`SpatialNode.plan_cycle` returned before planning at a Node with no active
+source, no field content and nothing received. Fixed on 2026-09-17 with
+`field-spreading-v1` (the `resident` case of `test_field_spreading.py`); the
+bound group is kept here, the electron at rest of this README's dictionary.
 
 ### Run and render
 
@@ -440,3 +467,113 @@ python tools/ray_viewer/render_gif.py runs/screen/runs.json --output runs/screen
 The record stays outside the tree; the fingerprints above are its register
 line. A GIF is a rendering of a fingerprinted record, not evidence by
 itself.
+
+## The ring: an electron at rest as a loop
+
+`ring.json` and `ring_open.json` are the design worlds of feature 14,
+binding as a loop (`loop-binding-v1`, 2026-09-17; the rule and its
+derivation in [loop binding](../../docs/LOOP_BINDING.md), the model owner's
+decision in [Highlights](../../docs/HIGHLIGHTS.md#34-matter-is-emergent)
+3.4). A ray never stops: an electron at rest is not rays held at a Node but
+rays circulating on the smallest closed path of the lattice, a unit square,
+whose corner meetings reproduce them every interval. The two files are
+written before the feature and registered as
+[E5](../../docs/EXPERIMENTS.md#e5-the-ring-an-electron-at-rest-as-a-loop)
+(planned); their tick-by-tick states were computed by hand and pinned in
+[test expectations](../../docs/TEST_EXPECTATIONS.md#loop-binding) as the
+future `tests/test_loop_binding.py`, and the engine of `main` was then run
+once on them to check whether it already holds the ring: it does, line for
+line ([loop binding](../../docs/LOOP_BINDING.md#10-what-todays-engine-does-with-the-ring)).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| An electron at rest | Eight `electron` rays (charge -3) of amount 1 on the unit square P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5), P3 = (5,6,5) in the plane z = 5, four circulating one way (P0 -> P1 -> P2 -> P3) and four the other, one of each sense at every corner in every interval; content 8, ring 4; nothing is held and no register exists | [Loop binding](../../docs/LOOP_BINDING.md#2-the-smallest-loop-the-unit-square); Highlights 3.4 |
+| The binding | No rule of its own: the ordinary meeting of two electron rays at a corner, the outputs rule `corner`, each input's amount and phase leaving through the Port the other came in by (`"heading": "reversed"` of the other `input`), so each ray turns a quarter turn and stays on the ring; the ring is a fixed point of that table over one circuit | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1); [loop binding](../../docs/LOOP_BINDING.md#2-the-smallest-loop-the-unit-square) |
+| The preparation | Eight lamps, two at each corner, each holding 1 quantum and emitting it once in the cycle of tick 0 on its sense's heading out of that corner (`corner_k_r`, `corner_k_l`), at phase 0, keeping the recoil in its `momentum` register; after tick 1 every corner holds one ray of each sense | [Funded emission](../../docs/SPATIAL_FIELDS.md#funded-emission-and-absorption) |
+| Mass | The content, 8; the sum of the amounts is exact at every tick, since a meeting keeps every family's stock | Highlights 3.4, 3.28 |
+| The clock | Every ray's phase advancing by the rest rate at every Link, `kerengonen.phase_advance` 2 at `phase_bits` 3 (N = 8), so that one circuit of four Links advances every phase by 8 = 0 (mod 8) and the state repeats after one circuit; at the catalog's rate 1 the state repeats after two circuits, nothing lost | [Loop binding](../../docs/LOOP_BINDING.md#3-closure-as-integer-equalities); Highlights 3.3 |
+| The closure condition | Integer equalities: a partner at every corner (presence), the headings by the square's geometry, the amounts by the table, and 4 r = 0 (mod N) for the phase; under the Port form every amount and every rate closes, so the ladder needs a table that reads content, which is open | [Loop binding](../../docs/LOOP_BINDING.md#3-closure-as-integer-equalities) |
+| Dispersal (the control) | `ring_open.json`: the same eight rays and lamps under the catalog's Born table at the corner (`born_steering`, the shared content steered by the phase difference between the two entry Ports) with the senses in phase, d = 0: every corner sends its whole content one way, the next corner holds one ray, no rule fires for one ray and it crosses off the square; the eight quanta leave the open board by tick 8 | [Loop binding](../../docs/LOOP_BINDING.md#4-when-it-does-not-close) |
+| Momentum | Amount times heading; the two quarter turns at a corner move (2, 2, 0) at P0 and the like at the other corners, booked as that corner's source of the momentum field (`source_delta` of its cycle record), the four corners summing to zero every interval, so the world's momentum stays (0, 0, 0) exact; the recoil these bookings stand for belongs to the group's own field, which the worlds do not declare (open) | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) ("Momentum of a split"); Highlights 3.14 |
+| Charge | -3 per quantum, the ledger's electron line -24; `charge x amount` is appended to the corner rule by the engine | [Wave-ray families](../../docs/SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) |
+| The field of the electron | Not declared here: a ring ray in motion would release five headings per Node departed, one of them along the ring to the next corner, and the catalog's electron x light turn would take the ring's ray off the ring; the closure of a ring with its own field is the open point of the design | [Loop binding](../../docs/LOOP_BINDING.md#6-the-field-of-a-loop); Highlights 3.5 |
+
+### ring.json, tick by tick
+
+Board 12 x 12 x 11, open, `link_ticks` 1, `phase_bits` 3, rest rate 2, 16
+ticks. The ticks below are the state after the tick; a ray is (heading,
+amount, phase, steps, event mask, event shares).
+
+| Tick | What is on the board |
+| --- | --- |
+| 1 | Every corner holds two rays of amount 1, phase 2, steps 1, each stamped by its lamp's emission (mask `1 << heading`, share 1 on that Port): at P0 headings -X and -Y, at P1 +X and -Y, at P2 +X and +Y, at P3 -X and +Y; in the cycle that follows `corner` fires at all four corners |
+| 2 to 16 | The same picture at every tick: at P0 headings -X (mask 6, shares (0,1,1,0,0,0)) and -Y (mask 9, (1,0,0,1,0,0)), at P1 +X (mask 5, (1,0,1,0,0,0)) and -Y (mask 10, (0,1,0,1,0,0)), at P2 +X (mask 9) and +Y (mask 6), at P3 -X (mask 10) and +Y (mask 5), each ray amount 1, steps 1, phase 2t mod 8 (4, 6, 0, 2, ...), stamped by the corner it last left; the state after tick t + 4 is the state after tick t: the loop closes in one circuit |
+
+At every tick: electron 8 in the world, none escaped, momentum (0, 0, 0) in
+the world and in the sources (each corner books (2, 2, 0), (-2, 2, 0),
+(-2, -2, 0) or (2, -2, 0) per interval and the four cancel), the charge
+ledger electron -24, every audit line balanced,
+`conserved_at_every_completed_tick` true; `bound_groups` empty and no
+`bound_tick`, since nothing is held. The check run of 2026-09-17 on `main`
+at `c21e03e` (not the registered demonstration, which waits for the
+feature): `initialization_sha256`
+`7908d327bd9163414cf3c019aec9919c2a0cbdb79c086b6fd081e52b69f83fa8`,
+`source_sha256`
+`5abd76ae78b2274d52679fbdbaaf1832e4af33278ef9d36e34120038240dbff6`, every
+line as pinned.
+
+### ring_open.json, tick by tick
+
+The same board, lamps and rays; the rule `corner` is the catalog's Born
+table on the sum of the two inputs at their phase difference, the table
+output through the Port input 1 came in by and the rest output through the
+Port input 0 came in by. Input 0 at a corner is the resident ray with the
+lower heading index.
+
+| Tick | What is on the board |
+| --- | --- |
+| 1 | As `ring.json` |
+| 2 | In the cycle of tick 1 every corner read d = 0 and sent its whole content, 2, through one Port (floor(2 x 8 / 8) = 2, the rest output no ray): P0 and P1 on +Y, P2 and P3 on -Y; each corner now holds one ray of amount 2, phase 4, steps 1, and no rule fires for one ray |
+| 3 to 7 | The four rays walk off the square, (5, 7 - t, 5) and (6, 7 - t, 5) on -Y, (5, 4 + t, 5) and (6, 4 + t, 5) on +Y, amount 2, phase 2t mod 8, steps t - 1 |
+| 8 to 16 | The board is empty: electron 0 in the world, 8 escaped |
+
+At every tick momentum (0, 0, 0) (the corners booked (1, 3, 0), (-1, 3, 0),
+(-1, -3, 0) and (1, -3, 0) in the cycle of tick 1), every audit line
+balanced, `conserved_at_every_completed_tick` true. Check run:
+`initialization_sha256`
+`deeae3635bb5924ff90f36e9996f4acd7c7b6e235a5c6315630c62a5e442e539`, the
+same `source_sha256`. With the four L lamps at phase 2 instead (the senses
+a quarter turn apart, d = 2, the `quadrature` case of the expectations) the
+same Born table closes the ring with the Nodes, headings and amounts of
+`ring.json`.
+
+### Limits: what the worlds show and what is open
+
+The ring holds under today's engine because a meeting with outputs is
+already the ordinary event of Highlights 5.2 and needs no hold; what the
+feature changes is the removal of the held form and its register (the list
+in [loop binding](../../docs/LOOP_BINDING.md#9-the-interim-forms-and-what-feature-14-removes)),
+the reading of a group from the record, and the catalog's binding entries
+as corner tables. The Port form closes for every content and every rate,
+so it gives no ladder; under the catalog's Born table the ring closes only
+with the senses in quadrature and equal amounts, no content ladder either;
+the ladder of hypothesis 12 needs the ring's turn to be produced by its own
+field, which is open. The turns' momentum is booked as a source at the
+corners, exact in the world's total, until the group's field carries it.
+The unit-square electron with the catalog's rate 1 closes in two circuits;
+whether the electron is this loop or a longer ring is A10's.
+
+### Run and render
+
+```bash
+PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/ring.json'), Path('runs/ring'))"
+PYTHONPATH=src python tools/ray_viewer/record_sidecar.py runs/ring
+python tools/ray_viewer/extract.py runs/ring --sidecar runs/ring/ray-recording.json --label "The ring: an electron at rest as a loop" --out runs/ring/runs.json
+python tools/ray_viewer/render_gif.py runs/ring/runs.json --output runs/ring.gif --contact-sheet runs/ring-contact.png
+```
+
+The same four lines with `ring_open` render the control. The record stays
+outside the tree; the register entry E5 is planned and carries no
+fingerprint until the feature lands.

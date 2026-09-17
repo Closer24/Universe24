@@ -6,6 +6,84 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Binding as a loop designed on 2026-09-17 (`loop-binding-v1`, design only)
+
+Issue #169, feature 14 ([loop binding](LOOP_BINDING.md); Highlights 3.4,
+"Binding is a periodic orbit of the meeting rule", model owner,
+2026-09-17). Documents and two world files only; no module, schema key,
+record or test changes with this note:
+
+- `docs/LOOP_BINDING.md` states the rule, the unit-square corner table in
+  today's schema, the closure condition (`L r = 0 (mod N)`, the presence
+  condition, the amounts by the table), dispersal, mass and clock, the
+  field of a loop, the ladder count for A10, the motion of a loop and the
+  mapping of the interim forms; `examples/nature/ring.json` and
+  `ring_open.json` are the unit-square electron and its dispersing control,
+  registered as E5 (planned) and in the nature README; the expected
+  integers of the future `tests/test_loop_binding.py` are pinned in
+  [test expectations](TEST_EXPECTATIONS.md#loop-binding).
+- When the feature is implemented, after feature 8b, the following are
+  removed with their own dated note here: the binding form of a
+  `ray_interactions` rule without outputs (assignments of `delay` 1 as a
+  hold), the `ray_delay` key and the Node's `bound_delay`, `bound_group`,
+  the snapshot's `bound_groups`, the `bound_tick` record, the six-heading
+  release of a held ray in `release_field`, and all of
+  `bound-group-motion-v1` (`BoundMotion`, `bound_motion`, `group_step`,
+  `carry_rays`, `bound_group_step`, `momentum_table` on binding rules,
+  `SpatialPacket.group`, the ledger's reading of a group by its register).
+  A `ray_interactions` rule with outputs, its `delay` output, the delay
+  table and the lag, the released field with `spread`, and the external
+  body are unchanged; the catalog's `binds` entries become corner tables,
+  and the nature examples that use the held form are rewritten as loops or
+  retired with their dated records kept.
+- The two world files run on today's engine unchanged (the check of
+  2026-09-17 on `main` at `c21e03e` agreed with every pinned line); the
+  run record's `ray_binding` identity and empty `bound_groups` are written
+  for them as for any world.
+
+## Bound groups that move on 2026-09-17 (`bound-group-motion-v1`)
+
+Issue #169, feature 8c ([bound group
+motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)), the gap
+the helium-ion run found (E4): a bound group was held at its Node and could
+not move, while Highlights 3.28 gives a group moving one Link every k
+intervals the speed 1/k. The external body's motion rule now applies to
+matter, the same integers:
+
+- A bound group carries a momentum register with three accumulators
+  (`BoundMotion`, `SpatialNodeState.bound_motion`, `SpatialPacket.group`,
+  `InventoryNode.group`, `InventoryPacket.group`), set at its formation as
+  the sum of amount x heading of its rays; it steps one Link when a whole
+  content has accumulated on an axis (`group_step`, sharing `motion_step`
+  with `body_step`). The planner takes the step Port as an eighth argument
+  (`SpatialLaw.__call__(..., bound_port=-1)`, `SpatialPlanningInput.bound_port`),
+  reports `SpatialPlan.bound_port` and `SpatialPlan.bound_push`, and a
+  held ray released nothing on the heading its group is carried through
+  (`release_field(..., carried)`); `carry_rays` in `fields/rays.py`.
+- A binding rule may declare `momentum_table` (`InteractionDefinition.momentum_table`,
+  [disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)); the named families join
+  the rule's layer (`ray_layers`), and `apply_ray_interactions` takes a
+  `pushes` list beside `bound`.
+- The world ledger and the local conservation audit read a bound group's
+  momentum by its register (`held_ray`, `free_rays`, `group_momentum_field`);
+  the push is booked as a source of the momentum field the group's families
+  bind; a group leaving an open boundary is booked as escaped with its
+  content and register (`spatial_escaped` carries `bound_group`). A group
+  whose families bind two momentum fields fails closed at formation.
+- New record `bound_group_step` (position left, Port, arrival tick, momentum,
+  accumulators, content) after the `bound_tick` of that cycle; the
+  snapshot's `bound_groups` entries carry `momentum` and `accumulators`
+  (`test_ray_binding.py`'s pin updated with a dated note); the runner records
+  `bound_group_motion: "bound-group-motion-v1"` when any group stepped or any
+  rule declares a table. Events and the run record of a world where no group
+  ever has a nonzero register are byte for byte what they were
+  (`test_bound_group_motion.py`, case `rest`); `state.json` gains the two
+  zero vectors per group. The output-clock delay `bound_delay` of a Node
+  returns to 0 when its group departs.
+- Not in this slice: two bound groups at one Node (a group arriving at a
+  Node that holds one fails closed), absorption of a field ray into a group
+  (the table returns it reversed), and the local audit's source term for
+  the push (booked to the world ledger only, as the momentum a split moves).
 ## Field spreading added on 2026-09-17 (`field-spreading-v1`)
 
 Feature 12 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
@@ -80,6 +158,51 @@ spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
 - Tests: `tests/test_field_spreading.py` (single, superposition, cancelled,
   quantum, sign, returned, source, resident, rejected, unchanged;
   [expectations](TEST_EXPECTATIONS.md#field-spreading)).
+## The Detector's bit as a property on 2026-09-17 (`detector-bit-property-v1`)
+
+Issue #169, feature 2b ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1),
+[the bit read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1);
+Highlights 5.4, model owner, 2026-09-17):
+
+- A marked Node reads the bit a ray carries before it draws: a ray carrying
+  1 passes without a draw and a ray carrying 0 (a transmission) is never
+  drawn, each recorded as a `detector_pass` event (position, tick, Port,
+  family, amount, `bit`), and only a ray carrying no bit is drawn. A mark
+  that wants the draw of `detector-mark-v1` on such arrivals writes
+  `on_bit_1` or `on_bit_0` as `"draw"` on its `detectors[]` entry; the
+  default is `"pass"`, and any other value is rejected. `DetectorMark`
+  gained `on_bit_1`, `on_bit_0` (`BIT_PASS` 0, `BIT_DRAW` 1) and `bit_keys`,
+  all defaulted, so a typed mark of three or four arguments parses and
+  compares as before.
+- The outputs of every ray interaction that fires, with outputs or with
+  assignments, inherit the Detector bit of its inputs: the highest by the
+  order 1 over 0 over none, unless the rule declares `bit` (`"highest"`,
+  `"none"` or `{"of": i}`); `stamp_event` takes the bit as a third argument
+  and `inherited_bit` is the rule. Before, a meeting's outputs carried no
+  bit; a world in which a marked ray met another ray changes there. An
+  external body's coupled token inherits the bit and is stripped as before;
+  a release carries none.
+- `RAY_PROPERTIES` gained the read-only view `detector` (0 none, 1 a draw
+  of 0, 2 a draw of 1), readable by a `when` guard or an invariant as
+  `charge` is; an assignment to it is rejected. A world with ray
+  interactions reads one more view component per participant (`read` cost
+  10 instead of 9, the cost line of its `spatial_cycle` records and its
+  `computation` report accordingly), as `wave-ray-family-v1` added two; the
+  pin of `RAY_PROPERTIES` in `test_wave_ray_families.py` lists it.
+- The runner records `detector_bit_property: "detector-bit-property-v1"`
+  when a mark writes either coupling key or a rule writes `bit`; a world
+  that declares neither is recorded as before, and its `events.jsonl` and
+  `run.json` are byte for byte what they were unless a marked ray reaches a
+  second mark or meets another ray (checked on the worlds of
+  `test_detector_mark.py`, `test_detector_return.py` and
+  `test_inverse_split.py`).
+- `tools/ray_viewer/extract.py` reads `detector_pass` as the event kind
+  `pass` (a marker like a click, in the captions) and carries each ray's
+  `bit` (`null`, 0 or 1) in `runs.json`; `style.json` and the page's default
+  style gained the kind.
+- `catalog/nature.json`: the Detector's couplings `on_bit_1` and `on_bit_0`
+  are decided, with their world keys and the engine identity, and
+  `docs/CATALOG.md` lists two undecided entries fewer (29).
 
 ## Ray-event audits on 2026-09-17 (`ray-event-audit-v1`)
 
@@ -1077,6 +1200,31 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   along +X. Before feature 12 one mark clicks, the on-axis one, eighteen
   times; after it the whole screen. The test pins the world file's
   integers, not its run.
+
+## Ray viewer: phone GIF preset, 2026-09-17
+
+The model owner's GIFs do not always open on the phone, and he wants GIFs
+only ([ray viewer](../tools/ray_viewer/README.md)); the record is
+unchanged.
+
+- `style.json` gains `motion.gif_preset` (`phone`, the default) and
+  `motion.gif_presets`. `phone` renders 640 px wide (480 px per panel side
+  by side), at most 20 frames spread evenly over the run (`tick_schedule`:
+  the run still reaches its end, at most a quarter of the frames hold the
+  last tick with the camera still, `gif_hold_still`, so the hold is stored
+  once; the 24 frames the model owner allowed left the two-panel screen
+  GIF at 1.05 MB, 20 bring every GIF under the target), 128 colours, no
+  supersampling, a frame duration that makes
+  the GIF read in about six seconds (`gif_seconds`), a target of under 1 MB
+  (`gif_target_bytes`), no contact sheet and no stills. `full` holds the
+  earlier numbers: every tick and twelve hold frames, supersampled, 120 ms
+  a frame, a contact sheet of 16 stills.
+- `render_gif.py --preset phone|full` chooses one; `--frames N` now spreads
+  the run over N frames instead of cutting it. The summary records the byte
+  size, the preset and the tick of every frame, and the renderer prints the
+  size, with a note when it is above the target; it refuses nothing. The
+  nature README's render lines are unchanged and make phone GIFs now.
+- The test pins the presets and the schedule.
 
 ## Primary initialization-based API
 

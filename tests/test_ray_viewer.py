@@ -278,6 +278,11 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert all(e["detail"]["port"] == 1 and e["detail"]["bit"] == 1 for e in clicks)
     quanta_click = next(e for e in clicks if e["detail"]["family"] == "quanta")
     assert quanta_click["in"] == [plus["id"]]
+    # Each ray carries its Detector bit (detector-bit-property-v1, 2026-09-17): the
+    # +X ray realized by the click at (4,1,1), the others none; no pass without a
+    # draw in this world, since no ray carrying a bit reaches a second mark.
+    assert [rays[0]["bit"], rays[1]["bit"], plus["bit"], minus["bit"]] == [None, None, 1, None]
+    assert not any(e["kind"] == "pass" for e in events)
     escapes = [e for e in matter if e["kind"] == "escape"]
     assert escapes[0]["in"] == [minus["id"]] and escapes[1]["in"] == [plus["id"]]
     assert run["detectors"] == [{"pos": [4, 1, 1], "setting": [1, 1], "seed": 0}]
@@ -444,6 +449,49 @@ def test_screen_example_world_is_the_pinned_geometry():
         [([7, y, 5], [1, 1], 0) for y in range(2, 9)],
         [("bind", 1)],
     )
+
+
+def test_phone_preset_schedules_the_frames():
+    style = RENDER.load_style(None)
+    motion = style["motion"]
+    assert motion["gif_preset"] == "phone" and set(motion["gif_presets"]) == {"phone", "full"}
+    phone = RENDER.preset_motion(motion, None)
+    assert (
+        phone["gif_width_px"],
+        phone["gif_panel_px"],
+        phone["gif_max_frames"],
+        phone["gif_hold_frames"],
+        phone["gif_hold_still"],
+        phone["gif_colors"],
+        phone["gif_supersample"],
+        phone["gif_seconds"],
+        phone["gif_target_bytes"],
+        phone["contact_stills"],
+    ) == (640, 480, 20, 12, True, 128, 1, 6, 1000000, 0)
+    full = RENDER.preset_motion(motion, "full")
+    assert (
+        full["gif_max_frames"],
+        full["gif_hold_still"],
+        full["gif_supersample"],
+        full["gif_frame_ms"],
+        full["contact_stills"],
+    ) == (None, False, 2, 120, 16)
+    assert (
+        RENDER.tick_schedule(24, 12, 24)
+        == [0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 14, 16, 17, 18, 20, 21, 23, 24] + [24] * 6
+    )
+    assert RENDER.tick_schedule(6, 12, None) == list(range(7)) + [6] * 12
+    assert RENDER.frame_duration_ms(6, 24, 120) == 250 and RENDER.frame_duration_ms(None, 24, 120) == 120
+    with pytest.raises(ValueError, match="unknown GIF preset"):
+        RENDER.preset_motion(motion, "tablet")
+    bad = copy.deepcopy(style)
+    bad["motion"]["gif_presets"]["phone"]["gif_dither"] = True
+    with pytest.raises(ValueError, match="gif_presets.phone"):
+        RENDER.validate_style(bad)
+    bad = copy.deepcopy(style)
+    bad["motion"]["gif_preset"] = "tablet"
+    with pytest.raises(ValueError, match="gif_preset"):
+        RENDER.validate_style(bad)
 
 
 def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():

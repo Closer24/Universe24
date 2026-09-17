@@ -19,6 +19,7 @@ SpatialPlanner = Callable[
         tuple[Rays, ...],
         int,
         int,
+        int,
     ],
     SpatialPlan,
 ]
@@ -45,6 +46,9 @@ class SpatialPlanningInput:
     tick: int = 0
     # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
     ray_hold: int = 0
+    # The Port the bound group held at the Node departs through this interval,
+    # or -1 (bound-group-motion-v1): decided by the Node from its register.
+    bound_port: int = -1
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -81,6 +85,7 @@ def finish_local_cycle(
                     request.rays,
                     request.tick,
                     request.ray_hold,
+                    request.bound_port,
                 )
             else:
                 result = None
@@ -109,6 +114,7 @@ def _plan_spatial_batch(
             item.rays,
             item.tick,
             item.ray_hold,
+            item.bound_port,
         )
         for item in items
     )
@@ -161,8 +167,11 @@ class NodeExecution:
         rays: tuple[Rays, ...] = (),
         tick: int = 0,
         ray_hold: int = 0,
+        bound_port: int = -1,
     ) -> SpatialPlan:
-        request = SpatialPlanningInput(states, records, received, node_cost, rays, tick, ray_hold)
+        request = SpatialPlanningInput(
+            states, records, received, node_cost, rays, tick, ray_hold, bound_port
+        )
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 
     def _evaluate_carriers(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:

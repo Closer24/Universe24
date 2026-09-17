@@ -140,14 +140,14 @@ separate carriers and their different directions.
 | `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`, each ray field a [wave-ray family](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) with optional `phase_bits`, `charge` and `kerengonen`, and a ray field with `field_of` and `release` the field of that family ([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)), a ray field with `spread` a family whose arrived content every Node releases again by the six-entry split table ([field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)); version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
 | `spatial_seeds` | Optional initial octant populations at named lattice nodes |
-| `detectors` | Optional list of Detector marks, one per position, each with `position`, `setting` `[n, d]` and `seed`, all required and none defaulted ([Detector mark](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)); the only place a draw exists, under the shared Detector admission |
+| `detectors` | Optional list of Detector marks, one per position, each with `position`, `setting` `[n, d]` and `seed`, all required and none defaulted ([Detector mark](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)), and the optional `on_bit_1` and `on_bit_0`, `"pass"` (default) or `"draw"`, what the mark does with a ray that already carries that bit ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)); the only place a draw exists, under the shared Detector admission |
 | `return_mode` | Optional, `"siblings"` (default), `"straight"` or `"annul"`: what a returned ray does at its event Node ([Inverse split](SPATIAL_FIELDS.md#inverse-split-inverse-split-v1)); read only for a returned ray, so a world without a mark is unchanged |
 | `external_bodies` | Optional list of external bodies, one per Node, each with `position`, `family` and `amount` (a positive integer of any width) required and `charge`, `phase`, `initial_momentum` (`heading`, `pace` `[n, d]`), `coupling` (`"sink"` or a declared ray interaction) and `momentum_table` (family to sign) optional ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); the second declared element beside the Detector mark, under the shared Detector admission |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
-| `ray_interactions` | Schema 1 only: at most 32 meetings of rays over indexed ray-field roles ([shared coupling](SHARED_RAY_COUPLING.md)); an entry with `outputs` replaces its participants by one to six new event rays, an amount optionally split by a declared table ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)), an output's `delay` optionally `{"of": i, "table": [six], "per": u}`, a delay per the Port input i came through; an entry without outputs assigning `delay` 1 binds its participants and may declare `ray_delay`, the output-clock delay of the Node that holds its group ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
+| `ray_interactions` | Schema 1 only: at most 32 meetings of rays over indexed ray-field roles ([shared coupling](SHARED_RAY_COUPLING.md)); an entry with `outputs` replaces its participants by one to six new event rays, an amount optionally split by a declared table ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)), an output's `delay` optionally `{"of": i, "table": [six], "per": u}`, a delay per the Port input i came through; an entry without outputs assigning `delay` 1 binds its participants and may declare `ray_delay`, the output-clock delay of the Node that holds its group ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)), and `momentum_table` (family name to sign, -1 attraction toward the source of an arriving field ray, 1 repulsion, as the external body's table), the field families that push the group it binds, which then moves by its momentum register, one Link every content / momentum intervals ([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)); any entry may declare `bit` (`"highest"`, the default, `"none"` or `{"of": i}`), the Detector bit its outputs inherit from its inputs ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 
 The authoritative contract for local field selection, group semantics, rule
 expressions and joint transactions is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
@@ -333,6 +333,16 @@ Ordinary update and movement expressions read fields owned by that record.
 Coupling expressions can reference the declared participant with `side: "left"`
 or `side: "right"`; left is the default. Remote nodes, global totals, clocks
 outside the modeled scheduler and diagnostic histories are not expression inputs.
+
+A ray interaction's expressions reference a participant by index
+(`{"field": "charge", "participant": 0}`) over the ray view `RAY_PROPERTIES`
+([shared coupling](SHARED_RAY_COUPLING.md)): `amount`, `heading`, `phase`,
+`advance`, `delay`, `family`, `charge` and, since `detector-bit-property-v1`,
+`detector`, the Detector bit the ray carries as the engine stores it, `0`
+none, `1` a draw of 0, `2` a draw of 1, so that a `when` guard fires a rule
+for realized content alone (`{"op": "eq", "args": [{"field": "detector",
+"participant": 0}, 2]}`); `family`, `charge` and `detector` are read-only
+([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
 
 ### Paired exchange couplings
 

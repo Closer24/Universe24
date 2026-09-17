@@ -37,8 +37,13 @@ here that touches the engine.
 - Every other event is a marker at its Node that stays for the rest of the
   run, told by shape and colour alone (the legend under the canvas names
   them): emission, meeting of rays (also a trajectory or family change),
-  Detector PASS, Detector RETURN with the arrival of a returning ray at its
-  event Node, inverse split, and escape through an open Link as a small dot.
+  Detector PASS, a Detector pass without a draw (a ray carrying a bit read by
+  a later mark, `detector-bit-property-v1`), Detector RETURN with the arrival
+  of a returning ray at its event Node, inverse split, and escape through an
+  open Link as a small dot. Each ray of `runs.json` carries its Detector
+  `bit` (`null`, 0 or 1): set by a click, a pass or a return, inherited by the
+  outputs of an event from its inputs, and read from the ray recording when
+  the record carries one.
   Escapes of field rays are drawn as nothing. Crossings without interaction
   and an absorption into a body's sink end or continue the rays but draw
   nothing. A record kind the extractor does not know becomes a generic
@@ -72,8 +77,9 @@ here that touches the engine.
   `node_dot_alpha`) inside a thin box (`box_alpha`), field rays as faint
   cyan-white hairlines with additive glow (`draw.field_additive`), event
   markers as thin glowing rings (`marker_ring_thickness`, `marker_alpha`),
-  small dim escape dots (`escape_alpha`), and a GIF rendered at twice the
-  size and scaled down (`motion.gif_supersample`) for gentle anti-aliasing.
+  small dim escape dots (`escape_alpha`), and, in the `full` GIF preset, a
+  GIF rendered at twice the size and scaled down (`gif_supersample`) for
+  gentle anti-aliasing.
   The camera fits the action (`motion.camera_fit` `rays`): the box around
   every matter ray path, source, Detector mark and body over the run, padded
   by `camera_fit_margin_links`, holds the lattice and the thin box, with the
@@ -119,11 +125,11 @@ never a code change. Its sections and keys, all of them, are:
 
 | Section | Keys |
 | --- | --- |
-| `colors` | `background`, `surface`, `scene` (the vignette's centre), `scene_edge` (its edge), `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
+| `colors` | `background`, `surface`, `scene` (the vignette's centre), `scene_edge` (its edge), `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `pass`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
 | `sizes` | `ray_width_px`, `head_radius_px` (a sphere head, on screen), `head_links` (a segment head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `marker_ring_thickness`, `marker_alpha`, `escape_dot_radius`, `escape_alpha`, `click_flash_ticks`, `click_flash_px_per_quantum`, `click_flash_min_px`, `click_dot_px`, `click_dot_alpha`, `mark_alpha` (the eye view), `source_size`, `detector_size`, `body_size`, `detector_alpha`, `glow_scale`, `glow_alpha`, `sphere_roughness`, `sphere_metalness`, `sphere_emissive`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `node_dot_alpha`, `lattice_alpha`, `box_alpha` |
 | `draw` | `view` (`board` or `eye`), `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `marker_shape` (`sphere` or `cube` for sources, Detector marks, bodies and heads) with `shape_overrides` (per kind: `source`, `detector`, `body`, `head`), `glow`, `vignette`, `field_additive`, `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
 | `caption` | `kinds` (the event kinds listed), `max_per_tick`, `more`, `emissions`, `escapes`, `field_escapes`, `empty`, `totals` (`{family}`, `{in_world}`, `{escaped}`, `{on_links}`, `{held}`, `{sourced}`), `conservation` (`{status}`, `{balanced}`, `{every_tick}`) |
-| `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `gif_supersample`, `contact_stills`, `elevation_deg`, `start_angle_deg`, `camera_fit` (`rays` or `board`), `camera_fit_margin_links` |
+| `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `gif_supersample`, `gif_preset` (`phone` or `full`, the GIF preset the renderer uses without `--preset`), `gif_presets` (one object per preset name, each overriding `gif_width_px`, `gif_panel_px` (per panel side by side), `gif_max_frames`, `gif_hold_frames`, `gif_hold_still`, `gif_colors`, `gif_supersample`, `gif_seconds`, `gif_frame_ms`, `gif_target_bytes` and `contact_stills`), `contact_stills`, `elevation_deg`, `start_angle_deg`, `camera_fit` (`rays` or `board`), `camera_fit_margin_links` |
 
 `viewer.html` reads the style from its inlined `<script type="application/json"
 id="style">` block when the renderer filled it, else from `?style=URL`, else
@@ -140,7 +146,7 @@ inlines that file and takes every default of its arguments from the file's
 | File | Used for |
 | --- | --- |
 | `run.json` | model, status, shape, boundary, completed ticks, fingerprints (`source_sha256`, `initialization_sha256`), `ray_state`, `detector_mark`, `released_field`, `external_bodies` (declaration, `positions` per tick, final state), initial, final, escaped and source totals, the conservation report, and `audit`, the world ledger per completed tick (`ray-event-audit-v1`: amount, momentum and charge lines with initial, sourced, current, escaped, annulled and absorbed), carried into the `conservation` entry for the caption |
-| `events.jsonl` | `spatial_sent` (position, Port, arrival tick) and `spatial_received` (per-Port family amounts) build the Link transits; `spatial_escaped` the escapes; `spatial_cycle` deltas count the sources tick by tick and annotate emissions; `detector_click` the PASS markers; `external_body_absorbed` ends the rays a body took, and gives their transit into the body's Node the amount the receiver's reading leaves out (at a coupled body only the absorbed families end there); any other kind becomes a generic marker (`cycle_started`, `cycle_committed`, `spatial_cycle_started` and `external_body_step` are host timing or already in `run.json` and are skipped) |
+| `events.jsonl` | `spatial_sent` (position, Port, arrival tick) and `spatial_received` (per-Port family amounts) build the Link transits; `spatial_escaped` the escapes; `spatial_cycle` deltas count the sources tick by tick and annotate emissions; `detector_click` the PASS markers and `detector_pass` the pass-without-a-draw markers (`detector-bit-property-v1`); `external_body_absorbed` ends the rays a body took, and gives their transit into the body's Node the amount the receiver's reading leaves out (at a coupled body only the absorbed families end there); any other kind becomes a generic marker (`cycle_started`, `cycle_committed`, `spatial_cycle_started` and `external_body_step` are host timing or already in `run.json` and are skipped) |
 | `initialization.json` | families and which are ray fields (and fields of a family, with their `release`), sources (`seeds`), Detector marks (`detectors`), the declared couplings (`ray_interactions`, `spatial_couplings`) |
 | `ray-recording.json` (optional) | a per-tick ray listing: phase per Link, and the ray-event fields `steps`, `outbound`, `event_ports`, `event_shares`, `detector` when the recording carries them |
 
@@ -188,13 +194,26 @@ python tools/ray_viewer/render_gif.py runs.json --output electron.gif
 
 `extract.py` takes one or more records (a `run.json` or its directory) and
 writes one `runs.json` (`ray-viewer-runs-v1`); `--label` names each run in
-order and `--sidecar` its recording. `render_gif.py` writes the GIF, a
-contact sheet of `contact_stills` frames (`--contact-sheet`, default
-`<output>-contact.png`), a few stills and `render-summary.json` under
-`--work`, and with `--html PAGE` the viewer page with the runs and the style
-inlined. Its arguments `--frames`, `--hold`, `--step`, `--start-angle`,
+order and `--sidecar` its recording. `render_gif.py` writes the GIF and
+`render-summary.json` under `--work` (the GIF's size in bytes is always
+printed), and with `--html PAGE` the viewer page with the runs and the
+style inlined. `--preset` picks a GIF preset from the style's
+`motion.gif_presets`; without it the style's `gif_preset` applies. `phone`
+(the default; the model owner's phone, 2026-09-17): 640 px wide, 480 px per
+panel side by side, at most 20 frames spread evenly over the run so it
+still reaches its end (at most a quarter of them holding the last tick,
+the camera still during the hold, `gif_hold_still`, so the GIF stores the
+hold once with its whole duration), 128 colours, no supersampling, the
+frame duration set so the GIF reads in about six seconds (`gif_seconds`),
+a target of under 1 MB (`gif_target_bytes`, noted beside the size when
+exceeded, never refused), no contact sheet and no stills. `full`: the
+large GIF, 640 px per panel, every tick and twelve hold frames turning on,
+supersampled, with a contact sheet of
+`contact_stills` frames (`--contact-sheet`, default `<output>-contact.png`)
+and a few stills under `--work`. The arguments `--frames` (a frame count
+the run is spread over), `--hold`, `--step`, `--start-angle`,
 `--elevation`, `--width`, `--colors`, `--frame-ms` and `--contact-stills`
-override the style's `motion` block; `--run KEY` selects runs (stacked
+(0 for none) override the preset; `--run KEY` selects runs (stacked
 vertically); `--three PATH` names a local copy of Three.js r128.
 
 To use the page interactively, open `viewer.html` with a `runs.json` (and

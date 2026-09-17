@@ -315,6 +315,8 @@ def test_every_ray_is_a_wave_ray(tmp_path):
     # tick, through a meeting that reverses both headings; charge x amount is an
     # invariant of the declared interaction, and an interaction that would change
     # the total charge is rejected at validation.
+    # `detector` joined the view on 2026-09-17 (detector-bit-property-v1, feature
+    # 2b): the Detector bit a ray carries, read-only like family and charge.
     assert [field.name for field in RAY_PROPERTIES] == [
         "amount",
         "heading",
@@ -323,6 +325,7 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         "delay",
         "family",
         "charge",
+        "detector",
     ]
     plus = {
         "type": "lamp_plus",

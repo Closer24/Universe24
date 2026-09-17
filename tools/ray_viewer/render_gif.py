@@ -7,9 +7,13 @@ answered from a local copy of the same file through a route, so the capture
 needs no network, and every other request is blocked. The camera azimuth
 advances ``--step`` degrees per frame while the tick runs 0..ticks and then
 holds the final state for ``--hold`` frames; the runs are stacked vertically
-in each frame. Pillow assembles the GIF with one shared palette and writes a
-contact sheet of evenly spaced frames. Every default below comes from the
-style's ``motion`` block, so a change of look is a file edit and a re-render.
+in each frame. Pillow assembles the GIF with one shared palette and, when the
+preset asks for stills, writes a contact sheet of evenly spaced frames. Every
+default below comes from the style's ``motion`` block and its GIF preset
+(``--preset``: ``phone``, the default, a small GIF of at most 24 frames that
+reads in about six seconds; ``full``, the large anti-aliased one with a
+contact sheet), so a change of look is a file edit and a re-render. The
+summary always prints the GIF's size in bytes.
 
 The result is a rendering of a fingerprinted record, not evidence by itself.
 
@@ -144,6 +148,8 @@ STYLE_KEYS = {
         "gif_frame_ms",
         "gif_colors",
         "gif_supersample",
+        "gif_preset",
+        "gif_presets",
         "contact_stills",
         "elevation_deg",
         "start_angle_deg",
@@ -151,6 +157,20 @@ STYLE_KEYS = {
         "camera_fit_margin_links",
     ),
 }
+# The keys a GIF preset (style motion.gif_presets.<name>) may override.
+PRESET_KEYS = (
+    "gif_width_px",
+    "gif_panel_px",
+    "gif_max_frames",
+    "gif_hold_frames",
+    "gif_hold_still",
+    "gif_colors",
+    "gif_supersample",
+    "gif_seconds",
+    "gif_frame_ms",
+    "gif_target_bytes",
+    "contact_stills",
+)
 CHROMIUM_ARGS = [
     "--use-angle=swiftshader",
     "--enable-unsafe-swiftshader",
@@ -205,7 +225,52 @@ def validate_style(style: dict[str, Any]) -> dict[str, Any]:
         extra = set(block) - set(keys)
         if extra:
             raise ValueError(f"unknown keys in style.{section}: {sorted(extra)}")
+    presets = style.get("motion", {}).get("gif_presets", {})
+    if not isinstance(presets, dict) or not all(isinstance(p, dict) for p in presets.values()):
+        raise ValueError("style.motion.gif_presets must map preset names to objects")
+    for name, preset in presets.items():
+        extra = set(preset) - set(PRESET_KEYS)
+        if extra:
+            raise ValueError(f"unknown keys in style.motion.gif_presets.{name}: {sorted(extra)}")
+    chosen = style.get("motion", {}).get("gif_preset")
+    if chosen is not None and chosen not in presets:
+        raise ValueError(f"style.motion.gif_preset {chosen!r} is not one of {sorted(presets)}")
     return style
+
+
+def preset_motion(motion: dict[str, Any], name: str | None) -> dict[str, Any]:
+    """The motion block with the named GIF preset (default: ``gif_preset``) laid over it."""
+    presets = motion.get("gif_presets", {})
+    chosen = name if name is not None else motion.get("gif_preset")
+    if chosen is None:
+        return dict(motion)
+    if chosen not in presets:
+        raise ValueError(f"unknown GIF preset {chosen!r}; the style has {sorted(presets)}")
+    return {**motion, **presets[chosen]}
+
+
+def tick_schedule(ticks: int, hold: int, frames: int | None = None) -> list[int]:
+    """The tick each frame shows: 0..ticks, then ``hold`` frames of the last tick.
+
+    With a frame cap the moving frames are spread evenly over the run so it still
+    reaches its end, and at most a quarter of the frames hold the last tick."""
+    full = list(range(ticks + 1)) + [ticks] * hold
+    if frames is None or len(full) == frames:
+        return full
+    if len(full) < frames:
+        return full + [ticks] * (frames - len(full))
+    if frames <= 2:
+        return [0, ticks][:frames]
+    holding = min(hold, max(1, frames // 4))
+    moving = max(2, frames - holding)
+    return [round(i * ticks / (moving - 1)) for i in range(moving)] + [ticks] * (frames - moving)
+
+
+def frame_duration_ms(seconds: float | None, frames: int, fallback: int) -> int:
+    """The frame duration that makes the GIF read in ``seconds``; at least 20 ms."""
+    if seconds is None:
+        return fallback
+    return max(20, round(seconds * 1000 / max(1, frames)))
 
 
 def inline_json(page: str, tag: str, document: dict[str, Any]) -> str:
@@ -286,11 +351,9 @@ def contact_sheet(
 def capture_frames(
     page_html: str,
     run_keys: list[str],
-    ticks: int,
+    schedule: list[int],
+    angles: list[float],
     *,
-    frames: int,
-    step: float,
-    start_angle: float,
     elevation: float,
     width: int,
     three: Path,
@@ -331,9 +394,7 @@ def capture_frames(
         if not info.get("webgl"):
             raise RuntimeError("the page reports no WebGL renderer")
         capture = page.locator("#capture")
-        for i in range(frames):
-            tick = min(i, ticks)
-            angle = start_angle + step * i
+        for i, (tick, angle) in enumerate(zip(schedule, angles, strict=True)):
             parts = []
             for j, key in enumerate(run_keys):
                 panels = []
@@ -366,7 +427,16 @@ def main() -> None:
     parser.add_argument("--contact-sheet", type=Path, help="default: the output name with -contact.png")
     parser.add_argument("--html", type=Path, help="also write the viewer page with the runs inlined")
     parser.add_argument("--style", type=Path, help="style file (default: style.json beside this script)")
-    parser.add_argument("--frames", type=int, help="default: style gif_frames, else ticks + 1 + hold")
+    parser.add_argument(
+        "--preset",
+        help="GIF preset from the style's motion.gif_presets (default: motion.gif_preset)",
+    )
+    parser.add_argument(
+        "--frames",
+        type=int,
+        help="frame count; the run is spread over them (default: the preset's gif_max_frames cap, "
+        "else ticks + 1 + hold)",
+    )
     parser.add_argument(
         "--hold", type=int, help="frames that hold the final tick (style gif_hold_frames)"
     )
@@ -376,7 +446,9 @@ def main() -> None:
     parser.add_argument("--width", type=int, help="pixels (style gif_width_px)")
     parser.add_argument("--colors", type=int, help="palette size (style gif_colors)")
     parser.add_argument("--frame-ms", type=int, help="frame duration (style gif_frame_ms)")
-    parser.add_argument("--contact-stills", type=int, help="stills on the contact sheet (style)")
+    parser.add_argument(
+        "--contact-stills", type=int, help="stills on the contact sheet, 0 for none (preset)"
+    )
     parser.add_argument(
         "--run", action="append", default=[], help="run key to draw; repeat; default all"
     )
@@ -394,7 +466,11 @@ def main() -> None:
     if args.view:
         style["draw"]["view"] = args.view
     views: tuple[str, ...] = ("board", "eye") if args.side_by_side else (style["draw"]["view"],)
-    motion = style["motion"]
+    try:
+        motion = preset_motion(style["motion"], args.preset)
+    except ValueError as error:
+        parser.error(str(error))
+    preset = args.preset if args.preset is not None else style["motion"].get("gif_preset")
 
     def pick(value: Any, key: str, fallback: Any) -> Any:
         return value if value is not None else motion.get(key, fallback)
@@ -403,11 +479,12 @@ def main() -> None:
     step = float(pick(args.step, "gif_degrees_per_frame", 5.0))
     start_angle = float(pick(args.start_angle, "start_angle_deg", -35.0))
     elevation = float(pick(args.elevation, "elevation_deg", 28.0))
-    width = int(pick(args.width, "gif_width_px", 640))
+    panel_key = "gif_panel_px" if len(views) > 1 else "gif_width_px"
+    width = int(pick(args.width, panel_key, motion.get("gif_width_px", 640)))
     colors = int(pick(args.colors, "gif_colors", 128))
-    frame_ms = int(pick(args.frame_ms, "gif_frame_ms", 120))
     stills = int(pick(args.contact_stills, "contact_stills", 16))
     supersample = int(motion.get("gif_supersample", 1) or 1)
+    target_bytes = motion.get("gif_target_bytes")
     runs = json.loads(args.runs.read_text(encoding="utf-8"))
     keys = args.run or [run["key"] for run in runs["runs"]]
     known = {run["key"] for run in runs["runs"]}
@@ -415,16 +492,25 @@ def main() -> None:
     if missing:
         parser.error(f"unknown run keys {missing}; known: {sorted(known)}")
     ticks = max(int(run["ticks"]) for run in runs["runs"] if run["key"] in keys)
-    styled_frames = motion.get("gif_frames")
-    frames = int(
-        args.frames
-        if args.frames is not None
-        else styled_frames
-        if styled_frames is not None
-        else ticks + 1 + hold
+    cap = args.frames
+    if cap is None:
+        cap = motion.get("gif_frames")
+    if cap is None:
+        cap = motion.get("gif_max_frames")
+    schedule = tick_schedule(ticks, hold, None if cap is None else int(cap))
+    frames = len(schedule)
+    frame_ms = int(
+        args.frame_ms
+        if args.frame_ms is not None
+        else frame_duration_ms(motion.get("gif_seconds"), frames, int(motion.get("gif_frame_ms", 120)))
     )
     if frames < 1 or width < 320:
         parser.error("frames must be positive and width at least 320")
+    # With a still hold the camera stops at the run's end, so the hold frames are
+    # identical and the GIF stores them once with the whole hold's duration.
+    hold_still = bool(motion.get("gif_hold_still", False))
+    first_end = schedule.index(ticks) if ticks in schedule else frames - 1
+    angles = [start_angle + step * (min(i, first_end) if hold_still else i) for i in range(frames)]
     work = args.work or args.output.with_suffix("").with_name(args.output.stem + "-render")
     work.mkdir(parents=True, exist_ok=True)
     three = three_js(args.three)
@@ -435,10 +521,8 @@ def main() -> None:
     images, errors, blocked = capture_frames(
         page_html,
         keys,
-        ticks,
-        frames=frames,
-        step=step,
-        start_angle=start_angle,
+        schedule,
+        angles,
         elevation=elevation,
         width=width,
         three=three,
@@ -460,21 +544,32 @@ def main() -> None:
         optimize=False,
         disposal=1,
     )
-    sheet_path = args.contact_sheet or args.output.with_name(args.output.stem + "-contact.png")
-    contact_sheet(images, count=stills, width=320 * len(views)).save(sheet_path)
-    still_paths = {}
-    for index in sorted({0, min(ticks // 2, frames - 1), min(ticks, frames - 1), frames - 1}):
-        path = work / f"frame-{index:03d}.png"
-        images[index].save(path)
-        still_paths[index] = str(path)
+    sheet_path: Path | None = None
+    still_paths: dict[int, str] = {}
+    if stills > 0:
+        # Stills belong to the full preset; the phone preset writes the GIF alone.
+        sheet_path = args.contact_sheet or args.output.with_name(args.output.stem + "-contact.png")
+        contact_sheet(images, count=stills, width=320 * len(views)).save(sheet_path)
+        for index in sorted({0, frames // 2, frames - 1}):
+            path = work / f"frame-{index:03d}.png"
+            images[index].save(path)
+            still_paths[index] = str(path)
     with Image.open(args.output) as check:
         n_frames, size = getattr(check, "n_frames", 1), check.size
+    gif_bytes = args.output.stat().st_size
+    above_target = target_bytes is not None and gif_bytes > int(target_bytes)
     summary = {
         "gif": str(args.output),
-        "gif_bytes": args.output.stat().st_size,
+        "gif_bytes": gif_bytes,
+        "gif_target_bytes": target_bytes,
+        "above_target": above_target,
+        "preset": preset,
+        "frames": frames,
+        "hold_still": hold_still,
         "n_frames": n_frames,
         "size_px": list(size),
         "frame_ms": frame_ms,
+        "seconds": round(frames * frame_ms / 1000, 2),
         "step_deg": step,
         "start_angle_deg": start_angle,
         "elevation_deg": elevation,
@@ -484,7 +579,7 @@ def main() -> None:
         "supersample": supersample,
         "views": list(views),
         "runs": keys,
-        "tick_schedule": f"tick = min(frame, {ticks}); frames {ticks + 1}..{frames - 1} hold tick {ticks}",
+        "tick_schedule": schedule,
         "records": [
             {
                 "key": run["key"],
@@ -498,12 +593,17 @@ def main() -> None:
         "three_js": THREE_URL,
         "three_served_from": str(three),
         "blocked_requests": blocked,
-        "contact_sheet": str(sheet_path),
+        "contact_sheet": None if sheet_path is None else str(sheet_path),
         "stills": still_paths,
         "elapsed_seconds": round(time.time() - started, 1),
     }
     (work / "render-summary.json").write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=1))
+    note = f", above the preset's target of {target_bytes}" if above_target else ""
+    print(
+        f"GIF {args.output}: {gif_bytes} bytes, {n_frames} frames stored of {frames}, "
+        f"{size[0]}x{size[1]} px, {summary['seconds']} s{note}"
+    )
 
 
 if __name__ == "__main__":

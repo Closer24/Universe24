@@ -48,13 +48,16 @@ capacity; rays are met layer by layer
 layers do not share that capacity.
 A participant's configured spatial-field type or
 required structural properties selects its non-owning view. The projection
-properties are `amount`, `heading`, `phase`, `advance`, `delay`, `family` and
-`charge` (`RAY_PROPERTIES`); `delay` maps to native `interaction_delay`,
-`family` is the index of the ray's spatial field and `charge` its family's
-charge per quantum ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+properties are `amount`, `heading`, `phase`, `advance`, `delay`, `family`,
+`charge` and `detector` (`RAY_PROPERTIES`); `delay` maps to native
+`interaction_delay`, `family` is the index of the ray's spatial field,
+`charge` its family's charge per quantum ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1))
+and `detector` the Detector bit it carries, `0` none, `1` a draw of 0, `2` a
+draw of 1 ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
 Only heading, phase and delay are writable in this first interface. Amount,
-advance, family and charge are read-only, and `charge x amount` summed over the
-participants is an invariant appended to every rule. The shared value-level
+advance, family, charge and detector are read-only, and `charge x amount`
+summed over the participants is an invariant appended to every rule; the
+outputs of every rule that fires carry the bit its inputs hand down. The shared value-level
 evaluator is also the carrier path's evaluator, not a copied implementation.
 Native ray operations without outputs preserve the number and identity of
 complete owners. They reject `output_types`, including typed initialization and

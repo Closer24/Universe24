@@ -194,6 +194,11 @@ class DisturbanceEngine:
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].incoming,
                 () if spatial is None or position not in spatial.nodes else spatial.nodes[position].rays,
+                group=(
+                    None
+                    if spatial is None or position not in spatial.nodes
+                    else spatial.nodes[position].bound_motion
+                ),
             )
             for position in sorted(positions)
         )
@@ -215,6 +220,7 @@ class DisturbanceEngine:
                     packet.arrival_tick,
                     spatial=packet.fields,
                     rays=packet.rays,
+                    group=packet.group,
                 )
                 for origin, links in spatial.links.items()
                 for slot, packet in enumerate(links)
