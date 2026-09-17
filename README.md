@@ -21,7 +21,7 @@ not recognize mass, charge or velocity by name or supply a hidden physical model
 Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
 The shared quantum resource and its integration layer were deleted on
 2026-09-17 ([migration](docs/MIGRATION.md#shared-quantum-resource-and-integration-layer-deleted-on-2026-09-17)).
-The [named-particle gallery](examples/gallery/README.md) renders recorded
+The named-particle gallery (`examples/gallery/`, deleted on 2026-09-17) renders recorded
 electron and positron runs as three-dimensional animations.
 
 For a complete authoring walkthrough, use the
@@ -153,10 +153,10 @@ limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.m
 and [the entity catalog](examples/known-entities/catalog.json). Compile selected
 experiments using [the catalog and explicit profile guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
-Compare selected behavior using the [small-space physics suite](examples/small-space/README.md),
+Compare selected behavior using the small-space physics suite (`examples/small-space/`, deleted on 2026-09-17),
 or probe the outward field from outside the event space with the
-[inverse-square experiment](examples/inverse-square/README.md).
-The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
+inverse-square experiment (`examples/inverse-square/`, deleted on 2026-09-17).
+The local Maxwell experiment (`examples/maxwell/`, deleted on 2026-09-17) tests a configured
 reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
 Emergence probes use elementary local vector operations; known continuum equations remain
 external validation targets rather than supplied update formulas.

@@ -185,7 +185,13 @@ def test_clean_checkout_still_honors_explicit_test_selection(monkeypatch, tmp_pa
     report = json.loads(capsys.readouterr().out)
     assert report["changed"] == []
     assert report["commands"] == [
-        ["pytest", "tests/test_selected.py::test_boundary", "--junitxml=artifacts/junit.xml"]
+        [
+            "pytest",
+            "-n",
+            "auto",
+            "tests/test_selected.py::test_boundary",
+            "--junitxml=artifacts/junit.xml",
+        ]
     ]
 
 
@@ -272,7 +278,7 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     report = tmp_path / "artifacts/check-scope.json"
 
     def fail_command(command, **kwargs):
-        assert command[2:4] == ["pytest", "tests/test_selected.py"]
+        assert command[2:6] == ["pytest", "-n", "auto", "tests/test_selected.py"]
         active = cleanup_expired(report.parent, now=time.time() + 2 * MAX_AGE_SECONDS)
         assert not active["errors"] and not active["deleted"] and report.exists()
         assert any(item["reason"] == "active writer" for item in active["skipped"])

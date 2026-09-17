@@ -260,6 +260,22 @@ tests. Do not remove a failing requirement, change a frozen source, or turn fail
 into an expected pass to achieve a green gate. A candidate's passing tests do not
 repair another model's failure or establish a real-world law.
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions),
+a test exercises one generic rule in isolation on a minimal board and nothing
+else: one test module per rule, one per feature of the ray-event model, with the
+expected integers written down before the first run. No test pins the numbers of
+an example world, compares two worlds or reproduces a known experiment; those are
+research runs, made once and recorded with a fingerprint and a date in
+[validation evidence](../docs/VALIDATION.md), never repeated as tests. A change is
+checked only against the tests that depend on what it changed, selected by the
+import graph (`python tools/check.py`); the whole suite runs together only when
+the shared core changes (the Node and its Ports, the order of the cycle, the
+bounded integers, the phase), and then once, in parallel (`pytest -n auto`). A
+physical milestone, a phenomenon that several rules produce together, is one
+fingerprinted, dated run of the engine, not a suite. The cost of checking is
+proportional to the risk of the change, never constant.
+
 Pure documentation/skill changes need skill/link/language and packaging validation,
 not newly invented physical tests. The repository's existing submission and CI
 gate still applies. Ordinary runs and tests are headless; render only when the

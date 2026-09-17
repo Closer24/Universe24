@@ -32,6 +32,15 @@ the bond registry and claim/gather the same day with bucket B.5; the record
 operations stay until bucket B.6 of issue #164.
 
 
+The test suite was reduced on 2026-09-17 by decision of the model owner: the
+engine is generic, so one module isolates each generic rule on a minimal board
+and one module covers each feature of the ray-event model; world-specific
+pins, duplicates, experiment-like suites and the dated research studies under
+`examples/` were deleted. The kept modules and the rule each one isolates are
+listed in [test expectations](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17);
+the deleted modules and studies are named in the
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule).
+
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
 of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate
 uses existing received-port interactions and paired momentum updates. The impulse
@@ -95,32 +104,32 @@ two-wing Bell experiments and the finite quantum-register extension were
 deleted on 2026-09-17 with the shared quantum resource.
 
 
-The [local Maxwell experiment](../examples/maxwell/README.md) selects a
+The local Maxwell experiment (`examples/maxwell/`, deleted on 2026-09-17) selects a
 six-population reflection and causal streaming through configuration only.
 Its conditional long-wavelength vacuum generator and eleven small-world runs
 give two transverse modes with leading speed one half link per tick. Centered
 Gauss conservation, exact macro electromagnetic energy and indefinite integer
 mixing remain explicit blockers; this is not a complete electromagnetic law.
 
-The [small-space comparisons](../examples/small-space/README.md) record 24
+The small-space comparisons (`examples/small-space/`, deleted on 2026-09-17) record 24
 9-cubed/15-cubed entity, source and response experiments. Local accounting and
 selected mechanisms pass; field/particle physical laws remain incomplete.
 Finite owned-reservoir transfer, a ray-speed parameter and a restricted
 zero-total-momentum unequal-mass candidate are explicit configuration solutions,
 not replacements for the default entity profiles or derived universal laws.
-The [inverse-square probe](../examples/inverse-square/README.md) measures the
+The inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) measures the
 outward field from outside the event space: every Manhattan shell carries exactly
 one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
 values are anisotropic (geometric on axes, about `1/r` on body diagonals). The
 straight-ray candidate `isotropic-ray-field-v1` (`"transport": "ray"`) removes that
 anisotropy: rays carry their heading and phase, and the time-averaged flux per
-node follows solid angle. The [gravity probe](../examples/gravity-probe/README.md)
+node follows solid angle. The gravity probe (`examples/gravity-probe/`, deleted on 2026-09-17)
 composes existing rules only: an `exchange` coupling with amount `mass x flux / D`
 gives held bodies momentum toward the ray source in proportion to mass, and a
 moving body falls inward. The reaction stays in the local momentum field at the
 body's Node; no reaction reaches the source, and no gravitational constant is
 identified beyond the configured `1 / D`. The
-[particle interaction probes](../examples/particle-interactions/README.md) give
+particle interaction probes (`examples/particle-interactions/`, deleted on 2026-09-17) give
 all charged bodies one signed ray field with the local one-link `self_exclusion`
 rule: like charges repel head-on, opposite charges attract, neutral bodies
 cross, and a timed two-record conversion emits a proton with a recoiling core.
@@ -145,7 +154,7 @@ or gravitational dynamics.
 
 A Huygens slit re-emits the phase and advance it absorbed, so one lamp behind
 two slits gives the fringe, and rays may carry their own advance from the
-emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
+emitter's momentum: the de Broglie probe (`examples/de-broglie/`, deleted on 2026-09-17)
 halves the fringe period each time the beam's momentum doubles in its measured
 range. The momentum-to-advance relation is supplied by configuration, not derived.
 The Bell test on the phased-ray field (`examples/kerengonen-bell/`, deleted on
@@ -155,15 +164,15 @@ placed the candidate: with the four CHSH settings of the former quantum owner
 recorded 14/5 in every correlation, and the plain field 2, so the classical
 candidate stayed inside the local bound.
 halves the fringe period each time the beam's momentum doubles, and the
-[matter-wave probe](../examples/matter-wave/README.md) stops a moving particle,
+matter-wave probe (`examples/matter-wave/`, deleted on 2026-09-17) stops a moving particle,
 pays its matter out as a wave train and lands it on the screen with the fringe
 of the momentum it flew with. A mirror emission re-emits along the reflected
-absorbed heading, and the [mirror probe](../examples/kerengonen-mirror/README.md)
+absorbed heading, and the mirror probe (`examples/kerengonen-mirror/`, deleted on 2026-09-17)
 reads the standing wave between a lamp and a mirror with period
 `phase_steps / (2 x advance)`. A ray field may set `"metric": "euclidean"`
 (`euclidean-ray-pace-v1`): rays wait at Nodes by their heading's pace so every
 heading covers equal Euclidean distance per tick, and the
-[Euclidean pace probe](../examples/euclidean-pace/README.md) reads a round
+Euclidean pace probe (`examples/euclidean-pace/`, deleted on 2026-09-17) reads a round
 front and a fringe in Euclidean path difference. The claim-and-gather rule
 (`claim-gather-ray-field-v1`, a claim flooding the world at link speed to
 gather a captured train), the Bell probe (`examples/bell-chsh/`, CHSH
@@ -197,7 +206,7 @@ Use the linked catalog and exact PR evidence instead of treating physical labels
 as implemented laws.
 
 Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`
-([bottom line](../examples/relativity-probes/README.md#bottom-line-2026-09-14)):
+(bottom line of 2026-09-14; `examples/relativity-probes/` deleted on 2026-09-17):
 the supplied JSON couplings and declared transport/phase policies produce
 finite attraction, velocity-scaling, lensing-like and delay observations.
 These are configured candidates, not a derivation of Newtonian gravity or
@@ -317,7 +326,7 @@ acceptance. Maxwell dynamics, gravity, general physical creation/annihilation,
 relativity and universal energy conservation are not established merely by these
 interfaces or by successful software tests.
 
-The [small-space comparisons](../examples/small-space/README.md), integrated through
+The small-space comparisons (`examples/small-space/`, deleted on 2026-09-17), integrated through
 PR #40, record 24 experiments in 9-cubed/15-cubed worlds. Finite reservoir transfer,
 a ray-speed parameter and a restricted zero-total-momentum unequal-mass candidate
 are explicit configuration solutions, not changed entity defaults or derived

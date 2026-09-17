@@ -15,7 +15,7 @@ dependencies = []
 
 [project.optional-dependencies]
 render = ["matplotlib>=3.8,<4", "Pillow>=10,<13", "numpy>=1.26,<3", "playwright>=1.45,<2"]
-dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
+dev = ["pytest>=8,<10", "pytest-xdist>=3,<4", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
 
 [project.scripts]
 event-universe = "event_universe.runner:main"

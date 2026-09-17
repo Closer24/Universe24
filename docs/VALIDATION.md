@@ -1,5 +1,38 @@
 # Validation evidence
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), this is
+the record of research runs and physical milestones: a phenomenon that several
+rules produce together, an example world's numbers, a comparison of two worlds
+or a known experiment is one run of the engine, made once, recorded with a
+source fingerprint and a date, and never repeated as a test. Tests and their
+expected integers are listed in [test expectations](TEST_EXPECTATIONS.md). A
+change is checked against the tests selected by the import graph; the whole
+suite runs together only when the shared core changes, and then once, in
+parallel. Entries below keep the scope they had when recorded.
+
+## Test suite reduced to one test per rule - 2026-09-17
+
+Base: main `5df25f3` (after PR #184), branch `cleanup/prune-tests`, merged
+with main `bbb4de7` (PR #186) before publication. Decision
+of the model owner, 2026-09-17: one module per generic rule and one per feature
+of the ray-event model; see the
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule)
+for the deleted modules and studies. Python 3.14.0rc2 on Linux, headless,
+single-process, `-p no:cacheprovider`, on a host shared with two other test
+runs.
+
+| Check | Result |
+| --- | --- |
+| Whole suite before the reduction | 108 modules; 2,191 passed, 3 visual-only skipped in 622 seconds (the same suite runs about 15 minutes in CI) |
+| Whole suite after the reduction, merged with main `bbb4de7` (PR #186, `test_detector_mark.py`) | 40 modules; 1,009 passed in 35 seconds; the slowest modules are `test_ray_delay.py` (13 s), `test_kerengonen.py` (7 s) and `test_repository_language.py` (5 s) |
+| Documentation gates (`test_repository_navigation.py`, `test_repository_language.py`, `test_repository_hygiene.py`, `test_json_documents.py`) | 80 passed before and after |
+| `python tools/check.py` against `origin/main` | ruff lint and format, mypy on the changed tool, and the affected kept modules passed |
+
+The dated records below keep their original scope: a module they name that is
+absent from the [suite inventory](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17)
+was deleted on 2026-09-17, and its numbers remain evidence about that revision.
+
 ## Integrated ray ownership and local Focus - 2026-09-14
 
 Reviewed integration input: PR #116 at `b517590b4011f1e2ff9a53be7b61fe76b50f7b08`,
@@ -1012,7 +1045,6 @@ remain sufficient, so no additional Skill or orchestration layer was created.
 The live Highlights revision is reconciled in its
 [coverage map](HIGHLIGHTS_IMPLEMENTATION.md); the live document was not changed.
 
-
 ## Descriptive physical catalog and explicit profiles — 2026-09-12
 
 Base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`. The version 2
@@ -1041,7 +1073,6 @@ review and PR-review Skills already cover these boundaries; no additional Skill
 or workflow is needed. The Highlights revision and reconciliation are recorded
 in its [versioned companion](HIGHLIGHTS_IMPLEMENTATION.md); the live document
 was read, not changed.
-
 
 Each record applies to its identified source and configuration, not all future
 checkouts. Original paths and hashes in historical results are retained. Use
@@ -1115,7 +1146,6 @@ already cover the candidate; no broader procedure change was needed. This result
 is a discrete polarization-interaction candidate, not Maxwell dynamics, trajectory
 scattering, charge coupling or arbitrary-angle isotropy. Native event programs
 remain absent; their spatial-field composition is explicitly unsupported.
-
 
 ## Physical inventory and elementary probes — 2026-09-12
 
@@ -1765,7 +1795,6 @@ Detailed outputs are in `artifacts/checks.log`, `artifacts/junit.xml`,
 `artifacts/test-runs.html`, and each scenario's `run.json` and `run.html`.
 Known model assumptions and limits remain in `SIMULATOR_DEFINITIONS.md`.
 
-
 ## v11 local-link candidate validation — this change
 
 - Required `python tools/check.py` completed: Ruff lint/format passed (60 Python
@@ -1791,7 +1820,6 @@ Current outputs: `artifacts/local-links-check.log`, `artifacts/junit.xml`,
 not a separately simulated trajectory.
 
 Source fingerprint for the linked application: `53786817fe9f2c9a089a875894523229b6eb02d52bc077095fea2cc482693875`.
-
 
 ## Concurrent update reconciliation
 
@@ -1839,7 +1867,6 @@ representation/conversion tests, not physical annihilation, Maxwell, mass,
 spinor, gauge, metric or general energy derivations. Git PR/CI evidence identifies
 the final integrated tree; generated output follows finite retention.
 
-
 ## Repository consistency baseline — 2026-09-12
 
 The whole-repository audit starts from main
@@ -1858,7 +1885,6 @@ The cleanup consolidates that input, explicitly names historical scalar owners,
 extends source-language/navigation/hygiene coverage and preserves reference files.
 Final submitted-tree validation is recorded in its PR/CI, not inferred from this
 baseline result. No visual inspection or newly derived physical law is claimed.
-
 
 ## Parallel Node tick planning — 2026-09-13
 
@@ -1930,7 +1956,7 @@ Base: `ca51869` on this branch. `"transport": "ray"` (`isotropic-ray-field-v1`)
 adds straight-moving rays that carry an integer heading and three accumulators,
 a per-Node ray slot capacity, emission over a configured heading sequence, and
 attenuation, deposits, escape and flux samples through the existing accounting.
-The [probe](../examples/inverse-square/README.md) measured it as a read-only
+The probe (`examples/inverse-square/`, deleted on 2026-09-17) measured it as a read-only
 world/event audit at host Euclidean distance, not as an operational observer.
 
 | Check | Result |
@@ -1951,7 +1977,7 @@ large radius is finite direction sampling.
 Base: `cc042ce` (main after PR #92). Configuration only, plus one engine fix:
 a coupling reaction that amends a departing packet now keeps the rays on that
 port, so rays pass through Nodes whose carriers respond to them (previously they
-were dropped there). The [probe](../examples/gravity-probe/README.md) couples
+were dropped there). The probe (`examples/gravity-probe/`, deleted on 2026-09-17) couples
 held and moving bodies to the ray flux with `mass x flux / D`, `D = 16`, and
 reads the result as a read-only world/event audit at host Euclidean distance.
 
@@ -2004,7 +2030,6 @@ left through from the flux and value it samples. Work is bounded by
 
 Self-field returning from any distance other than one link is not excluded; a
 general self-field law remains the open hypothesis in `POSTULATES.md`.
-
 
 ## Funded emission, absorption and rays in the audit — 2026-09-13
 
@@ -2167,7 +2192,6 @@ No visualization, simulator/package build or new physical species law was added.
 Independent physics review gives a scoped pass; live PR/CI state supplies the
 separate publication and merge evidence. Existing Skills already require these
 ownership, arithmetic and provenance checks; no duplicate Skill rule was needed.
-
 
 ## Kerengonen carried phase: one lamp, two re-emitting slits — 2026-09-14
 
