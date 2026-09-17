@@ -691,7 +691,8 @@ Admission: `field_of` and `release` are declared together, `field_of` names
 another ray spatial field that is not itself a field of anything (a field has
 no field), G carries the six Port headings, G and F are positive, conserved,
 unpaced unit-axial ray fields on the links metric with zero baseline, no
-decay and no self-exclusion, with the same phase steps, under the shared
+decay and no self-exclusion, with the same phase width (`phase_bits`, and
+so the same phase steps), under the shared
 Detector admission (schema 1, `link_ticks` 1, the default fixed clock, no
 field rules, spatial interactions, couplings or absorption on G or F). The
 runner records `released_field: "released-field-v1"` and `released_fields`,

@@ -434,8 +434,8 @@ def validate_released_fields(
                 raise ValueError("a released field requires positive unit-axial unpaced ray fields")
         if any(heading not in definition.headings for heading in PORT_HEADINGS):
             raise ValueError("a released field requires the six Port headings")
-        if definition.phase_steps != origin.phase_steps:
-            raise ValueError("a released field carries its source's phase steps")
+        if definition.phase_modulus != origin.phase_modulus:
+            raise ValueError("a released field carries its source's phase steps: one phase width")
 
 
 def validate_released_field_admission(initial: InitialState) -> None:

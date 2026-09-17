@@ -48,7 +48,7 @@ Issue #169, feature 7, implements the one field rule of sections 3.5 and 3.28
 | 3.3, the field acts at the crossing | The meeting fires in the interval the G ray and the responding ray share a Node, like every meeting |
 | 3.17, remainders | The fraction the floor leaves is not released; a description booked as a source destroys nothing |
 | 3.28, gravity is bending by delay | The delay and the turn are outputs of the declared rule (heading, delay or phase); the recoil's coupling to its source and to bound groups is feature 8 |
-| 3.19, the fixed body | Feature 7b reuses the release of resident content (`release_stock`) with the sink it declares |
+| 3.19, the external body (`external-body-v1`) | Feature 7b reuses the release of resident content (`release_stock`) with the sink it declares |
 
 ## Ray integration and local Focus - 2026-09-14
 
