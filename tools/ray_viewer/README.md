@@ -31,6 +31,15 @@ state. Nothing under `tools/ray_viewer/` imports the simulator.
 - Detector marks are drawn as marked Nodes with their setting and the bits
   drawn so far; the family totals and the run's conservation line are in the
   caption, tick by tick.
+- External bodies, by [Highlights](../../docs/HIGHLIGHTS.md) 3.19: "In a
+  rendering every external body carries its own identifying picture (a star,
+  a mirror, a wall), so it is never mistaken for matter." That picture is
+  distinct from matter and from the Detector mark; a splitter, a phase plate
+  and a screen get theirs as well. The record does not carry external bodies
+  yet (`external-body-v1` is feature 7b); once the runner writes
+  `external_bodies` into the record, the viewer draws each one at its Node
+  with such a marker. Until then, a record kind the extractor does not know,
+  an external body's events included, is drawn as a generic marker.
 - Text is at least 14 px; the page works at 400 px width.
 
 ## What the record must contain

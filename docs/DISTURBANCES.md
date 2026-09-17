@@ -137,7 +137,7 @@ separate carriers and their different directions.
 | `couplings` | Optional list, at most 32 local exchange rules |
 | `interactions` | Optional list, at most 32 atomic pair transactions; an entry with `participants` and `outputs` is an [N-to-M family conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) |
 | `seeds` | Positions, disturbance type names and optional value overrides |
-| `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`; version 2 requires decay per field |
+| `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`, each ray field a [wave-ray family](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) with optional `phase_bits`, `charge` and `kerengonen`; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
 | `spatial_seeds` | Optional initial octant populations at named lattice nodes |
 | `detectors` | Optional list of Detector marks, one per position, each with `position`, `setting` `[n, d]` and `seed`, all required and none defaulted ([Detector mark](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)); the only place a draw exists, under the shared Detector admission |
@@ -179,9 +179,11 @@ remains a free configured identity and cannot select behavior through its name.
 Every run also records `sampling_profile` (`detector-only-v1`, the
 [Detector-owned sampling](DETECTOR_SAMPLING.md) admission), `ray_state`
 (`ray-event-state-v1`, the [ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)
-every ray carries) and `detector_mark` (`detector-mark-v1`, the
+every ray carries), `detector_mark` (`detector-mark-v1`, the
 [Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1) a Node
-may carry).
+may carry), and `ray_layers` (`ray-layers-v1`) with `ray_layer_families`, the
+[layers](SPATIAL_FIELDS.md#layers-ray-layers-v1) derived from the declared
+`ray_interactions` as sorted lists of field names.
 See [spatial fields](SPATIAL_FIELDS.md) for per-completed-link decay and clipped
 emission allowances, and [spatial response](SPATIAL_COUPLINGS.md) for atomic
 whole-action allowances. Neither allowance is a conserved physical reservoir.

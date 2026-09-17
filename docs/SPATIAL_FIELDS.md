@@ -269,6 +269,7 @@ between arrival and the next cycle; there is no octant stock.
 | `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
 | `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
 | `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
+| `phase_bits`, `charge`, `kerengonen` | The family's phase width, charge per quantum and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
 
 An emitting record keeps a cursor into the heading sequence in its emission
 phase register and advances it by `rays_per_tick` each tick, so a long sequence
@@ -335,9 +336,10 @@ delay:
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
-(`checked_work`) bounded before they are stored. The phase uses the field's
-`phase_steps` modulus: outbound, the phase advances by the ray's step per
-Link as before; on the walk back it decrements by the same step, so the
+(`checked_work`) bounded before they are stored. The phase has the width its
+family declares (`phase_bits`, [wave-ray families](#wave-ray-families-wave-ray-family-v1)),
+a mask over 2^`phase_bits`: outbound, the phase advances by the ray's rate per
+Link as before; on the walk back it decrements by the same rate, so the
 phase, like the count, returns to what it was at the event. A ray that spends
 a tick at its Node (pace wait, interaction delay, load hold) moves its phase
 by the same signed step.
@@ -400,6 +402,109 @@ cases; the return is feature 3. A document without `detectors` has no marked
 Node and runs exactly as before, and the runner records
 `detector_mark: "detector-mark-v1"`.
 
+### Layers (`ray-layers-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.1; [ray-event
+model](RAY_EVENT_MODEL.md#1-definitions)): event spacetime has layers. A
+layer is a set of families that couple, and a meeting exists only inside a
+layer. Rays whose families have no declared coupling never meet: they cross
+as if the other were not there, so two events can happen at the same Node
+in the same interval in layers that do not communicate.
+
+Layers are derived, never declared. A family is a ray field and the
+catalog's couplings are the declared `ray_interactions`: the layers are the
+connected components of the ray fields over the participants of those
+rules, where every field a rule's roles can select is one participant set
+(a rule whose roles select `a` and `b` puts `a` and `b` in one layer, and
+two rules that share a field chain their fields into one layer). A ray
+field that no rule selects is its own layer and always crosses.
+`ray_layers` (`core/spatial_state.py`) derives them from the catalog once,
+when the `SpatialLaw` is built, as a tuple of tuples of spatial-field
+indices in field order, bounded by the number of spatial fields; the runner
+records `ray_layers: "ray-layers-v1"` and `ray_layer_families`, the derived
+layers as lists of field names sorted within each layer and between layers,
+in `run.json` beside `ray_state`.
+
+At a Node in one interval the interaction step (`apply_ray_interactions`)
+meets the resident rays layer by layer. For each layer that has a rule, its
+rays and only its rays are the candidate participants; its rules fire in
+declared order, each with its own participants, guard, invariants and
+events, exactly as the [shared coupling contract](SHARED_RAY_COUPLING.md)
+states for one layer; a ray of a layer that has no rule, or whose rules do
+not fire, crosses unchanged with its event record intact. Rules of
+different layers therefore fire independently in the same cycle, and a ray
+of one layer is never a participant, a blocker or a merge partner of a ray
+of another: the indexed selector's 32-slot participant capacity is a bound
+per layer (the declared `ray_slots` of the fields of one layer with a rule
+sum to at most 32), rays of different fields never merge, and there is no
+occupied channel and no capacity rule between layers. The Node's proposal
+stays one atomic commit: a failed guard or invariant in any layer rejects
+the interval's proposal before any owner changes, as before. A world with a
+single layer runs byte-identically to the previous rule, and the existing
+suite is its regression. No new draw, no new arithmetic and no new
+initialization key; the Detector (issue #169, feature 2) is untouched.
+
+### Wave-ray families (`wave-ray-family-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.3 and 5.1; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), the wave-ray part of
+migration step 6): every ray is a wave ray and carries a phase; a plain ray is
+the special case of the wave ray whose family's rest rate is 0, not a second
+kind. Three things change a phase and nothing else: each interval advances it
+at the rest rate its family declares (the ray's mass as a clock, zero for
+light), an interaction changes it as the declared coupling says, and a bound
+group advances it once per interval it is held (feature 8 of issue #169). A
+light ray carries the phase of the clock that emitted it and delivers it
+unchanged. Every ray field is one family, and its `spatial_fields` entry is the
+catalog entry that declares the family's phase rule and charge; the engine
+applies what the catalog says and holds no phase rule of its own.
+
+| Key | Contract |
+| --- | --- |
+| `phase_bits` | Optional, ray transport only: the width of the phase every ray of the family carries, an integer at least 0. The phase is an integer from 0 below 2^`phase_bits`, and every phase advance and difference is a mask with 2^`phase_bits` - 1, never a division. Default 0 (one phase value: the plain field of every existing world), or log2 of `kerengonen.phase_steps` when a coherence table is declared, so an existing Kerengonen world keeps its modulus (8 phase steps is `phase_bits` 3); both given, they must agree. The model sets no upper bound: Python integers are unbounded, and a Rust or GPU port uses a two-word type above 64 bits |
+| `kerengonen.phase_advance` | The family's rest rate: the steps its phase advances every interval, an integer from 0 below 2^`phase_bits`, bounded by the width and not by `MAX_VALUE`; required with the `kerengonen` key, 0 without it. Light is a family with rest rate 0: a plain field with a declared width, or the key with `phase_advance` 0 |
+| `kerengonen.phase_steps` | Optional with the key: the coherence table of the Kerengonen coupling (below), one entry per phase step of one turn, 2^`phase_bits` entries, a power of two from 2 to 4096 (at most twelve bits). A family with a rest rate and no table meets readers and absorbers without coherence gating; `capture`, a carried phase and a mirror require the table |
+| `charge` | Optional, ray transport only: the family's charge per quantum, a bounded signed integer, default 0 |
+
+An emission stamps its `kerengonen_phase` on any ray field of the declared
+width, a plain field included: the ray carries the emitter's phase along its
+line, advancing by the family's rest rate per Link (and per waiting interval,
+[ray delay](#ray-delay-and-phase-per-interval)), so a light ray delivers the
+emitter's phase unchanged and a massive ray arrives with `phase + rate x Links`,
+masked. Without a declared width only phase 0 is admissible, which is what
+every existing plain world carries. A ray's own advance (`kerengonen_advance`)
+overrides the family's rate and requires the key. The phase is the one value
+with its own declared width (issue #169, 2026-09-17); two host limits follow
+from what else stores it. The coherence table has at most 4096 entries, so a
+phase wider than twelve bits has no table. A ray interaction views the phase
+as a stored value (`MAX_VALUE`, thirty bits) and a self-exclusion row stores
+it likewise, so `ray_interactions` on the family and `self_exclusion` require
+`phase_bits` at most 30. Everything else (content, steps, shares, headings)
+keeps 32-bit storage and 64-bit intermediates.
+
+`RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
+gains two read-only properties: `family`, the index of the ray's spatial
+field, and `charge`, the family's charge per quantum. Charge is per quantum
+because amounts merge and split; the charge readout of a bundle is `charge x
+amount` summed over its rays (`ray_charge`), and `charge_totals()` reads it
+per ray field over the rays resident at active Nodes and in flight on Links,
+the owners `totals()` reads (escaped charge and the runner's conservation flag
+are feature 10). The readout is an invariant of every declared ray
+interaction: the parser appends `charge`, `charge x amount` summed over the
+participants, to the rule's invariants, checked like the declared ones, exact
+before and after; a declared invariant named `charge` is refused, an
+assignment to `family` or `charge` is refused as read-only, and a rule may
+declare at most fifteen invariants of its own.
+
+Nothing else changes: an existing world without ray interactions runs
+byte-identically (a plain field has width 0 and rate 0; a Kerengonen field has
+the width of its `phase_steps`, and the mask equals its former modulus), and a
+world with ray interactions reads the two added view components per
+participant (`read` cost 9 instead of 7) and is otherwise identical. The runner
+records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
+`test_wave_ray_families.py` ([expectations](TEST_EXPECTATIONS.md#wave-ray-families))
+is the test.
+
 ### Funded emission and absorption
 
 A field whose emitting type also carries a scalar field of the same name may
@@ -458,10 +563,13 @@ terms. Physical events read the prepared tuples and never construct trigonometri
 tables. Preparation and cache storage are host costs outside NodeState.
 
 A ray field may add `"kerengonen": {"phase_steps": P, "phase_advance": k}`,
-with `2 <= P <= 4096` and `0 <= k < P`. Every ray then carries a phase step,
-starting at the emission rule's `kerengonen_phase` (default 0) and advancing by
-`k` on every link. Rays merge only when heading, lattice phase and wave phase
-all agree. Nothing else about transport changes: a ray still follows one
+with `P` a power of two from 2 to 4096 (the phase width `phase_bits` is log2 `P`;
+[wave-ray families](#wave-ray-families-wave-ray-family-v1)) and `0 <= k < P`,
+the family's rest rate. Every ray carries a phase step in any case, since every
+ray is a wave ray, starting at the emission rule's `kerengonen_phase` (default
+0) and advancing by `k` on every link, masked to the width; the key adds the
+rate and the coherence table below. Rays merge only when heading, lattice phase
+and wave phase all agree. Nothing else about transport changes: a ray still follows one
 integer line, keeps its amount, and is counted whole by the ledger and the
 audit.
 
@@ -514,9 +622,11 @@ momentum, `|p| / D`, supplies a candidate de Broglie relation: a faster beam has
 shorter wavelength within the probe's configured range. The
 de Broglie probe (`examples/de-broglie/`, deleted on 2026-09-17) measures the fringe spacing
 it gives; this relation is configured, not derived. A ray without its own advance uses the
-field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
-runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+field's rate. Without the key the field is the plain `isotropic-ray-field-v1`,
+a wave-ray family with rest rate 0 and no coherence table, which still admits
+a `kerengonen_phase` below its declared width; a `kerengonen_advance` on an
+emission requires the key. The runner records the identity
+`kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
 
 Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
@@ -565,8 +675,9 @@ then holds a standing wave: the reading along the line repeats every
 `phase_steps / (2 x advance)` links, as the
 mirror probe (`examples/kerengonen-mirror/`, deleted on 2026-09-17) measures.
 Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_phase`, `kerengonen_advance` or `kerengonen_mirror` on an emission
-requires the key. The runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+`kerengonen_advance` on an emission requires the key, and a carried phase or a
+`kerengonen_mirror` requires its coherence table. The runner records the
+identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
 
 ### Euclidean pace (`"metric": "euclidean"`)

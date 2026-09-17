@@ -432,7 +432,12 @@ What can be tested is representability: with the bounded integers of the
 engine, the measured ratios (muon to electron 206.77, tau to electron
 3477.2, proton to electron 1836.15) must all fit one grid within the encoding
 error the [reference units](REFERENCE_UNITS.md) declare, at one `N`. If no
-single `N` fits them within that error, the ladder fails.
+single `N` fits them within that error, the ladder fails. The external body
+of Highlights 3.19 (model owner, 2026-09-17) stands outside the ladder: the
+ladder comes from the spreading law, since a bound group is rays that must
+keep moving and bind again every interval, so only the closed patterns the
+binding table can hold exist, and a body that does not spread has no
+closure condition and any amount is allowed.
 
 **The composite spectrum.** A composite (a hadron, a nucleus, an atom) is a
 bound group: rays held at one Node by a binding coupling, an interaction that
@@ -499,8 +504,8 @@ Recorded 2026-09-17 from the model owner's statement of that day; open.
 
 **Statement.** In the ray-event model gravity is bending by delay (Highlights 3.28): the retained content of a Node makes it slow, and the information that it is heavy spreads in ray form. The unit of mass is the rest rate m₀ of the lightest massive family (one phase step per interval), and the largest rest rate the phase can represent is N steps per interval, N being the phase modulus declared by `phase_bits`. The hypothesis is that the effective gravitational coupling measured on the board scales as the inverse square of that ceiling, G_eff ∝ 1/N², so that in physical units G = ħc/(N m₀)², with N m₀ playing the role of the Planck mass. The real N is then of the order of 10²², which the 74-bit phase of the integer width convention can hold.
 
-**Prediction.** Measure G_eff from the bending of a light ray passing a body of declared mass (experiment A6 of `docs/EXPERIMENTS.md`) on one small board with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
+**Prediction.** Measure G_eff from the bending of a light ray passing an external body (Highlights 3.19, feature 7b, `external-body-v1`; named "fixed body" earlier on 2026-09-17) of declared family and amount, at its default coupling, absorption into its explicitly accounted sink, so that it never moves (experiment A6 of `docs/EXPERIMENTS.md`) on one small board with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
 
 **What would falsify it.** A bending that does not fall as 1/N², or that depends on the board size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the board allows.
 
-**Status.** Open. Needs features 7, 7b and 8 of issue #169.
+**Status.** Open. Needs features 7, 7b (the external body) and 8 of issue #169.

@@ -240,6 +240,32 @@ is otherwise an ordinary Node
 A document without `detectors` has no marked Node, calls the ticket rule
 nowhere and runs exactly as before.
 
+## Ray layers added on 2026-09-17 (`ray-layers-v1`)
+
+Issue #169, feature 5, under [Highlights](HIGHLIGHTS.md) 5.1 and the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): event spacetime
+has layers, a layer is a set of families that couple, and a meeting exists
+only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+
+- `ray_layers` (`core/spatial_state.py`) derives the layers from the catalog
+  as the connected components of the ray fields over the participants of the
+  declared `ray_interactions`; a ray field that no rule selects is its own
+  layer. `SpatialLaw` derives them once when it is built (`layers`) and
+  `apply_ray_interactions` (`fields/ray_interactions.py`) meets the resident
+  rays of a Node layer by layer: each layer's rules fire over that layer's
+  rays alone, in declared order, and a ray of a layer without a firing rule
+  crosses unchanged. Rules of different layers fire independently in one
+  interval.
+- The 32-slot participant capacity of `validate_ray_participants` is now a
+  bound per layer with a rule (the `ray_slots` of that layer's fields sum to
+  at most 32) instead of over every selected field.
+- The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
+  (the derived layers as sorted lists of field names) in `run.json` beside
+  `ray_state`.
+- A world with a single layer runs byte-identically to before: the same
+  owners, rules, charges and events. No initialization key changes; no
+  draw, absorber, readout or Detector is touched.
+
 ## Test suite reduced on 2026-09-17: one test per rule
 
 Decision of the model owner, 2026-09-17: the engine is generic, so the test
@@ -352,6 +378,78 @@ directories removed the same day; their dated results stay in the
 [documentation index](README.md) routes to the register and the
 [hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
 runtime behavior changes.
+## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
+
+Issue #169, feature 9, the wave-ray part of
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) migration step 6
+under [Highlights](HIGHLIGHTS.md) 3.3 and 5.1: every ray is a wave ray, a
+plain ray the special case with rest rate 0, light a family with rest rate 0
+that carries its emitter's phase unchanged, and the phase the one value with
+its own declared width
+([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+
+- `spatial_fields[i]` (ray transport) admits `phase_bits` (the phase width;
+  default 0, or log2 of `kerengonen.phase_steps`) and `charge` (per quantum,
+  default 0). In the `kerengonen` object `phase_advance` (the rest rate) is
+  required and `phase_steps` (the coherence table) optional; `phase_steps`
+  must be a power of two (every existing world's is: 4, 8, 64), and
+  `phase_advance` is bounded by the width, not by `MAX_VALUE`.
+- `SpatialFieldDefinition` (`core/spatial_state.py`) gains `phase_bits`,
+  `charge` and the properties `coherent`, `phase_modulus` and `phase_mask`;
+  `kerengonen` now means a declared phase rule (a table or a nonzero rate);
+  `advance_ray(ray, heading, phase_modulus, phase_advance)` takes the modulus,
+  a power of two (a Kerengonen world's `phase_steps`), and masks; `phase_mask`,
+  `ray_charge`, `charge_invariant`, `RAY_WRITABLE`, `RAY_VIEW_COMPONENTS`,
+  `CHARGE_INVARIANT`, `WAVE_RAY_FAMILY`, `MAX_TABLE_BITS` and
+  `MAX_STORED_PHASE_BITS` are added. Every `% phase_steps` in the engine became
+  a mask.
+- `RAY_PROPERTIES` gains read-only `family` and `charge`; a ray interaction's
+  view reads nine components per participant (`read` cost 9 instead of 7), and
+  the parser appends the `charge` invariant to every `ray_interactions` rule.
+  `Simulation.charge_totals()` reads `charge x amount` per ray field.
+- `kerengonen_phase` on an emission requires a ray field of sufficient width,
+  not the `kerengonen` key (a plain field without a width admits phase 0
+  only); a carried phase and `kerengonen_mirror` require the coherence table;
+  `ray_phase_per_tick` and `hold_rays` follow the declared phase rule.
+- Not admitted in this slice: `self_exclusion` or `ray_interactions` on a
+  family wider than 30 bits, a coherence table wider than 12 bits
+  (`phase_steps` above 4096), and a non-power-of-two `phase_steps` in a field
+  definition (the table builders `phase_cosines` and `phase_sines` still take
+  any count from 2 to 4096).
+- The runner records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
+
+Existing worlds run unchanged: a plain field has width 0 and rate 0, a
+Kerengonen field the width of its `phase_steps`; the metered `read` cost of a
+ray interaction is the one recorded difference. Tests adapted:
+`test_kerengonen.py` (a nonzero phase before the plain-field rejection) and
+`test_ray_integration_guards.py` (odd table sizes through the builders, 32
+phase steps in the table-construction guard).
+
+## Fixed body renamed external body on 2026-09-17
+
+Fixed body renamed external body, 2026-09-17, same specification extended.
+By the model owner's statement of that day, the declared element named
+"fixed body" earlier the same day is the external body: a Node declared to
+hold a family with an amount and, if wanted, a charge and a trajectory,
+standing for a star, a neutron star, a fixed proton, a large charge or a
+piece of apparatus; it radiates by the one field rule, does not spread and
+is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+text; the [postulates](../POSTULATES.md) section 23, the
+[ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
+migration step 7b (`external-body-v1`, after feature 7), the
+[experiments register](EXPERIMENTS.md) (A1, A2, A3, A6, A8, A12, A13 and
+section C), the [terminology](TERMINOLOGY.md) (External body, Apparatus)
+and section 14 of the [hypotheses page](HYPOTHESES.md) restate it. What the
+extension adds: the amount is finite and of any width, since it enters no
+sum; absorption into an explicitly accounted sink is the default coupling of
+the body's family and the other couplings make the apparatus (a reversed
+heading a mirror, a split by a declared table a beam splitter, a phase
+offset a phase plate, a polarization read a polarizer once feature 11
+exists; a wall, a screen and a beam stop the default); on the Node the body
+is bounded metadata like the Detector mark, with one exact counter, the
+sink totals per family; and where the back-reaction is wanted an ordinary
+bound group with a large amount is declared instead. No initialization key,
+API or runtime behavior changes; `external-body-v1` is not yet in the code.
 ## Ray viewer added on 2026-09-17 (`tools/ray_viewer/`)
 
 The model owner's visualization requirement of 2026-09-17 (issue #169) is
