@@ -69,7 +69,7 @@ def ray_field(name, slots=8, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "kerengonen": {"phase_steps": 8, "phase_advance": 0},
+        "kerengonen": {"phase_steps": 8},
     } | extra
 
 
@@ -197,6 +197,9 @@ def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=N
         "absorbed_by_marks": zero,
         # bit-law-v1 (2026-09-18): the momentum shadows carry home; zero here.
         "returned": zero,
+        # clock-readings-v1 (2026-09-18): the momentum field's line, the vector
+        # line, carries `spent`, what the things' steps took; zero here.
+        **({"spent": zero} if not isinstance(initial, int) and len(initial) == 3 else {}),
         "balanced": True,
     }
 

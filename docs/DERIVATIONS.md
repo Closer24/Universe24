@@ -26,7 +26,7 @@ is named. **Different law**: the rules give a definite law of another form,
 stated, with the run that would show the difference. **Not reached**: the
 rules as declared do not determine the quantity, and what would is stated
 plainly. **New** marks a formula the lattice gives that has no counterpart in
-known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts).
+known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts).
 
 ## 0. Units, notation and the operator
 
@@ -2243,3 +2243,659 @@ of a diffusive field (the wash-out radius of B's pattern beyond √(Dλ));
 the second order of the wait (strict against queued reading, and what the
 thing reads while it waits); the corner table's tolerance to a lag (whether
 a sheared loop breaks or drifts).
+
+## 26. Round 4: the Node mixes the six, as an operator
+
+Round 4 (2026-09-18, after PR #281) derives what the rule of Highlights 5.4
+point 24 gives, bottom-up from the stated operator, with no physics assumed.
+As before: no engine run, no edit to the engine; every number is checked by
+an iteration of the stated operator on a box of 41³ to 81³ Nodes (seconds),
+in floating point for the linear part and with the integer rule for section
+30, cited after each derivation and never used as its source. The scripts
+are the scratch files of this round, not committed.
+
+**The rule, R10 (point 24).** Per Node and per owner, the six arrivals of an
+interval are amplitudes A_p = √(amount_p)·e^{iφ_p}, p the Port they came in
+through (from the neighbour x + e_p, so their heading is −e_p), the phase on
+the circle of N steps. Each Port sends out
+
+```text
+B_p = (1/3) Σ_q A_q − A_p        (S = (1/3)J − I on the six Ports),
+```
+
+toward x + e_p; the amounts leaving are the total arriving shared in
+proportion to |B_p|² in whole quanta, the remainders owned by the Node
+(section 3.17's registers, now parked shadows by point 22), each share
+carrying the phase of B_p; every share then moves one Link (R2). The return
+of a pushed shadow (point 3) walks the trace and is not mixed. The prefilled
+standing set, the pushes and the marks are as in points 1 to 23. Rules used
+besides: R2, R3 (standing reading), R4′, R5, R6′, R7′, R9.
+
+**Assumptions and limit.** One owner (the mixing is per owner; shadows of
+different owners cross). The mean field of the integer rule is the linear
+map on amplitudes (below); section 30 says where the integers break it. The
+board large.
+
+**(i) The matrix.** S = 2P − I with P = J/6 the projector on the uniform
+vector: S is real, symmetric, S² = I, so S is orthogonal (unitary on
+complex amplitudes), a Householder reflection. Its eigenvalues are +1 (once,
+the uniform vector: six equal arrivals leave unchanged) and −1 (five times:
+any six arrivals of zero sum are sent back with the sign reversed). A lone
+arrival A on one Port leaves as −(2/3)A through its own Port and (1/3)A
+through the five others: the amounts 4/9 back, 1/9 on each other heading,
+point 24's numbers; its signed flux Σ amount·heading is reversed and cut to
+a third (in: A² on +x; out: −A²/3 on +x). Nothing is declared: (2/n)J − I
+is the only matrix that is symmetric under the Port permutations, orthogonal
+and not ±I or a permutation. In the heading basis (W_h = A_{−h}) the same
+matrix reads (1/3)J − Π with Π the flip h → −h: the Grover coin of the six
+Ports composed with the reflection, which is the transmission-line node.
+
+**(ii) The exact identities.**
+
+- *Amount (unitarity).* Σ_p |B_p|² = Σ_p |A_p|² at every Node, so the
+  amount leaving equals the amount arriving in the mean field, and the
+  integer rule's shares sum to the arriving whole quanta by construction.
+  Continuity holds exactly with the Link current Φ(x, x + e_p) = |B_p(x)|² −
+  |B_{−p}(x + e_p)|²: n(x, t + 1) − n(x, t) = −Σ_p Φ(x, x + e_p), and
+  Gauss's law in flux form (section 1) follows as before, an identity of
+  the operator. The remainder rule adds a bounded parked amount per Node
+  and Port, as in section 0.
+- *Amplitude (Kirchhoff).* Σ_p B_p = 2Σ_p A_p − Σ_p A_p = Σ_p A_p: the
+  Node conserves the amplitude sum as well as the amount. Hence, with
+  u(x, t) = (1/3) Σ_p A_p(x, t) (the Node's common part; B_p = u − A_p),
+  the total Σ_x u is conserved exactly, and the real and the imaginary
+  part separately, since S is real.
+- *The wave equation.* From B_p = u − A_p and R2, A_p(x, t + 1) =
+  u(x + e_p, t) − A_{−p}(x + e_p, t) and A_{−p}(x + e_p, t) = u(x, t − 1) −
+  A_p(x, t − 1); summing over p,
+
+```text
+u(x, t + 1) + u(x, t − 1) = (1/3) Σ_p u(x + e_p, t),        i.e.
+u(t + 1) − 2u(t) + u(t − 1) = (1/3) Δ_lattice u(t),
+```
+
+  the lattice wave equation of the transmission-line matrix (Johns and
+  Beurle 1971), exact at every Node and tick, for the real and the
+  imaginary part alike. The amounts are the six |A_p|², not u², and are
+  recovered from u by the two relations above.
+- *The signed flux is not conserved by the Node.* J = Σ_h amount_h h
+  changes at every Node (the lone share: −1/3 of itself); no local law of
+  the form "J in = J out" exists, and the momentum the field carries is not
+  Σ amount·heading. What a thing reads is J at its Node (R4′), so what J is
+  in a wave is the question, answered in (iii).
+
+**(iii) The dispersion relation and the plane wave.** With u = ū e^{i(k·x − ωt)}
+the wave equation gives
+
+```text
+cos ω = (1/3)(cos k_x + cos k_y + cos k_z),
+```
+
+real ω for every k (the right side lies in [−1, 1]: no growing mode, the
+scheme is stable, as unitarity demands). The Port amplitudes of the plane
+wave are A_p = ū (e^{iω} − e^{ik·e_p})/(2i sin ω), and from them, exactly
+at every k,
+
+```text
+n = Σ_p |A_p|² = 3|ū|²,        J = n · v_g,   v_g = ∇_k ω = (sin k_x, sin k_y, sin k_z)/(3 sin ω),
+```
+
+with the amount per Port |A_p|²/n = (1 − cos(ω − k·e_p))/(6 sin²ω). The
+push a thing takes per interval from a plane wave is the amount per Node
+times the group velocity, the energy flux of the wave, constant in time
+although every amplitude oscillates; and the Link current on the axis
+equals it, Φ_i = J_i (ζ = 1 in section 19's notation, against 11/8 for the
+diffusive field). Two opposite waves of equal amount give J = 0 with n = 6|ū|²
+passing through: the model owner's "a cancellation is a zero flux with the
+amounts passing through, nothing destroyed" is this identity. Expanding,
+
+```text
+ω² = k²/3 − Σᵢkᵢ⁴/36 + (k²)²/108 + O(k⁶),
+```
+
+so the phase speed is (1/√3)(1 − k²(K₄/24 + 1/90)) with K₄ = Σk̂ᵢ⁴ − 3/5:
+(1/√3)(1 − k²/36) on an axis, (1/√3)(1 − k²/144) on (110), and exactly
+1/√3 at every k on (111), where cos ω = cos(k/√3). On an axis ω rises to
+arccos(1/3) = 1.231 at k = π with v_g = 0 there: a stop band, the lattice
+carries no axis wave shorter than two Links. Over the whole zone
+|v_g|² = Σsin²kᵢ/(9 − (Σcos kᵢ)²) ≤ 1/3 (by Σcos²kᵢ ≥ (Σcos kᵢ)²/3), with
+equality only for k ∥ (111): **no signal of the mixed field outruns 1/√3 in
+any direction, at any wavelength (exact)**, and the octahedron |x|₁ = t of
+the walk's support carries only an exponentially small precursor.
+
+**Check.** A random complex state on 16³: unitarity per Node to 1.4·10⁻¹⁴,
+the amplitude sum to 3.6·10⁻¹⁵, S² = I to 10⁻¹⁵, the wave-equation residual
+9·10⁻¹⁶, the continuity residual 1.2·10⁻¹⁴. Plane waves on 32³ at six k
+(axis, (110), (111), up to k = 0.98): ω measured from one step equals
+arccos((1/3)Σcos kᵢ) to six digits, n/|ū|² = 3.0000, J = n·v_g to five
+digits (1.72648 at k = 2π/32 on the axis, (1, 1, 1) exactly at k ∥ (111)).
+The maximum of |v_g| on a 121³ grid of the zone: 0.57735 = 1/√3. The lone
+share: (0.1111, 0.4444, 0.1111 ×4) and J out = −1/3.
+
+**Verdict.** Unitarity and continuity: **reached exactly**. The lattice
+wave equation of TLM with cos ω = (1/3)Σcos kᵢ: **reached exactly**, for the
+amplitude's common part u. J = n·v_g and Φ = J for a wave: **new** (the push
+is the energy flux; ζ = 1). A conservation law for the signed flux:
+**not reached** (none exists; the Node reverses a lone share's flux).
+
+## 27. Round 4: the continuum limit, the front, the far field and the standing part
+
+**Rules used.** R10, R2, R3 (standing reading), section 26.
+
+**(i) The wave speed and the equation.** At k → 0, ω = k/√3: the field
+propagates at
+
+```text
+c_w = 1/√3 = 0.577 Links per interval    (the TLM speed on a cubic mesh, 1/√d in d dimensions),
+```
+
+isotropic at leading order, with the continuum equation of the common part
+
+```text
+∂²u/∂t² = (1/3) ∇²u + (1/36) Σᵢ ∂ᵢ⁴u − (1/108) ∇⁴u + O(∂⁶),
+```
+
+the anisotropic term at order k⁴ (the cubic invariant Σkᵢ⁴, as section 2's
+for the diffusive symbol). It is a wave equation, which no rule on amounts
+gave (section 6's obstruction): the reflected share −(2/3)A carries the
+sign, and the sign is the heading, as point 24 says.
+
+**(ii) The tube theorem overturned (against section 17).** Under R8 and R8v
+a one-phase release stayed on the coordinate planes for ever (4/5 on the
+light-cone edge, 0 off the planes, section 22). Under R10 the six lone
+shares X/6 leave the origin, and at the first Node each is reflected
+(4/9) and scattered (1/9 ×5): from the second tick on there is content off
+the axes, from the third off the planes, and the backward shares of
+neighbouring Nodes cancel by sign, which is what makes the spherical wave.
+The share off the three coordinate planes at t = 3, 5, 10, 20, 30 is
+0.198, 0.678, 0.693, 0.828, 0.890 (a uniform shell at r = 17 would have
+0.91 off the planes: the field fills every direction); on the six axes
+0.004 at t = 30; on the light-cone edge |x|₁ = t, 0.178, 0.086, 0.057 at
+t = 10, 20, 30, falling as 1/t, and that content sits at the face centres
+(t/3, t/3, t/3) of the octahedron, Euclidean t/√3, which is the wave front
+itself and not a tube. The shell of maximal amount is at r = 5, 10, 16 at
+t = 10, 20, 30 (0.53 t; the peak lags the front at t/√3 = 5.8, 11.5, 17.3).
+**A one-phase release is not confined to axis lines or planes (exact
+from the second tick; measured 89 % off the planes at t = 30).**
+
+**(iii) The front's sharpness and anisotropy.** The front of a pulse moves
+at the maximal group speed, 1/√3 in every direction (section 26 (iii)),
+but it is sharp only where the dispersion vanishes: along (111) the pulse
+keeps its shape (ω = k/√3 exactly), along an axis it is dispersive (the
+short waves lag, the shortest stop), so the edge there is an Airy-type
+smear whose width grows as t^{1/3}, and it is weak, since a point release
+is broadband and the axis carries only its long waves. Measured (the
+amount at the Node and its six neighbours per tick, 61³, one-phase
+release): at r = 12.1 on (111) the passing pulse peaks at tick 24 (√3 r =
+21) with its 10–90 % width 6 ticks and a peak amount 1.0·10⁻²; at r = 17.3
+on (111) it peaks at 33 (30), width 6; on (110) at r = 12.7 and 17: peaks
+at 29 and 39 (22, 29), widths 11 and 12; on the axis at r = 12 and 18:
+peaks at 39 and 35 (21, 31), widths 20 and 14, peak amounts 3.2·10⁻⁴ and
+6.9·10⁻⁵, thirty times below (111) at the same r. So **the front is at
+√3 r in every direction, sharp (6 ticks) on the body diagonals and smeared
+(14 to 20 ticks) on the axes, and a short pulse favours the diagonals by a
+factor 30 in amount at r = 12**; a long wave (a clocked thing's field, (v))
+is nearly isotropic, with the first-order anisotropy of (v). The
+retardation of a switched-on clocked source (period 16; the period-mean
+of J_r at the Node and its six neighbours, 61³, 120 ticks) reaches 90 % of
+its steady value at t₉₀ = 22, 27, 31 for r = 12.1 on (111), 12.7 on (110)
+and 12 on an axis (√3 r = 21.0, 22.0, 20.8), and at 32 and 45 for r = 17.3
+on (111) and 16 on an axis (30.0, 27.7):
+
+```text
+t₉₀ = √3 r + 1 to 2 on the body diagonals,  + 5 on (110),  + 10 to 17 on the axes   (r = 12 to 17),
+```
+
+∝ r, against 1.925 r² of section 6 and r on the tubes only of sections 17
+and 22.
+
+**(iv) The standing part: the flat bands.** The one-step map on the six
+amplitudes at wavevector k, U(k) = D(k)·Π·S, has the eigenvalues e^{±iω(k)}
+once each (the wave) and +1 twice and −1 twice, independent of k (computed
+at three generic k; the trace of the mean flat projector over the zone
+3.99999). Four of the six bands are flat: their content does not move,
+it stands (+1) or flips sign every tick (−1) where it was put. The
+standing fraction of an initial state at one Node is its projection on the
+flat bands, integrated over the zone:
+
+```text
+a lone share on one heading:            2/3 stands, 1/3 radiates         (exact, the zone integral 0.66667);
+six equal shares in one phase:          0 stands, all radiates            (exact, 2·10⁻¹⁹);
+a plane wave:                            0 stands                          (exact).
+```
+
+The iteration (61³, a lone share of amount 1 at the origin): the amount
+within r ≤ 3 is 0.966, 0.748, 0.678, 0.669, 0.6648 at t = 4, 8, 12, 16, 40
+(the two-tick mean; the origin Node itself holds 0.535), converging to
+2/3. This is "what stays standing beside a thing" (point 24's third thing
+to measure): a shadow re-released alone on the heading it came home on
+(the orchestrator's re-release rule) leaves two thirds of itself standing
+at the owner's Node for ever and sends one third out as a pulse; six
+re-released together in one phase send everything out. The standing set of
+point 11 is, under R10, this flat-band content: exact eigenstates of the
+operator, localized, costing nothing and never leaving.
+
+**(v) The far field of a source.** Three sources, each with its result.
+
+*A constant one-phase source* (a clockless thing re-releasing every tick
+what came home, or the emitting reading of R3 at rate 0: amplitude a on six
+Ports every tick). The source in the u equation is −2a at the Node and
++a/3 at each of its six neighbours, of zero sum: **no monopole**, no 1/r
+potential, no far field. The iteration (41³, 80 ticks): the source Node's
+own standing set settles at A_p = −0.50 a on its six Ports (u = −1.0 a),
+so that what leaves is 0.50 a per Port and is sent back by the neighbours'
+standing pattern; the amount at (8, 0, 0), (12, 0, 0) and (7, 7, 7) is
+0.000 at t = 20 to 60, the total amount 9.5 a² of which 4.1 within r ≤ 3
+and the rest in the single switch-on shell that left once. **A clockless
+thing at rest has no far field under R10: its constant release is cancelled
+by the standing set it builds.**
+
+*A switched-on clocked source* (a thing of rate ρ = M/K turns per interval
+re-releasing at its current phase: amplitude a e^{−2πiρt} on six Ports
+every tick). This is a monochromatic source of the wave equation at
+ω₀ = 2πρ, and by section 26 (iii) its far field is a spherical wave of
+wavenumber k₀ = √3 ω₀(1 + ω₀²(K₄(r̂)/8 + 1/30)), that is of wavelength
+
+```text
+λ_w = 2π/k₀ ≈ 1/(√3 ρ) = K/(√3 M) Links   (the Compton length of section 18 over √3),
+```
+
+with the amount n(r) = 3|u|² ∝ 1/r² and the push J = n v_g ∝ 1/r² outward
+at every angle. The lattice's first-order anisotropy, from the stationary
+phase on the dispersion surface (|G|² ∝ 1/(|∇_k D|² 𝒦 r²), 𝒦 the Gaussian
+curvature of cos ω₀ = (1/3)Σcos kᵢ, computed with Δ_S K₄ = −20 K₄):
+
+```text
+n(r, r̂)  = (√3 S / 4π r²) [1 − (3/2) ω₀² K₄(r̂) + O(ω₀⁴)],
+J_r(r, r̂) = (S / 4π r²) [1 − (15/8) ω₀² K₄(r̂) + O(ω₀⁴)],     v_g(r̂) = (1/√3)[1 − (3/8) ω₀² K₄(r̂)],
+```
+
+S the flux (amount per interval) the source sends out; the field is
+weaker on the axes (K₄ = 2/5) than on the diagonals (−1/10, −4/15), by the
+fixed fraction (15/8)(2/5 + 4/15) ω₀² = 1.25 ω₀² between an axis and (111),
+**independent of r**: the anisotropy of the wave field does not decay with
+distance, as the diffusive field's (145/4)K₄/r² did, and for a thing of
+content M it is 1.25 (2πM/K)² = 49 (M/K)². **1/r² at every angle: reached
+for a clocked thing**, with a fixed angular modulation of relative size
+(15/8) ω₀² K₄.
+
+*A finite standing set.* Under the standing reading a clocked thing's set of
+total X is the wave above cut at the radius R its profile declares, and it
+flows out at S = X/(√3 R) per interval for √3 R intervals and is gone
+unless the board returns it: like section 5's, the force constant is the
+profile's flux and must be declared with the profile (κ = 1/(√3 R) in
+section 19's notation); unlike section 5's, what is not returned leaves
+at 1/√3 instead of spreading to a uniform density.
+
+**Check.** The switched-on clocked source on 81³ with a sponge, averaged
+over one period after 150 ticks: at period 16 (ω₀ = 0.393, λ_w = 9.2)
+J_r/n = 0.632, 0.603, 0.592, 0.589 on the axis at r = 8 to 20 and
+0.567 to 0.578 on (110) and (111) (→ 1/√3 = 0.577); 4πr²J_r/S with S the
+flux of J through the cube of half-width 8: axis 0.909, 0.852, 0.848, 0.811
+at r = 8, 12, 16, 20; (110) 0.916, 0.915, 0.916, 0.914; (111) 0.928, 0.929,
+0.946, 0.948; the flux of J through cubes of half-width 4, 8, 12, 16 is
+1.039, 0.907, 0.864, 0.843 of the reference (J differs from the Link
+current by the forward difference of the outward amount, ∝ 2/r, so J's
+flux converges to Gauss's as 1/r). The ratio axis/(111) at r = 16 to 20 is
+0.90 to 0.86 against the first-order 0.884/1.077 = 0.82. The steady state
+by the lattice resolvent (256³ FFT of 1/(2cos ω₀ − (2/3)Σcos kᵢ + iη)) at
+period 32 (ω₀ = 0.196, λ_w = 18.5): r²n relative to the directional mean at
+r = 24, 36, 48, 60 is 0.962, 0.954, 0.948, 0.959 on the axis, 1.007 to
+1.014 on (110), 1.022 to 1.041 on (111), constant in r, against the
+first-order 0.977, 1.006, 1.016: the same sign and order (the first order
+underestimates by about half at this ω₀; at period 16 the ordering holds
+with 0.83, 1.03, 1.12 at r = 24 to 48). The constant source, the release
+and the lone share: the numbers quoted in (ii), (iv), (v).
+
+**Verdict.** The wave equation with c_w = 1/√3: **reached exactly** as the
+continuum limit. The front fills every direction: **reached** (the tube
+theorem of sections 17 and 22 does not hold under R10; 89 % off the planes
+at t = 30). A sharp isotropic front: **different law** (sharp on (111),
+Airy-smeared on the axes, a short pulse thirty times weaker on an axis).
+t₉₀ ∝ r: **reached** (√3 r + 1 to 17 by direction). The far field 1/r² at every angle:
+**reached** for a clocked thing, with a fixed first-order anisotropy
+(15/8)ω₀²K₄; **not reached** for a clockless thing (no far field at all).
+The standing part: **new** (2/3 of a lone re-release; 0 of a symmetric
+one; four flat bands of six).
+
+## 28. Round 4: the wave against the causal speed
+
+**Rules used.** R10, R6′ (a thing moves one Link per interval), R9 (the
+wait), section 26.
+
+**What an observer measures.** A thing of light from A reaches B at
+distance r after |x_B − x_A|₁ intervals, between r and √3 r; a change in
+A's field (a wave front) reaches B after √3 r in every direction (section
+26 (iii): nothing in the mixed field outruns 1/√3). So an observer at B
+sees the light of A's move before the field of A's move, by (√3 − 1) r =
+0.73 r intervals on an axis and by 0 to 0.73 r on a diagonal (light on the
+L1 path takes √3 r on (111), the same as the wave). The retardation of
+the force is √3 r, the delay of light r to √3 r. Every free thing moves
+at speed 1 > 1/√3: **every thing outruns its own field**, and the field
+of a moving thing is a Mach cone behind it of half-angle arcsin(1/√3) =
+35.3° (in the continuum limit; on the lattice the cone is dressed by the
+front's anisotropy), not the contracted Coulomb field of a moving charge.
+A pushed shadow returning on the trace at one Link per interval (section
+32) arrives before the field change that follows it.
+
+**Is there an identification that makes the two speeds equal?** No, on
+three counts. (a) The lattice unit: things and shadows walk the same
+Links in the same intervals, and c_w = 1/√3 is a number of the mesh, the
+TLM speed 1/√d for six Ports, not of any unit; a two-dimensional board
+would give 1/√2 and a line 1. (b) N: the phase circle enters only the
+rounding of the phase (section 30), not the linear map; the dispersion
+relation has no N in it. (c) The wait of point 23: it slows things and
+never shadows (a shadow pays nothing), so it moves light toward 1/√3
+rather than the field toward 1: a light thing runs at 1 − w n (section 24
+(ii)), equal to 1/√3 only where w n = 1 − 1/√3 = 0.423 quanta read per
+interval, a dense field with the clock at 0.58; in the far field of
+anything, light is at 1 and the field at 1/√3. A speed-1 field would need
+a different node (in TLM the speed is set by the number of Ports and their
+impedances; equal Ports on the cubic mesh give 1/√3 and nothing else), that
+is, a different declaration, not a parameter of this one.
+
+**Prediction.** Under R10, the field of a thing propagates at 1/√3 of the
+causal speed: the recoil of a source pushed by a thing that moves (E11 (a)
+repeated with a moving pusher) arrives r√3 intervals after the move, the
+light of the move r to √3 r; a two-thing run with A displaced by one Link
+at tick t₀ reads B's register change at t₀ + √3 r + 2 (on (111)) to
+t₀ + √3 r + 17 (on an axis), never at t₀ + r; and a thing moving on a line
+leaves its field in a cone of 35° behind it. **Different law** (c_w = c/√3;
+the retardation of the force √3 r against r; the Mach cone).
+
+## 29. Round 4: two slits and a mirror
+
+**Rules used.** R10, the wave equation of section 26 (linear in the
+amplitudes, so superposition holds), R4′ (a thing reads J), point 6 (a mark
+counts nothing of a field), E5 (a thing meets its own shadows as home).
+
+**Two slits.** A clocked owner's field (section 27 (v)) is a monochromatic
+wave of wavelength λ_w = K/(√3 M); behind a wall with two slits at
+(0, ±d/2, 0) the common part at the screen Node (L, y, 0) is the sum of
+two spherical waves, u = u₁ + u₂ with u_{1,2} ∝ e^{ik₀ r_{1,2}}/r_{1,2},
+and the amount is n = 3|u|² locally (section 26 (iii)): the cross term
+2√(n₁n₂) cos(k₀(r₁ − r₂)) is real, since the amplitudes have signs, which
+R8 and R8v could not produce (sections 17 and 22). For L ≫ d the pattern is
+
+```text
+n(y) = n₁ + n₂ + 2√(n₁n₂) cos(2π d y/(λ_w L)),    fringe spacing λ_w L/d,   depth 2√(n₁n₂)/(n₁ + n₂) (1 for equal slits),
+```
+
+optics' law, and the push on a row of things behind the slits is
+J = n v_g (radial), modulated with the same fringes: **fringes in the
+push**, of the optical spacing λ_w L/d everywhere on the screen, against
+λ/2 in the strip only (R8) and none (R8v). In counts: a mark counts nothing
+of a field (point 6), so the fringes of shadows are read only as pushes;
+a thing meets its own shadows as home (E5) and one thing at a time shows
+no self-interference, as in sections 17 and 22, so the fringes of things
+scale with the coincidence rate, unchanged (A1). (In the exact lattice
+form n is Σ_p|A_p|² of the six Port amplitudes, which for two crossing
+plane waves of headings k₁, k₂ is n₁ + n₂ + 2Re Σ_p A_{1p}A*_{2p}, a cross
+term whose weight against 2√(n₁n₂) is the overlap of the two Port vectors,
+1 at small angle and cos-like at large angle: the fringe depth on the
+lattice is that overlap, 1 at k₁ = k₂ and (1 + cos θ)/2 at long wavelength
+for waves at angle θ, derived from section 26's A_p; at the two-slit
+angles d/L ≪ 1 it is 1.)
+
+**A mirror.** A wall that returns (a mark, or a thing's table: a shadow
+that arrives turns back with its amount and its phase, point 6) is the Port
+rule B_p = A_p at the wall Node in place of u − A_p: reflection coefficient
++1 on the amplitude. In front of it the incident and the returned waves
+form a standing wave of the common part, u = 2ū cos(k₀x + θ) e^{−iω₀t} for
+normal incidence, of period λ_w/2 = π/k₀ in the amounts. Two things
+distinguish the lattice from a scalar field. First, the net flow is zero
+but the push is not: the Link current Φ (what continuity conserves)
+vanishes in the time mean at every Link, while J at a Node, which is what
+a thing reads, differs from Φ by the forward difference of the outward
+amount (section 26 (ii)) and oscillates with x:
+
+```text
+Φ = 0,    J_x(x) = ±(k₀/3) n · sin(2k₀x + θ′) + O(k₀³),    n(x) = 2n₀ [1 + (k₀²/6) cos(2k₀x + θ″) + O(k₀⁴)],
+```
+
+n₀ the amount of one wave (derived from the Port amplitudes A_p of section
+26 (iii) for the two waves ±k₀; the coefficients are exact expansions of
+the six-Port sums). So a thing at rest in front of a mirror is pushed
+toward or away from the wall by up to (k₀/3) of the amount at its Node,
+with the sign changing every λ_w/4, a standing ladder of force of period
+λ_w/2 whose mean over a period is zero; and the amount itself is nearly
+flat, modulated at depth k₀²/6 only (0.08 at λ_w = 9.2, 0.007 at
+λ_w = 31), not the full cos² of a scalar standing wave: the amounts of the
+two waves pass through each other almost uniformly while the push
+alternates. **Reached** (a standing wave of period λ_w/2, zero net flow);
+**new** (the push oscillates at (k₀/3) n and the amount at k₀²/6: the
+lattice's Port structure, which no scalar field has).
+
+**Check.** *Two slits* (R10 iterated on 97 × 97 × 17 with a plane source
+at x = 6 of period 16, a returning wall at x = 30 with two slit lines
+d = 16 apart, the screen at L = 48 behind it, a sponge on the x and y
+edges, 420 ticks, the mean over the last period): the push J_x along the
+screen has its maximum at y = 0 (109·10⁻⁴), minima at y = ±15
+(0.7·10⁻⁴) and the next maxima at ±31 (91·10⁻⁴), against the first
+minimum at y = 14.7 from the exact path difference √(L² + (y + d/2)²) −
+√(L² + (y − d/2)²) = λ_w/2 (λ_w = 9.24; the small-angle spacing λ_w L/d =
+27.7): the optical fringes, with the depth (109 − 0.7)/(109 + 0.7) = 0.99
+in the push and 0.96 in the amount (193 against 4.0). *The mirror* (R10
+iterated on 129 × 5 × 5 with a plane source of period 16 at x = 10, the
+returning wall at x = 110, 900 ticks): the field in front of the wall is
+two waves of equal weight at ±k₀ (the spectrum of the +x-moving Port
+amplitude: 26.0 at +k₀ and 7.5 at −k₀, mirrored for the −x-moving one,
+nothing else); the amount n(x) runs between 2.27 and 2.67, depth 0.081
+against k₀²/6 = 0.079 at k₀ = 0.689; J_x(x) runs between −0.53 and +0.54,
+amplitude 0.22 of the mean amount 2.46 against the exact two-wave value
+0.220 (k₀/3 = 0.230), with its mean +0.005; the period of both 4.5 Links
+against π/k₀ = 4.56. The exact two-wave state built from the Port
+amplitudes gives the depth 0.0790 and the J amplitude 0.2204 for every
+relative phase θ.
+
+**Verdict.** Two-slit fringes of shadows in the push: **reached**, the
+optical law λ_w L/d at full depth (0.99); in counts: none (point 6), and
+no self-interference of a thing (E5). A mirror: **reached** as a standing
+wave of period λ_w/2 with zero net flow; the push in front of it
+oscillating at (k₀/3) n with zero mean and the amount nearly flat: **new**.
+
+## 30. Round 4: the integer rule
+
+**Rules used.** R10 in its integer form: at each Node the whole quanta
+arriving, n_in = Σ_p amount_p, are shared over the Ports as ⌊n_in|B_p|²/Σ|B|²
++ ρ_p⌋ with ρ_p the Node's remainder register for that Port (a parked
+shadow, point 22), the register keeping what is not whole; the leaving
+share carries the phase of B_p, rounded to the circle of N steps; the
+prefill rounds the declared profile to whole quanta per Node and heading
+with the fractions in the registers (Highlights 5.4, "A thing does not
+emit", the second rule).
+
+**(i) What a wave needs in whole quanta.** By section 26 (iii) a plane wave
+of amount n per Node has, at long wavelength, (1 + √3)²/12 = 0.622 n on
+the Port moving with it, (1 − √3)²/12 = 0.0447 n on the Port moving against
+it, and 1/12 = 0.0833 n on each of the four transverse Ports (at
+λ = 16 Links: 0.616, 0.046, 0.084 ×4, exact). The wave is the cancellation
+of the backward and transverse shares between neighbours; a rounding that
+moves one quantum on a Port whose share is a few quanta destroys that
+cancellation at that Node. So n must be large against 1/0.045 = 22 for the
+smallest share to be whole at all, and larger for the cancellation to
+hold: **the wave is a many-quanta phenomenon per Node.** A prefill with
+fewer than 6 quanta per Node has no whole quantum on any Port and goes
+entirely into the registers, where nothing moves it: the wave does not
+start.
+
+**(ii) Where the rounding puts what it takes.** The linear map has no
+diffusive mode (its six bands are two waves and four flat bands, section
+27 (iv)), so the rounding error, a perturbation of one quantum at a Node,
+becomes standing flat-band content (2/3 of a lone perturbation) and
+incoherent waves (1/3): **the rounding creates no diffusive part; it
+creates standing content and noise**, and the amount it takes from the
+wave stays where it was taken. The coherent push J of the wave is what
+decays.
+
+**(iii) The survival table.** A plane wave along an axis in a periodic 16³
+box, N = 64, registers, the push ⟨J_x⟩ over the box against the linear
+value n v_g, averaged over the 16 ticks ending at t = 32, 64, 128, 256,
+512:
+
+```text
+quanta per Node     λ = 16 Links                              λ = 8 Links
+      32            0.85  0.85  0.42  0.54  0.37               0.83  0.59  0.45  0.49  0.02
+      64            0.94  0.89  0.86  0.75  −0.01              0.93  0.88  0.66  0.23  0.01
+     128            0.97  0.97  0.98  0.97  0.92               0.97  0.97  0.90  0.79  0.74
+     256            0.99  0.99  0.99  0.99  0.99               0.98  0.99  0.98  0.98  0.99
+    1024            1.00  1.00  1.00  1.00  1.00               0.99  0.99  0.99  0.99  0.99
+    4096            1.00  1.00  1.00  1.00  1.00               1.00  1.00  1.00  1.00  1.00
+```
+
+and at 8, 16 and 24 quanta per Node the push is 0.00 ± 0.1 from t = 16 on
+(dead within a wavelength of travel). At 256 quanta per Node the wave
+holds over 500 intervals at 99 % of its push; at 128 it loses 8 % (λ = 16)
+to 26 % (λ = 8) in 500 intervals; at 64 it is gone by 500; at 32 by 100.
+The phase circle: N = 64 changes nothing against unquantized phases; N = 8
+caps the push at 0.93 of the linear value at every amount (0.925 at 256,
+0.933 at 1024: the coherent fraction of a phase rounded to ±π/8 is
+(sin(π/8)/(π/8))² = 0.95, less the register's part), so N = 8 is a 7 %
+loss of force and N ≥ 64 none. Where the wave dies, its amount is 30 to
+50 % in the flat bands (the projector of section 27 (iv) applied to the
+state at t = 128: 0.32 to 0.52 at 8 to 32 quanta per Node, 0.02 at 64,
+0.00 at 256), the rest incoherent waves; the registers hold 2 to 5 quanta
+per Node throughout. The largest-remainder (Hamilton) variant, which parks
+nothing and gives the leftover quanta to the largest fractions, behaves
+the same to the digits shown at 64 and 256 quanta per Node.
+
+**The smallest amount for the wave to survive:** about **256 quanta per
+Node** for a field that keeps its push over hundreds of intervals (128 for
+tens, 64 for a few wavelengths of travel). In the far field of a clocked
+thing, n(r) = √3 S/(4πr²) ≥ 256 requires r ≤ 0.023 √S: a source of
+S = 10⁶ quanta per interval carries a wave to r = 23 Links and a standing,
+incoherent field beyond; the wave of a shadow set is, in whole quanta, a
+near-field object unless X is enormous, and the 1/r² push of section 27 (v)
+is read in the engine only inside that radius.
+
+**Check.** The table above (16³, 512 ticks, seconds each); the linear
+plane wave's flat-band fraction 0.000000 and its Port shares 0.0463,
+0.6161, 0.0844 ×4 at λ = 16; the prefill at 1, 2 and 4 quanta per Node
+giving n = 0.00 after rounding.
+
+**Verdict.** The wave survives the integer rule: **reached** above about
+256 quanta per Node (N ≥ 64), **not reached** below 64. A spurious
+diffusive part: **none** (the rounding makes standing content and noise;
+the operator has no diffusive mode). The phase circle: N = 8 costs 7 % of
+the push, N ≥ 64 nothing. **New**: the radius 0.023 √S inside which the
+engine's field is a wave.
+
+## 31. Round 4: Coulomb and Newton under the mixed field
+
+**Rules used.** R3′ (one shadow set, X = ξM), R4′ (the two readings of
+points 16 and 18), R5, R7′ (rate M/K), R10, sections 19, 26, 27.
+
+**The push.** A thing B at distance r from a clocked thing A reads, per
+interval, J_A(B) = n v_g = S_A/(4π r²)[1 − (15/8)ω_A²K₄(r̂)] (section 27 (v);
+ω_A = 2πM_A/K), constant in time for the monochromatic wave although the
+amplitudes oscillate; the reading multiplies it by M_B (mass) or by
+(q_A/M_A) q_B (charge), and B's own wave pushes A by the same law with
+A ↔ B, the recoil returning on the trace (section 32). With S_A = κ ξ M_A
+(κ = 1/(√3 R) for a set of extent R, section 27 (v)) section 19's algebra
+goes through with ζ = 1:
+
+```text
+F_B = k_C q_A q_B / r² r̂_AB [1 − (15/8) ω² K₄(r̂)],   F_B = −G M_A M_B / r² r̂_AB [the same bracket],   k_C = G = κ ξ /(2π),
+```
+
+the product laws, the sign rule, the equivalence principle and k_C = G as
+in round 2, **reached**, with three modifications. (1) **The angular
+factor**: a fixed anisotropy of relative size (15/8)ω²K₄(r̂), ω the
+*owner's* rate 2πM/K (so the bracket in F_B carries ω_A² for A's wave on B
+and ω_B² for B's wave returned to B), 1.25(2πM/K)² between an axis and a
+body diagonal, not decaying with r; for ω ≤ 0.1 (a content below K/63) it
+is below 1.3 %, and the wave equation's own condition on the clock (point
+19: the phase step per interval below half the circle, M/K < 1/2) allows
+ω up to π where it is total. (2) **The retardation**: a change of either
+thing's field reaches the other after √3 r, not r (section 28). (3)
+**The source**: only a clocked thing has a far field (section 27 (v)),
+and the flux S = X/(√3 R) of a finite standing set lasts √3 R intervals
+unless returned; a clockless thing (light) pushes nothing at a distance,
+which is consistent with light having no rest. Under the rounding of
+section 30 the law holds where n(r) ≥ 256 quanta per Node, r ≤ 0.023 √S.
+
+**No length scale in the force from the phase.** J reads amounts and no
+phase, and for a monochromatic wave the amounts per Port are constant in
+time (section 26 (iii)): the Compton pattern of section 18 is present in
+the amplitudes and read by nothing; section 23's standing modulation
+cos(2πM_B s/K)/s² appears only under R4″, which point 24 does not adopt.
+
+**Check.** J = n v_g and Φ = J of section 26 (five digits); the 1/r² and
+the angular numbers of section 27's check; the algebra of section 19.
+
+**Verdict.** Coulomb's product law and Newton's, with k_C = G: **reached**
+(ζ = 1), **modified** by a fixed lattice anisotropy of first order
+(15/8)(2πM/K)²K₄(r̂), a retardation √3 r, and the requirement of a clock on
+the source and of 256 quanta per Node at the receiver.
+
+## 32. Round 4: the return on the trace inside a mixed field
+
+**Rules used.** R5 (the return), point 24's exemption ("the return of point
+3 stays a walk back on the trace, never a spread"), R10 for everything
+else, section 4.
+
+**The return is exempt, so the third law is exact.** A shadow that pushed
+B turns back carrying its amount and −Δp and walks the trace home at one
+Link per interval, unmixed: it crosses the mixed field of its owner (and of
+everyone) without combining, so nothing of the −Δp is scattered, reversed
+or collimated on the way, the failure of R8v (section 22 (v)) does not
+occur, and the identity of section 4 holds in integers: Δp_owner(t_meet +
+s) = −Δp_thing(t_meet), Σ p over things constant once the returns are home.
+The number of steps s: under R10 a share at B is a sum over paths of many
+lengths and has no step count of its own; what the rule gives it is the
+trace, that is the Link path to where the owner is, s = |x_B − x_A|₁ for an
+owner at rest (r on an axis, √3 r on (111)), and the trace of the owner's
+moves otherwise. So the recoil arrives after |x|₁ ≤ √3 r intervals, **at or
+before the field's own retardation** (section 28): the reaction reaches
+the owner no later than any change of its field reaches the pushed thing.
+**Reached exactly** (the third law in the books, delayed by |x|₁).
+
+**What the return does at home.** By R5 a returning shadow is absorbed
+and, under the standing reading, leaves again "back out along the line it
+came home on" (the orchestrator's elaboration): a lone share on one
+heading, of which 2/3 stands at the owner's Node in the flat bands and 1/3
+radiates (section 27 (iv)). So in a steady circulation A → B → A, two
+thirds of every returned amount joins A's standing set and one third goes
+back out, and the flux S_A the far field carries is fed by one third of
+the returns unless the re-release is six-fold and in phase (then all
+radiates, 0 stands). The recoil momentum is unaffected (it is booked at
+absorption, whole); the amount's fate depends on the re-release rule,
+which is the owner's to fix (flagged in Highlights 5.4). **New**.
+
+**Check.** Section 27 (iv)'s flat-band fractions (2/3 exact for a lone
+share; the iteration 0.6648 at t = 40).
+
+**Verdict.** The returning shadow's momentum comes home whole and the
+third law is kept exactly, delayed by the L1 path: **reached**. The
+returned amount's re-release: two thirds standing per lone re-release,
+**new** and the owner's rule to fix.
+
+## 33. Round 4: the verdicts
+
+| Law | Round 3 (section 25) | Round 4: R10 (the Node mixes the six) | Run |
+| --- | --- | --- | --- |
+| Continuity, Gauss's law (flux) | reached | **reached exactly** (unitarity of S; Link current) | E11 under 16c |
+| A conservation law for the signed flux J | — | **not reached** (the Node reverses a lone share's J to −1/3) | — |
+| Maxwell's wave equation | not reached (amounts have no sign) | **reached exactly**: u(t+1) + u(t−1) = (1/3)Σ_nb u, cos ω = (1/3)Σcos kᵢ (TLM) | — |
+| Wave speed | — | **1/√3 Link per interval** in the bulk; no signal faster in any direction | A5s Run 2 tick by tick |
+| The push in a wave | J = 11/8 Φ (diffusive) | **new**: J = n·v_g = Φ exactly (ζ = 1); two opposite waves J = 0 with the amounts passing | — |
+| The front of a release | 4/5 on tubes, 0 off the planes | **tube theorem overturned**: 89 % off the planes at t = 30; front at √3 r everywhere, sharp on (111) (6 ticks), smeared on the axes (14 to 20), a short pulse 30× weaker on an axis | E11's release read at (12,0,0), (7,7,7) |
+| Retardation t₉₀ | r on tubes, ∞ off | **√3 r + 1 to 17** by direction (1 to 2 on (111), 10 to 17 on an axis) | A5s Run 2 |
+| Far field of a thing at rest | six tubes | **1/r² at every angle** for a clocked thing, with a fixed anisotropy (15/8)ω²K₄ (1.25 ω² axis vs (111)); **no far field** for a clockless one (the constant source cancels itself) | E11 with a clocked source, at (24,0,0) and (14,14,14) |
+| The standing set | — | **new**: four flat bands of six; 2/3 of a lone re-release stands, 0 of a symmetric release | a lone shadow re-released at a thing |
+| Field speed against light | — | **different law**: the force lags light by (√3 − 1) r; every thing outruns its field; Mach cone 35.3°; no identification (unit, N, wait) closes the gap | E11 (a) with a moved pusher |
+| Two-slit fringes of shadows | lost (R8v) | **reached** in the push: the optical spacing λ_w L/d, λ_w = K/(√3 M), depth 0.99 measured; none in counts (point 6); no self-interference of a thing | A1 |
+| A mirror | ties, Port order (R8v) | **reached**: standing wave of period λ_w/2, zero net flow; **new**: the push oscillates at (k₀/3) n with zero mean, the amount at depth k₀²/6 (0.081 measured, 0.079 derived) | E11 with a wall |
+| The integer rule | — | **reached** above ≈ 256 quanta per Node (N ≥ 64), dead below 64; no diffusive part (standing content and noise instead); N = 8 costs 7 % | A5s dense mode at two X |
+| Coulomb's product law, Newton's, k_C = G | reached (R4′) | **reached** with ζ = 1, modified: anisotropy (15/8)(2πM/K)²K₄, retardation √3 r, a clock required on the source, 256 quanta per Node at the receiver | A5s, A7 |
+| A length scale in the force | reached under R4″ | **not reached** (J is phase-blind and time-constant in a wave) | — |
+| Newton's third law | lost (R8v) | **reached exactly**, delayed by \|x\|₁ ≤ √3 r (the return is exempt from mixing) | E11 (a) |
+| Port-order independence | lost (R8v) | **reached** (S is a fixed linear map; the register order is the only tie, bounded) | — |
+
+Open after this round, one line each: the
+second-order (ω⁴) anisotropy and the first-order coefficient's excess
+(measured ≈ 1.5 to 2 × 3/2 at ω₀ = 0.2); the re-release rule at the owner
+(lone versus six-fold in phase decides whether the returns stand or
+radiate); the time-averaged Gauss flux of J against Φ near a source
+(the 2/r correction); a rounding-survival law in closed form (the measured
+loss ∝ 1/n^{1.5 to 2} per interval).

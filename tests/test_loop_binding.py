@@ -4,7 +4,9 @@ of rays on a ring of Nodes whose corner meetings, under an ordinary rule with
 outputs, reproduce the rays that entered them. The unit-square electron of
 `examples/nature/ring.json`, built inline: eight rays circulating both ways on
 four Nodes under the Port form of the corner table hold every tick with content
-8, period 4 and their phases as the clock; under the catalog's Born table with
+8, period 8 (K 1: a ray of 1 advances one step per interval, clock-readings-v1,
+2026-09-18; the rate 2 of the first pin is out of the bound content / K < N / 2
+for a corner's merged output of 2 at N = 8) and their phases as the clock; under the catalog's Born table with
 the senses in phase the ring disperses (`ring_open.json`); at the catalog's rate
 1 the state repeats after two circuits; four rays close the smallest loop; the
 Born table closes the ring in quadrature. Nothing at a Node names a group: the
@@ -99,9 +101,10 @@ def lamps(corners=(0, 1, 2, 3), l_phase=0):
     return result
 
 
-def document(rule, rate=2, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
+def document(rule, clock=1, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
     return {
         "schema_version": 1,
+        "K": clock,
         "model_id": "loop-binding-test-v1",
         "shape": [12, 12, 11],
         "boundary": "open",
@@ -161,7 +164,10 @@ def document(rule, rate=2, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
                 "metric": "links",
                 "pace": [1, 1],
                 "phase_bits": 3,
-                "kerengonen": {"phase_advance": rate},
+                # The clock is the content (clock-readings-v1, 2026-09-18): a ray
+                # of 1 advances one step per interval at K 1 and one step every
+                # second interval at K 2; no rate is declared.
+                "clock": True,
                 "charge": -3,
             }
         ],
@@ -235,11 +241,15 @@ PORT_SOURCES = {P0: (2, 2, 0), P1: (-2, 2, 0), P2: (-2, -2, 0), P3: (2, -2, 0)}
 BORN_SOURCES = {P0: (1, 3, 0), P1: (-1, 3, 0), P2: (-1, -3, 0), P3: (1, -3, 0)}
 
 
-def lines(table, phase, phases=None):
-    """The expected rays of every corner: (heading, mask, shares) with a phase."""
+def lines(table, phase, phases=None, remainder=0):
+    """The expected rays of every corner: (heading, mask, shares) with a phase and
+    the clock's remainder (clock-readings-v1)."""
     return {
         position: [
-            ray(heading, 1, phase if phases is None else phases[position][index], 1, mask, shares)
+            replace(
+                ray(heading, 1, phase if phases is None else phases[position][index], 1, mask, shares),
+                remainder=remainder,
+            )
             for index, (heading, mask, shares) in enumerate(entries)
         ]
         for position, entries in table.items()
@@ -272,19 +282,25 @@ def tool(name):
 @pytest.mark.parametrize("case", ["ring", "open", "slow", "half", "quadrature", "record", "rejected"])
 def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
     if case == "ring":
-        # (a) The Port form at rate 2: every corner meets every interval from the
-        # cycle of tick 1, the loop closes in one circuit, content 8 exact.
+        # (a) The Port form at K 1 (a ray of 1 advances one step per interval,
+        # clock-readings-v1; the rate 2 of the first pin needs a content of 2
+        # per ray, whose merged corner outputs of 4 the bound content / K < N / 2
+        # refuses at N = 8): every corner meets every interval from the cycle of
+        # tick 1, the lines close in one circuit and the phases in two, content 8
+        # exact.
         world = Simulation(parse_initial_state(document(PORT_CORNER)))
         seen = {}
         for tick in range(1, 17):
             world.step()
             if tick == 1:
-                assert state(world) == lines(LAMP_LINES, 2)
+                assert state(world) == lines(LAMP_LINES, 1)
             else:
-                assert state(world) == lines(RING_LINES, (2 * tick) % 8)
+                assert state(world) == lines(RING_LINES, tick % 8)
             seen[tick] = state(world)
             if tick >= 6:
-                assert seen[tick] == seen[tick - 4]
+                assert seen[tick] != seen[tick - 4]
+            if tick >= 10:
+                assert seen[tick] == seen[tick - 8]
             assert ledger(world) == ((8,), ZERO, (0,), -24, True)
             assert world.source_totals()["momentum"] == ZERO
             assert "bound_groups" not in world.snapshot()
@@ -299,17 +315,19 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
             electron = 8 if tick < 8 else 0
             assert ledger(world) == ((electron,), ZERO, (8 - electron,), -3 * electron, True)
             if tick == 1:
-                assert state(world) == lines(LAMP_LINES, 2)
+                assert state(world) == lines(LAMP_LINES, 1)
             elif tick == 2:
+                # The merged output of 2 leaves at the inputs' phase 1 and advances
+                # two steps per Link at K 1: phase 3 one Link on.
                 assert state(world) == {
-                    P0: [ray(3, 2, 4, 1, 8, (0, 0, 0, 2, 0, 0))],
-                    P1: [ray(3, 2, 4, 1, 8, (0, 0, 0, 2, 0, 0))],
-                    P2: [ray(2, 2, 4, 1, 4, (0, 0, 2, 0, 0, 0))],
-                    P3: [ray(2, 2, 4, 1, 4, (0, 0, 2, 0, 0, 0))],
+                    P0: [ray(3, 2, 3, 1, 8, (0, 0, 0, 2, 0, 0))],
+                    P1: [ray(3, 2, 3, 1, 8, (0, 0, 0, 2, 0, 0))],
+                    P2: [ray(2, 2, 3, 1, 4, (0, 0, 2, 0, 0, 0))],
+                    P3: [ray(2, 2, 3, 1, 4, (0, 0, 2, 0, 0, 0))],
                 }
             elif tick <= 7:
                 assert state(world) == {position: [] for position in CORNERS}
-                phase = (2 * tick) % 8
+                phase = (2 * tick - 1) % 8
                 for x in (5, 6):
                     assert rays_at(world, (x, 7 - tick, 5)) == [
                         ray(3, 2, phase, tick - 1, 8, (0, 0, 0, 2, 0, 0))
@@ -321,26 +339,30 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
                 assert not any(n.rays and any(n.rays) for n in world.inventory_view().nodes)
         return
     if case == "slow":
-        # (c) The Port form at the catalog's rate 1: the same lines with phase t
-        # mod 8, the state repeating after two circuits, nothing dispersing.
-        world = Simulation(parse_initial_state(document(PORT_CORNER, rate=1, ticks=10)))
+        # (c) The Port form at K 2: a ray of 1 advances (remainder + 1) // 2
+        # steps per interval, one every second interval with the remainder kept
+        # on the ray (clock-readings-v1), the same lines with phase t // 2 mod 8,
+        # the state repeating after four circuits, nothing dispersing.
+        world = Simulation(parse_initial_state(document(PORT_CORNER, clock=2, ticks=20)))
         seen = {}
-        for tick in range(1, 10):
+        for tick in range(1, 20):
             world.step()
-            assert state(world) == lines(LAMP_LINES if tick == 1 else RING_LINES, tick % 8)
+            assert state(world) == lines(
+                LAMP_LINES if tick == 1 else RING_LINES, (tick // 2) % 8, remainder=tick % 2
+            )
             seen[tick] = state(world)
             if tick >= 6:
                 assert seen[tick] != seen[tick - 4]
                 assert all(
-                    a.phase == (b.phase + 4) % 8
+                    a.phase == (b.phase + 2) % 8
                     for position in CORNERS
                     for a, b in zip(seen[tick][position], seen[tick - 4][position], strict=True)
                 )
-            if tick >= 10:
-                assert seen[tick] == seen[tick - 8]
+            if tick >= 18:
+                assert seen[tick] == seen[tick - 16]
             assert ledger(world) == ((8,), ZERO, (0,), -24, True)
         world.step()
-        assert state(world) == seen[2]
+        assert state(world) == seen[4]
         return
     if case == "half":
         # (d) Four rays, the two lamps at P0 and at P2: the smallest loop, two
@@ -349,7 +371,7 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
         seen = {}
         for tick in range(1, 11):
             world.step()
-            phase = (2 * tick) % 8
+            phase = tick % 8
             if tick == 1:
                 expected = {
                     P0: [],
@@ -374,7 +396,9 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
             assert state(world) == expected
             seen[tick] = state(world)
             if tick >= 6:
-                assert seen[tick] == seen[tick - 4]
+                assert seen[tick] != seen[tick - 4]
+            if tick >= 10:
+                assert seen[tick] == seen[tick - 8]
             assert ledger(world) == ((4,), ZERO, (0,), -12, True)
         return
     if case == "quadrature":
@@ -389,7 +413,7 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
             table = LAMP_LINES if tick == 1 else RING_LINES
             phases = {
                 position: [
-                    ((2 * tick) + (2 if heading == l_headings[position] else 0)) % 8
+                    (tick + (2 if heading == l_headings[position] else 0)) % 8
                     for heading, _, _ in table[position]
                 ]
                 for position in CORNERS
@@ -397,7 +421,7 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
             assert state(world) == lines(table, 0, phases)
             seen[tick] = state(world)
             if tick >= 6:
-                assert seen[tick] == seen[tick - 4]
+                assert seen[tick] != seen[tick - 4]
             assert ledger(world) == ((8,), ZERO, (0,), -24, True)
         return
     if case == "record":
@@ -405,8 +429,9 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
         # the group from it: the corner turns are booked as each corner's source
         # in its cycle record, no `bound_tick` exists, the run record carries the
         # loop identity and no motion identity, and the ray viewer's extractor
-        # reads one group on the unit square, content 8, period 4, clock 2 on the
-        # 8-step circle, from tick 1 to tick 15; the control reads none.
+        # reads one group on the unit square, content 8, period 8, clock 1 on the
+        # 8-step circle (K 1, clock-readings-v1), from tick 1 to tick 15; the
+        # control reads none.
         extract = tool("extract")
         sidecar = tool("record_sidecar")
         for name, rule, sources in (
@@ -416,7 +441,8 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
             path = tmp_path / f"{name}.json"
             path.write_text(json.dumps(document(rule)), encoding="utf-8")
             record = tmp_path / name
-            run_initialization(path, record, ticks=16)
+            # 24 ticks: the extractor's window must cover two periods of 8.
+            run_initialization(path, record, ticks=24)
             metadata = json.loads((record / "run.json").read_text(encoding="utf-8"))
             assert metadata["loop_binding"] == LOOP_BINDING == "loop-binding-v1"
             assert metadata["ray_meeting"] == "ray-meeting-conversion-v1"
@@ -429,7 +455,7 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
             assert not any(e["event"] in ("bound_tick", "bound_group_step") for e in records)
             assert corner_sources(records, 1) == sources
             if name == "ring":
-                assert all(corner_sources(records, tick) == sources for tick in range(1, 16))
+                assert all(corner_sources(records, tick) == sources for tick in range(1, 24))
                 assert metadata["final_totals"] == {"electron": [8], "momentum": [0, 0, 0]}
             else:
                 assert corner_sources(records, 2) == {}
@@ -437,7 +463,8 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
                 assert metadata["escaped_totals"]["electron"] == [8]
             # Without the phase recording the pattern of Nodes, headings and amounts
             # alone is read: on the eight-ray ring it is the same every interval,
-            # period 1, and the clock is unknown; the phases make the period 4.
+            # period 1, and the clock is unknown; the phases make the period 8
+            # (K 1, clock-readings-v1).
             plain = extract.extract_record(record)
             sidecar.write_sidecar(record)
             run = extract.extract_record(record, sidecar=record / "ray-recording.json")
@@ -451,17 +478,17 @@ def test_a_bound_group_is_a_periodic_orbit_of_the_meeting_rule(tmp_path, case):
                 "ring_size": 4,
                 "content": 8,
                 "families": {"electron": 8},
-                "period": 4,
-                "clock": {"electron": 2},
+                "period": 8,
+                "clock": {"electron": 1},
                 "phase_steps": {"electron": 8},
                 "from_tick": 1,
-                "to_tick": 15,
+                "to_tick": 23,
                 "rays": group["rays"],
             }
-            assert len(group["rays"]) == 120
+            assert len(group["rays"]) == 184
             assert all(run["rays"][i]["group"] == 0 for i in group["rays"])
             assert all(r["group"] is None for r in run["rays"] if r["id"] not in group["rays"])
-            assert [row["bound"] for row in run["ticks_data"]] == [{}] + [{"electron": [8]}] * 15 + [{}]
+            assert [row["bound"] for row in run["ticks_data"]] == [{}] + [{"electron": [8]}] * 23 + [{}]
             assert [(g["content"], g["period"], g["clock"]) for g in plain["groups"]] == [
                 (8, 1, {"electron": None})
             ]

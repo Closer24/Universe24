@@ -13,6 +13,15 @@ declarations are rejected (g); the mark is the home of what it absorbed (h);
 the ledger per bit with the border lines (i); a thing reads the shadows'
 message by its content or by its charge, as declared (j).
 
+Re-pinned on 2026-09-18 under clock-readings-v1 (feature 16b, Highlights 5.4
+points 16, 18, 19 and 21): a family declares no rest rate, `m` declares
+`clock` and the world `K` (world (a): K 2, so a thing of 2 advances one step
+per interval as before); the electricity reading multiplies by the owner's
+whole charge over its content, so a body of 100 quanta of `m` declares the
+whole charge -100 and pushes as it did at -1 per quantum; a thing's `momentum` is the
+pushes it carries, its register line amount x heading plus that; the momentum
+line carries `spent`.
+
 Re-pinned on 2026-09-18 under node-is-ports-v1 (feature 17, Highlights 5.4
 point 22 and the settled rules): a lamp is a thing that spends its content
 (no `source`, no `recoil_field`), a prefilled shadow starts with its Link
@@ -22,6 +31,22 @@ without an event (rule (iv)), the trace is a zero-amount parked shadow, the
 runner's per-tick line is `momentum`, the ledgers per bit read initial +
 converted = current + escaped + absorbed (things) and initial = current +
 escaped + absorbed_at_home (shadows), and `seed` is rejected.
+
+Re-pinned on 2026-09-18 under the Node's mixing (node-mixing-v1, Highlights
+5.4 point 24, feature 16c): these worlds declared no split table, so their
+shadows walked straight to what they were to meet; under point 24 every shadow
+of a family with a shadow set mixes at every Node it reaches with nothing else
+there (a lone quantum parks its ninths and goes nowhere), so a shadow that is
+to meet a thing, a body or a mark now leaves fresh (`steps` 0) from the Node
+beside it and arrives there in the first delivery, and what returns walks its
+one step back and waits (rule (ii)). The subjects are the same; the geometry
+is adjacent and the ticks earlier: (a) the body one Link past the push, (b)
+the two bodies adjacent and pushing each other every tick, (c) the homecoming
+at tick 1, (d) the returned shadow waiting at steps 0, (e) and (k) the
+mixing's amounts (4 back, 1 each other way from 11; the rest parked in
+ninths), (f) the fill's transient by the mixing, (h) the marks adjacent, (i)
+the escape and the return at the first delivery, (j) the shadows one Link
+ahead of the things.
 """
 
 import json
@@ -51,7 +76,7 @@ def field(name, components=1):
     }
 
 
-def family(spread=None, phase_bits=0, rate=0):
+def family(spread=None, phase_bits=0, clock=False):
     entry = {
         "field": "m",
         "baseline": 0,
@@ -63,9 +88,10 @@ def family(spread=None, phase_bits=0, rate=0):
         "pace": [1, 1],
         "phase_bits": phase_bits,
         "charge": -1,
-        "kerengonen": {"phase_advance": rate},
         "release": [1, 1],
     }
+    if clock:
+        entry["clock"] = True
     if spread is not None:
         entry["spread"] = spread
     return entry
@@ -116,20 +142,29 @@ TURN = {
 }
 
 
-def shadow(position, heading, amount=1, owner=1, sign=-1):
+def shadow(position, heading, amount=1, owner=1, sign=-1, steps=None):
     """A profile shadow; its sign is its owner's charge sign (-1 here, the
-    family's charge and the bodies' charge are -1)."""
-    return {
+    family's charge and the bodies' charge are -1); `steps` 0 is a fresh shadow
+    leaving at the first tick, None the default (its Link distance from its
+    owner's Node, rule (ii))."""
+    entry = {
         "position": list(position),
         "heading": list(heading),
         "amount": amount,
         "owner": owner,
         "sign": sign,
     }
+    if steps is not None:
+        entry["steps"] = steps
+    return entry
 
 
 def body(position, thing=None, table=None, amount=100):
-    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -1}
+    """A body of `amount` quanta of `m` with the whole charge -amount, the
+    family's -1 per quantum (clock-readings-v1: its shadows carry its whole
+    charge and its content, and the electricity reading divides the one by the
+    other)."""
+    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -amount}
     if table is not None:
         entry["momentum_table"] = table
         entry["reads"] = "charge"
@@ -150,7 +185,7 @@ def document(
     spread=None,
     fill=None,
     phase_bits=0,
-    rate=0,
+    clock=0,
     dense=None,
     rules=(TURN,),
 ):
@@ -166,7 +201,11 @@ def document(
         "operation_costs": dict.fromkeys(COSTS, 1),
         "fields": [field("m"), field("momentum", 3)],
         "disturbance_types": list(types) or [RING],
-        "spatial_fields": [family(spread, phase_bits, rate)],
+        "spatial_fields": [family(spread, phase_bits, bool(clock))],
+        **({"K": clock} if clock else {}),
+        # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
+        # tests/test_wait_rule.py; these worlds pin the pushes without it.
+        "wait_per_quantum": 0,
         "emissions": list(emissions),
         "seeds": list(seeds),
         "ray_interactions": [deepcopy(rule) for rule in rules],
@@ -248,59 +287,62 @@ def parked_at(snapshot, position):
 
 def test_shadow_pushes_thing_and_comes_home_to_body():
     """(a): the push, the walk back on the shadow's steps, home to the body with
-    -dp, the re-release, the ledger's returned line and the things' identity."""
+    -dp, the re-release, the ledger's returned line and the things' identity.
+    Re-pinned 2026-09-18 (node-mixing-v1): the body's shadow leaves fresh from
+    the body at (3,2,2) and meets the thing at (2,2,2) in the cycle of tick 2;
+    the thing is absorbed by the body one tick later, the shadow home with it."""
     kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
     doc = document(
-        ticks=7,
+        ticks=5,
         types=[kind, RING],
         emissions=[emission],
         seeds=[seed],
-        bodies=[body((7, 2, 2))],
-        shadows=[shadow((5, 2, 2), MINUS_X, owner=3)],
+        bodies=[body((3, 2, 2))],
+        shadows=[shadow((3, 2, 2), MINUS_X, owner=3, steps=0)],
         phase_bits=2,
-        rate=1,
+        clock=2,
     )
     assert parse_initial_state(doc).spatial_fields[0].owners == (1, 2, 3)
-    result = run(doc, 7)
-    after_2 = result["inventories"][1]
-    resident = rays_at(after_2, (3, 2, 2))
+    result = run(doc, 5)
+    after_1 = result["inventories"][0]
+    resident = rays_at(after_1, (2, 2, 2))
     thing = next(ray for ray in resident if ray.detector == BIT_THING)
-    walker = next(ray for ray in resident if ray.detector == BIT_SHADOW)
-    assert (thing.amount, thing.phase, thing.steps, thing.owner) == (2, 2, 2, 1)
-    # The shadow started two Links from its owner's Node (settled rule (ii)).
-    assert (walker.amount, walker.phase, walker.steps, walker.owner) == (1, 0, 4, 3)
+    walker = next(ray for ray in resident if ray.detector == BIT_SHADOW and not ray.parked)
+    assert (thing.amount, thing.phase, thing.steps, thing.owner) == (2, 1, 1, 1)
+    assert (walker.amount, walker.phase, walker.steps, walker.owner) == (1, 0, 1, 3)
     # A push is not an event: the momentum line of the record shows it.
     assert not {"ray_push", "shadow_home", "external_body_pushed"} & set(kinds(result["events"]))
-    assert result["momentum"][1] == {1: [2, 0, 0], 3: [0, 0, 0]}
-    assert result["momentum"][2] == {1: [1, 0, 0], 3: [0, 0, 0]}
-    pushed = next(r for r in rays_at(result["inventories"][3], (5, 2, 2)) if r.detector == BIT_THING)
-    assert (pushed.detector, pushed.owner, pushed.momentum, pushed.amount) == (
-        BIT_THING,
-        1,
-        (1, 0, 0),
-        2,
-    )
-    for tick, steps in ((3, 3), (4, 2), (5, 1)):
-        back = rays_at(result["inventories"][tick - 1], (tick + 1, 2, 2))
-        returning = [ray for ray in back if ray.detector == BIT_SHADOW]
-        assert [(ray.outbound, ray.steps, ray.momentum) for ray in returning] == [(0, steps, (1, 0, 0))]
+    assert result["momentum"][0] == {1: [2, 0, 0], 3: [0, 0, 0]}
+    assert result["momentum"][1] == {3: [1, 0, 0]}
     received = [
         e for e in result["events"] if e["event"] == "spatial_received" and e.get("returned_to_body")
     ]
     assert [(e["tick"], tuple(e["position"]), e["returned_to_body"]) for e in received] == [
-        (6, (7, 2, 2), {"m": {"amount": 1, "momentum": (1, 0, 0)}})
+        (2, (3, 2, 2), {"m": {"amount": 1, "momentum": (1, 0, 0)}})
     ]
-    assert result["momentum"][4] == {1: [1, 0, 0], 3: [0, 0, 0]}
-    assert result["momentum"][5] == {3: [1, 0, 0]}
     sunk = [e for e in result["events"] if e["event"] == "external_body_absorbed"]
-    assert [(e["tick"], e["amount"], e["momentum"]) for e in sunk] == [(6, 2, (1, 0, 0))]
+    assert [(e["tick"], e["amount"], e["momentum"]) for e in sunk] == [(2, 2, (1, 0, 0))]
     assert result["bodies"][0]["momentum"] == [1, 0, 0]
-    fresh = rays_at(result["inventories"][5], (7, 2, 2))
+    fresh = [r for r in rays_at(result["inventories"][1], (3, 2, 2)) if not r.parked]
     assert [(r.detector, r.outbound, r.steps, r.owner, HEADINGS[r.heading]) for r in fresh] == [
         (BIT_SHADOW, 1, 0, 3, MINUS_X)
     ]
-    assert [HEADINGS[r.heading] for r in rays_at(result["inventories"][6], (6, 2, 2))] == [MINUS_X]
-    ledger = result["ledgers"][5]
+    assert [
+        HEADINGS[r.heading] for r in rays_at(result["inventories"][2], (2, 2, 2)) if not r.parked
+    ] == [MINUS_X]
+    # The re-released quantum mixes at (2,2,2) and parks its ninths there, 4 on
+    # its back heading and 1 on each other, beside the thing's trace.
+    assert parked_at(result["snapshot"], (2, 2, 2)) == [
+        (1, [1, 0, 0], 0),
+        (3, [1, 0, 0], 4),
+        (3, [-1, 0, 0], 1),
+        (3, [0, 1, 0], 1),
+        (3, [0, -1, 0], 1),
+        (3, [0, 0, 1], 1),
+        (3, [0, 0, -1], 1),
+    ]
+    assert result["shadows"] == [1] * 5 and result["counts"][4] == {1: [0, 0], 2: [0, 0], 3: [0, 0]}
+    ledger = result["ledgers"][4]
     assert line(ledger, "fields", "m") == {
         "initial": (3,),
         "sourced": (0,),
@@ -333,6 +375,7 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         "absorbed": (1, 0, 0),
         "absorbed_by_marks": (0, 0, 0),
         "returned": (1, 0, 0),
+        "spent": (0, 0, 0),
     }
     assert line(ledger, "charge", "m") == {
         "initial": -2,
@@ -345,52 +388,51 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         "returned": 0,
     }
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
-    assert result["contents"] == [2, 2, 2, 2, 2, 0, 0]
-    assert result["shadows"] == [1] * 7
+    assert result["contents"] == [2, 0, 0, 0, 0]
     # The trace is a zero-amount parked shadow on the heading the thing left by
-    # (node-is-ports-v1): thing 1 left (3,2,2) through +X.
-    assert parked_at(result["snapshot"], (3, 2, 2)) == [(1, [1, 0, 0], 0)]
+    # (node-is-ports-v1): thing 1 left (1,2,2) through +X; the unit is ninths.
+    assert parked_at(result["snapshot"], (1, 2, 2)) == [(1, [1, 0, 0], 0)]
     assert all(
-        entry["bit"] == BIT_SHADOW and entry["unit"] == 1 for entry in result["snapshot"]["parked"]
+        entry["bit"] == BIT_SHADOW and entry["unit"] == 9 for entry in result["snapshot"]["parked"]
     )
 
 
 def test_two_bodies_push_each_other_and_take_back_the_recoil():
     """(b): each body pushed by the other's shadow, each shadow home with -dp, the
-    momenta equal and opposite, the shadow sets kept, no event at a Node without a thing."""
+    momenta equal and opposite, the shadow sets kept, no event at a Node without a
+    thing. Re-pinned 2026-09-18 (node-mixing-v1): the bodies are adjacent, each
+    shadow leaves fresh from its body, pushes the other at the delivery of every
+    odd tick and is home with -dp at every even one, so each body's momentum
+    grows by one every tick, the push and the receipt in turn."""
     doc = document(
-        ticks=10,
-        bodies=[body((2, 2, 2), 3, table={"m": 1}), body((7, 2, 2), 4, table={"m": 1})],
-        shadows=[shadow((3, 2, 2), X, owner=3), shadow((6, 2, 2), MINUS_X, owner=4)],
+        ticks=6,
+        bodies=[body((2, 2, 2), 3, table={"m": 1}), body((3, 2, 2), 4, table={"m": 1})],
+        shadows=[shadow((2, 2, 2), X, owner=3, steps=0), shadow((3, 2, 2), MINUS_X, owner=4, steps=0)],
     )
-    result = run(doc, 10)
-    assert result["contents"] == [0] * 10 and result["shadows"] == [2] * 10
+    result = run(doc, 6)
+    assert result["contents"] == [0] * 6 and result["shadows"] == [2] * 6
     assert not {"ray_push", "shadow_home", "external_body_pushed"} & set(kinds(result["events"]))
     for tick, (a, b) in enumerate(result["bodies_per_tick"], start=1):
-        expected = [0, 0, 0] if tick < 4 else [-1, 0, 0] if tick < 9 else [-2, 0, 0]
-        assert (a, b) == (expected, [-c for c in expected]), tick
-    assert result["momentum"][3] == {3: [-1, 0, 0], 4: [1, 0, 0]}
-    assert result["momentum"][8] == {3: [-2, 0, 0], 4: [2, 0, 0]}
+        assert (a, b) == ([-tick, 0, 0], [tick, 0, 0]), tick
+    assert result["momentum"][1] == {3: [-2, 0, 0], 4: [2, 0, 0]}
+    assert result["momentum"][5] == {3: [-6, 0, 0], 4: [6, 0, 0]}
     received = [
         e for e in result["events"] if e["event"] == "spatial_received" and e.get("returned_to_body")
     ]
     assert sorted(
-        (e["tick"], tuple(e["position"]), e["returned_to_body"]["m"]["momentum"]) for e in received
-    ) == [
-        (4, (2, 2, 2), (-1, 0, 0)),
-        (4, (7, 2, 2), (1, 0, 0)),
-        (9, (2, 2, 2), (-1, 0, 0)),
-        (9, (7, 2, 2), (1, 0, 0)),
-    ]
-    assert [b["momentum"] for b in result["bodies"]] == [[-2, 0, 0], [2, 0, 0]]
+        (e["tick"], tuple(e["position"]), e["returned_to_body"]["m"]["amount"]) for e in received
+    ) == sorted(
+        (tick, position, 1 - tick % 2) for tick in range(1, 7) for position in ((2, 2, 2), (3, 2, 2))
+    )
+    assert [b["momentum"] for b in result["bodies"]] == [[-6, 0, 0], [6, 0, 0]]
     for ledger in result["ledgers"]:
         assert ledger["balanced"] and ledger["real_conserved"]
         assert ledger["fields"]["momentum"]["returned"] == (0, 0, 0)
-    assert all(counts == {3: [1, 1], 4: [1, 1]} for counts in result["counts"])
+    assert all(counts[3] == [1, 1] and counts[4] == [1, 1] for counts in result["counts"])
     for event in result["events"]:
         if event["event"] in ("spatial_received", "spatial_cycle", "spatial_sent"):
-            assert tuple(event["position"]) in ((2, 2, 2), (7, 2, 2))
-    assert line(result["ledgers"][8], "shadow", "m") == {
+            assert tuple(event["position"]) in ((2, 2, 2), (3, 2, 2))
+    assert line(result["ledgers"][5], "shadow", "m") == {
         "initial": (2,),
         "current": (2,),
         "escaped": (0,),
@@ -400,26 +442,28 @@ def test_two_bodies_push_each_other_and_take_back_the_recoil():
 
 def test_a_thing_meets_its_own_shadow_without_a_push():
     """(c): the shadow of the thing's own identity is home at the thing ray: no push,
-    absorbed back, released again with it."""
+    absorbed back, released again with it. Re-pinned 2026-09-18 (node-mixing-v1):
+    the shadow leaves fresh from (3,2,2) and is home at (2,2,2) in the cycle of
+    tick 1; released again it rides one Link with the thing and then mixes."""
     kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
     doc = document(
         ticks=5,
         types=[kind, RING],
         emissions=[emission],
         seeds=[seed],
-        shadows=[shadow((5, 2, 2), MINUS_X, owner=1)],
+        shadows=[shadow((3, 2, 2), MINUS_X, owner=1, steps=0)],
     )
     result = run(doc, 5)
     assert not {"ray_push", "shadow_home"} & set(kinds(result["events"]))
     cycles = [e for e in result["events"] if e["event"] == "spatial_cycle" and e.get("returned")]
     assert [(e["tick"], tuple(e["position"]), e["returned"]) for e in cycles] == [
-        (2, (3, 2, 2), {"m": {"amount": 1, "momentum": (0, 0, 0)}})
+        (1, (2, 2, 2), {"m": {"amount": 1, "momentum": (0, 0, 0)}})
     ]
     assert all(r == {1: [2, 0, 0]} for r in result["momentum"])
-    together = rays_at(result["inventories"][4], (6, 2, 2))
+    together = [r for r in rays_at(result["inventories"][1], (3, 2, 2)) if not r.parked]
     assert sorted((r.detector, r.amount, r.momentum, r.steps) for r in together) == [
-        (BIT_SHADOW, 1, None, 3),
-        (BIT_THING, 2, None, 5),
+        (BIT_SHADOW, 1, None, 1),
+        (BIT_THING, 2, None, 2),
     ]
     # A homecoming is no crossing of the border (point 7): nothing sourced or returned.
     assert result["ledgers"][2]["fields"]["m"]["returned"] == (0,)
@@ -445,16 +489,19 @@ def test_a_mark_returns_shadows_and_counts_things_by_its_table(tmp_path):
         emissions=[emission, emission2],
         seeds=[seed, seed2],
         marks=[{"position": [4, 2, 2], "setting": [1, 2]}],
-        shadows=[shadow((5, 2, 2), MINUS_X, owner=5)],
+        shadows=[shadow((5, 2, 2), MINUS_X, owner=5, steps=0)],
     )
     result = run(doc, 6)
     events = result["events"]
-    # A mark returning a shadow is no event: the shadow is read from the board.
+    # A mark returning a shadow is no event: the shadow is read from the board
+    # (re-pinned 2026-09-18, node-mixing-v1: the shadow leaves fresh from (5,2,2),
+    # is returned at the first delivery and waits at (5,2,2), its one step spent).
     assert "shadow_return" not in kinds(events)
-    back = rays_at(result["inventories"][1], (5, 2, 2))
-    assert [(r.detector, r.owner, r.outbound, r.steps, HEADINGS[r.heading]) for r in back] == [
-        (BIT_SHADOW, 5, 0, 1, X)
-    ]
+    for tick in range(2, 7):
+        back = rays_at(result["inventories"][tick - 1], (5, 2, 2))
+        assert [(r.detector, r.owner, r.outbound, r.steps, HEADINGS[r.heading]) for r in back] == [
+            (BIT_SHADOW, 5, 0, 0, X)
+        ], tick
     assert result["marks"][0]["resident"]["real"] == {"m": 2}
     clicks = [e for e in events if e["event"] == "detector_click"]
     assert [(e["tick"], e["amount"], e["owner"], e.get("absorbed")) for e in clicks] == [(3, 2, 1, 2)]
@@ -507,7 +554,9 @@ def test_a_mark_returns_shadows_and_counts_things_by_its_table(tmp_path):
 
 def test_a_shadow_only_board_makes_no_event_and_the_dense_layer_agrees():
     """(e): a Node holding shadows alone publishes nothing; the dense layer (the
-    default when admitted) and the engine give one state and one ledger."""
+    default when admitted) and the engine give one state and one ledger.
+    Re-pinned 2026-09-18 (node-mixing-v1): each 11 sends 4 back, 1 on and 1 on
+    each transverse heading and parks 2 quanta of ninths; the 4s send 1 back."""
     results = []
     for dense in (False, None):
         doc = document(
@@ -516,7 +565,6 @@ def test_a_shadow_only_board_makes_no_event_and_the_dense_layer_agrees():
                 shadow((4, 2, 2), X, amount=11, owner=2),
                 shadow((5, 2, 2), MINUS_X, amount=11, owner=2),
             ],
-            spread=[6, 1, 1, 1, 1, 1],
             dense=dense,
             rules=(),
         )
@@ -529,35 +577,58 @@ def test_a_shadow_only_board_makes_no_event_and_the_dense_layer_agrees():
             assert ledger["balanced"] and ledger["fields"]["m"]["current"] == (22,)
             assert ledger["fields"]["m"]["escaped"] == (0,)
         after_2 = result["inventories"][1]
-        assert [(r.amount, HEADINGS[r.heading], r.owner) for r in rays_at(after_2, (6, 2, 2))] == [
-            (3, X, 2)
-        ]
-        assert [(r.amount, HEADINGS[r.heading], r.owner) for r in rays_at(after_2, (3, 2, 2))] == [
-            (3, MINUS_X, 2)
-        ]
+        assert [
+            (r.amount, HEADINGS[r.heading], r.owner) for r in rays_at(after_2, (6, 2, 2)) if not r.parked
+        ] == [(1, X, 2)]
+        assert [
+            (r.amount, HEADINGS[r.heading], r.owner) for r in rays_at(after_2, (3, 2, 2)) if not r.parked
+        ] == [(1, MINUS_X, 2)]
         after_1 = result["inventories"][0]
-        assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (5, 2, 2))] == [(6, X)]
-        assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (6, 2, 2))] == [(1, X)]
+        assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (5, 2, 2))] == [(1, X)]
+        assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (6, 2, 2))] == [(4, X)]
+        assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (3, 2, 2))] == [(4, MINUS_X)]
+        assert [{o: c for o, c in counts.items() if c != [0, 0]} for counts in result["counts"]] == [
+            {2: [12, 18]},
+            {2: [4, 4]},
+            {2: [2, 2]},
+            {},
+        ]
     sparse, dense = results
     assert sparse["ledgers"] == dense["ledgers"]
     assert sparse["inventories"] == dense["inventories"]
     assert sparse["snapshot"]["parked"] == dense["snapshot"]["parked"]
-    # The shares below one quantum are parked shadows in units of the table's total.
-    assert all(
-        entry["unit"] == 11 and 0 < entry["amount"] < 11 for entry in sparse["snapshot"]["parked"]
-    )
-    assert {tuple(e["position"]) for e in sparse["snapshot"]["parked"]} >= {(6, 2, 2), (3, 2, 2)}
+    # The shares below one quantum are parked shadows in ninths (node-mixing-v1):
+    # 8 on each axis heading and 5 on each transverse one at (4,2,2), 2 on +X and
+    # 5 on the five others at (3,2,2).
+    assert all(entry["unit"] == 9 and 0 < entry["amount"] < 9 for entry in sparse["snapshot"]["parked"])
+    assert sorted(parked_at(sparse["snapshot"], (4, 2, 2))) == [
+        (2, [-1, 0, 0], 8),
+        (2, [0, -1, 0], 5),
+        (2, [0, 0, -1], 5),
+        (2, [0, 0, 1], 5),
+        (2, [0, 1, 0], 5),
+        (2, [1, 0, 0], 8),
+    ]
+    assert sorted(amount for _, _, amount in parked_at(sparse["snapshot"], (3, 2, 2))) == [
+        2,
+        5,
+        5,
+        5,
+        5,
+        5,
+    ]
 
 
 def test_the_fill_gives_the_board_the_bodys_shadows_exactly():
-    """(f): two intervals of the split table's transient from a body, exact in
-    both modes and booked as initial content."""
+    """(f): two intervals of the mixing's transient from a body, exact in both
+    modes and booked as initial content (re-pinned 2026-09-18, node-mixing-v1:
+    the 11 at each neighbour sends 4 back to the body, which reflects them, 1 on
+    and 1 on each transverse heading, and parks 2 quanta of ninths)."""
     results = []
     for dense in (False, None):
         doc = document(
             ticks=3,
             bodies=[body((4, 2, 2), amount=11)],
-            spread=[6, 1, 1, 1, 1, 1],
             fill=2,
             dense=dense,
             rules=(),
@@ -575,24 +646,32 @@ def test_the_fill_gives_the_board_the_bodys_shadows_exactly():
         document(
             ticks=3,
             bodies=[body((4, 2, 2), amount=11)],
-            spread=[6, 1, 1, 1, 1, 1],
             fill=2,
             dense=False,
             rules=(),
         )
     )
     with Simulation(initial) as world:
-        held = {node.position: node.rays[0] for node in world.inventory_view().nodes if any(node.rays)}
-    amounts = {position: sorted(r.amount for r in rays) for position, rays in held.items()}
-    assert amounts[(5, 2, 2)] == [11] and amounts[(6, 2, 2)] == [6] and amounts[(5, 3, 2)] == [1, 1]
-    assert amounts[(4, 2, 2)] == [1] * 6
+        held = {
+            node.position: [r for r in node.rays[0] if not r.parked]
+            for node in world.inventory_view().nodes
+            if any(node.rays)
+        }
+        parked = sum(entry["amount"] for entry in world.snapshot()["parked"])
+    amounts = {position: sorted(r.amount for r in rays) for position, rays in held.items() if rays}
+    assert amounts[(5, 2, 2)] == [11] and amounts[(6, 2, 2)] == [1] and amounts[(5, 3, 2)] == [1, 1]
+    assert amounts[(4, 2, 2)] == [4] * 6
     assert all(r.steps == 0 and r.outbound for r in held[(4, 2, 2)])
-    assert sum(sum(a) for a in amounts.values()) == 132
+    assert sum(sum(a) for a in amounts.values()) == 120 and parked == 12 * 9
 
 
 def test_a_mark_is_the_home_of_the_shadows_of_what_it_absorbed():
     """(h): the trace of a thing a mark absorbed ends at the mark, and each shadow
-    of it that returns is absorbed into the same counter."""
+    of it that returns is absorbed into the same counter. Re-pinned 2026-09-18
+    (node-mixing-v1): the shadow leaves fresh from (3,2,2) into the mark, is
+    returned at the first delivery, waits at (3,2,2) for its thing, is home with
+    it there in the cycle of tick 2 and released again with it into the mark,
+    which absorbs the thing at tick 3 and, one round later, the shadow."""
     kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
     doc = document(
         ticks=5,
@@ -603,16 +682,16 @@ def test_a_mark_is_the_home_of_the_shadows_of_what_it_absorbed():
             {"position": [4, 2, 2], "setting": [1, 1]},
             {"position": [8, 2, 2], "setting": [1, 1]},
         ],
-        shadows=[shadow((7, 2, 2), X, owner=1)],
+        shadows=[shadow((3, 2, 2), X, owner=1, steps=0)],
     )
     result = run(doc, 5)
     events = result["events"]
-    assert "shadow_return" not in kinds(events)
-    # The shadow started six Links from its owner's Node (settled rule (ii)).
-    back = rays_at(result["inventories"][1], (7, 2, 2))
-    assert [(r.detector, r.outbound, r.steps, HEADINGS[r.heading]) for r in back] == [
-        (BIT_SHADOW, 0, 6, MINUS_X)
+    back = [r for r in rays_at(result["inventories"][1], (3, 2, 2)) if r.detector == BIT_SHADOW]
+    assert [(r.outbound, r.steps, HEADINGS[r.heading]) for r in back if not r.parked] == [
+        (0, 0, MINUS_X)
     ]
+    cycles = [e for e in events if e["event"] == "spatial_cycle" and e.get("returned")]
+    assert [(e["tick"], tuple(e["position"])) for e in cycles] == [(2, (3, 2, 2))]
     assert [(e["tick"], e.get("absorbed")) for e in events if e["event"] == "detector_click"] == [(3, 2)]
     # A shadow absorbed at its home mark makes no event (settled rule (iv)): it is
     # counted on the resident's shadows line, never as a click.
@@ -634,6 +713,7 @@ def test_a_mark_is_the_home_of_the_shadows_of_what_it_absorbed():
     assert ledger["marks"]["shadow"] == {"m": (1,), "momentum": (0, 0, 0)}
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     assert result["contents"] == [2, 2, 0, 0, 0] and result["shadows"] == [1, 1, 1, 1, 0]
+    assert result["counts"][4] == {1: [0, 0], 2: [0, 0]}
 
 
 def test_the_ledger_per_bit_with_the_border_lines():
@@ -658,12 +738,16 @@ def test_the_ledger_per_bit_with_the_border_lines():
             {"position": [8, 3, 2], "setting": [1, 1]},
         ],
         shadows=[
-            shadow((6, 1, 2), X, owner=3),
-            shadow((6, 2, 2), MINUS_X, owner=3),
-            shadow((7, 3, 2), X, owner=2),
+            shadow((9, 1, 2), X, owner=3, steps=0),
+            shadow((5, 2, 2), MINUS_X, owner=3, steps=0),
+            shadow((3, 3, 2), X, owner=2, steps=0),
         ],
         rules=(),
     )
+    # Re-pinned 2026-09-18 (node-mixing-v1): the three shadows leave fresh, one
+    # off the board's edge at tick 1, one into the body and one into the mark,
+    # which returns it to its thing at (3,3,2), where it is home and released
+    # again with it every other tick, the mark returning it each time.
     result = run(doc, 6)
     ledger = result["ledgers"][5]
     assert line(ledger, "real", "m") == {
@@ -675,34 +759,35 @@ def test_the_ledger_per_bit_with_the_border_lines():
     }
     assert line(ledger, "shadow", "m") == {
         "initial": (3,),
-        "current": (1,),
+        "current": (2,),
         "escaped": (1,),
-        "absorbed_at_home": (1,),
+        "absorbed_at_home": (0,),
     }
     assert line(ledger, "fields", "m") == {
         "initial": (15,),
         "sourced": (0,),
-        "current": (5,),
+        "current": (6,),
         "escaped": (1,),
         "annulled": (0,),
         "absorbed": (4,),
-        "absorbed_by_marks": (5,),
+        "absorbed_by_marks": (4,),
         "returned": (0,),
     }
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     # The lamps' content counts among the things until it is absorbed: two per
     # tick from tick 3, the 0-th quantum of each lamp at its border after tick 3.
     assert result["contents"] == [12, 12, 10, 8, 6, 4]
-    assert result["shadows"] == [3, 3, 3, 2, 1, 1]
+    assert result["shadows"] == [2] * 6
     assert result["marks"][0]["resident"]["real"] == {"m": 4}
-    assert result["marks"][0]["resident"]["shadow"] == {"m": 1}
+    assert result["marks"][0]["resident"]["shadow"] == {}
     assert result["marks"][0]["resident"]["owners"] == [2]
     assert result["bodies"][0]["sink"] == {"m": 4}
 
 
 def test_a_thing_moves_whole_while_its_shadows_spread():
-    """(k): a thing is never split; only its shadows spread by the family's table
-    (points 2 and 12), and the thing's Node alone publishes events (point 13)."""
+    """(k): a thing is never split; only its shadows spread, by the Node's mixing
+    (points 2, 12 and 24), and the thing's Node alone publishes events (point 13).
+    Re-pinned 2026-09-18 (node-mixing-v1): the 11 sends 4 back and 1 each other way."""
     kind, emission, seed = lamp("lamp", 2, (1, 1, 2))
     doc = document(
         ticks=3,
@@ -710,18 +795,20 @@ def test_a_thing_moves_whole_while_its_shadows_spread():
         emissions=[emission],
         seeds=[seed],
         shadows=[shadow((4, 2, 2), X, amount=11, owner=1)],
-        spread=[6, 1, 1, 1, 1, 1],
         rules=(),
     )
     result = run(doc, 3)
     assert result["contents"] == [2] * 3 and result["shadows"] == [11] * 3
     for tick in range(1, 4):
-        thing = rays_at(result["inventories"][tick - 1], (1 + tick, 1, 2))
+        thing = [r for r in rays_at(result["inventories"][tick - 1], (1 + tick, 1, 2)) if not r.parked]
         assert [(r.detector, r.amount, r.owner, r.steps) for r in thing] == [(BIT_THING, 2, 1, tick)]
     after_1, after_2 = result["inventories"][:2]
-    assert [(r.amount, r.detector, r.owner) for r in rays_at(after_1, (5, 2, 2))] == [(6, BIT_SHADOW, 1)]
-    assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (3, 2, 2))] == [(1, MINUS_X)]
-    assert [(r.amount, r.detector, r.owner) for r in rays_at(after_2, (6, 2, 2))] == [(3, BIT_SHADOW, 1)]
+    assert [(r.amount, r.detector, r.owner) for r in rays_at(after_1, (5, 2, 2))] == [(1, BIT_SHADOW, 1)]
+    assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_1, (3, 2, 2))] == [(4, MINUS_X)]
+    assert [(r.amount, HEADINGS[r.heading]) for r in rays_at(after_2, (4, 2, 2)) if not r.parked] == [
+        (1, X)
+    ]
+    assert [r for r in rays_at(after_2, (6, 2, 2)) if not r.parked] == []
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     # Nothing is created from a shadow, and nothing is sourced (node-is-ports-v1).
     assert all("sourced" not in entry["shadow"]["m"] for entry in result["ledgers"])
@@ -744,23 +831,32 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
         emissions=[emission, emission2],
         seeds=[seed, seed2],
         bodies=[body((9, 2, 2))],
-        shadows=[shadow((5, 1, 2), MINUS_X, owner=3), shadow((5, 3, 2), MINUS_X, owner=3)],
+        shadows=[
+            shadow((3, 1, 2), MINUS_X, owner=3, steps=0),
+            shadow((3, 3, 2), MINUS_X, owner=3, steps=0),
+        ],
         rules=(TURN | {"momentum_table": {"m": -1}, "reads": reads},),
     )
+    # Re-pinned 2026-09-18 (node-mixing-v1): the shadows leave fresh one Link
+    # ahead of the things and push them head on at (2,y,2) in the cycle of tick
+    # 2; each return walks its one step back to (3,y,2) and waits there.
     result = run(doc, 3)
     pushes = {"content": ((2, 0, 0), (4, 0, 0)), "charge": ((1, 0, 0), (1, 0, 0))}[reads]
-    assert result["momentum"][1] == {1: [2, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
-    assert result["momentum"][2] == {
+    assert result["momentum"][0] == {1: [2, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
+    assert result["momentum"][1] == {
         1: [2 + pushes[0][0], 0, 0],
         2: [4 + pushes[1][0], 0, 0],
         3: [0, 0, 0],
     }
-    # Each shadow started five Links from the body's Node (settled rule (ii)).
-    for y, push, amount in ((1, pushes[0], 2), (3, pushes[1], 4)):
-        rays = rays_at(result["inventories"][2], (4, y, 2))
+    for y, push in ((1, pushes[0]), (3, pushes[1])):
+        rays = [r for r in rays_at(result["inventories"][2], (4, y, 2)) if not r.parked]
+        # The momentum a thing carries is the pushes it took (clock-readings-v1).
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
-            (BIT_SHADOW, 3, (-push[0], 0, 0), 0, 6),
-            (BIT_THING, y // 2 + 1, (amount + push[0], 0, 0), 1, 3),
+            (BIT_THING, y // 2 + 1, (push[0], 0, 0), 1, 3),
+        ]
+        rays = [r for r in rays_at(result["inventories"][2], (3, y, 2)) if not r.parked]
+        assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
+            (BIT_SHADOW, 3, (-push[0], 0, 0), 0, 0),
         ]
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     assert result["contents"] == [6] * 3 and result["shadows"] == [2] * 3

@@ -183,7 +183,7 @@ def lamp_line(stock, ticks):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 0},
+                "kerengonen": {"phase_steps": 8},
             }
         ],
         "emissions": [

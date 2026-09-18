@@ -22,8 +22,6 @@ from event_universe.core.spatial_state import (
     RAY_PROPERTIES,
     RAY_VIEW_COMPONENTS,
     RAY_VIEW_COMPONENTS_UNPOLARIZED,
-    DecayDraw,
-    Heading,
     Layers,
     Ray,
     RayPush,
@@ -36,7 +34,6 @@ from event_universe.core.spatial_state import (
     ray_vector,
     return_shadow,
     stamp_event,
-    ticket_bit,
     turn_receiver,
     validate_ray_participants,
     validate_rays,
@@ -45,10 +42,6 @@ from event_universe.core.spatial_state import (
 from .disturbances import convert_values, evaluate, interact_values
 
 Turns = list[RayPush]
-# The draws of the decaying rules at one Node in one cycle (decay-draw-v1), in
-# the order they were taken from the Node's ticket stream; the last one carries
-# the stream's state after the cycle, and the caller's `ticket` its state before.
-Draws = list[DecayDraw]
 
 
 def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
@@ -164,10 +157,23 @@ def _convert(
         if rule.polarization_declared:
             meter.charge("update")
     # bit-law-v1: each output is the thing its source input is, the owner of the
-    # input the output reads.
+    # input the output reads; it carries that input's clock remainder and push
+    # remainder on (clock-readings-v1: the corner table reproduces the thing that
+    # entered, clock and all) and its passages, 0 when this rule is the group
+    # breaking (point 20: the outputs of a decay are fresh things).
     for position, origin in enumerate(rule.output_sources):
         kind, ray = produced[position]
-        produced[position] = (kind, replace(ray, owner=inputs[origin][1].owner))
+        source = inputs[origin][1]
+        produced[position] = (
+            kind,
+            replace(
+                ray,
+                owner=source.owner,
+                remainder=source.remainder if definitions[kind].clock else 0,
+                push_remainder=source.push_remainder,
+                periods=0 if rule.decay is not None else source.periods,
+            ),
+        )
     for lag in rule.lags:
         # ray-binding-v1, Highlights 3.28: the delay by the declared table, per the
         # Port the source input came through, the whole quanta of amount x entry /
@@ -187,9 +193,9 @@ def _convert(
         stock[kind] = checked_work(stock.get(kind, 0) + ray.amount)
     for kind, ray in produced:
         stock[kind] = checked_work(stock.get(kind, 0) - ray.amount)
-    if any(stock.values()) and rule.draw is None:
-        # A decaying rule (decay-draw-v1, Highlights 3.26: the weak interaction is
-        # a change of family) may move content between families; the total
+    if any(stock.values()) and rule.decay is None:
+        # A decay (Highlights 5.4 point 20 and 3.26: the weak interaction is a
+        # change of family) may move content between families; the total
         # amount, the declared invariants and the appended charge invariant were
         # checked above, and the caller books what each family lost or gained.
         raise ValueError(f"ray meeting {rule.name} changes the stock of a family")
@@ -208,57 +214,13 @@ def _convert(
     return tuple((kind, ray) for (kind, _), ray in zip(products, stamped, strict=True))
 
 
-def _table_pushes(
-    rule: InteractionDefinition,
-    owners: tuple[tuple[int, int], ...],
-    views: tuple[DisturbanceRecord | None, ...],
-    used: set[int],
-    rays: tuple[Rays, ...],
-    candidate: list[list[Ray | None]],
-    definitions: tuple[SpatialFieldDefinition, ...],
-    fields: tuple[FieldDefinition, ...],
-    meter: CostMeter,
-    receiver_owner: int,
-    receiver: Ray,
-    receiver_definition: SpatialFieldDefinition,
-) -> list[tuple[int, Ray, Heading, tuple[int, int, int]]]:
-    """The shadows a momentum table meets and the push each gives (bit-law-v1,
-    point 3): every resident outbound shadow of a named family that no earlier
-    rule met, in slot order, whose owner is not the pushed thing's (a thing is
-    never pushed by its own shadow: that shadow is home, and the planner absorbs
-    it back). Each is turned back on its own steps carrying -push
-    (`return_shadow`): its spatial field, the shadow, its heading and the push,
-    sign x amount x heading read times the thing's content or charge as the
-    rule's `reads` declares (point 16), -1 toward the source, which lies
-    opposite the arriving heading. The meeting creates no momentum."""
-    met = []
-    for slot, (index, ray_slot) in enumerate(owners):
-        sign = rule.momentum_table[index] if index < len(rule.momentum_table) else 0
-        if not sign or slot in used or views[slot] is None:
-            continue
-        ray = rays[index][ray_slot]
-        if ray.detector != BIT_SHADOW or ray.owner == receiver_owner:
-            continue
-        meter.charge("evaluate")
-        heading = definitions[index].headings[ray.heading]
-        push = push_of(
-            sign, ray, definitions[index], rule.reads, receiver.amount, receiver_definition.charge
-        )
-        returned = return_shadow(ray, definitions[index], (-push[0], -push[1], -push[2]))
-        validate_rays((returned,), definitions[index], fields[definitions[index].field])
-        candidate[index][ray_slot] = returned
-        used.add(slot)
-        met.append((index, ray, heading, push))
-        meter.charge("update", 5)
-    return met
-
-
 def _turn(
     rule: InteractionDefinition,
     receiver_slot: int,
     owners: tuple[tuple[int, int], ...],
     views: tuple[DisturbanceRecord | None, ...],
     used: set[int],
+    taken: dict[int, int],
     rays: tuple[Rays, ...],
     candidate: list[list[Ray | None]],
     definitions: tuple[SpatialFieldDefinition, ...],
@@ -266,35 +228,64 @@ def _turn(
     meter: CostMeter,
     turns: Turns | None,
 ) -> None:
-    """A thing turns by momentum (ray-momentum-turn-v2 under bit-law-v1): the
-    coupling's one unnamed participant, a thing, is pushed by every resident
-    outbound shadow of a family the table names that no earlier rule met and
-    that is not its own, the group's shadow among them, each push sign x amount x
-    heading of the shadow, and each shadow turned back on its steps with -push.
-    The thing keeps its amount, phase, bit, heading index and event record; no
-    event is stamped and the bit never changes. One record per push, in slot
-    order, reports the register before and after."""
+    """A thing turns by momentum (ray-momentum-turn-v3 under clock-readings-v1,
+    Highlights 5.4 points 3, 15, 16 and 18): the coupling's one unnamed
+    participant, a thing, is pushed by every resident outbound shadow of a family
+    the table names that is not its own, the group's shadow among them, each
+    push the rule's reading of the shadow's message (`push_of`: the table's sign
+    x amount x heading x the thing's content, or x the owner's charge over its
+    content x the thing's charge, the latter accumulated exactly on the thing's
+    push remainder), and each shadow turned back on its steps carrying -push.
+    The same shadows are read once per momentum rule of the thing (point 18,
+    gravity and electricity the same shadows read twice): a shadow an earlier
+    rule turned back for this thing pushes it again under this rule's reading
+    and carries the sum home; a shadow another thing took is left to it. The
+    thing keeps its amount, phase, bit, heading and event record; no event is
+    stamped and the bit never changes. One record per push, in slot order,
+    reports the momentum before and after."""
     index, slot = owners[receiver_slot]
-    ray = rays[index][slot]
+    ray = candidate[index][slot]
+    assert ray is not None
     definition = definitions[index]
-    used.add(receiver_slot)
-    for pusher, field_ray, heading, push in _table_pushes(
-        rule,
-        owners,
-        views,
-        used,
-        rays,
-        candidate,
-        definitions,
-        fields,
-        meter,
-        ray.owner,
-        ray,
-        definition,
-    ):
+    taken[receiver_slot] = receiver_slot
+    for shadow_slot, (kind, ray_slot) in enumerate(owners):
+        sign = rule.momentum_table[kind] if kind < len(rule.momentum_table) else 0
+        if not sign or shadow_slot in used or views[shadow_slot] is None:
+            continue
+        shadow = rays[kind][ray_slot]
+        if shadow.detector != BIT_SHADOW or shadow.owner == ray.owner:
+            continue
+        if taken.get(shadow_slot, receiver_slot) != receiver_slot:
+            continue
+        meter.charge("evaluate")
+        heading = definitions[kind].headings[shadow.heading]
+        push, remainder = push_of(
+            sign,
+            shadow,
+            definitions[kind],
+            rule.reads,
+            ray.amount,
+            definition.charge,
+            ray.push_remainder,
+        )
         before = ray_momentum_vector(ray, definition)
-        ray = pushed_ray(ray, push, definition)
+        ray = replace(pushed_ray(ray, push, definition), push_remainder=remainder)
         meter.charge("update", 4)
+        carried = (-push[0], -push[1], -push[2])
+        earlier = candidate[kind][ray_slot] if shadow_slot in taken else None
+        if earlier is not None and earlier.outbound == 0:
+            # Read twice: the shadow already turned back carries the sum home.
+            home = earlier.momentum if earlier.momentum is not None else (0, 0, 0)
+            carried = (
+                checked_work(home[0] + carried[0]),
+                checked_work(home[1] + carried[1]),
+                checked_work(home[2] + carried[2]),
+            )
+        returned = return_shadow(shadow, definitions[kind], carried)
+        validate_rays((returned,), definitions[kind], fields[definitions[kind].field])
+        candidate[kind][ray_slot] = returned
+        taken[shadow_slot] = receiver_slot
+        meter.charge("update", 5)
         if turns is not None:
             turns.append(
                 RayPush(
@@ -302,13 +293,27 @@ def _turn(
                     ray.amount,
                     before,
                     ray_momentum_vector(ray, definition),
-                    pusher,
-                    field_ray.amount,
+                    kind,
+                    shadow.amount,
                     heading,
                 )
             )
     validate_rays((ray,), definition, fields[definition.field])
     candidate[index][slot] = ray
+
+
+def _decay_passes(rule: InteractionDefinition, inputs: tuple[tuple[int, Ray], ...]) -> bool:
+    """Whether the group breaks at this meeting under the rule's declared decay
+    condition (Highlights 5.4 point 20, clock-readings-v1): `after_periods` n,
+    the group breaks at its n-th meeting under the rule (its passages counted on
+    its rays, `periods`); `content_at_most` c, it breaks when the content of the
+    rays met is at most c. Deterministic: the state of the group, nothing else."""
+    kind, value = rule.decay if rule.decay is not None else ("", 0)
+    if kind == "after_periods":
+        return max(ray.periods for _, ray in inputs) + 1 >= value
+    if kind == "content_at_most":
+        return sum(ray.amount for _, ray in inputs) <= value
+    raise ValueError("a decay is after_periods or content_at_most (clock-readings-v1, point 20)")
 
 
 def _meet(
@@ -321,26 +326,23 @@ def _meet(
     meter: CostMeter,
     costs: OperationCosts,
     turns: Turns | None = None,
-    draws: Draws | None = None,
-    ticket: int = 0,
-    declared: tuple[InteractionDefinition, ...] = (),
 ) -> None:
     """The meeting inside one layer: its rules fire over its rays alone, in declared
     order, each group once; the events are written to the candidate bundles. A rule
     with outputs removes its participants and appends its new event rays; a
     coupling of free rays whose table names a participant family pushes its
     unnamed participant and reports each push through `turns`
-    (ray-momentum-turn-v1). A rule meets only the rays that arrived at the Node
+    (ray-momentum-turn-v3). A rule meets only the rays that arrived at the Node
     (loop-binding-v1, Highlights 3.4: a ray never stops): a ray at its event Node,
     the output of a rule waiting its declared delay there, is met by nothing and
     leaves, so no rule can hold its participants by meeting them again. A rule
-    with outputs that declares `draw` is a decaying conversion (decay-draw-v1,
-    Highlights 3.26): when its participants meet, the meeting draws once, one draw
-    per meeting and not per ray, from the Node's ticket stream (`ticket` its state
-    before this cycle, the last of `draws` its state after) with the rule's
-    setting; on 1 the rule fires, on 0 it does not and the meeting continues to
-    the next rule in declared order. A false guard is no meeting under the rule
-    and draws nothing."""
+    with outputs that declares `decay` is a group breaking by a table
+    (clock-readings-v1, Highlights 5.4 point 20): when its participants meet, the
+    declared condition on their state decides; met, the rule fires and its
+    outputs are fresh things; not met, the meeting counts as one passage on the
+    rays (`periods`, read by `after_periods`) and continues to the next rule in
+    declared order, whose outputs carry the count on. A false guard is no
+    meeting under the rule and counts nothing. Nothing is drawn."""
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
@@ -377,6 +379,14 @@ def _meet(
         for index, slot in owners
     )
     used: set[int] = set()
+    # The shadows turned back this cycle and the thing each pushed, and the
+    # things pushed, each its own entry (point 18: the same shadows read by every
+    # momentum rule of that thing, once each; a pushed thing is met by no rule
+    # with outputs or assignments this cycle, as before).
+    taken: dict[int, int] = {}
+    # The rays as the rules see them: a passage under a decay rule is counted
+    # here before the next rule reads its inputs.
+    current: list[list[Ray]] = [list(bundle) for bundle in rays]
     for rule in rules:
         receiver = turn_receiver(rule)
         if receiver is not None:
@@ -408,6 +418,7 @@ def _meet(
                     and rule.momentum_table[kind]
                     and rays[kind][kind_slot].detector == BIT_SHADOW
                     and rays[kind][kind_slot].owner != thing.owner
+                    and taken.get(other, slot) == slot
                 ]
                 if not shadows:
                     continue
@@ -419,36 +430,54 @@ def _meet(
                         continue
                 meter.charge("couple")
                 _turn(
-                    rule, slot, owners, views, used, rays, candidate, definitions, fields, meter, turns
+                    rule,
+                    slot,
+                    owners,
+                    views,
+                    used,
+                    taken,
+                    rays,
+                    candidate,
+                    definitions,
+                    fields,
+                    meter,
+                    turns,
                 )
             continue
         available = tuple(
-            None if slot in used or rays[index][ray_slot].detector == BIT_SHADOW else view
+            None
+            if slot in used or slot in taken or rays[index][ray_slot].detector == BIT_SHADOW
+            else view
             for slot, ((index, ray_slot), view) in enumerate(zip(owners, views, strict=True))
         )
         for group in participant_groups(rule, available):
             group_views = tuple(views[slot] for slot in group)
             assert all(view is not None for view in group_views)
             if rule.outputs:
-                inputs = tuple((owners[o][0], rays[owners[o][0]][owners[o][1]]) for o in group)
-                if rule.draw is not None:
-                    # decay-draw-v1: the group meets under the rule (its guard read
-                    # over the views) and the meeting draws once at the rule's
-                    # setting from the Node's stream; the draw reads nothing from
-                    # the rays. On 0 the rule does not fire and the rays stay
-                    # available to the next rule in declared order.
+                inputs = tuple((owners[o][0], current[owners[o][0]][owners[o][1]]) for o in group)
+                if rule.decay is not None:
+                    # The decay table (clock-readings-v1, point 20): the group meets
+                    # under the rule (its guard read over the views) and its own
+                    # state decides; not met, this meeting is one passage of the
+                    # group and the rays stay available to the next rule in
+                    # declared order, their count carried on.
                     before = tuple(view.values for view in group_views if view is not None)
                     if (
                         rule.when is not None
                         and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0
                     ):
                         continue
-                    if draws is None:
-                        raise ValueError("a decaying rule draws from the Node's ticket stream")
-                    state, bit = ticket_bit(draws[-1].ticket if draws else ticket, *rule.draw)
-                    index = (declared or rules).index(rule)
-                    draws.append(DecayDraw(index, rule.draw[0], rule.draw[1], state, bit))
-                    if not bit:
+                    meter.charge("evaluate")
+                    if not _decay_passes(rule, inputs):
+                        for owner in group:
+                            index, slot = owners[owner]
+                            passed = replace(
+                                current[index][slot], periods=current[index][slot].periods + 1
+                            )
+                            current[index][slot] = passed
+                            if candidate[index][slot] is not None:
+                                candidate[index][slot] = passed
+                            meter.charge("update")
                         continue
                 products = _convert(rule, inputs, definitions, meter, costs)
                 if products is None:
@@ -488,8 +517,6 @@ def apply_ray_interactions(
     costs: OperationCosts,
     layers: Layers | None = None,
     turns: Turns | None = None,
-    draws: Draws | None = None,
-    ticket: int = 0,
 ) -> tuple[Rays, ...]:
     """Build one complete proposal; no physical owner changes before all guards pass.
 
@@ -501,10 +528,9 @@ def apply_ray_interactions(
     participants by its outputs, new event rays at this Node, with every family's
     stock exact; nothing is left at the Node. The outputs of every group that
     fires are things (bit-law-v1). `turns`, when given, collects the record of
-    every push a coupling's table gave its thing (ray-momentum-turn-v2). `draws`, when given, collects the
-    draw of every meeting of a rule that declares `draw` (decay-draw-v1), taken
-    from the Node's ticket stream whose state before this cycle is `ticket`; a
-    world without such a rule never touches either.
+    every push a coupling's table gave its thing (ray-momentum-turn-v3); a rule
+    with `decay` breaks its group by its declared condition (clock-readings-v1,
+    point 20), nothing is drawn.
     """
     if not rules:
         return rays
@@ -531,9 +557,6 @@ def apply_ray_interactions(
             meter,
             costs,
             turns,
-            draws,
-            ticket,
-            rules,
         )
     result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
     for index, bundle in enumerate(result):

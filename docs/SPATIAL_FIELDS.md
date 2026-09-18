@@ -1193,6 +1193,13 @@ declares no `external_bodies` runs byte-identically.
 
 ### Field spreading (`field-spreading-v1`)
 
+Retired for shadows on 2026-09-18 by `node-mixing-v1` (Highlights 5.4, point
+24; [the Node mixes the six](#the-node-mixes-the-six-node-mixing-v1)): the
+split table is no longer declared and a shadow spreads by the Node's mixing;
+the Node-owned remainder of `field-remainder-v1` stays, in ninths. The
+description below is kept for the record of what the table was.
+
+
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, "Light is the field, and the
 field spreads", 3.17, 3.20 and 3.23; [ray-event
 model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 12; model owner,
@@ -1405,7 +1412,7 @@ rejected at initialization. The runner records `field_spreading:
 `spreading_fields` (each family with its table) only when a family declares
 `spread`; a world that declares none runs byte-identically, records
 included. `test_field_spreading.py`
-([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
+([expectations](TEST_EXPECTATIONS.md#field-spreading-deleted-on-2026-09-18)) was the test.
 
 ### The dense mode (`dense-field-v1`)
 
@@ -2263,11 +2270,12 @@ The rule ([Highlights](HIGHLIGHTS.md) 5.4, the model owner's decision of
 2026-09-18 with the amendments of that day; issue #169, feature 15): every ray
 carries one bit, `detector` 1 a thing and 0 its shadow, a ray of the same
 family as its thing (there is no field family: `field_of` is retired, a family
-declares its own `release`, the size of its things' shadow sets, and its own
-`spread`, the shadows' split table). A thing has a stable id, `thing` on its
-disturbance type or external body (the type's index from 1, then the bodies),
-stamped on every ray as `owner`. Things move whole and turn by pushes; shadows
-spread by the family's table, have no mass, no clock (their phase never
+declares its own `release`, the size of its things' shadow sets; since
+node-mixing-v1 nothing of the spread is declared). A thing has a stable id,
+`thing` on its disturbance type or external body (the type's index from 1,
+then the bodies), stamped on every ray as `owner`. Things move whole and turn
+by pushes; shadows spread by the Node's mixing ([below](#the-node-mixes-the-six-node-mixing-v1)),
+have no mass, no clock (their phase never
 advances) and no delay, and cost no computation of their own. A shadow meeting
 a thing of another owner under a coupling with a `momentum_table` pushes it by
 sign x amount x heading read times the thing's content (`reads: "content"`) or
@@ -2311,48 +2319,163 @@ textual migration, the decay table (point 20), the speed rule (point 21), the
 restated readings of point 18 and the rest rate of point 19 follow in feature
 16.
 
-### The phase-steered spread (`phase-spread-v1`)
+### The Node mixes the six (`node-mixing-v1`)
 
-The rule ([Highlights](HIGHLIGHTS.md) 5.4, point 17, the model owner's
-decision of 2026-09-18, with the polarization amendment of that day; feature
-16a): at a Node, the shares of one owner that meet combine by the coherence
-rule, their amount unchanged and their phase the step nearest their coherent
-sum, and steer each other by the Born table of section 3.3. The table is not
-declared (the model owner, 2026-09-18): the engine writes it once from the
-family's phase width N, the share that continues at a difference of d steps
-being cos^2(pi d / N) in N-ths rounded to the nearest whole,
-[8, 7, 4, 1, 0, 1, 4, 7] at eight steps (`steering_table`, in the fixed-point
-integer arithmetic of the phase tables), the same table for every steering
-of the family, its shadows' spread and two of its things that meet by a
-split indexed by the phase difference (`{"of": ..., "index":
-"phase_difference"}`, the catalog declaring only which pairs steer); a
-`steering` key on a family or a `table` on such a split is refused, and the
-run records the table under `shadow_families`. The four declarations point 17 left open (DERIVATIONS.md
-section 17, D1 to D4), each the simplest exact integer rule: (D1) the
-candidate Port of a share is its own continuation; (D3) a group is the shares
-of one owner, source sign and polarization at the Node, and in a group of two
-or more each share reads its phase difference to the step nearest the coherent
-sum of the others (a cancelled or tied sum reads as step 0, as `phase_of_sum`
-does); (D2) each share continues with the whole quanta of amount x
-table[difference] / modulus, so unequal shares each go by their own amount and
-difference and a pair's sum gets the table's share up to the two floors; (D4)
-the rest is sent apart through the four headings transverse to the share's
-own, rest // 4 each and the remaining rest mod 4 quanta one to each of the
-first of them in Port order, whole quanta only, nothing of a steered share
-entering the registers. A lone share, one that meets no other share of its
-group, keeps the split table of section 3.5 with its remainders; shadows of
-different owners, or of differing polarization (orthogonal polarizations
-neither combine nor steer, the model owner, 2026-09-18), are lone to each
-other. Amounts stay non-negative and conserved exactly: cancellation is never
-in amount, only in heading. The dense mode implements the same rule
-vectorized, per owner and sign, and hands a Node holding more shadows than
-its layers to `spread_content` ray by ray. Known and noted, not fixed here:
-under "in phase continues forward" a release of one phase keeps four fifths
-of its content on axis-parallel lines in the coordinate planes through its
-source (the tube theorem of DERIVATIONS.md section 17); the model owner
-decides. Identity `phase-spread-v1`; isolated test
-`tests/test_phase_spread.py`
-([expectations](TEST_EXPECTATIONS.md#the-phase-steered-spread)).
+The rule ([Highlights](HIGHLIGHTS.md) 5.4, point 24, the model owner's
+decision of 2026-09-18; feature 16c): a shadow does not choose its next
+heading alone, and not in a pair. At every Node, in every interval, for each
+group (one owner, source sign and polarization, as before; shadows of
+different owners or of differing polarization do not mix), the shadows that
+arrived through the six Ports are six complex amplitudes, A_j = sqrt(amount_j)
+at the phase phi_j on the family's phase circle of N steps (a Port with no
+arrival is 0; two shadows of the group on one heading are one amplitude, their
+amount at the step nearest their coherent sum), and the six leaving amplitudes
+are B_h = (1/3) sum_j A_j - A_h: a third of the coherent sum to every Port,
+less the arrival that came in through that Port, sent back (the
+transmission-line matrix node of Johns and Beurle, S = J/3 - I). The amounts
+leaving are the total amount arriving, shared among the six headings in
+proportion to |B_h|^2 in whole quanta, the parts below one quantum parked in
+the Node's remainder registers per owner, sign and heading in ninths
+(`field-remainder-v1`, its unit now `MIXING_DENOMINATOR` = 9, the third
+squared; a register at nine releases a whole quantum through its heading with
+its phase, as before), and each leaving share carries the phase of its B_h,
+the nearest step of N; a zero B_h sends nothing. Nothing is declared: a
+`spread` table or a `steering` key on a family is refused naming point 24, and
+the family's phase width N is the mixing's one input; every ray family with a
+shadow set (a `release`, or a field given with the board) spreads its shadows
+this way, and a shadow that walks straight no longer exists. The integers
+(`node_mixing` in `core/spatial_state.py`): the amplitude is the integer
+square root of amount x 32^2, the phase factors are the cosine and sine tables
+of the phase circle at 256, the weights are the squared lengths of 3 B_h (the
+same ratios and phases), reduced by a common shift to 28 bits so that every
+product stays in 64-bit work, and the total in ninths is apportioned by the
+largest-remainder rule, ties to the lower Port: exact conservation,
+deterministic, integers only.
+
+By hand: a lone arrival of 9 sends 4 back through the Port it came in by, its
+phase turned by a half turn (the minus), and 1 through each of the other five
+(four ninths back, a ninth on each other heading); two equal arrivals head on
+in phase, a each, send a/9 back each way and 4a/9 through each of the four
+transverse Ports; two equal arrivals in antiphase are each sent back whole
+through the Port they came in by, nothing transverse. A 1-D chain does not
+transmit: the six-Port rule sends a lone shadow on a line mostly back (a
+two-Port restriction of S would be pure transmission, but the Node has six
+Ports and that is the rule), so a set in one phase moves as a wave because the
+turned-back parts of neighbours cancel, and the field is a collective, not a
+stream. What stays: the Born split of two things that meet (section 5.2,
+`steering_table`, a split indexed by the phase difference); the return of a
+shadow after a push, a walk back on the trace, never mixed; a shadow arriving
+at its own thing is home; marks and bodies return shadows as before; the
+remainders parked at a Node join the next interval's departures on their
+heading as before. Retired for shadows: the split table of section 3.5
+(`field-spreading-v1`, the `spread` key) and the pairwise steering of point 17
+(`phase-spread-v1`, `SpatialFieldDefinition.steering`); the example worlds
+lost their `spread` keys (`examples/nature/bit_law_migration.py` drops them).
+The dense mode (part 1 of the feature) cycles every Node that holds arrivals
+through `spread_content` itself, ray by ray, so the two modes are one
+arithmetic by construction; the vectorized twin is part 2. The runner records
+`node_mixing` "node-mixing-v1", `field_remainder` and `mixing_fields` (each
+family with its `phase_width`), and `shadow_families` carries `phase_width`
+in place of a table. Identity `node-mixing-v1`; isolated test
+`tests/test_node_mixing.py`
+([expectations](TEST_EXPECTATIONS.md#the-node-mixes-the-six)).
+
+### The clock and the readings (`clock-readings-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4 points 11, 16, 18, 19, 20, 21 and
+23 and the settled rule (i), the model owner's decisions of 2026-09-18; issue
+#169, feature 16b), the engine's only behaviour:
+
+- **The clock is the content (point 19).** No family declares a rest rate:
+  `kerengonen.phase_advance`, `rest_rate` on a family and `kerengonen_advance`
+  on an emission are refused. A family whose things have a clock declares
+  `clock: true` beside its charge (light and the plain family do not), and the
+  world declares `K` once, the content per phase step per interval, required
+  when any family declares a clock. A thing of a clock family advances its
+  phase by `(remainder + content) // K` steps per interval and keeps the rest
+  on itself (`Ray.remainder`, below K, a property of the thing and no ledger
+  quantity); on its walk back it undoes exactly that interval. A shadow has no
+  clock and neither has a family without one: their phase stays what it was
+  given. K and N = 2^`phase_bits` bound the content one Node may hold: a
+  thing's content / K stays below N / 2 (2 x content < K x N), refused at
+  parsing for every emitted content (the largest share of an undirected
+  emission) and at a meeting whose output would hold more, which fails closed
+  before any owner changes.
+- **The computation (point 11).** The world's computation per interval is the
+  sum over its things of the phase steps they made that interval, content / K
+  each with the remainders carried, constant between absorptions and escapes;
+  the engine keeps the running total (`Simulation.phase_steps()`) and the
+  runner records `computation_per_tick`, `clock_readings`, `K` and
+  `wait_per_quantum` in `run.json`.
+- **One shadow set, read twice (points 16 and 18).** A shadow carries its
+  owner's id; its owner's charge and content are read by that id from the
+  family's owner table (`SpatialFieldDefinition.owner_contents`,
+  `owner_charges`: a type's default stock of the family's field with the
+  family's charge per quantum times that stock, a body's amount with its
+  declared whole charge, 1 and 0 for an owner known from a profile alone). The
+  gravity reading, `reads: "content"`: dp = sign x amount x heading x the
+  content of what is pushed, exact. The electricity reading, `reads:
+  "charge"`: dp = sign x amount x heading x (the owner's charge / the owner's
+  content) x the charge per quantum of what is pushed (the family's for a
+  thing, the declared charge over the amount for a body, which must divide
+  it), accumulated per axis in units of 1 / D on the pushed thing's
+  `push_remainder` (D the least common multiple of every owner's content over
+  the world, `push_denominator` on every family), the whole units into the
+  momentum, rounded toward zero so that a push below one quantum of either
+  sign accumulates exactly and the remainder keeps its sign. The same shadows
+  are read once per momentum rule of the thing they meet: a shadow an earlier
+  rule turned back for that thing pushes it again under the next rule's
+  reading and carries the sum of the pushes home; a shadow another thing took
+  is left to it. The catalog's `mass_field` and `mass_field_delay` are retired;
+  `reads` admits nothing beyond the two words.
+- **The decay table (point 20).** `draw` and `seed` on a rule are refused. A
+  rule with outputs may declare `decay: {"after_periods": n}` (the group
+  breaks at its n-th meeting under the rule; its passages are counted on its
+  rays, `Ray.periods`, carried by the outputs of the corner table declared
+  after it, and reset to 0 on the outputs of the decay, which are fresh
+  things) or `{"content_at_most": c}` (it breaks when the content of the rays
+  met is at most c); the condition is read at every meeting the rule's guard
+  admits, nothing is drawn, no counter and no ticket, and two runs are
+  byte-identical.
+- **One Link per interval and the step (point 21, the settled rule (i)).**
+  Every ray moves one Link per interval on its heading; `ray_delay`,
+  `ray_phase_per_tick` and, on a board of ray fields, `computation_field` are
+  refused, and the DDA staircase of `ray-momentum-turn-v2` is retired
+  (`ray-momentum-turn-v3`). The momentum a thing carries (`Ray.momentum`) is
+  the pushes it has taken and not yet spent; the ledger reads a thing's
+  momentum as amount x heading plus that (`thing_momentum`, the `momentum`
+  line of the record). At a departure the first axis (x before y before z)
+  whose component has reached the thing's content turns the thing to that
+  axis, the sign choosing the sense, and the component drops by the content;
+  at most one step per departure; a component on the thing's own direction
+  turns it nowhere and drops nothing. What a step takes off the thing's
+  momentum as the ledger reads it, content x the heading before the step, is
+  booked on the momentum field's line as `spent`: `initial + sourced = current
+  + escaped + annulled + absorbed + absorbed_by_marks + returned + spent`
+  there, the other lines carrying no `spent` key (an optional line of
+  `ray-event-audit-v1`).
+- **A thing pays a tick for every whole quantum it reads (point 23).** A push
+  of whole quanta on a thing's momentum owes it w intervals per quantum,
+  w = n / d the world's `wait_per_quantum` (1 by default; an integer or
+  `[n, d]`), kept exactly on the thing (`Ray.owed`, in units of 1 / d) and
+  spent one interval at a time: an interval in which the thing neither moves,
+  nor steps, nor advances its phase, the only exception to one Link per
+  interval; a shadow pays nothing. The queued reading of DERIVATIONS.md
+  section 24 (w per quantum, always).
+
+Choices where the text was open, flagged for the owner: the clock is declared
+per family as `clock: true` (the text says a family declares only its charge
+and its tables; something must tell light from an electron); a body's declared
+`charge` is its whole charge; a type owner's charge is the family's charge per
+quantum times its stock; the electricity remainder rounds toward zero; a
+component reaching the content on the thing's own direction drops nothing;
+`after_periods` counts the group's meetings under the rule, so a world that
+means full circuits of a ring of L corners declares n x L or guards the rule
+to one corner. Identity `clock-readings-v1`; isolated tests
+`tests/test_clock_readings.py` ([expectations](TEST_EXPECTATIONS.md#the-clock-and-the-readings)),
+`tests/test_wait_rule.py` ([expectations](TEST_EXPECTATIONS.md#the-wait-per-quantum-read))
+and the step in `tests/test_ray_momentum_turn.py`; old worlds are migrated
+textually by `migrate_clock` in `examples/nature/bit_law_migration.py`.
 
 ### A Node is its six Ports (`node-is-ports-v1`)
 
@@ -2364,9 +2487,9 @@ behaviour, with no declarable alternative:
 
 - **The parked shadow.** What a Node holds below one quantum is a shadow at
   rest among its rays, `Ray.parked` 1, a bit-0 ray of its owner on the Port
-  heading it will leave through, its amount in units of the family's split
-  denominator (the table's total S, declared once per family: `parked_unit`;
-  a family without a split parks nothing but traces). The spread step reads
+  heading it will leave through, its amount in ninths of a quantum (the
+  mixing's unit S = 9 since node-mixing-v1, `parked_unit`; a family without a
+  shadow set parks nothing but traces). The spread step reads
   the parked shares as the block it always read (`parked_shares`), combines
   each with the shares it adds by the coherence rule, releases a share that
   reaches S whole through its heading, and parks the rest again
@@ -2449,6 +2572,12 @@ isolated test `tests/test_node_is_ports.py`
 ([expectations](TEST_EXPECTATIONS.md#a-node-is-its-six-ports)).
 
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
+
+Restated on 2026-09-18 under `clock-readings-v1` (above): the momentum a
+thing carries is the pushes it has taken, the step of the settled rule (i)
+replaces the DDA walk of v2, and the momentum spent on a step is booked. The
+text below describes v2 and stands as its history.
+
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.16 and 3.28;
 [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature

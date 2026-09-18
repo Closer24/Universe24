@@ -67,7 +67,10 @@ def ray_field(name, advance, **extra):
         "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
-        "kerengonen": {"phase_steps": 8, "phase_advance": advance},
+        "kerengonen": {"phase_steps": 8},
+        # The clock is the content (clock-readings-v1, 2026-09-18): the electron
+        # lamp's ray of 3 advances one step per interval at K 3.
+        **({"clock": True} if advance else {}),
     } | extra
 
 
@@ -112,6 +115,7 @@ def document(bodies, lamps=(), rules=(), families=("star",), ticks=6):
             {"name": "idle", "fields": ["star"], "defaults": {"star": 0}, "transport": {"mode": "hold"}}
         ],
         "spatial_fields": [ray_field(name, 1 if name == "electron" else 0) for name in names],
+        "K": 3,
         "emissions": [
             {
                 "type": f"lamp_{index}",

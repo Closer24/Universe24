@@ -35,6 +35,8 @@ Feature tests of issue #169 join this table as they land.
 | `test_dense_field.py` | 3 | 1.0 | The dense mode for boards that a field fills (`dense-field-v1`, [performance](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17)): the pure-field Nodes cycled as one vectorized step, one split step equal to `spread_content` (the registers, the releases, the phases, the bit), the hand-over of rays between the region and the engine's Nodes both ways, the same `state.json` and ledger as the engine alone, the unsupported worlds rejected, pinned below |
 | `test_perf_arrays.py` | 6 | 6.0 | The performance lane of 2026-09-18 (`perf-arrays-v1`, [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)): `state.json` written Node by Node from the engine and the dense arrays, byte for byte `json.dumps(snapshot)`; a series run one process per world byte-identical to a single run; the standing set (`standing-field-v1`): the layer kept fixed from its exact repeat, the things reading it as the stepping engine gives, the run's files identical, the fallback when a thing steps, the residual without a repeat, the refusals, pinned below |
 | `test_bit_law.py` | 19 | 2.2 | Feature 15, the law of the bit (`bit-law-v1`, the model owner's decision of 2026-09-18, Highlights 5.4): every ray carries one bit, 1 a thing and 0 its shadow, a ray of the same family; a shadow pushes a thing and walks home with -dp, home to a body and to a thing ray; a shadow meets its own thing without a push; a mark returns a shadow and counts nothing, catches things by its counter; the ledger's `returned` line and the things' own identity; the trace; the bit never changes; the things' content is constant between absorptions; a shadow-only board makes no event and the dense layer equals the engine; no lottery, two runs byte-identical; the retired keys rejected, pinned below |
+| `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
+| `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
@@ -54,7 +56,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
 | `test_loop_binding.py` | 7 | 0.70 | Issue #169 feature 14: a bound group is a periodic orbit of the ordinary meeting rule on a ring of Nodes, nothing at a Node names it, the record reads it, and the held form's keys are rejected (`loop-binding-v1`) |
 | `test_mean_field_gauss.py` | 3 | 0.01 | The mean-field kernel of `examples/nature/a5_static/mean_field_gauss.py` (the computation after experiment A5s): the split of one heading's content at one Node by the table [6, 1, 1, 1, 1, 1] relative to its heading, the conservation of the transport (the total kept until the front reaches the open boundary, the source's own sink taking the backward shares, the mirrored octant equal to the full box), and the beam 4096 x (6/11)^(r-1) as the push at ticks r and r + 1 on a sink at r = 1 to 4, pinned below |
-| `test_momentum_turn_walk.py` | 4 | 7.8 | The fix of `ray-momentum-turn-v2`: a push keeps the DDA's accumulators, so a ray pushed at every interval walks the DDA line of its running register; the staircases of a push of 1 and of 8 per interval on a ray of 64, the flip, the cancel, the shrink and the lift by hand, and two boards where a field ray meets the ray at every Node |
+| `test_momentum_turn_walk.py` | 4 | 7.8 | Deleted on 2026-09-18 under `clock-readings-v1` (the DDA walk and the output-clock delay of a departure are retired: every ray moves one Link per interval); The fix of `ray-momentum-turn-v2`: a push keeps the DDA's accumulators, so a ray pushed at every interval walks the DDA line of its running register; the staircases of a push of 1 and of 8 per interval on a ray of 64, the flip, the cancel, the shrink and the lift by hand, and two boards where a field ray meets the ray at every Node |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_nature_catalog.py` | 4 | 0.12 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
@@ -65,7 +67,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_plan_reuse.py` | 10 | 0.37 | Exact transition plan reuse: every argument of a law is its key, the world tick is not (a Node in a steady field reuses its plan across ticks, a lamp whose stock counts down does not), and a plan is validated once, when it is made, a hit being served without a second check, pinned below |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
-| `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
+| `test_ray_delay.py` | 6 | 12.78 | Deleted on 2026-09-18 under `clock-readings-v1` (the DDA walk and the output-clock delay of a departure are retired: every ray moves one Link per interval); Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
 | `test_ray_event_audit.py` | 3 | 0.90 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release, an escape and an external body's sink (`ray-event-audit-v1`) |
 | `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
 | `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
@@ -107,6 +109,8 @@ changing values. The separate family-conversion suite retains its one-to-six,
 six-to-one, conservation, capacity, Port and delayed-owner coverage.
 
 ## Kerengonen integration guards
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: the families of these worlds declare no rate (their phases stay), `two_lamps(steps, advance)` declares `clock` and K 2 / advance (rays of 2), the tests of a ray's own advance (`kerengonen_advance`) and of the carried advance are deleted with the key, and the attenuated self-exclusion world is the plain one.
 
 The Kerengonen integration regressions in `test_ray_integration_guards.py` cover
 ordinary runner momentum accounting through absorption and escape, frozen phase
@@ -556,6 +560,8 @@ values hits it, and that failed readouts are requested again and never retained.
 
 ## Ray hidden state
 
+Re-pinned on 2026-09-18 under `clock-readings-v1`: no rate, no clock; A's rays keep phase 0 and the returning ray of (c) keeps phase 1 on its walk back; `forward_rays` returns three values.
+
 `test_ray_hidden_state.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
 the six unit-axial headings in Port order, closed under negation) on a
@@ -605,6 +611,8 @@ earlier-cycle wake is a distinct event and no longer merges with the excluded
 one.
 
 ## Node Detector bit
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares no rate, so the continuing and returned rays keep phase 0.
 
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14, no lottery): the mark's setting is its counter table, the k-th arrival catching the bit 1 when k mod 2 < 1, so the bits are (1, 0, 1, 0, 1, 0) in Port order and the counter stands at 6; the seed is retired; the mark declares `on_click: "pass"` so that a thing that draws 1 walks on as before; a click and a return name the thing's owner (`tests/test_detector_mark.py`).
 
@@ -680,6 +688,8 @@ mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
 
 ## Detector return
 
+Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares no rate and no clock, so the phase column of the tick table is 0 throughout (the shares of one emission are of several amounts, which no one K makes one step per Link).
+
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14): the mark's setting [0, 1] is a counter table that catches nothing and returns every thing (the draw of 0 of the old world); the seed is retired, the counter stands at 1 after the one arrival, a return names the owner (`tests/test_detector_return.py`).
 
 `test_detector_return.py` builds its board inline under the shared Detector
@@ -741,6 +751,8 @@ first draw of [Node Detector bit](#node-detector-bit)):
   and records no escape.
 
 ## Inverse split
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: no rate, no clock; every phase pinned as the Links walked is 0.
 
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14): the mark's setting [0, 1] returns every thing; no `bit` on an `inverse_split` record; a return names the owner (`tests/test_inverse_split.py`).
 
@@ -1023,6 +1035,10 @@ Existing worlds keep their amounts, phases, totals, audits and charges: a
 world whose rules select one layer meets the same owners in the same order.
 ## The law of the bit
 
+Re-pinned on 2026-09-18 under `clock-readings-v1` (feature 16b): `m` declares `clock` where a rate was declared and the world K (world (a): K 2, a thing of 2 one step per interval); a body of 100 quanta declares its whole charge -100, so the electricity reading (the owner's charge over its content times the thing's charge per quantum) gives the pushes of the first pin; a thing's `momentum` on the ray is the pushes it carries ((-1, 0, 0) after the push of (a), (push, 0, 0) in (j)) while the register line stays amount x heading plus that; the momentum line carries `spent` (0 here); `wait_per_quantum` is 0 in these worlds.
+
+Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_bit_law.py`): these worlds declared no split table, so their shadows walked straight to what they were to meet; under point 24 every shadow of a family with a shadow set mixes at every Node with nothing else there, and a lone quantum parks its ninths and goes nowhere. Every shadow that is to meet a thing, a body or a mark now leaves fresh (`steps` 0) from the Node beside it and arrives there in the first delivery, and a return whose one step is spent waits where it is (node-is-ports-v1, rule (ii)), so the meetings are at tick 1 or 2 and the geometry adjacent: (a) the body at (3,2,2), the push at (2,2,2) in the cycle of tick 2, the thing absorbed and the shadow home at tick 2 (`returned_to_body` (2, (3,2,2), amount 1, momentum (1,0,0))), the re-released quantum parked at (2,2,2) from tick 4 in ninths (4 on its back heading, 1 on each other) beside the thing's trace, contents [2, 0, 0, 0, 0], shadows [1] x 5; (b) the bodies at (2,2,2) and (3,2,2), a push at the delivery of every odd tick and a receipt at every even one, so the momenta are (-t, 0, 0) and (t, 0, 0) after tick t, six ticks; (c) the homecoming at (2,2,2) at tick 1, the shadow riding with the thing at (3,2,2) after tick 2 (steps 1 beside steps 2) and mixing there; (d) the returned shadow waiting at (5,2,2) from tick 2 with steps 0, everything else as pinned; (e) with the 11s: after tick 1 (5,2,2) holds 1 on +X, (6,2,2) 4 on +X and (3,2,2) 4 on -X, twelve Nodes, after tick 2 (6,2,2) 1 on +X and (3,2,2) 1 on -X, after tick 4 no ray, the registers (8, 8, 5, 5, 5, 5) at (4,2,2) and (5, 2, 5, 5, 5, 5) at (6,2,2), 22 at every tick in both modes; (f) the fill's 132 with 120 in rays and 12 quanta parked in ninths, (6,2,2) 1, (4,2,2) [4] x 6, (5,3,2) [1, 1]; (h) the shadow fresh from (3,2,2) into the mark at (4,2,2), returned at tick 1, waiting at (3,2,2) for its thing, home with it in the cycle of tick 2 and released again with it into the mark, which absorbs the thing at tick 3 and the shadow a round later, shadows [1, 1, 1, 1, 0] and the mark's resident shadow line 1; (i) the shadows fresh from (9,1,2) (off the edge at tick 1), (5,2,2) (into the body) and (3,3,2) (into the mark, which returns it to its thing at (3,3,2), where it is home and released again every other tick), the real lines the same, the shadow line initial 3, current 2, escaped 1, absorbed at home 0, shadows [2] x 6; (j) the shadows fresh from (3,y,2), the push at (2,y,2) in the cycle of tick 2, the momenta pushed from tick 2, each return waiting at (3,y,2) with steps 0; (k) the 11 sends 1 on to (5,2,2) and 4 back to (3,2,2), then (4,2,2) holds 1 on +X after tick 2 and (6,2,2) nothing.
+
 `tests/test_bit_law.py` is the isolated test of `bit-law-v1`
 ([the law of the bit](SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1);
 Highlights 5.4, the model owner's decision of 2026-09-18, with the amendments
@@ -1231,107 +1247,146 @@ computed from the rules:
   the words "bit-law-v1"; two types with one `thing` id are rejected; a
   spatial field lists its owners after parsing, [1, 2, 3] in world (a).
 
-## The phase-steered spread
+## The Node mixes the six
 
-`tests/test_phase_spread.py` is the isolated test of `phase-spread-v1`
-([the phase-steered spread](SPATIAL_FIELDS.md#the-phase-steered-spread-phase-spread-v1);
-Highlights 5.4 point 17, the model owner's decision of 2026-09-18, with the
-polarization amendment of that day; feature 16a), pinned here on 2026-09-18
-before its first run, as Highlights 5.5 requires.
+`tests/test_node_mixing.py` is the isolated test of `node-mixing-v1`
+([the Node mixes the six](SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1);
+Highlights 5.4 point 24, the model owner's decision of 2026-09-18; feature
+16c), pinned here on 2026-09-18 before its first run, as Highlights 5.5
+requires.
 
 The board of every world: open 11 x 5 x 5, `link_ticks` 1, costs 1, one ray
 family `m` (the six unit-axial headings, `metric: "links"`, pace 1/1, 8 ray
-slots, charge -1, `release` [1, 1], `spread` [6, 1, 1, 1, 1, 1], `phase_bits`
-3 so the steering table is the catalog's reference [8, 7, 4, 1, 0, 1, 4, 7])
-and one never-seeded holder type (thing 1; a second, thing 2, in world (e));
-the table is the family's, written from its width, never declared;
-the shadows are given with the board (`initial_field.m.rays`) at (5,2,2),
-content that arrived and spreads there in the cycle of tick 0. The rule
-(the four declarations, D1 to D4 of DERIVATIONS.md section 17): the shares of
-one owner, sign and polarization at a Node are one group; a group of one is
-a lone share and keeps the split table; in a group of two or more, each share
-reads its phase difference to the step nearest the coherent sum of the
-others (a cancelled or tied sum reads as step 0), continues on its own
-heading with the whole quanta of amount x table[difference] / 8, and sends
-the rest apart through its four transverse headings, rest // 4 each and the
-remaining rest mod 4 quanta one to each of the first of them in Port order;
-every departure of the group carries the phase of the group's coherent sum;
-nothing of a steered share enters the registers. Written before the first
-run, all of it computed from the rule:
+slots, charge -1, `release` [1, 1], `phase_bits` 3, so N = 8 and a half turn
+is four steps; nothing else declared of the spread) and one never-seeded
+holder type (thing 1; a second, thing 2, in world (d)); the shadows are given
+with the board (`initial_field.m.rays`) at (5,2,2), content that arrived and
+mixes there in the cycle of tick 0. The rule: at a Node the shadows of one
+group (owner, sign, polarization) that arrived on each heading are one
+amplitude, sqrt(amount) at the step nearest their coherent sum; the leaving
+amplitude of a heading is a third of the sum of the six less the arrival
+that came in through that Port (the one walking the opposite heading), sent
+back; the total in ninths is shared among the six headings in proportion to
+the squared leaving amplitudes by the largest-remainder rule (ties to the
+lower Port), the whole quanta leave at the phase of their leaving amplitude
+and the ninths below one quantum are parked in the Node's register of that
+heading (released whole when a register reaches nine, as
+`field-remainder-v1` does). Registers are read per Node in Port order
+[+X, -X, +Y, -Y, +Z, -Z] with their phases. Written before the first run,
+all of it computed from the rule:
 
-- (a) a pair in phase: 23 on +X and 23 on -X, both phase 0. Each reads the
-  other at difference 0, table 8: both continue whole. After tick 1 (6,2,2)
-  holds 23 on +X and (4,2,2) 23 on -X, nothing else on the board. Each is
-  lone at its Node and splits by the table in the cycle of tick 1: after
-  tick 2 (7,2,2) holds 12 on +X, (3,2,2) 12 on -X, (5,2,2) 2 on -X and 2 on
-  +X (the two backward shares, meeting again), and 2 on each of the four
-  transverse Nodes of (6,2,2) and of (4,2,2), eleven Nodes; the registers at
-  (6,2,2) read (6, 1, 1, 1, 1, 1) and at (4,2,2) (1, 6, 1, 1, 1, 1). In the
-  cycle of tick 2 the pair at (5,2,2), in phase, continues again, and the
-  12s split: after tick 3 (8,2,2) holds 6 on +X, (2,2,2) 6 on -X, (6,2,2)
-  2 on +X and 1 on -X (the 12's backward share), (4,2,2) 1 on +X and 2 on
-  -X, (7,3,2) 1 on +Y and (6,4,2) 1 on +Y (the transverse 2's forward
-  share); the registers at (7,2,2) (6, 1, 1, 1, 1, 1), at (3,2,2)
-  (1, 6, 1, 1, 1, 1), at (6,3,2) (2, 2, 1, 2, 2, 2), at (4,1,2)
-  (2, 2, 2, 1, 2, 2), twelve blocks in all and none at (5,2,2);
-  `shadows_content` 46 after every tick, every line balanced, no event
-  beyond the cycle's own (a Node holding shadows alone publishes nothing).
-- (b) a pair in opposite phase: 23 on +X at phase 0 and 23 on -X at phase
-  4. Each reads difference 4, table 0: nothing continues; each sends 23
-  apart through +Y, -Y, +Z, -Z, 5 each and the remaining 3 one to each of
-  +Y, -Y, +Z: after tick 1 (5,3,2) holds 12 on +Y, (5,1,2) 12 on -Y,
-  (5,2,3) 12 on +Z and (5,2,1) 10 on -Z, at phase 0 (the cancelled sum),
-  nothing on the axis, no register; `shadows_content` 46.
-- (c) unequal shares: 24 on +X at phase 0 and 8 on -X at phase 2. The 24
-  reads the 8 at difference 6, table 4: 12 continue on +X, 12 apart, 3 per
-  transverse heading; the 8 reads the 24 at difference 2, table 4: 4
-  continue on -X, 4 apart, 1 per transverse heading; the group's phase, that
-  of 24 at 0 with 8 at 2, is 0. After tick 1 (6,2,2) holds 12 on +X, (4,2,2)
-  4 on -X and each transverse Node 4; `shadows_content` 32, no register.
-- (d) three shares: 8 on +X at phase 0, 8 on +Y at phase 0, 8 on +Z at phase
-  4. The +X share reads the other two, whose sum cancels, as step 0:
-  difference 0, it continues whole; the +Y share likewise; the +Z share reads
-  the other two, 16 at phase 0, at difference 4, table 0: 8 apart, 2 on each
-  of +X, -X, +Y, -Y. After tick 1 (6,2,2) holds 10 on +X, (5,3,2) 10 on +Y,
-  (4,2,2) 2 on -X, (5,1,2) 2 on -Y, nothing on Z; `shadows_content` 24.
-- (e) two owners: 23 on +X at phase 0 of thing 1 and 23 on -X at phase 4 of
-  thing 2. Each is lone: the split table, 12 forward, 2 back, 2 per
-  transverse heading, each at its own phase (0 and 4) and into its own
-  register block, (6, 1, 1, 1, 1, 1) at phase 0 for thing 1 and
-  (1, 6, 1, 1, 1, 1) at phase 4 for thing 2; after tick 1 (6,2,2) holds 12
-  on +X of thing 1 at phase 0 and 2 on +X of thing 2 at phase 4, (4,2,2)
-  2 and 12 the other way, each transverse Node 2 and 2; `shadows_content`
-  46.
-- (f) polarization (`polarization_bits` 2): the pair of (b) with
-  polarizations 0 and 2, orthogonal: lone to each other, each splits by the
-  table at its own phase and polarization, both into thing 1's one register
-  block, (7, 7, 2, 2, 2, 2) with phases (0, 4, 0, 0, 0, 0) (the shares
-  combine in each register by the coherence rule, the transverse ones
-  cancelling to step 0); after tick 1 (6,2,2) holds 12 on +X at phase 0,
-  polarization 0, and 2 on +X at phase 4, polarization 2, (4,2,2) the
-  reverse, each transverse Node 2 and 2. The same pair with polarization 0
-  on both steers as in (b), 12, 12, 12, 10 apart with polarization 0.
-- (g) the table (the model owner, 2026-09-18: computed once from the family's
-  phase width, never declared): `steering_table` writes [8, 7, 4, 1, 0, 1, 4,
-  7] at eight steps, (1,) at one, (4, 2, 0, 2) at four and (16, 15, 14, 11,
-  8, ...) at sixteen; a spreading family of `phase_bits` 3 carries the
-  eight-step table and one of `phase_bits` 0 the table (1,); a `steering` key
-  on a family, and a `table` on a split by the phase difference, are refused
-  naming the decision, and a split without one carries the family's table.
-  The runner records `phase_spread` "phase-spread-v1" and the table under
-  `shadow_families`, and world (a) for two ticks writes no event beyond the
+- (a) a lone arrival: 9 on +X at phase 0. Its leaving amplitude back through
+  the Port it came in by (-X) is -2/3 of its own, the five others +1/3: the
+  weights 4 : 1 : 1 : 1 : 1 : 1 of 81 ninths give 4 back and 1 on each other
+  heading, exactly, the back share at phase 4 (the minus), the rest at 0.
+  After tick 1 (4,2,2) holds 4 on -X at phase 4, (6,2,2) 1 on +X, (5,3,2) 1
+  on +Y, (5,1,2) 1 on -Y, (5,2,3) 1 on +Z and (5,2,1) 1 on -Z, at phase 0,
+  six Nodes, no register, `shadows_content` 9. In the cycle of tick 1 the 4
+  (36 ninths, 16 back and 4 on each other heading) sends 1 back on +X at
+  phase 0 (4 + 4) and parks (7, 4, 4, 4, 4, 4) at phases (0, 4, 4, 4, 4, 4);
+  each lone 1 parks whole, 4 ninths on its back heading and 1 on each other:
+  after tick 2 the one ray on the board is 1 on +X at phase 0 at (5,2,2);
+  the registers read (7, 4, 4, 4, 4, 4) at (4,2,2), (1, 4, 1, 1, 1, 1) at
+  phases (0, 4, 0, 0, 0, 0) at (6,2,2), (1, 1, 1, 4, 1, 1) at (5,3,2) with
+  the 4 at phase 4, (1, 1, 4, 1, 1, 1) at (5,1,2), (1, 1, 1, 1, 1, 4) at
+  (5,2,3) and (1, 1, 1, 1, 4, 1) at (5,2,1); content 9 (1 in the ray, 8 in
+  the registers). After tick 3 no ray is on the board and (5,2,2) parks
+  (1, 4, 1, 1, 1, 1) at phases (0, 4, 0, 0, 0, 0), seven blocks in all,
+  content 9, every ledger line balanced, no event beyond the cycle's own.
+- (b) two equal arrivals head on in phase: 9 on +X and 9 on -X, phase 0.
+  The sum is 2 amplitudes; each axis heading gets 2/3 - 1 = -1/3 of one,
+  each transverse heading 2/3: weights 1 : 1 : 4 : 4 : 4 : 4 of 162 ninths,
+  a/9 = 1 on each axis heading at phase 4 and 4a/9 = 4 on each transverse
+  heading at phase 0. After tick 1 (6,2,2) holds 1 on +X and (4,2,2) 1 on
+  -X, phase 4, and (5,3,2), (5,1,2), (5,2,3), (5,2,1) hold 4 on +Y, -Y, +Z,
+  -Z at phase 0; content 18, no register. In the cycle of tick 1 each 4
+  sends 1 back at phase 4 and parks 7 on its back heading and 4 on the
+  others, each 1 parks whole: after tick 2 (5,2,2) holds four rays of 1 on
+  +Y, -Y, +Z and -Z at phase 4 and nothing else is on the board; the
+  registers read (1, 4, 1, 1, 1, 1) at phases (4, 0, 4, 4, 4, 4) at (6,2,2),
+  (4, 1, 1, 1, 1, 1) at phases (0, 4, 4, 4, 4, 4) at (4,2,2), (4, 4, 4, 7,
+  4, 4) at (5,3,2) with the 7 at phase 4, (4, 4, 7, 4, 4, 4) at (5,1,2),
+  (4, 4, 4, 4, 4, 7) at (5,2,3), (4, 4, 4, 4, 7, 4) at (5,2,1); content 18.
+  In the cycle of tick 2 the four 1s in phase mix at (5,2,2): the sum is 4
+  amplitudes, the four headings they came in by get 4/3 - 1 = 1/3, the two
+  axis headings 4/3: weights 16 : 16 : 1 : 1 : 1 : 1 of 36 ninths, 1 on +X
+  and 1 on -X at phase 4 and (7, 7, 1, 1, 1, 1) parked at phase 4. After
+  tick 3 (6,2,2) holds 1 on +X and (4,2,2) 1 on -X at phase 4, the seven
+  blocks hold 16 quanta, content 18.
+- (c) two equal arrivals head on in antiphase: 9 on +X at phase 0 and 9 on
+  -X at phase 4. The sum cancels; each is sent back whole through the Port
+  it came in by, its phase turned by a half turn, nothing transverse: after
+  tick 1 (6,2,2) holds 9 on +X at phase 0 and (4,2,2) 9 on -X at phase 4,
+  nothing else, content 18. Each is lone in the cycle of tick 1 and mixes as
+  (a): after tick 2 (5,2,2) holds 4 on -X at phase 4 and 4 on +X at phase 0,
+  (7,2,2) 1 on +X at phase 0, (3,2,2) 1 on -X at phase 4, the four
+  transverse Nodes of (6,2,2) 1 each at phase 0 and those of (4,2,2) 1 each
+  at phase 4, eleven Nodes, no register. The pair at (5,2,2) is in
+  antiphase again and is sent back whole in the cycle of tick 2, the ten 1s
+  park: after tick 3 (6,2,2) holds 4 on +X at phase 0 and (4,2,2) 4 on -X
+  at phase 4, the only rays, ten blocks of one quantum, content 18.
+- (d) two owners at one Node do not mix: 9 on +X of thing 1 and 9 on -X of
+  thing 2, both phase 0. Each is lone and mixes as (a): after tick 1 (6,2,2)
+  holds 1 on +X of thing 1 at phase 0 and 4 on +X of thing 2 at phase 4,
+  (4,2,2) 4 on -X of thing 1 at phase 4 and 1 on -X of thing 2 at phase 0,
+  and each transverse Node 1 of thing 1 and 1 of thing 2 at phase 0, two
+  rays; content 18, no register; the same amounts of one owner give (b).
+- (e) two shadows of one owner on one heading are one amplitude: 9 on +X at
+  phase 0 and 9 on +X at phase 2 (two rays, their phases differ). Their
+  amount 18 at the phase of their sum, 1, mixes as a lone arrival: 8 back
+  on -X at phase 5 and 2 on each other heading at phase 1 (162 ninths, 72
+  back and 18 each), content 18, no register.
+- (f) unequal amounts and phases, the integers of the rule: 24 on +X at
+  phase 0 and 8 on -X at phase 2. The amplitudes are the integer square
+  roots of 24 x 1024 and 8 x 1024, 156 and 90, times the cosine and sine at
+  256: (39936, 0) and (0, 23040), sum (39936, 23040). Three times the
+  leaving amplitude of +X (the -X walker came in through it) is (39936,
+  -46080), of -X (-79872, 23040), of each transverse heading the sum; their
+  squared lengths 3718250496, 6910377984 and 2125725696 total 19131531264
+  (35 bits), reduced by 7 bits to 29048832, 53987328 and 16607232 (total
+  149465088); the 288 ninths give 55, 104 and 32 x 4 with a remainder of 1
+  to the largest fraction, +X: 56, 104, 32, 32, 32, 32, so 6 on +X at phase
+  7, 11 on -X at phase 4, 3 on each transverse heading at phase 1, and
+  (2, 5, 5, 5, 5, 5) parked at phases (7, 4, 1, 1, 1, 1): 29 in rays, 3 in
+  the registers, content 32.
+- (g) the registers (`field-remainder-v1` under the mixing, through
+  `spread_content`): lone quanta of 1 on +X at phase 0 arriving one per
+  cycle at one Node park 4 ninths on -X and 1 on each other heading per
+  arrival; the -X register releases one quantum at the third, fifth,
+  seventh and ninth arrival (12, 11, 10 and 9 ninths, left at 3, 2, 1 and
+  0) and the five others one each at the ninth, so after nine arrivals nine
+  quanta have left, 4 back at phase 4 and 1 on each other heading at phase
+  0, and the block is empty; after two arrivals the block reads (2, 8, 2,
+  2, 2, 2). Two lone shadows of 3 of opposite sign on +X are two groups: 1
+  back each on -X at phase 4, a ray per sign, and (3, 3, 3, 3, 3, 3) in each
+  sign's block, `signs` (-1, 1), `stored` 4.
+- (h) nothing declared: a `spread` key and a `steering` key on a family are
+  refused naming point 24 ("the Node mixes the six"); a `table` on a split by
+  the phase difference is refused as before (point 17, the split of two
+  things of section 5.2 stands) and such a split carries the family's table
+  [8, 7, 4, 1, 0, 1, 4, 7], which `steering_table(8)` still writes. The
+  runner records `node_mixing` "node-mixing-v1" and `mixing_fields`
+  `[{"field": "m", "phase_width": 8}]`, `shadow_families` carries
+  `phase_width` 8 and no table, no `phase_spread` and no `field_spreading`
+  key is written, and world (a) for two ticks writes no event beyond the
   cycle's own.
-- (h) the dense layer: worlds (a) to (d) for four ticks under the engine
+- (i) the dense layer: worlds (a) to (f) for four ticks under the engine
   alone and under the dense mode (the default, admitted) give the same board,
   ledger, content and registers at every tick.
 
-Known and noted, not fixed here (the model owner decides): with this rule a
-release of one phase keeps four fifths of its content on lines parallel to
-the axes in the coordinate planes through its source (the tube theorem of
-DERIVATIONS.md section 17), as world (a)'s axis shows: the tip on +X holds
-23, 12, 6, 3, 1 after ticks 1 to 5.
+## The phase-steered spread (deleted on 2026-09-18)
+
+`tests/test_phase_spread.py` was deleted on 2026-09-18 with `phase-spread-v1`
+by feature 16c, `node-mixing-v1` (Highlights 5.4, point 24): a shadow does
+not choose its next heading alone and not in a pair, the six Ports mix, so
+the pairwise steering of point 17 and the split table of a lone share are
+retired for shadows and no case of that module states the rule. The steering
+table stays the Born split of two things that meet (section 5.2), pinned in
+`tests/test_ray_meeting_conversion.py` and `tests/test_loop_binding.py`.
 
 ## A Node is its six Ports
+
+Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_node_is_ports.py`): no split table is declared, the parked unit is ninths, and a lone shadow mixes at every Node it reaches with nothing else there, so (a) reads the mixing (5 on +X at (4,2,2): 2 leave back on -X, 5 ninths park on +X and on each transverse heading and 2 on -X, 27 in all; the 2 park whole at (3,2,2), 8 on +X and 2 on each other heading), the shadows of (b), (c), (d) and (g) leave fresh from the Node beside the mark or the body they are to reach (M2 at (1,1,1) and the shadow from the seed Node (2,1,1), its step spent there where the trace is, home at M after tick 5; the ring's mark at (4,5,5) and the shadow from P0, home every second tick; the mirror's shadow from (5,2,2), waiting there from tick 2), and the M8 record's trace carries `unit` 9.
 
 `tests/test_node_is_ports.py` is the isolated test of `node-is-ports-v1`
 ([a Node is its six Ports](SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1);
@@ -1451,6 +1506,8 @@ evaluations, 20 hits); in `tests/test_kerengonen.py` the dissolving moving
 particle recoils from its own emissions and walks back to -2.
 
 ## A click is an absorption
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares `clock` at K 4 (one step per interval for the thing of 4); `detector_absorb` reads a thing's momentum as amount x heading plus the pushes it carries, (1, 2, -1) and (5, 2, -1) in the helper case.
 
 Re-pinned on 2026-09-18 under `bit-law-v1`: the field family `G` and its release per tick went with the law; absorb is the default for every family, the thing of the lamp is caught by C at tick 4 with its momentum (or passed under `on_click: "pass"`), a click names the owner (`tests/test_detector_absorb.py`, three tests).
 
@@ -1801,6 +1858,8 @@ a rendering of the fingerprinted record, not evidence by itself.
 
 ## Ray meetings with outputs
 
+Re-pinned on 2026-09-18 under `clock-readings-v1`: no rate, no clock; the inputs meet at phase 0 and delta, so the four outputs read 0, 0, 3 and 7 and the table cases 0, 4, (0, 2) and (0, 1); a product's phase stays as it walks.
+
 `test_ray_meeting_conversion.py` builds its board inline under the shared
 Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
 no decay, the six unit-axial headings in Port order) on a periodic 15^3
@@ -1971,7 +2030,18 @@ n (arrivals, the sink). The test is parametrized over `sink`, `stars`,
 A world without `external_bodies` is unchanged: no body Node exists, no
 token is added, no source is booked and the sink line is zero.
 
-## Field spreading
+## Field spreading (deleted on 2026-09-18)
+
+`tests/test_field_spreading.py` was deleted on 2026-09-18 with
+`field-spreading-v1` by feature 16c, `node-mixing-v1` (Highlights 5.4, point
+24): the declared split table is retired, a shadow spreads by the Node's
+mixing and nothing of the spread is declared, so every case of the module
+(`single`, `superposition`, `cancelled`, `stream`, `sign`, `rejected`) stated
+a retired rule. Its surviving subjects, the Node-owned remainder
+(`field-remainder-v1`, now in ninths), the sign kept through the spread and
+the refusal of a declared table, are pinned in
+[The Node mixes the six](#the-node-mixes-the-six), (g) and (h). The pins
+below stay for the record of what the table was.
 
 Re-pinned on 2026-09-18 under `phase-spread-v1` (Highlights 5.4 point 17): two shares of one owner meeting at a Node steer each other by the Born table instead of spreading by the split table, so `superposition` (a difference of two steps) reads 11 forward each way and 6 on each transverse heading at phase 7, and `cancelled` reads 12, 12, 12, 10 apart at phase 0, nothing in the registers (`tests/test_field_spreading.py`).
 
@@ -2174,6 +2244,8 @@ nonzero block. `relative_ports` gives (0, 1, 2, 3, 4, 5) for Port 0 and
 
 ## Ray-event audit
 
+Re-pinned on 2026-09-18 under `clock-readings-v1`: the momentum field's line carries `spent`, zero in these worlds; the families declare no rate.
+
 `test_ray_event_audit.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
 the six unit-axial headings in Port order, closed under negation) on an open
@@ -2307,6 +2379,8 @@ feature 10, over rays alone).
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_detector_sampling_contract.py` pinned behaviour the law removed and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
 ## Wave-ray families
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: no family declares a rate; every world declares K 1; the massive family of case (b) declares `clock` and its rays of 4 advance 4 steps per interval (phases (77 + 4 t) mod 256); the wide case's ray of 2 advances 2 per interval on the 128-bit circle (`WIDE_RATE` 2, `WIDE_PHASE` the turn less 6; outbound[1] = 2^128 - 4, outbound[100] = 194; a rest rate of 2^70 is no family's to declare); the rejections name `clock-readings-v1` for `phase_advance` and `coherence table` for a carried phase on a family with a clock and no table; `forward_rays` returns the departures' account as a third value.
 
 `test_wave_ray_families.py` builds four boards inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay, the
@@ -2510,6 +2584,10 @@ run:
 
 ## A free ray turns by momentum
 
+Re-pinned on 2026-09-18 under `clock-readings-v1` (`ray-momentum-turn-v3`): the module is rewritten to the step of the settled rule (i), the cases `turn`, `cancel`, `reverse`, `along`, `identical` and `rejected` of `tests/test_ray_momentum_turn.py`, the world of 21^3, K 8, `wait_per_quantum` 0, the coupling reading the thing's content (the shadows of `f` have no charge): a thing of 8 heading +X at (4,10,10) meets a shadow of 1 from -Y at C after tick 6; the push (0, -8, 0) is its momentum, the shadow turns back carrying (0, 8, 0), at its departure of tick 7 the thing turns to -Y with nothing carried and (8, 0, 0) spent, both walk -Y together, the momentum line reading current (-8, 0, 0) and spent (8, 0, 0) from tick 7 and the momentum line of the record (0, -8, 0); re-pinned the same day under `node-is-ports-v1` (settled rule (ii)): the shadow's steps are spent at (10,4,10) after tick 12 and it waits there at rest, nothing of `f` leaving the board, while the thing leaves after tick 16 with (0, -8, 0) escaped, the momentum line reading current (-8, 8, 0) from tick 17 and the record's final totals `f` 1 and momentum (-8, 8, 0); in `cancel` each shadow waits at its Node of the board from tick 13; a second shadow from +Y in the same cycle cancels the push, nothing spent, the thing walks on +X; a shadow head on with sign 1 reverses the thing to -X (spent (8, 0, 0)), with sign -1 pushes along its own direction, which turns it nowhere and leaves (8, 0, 0) carried (the momentum line (16, 0, 0)); a world without a table records no identity and runs byte-identically twice; the malformed tables of the first pin are rejected and a table without `reads` names point 16. The tables of the DDA walk below stand as history.
+
+Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_ray_momentum_turn.py`, on the `ray-momentum-turn-v3` module): a lone shadow no longer walks straight to the thing it pushes, so the thing's lamp is one Link before C, at (9,10,10), and every shadow leaves fresh from the Node beside C ((10,9,10), (10,11,10), (11,10,10)); both reach C after tick 1, the push is in the cycle of tick 2 and every tick is five earlier than the pins above (`turn` 14 ticks, the thing off the board after tick 11; `cancel`, `reverse` and `along` 8 ticks); the return walks its one step back, waits beside C with steps 0 (a waiting shadow reads heading 0 from the tick after it arrives) and nothing of `f` leaves the board.
+
 Re-pinned on 2026-09-18 under `bit-law-v1`: only a shadow pushes, so the `f` rays are shadows given with the board (sign 1) and the coupling reads the thing's charge (`m` charge 1); no `ray_push` record; a returned shadow carries -push, its steps counting down to 0 and staying there; the momentum line is exact at zero until a shadow escapes; the `identical` digests carry the law's identities (`tests/test_ray_momentum_turn.py`).
 
 `test_ray_momentum_turn.py` builds its boards inline under the shared
@@ -2629,6 +2707,8 @@ Pinned before the first run:
   (0, 0, 0), and the seventh `step()` raises ("cannot stop a ray").
 
 ## The walk kept through a push
+
+Retired on 2026-09-18 under `clock-readings-v1`: `tests/test_momentum_turn_walk.py` pinned the DDA staircase, which the settled rule (i) retires, and is deleted; the text below stands as its history.
 
 Re-pinned on 2026-09-18 under `bit-law-v1`: the `f` and `g` rays are shadows given with the board, the couplings read the thing's charge (`m` charge 1), no `ray_push` record, the momentum line exact at zero (`tests/test_momentum_turn_walk.py`).
 
@@ -2782,6 +2862,8 @@ before the first run. The test is parametrized over `running`, `kept`,
   every ledger balanced; `m` 64, `f` 56, `g` 40 throughout.
 
 ## Loop binding
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: the ring's rays of 1 declare `clock` at the world's K; at K 1 they advance one step per interval (the rate 2 of the first pin is out of the bound content / K < N / 2 for a corner's merged output of 2 at N = 8), so (a) reads phases t mod 8 with the lines closing in one circuit and the phases in two (`seen[t] == seen[t - 8]`), (b) the merged outputs of 2 at phase 3 after tick 2 and (2 t - 1) mod 8 after, (d) and (e) likewise with the two-circuit closure, and the record case runs 24 ticks for the extractor's window of two periods of 8 (clock 1, `to_tick` 23, 184 rays, the plain reading period 1 with an unknown clock); (c) runs at K 2, one step every second interval with the remainder t mod 2 on the rays, the phases (t // 2) mod 8, four ticks apart two steps, closing after sixteen (20 ticks).
 
 `tests/test_loop_binding.py` is the test of feature 14, binding as a loop
 (`loop-binding-v1`, [loop binding](LOOP_BINDING.md)), pinned here on
@@ -2937,6 +3019,8 @@ Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_ring_
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_screen_no_draw.py` pinned behaviour the law removed (a mark's ticket seed, a body radiating per tick, `field_of`) and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
 ## Catalog of nature
+
+Re-pinned on 2026-09-18 under `clock-readings-v1`: a ray declares `content` (its rung, the former rest rate in m_0) and `clock`, the units name `content` and the world's `K`, `mass_field` and `mass_field_delay` are retired (11 rays, 15 couplings, 25 undecided entries, A6 no longer a decider), `weak_conversion` declares `decay.after_periods` (undecided, A9) and no `draw`, the neutron's decay names its coupling alone, and the apparatus family declares content 0 and no clock; the worlds case stays skipped (the field families' textual migration is in the feature's remaining list).
 
 `test_nature_catalog.py` reads [`catalog/nature.json`](../catalog/nature.json)
 ([catalog of nature](CATALOG.md)) through the strict decoder and builds its
@@ -3123,6 +3207,8 @@ Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_heliu
 
 ## The dense mode
 
+Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_dense_field.py`): the boards are built in the module (the field spreading test went with the split table) with nothing declared of the spread; part 1 of the feature cycles every Node of the region that holds arrivals through `spread_content` itself, so `split` reads the mixing's integers: the single 12 at phase 6 on +X sends 5 back on -X at phase 2 and 1 on each other heading at phase 6, the sign-0 block (3, 3, 3, 3, 3, 3); the two 3s of opposite sign send 1 back each on -X at phase 4; the quantum on +X with its +X register at 10 parks (1, 4, 1, 1, 1, 1) and the register at 11 releases one forward, left at 2, the block (2, 4, 1, 1, 1, 1); the mixed and three-shadow cases against the oracle as before (the phase of the three is 2); `identity` unchanged in form; `rejected` names a world without a shadow set, an outward field beside the rays and polarization.
+
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 13): the region is the shadow layer, on by default wherever admitted, holding shadows alone (no bit, one block per owner); the boards are shadows given with the board; a mark returns every shadow and counts none; the `boundary` case's world went with the law (`tests/test_dense_field.py`, three cases).
 
 `tests/test_dense_field.py` is the isolated test of the dense mode for boards
@@ -3252,3 +3338,105 @@ identities are not the rule's. Six cases:
 
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_field_books.py` pinned behaviour the law removed and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
+## The clock and the readings
+
+Re-pinned on 2026-09-18 under `node-mixing-v1` (feature 16c; `tests/test_clock_readings.py`): in (b) the shadows s and u leave fresh from (2,1,2) and (4,1,2), share (3,1,2) after tick 1 with their phases 5 and 2 unchanged and no event, and mix there in the cycle of tick 2, each alone, a lone quantum parking whole; in (d) the lamps are at (2,2,1) and (2,3,1) and the star's shadows leave fresh from (3,1,1) and (3,2,1), so the meeting is after tick 1, the push in the cycle of tick 2 and the turn at the departure of tick 2, the things at (3,0,1) and (3,1,1) after tick 3, each return waiting one Link back with steps 0.
+
+`tests/test_clock_readings.py` is the isolated test of `clock-readings-v1`
+([the clock and the readings](SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1);
+Highlights 5.4 points 11, 16, 18, 19 and 20, the model owner's decisions of
+2026-09-18), pinned here on 2026-09-18 before its first run. Boards are open,
+`link_ticks` 1, costs 1, the six unit-axial headings, 8 ray slots, `release`
+[1, 1], N = 8 (`phase_bits` 3) unless said, `wait_per_quantum` 0 (the wait is
+pinned in its own module), a three-component `momentum` field; a lamp of a
+family emits its whole stock once along its heading in the cycle of tick 0,
+recoiling into `momentum`; a shadow of a profile is given with `steps` 0. A
+tick t is one `step()`: the cycle of interval t - 1 and the delivery of tick t;
+a push of the cycle of tick t is on the thing after tick t + 1, and its step at
+the departure of tick t + 1.
+
+- (a) the computation: 9 x 3 x 3, K 2, `m` (charge -1, `clock`): a thing e of
+  6 at (1,1,1) +X (three steps per interval) and a thing f of 2 at (1,2,1) +X
+  (one), a mark at (5,2,1) [1, 1] on f's line, three shadows of e (amount 1,
+  z = 2, +X) that add nothing. The phase steps per completed tick read 4 at
+  ticks 1 to 4 (f's step of tick 4 counted, then absorbed on its arrival at the
+  mark), 3 at ticks 5 to 8 (e's step of tick 8 counted, then it leaves the
+  board on that departure) and 0 from tick 9; `real_content` 8, 8, 8, 6, 6,
+  6, 6, 0, 0, 0; the same world without the shadows gives the same running
+  totals; the runner records `computation_per_tick` equal to the differences,
+  `clock_readings`, `K` 2 and `wait_per_quantum` [0, 1].
+- (b) two clocks, no clock on a shadow: 9 x 3 x 3, K 2: e of 6 at (1,1,1) +X
+  is at (1 + t, 1, 1) after tick t with phase 3 t mod 8 and remainder 0; f of
+  2 at (8,2,1) -X at (8 - t, 2, 1) with phase t mod 8; a shadow s of e (phase
+  5) at (1,1,2) +X and a shadow u of f (phase 2) at (5,1,2) -X are at (1 + t,
+  1, 2) and (5 - t, 1, 2) with phases 5 and 2 and remainder 0 at every tick,
+  share (3,1,2) after tick 2 with no event there, and the running total of
+  phase steps reads 4, 8, 12, 16.
+- (c) the bound: at N 8 and K 1 an emission of 3 parses and one of 4 is refused
+  naming half the phase circle; at K 2, 7 parses and 8 is refused. Two things
+  of half that content head on, at (1,1,1) +X and (5,1,1) -X, under an outputs
+  rule joining them into one output of the sum on +X: the totals read the sum
+  after tick 2, and the third step fails closed with the same words (K 1: 4;
+  K 2: 8).
+- (d) the readings: 9 x 5 x 3, K 4: a neutral thing n of 4 (`n`, charge 0,
+  `clock`) at (1,2,1) +X and a charged thing c of 4 (`c`, charge 1 per
+  quantum, `clock`) at (1,3,1) +X; a body of `e` (charge -1 per quantum on
+  the family, the body's whole charge -1, amount 32, thing 3) at (7,4,1), its
+  shadows of 1 at (3,0,1) and (3,1,1) on +Y; per pushed family a gravity rule
+  (table {"e": -1}, `reads` "content") and an electric rule ({"e": 1},
+  `reads` "charge"). The owner table reads content 32 and charge -1 for thing
+  3 and the push denominator is 32. Each thing meets its shadow after tick 2;
+  in the cycle of that tick the gravity reading gives (0, -4, 0) to each and
+  the electric reading 0 to n (its charge 0) and -1 / 32 to c: nothing into
+  its momentum, the remainder (0, -1, 0). The momentum line reads (4, 0, 0),
+  (4, 0, 0), (0, 0, 0) after tick 2 and (0, -4, 0), (0, -4, 0), (0, 0, 0)
+  after tick 3, both things turned to -Y at their departure of tick 3 with
+  nothing carried, n at (3,1,1) with remainder (0, 0, 0) and c at (3,2,1)
+  with `push_remainder` (0, -1, 0); each shadow, read twice, walks back -Y
+  carrying (0, 4, 0) with steps 1; the momentum line's `spent` reads (8, 0,
+  0); no push and no draw is an event.
+- (e) the decay table: the unit-square ring of `tests/test_loop_binding.py`
+  (K 1) under a rule `weak` declared before its corner table, participants
+  two electrons, outputs the two inputs on +Z and -Z. With `decay`
+  {"after_periods": 3} the corners hold two rays each after ticks 1 to 3 with
+  passages 0, 1 and 2, the third meeting (the cycle of tick 3) breaks every
+  corner's pair, and after ticks 4 to 6 the corners are empty and eight rays of
+  1 with passages 0 stand tick - 3 Links above and below them on +Z and -Z,
+  content 8 exact; with {"content_at_most": 1} the ring holds for eight ticks
+  with the passages counting up, with {"content_at_most": 2} it breaks at the
+  first meeting; two runs write the same `events.jsonl` and no `decay_draw`
+  identity; `draw` with `seed` is refused naming `clock-readings-v1`, an empty
+  or a double condition names one condition, `after_periods` 0 is refused, and
+  `decay` on a rule without outputs names the outputs.
+
+## The wait per quantum read
+
+Re-pinned on 2026-09-18 under `node-mixing-v1` (feature 16c; `tests/test_wait_rule.py`): the thing's lamp is at (9,10,10) and the shadow leaves fresh from (10,9,10), both at C after tick 1, the push in the cycle of tick 2 and every tick five earlier than pinned below (eight ticks per case): with w = 1 the thing waits the interval of tick 2 and steps to -Y at tick 3, with w = 2 it waits ticks 2 and 3 (`owed` 1 then 0), with w = 1/2 it steps at tick 2 owing 1; the returned shadow waits at (10,9,10) with steps 0.
+
+`tests/test_wait_rule.py` is the isolated test of Highlights 5.4 point 23
+under `clock-readings-v1` (a thing pays a tick for every whole quantum it
+reads, the model owner's decision of 2026-09-18), pinned here on 2026-09-18
+before its first run, on the world of `tests/test_ray_momentum_turn.py` with a
+thing of 1 (K 1: one phase step per interval) at (4,10,10) +X and a shadow of
+1 from -Y at (10,4,10), the coupling reading the content with sign -1: a push
+of one whole quantum, (0, -1, 0), in the cycle of tick 6.
+
+- (a) w 1: after ticks 1 to 6 the thing is at (4 + t, 10, 10) with phase t and
+  the running phase steps t; after tick 7 it is still at C with steps 6, phase
+  6, momentum (0, -1, 0) and nothing owed (its one interval spent), the
+  running total 6; from tick 8 it is at (10, 17 - t, 10) heading -Y (the
+  component reached its content at the departure of tick 8) with phase and
+  steps t - 1 and the running total t - 1; the ledger balances at every tick.
+- (b) a shadow pays nothing: the shadow is at (10, 4 + t, 10) after ticks 1
+  to 6 and, turned back with (0, 1, 0), at (10, 16 - t, 10) with steps 12 - t
+  from tick 7, one Link every interval while the thing waits; no shadow ever
+  owes.
+- (c) w 2: the thing stays at C after ticks 7 and 8 (owed 1 then 0, phase 6,
+  steps 6, the running total 6) and is at (10, 18 - t, 10) from tick 9 with
+  phase and steps t - 2.
+- (d) no reading, no wait: alone, at w 2, the thing is at (4 + t, 10, 10)
+  after every tick with phase t and the running total t.
+- (e) w 1 / 2: one quantum read owes half an interval, kept exactly (`owed` 1
+  in units of 1 / 2) and never spent: the thing steps at tick 7 as if it owed
+  nothing and carries the debt; `wait_per_quantum` [11, 9] parses as (11, 9),
+  the default is (1, 1), and [1, 0], -1 and [1] are refused.

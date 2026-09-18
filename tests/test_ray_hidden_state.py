@@ -98,7 +98,7 @@ def document(ticks=4):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
             }
         ],
         "emissions": [
@@ -173,7 +173,7 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
                     port,
                     (0, 0, 0),
                     amount,
-                    phase=tick,
+                    phase=0,  # no clock (clock-readings-v1, 2026-09-18): the phase stays
                     steps=tick,
                     outbound=1,
                     event_ports=0b111111,
@@ -217,13 +217,14 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
     )
     walked = []
     for _ in range(5):
-        ports, kept = forward_rays((returning,), definition, CostMeter(initial.operation_costs))
+        ports, kept, _ = forward_rays((returning,), definition, CostMeter(initial.operation_costs))
         assert kept == () and [len(p) for p in ports] == [1, 0, 0, 0, 0, 0]
         (returning,) = ports[0]
         walked.append((returning.steps, returning.phase))
-    assert walked == [(4, 0), (3, 7), (2, 6), (1, 5), (0, 4)]
+    # The phase stays 1: the family has no clock (clock-readings-v1, 2026-09-18).
+    assert walked == [(4, 1), (3, 1), (2, 1), (1, 1), (0, 1)]
     assert returning.outbound == 0 and returning.event_ports == 1
-    ports, kept = forward_rays((returning,), definition, CostMeter(initial.operation_costs))
+    ports, kept, _ = forward_rays((returning,), definition, CostMeter(initial.operation_costs))
     assert kept == (returning,) and ports == ((),) * 6
     with pytest.raises(ValueError, match="event Node"):
         advance_ray(returning, definition.headings[0], definition.phase_steps, 1)

@@ -12,24 +12,7 @@ from event_universe.initialization import parse_initial_state
 
 from .test_energy_audit import absorbing_document, document
 from .test_kerengonen import two_lamps
-from .test_ray_delay import document as delay_document
 from .test_ray_integration_guards import _law, _record
-
-
-@pytest.mark.parametrize("screen_here", [False, True])
-def test_load_delay_keeps_funded_slow_emissions_and_allows_resident_absorption(screen_here):
-    raw = delay_document(ray_delay=True, emission=0)
-    raw["spatial_fields"][0]["pace"] = [1, 4]
-    raw["spatial_fields"][1]["baseline"] = 6000
-    raw["emissions"][0]["amount"] = 1
-    if screen_here:
-        raw["seeds"][1]["position"] = raw["seeds"][0]["position"]
-    world = Simulation(parse_initial_state(raw))
-    for tick in range(1, 4):
-        world.step()
-        assert world.totals()["quanta"] == (16,)
-        if screen_here:
-            assert unpack(_record(world, 1).values[0]) == (tick - 1,)
 
 
 @pytest.mark.parametrize(
@@ -76,43 +59,9 @@ def test_pace_is_prepared_before_steps_and_irreducible_overflow_fails_preflight(
         world.step()
 
 
-def test_observer_failure_cannot_interrupt_installation_of_held_ray_inventory():
-    raw = delay_document(ray_delay=True, emission=0)
-    raw["spatial_fields"][0]["pace"] = [1, 4]
-    raw["spatial_fields"][1]["baseline"] = 6000
-    raw["emissions"][0]["amount"] = 1
-    world = Simulation(parse_initial_state(raw))
-    world.step()
-
-    def fail_after_commit(event):
-        if event["event"] == "spatial_cycle":
-            raise RuntimeError("observer failed after commit")
-
-    world._spatial.observer = fail_after_commit
-    with pytest.raises(RuntimeError, match="observer failed"):
-        world.step()
-    assert world.faulted and world.totals()["quanta"] == (16,)
-
-
-def test_absorbing_the_last_waiting_ray_releases_its_local_delay_counter():
-    raw = delay_document(ray_delay=True, emission=0)
-    raw["seeds"][1]["position"] = raw["seeds"][0]["position"]
-    raw["emissions"][0]["amount"] = 0
-    world = Simulation(parse_initial_state(raw))
-    position = tuple(raw["seeds"][0]["position"])
-    spatial = world._spatial
-    node = spatial._at(position)
-    node.rays = ((Ray(0, (0, 0, 0), 1),), ())
-    node.ray_wait = 3
-    node.advance(0, world._nodes[position], spatial._services)
-    assert not any(node.rays)
-    assert node.ray_wait == 0
-    assert unpack(_record(world, 1).values[0]) == (1,)
-
-
 def test_share_capture_keeps_exact_rational_truncation():
     raw = absorbing_document(headings=[[1, 0, 0]], rays_per_tick=1, absorber_position=[1, 0, 0])
-    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 4, "phase_advance": 0}
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 4}
     raw["spatial_couplings"][0].update(fraction=1, fraction_denominator=3)
     initial = parse_initial_state(raw)
     residents, records = [Ray(0, (0, 0, 0), 100005)], [_record(Simulation(initial), 1)]
@@ -126,7 +75,6 @@ def test_threshold_capture_cannot_partially_fund_a_negative_ray():
     )
     raw["spatial_fields"][0]["kerengonen"] = {
         "phase_steps": 4,
-        "phase_advance": 0,
         "capture": "threshold",
     }
     initial = parse_initial_state(raw)
@@ -140,6 +88,8 @@ def test_directed_self_exclusion_uses_the_emitted_heading_and_full_ray_identity(
     raw = two_lamps(4, 1)
     raw["spatial_fields"][0].update(self_exclusion=True, rays_per_tick=1)
     raw["emissions"][0]["heading"] = [-1, 0, 0]
+    # One directed ray of 4: at K 4 it advances one step per Link (clock-readings-v1).
+    raw["K"] = 4
     raw["spatial_couplings"][0]["type"] = "lamp_a"
     initial = parse_initial_state(raw)
     record = replace(
