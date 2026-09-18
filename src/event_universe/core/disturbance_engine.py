@@ -27,7 +27,7 @@ from .node_execution import NodeExecution, SpatialPlanningInput
 from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
-from .ray_event_audit import Line, ledger_line, world_ledger
+from .ray_event_audit import Line, ledger_line, shadow_line, thing_line, world_ledger
 from .spatial_engine import (
     SpatialCoupler,
     SpatialDecayer,
@@ -226,11 +226,15 @@ class DisturbanceEngine:
                 ()
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].incoming,
-                () if spatial is None or position not in spatial.nodes else spatial.nodes[position].rays,
-                remainders=(
-                    ()
-                    if spatial is None or position not in spatial.nodes
-                    else spatial.nodes[position].remainders
+                ()
+                if spatial is None or position not in spatial.nodes
+                else tuple(
+                    tuple(ray for ray in rays if not ray.parked) for rays in spatial.nodes[position].rays
+                ),
+                parked=()
+                if spatial is None or position not in spatial.nodes
+                else tuple(
+                    tuple(ray for ray in rays if ray.parked) for rays in spatial.nodes[position].rays
                 ),
             )
             for position in sorted(positions)
@@ -665,7 +669,7 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    def things_content(self) -> int:
+    def real_content(self) -> int:
         """The content of the things (bit-law-v1, point 11): the amount of every
         thing of every ray family, resident, travelling or held by a record;
         constant between the absorptions of a mark, as the computation is."""
@@ -677,11 +681,11 @@ class DisturbanceEngine:
                 total = checked_work(total + things.get(name, (0,))[0])
         return total
 
-    def shadows_content(self) -> int:
+    def shadow_content(self) -> int:
         """The content of the shadows (bit-law-v1): the amount of every shadow of
-        every ray family, resident, in flight or held in a Node's remainder
-        registers, the dense region's included; constant but for what escaped
-        the board and what a mark absorbed as the home of an absorbed thing."""
+        every ray family, resident, in flight or parked at a Node below one
+        quantum, the dense region's included; constant but for what escaped the
+        board and what a mark absorbed as the home of an absorbed thing."""
         shadows = self.totals(BIT_SHADOW)
         total = 0
         for definition in self.initial.spatial_fields:
@@ -690,9 +694,9 @@ class DisturbanceEngine:
                 total = checked_work(total + shadows.get(name, (0,))[0])
         return total
 
-    def thing_registers(self) -> dict[int, list[int]]:
-        """The register line of every thing (bit-law-v1, point 15): thing id to momentum."""
-        return {} if self._spatial is None else self._spatial.thing_registers()
+    def thing_momentum(self) -> dict[int, list[int]]:
+        """The momentum of every thing (bit-law-v1, point 15): thing id to momentum."""
+        return {} if self._spatial is None else self._spatial.thing_momentum()
 
     def shadow_counts(self) -> dict[int, list[int]]:
         """The shadows per thing (bit-law-v1): owner to [rays, amount]."""
@@ -802,26 +806,27 @@ class DisturbanceEngine:
             name = self.initial.fields[definition.field].name
             if name not in initial_totals:
                 continue
-            zero = (0,) * len(initial_totals[name])
-            things[name] = ledger_line(
+            # The lines per bit (node-is-ports-v1, no sourced line anywhere): the
+            # things' initial + converted = current + escaped + absorbed (into a
+            # body, into the thing resident at a mark or annulled), the shadows'
+            # initial = current + escaped + absorbed_at_home.
+            things[name] = thing_line(
                 initial_things[name],
                 tuple(a - b for a, b in zip(sources[name], shadow_sources[name], strict=True)),
                 current_things[name],
                 tuple(a - b for a, b in zip(escaped[name], shadow_escaped[name], strict=True)),
-                annulled[name],
-                absorbed[name],
-                tuple(a - b for a, b in zip(taken[name], shadow_taken[name], strict=True)),
-                zero,
+                tuple(
+                    a + b + c - d
+                    for a, b, c, d in zip(
+                        annulled[name], absorbed[name], taken[name], shadow_taken[name], strict=True
+                    )
+                ),
             )
-            shadows[name] = ledger_line(
+            shadows[name] = shadow_line(
                 initial_shadows[name],
-                shadow_sources[name],
                 current_shadows[name],
                 shadow_escaped[name],
-                zero,
-                zero,
-                shadow_taken[name],
-                returned[name],
+                tuple(a + b for a, b in zip(shadow_taken[name], returned[name], strict=True)),
             )
         current_charge, escaped_charge = self.charge_totals(), self.escaped_charge_totals()
         charge = {}
@@ -854,10 +859,18 @@ class DisturbanceEngine:
             "charge": body_charge,
             "sink": absorbed,
         }
+        # The marks' lines (node-is-ports-v1): what the residents hold per bit and
+        # field, `real` the things absorbed and `shadow` the shadows absorbed at home.
         marks = {
             "count": len(self.initial.detectors),
             "momentum": self.detector_mark_momentum(),
-            "counter": taken,
+            "real": {
+                name: tuple(a - b for a, b in zip(values, shadow_taken.get(name, values), strict=True))
+                if name in shadow_taken
+                else values
+                for name, values in taken.items()
+            },
+            "shadow": {name: shadow_taken.get(name, tuple(0 for _ in values)) for name, values in taken.items()},
         }
         return world_ledger(self.tick, fields, charge, bodies, marks, things, shadows)
 

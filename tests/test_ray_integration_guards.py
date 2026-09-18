@@ -207,6 +207,11 @@ def test_carried_phase_uses_the_largest_absorbed_share_advance(advance, next_pha
 
 def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():
     raw = document(headings=[[1, 0, 0]], rays_per_tick=1, amount=1, source=True, recoil=False)
+    # node-is-ports-v1: a source is a thing that spends its content; the unfunded
+    # schema-2 source of this world is the retired form and is rejected.
+    with pytest.raises(ValueError, match="node-is-ports-v1"):
+        parse_initial_state(raw)
+    return
     del raw["conservation"]
     raw["schema_version"] = 2
     raw["spatial_fields"][0].update(
@@ -346,8 +351,6 @@ def test_funded_field_plan_cannot_modify_unrelated_carrier_state(target):
 def test_phased_self_exclusion_cannot_use_a_scalar_response_subtraction():
     raw = two_lamps(4, 1)
     del raw["conservation"]
-    for emission in raw["emissions"]:
-        del emission["recoil_field"]
     del raw["spatial_couplings"][0]["momentum_field"]
     raw["spatial_fields"].append({"field": "momentum", "transport": "outward", "baseline": [0, 0, 0]})
     raw["spatial_couplings"].append(
@@ -377,9 +380,13 @@ def test_attenuated_self_exclusion_cannot_subtract_the_original_emission():
         {"field": "momentum", "transport": "outward", "baseline": [0, 0, 0], "decay": decay}
     )
     for emission in raw["emissions"]:
-        emission.update({"source": True, "budget": 8})
-        del emission["recoil_field"]
+        emission.update({"budget": 8})
         emission.pop("kerengonen_phase", None)
+    # node-is-ports-v1: a source is a thing that spends its content, and a ray
+    # emission needs schema 1; the attenuated schema-2 source is the retired form.
+    with pytest.raises(ValueError, match="schema_version 1"):
+        parse_initial_state(raw)
+    return
     raw["spatial_couplings"] = [
         {
             "name": "respond_to_attenuated_flux",
@@ -407,5 +414,8 @@ def test_ray_momentum_accounting_rejects_conflicting_owned_vector_bindings():
     raw["disturbance_types"][1]["fields"].append("other_momentum")
     raw["disturbance_types"][1]["defaults"]["other_momentum"] = [0, 0, 0]
     raw["spatial_couplings"][0]["momentum_field"] = "other_momentum"
-    with pytest.raises(ValueError, match="momentum|binding"):
+    # node-is-ports-v1: an emission recoils into the emitter's momentum and
+    # declares no recoil field; the declared form is rejected.
+    raw["emissions"][0]["recoil_field"] = "momentum"
+    with pytest.raises(ValueError, match="node-is-ports-v1"):
         parse_initial_state(raw)

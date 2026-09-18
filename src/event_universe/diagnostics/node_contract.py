@@ -25,6 +25,7 @@ from event_universe.core.spatial_state import (
     InverseSplit,
     Polarized,
     Polarizer,
+    Resident,
     Ray,
     RayPush,
     ShadowHome,
@@ -60,6 +61,7 @@ STATE_RECORDS = (
     RayPush,
     DecayDraw,
     Polarizer,
+    Resident,
     Polarized,
 )
 

@@ -86,7 +86,7 @@ NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # rate) and no delay, and moves at the causal speed. A shadow meeting a thing
 # under a momentum table gives the thing the push the table declares and turns
 # back on its own steps carrying its amount and the opposite momentum, -dp, in
-# its register, walks home to the thing that released it (its owner, by the
+# its momentum, walks home to the thing that released it (its owner, by the
 # trace the owner leaves at every Node it departs), and is absorbed back and
 # re-released; a shadow meeting the thing that released it is home, never a
 # push; a thing meeting a thing is the declared tables; a shadow meeting a
@@ -146,13 +146,22 @@ RELEASED_FIELD = "released-field-v1"
 # every seeded record holding the origin family), or a profile of shadows
 # (`rays`), booked as `initial`, the thing's presence and not a source.
 INITIAL_FIELD_MODES = ("fill", "rays")
-# The trace a thing leaves at a Node (bit-law-v1, point 3 of the law): the Port
-# the last thing of each owner left by, bounded to the most recent owners, so
-# that a shadow walking home follows the thing that released it if it moved;
-# TRACE_END in place of a Port where the thing ended, absorbed by a mark, which
-# is then the home of its shadows (the model owner, 2026-09-18, PR #270).
+# A Node is its six Ports; everything else is a ray (Highlights 5.4, point 22,
+# the model owner, 2026-09-18; node-is-ports-v1, feature 17 of issue #169).
+# Every store the model kept on a Node or beside the rays is a ray with a
+# property: what a Node holds below one quantum is a parked shadow (`Ray.parked`,
+# its amount in units of the family's split denominator), what a Node remembers
+# of a departure is a parked shadow of amount zero on the heading the thing
+# left by (the trace, read by the shadows coming home), what a mark has
+# absorbed is a thing resident at it (`DetectorMark.resident`), a source is a
+# thing that spends its content by its emission rule (no sourced line), and the
+# apparatus are things with declared tables. A thing's momentum stays what it
+# is, a property of the thing; there is no register and no counter.
+NODE_IS_PORTS = "node-is-ports-v1"
+# The trace a thing leaves at the Node it departs (bit-law-v1, point 3; a
+# zero-amount parked shadow since node-is-ports-v1): at most this many owners'
+# traces per family at one Node, the lowest owner ids dropped beyond it.
 MAX_TRACES = 16
-TRACE_END = 6
 # The 0-meets-1 table (bit-law-v1, point 16, the model owner, 2026-09-18): per
 # pair of families one rule for what the thing multiplies the shadows' message
 # by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
@@ -190,8 +199,8 @@ LOOP_BINDING = "loop-binding-v1"
 DECAY_DRAW = "decay-draw-v1"
 # A free ray turns by momentum (Highlights 3.5, 3.14, 3.16 and 3.28,
 # ray-momentum-turn-v2): a ray's direction is its momentum vector, three integers
-# carried as its register, by default amount x heading, the line its event gave
-# it; the DDA walks the register at every departure, one Link per interval, so
+# carried as its momentum, by default amount x heading, the line its event gave
+# it; the DDA walks the momentum at every departure, one Link per interval, so
 # a ray with momentum (7, -1, 0) takes seven +x Links per -y Link. A coupling
 # without outputs whose momentum_table names a participant family pushes the
 # one participant it does not name by sign x amount x heading of every field
@@ -199,9 +208,9 @@ DECAY_DRAW = "decay-draw-v1"
 # returned reversed; the push stamps no event and changes no amount, phase or
 # bit. The heading index stays the ray's line for the rules that read it. A
 # push keeps the walk (v2, 2026-09-17): the DDA's three accumulators carry over
-# and continue against the new register, so a ray pushed at every interval
-# walks the DDA line of its running register; v1 reset them at every push,
-# which the helium-orbit run (E8) showed steps such a ray along its register's
+# and continue against the new momentum, so a ray pushed at every interval
+# walks the DDA line of its running momentum; v1 reset them at every push,
+# which the helium-orbit run (E8) showed steps such a ray along its momentum's
 # dominant axis alone.
 RAY_MOMENTUM_TURN = "ray-momentum-turn-v2"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
@@ -263,28 +272,29 @@ BODY_SINK = -1
 FIELD_SPREADING = "field-spreading-v1"
 SPREAD_ENTRIES = 6
 SPREAD_BACKWARD = 1
-# The Node owns the sub-quantum remainder (Highlights 3.5 and 3.17, model owner
-# 2026-09-17; field-remainder-v1): the shares the table gives a heading below
-# one quantum are kept at the Node in a remainder register per spreading family,
-# source sign and Port, in units of 1/S where S is the table's total, with the
-# register's phase combined with each share's by the coherence rule; when a
-# register reaches S it releases one whole quantum through its heading in that
-# interval, more if it reached kS, as a fresh eventless field ray. Since the
-# weights sum to S, a Node's registers of one family hold whole quanta in
-# total, and the ledger counts them as content.
+# The sub-quantum remainder (Highlights 3.5 and 3.17, model owner 2026-09-17;
+# field-remainder-v1): the shares the table gives a heading below one quantum
+# stay at the Node, per spreading family, owner, source sign and Port, in units
+# of 1/S where S is the table's total, their phase combined with each share's by
+# the coherence rule; a share that reaches S leaves as one whole quantum through
+# its heading in that interval, more if it reached kS, as a fresh eventless
+# shadow. Since the weights sum to S, what a Node holds this way of one family
+# is whole quanta in total, and the ledger counts it as shadow content. Since
+# node-is-ports-v1 the store is a parked shadow per owner, sign and Port among
+# the Node's rays (`Ray.parked`), eighteen at most per owner and family.
 FIELD_REMAINDER = "field-remainder-v1"
 REMAINDER_SIGNS = (-1, 0, 1)
 REMAINDER_SLOTS = 18
 # The dense mode for boards that a field fills (dense-field-v1; performance,
-# 2026-09-17): the pure-field Nodes of a board, those holding nothing but
-# outbound content of spreading families and their remainder registers, are
-# cycled by the host as one vectorized step over integer arrays that applies
-# the same spread and remainder rule to every such Node at once. A host
-# scheduling choice, not a physical rule: the law is the one above, the
-# integers are the same, and a Node holding anything else (a Detector mark, an
-# external body, a record, a ray of another family, a returning ray, an
-# event-carrying ray) is cycled by the engine as before. Off unless the world
-# declares `dense_field: true`; the runner records the identity when on.
+# 2026-09-17): the shadow-only Nodes of a board, those holding nothing but
+# shadows of spreading families (arriving, parked, returning or waiting) and
+# their traces, are cycled by the host as one vectorized step over integer
+# arrays that applies the same spread and remainder rule to every such Node at
+# once. A host scheduling choice, not a physical rule: the law is the one
+# above, the integers are the same, and a Node holding anything else (a
+# Detector mark, an external body, a record, a thing) is cycled by the engine
+# as before. The default wherever a world admits it; the runner records the
+# identity when on.
 DENSE_FIELD = "dense-field-v1"
 # Polarization (Highlights 3.26, feature 11; ray-polarization-v1): a family
 # property read only at a meeting, exactly as charge is. A ray carries a
@@ -304,41 +314,73 @@ POLARIZATION_NONE = -1
 # The polarizer coupling of an external body (Highlights 3.19; feature 11): the
 # body's coupling value below BODY_SINK, declared with an angle, a pass Port and
 # a table, its rest ending in the body's sink and the shares below one quantum in
-# the body's registers, six per body (sign-major -1, 0, 1, then pass and sink).
+# the body's held shares, six per body (sign-major -1, 0, 1, then pass and sink).
 BODY_POLARIZER = -2
 POLARIZER_SLOTS = 6
 
 
 @dataclass(frozen=True, slots=True)
+class Resident:
+    """The thing resident at a mark (node-is-ports-v1, Highlights 5.4 point 22): what
+    the mark has absorbed, a thing like every other with its content per family,
+    its momentum and the identities it is made of, and no counter. A click is an
+    absorption into it: `things` holds the content absorbed from things per
+    spatial field, `shadows` the content absorbed from the shadows that came home
+    to it (settled rule (iv): a shadow absorbed at its home mark makes no event
+    and is counted on this line, never as a click), `momentum` the momentum of
+    both, and `owners` the ids of the things absorbed, sorted: the resident is
+    the home of their shadows. Both content tuples are empty until the first
+    absorption and then hold one entry per spatial field. Its content has left
+    the board (point 11): nothing here is on the current line."""
+
+    things: tuple[int, ...] = ()
+    shadows: tuple[int, ...] = ()
+    momentum: tuple[int, int, int] = (0, 0, 0)
+    owners: tuple[int, ...] = ()
+
+    def __post_init__(self) -> None:
+        for line in (self.things, self.shadows):
+            if type(line) is not tuple or any(type(v) is not int or v < 0 for v in line):
+                raise ValueError("a resident thing's content is nonnegative integers per family")
+        if len(self.things) != len(self.shadows):
+            raise ValueError("a resident thing's things and shadows lines have one entry per family")
+        if type(self.momentum) is not tuple or len(self.momentum) != 3:
+            raise ValueError("a resident thing's momentum requires three integers")
+        for value in self.momentum:
+            checked_work(value)
+        if (
+            type(self.owners) is not tuple
+            or any(type(v) is not int or not 0 <= v < MAX_THING_ID for v in self.owners)
+            or tuple(sorted(set(self.owners))) != self.owners
+        ):
+            raise ValueError("a resident thing's owners are distinct thing ids in ascending order")
+
+
+@dataclass(frozen=True, slots=True)
 class DetectorMark:
-    """A Node's Detector bit with its setting and ticket seed: bounded Node metadata.
+    """A Node's Detector bit with its setting: bounded Node metadata.
 
     The setting is the mark's efficiency (bit-law-v1), the declared table "catch
-    n things in every d" read by the mark's own counter, an explicit rational
-    with no default; `seed` is retired (point 14 of the law: there is no
-    lottery), kept at 0 so that old worlds and records parse, never read. What
-    the mark does with a thing
-    that draws 1 is its coupling per spatial field (detector-absorb-v1):
-    `on_click` holds CLICK_PASS, CLICK_ABSORB or CLICK_DEFAULT per spatial field
-    index, empty for all defaults (absorb), and `click_keys` is 1 when the world
-    file wrote the key. A shadow is returned without a draw and never counted.
-    The mark's one exact counter, `counter` per spatial field (empty until the
-    first absorption), and `momentum`, the momentum of what it absorbed, are
-    bounded metadata like a body's sink; `things` are the ids of the things it
-    absorbed, sorted: the mark is the home of their shadows, and each of them
-    that returns is absorbed into the same counter with its momentum (the model
-    owner, 2026-09-18). Nothing here is a record, stock or a reading of any ray.
+    n things in every d" read by the mark's own count of arrivals, an explicit
+    rational with no default; there is no seed (point 14 of the law: there is no
+    lottery; the key is rejected since node-is-ports-v1). What the mark does
+    with a thing it catches is the declared table of the thing resident at it,
+    per spatial field (detector-absorb-v1): `on_click` holds CLICK_PASS,
+    CLICK_ABSORB or CLICK_DEFAULT per spatial field index, empty for all
+    defaults (absorb), and `click_keys` is 1 when the world file wrote the key.
+    A shadow is returned without a draw and never counted, unless the resident
+    is its home. `resident` is the thing the mark has absorbed (node-is-ports-v1):
+    a click is an absorption into it, and each shadow of an absorbed thing that
+    returns is absorbed into it too, on its shadows line (the model owner,
+    2026-09-18). Nothing here is a record, stock or a reading of any ray.
     """
 
     position: Address3
     pass_numerator: int
     pass_denominator: int
-    seed: int = 0
     on_click: tuple[int, ...] = ()
     click_keys: int = 0
-    counter: tuple[int, ...] = ()
-    momentum: tuple[int, int, int] = (0, 0, 0)
-    things: tuple[int, ...] = ()
+    resident: Resident = Resident()
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -349,29 +391,14 @@ class DetectorMark:
             raise ValueError("a Detector setting requires a positive denominator")
         if not 0 <= bounded(self.pass_numerator) <= self.pass_denominator:
             raise ValueError("a Detector setting must be a rational from 0 through 1")
-        if type(self.seed) is not int or self.seed != 0:
-            raise ValueError(
-                "a Detector mark has no seed (bit-law-v1, point 14: there is no lottery); "
-                "its counter starts at 0"
-            )
         if type(self.on_click) is not tuple or any(
             value not in (CLICK_PASS, CLICK_ABSORB, CLICK_DEFAULT) for value in self.on_click
         ):
             raise ValueError("a Detector mark meets a click by absorb or pass")
         if self.click_keys not in (0, 1):
             raise ValueError("a Detector mark declares its click key as 0 or 1")
-        if type(self.counter) is not tuple or any(type(v) is not int or v < 0 for v in self.counter):
-            raise ValueError("a Detector mark counter holds nonnegative integers")
-        if type(self.momentum) is not tuple or len(self.momentum) != 3:
-            raise ValueError("a Detector mark momentum requires three integers")
-        for value in self.momentum:
-            checked_work(value)
-        if (
-            type(self.things) is not tuple
-            or any(type(v) is not int or not 0 <= v < MAX_THING_ID for v in self.things)
-            or tuple(sorted(set(self.things))) != self.things
-        ):
-            raise ValueError("a Detector mark's things are distinct thing ids in ascending order")
+        if type(self.resident) is not Resident:
+            raise ValueError("a Detector mark holds a resident thing")
 
 
 @dataclass(frozen=True, slots=True)
@@ -420,7 +447,7 @@ class ExternalBody:
     BODY_POLARIZER with its polarizer declaration,
     the released phase, the momentum table as one sign per spatial field), the
     momentum with its three exact accumulators, one exact sink counter per spatial
-    field and, for a polarizer, six remainder registers with their phases
+    field and, for a polarizer, six held shares below one quantum with their phases
     (ray-polarization-v1). The body's identity as a thing, `thing` (bit-law-v1):
     the owner its shadows carry. No rays, no history.
     """
@@ -441,7 +468,7 @@ class ExternalBody:
     # index of "content" or "charge" in PUSH_READS, required beside a momentum
     # table; -1 without one.
     reads: int = -1
-    # The polarizer (ray-polarization-v1): the declaration, and the registers that
+    # The polarizer (ray-polarization-v1): the declaration, and the held shares that
     # own the shares below one quantum in units of 1/D, D the table's length,
     # sign-major (-1, 0, 1) then pass and sink, with a phase each; () otherwise.
     polarizer: Polarizer | None = None
@@ -465,17 +492,17 @@ class ExternalBody:
             raise ValueError("an external body polarizer coupling carries its polarizer declaration")
         if self.polarizer is None:
             if self.held or self.held_phases:
-                raise ValueError("only a polarizer body holds remainder registers")
+                raise ValueError("only a polarizer body holds shares below one quantum")
         else:
             if type(self.polarizer) is not Polarizer:
                 raise ValueError("an external body polarizer must be a Polarizer")
             for block in (self.held, self.held_phases):
                 if type(block) is not tuple or len(block) != POLARIZER_SLOTS:
-                    raise ValueError("a polarizer body holds six registers and six phases")
+                    raise ValueError("a polarizer body holds six shares and six phases")
                 if any(type(v) is not int or v < 0 for v in block):
-                    raise ValueError("polarizer registers and phases are nonnegative integers")
+                    raise ValueError("polarizer shares and phases are nonnegative integers")
             if any(v >= self.polarizer.steps for v in self.held):
-                raise ValueError("a polarizer register stays below one quantum")
+                raise ValueError("a polarizer share stays below one quantum")
         if type(self.phase) is not int or self.phase < 0:
             raise ValueError("an external body phase must be a nonnegative integer")
         bounded(self.charge)
@@ -548,13 +575,14 @@ class Ray:
     # family; a visible property like the Detector bit, never encoded in the
     # phase, read by no rule of the engine.
     source_sign: int = 0
-    # The momentum register (ray-momentum-turn-v2, Highlights 3.16): the ray's
-    # momentum, three integers, or None for the default amount x heading, the
-    # line of its heading index. Set by a push, the DDA walks it in place of the
-    # heading, the accumulators kept through the push (continued_walk); a push
-    # that brings it back to the default clears it, so a ray that resumes its
-    # line is the ray it was. Negated by a return with the heading; extensive,
-    # so merging rays adds it as it adds their amounts.
+    # The momentum (ray-momentum-turn-v2, Highlights 3.16 and 5.4 point 22): a
+    # property of the thing, three integers, or None for the default amount x
+    # heading, the line of its heading index. Set by a push, the DDA walks it in
+    # place of the heading, the accumulators kept through the push
+    # (continued_walk); a push that brings it back to the default clears it, so
+    # a ray that resumes its line is the ray it was. Negated by a return with
+    # the heading; extensive, so merging rays adds it as it adds their amounts.
+    # On a shadow walking home it is -dp, the momentum it carries back.
     momentum: tuple[int, int, int] | None = None
     # Polarization (ray-polarization-v1, Highlights 3.26): the transverse direction
     # modulo a half turn in steps of the family's polarization circle
@@ -567,15 +595,22 @@ class Ray:
     # of the merge identity; a shadow at a Node holding a thing of its owner is
     # home, and a momentum table never pushes a thing with its own shadow.
     owner: int = 0
+    # A parked shadow (node-is-ports-v1, Highlights 5.4 point 22): 1 on a shadow
+    # at rest at its Node, never forwarded and outside the slot budget. With an
+    # amount it is what the Node holds below one quantum of its owner on the
+    # heading it will leave through, the amount in units of the family's split
+    # denominator (`parked_unit`), combined with the shares the spread adds and
+    # released whole when it reaches one quantum; with amount zero it is the
+    # trace, the mark a thing left at the Node it departed, its heading the way
+    # the owner went, read by the shadows coming home. Part of the merge identity.
+    parked: int = 0
 
 
 Rays = tuple[Ray, ...]
-# The remainder registers of a Node (field-remainder-v1): per spatial field, 18
-# integers in units of 1/S, sign-major (-1, 0, 1) then Port, or () for a family
-# that does not spread; the phases likewise.
-Remainders = tuple[tuple[int, ...], ...]
-# The trace register of a Node (bit-law-v1): (owner, Port) pairs, most recent last.
-Traces = tuple[tuple[int, int], ...]
+# One owner's parked shares at a Node, as the spread step reads and writes them
+# (field-remainder-v1): eighteen amounts in units of 1/S, sign-major (-1, 0, 1)
+# then Port, per owner in the family's owner order, and as many phases.
+ParkedBlock = tuple[int, ...]
 
 # Structural non-owning projections used by the ordinary indexed evaluator.
 RAY_PROPERTIES = (
@@ -979,7 +1014,7 @@ def motion_step(
     a whole content, subtracting the content; at most one Link per interval, never
     faster than a ray. Returns the Port, or -1 when it stays, and the new
     accumulators. An accumulator only grows past the content while the owner waits
-    its turn on another axis; it is capped so the register stays bounded metadata."""
+    its turn on another axis; it is capped so the accumulator stays bounded metadata."""
     advanced = [a + m for a, m in zip(accumulators, momentum, strict=True)]
     port = -1
     for axis in range(3):
@@ -1085,7 +1120,7 @@ class ShadowHome:
     to: int
     out_port: int
     # 1 when the momentum left the identity the ledger measures (a record without
-    # a recoil field), booked on the returned line; 0 when a register took it.
+    # a momentum field), booked on the returned line; 0 when the thing took it.
     outside: int = 0
 
 
@@ -1184,7 +1219,7 @@ def validate_dense_field_admission(initial: InitialState) -> None:
     if any(not definition.rays for definition in initial.spatial_fields):
         raise ValueError(
             "dense_field requires ray transport on every spatial field: the dense region "
-            "carries rays and remainder registers only"
+            "carries rays only"
         )
     if initial.conservation is not None:
         raise ValueError(
@@ -1221,67 +1256,133 @@ def relative_ports(port: int) -> tuple[int, ...]:
 
 
 def remainder_slot(sign: int, port: int, rank: int = 0) -> int:
-    """The register of one owner (its rank among the family's owners), source sign
-    and Port in a family's block: eighteen per owner, owner-major (bit-law-v1)."""
+    """The slot of one owner (its rank among the family's owners), source sign and
+    Port in a family's parked block: eighteen per owner, owner-major (bit-law-v1)."""
     if sign not in REMAINDER_SIGNS or type(port) is not int or not 0 <= port < 6:
-        raise ValueError("a remainder register is named by a source sign and a Port")
+        raise ValueError("a parked share is named by a source sign and a Port")
     if type(rank) is not int or rank < 0:
-        raise ValueError("a remainder register is named by an owner's rank")
+        raise ValueError("a parked share is named by an owner's rank")
     return rank * REMAINDER_SLOTS + (sign + 1) * 6 + port
 
 
 def remainder_block_size(definition: SpatialFieldDefinition) -> int:
-    """The registers of one spreading family at a Node: eighteen per owner of the
-    family, eighteen for a family with no declared owner (bit-law-v1)."""
+    """The parked shares of one spreading family at a Node, as the spread step reads
+    them: eighteen per owner of the family, eighteen for a family with no declared
+    owner (bit-law-v1)."""
     return REMAINDER_SLOTS * max(1, len(definition.owners)) if definition.spread else 0
 
 
-def blank_remainders(definitions: tuple[SpatialFieldDefinition, ...]) -> Remainders:
-    """Empty registers: a block of eighteen zeros per owner of a spreading family,
-    () otherwise."""
-    return tuple((0,) * remainder_block_size(definition) for definition in definitions)
-
-
-def validate_remainders(
-    remainders: Remainders, phases: Remainders, definitions: tuple[SpatialFieldDefinition, ...]
-) -> None:
-    """One block per spatial field: eighteen nonnegative bounded integers per owner
-    and as many phases below the family's width for a spreading family, nothing
-    for the rest."""
-    if (
-        type(remainders) is not tuple
-        or type(phases) is not tuple
-        or len(remainders) != len(definitions)
-        or len(phases) != len(definitions)
-    ):
-        raise ValueError("remainder registers require one block per spatial field")
-    for definition, block, block_phases in zip(definitions, remainders, phases, strict=True):
-        if not definition.spread:
-            if block or block_phases:
-                raise ValueError("only a spreading family owns remainder registers")
-            continue
-        size = remainder_block_size(definition)
-        if (
-            type(block) is not tuple
-            or type(block_phases) is not tuple
-            or len(block) != size
-            or len(block_phases) != size
-            or any(type(v) is not int or bounded(v) < 0 for v in block)
-            or any(type(p) is not int or not 0 <= p < definition.phase_modulus for p in block_phases)
-        ):
-            raise ValueError("a remainder block holds eighteen registers and eighteen phases per owner")
-
-
 def remainder_stock(block: tuple[int, ...], total: int) -> int:
-    """The whole quanta a Node's registers of one family hold: their sum over the
-    table's total, exact because the weights sum to the total (the shares one
+    """The whole quanta a Node's parked shares of one family hold: their sum over
+    the table's total, exact because the weights sum to the total (the shares one
     spread adds are a multiple of it) and a release takes a multiple of it."""
     held = 0
     for value in block:
         held = checked_work(held + value)
     if held % total:
-        raise ValueError("a Node's remainder registers hold whole quanta in total")
+        raise ValueError("a Node's parked shadows hold whole quanta in total")
     return held // total
+
+
+# The parked shadow (node-is-ports-v1): the store below one quantum and the trace
+# as rays at rest among the Node's rays. Nothing here reads another Node.
+
+
+def parked_unit(definition: SpatialFieldDefinition) -> int:
+    """The unit of a parked shadow's amount, declared once per family: the split
+    table's total S for a spreading family (a parked amount is in S-ths of a
+    quantum, below S), 1 for a family that does not spread (whose parked shadows
+    are traces of amount zero)."""
+    return sum(definition.spread) if definition.spread else 1
+
+
+def parked_shadow(
+    owner: int, port: int, definition: SpatialFieldDefinition, amount: int = 0, phase: int = 0, sign: int = 0
+) -> Ray:
+    """A shadow parked at a Node on the heading of `port`: the trace of `owner` when
+    the amount is zero, its share below one quantum otherwise (in units of the
+    family's split denominator), with the share's phase and sign."""
+    if not 0 <= amount < parked_unit(definition):
+        raise ValueError("a parked shadow's amount stays below one quantum in its unit")
+    return Ray(
+        definition.headings.index(PORT_HEADINGS[port]),
+        (0, 0, 0),
+        amount,
+        phase=phase,
+        detector=BIT_SHADOW,
+        source_sign=sign,
+        owner=owner,
+        parked=1,
+    )
+
+
+def parked_shares(rays: Rays, definition: SpatialFieldDefinition) -> tuple[ParkedBlock, ParkedBlock]:
+    """The parked shares of one family at a Node as the spread step reads them: the
+    block of eighteen amounts per owner (owner-major by the family's owner order,
+    sign-major then Port) and their phases, from the Node's parked shadows with
+    an amount; the traces (amount zero) are not shares."""
+    size = remainder_block_size(definition)
+    held, phases = [0] * size, [0] * size
+    if not size:
+        return (), ()
+    owners = definition.owners or (0,)
+    for ray in rays:
+        if not ray.parked or not ray.amount:
+            continue
+        if ray.owner not in owners:
+            raise ValueError("a parked shadow's owner is one of its family's declared owners")
+        port = PORT_HEADINGS.index(definition.headings[ray.heading])
+        slot = remainder_slot(ray.source_sign, port, owners.index(ray.owner))
+        if held[slot]:
+            raise ValueError("a Node parks one shadow per owner, sign and Port of a family")
+        held[slot], phases[slot] = ray.amount, ray.phase
+    return tuple(held), tuple(phases)
+
+
+def park_shares(block: ParkedBlock, phases: ParkedBlock, definition: SpatialFieldDefinition) -> Rays:
+    """The parked shadows of one family at a Node from the block the spread step
+    wrote: one per nonzero slot, on the slot's Port heading with the slot's phase,
+    sign and owner, in slot order."""
+    owners = definition.owners or (0,)
+    result = []
+    for slot, amount in enumerate(block):
+        if not amount:
+            continue
+        rank, rest = divmod(slot, REMAINDER_SLOTS)
+        sign, port = divmod(rest, 6)
+        result.append(parked_shadow(owners[rank], port, definition, amount, phases[slot], sign - 1))
+    return tuple(result)
+
+
+def parked_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The whole quanta the parked shadows of one family at a Node hold: the sum of
+    their amounts over the family's unit, whole exactly (field-remainder-v1)."""
+    return remainder_stock(tuple(ray.amount for ray in rays if ray.parked), parked_unit(definition))
+
+
+def leave_trace(rays: Rays, owner: int, port: int, definition: SpatialFieldDefinition) -> Rays:
+    """The Node's rays of one family after a thing of `owner` left through `port`
+    (bit-law-v1, point 3; node-is-ports-v1): the owner's trace replaced by a
+    zero-amount parked shadow on that Port's heading, the traces bounded to
+    MAX_TRACES owners per family (the lowest ids dropped beyond it)."""
+    if type(port) is not int or not 0 <= port < 6:
+        raise ValueError("a trace is a Port")
+    kept = [ray for ray in rays if not (ray.parked and not ray.amount and ray.owner == owner)]
+    kept.append(parked_shadow(owner, port, definition))
+    traces = sorted((ray.owner for ray in kept if ray.parked and not ray.amount), reverse=True)
+    dropped = set(traces[MAX_TRACES:])
+    return merge_rays(
+        tuple(ray for ray in kept if not (ray.parked and not ray.amount and ray.owner in dropped))
+    )
+
+
+def trace_of(rays: Rays, owner: int, definition: SpatialFieldDefinition) -> int:
+    """The Port the last thing of `owner` left this Node by, read from its trace
+    among the family's rays, or -1 for none."""
+    for ray in rays:
+        if ray.parked and not ray.amount and ray.owner == owner:
+            return PORT_HEADINGS.index(definition.headings[ray.heading])
+    return -1
 
 
 def spread_tables(
@@ -1567,7 +1668,7 @@ class SpatialFieldDefinition:
     # whose things have no shadows; and the owners, the ids of the things whose
     # shadows the family carries (the types holding its stock, the bodies of the
     # family, the owners of its declared profile), sorted, filled in by the
-    # world's initial state when left empty; the remainder registers of a
+    # world's initial state when left empty; the parked shadows of a
     # spread are per owner in this order.
     release_numerator: int = 0
     release_denominator: int = 1
@@ -1867,16 +1968,10 @@ class SpatialNodeState:
     detector: DetectorMark | None = None
     detector_ticket: int = 0
     # The external body this Node holds, whole, when one is declared or has
-    # stepped here (external-body-v1); None at every other Node.
+    # stepped here (external-body-v1); None at every other Node. What the Node
+    # holds below one quantum and what it remembers of a departure are parked
+    # shadows among `rays` (node-is-ports-v1): a Node is its six Ports.
     body: ExternalBody | None = None
-    # The remainder registers of the spreading families and their phases
-    # (field-remainder-v1): one block of eighteen per spreading family.
-    remainders: Remainders = ()
-    remainder_phases: Remainders = ()
-    # The trace register (bit-law-v1): (owner, Port) pairs, the Port the last
-    # thing of each owner left this Node by, the most recent last, at most
-    # MAX_TRACES; a shadow walking home follows it once its steps are spent.
-    traces: Traces = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -1915,11 +2010,8 @@ class SpatialPlan:
     # to an owner the identity does not measure (a record without a recoil
     # field); the re-release is booked on `source_delta`.
     returned_delta: Values = ()
-    # The remainder registers after this cycle (field-remainder-v1).
-    remainders: Remainders = ()
-    remainder_phases: Remainders = ()
-    # The trace register after this cycle (bit-law-v1).
-    traces: Traces = ()
+    # The parked shadows after this cycle, the shares below one quantum and the
+    # traces (node-is-ports-v1), are among `kept_rays`.
     # The pushes of free rays this cycle, one per field ray met by a coupling's
     # momentum table (ray-momentum-turn-v1).
     ray_pushes: tuple[RayPush, ...] = ()
@@ -1949,7 +2041,7 @@ class DecayDraw:
 class RayPush:
     """The record of one push of a free ray for the Node to publish
     (ray-momentum-turn-v1): plain bounded integers, as the Node state contract
-    requires. The pushed ray's spatial field and amount, its register before and
+    requires. The pushed ray's spatial field and amount, its momentum before and
     after, and the field ray that pushed it: its spatial field, amount and heading.
     """
 
@@ -2023,8 +2115,11 @@ def validate_heading(heading: Heading) -> int:
 
 
 def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDefinition) -> None:
-    if type(rays) is not tuple or len(rays) > definition.ray_slots:
+    if type(rays) is not tuple:
+        raise ValueError("ray transport requires a tuple of rays")
+    if sum(1 for ray in rays if type(ray) is Ray and not ray.parked) > definition.ray_slots:
         raise ValueError("ray slot budget exceeded")
+    parked = 0
     for ray in rays:
         if type(ray) is not Ray:
             raise ValueError("ray transport requires immutable Ray entries")
@@ -2032,23 +2127,43 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray heading index is outside the configured sequence")
         validate_heading(definition.headings[ray.heading])
         if ray.momentum is not None:
-            # ray-momentum-turn-v1: a register is three stored integers, not all zero.
+            # ray-momentum-turn-v1: a momentum is three stored integers, not all zero.
             if type(ray.momentum) is not tuple or len(ray.momentum) != 3:
-                raise ValueError("a ray momentum register requires three integers")
+                raise ValueError("a ray momentum requires three integers")
             for value in ray.momentum:
                 if type(value) is not int:
-                    raise ValueError("a ray momentum register requires three integers")
+                    raise ValueError("a ray momentum requires three integers")
                 bounded(value)
             if not any(ray.momentum):
-                raise ValueError("a ray momentum register must not be the zero vector")
+                raise ValueError("a ray momentum must not be the zero vector")
         length = vector_length(ray_vector(ray, definition))
         if type(ray.accumulators) is not tuple or len(ray.accumulators) != 3:
             raise ValueError("a ray requires three integer accumulators")
         if any(type(a) is not int or not -length < a <= length for a in ray.accumulators):
             raise ValueError("ray accumulators must stay within the heading length")
-        if bounded(ray.amount) == 0:
+        if type(ray.parked) is not int or ray.parked not in (0, 1):
+            raise ValueError("a ray is parked (1) or on its way (0)")
+        if ray.parked:
+            # node-is-ports-v1: a parked shadow is at rest, below one quantum in
+            # its family's unit (zero for a trace), on a Port heading, without a
+            # momentum, a wait or an event, and outside the slot budget.
+            parked += 1
+            if (
+                ray.detector != BIT_SHADOW
+                or not ray.outbound
+                or ray.steps
+                or ray.momentum is not None
+                or ray.wait
+                or ray.accumulators != (0, 0, 0)
+                or definition.headings[ray.heading] not in PORT_HEADINGS
+            ):
+                raise ValueError("a parked shadow is a shadow at rest on a Port heading")
+            if not 0 <= bounded(ray.amount) < parked_unit(definition):
+                raise ValueError("a parked shadow's amount stays below one quantum in its unit")
+        elif bounded(ray.amount) == 0:
             raise ValueError("a resident ray must carry a nonzero amount")
-        field.validate(pack((ray.amount,)))
+        else:
+            field.validate(pack((ray.amount,)))
         if type(ray.phase) is not int or not 0 <= ray.phase < definition.phase_modulus:
             raise ValueError("ray phase must be below the field's phase width")
         if type(ray.advance) is not int or not -1 <= ray.advance < definition.phase_modulus:
@@ -2072,6 +2187,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
                 "ray polarization must be none (-1) or a step below the family's polarization circle"
             )
         validate_ray_event_state(ray)
+    if parked > (REMAINDER_SLOTS + 1) * max(1, len(definition.owners)) + MAX_TRACES:
+        raise ValueError("a Node parks at most eighteen shares and one trace per owner of a family")
 
 
 def validate_ray_event_state(ray: Ray) -> None:
@@ -2099,7 +2216,7 @@ def validate_ray_event_state(ray: Ray) -> None:
 
 def vector_length(vector: Heading) -> int:
     """The Manhattan length of a nonzero integer vector the DDA walks: a heading of
-    the family's table or a ray's momentum register (ray-momentum-turn-v1), whose
+    the family's table or a ray's momentum (ray-momentum-turn-v1), whose
     components are stored values and may exceed a heading's bound."""
     if type(vector) is not tuple or len(vector) != 3:
         raise ValueError("a ray vector requires three integer components")
@@ -2114,10 +2231,10 @@ def vector_length(vector: Heading) -> int:
 
 
 def ray_vector(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
-    """The vector the ray's DDA walks (ray-momentum-turn-v1): its momentum register
+    """The vector the ray's DDA walks (ray-momentum-turn-v1): its momentum
     when a push set one, else the heading of its line, which is the default
-    register amount x heading up to the amount. A shadow walks its heading
-    always (bit-law-v1): its register, when set, is the momentum it carries home,
+    momentum amount x heading up to the amount. A shadow walks its heading
+    always (bit-law-v1): its momentum, when set, is what it carries home,
     not its direction."""
     if ray.momentum is not None and ray.detector == BIT_THING:
         return ray.momentum
@@ -2126,7 +2243,7 @@ def ray_vector(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
 
 def ray_line(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
     """The line a ray occupies ahead of it: the heading of its index, or, for a
-    thing with a momentum register, the unit-axial heading of the register's
+    thing with a momentum set by a push, the unit-axial heading of the momentum's
     dominant axis, the axis of the largest component, ties to the lowest axis as
     the DDA takes them."""
     if ray.momentum is None or ray.detector != BIT_THING:
@@ -2137,7 +2254,7 @@ def ray_line(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
 
 
 def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
-    """One thing's momentum as the ledger reads it: its register when a push set
+    """One thing's momentum as the ledger reads it: its momentum when a push set
     one, else amount x heading (ray-momentum-turn-v1). The sign of a returning
     thing is the caller's. A shadow's momentum is `ledger_momentum` (bit-law-v1):
     zero outbound, the momentum it carries home on the walk back."""
@@ -2155,10 +2272,10 @@ def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[i
 
 def ledger_momentum(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
     """One ray's momentum on the ledger's lines, signed (bit-law-v1, Highlights 3.15
-    and 5.4 point 7): a thing reads its register or amount x heading, negated on
+    and 5.4 point 7): a thing reads its momentum or amount x heading, negated on
     its walk back (its share on the event's heading, detector-return-v1); a
     shadow is free, it reads zero while outbound and, on its walk home, the
-    register the push gave it, -dp, the momentum it carries back to its owner."""
+    momentum the push gave it, -dp, what it carries back to its owner."""
     vector = ray_momentum_vector(ray, definition)
     if ray.detector == BIT_THING and not ray.outbound:
         return (-vector[0], -vector[1], -vector[2])
@@ -2167,7 +2284,7 @@ def ledger_momentum(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, 
 
 def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
     """The momentum a share of one ray carries away: share x heading on the ray's
-    line; a ray with a momentum register is taken whole or not at all."""
+    line; a ray with a momentum set by a push is taken whole or not at all."""
     if ray.momentum is None:
         heading = definition.headings[ray.heading]
         return (
@@ -2176,24 +2293,24 @@ def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition)
             checked_work(share * heading[2]),
         )
     if share != ray.amount:
-        raise ValueError("a ray with a momentum register is absorbed whole")
+        raise ValueError("a ray with a momentum set by a push is absorbed whole")
     return ray.momentum
 
 
 def continued_walk(
-    ray: Ray, register: tuple[int, int, int], definition: SpatialFieldDefinition
+    ray: Ray, momentum: tuple[int, int, int], definition: SpatialFieldDefinition
 ) -> tuple[int, int, int]:
     """The walk's progress carried through a push (ray-momentum-turn-v2). The three
     accumulators are, per axis, the momentum-intervals banked toward the next Link
-    on that axis: every interval deposits the register's component, and a Link on
-    the axis withdraws the register's Manhattan length (`dda_step`). A push changes
+    on that axis: every interval deposits the momentum's component, and a Link on
+    the axis withdraws the momentum's Manhattan length (`dda_step`). A push changes
     the deposit and the price, not the balance, so the accumulators carry over and
-    continue against the new register. A ray without a register walked the heading
-    of its line at the table's scale, and the default register is amount x that
+    continue against the new momentum. A ray without a push walked the heading
+    of its line at the table's scale, and the default momentum is amount x that
     heading, so its balance is lifted by the amount (the DDA on a vector scaled
     takes the same Ports from accumulators scaled with it), exactly. A balance the
-    new register cannot hold, an accumulator outside the admissible (-length,
-    length] of the new length (the push shrank the register below what was
+    new momentum cannot hold, an accumulator outside the admissible (-length,
+    length] of the new length (the push shrank the momentum below what was
     banked), starts the walk over at (0, 0, 0), as every push did under v1."""
     scale = 1 if ray.momentum is not None else ray.amount
     kept = (
@@ -2201,16 +2318,16 @@ def continued_walk(
         checked_work(ray.accumulators[1] * scale),
         checked_work(ray.accumulators[2] * scale),
     )
-    length = vector_length(register)
+    length = vector_length(momentum)
     if all(-length < value <= length for value in kept):
         return kept
     return (0, 0, 0)
 
 
 def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDefinition) -> Ray:
-    """The ray after a push (ray-momentum-turn-v2): its register moved by the push
+    """The ray after a push (ray-momentum-turn-v2): its momentum moved by the push
     and its walk kept (`continued_walk`), amount, phase, bit, heading index and
-    event record untouched. A register back at the default amount x heading is
+    event record untouched. A momentum back at the default amount x heading is
     cleared and the walk starts over, so the ray resumes its line as the ray it
     was; a push that would leave no direction fails closed, since a ray never
     stops."""
@@ -2258,7 +2375,7 @@ def turn_receiver(rule: InteractionDefinition) -> int | None:
 
 def dda_step(accumulators: tuple[int, int, int], heading: Heading) -> tuple[int, tuple[int, int, int]]:
     """One Link along the axis furthest behind the heading; ties take the lowest axis.
-    The vector is a heading of the table or a ray's momentum register."""
+    The vector is a heading of the table or a ray's momentum."""
     length = vector_length(heading)
     advanced = [a + abs(h) for a, h in zip(accumulators, heading, strict=True)]
     axis = max(range(3), key=lambda i: (advanced[i], -i))
@@ -2375,7 +2492,7 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         raise ValueError("a shadow turns back by return_shadow (bit-law-v1)")
     momentum = ray.momentum
     if momentum is not None:
-        # ray-momentum-turn-v1: the same ray reversed walks its register back.
+        # ray-momentum-turn-v1: the same ray reversed walks its momentum back.
         momentum = (-momentum[0], -momentum[1], -momentum[2])
     return replace(
         ray,
@@ -2394,9 +2511,9 @@ def return_shadow(
 ) -> Ray:
     """A shadow turned back on its own steps (bit-law-v1, points 3 and 6): the
     same shadow reversed on the line it arrived by, its steps kept to walk back,
-    its amount, phase, sign and owner what arrived, carrying home in its register
+    its amount, phase, sign and owner what arrived, carrying home as its momentum
     the opposite of the momentum it gave (-dp; none when it gave none, as at a
-    mark). A shadow walks its heading, never its register."""
+    mark). A shadow walks its heading, never its momentum."""
     if ray.detector != BIT_SHADOW or not ray.outbound:
         raise ValueError("return_shadow turns back an outbound shadow")
     heading = definition.headings[ray.heading]
@@ -2419,7 +2536,7 @@ def rerelease_shadow(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     """A shadow that came home leaves again from where its thing is (bit-law-v1,
     the amendment's point c): a fresh outbound shadow on the heading it arrived
     from reversed, back out along its line, with its amount, phase, sign and
-    owner, no steps, no register."""
+    owner, no steps, no momentum."""
     heading = definition.headings[ray.heading]
     negated = (-heading[0], -heading[1], -heading[2])
     if negated not in definition.headings:
@@ -2434,26 +2551,6 @@ def rerelease_shadow(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         polarization=ray.polarization,
         owner=ray.owner,
     )
-
-
-def leave_trace(traces: Traces, owner: int, port: int) -> Traces:
-    """The trace register after a thing of `owner` left through `port` (bit-law-v1),
-    or ended here (TRACE_END, absorbed by the Node's mark): the owner's entry
-    moved to the end with the new Port, the register bounded to the most recent
-    MAX_TRACES owners."""
-    if type(port) is not int or not 0 <= port <= TRACE_END:
-        raise ValueError("a trace is a Port or the end of a thing")
-    kept = tuple(entry for entry in traces if entry[0] != owner) + ((owner, port),)
-    return kept[-MAX_TRACES:]
-
-
-def trace_of(traces: Traces, owner: int) -> int:
-    """The Port the last thing of `owner` left this Node by, TRACE_END where it
-    ended, or -1 for none."""
-    for entry in traces:
-        if entry[0] == owner:
-            return entry[1]
-    return -1
 
 
 def event_port(ray: Ray, definition: SpatialFieldDefinition) -> int:
@@ -2550,6 +2647,7 @@ RayMergeKey = tuple[
     tuple[int, int, int] | None,
     int,
     int,
+    int,
 ]
 
 
@@ -2572,6 +2670,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.momentum,
         ray.polarization,
         ray.owner,
+        ray.parked,
     )
 
 
@@ -2581,11 +2680,12 @@ def merge_rays(rays: Rays) -> Rays:
     Rays of different events never merge, whatever their heading and phase: the
     event state is part of the identity, so each ray keeps the information of
     its own event. Field content of opposite source signs never merges either:
-    it stays two rays of the same family (field-spreading-v1).
+    it stays two rays of the same family (field-spreading-v1). A parked shadow
+    of amount zero, a trace, is kept (node-is-ports-v1).
     """
     combined: dict[RayMergeKey, int] = {}
-    # ray-momentum-turn-v1: a register is extensive, so rays of one register that
-    # merge carry the sum of their registers, as they carry the sum of their amounts.
+    # ray-momentum-turn-v1: momentum is extensive, so rays of one momentum that
+    # merge carry the sum of their momenta, as they carry the sum of their amounts.
     counts: dict[RayMergeKey, int] = {}
     for ray in rays:
         key = ray_merge_key(ray)
@@ -2607,17 +2707,18 @@ def merge_rays(rays: Rays) -> Rays:
             detector=key[10],
             lag=key[11],
             source_sign=key[12],
-            momentum=_merged_register(key[13], counts[key]),
+            momentum=_merged_momentum(key[13], counts[key]),
             polarization=key[14],
             owner=key[15],
+            parked=key[16],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
-        if amount
+        if amount or key[16]
     )
 
 
-def _merged_register(momentum: tuple[int, int, int] | None, count: int) -> tuple[int, int, int] | None:
-    """The register of `count` merged rays that share one: its sum, count times it."""
+def _merged_momentum(momentum: tuple[int, int, int] | None, count: int) -> tuple[int, int, int] | None:
+    """The momentum of `count` merged rays that share one: its sum, count times it."""
     if momentum is None:
         return None
     return (
@@ -2628,11 +2729,11 @@ def _merged_register(momentum: tuple[int, int, int] | None, count: int) -> tuple
 
 
 def _merge_order(key: RayMergeKey) -> tuple[object, ...]:
-    """The fixed order of merged rays: the key with a register not set before one set,
-    the polarization last (ray-polarization-v1), so that rays without one keep the
-    order they had."""
+    """The fixed order of merged rays: the key with a momentum not set before one set,
+    the polarization, the owner and the parked flag last, so that rays without one
+    keep the order they had."""
     momentum = key[13]
-    return (*key[:13], momentum is not None, momentum or (0, 0, 0), key[14], key[15])
+    return (*key[:13], momentum is not None, momentum or (0, 0, 0), key[14], key[15], key[16])
 
 
 def ray_stock(rays: Rays) -> int:
@@ -2820,7 +2921,7 @@ def _coherence(rays: Rays, cosines: tuple[int, ...], mask: int) -> tuple[int, in
 # decaying rule at a meeting (decay-draw-v1, ticket_bit), the same draw at a Node
 # the rule's declaration marks. No ordinary owner calls it.
 CAPTURE_MODES = ("share", "threshold")
-TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
+TICKET_MODULUS = 1073741789  # the largest prime below the field value bound
 
 
 def ticket_bit(ticket: int, numerator: int, denominator: int) -> tuple[int, int]:
@@ -2863,28 +2964,33 @@ def click_coupling(mark: DetectorMark, index: int, definition: SpatialFieldDefin
 def detector_absorb(
     mark: DetectorMark, index: int, rays: Rays, definition: SpatialFieldDefinition, fields: int
 ) -> DetectorMark:
-    """The click as an absorption (detector-absorb-v1 under bit-law-v1): the
-    arriving things of one family that were caught end in the mark's exact
-    counter for that family, and their momentum, amount x heading (a register
-    where a push set one), in the mark's momentum; the mark becomes the home of
-    their shadows (`things`), and each shadow of theirs that returns to it ends
-    in the same counter with the momentum it carries. `fields` sizes the
-    counter, one entry per spatial field, on the first absorption; nothing else
-    of the mark changes."""
-    counter = list(mark.counter) or [0] * fields
-    momentum = list(mark.momentum)
-    things = set(mark.things)
+    """The click as an absorption into the thing resident at the mark
+    (detector-absorb-v1 under node-is-ports-v1): the arriving rays of one family
+    that were caught end in the resident, a thing on its things line and a
+    shadow home to it on its shadows line (settled rule (iv)), their momentum,
+    amount x heading or the momentum a push set, in the resident's momentum; a
+    thing absorbed makes the resident the home of its shadows (`owners`), and
+    each shadow of it that returns is absorbed into the same resident. `fields`
+    sizes the content lines, one entry per spatial field, on the first
+    absorption; nothing else of the mark changes."""
+    resident = mark.resident
+    things = list(resident.things) or [0] * fields
+    shadows = list(resident.shadows) or [0] * fields
+    momentum = list(resident.momentum)
+    owners = set(resident.owners)
     for ray in rays:
-        counter[index] = checked_work(counter[index] + ray.amount)
+        if ray.detector == BIT_THING:
+            things[index] = checked_work(things[index] + ray.amount)
+            owners.add(ray.owner)
+        else:
+            shadows[index] = checked_work(shadows[index] + ray.amount)
         for axis, value in enumerate(ledger_momentum(ray, definition)):
             momentum[axis] = checked_work(momentum[axis] + value)
-        if ray.detector == BIT_THING:
-            things.add(ray.owner)
     return replace(
         mark,
-        counter=tuple(counter),
-        momentum=(momentum[0], momentum[1], momentum[2]),
-        things=tuple(sorted(things)),
+        resident=Resident(
+            tuple(things), tuple(shadows), (momentum[0], momentum[1], momentum[2]), tuple(sorted(owners))
+        ),
     )
 
 
@@ -2905,8 +3011,8 @@ def validate_detector_marks(initial: InitialState) -> None:
         positions.add(mark.position)
         if len(mark.on_click) not in (0, len(initial.spatial_fields)):
             raise ValueError("a Detector mark declares on_click per spatial field")
-        if len(mark.counter) not in (0, len(initial.spatial_fields)):
-            raise ValueError("a Detector mark counter has one entry per spatial field")
+        if len(mark.resident.things) not in (0, len(initial.spatial_fields)):
+            raise ValueError("a resident thing's content has one entry per spatial field")
     ray_fields = [definition for definition in initial.spatial_fields if definition.rays]
     if (
         initial.schema_version != 1
@@ -3113,8 +3219,8 @@ class Polarized:
     (-1 none) and source sign, the difference angle - polarization on the circle
     (-1 for an unpolarized ray), the pass share in D-ths, the whole quanta passed
     and sunk, the shares below one quantum added to the pass and the sink
-    registers, the whole quanta the registers released to the pass Port and to
-    the sink after this ray, and the body's six registers after it."""
+    held shares, the whole quanta the held shares released to the pass Port and to
+    the sink after this ray, and the body's six held shares after it."""
 
     amount: int
     polarization: int
@@ -3125,13 +3231,13 @@ class Polarized:
     sunk: int
     held: tuple[int, int]
     released: tuple[int, int]
-    registers: tuple[int, ...]
+    held_after: tuple[int, ...]
 
 
 def polarizer_slot(sign: int, output: int) -> int:
-    """The register of one source sign (-1, 0, 1) and output (0 pass, 1 sink)."""
+    """The held share of one source sign (-1, 0, 1) and output (0 pass, 1 sink)."""
     if sign not in REMAINDER_SIGNS or output not in (0, 1):
-        raise ValueError("a polarizer register is named by a source sign and pass or sink")
+        raise ValueError("a polarizer share is named by a source sign and pass or sink")
     return (sign + 1) * 2 + output
 
 
@@ -3148,14 +3254,14 @@ def polarizer_share(polarizer: Polarizer, polarization: int) -> tuple[int, int]:
 
 
 def held_stock(body: ExternalBody) -> int:
-    """The whole quanta a polarizer body's registers hold in total, exactly
+    """The whole quanta a polarizer body's held shares hold in total, exactly
     (ray-polarization-v1): the pass and the sink fraction of one ray sum to a
-    whole quantum, so the registers of one sign always hold whole quanta."""
+    whole quantum, so the held shares of one sign always hold whole quanta."""
     if body.polarizer is None or not body.held:
         return 0
     whole, fraction = divmod(sum(body.held), body.polarizer.steps)
     if fraction:
-        raise ValueError("a polarizer body holds whole quanta in its registers in total")
+        raise ValueError("a polarizer body holds whole quanta in its held shares in total")
     return whole
 
 
@@ -3170,15 +3276,15 @@ def polarize_content(
     as its polarization; the whole quanta of amount x (D - T[d]) / D end in the
     body's sink for the family (moving the body by its momentum table as the
     sink does); and the two shares below one quantum, which sum to one quantum
-    or to none, go to the body's pass and sink registers of the ray's sign, in
-    units of 1/D, each register's phase combined with the share's by the
-    coherence rule as a spread's register is (field-remainder-v1). A register
+    or to none, go to the body's pass and sink held shares of the ray's sign, in
+    units of 1/D, each held share's phase combined with the share's by the
+    coherence rule as a parked shadow's is (field-remainder-v1). A held share
     that reaches D releases the whole quanta it holds, to the pass Port as a
-    fresh event ray with the register's phase, sign and the body's angle and the
+    fresh event ray with the held share's phase, sign and the body's angle and the
     highest bit of this meeting's arrivals, or into the sink, and keeps the rest.
     Returns the body after, the pass rays stamped as events of this Node, and one
     record per arriving ray. The total is exact: what arrived equals what passed
-    plus what sank plus the whole quanta the registers gained."""
+    plus what sank plus the whole quanta the held shares gained."""
     polarizer = body.polarizer
     if polarizer is None or polarizer.family != index:
         raise ValueError("a polarizer meets the family it polarizes")
@@ -3417,16 +3523,23 @@ def validate_initial_field(initial: InitialState) -> None:
                 raise ValueError("an initial_field ray owner is a thing id below the id bound")
             if definition.owners and ray.owner not in definition.owners:
                 raise ValueError("an initial_field ray owner is one of its family's owners")
-            if ray.steps not in (0, 1):
-                raise ValueError("an initial_field ray has walked one Link (1) or none (0)")
+            if ray.steps not in (-1, 0, 1):
+                raise ValueError(
+                    "an initial_field ray has walked one Link (1), none (0) or, by default, its "
+                    "Link distance from its owner's Node (node-is-ports-v1, settled rule (ii))"
+                )
 
 
 @dataclass(frozen=True, slots=True)
 class InitialShadow:
     """One shadow of a declared profile (`initial_field.rays`): placed at its Node
-    as content that arrived on its heading (`steps` 1, the default, spreading
-    there at the first cycle) or as content leaving the Node at the first cycle
-    (`steps` 0, a fresh shadow on its way)."""
+    as content that arrived on its heading, its steps by default (-1) its Link
+    distance from its owner's Node, so that its return arrives where the owner
+    was (settled rule (ii) of Highlights 5.4, node-is-ports-v1; for a loop, from
+    the owner's Node its line crosses; 1 for an owner with no Node on the
+    board), or as declared: 1, one Link walked, spreading there at the first
+    cycle, or 0, content leaving the Node at the first cycle, a fresh shadow on
+    its way."""
 
     position: Address3
     heading: Heading
@@ -3434,7 +3547,7 @@ class InitialShadow:
     phase: int = 0
     sign: int = 0
     owner: int = 0
-    steps: int = 1
+    steps: int = -1
 
 
 @dataclass(frozen=True, slots=True)

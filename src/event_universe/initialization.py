@@ -923,14 +923,16 @@ def _detectors(
     spatial: tuple[SpatialFieldDefinition, ...],
 ) -> tuple[DetectorMark, ...]:
     """Detector marks: position and setting, both required, there is no default
-    rate; `seed` is accepted and never read (bit-law-v1, point 14: there is no
-    lottery). The setting is the mark's counter table: the k-th thing to arrive
-    draws 1 when k mod d < n. `on_click` (detector-absorb-v1) says what the mark does with
-    a thing that draws 1: `"absorb"` (the default for every family) or `"pass"`,
-    for every ray family or as a mapping of ray family name to one of them; an
-    unknown value or family is rejected. A shadow is returned without a draw and
-    never counted. `on_bit_1` and `on_bit_0` (detector-bit-property-v1) are gone:
-    the bit is the law's and a mark reads it, never a coupling on it."""
+    rate; `seed` is rejected (bit-law-v1, point 14: there is no lottery;
+    node-is-ports-v1: no register, no counter, no seed). The setting is the
+    mark's table: the k-th thing to arrive is caught when k mod d < n. `on_click`
+    (detector-absorb-v1) is the declared table of the thing resident at the mark:
+    what it does with a thing caught, `"absorb"` (the default for every family)
+    or `"pass"`, for every ray family or as a mapping of ray family name to one
+    of them; an unknown value or family is rejected. A shadow is returned without
+    a draw and never counted, unless the resident is its home. `on_bit_1` and
+    `on_bit_0` (detector-bit-property-v1) are gone: the bit is the law's and a
+    mark reads it, never a coupling on it."""
     families = {
         fields[definition.field].name: index
         for index, definition in enumerate(spatial)
@@ -944,10 +946,15 @@ def _detectors(
                 "is the law's, 1 a thing and 0 its shadow; a mark draws every thing and returns "
                 "every shadow, and on_click says what it does with a thing that draws 1"
             )
+        if isinstance(raw, dict) and "seed" in raw:
+            raise ValueError(
+                "detector.seed was retired by node-is-ports-v1 (2026-09-18, after bit-law-v1 point "
+                "14): there is no lottery and no counter; a mark catches things by its setting alone"
+            )
         obj = _object(
             raw,
             "detector",
-            {"position", "setting", "seed", "on_click"},
+            {"position", "setting", "on_click"},
             {"position", "setting"},
         )
         setting = _array(obj["setting"], "detector.setting", 2, 2)
@@ -970,10 +977,6 @@ def _detectors(
                     raise ValueError(f"detector.on_click.{name} must be absorb or pass")
                 table[families[str(name)]] = CLICK_COUPLINGS.index(str(coupling))
             on_click = tuple(table)
-        # bit-law-v1, point 14: there is no lottery. The seed is accepted so that
-        # old worlds parse, and never read: the mark's counter starts at 0.
-        if "seed" in obj:
-            _integer(obj["seed"], "detector.seed", 0)
         result.append(
             DetectorMark(
                 _address(obj["position"], "detector.position", 0),
@@ -1009,6 +1012,10 @@ def _external_bodies(
     }
     rule_names = {rule.name: index for index, rule in enumerate(rules)}
     for index, raw in enumerate(_array(value, "external_bodies", MAX_EXTERNAL_BODIES)):
+        if isinstance(raw, dict) and "field" in raw:
+            raise ValueError(
+                "an external body radiates its own family's shadows (bit-law-v1): there is no field key"
+            )
         obj = _object(
             raw,
             "external body",
@@ -1027,10 +1034,6 @@ def _external_bodies(
             },
             {"position", "family", "amount"},
         )
-        if "field" in obj:
-            raise ValueError(
-                "an external body radiates its own family's shadows (bit-law-v1): there is no field key"
-            )
         thing = _integer(obj.get("thing", thing_base + index + 1), "external body thing", 1)
         if thing >= MAX_THING_ID:
             raise ValueError("an external body's thing id stays below the id bound")
@@ -1442,10 +1445,26 @@ def _emissions(
                 "polarization",
             }
             | ({"budget"} if schema_version == 2 else set()),
-            {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
+            {"field"} | ({"budget"} if schema_version == 2 else set()),
         )
         if "amount" not in obj and "dissolve" not in obj:
             raise ValueError("emission requires an amount unless it dissolves")
+        emitted_index = _index(obj["field"], names, "emission.field")
+        if spatial[emitted_index].rays:
+            # A source is a thing that spends its content (node-is-ports-v1,
+            # Highlights 5.4 point 22): an emission on a ray family is paid from the
+            # emitter's content of that family and recoils into the emitter's
+            # momentum, the world's momentum field, which the type holds; the
+            # funded/recoil_field/source form of the lamp is retired.
+            if {"source", "recoil_field", "funded"} & obj.keys():
+                raise ValueError(
+                    "emission.source, recoil_field and funded were retired by node-is-ports-v1 "
+                    "(2026-09-18): a source is a thing that spends its content, so an emission on a "
+                    "ray family is paid from the emitting type's content and recoils into its "
+                    "momentum field; nothing is sourced"
+                )
+        elif "source" not in obj:
+            raise ValueError("emission requires source")
         polarization = POLARIZATION_NONE
         if "polarization" in obj:
             # A lamp declares the polarization of what it emits (ray-polarization-v1).
@@ -1455,7 +1474,7 @@ def _emissions(
             polarization = _polarization_value(
                 obj["polarization"], "emission.polarization", spatial[emitted]
             )
-        source = _boolean(obj["source"], "emission.source")
+        source = False if spatial[emitted_index].rays else _boolean(obj["source"], "emission.source")
         kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "emission")
         kind = kinds[0]
         index = _index(obj["field"], names, "emission.field")
@@ -1466,7 +1485,23 @@ def _emissions(
                 raise ValueError("funded emission requires the emitting type to own the emitted field")
             if spatial[index].rays and schema_version == 2:
                 raise ValueError("funded ray emission requires schema_version 1")
-        if "recoil_field" in obj:
+        if spatial[index].rays:
+            # The emitter's momentum (node-is-ports-v1): the world's one signed
+            # three-component conserved field, held by the emitting type.
+            octants = {item.field for item in spatial}
+            vectors = [
+                i
+                for i, item in enumerate(fields)
+                if item.components == 3 and item.signed and item.conserved and i not in octants
+            ]
+            if len(vectors) == 1:
+                if vectors[0] not in owned:
+                    raise ValueError(
+                        "an emitting type holds the world's momentum field: a thing's momentum is a "
+                        "property of the thing (node-is-ports-v1)"
+                    )
+                recoil = vectors[0]
+        elif "recoil_field" in obj:
             if source:
                 raise ValueError("recoil_field requires a funded emission (source: false)")
             recoil = _index(obj["recoil_field"], _names(fields), "emission.recoil_field")
@@ -1548,9 +1583,10 @@ def _emissions(
                     raise ValueError(
                         "kerengonen_mirror requires the heading sequence to contain every mirror image"
                     )
-            if "recoil_field" not in obj:
+            if recoil is None:
                 raise ValueError(
-                    "kerengonen_mirror requires a recoil_field: a mirror takes the momentum it reverses"
+                    "kerengonen_mirror requires the emitter's momentum field: a mirror takes the "
+                    "momentum it reverses"
                 )
         fixed_heading: int | None = None
         if "heading" in obj:
@@ -2453,7 +2489,7 @@ def _initial_field(
                         _integer(ray.get("phase", 0), "initial_field ray phase", 0),
                         _integer(ray.get("sign", 0), "initial_field ray sign", -1),
                         _integer(ray.get("owner", 0), "initial_field ray owner", 0),
-                        _integer(ray.get("steps", 1), "initial_field ray steps", 0),
+                        _integer(ray.get("steps", -1), "initial_field ray steps", -1),
                     )
                 )
         result[families[str(name)]] = InitialFieldDefinition(fill, tuple(rays))

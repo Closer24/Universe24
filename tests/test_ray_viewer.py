@@ -68,8 +68,6 @@ def emission(name, amount, heading, phase):
         "field": "quanta",
         "amount": amount,
         "denominator": 1,
-        "source": False,
-        "recoil_field": "momentum",
         "heading": heading,
         "kerengonen_phase": phase,
     }

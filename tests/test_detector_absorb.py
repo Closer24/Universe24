@@ -21,12 +21,14 @@ import pytest
 from event_universe import Simulation
 from event_universe.configuration_validation import validate_configuration
 from event_universe.core.spatial_state import (
+    BIT_SHADOW,
     BIT_THING,
     CLICK_ABSORB,
     CLICK_DEFAULT,
     CLICK_PASS,
     DetectorMark,
     Ray,
+    Resident,
     click_coupling,
     detector_absorb,
 )
@@ -128,8 +130,6 @@ def document(detectors, ticks=TICKS):
                 "field": "quanta",
                 "amount": AMOUNT,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "heading": HEADINGS[0],
                 "kerengonen_phase": 0,
             }
@@ -195,7 +195,7 @@ def test_a_click_absorbs_a_thing_by_default(tmp_path):
     assert declared[B].on_click == (CLICK_PASS,) and declared[B].click_keys == 1
     assert declared[C].on_click == (CLICK_ABSORB,)
     assert declared[E].on_click == (CLICK_ABSORB,)
-    assert declared[A].counter == () and declared[A].momentum == ZERO
+    assert declared[A].resident.things == () and declared[A].resident.momentum == ZERO
     events = []
     world = Simulation(
         initial,
@@ -223,19 +223,23 @@ def test_a_click_absorbs_a_thing_by_default(tmp_path):
             "absorbed": (0,),
             "absorbed_by_marks": (taken,),
         }
-        assert line("things", "quanta", ledger)["absorbed_by_marks"] == (taken,)
+        assert ledger["real"]["quanta"]["absorbed"] == (taken,)
         assert line("fields", "momentum", ledger)["current"] == (-taken, 0, 0)
         assert line("fields", "momentum", ledger)["absorbed_by_marks"] == (taken, 0, 0)
-        assert world.things_content() == AMOUNT - taken and world.shadows_content() == 0
+        assert world.real_content() == AMOUNT - taken and world.shadow_content() == 0
     # (b) One click, C's, naming the thing and what it absorbed; C's counter and
     # momentum; A, B and E untouched.
     assert events == [
         event("detector_click", 4, C, port=1, family="quanta", amount=AMOUNT, bit=1, owner=1, absorbed=4)
     ]
-    assert mark_at(world, C).counter == (AMOUNT,) and mark_at(world, C).momentum == (AMOUNT, 0, 0)
-    assert mark_at(world, C).things == (1,)
+    # The resident thing of C (node-is-ports-v1): the thing absorbed, its momentum
+    # and its owner; the marks A, B and E hold nothing.
+    resident = mark_at(world, C).resident
+    assert (resident.things, resident.shadows, resident.momentum) == ((AMOUNT,), (0,), (AMOUNT, 0, 0))
+    assert resident.owners == (1,)
     for position in (A, B, E):
-        assert mark_at(world, position).counter == () and mark_at(world, position).momentum == ZERO
+        assert mark_at(world, position).resident.things == ()
+        assert mark_at(world, position).resident.momentum == ZERO
     assert not any(node.rays and any(node.rays) for node in world.inventory_view().nodes)
     # (c) The runner: the marks' totals and momentum, the marks with their counters.
     path = tmp_path / "absorb.json"
@@ -244,7 +248,13 @@ def test_a_click_absorbs_a_thing_by_default(tmp_path):
     metadata = json.loads((tmp_path / "absorb" / "run.json").read_text(encoding="utf-8"))
     assert metadata["detector_mark_totals"] == {"quanta": [AMOUNT], "momentum": [AMOUNT, 0, 0]}
     assert metadata["detector_mark_momentum"] == [AMOUNT, 0, 0]
-    assert [item["counter"] for item in metadata["detector_marks"]] == [{}, {}, {"quanta": AMOUNT}, {}]
+    assert [item["resident"]["real"] for item in metadata["detector_marks"]] == [
+        {},
+        {},
+        {"quanta": AMOUNT},
+        {},
+    ]
+    assert metadata["detector_marks"][2]["resident"]["owners"] == [1]
     assert metadata["conserved_at_every_completed_tick"]
     assert metadata["local_conservation"]["status"] == "passed"
 
@@ -264,7 +274,7 @@ def test_a_thing_passes_with_the_bit_when_the_mark_says_so(tmp_path):
     assert events == [
         event("detector_click", 4, C, port=1, family="quanta", amount=AMOUNT, bit=1, owner=1)
     ]
-    assert mark_at(world, C).counter == () and mark_at(world, C).momentum == ZERO
+    assert mark_at(world, C).resident.things == () and mark_at(world, C).resident.momentum == ZERO
     (walking,) = [
         ray for node in world.inventory_view().nodes for ray in (node.rays[0] if node.rays else ())
     ]
@@ -293,7 +303,8 @@ def test_a_thing_passes_with_the_bit_when_the_mark_says_so(tmp_path):
     assert metadata["detector_mark_totals"] == {"quanta": [0], "momentum": [0, 0, 0]}
     assert metadata["detector_mark_momentum"] == [0, 0, 0]
     assert all(
-        item["counter"] == {} and item["momentum"] == [0, 0, 0] for item in metadata["detector_marks"]
+        item["resident"]["real"] == {} and item["resident"]["momentum"] == [0, 0, 0]
+        for item in metadata["detector_marks"]
     )
     assert all(ledger["fields"]["quanta"]["absorbed_by_marks"] == [0] for ledger in metadata["audit"])
     assert (
@@ -320,8 +331,10 @@ def test_the_click_keys_are_validated_and_the_helpers_are_exact():
     with pytest.raises(ValueError, match="absorb or pass"):
         DetectorMark(A, 1, 1, on_click=(5,))
     with pytest.raises(ValueError, match="nonnegative"):
-        DetectorMark(A, 1, 1, counter=(-1,))
-    assert DetectorMark(A, 1, 1) == DetectorMark(A, 1, 1, 0, (), 0, (), ZERO, ())
+        Resident(things=(-1,), shadows=(0,))
+    with pytest.raises(ValueError, match="resident thing"):
+        DetectorMark(A, 1, 1, resident=())
+    assert DetectorMark(A, 1, 1) == DetectorMark(A, 1, 1, (), 0, Resident())
     initial = parse_initial_state(document(marks()))
     (quanta,) = initial.spatial_fields
     plain = DetectorMark(A, 1, 1)
@@ -329,10 +342,15 @@ def test_the_click_keys_are_validated_and_the_helpers_are_exact():
     declared = DetectorMark(A, 1, 1, on_click=(CLICK_PASS,), click_keys=1)
     assert click_coupling(declared, 0, quanta) == CLICK_PASS
     assert CLICK_DEFAULT == -1
-    # The absorption: the counter sized on the first take, the momentum amount x
-    # heading, or the register where a push set one, added exactly.
+    # The absorption into the resident thing (node-is-ports-v1): its things line
+    # sized on the first take, the momentum amount x heading, or the momentum a
+    # push set, added exactly; a shadow home to it goes on its shadows line.
     taken = detector_absorb(plain, 0, (Ray(2, ZERO, 3), Ray(5, ZERO, 1, momentum=(1, -1, 0))), quanta, 1)
-    assert (taken.counter, taken.momentum) == ((4,), (1, 2, 0))
+    assert (taken.resident.things, taken.resident.momentum) == ((4,), (1, 2, 0))
     again = detector_absorb(taken, 0, (Ray(0, ZERO, 4, detector=BIT_THING),), quanta, 1)
-    assert (again.counter, again.momentum) == ((8,), (5, 2, 0))
-    assert again.position == A and again.on_click == () and again.seed == 0
+    assert (again.resident.things, again.resident.momentum) == ((8,), (5, 2, 0))
+    home = detector_absorb(
+        again, 0, (Ray(1, ZERO, 2, detector=BIT_SHADOW, outbound=0, momentum=(-1, 0, 0)),), quanta, 1
+    )
+    assert (home.resident.things, home.resident.shadows, home.resident.momentum) == ((8,), (2,), (4, 2, 0))
+    assert again.position == A and again.on_click == () and again.resident.owners == (0,)

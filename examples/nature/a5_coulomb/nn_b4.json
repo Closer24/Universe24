@@ -330,28 +330,24 @@
    "field": "neutral_a",
    "amount": 64,
    "denominator": 1,
-   "source": false,
    "heading": [
     1,
     0,
     0
    ],
-   "kerengonen_phase": 0,
-   "recoil_field": "momentum"
+   "kerengonen_phase": 0
   },
   {
    "type": "lamp_b",
    "field": "neutral_b",
    "amount": 64,
    "denominator": 1,
-   "source": false,
    "heading": [
     -1,
     0,
     0
    ],
-   "kerengonen_phase": 0,
-   "recoil_field": "momentum"
+   "kerengonen_phase": 0
   }
  ],
  "seeds": [

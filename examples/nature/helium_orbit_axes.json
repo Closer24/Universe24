@@ -292,14 +292,12 @@
       "field": "electron",
       "amount": 256,
       "denominator": 1,
-      "source": false,
       "heading": [
         0,
         1,
         0
       ],
-      "kerengonen_phase": 0,
-      "recoil_field": "momentum"
+      "kerengonen_phase": 0
     }
   ],
   "seeds": [
