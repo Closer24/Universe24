@@ -59,7 +59,10 @@ each of the half-axes +Y, -Y, +Z and -Z (a mirror body's token heads +X and
 lanes-v1 refuses a light thing leaving a mirror on +X, so no cavity lies on
 the X axis), each a light thing between two mirror bodies (`mirror`, the
 coupling `reflect`: the arriving light leaves on the reversed heading) at r - 1
-and r + 1 on the half-axis, launched from the centre at r outward at tick 0. It
+and r + 1 along the half-axis, the cavity one Link aside of the axis on X (a
+mirror on the axis returns the star's shadows straight to the source, whose
+Port holds two phases, and the prefill refuses the third; the Euclidean r is
+sqrt(r^2 + 1)), launched from the centre at r outward at tick 0. It
 alternates between the centre and a mirror and reads the field at the centre on
 every other interval; a push along its axis turns it nowhere or reverses it
 (it stays), a transverse push (a shadow arriving on a side Port) turns it out
@@ -84,7 +87,7 @@ is the same without the star, `bend_open_b3_6` the m256 w = 1 amount world
 on an open board.
 
 The separating run (`sep_{option}`, DERIVATIONS.md section 37 (ix) and 43 (x)):
-a source body A of the family `source` (X = 4096, fill 14: the whole quanta
+a source body A of the family `source` (X = 1024, fill 14: the whole quanta
 of a weaker source never reach B, the probe above) at (16, 4, 10) and a
 receiver B, a light thing in a Y cavity at (36, 24, 30), on the body diagonal
 through both, the mass M (X = 7, S = 42, GM = 6.7, the S = 40 of section 37)
@@ -130,7 +133,13 @@ BEND_TICKS = 100
 CLOCK_TICKS = 300
 SEP_TICKS = 150
 BOUNDARY = "periodic"
-# The cavities per batch: (axis, r) on the Y and Z half-axes.
+# The cavities per batch: (axis, r) on the Y and Z half-axes; every cavity's
+# centre is offset by one Link on X (`CAVITY_OFFSET`), so that its mirrors
+# reflect the star's shadows along a line that passes the star one Link
+# aside: a mirror on the axis returns them straight to the source, whose
+# Port holds two phases, and the prefill refuses the third (the Euclidean r
+# of the cavity is sqrt(r^2 + 1)).
+CAVITY_OFFSET = (1, 0, 0)
 BATCHES = {
     "a": (((0, 1, 0), 3), ((0, -1, 0), 5), ((0, 0, 1), 8), ((0, 0, -1), 5)),
     "b": (((0, 1, 0), 4), ((0, -1, 0), 6), ((0, 0, 1), 10), ((0, 0, -1), 6)),
@@ -138,7 +147,7 @@ BATCHES = {
 # The separating run: A, B and the mass, DERIVATIONS.md section 37 (ix).
 SEP_SOURCE = (16, 4, 10)
 SEP_RECEIVER = (36, 24, 30)
-SEP_SOURCE_X, SEP_SOURCE_FILL = 4096, 14
+SEP_SOURCE_X, SEP_SOURCE_FILL = 1024, 14
 
 
 def flux(mass):
@@ -325,7 +334,7 @@ def clock_world(name, *, mass, wait_name, reading, batch, star_on=True, boundary
     at its r from the star, open on its four sides."""
     kinds, emissions, seeds, bodies = [], [], [], []
     for index, (axis, r) in enumerate(BATCHES[batch]):
-        centre = [STAR[i] + axis[i] * r for i in range(3)]
+        centre = [STAR[i] + axis[i] * r + CAVITY_OFFSET[i] for i in range(3)]
         kind, emission, seed, mirrors = cavity(index, centre, axis)
         kinds.append(kind)
         emissions.append(emission)
