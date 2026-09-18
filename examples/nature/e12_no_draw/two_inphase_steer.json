@@ -379,16 +379,6 @@
     {
      "field": "proton",
      "amount": {
-      "table": [
-       8,
-       7,
-       4,
-       1,
-       0,
-       1,
-       4,
-       7
-      ],
       "of": "sum",
       "index": "phase_difference"
      },

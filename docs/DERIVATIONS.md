@@ -26,7 +26,7 @@ is named. **Different law**: the rules give a definite law of another form,
 stated, with the run that would show the difference. **Not reached**: the
 rules as declared do not determine the quantity, and what would is stated
 plainly. **New** marks a formula the lattice gives that has no counterpart in
-known physics. The summary table is [section 15](#15-the-verdicts-in-one-table).
+known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts).
 
 ## 0. Units, notation and the operator
 
@@ -1225,7 +1225,7 @@ test it; each is marked new: not in known physics.
   fluxes; the "declared amount" option of Highlights 5.4 is where charge
   would become independent of content.
 
-## 15. The verdicts in one table
+## 15. The verdicts in one table (round 1; see section 21 for round 2)
 
 | Law | Verdict | Constant or form derived | Run that decides |
 | --- | --- | --- | --- |
@@ -1281,3 +1281,965 @@ the simple walk; the harmonic identity Σᵢ∂ᵢ⁴ r = −15K₄/r³; the ret
 fraction 0.176 and the density coefficient in a 97³ iteration of R1–R2; the
 DDA staircase 9, 15, 20, 24; z₉₀ = 0.5405; the bending integral 2/b; the
 closure enumeration of section 12. None of it ran the engine.
+
+## 17. Round 2: the phase-steered spread as an operator
+
+Round 2 (2026-09-18, after the model owner's decisions of Highlights 5.4
+points 16 to 21, PR #273) derives from four amended rules. **R3′, one
+shadow set per thing.** A thing of content M has one standing set of
+shadows of size X = ξM (ξ declared once, for every family), each shadow
+carrying its owner's id, its owner's charge q and content M; there is no
+declared X for charge (point 18 restated). **R4′, the two readings**
+(point 16): a thing B meeting a shadow of A takes, for the mass reading,
+Δp = M_B · a h (σ = −1, always toward A), and for the charge reading
+Δp = (q_A / M_A) · q_B · a h with the sign of q_A q_B (+ away). **R6′,
+one Link per interval** (point 21): every thing moves one Link per
+interval; its register sets the direction only (the DDA of section 3,
+v = p/|p|₁, for every thing; the accumulator law v = p/M of section 3 is
+superseded). **R7′, the clock** (point 19): a thing at rest advances its
+phase by M/K turns of the circle per interval, K one universal constant
+(N M/K steps per interval, an integer or a register); light and shadows
+have no clock; a shadow carries its owner's phase at release. **R8, the
+steered spread** (point 17): at a Node the shares of one owner that arrive
+on two or more headings combine by the coherence rule (the amount A = Σ_h
+a_h unchanged, the phase that of Σ_h a_h e^{iφ_h}); the phase difference δ
+between the directions they came from steers the combined content by the
+Born table of 3.3, cos²(δ/2) : sin²(δ/2) as ⌊A·T[δ]/N⌋ with the remainder
+owned by the rest Port; shares arriving in one phase from behind continue
+forward, shares of differing phase are sent apart; a share meeting no other
+share of its owner keeps the fixed split R1. Sections 1 to 16 stand as
+round 1; where a round-1 formula changes under these rules, section 21
+says so.
+
+**What R8 leaves to declare.** Four things, none derivable, each named
+where it enters: (D1) the candidate Ports of a pair are its two
+continuations (the words "continue forward" say so; the ring's corner of
+section 12 uses the two entry Ports instead); (D2) for a pair of unequal
+amounts the table splits the *sum* by δ alone, whereas the coherence rule's
+own number, |√a₁e^{iφ₁} + √a₂e^{iφ₂}|², equals A cos²(δ/2) only for
+a₁ = a₂ (derived: (2a + 2a cos δ)/(4a) = cos²(δ/2)); (D3) three or more
+arrivals; (D4) where "apart" is. The completion used below, C1: the share
+C² = |Σ_h a_h e^{iφ_h}|² / A² of every arrival continues on its own heading
+(C² = cos²(δ/2) for an equal pair, the table's entry), and the rest
+(1 − C²) a_h leaves through the four headings transverse to h, equally.
+Every statement marked **(exact)** below holds for any completion that has
+in-phase arrivals continue; the rest is C1's.
+
+**The state.** As section 0, plus one phase per (Node, heading) and, for
+the derivation, the age s of a share: the number of Links it has walked
+since its release. Since a shadow's phase is its owner's at release and
+does not advance (R7′), a share of age s at tick t carries φ = φ₀ + ρ(t − s)
+with ρ = M/K the owner's rate; so at a Node **the phase difference between
+two shares of one owner is ρ times their age difference (exact)**, and on
+the lattice every step changes |x|₁ by ±1, so s ≡ |x|₁ − |x₀|₁ (mod 2): ages
+at one Node differ by even numbers, δ ∈ {0, 2ρ, 4ρ, …} turns.
+
+**Exact facts, before any completion.** (E1) Continuity and Gauss's law of
+section 1 hold unchanged: they used only that the split conserves amount,
+and R8 conserves it at every Node. (E2) For a single release every share
+has the same age at every tick, so δ = 0 at every meeting: the steering is
+the identity and only the lone split acts. (E3) On the light-cone edge
+|x|₁ = t of any release, whatever the owner's rate, every arrival came by a
+monotone path of length t, so all are in phase: the front is the identity's
+front. (E4) An owner of rate 0 (a light thing's mass shadows; any set whose
+profile was given with one phase) or of 2ρ ≡ 0 (mod 1) is steered as if
+there were no steering. (E5) A thing meeting its own shadow is home (R5):
+no push and no steering between a thing and its own field.
+
+**(ii) A point release of one phase: the tube theorem (exact under "in
+phase → continue").** Six lone shares X/6 leave the origin; the axis tip
+(t, 0, 0) is reached at tick t by one path only, so it is lone at every
+tick and keeps (6/11)^t of X/6 on the axis; of what it sheds, 4/11 goes to
+(t, ±1, 0), (t, 0, ±1), Nodes of the edge |x|₁ = t + 1, where each share
+meets the in-phase content of the line already there and continues, and
+1/11 goes back into the interior. So the share of a release that stays on
+the light-cone edge for ever is
+
+```text
+1 − (1/11) Σ_{t≥0} (6/11)^t = 1 − (1/11)/(1 − 6/11) = 4/5      (exact),
+```
+
+and it lives on lines parallel to the axes in the three coordinate planes
+through the source: the line y = j (x ≥ 1, z = 0) carries (1/11)(6/11)^{j−1}
+X/6 on heading +x, constant in x, and nothing leaves the planes (each tip
+feeds only the four Nodes of its own coordinate planes). My iteration of C1
+(45³, 20 ticks): the edge fraction 0.9091, 0.8595, 0.8325, …, 0.800002 at
+t = 20; the coordinate planes 1.000000 at every tick; the line y = 1 at
+1/66 = 0.015152 of X at every tick. The front moves at c on the
+octahedron |x|₁ = t, but its content is six tubes of e-folding width
+1/ln(11/6) = 1.65 Links in the coordinate planes, the flux through a
+shell S_eff on a fixed set of lines: the field per Node on a tube does not
+fall with r, and off the planes it is zero. The remaining 1/5 (the tips'
+backward shares) is the diffusive residue: in the mean field it meets
+in-phase content and continues; in the engine's integers it is lone
+wherever fewer than two whole quanta arrive, and there it spreads by R1
+with D = 4/9 as in section 2. This is E6's field on lines (Highlights 3.5,
+rejected on 2026-09-17), returned by the identity at δ = 0.
+
+**(i) A plane front of one phase.** Content on heading +x at every Node of
+a plane: each share is lone at the next plane (6/11 forward, 1/11 back,
+4/11 into the plane), and in the plane the four transverse arrivals at each
+Node are in phase and continue sideways for ever. The transmitted front is
+the lone beam (6/11)^x; the rest is left in planes of sideways streams. A
+front of one phase has no phase gradient to read (k = 0), and the in-phase
+rule carries content along the *arrival* headings, not along the front's
+normal: Huygens' cancellation of the sideways wavelets needs signed
+amplitudes, which amounts do not have. **Not a propagating front.**
+
+**(iii) A continuous release from a thing with a clock.** Shares released
+at successive ticks have ages that differ, so the field carries the
+pattern φ(x, t) = φ₀ + ρ t − ρ s(x), and on the tubes and on every edge
+s = |x|₁: the phase is constant on the L1 shells |x|₁ = const, with
+
+```text
+λ = 1/ρ = K/M Links   (N/r Links for a step rate r = N M/K),
+```
+
+the shell spacing along an axis, λ/√2 and λ/√3 in Euclidean distance
+along the (110) and (111) diagonals. In the interior, shares of ages s and
+s + 2m meet with δ = 2mρ turns. Under C1 an old share of amount ε at a Node
+of young content A (phase difference δ) has 1 − C² = 2Aε(1 − cos 2πδ)/(A + ε)²
+(derived from |A + εe^{iδ}|²), so it scatters about 2ε(1 − cos 2πδ) of the
+young content per Node it passes; half of what is scattered moves inward
+and is old at its next Node, so one old quantum walking home over s Links
+breeds about (1 − cos 2πδ)·s old quanta. The pure transport state (all
+shares outward, in phase) is therefore a fixed point of C1 that is stable
+only out to
+
+```text
+r_coh ≈ 1/(1 − cos 2πδ) ≈ 2/(2π δ)² = λ² / (8π²) Links    (δ = 2ρ = 2/λ),
+```
+
+and beyond r_coh the field mixes. Under the declared table on the sum (D2)
+one quantum of the wrong phase steers sin²(πδ) of the whole Node's content,
+the gain is ∝ A/ε, and the transport state is unstable at every r. In the
+mixing regime the steering acts as transverse scattering with a fraction p
+per step (p = the steady mean of 1 − C², self-consistent, not derived
+here), the effective table is [1 − p, 0, p/4, p/4, p/4, p/4], persistence
+1 − p, and by section 2's formula
+
+```text
+D′(p) = (1/6)·(2 − p)/p Link² per interval     (D′ = 4/9 at p = 6/11; → ∞ as p → 0),
+```
+
+with the far field diffusive again. **The continuum limit** is therefore
+not one equation: for r < r_coh (and for any single release, E2) it is the
+transport equation ∂_t f_h + h·∇f_h = 0 on the six headings (symbol
+e^{−ik·h}, six undamped modes with ω_h = k·h, dispersionless, anisotropic:
+the content is carried on the axis families), fed by the lone split as a
+source at the edges of the support; for r > r_coh it is the diffusion
+equation with D′(p); and it is the wave equation in neither: no completion
+of R8 on amounts gives ω = c|k| with an isotropic cone, since that needs
+the amplitudes' signs (section 6's obstruction, now for the steered map: at
+δ = 0 it is a non-negative map, and E3 puts every front at δ = 0). The
+class of initial data that propagates ballistically: a release whose
+shares meet only shares of their own age (single releases; the edge;
+the coherent region of a slow clock).
+
+**t₉₀ under R8.** On a tube, for a switched-on emitter, the content at a
+Node is constant once the front has passed: t₉₀ = r + O(1) (exact). Off the
+planes and for the residue: t₉₀ = 1.925 r² of the residue's own push
+(section 6). In the mixing regime: t₉₀ = 0.856 r²/D′(p) = 5.13 p r²/(2 − p)
+for r ≫ 1/p, and ≈ r for r ≪ 1/p. So the model owner's t₉₀ ∝ r is reached
+on the tubes and within r_coh, and ∝ r² beyond. Run: A5s Run 2 under R8
+with the push read at r = 24 and 32 on an axis, on a (110) diagonal in the
+plane, and at (24, 12, 12) off the planes.
+
+**Two slits.** Shadows of one owner through two slits at (0, ±d/2, 0) reach
+the screen Node (L, y, 0) with ages L + |y ∓ d/2|, so δ(y) = ρ·(|y − d/2| −
+|y + d/2|) = −2ρ y for |y| ≤ d/2 and ∓ρ d outside: the steering at the
+screen Nodes sends cos²(2π ρ y) of the combined content forward and the
+rest apart, a fringe pattern of period
+
+```text
+Δy = 1/(2ρ) = λ/2 Links,   in the strip |y| < d/2 only, independent of L and of d,
+```
+
+against optics' λL/d everywhere. A mark counts nothing of a field (law of
+the bit, point 6): the fringes are read only as the push on a row of things
+behind the slits. **Two slits for things:** a thing meets its own shadows
+as home (E5), so one thing at a time shows the geometric shadow of its slit
+and no fringes; the Born steering acts only where two things of one family
+stand at one Node in one interval, so the fringes of things scale with the
+coincidence rate. **Different law**; the run is A1 with one electron at a
+time against many.
+
+**Verdict.** The front at c: **reached** as the edge of the tubes (exact),
+carrying 4/5 of a release on the coordinate planes; the wave equation:
+**not reached** (transport inside r_coh, diffusion with D′(p) outside);
+t₉₀ = r on the tubes: **new**; t₉₀ ∝ r² beyond r_coh: **stands**; the
+fringe law λ/2 in the strip: **new**; no self-interference of a thing:
+**different law** (A1).
+
+## 18. Round 2: the field of a thing with a clock
+
+**Rules used.** R7′ (rate = M/K), R8, R4′, R5, hypothesis 12, section 17.
+
+**The pattern and its dictionary.** By section 17 (iii) the shadows of a
+thing of content M carry φ = φ₀ + (M/K)(t − |x − x₀|₁): a pattern whose
+spatial period is fixed, λ = K/M Links on L1 shells, and whose phase at a
+fixed Node turns at the thing's rate. The energy–frequency identity: the
+clock rate is ν = M/K turns per interval and the amount is E = M (section
+7), so E = K ν for every thing at rest. **Planck's relation from an
+emission.** A meeting whose table puts ΔE on a light thing takes ΔE from
+the group (the invariant `energy`, section 7): the group's rate falls from
+M/K to (M − ΔE)/K, and the beat between the emitter's clock before and after
+is Δν = ΔE/K. The light thing has no clock (R7′); its frequency is read
+only by interference between successive emissions (Highlights 3.3), that
+is, against the emitter's clock, and what the emitter's clock lost is
+exactly the light's amount over K:
+
+```text
+ΔE = K · Δν        (E = h ν with h = K quanta·interval, exact),
+```
+
+a consequence of conservation of amount plus rate ∝ content, not a new
+rule; and E = m c² and E = h ν are the same identity, since ν = M/K. With
+that h, the Compton wavelength is h/(m c) = K/M Links = λ: **the field's
+wavelength is the Compton wavelength exactly**, for every K. What fixes K:
+nothing in the rules; K = N makes one quantum advance one step per
+interval, which is hypothesis 12's m₀ = h/(N δt c²) and round 1's first
+choice in section 10 (h = N); in physical units K = h/(E₁ δt) with E₁ the
+energy of one quantum. **Reached** (E = hν as an identity; λ = h/(mc)).
+
+**What the steering does to the pattern.** On the tubes and on every edge
+it holds exactly (E3); in the interior it is what steers: under C1 the
+pattern is self-consistent (no scattering) out to r_coh = λ²/(8π²) Links
+and self-scattering beyond, so a heavy thing (small λ) has a field that
+mixes within a Link and a light thing (large λ) a coherent field far out;
+under the sum table (D2) it scatters everywhere. Neither focuses.
+
+**Two things with clocks.** R8 combines shares of one owner only; shares of
+different owners cross. R4′ reads amount × heading × (M_B or q_A q_B/M_A)
+and no phase. So A's phase pattern is invisible to B: no beat, no standing
+pattern between them, no potential with a length scale; the Compton length
+is present in every field and read by nothing that moves a thing. A beat at
+|ρ_A − ρ_B| would appear only under a cross-owner steering, which point 17
+does not declare. **Not reached** (no bound-state condition from this
+alone; hypothesis 12 / A10 in the new form: none).
+
+**Loops under rate ∝ content.** A ray of amount a on a ring of length L
+advances a/K turns per Link; its phase returns after K/a intervals per
+turn, the ring after L, the state after T = L N/gcd(L·N a/K, N) intervals;
+nothing at a corner reads the absolute phase (section 12), so L a/K ∈ ℤ is
+read by nothing. The Port form closes for every amount at every L. The Born
+form reads d = φ_R − φ_L: for equal amounts the two senses have equal rates
+and d is constant, so section 12's result stands (every even content at
+d = N/4, 3N/4); for the alternating orbits (a₁, a₂) that swap senses at
+every corner, d drifts by (a₁ − a₂)·g/K turns between corners g Links apart
+and back by the same between the next two, so the orbit closes only if
+T[d₀] = T[d₀ + Δ] with Δ = (a₁ − a₂) g N/K steps: Δ ≡ 0 or Δ ≡ N − 2d₀
+(mod N), a discrete condition on the *difference* of the amounts, not on
+the content. The ring size is constrained as before (presence: (a + b)/gcd
+rays per sense) and by g N (a₁ − a₂)/K being an integer. **No ladder of
+contents appears**: the members are every even content (Born, equal
+senses) and every content (Port), whose ratios are all rationals, so none
+of proton/electron 1836.153, neutron/proton 1.001378, muon/electron 206.768,
+tau/electron 3477.2, π±/electron 273.13, π⁰/electron 264.14 is selected by
+any K, N or ring; the alternating orbits' condition on a₁ − a₂ is the one
+new integer equality and its enumeration with rates a/K (A10's count over
+the corner tables, section 12's procedure) is open, not made here. The rule
+a ladder needs: a meeting that reads a thing's absolute phase advance over
+a closed path against a clock that did not walk it, e.g. a push that reads
+a returning shadow's phase (age s) against its owner's, δ = M s/K; closure
+M s/K ∈ ℤ gives s = m λ, the L1 length of the path a multiple of the
+Compton wavelength (de Broglie's condition), and then A10 counts the (M, s)
+pairs. **Not reached.**
+
+**Verdict.** E = hν with h = K: **reached** as an identity of R7′. λ = h/(mc):
+**reached** exactly. A length scale in the force: **not reached** (nothing
+reads the phase in a push). Ladder: **not reached** (one new condition on
+amount differences, enumeration open, A10).
+
+## 19. Round 2: Coulomb and Newton from one shadow set and two readings
+
+**Rules used.** R3′, R4′, R5, R6′, sections 1, 5 (the far field J = ζ Φ,
+Φ = S/(4πr²), ζ = 11/8 for a diffusive field and 1 for a purely radial
+transport field; the product and equivalence laws below hold for any ζ).
+
+**The flux.** A's set has X_A = ξ M_A shadows; the flux its profile carries
+is S_A = κ X_A = κ ξ M_A, κ the profile's flux per unit set (2D/R² for the
+diffusive profile of section 5; X/(2R) for tubes returning from a wall at
+R). Every force constant is written in κξ.
+
+**Coulomb.** B at distance r reads A's shadows by the charge reading:
+Δp_B = (q_A/M_A) q_B · J_A(B) = (q_A/M_A) q_B · ζ κ ξ M_A /(4π r²) r̂ =
+ζ κ ξ q_A q_B/(4π r²) r̂: **M_A cancels**. B's own shadows push A by the
+same law with A ↔ B, ζκξ q_B q_A/(4π r²), and return the recoil to B on the
+schedule of section 4. Both halves are equal (the flux ∝ M_A, the reading
+∝ 1/M_A), so, once the returns are home,
+
+```text
+F_B = k_C q_A q_B / r² r̂_AB,   F_A = −F_B,   k_C = ζ κ ξ /(2π),   a_B = F_B / M_B:
+```
+
+the product law, the sign rule (like charges apart), symmetric between the
+two bodies at equal distance, independent of both masses in the force and
+inverse in the pushed mass in the acceleration. **Reached exactly** (the
+constant an input through ξ, κ). Note on the declared-X variant (the
+superseded point 18): with X per family and a reading × q_B it would have
+given F ∝ |q_B| X_A + |q_A| X_B, a product only if X ∝ |q| across families,
+and a third law by halves only then.
+
+**Newton.** The mass reading: Δp_B = M_B · ζ κ ξ M_A/(4π r²), and the return
+of B's shadows the same, so
+
+```text
+F_B = −G M_A M_B / r² r̂_AB,   G = ζ κ ξ /(2π) = k_C,   a_B = −G M_A / r² r̂_AB   (any M_B, any structure):
+```
+
+**the equivalence principle exact** (round 1's g = N/M is gone: the reading
+is per thing times its content). G and k_C are one number: the ratio of
+the electric to the gravitational push between two things is q_A q_B/(M_A
+M_B) in lattice units, exactly; for two electrons to have nature's
+4.17·10⁴² the electron's content must be M_e = |q_e|·2.04·10²¹ quanta (6.1·10²¹
+at q = 3 in thirds of e). **New**, testable by A5s and A7 on one board with
+the same two bodies (the ratio of the registers is q²/M², no fit).
+
+**Light bending.** A thing of content p at speed 1 (R6′: every thing)
+passes at impact parameter b; the mass reading gives Δp_⊥ = p · ζ S_M/(2π b)
+= p G M/b (section 8's integral 2/b), and its register has |p|₁ = p, so
+
+```text
+α = G M /(c² b)   on the pass, for every thing, achromatic;
+```
+
+the light thing's own mass shadows (ξ p of them) push M by the same law and
+return the recoil along the trace (R5), up to another G M/b delivered late,
+so α_total ∈ [GM/(c²b), 2GM/(c²b)]: at most Newton's 2GM/(c²b) and never
+Einstein's 4GM/(c²b) (no delay gradient, section 8). The capture radius
+b_c = G M and the circle R_c = G M/2 of section 11 are now the same for
+every thing. **Achromatic: reached; coefficient: different law** (½ to 1 of
+Newton, ¼ to ½ of Einstein; A6 with light of 2¹⁷ and 2¹⁹ reads the same
+α, and the return part is read as the register after the pass).
+
+**Motion (R6′).** dp/dt = F stands (section 3); every free thing moves at
+one Link per interval on its DDA line, so Kepler's orbits (section 11 (b))
+and v = p/M are **not reached** for a free thing: a free thing orbits only
+on the circle R_c, and the slow motion of matter is a loop's drift, open
+(section 9). E = m with no kinetic energy stands (section 7).
+
+## 20. Round 2: what is new and testable under 16 to 21
+
+1. **The front is six tubes.** 4/5 of a release stays on the light-cone
+   edge on lines parallel to the axes in the coordinate planes, e-folding
+   1.65 Links; off the planes the coherent field is zero and the push is
+   the residue's (section 17). Run: E11's source under R8 read at (24, 0,
+   0), (24, 1, 0), (17, 17, 0) and (14, 14, 14).
+2. **The residual anisotropy.** In the mixing regime the field is the walk
+   of table [1 − p, 0, p/4 ×4] with D′ = (2 − p)/(6p); in the coherent
+   regime it is total (tubes). The k⁴ anisotropy coefficient of the
+   effective table as a function of p: open (one symbol expansion, as
+   section 2's).
+3. **t₉₀ = r on a tube, 1.925 r² for the residue, 0.856 r²/D′(p) beyond
+   r_coh = λ²/(8π²)** (section 17). Run: A5s Run 2 tick by tick.
+4. **The wavelength of a massive thing's field is h/(mc) on L1 shells**,
+   λ = K/M Links, spacing λ on an axis and λ/√2, λ/√3 in Euclidean distance
+   on the diagonals (section 18). Run: E11 with a clocked source, the phase
+   per Node from the dense mode read along an axis and a diagonal.
+5. **No beat between two things** (per-owner steering, phase-blind push);
+   a beat at |M_A − M_B|/K would mark a cross-owner steering (section 18).
+6. **Fringes of shadows at λ/2 in the strip between the slits**,
+   independent of L and d, against λL/d; **no fringes for one thing at a
+   time** (section 17). Run: A1.
+7. **k_C = G in lattice units**: F_e/F_g = q_A q_B/(M_A M_B); the electron's
+   content follows from nature's ratio (section 19). Run: A5s and A7 on
+   one board.
+8. **Bending GM/(c²b) on the pass plus a late return**, achromatic (section
+   19). Run: A6 at two amounts, the register read during and after.
+9. **E = hν with h = K as an identity**, and the ladder's one new integer
+   equality on amount differences (section 18). Run: A10 with rates a/K.
+
+## 21. Round 2: the verdicts that change, and those that stand
+
+| Law | Round 1 (section 15) | Under 16 to 21 | Run |
+| --- | --- | --- | --- |
+| Coulomb's product law | different (sum of fluxes) | **reached exactly**, k_C = ζκξ/(2π), mass-independent | A5s unequal contents |
+| Equivalence principle | not reached (g = N/M) | **reached exactly** (reading × content) | A7 |
+| Achromatic bending | different (α ∝ 1/p) | **reached** (α = GM/(c²b) for every thing) | A6 at 2¹⁷, 2¹⁹ |
+| Einstein's 4GM/(c²b) | not reached | not reached (≤ 2GM/(c²b) with the return) | A6 after the pass |
+| Diffusion of the field | reached, D = 4/9 | dichotomy: tubes/transport inside r_coh, D′(p) outside; D = 4/9 for lone quanta | A5s under R8 |
+| Maxwell's wave equation | not reached | **not reached** (amounts have no sign) | — |
+| Retardation t₉₀ | 1.925 r² | r on tubes and inside r_coh; r² beyond | A5s Run 2 |
+| Newton's 2nd law, v = p/M | reached for a body | **superseded**: speed 1 for every thing, register = direction | any pushed body |
+| Two-body orbits (Kepler) | reached | not reached for free things (speed 1); loops open | A7 |
+| E = mc², no kinetic energy | reached / different | stands | a body at a mark |
+| E = hν | not a consequence | **reached** as an identity, h = K | — |
+| Compton wavelength | — | **reached**: λ = K/M = h/(mc), L1 shells | E11 clocked |
+| Time dilation, Lorentz factor | not reached | stands (R6′ makes every thing's speed 1; the loop's drift open) | A14 |
+| Gravitational time dilation | not reached | stands (16 changes the push, not a clock) | — |
+| Mass ladder | not reached | stands; one new condition on amount differences, enumeration open | A10 |
+| Born rule | declared | declared; no self-interference of a thing | A1 |
+| G's value, α's value | inputs | inputs (ξ, κ); k_C = G new | A5s + A7 |
+
+Open after 30 minutes, in one line each: the self-consistent p of the
+mixing regime; the k⁴ coefficient of the effective table; the enumeration
+of the alternating orbits with rates a/K; the field of a thing moving at
+speed 1 (the return half of the bending).
+
+## 22. Round 3: the vectorial steering rule, verified
+
+Round 3 (2026-09-18, after PR #277) verifies two rules Boss proposed to the
+model owner, A (this section) and B (section 23), and derives the wait of
+Highlights 5.4 point 23 (section 24, PR #278). As before: no engine run, no
+edit to the engine; the arithmetic is a mean-field iteration of the stated
+rule on a board of 45³ or 61³ Nodes (seconds), cited as a check of the
+derivation and never as its source.
+
+**The rule, A (R8v).** At a Node, all shares of one owner that arrive on
+two or more headings combine: the amount A = Σ_h a_h is summed, the phase
+φ̄ is that of Σ_h a_h e^{iφ_h} (the coherence rule of Highlights 3.20, as
+R8 of section 17). The steering is vectorial: with the weights
+w_h = a_h cos²((φ_h − φ̄)/2) (the Born table read against the combined
+phase) the vector V = Σ_h w_h h is formed over the arrival headings, and
+the whole A leaves through the Port(s) nearest V with the remainder rule. A
+share meeting no other share of its owner keeps the fixed split R1. Two
+readings of "nearest" exist and both are derived: **(P)**, the DDA reading
+(section 3, v = p/|p|₁): the content leaves through the Ports of the
+nonzero components of V in the proportion |V_i|/|V|₁, the remainders owned
+by the Node; **(M)**, the single-Port reading: all of A leaves through the
+Port of the largest |V_i|, ties by Port order. Rules used besides: R1, R2,
+R3 (both readings), R5, R7′; the state is section 17's (an amount and a
+phase per Node and heading).
+
+**Assumptions and limit.** One owner (R8v combines shares of one owner
+only, as R8; shares of different owners cross). The mean field of the
+integer rule (a register never destroys a share; every statement holds for
+the integers up to one quantum per Node, heading and register). The board
+large. Every statement marked **(exact)** holds for both readings and
+without any completion.
+
+**(i) The operator.** Write the one-phase case first (a single release, or
+an owner of rate 0: E2 and E4 of section 17 make every meeting of one
+release in phase, δ = 0, so w_h = a_h and V = Σ_h a_h h = J(x), the net
+momentum arriving, section 0). Per axis i, V_i = a_{+i} − a_{−i} and
+|V|₁ = Σ_i |a_{+i} − a_{−i}|, while A = Σ_i (a_{+i} + a_{−i}). Under (P)
+the departure through +i is A·max(V_i, 0)/|V|₁. Hence the **identity
+lemma (exact)**: if no axis carries arrivals of both signs, then
+|V|₁ = A and the departure through h is A·a_h/A = a_h, the share continues
+on its own heading, whatever the amounts. R8v differs from the transport
+identity ("in phase → continue", the completion C1 of section 17 at δ = 0)
+only at a Node where two shares of one owner meet head-on, and there it
+collimates: the smaller is reversed and carried with the larger, the whole
+A leaving along V/|V|₁, so the momentum of the field grows at that Node by
+
+```text
+|out|₁ − |V|₁ = A − |V|₁ = 2 Σ_i min(a_{+i}, a_{−i})      (exact; zero iff no head-on pair),
+```
+
+a non-conserving corner for momentum (amount is conserved exactly: all of
+A leaves). At V = 0 (equal head-on arrivals, or a symmetric star of
+arrivals) the rule names no Port. Under (M) the identity lemma fails
+already at two orthogonal arrivals of equal amount (a tie, decided by Port
+order) and of unequal amount (the whole A goes the larger way).
+
+With phases, for a large share A of phase 0 meeting a small share ε of
+phase δ: φ̄ = O(ε/A), w_A = A − O(ε), w_ε = ε cos²(δ/2) ≤ ε, so the sum
+still leaves along A's heading for every δ: **the collimation of a small
+opposing share does not depend on its phase (exact to O(ε/A))**. For two
+equal shares a of phases φ₁, φ₂ (δ = φ₁ − φ₂, |δ| < π) the coherent sum is
+2a cos(δ/2) e^{i(φ₁+φ₂)/2}, so φ_{1,2} − φ̄ = ±δ/2 and w₁ = w₂ = a cos²(δ/4):
+V ∝ h₁ + h₂ **for every δ**, and at δ = π the sum is zero and φ̄ is
+undefined. The steering of equal shares is blind to their phase difference;
+only unequal amounts read it (below, (iv)).
+
+**The Fourier symbol.** R8v is homogeneous of degree one (F(λa) = λF(a))
+and piecewise linear, not linear: it has no symbol. Its linearisations do.
+(a) About the empty background (a lone share) it is R1: section 2's
+symbol, D = 4/9, the k⁴ coefficients −58/81 and 95/243. (b) About a
+collimated background (a stream of amount A on +x at every Node of a line,
+or any set of non-opposing arrivals) it is the transport map on the five
+non-opposing headings, symbol e^{−ik·h}, five undamped modes ω = k·h with
+no diffusion and total anisotropy (the group velocity is the axis heading),
+and the annihilation of the opposing one (a perturbation ε on −x leaves on
++x with weight 1: eigenvalue 0). (c) About the isotropic background
+a_h = ā on six headings (the local form of any diffusive field) it does
+not exist: V = 0 there, and a perturbation ε on one heading sends all 6ā
+through that Port, a gain 6ā/ε unbounded as ε → 0. The map is not
+Lipschitz at V = 0, and the diffusive state of round 1 is not a fixed point
+but a singular point of R8v. Nor does the rule's own direction, V/|V|₁,
+carry an isotropic term with a small anisotropic correction: it is the
+DDA's unit vector in the L1 norm, so a collimated stream steered toward
+(cos θ, sin θ, 0) advances at Euclidean speed 1/(|cos θ| + |sin θ|) per
+interval, 1/√2 on the diagonal, and the front of anything the rule
+collimates is the octahedron |x|₁ = t, not a sphere and not a sphere plus
+a k⁴ term. There is no order at which the shape becomes spherical.
+
+**(ii) A point release of one phase: the tube theorem holds verbatim
+(exact).** Section 17's theorem needs only that in-phase, non-opposing
+arrivals continue; by the identity lemma R8v is that identity on the
+light-cone edge (every arrival at a Node of |x|₁ = t at tick t came by a
+monotone path, so all arrivals are outward and no axis carries both
+signs). So the axis tip (t, 0, 0) is lone, keeps (6/11)^t of X/6 on the
+axis and sheds 4/11 into the four lines (t, ±1, 0), (t, 0, ±1), where the
+shed meets the line's in-phase stream at right angles and both continue;
+the edge fraction is
+
+```text
+1 − (1/11) Σ_{t≥0} (6/11)^t = 4/5   (exact, both readings),
+```
+
+on lines parallel to the axes in the three coordinate planes through the
+source, the line y = j carrying (1/11)(6/11)^{j−1} X/6, e-folding
+1/ln(11/6) = 1.65 Links under (P). Under (M) the shed at (t, 1, 0) meets
+the line's larger stream and all of it goes +x: the four lines at distance
+1 absorb every tip's shed and the tubes are one Link wide; and at tick 2
+the Node (1, 1, 0) holds X/66 on +x and X/66 on +y, a tie decided by Port
+order, so the six crosses receive unequal shares and the release loses the
+cubic symmetry of its source at its second step. My iteration (45³, 20
+ticks, X = 1): under (P) the edge fraction 0.9091, 0.8595, 0.8325, …,
+0.800002 at t = 20; the coordinate planes 1.000000 through t = 5 and
+0.9834 at t = 20 (the residue's lone shares off the axes shed out of the
+planes, 1.7 %, where C1 kept 1.000000); the axes 0.0011; home (the residue
+absorbed at the owner's Node, R5) 0.1500 of X by t = 20, three quarters of
+the 1/5 that is not on the edge, collimated inward by the head-on rule;
+the tie content 1.3·10⁻⁶ X. Under (M): edge 0.7347, planes 0.9243, home
+0.1596, Port-order ties 0.392 X (the second step), V = 0 ties 3·10⁻⁴ X.
+
+**A switched-on source of one phase (the field of a thing).** This is the
+case a force needs, and it is worse than the release. With the source
+releasing X/6 per heading every tick, an axis Node x at tick t receives
+the outward stream from x − 1 and, if the Node x + 1 was lone one tick
+earlier, its backward 1/11; two opposing arrivals collimate (all forward,
+nothing shed), one arrival is lone (R1: 4/11 shed sideways, 1/11 back).
+So a Node is collimated exactly when the Node ahead of it was lone one
+tick before, state(x, t) = ¬state(x + 1, t − 1), and with the tip lone this
+gives on every axis Node the cycle lone, lone, collimated, collimated,
+period 4 (derived; the iteration shows 0.1848, 0.1848, 0.0000, 0.0000 at
+(16, 0, 0) from t = 18 on, and the same period on every line and diagonal).
+The steady state (61³, 60 ticks, the mean over one period, ρ = 0): the
+content per Node on the axis 0.0924 = 0.554 X/6 at r = 8, 12, 16, constant
+in r; on the lines at distance 1, 2, 3 from an axis 0.00758, 0.00413,
+0.00225, the ratio 0.545 = 6/11 per Link (e-folding 1.65 Links); on the
+diagonal (r, r, 0) 0.00246, 0.00073, 0.00022 at r = 4, 6, 8 ((6/11)^{2r});
+at (r, r, r) and at (r, 3, 3) exactly 0. Per L1 shell at r = 10 to 18:
+58.1 % of the content on the six axes, 77.2 % within one Link of an axis,
+87.5 % within two, **100.0 % on the three coordinate planes, 0 off them**;
+the shell total 0.9546 X (the release X less the X/22 per tick that is
+collimated home). The clock changes nothing: with ρ = 1/8 (λ = 8 Links)
+every number above is the same to four digits, as the small-share lemma
+says. The V = 0 ties: 0.64 X in 60 ticks, one per cent of the release,
+decided by Port order. Under (M) the field is not steady in 60 ticks (the
+axis 0.040, 0.024, 0.012 at r = 8, 16, 24 and drifting; 69 % on the
+planes; the Port-order ties 2.0 X): the field of a point source under (M)
+is a function of the Port order.
+
+**(iii) Front speed and t₉₀.** The front is on |x|₁ = t at c (E3, exact,
+any rule). On a tube the content is a pulse train of period 4, so the push
+on a thing there is 0.185 X/6 for two ticks and 0 for two; its four-tick
+mean is at its steady value from t = r + 4: **t₉₀ = r + O(4) on the tubes
+(exact)**; off the three coordinate planes the field is 0 at every t
+(t₉₀ = ∞: no push ever); on the diagonals of the planes it is
+(6/11)^{2r} X/6, a push that at r = 8 is 2·10⁻⁴ of the axis value. The
+model owner's t₉₀ ∝ r is reached where there is a field, and there is a
+field on a set of measure zero.
+
+**(iv) Two slits.** Section 17's geometry (slits at (0, ±d/2, 0), the
+screen Node (L, y, 0), δ(y) = −2ρy in the strip |y| < d/2) gives at the
+screen Node two shares of one owner on two headings h₁, h₂ with amounts
+a₁, a₂ and phase difference δ. By the equal-share lemma the steering is
+blind to δ when a₁ = a₂: the departures are (a₁, a₂) on (h₁, h₂) for every
+δ < π and undefined at δ = π. For a₁ ≠ a₂ the fraction leaving on h₁ is
+w₁/(w₁ + w₂), which moves from a₁/A at δ = 0 to 1 at δ = π (a₁ > a₂): a
+modulation of the *direction* of the push behind the screen, of depth
+|a₁ − a₂|/A, with the period λ/2 in y of section 17 and zero depth on the
+symmetry line y = 0, where optics has its central maximum. The amount that
+reaches the screen Node is A = a₁ + a₂ whatever δ, so a mark that absorbs
+counts a₁(y) + a₂(y), the sum of the two single-slit patterns with no
+cross term: **no fringes in the counts**; the cross term 2√(a₁a₂) cos δ of
+the Born rule is what a rule on amounts cannot produce, and R8 of section
+17 produced its stand-in (cos²(δ/2) of the sum forward, the rest apart)
+only by steering equal shares apart, which R8v does not do. Things: as in
+section 17, no self-interference (E5).
+
+**(v) Pathologies.** (1) *V = 0 is not rare.* A mark returns a shadow as
+at any thing (law of the bit, point 6), so in front of any mirror or wall
+the incoming stream a on +h meets its own return a on −h at every tick,
+V = 0 exactly, and the rule names no Port: the two-slit apparatus is made
+of the configuration the rule cannot process; Port order decides, and the
+first decision (2a through +h) makes the next tick's V = −a: the wall's
+return then sweeps the incoming stream home, and the Node in front of the
+wall alternates. In the switched-on source 1 % of the release meets V = 0
+with no wall at all. (2) *The return is destroyed.* R5 sends a shadow that
+pushed back on its own steps with amount ε against the outgoing stream A of
+its owner; by the small-share lemma R8v collimates it outward again at the
+first Node where A > ε cos²(δ/2), which is every Node of the path. The
+recoil never comes home, B keeps Δp and A never receives −Δp: the third
+law of section 4 and the closing of the books of things (point 7, "every
+action is a message that returns") fail; exempting returning shares
+contradicts "all shares of one owner that meet". (3) *Momentum is created*
+at every head-on meeting, 2 Σ_i min(a_{+i}, a_{−i}) per Node per interval
+(above); the field's J is no longer the source's momentum spread out, and
+J = ζΦ of section 1 holds with ζ = 1 on the tubes and is meaningless
+elsewhere. (4) *Port order:* every tie under (M), the V = 0 ties under (P);
+the field of a symmetric source is asymmetric under (M) from tick 2. (5)
+*The map is not Lipschitz:* the gain A/|V|₁ is unbounded, so the isotropic
+state is an unstable singular point, and the engine's rounding (one
+quantum) decides the direction of a whole Node's content wherever the
+arrivals nearly balance. (6) *No trapping at a Node* (all of A leaves every
+tick), but a cavity between two walls sloshes with period 2, the content
+never diffusing out because equal head-on shares are the tie case.
+
+**Formula.**
+
+```text
+R8v (P), one phase:   out_h = A · max(V·h, 0) / |V|₁,   V = Σ_h a_h h = J,   A = Σ_h a_h;
+identity lemma:       no head-on pair  ⇒  out_h = a_h                            (exact);
+head-on:              |out|₁ − |V|₁ = 2 Σ_i min(a_{+i}, a_{−i}) > 0,   V = 0 undefined;
+point release:        4/5 on the light-cone edge, on axis-parallel lines of the coordinate planes  (exact);
+switched-on source:   six tubes of period 4, 58 % on the axes, 100 % on the coordinate planes, 0 off them;
+two slits:            counts a₁ + a₂ (no cross term); push direction modulated at λ/2 with depth |a₁ − a₂|/A.
+```
+
+**Dictionary.** A tube ↔ a ray of the E6 geometry (Highlights 3.5, the
+"field on lines" the model owner rejected on 2026-09-17); the pulse train
+↔ a field of period 4 intervals at every Node; V/|V|₁ ↔ the DDA direction;
+the ties ↔ the standing wave in front of a mirror.
+
+**Verdict.** Does R8v fix the tube artefact: **no.** It is the transport
+identity wherever the artefact is made (the light-cone edge, the lines,
+every Node without a head-on pair), so the tube theorem holds exactly:
+4/5 of a release on the edge in the coordinate planes, and for a
+switched-on source 58 % of the field on the six axes, 100 % on the three
+coordinate planes and 0 off them, the six-line field of E6 with a period-4
+pulse. Its Fourier symbol does not exist; its front is the octahedron at
+every order. It loses what R8 had (the λ/2 fringes) and what R5 needs (the
+return). **Different law** (six tubes; no fringes in counts; the third law
+lost). The run: E11's source under R8v read at (24, 0, 0), (24, 1, 0),
+(17, 17, 0) and (14, 14, 14) over eight ticks: 0.55 X/6 and 0.045 X/6 in a
+period-4 pulse, 2·10⁻⁸ X/6, and exactly 0; and A5s Run 2 with the recoil
+read at the source (none arrives).
+
+## 23. Round 3: a push that reads the phase, verified
+
+**The rule, B (R4″).** A shadow carries its owner's phase at release
+(point 9: nothing advances it on the way; point 12: it is a ray of the
+owner's family). When a shadow of A reaches a thing B, the push of R4′ is
+multiplied by a declared function f of the difference between the
+shadow's phase and B's own clock now: f(δ) = cos δ, or the Born table
+cos²(δ/2) = (1 + cos δ)/2 (Highlights 3.3, T[d]/N). R5 stands: the return
+carries the opposite of the push actually given. Rules used besides: R3′,
+R7′ (rates ρ_A = M_A/K, ρ_B = M_B/K turns per interval), R6′, and the
+phase pattern of sections 17 and 18, φ(x, t) = φ₀ + ρ(t − s) for a share
+of age s.
+
+**Assumptions and limit.** Two things at rest (loops, or the external
+bodies of round 1) at L1 distance s, s ≫ 1. The phase of A's shadow at B
+is a function of position only where the age of a share is: on the
+coherent field (the tubes and edges of sections 17 and 22, where s = |x|₁
+exactly), or within r < √(Dλ) = 0.67√λ Links of a diffusive source, beyond
+which the ages at one Node spread over more than λ/ρ and the pattern is
+washed out (section 17 (iii)). Everything below is on the coherent field.
+The mean-field push of section 19 is written −G M_A M_B/s² r̂ for one
+half (the direct push on B) and the same for the other (the recoil of B's
+shadows' push on A, returned to B), G = ζκξ/(4π) per half.
+
+**(i) The effective push on B.** The shadow that reaches B at tick t left
+A at t − s with φ_A(t − s) = φ_A0 + ρ_A(t − s); B's clock reads
+φ_B(t) = φ_B0 + ρ_B t. So B reads
+
+```text
+x(t) = φ_A(t − s) − φ_B(t) = Δ₀ + (ρ_A − ρ_B) t − ρ_A s,      Δ₀ = φ_A0 − φ_B0   (turns),
+```
+
+and A reads, of B's shadow, y(t) = −Δ₀ − (ρ_A − ρ_B) t − ρ_B s. The push on
+B at tick t is the direct half f(x(t)) plus the returned half of what B's
+shadow did at A at tick t − s (R5, delivered after s more Links),
+f(y(t − s)); with x(t) + y(t − s) = −2ρ_B s (exact: the drift cancels, A's
+lag ρ_A s cancels against its advance over the return) and
+x(t) − y(t − s) = 2[Δ₀ + (ρ_A − ρ_B)(t − s)],
+
+```text
+f = cos:   F_B(s, t) = −(2 G M_A M_B / s²) · cos(2π M_B s / K) · cos(2π[Δ₀ + (M_A − M_B)(t − s)/K]) r̂,
+f = cos²:  F_B(s, t) = −(G M_A M_B / s²) · [1 + cos(2π M_B s / K) · cos(2π[Δ₀ + (M_A − M_B)(t − s)/K])] r̂.
+```
+
+Boss's "round-trip phase s(rate_A + rate_B)" is what the two halves give
+when both are read at the same tick, x(t) + y(t) = −(ρ_A + ρ_B) s; with
+the return's own delay of s Links it is B's clock over the round trip,
+2ρ_B s, and A's push has 2ρ_A s. Either way the standing factor is
+multiplied by a **beat** at |M_A − M_B|/K turns per interval whenever the
+rates differ, and the beat is a full cosine: under f = cos the push on B
+changes sign every K/(2|M_A − M_B|) intervals and averages to **zero** over
+a beat period; under cos² it averages to half the bare push of section 19
+(cos² has mean ½) and the standing pattern survives only as a flicker of
+depth cos(2πM_B s/K).
+For equal rates (M_A = M_B = M) the beat factor is the constant
+c₀ = cos(2πΔ₀), the relative setting of the two clocks, an initial
+condition nothing fixes: two equal things with Δ₀ = 1/4 turn feel no force
+at all under f = cos, and the standing pattern in s is
+
+```text
+F_B(s) = −(2 G M² c₀ / s²) cos(2π s/λ),   λ = K/M   (the Compton wavelength of section 18),
+```
+
+with sign changes at s = (n ± ¼)λ: attraction on |s − nλ| < λ/4 for
+c₀ > 0, repulsion between (Coulomb's like charges attract there, gravity
+repels), nodes at (n ± ¼)λ. Under cos² there is no sign change at any s.
+
+**(ii) Orbits and preferred radii.** Under R6′ (point 21) a free thing
+moves one Link per interval and its register sets its direction, so a
+circle of L1 radius s (the DDA staircase of section 11 (d)) needs a turn of
+1/s per Link, |F(s)| = |p_B|/s: for every s in an attractive band there is
+a register length |p_B| = |F(s)| s that orbits, and none in a repulsive
+band. Preferred radii in the sense of a discrete set: **none**; bands of
+width λ/2 about s = nλ (equal rates, c₀ > 0), and for unequal rates no
+band that lasts longer than a quarter beat, K/(4|M_A − M_B|) intervals. The
+other sense, the minima of the standing potential U(s) = ∫_s^∞ F ds′ (a
+constant of the trajectory, not a booked quantity, section 7): with
+F = −C cos(ks)/s², C = 2GM²c₀, k = 2π/λ, the zeros of F with F′ < 0 are
+at cos(ks) = 0, sin(ks) = −1 exactly,
+
+```text
+s_n = (n − ¼) λ,   n = 1, 2, …;    U_n = −C ∫_{s_n}^∞ cos(ks′)/s′² ds′  →  −C/(k s_n²) = −C/(2π λ (n − ¼)²) for large n.
+```
+
+The exact values (mpmath, in units C = λ = 1): U₁ = −0.23610 at s = 0.75,
+and U_n/U₁ = 0.2106, 0.0875, 0.0474, 0.0297 at n = 2 to 5 (the asymptotic
+law (¾)²/(n − ¼)² gives 0.184, 0.074, 0.040, 0.025); at the attraction
+maxima s = nλ instead U = −0.0409, −0.0059, −0.0018, falling as 1/n³. The
+model's own law: **r_n ∝ n, U_n ∝ 1/(n − ¼)²**, against Bohr's r_n ∝ n²,
+E_n ∝ 1/n², because the wavelength here is the Compton length K/M, fixed,
+and not de Broglie's h/(mv), which shrinks with the momentum: the condition
+of section 18 (s = mλ) meets a 1/s² force with a fixed λ, and that gives a
+linear ladder of radii. And no thing can sit at s_n: under R6′ nothing is
+at rest but a loop, and a loop's rays read the pattern at their own Nodes.
+
+**(iii) The ladder of A10.** Unchanged. A10 counts the closing orbits of
+the corner table on a ring, a thing meeting a thing (point 4), and R4″
+changes what a thing does with a *shadow*. What changes is which pairs
+bind: under f = cos a pair of unequal contents has a force that averages to
+zero, so **only equal contents bind** (for the proton and the electron the
+sign flips every K/(2(M_p − M_e)) ≈ λ_p/2 Links of travel: hydrogen does
+not bind); under cos² every pair binds as in section 19, on half the bare force
+with a flicker. Neither is a ladder of contents.
+
+**(iv) The measured ratios.** The level ratios of the model's law are
+numbers, 0.2106 and 0.0875 against hydrogen's 1/4 and 1/9 (16 % and 21 %
+low), independent of K (which sets λ, a scale) and of N (which sets the
+resolution of the table, a rounding of order λ/N in s_n); no K, N
+reproduces them, and the ratio E₂/E₁ = 1/4 needs minima at s = nλ exactly
+(the form (n + c)⁻² has E₂/E₁ = 1/4 iff c = 0), which a cosine force gives
+at no phase offset (c = −¼ for c₀ > 0, +¼ for c₀ < 0, ratios 0.184 or
+0.309). The six mass ratios do not enter: the ladder is untouched, and the
+one condition R4″ adds, M_A = M_B for binding, selects no ratio but 1.
+
+**(v) The integer rule.** The phases are on the circle of N steps; B reads
+d = (φ_shadow − φ_B) mod N, an integer, and the table T[d] ∈ {0, …, N}
+(T[d] = round(N cos²(πd/N)) for the Born form, or a declared cos table with
+sign). The push Δp_i on axis i (an integer, the whole quanta met times
+their heading times M_B or q_Aq_B/M_A) becomes ⌊(Δp_i T[d] + R_i)/N⌋ with
+R_i the thing's remainder register per family and axis, bounded by N − 1
+in units of 1/N, so the mean push is exact and the remainder is one push
+unit per register (section 0's rule, now on a thing). The clock advances
+N M_B/K steps per interval, an integer or a register (R7′). The standing
+pattern is resolved to 1/N of a turn and, since the age of a coherent
+share is its L1 distance, lies on the octahedra |x − x_A|₁ = s, not on
+spheres: the nodes of the force are at L1 radii (n ± ¼)K/M_B.
+
+**A consequence to name.** Under f = cos the force between two equal things
+is modulated to full depth at the pushed thing's Compton wavelength:
+Coulomb's law between two electrons would reverse sign every 1.2 pm and
+vanish at λ_e/4; under cos² it would flicker at the beat. Møller scattering
+agrees with the unmodulated law to 10⁻¹⁸ m. **Different law.**
+
+**Formula.**
+
+```text
+x(t) + y(t − s) = −2 M_B s / K  (delayed return; Boss's simultaneous reading: −(M_A + M_B) s / K);
+F_B = −(2GM_AM_B/s²) cos(2πM_B s/K) · cos(2π[Δ₀ + (M_A − M_B)(t − s)/K])          (cos);
+F_B = −(GM_AM_B/s²) [1 + the same product]                                          (cos²);
+equal rates: bands |s − nλ| < λ/4 attract (c₀ > 0), λ = K/M; potential minima s_n = (n − ¼)λ, U_n/U₁ = 0.2106, 0.0875, 0.0474.
+```
+
+**Dictionary.** λ = K/M ↔ h/(mc) (section 18); the beat ↔ (M_A − M_B)c²/h,
+the difference of the two Compton frequencies; Δ₀ ↔ the relative phase of
+two clocks, unobservable in physics and load-bearing here; U_n ↔ a level
+only as a constant of the trajectory.
+
+**Verdict.** Does R4″ give levels: **no.** It gives a standing modulation of
+the 1/s² force at the pushed thing's Compton wavelength, F ∝
+cos(2πM_B s/K)/s², which for unequal contents beats at |M_A − M_B|/K and
+averages to zero (cos) or to half the bare force (cos²), and for equal contents
+depends on the clocks' relative setting Δ₀; the radii it prefers are bands
+of width λ/2 about nλ, and the minima of its potential lie at (n − ¼)λ
+with U_n ∝ 1/(n − ¼)² (r_n ∝ n): E₂/E₁ = 0.211 and E₃/E₁ = 0.087 against
+1/4 and 1/9, for every K and N. The ladder of A10 is unchanged; hydrogen
+does not bind under cos. **Different law.** The run: A5s Run 2 with two
+clocked bodies of equal content M at s = 8 to 32 on an axis, K = 8M (λ = 8):
+the register's change per interval ∝ cos(2πs/8)/s², zero at s = 10, 14,
+18, …, sign reversed at s = 12, 20, 28; then with contents M and 2M: the
+change oscillating at M/K per interval with zero mean.
+
+## 24. Round 3: the wait, a tick per whole quantum read (point 23)
+
+**The rule, R9 (Highlights 5.4 point 23, PR #278).** A thing that reads a
+whole quantum of shadow does not step and does not advance its phase in
+that interval; w intervals per quantum, w = 1 the natural value, kept
+symbolic. A shadow pays nothing. Rules used besides: R4′, R6′, R7′, and the
+standing field of round 1 (section 5: n(r) = 9S_eff/(16πr) quanta per Node
+per interval, S_eff = 6ρM(1 − f), G_L = 33ρ(1 − f)/(8π)) or of round 2
+(section 19: S = κξM, G = ζκξ/(2π)); in both
+
+```text
+n(r) = (9/11) · G M / r   quanta per Node per interval   (G = G_L in round 1, G = ζκξ/(2π) in round 2),
+```
+
+the ratio of the density coefficient 9/(16π) to the push coefficient
+11/(16π) of section 5 (the same number that made w = 11/9 in section 11
+(c)). This is the diffusive field; on the tubes of sections 17 and 22 n
+does not fall with r and is zero off the planes, and everything below is
+then true on a tube at its own n.
+
+**Assumptions and limit.** n(r) ≪ 1/w (far field; the quanta arrive whole
+in a fraction n of the intervals, section 11 (a), the registers making the
+arrivals regular). Two readings agree there: the strict one (the interval
+of a reading is the wait; several quanta in one interval cost one
+interval) and the queued one (w per quantum, always): the fraction of
+intervals lost is w n + O(n²) in both. Where w n ≥ 1 the thing never steps
+and never ticks under either reading: a **horizon** at
+
+```text
+r_h = (9 w / 11) · G M     (w = 11/9: r_h = G M, the capture radius b_c of section 19; GR: 2GM).
+```
+
+Note the scale: A6's source (S_eff = 40 262) has n ≥ 1 out to
+r = 9S_eff/(16π) = 7208 Links, so at w = 1 every clock within 7208 Links
+of it stops; the weakness of gravity must sit in n ≪ 1 at every r of
+interest, that is in ξκ, and the wait then inherits it, since one number
+(9w/11) G sets both the push and the wait.
+
+**(i) The clock of a thing at rest.** Its phase advances ρ per interval in
+the intervals it does not wait, so the mean rate is
+
+```text
+ρ_eff(r) / ρ = 1 − w n(r) = 1 − (9 w / 11) · G M / r    (w n < 1; 0 beyond r_h),
+```
+
+against general relativity's √(1 − 2GM/(rc²)) = 1 − GM/(rc²) − ½(GM/(rc²))²
+− …: the same form at first order, GR's coefficient exactly at **w = 11/9**
+(w = 1 gives 9/11 of it), and a different second order (linear here,
+−½(GM/r)² there; under the queued reading with the thing still reading
+while it waits, 1/(1 + wn) = 1 − wn + (wn)², also different). A loop's
+clock is its period (Highlights 3.4), and each ray of the ring loses the
+same fraction of its steps, so P/P₀ = 1/(1 − wn) ≈ 1 + wn: the same factor
+for the phase clock and the loop clock, section 11 (c)'s form with its
+coefficient now derived from a rule rather than posited. Local and in
+integers, as point 23 says. **Reached** in form; the coefficient is the
+choice of w.
+
+**(ii) Light passing at b.** A light thing reads the mass shadows like any
+thing (point 16, times its content) and waits like any thing, so its speed
+along its line is 1 − wn(r): an effective index n_eff = 1 + wn(r) =
+1 + (9w/11)GM/r. A front (many light things abreast, or the phase pattern
+of one emitter's successive things) is delayed more on the near side and
+tilts by the standard integral of section 8 (∫ b/(b² + x²)^{3/2} dx = 2/b):
+
+```text
+α_front = (18 w / 11) · G M / b     (w = 1: 1.636 GM/b;   w = 11/9: 2 GM/b, Einstein's space half exactly).
+```
+
+But a thing moves on its line and turns only by a push (points 10 and 21;
+rule (i) of the five settled rules): the wait delays it and does not turn
+it. So the **image** (where each light thing lands) is turned by the push
+alone, GM/b on the pass and up to another GM/b by the late return (section
+19), while the **front** (the phase pattern, read by an interferometer or a
+two-slit behind the mass) is turned by push and wait together:
+
+```text
+w = 1:     image 1 to 2 GM/b,   front 2.64 to 3.64 GM/b;
+w = 11/9:  image 1 to 2 GM/b,   front 3 to 4 GM/b  (4 GM/b with the full return, Einstein's number, in the front only).
+```
+
+The delay itself is Shapiro's: Δt = w ∫ n dx = (9w/11) GM [asinh(x_A/b) +
+asinh(x_B/b)] ≈ (9w/11) GM ln(4x_Ax_B/b²), half of GR's 2GM ln(4x_Ax_B/b²)
+at w = 11/9 and GR's at w = 22/9, where the clock would run at 1 − 2GM/r,
+twice GR's slowing. One w cannot serve both, because in GR light's index
+carries two metric parts and a clock one (the ratio 2, γ = 1), and here the
+same wait serves both (the ratio 1). The push half is changed only at
+second order: a slower pass reads (1 + wn) quanta per Link, O((GM/b)²).
+**Reached** (the space half of the front's bending, at w = 11/9);
+**different law** (the image and the front disagree; Shapiro at half).
+
+**(iii) The redshift.** A clock at r₁ runs at ρ(1 − wn₁), one at r₂ at
+ρ(1 − wn₂); the light things between them carry no clock (R7′) and a
+static field delays every emission alike, so the received rate against the
+receiver's clock is
+
+```text
+ν₂/ν₁ = (1 − w n₁)/(1 − w n₂),    z = ν₁/ν₂ − 1 ≈ (9 w / 11) · G M (1/r₁ − 1/r₂),
+```
+
+GR's GM(1/r₁ − 1/r₂)/c² at w = 11/9. **Reached** in form.
+
+**(iv) A free thing and a loop.** A push along a thing's own heading
+changes its register and never its speed (point 21); the wait changes its
+speed and never its register. So in the field of M every thing, whatever
+the push's direction, moves at
+
+```text
+v(r) = 1 − w n(r) = 1 − (9 w / 11) · G M / r   Links per interval    (0 at r_h),
+```
+
+a thing falling in slows and stops at r_h in the lattice frame, the
+frozen-star form of the Schwarzschild coordinate speed 1 − 2GM/r (with
+w = 22/9 the two are equal, and then the clock is off by 2). Its momentum
+still integrates the push exactly, dp/dt = F (section 3): a thing pushed
+along its heading gains register at the full rate while moving slower. A
+loop of side a at distance r: its period P₀/(1 − wn) as in (i), and a new
+thing, a **tidal desynchronisation**: the near-side rays wait
+w a |dn/dr| = (9w/11) a GM/r² intervals per interval more than the far
+side, and since a corner fires only with both rays present (section 12) the
+ring misses a corner after (11/9) r²/(w a G M) intervals unless the corner
+table tolerates a lag: the loop is not pulled by the wait, it is sheared by
+it. **New** (the slowing, the shear).
+
+**Dictionary.** w ↔ intervals of proper time per quantum of field read;
+9w/11 ↔ the ratio of the clock's coupling to the push's; r_h ↔ a horizon
+where things freeze; n_eff ↔ a refractive index of the vacuum near mass.
+
+**Verdict.** Gravitational time dilation: **reached** in form, 1 − (9w/11)GM/r,
+GR's coefficient at w = 11/9, with a horizon at (9w/11)GM against 2GM and no
+second-order term of GR's. The redshift: **reached** with the same w. The
+bending: the front gains (18w/11)GM/b, Einstein's second half exactly at
+w = 11/9, but the image does not: **different law** (image 1 to 2 GM/b,
+front 3 to 4). Shapiro: half of GR's at the w that fixes the clock:
+**different law**. The slowing of a free thing in a field and the shearing
+of a loop: **new**. The runs: A6 repeated with the wait, reading the
+register (unchanged to O((GM/b)²)) and the arrival tick; not with A6's
+source, whose S_eff = 40 262 puts every Node of its board inside
+r_h = 7208 Links at w = 1 (the light thing never steps: the first thing the
+repeated run shows), but with S_eff = 10 (G_L M = 33 S_eff/(48π) = 2.19,
+n(8) = 0.22): the register turns by one quantum in about a quarter of the
+passes at b = 8 (section 11 (a)) and the arrival is late by
+(9w/11) G_L M ln(4x_Ax_B/b²) = 11.4 w intervals for x_A = x_B = 96; and a
+two-slit behind the mass for the front; E5's ring placed at
+r = 8, 16, 32 from a body of content M for P/P₀ − 1 = (9w/11)G M/r; two
+rings at two radii for z.
+
+## 25. Round 3: the verdicts
+
+| Law | Round 2 (section 21) | Round 3: A (R8v), B (R4″), C (R9) | Run |
+| --- | --- | --- | --- |
+| The front of a release | 4/5 on tubes (R8) | A: **the same, exact** (R8v is the transport identity off head-on pairs); switched-on source: 58 % on the axes, 100 % in the coordinate planes, 0 off, period-4 pulse | E11 under R8v at (24,0,0), (24,1,0), (17,17,0), (14,14,14) |
+| Isotropy of the field | anisotropic (tubes) | A: **not reached**; no symbol; the front an octahedron at every order | — |
+| Retardation t₉₀ | r on tubes | A: r + O(4) on tubes, ∞ off the planes | A5s Run 2 tick by tick |
+| Two-slit fringes of shadows | λ/2 in the strip (R8) | A: **lost** in counts (a₁ + a₂), a push-direction modulation of depth \|a₁ − a₂\|/A | A1 |
+| Newton's third law | reached with the return | A: **lost** (the return is collimated outward) | A5s Run 2, the recoil at the source |
+| Port-order independence | — | A: **lost** under (M) at every tie; under (P) at V = 0 (every mirror, 1 % of a source) | E11 with a wall |
+| A length scale in the force | not reached | B: **reached** as cos(2πM_B s/K)/s², beating at \|M_A − M_B\|/K | A5s with two clocked bodies |
+| Bohr's levels | not reached | B: **not reached**: bands about nλ; potential minima (n − ¼)λ, E₂/E₁ = 0.211, E₃/E₁ = 0.087 vs 1/4, 1/9; r_n ∝ n | — |
+| Mass ladder | stands, one new condition | B: unchanged; under cos only equal contents bind (no hydrogen) | A10 |
+| Coulomb's law at short range | reached | B: **different law**, modulated at λ_e (cos) or flickering (cos²) | A5s at s < λ |
+| Gravitational time dilation | not reached | C: **reached** in form, 1 − (9w/11)GM/r; GR's coefficient at w = 11/9; horizon (9w/11)GM vs 2GM | a ring beside a body |
+| Gravitational redshift | — | C: **reached**, z = (9w/11)GM(1/r₁ − 1/r₂) | two rings at two radii |
+| Einstein's 4GM/(c²b) | not reached (≤ 2) | C: front 3 to 4 GM/b at w = 11/9 (**reached** in the front), image 1 to 2 (**different law**) | A6 with the wait; a two-slit behind the mass |
+| Shapiro delay | — | C: (9w/11)GM ln(4x_Ax_B/b²), half of GR's at w = 11/9 | A6 arrival tick |
+| Speed of a thing in a field | 1 | C: **new**, 1 − wn(r), frozen at r_h; a loop sheared, period P₀/(1 − wn) | any pushed thing near a body |
+
+Open after this round, one line each: the self-consistent tie rule of R8v
+at a wall (the standing pattern in front of a mirror); the age distribution
+of a diffusive field (the wash-out radius of B's pattern beyond √(Dλ));
+the second order of the wait (strict against queued reading, and what the
+thing reads while it waits); the corner table's tolerance to a lag (whether
+a sheared loop breaks or drifts).

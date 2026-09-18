@@ -179,7 +179,7 @@ condition is an equality of bounded integers.
    difference), the two candidate Ports being the two entry Ports:
 
    ```json
-   {"field": "electron", "amount": {"table": [8, 7, 4, 1, 0, 1, 4, 7], "of": "sum", "index": "phase_difference"},
+   {"field": "electron", "amount": {"of": "sum", "index": "phase_difference"},
     "heading": "reversed", "input": 1, "phase": {"of": 0}},
    {"field": "electron", "amount": {"rest_of": 0}, "heading": "reversed", "input": 0, "phase": {"of": 1}}
    ```

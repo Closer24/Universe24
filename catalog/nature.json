@@ -184,11 +184,11 @@
       "engine": {"identity": "ray-meeting-conversion-v1", "landed": true},
       "participants": [{"type": "light"}, {"type": "light"}],
       "outputs": [
-        {"field": "light", "amount": {"table": [8, 7, 4, 1, 0, 1, 4, 7], "of": "sum", "index": "phase_difference"}, "heading": 2},
+        {"field": "light", "amount": {"of": "sum", "index": "phase_difference"}, "heading": 2},
         {"field": "light", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}}
       ],
       "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
-      "table_rule": "cos^2(d/2) in N-ths, rounded, for d the phase difference of the two rays and N = 2^phase_bits; the 8-step table is the reference (Highlights 3.3; ray-event model, step 6); a wider table is written by the same rule before the run (A1 at N = 256; A3: cos 45 degrees = 181/256)",
+      "table_rule": "the table is not declared (the model owner, 2026-09-18, Highlights 5.4 point 17): the engine writes it once from the family's phase width N as cos^2(d/2) in N-ths, rounded to the nearest whole, for d the phase difference of the two rays; [8, 7, 4, 1, 0, 1, 4, 7] at N = 8 (Highlights 3.3; ray-event model, step 6), the same table steering the shadows' spread (feature 16a); the catalog declares only which pairs steer",
       "note": "Interference as steering (Highlights 3.3): where two rays of one family meet in one layer, the coupling reads their phase difference d and splits the shared content between the two candidate Ports in the ratio table[d] : N - table[d], the table output taking floor(content x table[d] / N) and the rest output the rest, so the remainder has an owner (3.17); nothing is erased and no Detector reads it. The two Ports here, +Y and -Y, are the world's choice; the same table serves any family whose rays meet in one layer (A1 confronts the electron fringes of Tonomura as well as light). Charge x amount is appended as an invariant by the engine."
     },
     "electron_field_turn": {
