@@ -1,8 +1,8 @@
 """The dense mode for boards that a field fills (dense-field-v1, docs/PERFORMANCE.md):
 the shadow-only Nodes of a board held as integer arrays and cycled by the mixing
 and remainder rule of node-mixing-v1 and field-remainder-v1, exactly as the
-engine's `spread_content` (since feature 16c, part 1, through it, Node by Node;
-the vectorized twin is part 2); a ray leaving a dense Node
+engine's `spread_content` (feature 16c, part 2: the mixing vectorized in
+`DenseField._mix`, the same integers at every Node); a ray leaving a dense Node
 toward a sparse Node (a mark, a body, a lamp, a Node holding a returning or another
 family's ray) handed over as an ordinary packet and a packet leaving a sparse Node
 into the dense region absorbed into the arrays; the same `state.json` and the same
