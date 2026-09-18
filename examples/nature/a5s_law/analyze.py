@@ -70,10 +70,15 @@ def read_world(run, offset, amount_a, amount_b):
             row[f"push_{key}_line"] = sum(push[k] * line[k] for k in range(3))
             row[f"p_{key}_line"] = sum(vector[k] * line[k] for k in range(3))
         things = [row["p_a"][k] + row["p_b"][k] for k in range(3)]
-        current = list(entry["fields"]["momentum"]["current"])
+        line = entry["fields"]["momentum"]
+        current, returned = list(line["current"]), list(line["returned"])
         row["things_sum"] = things
-        row["in_flight"] = [current[k] - things[k] for k in range(3)]
-        row["momentum_escaped"] = list(entry["fields"]["momentum"]["escaped"])
+        # The ledger's `current` is the momentum on rays, here the shadows'
+        # alone (no real ray on the board); the bodies' momentum is the
+        # `returned` line, so the world's zero is current + returned + escaped.
+        row["in_flight"] = current
+        row["returned"] = returned
+        row["momentum_escaped"] = list(line["escaped"])
         row["balanced"] = bool(entry["balanced"])
         row["real_balanced"] = all(x["balanced"] for x in entry["real"].values())
         row["shadow_balanced"] = all(x["balanced"] for x in entry["shadow"].values())
@@ -131,7 +136,9 @@ def read_world(run, offset, amount_a, amount_b):
         ),
         "books_every_tick": all(r["balanced"] and r["real_balanced"] and r["shadow_balanced"] and r["real_conserved"] for r in rows),
         "closed_every_tick": all(
-            all(r["things_sum"][k] + r["in_flight"][k] + r["momentum_escaped"][k] == 0 for k in range(3)) for r in rows
+            all(r["things_sum"][k] + r["in_flight"][k] + r["momentum_escaped"][k] == 0 for k in range(3))
+            and r["returned"] == r["things_sum"]
+            for r in rows
         ),
         "escaped_momentum_at_end": rows[-1]["momentum_escaped"],
     }
@@ -279,7 +286,7 @@ def tables(record):
             if row["tick"] in shown:
                 total = [row["bodies"][0][k] + row["bodies"][1][k] + row["in_flight_inventory"][k] + row["ledger_escaped"][k] for k in range(3)]
                 lines.append(f"| {row['tick']} | {row['bodies'][0]} | {row['bodies'][1]} | {row['in_flight_inventory']} | {row['ledger_current']} | {row['ledger_escaped']} | {total} |")
-        lines.append(f"\nInventory in flight equals the ledger's current less the bodies' at every tick: {rp['inventory_matches_ledger']}; the replay's momentum lines equal the record's: {rp['matches_record']}; the two things' momenta plus the momentum in flight plus the escaped sum to zero at every tick: {rp.get('sum_zero_every_tick')}.\n")
+        lines.append(f"\nThe momentum in flight read from the inventory equals the ledger's current line at every tick: {rp['inventory_matches_ledger']}; the replay's momentum lines equal the record's: {rp['matches_record']}; the two things' momenta plus the momentum in flight plus the escaped sum to zero at every tick: {rp.get('sum_zero_every_tick')}.\n")
     return "\n".join(lines) + "\n"
 
 
@@ -305,6 +312,14 @@ def main(argv=None):
         # Keep an earlier analysis's replays (the engine is deterministic).
         earlier = json.loads(args.record.read_text(encoding="utf-8"))
         record["replays"] = earlier.get("replays") or {}
+        for rp in record["replays"].values():
+            # The checks are re-read from the rows (the ledger's `current` is the
+            # shadows' momentum; the bodies' is the `returned` line).
+            rp["inventory_matches_ledger"] = all(row["in_flight_inventory"] == row["ledger_current"] for row in rp["rows"])
+            rp["sum_zero_every_tick"] = all(
+                all(row["bodies"][0][k] + row["bodies"][1][k] + row["in_flight_inventory"][k] + row["ledger_escaped"][k] == 0 for k in range(3))
+                for row in rp["rows"]
+            )
     for name, document in documents.items():
         run = load_record(args.closed if args.closed else args.runs, name)
         if run is None:
@@ -365,10 +380,7 @@ def main(argv=None):
         record["replays"][name] = {
             "world": name,
             "rows": rows,
-            "inventory_matches_ledger": all(
-                row["in_flight_inventory"] == [row["ledger_current"][k] - row["bodies"][0][k] - row["bodies"][1][k] for k in range(3)]
-                for row in rows
-            ),
+            "inventory_matches_ledger": all(row["in_flight_inventory"] == row["ledger_current"] for row in rows),
             "matches_record": all(row["bodies"] == [rec["p_a"], rec["p_b"]] for row, rec in zip(rows, recorded, strict=True)),
             "sum_zero_every_tick": all(
                 all(row["bodies"][0][k] + row["bodies"][1][k] + row["in_flight_inventory"][k] + row["ledger_escaped"][k] == 0 for k in range(3))

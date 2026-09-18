@@ -3235,158 +3235,237 @@ sign rule, and its other couplings are catalog entries.
 
 - **Claim.** The first confrontation of the engine under the law of the bit
   (Highlights 5.4, the model owner's decisions of 2026-09-18; features 15 to
-  18 and 16d part 1 on `main` at `ffa4a56`) with round 4 of
+  18, 16d, 16e, 16f and the cleanup on `main` at `1a88785`) with round 4 of
   [DERIVATIONS](DERIVATIONS.md#26-round-4-the-node-mixes-the-six-as-an-operator)
-  (sections 26 to 33), on one thing at rest and its field: the field is a
-  standing set given with the board (points 11, 13, "A thing does not
-  emit"), a shadow spreads by the Node's mixing (point 24), the return is a
-  field (point 3), a thing reads the shadows' message by its content or its
-  charge (point 16), there is one shadow set per thing and no field family
-  (points 12, 18), a thing's clock is its content (point 19) and it pays a
-  tick per whole quantum read (point 23). The predictions confronted, each
-  answered below with its number: (i) no tubes, 89 % of a release off the
-  coordinate planes at t = 30 (section 27 (ii)); (ii) the front at sqrt 3 r
-  in every direction, sharp on (111) and smeared on the axes (27 (iii));
-  (iii) 1/r^2 at every angle with a fixed first-order anisotropy of order
-  (15/8) omega^2 K_4 between an axis and (111) for a clocked source, and no
-  far field for a clockless one (27 (v)); (iv) the wave surviving the
-  integer rule above about 256 quanta per Node (section 30); (v) the third
-  law exact through the field, the recoil arriving at the owner (sections 32
-  and 33); and the books per bit balanced at every interval (point 7).
-  Nothing is registered as a law; what came out is recorded.
+  (sections 26 to 33) and round 6 (section 39), on one thing at rest and its
+  field: the field is a standing set given with the board (points 11, 13, "A
+  thing does not emit"), a shadow spreads by the Node's mixing (point 24),
+  the return is a field (point 3), a thing reads the shadows' message by its
+  content or its charge (point 16), there is one shadow set per thing and no
+  field family (points 12, 18), a thing's clock is its content (point 19) and
+  it pays a tick per whole quantum read (point 23). By the model owner's
+  decisions of the same day the board of a run is closed and only closed
+  worlds are tested (Highlights 5.4, "The board of a run is closed", PRs #311
+  and #314): the series is made on a periodic board, where every shadow
+  comes around and the field of a thing at rest is meant to be a steady
+  circulation, read once settled. The predictions confronted, each answered
+  below with its number: (i) no tubes, 89 % of a release off the coordinate
+  planes at t = 30 (section 27 (ii)); (ii) the front at sqrt 3 r in every
+  direction, sharp on (111) and smeared on the axes (27 (iii)); (iii) 1/r^2
+  at every angle with a fixed first-order anisotropy of order (15/8) omega^2
+  K_4 between an axis and (111) for a clocked source, and no far field for a
+  clockless one (27 (v)); (iv) the wave surviving the integer rule above
+  about 256 quanta per Node (section 30); (v) the third law exact through
+  the field, the recoil arriving at the owner (sections 32 and 33); (vi) the
+  books per bit balanced at every interval (point 7); and, new, (vii) the
+  amplitude a thing reads, 0.5373 sqrt(G M) / r, the potential's 1/r
+  (section 39). Nothing is registered as a law; what came out is recorded.
 - **Features.** 15 (`bit-law-v1`), 16b (`clock-readings-v1`), 16c
-  (`node-mixing-v1`), 16d part 1 (`return-field-v1`), 17
-  (`node-is-ports-v1`), 18 (`lanes-v1`), the dense mode (`dense-field-v1`)
-  and the streamed snapshot and series runner of `perf-arrays-v1`.
-- **Run.** `examples/nature/e11_law/` (eleven worlds written by
-  `make_worlds.py`, the dictionary in the
+  (`node-mixing-v1`), 16d (`return-field-v1`, parts 1 and 2: the returning
+  shares in the dense layer), 16e and 16f present and not declared
+  (`shadow_wait`, `wait_reads` absent: the wait and the push are point 23's),
+  17 (`node-is-ports-v1`), 18 (`lanes-v1`), the cleanup (`cleanup-law-v1`:
+  one `N` for the world), the dense mode (`dense-field-v1`), the standing-set
+  search (`standing-field-v1`) and the series runner of `perf-arrays-v1`.
+- **Run.** `examples/nature/e11_law/` (the worlds written by `make_worlds.py`,
+  the dictionary in the
   [README](../examples/nature/README.md#e11-repeated-under-the-law-of-the-bit-the-field-of-one-thing-at-rest)),
-  every world on the law: N = 64 (`phase_bits` 6, the engine's per-family
-  key), K 1, `wait_per_quantum` 1, the dense mode, no `spread`, `steering`,
-  `mass_field`, `seed` or `field_of` key, 40 ticks, open boundary. The thing
-  at rest is an external body of the catalog's `proton` family, amount 2^28,
-  whole charge 3 x 2^28, at the centre; its shadow set is given with the
-  board by `initial_field` `{"fill": 12}` with `release` [1, 512]: 2^19 per
-  Port heading per interval of the fill, 6 x 2^19 x 12 = 37748736 quanta.
-  The fill is 12 because the prefill admits no longer one (at 13 a third
-  phase arrives back at the source on one Port and its two phase layers
-  refuse it, at every amount tried from 4096 to 2^18 per heading): the
-  largest lawful fill. The release amount is chosen for the receiver's
-  condition of section 30, at least 256 quanta per owner at the receiver's
-  Node: measured before the run on a 25^3 board at half the amount, the
-  train holds about 20000 per Node at r = 4 to 8 and the haze after it about
-  700 per Node at tick 30, so every read Node holds more than 256 through
-  the run (the table below reads it at every read Node). `standing.json`:
-  the body alone on 33^3 (r = 16), the field read shell by shell per tick by
-  `analyze.py` in-process (the dense layer publishes no per-Node event; the
-  replay's ledger is checked equal to the record's). `pulse.json`: the body
-  on 41^3 with `fill` 1, one release of 2^19 on each heading (X = 3145728)
-  and nothing else, for the front and the fraction off the planes at t = 30
-  (the board wider so that t / sqrt 3 = 17.3 is still on it). Nine probe
-  worlds, `probe_axis_r{4,8,12}`, `probe_110_m{3,6,9}` ((m, m, 0), r =
-  4.24, 8.49, 12.73) and `probe_111_m{2,5,7}` ((m, m, m), r = 3.46, 8.66,
-  12.12): the standing world with one test thing each, a real ray of the
-  catalog's `electron` family of content 1 emitted by a lamp one Link
+  every world on the law: `N` 64 declared once for the world, K 1,
+  `wait_per_quantum` 1, the dense mode, no `spread`, `steering`,
+  `mass_field`, `seed` or `field_of` key. The thing at rest is an external
+  body of the catalog's `proton` family, amount 2^28, whole charge 3 x 2^28,
+  at the centre of a 33^3 board; its shadow set is given with the board by
+  `initial_field` `{"fill": 12}` with `release` [1, 512]: 2^19 per Port
+  heading per interval of the fill, 6 x 2^19 x 12 = 37748736 quanta (the
+  fill is 12 because the prefill admits no longer one: at 13 a third phase
+  arrives back at the source on one Port and its two phase layers refuse it;
+  the release amount keeps every read Node above 256 quanta while the train
+  passes). The series, ten closed worlds of 120 ticks with `boundary`
+  periodic and `standing_field` on (the runner's search for the shadow
+  layer's fixed point or cycle, reporting the iterations to the repeat or
+  the residual at the last comparison): `standing_closed.json`, the body
+  alone, the field read shell by shell per tick by `analyze.py` in-process
+  (the dense layer publishes no per-Node event; the replay is checked
+  against the record tick by tick, the shadows on the board, the escapes,
+  the body's momentum and the books); and nine probe worlds,
+  `probe_axis_r{4,8,12}_closed`, `probe_110_m{3,6,9}_closed` ((m, m, 0), r =
+  4.24, 8.49, 12.73) and `probe_111_m{2,5,7}_closed` ((m, m, m), r = 3.46,
+  8.66, 12.12): the standing world with one test thing each, a real ray of
+  the catalog's `electron` family of content 1 emitted by a lamp one Link
   outward of the read Node and heading inward, standing at the read Node
   after tick 1; its coupling `read` over [electron, proton] is the momentum
-  table `{"proton": 1}` read by content, so every push is +amount x heading
-  x 1, the signed flux J of the body's shadows at its Node in quanta, and the
+  table `{"proton": 1}` read by content, so every push is +amount x heading,
+  the signed flux J of the body's shadows at its Node in quanta, and the
   thing's momentum line per tick (the runner's `momentum`) is the pushed
   amount itself; under point 23 a thing that reads thousands of quanta never
-  moves again, so the test thing is a probe at rest and its
-  `computation_per_tick` reads 0 while it waits. It heads inward because
-  under `return-field-v1` a share arriving through the Port the thing
-  arrived by rides with it and pushes nothing (one meeting, one push): the
-  ignored lane carries the wave's small backward share, and the inventory's
-  J at the same Node in `standing.json` is reported beside every probe's
-  reading. One probe per world, since every push returns as field and a
-  probe's returns would pollute another probe's reading on the same line.
-  The pushed amount per direction is read as the probe's cumulative radial
-  momentum at tick 40 (for a wave train that passes, the time-integrated
-  push is what crossed the shell over its area) and as its mean per interval
-  over the first twenty read intervals (ticks 2 to 21); the 1/r^2 fit is the
-  log-log least-squares slope over the three radii per direction and the
-  anisotropy the axis fit over the (111) fit at r = 8 and 12. The records
-  were made with `tools/run_series.py --jobs 2` on the shared machine (4
-  cores, 15 GB; another lane running beside), the `run.json` of every world
-  kept under `artifacts/e11_law/` of the branch and the readings in
-  `record.json` and `tables.md` beside the worlds. Stated before the run:
-  the prefill drops what reaches the lamp's Node during the fill (a Node
-  holding a record is the engine's and not a source), so the probe worlds
-  whose lamp lies within the fill's train start with slightly fewer shadows
-  (37733842 at `probe_axis_r4`, 37716989 at `probe_110_m3`, 37514574 at
-  `probe_111_m2`, 37748734 at `probe_axis_r8`, the full 37748736 elsewhere);
-  the books open with the counted content.
-- **Result (work in progress, 2026-09-18 11:45 UTC; the lane moves to a
-  dedicated machine and the entry is completed there).** Eight of the eleven
-  worlds are recorded (`pulse`, `standing`, the three axis probes, the three
-  (110) probes; the three (111) probes were killed unfinished when the lane
-  moved, and the closed-board world `standing_closed.json`, added on the model
-  owner's decision of the same hour that the confrontation runs are made on a
-  closed board, is written and not run). The books: every ledger line per bit
-  balanced at every completed tick of all eight worlds, `real_conserved` true
-  throughout. The field of the thing at rest on the open board is not a
-  standing set: the shadow set of 37748736 falls to 19372497 by tick 40
-  (18376239 escaped), the train leaving the body at about 1 / sqrt 3 Link per
-  interval and the haze behind it thinning (the shells per tick, the fraction
-  off the planes and the front's arrival are read by the replay of `pulse`
-  and `standing`, not yet made; measured before the run at half the amount on
-  a 25^3 board, the content per Node at r = 4 to 8 was about 20000 while the
-  train passed and about 700 at tick 30, so every read Node held more than 256
-  quanta of the body's shadows through the run). The probes (the cumulative
-  radial push at tick 40 / the mean push per interval over ticks 2 to 21):
-  axis r = 4: 115328 / 5868; r = 8: 17204 / 392; r = 12: 6572 / 101; (110)
-  r = 4.24: 235703 / 11527; 8.49: 69914 / 2880; 12.73: 15481 / 307. The
-  log-log slope of the cumulative push over the three radii is -2.62 +- 0.10
-  on the axis and -2.40 +- 0.52 on (110) (of the early mean -3.72 and -3.16);
-  the axis reads 0.315 of the (110) fit at r = 8 and 0.288 at r = 12, a
-  threefold anisotropy against the diagonal (the (111) probes are missing, so
-  the axis / (111) number of the claim is not yet read). The push per interval
-  changes sign from interval to interval (at r = 8: 271, 598, 264, -209, -328,
-  339, ... then 3391 and 2832 at ticks 13 and 14 and 2649, 2390 at 31, 32): the
-  probe's own returned shares come back to it through the mixing (four ninths
-  of a lone share turns back at the next Node) and push it with the opposite
-  sign. The recoil through the field: the body's momentum line at tick 40 is
-  (-1587, 6, 5) at r = 4 (its first change at tick 6), (-6044, -5618, -2) at
-  (110) r = 4.24 and (-449, -391, -3) at 8.49, and (0, 0, 0) at r = 8, 12 and
-  12.73: 1.4 %, 3.5 %, 0.9 % and nothing of the probe's push came home within
-  40 ticks, the momentum the returned shares carry staying in flight on the
-  board (the ledger's momentum line at zero with the rest on the shadows, of
-  which -119 to -173 on x escaped by tick 40). Every probe waited 35 to 39 of
-  its 39 read intervals (point 23), so the test things stood at their Nodes
-  as intended. Cost on the shared machine (two runs at a time beside another
-  lane): 114 s (`standing`), 211 s (`pulse`), 279 to 594 s for the probes at
-  r >= 8 and 1251 to 1329 s for those at r = 4 (the returned shares near the
-  body are the engine's Nodes on this commit; 16d part 2 on `main` carries
-  them in the dense layer).
-- **Reading (provisional).** On the open board the engine gives no standing
-  field at a thing at rest: the prefilled set is an outgoing wave train that
-  leaves, so 1/r^2 can be read only as the time-integrated push of the passing
-  train, whose slope over r = 4 to 12 is -2.6 on the axis and -2.4 on (110),
-  steeper than 1/r^2 and strongly anisotropic (the axis a third of the
-  diagonal), with the clockless source the derivation says has no far field
-  at all; the return as a field does not bring the recoil home within 40 ticks
-  beyond r = 4, the momentum staying in flight on shares that stand near the
-  probe; the books per bit close at every interval. The closed board decided
-  by the model owner during these runs is where the standing set is to be
-  read, and the next steps below name it.
-- **Fingerprint.** Source `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`
-  (the package of `main` at `ffa4a56`, features 15 to 18 and 16d part 1; no
-  engine change on the branch), initializations `pulse`
-  `e11_law/records/pulse.json` and the others in
-  `examples/nature/e11_law/records/` (the `run.json` of every recorded world,
-  `initialization_sha256` inside each; `events.jsonl` and `state.json` were
-  not kept). The worlds are the files beside them at this commit, byte for
-  byte the runs' `initialization.json` (checked for `pulse`, `standing`,
-  `probe_axis_r8`); `main` has since taken the world key `N` in place of
-  `phase_bits` (PR #307), so the shipped worlds are to be migrated before they
-  parse there, their textual fingerprint changing and their physics not.
-- **Status.** in progress: measured on 2026-09-18 for eight worlds at the
-  fingerprint above, recorded here as work in progress at the WIP commit of
-  this branch; the (111) probes, the closed-board world, the replays (the
-  shells, the front, the fraction off the planes), the anisotropy against
-  (111) and the GIF page remain (the next steps in the pull request's
-  handoff). Nothing is registered as a law.
+  moves again, so the test thing is a probe at rest (it waited 115 to 119 of
+  its 119 read intervals in every world). It heads inward because under
+  `return-field-v1` a share arriving through the Port the thing arrived by
+  rides with it and pushes nothing (one meeting, one push): the ignored lane
+  carries the wave's backward share. One probe per world, since every push
+  returns as field. The settled push per direction is the probe's mean
+  radial push per interval over the last twenty ticks (101 to 120), with its
+  standard error and beside it every window of twenty and the settling tick
+  (the first from which every later window of twenty stays within 10 % of
+  the last); the 1/r^2 fit is the log-log least-squares slope over the three
+  radii per direction and the anisotropy the axis fit over the (111) fit at
+  r = 8 and 12. The amplitude at the test thing's Node is the size of the
+  coherent sum of the shadows that arrived there in the interval, formed by
+  `analyze.py` from the arrivals of the replay (the layer's arrays and the
+  engine's Node) with the engine's own `arrival_amplitude` of wait-reads-v1,
+  once per group (owner, sign, flow) and summed: |sum_p A_p| = 3 |u| of
+  section 39, in quanta^(1/2); no world declares `wait_reads`, since the
+  record carries no per-tick amplitude either way and the push is the same
+  under both; the same sum is read at the same Nodes of the free field
+  (`standing_closed`), and the wave fraction |sum A|^2 / (3 n) (1 for a pure
+  wave, 0 for standing flat-band content, up to 2 for six arrivals in one
+  phase) beside it. The records were made with `tools/run_series.py --jobs
+  4` on a dedicated machine (4 cores, 16 GB; 479 to 1016 s per world, 2.5 GB
+  peak each), the `run.json` of every world kept in `records/` beside the
+  worlds, the readings in `record.json` and `tables.md`, the page in
+  `e11_law.html`. Stated before the run: the prefill drops what reaches the
+  lamp's Node during the fill, so the probe worlds whose lamp lies within
+  the fill's train start with slightly fewer shadows (37733842 at r = 4,
+  37716989 at (110) m = 3, 37514574 at (111) m = 2, 37748734 at r = 8, the
+  full 37748736 elsewhere); the books open with the counted content. Before
+  the decision that only closed worlds are tested, eight open-board worlds
+  of 40 ticks (`pulse`, one release of 2^19 per heading on 41^3; `standing`;
+  the three axis and the three (110) probes) were recorded on `main` at
+  `ffa4a56` (features 15 to 18 and 16d part 1); they stand outside the
+  series' reading and are kept as recorded, their numbers quoted below
+  where a prediction was read only there (the front, the release off the
+  planes) and in the tables' last section.
+- **Result (the closed series).** Per prediction, whether the engine gave it,
+  with the number. *(vi) The books:* given. Every ledger line per bit
+  balanced at every tick of all ten worlds, `real_conserved` true
+  throughout, nothing escaped, the shadow set constant to the quantum, and
+  in every probe world the probe's momentum plus the momentum in flight on
+  the shadows (the ledger's `current` line) plus the body's (its `returned`
+  line) is zero at every tick. *The standing set:* not reached. The runner's
+  search found no fixed point and no cycle within 120 ticks in any of the
+  ten worlds (the residual at the last comparison 46.6 to 47.0 M quanta
+  moved over 622 k to 953 k array cells, out of 37.7 M on the board): the
+  field of the thing at rest on the closed board is not a steady
+  circulation within 120 ticks but a train that circles the board. In
+  `standing_closed` the train leaves the body (the L1 shell k = 4: 40312
+  quanta per Node at t = 1, 9140 at t = 10, 1684 at t = 20, 294 at t = 40),
+  the board fills to a near-uniform haze by t = 40 to 60 (220 to 350 per
+  Node at k = 4 to 16, 0.94 to 0.96 of the content off the coordinate
+  planes, 0.3 % parked), and the train comes around the periodic board and
+  reconverges at the body: the body's Node holds 395 quanta at t = 40,
+  16429 at t = 80, 40922 at t = 84, 72786 at t = 92 and 44238 at t = 104,
+  the k = 4 shell rises to 4390 per Node at t = 88, and the train leaves
+  again (459 per Node at k = 4 at t = 120). The round trip of 33 Links at
+  the derived front speed 1 / sqrt 3 is 57 intervals; the first reconvergence
+  is spread over t = 72 to 116. The mean over ticks 101 to 120 differs from
+  the mean over 81 to 100 by a factor 2 to 3 at every shell, and no read
+  Node settled (no two consecutive windows of twenty within 10 %). *(i) No
+  tubes:* given. The content off the coordinate planes is 0.83 at t = 5,
+  0.87 at t = 20, 0.91 at t = 30, 0.94 at t = 40, 0.955 to 0.958 at t = 50
+  to 60, 0.80 to 0.89 during the reconvergence (mean of the last twenty
+  0.86), on the axes below 1 % from t = 5; the release measured earlier on
+  the open board (`pulse`) had 0.891 off the planes at t = 30 against the
+  derivation's 0.890. *(ii) The front at sqrt 3 r:* given, read on the open
+  board earlier (on the closed board the first passage is the same until the
+  train reaches the boundary at about t = 28): the pulse's content at the
+  read Nodes peaks at ticks 7, 16, 22 on (111) (sqrt 3 r = 6.0, 15.0, 21.0),
+  9, 19, 29 on (110) (7.3, 14.7, 22.0) and 9, 29, 37 on the axis (6.9, 13.9,
+  20.8): on time and sharp on the body diagonal, 2 to 7 intervals late on
+  (110), 2 to 16 late and smeared on the axis, with the axis peak 30 times
+  below the (111) peak at r = 12 (241 against 7786), as section 27 (iii)
+  derives. *(iii) 1/r^2 at every angle:* not given. The settled push per
+  interval (ticks 101 to 120, +- its standard error) is 637 +- 588, 1155 +-
+  685 and 1846 +- 621 on the axis at r = 4, 8, 12 (log-log slope +0.96 +-
+  0.08), 1064 +- 542, 409 +- 883 and 453 +- 252 on (110) at r = 4.24, 8.49,
+  12.73 (-0.84 +- 0.43), 444 +- 827, 562 +- 403 and 319 +- 219 on (111) at
+  r = 3.46, 8.66, 12.12 (-0.15 +- 0.41); the window 81 to 100 gives 1916,
+  1344, 1939 on the axis (-0.05 +- 0.37), 1348, 223, -123 on (110), -341,
+  267, 317 on (111); the anisotropy axis / (111) of the settled push is 2.87
+  at r = 8 and 4.51 at r = 12 (5.6 and 5.7 of the window 81 to 100), against
+  the derived 1 - 1.25 omega^2 = 1 for this source (omega = 0: the body has
+  no clock); the push changes sign every two to three intervals (36 to 66
+  sign changes in 119 intervals; single intervals of +-10000 around means
+  of hundreds), the probe reading the train as it passes outward and,
+  after the round trip, inward, and its own returned shares. What the probe
+  reads is not a far field but the circling train; the derivation's clause
+  that a clockless source has no far field is not contradicted, and its
+  1/r^2 for a clocked source was not put to the test (no world of the series
+  has a clocked source). *(iv) The wave above 256 quanta per Node:* given
+  where read. The wave came around the board and reconverged at the body
+  (above) with 220 to 3000 quanta per Node on the way, and the wave fraction
+  |sum A|^2 / (3 n) at the free read Nodes is 0.77 to 1.67 over the last
+  twenty ticks (a pure wave 1, standing content 0) and 0.9 to 2.8 at the
+  probes' Nodes: the field the probes read is a wave, not parked residue
+  (0.3 % parked at t = 120). *(v) The third law through the field:* the
+  books exact (above); the recoil arriving at the owner, not within 120
+  ticks beyond a few per cent: of the probe's cumulative push the body's
+  momentum at tick 120 is 2.0 %, 0.3 % and 0.1 % on the axis at r = 4, 8,
+  12 (-3284 of 167837, -257 of 76386, -58 of 93060), 4.2 %, 1.1 % and 0.3 %
+  on (110), 17.3 %, 4.2 % and 1.5 % on (111) (-29934, -30205, -32802 of
+  310224 at (2, 2, 2)); the rest is in flight on the shadows, which do not
+  find the owner in one round trip. *(vii) The amplitude 1/r:* given at the
+  probe's Node, not in the free field. At the test thing's Node the size of
+  the coherent sum over ticks 101 to 120 is 264, 172, 103 quanta^(1/2) on
+  the axis at r = 4, 8, 12 (slope -0.83 +- 0.17), 214, 192, 85 on (110)
+  (-0.77 +- 0.49), 393, 53, 127 on (111) (-1.17 +- 1.01; the window 81 to
+  100: 259, 191, 143; 192, 91, 73; 346, 99, 94), the anisotropy axis / (111)
+  1.28 at r = 8; at the same Nodes of the free field (`standing_closed`, the
+  probe absent) it is 86, 73, 97 on the axis (+0.07 +- 0.24), 63, 86, 84 on
+  (110) (+0.28 +- 0.12), 47, 55, 127 on (111) (+0.66 +- 0.49): flat, as the
+  count there is flat (2603, 3038, 3059 per Node on the axis). The 1/r at
+  the probe's Node comes with a count that exceeds the free field's by 5.5,
+  4.1 and 0.85 at r = 4, 8, 12 (14200, 12360, 2589 quanta arriving per
+  interval): the probe returns every share it reads, a point mirror, and
+  piles the field near itself the more the nearer it stands to the body's
+  reconvergence; the amplitude read is that pile's square root, not the
+  free field's potential, and the derived 0.5373 sqrt(G M) / r (a clocked
+  source's far field) was not put to the test. *Cost.* 479 s (`standing_closed`)
+  and 550 to 1016 s per probe world, four at a time, 2.5 GB peak each; the
+  replays 182 to 569 s.
+- **Result (the open board, measured earlier, outside the series).** Eight
+  worlds on `main` at `ffa4a56`, 40 ticks: the books balanced at every tick;
+  the set falls from 37748736 to 19372497 by tick 40 (18376239 escaped); the
+  cumulative radial push at tick 40 on the axis 115328, 17204, 6572 (slope
+  -2.62 +- 0.10) and on (110) 235703, 69914, 15481 (-2.40 +- 0.52), the axis
+  0.315 of the (110) fit at r = 8; the inventory's J at the nine Nodes of
+  `standing` over ticks 2 to 21 has slopes -2.95, -2.03, -1.25 (axis, (110),
+  (111)) and the axis reads 0.10 of (111) at r = 8; the recoil home by tick
+  40: 1.4 % at r = 4, 3.5 % and 0.8 % at (110) r = 4.24 and 8.49, nothing at
+  r >= 8 on the axis; the (111) probes were never run.
+- **Reading.** On the closed board the engine gives, within 120 ticks, no
+  standing set and no steady circulation: the prefilled field of a thing at
+  rest is a wave train that circles the periodic board at about 1 / sqrt 3
+  Link per interval, thins to a haze and reconverges at its owner once per
+  round trip, and the search for a fixed point or a cycle finds none. What a
+  test thing at rest reads is that train, outward and then inward, with the
+  sign alternating every few intervals and a twenty-interval mean as large
+  at r = 12 as at r = 4 on the axis: 1/r^2 is not read, at any angle, and
+  the field of this clockless source has no far field to read, as section 27
+  (v) derives; the wave itself survives the integer rule and a round trip.
+  The books per bit close at every interval and the third law holds exactly
+  in the books, the recoil in flight on the shadows and at the owner only by
+  a few per cent within one round trip. The amplitude falls as 1/r at the
+  probe's Node and not in the free field: it is the probe's own mirror. The
+  predictions that need a clocked source (1/r^2 with the fixed anisotropy,
+  the amplitude 0.5373 sqrt(G M) / r) were not confronted by this series,
+  whose source has no clock; whether the circulation settles over several
+  round trips is beyond 120 ticks.
+- **Fingerprint.** The series: source
+  `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5` (the
+  package of `main` at `1a88785` merged into the branch: features 15 to 18,
+  16d parts 1 and 2, 16e, 16f, `cleanup-law-v1`; no engine change on the
+  branch), the initializations in `examples/nature/e11_law/records/*_closed.json`
+  (the `run.json` of every world, `initialization_sha256` inside each;
+  `standing_closed`
+  `872d63acd3178537f31b577b40aed15e7185d36b62aa59637210ed91fcf568da`), the
+  worlds the files beside them at this commit. The open board, earlier:
+  source `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`
+  (`main` at `ffa4a56`), `records/{pulse,standing,probe_axis_*,probe_110_*}.json`,
+  whose worlds carried the per-family `phase_bits` 6 that the migration to
+  the world key `N` rewrites (the physics unchanged).
+- **Status.** measured on 2026-09-18 for the ten closed worlds at the
+  fingerprint above (and, earlier the same day, for eight open worlds at
+  theirs); recorded here. Nothing is registered as a law.
 
 ### E12. The screen without a draw: a counter against a drawn mark, and interference in counts
 
