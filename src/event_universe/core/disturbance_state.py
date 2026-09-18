@@ -245,6 +245,14 @@ class InteractionDefinition:
     # input whose identity (`owner`) the output carries, its `input` key, input
     # 0 by default. Empty for a rule without outputs.
     output_sources: tuple[int, ...] = ()
+    # The inputs whose identities each output carries (charge-per-thing-v1,
+    # Highlights 5.4 points 16 and 25): its source input alone, or every input
+    # it sums when its amount is the sum of the inputs without a split (a join
+    # is a merge: the owners are kept as a set and the charges add). The
+    # output's charge view is the sum of these inputs' charges, and its further
+    # owners (`Ray.owners`) are their identities without its own. Empty for a
+    # rule without outputs.
+    output_identities: tuple[tuple[int, ...], ...] = ()
     # The decay table of a conversion (clock-readings-v1, Highlights 5.4 point
     # 20): the declared condition on the group's state, ("after_periods", n) or
     # ("content_at_most", c), None for a rule that fires at every meeting; the

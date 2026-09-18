@@ -76,12 +76,20 @@ def field(name, components=1):
     }
 
 
+# The whole charge of a body of the line and of a thing of `m` (charge-per-thing-v1,
+# 2026-09-18): a body's shadows carry its charge over its content, -4096 / 2^24,
+# and a pushed body or thing multiplies that by its whole charge, -4096, so the
+# product is the one unit per quantum of shadow these worlds pinned under the
+# per-quantum reading (-1 per quantum on 2^24 quanta); every number below holds.
+CHARGE = -4096
+
+
 def body(position):
     return {
         "position": list(position),
         "family": "m",
         "amount": AMOUNT,
-        "charge": -AMOUNT,
+        "charge": CHARGE,
         "momentum_table": {"m": 1},
         "reads": "charge",
     }
@@ -123,7 +131,7 @@ def document(shape, bodies, ticks, *, fill=8):
                 "rays_per_tick": 1,
                 "metric": "links",
                 "pace": [1, 1],
-                "charge": -1,
+                "charge": CHARGE,
                 "release": [1, 4096],
             }
         ],

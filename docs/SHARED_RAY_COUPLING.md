@@ -51,7 +51,7 @@ required structural properties selects its non-owning view. The projection
 properties are `amount`, `heading`, `phase`, `advance`, `delay`, `family`,
 `charge` and `detector` (`RAY_PROPERTIES`); `delay` maps to native
 `interaction_delay`, `family` is the index of the ray's spatial field,
-`charge` its family's charge per quantum ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1))
+`charge` the whole charge of the thing the ray is, its family's times the things a merged ray carries ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1), [charge per thing](SPATIAL_FIELDS.md#charge-per-thing-charge-per-thing-v1))
 and `detector` the Detector bit it carries, `0` none, `1` a draw of 0, `2` a
 draw of 1 ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
 Only heading, phase and delay are writable in this first interface. Amount,

@@ -194,7 +194,7 @@ RAY_SLOTS_RETIRED = (
 # by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
 # x heading x the thing's content, the acceleration content-independent) or
 # "charge" (a charged family's shadow, dp = sign x amount x heading x the
-# shadow's source sign x the thing's charge); no default.
+# owner's charge over its content x the thing's charge, whole); no default.
 PUSH_READS = ("content", "charge")
 # Gravity by delay (ray-binding-v1, the lag of a ray's face clocks by a declared
 # table) was deleted in the cleanup of 2026-09-18 (Highlights 5.4, points 16, 21
@@ -221,9 +221,12 @@ LOOP_BINDING = "loop-binding-v1"
 # the owner's id from the family's owner table. The gravity reading of a push is
 # sign x amount x heading x the content of what is pushed; the electricity
 # reading is sign x amount x heading x (the owner's charge / the owner's
-# content) x the charge of what is pushed, accumulated exactly on the pushed
-# thing in units of 1 / D (D the least common multiple of the owners' contents,
-# `push_remainder`), the whole units into its momentum. A decay is a declared
+# content) x the charge of what is pushed, whole (charge-per-thing-v1, point 16
+# as amended: the charge of a thing is one declared number of its family,
+# whatever its content, and a merged ray of k things carries k of it),
+# accumulated exactly on the pushed thing in units of 1 / D (D the least common
+# multiple of the owners' contents, `push_remainder`), the whole units into its
+# momentum. A decay is a declared
 # condition on the group's state (`decay` on a rule with outputs: the n-th
 # meeting under the rule, or the group's content at most c), never a draw. The
 # momentum a thing carries accumulates its pushes and sets its direction only:
@@ -334,6 +337,21 @@ RETURN_FIELD = "return-field-v1"
 SHADOW_WAIT = "shadow-wait-v1"
 # The wait reads the amplitude, a declared coupling option (wait-reads-v1, feature 16f).
 WAIT_READS = "wait-reads-v1"
+# Charge per thing (charge-per-thing-v1, feature 16g; Highlights 5.4 point 16 as
+# amended by the model owner, 2026-09-18): the charge of a thing is one declared
+# number of its family, whatever its content (an electron -1, a proton +1, a body
+# its own declared charge), never a charge per quantum. It is what a thing
+# multiplies an electric message by, whole; it adds when two things of one
+# family become one ray (point 25: a merged ray of k things carries k of it,
+# read off the identities it carries, `owner` and `owners`), and every table
+# conserves it (the appended `charge` invariant sums the things' charges). The
+# source's charge over its content stays in the reading, since a shadow set is
+# proportional to its thing's content (point 18): that quotient is the field's
+# charge per quantum, the message a shadow carries. The charge readout of a
+# world counts things: a real ray carries the charge of the things it is, a
+# record's stock of a charged family is one thing not yet emitted (every source
+# emits its thing whole, point 25), and a shadow carries none.
+CHARGE_PER_THING = "charge-per-thing-v1"
 MIXING_DENOMINATOR = 9
 MIXING_AMPLITUDE_SCALE = 32
 MIXING_WEIGHT_BITS = 28
@@ -514,7 +532,9 @@ class ExternalBody:
     """The external body mark of a Node (external-body-v1): bounded Node metadata.
 
     The declaration (position, family as a spatial field index, amount of any
-    width, charge, the coupling as a ray interaction index, BODY_SINK or
+    width, charge (the body's whole charge, what it multiplies an electric
+    message by and what its shadows carry over its amount, charge-per-thing-v1),
+    the coupling as a ray interaction index, BODY_SINK or
     BODY_POLARIZER with its polarizer declaration,
     the released phase, the momentum table as one sign per spatial field), the
     momentum with its three exact accumulators, one exact sink counter per spatial
@@ -716,9 +736,11 @@ RAY_PROPERTIES = (
     FieldDefinition("advance", 1, "phase step per interval", True, False),
     FieldDefinition("delay", 1, "local interval", False, False),
     # wave-ray-family-v1: the ray's family (the index of its spatial field) and
-    # that family's charge per quantum, read-only views for a coupling at a meeting.
+    # the ray's charge, read-only views for a coupling at a meeting; since
+    # charge-per-thing-v1 the charge is the whole charge of the thing the ray
+    # is, the family's times the things it carries (`thing_charge`).
     FieldDefinition("family", 1, "spatial field index", False, False),
-    FieldDefinition("charge", 1, "charge per quantum", True, False),
+    FieldDefinition("charge", 1, "charge of the thing", True, False),
     # bit-law-v1: the bit the ray carries, 1 a thing and 0 a shadow, a read-only
     # view; a rule meets things alone, so a guard reads 1 here.
     FieldDefinition("detector", 1, "the bit of the law", False, False),
@@ -749,20 +771,15 @@ CHARGE_INVARIANT = "charge"
 
 
 def charge_invariant(participants: int) -> Invariant:
-    """The charge readout, charge x amount summed over the participants, declared as an
-    invariant of a ray interaction: exact before and after, checked like every
-    declared invariant (wave-ray-family-v1)."""
+    """The charge readout, the charge of the things summed over the participants,
+    declared as an invariant of a ray interaction: exact before and after,
+    checked like every declared invariant (wave-ray-family-v1; the charge of a
+    ray is the whole charge of the thing it is since charge-per-thing-v1)."""
     if type(participants) is not int or not 1 <= participants <= 6:
         raise ValueError("the charge invariant covers one to six participants")
     total: Expression | None = None
     for side in range(participants):
-        term = Expression(
-            "mul",
-            (
-                Expression("field", field=RAY_CHARGE, side=side),
-                Expression("field", field=RAY_AMOUNT, side=side),
-            ),
-        )
+        term = Expression("field", field=RAY_CHARGE, side=side)
         total = term if total is None else Expression("add", (total, term))
     assert total is not None
     return Invariant(CHARGE_INVARIANT, total)
@@ -1970,8 +1987,10 @@ class SpatialFieldDefinition:
     # 2^phase_bits, the same on every ray family; the parser sets it from N, and
     # a typed caller may leave 0 (one phase value) or let a coherence table set it.
     phase_bits: int = 0
-    # The family's charge per quantum, a bounded signed integer read by couplings
-    # at a meeting and summed as charge x amount by the charge readout.
+    # The charge of a thing of the family, whole, whatever its content
+    # (charge-per-thing-v1, Highlights 5.4 point 16 as amended): a bounded
+    # signed integer, what a thing multiplies an electric message by, read by
+    # couplings at a meeting and summed over the things by the charge readout.
     charge: int = 0
     # The shadow set (released-field-v1 under bit-law-v1): the release ratio, the
     # share of a thing's amount each of its shadows carries, 0 / 1 for a family
@@ -1986,11 +2005,12 @@ class SpatialFieldDefinition:
     # The owners' contents and charges (clock-readings-v1, point 18): per owner
     # in the order of `owners`, the stock each was declared with (a type's
     # default of the family's field, a body's amount, 1 for an owner known only
-    # from a profile) and its whole charge (the charge per quantum, the family's
-    # or the body's declared, times that stock), what a shadow carries as its
-    # owner's content and charge, read by the owner's id; and D, the least
-    # common multiple of the owners' contents over the world's families, the
-    # unit of the electricity reading's remainder.
+    # from a profile) and its whole charge (the family's charge for a thing of
+    # a type, the body's declared charge; charge-per-thing-v1), what a shadow
+    # carries as its owner's content and charge, read by the owner's id, the
+    # quotient of the two the message; and D, the least common multiple of the
+    # owners' contents over the world's families, the unit of the electricity
+    # reading's remainder.
     owner_contents: tuple[int, ...] = ()
     owner_charges: tuple[int, ...] = ()
     push_denominator: int = 1
@@ -2152,9 +2172,11 @@ class SpatialFieldDefinition:
 
     def owner_charge(self, owner: int) -> int:
         """The charge of one owner of the family (clock-readings-v1, point 18): its
-        whole charge, what its shadows carry as their owner's charge, read by the
-        owner's id from the owner table; over the owner's content it is the
-        family's charge per quantum for a thing of a type."""
+        whole charge, the family's for a thing of a type and the declared for a
+        body (charge-per-thing-v1), what its shadows carry as their owner's
+        charge, read by the owner's id from the owner table; over the owner's
+        content it is the message a shadow carries, the field's charge per
+        quantum."""
         if owner in self.owners and self.owner_charges:
             return self.owner_charges[self.owners.index(owner)]
         return 0
@@ -2406,6 +2428,12 @@ class SpatialPlan:
     # (clock-readings-v1, the settled rule (i)): on the momentum field, the
     # content x heading each step dropped from a thing's momentum, booked spent.
     spent_delta: Values = ()
+    # What the meetings of this cycle did to the charge readout, per spatial
+    # field (charge-per-thing-v1): the charge of the things after the tables
+    # less before, nonzero only where a table moved a thing between families
+    # (a decay, point 20) or changed the count of things of a family; booked on
+    # the charge ledger's sourced line so the line stays exact.
+    charge_delta: tuple[int, ...] = ()
     # The phase steps of the things this cycle (clock-readings-v1, point 11): the
     # world's computation per interval is their sum over its Nodes.
     phase_steps: int = 0
@@ -3403,15 +3431,50 @@ def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, i
     return result[0], result[1], result[2]
 
 
+def thing_charge(ray: Ray, definition: SpatialFieldDefinition) -> int:
+    """The whole charge of the thing a ray is (charge-per-thing-v1, Highlights 5.4
+    point 16 as amended): the family's charge, one declared number whatever the
+    content, times the things the ray carries, one plus the further owners a
+    merge of point 25 kept (charge adds when two things become one ray). Read
+    for a shadow too, as the charge of the thing whose shadow it is (a guard
+    may read it); the readouts count shadows as no charge."""
+    return checked_work(definition.charge * (1 + len(ray.owners)))
+
+
 def ray_charge(rays: Rays, definition: SpatialFieldDefinition) -> int:
-    """The charge readout of one bundle: the family's charge per quantum times the amount,
-    summed over its things as a 64-bit intermediate (wave-ray-family-v1). A shadow
-    carries the sign of its owner's charge as a message and no charge (bit-law-v1)."""
+    """The charge readout of one bundle: the whole charge of each thing
+    (`thing_charge`) summed over its things as a 64-bit intermediate
+    (wave-ray-family-v1, charge-per-thing-v1). A shadow carries the sign of its
+    owner's charge as a message and no charge (bit-law-v1)."""
     total = 0
     for ray in rays:
         if ray.detector == BIT_THING:
-            total = checked_work(total + checked_work(ray.amount * definition.charge))
+            total = checked_work(total + thing_charge(ray, definition))
     return total
+
+
+def record_things(initial: InitialState, type_index: int, index: int, stock: int) -> int:
+    """The things a record's stock of one ray family is (charge-per-thing-v1): a
+    source emits its thing whole (Highlights 5.4 point 25), so a stock a constant
+    directed emission of the record's type pays out in amounts a is ceil(stock /
+    a) things not yet emitted, each with the family's charge; a stock with no
+    such emission (an expression, a sweep over the headings, or no emission of
+    the family for the type) is one thing while it is positive, the sweep's
+    count of things being the model owner's open question. The charge a record
+    holds is the family's charge times this."""
+    if stock <= 0:
+        return 0
+    for emission in initial.emissions:
+        if emission.spatial_field != index or emission.heading is None:
+            continue
+        if type_index not in (emission.types or (emission.type_index,)):
+            continue
+        if emission.amount.op != "literal" or len(emission.amount.literal) != 1:
+            continue
+        amount = abs(int(emission.amount.literal[0]))
+        if amount:
+            return -(-stock // amount)
+    return 1
 
 
 def attenuate_rays(rays: Rays, decay: DecayDefinition, meter: CostMeter) -> tuple[Rays, int]:
@@ -3794,12 +3857,14 @@ def push_of(
     table's sign x the shadow's amount x its heading x the content of what is
     pushed, exact, the remainder untouched. The electricity reading, `reads`
     "charge": the table's sign x the shadow's amount x its heading x (the owner's
-    charge / the owner's content) x the charge of what is pushed, the owner's
-    charge and content read by the owner's id from the family's owner table (a
-    shadow is a ray of its owner's family: the owner's whole charge, its charge
-    per quantum times its stock) and the charge of what is pushed being its
-    charge per quantum, the family's for a thing and the declared for a body;
-    the product is accumulated per axis in units of 1 / D, D the family's
+    charge / the owner's content) x the charge of what is pushed, whole
+    (charge-per-thing-v1, point 16 as amended), the owner's charge and content
+    read by the owner's id from the family's owner table (a shadow is a ray of
+    its owner's family: the owner's whole charge over its content, the field's
+    charge per quantum, is the message) and the charge of what is pushed being
+    the whole charge of the thing, the family's times the things a merged ray
+    carries (`thing_charge`) and the declared charge for a body, never a charge
+    per quantum; the product is accumulated per axis in units of 1 / D, D the family's
     push denominator (a multiple of every owner's content), on the pushed thing's
     remainder, and the whole units go into the momentum, the rounding toward
     zero so that a push below one quantum of either sign accumulates exactly

@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
     BIT_LAW,
+    CHARGE_PER_THING,
     CLOCK_READINGS,
     DENSE_FIELD,
     DETECTOR_ABSORB,
@@ -316,6 +317,11 @@ def _execute_run(
         # computation per completed tick (point 11) and the momentum spent on
         # the things' steps (the settled rule (i)).
         "clock_readings": CLOCK_READINGS,
+        # Charge per thing (charge-per-thing-v1, feature 16g, Highlights 5.4 point
+        # 16 as amended): a family's `charge` and a body's are the charge of one
+        # thing, whole, what it multiplies an electric message by; the readouts
+        # and the charge ledger count things.
+        "charge_per_thing": CHARGE_PER_THING,
         "K": initial.clock,
         "N": initial.phase_steps,
         "wait_per_quantum": list(initial.wait_per_quantum),

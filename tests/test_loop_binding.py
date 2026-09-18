@@ -196,9 +196,12 @@ def ray(heading, amount, phase, steps, mask, shares):
 def rays_at(world, position):
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
     # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
-    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    # it (`owner`), and since charge-per-thing-v1 (the same day) a Born product
+    # that took the whole content of a corner carries the other thing's identity
+    # too (`owners`, point 25); this module pins lines and events, not identities
+    # (test_bit_law and test_charge_per_thing do).
     rays = node.rays[0] if node is not None and node.rays else ()
-    return sorted((replace(ray, owner=0) for ray in rays), key=ray_merge_key)
+    return sorted((replace(ray, owner=0, owners=()) for ray in rays), key=ray_merge_key)
 
 
 def state(world):

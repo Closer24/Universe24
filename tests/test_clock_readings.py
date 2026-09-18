@@ -279,8 +279,8 @@ def test_k_and_n_bound_the_content_one_node_may_hold(K, content, accepted):
 
 def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulates_exactly():
     """(d) 9 x 5 x 3, K 4: a neutral thing n of 4 and a charged thing c of 4
-    (charge +1 per quantum) each meet one shadow of a body of 32 with the whole
-    charge -1 after tick 1 (re-pinned 2026-09-18, node-mixing-v1: the lamps one
+    (charge +1, whole: charge-per-thing-v1) each meet one shadow of a body of 32
+    with the whole charge -1 after tick 1 (re-pinned 2026-09-18, node-mixing-v1: the lamps one
     Link before the meeting and the shadows fresh from the Node beside it), the
     same shadow read twice: gravity, -1 x 1 x (0, 1, 0) x 4 = (0, -4, 0), turns
     each to -Y at its departure of tick 2 (the content reached), 4 spent each;

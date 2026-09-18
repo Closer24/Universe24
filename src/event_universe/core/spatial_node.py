@@ -66,6 +66,7 @@ from .spatial_state import (
     merge_rays,
     polarize_content,
     push_of,
+    ray_charge,
     ray_merge_key,
     ray_momentum,
     ray_stock,
@@ -215,6 +216,9 @@ class SpatialAccounting:
         shadow_absorbed_by_marks: list[list[int]] | None = None,
         spent: list[list[int]] | None = None,
         computation: list[int] | None = None,
+        sourced_charge: list[int] | None = None,
+        absorbed_charge: list[int] | None = None,
+        absorbed_charge_by_marks: list[int] | None = None,
     ) -> None:
         self.__sources, self.__dissipation = sources, dissipation
         self.__spent = [] if spent is None else spent
@@ -226,6 +230,14 @@ class SpatialAccounting:
         self.__returned = [] if returned is None else returned
         self.__shadow_absorbed_by_marks = (
             [] if shadow_absorbed_by_marks is None else shadow_absorbed_by_marks
+        )
+        # The charge ledger's lines per spatial field (charge-per-thing-v1): the
+        # charge of the things a meeting sourced, sunk in a body and absorbed at
+        # a mark, counted per thing where the amounts above are counted.
+        self.__sourced_charge = [] if sourced_charge is None else sourced_charge
+        self.__absorbed_charge = [] if absorbed_charge is None else absorbed_charge
+        self.__absorbed_charge_by_marks = (
+            [] if absorbed_charge_by_marks is None else absorbed_charge_by_marks
         )
 
     def record_sources(self, values: Values) -> None:
@@ -256,6 +268,26 @@ class SpatialAccounting:
         """The shadows a mark absorbed, home to it (bit-law-v1): on the marks' line
         and here, so that the things' own identity reads the line less these."""
         add_audit_delta(self.__shadow_absorbed_by_marks, values)
+
+    @staticmethod
+    def _add_charge(target: list[int], values: tuple[int, ...]) -> None:
+        for index, value in enumerate(values):
+            target[index] = checked_work(target[index] + value)
+
+    def record_sourced_charge(self, values: tuple[int, ...]) -> None:
+        """What the meetings did to the charge of the things, per spatial field
+        (charge-per-thing-v1): a thing moved between families by a decay."""
+        self._add_charge(self.__sourced_charge, values)
+
+    def record_absorbed_charge(self, values: tuple[int, ...]) -> None:
+        """The charge of the things that ended in an external body's sink, per
+        spatial field (charge-per-thing-v1)."""
+        self._add_charge(self.__absorbed_charge, values)
+
+    def record_absorbed_charge_by_marks(self, values: tuple[int, ...]) -> None:
+        """The charge of the things a Detector mark absorbed on its clicks, per
+        spatial field (charge-per-thing-v1)."""
+        self._add_charge(self.__absorbed_charge_by_marks, values)
 
     def record_returned(self, values: Values) -> None:
         """What came home (bit-law-v1): the amounts of the shadows absorbed back into
@@ -587,6 +619,7 @@ class SpatialNode(SpatialNodeState):
         home_by_family: dict[int, list[int]],
         notes: list[dict[str, object]],
         home_pushes: dict[int, list[list[int]]],
+        absorbed_charge: list[int],
     ) -> Rays:
         """What arrives at an external body is met by the law of the bit (bit-law-v1,
         point 3) and its declared coupling. A shadow of the body's own identity is
@@ -626,18 +659,15 @@ class SpatialNode(SpatialNodeState):
                         # its sign flipped at the same Node handing -push back,
                         # both in this cycle before the body's step; they sum to
                         # zero and the body is what it was; both halves are booked.
-                        if body.charge % body.amount:
-                            raise ValueError(
-                                "a body read by its charge carries a whole charge that is a "
-                                "multiple of its amount (clock-readings-v1, point 16)"
-                            )
+                        # The body is read with its declared charge, whole
+                        # (charge-per-thing-v1).
                         push, _ = push_of(
                             sign,
                             ray,
                             definition,
                             PUSH_READS[body.reads],
                             body.amount,
-                            body.charge // body.amount,
+                            body.charge,
                             current.push_remainder,
                         )
                         halves = home_pushes.setdefault(definition.field, [[0, 0, 0], [0, 0, 0]])
@@ -654,20 +684,15 @@ class SpatialNode(SpatialNodeState):
                         home_momentum[axis] = checked_work(home_momentum[axis] + momentum[axis])
                     continue
                 if sign:
-                    # The body is read with its charge per quantum, its whole
-                    # charge over its amount (clock-readings-v1).
-                    if body.charge % body.amount:
-                        raise ValueError(
-                            "a body read by its charge carries a whole charge that is a multiple "
-                            "of its amount (clock-readings-v1, point 16)"
-                        )
+                    # The body is read with its declared charge, whole, never a
+                    # charge per quantum (charge-per-thing-v1, point 16 as amended).
                     push, remainder = push_of(
                         sign,
                         ray,
                         definition,
                         PUSH_READS[body.reads],
                         body.amount,
-                        body.charge // body.amount,
+                        body.charge,
                         current.push_remainder,
                     )
                     current = replace(body_pushed(current, push), push_remainder=remainder)
@@ -763,8 +788,17 @@ class SpatialNode(SpatialNodeState):
                 )
             # The sink line: what sank in whole quanta, and the momentum the body
             # took, what arrived less what left on the pass Port; the held quanta
-            # have none, as a parked shadow has none (field-remainder-v1).
+            # have none, as a parked shadow has none (field-remainder-v1). The
+            # charge line (charge-per-thing-v1): the charge of the things that
+            # arrived less that of the things that pass on, so that what the
+            # polarizer holds or sinks of a charged thing is booked as absorbed
+            # (the charge of a share is the model owner's open question).
             absorbed[definition.field][0] = checked_work(absorbed[definition.field][0] + polarized_sunk)
+            absorbed_charge[index] = checked_work(
+                absorbed_charge[index]
+                + ray_charge(tuple(polarized), definition)
+                - ray_charge(tuple(passing), definition)
+            )
             if definition.momentum_field is not None:
                 for axis in range(3):
                     absorbed[definition.momentum_field][axis] = checked_work(
@@ -787,6 +821,10 @@ class SpatialNode(SpatialNodeState):
             current = body_absorb(current, index, tuple(sunk), definition)
             amount = ray_stock(tuple(sunk))
             absorbed[definition.field][0] = checked_work(absorbed[definition.field][0] + amount)
+            # The charge of the things that ended here (charge-per-thing-v1).
+            absorbed_charge[index] = checked_work(
+                absorbed_charge[index] + ray_charge(tuple(sunk), definition)
+            )
             if definition.momentum_field is not None:
                 for axis, value in enumerate(ray_momentum(tuple(sunk), definition)):
                     absorbed[definition.momentum_field][axis] = checked_work(
@@ -919,6 +957,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if any(plan.charge_delta):
+            services.accounting.record_sourced_charge(plan.charge_delta)
         if plan.transfer_delta:
             services.accounting.record_reactions(plan.transfer_delta)
         if plan.returned_delta:
@@ -1305,6 +1345,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if any(plan.charge_delta):
+            services.accounting.record_sourced_charge(plan.charge_delta)
         if plan.transfer_delta:
             services.accounting.record_reactions(plan.transfer_delta)
         services.accounting.record_reactions(reaction)
@@ -1492,6 +1534,7 @@ class SpatialNode(SpatialNodeState):
         absorbed: list[list[int]],
         absorbed_momentum: dict[int, list[int]],
         index: int,
+        absorbed_charge: list[int],
     ) -> Rays:
         """The mark meets what arrives by the law of the bit (bit-law-v1, point 6).
 
@@ -1541,6 +1584,10 @@ class SpatialNode(SpatialNodeState):
                     )
                     absorbed[definition.field][0] = checked_work(
                         absorbed[definition.field][0] + ray.amount
+                    )
+                    # The charge of the thing that ended here (charge-per-thing-v1).
+                    absorbed_charge[index] = checked_work(
+                        absorbed_charge[index] + ray_charge((ray,), definition)
                     )
                     momentum = absorbed_momentum.setdefault(definition.field, [0, 0, 0])
                     for axis, value in enumerate(ray_momentum((ray,), definition)):
@@ -1681,6 +1728,10 @@ class SpatialNode(SpatialNodeState):
         clicks: list[dict[str, object]] = []
         returns: list[dict[str, object]] = []
         absorbed = [[0] * field.components for field in services.initial.fields]
+        # The charge of the things that ended in the body's sink and at the mark
+        # this interval, per spatial field (charge-per-thing-v1).
+        absorbed_charge = [0] * len(services.initial.spatial_fields)
+        taken_charge_by_mark = [0] * len(services.initial.spatial_fields)
         # What came home at the body and what pushed it (bit-law-v1): the returned
         # line, the re-release on the source line, and per family for the record.
         returned = [[0] * field.components for field in services.initial.fields]
@@ -1765,6 +1816,7 @@ class SpatialNode(SpatialNodeState):
                         taken_by_mark,
                         taken_momentum,
                         index,
+                        taken_charge_by_mark,
                     )
                 if self.body is not None and (arriving or returning):
                     arriving = self._body_meet(
@@ -1778,6 +1830,7 @@ class SpatialNode(SpatialNodeState):
                         home_by_family,
                         returns,
                         home_pushes,
+                        absorbed_charge,
                     )
                     returning = ()
                 ray_arrivals[index][packet.port] = checked_work(
@@ -1900,6 +1953,10 @@ class SpatialNode(SpatialNodeState):
             services.accounting.record_absorbed_by_marks(
                 tuple(tuple(values) for values in taken_by_mark)
             )
+        if any(absorbed_charge):
+            services.accounting.record_absorbed_charge(tuple(absorbed_charge))
+        if any(taken_charge_by_mark):
+            services.accounting.record_absorbed_charge_by_marks(tuple(taken_charge_by_mark))
         if any(any(values) for values in shadows_taken):
             services.accounting.record_shadow_absorbed_by_marks(
                 tuple(tuple(values) for values in shadows_taken)
@@ -1923,10 +1980,14 @@ class SpatialNode(SpatialNodeState):
         # What the marks absorbed, per family with its momentum, on the reception
         # record (detector-absorb-v1): the local audit reads it before it checks the
         # Node, since the clicks follow this record; absent when nothing was absorbed.
+        spatial_index = {d.field: i for i, d in enumerate(services.initial.spatial_fields)}
         absorbed_by_mark = {
             services.initial.fields[field].name: {
                 "amount": taken_by_mark[field][0],
                 "momentum": tuple(momentum),
+                # The charge of the things absorbed (charge-per-thing-v1), read
+                # by the local audit as the ledger reads it.
+                "charge": taken_charge_by_mark[spatial_index[field]],
             }
             for field, momentum in sorted(taken_momentum.items())
         }

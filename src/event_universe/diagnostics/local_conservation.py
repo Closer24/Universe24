@@ -28,6 +28,8 @@ from event_universe.core.spatial_state import (
     ledger_momentum,
     parked_momentum,
     parked_stock,
+    record_things,
+    thing_charge,
 )
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
@@ -100,8 +102,10 @@ class LocalConservationAudit:
         self._pending_spent: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
         # The charged ray families (ray-event-audit-v1): the audit measures their
-        # charge, charge x amount over rays and over held stock, beside energy and
-        # momentum, and reports it when any family declares a charge.
+        # charge beside energy and momentum, per thing since charge-per-thing-v1
+        # (the whole charge of every thing on the board and one thing per record
+        # holding stock of the family), and reports it when any family declares
+        # a charge.
         self._charges = {
             definition.field: definition.charge
             for definition in initial.spatial_fields
@@ -126,11 +130,17 @@ class LocalConservationAudit:
         for measurement in self.definition.carriers:
             if record.type_index in measurement.types:
                 energy, px, py, pz, _ = self._evaluate(measurement.quantities, record.values)
-                # The stock a record holds of a charged family reads charge x stock.
+                # The stock a record holds of a charged family is the things it
+                # is at the record's emission amount (charge-per-thing-v1,
+                # `record_things`), each with the family's charge, as the world
+                # ledger reads it.
                 charge = 0
-                for field, per_quantum in self._charges.items():
-                    stock = unpack(record.values[field])[0]
-                    charge = checked_work(charge + checked_work(stock * per_quantum))
+                for index, definition in enumerate(self.initial.spatial_fields):
+                    if definition.field not in self._charges:
+                        continue
+                    stock = unpack(record.values[definition.field])[0]
+                    things = record_things(self.initial, record.type_index, index, stock)
+                    charge = checked_work(charge + checked_work(things * definition.charge))
                 return (energy, px, py, pz, charge)
         raise ValueError("conservation measurement missing for a disturbance layout")
 
@@ -167,12 +177,13 @@ class LocalConservationAudit:
                     # The momentum as the ledger reads it (bit-law-v1): a thing its
                     # momentum or amount x heading, negated on its walk back
                     # (detector-return-v1); a shadow zero outbound and -dp on its
-                    # walk home. A thing's charge is charge x amount; a shadow
-                    # carries none (ray-event-audit-v1).
+                    # walk home. A thing's charge is the whole charge of the thing
+                    # it is (charge-per-thing-v1); a shadow carries none
+                    # (ray-event-audit-v1).
                     for axis, value in enumerate(ledger_momentum(ray, definition)):
                         intrinsic[axis] = checked_work(intrinsic[axis] + value)
                     if ray.detector == BIT_THING:
-                        charge = checked_work(charge + checked_work(ray.amount * definition.charge))
+                        charge = checked_work(charge + thing_charge(ray, definition))
             if definition.spread and parked and index < len(parked) and parked[index]:
                 # The Node's parked shadows hold whole quanta in total, shadow
                 # content without charge (node-is-ports-v1), with the momentum
@@ -194,7 +205,8 @@ class LocalConservationAudit:
         """The quantity a Detector mark absorbed on its clicks in one reception
         (detector-absorb-v1): per family the amount through the declared energy
         expression, the momentum the record carries (amount x heading, a register
-        where a push set one) as the intrinsic momentum, charge x amount."""
+        where a push set one) as the intrinsic momentum, and the charge of the
+        things absorbed as the record carries it (charge-per-thing-v1)."""
         if self.definition.spatial is None:
             return ZERO
         taken = cast(dict[str, dict[str, object]], event.get("absorbed_by_mark", {}))
@@ -206,7 +218,7 @@ class LocalConservationAudit:
             if definition.rays and name in taken:
                 amount = cast(int, taken[name]["amount"])
                 values[definition.field] = pack((amount,))
-                charge = checked_work(charge + checked_work(amount * definition.charge))
+                charge = checked_work(charge + cast(int, taken[name].get("charge", 0)))
                 for axis, value in enumerate(cast(Sequence[int], taken[name]["momentum"])):
                     intrinsic[axis] = checked_work(intrinsic[axis] + value)
         energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))

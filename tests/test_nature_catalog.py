@@ -594,7 +594,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             expected = event_ray(0, 5, (3 + 2 * rate) % 8, 1, (5, 0, 0, 0, 0, 0), 2)
             assert rays_at(simulation, (9, 7, 7)) == [expected]
             assert simulation.totals() == {name: (5,), "momentum": (0, 0, 0)}
-            assert simulation.charge_totals() == {name: 5 * rays[name]["charge"]}
+            # One thing of the family, its charge whole whatever its content
+            # (charge-per-thing-v1, 2026-09-18; 5 x the charge per quantum before).
+            assert simulation.charge_totals() == {name: rays[name]["charge"]}
             assert (simulation.real_content(), simulation.shadow_content()) == (5, 0)
         # Every shadow set a world can declare today, the electron's and the
         # positron's (bit-law-v1, point 12: a shadow is a ray of the same family
@@ -635,7 +637,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert rays_at(simulation, (4, 3, 3)) == []
             assert rays_at(simulation, (9, 7, 7)) == [event_ray(0, 5, 5, 1, (5, 0, 0, 0, 0, 0), 2)]
             assert simulation.totals() == {name: (14,), "momentum": (0, 0, 0)}
-            assert simulation.charge_totals() == {name: 5 * rays[name]["charge"]}
+            # One thing of the family, its charge whole whatever its content
+            # (charge-per-thing-v1, 2026-09-18; 5 x the charge per quantum before).
+            assert simulation.charge_totals() == {name: rays[name]["charge"]}
             assert (simulation.real_content(), simulation.shadow_content()) == (5, 9)
             assert simulation.audit()["balanced"]
         # Every decided coupling the engine runs today, with its rule taken from the
@@ -671,15 +675,19 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         # electron_field_turn (bit-law-v1, points 3, 15 and 16): an electron of 20
         # (lamp 0, K 20, one phase step per interval) emitted along +X from (6,7,7)
         # and a shadow of 1 of a second electron (lamp 1 at (13,13,13), thing 2,
-        # whole charge -60 over content 20) heading -Y from (7,8,7) meet at (7,7,7)
+        # charge -3 whole over content 20) heading -Y from (7,8,7) meet at (7,7,7)
         # after tick 1. In the cycle of tick 2 the electron takes the push: sign 1
-        # x amount 1 x heading (0,-1,0) x the owner's charge over its content (-3)
-        # x the electron's charge (-3) = (0,-9,0), below its content, so it goes on
-        # along +X to (8,7,7) carrying momentum (0,-9,0) (no event, no step); the
-        # shadow turns back with the opposite sign, fresh at (7,7,7), and after
+        # x amount 1 x heading (0,-1,0) x the owner's charge over its content
+        # (-3 / 20) x the electron's charge, whole (-3), = (0,-9/20,0), below one
+        # quantum: nothing into its momentum, the remainder (0,-9,0) in units of
+        # 1/20 on it (re-pinned 2026-09-18, charge-per-thing-v1: the electron does
+        # not turn at its first push; under the per-quantum reading the push was
+        # (0,-9,0) whole), so it goes on along +X to (8,7,7) (no event, no step);
+        # the shadow turns back with the opposite sign, fresh at (7,7,7), and after
         # tick 2 is at (7,8,7) on +Y, returning (outbound 0, sign +1), carrying
-        # (0,9,0). The books: the family's total 41, real 40, shadow 1, the two
-        # things' momentum {1: (20,-9,0), 2: (20,0,0)}, the ledger balanced.
+        # nothing. The books: the family's total 41, real 40, shadow 1, the two
+        # things' momentum {1: (20,0,0), 2: (20,0,0)}, the charge two electrons,
+        # -6, the ledger balanced.
         turn = couplings["electron_field_turn"]
         lamps = [((6, 7, 7), "electron", 20, 0, 0), ((13, 13, 13), "electron", 20, 0, 0)]
         document = board(rays, ["electron"], lamps, [rule("electron_field_turn", turn)], clock=20)
@@ -700,14 +708,14 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         }
         simulation = run(document)
         assert rays_at(simulation, (8, 7, 7)) == [
-            event_ray(0, 20, 2, 1, (20, 0, 0, 0, 0, 0), 2, momentum=(0, -9, 0))
+            replace(event_ray(0, 20, 2, 1, (20, 0, 0, 0, 0, 0), 2), push_remainder=(0, -9, 0))
         ]
-        assert rays_at(simulation, (7, 8, 7)) == [shadow_ray(2, 1, 0, 1, outbound=0, momentum=(0, 9, 0))]
+        assert rays_at(simulation, (7, 8, 7)) == [shadow_ray(2, 1, 0, 1, outbound=0)]
         assert rays_at(simulation, (7, 7, 7)) == []
         assert simulation.totals() == {"electron": (41,), "momentum": (0, 0, 0)}
-        assert simulation.thing_momentum() == {1: [20, -9, 0], 2: [20, 0, 0]}
+        assert simulation.thing_momentum() == {1: [20, 0, 0], 2: [20, 0, 0]}
         assert (simulation.real_content(), simulation.shadow_content()) == (40, 1)
-        assert simulation.charge_totals() == {"electron": -120}
+        assert simulation.charge_totals() == {"electron": -6}
         # The apparatus. A Detector mark parses under the admission these worlds
         # share. An external body at (8,7,7) meets a light ray of 5 emitted at
         # (7,7,7) along +X at phase 1: under the absorber (the sink, a body of the

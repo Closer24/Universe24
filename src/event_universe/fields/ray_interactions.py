@@ -35,6 +35,7 @@ from event_universe.core.spatial_state import (
     ray_vector,
     return_shadow,
     stamp_event,
+    thing_charge,
     turn_receiver,
     validate_ray_participants,
     validate_rays,
@@ -47,9 +48,10 @@ Turns = list[RayPush]
 
 def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
     """The RAY_PROPERTIES view of one ray: its family is the index of its spatial field
-    and its charge per quantum is the family's (wave-ray-family-v1); its bit is the
-    one it carries, 1 a thing (bit-law-v1); its polarization is the step it
-    carries, -1 for none (ray-polarization-v1)."""
+    and its charge is the whole charge of the thing it is, the family's times the
+    things a merged ray carries (wave-ray-family-v1, charge-per-thing-v1); its
+    bit is the one it carries, 1 a thing (bit-law-v1); its polarization is the
+    step it carries, -1 for none (ray-polarization-v1)."""
     return (
         pack((ray.amount,)),
         pack(definition.headings[ray.heading]),
@@ -57,7 +59,7 @@ def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
         pack((ray.advance,)),
         pack((ray.interaction_delay,)),
         pack((family,)),
-        pack((definition.charge,)),
+        pack((thing_charge(ray, definition),)),
         pack((ray.detector,)),
         pack((ray.polarization,)),
     )
@@ -67,7 +69,7 @@ def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition, f
     """One output of an interaction: the ray on its new line, before the event stamp."""
     if unpack(values[0]) != (ray.amount,) or unpack(values[3]) != (ray.advance,):
         raise ValueError("ray coupling amount and advance are read-only")
-    if unpack(values[5]) != (family,) or unpack(values[6]) != (definition.charge,):
+    if unpack(values[5]) != (family,) or unpack(values[6]) != (thing_charge(ray, definition),):
         raise ValueError("ray coupling family and charge are read-only")
     if unpack(values[7]) != (ray.detector,):
         raise ValueError("ray coupling detector is read-only: the bit never changes at a meeting")
@@ -141,9 +143,11 @@ def _convert(
     if converted is None:
         return None
     for kind, values in zip(rule.outputs, converted[0], strict=True):
-        # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
-        if unpack(values[5]) != (kind,) or unpack(values[6]) != (definitions[kind].charge,):
-            raise ValueError("ray meeting outputs carry the family and charge of their field")
+        # wave-ray-family-v1: an output is a ray of its field; its charge view is
+        # the parser's, the charge of the things whose identities it carries
+        # (charge-per-thing-v1), so the appended invariant reads it.
+        if unpack(values[5]) != (kind,):
+            raise ValueError("ray meeting outputs carry the family of their field")
     produced = [
         (kind, _output(values, definitions[kind]))
         for kind, values in zip(rule.outputs, converted[0], strict=True)
@@ -161,20 +165,54 @@ def _convert(
     # input the output reads; it carries that input's clock remainder and push
     # remainder on (clock-readings-v1: the corner table reproduces the thing that
     # entered, clock and all) and its passages, 0 when this rule is the group
-    # breaking (point 20: the outputs of a decay are fresh things).
+    # breaking (point 20: the outputs of a decay are fresh things). The further
+    # identities (charge-per-thing-v1, point 25): the owners of every input the
+    # output's identities name (its source input, or every input it sums),
+    # kept as a set without its own, so that a merged thing keeps its things
+    # through a table and a join of two things carries both, its charge the sum.
     for position, origin in enumerate(rule.output_sources):
         kind, ray = produced[position]
         source = inputs[origin][1]
+        identities = rule.output_identities[position] if rule.output_identities else (origin,)
+        carried: set[int] = set()
+        for named in identities:
+            carried.add(inputs[named][1].owner)
+            carried.update(inputs[named][1].owners)
+        carried.discard(source.owner)
         produced[position] = (
             kind,
             replace(
                 ray,
                 owner=source.owner,
+                owners=tuple(sorted(carried)),
                 remainder=source.remainder if definitions[kind].clock else 0,
                 push_remainder=source.push_remainder,
                 periods=0 if rule.decay is not None else source.periods,
             ),
         )
+        if len(identities) > 1 and definitions[kind].clock and ray.amount:
+            # A join above the bound fails closed (clock-readings-v1, point 19),
+            # as it did before its output carried every thing it joined: the
+            # lane's merge alone is the decay table's business (point 25).
+            definition = definitions[kind]
+            if 2 * abs(ray.amount) >= definition.clock * definition.phase_modulus:
+                raise ValueError(
+                    "a thing's content / K must stay below half the phase circle N / 2: "
+                    "K and N bound the content one Node may hold (clock-readings-v1, point 19)"
+                )
+    # A split whose table sends the whole content one way (charge-per-thing-v1,
+    # point 25): both things left through one lane, so the product that took it
+    # is one real ray of both, the owners kept as a set and the charges added;
+    # the empty product is no ray and hands its identities over.
+    for split in rule.splits:
+        for empty, full in ((split.first, split.second), (split.second, split.first)):
+            kind_empty, ray_empty = produced[empty]
+            kind_full, ray_full = produced[full]
+            if ray_empty.amount or not ray_full.amount:
+                continue
+            joined = set(ray_full.owners) | {ray_empty.owner, *ray_empty.owners}
+            joined.discard(ray_full.owner)
+            produced[full] = (kind_full, replace(ray_full, owners=tuple(sorted(joined))))
     stock: dict[int, int] = {}
     for kind, ray in inputs:
         stock[kind] = checked_work(stock.get(kind, 0) + ray.amount)
@@ -250,8 +288,10 @@ def _turn(
     cancel in the same cycle, the home of point 3 as amended), each
     push the rule's reading of the shadow's message (`push_of`: the table's sign
     x amount x heading x the thing's content, or x the owner's charge over its
-    content x the thing's charge, the latter accumulated exactly on the thing's
-    push remainder; a returning share pushes with the opposite sign), and each
+    content x the thing's whole charge (charge-per-thing-v1: the family's times
+    the things a merged ray carries, never a charge per quantum), the latter
+    accumulated exactly on the thing's push remainder; a returning share pushes
+    with the opposite sign), and each
     shadow turned back with the opposite sign carrying -push (return-field-v1).
     The same shadows are read once per momentum rule of the thing (point 18,
     gravity and electricity the same shadows read twice): a shadow an earlier
@@ -289,7 +329,7 @@ def _turn(
             definitions[kind],
             rule.reads,
             ray.amount,
-            definition.charge,
+            thing_charge(ray, definition),
             ray.push_remainder,
         )
         before = ray_momentum_vector(ray, definition)
@@ -343,7 +383,7 @@ def _turn(
                         definitions[kind],
                         rule.reads,
                         ray.amount,
-                        definition.charge,
+                        thing_charge(ray, definition),
                     )
                     wait_quanta = abs(unit_push[0]) + abs(unit_push[1]) + abs(unit_push[2])
         ray = replace(

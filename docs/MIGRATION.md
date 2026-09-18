@@ -6,6 +6,58 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Charge per thing, on 2026-09-18 (`charge-per-thing-v1`)
+
+Feature 16g ([charge per thing](SPATIAL_FIELDS.md#charge-per-thing-charge-per-thing-v1);
+Highlights 5.4 point 16 as amended by the model owner, 2026-09-18). No world
+key is added or removed; the meaning of one changes:
+
+- `spatial_fields[i].charge` is the charge of one thing of the family, whole,
+  whatever its content (an electron -3 in thirds of e on 1 quantum or on 64),
+  no longer a charge per quantum. A world whose family charge meant "per
+  quantum" on things of more than one quantum (a family of charge -1 whose
+  things are 100 quanta, meant as -100 whole) declares the whole charge it
+  means; the example worlds and the catalog declare the charge of a thing
+  already and change nothing (the A5 worlds' electrons of 64 quanta were read
+  as -192 whole before and are -3 now, their pushes 64 times smaller: the
+  decided physics, the product of the charges).
+- `external_bodies[i].charge` is the body's whole charge, as before, and it
+  is what the body multiplies an electric message by: a body a table pushes
+  is no longer refused when its charge is not a multiple of its amount, and a
+  body of 1000 quanta declaring 1000 to mean 1 per quantum now means 1000
+  whole and is pushed a thousandfold; declare the charge the body has (the
+  tests' bodies of 100 that meant -1 per quantum declare -10, so that their
+  shadows' message, -10 / 100, times the charge is what they pinned; those
+  of 1000 pushed by a body of 81 declare -1; `tests/test_perf_arrays.py`
+  declares -4096 on 2^24).
+- readouts: `charge_totals()`, `escaped_charge_totals()`, the ledger's
+  `charge` lines, `conservation_report()["charge"]` and `ray_charge` count
+  the whole charge of things (a merged ray of k things k times the family's
+  charge, a record's stock the things it has not yet emitted, `record_things`)
+  instead of charge x amount; a run's `audit` and the runner's conservation
+  flag read these. `run.json` gains `charge_per_thing`.
+- `RAY_PROPERTIES.charge`, the view a coupling reads, is the whole charge of
+  the thing the ray is; the appended `charge` invariant of a meeting is the
+  per-ray readout `{"field": "charge"}` summed over inputs and outputs
+  (`charge x amount` before); `InteractionDefinition` gains
+  `output_identities`; a meeting's outputs carry their source input's further
+  owners, a join (the plain sum of the inputs) every input's; a Born product
+  that took the whole content of a corner carries the other thing's identity.
+- `SpatialPlan` gains `charge_delta`; `SpatialAccounting` gains
+  `sourced_charge`, `absorbed_charge` and `absorbed_charge_by_marks`;
+  `SpatialEngine` the same lists and `sourced_charge_totals()`,
+  `absorbed_charge_totals()`, `marks_charge_totals()`; the reception record's
+  `absorbed_by_mark` entries carry `charge`; `ExternalBody` and
+  `SpatialFieldDefinition` keep their `charge` fields with the new meaning;
+  `push_of` takes the pushed thing's whole charge (`thing_charge`).
+- tests re-pinned, each with a dated reason: `test_wave_ray_families` (c),
+  `test_lanes` (h), `test_nature_catalog` (the charge readouts and the
+  electron's push), `test_bit_law` ((a)'s charge line, the pushed bodies of
+  (b) and (c')), `test_return_field`, `test_shadow_wait`, `test_perf_arrays`
+  (declarations), `test_loop_binding` (identities stripped from the lines it
+  reads), `test_clock_readings` (a docstring); new module
+  `tests/test_charge_per_thing.py`.
+
 ## The engine clean under the law of the bit, on 2026-09-18 (`cleanup-law-v1`)
 
 The cleanup lane of 2026-09-18 ([the engine clean](SPATIAL_FIELDS.md#the-engine-clean-under-the-law-of-the-bit-cleanup-law-v1)),
