@@ -34,9 +34,10 @@ the replay against the record; they never change the engine):
    steps, the size of the sum in the same units) from the arrivals the
    arrays and the engine's Node hold, once per group (owner, sign, flow) and
    summed over the groups, in quanta^(1/2), the |sum_p A_p| = 3 |u| of
-   DERIVATIONS.md section 39 (|u| is that over three). The replay's ledger
-   per tick is checked equal to the record's `audit`, so the reading belongs
-   to the fingerprinted run. `pulse` and `standing` (open) and
+   DERIVATIONS.md section 39 (|u| is that over three). The replay is checked
+   against the record tick by tick (the shadows on the board, the escapes,
+   the body's momentum line and the books; `identity_of`), so the reading
+   belongs to the fingerprinted run. `pulse` and `standing` (open) and
    `standing_closed` are replayed for the shells; every closed probe world is
    replayed for the amplitude at the test thing's own Node (the engine's
    Node, the probe returning the shares it reads).
@@ -409,20 +410,43 @@ def replay(document, ticks, read_nodes, log=print, shells=True):
     return per_tick, ledgers
 
 
+def identity_of(per_tick, run):
+    """The replay against the record, tick by tick: the shadows on the board
+    (the record's `shadow_content`), the escapes (the audit's shadow line), the
+    bodies' momentum (the runner's `momentum` line of thing 3) and, on a probe
+    world, the probe's momentum line (thing 2, read from the replay's ledger
+    as the world's momentum less the body's and the shadows' is not available
+    here, so the bodies' line stands for it); all four True is the identity."""
+    audit = run["audit"]
+    checks = {
+        "shadows_on_board": [row["on_board"] for row in per_tick] == list(run["shadow_content"][: len(per_tick)]),
+        "escaped": all(row["escaped"] == audit[i]["shadow"]["proton"]["escaped"][0] for i, row in enumerate(per_tick)),
+        "body_momentum": all(
+            row["body_momentum"][0] == list(run["momentum"][i].get(str(BODY_THING), [0, 0, 0])) for i, row in enumerate(per_tick)
+        ),
+        "balanced": all(row["balanced"] == (bool(audit[i]["balanced"]) and bool(audit[i].get("real_conserved", True))) for i, row in enumerate(per_tick)),
+    }
+    checks["identical"] = all(checks.values())
+    return checks
+
+
 def replay_world(job):
     """One replay (a worker of the pool): the world's document, its record and
-    the cache to write; the ledger's identity to the record is checked."""
+    the cache to write; the replay's identity to the record is checked
+    (`identity_of`), and the replay's ledger shadow line is kept beside it."""
     name, world_path, run_path, cache_path, labels, shells = job
     document = json.loads(Path(world_path).read_text(encoding="utf-8"))
     run = json.loads(Path(run_path).read_text(encoding="utf-8"))
     started = time.perf_counter()
     per_tick, ledgers = replay(document, run["completed_ticks"], labels, log=lambda _: None, shells=shells)
-    identical = [entry["fields"] for entry in ledgers] == [entry["fields"] for entry in run["audit"]]
+    identity = identity_of(per_tick, run)
+    shadow_lines = json.loads(json.dumps([entry["shadow"] for entry in ledgers]))
+    identity["ledger_shadow_line"] = shadow_lines == [entry["shadow"] for entry in run["audit"]]
     Path(cache_path).write_text(
-        json.dumps({"per_tick": per_tick, "ledger_identical_to_record": identical, "seconds": round(time.perf_counter() - started, 1)}),
+        json.dumps({"per_tick": per_tick, "identity": identity, "seconds": round(time.perf_counter() - started, 1)}),
         encoding="utf-8",
     )
-    return name, identical, round(time.perf_counter() - started, 1)
+    return name, identity["identical"], round(time.perf_counter() - started, 1)
 
 
 def front(per_tick, label):
@@ -558,7 +582,7 @@ def tables(record):
         c = record["replays"]["standing_closed"]
         w = record["worlds"]["standing_closed"]
         lines.append("\n### The closed board: the standing world with `boundary` periodic, 120 ticks, `standing_field` on\n")
-        lines.append(f"The runner's standing-set search: {standing_line(w)}. Shadows on the board at every tick: {w['shadows_initial']} (escaped {w['escaped']}). Off the planes, mean of the last twenty ticks: {c['off_planes_last_20']:.3f}. The replay's ledger identical to the record's: {c['ledger_identical_to_record']}.\n")
+        lines.append(f"The runner's standing-set search: {standing_line(w)}. Shadows on the board at every tick: {w['shadows_initial']} (escaped {w['escaped']}). Off the planes, mean of the last twenty ticks: {c['off_planes_last_20']:.3f}. The replay identical to the record tick by tick (shadows on the board, escapes, the body's momentum, the books): {c['ledger_identical_to_record']}.\n")
         lines.append("| k (L1) | Nodes | Content per Node, ticks 81-100 | 101-120 | J_r per Node, 81-100 | 101-120 |")
         lines.append("| ---: | ---: | ---: | ---: | ---: | ---: |")
         nodes_of = {x["k"]: x["nodes"] for x in c["per_tick"][-1]["l1"]}
@@ -725,8 +749,13 @@ def main(argv=None):
         for name in to_replay:
             cache = found[name] / name / "replay.json"
             cached = json.loads(cache.read_text(encoding="utf-8"))
-            per_tick, identical = cached["per_tick"], cached["ledger_identical_to_record"]
-            entry = {"per_tick": per_tick, "ledger_identical_to_record": identical, "replay_seconds": cached.get("seconds")}
+            per_tick = cached["per_tick"]
+            run, _ = load_record(args.runs, name)
+            identity = identity_of(per_tick, run)
+            if "identity" in cached:
+                identity["ledger_shadow_line"] = cached["identity"].get("ledger_shadow_line")
+            identical = identity["identical"]
+            entry = {"per_tick": per_tick, "identity": identity, "ledger_identical_to_record": identical, "replay_seconds": cached.get("seconds")}
             document = documents[name]
             if name == "pulse":
                 entry["fronts"] = {label: front(per_tick, label) for label in labels}
