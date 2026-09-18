@@ -81,14 +81,10 @@ class LocalConservationAudit:
         self.checks = 0
         self.failure: dict[str, object] | None = None
         self.escaped: Quantity = ZERO
-        # Content annulled at inverse splits (inverse-split-v1): the world total and
-        # what each Node annulled since its last check.
-        self.annulled: Quantity = ZERO
         # Content sourced at a Node (ray-event-audit-v1): since bit-law-v1 nothing
         # is released during a run, a spread moves content and a shadow that comes
         # home leaves again with what it brought; the line is kept, at zero.
         self.sourced: Quantity = ZERO
-        self._pending_annulled: dict[Address3, Quantity] = {}
         # Content a Detector mark absorbed on a click (detector-absorb-v1): the world
         # total and what each Node's mark absorbed since its last check, read from
         # the reception record before the Node is checked.
@@ -194,35 +190,6 @@ class LocalConservationAudit:
             charge,
         )
 
-    def _annulled(self, event: dict[str, object]) -> Quantity:
-        """The quantity an inverse split in annul mode removed from its Node: the ray
-        field's amount through the declared energy expression, the momentum field's
-        vector as the intrinsic momentum, as `_spatial` reads a resident ray."""
-        if self.definition.spatial is None:
-            return ZERO
-        annulled = cast(dict[str, tuple[int, ...]], event.get("annulled", {}))
-        values = [pack((0,) * field.components) for field in self.initial.fields]
-        intrinsic = [0, 0, 0]
-        charge = 0
-        for definition in self.initial.spatial_fields:
-            name = self.initial.fields[definition.field].name
-            if definition.rays and name in annulled:
-                values[definition.field] = pack(tuple(annulled[name]))
-                charge = checked_work(charge + checked_work(annulled[name][0] * definition.charge))
-                if definition.momentum_field is not None:
-                    momentum = annulled.get(self.initial.fields[definition.momentum_field].name)
-                    if momentum is not None:
-                        for axis in range(3):
-                            intrinsic[axis] = checked_work(intrinsic[axis] + momentum[axis])
-        energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
-        return (
-            energy,
-            checked_work(px + intrinsic[0]),
-            checked_work(py + intrinsic[1]),
-            checked_work(pz + intrinsic[2]),
-            charge,
-        )
-
     def _absorbed(self, event: dict[str, object]) -> Quantity:
         """The quantity a Detector mark absorbed on its clicks in one reception
         (detector-absorb-v1): per family the amount through the declared energy
@@ -293,12 +260,6 @@ class LocalConservationAudit:
         return cast(Quantity, tuple(sum(value[c] for value in quantities) for c in range(5)))
 
     def observe(self, event: dict[str, object]) -> None:
-        if event.get("event") == "inverse_split" and event.get("mode") == "annul":
-            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
-            amount = self._annulled(event)
-            self._pending_annulled[position] = _add(self._pending_annulled.get(position, ZERO), amount)
-            self.annulled = _add(self.annulled, amount)
-            return
         if event.get("event") not in EVENTS:
             return
         if event.get("event") == "spatial_cycle" and event.get("returned"):
@@ -389,8 +350,6 @@ class LocalConservationAudit:
             before, after = self._nodes.get(position, ZERO), nodes.get(position, ZERO)
             arrived, sent = incoming.get(position, ZERO), outgoing.get(position, ZERO)
             residual = _add(_subtract(after, before), _subtract(sent, arrived))
-            # What the Node annulled left it for the explicit sink, not for a Link.
-            residual = _add(residual, self._pending_annulled.pop(position, ZERO))
             # What the Node's mark absorbed on a click left it for the marks' sink.
             residual = _add(residual, self._pending_absorbed.pop(position, ZERO))
             # The momentum the Node's shadows delivered outside the measurement
@@ -424,7 +383,6 @@ class LocalConservationAudit:
             "sourced": _plain(self.sourced, self.charged),
             "current": _plain(self.current_total, self.charged),
             "escaped": _plain(self.escaped, self.charged),
-            "annulled": _plain(self.annulled, self.charged),
             "absorbed_by_marks": _plain(self.absorbed_by_marks, self.charged),
             "returned": _plain(self.returned, self.charged),
             "failure": self.failure,

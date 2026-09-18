@@ -176,20 +176,6 @@ def _convert(
                 periods=0 if rule.decay is not None else source.periods,
             ),
         )
-    for lag in rule.lags:
-        # ray-binding-v1, Highlights 3.28: the delay by the declared table, per the
-        # Port the source input came through, the whole quanta of amount x entry /
-        # unit in phase steps, laid on the output's face clock on that side.
-        kind, source = inputs[lag.source]
-        port = PORT_HEADINGS.index(definitions[kind].headings[source.heading]) ^ 1
-        delay = checked_work(source.amount * lag.table[port]) // lag.per
-        meter.charge("evaluate")
-        axis, negative = divmod(port, 2)
-        target, ray = produced[lag.output]
-        clocks = list(ray.lag)
-        clocks[axis] = checked_work(clocks[axis] + (-delay if negative else delay))
-        produced[lag.output] = (target, replace(ray, lag=(clocks[0], clocks[1], clocks[2])))
-        meter.charge("update")
     stock: dict[int, int] = {}
     for kind, ray in inputs:
         stock[kind] = checked_work(stock.get(kind, 0) + ray.amount)

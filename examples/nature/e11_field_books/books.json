@@ -139,7 +139,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": -3,
       "clock": true
     },
@@ -186,7 +185,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 3,
       "release": [
         1,
@@ -236,7 +234,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 0
     }
   ],
@@ -327,5 +324,6 @@
       "reads": "charge"
     }
   ],
-  "K": 64
+  "K": 64,
+  "N": 8
 }

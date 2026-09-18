@@ -103,7 +103,6 @@ def ray_field(name, advance, slots=16, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": 3,
     } | extra
 
 
@@ -115,6 +114,7 @@ def document(shadows, ticks=3, detectors=(), dense=False):
     its heading, spreading at its Node in the first cycle."""
     raw = {
         "schema_version": 1,
+        "N": 8,
         "model_id": "dense-field-test-v1",
         "shape": [13, 13, 13],
         "boundary": "open",

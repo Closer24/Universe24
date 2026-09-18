@@ -892,6 +892,69 @@ run byte-identically, and the runner records
    {"field": "a", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}}],
  "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
 ```
+### The engine clean under the law of the bit (`cleanup-law-v1`)
+
+The cleanup of 2026-09-18, on the model owner's instruction ("the engine
+clean, everything in order"), after features 15 to 18 and 16d. What the law
+retired and the engine still carried is deleted, not kept behind an option:
+
+- the return modes `straight` and `annul` and the `annulled` sink
+  (Highlights 5.4, point 7: things conserve exactly among themselves, nothing
+  leaves for a sink): the world key `return_mode`, `RETURN_MODES`,
+  `annulled_totals`, the `annulled` ledger line, the `mode` and `annulled`
+  fields of the `inverse_split` record; the one behaviour at an event Node is
+  the inverse split to the sibling lines, and `line_balanced` reads an
+  `annulled` line of an older record as a loss;
+- the sampling profile (point 14: nothing draws): `sampling_profile`,
+  `core/sampling_contract.py`, `validate_spatial_sampling`; the draw's names
+  with it: a mark's count of arrivals is `SpatialNodeState.arrivals`, its
+  table `table_catch` / `mark_catch`, the count wrapping at `ARRIVAL_MODULUS`;
+- the lag of `ray-binding-v1` (points 16, 21 and 22: gravity is the push of
+  the shadows read times the content of what is pushed, every ray moves one
+  Link per interval, the word register leaves the model): `LagTable`,
+  `InteractionDefinition.lags`, `Ray.lag`, the output form `delay: {of,
+  table, per}`, `_spend_lag`, `RAY_BINDING` and the `ray_binding` record key;
+  the twenty-three `delay_*` worlds of `examples/nature/a6_bending/` and the
+  `delay` form of their generator (their records stay as dated evidence);
+- the hold of resident rays under a computation load (point 21): the world
+  keys `ray_delay` and `ray_phase_per_tick`, `SpatialNodeState.ray_wait`,
+  the planner's `ray_hold` and `hold_rays`;
+- the field family (point 12; Highlights 3.26 as amended): the catalog's
+  `light` and `gluon` are families of things, every ray record declares its
+  own shadow set (`release`), `recoil_return` is no coupling (the recoil is
+  the return of the law, point 3), and the migration drops the orphan field
+  families the fold left in the example worlds ([catalog](CATALOG.md));
+- the phase width per family: **one N for the world** (the definitions of
+  the law, the model owner, 2026-09-18). `N`, the number of steps of the
+  phase circle, is a world key like `K`, declared once, 64 by default, a
+  power of two from 2 through 4096 (the coherence table's bound); every ray
+  family's phase is a step of that circle, `phase_bits` on a family is
+  refused with a message naming the definitions of the law, a coherence
+  table (`kerengonen.phase_steps`) is written over N (a world that declares
+  no `N` but one table of one size has declared its width once through it;
+  tables of two sizes are refused), the steering table of two things that
+  meet is computed once per width (`steering_table`, cached) and the mixing
+  reads N. `run.json` records `N` beside `K`; `InitialState.phase_steps`
+  holds it. `examples/nature/bit_law_migration.py` (`migrate_n`) sets `N`
+  from the widths a world declared and drops `phase_bits`; every example
+  world follows. What follows for a world that declared no width: it ran
+  on one phase value, where a returning share carried no sign; on a circle
+  of N steps the returning share is the minus (point 24), so the returning
+  and the outgoing shares of one owner sum apart, and the worlds of
+  `tests/test_return_field.py` (a) and `tests/test_perf_arrays.py` are
+  re-pinned from the run of 2026-09-18 with that reason, the latter at N 2
+  and 32 ray slots, its line no longer repeating within 200 intervals (the
+  standing-set search reports its residual), and the A6 `n14` and `n16`
+  worlds deleted with the bound.
+
+Not done in this cleanup and listed on its pull request: the record-as-owner
+field program (the settled rule (v): the outward octant field, the
+couplings of records, the mirror, slit, dissolve, capture and self-exclusion
+of that form, `computation_field` and its delay keys, `node_execution`), the
+generic "home" (point 3: the push and its return of zero steps summed at one
+Node), the body's recoil on its own line, and the stale paragraphs of the
+older documents.
+
 ### Wave-ray families (`wave-ray-family-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.3 and 5.1; [ray-event
