@@ -564,3 +564,14 @@ def test_compressed_inline_page_holds_the_same_runs_document():
     page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
     assert 'getAttribute("data-encoding") === "gzip+base64"' in page
     assert 'new DecompressionStream("gzip")' in page
+
+
+def test_viewer_fits_the_events_and_a_run_document_box():
+    """The page's camera fit has the events mode (the Nodes of matter's events, emissions,
+    releases and escapes left out) and honours a run document's own box."""
+    page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
+    assert 'mode === "events"' in page
+    assert 'e.kind === "emission" || e.kind === "release" || e.kind === "escape"' in page
+    assert "if (r.fit && r.fit.lo && r.fit.hi) return pad(r.fit.lo, r.fit.hi);" in page
+    readme = (ROOT / "tools/ray_viewer/README.md").read_text(encoding="utf-8")
+    assert "`events` fits the Nodes of matter's events" in readme
