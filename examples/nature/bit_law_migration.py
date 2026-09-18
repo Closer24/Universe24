@@ -31,7 +31,14 @@ The rules, applied to a world document in place:
   of the world refers to them by anything but the name), unused;
 - since node-mixing-v1 (Highlights 5.4, point 24, the model owner, 2026-09-18) a
   shadow spreads by the Node's mixing and nothing of the spread is declared: a
-  `spread` table and a `steering` table on any spatial field are dropped.
+  `spread` table and a `steering` table on any spatial field are dropped;
+- (the cleanup of 2026-09-18, `cleanup-law-v1`: no field family, Highlights 5.4
+  point 12) a ray family that nothing in the world names any more once its
+  `field_of` has been folded into its owner (no type's `fields` or `defaults`,
+  no emission, seed, body, rule, mark or `initial_field`) is an orphan of the
+  old field program and leaves the world: its spatial field, its value field
+  and its `initial_field` entry are dropped, so no world of nature declares a
+  field family.
 
 The clock, the decay table and one Link per interval (clock-readings-v1, the
 model owner's decisions of 2026-09-18, Highlights 5.4 points 19, 20, 21 and 23;
@@ -138,6 +145,7 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
             target.setdefault("release", entry.pop("release"))
         target["ray_slots"] = max(int(target.get("ray_slots", 0)), int(entry.get("ray_slots", 0)))
     if not renames:
+        _drop_orphan_families(document)
         return document
 
     def rekey(table: dict[str, Any]) -> dict[str, Any]:
@@ -178,7 +186,68 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
         if isinstance(mark.get("on_click"), dict):
             mark["on_click"] = rekey(mark["on_click"])
     _cap_layers(document)
+    _drop_orphan_families(document)
     return document
+
+
+def _named_families(document: dict[str, Any]) -> set[Any]:
+    """Every field name the world's declarations refer to, outside the fields and
+    the spatial fields themselves."""
+    names: set[Any] = set()
+    for kind in document.get("disturbance_types", []):
+        names.update(kind.get("fields", []))
+        names.update(kind.get("defaults", {}))
+    for emission in document.get("emissions", []):
+        names.add(emission.get("field"))
+        names.add(emission.get("recoil_field"))
+    for seed in document.get("spatial_seeds", []):
+        names.add(seed.get("field"))
+    for body in document.get("external_bodies", []):
+        names.add(body.get("family"))
+        names.update(body.get("momentum_table", {}))
+        if isinstance(body.get("polarizer"), dict):
+            names.add(body["polarizer"].get("family"))
+    for rule in document.get("ray_interactions", []):
+        for role in rule.get("participants", []):
+            kinds = role.get("type")
+            names.update(kinds if isinstance(kinds, list) else [kinds])
+        for output in rule.get("outputs", []):
+            names.add(output.get("field"))
+        names.update(rule.get("momentum_table", {}))
+    for mark in document.get("detectors", []):
+        if isinstance(mark.get("on_click"), dict):
+            names.update(mark["on_click"])
+    names.update(document.get("initial_field", {}))
+    for key in ("couplings", "spatial_couplings", "field_rules", "spatial_interactions", "field_groups"):
+        for entry in document.get(key, []):
+            for value in entry.values():
+                if isinstance(value, str):
+                    names.add(value)
+                elif isinstance(value, list):
+                    names.update(item for item in value if isinstance(item, str))
+    for key in ("computation_field", "cost_field"):
+        names.add(document.get(key))
+    return names
+
+
+def _drop_orphan_families(document: dict[str, Any]) -> None:
+    """A ray family nothing names (the field family the fold left behind) leaves
+    the world with its value field and its initial field, if any."""
+    used = _named_families(document)
+    orphans = {
+        entry["field"]
+        for entry in document.get("spatial_fields", [])
+        if entry.get("transport") == "ray" and entry["field"] not in used
+    }
+    if not orphans:
+        return
+    document["spatial_fields"] = [
+        entry for entry in document["spatial_fields"] if entry["field"] not in orphans
+    ]
+    document["fields"] = [item for item in document.get("fields", []) if item["name"] not in orphans]
+    if isinstance(document.get("initial_field"), dict):
+        for name in orphans:
+            document["initial_field"].pop(name, None)
 
 
 def _node_is_ports(document: dict[str, Any]) -> None:

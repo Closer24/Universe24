@@ -41,14 +41,6 @@
       "extensive": true
     },
     {
-      "name": "light",
-      "components": 1,
-      "units": "quantum",
-      "signed": false,
-      "conserved": true,
-      "extensive": true
-    },
-    {
       "name": "launcher",
       "components": 1,
       "units": "quantum",
@@ -207,52 +199,6 @@
         1
       ],
       "phase_bits": 3,
-      "charge": 0
-    },
-    {
-      "field": "light",
-      "baseline": 0,
-      "transport": "ray",
-      "headings": [
-        [
-          1,
-          0,
-          0
-        ],
-        [
-          -1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
-          -1,
-          0
-        ],
-        [
-          0,
-          0,
-          1
-        ],
-        [
-          0,
-          0,
-          -1
-        ]
-      ],
-      "rays_per_tick": 1,
-      "ray_slots": 8,
-      "metric": "links",
-      "pace": [
-        1,
-        1
-      ],
-      "phase_bits": 12,
       "charge": 0
     },
     {
