@@ -947,13 +947,25 @@ retired and the engine still carried is deleted, not kept behind an option:
   standing-set search reports its residual), and the A6 `n14` and `n16`
   worlds deleted with the bound.
 
-Not done in this cleanup and listed on its pull request: the record-as-owner
+- **"Home" through the generic mechanism** (the model owner, 2026-09-18,
+  point 3 as amended; the second part of the cleanup). The special branch
+  that skipped the push when a shadow met its own thing is deleted
+  (`_turn` and the body's meeting): the generic push is applied and the
+  return of zero steps, the same shadow with its sign flipped at the same
+  Node, hands -push back in the same cycle, before any step decision, so the
+  sum is zero, the thing is what it was, and the shadow is absorbed at home
+  and re-released as before. The two halves are booked, not hidden: a
+  `RayPush` pair with `home` 1 on the plan, summed per family on the
+  `spatial_cycle` record as `home_pushes` (`push`, `return`), and on the
+  `spatial_received` record of a body likewise. "Home" names that result
+  and is no rule of its own; the engine computes the zero directly.
+
+Not done in the first part and listed on its pull request: the record-as-owner
 field program (the settled rule (v): the outward octant field, the
 couplings of records, the mirror, slit, dissolve, capture and self-exclusion
 of that form, `computation_field` and its delay keys, `node_execution`), the
-generic "home" (point 3: the push and its return of zero steps summed at one
-Node), the body's recoil on its own line, and the stale paragraphs of the
-older documents.
+body's recoil on its own line, and the stale paragraphs of the older
+documents; the second part takes them up.
 
 ### Wave-ray families (`wave-ray-family-v1`)
 

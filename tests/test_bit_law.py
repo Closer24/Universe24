@@ -4,7 +4,8 @@
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("The law of the bit")
 before the first run. Every ray carries one bit, 1 a thing and 0 its shadow, a ray
 of the same family: a shadow pushes a thing it meets and walks home with -dp,
-home to a body (a) and to a thing ray (c); a thing's own shadow never pushes it;
+home to a body (a) and to a thing ray (c); a thing's own shadow pushes it and
+its return of zero steps undoes it in the same cycle, the two halves booked (c');
 two bodies push each other through their shadows and take the -dp back (b); a
 mark returns a shadow and counts nothing, and catches things by its counter
 table, no lottery (d); a shadow-only board makes no event and the dense layer
@@ -490,6 +491,54 @@ def test_a_thing_meets_its_own_shadow_without_a_push():
     looped = run(closed, 12)
     assert looped["contents"] == [2] * 12 and looped["shadows"] == [1] * 12
     assert all(entry["balanced"] and entry["real_conserved"] for entry in looped["ledgers"])
+
+
+def test_home_is_the_push_and_its_return_of_zero_steps_booked_and_cancelling():
+    """(c'): "home" is no rule of its own (the model owner, 2026-09-18, point 3 as
+    amended; the cleanup of that day): a thing meeting its own shadow takes the
+    generic push, and the return of zero steps, the same shadow with its sign
+    flipped at the same Node, hands -push back in the same cycle, before any step
+    decision; the two halves are booked on the cycle record (`home_pushes`) and
+    sum to zero, so the thing is what it was and the shadow is absorbed at home
+    as before. The world of (c): the push of the lamp's own shadow of 1 on -X,
+    read by charge (the owner's whole charge -2 over its content 2, the thing's
+    charge -1, the table's sign 1), is (-1, 0, 0); the return (1, 0, 0). The
+    world of (b): each body's own shadow, home at the even ticks, is pushed by
+    the body's table and returned in the same interval, (1,0,0) and (-1,0,0) at
+    body 3, the opposite at body 4, on the reception record (`home_pushes`),
+    and the bodies' momenta are what (b) pins."""
+    kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
+    doc = document(
+        ticks=5,
+        types=[kind, RING],
+        emissions=[emission],
+        seeds=[seed],
+        shadows=[shadow((3, 2, 2), MINUS_X, owner=1, steps=0)],
+    )
+    result = run(doc, 5)
+    cycles = [e for e in result["events"] if e["event"] == "spatial_cycle" and e.get("home_pushes")]
+    assert [(e["tick"], tuple(e["position"]), e["home_pushes"]) for e in cycles] == [
+        (1, (2, 2, 2), {"m": {"push": (-1, 0, 0), "return": (1, 0, 0)}})
+    ]
+    assert cycles[0]["returned"] == {"m": {"amount": 1, "momentum": (0, 0, 0)}}
+    assert all(r == {1: [2, 0, 0]} for r in result["momentum"])
+    assert not {"ray_push", "shadow_home"} & set(kinds(result["events"]))
+    assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
+    pair = document(
+        ticks=6,
+        bodies=[body((2, 2, 2), 3, table={"m": 1}), body((3, 2, 2), 4, table={"m": 1})],
+        shadows=[shadow((2, 2, 2), X, owner=3, steps=0), shadow((3, 2, 2), MINUS_X, owner=4, steps=0)],
+    )
+    result = run(pair, 6)
+    received = [e for e in result["events"] if e["event"] == "spatial_received" and e.get("home_pushes")]
+    assert [(e["tick"], tuple(e["position"]), e["home_pushes"]) for e in received] == [
+        (tick, position, {"m": {"push": (sign, 0, 0), "return": (-sign, 0, 0)}})
+        for tick in (2, 4, 6)
+        for position, sign in (((2, 2, 2), 1), ((3, 2, 2), -1))
+    ]
+    for tick, (a, b) in enumerate(result["bodies_per_tick"], start=1):
+        assert (a, b) == ([-tick, 0, 0], [tick, 0, 0]), tick
+    assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
 
 
 def test_a_mark_returns_shadows_and_counts_things_by_its_table(tmp_path):

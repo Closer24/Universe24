@@ -2384,6 +2384,10 @@ class RayPush:
     (ray-momentum-turn-v1): plain bounded integers, as the Node state contract
     requires. The pushed ray's spatial field and amount, its momentum before and
     after, and the field ray that pushed it: its spatial field, amount and heading.
+    `home` 1 marks the two halves of a thing meeting its own shadow (the law of
+    the bit, point 3 as amended, the model owner, 2026-09-18; the cleanup of
+    that day): the push, then the return of zero steps, the same shadow with its
+    sign flipped at the same Node, whose hand-over undoes it in the same cycle.
     """
 
     field: int
@@ -2393,6 +2397,7 @@ class RayPush:
     pusher: int
     pusher_amount: int
     pusher_heading: Heading
+    home: int = 0
 
 
 @dataclass(frozen=True, slots=True)

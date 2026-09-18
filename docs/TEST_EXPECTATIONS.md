@@ -34,7 +34,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
 | `test_dense_field.py` | 3 | 1.0 | The dense mode for boards that a field fills (`dense-field-v1`, [performance](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17)): the pure-field Nodes cycled as one vectorized step, one split step equal to `spread_content` (the registers, the releases, the phases, the bit), the hand-over of rays between the region and the engine's Nodes both ways, the same `state.json` and ledger as the engine alone, the unsupported worlds rejected, pinned below |
 | `test_perf_arrays.py` | 8 | 9.2 | The performance lane of 2026-09-18 (`perf-arrays-v1`, [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)): `state.json` written Node by Node from the engine and the dense arrays, byte for byte `json.dumps(snapshot)`; a series run one process per world byte-identical to a single run; the standing set (`standing-field-v1`): the layer kept fixed from its exact repeat, the things reading it as the stepping engine gives, the run's files identical, the fallback when a thing steps, the residual without a repeat, the refusals, pinned below |
-| `test_bit_law.py` | 19 | 2.2 | Feature 15, the law of the bit (`bit-law-v1`, the model owner's decision of 2026-09-18, Highlights 5.4): every ray carries one bit, 1 a thing and 0 its shadow, a ray of the same family; a shadow pushes a thing and walks home with -dp, home to a body and to a thing ray; a shadow meets its own thing without a push; a mark returns a shadow and counts nothing, catches things by its counter; the ledger's `returned` line and the things' own identity; the trace; the bit never changes; the things' content is constant between absorptions; a shadow-only board makes no event and the dense layer equals the engine; no lottery, two runs byte-identical; the retired keys rejected, pinned below |
+| `test_bit_law.py` | 20 | 2.4 | Feature 15, the law of the bit (`bit-law-v1`, the model owner's decision of 2026-09-18, Highlights 5.4): every ray carries one bit, 1 a thing and 0 its shadow, a ray of the same family; a shadow pushes a thing and walks home with -dp, home to a body and to a thing ray; a shadow meets its own thing without a push; a mark returns a shadow and counts nothing, catches things by its counter; the ledger's `returned` line and the things' own identity; the trace; the bit never changes; the things' content is constant between absorptions; a shadow-only board makes no event and the dense layer equals the engine; no lottery, two runs byte-identical; the retired keys rejected, pinned below |
 | `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
 | `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
@@ -1146,6 +1146,23 @@ computed from the rules:
   every tick. The same world on a periodic board (closed, no mark) for twelve
   ticks: the thing loops and both contents are constant, 2 and 1, every line
   balancing.
+- (c') home through the generic mechanism (the model owner, 2026-09-18, point
+  3 as amended; the cleanup of that day, `cleanup-law-v1`; pinned before the
+  first run): the special branch that skipped the push when a shadow met its
+  own thing is deleted; the generic push is applied and the return of zero
+  steps, the same shadow with its sign flipped at the same Node, hands -push
+  back in the same cycle before any step decision, so the sum is zero, the
+  thing is what it was and the shadow is absorbed at home as before. The two
+  halves are booked: on the `spatial_cycle` record as `home_pushes` per family
+  (`push`, `return`), on the `spatial_received` record of a body likewise. In
+  the world of (c) the push of the lamp's own shadow of 1 on -X at (2,2,2) in
+  the cycle of tick 1, read by charge (the owner's whole charge -2 over its
+  content 2, the thing's charge -1, sign 1), is (-1, 0, 0) and the return
+  (1, 0, 0); (c) stands unchanged (`returned` m amount 1, momentum (0, 0, 0),
+  the thing's momentum (2, 0, 0) at every tick, no event). In the world of
+  (b) each body's own shadow comes home at ticks 2, 4 and 6 and is pushed by
+  the body's table, (1, 0, 0) and back (-1, 0, 0) at body 3 at (2,2,2), the
+  opposite at body 4 at (3,2,2); the bodies' momenta are (b)'s.
 - (d) the mark: the lamp at (1,2,2), a second lamp `lamp2` (thing 2, `m` 1)
   at (0,2,2), a mark at (4,2,2) with setting [1, 2], and a shadow of thing 5
   at (5,2,2) on -X. After tick 1 the shadow reaches the mark and is returned:

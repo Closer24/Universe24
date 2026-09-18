@@ -555,12 +555,15 @@ class SpatialNode(SpatialNodeState):
         sourced: list[list[int]],
         home_by_family: dict[int, list[int]],
         notes: list[dict[str, object]],
+        home_pushes: dict[int, list[list[int]]],
     ) -> Rays:
         """What arrives at an external body is met by the law of the bit (bit-law-v1,
         point 3) and its declared coupling. A shadow of the body's own identity is
-        home: absorbed back, the momentum it carries into the body's momentum, and
-        released again from where the body is, back out along its line (no push,
-        no record: a push is not an event, point 15). A shadow of another thing is
+        home: the generic push and its return of zero steps, booked as two halves
+        that cancel in this cycle (point 3 as amended, the cleanup of 2026-09-18),
+        then absorbed back, the momentum it carries into the body's momentum, and
+        released again from where the body is, back out along its line (no
+        record: a push is not an event, point 15). A shadow of another thing is
         turned back on its steps (a body is a border of the board: it absorbs
         things and returns shadows, the model owner, 2026-09-18), pushing the
         body by sign x amount x heading and carrying -push when the body's
@@ -585,6 +588,31 @@ class SpatialNode(SpatialNodeState):
         for ray in rays:
             if ray.detector == BIT_SHADOW:
                 if ray.owner == body.thing:
+                    if sign:
+                        # A thing meeting its own shadow (the law of the bit, point
+                        # 3 as amended, the model owner, 2026-09-18): the generic
+                        # push and the return of zero steps, the same shadow with
+                        # its sign flipped at the same Node handing -push back,
+                        # both in this cycle before the body's step; they sum to
+                        # zero and the body is what it was; both halves are booked.
+                        if body.charge % body.amount:
+                            raise ValueError(
+                                "a body read by its charge carries a whole charge that is a "
+                                "multiple of its amount (clock-readings-v1, point 16)"
+                            )
+                        push, _ = push_of(
+                            sign,
+                            ray,
+                            definition,
+                            PUSH_READS[body.reads],
+                            body.amount,
+                            body.charge // body.amount,
+                            current.push_remainder,
+                        )
+                        halves = home_pushes.setdefault(definition.field, [[0, 0, 0], [0, 0, 0]])
+                        for axis in range(3):
+                            halves[0][axis] = checked_work(halves[0][axis] + push[axis])
+                            halves[1][axis] = checked_work(halves[1][axis] - push[axis])
                     # Home (return-field-v1): the share hands over what it carries.
                     momentum = ray.momentum if ray.momentum is not None else (0, 0, 0)
                     if any(momentum):
@@ -951,6 +979,21 @@ class SpatialNode(SpatialNodeState):
         # are on the cycle's record for the local audit.
         returned_amount: dict[str, int] = {}
         returned_outside: dict[str, list[int]] = {}
+        # The two halves of a thing meeting its own shadow (point 3 as amended,
+        # the cleanup of 2026-09-18): the push and the return of zero steps, in
+        # pairs on the plan's pushes, summed per family; they cancel.
+        home_pushes: dict[str, list[list[int]]] = {}
+        half = 0
+        for push in plan.ray_pushes:
+            if not push.home:
+                continue
+            name = services.initial.fields[services.initial.spatial_fields[push.field].field].name
+            halves = home_pushes.setdefault(name, [[0, 0, 0], [0, 0, 0]])
+            for axis in range(3):
+                halves[half][axis] = checked_work(
+                    halves[half][axis] + push.after[axis] - push.before[axis]
+                )
+            half ^= 1
         for item in plan.homecomings:
             definition = services.initial.spatial_fields[item.field]
             name = services.initial.fields[definition.field].name
@@ -978,6 +1021,16 @@ class SpatialNode(SpatialNodeState):
                     }
                 }
                 if returned_amount
+                else {}
+            ),
+            **(
+                {
+                    "home_pushes": {
+                        name: {"push": tuple(halves[0]), "return": tuple(halves[1])}
+                        for name, halves in home_pushes.items()
+                    }
+                }
+                if home_pushes
                 else {}
             ),
             **(
@@ -1602,6 +1655,9 @@ class SpatialNode(SpatialNodeState):
         returned = [[0] * field.components for field in services.initial.fields]
         sourced = [[0] * field.components for field in services.initial.fields]
         home_by_family: dict[int, list[int]] = {}
+        # The two halves of the body meeting its own shadows this interval, per
+        # family: the pushes and their zero-step returns (the cleanup of 2026-09-18).
+        home_pushes: dict[int, list[list[int]]] = {}
         # Events happen at Nodes that hold a thing (bit-law-v1, point 13).
         witnessed = (
             self.body is not None
@@ -1692,6 +1748,7 @@ class SpatialNode(SpatialNodeState):
                         sourced,
                         home_by_family,
                         returns,
+                        home_pushes,
                     )
                     returning = ()
                 ray_arrivals[index][packet.port] = checked_work(
@@ -1854,6 +1911,10 @@ class SpatialNode(SpatialNodeState):
             services.initial.fields[field].name: {"amount": home[0], "momentum": tuple(home[1:])}
             for field, home in sorted(home_by_family.items())
         }
+        body_home_pushes = {
+            services.initial.fields[field].name: {"push": tuple(halves[0]), "return": tuple(halves[1])}
+            for field, halves in sorted(home_pushes.items())
+        }
         notifications: list[dict[str, object]] = []
         # A mark that absorbs, a thing or a shadow home to it, is the thing's
         # border and its record is kept; a mark that only returns makes none.
@@ -1868,6 +1929,7 @@ class SpatialNode(SpatialNodeState):
             received_fields=received_fields,
             **({"absorbed_by_mark": absorbed_by_mark} if absorbed_by_mark else {}),
             **({"returned_to_body": returned_to_body} if returned_to_body else {}),
+            **({"home_pushes": body_home_pushes} if body_home_pushes else {}),
         )
         # The clicks of this arrival interval, one per thing caught, then the
         # returns, one per shadow and one per thing the mark let by, each in
