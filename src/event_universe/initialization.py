@@ -33,7 +33,6 @@ from .core.disturbance_state import (
     InitialState,
     InteractionDefinition,
     Invariant,
-    LagTable,
     OperationCosts,
     Payload,
     Seed,
@@ -2187,7 +2186,7 @@ def _ray_interactions(
     event rays that replace its participants; every output is a thing
     (bit-law-v1), and the `bit` key of detector-bit-property-v1 is rejected.
     `draw: [n, d]` with `seed` (decay-draw-v1) makes a rule with outputs a
-    decaying conversion: its meeting draws once from the Node's ticket stream at
+    decaying conversion: its meeting drew once from the Node's counter at
     that setting and fires on 1 only.
     """
     definitions = ray_participant_definitions(fields, spatial)
@@ -2350,7 +2349,6 @@ def _ray_meeting(
     # of a family whose charge differs from its source's changes the total charge.
     amount_sources: dict[int, tuple[int, ...]] = {}
     every_input = tuple(range(len(selections)))
-    lags: list[LagTable] = []
     # ray-polarization-v1: whether an output declares its polarization, and what
     # each output carries.
     names_polarization = False
@@ -2470,28 +2468,10 @@ def _ray_meeting(
             phase_expression = {"op": "add", "args": [phase_expression, offset]}
         assignments.append(Assignment(position, 2, parser.parse(phase_expression, 1)))
         assignments.append(Assignment(position, 3, parser.parse(ref("advance", source), 1)))
-        raw_delay = item.get("delay", 0)
-        delay = 0
-        if isinstance(raw_delay, dict):
-            spec = _object(raw_delay, "output.delay", {"of", "table", "per"}, {"of", "table"})
-            of_input = _integer(spec["of"], "output.delay.of", 0)
-            if of_input >= len(selections):
-                raise ValueError("output.delay.of exceeds the declared roles")
-            entries = tuple(
-                _integer(entry, "output.delay.table", 0)
-                for entry in _array(spec["table"], "output.delay.table", 6, 6)
-            )
-            per = _integer(spec.get("per", 1), "output.delay.per", 1)
-            lags.append(
-                LagTable(
-                    position,
-                    of_input,
-                    (entries[0], entries[1], entries[2], entries[3], entries[4], entries[5]),
-                    per,
-                )
-            )
-        else:
-            delay = _integer(raw_delay, "output.delay", 0)
+        # The delay table of ray-binding-v1 (a lag per Port) was deleted in the
+        # cleanup of 2026-09-18 (Highlights 5.4, points 21 and 22): a delay is an
+        # integer, and a shadow delays nothing.
+        delay = _integer(item.get("delay", 0), "output.delay", 0)
         assignments.append(Assignment(position, 4, parser.parse(delay, 1)))
         # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
         assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
@@ -2579,7 +2559,6 @@ def _ray_meeting(
         participants=tuple(selections),
         outputs=tuple(outputs),
         splits=tuple(splits),
-        lags=tuple(lags),
         polarization_declared=names_polarization,
         output_polarization=tuple(output_polarization),
         output_sources=tuple(output_sources),
@@ -2689,11 +2668,9 @@ def parse_initial_state(document: object) -> InitialState:
             "computation_field",
             "delay_direction",
             "least_delay_routing",
-            "ray_delay",
             "focus",
             "dense_field",
             "standing_field",
-            "ray_phase_per_tick",
             "K",
             "wait_per_quantum",
             "detectors",
@@ -2738,12 +2715,6 @@ def parse_initial_state(document: object) -> InitialState:
             wait = (numerator, denominator)
         else:
             wait = (_integer(raw_wait, "wait_per_quantum", 0), 1)
-    if {"ray_delay", "ray_phase_per_tick"} & obj.keys():
-        raise ValueError(
-            "ray_delay and ray_phase_per_tick were retired by clock-readings-v1 (Highlights 5.4 "
-            "point 21, 2026-09-18): every ray moves one Link per interval, always; a thing's "
-            "departure is delayed by nothing"
-        )
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version, clock, wait)
     if "computation_field" in obj and any(definition.rays for definition in spatial):
         raise ValueError(
@@ -2805,7 +2776,6 @@ def parse_initial_state(document: object) -> InitialState:
             None if "delay_direction" not in obj else _text(obj["delay_direction"], "delay_direction")
         ),
         least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
-        ray_delay=False,
         clock=clock,
         wait_per_quantum=wait,
         focus=_boolean(obj.get("focus", True), "focus"),
@@ -2813,7 +2783,6 @@ def parse_initial_state(document: object) -> InitialState:
         standing_field=_standing_field(
             obj.get("standing_field", False), _integer(obj["ticks"], "ticks", 0)
         ),
-        ray_phase_per_tick=False,
         detectors=_detectors(obj.get("detectors", []), fields, spatial),
         external_bodies=_external_bodies(
             obj.get("external_bodies", []), fields, spatial, ray_rules, len(disturbances)

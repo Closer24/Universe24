@@ -182,14 +182,11 @@ NODE_LANES = 6 * LANES_PER_PORT
 # "charge" (a charged family's shadow, dp = sign x amount x heading x the
 # shadow's source sign x the thing's charge); no default.
 PUSH_READS = ("content", "charge")
-# Gravity by delay (Highlights 3.28, ray-binding-v1): a meeting output may carry
-# a delay by a declared table per the Port the field ray came through, a lag of
-# the output's face clock in phase steps that turns the ray toward the lagging
-# side one Link per phase modulus. The held form of this identity (a rule
-# without outputs whose assignments set delay 1 as a hold, its ray_delay wait and
-# the six-heading release of a held ray) was removed on 2026-09-17 by
-# loop-binding-v1 (docs/MIGRATION.md).
-RAY_BINDING = "ray-binding-v1"
+# Gravity by delay (ray-binding-v1, the lag of a ray's face clocks by a declared
+# table) was deleted in the cleanup of 2026-09-18 (Highlights 5.4, points 16, 21
+# and 22): gravity is the push of the shadows read times the content of what is
+# pushed, every ray moves one Link per interval, and the word register leaves
+# the model with the stores it named.
 # Binding as a loop (Highlights 3.4 and 3.28, loop-binding-v1): a ray never
 # stops, and a bound group is a periodic orbit of the ordinary meeting rule, a
 # set of rays that a ring of Nodes brings back to the same place in the same
@@ -250,10 +247,10 @@ PORT_HEADINGS: tuple[Heading, ...] = (
 WAVE_RAY_FAMILY = "wave-ray-family-v1"
 MAX_TABLE_BITS = 12
 MAX_STORED_PHASE_BITS = 30
-# The Detector mark (Highlights 3.19, 3.20 and 5.4, detector-mark-v1): a Node's
-# bit with its setting and ticket seed. A marked Node draws one bit per arriving
-# ray from its own ticket stream, reading nothing from the ray, and is otherwise
-# an ordinary Node. In this slice the ray continues unchanged on both outcomes.
+# The Detector mark (Highlights 3.19, 3.20 and 5.4, detector-mark-v1 under
+# bit-law-v1): a Node's bit with its table. A marked Node counts the things that
+# arrive and catches the k-th when k mod d < n, reading nothing from the ray but
+# its bit, and is otherwise an ordinary Node.
 DETECTOR_MARK = "detector-mark-v1"
 MAX_DETECTORS = 4096
 # A draw of 0 returns the arriving ray on its own line (detector-return-v1): the
@@ -617,12 +614,6 @@ class Ray:
     event_ports: int = 0
     event_shares: EventShares = NO_EVENT_SHARES
     detector: int = BIT_THING
-    # Bending by delay (ray-binding-v1, Highlights 3.28): the lag of the ray's
-    # output-face clocks in phase steps, one signed integer per axis, positive
-    # toward the +axis Port. A transverse lag that reaches the phase modulus is
-    # spent as one Link toward the lagging side at the next departure; a lag on
-    # the ray's own axis as one interval of wait. Zero on every created ray.
-    lag: tuple[int, int, int] = (0, 0, 0)
     # The sign of the source's charge on a field ray (field-spreading-v1;
     # Highlights 3.5, the field is matter's message about itself): -1, 0 or 1,
     # set at the release from the releasing family's charge (a body's from its
@@ -826,24 +817,8 @@ def validate_ray_participants(
                 for split in rule.splits
             ):
                 raise ValueError("ray meeting table split requires two outputs and the phase modulus")
-            for lag in rule.lags:
-                # ray-binding-v1: a delay by a table per Port on one output, read from
-                # the amount and the Port of one input.
-                if (
-                    not 0 <= lag.output < len(rule.outputs)
-                    or not 0 <= lag.source < len(rule.participants)
-                    or len(lag.table) != 6
-                    or any(type(v) is not int or bounded(v) < 0 for v in lag.table)
-                    or type(lag.per) is not int
-                    or not 1 <= lag.per <= MAX_VALUE
-                ):
-                    raise ValueError(
-                        "a delay table names an output and an input, six Port entries and a unit"
-                    )
         elif rule.splits:
             raise ValueError("a table split requires a meeting with outputs")
-        elif rule.lags:
-            raise ValueError("a delay table requires a meeting with outputs")
         elif any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
         if rule.momentum_table:
@@ -971,8 +946,6 @@ def validate_ray_coupling(initial: InitialState) -> None:
         or initial.spatial_computation_delay
         or initial.field_phase_first
         or initial.arrival_port_blind
-        or initial.ray_delay
-        or initial.ray_phase_per_tick
         or initial.delay_direction is not None
         or initial.field_rules
         or initial.spatial_interactions
@@ -1033,8 +1006,6 @@ def validate_released_field_admission(initial: InitialState) -> None:
         or initial.spatial_computation_delay
         or initial.field_phase_first
         or initial.arrival_port_blind
-        or initial.ray_delay
-        or initial.ray_phase_per_tick
         or initial.delay_direction is not None
         or initial.field_rules
         or initial.spatial_interactions
@@ -1281,8 +1252,6 @@ def validate_spread_admission(initial: InitialState) -> None:
         or initial.spatial_computation_delay
         or initial.field_phase_first
         or initial.arrival_port_blind
-        or initial.ray_delay
-        or initial.ray_phase_per_tick
         or initial.delay_direction is not None
         or initial.field_rules
         or initial.spatial_interactions
@@ -1728,7 +1697,7 @@ def spread_content(
     to their ninths (`apportion_momentum`, exact), and a release takes the
     register's momentum in proportion to what it releases (`momentum_part`).
     Each departure carries the Port's heading, accumulators (0, 0, 0), its
-    phase, no rate, wait, delay or lag, steps 0, its flow, no event, its sign,
+    phase, no rate, wait or delay, steps 0, its flow, no event, its sign,
     its owner, its momentum and its group's polarization (a register's release
     the Node's combined polarization). The total is exact: what arrived equals
     what leaves plus the whole quanta the registers gained, and the momentum
@@ -2325,15 +2294,11 @@ class SpatialNodeState:
     incoming: tuple[SpatialState, ...] = ()
     incoming_count: int = 0
     incoming_decay_cost: int = 0
-    # Intervals the resident rays still wait under ray_delay before forwarding.
-    ray_wait: int = 0
-    # The Detector mark of this Node when its bit is set, and the Node's one ticket
-    # state: seeded from the mark, advanced by one unsalted step per arriving ray;
-    # at a Node a decaying rule may fire at (decay-draw-v1) seeded from that
-    # declaration salted by the position when no mark is set, and advanced by one
-    # unsalted step per meeting of such a rule.
+    # The Detector mark of this Node when its bit is set, and the count of the
+    # things that arrived at it, read against the mark's table (bit-law-v1, point
+    # 14: no seed, no draw).
     detector: DetectorMark | None = None
-    detector_ticket: int = 0
+    arrivals: int = 0
     # The external body this Node holds, whole, when one is declared or has
     # stepped here (external-body-v1); None at every other Node. What the Node
     # holds below one quantum and what it remembers of a departure are parked
@@ -2551,10 +2516,6 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray wait must stay below its heading's pace denominator")
         if bounded(ray.interaction_delay) < 0:
             raise ValueError("ray interaction delay must be nonnegative")
-        if type(ray.lag) is not tuple or len(ray.lag) != 3 or any(type(v) is not int for v in ray.lag):
-            raise ValueError("a ray requires three integer face-clock lags")
-        for value in ray.lag:
-            bounded(value)
         if ray.source_sign not in (-1, 0, 1):
             raise ValueError("ray source_sign must be -1, 0 or 1")
         if type(ray.polarization) is not int or not (
@@ -2597,10 +2558,8 @@ def validate_ray_event_state(ray: Ray) -> None:
             "a merged thing's further owners are a sorted set of thing ids without its own; "
             "a shadow has none (lanes-v1)"
         )
-    if ray.detector == BIT_SHADOW and (
-        ray.event_ports or ray.interaction_delay or any(ray.lag) or ray.advance != -1
-    ):
-        raise ValueError("a shadow carries no event, no delay, no lag and no clock (bit-law-v1)")
+    if ray.detector == BIT_SHADOW and (ray.event_ports or ray.interaction_delay or ray.advance != -1):
+        raise ValueError("a shadow carries no event, no delay and no clock (bit-law-v1)")
 
 
 @dataclass(frozen=True, slots=True)
@@ -3064,8 +3023,7 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     """The same wave ray reversed on its line (detector-return-v1).
 
     The heading index becomes the index of the negated heading, outbound becomes 0
-    and the transport accumulators (DDA, pace wait, interaction delay, face-clock
-    lag) are reset;
+    and the transport accumulators (DDA, pace wait, interaction delay) are reset;
     amount, phase, steps, event Ports, event shares and Detector bit are exactly
     what arrived. The Detector admission guarantees the negated heading is in the
     sequence; a field where it is not fails closed.
@@ -3086,7 +3044,6 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         accumulators=(0, 0, 0),
         wait=0,
         interaction_delay=0,
-        lag=(0, 0, 0),
         outbound=0,
         momentum=momentum,
     )
@@ -3232,7 +3189,6 @@ RayMergeKey = tuple[
     int,
     EventShares,
     int,
-    tuple[int, int, int],
     int,
     tuple[int, int, int] | None,
     int,
@@ -3262,7 +3218,6 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.event_ports,
         ray.event_shares,
         ray.detector,
-        ray.lag,
         ray.source_sign,
         ray.momentum,
         ray.polarization,
@@ -3307,20 +3262,19 @@ def merge_rays(rays: Rays) -> Rays:
             event_ports=key[8],
             event_shares=key[9],
             detector=key[10],
-            lag=key[11],
-            source_sign=key[12],
-            momentum=_merged_momentum(key[13], counts[key]),
-            polarization=key[14],
-            owner=key[15],
-            remainder=key[16],
-            push_remainder=key[17],
-            periods=key[18],
-            owed=key[19],
-            parked=key[20],
-            owners=key[21],
+            source_sign=key[11],
+            momentum=_merged_momentum(key[12], counts[key]),
+            polarization=key[13],
+            owner=key[14],
+            remainder=key[15],
+            push_remainder=key[16],
+            periods=key[17],
+            owed=key[18],
+            parked=key[19],
+            owners=key[20],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
-        if amount or key[20]
+        if amount or key[19]
     )
 
 
@@ -3339,8 +3293,8 @@ def _merge_order(key: RayMergeKey) -> tuple[object, ...]:
     """The fixed order of merged rays: the key with a momentum not set before one set,
     the polarization, the owner and the parked flag last, so that rays without one
     keep the order they had."""
-    momentum = key[13]
-    return (*key[:13], momentum is not None, momentum or (0, 0, 0), *key[14:])
+    momentum = key[12]
+    return (*key[:12], momentum is not None, momentum or (0, 0, 0), *key[13:])
 
 
 def ray_stock(rays: Rays) -> int:
@@ -3521,36 +3475,31 @@ def _coherence(rays: Rays, cosines: tuple[int, ...], mask: int) -> tuple[int, in
     return (min(max(numerator, 0), denominator), denominator)
 
 
-# The two captures are deterministic. The ordinary lottery capture and the bond
-# registry were deleted on 2026-09-17 (Highlights 3.18 deleted, 3.19, 3.20, 5.4):
-# an absorber never draws. The ticket sequence below is the bounded local draw
-# the Detector mark owns (detector_draw); its one other caller is the draw of a
-# decaying rule at a meeting (decay-draw-v1, ticket_bit), the same draw at a Node
-# the rule's declaration marks. No ordinary owner calls it.
+# The two captures are deterministic; nothing draws (bit-law-v1, point 14). The
+# mark's table below is the one counter of the model: the Detector mark counts
+# the things that arrive and catches them by its setting.
 CAPTURE_MODES = ("share", "threshold")
-TICKET_MODULUS = 1073741789  # the largest prime below the field value bound
+ARRIVAL_MODULUS = 1073741789  # the largest prime below the field value bound
 
 
-def ticket_bit(ticket: int, numerator: int, denominator: int) -> tuple[int, int]:
-    """One step of a Node's counter at a setting (bit-law-v1, point 14: there is no
-    lottery): the next count and the bit, 1 = PASS. The k-th arrival, k the
-    count before it, passes when k mod d < n, so the setting [n, d] is a
-    declared table, "pass n arrivals in every d" (1 / 1 always passes, 0 / 1
-    never), like a mirror's or a splitter's; the count wraps at the ticket
-    modulus. The step reads nothing from the ray or the meeting it is taken for.
-    The Detector mark counts with its own setting (detector_draw); a decaying
-    rule with its `draw` setting at its meeting (decay-draw-v1)."""
-    if not 0 <= ticket < TICKET_MODULUS:
-        raise ValueError("ticket state must stay below the ticket modulus")
+def table_catch(arrivals: int, numerator: int, denominator: int) -> tuple[int, int]:
+    """One step of a mark's table (bit-law-v1, point 14: there is no lottery): the
+    next count and whether the arrival is caught, 1 = caught. The k-th arrival, k
+    the count before it, is caught when k mod d < n, so the setting [n, d] is a
+    declared table, "catch n arrivals in every d" (1 / 1 catches every thing,
+    0 / 1 none), like a mirror's or a splitter's; the count wraps at the modulus.
+    The step reads nothing from the ray."""
+    if not 0 <= arrivals < ARRIVAL_MODULUS:
+        raise ValueError("a mark's count of arrivals must stay below the arrival modulus")
     if denominator < 1 or not 0 <= numerator <= denominator:
         raise ValueError("a setting is a rational from 0 through 1")
-    passes = ticket % denominator < numerator
-    return (ticket + 1) % TICKET_MODULUS, int(passes)
+    caught = arrivals % denominator < numerator
+    return (arrivals + 1) % ARRIVAL_MODULUS, int(caught)
 
 
-def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
-    """One step of a marked Node's counter: the next count and the bit, 1 = PASS."""
-    return ticket_bit(ticket, mark.pass_numerator, mark.pass_denominator)
+def mark_catch(arrivals: int, mark: DetectorMark) -> tuple[int, int]:
+    """One step of a marked Node's table: the next count and 1 when the thing is caught."""
+    return table_catch(arrivals, mark.pass_numerator, mark.pass_denominator)
 
 
 def click_coupling(mark: DetectorMark, index: int, definition: SpatialFieldDefinition) -> int:
@@ -4035,8 +3984,6 @@ def validate_external_bodies(initial: InitialState) -> None:
         or initial.spatial_computation_delay
         or initial.field_phase_first
         or initial.arrival_port_blind
-        or initial.ray_delay
-        or initial.ray_phase_per_tick
         or initial.delay_direction is not None
         or initial.field_rules
         or initial.spatial_interactions

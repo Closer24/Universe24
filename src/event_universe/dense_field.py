@@ -316,7 +316,6 @@ def plain_ray(ray: Ray, definition: SpatialFieldDefinition, family: DenseFamily 
         or ray.advance != -1
         or ray.wait
         or ray.interaction_delay
-        or ray.lag != (0, 0, 0)
         or ray.polarization != POLARIZATION_NONE
         or ray.accumulators != (0, 0, 0)
         or definition.headings[ray.heading] not in PORT_HEADINGS
@@ -1578,6 +1577,6 @@ class DenseField:
             localized=engine._blank_localized(),
             rays=tuple(() for _ in self.initial.spatial_fields),
             detector=None,
-            detector_ticket=0,
+            arrivals=0,
             body=None,
         )

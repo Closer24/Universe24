@@ -60,7 +60,6 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        int,
     ],
     SpatialPlan,
 ]
@@ -265,7 +264,7 @@ class SpatialEngine:
                 rays=tuple(() for _ in self.initial.spatial_fields),
                 detector=mark,
                 # The Node's counter (bit-law-v1, point 14): every Node's starts at 0.
-                detector_ticket=0,
+                arrivals=0,
                 body=self._bodies.pop(position, None),
             )
             self._active.add(position)

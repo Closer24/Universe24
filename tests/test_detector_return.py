@@ -36,7 +36,7 @@ AMOUNT = 8
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z], closed under negation.
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 # The mark's counter after the one arrival of the world.
-TICKET_AFTER_DRAW = 1
+ARRIVALS_AFTER_RETURN = 1
 # After tick t: Links from the lamp, heading index offset (0 the emitted heading, 1 its
 # negation), amount, steps, outbound, phase, Detector bit, the share of the ray's event.
 # The phase column is 0 throughout since clock-readings-v1 (2026-09-18): the
@@ -300,7 +300,7 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
             "restored": True,
         },
     ]
-    assert world._spatial.nodes[MARK].detector_ticket == TICKET_AFTER_DRAW
+    assert world._spatial.nodes[MARK].arrivals == ARRIVALS_AFTER_RETURN
     # (d) The runner records the identity and replays byte for byte.
     path = tmp_path / "return.json"
     path.write_text(json.dumps(document(port)), encoding="utf-8")

@@ -194,20 +194,6 @@ class TableSplit:
 
 
 @dataclass(frozen=True, slots=True)
-class LagTable:
-    """A delay assigned to one output of a meeting of rays by a declared integer table,
-    per the Port the source input came through (ray-binding-v1, Highlights 3.28): the
-    whole quanta of `amount x table[port] / per` phase steps of the output's face
-    clock on the side of that Port. The engine applies the table; the physics is the
-    table."""
-
-    output: int
-    source: int
-    table: tuple[int, int, int, int, int, int]
-    per: int = 1
-
-
-@dataclass(frozen=True, slots=True)
 class InteractionDefinition:
     name: str
     left_type: int
@@ -226,9 +212,6 @@ class InteractionDefinition:
     outputs: tuple[int, ...] = ()
     # Splits by a declared table among the outputs, applied after the assignments.
     splits: tuple[TableSplit, ...] = ()
-    # Delays by a declared table per Port, on the outputs of a meeting of rays
-    # (ray-binding-v1, gravity by delay).
-    lags: tuple[LagTable, ...] = ()
     # The momentum table of a coupling of free rays (ray-momentum-turn-v1): one
     # sign per spatial field, -1 attraction toward the source of an arriving field
     # ray of that family, 1 repulsion, 0 for a family the table does not name.
@@ -359,17 +342,12 @@ class InitialState:
     computation_field: int | None = None
     delay_direction: str | None = None
     least_delay_routing: bool = False
-    # Rays resident at a Node wait the extra intervals its computation load alone
-    # would add to a cycle (default clock); with ray_phase_per_tick a Kerengonen
-    # ray's phase advances on every waiting interval as well as on every link.
-    ray_delay: bool = False
     # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
     # per interval, one integer for the world, required when a family declares
     # `clock`; 0 when no thing has a clock. The wait per whole quantum read
     # (point 23): w = n / d intervals, 1 by default.
     clock: int = 0
     wait_per_quantum: tuple[int, int] = (1, 1)
-    ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
     # Host scheduling only (dense-field-v1): the pure-field Nodes of a board are
@@ -446,8 +424,7 @@ class InitialState:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):
             if spatial_definition.self_exclusion and (
-                self.ray_delay
-                or spatial_definition.euclidean
+                spatial_definition.euclidean
                 or spatial_definition.pace_numerator != spatial_definition.pace_denominator
                 or any(
                     rule.spatial_field == index and rule.mirror is not None for rule in self.emissions
@@ -456,24 +433,12 @@ class InitialState:
                 raise ValueError(
                     "one-Link self-exclusion does not support paced, delayed or mirrored rays"
                 )
-        for name in ("ray_delay", "ray_phase_per_tick", "focus", "dense_field"):
+        for name in ("focus", "dense_field"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")
         validate_dense_field_admission(self)
         if type(self.standing_field) is not int or self.standing_field < 0:
             raise ValueError("standing_field is a nonnegative number of intervals")
-        if self.ray_delay:
-            if self.computation_field is None:
-                raise ValueError("ray_delay requires computation_field")
-            if self.spatial_computation_delay or self.node_execution:
-                raise ValueError("ray_delay requires the default clock")
-            if not any(definition.rays for definition in self.spatial_fields):
-                raise ValueError("ray_delay requires a ray spatial field")
-        if self.ray_phase_per_tick:
-            if not self.ray_delay:
-                raise ValueError("ray_phase_per_tick requires ray_delay")
-            if not any(definition.kerengonen for definition in self.spatial_fields):
-                raise ValueError("ray_phase_per_tick requires a Kerengonen ray field")
         if type(self.least_delay_routing) is not bool:
             raise ValueError("least_delay_routing must be boolean")
         if self.least_delay_routing and self.delay_direction is None:

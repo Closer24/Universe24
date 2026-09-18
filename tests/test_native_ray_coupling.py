@@ -179,7 +179,7 @@ def test_unchanged_vector_preserves_duplicate_heading_index_and_dda():
     )
 
 
-@pytest.mark.parametrize("unsupported", ["second_clock", "absorb", "routing"])
+@pytest.mark.parametrize("unsupported", ["absorb", "routing"])
 def test_direct_spatial_law_keeps_native_coupling_admission(unsupported):
     initial = parse_initial_state(document())
     options = {"ray_interactions": initial.ray_interactions}
@@ -191,19 +191,13 @@ def test_direct_spatial_law_keeps_native_coupling_admission(unsupported):
     elif unsupported == "routing":
         options["least_delay_direction"] = "along"
     with pytest.raises(ValueError, match="ray interactions"):
-        law = SpatialLaw(
-            initial.fields, definitions, initial.emissions, initial.operation_costs, **options
-        )
-        if unsupported == "second_clock":
-            law((), (), ray_hold=1)
+        SpatialLaw(initial.fields, definitions, initial.emissions, initial.operation_costs, **options)
 
 
 @pytest.mark.parametrize(
     "change",
     [
         {"link_ticks": 2},
-        {"ray_delay": True},
-        {"ray_phase_per_tick": True},
         {"node_execution": True},
         {"spatial_computation_delay": True},
     ],

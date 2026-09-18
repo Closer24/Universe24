@@ -34,7 +34,7 @@ from .node_execution import (
     finish_local_cycle,
 )
 from .node_ports import PortBank
-from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
+from .node_services import NodeEvents, add_audit_delta, port_count
 from .spatial_state import (
     BIT_SHADOW,
     BIT_THING,
@@ -62,7 +62,7 @@ from .spatial_state import (
     click_coupling,
     coherent_stock,
     detector_absorb,
-    detector_draw,
+    mark_catch,
     merge_rays,
     polarize_content,
     push_of,
@@ -87,7 +87,6 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
-        int,
         int,
     ],
     SpatialPlan,
@@ -449,31 +448,13 @@ class SpatialNode(SpatialNodeState):
                 tuple(bundles[self.body.family]) + (body_token(self.body),)
             )
             resident_rays = tuple(bundles)
-        ray_hold, next_ray_wait = 0, self.ray_wait
-        if services.initial.ray_delay and any(self.rays):
-            # Rays wait the intervals the Node's computation load alone would add to
-            # a cycle; a waiting Kerengonen ray may advance its phase per interval.
-            if self.ray_wait == 0:
-                extra, _ = cycle_timing(
-                    self.load_value(services),
-                    services.initial.normal_budget,
-                    services.initial.link_ticks,
-                )
-                next_ray_wait = extra // services.initial.link_ticks
-                waiting = next_ray_wait > 0
-            else:
-                next_ray_wait = self.ray_wait - 1
-                waiting = next_ray_wait > 0
-            if waiting:
-                ray_hold = 2 if services.initial.ray_phase_per_tick else 1
         plan = yield SpatialPlanningInput(
             states,
             records,
             self.received_count,
             node_cost,
             resident_rays,
-            ray_hold,
-            self.detector_ticket,
+            self.arrivals,
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
@@ -521,7 +502,7 @@ class SpatialNode(SpatialNodeState):
             sample_ports,
         )
         self.sample_received_masks = sample_received_masks
-        self._commit_plan(tick, carrier, services, plan, cost, next_ray_wait=next_ray_wait)
+        self._commit_plan(tick, carrier, services, plan, cost)
 
     def _body_cycle(self, plan: SpatialPlan, services: SpatialServices) -> SpatialPlan:
         """The external body's part of one cycle (external-body-v1 under bit-law-v1),
@@ -801,8 +782,6 @@ class SpatialNode(SpatialNodeState):
         services: SpatialServices,
         plan: SpatialPlan,
         cost: int,
-        *,
-        next_ray_wait: int | None = None,
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
@@ -857,9 +836,6 @@ class SpatialNode(SpatialNodeState):
             # Every resident ray that was due left along its own line; on a
             # Euclidean pace the rays not yet due stay.
             self.rays = plan.kept_rays if plan.kept_rays else tuple(() for _ in self.rays)
-        if next_ray_wait is not None:
-            # A later unrelated arrival starts its own load-priced wait.
-            self.ray_wait = next_ray_wait if any(self.rays) else 0
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -1461,7 +1437,7 @@ class SpatialNode(SpatialNodeState):
                     )
                 )
                 continue
-            self.detector_ticket, bit = detector_draw(self.detector_ticket, self.detector)
+            self.arrivals, bit = mark_catch(self.arrivals, self.detector)
             if bit:
                 taken = click_coupling(self.detector, index, definition) == CLICK_ABSORB
                 if taken:

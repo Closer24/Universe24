@@ -91,6 +91,8 @@ Feature tests of issue #169 join this table as they land.
 
 ## Native complete-ray coupling
 
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the sampling profile and the lottery capture are gone with `core/sampling_contract.py` (their two tests deleted), the `ray_hold` second clock and the `ray_delay` / `ray_phase_per_tick` world keys are deleted (unknown keys), so the direct-caller case has two entries (`absorb`, `routing`) and the clock case three.
+
 `test_native_ray_coupling.py` uses the canonical
 [finite residence input](../examples/generic-ray-coupling/finite-residence.json).
 Two funded axial rays of amount five arrive with phase zero at tick one; after
@@ -111,6 +113,8 @@ changing values. The separate family-conversion suite retains its one-to-six,
 six-to-one, conservation, capacity, Port and delayed-owner coverage.
 
 ## Kerengonen integration guards
+
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the ticket assertions of `test_kerengonen.py` are deleted with the ticket (the mark's table is pinned in [Node Detector bit](#node-detector-bit)); the share-absorber half of that test stays as `test_a_share_absorber_takes_single_quanta_deterministically`.
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the families of these worlds declare no rate (their phases stay), `two_lamps(steps, advance)` declares `clock` and K 2 / advance (rays of 2), the tests of a ray's own advance (`kerengonen_advance`) and of the carried advance are deleted with the key, and the attenuated self-exclusion world is the plain one.
 
@@ -614,6 +618,8 @@ one.
 
 ## Node Detector bit
 
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the ticket names are gone with the draw; the Node's count of arrivals is `SpatialNodeState.arrivals` (`FINAL_ARRIVALS` 9), the mark's table `table_catch` / `mark_catch` with `ARRIVAL_MODULUS`, and the control world's guard patches `table_catch`; `run.json` records no `sampling_profile` (the key is refused).
+
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares no rate, so the continuing and returned rays keep phase 0.
 
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14, no lottery): the mark's setting is its counter table, the k-th arrival catching the bit 1 when k mod 2 < 1, so the bits are (1, 0, 1, 0, 1, 0) in Port order and the counter stands at 6; the seed is retired; the mark declares `on_click: "pass"` so that a thing that draws 1 walks on as before; a click and a return name the thing's owner (`tests/test_detector_mark.py`).
@@ -689,6 +695,8 @@ mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
   reports the same documents invalid.
 
 ## Detector return
+
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the count after the one arrival is `arrivals` 1 (`ARRIVALS_AFTER_RETURN`); no `sampling_profile` in `run.json`.
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares no rate and no clock, so the phase column of the tick table is 0 throughout (the shares of one emission are of several amounts, which no one K makes one step per Link).
 
@@ -2559,6 +2567,8 @@ admitting only a power of two (the table-construction guard world uses 32
 phase steps instead of 37).
 
 ## Ray binding
+
+Deleted from the engine on 2026-09-18 in the cleanup (`cleanup-law-v1`): `LagTable`, `Ray.lag`, the `delay: {of, table, per}` output form, `RAY_BINDING` and the `ray_binding` record key; the twenty-three `delay_*` worlds of `examples/nature/a6_bending/` and the `delay` form of its generator are deleted (the `turn` series stays), their records dated evidence in `docs/EXPERIMENTS.md`.
 
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_ray_binding.py` pinned behaviour the law removed and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 

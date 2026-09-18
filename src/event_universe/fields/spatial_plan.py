@@ -62,7 +62,7 @@ from event_universe.core.spatial_state import (
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
 from .ray_interactions import Turns, apply_ray_interactions
-from .rays import LaneClaims, emit_rays, forward_rays, hold_rays, validate_ray_definition
+from .rays import LaneClaims, emit_rays, forward_rays, validate_ray_definition
 from .spatial import (
     add_populations,
     bounded_emission_amount,
@@ -713,28 +713,22 @@ class SpatialLaw:
         received_count: int = 0,
         node_cost: int | None = None,
         rays: tuple[Rays, ...] = (),
-        ray_hold: int = 0,
-        detector_ticket: int = 0,
+        arrivals: int = 0,
     ) -> SpatialPlan:
         """One Node's spatial plan from its local input alone: the law reads no clock
         (the Node checks its tick before planning), so equal inputs give equal plans
         at any tick, which is what the plan-reuse key relies on. The parked
         shadows among `rays` (node-is-ports-v1) are the shares below one quantum
-        the spread reads and writes and the traces the shadows walking home read
-        and the things that leave write."""
-        if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
-            raise ValueError("ray hold must be a bounded local delay mode")
-        if type(detector_ticket) is not int or bounded(detector_ticket) < 0:
-            raise ValueError("the Node's ticket state must be a nonnegative bounded integer")
-        if self.ray_interactions and ray_hold:
-            raise ValueError("ray interactions do not support a second ray hold clock")
+        the spread reads and writes."""
+        if type(arrivals) is not int or bounded(arrivals) < 0:
+            raise ValueError("a mark's count of arrivals must be a nonnegative bounded integer")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)
         # Rays that arrived on the previous link; this cycle's emission joins them
         # only after absorption, so a record never swallows its own fresh rays.
         # The parked shadows stay aside: the shares below one quantum as the block
-        # the spread step reads (field-remainder-v1), the traces as they are.
+        # the spread step reads (field-remainder-v1).
         resident_rays: list[list[Ray]] = [
             [ray for ray in rays[index] if not ray.parked] if rays and index < len(rays) else []
             for index in range(len(self.definitions))
@@ -1069,23 +1063,12 @@ class SpatialLaw:
                     )
                     if spread is not None:
                         spreads.append(spread)
-                if ray_hold:
-                    ports, fresh_kept, account = forward_rays(
-                        tuple(emitted_rays[index]), definition, meter, lanes
-                    )
-                    kept = merge_rays(
-                        hold_rays(
-                            tuple(resident_rays[index]), definition, meter, advance_phase=ray_hold == 2
-                        )
-                        + fresh_kept
-                    )
-                else:
-                    ports, kept, account = forward_rays(
-                        tuple(resident_rays[index]) + tuple(emitted_rays[index]),
-                        definition,
-                        meter,
-                        lanes,
-                    )
+                ports, kept, account = forward_rays(
+                    tuple(resident_rays[index]) + tuple(emitted_rays[index]),
+                    definition,
+                    meter,
+                    lanes,
+                )
                 phase_steps = checked_work(phase_steps + account.phase_steps)
                 if any(account.spent):
                     # The steps of the things (clock-readings-v1, the settled rule

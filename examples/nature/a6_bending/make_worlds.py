@@ -5,18 +5,17 @@ group and G_eff N^2 over N = 2^8 to 2^16"): a star, an external body at rest
 [6, 1, 1, 1, 1, 1] with the Node-owned remainder (field-spreading-v1,
 field-remainder-v1) and fills the board under the dense mode (dense-field-v1);
 one light ray launched along +x at impact parameter b past the star; the coupling
-of the light with the mass field in two forms, each its own series of worlds:
+of the light with the mass field in one form, its own series of worlds:
 
-- `delay`: the pre-registered form, the catalog's `mass_field_delay` as
-  ray-binding-v1 writes it, the light output keeping its amount, heading and
-  phase with `delay: {"of": 1, "table": T, "per": 1}` (the lag of its face clock
-  on the side the field ray came in through, spent as one Link toward that side
-  when it reaches the light's phase modulus N = 2^phase_bits) and the field ray
-  returned reversed;
 - `turn`: the form A6's status names for the deflection "measured as a momentum
   register" (ray-momentum-turn-v2, feature 8b): a `momentum_table` rule pushing
   the light's momentum register by -amount x heading of every mass-field ray it
   meets, each returned reversed.
+
+The `delay` form (the catalog's `mass_field_delay` of ray-binding-v1, a lag of
+the light's face clock by a declared table) was deleted with the lag in the
+cleanup of 2026-09-18 (Highlights 5.4, points 16, 21 and 22); its records stay
+as dated evidence in docs/EXPERIMENTS.md.
 
 The launch: the light waits at a launcher body at the start of its line (a
 declared coupling of the body, the light's output on Port +X with an integer
@@ -49,7 +48,7 @@ from bit_law_migration import migrate  # noqa: E402
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 SPREAD = [6, 1, 1, 1, 1, 1]
-FORMS = ("turn", "delay")
+FORMS = ("turn",)
 # The register's board: 65 x 65 x 9, the star at its center, open boundary; the
 # cube for the diagonal passes, the star at its center.
 SLAB = [65, 65, 9]
@@ -71,10 +70,6 @@ CUBE_DIAGONAL_D = (3, 4, 6)
 LIGHT = 1 << 18
 AMOUNT = 1 << 28
 RELEASE = [1, 1 << 15]
-# The delay table of the pre-registered form: one phase step of lag per quantum of
-# field met, on the side of the Port the field ray came in through, per 1.
-TABLE = [1, 1, 1, 1, 1, 1]
-PER = 1
 # The spreading family's phase width (read nowhere in these worlds: every release
 # at phase 0, the coherent sum of a spread costs one pass over the circle per
 # register), the reference Born width; the light's width is the case's N.
@@ -137,22 +132,6 @@ def launch_rule(ray, delay):
 
 
 def gravity_rule(form, ray):
-    if form == "delay":
-        return {
-            "name": "mass_field_delay",
-            "participants": [{"type": ray}, {"type": "mass_field"}],
-            "outputs": [
-                {
-                    "field": ray,
-                    "amount": {"of": 0},
-                    "heading": "same",
-                    "phase": "same",
-                    "delay": {"of": 1, "table": list(TABLE), "per": PER},
-                },
-                {"field": "mass_field", "amount": {"of": 1}, "heading": "reversed", "input": 1},
-            ],
-            "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
-        }
     if form == "turn":
         return {
             "name": "mass_field_turn",
