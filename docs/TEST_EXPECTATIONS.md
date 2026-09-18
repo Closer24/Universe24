@@ -38,6 +38,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
 | `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
+| `test_shadow_wait.py` | 8 | 1.0 | Feature 16e, the shadow's wait as a declared world option (`shadow-wait-v1`): absent, a record byte-identical to main (a); read by a thing, the share turned back owes the count per whole quantum of its push before it leaves (b); read by the field, every departure owes the count per whole quantum of another owner's arrivals at the Node, parked ninths never (c); the count exact, d spent per interval (d); the dense layer and the engine alone agree (e) |
 | `test_return_field.py` | 6 | 1.5 | Feature 16d, the return is a field (`return-field-v1`, Highlights 5.4 point 3 as amended): the inverted share leaving the pushed body reversed and mixing, the owner's momentum line receiving what reaches it with the books exact per interval and the momentum in flight on the shadows (a); a returning share pushing a third thing with the opposite sign (b); a returning share absorbed at its owner with no push (c); no trace, no wait, every share moving, the identity recorded (d); a head-on push taken exactly once, the share riding the Link with the thing on the same lane and pushing nothing at the next Node (f); the dense layer and the engine alone agreeing on the worlds of (a) and (b) over four ticks, the returning shares in the arrays with their momentum (e) |
 | `test_lanes.py` | 9 | 2.0 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; two reals of one family given one lane one real ray (amounts, momentum and charge exact, the phase the coherent sum's, the owners a set) that is home to a shadow of each owner, things of two families on one lane refused; the record of a world with no contested lane byte-identical, pinned below |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
@@ -1618,6 +1619,72 @@ from 9; a lone 1 parks its ninths). Computed from the rules before the run:
   at each holds 4 ninths on the Port toward (1,2,2) and 1 on each other, with
   (-1, 0, 0) on the 4 (the returning ninth of tick 3 mixed there in the cycle
   of tick 4, its momentum on the largest share) and nothing on the others.
+
+## The shadow's wait
+
+`tests/test_shadow_wait.py` is the isolated test of `shadow-wait-v1`
+([the shadow's wait](SPATIAL_FIELDS.md#the-shadows-wait-a-declared-option-shadow-wait-v1);
+Highlights 5.4, the model owner's paragraph of 2026-09-18; feature 16e),
+pinned here on 2026-09-18 before its first run, as Highlights 5.5 requires.
+The boards are those of the law of the bit (open, 10 x 5 x 5, the family `m`
+with charge -1 and `release` [1, 1], `wait_per_quantum` 0, bodies with the
+whole charge -amount, a body with the table {"m": 1} reading charge pushed by
+one quantum of another body's shadow by one unit along the shadow's heading;
+the mixing node-mixing-v1). `THING` is {"per_quantum": 1, "reads": "thing"},
+`FIELD` the same reading `field`. Computed from the rules before the run:
+
+- (a) without the key: the ring of `examples/nature/ring.json` for eight
+  ticks has the digests of test_lanes (f) (main at ffa4a56, 2026-09-18),
+  `events.jsonl` 091f6666... and `state.json` 830345cd...; its `run.json`
+  carries no `shadow_wait`; a world without the key parses with
+  `shadow_wait` None and the family's option 0 / 1 and ""; refused at
+  parsing: the object without `reads` (missing keys), `reads` "mass"
+  (shadow-wait-v1), `per_quantum` [1, 0] (d at least 1), -1 (per_quantum),
+  an extra key (unknown keys); declared, `run.json` records `shadow_wait`
+  "shadow-wait-v1" and `shadow_wait_option` {"per_quantum": [1, 1],
+  "reads": "thing"}.
+- (b) the world of the return as a field (b) with A's shadow of 1: without
+  the key B's momentum per tick is 1, 1, 2, 2, 3, 3 and C's 0, 1, 1, 2, 2, 3
+  (pushed at ticks 1, 3, 5 and 2, 4, 6); under THING the share turned back
+  at B after tick 1 (heading -X, steps 0) owes 1, stays through tick 2 owing
+  0 after it, reaches C at tick 3 and pushes it (C 0, 0, 1, 1, 1, 1), turns
+  back (+X, outbound 1, sign -1, carrying (-2, 0, 0)) owing 1, stays through
+  tick 4, reaches B at tick 5 (B 1, 1, 1, 1, 2, 2) and carries (-3, 0, 0):
+  one tick later at every push; the books balanced at every tick, the things
+  conserved, the shadows 1 throughout.
+- (c) P (owner 2) at (0,2,2) and Q (owner 3) at (9,2,2), bodies without a
+  table; P's share of 9 fresh at (3,2,2) on +X. `arrival`: Q's shadow of 3
+  fresh at (5,2,2) on -X, both at (4,2,2) after tick 1, 12 of shadows. In
+  the cycle of tick 2 P's 9 sends 4 back on -X and 1 on each other heading,
+  Q's 3 sends 1 back on +X and parks 3 ninths per heading (still parked after
+  tick 12); under FIELD every departure of P owes 3 (Q's quanta) and Q's
+  owes 9: after tick t = 2, 3, 4 P's six departures are at (4,2,2) with
+  steps 0 owing 4 - t and Q's owing 10 - t; after tick 5 P's are one Link
+  on (4 at (3,2,2) on -X, 1 at (5,2,2) on +X, 1 at each transverse
+  neighbour, steps 1, owing 0), where without the key they are after tick 2
+  (Q's 1 beside P's at (5,2,2) then); Q's 1 stays owing 5 after tick 5 and 0
+  after tick 10, and is at (5,2,2) after tick 11. `parked`: Q's shadow of 2
+  with a Link walked at (4,2,2), 11 of shadows, mixes in the cycle of tick 1
+  into its ninths, 8 on +X and 2 on each other heading (nothing whole,
+  nothing leaving), still parked after tick 12; P's 9, at (4,2,2) after tick
+  1 with steps 1, finds no arrival of another owner and owes nothing: its 4
+  are at (3,2,2) after tick 2 and the run equals the run without the key. In
+  both, the books balanced at every tick.
+- (d) [11, 9] read by a thing (parsed as (11, 9)), the world of (b) with A's
+  shadow of 9: the push of 9 quanta owes 99 ninths, spent 9 per interval, 90
+  after tick 2 and 0 after tick 12, exactly eleven intervals; the share
+  reaches C at tick 13 (C 0 through tick 12, 9 from tick 13; B 9 throughout)
+  and owes 99 there. With A's shadow of 1: 11 after tick 1, 2 after tick 2, 0
+  after tick 3, two intervals, the 2 / 9 below one interval paid by the
+  interval; at C after tick 4 owing 11; C pushed at ticks 4 and 10 (0, 0, 0,
+  then 1 through tick 9, 2 from tick 10), B at 1, 7 and 13 (1 through tick
+  6, 2 through tick 12, 3 after); balanced.
+- (e) the world of (b) under THING and of (c) under FIELD, both sub-cases,
+  run under the engine alone (`dense_field` false) and under the shadow
+  layer (the default, admitted for these boards): the inventories, the
+  ledgers, the things' and the bodies' momenta, the shadows' content and
+  the final parked entries are equal; in `arrival` the Node (4,2,2) is the
+  engine's after tick 2.
 
 ## A click is an absorption
 

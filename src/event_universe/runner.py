@@ -35,6 +35,7 @@ from event_universe.core.spatial_state import (
     RAY_POLARIZATION_PROPERTY,
     RELEASED_FIELD,
     RETURN_FIELD,
+    SHADOW_WAIT,
     WAVE_RAY_FAMILY,
     external_body_names,
     mixing_field_names,
@@ -406,6 +407,14 @@ def _execute_run(
         metadata["return_field"] = RETURN_FIELD
         metadata["field_remainder"] = FIELD_REMAINDER
         metadata["mixing_fields"] = mixing
+    if initial.shadow_wait is not None:
+        # The shadow's wait (shadow-wait-v1), a declared option: recorded only
+        # when a world declares it, so every other record is byte for byte the same.
+        metadata["shadow_wait"] = SHADOW_WAIT
+        metadata["shadow_wait_option"] = {
+            "per_quantum": list(initial.shadow_wait),
+            "reads": initial.shadow_wait_reads,
+        }
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],

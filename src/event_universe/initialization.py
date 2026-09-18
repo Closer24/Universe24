@@ -23,6 +23,7 @@ from .core.disturbance_state import (
     MAX_TYPES,
     MAX_VALUE,
     OPERATIONS,
+    SHADOW_WAIT_READS,
     Address3,
     Assignment,
     CouplingDefinition,
@@ -1323,6 +1324,8 @@ def _spatial_fields(
     clock: int = 0,
     wait: tuple[int, int] = (1, 1),
     phase_steps_of_world: int = DEFAULT_PHASE_STEPS,
+    shadow_wait: tuple[int, int] | None = None,
+    shadow_reads: str = "",
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
     names = _names(fields)
@@ -1562,6 +1565,9 @@ def _spatial_fields(
                 polarization_bits=polarization_bits,
                 wait_numerator=wait[0],
                 wait_denominator=wait[1],
+                shadow_wait_numerator=0 if shadow_wait is None else shadow_wait[0],
+                shadow_wait_denominator=1 if shadow_wait is None else shadow_wait[1],
+                shadow_wait_reads=shadow_reads,
             )
         )
     resolved = tuple(result)
@@ -2692,6 +2698,7 @@ def parse_initial_state(document: object) -> InitialState:
             "K",
             "N",
             "wait_per_quantum",
+            "shadow_wait",
             "detectors",
             "external_bodies",
             "initial_field",
@@ -2763,8 +2770,38 @@ def parse_initial_state(document: object) -> InitialState:
             wait = (numerator, denominator)
         else:
             wait = (_integer(raw_wait, "wait_per_quantum", 0), 1)
+    # The shadow's wait, a declared option (shadow-wait-v1; Highlights 5.4, the
+    # model owner's paragraph of 2026-09-18): absent by default, the law as it
+    # stands; declared, n / d intervals per whole quantum and the reading.
+    shadow_wait: tuple[int, int] | None = None
+    shadow_reads = ""
+    if "shadow_wait" in obj:
+        option = _object(
+            obj["shadow_wait"], "shadow_wait", {"per_quantum", "reads"}, {"per_quantum", "reads"}
+        )
+        raw_count = option["per_quantum"]
+        if isinstance(raw_count, list):
+            numerator, denominator = (
+                _integer(v, "shadow_wait per_quantum term", 0)
+                for v in _array(raw_count, "shadow_wait per_quantum", 2, 2)
+            )
+            if denominator < 1:
+                raise ValueError("shadow_wait per_quantum is n / d with d at least 1")
+            shadow_wait = (numerator, denominator)
+        else:
+            shadow_wait = (_integer(raw_count, "shadow_wait per_quantum", 0), 1)
+        shadow_reads = _text(option["reads"], "shadow_wait reads")
+        if shadow_reads not in SHADOW_WAIT_READS:
+            raise ValueError("shadow_wait reads thing or field (shadow-wait-v1)")
     spatial = _spatial_fields(
-        obj.get("spatial_fields", []), fields, schema_version, clock, wait, phase_steps
+        obj.get("spatial_fields", []),
+        fields,
+        schema_version,
+        clock,
+        wait,
+        phase_steps,
+        shadow_wait,
+        shadow_reads,
     )
     if "computation_field" in obj and any(definition.rays for definition in spatial):
         raise ValueError(
@@ -2829,6 +2866,8 @@ def parse_initial_state(document: object) -> InitialState:
         clock=clock,
         phase_steps=phase_steps,
         wait_per_quantum=wait,
+        shadow_wait=shadow_wait,
+        shadow_wait_reads=shadow_reads,
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
         standing_field=_standing_field(

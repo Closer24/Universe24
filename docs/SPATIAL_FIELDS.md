@@ -2825,6 +2825,64 @@ Identity `return-field-v1`, recorded in `run.json` as `return_field`;
 isolated test `tests/test_return_field.py`
 ([expectations](TEST_EXPECTATIONS.md#the-return-is-a-field)).
 
+### The shadow's wait (a declared option, `shadow-wait-v1`)
+
+The option ([Highlights](HIGHLIGHTS.md) 5.4, "The shadow's wait, a declared
+option to confront", the model owner, 2026-09-18; feature 16e): whether the
+shadow is affected by the wait of point 23 is open, the law saying it pays
+nothing (points 9 and 23) and the bending's missing time half
+(DERIVATIONS.md round 3) saying the field near a mass may have to slow. Until
+the runs decide, a world MAY declare
+
+    "shadow_wait": {"per_quantum": n | [n, d], "reads": "thing" | "field"}
+
+an experiment's knob, not a rule of the law. Absent, the law as it stands: a
+shadow owes nothing, and every record is byte for byte the record of a world
+that never had the key (`run.json` names the option, `shadow_wait`
+"shadow-wait-v1" and `shadow_wait_option`, only when declared). Declared, it
+holds on every ray family of the world (`SpatialFieldDefinition`'s
+`shadow_wait_numerator`, `shadow_wait_denominator` and `shadow_wait_reads`):
+
+- **The count.** A share owes intervals in units of 1 / d on its own `owed`
+  counter (the counter of point 23, on a shadow now); at its departure a share
+  that owes anything stays this interval and d is spent (`forward_rays`), and
+  it leaves when nothing is owed. A debt below one interval is paid by the
+  interval: a share, unlike a thing, keeps no remainder, since it has no
+  identity past its next mixing (n / d = 11 / 9: a quantum owes 11 ninths and
+  waits two intervals, nine quanta owe 99 and wait eleven, exactly). A waiting
+  share is on the board, on the current line, nothing sourced; it is at its
+  Node fresh (steps 0), so it mixes nowhere, is met by nothing and is home to
+  nothing until it leaves.
+- **`thing`.** A share read by a thing, one that pushes and turns back (at a
+  thing's Node, `_turn`; at a body, `_body_meet`), owes n / d intervals per
+  whole quantum of the push it gave (the push's components in quanta, as
+  `pushed_ray` counts a thing's; read twice under point 18, the sum) before it
+  leaves that Node. A share a mark, or a thing or a body without a table,
+  returns as it is gave no push and owes nothing.
+- **`field`.** A share owes n / d intervals for every whole quantum of another
+  owner's shadows at the Node it crosses this interval: the shadows that
+  arrived there, of every family, whole quanta as they arrived, the parked
+  ninths never (`presence` in the plan); every departure of an owner from that
+  Node, the mixing's and the parked shares' releases alike, carries the debt
+  (`_spread`). A share turned back by a thing, a body or a mark, and a share
+  re-released at its owner, leave under the `thing` reading alone. So a mass's
+  field is an index for the other fields: the denser another owner's field at
+  a Node, the longer a share crossing it stays.
+- **The dense layer.** Under `thing` the pushes happen at things' Nodes, the
+  engine's. Under `field` a dense Node that receives shadows of one owner
+  while it holds or receives another's (arriving from the arrays or by a
+  packet, or parked in its registers) is the engine's this interval, which
+  charges the wait on what leaves it (`DenseField._field_wait_nodes`), and a
+  waiting share keeps its Node the engine's (`plain_ray` refuses a share that
+  owes); a Node of one owner's shadows owes nothing and the region cycles it.
+  The prefill (`initial_field.fill`, the standing set given with the board) is
+  computed without the wait. The identity of the modes is
+  `tests/test_shadow_wait.py` (e).
+
+Identity `shadow-wait-v1`, recorded in `run.json` as `shadow_wait` when
+declared; isolated test `tests/test_shadow_wait.py`
+([expectations](TEST_EXPECTATIONS.md#the-shadows-wait)).
+
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 Restated on 2026-09-18 under `clock-readings-v1` (above): the momentum a
