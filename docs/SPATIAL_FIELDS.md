@@ -1193,6 +1193,13 @@ declares no `external_bodies` runs byte-identically.
 
 ### Field spreading (`field-spreading-v1`)
 
+Retired for shadows on 2026-09-18 by `node-mixing-v1` (Highlights 5.4, point
+24; [the Node mixes the six](#the-node-mixes-the-six-node-mixing-v1)): the
+split table is no longer declared and a shadow spreads by the Node's mixing;
+the Node-owned remainder of `field-remainder-v1` stays, in ninths. The
+description below is kept for the record of what the table was.
+
+
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, "Light is the field, and the
 field spreads", 3.17, 3.20 and 3.23; [ray-event
 model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 12; model owner,
@@ -1405,7 +1412,7 @@ rejected at initialization. The runner records `field_spreading:
 `spreading_fields` (each family with its table) only when a family declares
 `spread`; a world that declares none runs byte-identically, records
 included. `test_field_spreading.py`
-([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
+([expectations](TEST_EXPECTATIONS.md#field-spreading-deleted-on-2026-09-18)) was the test.
 
 ### The dense mode (`dense-field-v1`)
 
@@ -2330,9 +2337,9 @@ behaviour, with no declarable alternative:
 
 - **The parked shadow.** What a Node holds below one quantum is a shadow at
   rest among its rays, `Ray.parked` 1, a bit-0 ray of its owner on the Port
-  heading it will leave through, its amount in units of the family's split
-  denominator (the table's total S, declared once per family: `parked_unit`;
-  a family without a split parks nothing but traces). The spread step reads
+  heading it will leave through, its amount in ninths of a quantum (the
+  mixing's unit S = 9 since node-mixing-v1, `parked_unit`; a family without a
+  shadow set parks nothing but traces). The spread step reads
   the parked shares as the block it always read (`parked_shares`), combines
   each with the shares it adds by the coherence rule, releases a share that
   reaches S whole through its heading, and parks the rest again

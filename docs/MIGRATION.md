@@ -394,7 +394,7 @@ supersedes the phase-selected heading of `field-spreading-v1`:
   `field_spreading` only when a family declares `spread`; a world that
   declares none runs byte-identically (the `unchanged` case still pins the
   hashes of main `f3809be`). `test_field_spreading.py` is repinned
-  ([expectations](TEST_EXPECTATIONS.md#field-spreading)): the `quantum` case
+  ([expectations](TEST_EXPECTATIONS.md#field-spreading-deleted-on-2026-09-18)): the `quantum` case
   becomes `stream` (a ray of amount 1 fills the forward register by 6/11 per
   arrival and the transverse by 1/11; the second quantum releases forward
   after two arrivals, a transverse quantum after eleven), the Detector of
@@ -479,7 +479,7 @@ spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
   emitting their whole stock at once), pinned by the `resident` case.
 - Tests: `tests/test_field_spreading.py` (single, superposition, cancelled,
   quantum, sign, returned, source, resident, rejected, unchanged;
-  [expectations](TEST_EXPECTATIONS.md#field-spreading)).
+  [expectations](TEST_EXPECTATIONS.md#field-spreading-deleted-on-2026-09-18)).
 ## The Detector's bit as a property on 2026-09-17 (`detector-bit-property-v1`)
 
 Issue #169, feature 2b ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1),

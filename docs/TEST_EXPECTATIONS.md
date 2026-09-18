@@ -1371,6 +1371,8 @@ table stays the Born split of two things that meet (section 5.2), pinned in
 
 ## A Node is its six Ports
 
+Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_node_is_ports.py`): no split table is declared, the parked unit is ninths, and a lone shadow mixes at every Node it reaches with nothing else there, so (a) reads the mixing (5 on +X at (4,2,2): 2 leave back on -X, 5 ninths park on +X and on each transverse heading and 2 on -X, 27 in all; the 2 park whole at (3,2,2), 8 on +X and 2 on each other heading), the shadows of (b), (c), (d) and (g) leave fresh from the Node beside the mark or the body they are to reach (M2 at (1,1,1) and the shadow from the seed Node (2,1,1), its step spent there where the trace is, home at M after tick 5; the ring's mark at (4,5,5) and the shadow from P0, home every second tick; the mirror's shadow from (5,2,2), waiting there from tick 2), and the M8 record's trace carries `unit` 9.
+
 `tests/test_node_is_ports.py` is the isolated test of `node-is-ports-v1`
 ([a Node is its six Ports](SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1);
 Highlights 5.4 point 22 and the five settled rules, the model owner's
