@@ -26,7 +26,7 @@ is named. **Different law**: the rules give a definite law of another form,
 stated, with the run that would show the difference. **Not reached**: the
 rules as declared do not determine the quantity, and what would is stated
 plainly. **New** marks a formula the lattice gives that has no counterpart in
-known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts).
+known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts).
 
 ## 0. Units, notation and the operator
 
@@ -2899,3 +2899,620 @@ second-order (ω⁴) anisotropy and the first-order coefficient's excess
 radiate); the time-averaged Gauss flux of J against Φ near a source
 (the 2/r correction); a rounding-survival law in closed form (the measured
 loss ∝ 1/n^{1.5 to 2} per interval).
+
+## 34. Round 5: does the shadow pay the wait? The question, the reading rate under R10, and the three options as rules
+
+Round 5 (2026-09-18, after PR #299) answers the model owner's question of
+the same day: is the shadow (bit 0) affected by the wait of point 23, the
+tick a thing pays per whole quantum it reads, and how, and what does each
+answer give against the gravitational tests. As before: bottom-up from the
+stated operator, no physics assumed, no engine run, no edit to the engine;
+every number checked by an iteration of the operator on a box of 41³ to
+81³ Nodes (seconds each), cited after the derivation and never used as its
+source; the scripts are the scratch files of this round, not committed.
+
+**The rules as they stand.** R10 (point 24, section 26) for the shadows;
+R9 (point 23, section 24) for the wait: a thing that reads a whole quantum
+of shadow does not step and does not advance its phase for w intervals, w
+the model's constant (one the natural value), and a shadow pays nothing
+(point 9: no mass, no clock, the causal speed). The return of a pushed
+shadow is a field (point 3 as amended on 2026-09-18: the same shadow with
+its heading reversed, mixing at every Node from then on, absorbed wherever
+it reaches its owner), which supersedes the exemption section 32 derived
+under ("the return walks the trace, unmixed"); everything below uses the
+amended point 3. R4′ (the two readings), R6′ (one Link per interval), R7′
+(the clock M/K), R3 in its standing reading (a clocked thing's set, flux
+S = κξM, G = κξ/(2π), section 31).
+
+**The three options, as local rules.** Each is stated as what a Node does
+in one interval, since nothing else is a rule of this model.
+
+- **I, the law as it stands (R9).** Only a real ray pays: w intervals per
+  whole quantum of shadow it reads. A shadow never.
+- **II, the shadow pays too.** Two readings, which differ, and both are
+  derived; they are the two readings of the declared option `shadow_wait`
+  of Highlights 5.4 ("The shadow's wait, a declared option to confront",
+  model owner, 2026-09-18, PR #303, feature 16e): II-a is its `thing`,
+  II-b its `field`. **II-a (R9a), at the thing:** the shadow a thing reads waits the
+  same w intervals per quantum at the thing's Node before it turns back;
+  the meeting is one computation and both parties pay. Local: the thing is
+  at the Node, the shadow is parked there (point 22), the count is the
+  thing's own. **II-b (R9b), in the field:** a share of owner A that
+  arrives at a Node where whole quanta of another owner M are present waits
+  w intervals per quantum of M present, then mixes with the arrivals of the
+  interval in which it is released. Local per Node and interval, but it
+  asks a shadow to count another owner's quanta, a reading, which point 16
+  gives to things only ("how a thing reads a shadow is the coupling"), and
+  it amends point 9 (a shadow moves at the causal speed) and point 21 (the
+  only exception is a thing's). II-b is the reading under which "the field
+  near a mass is slowed and piled up" (the model owner's phrase) means
+  anything: under II-a the vacuum beside a mass has no index, since shadows
+  wait only where a thing is.
+- **III, the opposite.** Four rules could mean "sped up or thinned", and
+  each is judged by the books. **III-1**: a share moves more than one Link
+  per interval where M's quanta are present: impossible, not merely
+  unlawful; R2 and the lane of point 25 hold one shadow per owner per lane
+  per interval, and a ray is at one Node. **III-2 (R9c)**: at a Node where
+  another owner's whole quantum is present the share passes straight,
+  unmixed (B_p = A_{opp(p)} for those shares, the identity on the Ports in
+  place of S): a switch between two orthogonal maps, so amount and
+  amplitude are conserved exactly, nothing parked, nothing destroyed;
+  lawful in the books, and it raises the field's speed from 1/√3 toward 1,
+  never beyond (a share still crosses one Link per interval), so "sped up"
+  is bounded by the causal speed. **III-3**: a share loses amount per
+  quantum of M present ("thinned"): unlawful, point 7 (amount is never
+  destroyed) and the unitarity of section 26 (ii). **III-4 (R9d)**: the
+  thing gains rather than loses, its phase advancing by an extra content/K
+  per quantum read (a tick bonus): lawful in the books of amount, momentum
+  and charge, since the phase is not booked, but against point 11
+  (computation is the things' content, nothing else) and point 19 (the
+  clock is content/K); it touches only clocks, not motion, since a thing
+  cannot move faster than one Link per interval. The lawful "opposite" is
+  therefore III-2 for the shadow and III-4 for the thing; III-1 and III-3
+  are not rules of this lattice.
+
+**What every option reads: the reading rate under R10.** The wait, in
+every option, counts quanta at a Node per interval. Under R10 the field of
+a clocked thing of flux S is the spherical wave of section 27 (v), and the
+arrivals per interval at a Node at distance r, which is what a thing there
+reads (R4′: every shadow at its Node), are
+
+```text
+n(r) = √3 · J(r) = √3 S / (4π r²) [1 − (3/2) ω₀² K₄(r̂)],      J(r) = S / (4π r²) [1 − (15/8) ω₀² K₄(r̂)],
+```
+
+J = n v_g with v_g = 1/√3 (section 26 (iii)). With S = 2πGM (section 31:
+S = κξM, G = κξ/(2π); the direct push per unit content of the receiver is
+J = GM/(2r²), the other half of Newton's GM/r² being the returned recoil
+of the receiver's own shadows),
+
+```text
+n(r) = (√3 / 2) · G M / r²    quanta per Node per interval:    the wait reads the field strength, not the potential.
+```
+
+This is the fact of the round. In rounds 1 to 3 the field was diffusive
+and its amount fell as 1/r (section 5: n = 9S/(16πr); section 24:
+n = (9/11)GM/r), which is why the wait gave the potential's form
+1 − (9w/11)GM/r and w = 11/9 fixed GR's coefficient. Under R10 the amount
+falls as 1/r², since the shadows pass at v_g and do not linger: n = J/v_g.
+The potential 1/r is present in R10's field, as the amplitude of the
+common part u ∝ e^{ik₀r}/r (section 27 (v)), and it is read by nothing: a
+thing reads amounts, which are the squares. (As the Compton pattern of
+section 18 and the phase of section 31: present in the amplitudes, read by
+no push.) So every consequence of the wait below is a law in
+g = GM/r², the acceleration, and none is a law in GM/r. In physical units
+the reading rate is (√3/2) g ℓ/c² per interval, ℓ the Link, so the
+wait's effects carry a factor ℓ/r against GR's.
+
+**Assumptions and limit.** Mean field (the integer form is the register
+rule on the thing's side, section 24; where it breaks is section 37).
+Far field, k₀r ≫ 1, and w n ≪ 1. The self-reading excluded: a thing
+meeting its own shadow is a round trip of length zero computed as zero
+(point 3), so the home absorption is no reading; if it were, every thing
+would pay w × (its standing amount at its Node) per interval, a constant
+of the thing that cancels in every ratio below but stops every thing whose
+own set exceeds 1/w at its Node. Light: a thing of the light family at
+speed 1 (R6′), clockless (R7′); its own field is the Mach cone of section
+28 and pushes M behind it, but the return is a field at group speed 1/√3
+(section 26 (iii)) and a thing moving on an axis or a (110) line at
+Euclidean speed 1 or 0.71 is never caught by it (only on a (111) line,
+Euclidean 1/√3, does the sharp front keep pace); what would have been the
+"late return" half of sections 19 and 24 stays in flight until the light
+thing is absorbed at a mark, which then becomes the home of its shadows
+(Highlights 5.4, "A thing does not emit"): the recoil goes to the screen.
+
+**Check** (81³, a clocked source at period 16 and 32, the period mean
+after 150 and 200 ticks, S the flux of J through the cube of half-width
+16). The ratio n/J at r = 8 to 24: 1.72 to 1.76 on (110) and (111) at
+period 16 (1.73 to 1.84 at period 32), 1.58 to 1.74 on the axis, rising
+toward √3 = 1.732 with r (the axis's near-field term); 4πr²n/S = 1.67 to
+1.78 on the diagonals, 1.45 to 1.55 on the axis at period 16 (the (15/8)ω₀²K₄
+deficit of section 27 (v) with ω₀ = 0.39), against √3. The path sums of
+the next section (Σ_x n along a line at impact parameter b = 8, 12, 16,
+x ∈ [−28, 28]): 0.943, 0.943, 0.945 of (√3S/(4π))(2/b)atan(28/b) at
+period 16 and 0.978, 0.966, 0.963 at period 32; Σ_x J_⊥: 0.978, 0.955,
+0.947 and 1.017, 0.988, 0.976 of (S/(4π))(2/b)·28/√(b² + 28²).
+
+**Verdict.** The reading rate under R10: n = √3 J = (√3/2)GM/r², **reached
+exactly** in the mean field (n/J = 1.72 to 1.74 measured). A law of the
+wait in the potential GM/r: **not reached** by any option, because the
+amount of R10's field is 1/r² and its 1/r is an amplitude, which no rule
+reads.
+
+## 35. Round 5: the four gravitational tests under each option
+
+**Rules used.** Section 34's rules and reading rate; the integrals of
+section 8 (∫ b/(b² + x²)^{3/2} dx = 2/b) and two more, ∫ dx/(b² + x²) =
+(1/b)[atan(x_A/b) + atan(x_B/b)] → π/b and ∫ ∂_b[1/(b² + x²)] dx → −π/b².
+Everything is first order in w n and in GM/b; the second order (strict
+against queued reading, and what a thing reads while it waits) is as in
+section 24 and open.
+
+**(i) The clock of a thing at rest at r.** The thing reads n(r) quanta per
+interval and loses w intervals per quantum:
+
+```text
+I, II-a, II-b, III-2:   ρ_eff / ρ = 1 − w n(r) = 1 − (√3 w / 2) · G M / r²     (0 at the horizon r_h = √((√3/2) w G M) = 0.93 √(w G M));
+III-4:                  ρ_eff / ρ = 1 + (√3 w / 2) · G M / r².
+```
+
+Against general relativity's 1 − GM/(rc²): there is no GM/r term to give
+a coefficient against GR's 1; the law is in the acceleration, a clock
+slows (III-4: quickens) by (√3 w/2) times the local g in Links per
+interval², and by the anisotropy (3/2)ω₀²K₄ of n it slows more on a body
+diagonal of the mass than on an axis at the same r. A loop's period,
+P/P₀ = 1/(1 − wn), the same factor. The options do not differ here except
+III-4, whose sign is the wrong one: near a mass a clock runs fast. II-a
+and II-b change nothing in what the thing reads, since a shadow that waits
+is read once, at its arrival, and the arrivals per interval in a steady
+state equal the departures (continuity, section 26 (ii)). **Different
+law** (I, II-a, II-b, III-2: 1/r² in place of 1/r; III-4: 1/r² and the
+opposite sign).
+
+**(ii) The gravitational redshift.** A clock at r₁ runs at ρ(1 − wn₁), at
+r₂ at ρ(1 − wn₂); the light things between them carry no clock, and a
+static field delays every emission alike (the Shapiro delay of (iv) is the
+same for every thing of the stream), so
+
+```text
+z = ν₁/ν₂ − 1 ≈ (√3 w / 2) · G M · (1/r₁² − 1/r₂²)     (I, II-a, II-b, III-2;   III-4: the negative of it),
+```
+
+against GR's GM(1/r₁ − 1/r₂)/c². A photon climbing out of a well loses
+frequency by the difference of the accelerations at the two ends times
+one Link, not by the difference of the potentials. **Different law**.
+
+**(iii) The bending.** Three things are bent, and each option bends them
+differently.
+
+*The image of light* (where a light thing lands): a thing turns only by a
+push (points 10 and 21); over a pass at b it takes Δp_⊥ = p ∫ J_⊥ dx =
+p (S/(4π))(2/b) = p GM/b, so
+
+```text
+α_image = G M / b     (every option; achromatic; a quarter of Einstein's 4GM/(c²b), half of Newton's corpuscle),
+```
+
+the direct push alone: the recoil half of Newton's force never reaches a
+thing at speed 1 (section 34), and the wait turns nothing. The wait
+changes the push at second order only (a slower pass reads (1 + wn) quanta
+per Link).
+
+*The front of light* (the phase pattern of successive light things from a
+clocked emitter, read by an interferometer or a two-slit behind the mass):
+each thing is late by w per quantum read, the phase it carries is its
+emitter's and does not advance, so the surfaces of equal phase tilt by the
+gradient of the delay,
+
+```text
+α_front(light) = α_image + w ∫ ∂_b n dx = G M / b + (√3 π w / 2) · G M / b²      (I, II-a, II-b, III-2;   III-4: α_image alone),
+```
+
+toward the mass (the near side waits more), 2.72 w GM/b². The added term
+is 1/b², not 1/b: it is not Einstein's space half (2GM/b) at any w, it is
+smaller than it by the factor 1.36 w/b, and the front and the image still
+disagree.
+
+*The front of the field* (a change in a thing A's field crossing M's field
+at impact parameter b, read by the register of a thing B behind M): a
+shadow of A is turned by no push (a shadow meeting a shadow is a sum of
+phases, point 5; shadows of different owners cross, point 25), so under I,
+II-a and III-4 its front is straight: α = 0. Under II-b the shadows of A
+have the index 1 + w n_M(r) relative to 1/√3, since each Node crossing
+costs w n_M intervals in the mean; under III-2 they have 1 − (1 − 1/√3) w
+n_M, since a fraction w n_M of the crossings is ballistic (one interval
+per Link in place of √3). The tilt of a front is the gradient of its
+delay times its speed, so
+
+```text
+II-b:   α_front(field) = + (√3 π w / 2) · G M / b² = +2.72 w G M / b²   toward M;
+III-2:  α_front(field) = − (1 − 1/√3)(√3 π w / 2) · G M / b² = −1.15 w G M / b²   away from M;
+I, II-a, III-4:  0.
+```
+
+The field of a thing is focused behind a mass under II-b and defocused
+under III-2; light is neither.
+
+*Against Einstein's 4GM/(c²b)*, which needs the time half (2GM/b, Newton's
+corpuscle) and the space half (2GM/b, the index): the image has one
+quarter, the front of light one quarter plus a 1/b² term. **Not reached**
+in every option; **different law** (image GM/b, front GM/b + 2.72 w
+GM/b²; the field's front 0, +2.72 w GM/b² or −1.15 w GM/b² by option).
+
+**(iv) The Shapiro delay.** *Light*: Δt = w ∫ n dx along the pass,
+
+```text
+Δt(light) = (√3 w / 2) · G M · (1/b) [atan(x_A/b) + atan(x_B/b)]  →  (√3 π w / 2) · G M / b = 2.72 w · G M / b     (I, II-a, II-b, III-2;   III-4: 0),
+```
+
+against GR's 2GM ln(4x_Ax_B/b²): a delay that saturates with the path
+length and falls as 1/b, no logarithm, smaller than GR's by the factor
+1.36 w/(b ln(4x_Ax_B/b²)), b in Links. A relation follows that no w can
+change: the delay of a light thing over a pass and its deflection over the
+same pass are the same integral up to the constant of the operator,
+
+```text
+Δt(light) / α_image = √3 · atan(X/b) / (X/√(b² + X²))  →  (√3 π / 2) w = 2.72 w   intervals per radian   (X the half-length of the pass),
+```
+
+so a light thing that is turned by α is late by 2.72 w α ticks, at every b
+and every S: a one-tick delay needs a deflection of 0.37/w radians, and a
+thing that is not captured (b > b_c = GM, section 19) is never late by more
+than 2.72 w ticks over its whole pass. *The field*: its own time per Link
+is √3 (section 28) and the extra is √3 w ∫ n_M dx under II-b, so
+
+```text
+II-b:   Δt(field) = + (3π / 2) w · G M / b = +4.71 w · G M / b;     III-2:  Δt(field) = − (1 − 1/√3) · 4.71 w · G M / b = −1.99 w · G M / b;     I, II-a, III-4:  0,
+```
+
+on top of the √3 r retardation of section 28 (which is unchanged in every
+option and is not GR's). Under II-a the field is not delayed in the vacuum
+but the return of every pushed shadow leaves the thing w intervals per
+quantum later, so the recoil of section 32 arrives at the owner late by w
+per quantum on top of |x|₁. **Different law** in every option (light's
+delay ∝ 1/b, no logarithm; the field's delay 0, +4.71 or −1.99 w GM/b).
+
+**Dictionary.** g = GM/r² ↔ the Newtonian acceleration in Links per
+interval²; w n ↔ the fraction of intervals lost; 1 + w n_M ↔ a refractive
+index of the vacuum for fields (II-b), 1 − 0.42 w n_M (III-2); the front
+of the field ↔ the retardation of a force, read as the tick a register
+first moves.
+
+**Check.** *The index of II-b and III-2* (a plane wave of period 16 along
+x in a thin periodic box, the exact one-dimensional reduction of R10, a
+slab of 80 Nodes in which a static random fraction f of the Nodes applies
+the modified rule, six masks, k_in fitted on the phase of the +x-moving
+Port amplitude's time-harmonic component over the slab interior). II-b
+with a first-in-first-out hold of w = 1 at the masked Nodes: k_in/k₀ =
+2.102 at f = 1, exactly the lattice dispersion's arccos(3cos 2ω − 2)/k₀ =
+2.102 (every Node delayed is the same operator with time doubled); at the
+masked fractions 0.485, 0.217, 0.090, 0.042: 1.538 ± 0.067, 1.240 ± 0.039,
+1.100 ± 0.042, 1.045 ± 0.038 against 1 + f = 1.485, 1.217, 1.090, 1.042
+(1.512, 1.225, 1.092, 1.043 with the dispersion): **n_eff = 1 + w n_M to
+first order**, with a transmitted amplitude 0.74 to 0.94 (the masks
+scatter). III-2 with the straight pass at the masked Nodes: k_in/k₀ =
+0.570 at f = 1 (ballistic: k_in = ω, ω/k₀ = 0.5696), and 0.816 ± 0.024,
+0.921 ± 0.016, 0.969 ± 0.012, 0.988 ± 0.010 at the four fractions against
+1 − f(1 − 1/√3) = 0.795, 0.908, 0.962, 0.982: **n_eff = 1 − 0.42 w n_M**
+to first order, with a transmitted amplitude 0.39 at f = 0.485 (a
+straight-passing Node in a wave scatters strongly) and 0.84 to 0.96 below.
+*The path integrals of light* (section 34's check): Σ_x n / Σ_x J_⊥ along
+the line at b = 8, 12, 16 with X = 28: 2.245, 2.170, 2.093 at period 16
+and 2.239, 2.149, 2.070 at period 32, against √3 atan(X/b)/(X/√(b² + X²))
+= 2.328, 2.197, 2.098 (the asymptote 2.721); the tilt d(Σ_x n)/db: 0.970,
+0.948, 0.949 of the formula at period 16 and 1.051, 0.980, 1.016 at period
+32.
+
+**Verdict.** The clock: **different law** in every option, 1 − (√3w/2)GM/r²
+(III-4 with the opposite sign); no coefficient of GM/r exists to set
+against GR's 1. The redshift: **different law**, in the accelerations.
+The bending: the image GM/b in every option (**different law**, a quarter
+of Einstein's); the front of light GM/b + 2.72 w GM/b² (**not reached**:
+the added term is 1/b²); the field's front 0 (I, II-a, III-4), focused
+(II-b) or defocused (III-2) by a 1/b² term. Shapiro: **different law** in
+every option, 2.72 w GM/b for light with no logarithm and the fixed ratio
+2.72 w ticks per radian of deflection; the field late by 4.71 w GM/b under
+II-b and early by 1.99 w GM/b under III-2. **New**: Δt = 2.72 w α for every
+pass, and the focusing of fields, not of light, behind a mass under II-b.
+
+## 36. Round 5: Coulomb near a mass, the far field of a thing near a mass, and the books
+
+**Rules used.** Section 34's rules and reading rate, section 31 (Coulomb
+and Newton under R10, ζ = 1), section 26 (ii) (continuity), section 28
+(the retardation √3 r), point 7 (the books per bit), point 3 as amended.
+
+**(v) Coulomb's law between two things at rest near a mass.** A and B at
+separation s, both at distance r from a mass M (r ≫ s). Under R10 the push
+B takes from A is J_A(B) = S_A/(4π s²), the flux of A's wave through the
+sphere of radius s, and with the returned recoil the force is
+k_C q_A q_B/s² (section 31). Near M three things could change it, and the
+options differ only in the third.
+
+- *The potential*: nothing. R10's amounts carry no potential (section
+  34), and the flux S_A is what A's set declares (X/(√3 R)), which no wait
+  changes; the pile-up of II-b raises the amount resident at B's Node to
+  n_A(1 + w n_M) but a held share is read once, at its arrival, and in a
+  steady state the arrivals per interval equal the departures
+  (continuity), so J_A(B) is unchanged. The force between two things at
+  rest is the same at every r from the mass, in lattice time, in every
+  option. **Reached** (the product law, its constant and its independence
+  of the place).
+- *The clocks*: each thing's rate is ρ(1 − w n_M(r)) (section 35 (i)), so
+  the same force per lattice interval is, per tick of the local clock,
+  F/(1 − w n_M) = F [1 + (√3 w/2) GM/r²]. Physics says the local force is
+  unchanged in the freely falling frame and the coordinate force carries
+  the metric's √g₀₀ ≈ 1 − GM/r; here the coordinate force is unchanged and
+  the proper force is larger, by the clock's factor, which is a law in
+  g ℓ/c² and not in the potential. A second-order companion: A's wave has
+  the frequency of A's slowed clock, ω_A(1 − w n_M), so the fixed
+  anisotropy (15/8)ω_A²K₄ of section 31 shrinks by (1 − w n_M)². Under
+  III-4 the signs reverse. **Different law** in the local observer's
+  measure, by 1/(1 − (√3w/2)GM/r²) (all options but III-4, which gives the
+  inverse).
+- *The path* (II-b and III-2 only): A's shadows crossing M's field to B
+  are late by √3 w ∫ n_M dx (II-b) or early by 0.42 of it (III-2), so a
+  change of A's field reaches B later or sooner than section 28's √3 s,
+  and the force lags or leads accordingly; the steady force is untouched.
+  With whole quanta arriving at random the index would also scatter (the
+  transmitted amplitude of section 35's check, 0.74 to 0.96 over a slab of
+  80 Nodes at masked fractions 0.04 to 0.49), a screening of one thing's
+  field by another's presence; with the registers' regular arrivals the
+  medium is uniform in the mean and scatters only at index gradients, at
+  second order. Whether M's own shadows count as "present" for M's own
+  shares (II-b, III-2 applied per owner or to others only) changes the
+  wavelength of M's near field by 1 + w n_M and nothing of (i) to (vi).
+
+**(vi) The far field of a thing near a mass.** B's flux S_B is declared
+and conserved through every shell (section 26 (ii)), so J = S_B/(4πr²)
+holds in every option: **1/r² kept**. Modified in three ways. The
+wavelength: B's clock is slowed, so λ_w = K/(√3 M_B (1 − w n_M)), longer
+by 1 + w n_M near the mass, and its fixed anisotropy (15/8)ω_B²K₄ smaller
+by (1 − w n_M)² (III-4: the reverse). The lens (II-b, III-2): B's wave
+passing M is refracted by 1 + w n_M(r) (or 1 − 0.42 w n_M), the flux per
+solid angle behind M raised (II-b) or lowered (III-2) at O(w GM/b²)
+(section 35 (iii)) while the flux through a closed surface is exact.
+The pile-up (II-b): the amount resident near M is n(1 + w n_M), which no
+thing reads and only a count of parked shadows would show. Under I, II-a
+and III-4 the far field of B is the far field of B with a slower clock,
+nothing else.
+
+**(vii) Conservation.** Point 7 asks that things conserve amount,
+momentum and charge exactly among themselves at every interval, with the
+momentum in flight in the returning shadows, and that every push comes
+home through the field (the third law, global, section 32 as amended by
+point 3). Option by option:
+
+- **I**: the wait is a counter on the thing, its own time; nothing is
+  parked, nothing is created; the return is a field at 1/√3 and the recoil
+  reaches a thing at rest after √3 r + 1 to 17 (section 27 (iii)); a
+  thing at speed 1 is not reached and its recoil is delivered to the mark
+  that absorbs it (section 34). **Exact**, with momentum in flight for as
+  long as the light flies.
+- **II-a**: the pushed shadow is parked at the thing's Node with its
+  amount and its −Δp for w intervals per quantum, a parked shadow of point
+  22 with a countdown (a counter per parked share, or the thing's own
+  counter, since the thing is there); the books close per interval with the
+  parked momentum counted as in flight; the third law's delay is
+  √3 r + w per quantum. **Exact**, one counter on the shadow.
+- **II-b**: a first-in-first-out of held shares per Node, owner and Port,
+  a delay line the Node holds beyond its six Ports (point 22 admits parked
+  shadows; this adds their order and their countdown); unitary at every
+  Node (each share leaves after w with its amplitude; at f = 1 it is the
+  same operator with time stretched, the check of section 35), Kirchhoff's
+  sum conserved, amount exact, the momentum in flight held longer near
+  every mass (the third law late by 4.71 w GM/b over a pass at b). **Exact**
+  in the books; new Node state; a reading by a shadow, which points 9, 16
+  and 21 do not have.
+- **III-2**: a switch between S and the Port identity in an interval,
+  both orthogonal, both conserving Kirchhoff's sum; no state; the wave
+  equation of section 26 (ii) fails at the switched Nodes (each is a
+  scatterer, section 35's check), the returns pass straight near masses
+  and arrive early. **Exact** in the books; a declared switch, which
+  point 24's "nothing here is declared" does not have.
+- **III-4**: amount, momentum and charge exact (the phase is not booked);
+  the world's computation per interval exceeds the things' content by the
+  bonus steps, against point 11, and the clock is no longer content/K,
+  against point 19. **Exact** in the books, unlawful in the clock.
+- **III-1, III-3**: not rules (III-1) or amount destroyed (III-3, against
+  point 7 and unitarity).
+
+**Check.** Section 35's slab check (unitarity at f = 1: transmitted
+amplitude 0.993 for II-b, 1.000 for III-2; the scattering at random
+masks); section 26's identities for the switched maps (Π is orthogonal
+and 1ᵀΠ = 1ᵀ, so ΣB = ΣA under both S and Π); section 31's algebra.
+
+**Verdict.** Coulomb near a mass: **reached** in lattice time in every
+option (no potential in the amounts to change it); **different law** in
+local time by the clock's 1/r² factor. The far field of a thing near a
+mass: **1/r² kept** in every option, the wavelength longer by 1 + w n_M,
+and under II-b and III-2 a lens of order w GM/b². The books: **exact** in
+I, II-a, II-b, III-2 and III-4; II-a and II-b need a counter on a shadow,
+II-b a reading by a shadow, III-2 a declared switch, III-4 breaks the
+clock's law; III-3 is unlawful and III-1 is not a rule.
+
+## 37. Round 5: one w for the four tests, the standing profile, and what A6 repeated can read
+
+**Rules used.** Sections 34 to 36; section 27 (iv) (the flat bands);
+section 30 (the integer rule); section 19 (the capture radius b_c = GM);
+the A6 entry of [EXPERIMENTS.md](EXPERIMENTS.md#a6-light-bending-by-a-bound-group-and-g_eff-n²-over-n--28-to-216).
+
+**(viii) Which option reaches GR's coefficients for (i) to (iv) with one
+w.** None, and with no w: there is no term in GM/r to carry a coefficient.
+Under R10 every effect of the wait is (√3 w/2) GM/r² or its integral, a
+law in the acceleration, in every option (section 35); the options differ
+only in what happens to fields, which GR's four tests do not read. The
+reason is the reading rate (section 34): the amount of the wave field is
+√3 J ∝ 1/r². Two ways to a 1/r amount exist on paper, and neither is
+lawful under R10.
+
+*The diffusive field* of rounds 1 to 3 had n ∝ 1/r because its shadows
+lingered (the residence time r²/D), and there one w fixed the clock, the
+redshift and the front's space half (w = 11/9) with Shapiro at half
+(section 24). R10 replaced it (point 24), and its shadows pass.
+
+*A standing profile.* R10 has content that does not move: the four flat
+bands of section 27 (iv). Derived here: the −1 band is the set of scalar
+Link fields with zero sum at every Node (A_p(x) = A_{−p}(x + e_p), Σ_p
+A_p(x) = 0: 3N − N = 2N dimensions, two bands), the +1 band the set of
+divergence-free directed Link currents (A_p(x) = −A_{−p}(x + e_p), zero
+Node sum: two bands); on either, every Node sends every arrival back
+(B_p = −A_p) and the amounts never change. A profile with the amount
+f(x) per Link on the −1 band (the checkerboard (−1)^{|x|₁} σ_i √f on the
+Link (x, x + e_i)) has, exactly on the lattice differences,
+
+```text
+n(x) = Σ_p f(x + e_p/2) ≈ 6 f(x),       J(x) = −Σ_i [f(x + e_i/2) − f(x − e_i/2)] e_i ≈ −∇f:
+```
+
+with f = γM/r a thing at r would read 6γM/r quanta per interval and be
+pushed by γM/r² outward in J, that is toward M with σ = −1: the potential
+in the wait and the inverse square in the push from one profile, the
+clock 1 − 6wγM/r = 1 − 3w GM/r with G = 2γ (the recoil half counted; 6w
+GM/r without it), GR's coefficient at w = 1/3 (1/6), the front of light
+turned by 6wGM/b (2GM/b at w = 1/3, Einstein's space half), Shapiro
+3wGM ln(4x_Ax_B/b²) (GM ln at w = 1/3, half of GR's): section 24's
+structure with 1/3 in place of 11/9. Three things stop it. (1) No source
+makes it: a clocked thing's re-release is a wave (section 27 (v)), a
+clockless thing's cancels itself; the profile would be a declared prefill,
+an input like G itself. (2) It does not stand: a smooth envelope breaks
+the zero sum at every Node by (1/3)σ·∇√f, and with f = γM/r two thirds of
+the profile radiates away within 20 intervals and one third stays (the
+check). (3) Decisive: a thing at rest empties it. The thing's Node
+returns every arrival with its amplitude (B_p = +A_p, point 3: the same
+shadow, heading reversed, its phase a shadow's phase) where the band
+needs −A_p; the sign defect empties the six Links at the thing's Node in
+two intervals, after which the thing reads a tenth and then a hundredth
+of 6f and a push that alternates in sign about zero: a standing profile
+pushes and slows a thing at rest for two ticks and never again (the
+check). And had the return carried the sign −1 instead, the thing's Node
+would be one more Node of the band, the thing read 6f and took J for ever,
+and nothing would ever leave toward the owner: a push with no reply,
+against point 7's closed round trip. A standing profile is therefore not a
+field of a thing under the law of the bit, on either sign, and the
+potential stays unread. **Not reached** by any option and any w: no
+local rule on amounts reads the potential under R10.
+
+**(ix) What A6 repeated can read.** The sizes, under R10 with the star a
+clocked thing of flux S (a declared set X of extent R, S = X/(√3R),
+GM = S/(2π)):
+
+```text
+b_c = G M = S/(2π)   (capture, section 19),      r_h = 0.93 √(w G M) = 0.37 √(w S)   (the horizon, wn = 1),
+```
+
+so r_h < b_c whenever GM > 0.87 w: for every mass that bends light by a
+measurable angle the horizon sits inside the capture radius and no ray
+that passes ever sees it. A6's board (65 × 65 × 9, b = 4 to 16) is
+outside both for S < 25 (GM < 4 = the smallest b). At S = 10 (GM = 1.59):
+b_c = 1.6, r_h = 1.2 (w = 1) and 1.3 (w = 11/9); the image α = GM/b =
+0.199 rad at b = 8 and 0.099 at 16 (a register turn of 5·10⁴ quanta at
+A6's p = 2¹⁸); the delay 2.72 w α = 0.54 w ticks at b = 8 and 1.1 w at
+b = 4, that is 0 or 1 tick per pass under the integer rule, with the 1/b
+law readable only as the fraction of passes delayed over many passes; the
+front of light tilted by 2.72 w GM/b² = 0.068 w rad at b = 8 (a two-slit
+behind the mass); a ring at r = 8 slowed by (√3w/2)GM/r² = 2.2 % w. At
+S = 25 (GM = 4): b_c = 4, r_h = 1.9 and 2.0, α(8) = 0.5 rad, the delay
+1.4 w ticks at b = 8, the ring at r = 8 slowed by 5.4 % w (86 w ticks
+over 100 periods of 16: w to 1 %). **The ring is the instrument for w**;
+the pass reads at most 2.72 w ticks at any S, since a delay beyond that
+needs b < b_c.
+
+*The integer rule against the wait.* Section 30: the field is a wave in
+whole quanta only where n ≥ 64 to 256 per Node, r ≤ 0.023 √S. Point 23:
+a thing that reads n ≥ 1/w quanta per interval never steps. Hence
+r_h = 0.37 √(wS) = 16 √w · r_wave: **wherever the integer field is a wave,
+every thing in it is frozen, for every w ≥ 1/256**, and where things
+move (n < 1) the integer field is the dead residue of section 30 (standing
+content and noise, J ≈ 0). At S = 25, n(8) = 0.054 quanta per Node: no
+wave in whole quanta. The wait as declared can therefore be read only in
+the dense layer (point 13's second layer, the field as a formula or one
+mean-field step), where the thing accumulates the fractional amount it
+reads and waits w per whole quantum accumulated, the register rule on the
+thing's side; the integer layer with the wait at w = 1 has no moving thing
+inside any wave.
+
+*The one run that separates the options.* A source thing A and a
+receiver thing B on a body-diagonal line (the field's front is sharp
+there, section 27 (iii): t₉₀ = √3 r + 1 to 2), the mass M beside the
+line at impact parameter b = 8, S = 40 (GM = 6.4: b_c = 6.4 < 8,
+r_h = 2.4), a ring at r = 8 from M, in the dense layer; A displaced by
+one Link at t₀. Read: (a) the tick B's register first moves, against the
+same board without M: I, II-a, III-4: unchanged (√3 r_AB + 1 to 2);
+II-b: later by 4.71 w GM/b = 3.8 w ticks; III-2: earlier by 1.6 w ticks;
+(b) the tick A's register takes the recoil of B's push: II-a: later than
+(a)'s mirror by w per quantum read at B; (c) the ring's period: 1 +
+(√3w/2)GM/r² = 1 + 0.087 w in I, II-a, II-b and III-2, 1 − 0.087 w in
+III-4; (d) a light thing along the same line: late by 2.72 w GM/b = 2.2 w
+ticks and turned by 0.8 rad in every option but III-4 (not late). (a)
+separates I and II-a from II-b from III-2; (b) separates II-a from I; (c)
+separates III-4; (d) confirms the wait of the thing and reads w coarsely.
+Nothing in A6's own geometry (a light ray at b, the register after the
+pass) separates the three: the image is GM/b in every option.
+
+**Check.** *The standing profile* (61³, the −1-band checkerboard with the
+amount f = 1/max(r, 2) per Link, tapered smoothly to zero between r = 12
+and 18 so that no sponge touches it). At t = 0: n = 1.0000, 0.6000, 0.4286
+at r = 6, 10, 14 against 6/r; J_r = +0.02797, +0.01003, +0.00511 against
+the lattice differences 1/5.5 − 1/6.5 = 0.02797, 0.01003, 0.00511 (exact).
+The amount within r ≤ 10 relative to t = 0: 0.998, 0.993, 0.964, 0.834,
+0.404, 0.362, 0.366, 0.332, 0.319 at t = 1, 2, 5, 10, 20, 40, 80, 160,
+400; within r ≤ 6: 0.994, 0.981, 0.904, 0.706, 0.413, 0.443, 0.380,
+0.353, 0.343; on the board 0.513 at t = 400 (the rest left through the
+sponge): a third stands, two thirds radiate by t = 20. J_r at r = 6 while
+it radiates: +0.048, +0.070, +0.139, +0.111, +0.124 at t = 1, 2, 5, 10, 20
+(the leaving waves carry J = n v_g, forty times the profile's own), then
+±0.01 to 0.02. *A thing at rest* at (10, 0, 0) in the untapered profile,
+its Node returning every arrival (B_p = +A_p): the arrivals it reads
+0.6000, 0.6000, 0.0680, 0.0692, 0.0243, 0.0370, 0.0138, 0.0204, 0.0033,
+0.0176, 0.0033 at t = 0, 1, 2, 3, 4, 6, 8, 12, 20, 40, 80 (6f = 0.6); the
+push J_x it reads +0.0100, +0.0169, −0.0048, −0.0070, −0.0048, +0.0113,
+−0.0022, +0.0052, −0.0013, +0.0005, −0.0006 (the profile's +0.0100); the
+amount within 3 Links of it 73.8 through t = 12 (the content is there and
+does not arrive), 54.5 at t = 20, 15.4 at t = 80. *The sizes*: algebra on
+section 34's n(r), section 19's b_c and section 30's radius.
+
+**Verdict.** One w for (i) to (iv): **not reached** in any option; under
+R10 no local rule on amounts reads the potential, the standing profile
+that would is unsourced, leaks by two thirds and is emptied by a thing at
+rest in two ticks. What A6 repeated reads: the image GM/b in every option
+(**different law**, unchanged by the wait), a delay of at most 2.72 w
+ticks per pass, the ring's period for w; the one run that separates the
+options is the arrival tick of a field's front through the mass's field
+on a body diagonal. **New**: the horizon hides inside the capture radius
+(r_h < b_c for GM > 0.87 w); the integer wave field and a moving thing
+cannot coexist at w ≥ 1/256 (r_h = 16 √w r_wave).
+
+## 38. Round 5: the verdicts
+
+| Law | Round 3 / 4 (sections 25, 33) | Round 5: I (R9 as it stands) | II-a (the shadow waits at the thing) | II-b (the shadow waits in the field) | III-2 (the straight pass) / III-4 (the tick bonus) | Run |
+| --- | --- | --- | --- | --- | --- | --- |
+| The reading rate at a thing | n = (9/11)GM/r (diffusive) | **n = √3 J = (√3/2)GM/r²** (measured 1.72 to 1.76) | the same | the same (a held share is read once) | the same | a thing's wait count beside a body |
+| Gravitational time dilation | 1 − (9w/11)GM/r, GR at w = 11/9 | **different law**: 1 − (√3w/2)GM/r² | the same | the same | III-2 the same; III-4 **1 + (√3w/2)GM/r²** (the wrong sign) | a ring at r = 8, 16 from a body, dense layer |
+| Gravitational redshift | (9w/11)GM(1/r₁ − 1/r₂) | **different law**: (√3w/2)GM(1/r₁² − 1/r₂²) | the same | the same | III-4 negative | two rings |
+| Light bending, the image | 1 to 2 GM/b | **GM/b** (a quarter of Einstein; the return never catches a thing at speed 1) | GM/b | GM/b | GM/b | A6 with the wait: the register after the pass |
+| Light bending, the front | 3 to 4 GM/b at w = 11/9 | **not reached**: GM/b + 2.72 w GM/b² (1/b²) | the same | the same | III-2 the same; III-4 GM/b | a two-slit behind the mass |
+| The field's front through a mass's field | — | 0 | 0 | **+2.72 w GM/b²** toward M (focused) | III-2 **−1.15 w GM/b²** (defocused); III-4 0 | B's register behind M |
+| Shapiro delay of light | (9w/11)GM ln(4x_Ax_B/b²), half of GR at w = 11/9 | **different law**: 2.72 w GM/b, no logarithm; Δt = 2.72 w α for every pass | the same | the same | III-2 the same; III-4 0 | A6 arrival tick |
+| Shapiro delay of the field | — | 0 (beyond √3 r) | 0; the recoil late by w per quantum at the thing | **+4.71 w GM/b** | III-2 **−1.99 w GM/b**; III-4 0 | the one run of section 37 |
+| The index of the vacuum for fields | — | 1 | 1 | **1 + w n_M** (measured 1 + f w, exact at f = 1) | III-2 **1 − 0.42 w n_M** (measured); III-4 1 | — |
+| Coulomb near a mass | reached (ζ = 1) | **reached** in lattice time; ×1/(1 − wn_M) in local time | the same | the same; the force lags by the field's delay | III-2 the same, leads; III-4 the inverse clock factor | A5s beside a body |
+| Far field of a thing near a mass | 1/r², fixed anisotropy | **1/r² kept**; λ_w longer by 1 + wn_M | the same | the same, a converging lens, a pile-up no thing reads | III-2 a diverging lens; III-4 λ_w shorter | E11 beside a body |
+| The books (point 7) | exact | **exact**; the counter on the thing | **exact**; a counter on the parked shadow | **exact**; a delay line per Node, a reading by a shadow (points 9, 16, 21 amended) | III-2 **exact**, a declared switch; III-4 exact in the books, against points 11 and 19; III-1 not a rule, III-3 unlawful | E11 (a) |
+| Newton's third law | exact, delayed \|x\|₁ | **exact**, through the field at 1/√3; light's recoil goes to the mark | exact, + w per quantum | exact, + 4.71 w GM/b near masses | III-2 exact, early | E11 (a) with a moved pusher |
+| One w for the four tests | w = 11/9 (clock, redshift, front), Shapiro at half | **not reached**: no GM/r term in any option | — | — | — | — |
+| A standing 1/r profile | — | **not a field of a thing**: unsourced, leaks 2/3 in 20 ticks, emptied by a thing at rest in 2 ticks (or pushes with no reply) | — | — | — | — |
+| The horizon | r_h = (9w/11)GM | **r_h = 0.93 √(wGM) < b_c = GM** for GM > 0.87 w | the same | the same | the same | — |
+| The integer wave and the wait | — | **incompatible** at w ≥ 1/256: r_h = 16 √w r_wave; the wait is read in the dense layer only | the same | the same | the same | A6 in the dense layer |
+
+Open after this round, one line each: the second order of the wait
+(strict against queued reading; what a thing reads while it waits); the
+time-random form of II-b (a held share merged with the next interval's
+arrivals is not a unitary map on amplitudes, only the first-in-first-out
+form is) and whether the registers' regular arrivals make the two agree;
+the scattering of a field by whole quanta arriving at random against the
+registers' regularity (the 0.74 to 0.96 transmission of the random-mask
+slabs); the fraction of a smooth-envelope flat-band profile that stands
+(a third measured for 1/r, its closed form not derived); the recoil of
+light delivered at the mark, and what E9's screen reads of it; a rule
+that would read the amplitude u ∝ 1/r rather than the amount, which
+nothing in the law of the bit provides.
