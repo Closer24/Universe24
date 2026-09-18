@@ -38,7 +38,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from bit_law_migration import migrate  # noqa: E402
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 SPREAD = [6, 1, 1, 1, 1, 1]
@@ -183,6 +187,10 @@ def base(model_id, shape, ticks, *, dense):
 
 
 def profile_world():
+    return migrate(_profile_world())
+
+
+def _profile_world():
     kind, emission = idle_lamp("light")
     return base("e11-point-source", PROFILE_SHAPE, PROFILE_TICKS, dense=True) | {
         "fields": [scalar("proton"), scalar("light"), MOMENTUM],
@@ -207,6 +215,10 @@ def profile_world():
 
 
 def books_world(*, spread=True):
+    return migrate(_books_world(spread=spread))
+
+
+def _books_world(*, spread=True):
     kind, emission = idle_lamp("light")
     light_extra = {"field_of": "proton", "release": BOOKS_RELEASE}
     if spread:

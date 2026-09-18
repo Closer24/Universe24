@@ -22,6 +22,7 @@ before the first run.
 import importlib.util
 import json
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -189,7 +190,10 @@ def ray(heading, amount, phase, steps, mask, shares):
 
 def rays_at(world, position):
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
-    return sorted(node.rays[0], key=ray_merge_key) if node is not None and node.rays else []
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    rays = node.rays[0] if node is not None and node.rays else ()
+    return sorted((replace(ray, owner=0) for ray in rays), key=ray_merge_key)
 
 
 def state(world):

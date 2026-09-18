@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
@@ -70,6 +71,11 @@ SOURCE_AMOUNT = 256
 SOURCE_CHARGE = 3
 ANTIPHASE = 4
 BORN_TABLE = [8, 7, 4, 1, 0, 1, 4, 7]
+
+# bit-law-v1 (2026-09-18): the worlds are written in the law's form, migrated
+# textually from the declaration below (see examples/nature/bit_law_migration.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from bit_law_migration import migrate  # noqa: E402
 
 
 def scalar(name):
@@ -296,6 +302,11 @@ def counter_world(seed=0, *, ticks=TEST_TICKS):
 
 
 def cases():
+    for name, document in _cases():
+        yield name, migrate(document)
+
+
+def _cases():
     for key, setting in SCREEN_SETTINGS.items():
         yield f"screen_{key}", screen_world(setting, 0)
     yield f"screen_d1_seed{OTHER_SEED}", screen_world([1, 1], OTHER_SEED)

@@ -164,7 +164,9 @@ def rays_at(world, position):
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
     if node is None or not node.rays:
         return []
-    return sorted((ray for bundle in node.rays for ray in bundle), key=ray_merge_key)
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    return sorted((replace(ray, owner=0) for bundle in node.rays for ray in bundle), key=ray_merge_key)
 
 
 def inventory(world):
@@ -206,7 +208,7 @@ def merged_pair(polarization):
     )
 
 
-def passed(steps, amount, polarization, detector=0):
+def passed(steps, amount, polarization, detector=1):
     """A polarizer's pass ray: a fresh event on +X of the body's Node."""
     return Ray(
         0,
@@ -270,8 +272,9 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
             parse_initial_state(document([lamp((4, 7, 7), 4, 0, 2), lamp((4, 7, 7), 4, 0, 2)]))
         )
         step(world, 1)
-        # Two identical events merge: the merged ray keeps the event record of each.
-        assert rays_at(world, (5, 7, 7)) == [merged_pair(2)]
+        # Two identical events of two things stay two rays (bit-law-v1, 2026-09-18:
+        # the identity is part of a ray's record and rays of two things never merge).
+        assert rays_at(world, (5, 7, 7)) == [emitted(0, 1, 4, 2), emitted(0, 1, 4, 2)]
         world = Simulation(
             parse_initial_state(document([lamp((4, 7, 7), 4, 0, 2), lamp((4, 7, 7), 4, 0, 6)]))
         )
@@ -279,7 +282,7 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
         assert rays_at(world, (5, 7, 7)) == [emitted(0, 1, 4, 2), emitted(0, 1, 4, 6)]
         world = Simulation(parse_initial_state(document([lamp((4, 7, 7), 4, 0), lamp((4, 7, 7), 4, 0)])))
         step(world, 1)
-        assert rays_at(world, (5, 7, 7)) == [merged_pair(NONE)]
+        assert rays_at(world, (5, 7, 7)) == [emitted(0, 1, 4, NONE), emitted(0, 1, 4, NONE)]
         # The pure function: rays of one event and line merge at equal polarization
         # only, the unpolarized one ordered first.
         three, five = replace(merged_pair(2), amount=3), replace(merged_pair(2), amount=5)
@@ -466,22 +469,25 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
                 ]
         return
     if case == "spread":
-        # (e) A spread carries the axial mean of what it takes: one polarized content
-        # keeps its polarization on every departure; two equal crossed lines are
-        # unpolarized content; lines at 0 and 45 degrees give 22.5 degrees.
+        # (e) Re-pinned under bit-law-v1 (2026-09-18): a lamp's light is a thing and
+        # a thing moves whole on its line; a family's spread table applies to its
+        # shadows alone, so the polarized content crosses the board unsplit, its
+        # polarization its own, and nothing reaches the transverse Nodes. (The
+        # axial mean of a spread's polarization is the shadows' rule, unchanged.)
         spreading = {"polarization_bits": 3, "spread": [6, 1, 1, 1, 1, 1]}
-        for lamps, expected, polarization in (
-            ([lamp((4, 7, 7), 11, 0, 2)], {(6, 7, 7): 6, (4, 7, 7): 1}, 2),
+        for lamps, expected in (
+            ([lamp((4, 7, 7), 11, 0, 2)], {(6, 7, 7): (11, 2, 2, 1)}),
             (
                 [lamp((4, 7, 7), 11, 0, 0), lamp((6, 7, 7), 11, 1, 4)],
-                {(6, 7, 7): 7, (4, 7, 7): 7},
-                NONE,
+                {(6, 7, 7): (11, 0, 2, 1), (4, 7, 7): (11, 4, 2, 2)},
             ),
-            ([lamp((4, 7, 7), 11, 0, 0), lamp((6, 7, 7), 11, 1, 2)], {(6, 7, 7): 7, (4, 7, 7): 7}, 1),
+            (
+                [lamp((4, 7, 7), 11, 0, 0), lamp((6, 7, 7), 11, 1, 2)],
+                {(6, 7, 7): (11, 0, 2, 1), (4, 7, 7): (11, 2, 2, 2)},
+            ),
         ):
             world = Simulation(parse_initial_state(document(lamps, light=spreading)))
             step(world, 2)
-            transverse = 1 if len(lamps) == 1 else 2
             found = {
                 position: [(ray.amount, ray.polarization, ray.steps, ray.event_ports) for ray in rays]
                 for position, rays in (
@@ -489,10 +495,10 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
                     for p in ((6, 7, 7), (4, 7, 7), (5, 8, 7), (5, 6, 7), (5, 7, 8), (5, 7, 6))
                 )
             }
-            for position, amount in expected.items():
-                assert found[position] == [(amount, polarization, 1, 0)], (lamps, position)
+            for position, entry in expected.items():
+                assert found[position] == [entry], (lamps, position)
             for position in ((5, 8, 7), (5, 6, 7), (5, 7, 8), (5, 7, 6)):
-                assert found[position] == [(transverse, polarization, 1, 0)], (lamps, position)
+                assert found[position] == [], (lamps, position)
             assert world.totals() == {"light": (11 * len(lamps),)}
         definition = SpatialFieldDefinition(
             0,

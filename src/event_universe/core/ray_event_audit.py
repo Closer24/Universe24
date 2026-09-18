@@ -3,25 +3,45 @@
 One exact ledger per completed tick for each conserved readout: the amount of
 every conserved field (momentum being the three-component field among them)
 and the charge of every ray family. Each line reads initial, sourced, current,
-escaped, annulled, absorbed (the external bodies' sinks) and, since
-detector-absorb-v1 (2026-09-18), absorbed_by_marks (what the Detector marks
-absorbed on their clicks), and balances when
+escaped, annulled, absorbed (the external bodies' sinks), absorbed_by_marks
+(what the Detector marks absorbed on their clicks, detector-absorb-v1) and,
+since bit-law-v1 (2026-09-18), returned (what came home: the shadows absorbed
+back into their things, whose re-release is on the sourced line, and the
+momentum delivered outside the identity, to a body or a record without a
+recoil field), and balances when
 
-    initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks
+    initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks + returned
 
-exactly, component by component; a line recorded before that date carries no
-absorbed_by_marks and reads it as zero. The ledger is a read-only host diagnostic
-over the readouts the engine already keeps (Highlights 3.15): it changes no
-physics and charges no model cost. `audit_failure` re-checks a recorded ledger
-from its integers alone, so a hand-altered record reports the tick and the
-line that no longer balances.
+exactly, component by component; a line recorded before those dates carries no
+absorbed_by_marks or returned and reads them as zero. Beside it, since
+bit-law-v1, the things' own line per ray family (`things`): the things conserve
+exactly with no source line but their emissions and conversions, initial +
+sourced = current + escaped + annulled + absorbed + absorbed_by_marks over the
+things alone, the shadows' line being initial + sourced = current + escaped +
+returned. The ledger is a read-only host diagnostic over the readouts the
+engine already keeps (Highlights 3.15): it changes no physics and charges no
+model cost. `audit_failure` re-checks a recorded ledger from its integers
+alone, so a hand-altered record reports the tick and the line that no longer
+balances.
 """
 
 from collections.abc import Mapping, Sequence
 from typing import cast
 
 RAY_EVENT_AUDIT = "ray-event-audit-v1"
-LINE_KEYS = ("initial", "sourced", "current", "escaped", "annulled", "absorbed", "absorbed_by_marks")
+LINE_KEYS = (
+    "initial",
+    "sourced",
+    "current",
+    "escaped",
+    "annulled",
+    "absorbed",
+    "absorbed_by_marks",
+    "returned",
+)
+# The lines a record may leave out, read as zero: absorbed_by_marks before
+# detector-absorb-v1, returned before bit-law-v1.
+OPTIONAL_LINES = ("absorbed_by_marks", "returned")
 
 Line = dict[str, object]
 
@@ -33,14 +53,17 @@ def _components(value: object) -> tuple[int, ...]:
 
 
 def line_balanced(line: Mapping[str, object]) -> bool:
-    """initial + sourced == current + escaped + annulled + absorbed + absorbed_by_marks,
-    exactly; a line without absorbed_by_marks (recorded before detector-absorb-v1)
-    reads it as zero."""
+    """initial + sourced == current + escaped + annulled + absorbed + absorbed_by_marks
+    + returned, exactly; a line without absorbed_by_marks (recorded before
+    detector-absorb-v1) or without returned (before bit-law-v1) reads it as zero."""
     values = {key: _components(line[key]) for key in LINE_KEYS if key in line}
     width = {len(v) for v in values.values()}
-    if len(width) != 1 or any(key not in values for key in LINE_KEYS[:-1]):
+    required = [key for key in LINE_KEYS if key not in OPTIONAL_LINES]
+    if len(width) != 1 or any(key not in values for key in required):
         return False
-    taken = values.get("absorbed_by_marks", (0,) * next(iter(width)))
+    zero = (0,) * next(iter(width))
+    taken = values.get("absorbed_by_marks", zero)
+    returned = values.get("returned", zero)
     return all(
         values["initial"][c] + values["sourced"][c]
         == values["current"][c]
@@ -48,6 +71,7 @@ def line_balanced(line: Mapping[str, object]) -> bool:
         + values["annulled"][c]
         + values["absorbed"][c]
         + taken[c]
+        + returned[c]
         for c in range(width.pop())
     )
 
@@ -60,6 +84,7 @@ def ledger_line(
     annulled: object,
     absorbed: object,
     absorbed_by_marks: object,
+    returned: object = 0,
 ) -> Line:
     line: Line = {
         "initial": initial,
@@ -69,7 +94,10 @@ def ledger_line(
         "annulled": annulled,
         "absorbed": absorbed,
         "absorbed_by_marks": absorbed_by_marks,
+        "returned": returned,
     }
+    if isinstance(returned, int) and not isinstance(initial, int):
+        line["returned"] = (0,) * len(_components(initial))
     line["balanced"] = line_balanced(line)
     return line
 
@@ -80,6 +108,8 @@ def world_ledger(
     charge: dict[str, Line],
     bodies: dict[str, object],
     marks: dict[str, object],
+    things: dict[str, Line] | None = None,
+    shadows: dict[str, Line] | None = None,
 ) -> dict[str, object]:
     """The ledger of one completed tick: a line per conserved field and per ray family,
     the external bodies' own lines (external-body-v1): their count, the exact sum
@@ -92,14 +122,22 @@ def world_ledger(
     balanced = all(bool(line["balanced"]) for line in fields.values()) and all(
         bool(line["balanced"]) for line in charge.values()
     )
-    return {
+    things_conserved = things is None or all(bool(line["balanced"]) for line in things.values())
+    ledger: dict[str, object] = {
         "tick": tick,
-        "balanced": balanced,
+        "balanced": balanced and things_conserved,
         "fields": fields,
         "charge": charge,
         "bodies": bodies,
         "marks": marks,
     }
+    if things is not None:
+        # The things' and the shadows' own lines per ray family (bit-law-v1,
+        # point 7): the things conserve exactly with no source line but their own.
+        ledger["things"] = things
+        ledger["shadows"] = {} if shadows is None else shadows
+        ledger["things_conserved"] = things_conserved
+    return ledger
 
 
 def audit_failure(audit: Sequence[Mapping[str, object]]) -> dict[str, object] | None:
@@ -107,7 +145,7 @@ def audit_failure(audit: Sequence[Mapping[str, object]]) -> dict[str, object] | 
     integers (the recorded `balanced` flags are not trusted): the tick, the readout
     (`fields` or `charge`) and the line's name; None when every line balances."""
     for ledger in audit:
-        for readout in ("fields", "charge"):
+        for readout in ("fields", "charge", "things", "shadows"):
             lines = cast(Mapping[str, Mapping[str, object]], ledger.get(readout, {}))
             for name, line in lines.items():
                 if not line_balanced(line):

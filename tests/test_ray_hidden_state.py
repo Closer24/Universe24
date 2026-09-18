@@ -146,7 +146,9 @@ def document(ticks=4):
 
 def rays_at(world, position):
     node = next(n for n in world.inventory_view().nodes if n.position == position)
-    return node.rays[0] if node.rays else ()
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    return tuple(replace(ray, owner=0) for ray in node.rays[0]) if node.rays else ()
 
 
 def lamp(world, type_index):
@@ -180,7 +182,7 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
                     outbound=1,
                     event_ports=0b111111,
                     event_shares=A_SHARES,
-                    detector=0,
+                    detector=1,  # a thing (bit-law-v1, 2026-09-18)
                 )
             ]
         # (d) Totals and the audit stay exact at every tick.

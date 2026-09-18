@@ -2,19 +2,23 @@
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Inverse split")
 before the first run: a pair lamp at X sending 4 quanta each way on one line,
-arm A returned at a marked Node three Links out (seed 3, setting 1/2, one draw,
-bit 0), arm B free, and the exact tick table from the return through the
-inverse split in each of the three modes.
+arm A returned at a marked Node three Links out, arm B free, and the exact tick
+table from the return through the inverse split in each of the three modes.
+
+Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1, point 14: there
+is no lottery): the mark's setting is its counter table, [0, 1] here, a mark
+that catches nothing and returns every thing by its table (the draw of 0 of the
+old world); the seed is retired and a return names the thing's owner.
 """
 
 import json
+from dataclasses import replace
 
 import pytest
 
 from event_universe import Simulation
 from event_universe.core.spatial_state import (
-    DETECTOR_BIT_0,
-    DETECTOR_NONE,
+    BIT_THING,
     INVERSE_SPLIT,
     RETURN_MODES,
     Ray,
@@ -25,7 +29,6 @@ from event_universe.runner import run_initialization
 
 X = (7, 7, 7)
 MARK = (10, 7, 7)
-SEED = 3
 AMOUNT = 8
 SHARE = 4
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z], closed under negation.
@@ -111,7 +114,7 @@ def document(mode, ticks=10):
             }
         ],
         "seeds": [{"position": list(X), "type": "lamp"}],
-        "detectors": [{"position": list(MARK), "setting": [1, 2], "seed": SEED}],
+        "detectors": [{"position": list(MARK), "setting": [0, 1]}],
         "conservation": {
             "name": "quanta",
             "energy_units": "quantum",
@@ -151,10 +154,10 @@ def ray(heading, amount, steps, outbound, phase, bit, ports, shares):
 def arm_a(tick):
     """Arm A's ray after tick t: out to the mark, returned there, back at X at tick 6."""
     if tick <= 2:
-        return ((7 + tick, 7, 7), ray(0, SHARE, tick, 1, tick, DETECTOR_NONE, PAIR_PORTS, PAIR_SHARES))
+        return ((7 + tick, 7, 7), ray(0, SHARE, tick, 1, tick, BIT_THING, PAIR_PORTS, PAIR_SHARES))
     if tick <= 6:
         back = 6 - tick
-        return ((7 + back, 7, 7), ray(1, SHARE, back, 0, back, DETECTOR_BIT_0, PAIR_PORTS, PAIR_SHARES))
+        return ((7 + back, 7, 7), ray(1, SHARE, back, 0, back, BIT_THING, PAIR_PORTS, PAIR_SHARES))
     return None
 
 
@@ -162,7 +165,7 @@ def arm_b(tick):
     """Arm B's ray after tick t: one Link per tick along -X, free, around the torus."""
     return (
         ((7 - tick) % 15, 7, 7),
-        ray(1, SHARE, tick, 1, tick % 8, DETECTOR_NONE, PAIR_PORTS, PAIR_SHARES),
+        ray(1, SHARE, tick, 1, tick % 8, BIT_THING, PAIR_PORTS, PAIR_SHARES),
     )
 
 
@@ -172,7 +175,7 @@ def transmission(tick):
     steps = tick - 6
     return (
         (7 - steps, 7, 7),
-        ray(1, SHARE, steps, 1, steps, DETECTOR_BIT_0, 1 << 1, (0, SHARE, 0, 0, 0, 0)),
+        ray(1, SHARE, steps, 1, steps, BIT_THING, 1 << 1, (0, SHARE, 0, 0, 0, 0)),
     )
 
 
@@ -186,8 +189,13 @@ def expected_rays(mode, tick):
 
 
 def rays_in(world):
+    # bit-law-v1 (2026-09-18): a ray carries its thing's identity (`owner`); this
+    # module pins lines and events, not identities (test_bit_law does).
     return sorted(
-        (node.position, r) for node in world.inventory_view().nodes for rays in node.rays for r in rays
+        (node.position, replace(r, owner=0))
+        for node in world.inventory_view().nodes
+        for rays in node.rays
+        for r in rays
     )
 
 
@@ -260,6 +268,7 @@ def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_
         "port": 1,
         "family": "quanta",
         "amount": SHARE,
+        "owner": 1,
     }
     assert events[1] == {
         "event": "inverse_split",
@@ -270,7 +279,6 @@ def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_
         "ports": () if annul else (1,),
         "amounts": () if annul else (SHARE,),
         "amount": SHARE,
-        "bit": 0,
         "restored": True,
         "annulled": {"quanta": (SHARE,), "momentum": (SHARE, 0, 0)} if annul else {},
     }

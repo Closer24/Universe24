@@ -1,12 +1,18 @@
-"""Node Detector bit (detector-mark-v1): one unsalted draw per arriving ray at a marked Node.
+"""Node Detector bit (detector-mark-v1): one bit per arriving thing at a marked Node.
 
 Expected bits are pinned in docs/TEST_EXPECTATIONS.md ("Node Detector bit")
-before the first run: six lamps one Link from one marked Node with setting 1/2
-and seed 3, six arrivals in one interval, bits (0, 0, 0, 1, 1, 0) in Port
-order, clicks on 1 only, the rays that drew 0 returned to their lamps
-(detector-return-v1) and restored to them by the inverse split of a one-line
-event (inverse-split-v1), and the unmarked control world equal on totals and
-momentum at every tick and on the lamps until the restore.
+before the first run: six lamps one Link from one marked Node with setting 1/2,
+six arrivals in one interval, clicks on 1 only, the rays that drew 0 returned
+to their lamps (detector-return-v1) and restored to them by the inverse split of
+a one-line event (inverse-split-v1), and the unmarked control world equal on
+totals and momentum at every tick and on the lamps until the restore.
+
+Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1, point 14: there
+is no lottery): the mark's setting is its counter table, the k-th arrival
+catching the bit 1 when k mod 2 < 1, so the bits are (1, 0, 1, 0, 1, 0) in
+Port order and the counter stands at 6; the seed is retired; the mark declares
+`on_click: "pass"` so that a thing that draws 1 walks on as before (absorb is
+the default for every family); a click and a return name the thing's owner.
 """
 
 import json
@@ -16,24 +22,21 @@ import pytest
 from event_universe import Simulation
 from event_universe.configuration_validation import validate_configuration
 from event_universe.core.spatial_state import (
-    DETECTOR_BIT_0,
-    DETECTOR_BIT_1,
+    BIT_THING,
+    CLICK_PASS,
     DETECTOR_MARK,
-    DETECTOR_NONE,
-    TICKET_MODULUS,
     DetectorMark,
 )
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
 CENTER = (7, 7, 7)
-SEED = 3
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z], closed under negation.
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
-# Pinned from the published ticket rule for seed 3 at setting 1/2, in the order of
-# the marked Node's Ports the six rays come in through.
-PINNED_BITS = (0, 0, 0, 1, 1, 0)
-FINAL_TICKET = 71969709
+# The counter at setting 1/2 (bit-law-v1, point 14), in the order of the marked
+# Node's Ports the six rays come in through: the k-th arrival draws 1 when k mod 2 < 1.
+PINNED_BITS = (1, 0, 1, 0, 1, 0)
+FINAL_TICKET = 6
 
 
 def unit(port):
@@ -142,7 +145,7 @@ def document(marked=True, ticks=3):
         },
     }
     if marked:
-        raw["detectors"] = [{"position": list(CENTER), "setting": [1, 2], "seed": SEED}]
+        raw["detectors"] = [{"position": list(CENTER), "setting": [1, 2], "on_click": "pass"}]
     return raw
 
 
@@ -186,9 +189,9 @@ def returned(port, tick):
     """The ray of Port p that drew 0: reversed at C at tick 1, at its lamp at tick 2 and
     restored to it by the inverse split of its one-line event from tick 3."""
     if tick == 1:
-        return (CENTER, port, port + 1, 1, 1, 0, DETECTOR_BIT_0)
+        return (CENTER, port, port + 1, 1, 1, 0, BIT_THING)
     if tick == 2:
-        return (lamp_position(port), port, port + 1, 0, 0, 0, DETECTOR_BIT_0)
+        return (lamp_position(port), port, port + 1, 0, 0, 0, BIT_THING)
     return None
 
 
@@ -221,16 +224,16 @@ def without_ray_field(raw):
 
 def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     initial = parse_initial_state(document())
-    assert initial.detectors == (DetectorMark(CENTER, 1, 2, SEED),)
-    # (c) The control world has no mark and calls the ticket rule nowhere.
+    assert initial.detectors == (DetectorMark(CENTER, 1, 2, on_click=(CLICK_PASS,), click_keys=1),)
+    # (c) The control world has no mark and steps a counter nowhere.
     control_clicks = []
     control_trace = []
     with monkeypatch.context() as patched:
 
         def forbidden(*args):
-            pytest.fail("an unmarked Node consumed a ticket")
+            pytest.fail("an unmarked Node stepped a counter")
 
-        patched.setattr("event_universe.core.spatial_state.next_ticket", forbidden)
+        patched.setattr("event_universe.core.spatial_state.ticket_bit", forbidden)
         control = Simulation(
             parse_initial_state(document(marked=False)),
             observer=lambda event: (
@@ -242,7 +245,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
             control_trace.append(observed(control))
             # The control's six rays all continue, unmarked.
             assert ray_inventory(control) == sorted(
-                continuing(port, tick, DETECTOR_NONE) for port in range(6)
+                continuing(port, tick, BIT_THING) for port in range(6)
             )
         assert all(node.detector is None for node in control._spatial.nodes.values())
     assert control_clicks == []
@@ -287,7 +290,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
         assert ray_inventory(world) == sorted(
             entry
             for entry in (
-                continuing(port, tick, DETECTOR_BIT_1) if bit else returned(port, tick)
+                continuing(port, tick, BIT_THING) if bit else returned(port, tick)
                 for port, bit in enumerate(PINNED_BITS)
             )
             if entry is not None
@@ -299,12 +302,14 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
                 assert ray.event_ports == 1 << origin and ray.accumulators == (0, 0, 0)
                 assert ray.event_shares == tuple(ray.amount if p == origin else 0 for p in range(6))
         if tick == 2:
-            # A passing ray and a resident returned ray share a Node and never merge.
-            assert world.spatial_values((7, 8, 7))["quanta"]["ray_count"] == 2
+            # A passing ray and a resident returned ray share a Node and never merge
+            # (the lamps of Ports 3 and 5, whose rays drew 0, on the lines of Ports
+            # 2 and 4, whose rays drew 1).
+            assert world.spatial_values((7, 6, 7))["quanta"]["ray_count"] == 2
             assert world.spatial_values((7, 7, 6))["quanta"]["ray_count"] == 2
     # (a) Exactly the arrivals that drew 1 clicked, at tick 1, in Port order, the
-    # arrivals that drew 0 were returned, in Port order, and the mark's stream
-    # stands where the published rule leaves it after six draws.
+    # arrivals that drew 0 were returned, in Port order, and the mark's counter
+    # stands at six after six arrivals; lamp p is thing p + 1.
     assert clicks == [
         {
             "event": "detector_click",
@@ -314,6 +319,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
             "family": "quanta",
             "amount": port + 1,
             "bit": 1,
+            "owner": port + 1,
         }
         for port, bit in enumerate(PINNED_BITS)
         if bit
@@ -326,6 +332,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
             "port": port,
             "family": "quanta",
             "amount": port + 1,
+            "owner": port + 1,
         }
         for port, bit in enumerate(PINNED_BITS)
         if not bit
@@ -342,7 +349,6 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
             "ports": (),
             "amounts": (),
             "amount": port + 1,
-            "bit": 0,
             "restored": True,
             "annulled": {},
         }
@@ -375,15 +381,14 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     assert first_run["sampling_profile"] == "detector-only-v1"
     assert first_run["ray_state"] == "ray-event-state-v1"
     assert first_run["conserved_at_every_completed_tick"] and first_run["final_totals"]["quanta"] == [21]
-    # (e) A mark without a setting, a setting outside 0 through 1, a seed at the
-    # modulus, a duplicate or outside position and a world without an admitted ray
-    # field are rejected before any world exists.
+    # (e) A mark without a setting, a setting outside 0 through 1, a negative seed
+    # (the key is accepted, never read), a duplicate or outside position and a
+    # world without an admitted ray field are rejected before any world exists.
     for edit, message in (
         (lambda raw: raw["detectors"][0].pop("setting"), "missing keys: setting"),
         (lambda raw: raw["detectors"][0].update(setting=[3, 2]), "from 0 through 1"),
         (lambda raw: raw["detectors"][0].update(setting=[1, 0]), "denominator"),
         (lambda raw: raw["detectors"][0].update(setting=[-1, 2]), "numerator"),
-        (lambda raw: raw["detectors"][0].update(seed=TICKET_MODULUS), "ticket modulus"),
         (lambda raw: raw["detectors"][0].update(seed=-1), "detector.seed"),
         (lambda raw: raw["detectors"][0].update(rate=1), "unknown keys: rate"),
         (lambda raw: raw["detectors"].append(dict(raw["detectors"][0])), "one Detector mark"),

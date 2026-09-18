@@ -126,11 +126,13 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
         "spatial_fields": [ray_field("plus", charge=1), ray_field("minus", charge=-1)],
         "emissions": [emission("pair", "plus", 1, 0), emission("pair", "minus", 1, 1)],
         "seeds": [{"position": list(X), "type": "pair"}],
-        "detectors": [{"position": list(MARK), "setting": [1, 2], "seed": SEED}],
+        # bit-law-v1 (2026-09-18, point 14): the mark's setting is its counter
+        # table; [0, 1] returns every thing, the draw of 0 of the old world.
+        "detectors": [{"position": list(MARK), "setting": [0, 1]}],
         "ray_interactions": list(rules),
     }
     if source:
-        raw["fields"] += [field("electron"), field("G")]
+        raw["fields"] += [field("electron")]
         raw["disturbance_types"].append(
             {
                 "name": "source",
@@ -139,10 +141,9 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
                 "transport": {"mode": "hold"},
             }
         )
-        raw["spatial_fields"] += [
-            ray_field("electron"),
-            ray_field("G", 16, field_of="electron", release=[1, 4]),
-        ]
+        # bit-law-v1 (2026-09-18): the electron's field family G and its release
+        # per tick went with the law; the electron is a thing crossing the board.
+        raw["spatial_fields"] += [ray_field("electron")]
         raw["emissions"].append(emission("source", "electron", 4, 4))
         raw["seeds"].append({"position": list(E), "type": "source"})
     if body:
@@ -151,7 +152,7 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
         raw["external_bodies"] = [BODY]
     if conservation:
         both = {"op": "add", "args": [{"field": "plus"}, {"field": "minus"}]}
-        names = ["plus", "minus"] + (["electron", "G"] if source else [])
+        names = ["plus", "minus"] + (["electron"] if source else [])
         energy = {"field": names[0], "side": "right"}
         for name in names[1:]:
             energy = {"op": "add", "args": [energy, {"field": name, "side": "right"}]}
@@ -196,8 +197,17 @@ def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=N
         "annulled": zero if annulled is None else annulled,
         "absorbed": zero if absorbed is None else absorbed,
         "absorbed_by_marks": zero,
+        # bit-law-v1 (2026-09-18): the momentum shadows carry home; zero here.
+        "returned": zero,
         "balanced": True,
     }
+
+
+def world_lines(ledger):
+    """The world ledger without its per-bit readouts (bit-law-v1: `things`,
+    `shadows`, `things_conserved`, pinned in test_bit_law.py), which hold here."""
+    assert ledger["things_conserved"]
+    return {k: v for k, v in ledger.items() if k not in ("things", "shadows", "things_conserved")}
 
 
 def expected_ledger(mode, tick, source=True, body=False):
@@ -244,14 +254,7 @@ def expected_ledger(mode, tick, source=True, body=False):
     }
     if source:
         fields["electron"] = line((4,), (0,) if out else (4,), escaped=(4,) if out else (0,))
-        fields["G"] = line(
-            (0,),
-            (G_SOURCED[tick] - G_ESCAPED[tick],),
-            escaped=(G_ESCAPED[tick],),
-            sourced=(G_SOURCED[tick],),
-        )
         charge["electron"] = line(0, 0)
-        charge["G"] = line(0, 0)
     if body:
         fields["star"] = line((0,), (0,))
         charge["star"] = line(0, 0)
@@ -291,7 +294,7 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     initial = parse_initial_state(document(mode, body=body))
     definitions = {initial.fields[d.field].name: d for d in initial.spatial_fields}
     assert (definitions["plus"].charge, definitions["minus"].charge) == (1, -1)
-    assert (definitions["G"].field_of, definitions["G"].release_numerator) == (2, 1)
+    assert definitions["electron"].charge == 0
     events = []
     world = Simulation(
         initial,
@@ -304,9 +307,9 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     # (a) Before the first tick the lamps hold everything: the charge readout counts
     # the stock a record holds of a charged family, like totals() counts its amount.
     star = {"star": 0} if body else {}
-    assert world.charge_totals() == {"plus": 1, "minus": -1, "electron": 0, "G": 0} | star
-    assert world.escaped_charge_totals() == {"plus": 0, "minus": 0, "electron": 0, "G": 0} | star
-    assert world.audit() == expected_ledger(mode, 0, body=body)
+    assert world.charge_totals() == {"plus": 1, "minus": -1, "electron": 0} | star
+    assert world.escaped_charge_totals() == {"plus": 0, "minus": 0, "electron": 0} | star
+    assert world_lines(world.audit()) == expected_ledger(mode, 0, body=body)
     ledgers = []
     for tick in range(1, TICKS + 1):
         world.step()
@@ -316,7 +319,7 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
         # current + escaped + annulled + absorbed for amount, momentum and charge,
         # through the return (tick 3), the inverse split (cycle 6), the release
         # (from tick 2) and the escapes (from tick 2, the minus arm at tick 5).
-        assert ledger == expected_ledger(mode, tick, body=body)
+        assert world_lines(ledger) == expected_ledger(mode, tick, body=body)
         assert all(line_balanced(item) for item in ledger["fields"].values())
         assert all(line_balanced(item) for item in ledger["charge"].values())
         assert (
@@ -325,7 +328,6 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
                 "plus": 0,
                 "minus": -1 if tick >= 5 and not body else 0,
                 "electron": 0,
-                "G": 0,
             }
             | star
         )
@@ -376,8 +378,8 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     corrupted[2]["charge"]["plus"]["current"] += 1
     assert audit_failure(corrupted) == {"tick": 3, "readout": "charge", "line": "plus"}
     corrupted = deepcopy(first_run["audit"])
-    corrupted[8]["fields"]["G"]["escaped"] = [15]
-    assert audit_failure(corrupted) == {"tick": 9, "readout": "fields", "line": "G"}
+    corrupted[8]["fields"]["electron"]["escaped"] = [15]
+    assert audit_failure(corrupted) == {"tick": 9, "readout": "fields", "line": "electron"}
     # (f) A rule whose outputs change the total charge is rejected at validation.
     with pytest.raises(ValueError, match="would change the total charge"):
         parse_initial_state(document(mode, rules=[CHARGE_BREAKING]))
@@ -389,15 +391,17 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
         pair.step()
     report = pair.conservation_report()
     ledger = pair.audit()
-    assert ledger == expected_ledger(mode, TICKS, source=False)
+    assert world_lines(ledger) == expected_ledger(mode, TICKS, source=False)
     assert report["status"] == "passed"
     for key in ("initial", "sourced", "current", "escaped", "annulled"):
         assert report[key]["charge"] == sum(item[key] for item in ledger["charge"].values())
         assert report[key]["energy"] == sum(ledger["fields"][n][key][0] for n in ("plus", "minus"))
         assert report[key]["momentum"] == ledger["fields"]["momentum"][key]
-    # (i) The local audit reads every release as a source at its Node, so the whole
-    # world (releases, escapes, the return and the inverse split) declares it and
-    # passes; the energy sums the four families, the momentum counts every ray.
+    # (i) The whole world (the escapes, the return and the inverse split) declares
+    # the local audit and passes; the energy sums the three families, the momentum
+    # counts every ray and the lamps' recoils (bit-law-v1, 2026-09-18: nothing is
+    # released per tick, so nothing is sourced; the electron's 4 escape along +Z
+    # and its lamp keeps the recoil).
     if mode == "annul" and not body:
         whole = Simulation(parse_initial_state(document(mode, conservation=True)))
         for _ in range(TICKS):
@@ -405,7 +409,7 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
         report = whole.conservation_report()
         assert report["status"] == "passed"
         assert report["initial"] == {"energy": 6, "momentum": (0, 0, 0), "charge": 0}
-        assert report["sourced"] == {"energy": 20, "momentum": (0, 0, -4), "charge": 0}
-        assert report["current"] == {"energy": 4, "momentum": (4, 0, -4), "charge": 0}
-        assert report["escaped"] == {"energy": 21, "momentum": (-5, 0, 0), "charge": -1}
+        assert report["sourced"] == {"energy": 0, "momentum": (0, 0, 0), "charge": 0}
+        assert report["current"] == {"energy": 0, "momentum": (0, 0, -4), "charge": 0}
+        assert report["escaped"] == {"energy": 5, "momentum": (-1, 0, 4), "charge": -1}
         assert report["annulled"] == {"energy": 1, "momentum": (1, 0, 0), "charge": 1}

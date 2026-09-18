@@ -92,7 +92,7 @@
     ]
    ],
    "rays_per_tick": 1,
-   "ray_slots": 2,
+   "ray_slots": 32,
    "metric": "links",
    "pace": [
     1,
@@ -102,7 +102,19 @@
    "charge": 3,
    "kerengonen": {
     "phase_advance": 0
-   }
+   },
+   "release": [
+    1,
+    4
+   ],
+   "spread": [
+    6,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
   },
   {
    "field": "light",
@@ -151,20 +163,7 @@
    "charge": 0,
    "kerengonen": {
     "phase_advance": 0
-   },
-   "field_of": "proton",
-   "release": [
-    1,
-    4
-   ],
-   "spread": [
-    6,
-    1,
-    1,
-    1,
-    1,
-    1
-   ]
+   }
   }
  ],
  "emissions": [
@@ -370,15 +369,15 @@
    "name": "born_steering",
    "participants": [
     {
-     "type": "light"
+     "type": "proton"
     },
     {
-     "type": "light"
+     "type": "proton"
     }
    ],
    "outputs": [
     {
-     "field": "light",
+     "field": "proton",
      "amount": {
       "table": [
        8,
@@ -396,7 +395,7 @@
      "heading": 2
     },
     {
-     "field": "light",
+     "field": "proton",
      "amount": {
       "rest_of": 0
      },

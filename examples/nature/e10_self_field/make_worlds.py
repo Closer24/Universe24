@@ -29,7 +29,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from bit_law_migration import migrate  # noqa: E402
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 # The unit square of ring.json in the plane z = 5, centred on the 12^3 board.
@@ -150,6 +154,10 @@ def rules(variant):
 
 
 def world(amount, variant, *, ticks=TICKS):
+    return migrate(_world(amount, variant, ticks=ticks))
+
+
+def _world(amount, variant, *, ticks=TICKS):
     content = 8 * amount
     return {
         "schema_version": 1,

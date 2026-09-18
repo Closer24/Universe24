@@ -30,7 +30,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from bit_law_migration import migrate  # noqa: E402
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 AXIS_DISTANCES = (4, 6, 8, 12, 16)
@@ -110,6 +114,11 @@ def body(position, name, charge, table):
 
 
 def world(case, offset, *, margin=MARGIN, ticks=None, dense=False):
+    tag, document = _world(case, offset, margin=margin, ticks=ticks, dense=dense)
+    return tag, migrate(document)
+
+
+def _world(case, offset, *, margin=MARGIN, ticks=None, dense=False):
     """`case`: pp (proton, proton), pe (proton, electron) or p (the control, one
     body); `offset`: the position of B relative to A, (r, 0, 0) on the axis or
     (d, d, 0) on the diagonal; (0, 0, 0) for the control. `dense`: the world of

@@ -124,14 +124,6 @@ def document():
                 "extensive": True,
             },
             {
-                "name": "G",
-                "components": 1,
-                "units": "quantum",
-                "signed": False,
-                "conserved": True,
-                "extensive": True,
-            },
-            {
                 "name": "momentum",
                 "components": 3,
                 "units": "quantum times heading",
@@ -141,16 +133,17 @@ def document():
             },
         ],
         "disturbance_types": [lamp("lamp_a", 3), lamp("lamp_b", 3)],
-        "spatial_fields": [
-            ray_field("quanta", 1),
-            ray_field("G", 0, 16, field_of="quanta", release=[1, 3]),
-        ],
+        # bit-law-v1 (2026-09-18): the field family G (`field_of` quanta) went with
+        # the law; the record carries the law's identities.
+        "spatial_fields": [ray_field("quanta", 1)],
         "emissions": [emission("lamp_a", 3, PLUS_X, 0), emission("lamp_b", 3, MINUS_X, 4)],
         "seeds": [
             {"position": [1, 1, 1], "type": "lamp_a"},
             {"position": [3, 1, 1], "type": "lamp_b"},
         ],
-        "detectors": [{"position": [4, 1, 1], "setting": [1, 1], "seed": 0}],
+        # bit-law-v1 (2026-09-18): absorb is the default of a mark for every family;
+        # the mark passes the thing with the bit 1 as the old default did.
+        "detectors": [{"position": [4, 1, 1], "setting": [1, 1], "on_click": "pass"}],
         "ray_interactions": [
             {
                 "name": "swap_headings",
@@ -221,10 +214,9 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
 
     # (a) Four quanta rays of amount 3: two into the meeting, two out of it to the boundary.
     assert run["ticks"] == 6 and run["shape"] == [5, 3, 3]
-    assert [f["name"] for f in run["families"]] == ["quanta", "G", "momentum"]
-    assert [f["ray"] for f in run["families"]] == [True, True, False]
-    assert [f["field"] for f in run["families"]] == [False, True, False]
-    assert run["families"][1]["field_of"] == "quanta" and run["families"][1]["release"] == [1, 3]
+    assert [f["name"] for f in run["families"]] == ["quanta", "momentum"]
+    assert [f["ray"] for f in run["families"]] == [True, False]
+    assert [f["field"] for f in run["families"]] == [False, False]
     rays = [r for r in run["rays"] if r["family"] == "quanta"]
     assert [r["amount"] for r in rays] == [[3]] * 4
     assert [r["origin"]["tick"] for r in rays] == [0, 0, 2, 2]
@@ -266,38 +258,16 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert run["couplings"] == ["swap_headings"]
     clicks = [e for e in events if e["kind"] == "click"]
     assert all(tuple(e["node"]) == (4, 1, 1) for e in clicks)
-    # One G click at tick 3: of the two rays waiting at (2,1,1) during tick 1 only
-    # the one heading -X released on +X (five headings, its own line excluded, since
-    # loop-binding-v1 removed the six-heading release of a held ray on 2026-09-17),
-    # and the Detector draws once per ray in the packet. Since detector-absorb-v1
-    # (2026-09-18) a click on G, the field of quanta, absorbs the quantum: the marker
-    # says so and records the absorbed amount, the G ray ends at the mark; the
-    # quanta click passes as before, without an `absorbed` entry.
+    # One click, the quanta ray's at tick 4 (bit-law-v1, 2026-09-18: the field
+    # family G and its clicks went with the law): the mark passes it with the bit
+    # 1, without an `absorbed` entry.
     assert sorted((e["tick"], e["detail"]["family"], e["detail"]["amount"]) for e in clicks) == [
-        (3, "G", 1),
-        (4, "G", 1),
         (4, "quanta", 3),
-        (6, "G", 1),
     ]
     assert all(e["detail"]["port"] == 1 and e["detail"]["bit"] == 1 for e in clicks)
-    assert [(e["label"], e["detail"].get("absorbed")) for e in clicks] == [
-        ("Detector PASS, absorbed", 1),
-        ("Detector PASS", None),
-        ("Detector PASS, absorbed", 1),
-        ("Detector PASS, absorbed", 1),
-    ]
+    assert [(e["label"], e["detail"].get("absorbed")) for e in clicks] == [("Detector PASS", None)]
     quanta_click = next(e for e in clicks if e["detail"]["family"] == "quanta")
     assert quanta_click["in"] == [plus["id"]]
-    for click in clicks:
-        if click["detail"]["family"] == "G":
-            (absorbed_ray,) = click["in"]
-            assert run["rays"][absorbed_ray]["end"] == {
-                "tick": click["tick"],
-                "node": [4, 1, 1],
-                "kind": "absorbed",
-                "event": click["id"],
-            }
-            assert run["rays"][absorbed_ray]["bit"] == 1
     # Each ray carries its Detector bit (detector-bit-property-v1, 2026-09-17): the
     # +X ray realized by the click at (4,1,1), the others none; no pass without a
     # draw in this world, since no ray carrying a bit reaches a second mark.
@@ -305,7 +275,7 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert not any(e["kind"] == "pass" for e in events)
     escapes = [e for e in matter if e["kind"] == "escape"]
     assert escapes[0]["in"] == [minus["id"]] and escapes[1]["in"] == [plus["id"]]
-    assert run["detectors"] == [{"pos": [4, 1, 1], "setting": [1, 1], "seed": 0}]
+    assert [(d["pos"], d["setting"]) for d in run["detectors"]] == [([4, 1, 1], [1, 1])]
     # (h) The eye view (Highlights 5.4): the marked Nodes and the list of PASS clicks.
     assert run["eye"]["marks"] == [{"pos": [4, 1, 1], "setting": [1, 1]}]
     assert sorted((c["tick"], c["family"], c["amount"]) for c in run["eye"]["clicks"]) == sorted(
@@ -313,69 +283,24 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     )
     assert all(c["node"] == [4, 1, 1] and c["bit"] == 1 and c["port"] == 1 for c in run["eye"]["clicks"])
     assert run["eye"]["hits"] == {"4,1,1": len(clicks)}
-    # The mark's count (detector-absorb-v1): the three G quanta it absorbed; the
-    # quanta click passed and counts nothing.
-    assert [c["absorbed"] for c in run["eye"]["clicks"]] == [1, 0, 1, 1]
-    assert run["eye"]["counts"] == {"4,1,1": 3}
+    # The mark's count (detector-absorb-v1): the quanta click passed and counts nothing.
+    assert [c["absorbed"] for c in run["eye"]["clicks"]] == [0]
+    assert run["eye"]["counts"] == {}
     assert [s["type"] for s in run["sources"]] == ["lamp_a", "lamp_b"]
     assert run["external_bodies"] == []
 
-    # (e) Releases: silent field events, the source ray's trail unbroken through them.
-    # The record releases from the two waiting rays at tick 1 as well as at their
-    # departure at tick 2: a ray waiting under a declared delay releases on the
-    # five headings other than its own in every interval it is there (Highlights
-    # 3.5; the six-heading release of a held ray went with the held form,
-    # loop-binding-v1, 2026-09-17), so the tick-1 release sources G 10, its four
-    # transverse packets carry G 2 and the two axial ones G 1, which the extractor
-    # reads as one G ray each.
-    releases = [e for e in events if e["kind"] == "release"]
-    assert all(e["field"] for e in releases)
-    assert [summary(e) for e in releases] == [
-        (1, (2, 1, 1), "release", (0, 1, 2, 3, 4, 5)),
-        (2, (2, 1, 1), "release", (0, 1, 2, 3, 4, 5)),
-        (3, (1, 1, 1), "release", (0, 2, 3, 4, 5)),
-        (3, (3, 1, 1), "release", (1, 2, 3, 4, 5)),
-        (4, (0, 1, 1), "release", (0, 2, 3, 4, 5)),
-        (4, (4, 1, 1), "release", (1, 2, 3, 4, 5)),
-    ]
-    assert releases[0]["in"] == []
-    assert sorted(releases[1]["in"]) == sorted([plus["id"], minus["id"]])
-    assert releases[2]["in"] == [minus["id"]] and releases[3]["in"] == [plus["id"]]
-    assert [e["detail"]["amount_out"] for e in releases] == [{"G": [10]}, {"G": [10]}] + [{"G": [5]}] * 4
-    fields = [r for r in run["rays"] if r["family"] == "G"]
-    assert len(fields) == 32 and len(run["rays"]) == 36
-    assert all(r["field"] for r in fields)
-    assert sorted(run["rays"][i]["amount"][0] for i in releases[0]["out"]) == [1, 1, 2, 2, 2, 2]
-    assert sorted(run["rays"][i]["amount"][0] for i in releases[1]["out"]) == [1, 1, 2, 2, 2, 2]
-    held_plus = next(i for i in releases[0]["out"] if run["rays"][i]["segments"][0]["heading"] == PLUS_X)
-    assert run["rays"][held_plus]["amount"] == [1]
-    assert [e["in"] for e in clicks if e["tick"] == 3] == [[held_plus]]
+    # (e) No release (bit-law-v1, 2026-09-18: a thing releases nothing per tick;
+    # its shadows are given with the board, and this board gives none): the four
+    # quanta rays are the world's rays, nothing is sourced, the mark counts nothing.
+    assert [e for e in events if e["kind"] == "release"] == []
+    assert len(run["rays"]) == 4 and not any(r["field"] for r in run["rays"])
     assert not any(e["kind"] in ("split", "crossing", "deflection") for e in events)
-    # Re-pinned 2026-09-18 under detector-absorb-v1 (a click on a field ray absorbs
-    # it): the three G quanta the mark absorbed at ticks 3, 4 and 6 no longer escape
-    # through +X at ticks 4 and 5 nor stay inside at tick 6, so the field escapes are
-    # 4, 5, 9, 8 carrying G 8, 9, 9, 8 (were 4, 6, 10, 8 and 8, 10, 10, 8), escaped
-    # G 34 (was 36), the world holds G 3 at the end (was 4) and the mark's line
-    # holds G 3; the sources are unchanged.
-    field_escapes = [e for e in events if e["kind"] == "escape" and e["field"]]
-    assert [sum(1 for e in field_escapes if e["tick"] == t) for t in (3, 4, 5, 6)] == [4, 5, 9, 8]
-    assert [
-        sum(e["detail"]["escaped"]["G"][0] for e in field_escapes if e["tick"] == t)
-        for t in (3, 4, 5, 6)
-    ] == [8, 9, 9, 8]
-    assert run["conservation"]["source_totals"] == {"quanta": [0], "G": [40], "momentum": [0, 0, 0]}
-    assert run["conservation"]["escaped_totals"]["G"] == [34]
-    assert run["conservation"]["final_totals"]["G"] == [3]
-    assert run["conservation"]["detector_mark_totals"] == {
-        "quanta": [0],
-        "G": [3],
-        "momentum": [0, 0, 0],
-    }
-    assert run["conservation"]["external_body_totals"] == {
-        "quanta": [0],
-        "G": [0],
-        "momentum": [0, 0, 0],
-    }
+    assert [e for e in events if e["kind"] == "escape" and e["field"]] == []
+    assert run["conservation"]["source_totals"] == {"quanta": [0], "momentum": [0, 0, 0]}
+    assert run["conservation"]["escaped_totals"]["quanta"] == [6]
+    assert run["conservation"]["final_totals"]["quanta"] == [0]
+    assert run["conservation"]["detector_mark_totals"] == {"quanta": [0], "momentum": [0, 0, 0]}
+    assert run["conservation"]["external_body_totals"] == {"quanta": [0], "momentum": [0, 0, 0]}
     assert run["record"]["released_field"] == "released-field-v1"
 
     # (c) Captions and totals come from the record, tick by tick.
@@ -386,22 +311,16 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert "t1 meeting (2,1,1) swap_headings" in notes[1]
     assert "in quanta 6, p (0, 0, 0)" in notes[1] and "out t2 quanta 6, p (0, 0, 0)" in notes[1]
     assert notes[2].startswith("t1 meeting") and "release" not in notes[2]
-    # Since detector-absorb-v1 (2026-09-18) a G click reads "Detector PASS, absorbed"
-    # with the absorbed amount, and the field escapes of ticks 4 and 5 are G 9.
-    assert notes[3].count("Detector PASS, absorbed") == 1 and notes[3].endswith("field escaped: G 8")
-    assert "G 1 through -x, bit 1, absorbed 1" in notes[3]
-    assert notes[4].count("Detector PASS") == 2 and notes[4].count("Detector PASS, absorbed") == 1
-    assert notes[4].endswith("field escaped: G 9")
-    assert notes[5] == "escaped: quanta 6 | field escaped: G 9"
-    assert notes[6].count("Detector PASS, absorbed") == 1 and notes[6].endswith("field escaped: G 8")
-    assert not any("release" in note for note in notes)
+    # The one click, the quanta ray's at tick 4, passes (bit-law-v1: no field, no
+    # absorption, no release in any caption).
+    assert "Detector" not in notes[3] and "Detector" not in notes[6]
+    assert notes[4].count("Detector PASS") == 1 and "absorbed" not in notes[4]
+    assert notes[5].startswith("escaped: quanta 6")
+    assert not any("release" in note or "G " in note for note in notes)
     assert [row["in_world"]["quanta"] for row in rows] == [[6]] * 5 + [[0], [0]]
-    # The in-world figure takes what the mark absorbed off (detector-absorb-v1,
-    # 2026-09-18): G 0, 0, 10, 11, 11, 12, 3 (was 0, 0, 10, 12, 12, 12, 4).
-    assert [row["in_world"]["G"] for row in rows] == [[0], [0], [10], [11], [11], [12], [3]]
-    assert [row["absorbed"]["G"] for row in rows] == [[0], [0], [0], [1], [2], [2], [3]]
+    assert [row["absorbed"]["quanta"] for row in rows] == [[0]] * 7
     assert [row["escaped"]["quanta"] for row in rows] == [[0]] * 5 + [[6], [6]]
-    assert [row["releases"] for row in rows] == [0, 1, 1, 2, 2, 0, 0]
+    assert [row["releases"] for row in rows] == [0] * 7
     assert run["conservation"]["status"] == "passed"
     # The quanta left through the open boundary: since ray-event-audit-v1
     # (2026-09-17) the runner's "conserved at every completed tick" is the world
@@ -423,7 +342,7 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
         stream.write(json.dumps({"event": "field_release", "tick": 3, "position": [2, 1, 1]}) + "\n")
     later = EXTRACT.extract_record(later_dir)
     expected = [summary(e) for e in events]
-    index = next(i for i, e in enumerate(events) if e["tick"] == 3 and tuple(e["node"]) > (2, 1, 1))
+    index = next(i for i, e in enumerate(events) if (e["tick"], tuple(e["node"])) > (3, (2, 1, 1)))
     assert [summary(e) for e in later["events"]] == expected[:index] + [
         (3, (2, 1, 1), "field_release", ())
     ] + expected[index:]

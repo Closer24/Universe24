@@ -46,10 +46,6 @@ from .core.disturbance_state import (
 )
 from .core.integer import checked_work
 from .core.spatial_state import (
-    BIT_COUPLINGS,
-    BIT_HIGHEST,
-    BIT_NONE,
-    BIT_PASS,
     BODY_POLARIZER,
     BODY_SINK,
     CAPTURE_MODES,
@@ -63,19 +59,22 @@ from .core.spatial_state import (
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
     MAX_STORED_PHASE_BITS,
+    MAX_THING_ID,
     POLARIZATION_NONE,
     POLARIZER_SLOTS,
     PORT_HEADINGS,
+    PUSH_READS,
     RAY_POLARIZATION,
     RAY_PROPERTIES,
     RAY_WRITABLE,
-    TICKET_MODULUS,
     DecayDefinition,
     DetectorMark,
     EmissionDefinition,
     ExternalBody,
     FieldAssignment,
     FieldGroupDefinition,
+    InitialFieldDefinition,
+    InitialShadow,
     NodeFieldRuleDefinition,
     Polarizer,
     SpatialCouplingDefinition,
@@ -83,6 +82,7 @@ from .core.spatial_state import (
     SpatialInteractionDefinition,
     SpatialSeed,
     charge_invariant,
+    dense_field_admissible,
     ray_participant_definitions,
     validate_heading,
     validate_released_fields,
@@ -541,9 +541,13 @@ def _disturbances(
     result: list[DisturbanceDefinition] = []
     names = _names(fields)
     zero = tuple(pack((0,) * field.components) for field in fields)
-    allowed = {"name", "fields", "defaults", "transport", "updates", "cost_field", "checks"}
-    for raw in _array(value, "disturbance_types", MAX_TYPES, 1):
+    allowed = {"name", "fields", "defaults", "transport", "updates", "cost_field", "checks", "thing"}
+    for position, raw in enumerate(_array(value, "disturbance_types", MAX_TYPES, 1)):
         obj = _object(raw, "disturbance type", allowed, {"name", "fields", "transport"})
+        # bit-law-v1: the identity of a thing of this type, by default its place.
+        thing = _integer(obj.get("thing", position + 1), "disturbance thing", 1)
+        if thing >= MAX_THING_ID:
+            raise ValueError("a disturbance type's thing id stays below the id bound")
         owned = tuple(
             _index(item, names, "disturbance field")
             for item in _array(obj["fields"], "disturbance fields", MAX_FIELDS, 1)
@@ -577,10 +581,13 @@ def _disturbances(
                 updates=updates,
                 cost_field=cost_field,
                 checks=tuple(checks),
+                thing=thing,
             )
         )
     disturbances = tuple(result)
     _names(disturbances)
+    if len({kind.thing for kind in disturbances}) != len(disturbances):
+        raise ValueError("every disturbance type is a distinct thing (bit-law-v1)")
     if sum(len(item.updates) for item in disturbances) > MAX_RULES:
         raise ValueError("initial state exceeds the total update rule limit")
     return disturbances
@@ -915,14 +922,15 @@ def _detectors(
     fields: tuple[FieldDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
 ) -> tuple[DetectorMark, ...]:
-    """Detector marks: position, setting and seed, all required; there is no default
-    rate. `on_bit_1` and `on_bit_0` (detector-bit-property-v1) say what the mark does
-    with a ray that already carries that bit: `"pass"` (the default: no draw) or
-    `"draw"` (the draw of detector-mark-v1 on that arrival); any other value is
-    rejected. `on_click` (detector-absorb-v1) says what the mark does with a ray that
-    draws 1: `"absorb"` or `"pass"` for every ray family, or a mapping of ray family
-    name to one of them, the families not named keeping the catalog default (absorb
-    for a field family, pass for matter); an unknown value or family is rejected."""
+    """Detector marks: position and setting, both required, there is no default
+    rate; `seed` is accepted and never read (bit-law-v1, point 14: there is no
+    lottery). The setting is the mark's counter table: the k-th thing to arrive
+    draws 1 when k mod d < n. `on_click` (detector-absorb-v1) says what the mark does with
+    a thing that draws 1: `"absorb"` (the default for every family) or `"pass"`,
+    for every ray family or as a mapping of ray family name to one of them; an
+    unknown value or family is rejected. A shadow is returned without a draw and
+    never counted. `on_bit_1` and `on_bit_0` (detector-bit-property-v1) are gone:
+    the bit is the law's and a mark reads it, never a coupling on it."""
     families = {
         fields[definition.field].name: index
         for index, definition in enumerate(spatial)
@@ -930,19 +938,19 @@ def _detectors(
     }
     result: list[DetectorMark] = []
     for raw in _array(value, "detectors", MAX_DETECTORS):
+        if isinstance(raw, dict) and ({"on_bit_1", "on_bit_0"} & raw.keys()):
+            raise ValueError(
+                "detector.on_bit_1 and on_bit_0 were retired by bit-law-v1 (2026-09-18): the bit "
+                "is the law's, 1 a thing and 0 its shadow; a mark draws every thing and returns "
+                "every shadow, and on_click says what it does with a thing that draws 1"
+            )
         obj = _object(
             raw,
             "detector",
-            {"position", "setting", "seed", "on_bit_1", "on_bit_0", "on_click"},
-            {"position", "setting", "seed"},
+            {"position", "setting", "seed", "on_click"},
+            {"position", "setting"},
         )
         setting = _array(obj["setting"], "detector.setting", 2, 2)
-        couplings = []
-        for key in ("on_bit_1", "on_bit_0"):
-            coupling = obj.get(key, BIT_COUPLINGS[BIT_PASS])
-            if coupling not in BIT_COUPLINGS:
-                raise ValueError(f"detector.{key} must be pass or draw")
-            couplings.append(BIT_COUPLINGS.index(coupling))
         on_click: tuple[int, ...] = ()
         if "on_click" in obj:
             declared = obj["on_click"]
@@ -962,15 +970,15 @@ def _detectors(
                     raise ValueError(f"detector.on_click.{name} must be absorb or pass")
                 table[families[str(name)]] = CLICK_COUPLINGS.index(str(coupling))
             on_click = tuple(table)
+        # bit-law-v1, point 14: there is no lottery. The seed is accepted so that
+        # old worlds parse, and never read: the mark's counter starts at 0.
+        if "seed" in obj:
+            _integer(obj["seed"], "detector.seed", 0)
         result.append(
             DetectorMark(
                 _address(obj["position"], "detector.position", 0),
                 _integer(setting[0], "detector.setting numerator", 0),
                 _integer(setting[1], "detector.setting denominator", 1),
-                _integer(obj["seed"], "detector.seed", 0),
-                on_bit_1=couplings[0],
-                on_bit_0=couplings[1],
-                bit_keys=int("on_bit_1" in obj or "on_bit_0" in obj),
                 on_click=on_click,
                 click_keys=int("on_click" in obj),
             )
@@ -983,12 +991,15 @@ def _external_bodies(
     fields: tuple[FieldDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
     rules: tuple[InteractionDefinition, ...],
+    thing_base: int = 0,
 ) -> tuple[ExternalBody, ...]:
     """External bodies (external-body-v1): position, family and amount required; the
     amount a positive integer of any width (it enters no sum); charge, phase,
     initial_momentum (heading and pace, zero for a body at rest), coupling ("sink",
-    the default, or the name of a declared ray interaction) and momentum_table
-    (family name to sign, -1 attraction toward the source) optional."""
+    the default, or the name of a declared ray interaction), momentum_table
+    (family name to sign, -1 attraction toward the source) and `thing`, the
+    body's identity (bit-law-v1; by default one past the disturbance types and
+    the bodies before it) optional."""
     result: list[ExternalBody] = []
     names = _names(fields)
     families = {
@@ -1011,9 +1022,18 @@ def _external_bodies(
                 "coupling",
                 "momentum_table",
                 "polarizer",
+                "thing",
+                "reads",
             },
             {"position", "family", "amount"},
         )
+        if "field" in obj:
+            raise ValueError(
+                "an external body radiates its own family's shadows (bit-law-v1): there is no field key"
+            )
+        thing = _integer(obj.get("thing", thing_base + index + 1), "external body thing", 1)
+        if thing >= MAX_THING_ID:
+            raise ValueError("an external body's thing id stays below the id bound")
         amount = obj["amount"]
         if type(amount) is not int or amount < 1:
             raise ValueError("external body amount must be a positive integer of any width")
@@ -1114,7 +1134,12 @@ def _external_bodies(
             if sign not in (-1, 1):
                 raise ValueError("momentum_table signs are -1 (attraction) or 1 (repulsion)")
             signs[families[name]] = sign
-        released = [i for i, d in enumerate(spatial) if d.field_of == family_index]
+        reads = _text(obj["reads"], "external body reads") if "reads" in obj else ""
+        if bool(table) != bool(reads) or (reads and reads not in PUSH_READS):
+            raise ValueError(
+                "a momentum_table declares what the body multiplies the shadows' message by: "
+                'reads "content" or "charge" beside it (bit-law-v1, point 16)'
+            )
         result.append(
             ExternalBody(
                 index,
@@ -1122,7 +1147,7 @@ def _external_bodies(
                 family_index,
                 amount,
                 charge=_integer(obj.get("charge", 0), "external body charge"),
-                field=released[0] if released else -1,
+                thing=thing,
                 coupling=BODY_SINK
                 if coupling == "sink"
                 else BODY_POLARIZER
@@ -1130,6 +1155,7 @@ def _external_bodies(
                 else rule_names[coupling],
                 phase=_phase_value(obj.get("phase", 0), "external body phase", definition.phase_bits),
                 signs=tuple(signs),
+                reads=PUSH_READS.index(reads) if reads else -1,
                 accumulators=(0, 0, 0),
                 momentum=(momentum[0], momentum[1], momentum[2]),
                 sink=(0,) * len(spatial),
@@ -1172,9 +1198,15 @@ def _spatial_fields(
     schema_version: int = 1,
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
-    sources: list[str | None] = []
     names = _names(fields)
     for raw in _array(value, "spatial_fields", MAX_FIELDS):
+        if isinstance(raw, dict) and "field_of" in raw:
+            raise ValueError(
+                "field_of was retired by bit-law-v1 (2026-09-18): a shadow is a ray of the same "
+                "family as its thing with the bit 0, so a family declares its own release (the "
+                "size of its things' shadow sets) and spread (the shadows' split table); "
+                "see docs/SPATIAL_FIELDS.md, 'The law of the bit'"
+            )
         obj = _object(
             raw,
             "spatial field",
@@ -1188,7 +1220,6 @@ def _spatial_fields(
                 "metric",
                 "pace",
                 "flux_projection",
-                "field_of",
                 "release",
                 "spread",
                 "phase_bits",
@@ -1220,17 +1251,13 @@ def _spatial_fields(
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
         flux_projection = "ports"
-        field_of: str | None = None
         release_numerator, release_denominator = 0, 1
         spread: tuple[int, ...] = ()
         if transport == "ray":
             flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
-            if ("field_of" in obj) != ("release" in obj):
-                raise ValueError("a released field declares field_of and release together")
-            if "field_of" in obj:
-                # The field of a family (released-field-v1): resolved to its spatial
-                # field once every field is parsed, since the family may follow.
-                field_of = _text(obj["field_of"], "field_of")
+            if "release" in obj:
+                # The shadow set of the family's things (released-field-v1 under
+                # bit-law-v1): the size of a thing's shadow per heading.
                 release = tuple(
                     _integer(v, "release term", 1) for v in _array(obj["release"], "release", 2, 2)
                 )
@@ -1331,11 +1358,11 @@ def _spatial_fields(
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
-            | {"phase_bits", "charge", "field_of", "release", "spread", "polarization_bits"}
+            | {"phase_bits", "charge", "release", "spread", "polarization_bits"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "flux_projection, phase_bits, charge, field_of, release, spread and "
+                "flux_projection, phase_bits, charge, release, spread and "
                 "polarization_bits require ray transport"
             )
         else:
@@ -1380,21 +1407,10 @@ def _spatial_fields(
                 polarization_bits=polarization_bits,
             )
         )
-        sources.append(field_of)
-    resolved: list[SpatialFieldDefinition] = []
-    for definition, source_name in zip(result, sources, strict=True):
-        if source_name is None:
-            resolved.append(definition)
-            continue
-        origin = next(
-            (i for i, item in enumerate(result) if fields[item.field].name == source_name), None
-        )
-        if origin is None or not result[origin].rays:
-            raise ValueError("field_of must name a ray spatial field")
-        resolved.append(replace(definition, field_of=origin))
-    validate_released_fields(tuple(resolved), fields)
-    validate_spread_fields(tuple(resolved), fields)
-    return tuple(resolved)
+    resolved = tuple(result)
+    validate_released_fields(resolved, fields)
+    validate_spread_fields(resolved, fields)
+    return resolved
 
 
 def _emissions(
@@ -2002,22 +2018,26 @@ def _ray_interactions(
 
     A rule with `outputs` is a meeting with N-to-M outputs
     (ray-meeting-conversion-v1): its outputs, not assignments, define the new
-    event rays that replace its participants. `bit` (detector-bit-property-v1)
-    says which Detector bit the outputs of the meeting inherit: `"highest"` (the
-    default: the highest bit of the inputs, 1 over 0 over none), `"none"`, or
-    `{"of": i}` for input i's bit. `draw: [n, d]` with `seed` (decay-draw-v1) makes
-    a rule with outputs a decaying conversion: its meeting draws once from the
-    Node's ticket stream at that setting and fires on 1 only.
+    event rays that replace its participants; every output is a thing
+    (bit-law-v1), and the `bit` key of detector-bit-property-v1 is rejected.
+    `draw: [n, d]` with `seed` (decay-draw-v1) makes a rule with outputs a
+    decaying conversion: its meeting draws once from the Node's ticket stream at
+    that setting and fires on 1 only.
     """
     definitions = ray_participant_definitions(fields, spatial)
     required = {"name", "participants", "invariants"}
     rules: list[InteractionDefinition] = []
     for raw in _array(value, "ray_interactions", MAX_RULES):
+        if isinstance(raw, dict) and "bit" in raw:
+            raise ValueError(
+                "a ray interaction's bit key was retired by bit-law-v1 (2026-09-18): the bit "
+                "never changes at a meeting, every output of a meeting is a thing (1)"
+            )
         obj = _object(
             raw,
             "ray interaction",
             required
-            | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "bit", "draw", "seed"},
+            | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "reads", "draw", "seed"},
             required,
         )
         if "ray_delay" in obj or ("momentum_table" in obj and "assignments" in obj):
@@ -2050,9 +2070,10 @@ def _ray_interactions(
                     "are read-only"
                 )
             if "momentum_table" in obj:
-                # ray-momentum-turn-v1: on a coupling of free rays, assigning
-                # nothing, the field families that push the one participant it
-                # does not name, family name to sign, as the external body's table.
+                # ray-momentum-turn-v1 under bit-law-v1: on a coupling of free rays,
+                # assigning nothing, the families whose shadows push the thing met
+                # (the one role it does not name, or the first role when every
+                # role is named), family name to sign, as the external body's table.
                 families = {
                     fields[definition.field].name: index
                     for index, definition in enumerate(spatial)
@@ -2066,11 +2087,17 @@ def _ray_interactions(
                     if sign not in (-1, 1):
                         raise ValueError("momentum_table signs are -1 (attraction) or 1 (repulsion)")
                     signs[families[name]] = sign
-                rule = replace(rule, momentum_table=tuple(signs))
+                reads = _text(obj["reads"], "ray interaction reads") if "reads" in obj else ""
+                if reads not in PUSH_READS:
+                    raise ValueError(
+                        "a momentum_table declares what the thing multiplies the shadows' message "
+                        'by: reads "content" or "charge" beside it (bit-law-v1, point 16)'
+                    )
+                rule = replace(rule, momentum_table=tuple(signs), reads=reads)
+        if "reads" in obj and "momentum_table" not in obj:
+            raise ValueError("reads is declared beside a momentum_table (bit-law-v1, point 16)")
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
-        if "bit" in obj:
-            rule = replace(rule, bit=_bit_rule(obj["bit"], len(rule.participants)), bit_declared=True)
         if not rule.polarization_declared and (
             _reads_polarization(rule.when)
             or any(_reads_polarization(invariant.expression) for invariant in rule.invariants)
@@ -2085,19 +2112,18 @@ def _ray_interactions(
                     "draw is the decay setting of a conversion: it requires a ray interaction "
                     "with outputs (decay-draw-v1)"
                 )
-            if "seed" not in obj:
-                raise ValueError("a ray interaction with draw requires its seed (decay-draw-v1)")
             setting = _array(obj["draw"], "ray interaction draw", 2, 2)
             numerator = _integer(setting[0], "draw numerator", 0)
             denominator = _integer(setting[1], "draw denominator", 1)
             if numerator > denominator:
                 raise ValueError("draw must be a setting [n, d] from 0 through 1: n at most d")
-            seed = _integer(obj["seed"], "ray interaction seed", 0)
-            if seed >= TICKET_MODULUS:
-                raise ValueError("a ray interaction seed must stay below the ticket modulus")
-            rule = replace(rule, draw=(numerator, denominator), seed=seed)
+            # bit-law-v1, point 14: there is no lottery. The setting is a declared
+            # table read by the Node's counter; `seed` is accepted so that old
+            # worlds parse, and never read.
+            _integer(obj.get("seed", 0), "ray interaction seed", 0)
+            rule = replace(rule, draw=(numerator, denominator))
         elif "seed" in obj:
-            raise ValueError("seed starts the ticket stream of a draw: it requires draw (decay-draw-v1)")
+            raise ValueError("seed is accepted beside draw alone (decay-draw-v1 under bit-law-v1)")
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
         # wave-ray-family-v1: charge x amount summed over the participants is an
@@ -2113,22 +2139,6 @@ def _ray_interactions(
             rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
         rules.append(rule)
     return tuple(rules)
-
-
-def _bit_rule(value: object, participants: int) -> int:
-    """The `bit` key of a ray interaction (detector-bit-property-v1): `"highest"`,
-    `"none"` or `{"of": i}` with i one of the rule's roles."""
-    if value == "highest":
-        return BIT_HIGHEST
-    if value == "none":
-        return BIT_NONE
-    if isinstance(value, dict):
-        spec = _object(value, "ray interaction bit", {"of"}, {"of"})
-        source = _integer(spec["of"], "bit.of", 0)
-        if source >= participants:
-            raise ValueError("bit.of exceeds the declared roles")
-        return source
-    raise ValueError('ray interaction bit must be highest, none or {"of": i}')
 
 
 def _ray_meeting(
@@ -2173,6 +2183,8 @@ def _ray_meeting(
     # each output carries.
     names_polarization = False
     output_polarization: list[tuple[int, int]] = []
+    # bit-law-v1: the source input of each output, whose identity it carries.
+    output_sources: list[int] = []
     for position, raw in enumerate(raw_outputs):
         item = _object(
             raw,
@@ -2188,6 +2200,7 @@ def _ray_meeting(
         source = _integer(item.get("input", 0), "output.input", 0)
         if source >= len(selections):
             raise ValueError("output.input exceeds the declared roles")
+        output_sources.append(source)
         amount = item["amount"]
         if type(amount) is int:
             amount_expression: object = _integer(amount, "output.amount", 1)
@@ -2383,6 +2396,7 @@ def _ray_meeting(
         lags=tuple(lags),
         polarization_declared=names_polarization,
         output_polarization=tuple(output_polarization),
+        output_sources=tuple(output_sources),
     )
 
 
@@ -2394,6 +2408,56 @@ def _reads_polarization(expression: Expression | None) -> bool:
     if expression.op == "field" and expression.field == RAY_POLARIZATION:
         return True
     return any(_reads_polarization(argument) for argument in expression.arguments)
+
+
+def _initial_field(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    shape: Address3,
+) -> dict[int, InitialFieldDefinition]:
+    """The field given with the board (bit-law-v1, `initial_field`): a mapping of ray
+    family name to `{"fill": T}`, the intervals of the split table's transient
+    from every thing of the family at rest, or `{"rays": [...]}`, a profile of
+    shadows, each `{"position", "heading", "amount", "phase", "sign", "owner"}`."""
+    families = {
+        fields[definition.field].name: index
+        for index, definition in enumerate(spatial)
+        if definition.rays
+    }
+    obj = _object(value, "initial_field", set(families), set())
+    result: dict[int, InitialFieldDefinition] = {}
+    for name, raw in obj.items():
+        entry = _object(raw, f"initial_field.{name}", {"fill", "rays"}, set())
+        if ("fill" in entry) == ("rays" in entry):
+            raise ValueError(f"initial_field.{name} declares fill or rays, one of them")
+        fill = 0
+        rays: list[InitialShadow] = []
+        if "fill" in entry:
+            fill = _integer(entry["fill"], f"initial_field.{name}.fill", 1)
+            if fill > MAX_VALUE:
+                raise ValueError("an initial_field fill is a bounded number of intervals")
+        else:
+            for item in _array(entry["rays"], f"initial_field.{name}.rays", MAX_RAY_SLOTS * 4096):
+                ray = _object(
+                    item,
+                    "initial_field ray",
+                    {"position", "heading", "amount", "phase", "sign", "owner", "steps"},
+                    {"position", "heading", "amount"},
+                )
+                rays.append(
+                    InitialShadow(
+                        _address(ray["position"], "initial_field ray position", 0),
+                        _address(ray["heading"], "initial_field ray heading", -1),
+                        _integer(ray["amount"], "initial_field ray amount", 1),
+                        _integer(ray.get("phase", 0), "initial_field ray phase", 0),
+                        _integer(ray.get("sign", 0), "initial_field ray sign", -1),
+                        _integer(ray.get("owner", 0), "initial_field ray owner", 0),
+                        _integer(ray.get("steps", 1), "initial_field ray steps", 0),
+                    )
+                )
+        result[families[str(name)]] = InitialFieldDefinition(fill, tuple(rays))
+    return result
 
 
 def parse_initial_state(document: object) -> InitialState:
@@ -2446,6 +2510,7 @@ def parse_initial_state(document: object) -> InitialState:
             "detectors",
             "return_mode",
             "external_bodies",
+            "initial_field",
         },
         required,
     )
@@ -2529,8 +2594,21 @@ def parse_initial_state(document: object) -> InitialState:
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
         detectors=_detectors(obj.get("detectors", []), fields, spatial),
         return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
-        external_bodies=_external_bodies(obj.get("external_bodies", []), fields, spatial, ray_rules),
+        external_bodies=_external_bodies(
+            obj.get("external_bodies", []), fields, spatial, ray_rules, len(disturbances)
+        ),
+        initial_field=_initial_field(obj.get("initial_field", {}), fields, spatial, shape),
     )
+    if "dense_field" not in obj and dense_field_admissible(initial):
+        # The dense mode is the board's shadow layer (bit-law-v1, point 13): the
+        # default wherever the world admits it; a world that writes the key keeps
+        # its choice.
+        initial = replace(initial, dense_field=True)
+    if initial.dense_field and not dense_field_admissible(initial):
+        raise ValueError(
+            "dense_field requires a spreading family on a board of ray fields, no local "
+            "conservation audit and no polarization (dense-field-v1 under bit-law-v1)"
+        )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")
     if any(definition.rays for definition in initial.spatial_fields):
@@ -2569,6 +2647,14 @@ def parse_initial_state(document: object) -> InitialState:
                 raise ValueError(
                     "phased or decaying self-exclusion supports absorption only, not response sampling"
                 )
+        # bit-law-v1: a shadow of any family carries -dp home, so a world with one
+        # momentum field binds every ray family to it; the ledger's momentum line
+        # is exact for all of them.
+        if len(set(bindings.values())) == 1:
+            target = next(iter(bindings.values()))
+            for index, definition in enumerate(initial.spatial_fields):
+                if definition.rays:
+                    bindings.setdefault(index, target)
         initial = replace(
             initial,
             spatial_fields=tuple(

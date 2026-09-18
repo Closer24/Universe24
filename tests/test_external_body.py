@@ -1,16 +1,23 @@
 """The external body (external-body-v1, Highlights 3.19): a declared Node holding a
-family with an amount of any width, radiating the released field of its family on
-all six headings once per interval, booked as a source; never spreading; meeting
-whatever arrives by its declared coupling, the explicitly accounted sink by
-default, a declared meeting with outputs otherwise (a mirror); moved by fields
-only, its momentum an exact accumulator per axis that steps one Link when a whole
-amount has accumulated.
+family with an amount of any width, meeting whatever arrives by its declared
+coupling, the explicitly accounted sink by default, a declared meeting with
+outputs otherwise (a mirror); moved by fields only, its momentum an exact
+accumulator per axis that steps one Link when a whole amount has accumulated.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("External body")
-before the first run: sink, stars, uniform and mirror.
+before the first run: sink, uniform and mirror.
+
+Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1): a body radiates
+nothing per interval (its shadows are given with the board, test_bit_law.py),
+so the `sink` world has no field of the star: the electron sent at the star
+ends in its sink with its momentum, the light passes untouched, nothing is
+sourced; the `stars` case (three stars in each other's per-tick field) went
+with the law, its physics being that of the shadows of test_bit_law.py (b);
+a body's record names no `field`; a body's momentum table needs `reads`.
 """
 
 import json
+from dataclasses import replace
 
 import pytest
 
@@ -26,17 +33,6 @@ from event_universe.runner import run_initialization
 
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
-# Light meets the star's field: it leaves on the field ray's heading and the field
-# ray returns reversed as the recoil, toward the star.
-TURN = {
-    "name": "turn",
-    "participants": [{"type": "light"}, {"type": "G"}],
-    "outputs": [
-        {"field": "light", "amount": {"of": 0}, "heading": "same", "input": 1, "phase": {"of": 0}},
-        {"field": "G", "amount": {"of": 1}, "heading": "reversed", "input": 1, "phase": {"of": 1}},
-    ],
-    "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
-}
 # A mirror: the arriving light ray leaves reversed on its own line, unchanged, and
 # the body, the participant that never changes, is returned as it came.
 MIRROR = {
@@ -75,10 +71,9 @@ def ray_field(name, advance, **extra):
     } | extra
 
 
-def document(bodies, lamps=(), rules=(), families=("star",), release=None, ticks=6):
-    """The board: `lamps` are (position, family, amount, heading index); `release`
-    declares G as the field of star with that ratio."""
-    names = sorted(set(families) | {family for _, family, _, _ in lamps} | ({"G"} if release else set()))
+def document(bodies, lamps=(), rules=(), families=("star",), ticks=6):
+    """The board: `lamps` are (position, family, amount, heading index)."""
+    names = sorted(set(families) | {family for _, family, _, _ in lamps})
     return {
         "schema_version": 1,
         "model_id": "external-body-test-v1",
@@ -116,10 +111,7 @@ def document(bodies, lamps=(), rules=(), families=("star",), release=None, ticks
         or [
             {"name": "idle", "fields": ["star"], "defaults": {"star": 0}, "transport": {"mode": "hold"}}
         ],
-        "spatial_fields": [
-            ray_field(name, 1 if name == "electron" else 0) for name in names if name != "G"
-        ]
-        + ([ray_field("G", 0, field_of="star", release=list(release))] if release else []),
+        "spatial_fields": [ray_field(name, 1 if name == "electron" else 0) for name in names],
         "emissions": [
             {
                 "type": f"lamp_{index}",
@@ -147,7 +139,10 @@ def rays_at(world, position, family):
         [f.name for f in world.initial.fields].index(family)
     )
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
-    return sorted(node.rays[index], key=ray_merge_key) if node is not None and node.rays else []
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    rays = node.rays[index] if node is not None and node.rays else ()
+    return sorted((replace(ray, owner=0) for ray in rays), key=ray_merge_key)
 
 
 def positions_of(world, family):
@@ -200,30 +195,8 @@ def at(position, heading, distance):
 
 
 STAR = (7, 7, 7)
-SINK_BODY = {"position": [7, 7, 7], "family": "star", "amount": 4096, "momentum_table": {"G": -1}}
+SINK_BODY = {"position": [7, 7, 7], "family": "star", "amount": 4096}
 SINK_LAMPS = (((8, 5, 7), "light", 5, 2), ((7, 7, 4), "electron", 3, 4))
-STARS = (
-    {"position": [4, 7, 7], "family": "star", "amount": 16, "momentum_table": {"G": -1}},
-    {"position": [10, 7, 7], "family": "star", "amount": 16, "momentum_table": {"G": -1}},
-    {
-        "position": [7, 7, 2],
-        "family": "star",
-        "amount": 8,
-        "initial_momentum": {"heading": [1, 0, 0], "pace": [1, 4]},
-        "momentum_table": {"G": -1},
-    },
-)
-# The third star's Node after tick n (pinned): one Link along +X every four intervals.
-THIRD = {
-    1: (7, 7, 2),
-    2: (7, 7, 2),
-    3: (7, 7, 2),
-    4: (8, 7, 2),
-    5: (8, 7, 2),
-    6: (8, 7, 2),
-    7: (8, 7, 2),
-    8: (9, 7, 2),
-}
 UNIFORM_BODY = {
     "position": [3, 7, 7],
     "family": "star",
@@ -233,21 +206,20 @@ UNIFORM_BODY = {
 MIRROR_BODY = {"position": [7, 7, 7], "family": "star", "amount": 4, "coupling": "mirror"}
 
 
-@pytest.mark.parametrize("case", ["sink", "stars", "uniform", "mirror", "rejected"])
+@pytest.mark.parametrize("case", ["sink", "uniform", "mirror", "rejected"])
 def test_an_external_body_radiates_absorbs_reflects_and_moves_by_fields_only(tmp_path, case):
     events = []
     if case == "rejected":
         # (e) Malformed bodies are rejected at initialization.
         for bodies, extra, message in (
             (({"position": [7, 7, 7], "family": "star", "amount": 0},), {}, "positive integer"),
-            (({"position": [7, 7, 7], "family": "G", "amount": 1},), {}, "not a field"),
             (
                 ({"position": [7, 7, 7], "family": "star", "amount": 1, "coupling": "turn"},),
                 {},
                 "sink or a declared",
             ),
             (
-                ({"position": [7, 7, 7], "family": "star", "amount": 1, "momentum_table": {"G": 2}},),
+                ({"position": [7, 7, 7], "family": "star", "amount": 1, "momentum_table": {"star": 2}},),
                 {},
                 "attraction",
             ),
@@ -261,42 +233,43 @@ def test_an_external_body_radiates_absorbs_reflects_and_moves_by_fields_only(tmp
             ),
             (
                 ({"position": [7, 7, 7], "family": "star", "amount": 4, "coupling": "mirror"},),
-                {"rules": [TURN], "families": ("star", "light")},
+                {"rules": [], "families": ("star", "light")},
                 "sink or a declared",
             ),
         ):
             with pytest.raises(ValueError, match=message):
-                parse_initial_state(document(bodies, release=(1, 2048), **extra))
+                parse_initial_state(document(bodies, **extra))
+        # A table without `reads` is rejected (bit-law-v1, point 16).
+        with pytest.raises(ValueError, match="point 16"):
+            parse_initial_state(
+                document(
+                    (
+                        {
+                            "position": [7, 7, 7],
+                            "family": "star",
+                            "amount": 1,
+                            "momentum_table": {"star": 1},
+                        },
+                    )
+                )
+            )
         with pytest.raises(ValueError, match="one Link per interval"):
             parse_initial_state(
                 document((UNIFORM_BODY | {"initial_momentum": {"heading": [0, 1, 0], "pace": [3, 2]}},))
             )
         return
     if case == "sink":
-        # (a) A star at rest radiates G on all six headings, 2 per heading per tick
-        # (floor(4096 x 1 / 2048)), booked as a source; light passing one Node away
-        # meets the field at (8,7,7) and turns onto the field ray's heading while the
-        # recoil returns to the star and ends in its sink, moving it by the table;
-        # an electron sent at the star ends in the sink and the star stays at rest.
-        initial = parse_initial_state(document((SINK_BODY,), SINK_LAMPS, [TURN], release=(1, 2048)))
+        # (a) A star at rest: light passing one Node away walks on untouched (no
+        # field is released), an electron sent at the star ends in the sink, and
+        # the star, moved by fields only, stays at rest: no thing pushes it.
+        initial = parse_initial_state(document((SINK_BODY,), SINK_LAMPS))
         world = Simulation(initial, observer=events.append)
         for n in range(1, 7):
             world.step()
             sunk = n >= 3
-            assert world.totals() == {
-                "G": (12 * n - (2 if sunk else 0),),
-                "electron": (0 if sunk else 3,),
-                "light": (5,),
-                "star": (0,),
-            }
-            assert world.source_totals() == {
-                "G": (12 * n,),
-                "electron": (0,),
-                "light": (0,),
-                "star": (0,),
-            }
+            assert world.totals() == {"electron": (0 if sunk else 3,), "light": (5,), "star": (0,)}
+            assert world.source_totals() == {"electron": (0,), "light": (0,), "star": (0,)}
             assert world.external_body_totals() == {
-                "G": (2 if sunk else 0,),
                 "electron": (3 if sunk else 0,),
                 "light": (0,),
                 "star": (0,),
@@ -307,110 +280,37 @@ def test_an_external_body_radiates_absorbs_reflects_and_moves_by_fields_only(tmp
                     "index": 0,
                     "position": [7, 7, 7],
                     "stepping": False,
-                    "momentum": [2 if sunk else 0, 0, 0],
-                    "accumulators": [2 * (n - 3) if sunk else 0, 0, 0],
-                    "sink": {"G": 2, "electron": 3} if sunk else {},
+                    "momentum": [0, 0, 0],
+                    "accumulators": [0, 0, 0],
+                    "sink": {"electron": 3} if sunk else {},
                 }
             ]
-            assert world.external_body_momentum() == ((2 if sunk else 0), 0, 0)
-            for heading in range(6):
-                for distance in range(1, n + 1):
-                    expected = (
-                        []
-                        if heading == 0 and sunk and distance == n - 1
-                        else [released(heading, distance, 2)]
-                    )
-                    assert rays_at(world, at(STAR, heading, distance), "G") == expected
-            assert sum(len(rays_at(world, p, "G")) for p in positions_of(world, "G")) == 6 * n - (
-                1 if sunk else 0
-            )
+            assert world.external_body_momentum() == (0, 0, 0)
+            assert rays_at(world, at((8, 5, 7), 2, n), "light") == [emitted(2, n, 0, 5)]
             if n <= 2:
-                assert rays_at(world, (8, 5 + n, 7), "light") == [emitted(2, n, 0, 5)]
                 assert rays_at(world, (7, 7, 4 + n), "electron") == [emitted(4, n, n, 3)]
             else:
-                assert rays_at(world, (6 + n, 7, 7), "light") == [
-                    product(0, 5, n - 2, 3, (5, 2, 0, 0, 0, 0))
-                ]
                 assert positions_of(world, "electron") == set()
-            assert rays_at(world, STAR, "G") == [] and rays_at(world, STAR, "electron") == []
+            assert rays_at(world, STAR, "electron") == []
         absorbed = [e for e in events if e["event"] == "external_body_absorbed"]
         assert [(e["tick"], e["family"], e["amount"], e["momentum"]) for e in absorbed] == [
-            (3, "G", 2, (2, 0, 0)),
-            (3, "electron", 3, (2, 0, 0)),
+            (3, "electron", 3, (0, 0, 0)),
         ]
         assert not any(e["event"] == "external_body_step" for e in events)
         path = tmp_path / "sink.json"
-        path.write_text(json.dumps(document((SINK_BODY,), SINK_LAMPS, [TURN], release=(1, 2048))))
+        path.write_text(json.dumps(document((SINK_BODY,), SINK_LAMPS)))
         run_initialization(path, tmp_path / "out", ticks=6)
         metadata = json.loads((tmp_path / "out" / "run.json").read_text(encoding="utf-8"))
         assert metadata["external_body"] == EXTERNAL_BODY == "external-body-v1"
-        assert metadata["external_body_totals"] == {"G": [2], "electron": [3], "light": [0], "star": [0]}
-        assert metadata["external_body_momentum"] == [2, 0, 0]
+        assert metadata["external_body_totals"] == {"electron": [3], "light": [0], "star": [0]}
+        assert metadata["external_body_momentum"] == [0, 0, 0]
         assert metadata["accounting_balanced_at_every_completed_tick"]
-        assert metadata["final_totals"] == {"G": [70], "electron": [0], "light": [5], "star": [0]}
+        assert metadata["final_totals"] == {"electron": [0], "light": [5], "star": [0]}
         body = metadata["external_bodies"][0]
-        assert (body["family"], body["amount"], body["coupling"], body["field"]) == (
-            "star",
-            4096,
-            "sink",
-            "G",
-        )
+        assert (body["family"], body["amount"], body["coupling"]) == ("star", 4096, "sink")
+        assert "field" not in body
         assert body["positions"] == [[tick, 7, 7, 7] for tick in range(7)]
-        assert body["final"]["momentum"] == [2, 0, 0] and body["final"]["accumulators"] == [6, 0, 0]
-        return
-    if case == "stars":
-        # (b) Three stars in space: two of amount 16 at rest six Links apart on x,
-        # each in the other's field from tick 6 on, and one of amount 8 moving one
-        # Link along +X every four intervals; accumulators, Links and the momentum
-        # of the bodies and of the rays pinned tick by tick.
-        initial = parse_initial_state(document(STARS, release=(1, 8), ticks=8))
-        world = Simulation(initial, observer=events.append)
-        for n in range(1, 9):
-            world.step()
-            released_total = 30 * n - (1 if n >= 4 else 0) - (1 if n >= 8 else 0)
-            absorbed_total = 4 * (n - 5) if n >= 6 else 0
-            assert world.source_totals() == {"G": (released_total,), "star": (0,)}
-            assert world.external_body_totals() == {"G": (absorbed_total,), "star": (0,)}
-            assert world.totals() == {"G": (released_total - absorbed_total,), "star": (0,)}
-            assert all(item["balanced"] for item in world.spatial_accounting().values())
-            pull = 2 * (n - 5) if n >= 6 else 0
-            first = {6: 0, 7: 2, 8: 6}.get(n, 0)
-            assert world.external_bodies() == [
-                {
-                    "index": 0,
-                    "position": [4, 7, 7],
-                    "stepping": False,
-                    "momentum": [pull, 0, 0],
-                    "accumulators": [first, 0, 0],
-                    "sink": {"G": pull} if pull else {},
-                },
-                {
-                    "index": 1,
-                    "position": [10, 7, 7],
-                    "stepping": False,
-                    "momentum": [-pull, 0, 0],
-                    "accumulators": [-first, 0, 0],
-                    "sink": {"G": pull} if pull else {},
-                },
-                {
-                    "index": 2,
-                    "position": list(THIRD[n]),
-                    "stepping": False,
-                    "momentum": [2, 0, 0],
-                    "accumulators": [(2 * n) % 8, 0, 0],
-                    "sink": {},
-                },
-            ]
-            # The bodies' momentum line: exact, the recoils of the two stars equal and
-            # opposite; the rays hold what was released less what the sinks took.
-            assert world.external_body_momentum() == (2, 0, 0)
-            released_momentum = (-(1 if n >= 4 else 0) - (1 if n >= 8 else 0), 0, 0)
-            assert momentum_of(world, "G") == released_momentum
-            for index, body in enumerate(STARS):
-                position = tuple(body["position"]) if index < 2 else THIRD[n]
-                assert rays_at(world, position, "G") == []
-        steps = [(e["tick"], e["body"], e["port"]) for e in events if e["event"] == "external_body_step"]
-        assert steps == [(3, 2, 0), (7, 2, 0)]
+        assert body["final"]["momentum"] == [0, 0, 0] and body["final"]["accumulators"] == [0, 0, 0]
         return
     if case == "uniform":
         # (c) A body with an initial momentum and no field around it moves uniformly:

@@ -17,8 +17,8 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work, reduced_ratio
 from event_universe.core.sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
 from event_universe.core.spatial_state import (
-    DETECTOR_BIT_0,
-    DETECTOR_BIT_1,
+    BIT_SHADOW,
+    BIT_THING,
     PORT_HEADINGS,
     REMAINDER_SLOTS,
     RETURN_MODES,
@@ -31,26 +31,31 @@ from event_universe.core.spatial_state import (
     Ray,
     Rays,
     Remainders,
-    ReturnedField,
+    ShadowHome,
     SpatialCouplingDefinition,
     SpatialFieldDefinition,
     SpatialOutgoing,
     SpatialPlan,
     SpatialPopulations,
     SpatialState,
+    Traces,
     advance_ray,
     coherence,
+    leave_trace,
     merge_rays,
     phase_of_sum,
+    port_heading,
+    pushed_ray,
     ray_layers,
+    ray_line,
     ray_momentum,
     ray_momentum_share,
     ray_stock,
-    release_field,
-    release_stock,
     remainder_stock,
+    rerelease_shadow,
     spread_content,
     stamp_event,
+    trace_of,
     transmit,
     validate_ray_participants,
     validate_rays,
@@ -97,6 +102,9 @@ class SpatialLaw:
     # Per spatial field, the families a declared ray interaction couples it with
     # (field-spreading-v1): the content a returned field quantum is absorbed by.
     coupled: tuple[tuple[int, ...], ...] = ()
+    # The thing id per disturbance type (bit-law-v1): the owner of what a record
+    # of that type emits and of the shadows its field is made of.
+    things: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
@@ -134,6 +142,8 @@ class SpatialLaw:
             return set()
         port = record.channel_code - 2
         keys: set[Ray] = set()
+        # The record's rays carry its identity (bit-law-v1), part of the key.
+        owner = self.things[record.type_index] if record.type_index < len(self.things) else 0
         for rule_index, rule in enumerate(self.emissions):
             if rule.spatial_field != index or not matches_type(rule, record.type_index):
                 continue
@@ -153,7 +163,7 @@ class SpatialLaw:
                 )
                 meter.charge("evaluate")
                 if first_port == port:
-                    keys.add(replace(moved, amount=1))
+                    keys.add(replace(moved, amount=1, owner=owner))
         return keys
 
     def _carried_phase(
@@ -390,8 +400,8 @@ class SpatialLaw:
         absorbed: list[int],
         annulled: list[list[int]],
     ) -> tuple[list[InverseSplit], Rays]:
-        """Every returned ray resident at its event Node performs the inverse split of
-        its own share by the world's return mode (inverse-split-v1).
+        """Every returned thing resident at its event Node performs the inverse split
+        of its own share by the world's return mode (inverse-split-v1).
 
         After the meeting by the declared couplings (absorption, ray interactions:
         in this slice a returning ray enters none) and before forwarding, so the
@@ -399,12 +409,9 @@ class SpatialLaw:
         publish and the transmitted rays, which join this cycle's emitted rays.
         """
         definition = self.definitions[index]
-        # A returned field quantum of a spreading family has no event Node and no
-        # inverse split: it walks on (field-spreading-v1, Highlights 5.5).
+        # A shadow has no event Node and no inverse split: it walks home (bit-law-v1).
         due = [
-            ray
-            for ray in resident
-            if not ray.outbound and ray.steps == 0 and (ray.event_ports or not definition.spread)
+            ray for ray in resident if not ray.outbound and ray.steps == 0 and ray.detector == BIT_THING
         ]
         if not due:
             return [], ()
@@ -466,58 +473,11 @@ class SpatialLaw:
                     ports,
                     amounts,
                     ray.amount,
-                    {DETECTOR_BIT_0: 0, DETECTOR_BIT_1: 1}.get(ray.detector, -1),
                     int(slot is not None),
                     tuple(tuple(v) for v in annulled_now) if self.return_mode == "annul" else (),
                 )
             )
         return splits, tuple(transmitted)
-
-    def _release(
-        self,
-        resident: list[list[Ray]],
-        records: list[DisturbanceRecord | None],
-        emitted: list[list[Ray]],
-        source: list[list[int]],
-        meter: CostMeter,
-    ) -> None:
-        """The field as the ray's information (released-field-v1, Highlights 3.5).
-
-        Every resident ray of a family that has a released field releases, at the
-        Node it is at, one field ray per Port heading except its own, each
-        carrying the whole quanta of its amount times the release ratio and its
-        phase, in every interval it is there (a ray waiting under a declared delay
-        included: the release does not wait for the clock); resident content (a
-        record holding stock of the family after this interval's emission)
-        releases on all six headings once per interval. The released rays leave
-        this interval with the residents. They are booked as an explicitly
-        accounted source of their field, and of its momentum field when one is
-        bound, so the source ray pays nothing: its amount, phase and heading are
-        untouched. A field ray releases nothing (a field has no field).
-        """
-        for index, definition in enumerate(self.definitions):
-            if definition.field_of is None:
-                continue
-            origin = self.definitions[definition.field_of]
-            released = release_field(tuple(resident[definition.field_of]), definition, origin)
-            meter.charge("read", len(resident[definition.field_of]))
-            for record in records:
-                if record is None or origin.field >= len(record.values):
-                    continue
-                stock = unpack(record.values[origin.field])[0]
-                if stock > 0:
-                    meter.charge("read")
-                    released += release_stock(stock, definition, origin)
-            if not released:
-                continue
-            meter.charge("split", len(released))
-            emitted[index].extend(released)
-            source[definition.field][0] = checked_work(source[definition.field][0] + ray_stock(released))
-            if definition.momentum_field is not None:
-                for axis, value in enumerate(ray_momentum(released, definition)):
-                    source[definition.momentum_field][axis] = checked_work(
-                        source[definition.momentum_field][axis] + value
-                    )
 
     def _spread(
         self,
@@ -539,15 +499,18 @@ class SpatialLaw:
         ray at its event Node and a fresh release depart on their line and spread
         from the next Node, a returning ray walks back, a held ray is not due. The
         departures join this interval's emitted rays. The total is exact, so no
-        amount is sourced; the momentum the spread moves, amount x heading over
-        the departures less the same over what arrived, is booked as an explicitly
-        accounted source of the family's momentum field when one is bound, as the
-        release and the table split are (Highlights 3.15)."""
+        amount is sourced, and a shadow carries no momentum on the ledger while
+        outbound (bit-law-v1), so nothing is booked on the momentum field."""
         definition = self.definitions[index]
+        # A thing moves whole on its line; a shadow spreads (bit-law-v1, point 2).
         due = tuple(
             ray
             for ray in resident
-            if ray.outbound and ray.steps and not ray.interaction_delay and not ray.wait
+            if ray.outbound
+            and ray.steps
+            and ray.detector == BIT_SHADOW
+            and not ray.interaction_delay
+            and not ray.wait
         )
         if not due:
             return None
@@ -561,106 +524,147 @@ class SpatialLaw:
         blocks[index], block_phases[index] = after, after_phases
         meter.charge("split", len(departures))
         meter.charge("update", REMAINDER_SLOTS)
+        # A shadow carries no momentum on the ledger while outbound (bit-law-v1):
+        # the spread moves content, and books nothing on the momentum field.
         emitted.extend(departures)
-        if definition.momentum_field is not None:
-            before = ray_momentum(due, definition)
-            after = ray_momentum(departures, definition)
-            for axis in range(3):
-                source[definition.momentum_field][axis] = checked_work(
-                    source[definition.momentum_field][axis] + after[axis] - before[axis]
-                )
         return record
 
-    def _returned(
+    def _homecoming(
         self,
         index: int,
         residents: list[list[Ray]],
         records: list[DisturbanceRecord | None],
+        emitted: list[Ray],
         source: list[list[int]],
-        absorbed: list[int],
+        returned: list[list[int]],
         meter: CostMeter,
-    ) -> list[ReturnedField]:
-        """A returned field quantum (field-spreading-v1; the orchestrator's proposal
-        of Highlights 5.5, pending the model owner's decision): a returning ray with
-        no event of a spreading family walks back along the line it arrived by,
-        with no inverse split, until it is absorbed by the first content its
-        coupling responds to or reaches its source. At the Node it is at: it is
-        restored to the record that emitted the family, if one is here (the funded
-        emission's input; stock and recoil back exactly, booked as the inverse
-        split's restore is); else it ends at content of the family this field is
-        the field of (a record holding its stock, a resident ray of it) or at a
-        resident ray of a family a declared rule couples with this one, its
-        release unbooked as a negative source of the field and of its momentum
-        field; else it walks on. Nothing is created and every audit stays exact."""
+    ) -> list[ShadowHome]:
+        """A shadow that meets the thing that released it is home (bit-law-v1,
+        point 3 of the law and the model owner's amendment): at a Node holding a
+        thing of the shadow's owner, a resident thing ray that arrived (a pushed
+        one among them) or a record of a type with that identity, every shadow of
+        the family with that owner, outbound (it met its own thing: never a push)
+        or on its walk back (it carries -dp of the push it gave), is absorbed
+        back: the momentum it carries goes into the thing's register (a thing
+        ray: `pushed_ray`; a record: its recoil field, or the `returned` line of
+        the momentum field when its type has none), and it leaves again from
+        where the thing is, back out along its line. A shadow is initial content,
+        never sourced, and its homecoming is no crossing of the border (the model
+        owner, 2026-09-18, point 7): its amount stays on the current line, nothing
+        is booked. One record per shadow."""
         definition = self.definitions[index]
         resident = residents[index]
-        due = [ray for ray in resident if not ray.outbound and not ray.event_ports]
+        due = [ray for ray in resident if ray.detector == BIT_SHADOW and ray.steps >= 1]
         if not due:
             return []
-        field = self.fields[definition.field]
-        origin = definition.field_of
-        origin_stock = origin is not None and any(
-            record is not None
-            and self.definitions[origin].field < len(record.values)
-            and unpack(record.values[self.definitions[origin].field])[0] > 0
-            for record in records
-        )
-        source_here = origin is not None and (
-            origin_stock or any(ray.outbound for ray in residents[origin])
-        )
-        coupled = next(
-            (kind for kind in self.coupled[index] if any(r.outbound for r in residents[kind])), -1
-        )
-        slot = self._input_slot(index, records)
-        taken: list[ReturnedField] = []
+        owners_here: dict[int, tuple[str, int, int]] = {}
+        for kind, bundle in enumerate(residents):
+            if not self.definitions[kind].rays:
+                continue
+            for slot, ray in enumerate(bundle):
+                if ray.detector == BIT_THING and ray.outbound and ray.steps >= 1:
+                    owners_here.setdefault(ray.owner, ("ray", kind, slot))
+        for slot, record in enumerate(records):
+            if record is None or record.type_index >= len(self.things):
+                continue
+            if any(unpack(value) != (0,) * len(unpack(value)) for value in record.values):
+                owners_here.setdefault(self.things[record.type_index], ("record", slot, 0))
+        taken: list[ShadowHome] = []
         ended: list[Ray] = []
+        field = self.fields[definition.field]
         for ray in due:
+            home = owners_here.get(ray.owner)
+            if home is None:
+                continue
             meter.charge("read")
-            port = PORT_HEADINGS.index(definition.headings[ray.heading])
-            if slot is not None:
-                record = records[slot]
+            kind_of, at, slot = home
+            if kind_of == "ray" and definition.headings[ray.heading] == ray_line(
+                residents[at][slot], self.definitions[at]
+            ):
+                # A shadow on the line of a moving thing, walking with it, has not
+                # come to it: what left a thing again leaves with it, and is home
+                # again only when it meets the thing from another heading.
+                continue
+            momentum = ray.momentum if (ray.momentum is not None and not ray.outbound) else (0, 0, 0)
+            outside = 0
+            if kind_of == "ray":
+                thing = residents[at][slot]
+                if any(momentum):
+                    thing = pushed_ray(thing, momentum, self.definitions[at])
+                    validate_rays(
+                        (thing,), self.definitions[at], self.fields[self.definitions[at].field]
+                    )
+                    residents[at][slot] = thing
+                    meter.charge("update", 4)
+                to = 0
+            else:
+                record = records[at]
                 assert record is not None
-                values = list(record.values)
-                stock = unpack(values[definition.field])[0]
-                values[definition.field] = pack((checked_work(stock + ray.amount),))
-                field.validate(values[definition.field])
                 recoil_field = next(
                     (
                         rule.recoil_field
                         for rule in self.emissions
-                        if rule.spatial_field == index
-                        and rule.funded
-                        and matches_type(rule, record.type_index)
+                        if matches_type(rule, record.type_index) and rule.recoil_field is not None
                     ),
                     None,
                 )
-                if recoil_field is not None:
-                    recoil = list(unpack(values[recoil_field]))
-                    for axis, value in enumerate(ray_momentum((ray,), definition)):
-                        recoil[axis] = checked_work(recoil[axis] + value)
-                    values[recoil_field] = pack(tuple(recoil))
-                    self.fields[recoil_field].validate(values[recoil_field])
-                records[slot] = replace(record, values=tuple(values))
-                absorbed[definition.field] = checked_work(absorbed[definition.field] + ray.amount)
-                meter.charge("update", 4)
-                ended.append(ray)
-                taken.append(ReturnedField(index, ray.amount, port, -1, 1))
-                continue
-            by = origin if source_here and origin is not None else coupled
-            if by < 0:
-                continue
-            source[definition.field][0] = checked_work(source[definition.field][0] - ray.amount)
-            if definition.momentum_field is not None:
-                for axis, value in enumerate(ray_momentum((ray,), definition)):
-                    source[definition.momentum_field][axis] = checked_work(
-                        source[definition.momentum_field][axis] - value
-                    )
-            meter.charge("update")
+                if any(momentum):
+                    if recoil_field is not None:
+                        values = list(record.values)
+                        recoil = list(unpack(values[recoil_field]))
+                        for axis in range(3):
+                            recoil[axis] = checked_work(recoil[axis] + momentum[axis])
+                        values[recoil_field] = pack(tuple(recoil))
+                        self.fields[recoil_field].validate(values[recoil_field])
+                        records[at] = replace(record, values=tuple(values))
+                        meter.charge("update", 3)
+                    elif definition.momentum_field is not None:
+                        # No register to hold it: the momentum leaves the identity on
+                        # the returned line, as a body's does.
+                        outside = 1
+                        for axis in range(3):
+                            returned[definition.momentum_field][axis] = checked_work(
+                                returned[definition.momentum_field][axis] + momentum[axis]
+                            )
+                to = 1
+            port = PORT_HEADINGS.index(definition.headings[ray.heading])
+            again = rerelease_shadow(ray, definition)
+            validate_rays((again,), definition, field)
+            emitted.append(again)
+            meter.charge("update", 2)
             ended.append(ray)
-            taken.append(ReturnedField(index, ray.amount, port, by, 0))
+            taken.append(
+                ShadowHome(
+                    index,
+                    ray.amount,
+                    ray.owner,
+                    port,
+                    (momentum[0], momentum[1], momentum[2]),
+                    to,
+                    PORT_HEADINGS.index(definition.headings[again.heading]),
+                    outside,
+                )
+            )
         if ended:
             resident[:] = [ray for ray in resident if ray not in ended]
         return taken
+
+    def _follow_traces(self, index: int, resident: list[Ray], traces: Traces, meter: CostMeter) -> None:
+        """A shadow walking home whose steps are spent follows the trace of its owner
+        (bit-law-v1, point 3): where the Node's register says which Port the last
+        thing of that owner left by, the shadow takes that line; where it says
+        nothing, the shadow walks on straight (the proposal of Highlights 5.5)."""
+        definition = self.definitions[index]
+        for slot, ray in enumerate(resident):
+            if ray.detector != BIT_SHADOW or ray.outbound or ray.steps:
+                continue
+            port = trace_of(traces, ray.owner)
+            if not 0 <= port < 6:
+                continue
+            heading = port_heading(port, definition)
+            if heading != ray.heading:
+                resident[slot] = replace(ray, heading=heading, accumulators=(0, 0, 0))
+                meter.charge("update")
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
         validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
@@ -757,10 +761,13 @@ class SpatialLaw:
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
         detector_ticket: int = 0,
+        traces: Traces = (),
     ) -> SpatialPlan:
         """One Node's spatial plan from its local input alone: the law reads no clock
         (the Node checks its tick before planning), so equal inputs give equal plans
-        at any tick, which is what the plan-reuse key relies on."""
+        at any tick, which is what the plan-reuse key relies on. `traces` is the
+        Node's trace register (bit-law-v1), read by the shadows walking home and
+        written by the things that leave."""
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
         if type(detector_ticket) is not int or bounded(detector_ticket) < 0:
@@ -859,9 +866,12 @@ class SpatialLaw:
         funded = [0] * len(self.fields)
         absorbed_by_field = [0] * len(self.fields)
         annulled = [[0] * field.components for field in self.fields]
+        # What came home this cycle (bit-law-v1): the amounts absorbed back and
+        # re-released, and the momentum delivered outside the identity.
+        returned = [[0] * field.components for field in self.fields]
         inverse_splits: list[InverseSplit] = []
         spreads: list[FieldSpread] = []
-        returned: list[ReturnedField] = []
+        homecomings: list[ShadowHome] = []
         for index, rule in enumerate(self.emissions):
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
@@ -967,6 +977,11 @@ class SpatialLaw:
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
                         last[index] = pack((unpack(amount)[0], cursor_before, phase, advance))
+                    # bit-law-v1: what a record emits is a thing of the record's identity.
+                    if record.type_index < len(self.things):
+                        new_rays = tuple(
+                            replace(ray, owner=self.things[record.type_index]) for ray in new_rays
+                        )
                     emitted_rays[rule.spatial_field].extend(new_rays)
                     if not rule.funded and definition.momentum_field is not None:
                         for axis, value in enumerate(ray_momentum(new_rays, definition)):
@@ -1011,7 +1026,6 @@ class SpatialLaw:
                     source[definition.field][component] = checked_work(
                         source[definition.field][component] + value
                     )
-        self._release(resident_rays, updated_records, emitted_rays, source, meter)
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()
@@ -1025,6 +1039,7 @@ class SpatialLaw:
         outgoing_phases: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         outgoing_rays: list[list[Rays]] = [[] for _ in range(6)]
         kept_rays: list[Rays] = [() for _ in self.definitions]
+        traces_after: Traces = traces
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -1064,15 +1079,21 @@ class SpatialLaw:
                     if definition.spread
                     else 0
                 )
-                if definition.spread:
-                    ended = self._returned(
-                        index, resident_rays, updated_records, source, absorbed_by_field, meter
+                # The shadows home at this Node come in and leave again (bit-law-v1),
+                # before the spread; those whose steps are spent follow the trace.
+                homecomings.extend(
+                    self._homecoming(
+                        index,
+                        resident_rays,
+                        updated_records,
+                        emitted_rays[index],
+                        source,
+                        returned,
+                        meter,
                     )
-                    returned.extend(ended)
-                    # What a restore took out of the resident rays without sending it.
-                    for item in ended:
-                        if item.restored:
-                            absorbed = checked_work(absorbed + item.amount)
+                )
+                self._follow_traces(index, resident_rays[index], traces, meter)
+                if definition.spread:
                     spread = self._spread(
                         index,
                         resident_rays[index],
@@ -1100,6 +1121,17 @@ class SpatialLaw:
                     )
                 validate_rays(kept, definition, field)
                 kept_rays[index] = kept
+                # The trace (bit-law-v1): the Port the largest thing of each owner
+                # leaves this Node by, ties to the lowest Port.
+                departures: dict[int, tuple[int, int]] = {}
+                for port, port_rays in enumerate(ports):
+                    for ray in port_rays:
+                        if ray.detector == BIT_THING and ray.outbound:
+                            best = departures.get(ray.owner)
+                            if best is None or ray.amount > best[0]:
+                                departures[ray.owner] = (ray.amount, port)
+                for owner, (_, port) in sorted(departures.items()):
+                    traces_after = leave_trace(traces_after, owner, port)
                 before_rays = ray_stock(tuple(rays[index])) if rays and index < len(rays) else 0
                 before_rays = checked_work(
                     before_rays
@@ -1107,6 +1139,8 @@ class SpatialLaw:
                     + funded[definition.field]
                     + registers_before
                 )
+                # What came home this cycle left the residents and leaves again
+                # among the kept rays, nothing booked (bit-law-v1, point 7).
                 after_rays = checked_work(absorbed + ray_stock(kept))
                 if definition.spread:
                     # What the registers hold after the step (field-remainder-v1).
@@ -1201,9 +1235,11 @@ class SpatialLaw:
             inverse_splits=tuple(inverse_splits),
             annulled=tuple(tuple(v) for v in annulled) if any(any(v) for v in annulled) else (),
             spreads=tuple(spreads),
-            returned=tuple(returned),
+            homecomings=tuple(homecomings),
+            returned_delta=tuple(tuple(v) for v in returned) if any(any(v) for v in returned) else (),
             remainders=tuple(registers_held),
             remainder_phases=tuple(register_phases_held),
+            traces=traces_after,
             ray_pushes=tuple(turns),
             decay_draws=tuple(draws),
         )

@@ -132,7 +132,11 @@
       "kerengonen": {
         "phase_advance": 1
       },
-      "charge": -3
+      "charge": -3,
+      "release": [
+        1,
+        4
+      ]
     },
     {
       "field": "light_of_nucleus",
@@ -181,12 +185,7 @@
       "kerengonen": {
         "phase_advance": 0
       },
-      "charge": 0,
-      "field_of": "proton",
-      "release": [
-        1,
-        4096
-      ]
+      "charge": 0
     },
     {
       "field": "light_of_electron",
@@ -235,12 +234,7 @@
       "kerengonen": {
         "phase_advance": 0
       },
-      "charge": 0,
-      "field_of": "electron",
-      "release": [
-        1,
-        4
-      ]
+      "charge": 0
     },
     {
       "field": "proton",
@@ -289,7 +283,11 @@
       "kerengonen": {
         "phase_advance": 0
       },
-      "charge": 3
+      "charge": 3,
+      "release": [
+        1,
+        4096
+      ]
     }
   ],
   "emissions": [
@@ -326,7 +324,7 @@
           "type": "electron"
         },
         {
-          "type": "light_of_nucleus"
+          "type": "proton"
         }
       ],
       "outputs": [
@@ -342,7 +340,7 @@
           }
         },
         {
-          "field": "light_of_nucleus",
+          "field": "proton",
           "amount": {
             "of": 1
           },
@@ -366,7 +364,7 @@
           "type": "electron"
         },
         {
-          "type": "light_of_electron"
+          "type": "electron"
         }
       ],
       "outputs": [
@@ -382,7 +380,7 @@
           }
         },
         {
-          "field": "light_of_electron",
+          "field": "electron",
           "amount": {
             "of": 1
           },
@@ -456,9 +454,10 @@
       "charge": 6,
       "coupling": "phase_plate",
       "momentum_table": {
-        "light_of_nucleus": -1,
-        "light_of_electron": -1
-      }
+        "proton": -1,
+        "electron": -1
+      },
+      "reads": "charge"
     }
   ]
 }

@@ -23,11 +23,10 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
-    PORT_HEADINGS,
-    Ray,
+    BIT_THING,
     Rays,
     Remainders,
-    ray_momentum_vector,
+    ledger_momentum,
     remainder_stock,
 )
 from event_universe.core.topology import neighbor_address
@@ -85,8 +84,9 @@ class LocalConservationAudit:
         # Content annulled at inverse splits (inverse-split-v1): the world total and
         # what each Node annulled since its last check.
         self.annulled: Quantity = ZERO
-        # Content released as a field (released-field-v1): an explicitly accounted
-        # source at the Node that released it, the world total (ray-event-audit-v1).
+        # Content sourced at a Node (ray-event-audit-v1): since bit-law-v1 nothing
+        # is released during a run, a spread moves content and a shadow that comes
+        # home leaves again with what it brought; the line is kept, at zero.
         self.sourced: Quantity = ZERO
         self._pending_annulled: dict[Address3, Quantity] = {}
         # Content a Detector mark absorbed on a click (detector-absorb-v1): the world
@@ -94,10 +94,11 @@ class LocalConservationAudit:
         # the reception record before the Node is checked.
         self.absorbed_by_marks: Quantity = ZERO
         self._pending_absorbed: dict[Address3, Quantity] = {}
-        # What each Node spread since its last check (field-spreading-v1): the
-        # content that arrived and was taken off the Node, given back to its
-        # residual because its departures are measured as a release.
-        self._pending_spread: dict[Address3, Quantity] = {}
+        # The momentum delivered outside the measurement (bit-law-v1): to an
+        # external body by a push or a homecoming, or to a record without a
+        # recoil field, read from the Node's records before it is checked.
+        self.returned: Quantity = ZERO
+        self._pending_returned: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
         # The charged ray families (ray-event-audit-v1): the audit measures their
         # charge, charge x amount over rays and over held stock, beside energy and
@@ -162,14 +163,15 @@ class LocalConservationAudit:
             if definition.rays and rays and index < len(rays):
                 for ray in rays[index]:
                     components[0] = checked_work(components[0] + ray.amount)
-                    # A returning ray reads as its share on the event's heading, its
-                    # own heading negated (detector-return-v1), and its charge as
-                    # charge x amount like any ray (ray-event-audit-v1).
-                    # A ray with a momentum register reads it (ray-momentum-turn-v1).
-                    sign = 1 if ray.outbound else -1
-                    for axis, value in enumerate(ray_momentum_vector(ray, definition)):
-                        intrinsic[axis] = checked_work(intrinsic[axis] + sign * value)
-                    charge = checked_work(charge + checked_work(ray.amount * definition.charge))
+                    # The momentum as the ledger reads it (bit-law-v1): a thing its
+                    # register or amount x heading, negated on its walk back
+                    # (detector-return-v1); a shadow zero outbound and -dp on its
+                    # walk home. A thing's charge is charge x amount; a shadow
+                    # carries none (ray-event-audit-v1).
+                    for axis, value in enumerate(ledger_momentum(ray, definition)):
+                        intrinsic[axis] = checked_work(intrinsic[axis] + value)
+                    if ray.detector == BIT_THING:
+                        charge = checked_work(charge + checked_work(ray.amount * definition.charge))
             if definition.spread and remainders and index < len(remainders) and remainders[index]:
                 # The Node's remainder registers hold whole quanta in total, content
                 # without momentum (field-remainder-v1).
@@ -243,88 +245,15 @@ class LocalConservationAudit:
             charge,
         )
 
-    def _spread(self, event: dict[str, object]) -> Quantity:
-        """The content a spread took off its Node (field-spreading-v1): what the
-        record says arrived per heading, measured as resident rays are (energy
-        through the declared spatial expression, momentum amount x heading, charge
-        x amount), so that the departures, measured as a release, are balanced by
-        it and only the momentum the spread moved is sourced."""
-        if self.definition.spatial is None:
-            return ZERO
-        family = str(event.get("family"))
-        arrived = cast(tuple[int, ...], event.get("arrived", ()))
-        bundle: list[Rays] = []
-        for definition in self.initial.spatial_fields:
-            if self.initial.fields[definition.field].name != family:
-                bundle.append(())
-                continue
-            bundle.append(
-                tuple(
-                    Ray(definition.headings.index(PORT_HEADINGS[port]), (0, 0, 0), int(amount))
-                    for port, amount in enumerate(arrived)
-                    if amount
-                )
-            )
-        if not any(bundle):
-            raise ValueError("a field_spread record names a spreading ray family")
-        taken = self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
-        stored = int(cast(int, event.get("stored", 0)))
-        if not stored:
-            return taken
-        # The whole quanta the registers kept (field-remainder-v1) stayed at the
-        # Node as content without momentum: they are not among the departures the
-        # release term measured, so only their energy and charge are given back.
-        kept = self._spatial(
-            tuple(() for _ in self.initial.spatial_fields),
-            tuple((Ray(0, (0, 0, 0), stored),) if rays else () for rays in bundle),
-        )
-        return _subtract(taken, (kept[0], 0, 0, 0, kept[4]))
-
-    def _returned(self, event: dict[str, object]) -> Quantity:
-        """The returned field quantum a Node ended without an owner to give it to
-        (field-spreading-v1): measured as the returning ray it was, its momentum
-        read as its share on the heading it arrived by."""
-        if self.definition.spatial is None:
-            return ZERO
-        family = str(event.get("family"))
-        port, amount = int(cast(int, event.get("port", 0))), int(cast(int, event.get("amount", 0)))
-        bundle: list[Rays] = []
-        for definition in self.initial.spatial_fields:
-            if self.initial.fields[definition.field].name != family:
-                bundle.append(())
-                continue
-            heading = definition.headings.index(PORT_HEADINGS[port])
-            bundle.append((Ray(heading, (0, 0, 0), amount, outbound=0),))
-        if not any(bundle):
-            raise ValueError("a field_returned record names a spreading ray family")
-        return self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
+    @staticmethod
+    def _outside(momentum: Sequence[int]) -> Quantity:
+        """Momentum delivered outside the measurement, as a quantity."""
+        return (0, int(momentum[0]), int(momentum[1]), int(momentum[2]), 0)
 
     def _packet(self, packet: InventoryPacket) -> Quantity:
         if packet.record is not None:
             return self._carrier(packet.record)
         return self._spatial(packet.spatial, packet.rays)
-
-    def _released(self, packet: InventoryPacket) -> Quantity:
-        """What a new packet carries that its origin released in the cycle that sent
-        it (released-field-v1): the rays of a field family with no event and one
-        Link walked, measured like any rays. A release is booked as a source and
-        no owner pays for it, so it is a source term at the Node, not a residual
-        (ray-event-audit-v1); an emitted or transmitted ray carries its event's
-        mask, and a field ray that crosses the Node has walked more than one Link.
-        The departures of a spreading family (field-spreading-v1) are fresh field
-        rays and read the same way; what the Node itself held is given back from
-        its `field_spread` record."""
-        if packet.record is not None or not packet.rays:
-            return ZERO
-        rays = tuple(
-            tuple(ray for ray in bundle if ray.outbound and ray.steps == 1 and not ray.event_ports)
-            if definition.field_of is not None or definition.spread
-            else ()
-            for definition, bundle in zip(self.initial.spatial_fields, packet.rays, strict=True)
-        )
-        if not any(rays):
-            return ZERO
-        return self._spatial(tuple(() for _ in self.initial.spatial_fields), rays)
 
     def _measure(
         self, view: InventoryView
@@ -366,21 +295,19 @@ class LocalConservationAudit:
             self._pending_annulled[position] = _add(self._pending_annulled.get(position, ZERO), amount)
             self.annulled = _add(self.annulled, amount)
             return
-        if event.get("event") == "field_spread":
-            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
-            amount = self._spread(event)
-            self._pending_spread[position] = _add(self._pending_spread.get(position, ZERO), amount)
-            return
-        if event.get("event") == "field_returned" and not event.get("restored"):
-            # A returned field quantum whose release was unbooked as a source
-            # (field-spreading-v1): what left the Node for no Link is given back to
-            # its residual and taken off the sourced line, as a spread's content is.
-            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
-            amount = self._returned(event)
-            self._pending_spread[position] = _add(self._pending_spread.get(position, ZERO), amount)
-            return
         if event.get("event") not in EVENTS:
             return
+        if event.get("event") == "spatial_cycle" and event.get("returned"):
+            # Shadows came home this cycle (bit-law-v1): the momentum delivered to a
+            # record without a recoil field left the measurement on the returned line.
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            for entry in cast(dict[str, dict[str, object]], event["returned"]).values():
+                amount = self._outside(cast(Sequence[int], entry["momentum"]))
+                if amount != ZERO:
+                    self._pending_returned[position] = _add(
+                        self._pending_returned.get(position, ZERO), amount
+                    )
+                    self.returned = _add(self.returned, amount)
         if event.get("event") == "spatial_received" and event.get("absorbed_by_mark"):
             # What the Node's mark absorbed on its clicks left it for the marks'
             # sink, not for a Link (detector-absorb-v1), read before the check.
@@ -388,6 +315,18 @@ class LocalConservationAudit:
             amount = self._absorbed(event)
             self._pending_absorbed[position] = _add(self._pending_absorbed.get(position, ZERO), amount)
             self.absorbed_by_marks = _add(self.absorbed_by_marks, amount)
+        if event.get("event") == "spatial_received" and event.get("returned_to_body"):
+            # What the shadows delivered to the Node's body (bit-law-v1): the push
+            # of every shadow of a named family and the -dp of every shadow of
+            # the body's own that came home, outside the measurement.
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            taken = cast(dict[str, dict[str, object]], event["returned_to_body"])
+            for entry in taken.values():
+                amount = self._outside(cast(Sequence[int], entry["momentum"]))
+                self._pending_returned[position] = _add(
+                    self._pending_returned.get(position, ZERO), amount
+                )
+                self.returned = _add(self.returned, amount)
         tick = cast(int, event["tick"])
         try:
             self._check(tick, str(event["event"]))
@@ -419,21 +358,16 @@ class LocalConservationAudit:
                 escaped = _add(escaped, amount)
             else:
                 incoming[target] = _add(incoming.get(target, ZERO), amount)
-        sourced: dict[Address3, Quantity] = {}
         for key, (packet, amount) in packets.items():
             if key not in self._packets:
                 outgoing[packet.origin] = _add(outgoing.get(packet.origin, ZERO), amount)
-                released = self._released(packet)
-                if released != ZERO:
-                    sourced[packet.origin] = _add(sourced.get(packet.origin, ZERO), released)
         self.current_total = self._total(nodes, packets)
-        spread_back: Quantity = ZERO
         positions = (
             self._nodes.keys()
             | nodes.keys()
             | incoming.keys()
             | outgoing.keys()
-            | self._pending_spread.keys()
+            | self._pending_returned.keys()
             | self._pending_absorbed.keys()
         )
         for position in sorted(positions):
@@ -444,14 +378,9 @@ class LocalConservationAudit:
             residual = _add(residual, self._pending_annulled.pop(position, ZERO))
             # What the Node's mark absorbed on a click left it for the marks' sink.
             residual = _add(residual, self._pending_absorbed.pop(position, ZERO))
-            # What the Node released as a field came from no owner: a source.
-            residual = _subtract(residual, sourced.get(position, ZERO))
-            # What the Node spread it held itself: its departures were measured as a
-            # release above, so the content that arrived is given back
-            # (field-spreading-v1), and the momentum the spread moved is the source.
-            held = self._pending_spread.pop(position, ZERO)
-            residual = _add(residual, held)
-            spread_back = _add(spread_back, held)
+            # The momentum the Node's shadows delivered outside the measurement
+            # (bit-law-v1): to its body or to a record without a recoil field.
+            residual = _add(residual, self._pending_returned.pop(position, ZERO))
             self.checks += 1
             if residual != ZERO:
                 self.failure = {
@@ -466,9 +395,6 @@ class LocalConservationAudit:
                 }
                 raise ValueError(f"local energy/momentum conservation failed at {position}: {residual}")
         self.escaped = cast(Quantity, tuple(a + b for a, b in zip(self.escaped, escaped, strict=True)))
-        for released in sourced.values():
-            self.sourced = _add(self.sourced, released)
-        self.sourced = _subtract(self.sourced, spread_back)
         self._nodes, self._packets = nodes, packets
 
     def report(self) -> dict[str, object]:
@@ -484,5 +410,6 @@ class LocalConservationAudit:
             "escaped": _plain(self.escaped, self.charged),
             "annulled": _plain(self.annulled, self.charged),
             "absorbed_by_marks": _plain(self.absorbed_by_marks, self.charged),
+            "returned": _plain(self.returned, self.charged),
             "failure": self.failure,
         }

@@ -11,9 +11,17 @@ the progress of a ray on the default walk is lifted to the register's scale.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("The walk kept
 through a push") before the first run.
+
+Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1): only a shadow
+pushes, so the field rays of `f` and `g` are shadows given with the board
+(`initial_field`, fresh at the old lamps' Nodes, sign 1), the couplings read the
+thing's charge (`m` charge 1: the push is sign x amount x heading as before), a
+push is not an event (no `ray_push`; the register is read from the ray) and the
+`momentum` line is exact at zero: each returned shadow carries -push.
 """
 
 import json
+from dataclasses import replace
 
 import pytest
 
@@ -124,7 +132,7 @@ def field(name, components=1, signed=False):
 
 
 def ray_field(name, advance):
-    return {
+    entry = {
         "field": name,
         "baseline": 0,
         "transport": "ray",
@@ -136,6 +144,9 @@ def ray_field(name, advance):
         "phase_bits": 3,
         "kerengonen": {"phase_advance": advance},
     }
+    if name == "m":
+        entry["charge"] = 1
+    return entry
 
 
 def turn(name, family, sign):
@@ -145,19 +156,36 @@ def turn(name, family, sign):
         "name": name,
         "participants": [{"type": "m"}, {"type": family}],
         "momentum_table": {family: sign},
+        # bit-law-v1, point 16 (2026-09-18): the push reads the thing's charge, 1.
+        "reads": "charge",
         "invariants": [ENERGY],
     }
 
 
 def document(shape, lamps, ticks):
-    """The board: `lamps` are (position, family, amount, heading index), one
-    disturbance type per family (a lamp of `m` emits along +X, of `f` along -Y, of
-    `g` along +Y) seeded at every position; every emission keeps its recoil on the
-    lamp's `momentum` vector. `f` rays come down under `above` with sign -1 and `g`
-    rays up under `below` with sign 1, so each pushes the m ray by (0, amount, 0)."""
+    """The board: `lamps` are (position, family, amount, heading index); the lamp
+    of `m` emits along +X, its recoil on its `momentum` vector; a "lamp" of `f`
+    or `g` is a fresh shadow given with the board at that Node (bit-law-v1: only a
+    shadow pushes), of `f` along -Y, of `g` along +Y. `f` shadows come down under
+    `above` with sign -1 and `g` shadows up under `below` with sign 1, so each
+    pushes the m ray by (0, amount, 0)."""
     types = {}
     for _, family, amount, heading in lamps:
         assert types.setdefault(family, (amount, heading)) == (amount, heading)
+    shadows = {
+        family: [
+            {
+                "position": list(position),
+                "heading": HEADINGS[heading],
+                "amount": amount,
+                "sign": 1,
+                "steps": 0,
+            }
+            for position, family_, amount, heading in lamps
+            if family_ == family
+        ]
+        for family in ("f", "g")
+    }
     return {
         "schema_version": 1,
         "model_id": "momentum-turn-walk-test-v1",
@@ -190,8 +218,10 @@ def document(shape, lamps, ticks):
                 "transport": {"mode": "hold"},
             }
             for family, (amount, _) in types.items()
+            if family == "m"
         ],
         "spatial_fields": [ray_field("m", 1), ray_field("f", 0), ray_field("g", 0)],
+        "initial_field": {family: {"rays": rays} for family, rays in shadows.items() if rays},
         "emissions": [
             {
                 "type": f"lamp_{family}",
@@ -204,9 +234,12 @@ def document(shape, lamps, ticks):
                 "kerengonen_phase": 0,
             }
             for family, (amount, heading) in types.items()
+            if family == "m"
         ],
         "seeds": [
-            {"position": list(position), "type": f"lamp_{family}"} for position, family, _, _ in lamps
+            {"position": list(position), "type": f"lamp_{family}"}
+            for position, family, _, _ in lamps
+            if family == "m"
         ],
         "ray_interactions": [turn("above", "f", -1), turn("below", "g", 1)],
     }
@@ -244,7 +277,10 @@ def rays_at(world, position, family):
         [f.name for f in world.initial.fields].index(family)
     )
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
-    return sorted(node.rays[index], key=ray_merge_key) if node is not None and node.rays else []
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    rays = node.rays[index] if node is not None and node.rays else ()
+    return sorted((replace(ray, owner=0) for ray in rays), key=ray_merge_key)
 
 
 def positions_of(world, family):
@@ -271,26 +307,13 @@ def balanced(world):
 
 
 def pushes_of(events):
-    return [
-        (
-            e["tick"],
-            tuple(e["position"]),
-            e["family"],
-            e["amount"],
-            tuple(e["before"]),
-            tuple(e["after"]),
-            e["field"],
-            e["field_amount"],
-            tuple(e["field_heading"]),
-        )
-        for e in events
-        if e["event"] == "ray_push"
-    ]
+    """A push is not an event (bit-law-v1, point 15): none is ever recorded."""
+    return [e for e in events if e["event"] == "ray_push"]
 
 
 def run_board(tmp_path, raw, ticks, positions, families, amount, path, accumulators, pushed, after):
     """Step the board tick by tick against the pinned path, then run it through the
-    runner: the same pushes, the identity recorded, every ledger exact."""
+    runner: no push recorded, the identity recorded, every ledger exact."""
     raw = raw | {"ticks": ticks}
     events = []
     world = Simulation(parse_initial_state(raw), observer=events.append)
@@ -310,28 +333,12 @@ def run_board(tmp_path, raw, ticks, positions, families, amount, path, accumulat
             ], t
         assert world.totals()["m"] == (64,)
         assert world.escaped_totals()["m"] == (0,)
-        # The push of the cycle of tick u is booked with the delivery of tick u + 1.
-        f_pushes = sum(1 for u in pushed if u < t and families[u] == "f")
-        g_pushes = sum(1 for u in pushed if u < t and families[u] == "g")
+        # Each shadow carries -push home: the momentum line stays at zero.
         line = world.audit()["fields"]["momentum"]
         assert line["initial"] == ZERO and line["escaped"] == ZERO
-        assert line["sourced"] == line["current"] == (0, amount * (3 * f_pushes - g_pushes), 0), t
+        assert line["sourced"] == line["current"] == ZERO, t
         assert balanced(world), t
-    expected = [
-        (
-            t,
-            positions[t],
-            "m",
-            64,
-            (64, amount * (t - 1), 0),
-            (64, amount * t, 0),
-            families[t],
-            amount,
-            (0, -1, 0) if families[t] == "f" else (0, 1, 0),
-        )
-        for t in pushed
-    ]
-    assert pushes_of(events) == expected
+    assert pushes_of(events) == []
     path_file = tmp_path / "world.json"
     path_file.write_text(json.dumps(raw), encoding="utf-8")
     run_initialization(path_file, tmp_path / "out", ticks=ticks)
@@ -343,7 +350,7 @@ def run_board(tmp_path, raw, ticks, positions, families, amount, path, accumulat
     assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v2"
     assert metadata["conserved_at_every_completed_tick"]
     assert metadata["accounting_balanced_at_every_completed_tick"]
-    assert pushes_of(records) == expected
+    assert pushes_of(records) == []
     assert metadata["final_totals"]["m"] == [64]
 
 

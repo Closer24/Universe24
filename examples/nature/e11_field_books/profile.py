@@ -63,7 +63,8 @@ HEADINGS = np.array(PORTS, dtype=np.int64)
 KMAX = 22
 WINDOW = 32
 STEADY_TOLERANCE = 0.01
-FAMILY = "light"
+# Since bit-law-v1 (2026-09-18) the field is the proton family's shadows (bit 0).
+FAMILY = "proton"
 
 
 def load_mean_field():
@@ -176,11 +177,12 @@ def read_arrays(world, name=FAMILY):
     definition = initial.spatial_fields[index]
     ports = port_of_heading_index(definition)
     family = spatial.dense.families[index]
+    # The arrays carry an owner axis since bit-law-v1 (Node, owner, sign, Port, layer).
     amounts = np.transpose(
-        family.arr_amt.sum(axis=(3, 5)) + family.fly_amt.sum(axis=(3, 5)), (3, 0, 1, 2)
+        family.arr_amt.sum(axis=(3, 4, 6)) + family.fly_amt.sum(axis=(3, 4, 6)), (3, 0, 1, 2)
     )
     amounts = np.ascontiguousarray(amounts)
-    registers = family.reg.sum(axis=(3, 4)) // family.total
+    registers = family.reg.sum(axis=(3, 4, 5)) // family.total
     for position, rays in family.overflow.items():
         for ray in rays:
             amounts[(ports[ray.heading], *position)] += ray.amount
@@ -521,7 +523,7 @@ def run_world(document, *, ticks=None, kmax=KMAX, window=WINDOW, log=print, with
 
 def document_release(document):
     for field in document["spatial_fields"]:
-        if field.get("field_of"):
+        if field.get("release"):
             return field["release"]
     raise ValueError("no released field in the world")
 

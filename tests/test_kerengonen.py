@@ -327,13 +327,15 @@ def absorber_of(world):
 
 
 def test_the_ticket_rule_is_bounded_and_no_absorber_draws_from_it():
-    from event_universe.core.spatial_state import TICKET_MODULUS, next_ticket, ticket_draw
+    from event_universe.core.spatial_state import TICKET_MODULUS, ticket_bit
 
-    # The bounded local draw stays for the Detector mark; an absorber never uses it.
-    assert next_ticket(0, 0) == 1 and next_ticket(1, 5) == 48277
-    assert ticket_draw(3) == 9 and 0 <= ticket_draw(TICKET_MODULUS - 1) < TICKET_MODULUS
+    # bit-law-v1, point 14 (2026-09-18): there is no lottery. The Node's counter
+    # stays for the Detector mark, a declared table "pass n arrivals in every d";
+    # an absorber never uses it.
+    assert ticket_bit(0, 1, 2) == (1, 1) and ticket_bit(1, 1, 2) == (2, 0)
+    assert ticket_bit(TICKET_MODULUS - 1, 1, 1) == (0, 1)
     with pytest.raises(ValueError, match="ticket state"):
-        next_ticket(TICKET_MODULUS, 0)
+        ticket_bit(TICKET_MODULUS, 1, 1)
     # Single quanta at a quarter turn (x = 1 with eight steps): the share rule
     # truncates one quantum times one half to nothing, so only the two quanta
     # absorbed before the second lamp's rays arrive are taken, deterministically.

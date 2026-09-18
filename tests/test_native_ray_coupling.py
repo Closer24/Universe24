@@ -41,8 +41,10 @@ def apply(initial, rays, rules=None):
 
 
 def residents(world):
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
     return tuple(
-        (position, ray)
+        (position, replace(ray, owner=0))
         for position, node in sorted(world._spatial.nodes.items())
         for bundle in node.rays
         for ray in bundle
