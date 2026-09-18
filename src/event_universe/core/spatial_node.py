@@ -40,6 +40,7 @@ from .spatial_state import (
     BIT_PASS,
     BODY_POLARIZER,
     BODY_SINK,
+    CLICK_ABSORB,
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
     POLARIZATION_NONE,
@@ -61,7 +62,9 @@ from .spatial_state import (
     body_release,
     body_step,
     body_token,
+    click_coupling,
     coherent_stock,
+    detector_absorb,
     detector_draw,
     holds_source_stock,
     merge_rays,
@@ -213,12 +216,14 @@ class SpatialAccounting:
         localized: list[list[int]] | None = None,
         annulled: list[list[int]] | None = None,
         absorbed: list[list[int]] | None = None,
+        absorbed_by_marks: list[list[int]] | None = None,
     ) -> None:
         self.__sources, self.__dissipation = sources, dissipation
         self.__reactions, self.__transformations = reactions, transformations
         self.__localized = [] if localized is None else localized
         self.__annulled = [] if annulled is None else annulled
         self.__absorbed = [] if absorbed is None else absorbed
+        self.__absorbed_by_marks = [] if absorbed_by_marks is None else absorbed_by_marks
 
     def record_sources(self, values: Values) -> None:
         add_audit_delta(self.__sources, values)
@@ -243,6 +248,10 @@ class SpatialAccounting:
     def record_absorbed(self, values: Values) -> None:
         """Content that ended in an external body's sink (external-body-v1)."""
         add_audit_delta(self.__absorbed, values)
+
+    def record_absorbed_by_marks(self, values: Values) -> None:
+        """Content a Detector mark absorbed on a click (detector-absorb-v1)."""
+        add_audit_delta(self.__absorbed_by_marks, values)
 
 
 @dataclass(slots=True)
@@ -1314,6 +1323,9 @@ class SpatialNode(SpatialNodeState):
         clicks: list[dict[str, object]],
         passes: list[dict[str, object]],
         returns: list[dict[str, object]],
+        absorbed: list[list[int]],
+        absorbed_momentum: dict[int, list[int]],
+        index: int,
     ) -> Rays:
         """One unsalted draw per arriving ray from the mark's own stream (detector-mark-v1).
 
@@ -1322,11 +1334,16 @@ class SpatialNode(SpatialNodeState):
         that bit, `pass` (the default), it passes without a draw, unchanged, and a
         detector_pass event records it with the bit it carries; under `draw` it is
         drawn like a ray with no bit. A drawn ray leaves with its Detector bit set. On
-        1 the ray continues unchanged and a click is recorded, the measurement. On 0
-        the ray is returned in this interval (detector-return-v1): the same wave ray
-        reversed on its line, unchanged, leaving through the Port it came in through at
-        the next cycle; a detector_return event records the reversal and no click,
-        because a return is no measurement. The draw reads nothing from the ray.
+        1 a click is recorded, the measurement, and the ray meets the mark's coupling
+        for its family (detector-absorb-v1): under `absorb`, the default for a field
+        family, the content ends in the mark's counter with its momentum, booked on
+        the marks' line of the audit, and nothing of it is delivered to the Node;
+        under `pass`, the default for matter, the ray continues unchanged with the
+        bit 1. On 0 the ray is returned in this interval (detector-return-v1): the
+        same wave ray reversed on its line, unchanged, leaving through the Port it
+        came in through at the next cycle; a detector_return event records the
+        reversal and no click, because a return is no measurement. The draw reads
+        nothing from the ray.
         """
         assert self.detector is not None
         family = services.initial.fields[definition.field].name
@@ -1352,7 +1369,26 @@ class SpatialNode(SpatialNodeState):
                 continue
             self.detector_ticket, bit = detector_draw(self.detector_ticket, self.detector)
             if bit:
-                drawn.append(replace(ray, detector=DETECTOR_BIT_1))
+                taken = click_coupling(self.detector, index, definition) == CLICK_ABSORB
+                if taken:
+                    # The click absorbs (detector-absorb-v1): the quantum ends in the
+                    # mark's counter, its momentum on the mark's line, and the Node
+                    # never holds it, so nothing of it spreads on.
+                    self.detector = detector_absorb(
+                        self.detector, index, (ray,), definition, len(services.initial.spatial_fields)
+                    )
+                    absorbed[definition.field][0] = checked_work(
+                        absorbed[definition.field][0] + ray.amount
+                    )
+                    momentum = absorbed_momentum.setdefault(definition.field, [0, 0, 0])
+                    for axis, value in enumerate(ray_momentum((ray,), definition)):
+                        momentum[axis] = checked_work(momentum[axis] + value)
+                        if definition.momentum_field is not None:
+                            absorbed[definition.momentum_field][axis] = checked_work(
+                                absorbed[definition.momentum_field][axis] + value
+                            )
+                else:
+                    drawn.append(replace(ray, detector=DETECTOR_BIT_1))
                 clicks.append(
                     services.events.message(
                         "detector_click",
@@ -1362,6 +1398,7 @@ class SpatialNode(SpatialNodeState):
                         family=family,
                         amount=ray.amount,
                         bit=1,
+                        **({"absorbed": ray.amount} if taken else {}),
                     )
                 )
                 continue
@@ -1438,6 +1475,10 @@ class SpatialNode(SpatialNodeState):
         passes: list[dict[str, object]] = []
         returns: list[dict[str, object]] = []
         absorbed = [[0] * field.components for field in services.initial.fields]
+        # What the mark absorbed on its clicks this interval (detector-absorb-v1): per
+        # field for the ledger, and the momentum per family for the reception record.
+        taken_by_mark = [[0] * field.components for field in services.initial.fields]
+        taken_momentum: dict[int, list[int]] = {}
         for packet in arrivals:
             if packet.body is None:
                 continue
@@ -1468,7 +1509,17 @@ class SpatialNode(SpatialNodeState):
                 returning = tuple(ray for ray in incoming_rays if not ray.outbound)
                 if self.detector is not None and arriving:
                     arriving = self._draw_arrivals(
-                        arriving, packet.port ^ 1, definition, tick, services, clicks, passes, returns
+                        arriving,
+                        packet.port ^ 1,
+                        definition,
+                        tick,
+                        services,
+                        clicks,
+                        passes,
+                        returns,
+                        taken_by_mark,
+                        taken_momentum,
+                        index,
                     )
                 if self.body is not None and (arriving or returning):
                     arriving = self._body_meet(
@@ -1591,6 +1642,10 @@ class SpatialNode(SpatialNodeState):
             services.accounting.record_localized(tuple(tuple(values) for values in deposited))
         if any(any(values) for values in absorbed):
             services.accounting.record_absorbed(tuple(tuple(values) for values in absorbed))
+        if any(any(values) for values in taken_by_mark):
+            services.accounting.record_absorbed_by_marks(
+                tuple(tuple(values) for values in taken_by_mark)
+            )
         # Read-only, post-commit summaries. State.delivered uses travel ports;
         # a receiver sees the opposite side. Retain zero readings on used
         # ports so cancellation is distinct from no completed reception.
@@ -1605,6 +1660,16 @@ class SpatialNode(SpatialNodeState):
             else {}
             for port in range(6)
         ]
+        # What the marks absorbed, per family with its momentum, on the reception
+        # record (detector-absorb-v1): the local audit reads it before it checks the
+        # Node, since the clicks follow this record; absent when nothing was absorbed.
+        absorbed_by_mark = {
+            services.initial.fields[field].name: {
+                "amount": taken_by_mark[field][0],
+                "momentum": tuple(momentum),
+            }
+            for field, momentum in sorted(taken_momentum.items())
+        }
         notifications: list[dict[str, object]] = []
         self._event(
             "spatial_received",
@@ -1613,6 +1678,7 @@ class SpatialNode(SpatialNodeState):
             notifications=notifications,
             packets=len(arrivals),
             received_fields=received_fields,
+            **({"absorbed_by_mark": absorbed_by_mark} if absorbed_by_mark else {}),
         )
         # The clicks of this arrival interval, one per draw of 1, then the passes
         # without a draw, one per arrival read by its bit (detector-bit-property-v1),

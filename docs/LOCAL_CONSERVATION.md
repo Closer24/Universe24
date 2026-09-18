@@ -170,7 +170,7 @@ already keeps; the runner records one per completed tick under `audit`
 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1)). The ledger has one
 line per conserved field (`fields`: the amount of every family and the
 momentum field's three integers) and one per ray family (`charge`), and
-every line reads six values and its identity:
+every line reads seven values and its identity:
 
 | Line | Reads |
 | --- | --- |
@@ -180,17 +180,22 @@ every line reads six values and its identity:
 | `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`) |
 | `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
 | `absorbed` | What the external bodies' sinks took (`external_body_totals`, the `absorbed_by_bodies` line of `external-body-v1`), the momentum field's components included when one is bound |
+| `absorbed_by_marks` | What the Detector marks absorbed on their clicks (`detector_mark_totals`, `detector-absorb-v1`, 2026-09-18: a click on a field family absorbs the quantum into the mark's counter, [a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)), the momentum field's components included when one is bound; a line recorded before that date has no such entry and reads it as zero |
 
 ```text
-initial + sourced = current + escaped + annulled + absorbed
+initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks
 ```
 
 exactly, component by component; `balanced` on the line and on the ledger
 says whether it holds. The ledger also carries the external bodies' own
 lines (`bodies`: count, the exact sum of their momentum, the sum of their
-declared charge, their sinks per field) beside the identity: a body's
-content never enters a sum, and its momentum is its declared response to the
-field rays it absorbs, whose momentum the `absorbed` line already holds. A
+declared charge, their sinks per field) and the Detector marks' own lines
+(`marks`: count, the exact sum of the momentum of what they absorbed, their
+counters per field) beside the identity: a body's content never enters a sum,
+and its momentum is its declared response to the field rays it absorbs, whose
+momentum the `absorbed` line already holds; a mark's counter is what its
+clicks took, and its momentum is that content's, amount x heading, so the
+momentum stays exact whether or not the family binds a momentum field. A
 returning ray reads its momentum as its share on
 the event's heading, its own heading negated (`detector-return-v1`), and its
 charge as charge x amount like any ray; charge is per quantum, so the charge
@@ -228,7 +233,14 @@ ray's release, five field rays on every heading but its own, has net
 momentum minus its own heading, and without the term the Node's residual
 read exactly that, (1, 0, 0). The momentum a table split moves is still
 booked to the world ledger only ([meetings](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)),
-and an external body's sink is not read by the local audit. Since
+and an external body's sink is not read by the local audit. What a
+Detector mark absorbed on a click (`detector-absorb-v1`, 2026-09-18) is read
+from the `spatial_received` record's `absorbed_by_mark` (per family the
+amount and its momentum) before the Node is checked, since the clicks follow
+that record: it is given to the Node's residual as annulled content is (it
+left the Node for the marks' sink, not for a Link) and summed as the report's
+`absorbed_by_marks` line, so the report reads initial + sourced = current +
+escaped + annulled + absorbed_by_marks, as the ledger does. Since
 `loop-binding-v1` (2026-09-17) no group has a register: a bound group is
 rays in motion on a ring, read by heading like every ray at its Node and on
 its Link, and the momentum its corner turns move is booked as each corner's

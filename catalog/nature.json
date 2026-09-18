@@ -402,15 +402,16 @@
   "apparatus": {
     "detector": {
       "world_key": "detectors",
-      "engine": {"identity": "detector-mark-v1, with detector-return-v1, inverse-split-v1 and detector-bit-property-v1", "landed": true},
+      "engine": {"identity": "detector-mark-v1, with detector-return-v1, inverse-split-v1, detector-bit-property-v1 and detector-absorb-v1", "landed": true},
       "declaration": {
         "position": "the marked Node, one mark per position",
         "setting": "[n, d], the pass share of the draw, 1 <= d, 0 <= n <= d; 1 is a source that always passes, 0 returns every arrival",
         "seed": "the start of the mark's own ticket stream",
         "on_bit_1": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 1 (the coupling on_bit_1 below)",
-        "on_bit_0": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 0 (the coupling on_bit_0 below)"
+        "on_bit_0": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 0 (the coupling on_bit_0 below)",
+        "on_click": "optional, \"absorb\" or \"pass\" for every ray family, or a mapping of ray family name to one of them: what the mark does with a ray that draws 1 (the coupling on_click below); a family not named keeps the default, absorb for a field family and pass for matter"
       },
-      "does": "For each transfer that arrives carrying no bit it draws 1 or 0, the only lottery in the model, once per arrival and independently for up to six in one interval. 1: the ray passes and that pass is the measurement, the click its record. 0: the ray is returned on its line unchanged, back the steps it has made, to its event Node, where it performs the inverse split by the world's return_mode (siblings, straight, annul). Its draw reads nothing else of the ray and obeys no table (Highlights 3.19, 5.4). It reads the bit a ray already carries (Highlights 5.4, 2026-09-17; detector-bit-property-v1, feature 2b): a ray carrying 1 passes without a draw, a ray carrying 0 is a transmission and is never drawn, and only a ray carrying no bit is drawn; how it meets each bit is its declared coupling below, pass without a draw by default and draw on request, the pass recorded as a detector_pass event. The bit is a property of the ray like charge: a coupling reads it as the ray property detector (0 none, 1 a draw of 0, 2 a draw of 1), and the outputs of every meeting a marked ray takes part in inherit it, the highest bit of the inputs unless the coupling declares bit (highest, none, or of an input).",
+      "does": "For each transfer that arrives carrying no bit it draws 1 or 0, the only lottery in the model, once per arrival and independently for up to six in one interval. 1: the click is the measurement and its record, and the ray meets the mark's coupling on_click for its family (Highlights 5.4, A click is an absorption, model owner, 2026-09-18; detector-absorb-v1, feature 2c): a field quantum, the default for a family declared field_of another, is absorbed into the mark's exact counter for its family with its momentum on the mark's line, booked on the audit as absorbed by marks, and nothing of it spreads on, a photon detected by being absorbed; matter, the default for every other family, passes with the bit 1, so the electron seen carries its mark. 0: the ray is returned on its line unchanged, back the steps it has made, to its event Node, where it performs the inverse split by the world's return_mode (siblings, straight, annul). Its draw reads nothing else of the ray and obeys no table (Highlights 3.19, 5.4). It reads the bit a ray already carries (Highlights 5.4, 2026-09-17; detector-bit-property-v1, feature 2b): a ray carrying 1 passes without a draw, a ray carrying 0 is a transmission and is never drawn, and only a ray carrying no bit is drawn; how it meets each bit is its declared coupling below, pass without a draw by default and draw on request, the pass recorded as a detector_pass event. The bit is a property of the ray like charge: a coupling reads it as the ray property detector (0 none, 1 a draw of 0, 2 a draw of 1), and the outputs of every meeting a marked ray takes part in inherit it, the highest bit of the inputs unless the coupling declares bit (highest, none, or of an input).",
       "couplings": {
         "on_bit_1": {
           "status": "decided",
@@ -431,6 +432,16 @@
           "default": "transmission, no draw",
           "alternative": "draw",
           "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17; landed 2026-09-17 as feature 2b of issue #169): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; a mark that wants the draw writes on_bit_0 draw. A ray carrying no bit is drawn as the does above says, and a ray on its walk back is not an arrival and is never drawn (detector-return-v1)."
+        },
+        "on_click": {
+          "status": "decided",
+          "world_key": "on_click",
+          "engine": {"identity": "detector-absorb-v1", "landed": true},
+          "reads": {"bit": "none (the draw of 1)", "family": "the arriving ray's"},
+          "values": {"absorb": "the quantum ends in the mark's exact counter for its family, its momentum on the mark's line, booked as absorbed by marks; the click records the absorbed amount and nothing of the quantum is delivered to the Node or spread on (the default for a field family, one declared field_of another)", "pass": "the ray continues with the bit 1 as at an unmarked Node, the click of detector-mark-v1 (the default for matter, every family not declared field_of another)"},
+          "default": "absorb for a field family, pass for matter",
+          "alternative": "the other value, per family or for every family",
+          "note": "What a marked Node does with a ray that draws 1 (Highlights 5.4, A click is an absorption, model owner, 2026-09-18; landed 2026-09-18 as feature 2c of issue #169): the field quantum a marked Node realizes ends there, a photon is detected by being absorbed and every measurement is paid, while matter that draws 1 passes with its mark; a screen that stops electrons writes on_click {\"electron\": \"absorb\"} on its detectors[] entry and a counter that lets light through writes on_click {\"light\": \"pass\"}. The bit is therefore the mark of content that passed a Detector without being absorbed, and the field a Node re-releases never carries the bit of what was realized. Decided on the loop screen (E9, 2026-09-17): with the clicked quantum spreading on, its bit left the marks along the screen and back toward the source and the screen stopped clicking at tick 72; a screen that absorbs counts, and its count grows as an intensity (E9 repeated under the rule on 2026-09-18)."
         }
       },
       "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its decay ratio is the draw setting of its conversion's rule, the Node marked by that declaration for the meeting's draw (weak_conversion, decay-draw-v1, 2026-09-17). A passive Recorder or Renderer is not a Detector."

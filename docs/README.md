@@ -95,4 +95,4 @@ The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DE
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
 
-- [Detector-owned sampling](DETECTOR_SAMPLING.md): canonical fail-closed admission, the Node Detector mark (`detector-mark-v1`: one draw per arriving ray, the click on 1 only) and the external exchange blockers that remain (the return).
+- [Detector-owned sampling](DETECTOR_SAMPLING.md): canonical fail-closed admission, the Node Detector mark (`detector-mark-v1`: one draw per arriving ray, the click on 1 only; `detector-absorb-v1`: the click absorbs a field quantum into the mark's counter) and the external exchange blockers that remain (the return).

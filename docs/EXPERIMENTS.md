@@ -2337,6 +2337,62 @@ sign rule, and its other couplings are catalog entries.
   light line and the group reading from the first run of its board
   ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
   record stays outside the tree; nothing was tuned after the run.
+- **Repeated under `detector-absorb-v1` (2026-09-18).** Status: repeated on
+  2026-09-18 under the decision of Highlights 5.4, "A click is an
+  absorption" (model owner, 2026-09-18; feature 2c, [a click is an
+  absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)),
+  taken on this experiment's finding, the screen that remembers: a click on
+  a field family now absorbs the quantum into the mark's exact counter, per
+  family, with its momentum on the marks' line, and nothing of it spreads
+  on. The world is unchanged (`screen_loop.json`, initialization
+  `e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`, the
+  marks on the `on_click` default of a field family, `light` being
+  `field_of` `electron`), run once for 240 ticks on the engine of commit
+  `10edd1dd` (the engine commit of feature 2c; source
+  `2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`), 94 s,
+  read with the extractor and the recording (the 96-tick viewer document
+  `runs_96.json`, "E9 under detector-absorb-v1: the screen counts", and a
+  full reading for the group). The clicks: 265, every one of family
+  `light`, amount 1, bit 1 and `absorbed` 1, the last at tick 240; per mark
+  from the axis outward 109, 38, 38, 25, 25, 15, 15 against the first
+  record's 17, 4, 4, 1, 1, 1, 1 (the pairs tick for tick with the same
+  amount; the first click of each mark at 11, 34, 34, 50, 50, 70, 70, the
+  first record's first arrivals, and (7, 3, 5) and (7, 7, 5) now click at 50
+  where the first record's screen passed); the on-axis mark 92 through its
+  -X face, 13 through +Z and 4 through -Z. The passes: none, against the
+  first record's 378: no ray carries a bit any more, since what a mark
+  realizes is no longer there to spread. The count keeps growing to tick
+  240, as an intensity: 4, 14, 24, 19, 29, 34, 33, 32, 42, 34 clicks in the
+  ten 24-tick windows over the whole screen (the on-axis mark 4, 10, 10, 9,
+  13, 12, 13, 12, 14, 12), 14, 33, 58, 83 and 109 at the on-axis mark by
+  ticks 48, 96, 144, 192 and 240, against the first record's last click at
+  tick 72. The marks' counters after tick 240: light 15, 25, 38, 109, 38,
+  25, 15, the marks' momentum (218, 0, -27) in all ((92, 0, -9) on the
+  axis), the two sinks' totals light 265 and 0. The ledger after tick 240:
+  light sourced 9560, current 3489, escaped 5806, absorbed by marks 265
+  (on the way, sourced, current, escaped, absorbed by marks: tick 8: 280,
+  264, 16, 0; 16: 600, 528, 70, 2; 32: 1240, 1009, 224, 7; 48: 1880, 1388,
+  474, 18; 96: 3800, 2291, 1448, 61; 192: 7640, 3169, 4282, 189), against
+  the first record's 9560, 3680, 5880 and no sink; electron 32 at every tick
+  with no source, escape, annulment or absorption; momentum (0, 0, 0);
+  charge electron -96, light 0; every line balanced at every tick,
+  `conserved_at_every_completed_tick` true. The group: exactly one, the
+  ring (1, 5, 5), (2, 5, 5), (2, 5, 6), (1, 5, 6), content 32, `{"electron":
+  32}`, period 8, clock 1 on 8 steps, from tick 1 to tick 239 over 1912
+  electron chains, every tick row bound `{"electron": [32]}`, as in the
+  first record. The events: `spatial_cycle` 176018, `spatial_sent` 96225,
+  `spatial_received` 60685, `field_spread` 60065, `spatial_escaped` 5369,
+  `detector_click` 265, `cycle_started` and `cycle_committed` 960 each, no
+  `detector_pass` and no other kind; `ray_layer_families` `[["electron"],
+  ["light"]]`. Outcome: the criterion holds in every clause, (3) now with
+  every mark counting through the run; the finding of the first record is
+  what the decision removed, and the record shows it removed. The isolated
+  test (`tests/test_screen_loop.py`, 32 ticks) was re-pinned from the new
+  engine on 2026-09-18 with its expectations written first ([the screen
+  with a loop](TEST_EXPECTATIONS.md#the-screen-with-a-loop)): the same
+  seven clicks, each absorbed, the light line current 1009 and absorbed 7.
+  The record stays outside the tree, the first record beside it; nothing
+  was tuned after the run.
 
 ### E10. The ring meets its own field: the loop under its own light, contents 32 to 128
 

@@ -692,6 +692,21 @@ every such set; Highlights 3.20 is the text to follow.
    `pass` kind and per-ray `bit`, the catalog entries decided; see [the bit
    read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1) and
    [the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1).)
+   Feature 2c, a click is an absorption (model owner, 2026-09-18, Highlights
+   5.4): the field quantum a marked Node realizes ends there, absorbed on a
+   draw of 1 into the mark's exact counter per family with its momentum on
+   the marks' line, booked as absorbed by marks, nothing of it spreading on;
+   matter that draws 1 passes with the bit 1 as before; how a mark meets
+   each family on a click is its declared coupling, absorb the default for a
+   field family and pass for matter. (Done on 2026-09-18, issue #169
+   feature 2c, `detector-absorb-v1`: the marks' `on_click` key, the counter
+   and the momentum on `DetectorMark`, the `absorbed` amount on the click,
+   the `absorbed_by_marks` line of the world ledger and the local audit with
+   the marks' own lines, the identity and the marks in `run.json`, the
+   viewer ending the absorbed ray at the mark and counting, the catalog
+   entry decided, E9 repeated; see [the click
+   absorbs](DETECTOR_SAMPLING.md#the-click-absorbs-detector-absorb-v1) and
+   [a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1).)
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
