@@ -6,6 +6,43 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The law of the shadow, a new engine mode, on 2026-09-18 (`field-only-v1`)
+
+Feature 20 ([the law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1);
+Highlights 5.4, the model owner's decision of 2026-09-18, the evening): the
+field-only engine, `event_universe/shadow/`, beside the old one. Nothing of
+the old engine is deleted or changed in behaviour:
+
+- a world with `"law": "shadow"` runs on the new engine; every other world
+  runs as before, byte for byte. The old parser refuses `law` as an unknown
+  key; the new parser refuses every key of the old schema by name
+  (`schema_version`, `fields`, `disturbance_types`, `seeds`, `spatial_fields`,
+  `emissions`, `spatial_seeds`, `detectors`, `external_bodies`,
+  `initial_field`, `ray_interactions`, `couplings`, `interactions`,
+  `dense_field`, `standing_field`, `wait_reads`, `shadow_wait`,
+  `slots_per_node`, `link_ticks`, `normal_budget`, `operation_costs`) and a
+  closed board;
+- the runner's switches `--observer`, `--visualize`, `--dense-field`,
+  `--standing-field` and `--node-workers` above 1 are refused for a world of
+  the law; `tools/run_series.py` runs such worlds as any;
+- `event_universe.configuration_validation` gains the kind `shadow`
+  (discriminated by `law`), `--kind shadow` on its command line;
+- `event_universe.dense_field`: the mixing kernels `DenseField._mix`,
+  `_apportion`, `_release`, `_departures` and `_place_departures` are the
+  module-level `mix_arrivals`, `apportion_carried`, `release_parked`,
+  `merge_departures` and `place_departures` over a `MixingArrays` protocol
+  (the methods delegate; a caller of the methods is unaffected);
+- `event_universe.snapshot_writer.write_snapshot` takes any `SnapshotSource`
+  (an object with `snapshot_stream`), the engine as before;
+- `run.json` of a world of the law has its own keys (`law`, `numbers`,
+  `audit` of the new books, `held_content`, `shadow_content`, `momentum`,
+  `contents`, `escaped`) and none of the old engine's markers; `state.json`
+  its own layout (`law`, `contents`, `nodes`); `events.jsonl` its own kinds
+  (`home`, `read`, `click`, `rerelease`, `step`, `merged`, `escaped`);
+- a content's `table` maps a family to `read`, `keep`, `rerelease` or
+  `pass` (round 8's fates): a free family is read and passes on, a paid one
+  is kept (the click) or re-released pooled with the holder's release.
+
 ## Charge per thing, on 2026-09-18 (`charge-per-thing-v1`)
 
 Feature 16g ([charge per thing](SPATIAL_FIELDS.md#charge-per-thing-charge-per-thing-v1);
