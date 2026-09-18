@@ -1,0 +1,338 @@
+{
+ "table": [
+  6,
+  1,
+  1,
+  1,
+  1,
+  1
+ ],
+ "ticks": 240,
+ "part1": {
+  "absorbing": {
+   "steady_state_reached_at_tick": 325,
+   "marks": {
+    "[7, 2, 5]": {
+     "first_tick": 9,
+     "steady_per_interval": 0.17002775122308186,
+     "integrated": 36.93967328426936,
+     "integrated_by_tick": {
+      "48": 4.4143626076763205,
+      "96": 12.458170534351268,
+      "120": 16.536700171788173,
+      "240": 36.93967328426936
+     }
+    },
+    "[7, 3, 5]": {
+     "first_tick": 8,
+     "steady_per_interval": 0.20848476681415223,
+     "integrated": 45.77273415486646,
+     "integrated_by_tick": {
+      "48": 5.863619093761858,
+      "96": 15.753418325603954,
+      "120": 20.754918756710044,
+      "240": 45.77273415486646
+     }
+    },
+    "[7, 4, 5]": {
+     "first_tick": 7,
+     "steady_per_interval": 0.2742452564841435,
+     "integrated": 60.81168124061881,
+     "integrated_by_tick": {
+      "48": 8.285517831594268,
+      "96": 21.32304049210412,
+      "120": 27.90263365381944,
+      "240": 60.81168124061881
+     }
+    },
+    "[7, 5, 5]": {
+     "first_tick": 6,
+     "steady_per_interval": 0.5817060857521843,
+     "integrated": 132.60438853912368,
+     "integrated_by_tick": {
+      "48": 21.048793531134912,
+      "96": 48.8414514557726,
+      "120": 62.80005047140876,
+      "240": 132.60438853912368
+     }
+    },
+    "[7, 6, 5]": {
+     "first_tick": 7,
+     "steady_per_interval": 0.2742452564841435,
+     "integrated": 60.81168124061881,
+     "integrated_by_tick": {
+      "48": 8.285517831594268,
+      "96": 21.32304049210412,
+      "120": 27.90263365381944,
+      "240": 60.81168124061881
+     }
+    },
+    "[7, 7, 5]": {
+     "first_tick": 8,
+     "steady_per_interval": 0.20848476681415223,
+     "integrated": 45.77273415486646,
+     "integrated_by_tick": {
+      "48": 5.863619093761858,
+      "96": 15.753418325603953,
+      "120": 20.754918756710044,
+      "240": 45.77273415486646
+     }
+    },
+    "[7, 8, 5]": {
+     "first_tick": 9,
+     "steady_per_interval": 0.17002775122308186,
+     "integrated": 36.93967328426936,
+     "integrated_by_tick": {
+      "48": 4.4143626076763205,
+      "96": 12.458170534351268,
+      "120": 16.536700171788173,
+      "240": 36.93967328426936
+     }
+    }
+   }
+  },
+  "transparent": {
+   "steady_state_reached_at_tick": 359,
+   "marks": {
+    "[7, 2, 5]": {
+     "first_tick": 9,
+     "steady_per_interval": 0.32417181369391884,
+     "integrated": 69.94708401180512,
+     "integrated_by_tick": {
+      "48": 8.047084493679414,
+      "96": 23.276955063764657,
+      "120": 31.04832951129966,
+      "240": 69.94708401180512
+     }
+    },
+    "[7, 3, 5]": {
+     "first_tick": 8,
+     "steady_per_interval": 0.4268944188043974,
+     "integrated": 92.84845879812192,
+     "integrated_by_tick": {
+      "48": 11.279351901121137,
+      "96": 31.387942679964926,
+      "120": 41.62328451779379,
+      "240": 92.84845879812192
+     }
+    },
+    "[7, 4, 5]": {
+     "first_tick": 7,
+     "steady_per_interval": 0.5386296872874328,
+     "integrated": 118.20570695240131,
+     "integrated_by_tick": {
+      "48": 15.216751733510012,
+      "96": 40.65634839739968,
+      "120": 53.572482376970314,
+      "240": 118.20570695240131
+     }
+    },
+    "[7, 5, 5]": {
+     "first_tick": 6,
+     "steady_per_interval": 0.862469950093402,
+     "integrated": 193.61567789811443,
+     "integrated_by_tick": {
+      "48": 28.460698890990603,
+      "96": 69.43367306634798,
+      "120": 90.1216835082098,
+      "240": 193.61567789811443
+     }
+    },
+    "[7, 6, 5]": {
+     "first_tick": 7,
+     "steady_per_interval": 0.5386296872874328,
+     "integrated": 118.20570695240131,
+     "integrated_by_tick": {
+      "48": 15.216751733510012,
+      "96": 40.65634839739968,
+      "120": 53.572482376970314,
+      "240": 118.20570695240131
+     }
+    },
+    "[7, 7, 5]": {
+     "first_tick": 8,
+     "steady_per_interval": 0.4268944188043973,
+     "integrated": 92.84845879812192,
+     "integrated_by_tick": {
+      "48": 11.279351901121137,
+      "96": 31.387942679964926,
+      "120": 41.62328451779379,
+      "240": 92.84845879812192
+     }
+    },
+    "[7, 8, 5]": {
+     "first_tick": 9,
+     "steady_per_interval": 0.32417181369391884,
+     "integrated": 69.94708401180512,
+     "integrated_by_tick": {
+      "48": 8.047084493679414,
+      "96": 23.276955063764657,
+      "120": 31.04832951129966,
+      "240": 69.94708401180512
+     }
+    }
+   }
+  }
+ },
+ "part2": {
+  "release_per_heading": 64,
+  "steady_state_reached_at_tick": 432,
+  "fringe_period_links": "infinite (emitter rate 0: N / r)",
+  "declared_phase_difference": {
+   "inphase": 0,
+   "antiphase": 4
+  },
+  "marks": {
+   "[12, 1, 4]": {
+    "first_tick": 14,
+    "steady_per_interval": 0.2584304601354515,
+    "integrated": 52.988580540008726,
+    "path_difference_links": {
+     "euclidean": -4.154594935112666,
+     "lattice": -8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 2, 4]": {
+    "first_tick": 13,
+    "steady_per_interval": 0.32966568219432235,
+    "integrated": 68.005047548321,
+    "path_difference_links": {
+     "euclidean": -3.685728859819557,
+     "lattice": -8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 3, 4]": {
+    "first_tick": 12,
+    "steady_per_interval": 0.4187512639685226,
+    "integrated": 86.91822481973408,
+    "path_difference_links": {
+     "euclidean": -3.167309386364634,
+     "lattice": -8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 4, 4]": {
+    "first_tick": 11,
+    "steady_per_interval": 0.6171955632980997,
+    "integrated": 131.2451257167209,
+    "path_difference_links": {
+     "euclidean": -2.601470508735444,
+     "lattice": -8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 5, 4]": {
+    "first_tick": 12,
+    "steady_per_interval": 0.48757948540052604,
+    "integrated": 100.59732339602967,
+    "path_difference_links": {
+     "euclidean": -1.9930437932180372,
+     "lattice": -6
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 6, 4]": {
+    "first_tick": 13,
+    "steady_per_interval": 0.4690111556867773,
+    "integrated": 95.76932118837694,
+    "path_difference_links": {
+     "euclidean": -1.3496241986427187,
+     "lattice": -4
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 7, 4]": {
+    "first_tick": 14,
+    "steady_per_interval": 0.45626722325070257,
+    "integrated": 92.53459260486933,
+    "path_difference_links": {
+     "euclidean": -0.6812917226031932,
+     "lattice": -2
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 8, 4]": {
+    "first_tick": 15,
+    "steady_per_interval": 0.45176296162461316,
+    "integrated": 91.40274077927874,
+    "path_difference_links": {
+     "euclidean": 0.0,
+     "lattice": 0
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 9, 4]": {
+    "first_tick": 14,
+    "steady_per_interval": 0.45626722325070246,
+    "integrated": 92.53459260486933,
+    "path_difference_links": {
+     "euclidean": 0.6812917226031932,
+     "lattice": 2
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 10, 4]": {
+    "first_tick": 13,
+    "steady_per_interval": 0.46901115568677726,
+    "integrated": 95.76932118837694,
+    "path_difference_links": {
+     "euclidean": 1.3496241986427187,
+     "lattice": 4
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 11, 4]": {
+    "first_tick": 12,
+    "steady_per_interval": 0.48757948540052604,
+    "integrated": 100.59732339602967,
+    "path_difference_links": {
+     "euclidean": 1.9930437932180372,
+     "lattice": 6
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 12, 4]": {
+    "first_tick": 11,
+    "steady_per_interval": 0.6171955632980997,
+    "integrated": 131.2451257167209,
+    "path_difference_links": {
+     "euclidean": 2.601470508735444,
+     "lattice": 8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 13, 4]": {
+    "first_tick": 12,
+    "steady_per_interval": 0.4187512639685226,
+    "integrated": 86.91822481973408,
+    "path_difference_links": {
+     "euclidean": 3.167309386364634,
+     "lattice": 8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 14, 4]": {
+    "first_tick": 13,
+    "steady_per_interval": 0.32966568219432235,
+    "integrated": 68.00504754832102,
+    "path_difference_links": {
+     "euclidean": 3.685728859819557,
+     "lattice": 8
+    },
+    "geometric_phase_difference": 0
+   },
+   "[12, 15, 4]": {
+    "first_tick": 14,
+    "steady_per_interval": 0.2584304601354515,
+    "integrated": 52.98858054000873,
+    "path_difference_links": {
+     "euclidean": 4.154594935112666,
+     "lattice": 8
+    },
+    "geometric_phase_difference": 0
+   }
+  }
+ }
+}
