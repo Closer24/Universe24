@@ -16,7 +16,10 @@ The rules, applied to a world document in place:
   a momentum table gets its `reads` (point 16): "charge" when an owner it
   names carries a charge, "content" otherwise;
 - the field family's value field and spatial field stay declared (nothing else
-  of the world refers to them by anything but the name), unused.
+  of the world refers to them by anything but the name), unused;
+- since node-mixing-v1 (Highlights 5.4, point 24, the model owner, 2026-09-18) a
+  shadow spreads by the Node's mixing and nothing of the spread is declared: a
+  `spread` table and a `steering` table on any spatial field are dropped.
 """
 
 from __future__ import annotations
@@ -29,15 +32,16 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
     by_name = {entry["field"]: entry for entry in fields}
     renames: dict[str, str] = {}
     for entry in fields:
+        # The Node mixes the six (node-mixing-v1): no table of the spread is declared.
+        entry.pop("spread", None)
+        entry.pop("steering", None)
         if "field_of" not in entry:
             continue
         owner = entry.pop("field_of")
         renames[entry["field"]] = owner
         target = by_name[owner]
-        for key in ("release", "spread"):
-            if key in entry:
-                value = entry.pop(key)
-                target.setdefault(key, value)
+        if "release" in entry:
+            target.setdefault("release", entry.pop("release"))
         target["ray_slots"] = max(int(target.get("ray_slots", 0)), int(entry.get("ray_slots", 0)))
     if not renames:
         return document

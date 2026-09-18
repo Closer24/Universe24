@@ -139,7 +139,14 @@ def _boolean(value: object, label: str) -> bool:
 
 NOT_DECLARED_STEERING = (
     "the steering table is written from the family's phase width, cos^2 of half the phase "
-    "difference in N-ths (phase-spread-v1; Highlights 5.4, point 17): it is not declared"
+    "difference in N-ths (Highlights 5.4, point 17): it is not declared"
+)
+NOT_DECLARED_MIXING = (
+    "the Node mixes the six (node-mixing-v1; Highlights 5.4, point 24, the model owner, "
+    "2026-09-18): a shadow spreads by the Node's mixing of the six Ports, a third of the "
+    "coherent sum to every Port less the arrival through it sent back, and nothing of it "
+    "is declared, no spread table and no steering table; the family's phase width is its "
+    "one input"
 )
 
 
@@ -1211,8 +1218,8 @@ def _spatial_fields(
             raise ValueError(
                 "field_of was retired by bit-law-v1 (2026-09-18): a shadow is a ray of the same "
                 "family as its thing with the bit 0, so a family declares its own release (the "
-                "size of its things' shadow sets) and spread (the shadows' split table); "
-                "see docs/SPATIAL_FIELDS.md, 'The law of the bit'"
+                "size of its things' shadow sets), whose shadows the Node mixes "
+                "(node-mixing-v1); see docs/SPATIAL_FIELDS.md, 'The law of the bit'"
             )
         obj = _object(
             raw,
@@ -1260,7 +1267,6 @@ def _spatial_fields(
         pace_numerator, pace_denominator = 1, 1
         flux_projection = "ports"
         release_numerator, release_denominator = 0, 1
-        spread: tuple[int, ...] = ()
         if transport == "ray":
             flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
             if "release" in obj:
@@ -1272,15 +1278,8 @@ def _spatial_fields(
                 release_numerator, release_denominator = release
                 if release_numerator > release_denominator:
                     raise ValueError("release must not exceed the source's amount")
-            if "spread" in obj:
-                # Field spreading (field-spreading-v1): the split table, six weights
-                # in Port order relative to the arriving heading; the definition
-                # validates its shape and the resolved fields its admission.
-                spread = tuple(
-                    _integer(v, "spread weight", 0) for v in _array(obj["spread"], "spread", 6, 6)
-                )
-            if "steering" in obj:
-                raise ValueError(NOT_DECLARED_STEERING)
+            if "spread" in obj or "steering" in obj:
+                raise ValueError(NOT_DECLARED_MIXING)
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             # Every ray is a wave ray (wave-ray-family-v1): the family declares the
             # width of its phase, 2^phase_bits values, and its charge per quantum.
@@ -1413,7 +1412,6 @@ def _spatial_fields(
                 release_denominator=release_denominator,
                 phase_bits=phase_bits,
                 charge=charge,
-                spread=spread,
                 polarization_bits=polarization_bits,
             )
         )
@@ -2221,8 +2219,9 @@ def _ray_meeting(
         elif isinstance(amount, dict) and "table" in amount:
             raise ValueError(NOT_DECLARED_STEERING)
         elif isinstance(amount, dict) and "index" in amount:
-            # A steering split (phase-spread-v1): the pair steers by the table of
-            # the output's family, written from its phase width.
+            # A steering split (Highlights 5.4, point 17; section 5.2, a thing meeting
+            # a thing): the pair steers by the table of the output's family, written
+            # from its phase width.
             spec = _object(amount, "output.amount", {"of", "index", "between"}, {"of", "index"})
             if spec["index"] != "phase_difference":
                 raise ValueError("a table split is indexed by the phase difference of two inputs")
@@ -2616,8 +2615,8 @@ def parse_initial_state(document: object) -> InitialState:
         initial = replace(initial, dense_field=True)
     if initial.dense_field and not dense_field_admissible(initial):
         raise ValueError(
-            "dense_field requires a spreading family on a board of ray fields, no local "
-            "conservation audit and no polarization (dense-field-v1 under bit-law-v1)"
+            "dense_field requires a family with a shadow set on a board of ray fields, no "
+            "local conservation audit and no polarization (dense-field-v1 under bit-law-v1)"
         )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")

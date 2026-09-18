@@ -19,6 +19,7 @@ from event_universe.core.sampling_contract import DETECTOR_ONLY, validate_spatia
 from event_universe.core.spatial_state import (
     BIT_SHADOW,
     BIT_THING,
+    MIXING_DENOMINATOR,
     PORT_HEADINGS,
     REMAINDER_SLOTS,
     RETURN_MODES,
@@ -491,9 +492,9 @@ class SpatialLaw:
         blocks: list[tuple[int, ...]],
         block_phases: list[tuple[int, ...]],
     ) -> FieldSpread | None:
-        """Field spreading (field-spreading-v1, Highlights 3.5): every Node that
-        content of a spreading family reaches releases it again by the declared
-        table. After the marks and the meetings and before the departures, the
+        """The spread of shadows (node-mixing-v1, Highlights 5.4, point 24): every
+        Node that shadows reach mixes them through its six Ports and releases
+        them again. After the marks and the meetings and before the departures, the
         outbound content that arrived this interval and is due to leave (at least
         one Link walked, no delay or wait pending) is taken off the Node; a fresh
         ray at its event Node and a fresh release depart on their line and spread
@@ -1075,7 +1076,7 @@ class SpatialLaw:
                     if RETURN_MODES[split.mode] == "annul":
                         absorbed = checked_work(absorbed + split.amount)
                 registers_before = (
-                    remainder_stock(registers_held[index], sum(definition.spread))
+                    remainder_stock(registers_held[index], MIXING_DENOMINATOR)
                     if definition.spread
                     else 0
                 )
@@ -1145,7 +1146,7 @@ class SpatialLaw:
                 if definition.spread:
                     # What the registers hold after the step (field-remainder-v1).
                     after_rays = checked_work(
-                        after_rays + remainder_stock(registers_held[index], sum(definition.spread))
+                        after_rays + remainder_stock(registers_held[index], MIXING_DENOMINATOR)
                     )
                 for port_rays in ports:
                     after_rays = checked_work(after_rays + ray_stock(port_rays))

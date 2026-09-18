@@ -32,6 +32,7 @@ from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
     BIT_SHADOW,
     BIT_THING,
+    MIXING_DENOMINATOR,
     REMAINDER_SIGNS,
     REMAINDER_SLOTS,
     ExternalBody,
@@ -511,7 +512,7 @@ class SpatialEngine:
                     for node in self.nodes.values():
                         if node.remainders and node.remainders[index]:
                             result[definition.field][0] += remainder_stock(
-                                node.remainders[index], sum(definition.spread)
+                                node.remainders[index], MIXING_DENOMINATOR
                             )
                 if definition.rays:
                     for position in self._active:
@@ -558,7 +559,7 @@ class SpatialEngine:
                 for node in self.nodes.values():
                     if node.remainders and node.remainders[index]:
                         result[definition.field][0] += remainder_stock(
-                            node.remainders[index], sum(definition.spread)
+                            node.remainders[index], MIXING_DENOMINATOR
                         )
             if definition.rays:
                 # A polarizer body's registers hold whole quanta of the family it
@@ -921,7 +922,7 @@ class SpatialEngine:
                                         "sign": sign,
                                         "registers": list(values),
                                         "phases": list(phases[start : start + 6]),
-                                        "total": sum(definition.spread),
+                                        "total": MIXING_DENOMINATOR,
                                     }
                                 )
             result["field_remainders"] = remainders

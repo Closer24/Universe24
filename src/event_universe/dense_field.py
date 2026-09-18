@@ -1,20 +1,16 @@
 """The dense mode for boards that a field fills (dense-field-v1).
 
 A host scheduling component, not a physical rule: the pure-field Nodes of a
-board, those holding nothing but outbound content of spreading families and
-their remainder registers, are cycled as one vectorized step over integer
-arrays that applies the spatial law's spread and remainder rule
-(`core/spatial_state.py`, `spread_content`; [field spreading]
-(../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)) to every
-such Node at once, with the same integers: the content arriving on each
-heading is split by the six-weight table relative to that heading into whole
-quanta that leave and sub-quantum shares that go to the Node's registers per
-source sign and Port, each register's phase combined with the share's by the
-coherence rule (`phase_of_sum` over the family's integer cosine and sine
-tables, in the order the engine combines them), a register at one quantum
-releasing the whole quanta it holds with its phase, the departures walking one
-Link with the family's phase advance, the open boundary absorbing what walks
-out, per family, owner and sign. Since bit-law-v1 (2026-09-18) the region is
+board, those holding nothing but outbound shadows and their remainder
+registers, are held as integer arrays and cycled by the spatial law's mixing
+and remainder rule (`core/spatial_state.py`, `node_mixing` and
+`spread_content`; [the Node mixes the six]
+(../../docs/SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1)), with
+the same integers: since node-mixing-v1 (feature 16c, part 1) every Node of
+the region that holds arrivals is cycled by `spread_content` itself, ray by
+ray, through the fallback that served the overflow (the vectorized twin of
+the mixing is part 2); the departures walk one Link as arrays, the open
+boundary absorbing what walks out, per family, owner and sign. Since bit-law-v1 (2026-09-18) the region is
 the board's shadow layer (point 13 of the law): it holds shadows alone, the
 bit-0 rays of the spreading families, per owner (the thing whose shadow each
 is; the arrays and the registers carry an owner axis, the family's declared
@@ -51,12 +47,12 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe.core.disturbance_state import MAX_VALUE, Address3, InitialState, pack, unpack
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_engine import SpatialEngine
 from event_universe.core.spatial_node import SpatialNode
 from event_universe.core.spatial_state import (
     BIT_SHADOW,
+    MIXING_DENOMINATOR,
     POLARIZATION_NONE,
     PORT_HEADINGS,
     REMAINDER_SLOTS,
@@ -67,38 +63,33 @@ from event_universe.core.spatial_state import (
     blank_remainders,
     merge_rays,
     phase_mask,
-    relative_ports,
     spread_content,
-    spread_tables,
 )
 from event_universe.core.topology import neighbor_address
 
 if TYPE_CHECKING:
     from event_universe.core.disturbance_node import DisturbanceNode
 
-# The layers of one Port's content from a dense Node: the spread's whole quanta at
-# the Node's combined phase and the register's release at the register's phase;
+# The layers of one Port's content from a dense Node: the mixing's whole quanta at
+# the leaving amplitude's phase and the register's release at the register's phase;
 # a sparse Node's packet may carry more phases on one Port and sign, and those
 # rays are kept whole beside the arrays (`overflow`).
 LAYERS = 2
 SIGNS = 3
-# The register phase combination is tabulated over (held, held phase, share,
-# share phase) when the table fits; a wider phase or table computes it directly.
-COMBINE_TABLE_LIMIT = 1 << 24
 # The six unit-axial headings in Port order, as an array.
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
 
 
 class DenseFamily:
-    """The arrays of one spreading family on the board.
+    """The arrays of one family whose shadows spread, on the board.
 
     `arr_*` hold the shadows resident at each Node, arrived this interval and due
     to spread: per owner (the family's declared owners in order), source sign
     (-1, 0, 1 as 0, 1, 2), travel Port (the heading the content arrived on, the
     engine's `arrived` index) and layer, the amount and the phase. `reg` and
     `regph` are the eighteen registers and their phases per Node and owner,
-    sign-major then Port, in units of 1/S. `fly_*` hold the departures of the
-    last cycle until the delivery walks them one Link."""
+    sign-major then Port, in ninths (S = MIXING_DENOMINATOR). `fly_*` hold the
+    departures of the last cycle until the delivery walks them one Link."""
 
     def __init__(
         self, index: int, definition: SpatialFieldDefinition, shape: Address3, prices: dict[str, int]
@@ -109,29 +100,15 @@ class DenseFamily:
         self.owners: tuple[int, ...] = definition.owners or (0,)
         self.rank = {owner: rank for rank, owner in enumerate(self.owners)}
         count = len(self.owners)
-        self.table = np.array(definition.spread, dtype=np.int64)
-        self.total = int(sum(definition.spread))
-        # The steering table of the shadows' spread (phase-spread-v1), one entry
-        # per phase step of the family's modulus.
-        self.steering = np.array(definition.steering or (1,), dtype=np.int64)
-        # relative[p, i]: the absolute Port of relative entry i for content arriving
-        # on the heading of Port p (forward, backward, the four transverse).
-        self.relative = np.array([relative_ports(p) for p in range(6)], dtype=np.int64)
+        self.total = MIXING_DENOMINATOR
         self.modulus = definition.phase_modulus
         self.mask = phase_mask(self.modulus)
         self.advance = definition.phase_advance
-        tables = spread_tables(definition)
-        if tables is None:
-            self.cosines = self.sines = None
-        else:
-            self.cosines = np.array(tables[0], dtype=np.int64)
-            self.sines = np.array(tables[1], dtype=np.int64)
         self.heading_index = np.array(
             [definition.headings.index(heading) for heading in PORT_HEADINGS], dtype=np.int64
         )
         # The travel Port of a ray by its heading index.
         self.port_of = {int(index): port for port, index in enumerate(self.heading_index)}
-        self.combine_table = self._combine_table()
         self.arr_amt = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
         self.arr_ph = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
         self.overflow: dict[Address3, list[Ray]] = {}
@@ -140,46 +117,6 @@ class DenseFamily:
         self.fly_amt = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
         self.fly_ph = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
         self.prices = prices
-
-    def _combine_table(self) -> np.ndarray | None:
-        """The register's phase after a share joins it, for every (held, held phase,
-        share, share phase) a cycle can present: the phase step nearest the
-        direction of held e^(i held phase) + share e^(i share phase) over the
-        family's tables, ties to the lowest step, exactly `_phase_of_sum`. A
-        register holds below S before the cycle and gains at most one share
-        below S per arriving Port, so held stays below 7 S."""
-        if self.cosines is None or self.sines is None:
-            return None
-        S, M = self.total, self.modulus
-        if 7 * S * M * S * M * M > COMBINE_TABLE_LIMIT:
-            return None
-        held = np.arange(7 * S, dtype=np.int64)[:, None, None, None]
-        hph = np.arange(M, dtype=np.int64)[None, :, None, None]
-        share = np.arange(S, dtype=np.int64)[None, None, :, None]
-        sph = np.arange(M, dtype=np.int64)[None, None, None, :]
-        x = held * self.cosines[hph] + share * self.cosines[sph]
-        y = held * self.sines[hph] + share * self.sines[sph]
-        return self._nearest_step(x, y)
-
-    def _nearest_step(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
-        """The phase step whose projection x cos + y sin is greatest, the first on
-        a tie (the engine's `_phase_of_sum`); step 0 for a cancelled sum."""
-        assert self.cosines is not None and self.sines is not None
-        projection = x[..., None] * self.cosines + y[..., None] * self.sines
-        return np.argmax(projection, axis=-1).astype(np.int64)
-
-    def combine(
-        self, held: np.ndarray, hph: np.ndarray, share: np.ndarray, sph: np.ndarray
-    ) -> np.ndarray:
-        """The register's phase after the share joins it, elementwise."""
-        if self.combine_table is not None:
-            S, M = self.total, self.modulus
-            flat = ((held * M + hph) * S + share) * M + sph
-            return np.asarray(np.take(self.combine_table.reshape(-1), flat), dtype=np.int64)
-        assert self.cosines is not None and self.sines is not None
-        x = held * self.cosines[hph] + share * self.cosines[sph]
-        y = held * self.sines[hph] + share * self.sines[sph]
-        return self._nearest_step(x, y)
 
 
 def plain_ray(ray: Ray, definition: SpatialFieldDefinition, family: DenseFamily | None = None) -> bool:
@@ -270,11 +207,12 @@ class DenseField:
         return self._active
 
     def cycle(self, tick: int) -> None:
-        """The spread of every dense Node with content, at once (field-spreading-v1,
-        field-remainder-v1, phase-spread-v1): the same integers as `spread_content`
-        at each, the departures kept in flight until the delivery and the cost of
-        each cycle as the spatial law would meter it. A Node holding more shadows
-        than the arrays' layers is cycled by `spread_content` itself, ray by ray."""
+        """The spread of every dense Node with content (node-mixing-v1,
+        field-remainder-v1): every Node with arrivals is cycled by
+        `spread_content` itself, ray by ray, with the Node's registers (the
+        fallback that served the overflow; the vectorized twin is part 2 of
+        feature 16c), the departures kept in flight until the delivery and the
+        cost of each cycle as the spatial law would meter it."""
         dense = self.owner == 0
         prices = self.prices
         ports_any = np.zeros((*self.shape, 6), dtype=bool)
@@ -282,6 +220,9 @@ class DenseField:
         family_cost = np.zeros(self.shape, dtype=np.int64)
         has_arrivals = np.zeros(self.shape, dtype=bool)
         for family in self.families.values():
+            arrived = (family.arr_amt > 0).any(axis=(3, 4, 5, 6))
+            for x, y, z in zip(*np.nonzero(arrived), strict=True):
+                family.overflow.setdefault((int(x), int(y), int(z)), [])
             fallback = self._fallback(family)
             count, family_ports = self._arrivals(family)
             for position, (rays, ports, _) in fallback.items():
@@ -294,14 +235,6 @@ class DenseField:
             has_arrivals |= present
             if not present.any():
                 continue
-            phase = self._group_phase(family)
-            steered, lone = self._steer(family, phase)
-            departures, released_phase, released = self._split(family, lone, phase)
-            departures += steered
-            layer_0, layer_1, phase_1 = self._departures(
-                family, departures, released, phase, released_phase
-            )
-            self._place_departures(family, layer_0, layer_1, phase, phase_1)
             for position, (_, _, departed) in fallback.items():
                 self._place_rays(family, position, departed)
             outgoing = family.fly_amt > 0
@@ -396,134 +329,6 @@ class DenseField:
         count = present.sum(axis=(3, 4, 5, 6)).astype(np.int64)
         ports = present.any(axis=(3, 4, 6))
         return count, ports
-
-    def _group_phase(self, family: DenseFamily) -> np.ndarray:
-        """The phase of each owner's content at each Node, per owner and sign: the
-        step nearest the coherent sum of its shares (`spread_content`'s group
-        phase); 0 for a family without a phase width."""
-        shape = (*self.shape, len(family.owners), SIGNS)
-        if family.cosines is None or family.sines is None:
-            return np.zeros(shape, dtype=np.int64)
-        amounts, phases = family.arr_amt, family.arr_ph
-        x = (amounts * family.cosines[phases]).sum(axis=(5, 6))
-        y = (amounts * family.sines[phases]).sum(axis=(5, 6))
-        self._check_projection(x)
-        return family._nearest_step(x, y)
-
-    @staticmethod
-    def _check_projection(x: np.ndarray) -> None:
-        if max(abs(int(x.max(initial=0))), abs(int(x.min(initial=0)))) * 256 > MAX_WORK_INT:
-            raise OverflowError("64-bit intermediate range exceeded")
-
-    def _steer(self, family: DenseFamily, phase: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        """The shares that meet others of their owner at a Node (phase-spread-v1):
-        each continues on its own heading with the whole quanta of amount x
-        steering[difference] / modulus, the difference its phase to the step
-        nearest the coherent sum of the others, and sends the rest through the
-        four transverse headings, rest // 4 each and the remainder one to each
-        of the first in Port order, exactly `spread_content`. Returns the
-        steered departures per owner, sign and Port, and the lone shares per
-        owner, sign and Port for the fixed split."""
-        amounts, phases = family.arr_amt, family.arr_ph
-        owners = len(family.owners)
-        present = amounts > 0
-        count = present.sum(axis=(5, 6))
-        meeting = present & (count[..., None, None] >= 2)
-        lone = np.where(present & (count[..., None, None] == 1), amounts, 0).sum(axis=6)
-        departures = np.zeros((*self.shape, owners, SIGNS, 6), dtype=np.int64)
-        if not meeting.any():
-            return departures, lone
-        if family.cosines is None or family.sines is None:
-            delta = np.zeros(amounts.shape, dtype=np.int64)
-        else:
-            cosines, sines = family.cosines[phases], family.sines[phases]
-            x = (amounts * cosines).sum(axis=(5, 6))
-            y = (amounts * sines).sum(axis=(5, 6))
-            others_x = x[..., None, None] - amounts * cosines
-            others_y = y[..., None, None] - amounts * sines
-            self._check_projection(others_x)
-            delta = (phases - family._nearest_step(others_x, others_y)) & family.mask
-        forward = np.where(meeting, amounts * family.steering[delta] // family.modulus, 0)
-        rest = np.where(meeting, amounts - forward, 0)
-        each, extra = rest // 4, rest % 4
-        departures += forward.sum(axis=6)
-        for port in range(6):
-            for offset, target in enumerate(family.relative[port][2:]):
-                share = each[..., port, :] + (offset < extra[..., port, :])
-                departures[..., int(target)] += np.where(meeting[..., port, :], share, 0).sum(axis=-1)
-        return departures, lone
-
-    def _split(
-        self, family: DenseFamily, arrived: np.ndarray, phase: np.ndarray
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The fixed split of each lone share by the table relative to its heading,
-        in the engine's order (Port by Port): the whole quanta per absolute target
-        Port, owner and sign, the shares into the registers with their phases
-        combined at the owner's phase, then every register at S or more releasing
-        its whole quanta with its phase and resetting its phase when it empties."""
-        S = family.total
-        reg, regph = family.reg, family.regph
-        departures = np.zeros((*self.shape, len(family.owners), SIGNS, 6), dtype=np.int64)
-        phase_b = phase[..., None]
-        for port in range(6):
-            content = arrived[..., port]
-            if not content.any():
-                continue
-            product = content[..., None] * family.table
-            whole = product // S
-            share = product - whole * S
-            targets = family.relative[port]
-            departures[..., targets] += whole
-            held = reg[..., targets]
-            held_phase = regph[..., targets]
-            has_share = share > 0
-            if family.cosines is None:
-                new_phase = np.where(has_share, 0, held_phase)
-            else:
-                combined = family.combine(held, held_phase, share, np.broadcast_to(phase_b, held.shape))
-                new_phase = np.where(has_share, np.where(held > 0, combined, phase_b), held_phase)
-            reg[..., targets] = held + share
-            regph[..., targets] = new_phase
-        whole = reg // S
-        releasing = whole > 0
-        rest = reg - whole * S
-        released_phase = regph.copy()
-        reg[...] = np.where(releasing, rest, reg)
-        regph[...] = np.where(releasing & (rest == 0), 0, regph)
-        return departures, released_phase, whole
-
-    @staticmethod
-    def _departures(
-        family: DenseFamily,
-        departures: np.ndarray,
-        released: np.ndarray,
-        phase: np.ndarray,
-        released_phase: np.ndarray,
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The two layers per owner, sign and Port: the spread's quanta at the
-        owner's phase and the register's release at its phase, one ray when the
-        phases are equal (the departures of one Port merge)."""
-        phase_b = phase[..., None]
-        same = (released > 0) & (departures > 0) & (released_phase == phase_b)
-        layer_0 = departures + np.where(same, released, 0)
-        layer_1 = np.where(same, 0, released)
-        return layer_0, layer_1, released_phase
-
-    def _place_departures(
-        self,
-        family: DenseFamily,
-        layer_0: np.ndarray,
-        layer_1: np.ndarray,
-        phase: np.ndarray,
-        phase_1: np.ndarray,
-    ) -> None:
-        if max(int(layer_0.max(initial=0)), int(layer_1.max(initial=0))) > MAX_VALUE:
-            raise ValueError("value exceeds the disturbance integer bound")
-        phase_b = phase[..., None]
-        family.fly_amt[..., 0] = layer_0
-        family.fly_ph[..., 0] = np.where(layer_0 > 0, phase_b, 0)
-        family.fly_amt[..., 1] = layer_1
-        family.fly_ph[..., 1] = np.where(layer_1 > 0, phase_1, 0)
 
     # -- the delivery ----------------------------------------------------------
 

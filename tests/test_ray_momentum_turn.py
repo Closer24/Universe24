@@ -20,6 +20,14 @@ reads the thing's charge (`m` charge 1: the push is sign x amount x heading as
 before), a push is not an event (no `ray_push`; the register is read from the
 ray), a returned shadow carries -push and the `momentum` line is exact at zero
 until a shadow escapes, and a run's record carries the law's identities.
+
+Re-pinned on 2026-09-18 under the Node's mixing (node-mixing-v1, Highlights
+5.4 point 24, feature 16c): a lone shadow no longer walks straight to the ray
+it is to push, it mixes at every Node with nothing else there, so every shadow
+here leaves fresh from the Node beside the meeting point and meets the thing
+there at tick 1, the push is in the cycle of tick 2, the paths are the same
+five ticks earlier (`TURN_PATH[t - 2]`, `STEEP_PATH[t - 2]`), the return walks
+its one step back and on to the edge, and `cancel` takes both pushes at once.
 """
 
 import hashlib
@@ -297,8 +305,8 @@ STEEP_PORTS = [2, 0, 2, 0, 2, 2, 0, 2, 0, 2]
 # by the declared table.
 IDENTICAL = {
     "meeting": (
-        "fc8e94668cf9519941581377834eeeb2773f136e7734a68a9d198915216f896c",
-        "30449bd97ce8884cf3e3e30deb7f1afa3eb770306b743efc514b12ad4b34614d",
+        "9553836d91db5dbd4eaf965644c2d3c24fa73f22a4f192ecaee18d9a9d69b009",
+        "717a884ad903ece5e781d51fe97a8652a918bbef1a043ce937587d969ba91087",
     ),
 }
 
@@ -320,35 +328,33 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # (a) A ray of 8 heading +X meets a field ray of 2 from -Y with sign -1:
         # its register becomes (8, -2, 0), toward the source, and it walks the
         # DDA on it for 12 intervals, one Link each; the recoil returns reversed.
-        lamps = (((4, 10, 10), "m", 8, 0), ((10, 4, 10), "f", 2, 2))
-        raw = document(lamps, [turn({"f": -1})], 18)
+        lamps = (((9, 10, 10), "m", 8, 0), ((10, 9, 10), "f", 2, 2))
+        raw = document(lamps, [turn({"f": -1})], 13)
         world = Simulation(parse_initial_state(raw), observer=events.append)
         assert ports_of(TURN_PATH, CENTER) == TURN_PORTS
-        for t in range(1, 19):
+        for t in range(1, 14):
             world.step()
             assert world.totals()["m"] == (8,)
-            assert world.totals()["f"] == ((2,) if t <= 16 else (0,))
-            assert world.escaped_totals()["f"] == ((0,) if t <= 16 else (2,))
+            assert world.totals()["f"] == ((2,) if t <= 11 else (0,))
+            assert world.escaped_totals()["f"] == ((0,) if t <= 11 else (2,))
             line = momentum_line(world)
             assert line["initial"] == ZERO and line["sourced"] == ZERO
-            assert line["escaped"] == (ZERO if t <= 16 else (0, 2, 0))
-            assert line["current"] == (ZERO if t <= 16 else (0, -2, 0))
+            assert line["escaped"] == (ZERO if t <= 11 else (0, 2, 0))
+            assert line["current"] == (ZERO if t <= 11 else (0, -2, 0))
             assert balanced(world)
-            if t <= 6:
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-                assert rays_at(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 2, t, 2)]
+            if t == 1:
+                assert rays_at(world, CENTER, "m") == [ray(0, 8, 1, 1, 0)]
+                assert rays_at(world, CENTER, "f") == [shadow_ray(2, 2, 1, 2)]
                 continue
-            at, accumulators = TURN_PATH[t - 7]
+            at, accumulators = TURN_PATH[t - 2]
             assert positions_of(world, "m") == {at}
             assert rays_at(world, at, "m") == [ray(0, 8, t & 7, t, 0, accumulators, (8, -2, 0))]
-            if t <= 16:
-                assert rays_at(world, (10, 16 - t, 10), "f") == [
-                    shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
-                ]
+            if t <= 11:
+                assert rays_at(world, (10, 11 - t, 10), "f") == [shadow_ray(3, 2, 0, 3, (0, 2, 0))]
             else:
                 assert positions_of(world, "f") == set()
         assert pushes_of(events) == []
-        metadata, records, _ = run(tmp_path, raw, 18)
+        metadata, records, _ = run(tmp_path, raw, 13)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v2"
         assert "bound_group_motion" not in metadata
         assert metadata["conserved_at_every_completed_tick"]
@@ -357,35 +363,30 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         assert metadata["final_totals"] == {"m": [8], "f": [0], "momentum": [0, -2, 0]}
         return
     if case == "cancel":
-        # (b) The same push, then a field ray of 2 from +Y two Links on: the
-        # register returns to (8, 0, 0), the default, and the ray resumes its line
-        # as the ray it was, walking +X with its accumulators at zero.
-        lamps = (((4, 10, 10), "m", 8, 0), ((10, 4, 10), "f", 2, 2), ((12, 18, 10), "f", 2, 3))
-        raw = document(lamps, [turn({"f": -1})], 14)
+        # (b) The same push and a field ray of 2 from +Y in the same cycle (re-pinned
+        # 2026-09-18, node-mixing-v1: a second push some Links on cannot be timed
+        # by a shadow's walk any more): the register stays (8, 0, 0), the default,
+        # and the ray keeps its line as the ray it was, walking +X with its
+        # accumulators at zero, each shadow returned with its own -push.
+        lamps = (((9, 10, 10), "m", 8, 0), ((10, 9, 10), "f", 2, 2), ((10, 11, 10), "f", 2, 3))
+        raw = document(lamps, [turn({"f": -1})], 8)
         world = Simulation(parse_initial_state(raw), observer=events.append)
-        for t in range(1, 15):
+        for t in range(1, 9):
             world.step()
             assert world.totals()["m"] == (8,) and world.totals()["f"] == (4,)
             line = momentum_line(world)
             assert line["sourced"] == ZERO
             assert line["current"] == ZERO and line["escaped"] == ZERO
             assert balanced(world)
-            if t <= 6:
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
+            assert positions_of(world, "m") == {(9 + t, 10, 10)}
+            assert rays_at(world, (9 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
+            if t == 1:
+                assert rays_at(world, CENTER, "f") == [shadow_ray(2, 2, 1, 2), shadow_ray(3, 2, 1, 3)]
                 continue
-            if t <= 8:
-                at, accumulators = TURN_PATH[t - 7]
-                assert rays_at(world, at, "m") == [ray(0, 8, t & 7, t, 0, accumulators, (8, -2, 0))]
-                assert rays_at(world, (12, 18 - t, 10), "f") == [shadow_ray(3, 2, t, 3)]
-            else:
-                assert positions_of(world, "m") == {(4 + t, 10, 10)}
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-                assert rays_at(world, (12, t + 2, 10), "f") == [shadow_ray(2, 2, 16 - t, 2, (0, -2, 0))]
-            assert rays_at(world, (10, 16 - t, 10), "f") == [
-                shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
-            ]
+            assert rays_at(world, (10, 11 - t, 10), "f") == [shadow_ray(3, 2, 0, 3, (0, 2, 0))]
+            assert rays_at(world, (10, 9 + t, 10), "f") == [shadow_ray(2, 2, 0, 2, (0, -2, 0))]
         assert pushes_of(events) == []
-        metadata, records, _ = run(tmp_path, raw, 14)
+        metadata, records, _ = run(tmp_path, raw, 8)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN
         assert metadata["conserved_at_every_completed_tick"]
         assert pushes_of(records) == []
@@ -396,31 +397,30 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # (repulsion, away from the source) has the register (2, 3, 0), past 45
         # degrees: three +Y Links per two +X, its heading index still +X and its
         # line for the release geometry +Y, the dominant axis.
-        lamps = (((4, 10, 10), "m", 2, 0), ((10, 4, 10), "f", 3, 2))
-        raw = document(lamps, [turn({"f": 1})], 16)
+        lamps = (((9, 10, 10), "m", 2, 0), ((10, 9, 10), "f", 3, 2))
+        raw = document(lamps, [turn({"f": 1})], 11)
         initial = parse_initial_state(raw)
         world = Simulation(initial, observer=events.append)
         assert ports_of(STEEP_PATH, CENTER) == STEEP_PORTS
-        for t in range(1, 17):
+        for t in range(1, 12):
             world.step()
             assert world.totals()["m"] == (2,) and world.totals()["f"] == (3,)
             line = momentum_line(world)
             assert line["sourced"] == ZERO
             assert line["current"] == ZERO and line["escaped"] == ZERO
             assert balanced(world)
-            if t <= 6:
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 2, t & 7, t, 0)]
+            if t == 1:
+                assert rays_at(world, CENTER, "m") == [ray(0, 2, 1, 1, 0)]
+                assert rays_at(world, CENTER, "f") == [shadow_ray(2, 3, 1, 2)]
                 continue
-            at, accumulators = STEEP_PATH[t - 7]
+            at, accumulators = STEEP_PATH[t - 2]
             assert positions_of(world, "m") == {at}
             (turned,) = rays_at(world, at, "m")
             assert turned == ray(0, 2, t & 7, t, 0, accumulators, (2, 3, 0))
             assert ray_line(turned, initial.spatial_fields[0]) == (0, 1, 0)
-            assert rays_at(world, (10, 16 - t, 10), "f") == [
-                shadow_ray(3, 3, max(12 - t, 0), 3, (0, -3, 0))
-            ]
+            assert rays_at(world, (10, 11 - t, 10), "f") == [shadow_ray(3, 3, 0, 3, (0, -3, 0))]
         assert pushes_of(events) == []
-        metadata, _, _ = run(tmp_path, raw, 16)
+        metadata, _, _ = run(tmp_path, raw, 11)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN
         assert metadata["conserved_at_every_completed_tick"]
         return
@@ -429,7 +429,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # with outputs runs byte for byte as before, no push recorded, no
         # identity written.
         worlds = {
-            "meeting": document((((4, 10, 10), "m", 8, 0), ((10, 4, 10), "f", 2, 2)), [DEFLECT], 12),
+            "meeting": document((((9, 10, 10), "m", 8, 0), ((10, 9, 10), "f", 2, 2)), [DEFLECT], 7),
         }
         for name, raw in worlds.items():
             (tmp_path / name).mkdir()
@@ -464,11 +464,10 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         "turn", 0, 1, (), (), participants=((0, 1), (1,)), momentum_table=(0, -1)
     )
     assert turn_receiver(mixed) == -1
-    head_on = (((4, 10, 10), "m", 2, 0), ((16, 10, 10), "f", 2, 1))
-    world = Simulation(parse_initial_state(document(head_on, [turn({"f": 1})], 8)))
-    for _ in range(6):
-        world.step()
-    assert rays_at(world, CENTER, "m") == [ray(0, 2, 6, 6, 0)]
-    assert rays_at(world, CENTER, "f") == [shadow_ray(1, 2, 6, 1)]
+    head_on = (((9, 10, 10), "m", 2, 0), ((11, 10, 10), "f", 2, 1))
+    world = Simulation(parse_initial_state(document(head_on, [turn({"f": 1})], 3)))
+    world.step()
+    assert rays_at(world, CENTER, "m") == [ray(0, 2, 1, 1, 0)]
+    assert rays_at(world, CENTER, "f") == [shadow_ray(1, 2, 1, 1)]
     with pytest.raises(ValueError, match="cannot stop a ray"):
         world.step()

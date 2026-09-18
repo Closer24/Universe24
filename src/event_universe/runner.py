@@ -23,10 +23,9 @@ from event_universe.core.spatial_state import (
     DETECTOR_RETURN,
     EXTERNAL_BODY,
     FIELD_REMAINDER,
-    FIELD_SPREADING,
     INVERSE_SPLIT,
     LOOP_BINDING,
-    PHASE_SPREAD,
+    NODE_MIXING,
     RAY_BINDING,
     RAY_EVENT_STATE,
     RAY_LAYERS,
@@ -37,10 +36,10 @@ from event_universe.core.spatial_state import (
     WAVE_RAY_FAMILY,
     decay_draw_declared,
     external_body_names,
+    mixing_field_names,
     polarization_declared,
     ray_layer_names,
     shadow_family_names,
-    spreading_field_names,
 )
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
@@ -355,14 +354,15 @@ def _execute_run(
         # every other world is byte for byte the same; a dense region writes no
         # per-Node events, its record being its totals per tick.
         metadata["dense_field"] = DENSE_FIELD
-    spreading = spreading_field_names(initial.fields, initial.spatial_fields)
-    if spreading:
-        # Field spreading (field-spreading-v1): recorded only when a family declares
-        # `spread`, so the record of every existing world is byte for byte the same.
-        metadata["field_spreading"] = FIELD_SPREADING
+    mixing = mixing_field_names(initial.fields, initial.spatial_fields)
+    if mixing:
+        # The Node mixes the six (node-mixing-v1): recorded with the phase width N
+        # of every family whose shadows spread, the mixing's one input, only when
+        # a world has such a family, so the record of every other world is byte
+        # for byte the same.
+        metadata["node_mixing"] = NODE_MIXING
         metadata["field_remainder"] = FIELD_REMAINDER
-        metadata["phase_spread"] = PHASE_SPREAD
-        metadata["spreading_fields"] = spreading
+        metadata["mixing_fields"] = mixing
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],

@@ -18,6 +18,13 @@ pushes, so the field rays of `f` and `g` are shadows given with the board
 thing's charge (`m` charge 1: the push is sign x amount x heading as before), a
 push is not an event (no `ray_push`; the register is read from the ray) and the
 `momentum` line is exact at zero: each returned shadow carries -push.
+
+Re-pinned on 2026-09-18 under the Node's mixing (node-mixing-v1, Highlights
+5.4 point 24, feature 16c): the `board` and `board_8` cases, a push at every
+interval for 24 and 12 ticks from shadows placed along the path so that each
+walked straight to the ray on its tick, were deleted: a lone shadow mixes at
+every Node it reaches and cannot be timed by its walk; the walk kept through a
+push stays pinned by `running` and `kept` on the ray arithmetic itself.
 """
 
 import json
@@ -354,7 +361,7 @@ def run_board(tmp_path, raw, ticks, positions, families, amount, path, accumulat
     assert metadata["final_totals"]["m"] == [64]
 
 
-@pytest.mark.parametrize("case", ["running", "kept", "board", "board_8"])
+@pytest.mark.parametrize("case", ["running", "kept"])
 def test_a_push_keeps_the_walk_of_the_ray_it_turns(tmp_path, case):
     if case == "running":
         # (a) The staircases of the running register: a push of (0, 1, 0) and one
@@ -421,52 +428,3 @@ def test_a_push_keeps_the_walk_of_the_ray_it_turns(tmp_path, case):
         assert port == 0 and after.accumulators == (-21, 20, 1)
         assert advance_ray(slanted, ray_vector(slanted, field))[0] == 0
         return
-    if case == "board":
-        # (c) A field ray meets the ray at every Node for 24 ticks, each pushing
-        # (0, 1, 0): the staircase of (a) on the board, then the static walk.
-        raw, positions, families, lamps = board((28, 56, 5), (2, 26, 2), 1, PATH_1, range(1, 25))
-        assert [p for p, family, _, _ in lamps if family == "g"] == [
-            (11, 17, 2), (16, 12, 2), (20, 8, 2), (23, 5, 2)
-        ]  # fmt: skip
-        assert [p for p, family, _, _ in lamps if family == "f"][:3] == [
-            (3, 27, 2), (4, 28, 2), (5, 29, 2)
-        ]  # fmt: skip
-        assert positions[25] == (23, 30, 2)
-        positions |= {26: (24, 30, 2), 27: (25, 30, 2)}
-        run_board(
-            tmp_path,
-            raw,
-            27,
-            positions,
-            families,
-            1,
-            PATH_1,
-            ACCUMULATORS_1,
-            range(1, 25),
-            {26: ZERO, 27: (-24, 24, 0)},
-        )
-        return
-    # (d) A push of (0, 8, 0) at every Node for 12 ticks, the walk going on with the
-    # static register (64, 96, 0) after: Links 12 and 13 are both +Y, and a Link
-    # after a +Y Link can be served from neither side.
-    raw, positions, families, lamps = board((16, 32, 5), (2, 14, 2), 8, PATH_8[:12], range(1, 13))
-    assert [p for p, family, _, _ in lamps if family == "g"] == [
-        (5, 11, 2), (7, 9, 2), (8, 8, 2), (9, 7, 2), (10, 6, 2)
-    ]  # fmt: skip
-    assert [p for p, family, _, _ in lamps if family == "f"] == [
-        (3, 15, 2), (4, 16, 2), (5, 19, 2), (6, 20, 2), (7, 23, 2), (8, 26, 2), (9, 29, 2)
-    ]  # fmt: skip
-    assert positions[13] == (10, 19, 2)
-    positions |= {14: (10, 20, 2), 15: (11, 20, 2), 16: (11, 21, 2), 17: (12, 21, 2)}
-    run_board(
-        tmp_path,
-        raw,
-        17,
-        positions,
-        families,
-        8,
-        PATH_8[:12],
-        ACCUMULATORS_8,
-        range(1, 13),
-        {14: (72, -72, 0), 15: (-24, 24, 0), 16: (40, -40, 0), 17: (-56, 56, 0)},
-    )

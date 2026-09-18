@@ -24,6 +24,7 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     BIT_THING,
+    MIXING_DENOMINATOR,
     Rays,
     Remainders,
     ledger_momentum,
@@ -175,7 +176,7 @@ class LocalConservationAudit:
             if definition.spread and remainders and index < len(remainders) and remainders[index]:
                 # The Node's remainder registers hold whole quanta in total, content
                 # without momentum (field-remainder-v1).
-                held = remainder_stock(remainders[index], sum(definition.spread))
+                held = remainder_stock(remainders[index], MIXING_DENOMINATOR)
                 components[0] = checked_work(components[0] + held)
                 charge = checked_work(charge + checked_work(held * definition.charge))
             values[definition.field] = pack(tuple(components))
