@@ -321,24 +321,28 @@ def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulat
     after_3 = result["inventories"][2]
     (neutral,) = things_at(after_3, (3, 0, 1), 0)
     (charged,) = things_at(after_3, (3, 1, 1), 1)
+    # Re-pinned 2026-09-18 (return-field-v1): each shadow turned back with the
+    # opposite sign rides the Link -Y with the thing it turned and pushes it
+    # again in the cycle of tick 3, the same gravity push (0, -4, 0) carried by
+    # the thing, the electricity read once more (-1 / 32 on c), then flips back
+    # to an outgoing share heading +Y carrying (0, 8, 0), one Link up.
     assert (HEADINGS[neutral.heading], neutral.momentum, neutral.push_remainder) == (
         [0, -1, 0],
-        None,
+        (0, -4, 0),
         (0, 0, 0),
     )
     assert (HEADINGS[charged.heading], charged.momentum, charged.push_remainder) == (
         [0, -1, 0],
-        None,
-        (0, -1, 0),
+        (0, -4, 0),
+        (0, -2, 0),
     )
-    # Each return walks its one step back and waits (settled rule (ii)).
-    for position in ((3, 1, 1), (3, 2, 1)):
+    for position in ((3, 2, 1), (3, 3, 1)):
         (home,) = [r for r in shadows_at(after_3, position, 2) if not r.parked]
         assert (HEADINGS[home.heading], home.momentum, home.outbound, home.steps) == (
-            [0, -1, 0],
-            (0, 4, 0),
-            0,
-            0,
+            [0, 1, 0],
+            (0, 8, 0),
+            1,
+            1,
         )
     assert not {"ray_push", "decay_draw"} & set(kinds(result["events"]))
     with Simulation(initial) as world:

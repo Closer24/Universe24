@@ -2455,20 +2455,12 @@ behaviour, with no declarable alternative:
   unit, phase, bit), the `field_spread` record carries `parked` and
   `parked_phases`, and the dense region keeps the same shares in its `reg`
   arrays, read back as parked rays.
-- **The trace.** What a Node remembers of a departure is a parked shadow of
-  amount zero, left at the Node a thing departs on the heading the largest
-  thing of each owner left by (`leave_trace`, at most sixteen owners per
-  family and Node, the lowest ids dropped beyond it), read by the shadows
-  coming home (`trace_of`); a family whose lines are not the six Port headings
-  leaves none. Settled rule (ii): a prefilled shadow's steps are its Link
-  distance from its owner's Node (for several Nodes, the one its line crosses,
-  else the nearest; 1 for an owner with no Node on the board; `steps` 0 or 1
-  may still be declared), so its return arrives where the owner was; home with
-  the owner present it is absorbed and re-released; with a trace it follows;
-  with none it waits at the Node, a zero-step shadow at rest (outbound 0,
-  steps 0), until a thing of its owner passes and takes it home. The record
-  of a trace at a mark where a thing ended is no longer needed: the resident
-  thing is the home.
+- **The trace (retired on 2026-09-18).** The zero-amount parked shadow a
+  thing left at the Node it departed, the settled rule (ii)'s distance and
+  the waiting shadow are gone with `return-field-v1` (below): a return is a
+  field and follows nothing, a Node remembers no departure, and a prefilled
+  shadow's `steps` is 1 by default (0 for a fresh one). The resident thing of
+  a mark is the home of the shadows of what it absorbed.
 - **The resident thing.** A mark's counter is a thing resident at the mark
   (`DetectorMark.resident`, a `Resident`): a click is an absorption into it,
   its content per family growing by the absorbed amount (`real`) and its
@@ -2510,16 +2502,12 @@ behaviour, with no declarable alternative:
   register leaves the engine with the stores it named. The runner's per-tick
   `registers` line is `momentum` (the momentum of every thing per tick, keyed
   by thing id, from its rays and its body).
-- **Performance.** The dense region carries the returns per Node, owner, sign
-  and heading (`ret_*`: the amount, the phase of the sum, the momentum carried
-  and the least steps), walked one Link back per interval, following the
-  owner's trace (`trace`) or waiting (`wait_*`) as the planner does, handed to
-  the engine only at its Nodes; the arrays hold amounts as int32, phases as
-  int16 and flags as int8; the engine's totals are computed once per tick per
-  bit and memoized until content moves. The loss is the per-ray identity of a
-  return inside the region (its own phase and steps); the record of a dense
-  Node is its totals. The per-Node snapshot still reads the region's Nodes as
-  Node state.
+- **Performance.** The dense region's arrays hold amounts as int32, phases
+  as int16 and flags as int8; the engine's totals are computed once per tick
+  per bit and memoized until content moves. Its `ret_*`, `wait_*` and `trace`
+  arrays are dormant since `return-field-v1` (a returning share is the
+  engine's until the dense sign axis lands) and the per-Node snapshot still
+  reads the region's Nodes as Node state.
 
 Identity `node-is-ports-v1`, recorded in `run.json` as `node_is_ports`;
 isolated test `tests/test_node_is_ports.py`
@@ -2609,6 +2597,75 @@ The shipped worlds `examples/nature/absorption.json`, `absorption_emission.json`
 and `helium_ion.json` declare tables (`absorb`, `nucleus_turn`) whose outputs
 share a heading; they are refused by this rule until the model owner declares
 their tables anew.
+
+### The return is a field (`return-field-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4, point 3 as amended by the model
+owner on 2026-09-18, superseding the chase of the same day; feature 16d):
+when a shadow pushes a thing, the shadow turns back with the opposite sign,
+and from that moment it is a field like any other. The engine's only
+behaviour, with no declarable alternative:
+
+- **The turn.** `return_shadow` gives the same shadow, its heading reversed on
+  the line it arrived by, fresh at the Node of the push (steps 0: it leaves
+  reversed and mixes from the next Node), its flow inverted (`Ray.outbound` 1
+  to 0, a returning share; a returning share that pushes turns back once more,
+  to 1) and its sign with it (`source_sign` negated), and the opposite of the
+  push it gave, -dp, added to the momentum it carries (`Ray.momentum`, a
+  shadow's momentum in flight). A mark or a thing without a table returns a
+  shadow as it is: reversed, nothing flipped, nothing carried (point 6).
+- **The field.** A returning share is an ordinary shadow of its owner: it
+  mixes at every Node (point 24, `spread_content`) in its own group (its
+  owner, its sign, its polarization and its flow; the outgoing and the
+  returning shares of one owner never mix, and a sign 0 family's are told
+  apart by the flow alone), its phase is a shadow's phase, and the momentum
+  the group carries goes with its shares over the twelve outputs of the
+  mixing in proportion to their ninths (`apportion_momentum`, exact per axis
+  by the largest remainder), a parked share holding its part until a release
+  takes the register's momentum in proportion to what it releases
+  (`momentum_part`). The parked block of a Node is thirty-six slots per owner
+  (`PARKED_SLOTS`: the eighteen of its outgoing shares, then the eighteen of
+  its returning shares, `remainder_slot(sign, port, rank, flow)`), and a
+  parked shadow carries its flow and its momentum (`parked_shadow`,
+  `parked_shares`, `park_shares`; the snapshot's `parked` entries read
+  `outbound` and `momentum`).
+- **The push.** A thing reads the signed sum of its owner's shares: a
+  returning share pushes whatever other thing it meets with the opposite sign
+  (`push_of` negates the table's sign for a share with `outbound` 0, under
+  either reading), and turns back again, sign flipped again, carrying the sum
+  of its pushes. A shadow turned back at a Node rides the Link it came by in
+  reverse; a thing that moves along that Link with it (a head-on push, or a
+  thing turned onto the shadow's line) meets it again at the next Node and is
+  pushed once more, the same push (its heading and its sign both inverted),
+  after which the share is an outgoing share again.
+- **Home.** Wherever a share of its owner reaches the owner's Node, outgoing
+  or returning, it is absorbed with no push: a body, a thing ray (or a merged
+  ray whose owner set carries the owner, lanes-v1), a record or the mark that
+  absorbed the owner takes the momentum it carries, and the share is
+  re-released reversed as an outgoing share of the owner's sign carrying
+  nothing (`rerelease_shadow`; the owner will decide a re-release rule later).
+  A parked ninth of the owner at the owner's Node is at rest and is not met.
+- **The books.** The push and its return sum to zero at every interval: what
+  the thing gained the shadows carry, on their way and parked
+  (`ledger_momentum`, `parked_momentum`), until it reaches the owner; the
+  world ledger and the local audit count the momentum in flight on the shadow
+  lines, and an escaping share takes its momentum with it.
+- **Retired.** The step counter of a return, the trace (the zero-amount parked
+  shadow, `leave_trace`, `trace_of`, `MAX_TRACES`), the settled rule (ii)'s
+  distance and waiting (`home_distance`; a profile shadow's `steps` is 1 by
+  default, 0 for a fresh one) and the chase of `return-chase-v1` (never
+  merged): a Node remembers no departure, no shadow waits, every share on its
+  way moves one Link per interval.
+- **The dense region.** Until the dense sign axis lands (part 2 of feature
+  16d), a share that carries momentum or that returns (`outbound` 0), parked
+  or on its way, is the engine's: the region refuses it (`plain_ray`) and the
+  Node holding or receiving it is cycled by the engine; the region's parked
+  block stays the outgoing eighteen per owner (`engine_block`,
+  `region_block`).
+
+Identity `return-field-v1`, recorded in `run.json` as `return_field`;
+isolated test `tests/test_return_field.py`
+([expectations](TEST_EXPECTATIONS.md#the-return-is-a-field)).
 
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 

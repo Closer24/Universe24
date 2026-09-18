@@ -358,10 +358,14 @@ def test_the_registers_park_the_ninths_and_keep_the_sign():
     others at the ninth; opposite signs are two groups."""
     light = parse_initial_state(document(LONE)).spatial_fields[0]
     assert light.spread is True and MIXING_DENOMINATOR == 9
-    held, held_phases = (0,) * 18, (0,) * 18
+    # The block is thirty-six per owner since return-field-v1: the outgoing
+    # shares' eighteen, then the returning shares' (empty here).
+    held, held_phases = (0,) * 36, (0,) * 36
     left = [0] * 6
     for n in range(1, 10):
-        departures, taken, held, held_phases = spread_content(0, (lone(0, 1),), light, held, held_phases)
+        departures, taken, held, held_phases, _ = spread_content(
+            0, (lone(0, 1),), light, held, held_phases
+        )
         back = (4 * n) % 9
         others = n % 9
         assert held[6:12] == (others, back, others, others, others, others), n
@@ -376,8 +380,8 @@ def test_the_registers_park_the_ninths_and_keep_the_sign():
             assert ray.phase == (4 if ray.heading == 1 else 0), n
         if n == 2:
             assert held[6:12] == (2, 8, 2, 2, 2, 2)
-    assert left == [1, 4, 1, 1, 1, 1] and held == (0,) * 18 and held_phases == (0,) * 18
-    departures, taken, held, held_phases = spread_content(
+    assert left == [1, 4, 1, 1, 1, 1] and held == (0,) * 36 and held_phases == (0,) * 36
+    departures, taken, held, held_phases, _ = spread_content(
         0, (lone(0, 3, 0, 1), lone(0, 3, 0, -1)), light
     )
     assert [(r.heading, r.amount, r.phase, r.source_sign) for r in departures] == [
@@ -385,7 +389,8 @@ def test_the_registers_park_the_ninths_and_keep_the_sign():
         (1, 1, 4, 1),
     ]
     both = ((3,) * 6, (0,) * 6, (3,) * 6)
-    assert held == both[0] + both[1] + both[2] and taken.signs == (-1, 1) and taken.stored == 4
+    assert held == both[0] + both[1] + both[2] + (0,) * 18
+    assert taken.signs == (-1, 1) and taken.stored == 4
     assert taken.arrived == (6, 0, 0, 0, 0, 0) and taken.amounts == (0, 2, 0, 0, 0, 0)
 
 

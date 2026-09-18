@@ -232,17 +232,19 @@ def ray(heading, amount, phase, steps, port, momentum=None):
     )
 
 
-def shadow_ray(heading, amount, steps, momentum=None):
-    """A shadow of `f` given with the board, or the same returned with -push
-    (bit-law-v1: bit 0, sign 1, no phase, walking back with `outbound` 0)."""
+def shadow_ray(heading, amount, steps, momentum=None, outbound=None, sign=None):
+    """A shadow of `f` given with the board, or the same turned back with -push
+    (return-field-v1: its flow inverted, `outbound` 0, and its sign with it,
+    -1; turned back twice, an outgoing share of sign 1 again)."""
+    flow = (0 if momentum is not None else 1) if outbound is None else outbound
     return Ray(
         heading,
         ZERO,
         amount,
         steps=steps,
-        outbound=0 if momentum is not None else 1,
+        outbound=flow,
         detector=BIT_SHADOW,
-        source_sign=1,
+        source_sign=(1 if flow else -1) if sign is None else sign,
         momentum=momentum,
     )
 
@@ -304,8 +306,8 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             assert world.totals()["f"] == (1,) and world.escaped_totals()["f"] == (0,)
             line = momentum_line(world)
             assert line["initial"] == ZERO and line["sourced"] == ZERO and line["returned"] == ZERO
-            assert line["escaped"] == (ZERO if t <= 11 else (0, -8, 0))
-            assert line["current"] == (ZERO if t <= 1 else (-8, 0, 0) if t <= 11 else (-8, 8, 0))
+            assert line["escaped"] == (ZERO if t <= 11 else (0, -16, 0))
+            assert line["current"] == (ZERO if t <= 1 else (-8, 0, 0) if t <= 11 else (-8, 16, 0))
             assert line["spent"] == (ZERO if t <= 1 else (8, 0, 0))
             assert balanced(world)
             if t == 1:
@@ -313,14 +315,28 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
                 assert rays_at(world, CENTER, "f") == [shadow_ray(2, 1, 1)]
                 assert world.thing_momentum() == {1: [8, 0, 0]}
                 continue
-            # The shadow walks its one step back to (10, 9, 10) and waits there.
-            assert positions_of(world, "f") == {(10, 9, 10)}
-            assert rays_at(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 0, (0, 8, 0))]
+            # Re-pinned 2026-09-18 (return-field-v1): the shadow, turned back with
+            # the opposite sign, rides the Link to (10, 9, 10) with the thing,
+            # pushes it again there in the cycle of tick 3 (the same push: its
+            # heading and its sign both inverted), flips back to an outgoing
+            # share carrying (0, 16, 0), walks to C and parks its ninths there
+            # from tick 4 with that momentum; the thing carries (0, -8, 0) on.
+            if t == 2:
+                assert positions_of(world, "f") == {(10, 9, 10)}
+                assert rays_at(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 1, (0, 8, 0))]
+            elif t == 3:
+                assert positions_of(world, "f") == {CENTER}
+                assert rays_at(world, CENTER, "f") == [
+                    shadow_ray(2, 1, 1, (0, 16, 0), outbound=1, sign=1)
+                ]
+            else:
+                assert positions_of(world, "f") == set()
+            carried = None if t == 2 else (0, -8, 0)
             if t <= 11:
                 at = (10, 11 - t, 10)
                 assert positions_of(world, "m") == {at}
-                assert rays_at(world, at, "m") == [ray(3, 8, t & 7, t, 0)]
-                assert world.thing_momentum() == {1: [0, -8, 0]}
+                assert rays_at(world, at, "m") == [ray(3, 8, t & 7, t, 0, carried)]
+                assert world.thing_momentum() == {1: [0, -8 if t == 2 else -16, 0]}
             else:
                 assert positions_of(world, "m") == set()
                 assert world.thing_momentum() == {}
@@ -332,9 +348,9 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["accounting_balanced_at_every_completed_tick"]
         assert pushes_of(records) == []
-        assert metadata["final_totals"] == {"m": [0], "f": [1], "momentum": [-8, 8, 0]}
+        assert metadata["final_totals"] == {"m": [0], "f": [1], "momentum": [-8, 16, 0]}
         assert metadata["spent_totals"] == {"m": [0], "f": [0], "momentum": [8, 0, 0]}
-        assert metadata["momentum"][6] == {"1": [0, -8, 0]}
+        assert metadata["momentum"][6] == {"1": [0, -16, 0]}
         return
     if case == "cancel":
         # (b) The same push and, in the same cycle, a shadow of 1 from +Y: the
@@ -357,15 +373,14 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             assert world.thing_momentum() == {1: [8, 0, 0]}
             if t == 1:
                 assert rays_at(world, CENTER, "f") == [shadow_ray(2, 1, 1), shadow_ray(3, 1, 1)]
+            elif t == 2:
+                # Re-pinned 2026-09-18 (return-field-v1): each turned back with the
+                # opposite sign beside C, then mixed there and parked in ninths
+                # with the momentum it carries (the thing walked on +X).
+                assert rays_at(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 1, (0, 8, 0))]
+                assert rays_at(world, (10, 11, 10), "f") == [shadow_ray(2, 1, 1, (0, -8, 0))]
             else:
-                # Each waits beside C with its step spent (a waiting shadow reads
-                # heading 0 from the tick after it arrives).
-                assert rays_at(world, (10, 9, 10), "f") == [
-                    shadow_ray(3 if t == 2 else 0, 1, 0, (0, 8, 0))
-                ]
-                assert rays_at(world, (10, 11, 10), "f") == [
-                    shadow_ray(2 if t == 2 else 0, 1, 0, (0, -8, 0))
-                ]
+                assert positions_of(world, "f") == set()
         assert pushes_of(events) == []
         metadata, records, _ = run(tmp_path, raw, 8)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN
@@ -394,7 +409,12 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
                 assert rays_at(world, CENTER, "f") == [shadow_ray(1, 1, 1)]
                 continue
             assert rays_at(world, (11 - t, 10, 10), "m") == [ray(1, 8, t & 7, t, 0)]
-            assert rays_at(world, (11, 10, 10), "f") == [shadow_ray(0, 1, 0, (8, 0, 0))]
+            # Re-pinned 2026-09-18 (return-field-v1): the shadow, turned back with
+            # the opposite sign, walks +X away from the reversed thing, mixes at
+            # (11, 10, 10) and parks its ninths there with (8, 0, 0).
+            assert rays_at(world, (11, 10, 10), "f") == (
+                [shadow_ray(0, 1, 1, (8, 0, 0))] if t == 2 else []
+            )
             assert world.thing_momentum() == {1: [-8, 0, 0]}
         assert pushes_of(events) == []
         return
@@ -413,9 +433,22 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             if t == 1:
                 assert rays_at(world, CENTER, "m") == [ray(0, 8, 1, 1, 0)]
                 continue
-            assert rays_at(world, (9 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0, (8, 0, 0))]
-            assert rays_at(world, (11, 10, 10), "f") == [shadow_ray(0, 1, 0, (-8, 0, 0))]
-            assert world.thing_momentum() == {1: [16, 0, 0]}
+            # Re-pinned 2026-09-18 (return-field-v1): the shadow, turned back with
+            # the opposite sign, rides the Link to (11, 10, 10) with the thing and
+            # pushes it again there in the cycle of tick 3, (8, 0, 0) once more,
+            # then flips back to an outgoing share heading -X carrying
+            # (-16, 0, 0), at C after tick 3 and parked there from tick 4.
+            carried = (8, 0, 0) if t == 2 else (16, 0, 0)
+            assert rays_at(world, (9 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0, carried)]
+            if t == 2:
+                assert rays_at(world, (11, 10, 10), "f") == [shadow_ray(0, 1, 1, (-8, 0, 0))]
+            elif t == 3:
+                assert rays_at(world, CENTER, "f") == [
+                    shadow_ray(1, 1, 1, (-16, 0, 0), outbound=1, sign=1)
+                ]
+            else:
+                assert positions_of(world, "f") == set()
+            assert world.thing_momentum() == {1: [16 if t == 2 else 24, 0, 0]}
         assert pushes_of(events) == []
         return
     if case == "identical":

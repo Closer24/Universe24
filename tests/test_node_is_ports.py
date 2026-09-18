@@ -304,101 +304,6 @@ def m8_document(ticks=6):
     )
 
 
-def test_the_trace_is_a_zero_amount_shadow_and_the_mark_is_the_home_of_what_it_absorbed():
-    """(b), M8: the thing leaves a zero-amount shadow on +X at every Node it departs;
-    the shadow, returned by M2, spends its step at (2,1,1), follows the traces to
-    M and is absorbed into the resident thing on its shadows line, no click, no
-    event; the resident's things 4 / shadows 1."""
-    result = run(m8_document(), 6)
-    # The traces: thing 1 left (2,1,1) at tick 0, (3,1,1) at tick 1, (4,1,1) at tick 2.
-    assert parked_at(result["parked"][0], (2, 1, 1)) == [(X, 0)]
-    assert parked_at(result["parked"][1], (3, 1, 1)) == [(X, 0)]
-    assert parked_at(result["parked"][2], (4, 1, 1)) == [(X, 0)]
-    assert (5, 1, 1) not in result["parked"][5]
-    trace = result["parked"][0][(2, 1, 1)][0][0]
-    assert (trace.parked, trace.amount, trace.detector, trace.owner, trace.outbound, trace.steps) == (
-        1,
-        0,
-        BIT_SHADOW,
-        1,
-        1,
-        0,
-    )
-    # The shadow: returned at M2 after tick 1, its step spent at (2,1,1) after
-    # tick 2, following the traces through (3,1,1) and (4,1,1), home at M after tick 5.
-    walk = {
-        1: ((1, 1, 1), 1, X),
-        2: ((2, 1, 1), 0, X),
-        3: ((3, 1, 1), 0, X),
-        4: ((4, 1, 1), 0, X),
-    }
-    for tick, (position, steps, heading) in walk.items():
-        (walker,) = rays_at(result["rays"][tick - 1], position)
-        assert (
-            walker.detector,
-            walker.outbound,
-            walker.steps,
-            HEADINGS[walker.heading],
-            walker.owner,
-        ) == (
-            BIT_SHADOW,
-            0,
-            steps,
-            heading,
-            1,
-        )
-    assert not any(any(node) for node in result["rays"][4].values())
-    # One click, the thing's, and no event for the shadow home (settled rule (iv)).
-    assert event_kinds(result["events"]) == {"detector_click": 1}
-    clicks = [e for e in result["events"] if e["event"] == "detector_click"]
-    assert (
-        clicks[0]["tick"],
-        tuple(clicks[0]["position"]),
-        clicks[0]["absorbed"],
-        clicks[0]["owner"],
-    ) == (
-        3,
-        (5, 1, 1),
-        4,
-        1,
-    )
-    assert result["marks"] == [
-        {
-            "position": [5, 1, 1],
-            "resident": {"real": {"m": 4}, "shadow": {"m": 1}, "momentum": [4, 0, 0], "owners": [1]},
-        },
-        {
-            "position": [1, 1, 1],
-            "resident": {"real": {}, "shadow": {}, "momentum": [0, 0, 0], "owners": []},
-        },
-    ]
-    assert result["contents"] == [4, 4, 0, 0, 0, 0] and result["shadows"] == [1, 1, 1, 1, 0, 0]
-    for tick, ledger in enumerate(result["ledgers"], start=1):
-        assert ledger["balanced"] and ledger["real_conserved"]
-        assert line(ledger, "real", "m") == {
-            "initial": (4,),
-            "converted": (0,),
-            "current": (0,) if tick >= 3 else (4,),
-            "escaped": (0,),
-            "absorbed": (4,) if tick >= 3 else (0,),
-        }
-        assert line(ledger, "shadow", "m") == {
-            "initial": (1,),
-            "current": (0,) if tick >= 5 else (1,),
-            "escaped": (0,),
-            "absorbed_at_home": (1,) if tick >= 5 else (0,),
-        }
-        assert ledger["fields"]["m"]["absorbed_by_marks"] == (
-            (5,) if tick >= 5 else (4,) if tick >= 3 else (0,)
-        )
-    assert result["ledgers"][5]["marks"] == {
-        "count": 2,
-        "momentum": (4, 0, 0),
-        "real": {"m": (4,)},
-        "shadow": {"m": (1,)},
-    }
-
-
 def test_a_prefilled_shadow_of_a_loop_is_absorbed_and_re_released():
     """(c), M9: the E5 unit square ring with a shadow of corner_0_r's thing (id 1)
     leaving fresh from P0 on -X (re-pinned 2026-09-18, node-mixing-v1: a shadow
@@ -431,13 +336,14 @@ def test_a_prefilled_shadow_of_a_loop_is_absorbed_and_re_released():
                 for corner in CORNERS:
                     things = [r for node in view.nodes if node.position == corner for r in node.rays[0]]
                     assert sum(r.amount for r in things if r.detector == BIT_THING) == 2
-    # The walk: returned by the mark after tick 1 with its one step; home at P0
-    # after tick 2; re-released on -X into the mark again, returned, home again.
+    # The walk: returned by the mark after tick 1 as it is (return-field-v1: an
+    # outgoing share, fresh); home at P0 after tick 2; re-released on -X into
+    # the mark again, returned, home again.
     for tick, (position, outbound, steps, heading) in {
-        1: ((4, 5, 5), 0, 1, X),
-        2: ((5, 5, 5), 0, 0, X),
-        3: ((4, 5, 5), 0, 1, X),
-        4: ((5, 5, 5), 0, 0, X),
+        1: ((4, 5, 5), 1, 0, X),
+        2: ((5, 5, 5), 1, 1, X),
+        3: ((4, 5, 5), 1, 0, X),
+        4: ((5, 5, 5), 1, 1, X),
     }.items():
         (walker,) = seen[tick - 1][position]
         assert (
@@ -461,28 +367,16 @@ def test_a_prefilled_shadow_of_a_loop_is_absorbed_and_re_released():
 
 
 def test_the_record_carries_the_fixed_terms_and_no_register_counter_or_seed(tmp_path):
-    """(d), M13: the runner's record of the M8 world: every parked shadow in
-    state.json carries `bit` 0 and its `owner`, the trace as a zero-amount ray at
-    (2,1,1) heading +X; run.json records `momentum` per tick, the residents and
-    the identity; no key of the retired stores anywhere."""
+    """(d), M13: the runner's record of the M8 world: state.json lists no parked
+    shadow (a Node remembers no departure, return-field-v1, and nothing has
+    mixed after one tick); run.json records `momentum` per tick, the residents
+    and the identity; no key of the retired stores anywhere."""
     path = tmp_path / "m8.json"
     path.write_text(json.dumps(m8_document(1)), encoding="utf-8")
     run_initialization(path, tmp_path / "m8", ticks=1)
     state = json.loads((tmp_path / "m8" / "state.json").read_text(encoding="utf-8"))
     metadata = json.loads((tmp_path / "m8" / "run.json").read_text(encoding="utf-8"))
-    assert state["parked"] == [
-        {
-            "position": [2, 1, 1],
-            "family": "m",
-            "owner": 1,
-            "sign": 0,
-            "heading": [1, 0, 0],
-            "amount": 0,
-            "unit": 9,
-            "phase": 0,
-            "bit": 0,
-        }
-    ]
+    assert state["parked"] == []
     assert metadata["node_is_ports"] == NODE_IS_PORTS == "node-is-ports-v1"
     assert metadata["bit_law"] == "bit-law-v1"
     assert metadata["momentum"] == [{"1": [4, 0, 0]}]
@@ -504,6 +398,7 @@ def test_the_record_carries_the_fixed_terms_and_no_register_counter_or_seed(tmp_
         "counter",
         "seed",
         "traces",
+        "trace",
         "field_remainders",
         "things_absorbed",
     }
@@ -640,9 +535,8 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
     """(g): a body of the apparatus family at (6,2,2) under the mirror table: the
     thing that reaches it leaves reversed as a fresh event, still a thing; a
     shadow of another owner, leaving fresh from (5,2,2) (re-pinned 2026-09-18,
-    node-mixing-v1), is returned on its step without a push and, its step spent
-    with no trace to follow, waits at (5,2,2) for a thing of its owner (settled
-    rule (ii); a waiting shadow reads heading +X from the tick after it arrives)."""
+    node-mixing-v1), is returned without a push as it is (return-field-v1) and
+    mixes at (5,2,2), where its ninths park."""
     kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
     doc = document(
         ticks=8,
@@ -660,11 +554,12 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
     result = run(doc, 8)
     # The shadow: returned by the body after tick 1 (no push: the body names no
     # family), back with its step and at rest at (5,2,2) from tick 2 on.
+    # Re-pinned 2026-09-18 (return-field-v1): returned as it is, an outgoing
+    # share fresh at (6,2,2), it arrives at (5,2,2) after tick 2, mixes there in
+    # the cycle of tick 3 and parks its ninths, 4 back on +X and 1 each other way.
     for tick, (position, steps, heading) in {
-        1: ((6, 2, 2), 1, MINUS_X),
-        2: ((5, 2, 2), 0, MINUS_X),
-        3: ((5, 2, 2), 0, X),
-        8: ((5, 2, 2), 0, X),
+        1: ((6, 2, 2), 0, MINUS_X),
+        2: ((5, 2, 2), 1, MINUS_X),
     }.items():
         (walker,) = [
             r
@@ -678,11 +573,20 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
             walker.momentum,
             walker.owner,
         ) == (
-            0,
+            1,
             steps,
             heading,
             None,
             2,
+        )
+    for tick in (3, 8):
+        assert not [
+            r
+            for r in rays_at(result["rays"][tick - 1], (5, 2, 2))
+            if r.detector == BIT_SHADOW and not r.parked
+        ]
+        assert parked_at(result["parked"][tick - 1], (5, 2, 2)) == sorted(
+            [(X, 4), (MINUS_X, 1), (Y, 1), (MINUS_Y, 1), ([0, 0, 1], 1), ([0, 0, -1], 1)]
         )
     # The thing: at the mirror after tick 5, reversed in that cycle as a fresh
     # event, a thing of the lamp's identity walking -X from tick 6.

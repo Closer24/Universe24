@@ -44,6 +44,7 @@ from event_universe.core.spatial_state import (
     remainder_slot,
     spread_content,
 )
+from event_universe.dense_field import engine_block, region_block
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
@@ -291,18 +292,21 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
             # Node is the engine's until the region takes it back).
             position = (7, 7, 7)
             for name, (rays, registers, phases, expected, block) in SPLIT_CASES.items():
-                held = tuple(registers) and (ZERO + tuple(registers) + ZERO) or ()
-                held_phases = tuple(phases) and (ZERO + tuple(phases) + ZERO) or ()
+                held = tuple(registers) and engine_block(ZERO + tuple(registers) + ZERO, 1) or ()
+                held_phases = tuple(phases) and engine_block(ZERO + tuple(phases) + ZERO, 1) or ()
                 for ray in rays:
                     place(family, position, ray.heading, ray)
                 if held:
                     set_block(family, position, held, held_phases)
                 region(world).cycle(0)
-                oracle, record, after, after_phases = spread_content(
+                oracle, record, after, after_phases, _ = spread_content(
                     family.index, rays, definition, held, held_phases
                 )
                 assert departures_of(family, position) == rows_of(oracle) == sorted(expected), name
-                assert block_of(family, position) == (after, after_phases), name
+                assert block_of(family, position) == (
+                    region_block(after, 1),
+                    region_block(after_phases, 1),
+                ), name
                 if block is not None:
                     assert after[6:12] == block, name
                 assert region(world).active_count() == 1
@@ -315,11 +319,15 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
                 place(family, position, ray.heading, ray)
             set_block(family, position, MIXED_REGISTERS, MIXED_PHASES)
             region(world).cycle(0)
-            oracle, record, after, after_phases = spread_content(
-                family.index, MIXED, definition, MIXED_REGISTERS, MIXED_PHASES
+            oracle, record, after, after_phases, _ = spread_content(
+                family.index,
+                MIXED,
+                definition,
+                engine_block(MIXED_REGISTERS, 1),
+                engine_block(MIXED_PHASES, 1),
             )
             assert departures_of(family, position) == rows_of(oracle)
-            assert block_of(family, position) == (after, after_phases)
+            assert block_of(family, position) == (region_block(after, 1), region_block(after_phases, 1))
             assert record.stored == (sum(after) - sum(MIXED_REGISTERS)) // family.total
             assert after[remainder_slot(1, 4)] != MIXED_REGISTERS[remainder_slot(1, 4)]
             family.fly_amt[...] = 0
@@ -335,9 +343,9 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
             assert node.rays[family.index] == THREE
             assert node.arrival_mask == (0, 1, 0, 0, 0, 0) and node.received_count == 1
             region(world).cycle(0)
-            oracle, record, after, after_phases = spread_content(family.index, THREE, definition)
+            oracle, record, after, after_phases, _ = spread_content(family.index, THREE, definition)
             assert departures_of(family, position) == rows_of(oracle)
-            assert block_of(family, position) == (after, after_phases)
+            assert block_of(family, position) == (region_block(after, 1), region_block(after_phases, 1))
             assert record.phase == 2 and family.overflow == {}
         return
     if case == "identity":
