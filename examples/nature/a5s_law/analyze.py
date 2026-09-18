@@ -5,24 +5,27 @@ Highlights 3.29): the books per bit at every completed tick (`audit`), the two
 bodies' momentum lines per tick (`momentum`, thing id to vector: the bodies
 are things 2 and 3, after the one unseeded type), the push per interval on
 each (the increments), the bodies' positions per tick (both at rest), the
-shadows' total and the escapes; and the momentum in flight on the shadows,
-the ledger's current momentum less the things' (the world's momentum line is
-its initial, zero, at every tick when the books close, so what the things
-gained the shadows carry). The push on B along the line from A to B per
-interval, averaged over windows of ten intervals, and its cumulative value at
-tick 40 (the wave train's whole passage), give the scaling with d over the
-axis worlds (log-log least squares over d = 4, 6, 8, 12) and the anisotropy
-(the (110) and (111) worlds against the axis fit at the same Euclidean
-distance); the three pairs of contents at d = 8 give the product law (the
-push on each body against the product of the whole charges, and against each
-body's own and the other's charge).
+shadows' total and the escapes, the runner's standing-set report; and the
+momentum in flight on the shadows, the ledger's current momentum less the
+things' (the world's momentum line is its initial, zero, at every tick when
+the books close, so what the things gained the shadows carry). Every world is
+closed (the model owner, 2026-09-18: only closed worlds are tested). The push
+on B along the line from A to B per interval, averaged over windows of twenty
+intervals, its settled value (the mean over ticks 101 to 120, with its
+standard error and the settling tick, the first from which every later
+window of twenty stays within 10 % of the last), gives the scaling with d
+over the axis worlds (log-log least squares over d = 4, 6, 8, 12) and the
+anisotropy (the (110) and (111) worlds against the axis fit at the same
+Euclidean distance); the three pairs of contents at d = 8 give the product
+law (the settled push on each body against the product of the whole charges,
+and against each body's own and the other's charge).
 
 With `--replay NAME` the named world is also replayed through the Simulation
 API and the momentum in flight is read from the inventory (every shadow's
 `momentum`, on its way and parked) and checked against the ledger's reading
 and against the record's momentum lines tick by tick.
 
-Run:  PYTHONPATH=src python examples/nature/a5s_law/analyze.py RUNS_DIR [--closed CLOSED_RUNS_DIR] [--record record.json] [--tables tables.md] [--replay pq_d8 --replay pq_d8_closed]
+Run:  PYTHONPATH=src python examples/nature/a5s_law/analyze.py RUNS_DIR [--closed CLOSED_RUNS_DIR] [--record record.json] [--tables tables.md] [--replay pq_d8_closed]
 """
 
 from __future__ import annotations
@@ -39,7 +42,6 @@ from make_worlds import AXIS_DISTANCES, OFF_AXIS, PAIRS, cases  # noqa: E402
 
 THING_A = 2
 THING_B = 3
-WINDOWS = ((1, 10), (11, 20), (21, 30), (31, 40))
 CLOSED_WINDOWS = tuple((a, a + 19) for a in range(1, 120, 20))
 
 
@@ -53,7 +55,7 @@ def unit(vector):
     return tuple(c / norm for c in vector)
 
 
-def read_world(run, offset, amount_a, amount_b, closed=False):
+def read_world(run, offset, amount_a, amount_b):
     line = unit(offset)
     rows = []
     previous = {THING_A: [0, 0, 0], THING_B: [0, 0, 0]}
@@ -79,7 +81,7 @@ def read_world(run, offset, amount_a, amount_b, closed=False):
         row["bodies_line"] = list(entry["bodies"]["momentum"])
         rows.append(row)
     windows = {}
-    for a, b in (CLOSED_WINDOWS if closed else WINDOWS):
+    for a, b in CLOSED_WINDOWS:
         sel = [r for r in rows if a <= r["tick"] <= b]
         if not sel:
             continue
@@ -91,9 +93,8 @@ def read_world(run, offset, amount_a, amount_b, closed=False):
     last = rows[-20:]
     before = rows[-40:-20]
     return {
-        "closed": closed,
-        "settling_tick_b": settling_tick(rows, "push_b_line") if closed else None,
-        "settling_tick_a": settling_tick(rows, "push_a_line") if closed else None,
+        "settling_tick_b": settling_tick(rows, "push_b_line"),
+        "settling_tick_a": settling_tick(rows, "push_a_line"),
         "standing_field": {k: run.get(k) for k in ("standing_field", "standing_field_iterations", "standing_field_period", "standing_field_residual", "standing_field_ticks", "standing_field_fallback", "standing_field_max_iterations")} if "standing_field" in run else None,
         "settled_push_b": sum(r["push_b_line"] for r in last) / len(last),
         "settled_push_b_error": standard_error([r["push_b_line"] for r in last]),
@@ -122,10 +123,6 @@ def read_world(run, offset, amount_a, amount_b, closed=False):
         ),
         "ticks": rows,
         "windows": windows,
-        "p_b_line_at_40": rows[-1]["p_b_line"],
-        "p_a_line_at_40": rows[-1]["p_a_line"],
-        "p_b_line_at_20": rows[19]["p_b_line"],
-        "p_a_line_at_20": rows[19]["p_a_line"],
         "first_push_tick_b": next((r["tick"] for r in rows if any(r["push_b"])), None),
         "max_push_b": max(r["push_b_line"] for r in rows),
         "min_push_b": min(r["push_b_line"] for r in rows),
@@ -136,8 +133,7 @@ def read_world(run, offset, amount_a, amount_b, closed=False):
         "closed_every_tick": all(
             all(r["things_sum"][k] + r["in_flight"][k] + r["momentum_escaped"][k] == 0 for k in range(3)) for r in rows
         ),
-        "in_flight_at_40": rows[-1]["in_flight"],
-        "escaped_momentum_at_40": rows[-1]["momentum_escaped"],
+        "escaped_momentum_at_end": rows[-1]["momentum_escaped"],
     }
 
 
@@ -230,7 +226,7 @@ def fmt(value, digits=1):
 def tables(record):
     w = record["worlds"]
     lines = ["### The books per bit, the rest and the momentum in flight\n"]
-    lines.append("| World | d | Contents A, B | Ticks | Books per bit balanced | Things + in flight + escaped = 0 | Bodies at rest | Shadows at start / 40 | Escaped | First push on B | Runner s |")
+    lines.append("| World | r | Contents A, B | Ticks | Books per bit balanced | Things + in flight + escaped = 0 | Bodies at rest | Shadows at start / at the end | Escaped | First push on B | Runner s |")
     lines.append("| --- | ---: | --- | ---: | --- | --- | --- | --- | ---: | ---: | ---: |")
     for name, r in w.items():
         lines.append(
@@ -238,38 +234,9 @@ def tables(record):
             f"{'every tick' if r['books_every_tick'] else 'NO'} | {'every tick' if r['closed_every_tick'] else 'NO'} | {'yes' if r['bodies_at_rest'] else 'NO'} | "
             f"{r['shadows_initial']} / {r['shadows_final']} | {r['escaped']} | {fmt(r['first_push_tick_b'])} | {fmt(r['elapsed_seconds'])} |"
         )
-    lines.append("\n### The push per interval on B along the line from A (mean per window) and the momentum lines\n")
-    lines.append("| World | d | Ticks 1-10 | 11-20 | 21-30 | 31-40 | Largest push on B in one interval | Smallest | Sign changes | p_B at 20 | p_B at 40 | p_A at 40 | In flight at 40 (x) | Escaped momentum at 40 (x) |")
-    lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
-    for name, r in w.items():
-        win = r["windows"]
-        lines.append(
-            f"| `{name}` | {r['distance']:.2f} | {win['1-10']['push_b']:.0f} | {win['11-20']['push_b']:.0f} | {win['21-30']['push_b']:.0f} | {win['31-40']['push_b']:.0f} | "
-            f"{r['max_push_b']:.0f} | {r['min_push_b']:.0f} | {r['sign_changes_b']} | {r['p_b_line_at_20']:.0f} | {r['p_b_line_at_40']:.0f} | {r['p_a_line_at_40']:.0f} | {r['in_flight_at_40'][0]} | {r['escaped_momentum_at_40'][0]} |"
-        )
-    lines.append("\n### The scaling with d (the axis worlds, like contents 2^28)\n")
-    lines.append("| Quantity | Slope (log-log over d = 4, 6, 8, 12) | Standard error | Fit at d = 11.31 | Fit at d = 13.86 |")
-    lines.append("| --- | ---: | ---: | ---: | ---: |")
-    for quantity, fit in record["fits"].items():
-        if fit:
-            lines.append(f"| {quantity} | {fit['slope']:.2f} | {fmt(fit['error'], 2)} | {fit_value(fit, math.sqrt(128)):.0f} | {fit_value(fit, math.sqrt(192)):.0f} |")
-    lines.append("\n### The anisotropy: B on (110) and (111) against the axis fit at the same distance\n")
-    lines.append("| World | r | Quantity | Measured | Axis fit | Ratio |")
-    lines.append("| --- | ---: | --- | ---: | ---: | ---: |")
-    for name, entry in record["anisotropy"].items():
-        for quantity, a in entry.items():
-            lines.append(f"| `{name}` | {a['r']:.2f} | {quantity} | {a['measured']:.0f} | {fmt(a['fit'], 0)} | {fmt(a['ratio'], 3)} |")
-    lines.append("\n### The product law at d = 8: three pairs of contents\n")
-    lines.append("| World | q_A, q_B | q_A q_B / (3 2^28)^2 | Push on B, ticks 1-10 | Ratio to `pp_d8` | Push on A, ticks 1-10 | Ratio | p_B at 40 | Ratio | p_A at 40 | Ratio | p_A + p_B at 40 | Ratio |")
-    lines.append("| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
-    for name, pr in record["product_law"].items():
-        lines.append(
-            f"| `{name}` | 3 x 2^{int(math.log2(pr['amount_a']))}, 3 x 2^{int(math.log2(pr['amount_b']))} | {pr['charge_product_ratio']:.4f} | {pr['push_b_1_10']:.0f} | {pr['push_b_ratio']:.3f} | "
-            f"{pr['push_a_1_10']:.0f} | {pr['push_a_ratio']:.3f} | {pr['p_b_40']:.0f} | {pr['p_b_ratio']:.3f} | {pr['p_a_40']:.0f} | {pr['p_a_ratio']:.3f} | {pr['sum_40']:.0f} | {pr['sum_ratio']:.3f} |"
-        )
-    closed = {name: r for name, r in w.items() if r.get("closed")}
+    closed = w
     if closed:
-        lines.append("\n### The closed board: the axis series with `boundary` periodic, 120 ticks, `standing_field` on\n")
+        lines.append("\n### The push per interval on B along the line from A, per window of twenty, the settled push and the standing-set search (every world closed: `boundary` periodic, 120 ticks, `standing_field` on)\n")
         lines.append("| World | r | Contents A, B | Books per bit | Things + in flight + escaped = 0 | At rest | Standing set found | Iterations | Period | Residual (cells, amount) | Push on B, ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Push on A, 101-120 | Sign changes | p_B at 120 | p_A at 120 | In flight at 120 (x) | Runner s |")
         lines.append("| --- | ---: | --- | --- | --- | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
         for name, r in closed.items():
@@ -282,19 +249,20 @@ def tables(record):
                 f"{sf.get('standing_field')} | {fmt(sf.get('standing_field_iterations'))} | {fmt(sf.get('standing_field_period'))} | {res.get('cells', '-')}, {res.get('amount', '-')} | {cells} +- {r['settled_push_b_error']:.0f} | {fmt(r['settling_tick_b'])} | {r['settled_push_a']:.0f} | {r['sign_changes_b']} | "
                 f"{r['p_b_line_at_end']:.0f} | {r['p_a_line_at_end']:.0f} | {r['in_flight_at_end'][0]} | {fmt(r['elapsed_seconds'])} |"
             )
-        lines.append("\n| Quantity (closed board, the axis worlds) | Slope (log-log over d = 4, 6, 8, 12) | Standard error | Fit at d = 8 | Fit at d = 11.31 | Fit at d = 13.86 |")
+        lines.append("\n### The scaling with d (the axis worlds, like contents 2^28), the anisotropy and the product law\n")
+        lines.append("| Quantity (the axis worlds) | Slope (log-log over d = 4, 6, 8, 12) | Standard error | Fit at d = 8 | Fit at d = 11.31 | Fit at d = 13.86 |")
         lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
         for quantity, fit in record.get("closed_fits", {}).items():
             if fit:
                 lines.append(f"| {quantity} | {fit['slope']:.2f} | {fmt(fit['error'], 2)} | {fit_value(fit, 8):.0f} | {fit_value(fit, math.sqrt(128)):.0f} | {fit_value(fit, math.sqrt(192)):.0f} |")
         if record.get("closed_anisotropy"):
-            lines.append("\n| World (closed) | r | Quantity | Measured | Axis fit | Ratio |")
+            lines.append("\n| World | r | Quantity | Measured | Axis fit | Ratio |")
             lines.append("| --- | ---: | --- | ---: | ---: | ---: |")
             for name, entry in record["closed_anisotropy"].items():
                 for quantity, a in entry.items():
                     lines.append(f"| `{name}` | {a['r']:.2f} | {quantity} | {a['measured']:.0f} | {fmt(a['fit'], 0)} | {fmt(a['ratio'], 3)} |")
         if record.get("closed_product_law"):
-            lines.append("\n| World (closed, d = 8) | q_A, q_B | q_A q_B / (3 2^28)^2 | Settled push on B, 101-120 | Ratio to `pp_d8_closed` | 81-100 | Settled push on A, 101-120 | Ratio | Push on A + push on B | p_B at 120 | p_A at 120 |")
+            lines.append("\n| World (d = 8) | q_A, q_B | q_A q_B / (3 2^28)^2 | Settled push on B, 101-120 | Ratio to `pp_d8_closed` | 81-100 | Settled push on A, 101-120 | Ratio | Push on A + push on B | p_B at 120 | p_A at 120 |")
             lines.append("| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
             for name, pr in record["closed_product_law"].items():
                 lines.append(
@@ -322,15 +290,12 @@ def main(argv=None):
     parser.add_argument("--record", type=Path, default=HERE / "record.json")
     parser.add_argument("--tables", type=Path, default=HERE / "tables.md")
     parser.add_argument("--replay", action="append", default=[], help="a world to replay in-process for the momentum in flight (repeatable)")
-    parser.add_argument("--closed", type=Path, default=None, help="the runs directory of the closed-board worlds")
+    parser.add_argument("--closed", type=Path, default=None, help="the runs directory (kept for the earlier form of the command; RUNS_DIR is read when absent)")
     args = parser.parse_args(argv)
     documents = dict(cases())
     record = {
         "experiment": "A5s repeated under the law of the bit (2026-09-18)",
         "worlds": {},
-        "fits": {},
-        "anisotropy": {},
-        "product_law": {},
         "replays": {},
         "closed_fits": {},
         "closed_anisotropy": {},
@@ -341,19 +306,15 @@ def main(argv=None):
         earlier = json.loads(args.record.read_text(encoding="utf-8"))
         record["replays"] = earlier.get("replays") or {}
     for name, document in documents.items():
-        closed = name.endswith("_closed")
-        runs = args.closed if closed and args.closed else args.runs
-        run = load_record(runs, name)
+        run = load_record(args.closed if args.closed else args.runs, name)
         if run is None:
             print(f"{name}: no record")
             continue
         a, b = document["external_bodies"]
         offset = tuple(b["position"][k] - a["position"][k] for k in range(3))
-        record["worlds"][name] = read_world(run, offset, a["amount"], b["amount"], closed=closed)
+        record["worlds"][name] = read_world(run, offset, a["amount"], b["amount"])
         r = record["worlds"][name]
-        print(f"{name}: {r['status']} {r['completed_ticks']} ticks, books {r['books_every_tick']}, closed {r['closed_every_tick']}, at rest {r['bodies_at_rest']}, p_B(40) {r['p_b_line_at_40']:.0f}")
-    axis = [(d, record["worlds"].get(f"pp_d{d}")) for d in AXIS_DISTANCES]
-    axis = [(d, r) for d, r in axis if r]
+        print(f"{name}: {r['status']} {r['completed_ticks']} ticks, books {r['books_every_tick']}, closed {r['closed_every_tick']}, at rest {r['bodies_at_rest']}, settled push on B {r['settled_push_b']:.0f}")
     closed_axis = [(d, record["worlds"].get(f"pp_d{d}_closed")) for d in AXIS_DISTANCES]
     closed_axis = [(d, r) for d, r in closed_axis if r]
     closed_quantities = {
@@ -393,45 +354,6 @@ def main(argv=None):
             "sum": r["settled_push_a"] + r["settled_push_b"],
             "p_b_120": r["p_b_line_at_end"],
             "p_a_120": r["p_a_line_at_end"],
-        }
-    quantities = {
-        "push on B, ticks 1-10": lambda r: r["windows"]["1-10"]["push_b"],
-        "push on B, ticks 11-20": lambda r: r["windows"]["11-20"]["push_b"],
-        "p_B at 20": lambda r: r["p_b_line_at_20"],
-        "p_B at 40": lambda r: r["p_b_line_at_40"],
-    }
-    for quantity, read in quantities.items():
-        record["fits"][quantity] = fit_slope([(d, read(r)) for d, r in axis])
-    for direction in OFF_AXIS:
-        name = f"pp_d8_{direction}"
-        if name not in record["worlds"]:
-            continue
-        r = record["worlds"][name]
-        record["anisotropy"][name] = {}
-        for quantity, read in quantities.items():
-            fit = record["fits"][quantity]
-            value = fit_value(fit, r["distance"])
-            measured = read(r)
-            record["anisotropy"][name][quantity] = {"r": r["distance"], "measured": measured, "fit": value, "ratio": measured / value if value else None}
-    base = record["worlds"].get("pp_d8")
-    for name in ("pp_d8", *(f"{tag}_d8" for tag in PAIRS)):
-        r = record["worlds"].get(name)
-        if r is None or base is None:
-            continue
-        record["product_law"][name] = {
-            "amount_a": r["amount_a"],
-            "amount_b": r["amount_b"],
-            "charge_product_ratio": (r["charge_a"] * r["charge_b"]) / (base["charge_a"] * base["charge_b"]),
-            "push_b_1_10": r["windows"]["1-10"]["push_b"],
-            "push_b_ratio": r["windows"]["1-10"]["push_b"] / base["windows"]["1-10"]["push_b"],
-            "push_a_1_10": r["windows"]["1-10"]["push_a"],
-            "push_a_ratio": r["windows"]["1-10"]["push_a"] / base["windows"]["1-10"]["push_a"],
-            "p_b_40": r["p_b_line_at_40"],
-            "p_b_ratio": r["p_b_line_at_40"] / base["p_b_line_at_40"],
-            "p_a_40": r["p_a_line_at_40"],
-            "p_a_ratio": r["p_a_line_at_40"] / base["p_a_line_at_40"],
-            "sum_40": r["p_a_line_at_40"] + r["p_b_line_at_40"],
-            "sum_ratio": (r["p_a_line_at_40"] + r["p_b_line_at_40"]) / (base["p_a_line_at_40"] + base["p_b_line_at_40"]),
         }
     for name in args.replay:
         if name not in record["worlds"] or name in record["replays"]:

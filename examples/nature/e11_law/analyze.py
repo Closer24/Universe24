@@ -541,47 +541,10 @@ def tables(record):
             f"\nThe world `{ic['world']}` recorded on the source `{ic['earlier_source'][:8]}` and run again on `{ic['later_source'][:8]}`: "
             f"the audit per tick identical {ic['audit_identical']}, the shadows per tick identical {ic['shadow_content_identical']}, the momentum lines identical {ic['momentum_identical']}.\n"
         )
-    if "pulse" in record["replays"]:
-        p = record["replays"]["pulse"]
-        lines.append("\n### The pulse (open board): the front per direction and the release off the planes\n")
-        lines.append("| Read Node | r | sqrt 3 r | First arrival (tick) | Peak (tick) | Peak content |")
-        lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
-        for label, f in p["fronts"].items():
-            r = record["read_nodes"][label]["radius"]
-            lines.append(f"| {label} | {r:.2f} | {math.sqrt(3) * r:.1f} | {fmt(f['first'])} | {fmt(f['peak_tick'])} | {f['peak']} |")
-        lines.append("\n| t | On the board | Escaped | On the axes | On the planes off the axes | Off the planes | Parked |")
-        lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
-        for row in p["per_tick"]:
-            if row["tick"] in (1, 2, 3, 5, 10, 20, 30, 40):
-                f = row["fractions"]
-                lines.append(f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {f['axes']:.3f} | {f['planes_off_axes']:.3f} | {f['off_planes']:.3f} | {f['parked']:.3f} |")
-    if "standing" in record["replays"]:
-        s = record["replays"]["standing"]
-        lines.append("\n### The field of the thing at rest on the open board, shell by shell (L1 shells; content per Node / J_r per Node)\n")
-        ticks_shown = (1, 5, 10, 20, 30, 40)
-        lines.append("| k | Nodes | " + " | ".join(f"t = {t}" for t in ticks_shown) + " |")
-        lines.append("| ---: | ---: | " + " | ".join("---:" for _ in ticks_shown) + " |")
-        by_tick = {row["tick"]: row for row in s["per_tick"]}
-        for k in range(0, HALF + 1):
-            cells, nodes = [], None
-            for t in ticks_shown:
-                shell = next((x for x in by_tick[t]["l1"] if x["k"] == k), None)
-                if shell is None:
-                    cells.append("-")
-                    continue
-                nodes = shell["nodes"]
-                cells.append(f"{shell['per_node']:.0f} / {shell['jr_per_node']:.0f}")
-            lines.append(f"| {k} | {nodes} | " + " | ".join(cells) + " |")
-        lines.append("\n| t | On the board | Escaped | J_r per Node at k = 4 | 8 | 12 | Off the planes |")
-        lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
-        for row in s["per_tick"]:
-            if row["tick"] in (1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40):
-                j = {x["k"]: x["jr_per_node"] for x in row["l1"]}
-                lines.append(f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} |")
     if "standing_closed" in record["replays"]:
         c = record["replays"]["standing_closed"]
         w = record["worlds"]["standing_closed"]
-        lines.append("\n### The closed board: the standing world with `boundary` periodic, 120 ticks, `standing_field` on\n")
+        lines.append("\n### The standing world (`standing_closed`): the field of the thing at rest on the closed board, `boundary` periodic, 120 ticks, `standing_field` on\n")
         lines.append(f"The runner's standing-set search: {standing_line(w)}. Shadows on the board at every tick: {w['shadows_initial']} (escaped {w['escaped']}). Off the planes, mean of the last twenty ticks: {c['off_planes_last_20']:.3f}. The replay identical to the record tick by tick (shadows on the board, escapes, the body's momentum, the books): {c['ledger_identical_to_record']}.\n")
         lines.append("| k (L1) | Nodes | Content per Node, ticks 81-100 | 101-120 | J_r per Node, 81-100 | 101-120 |")
         lines.append("| ---: | ---: | ---: | ---: | ---: | ---: |")
@@ -604,20 +567,8 @@ def tables(record):
                 lines.append(f"| {row['tick']} | {row['on_board']} | {n.get(4, 0):.0f} | {n.get(8, 0):.0f} | {n.get(12, 0):.0f} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} | {row['fractions']['parked']:.3f} | {row['seconds']} |")
     open_probes = {k: v for k, v in record["probes"].items() if not v["closed"]}
     closed_probes = {k: v for k, v in record["probes"].items() if v["closed"]}
-    if open_probes:
-        lines.append("\n### The test things on the open board: the pushed amount per interval and the inventory's J at the same Node\n")
-        lines.append("| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | In flight at 40 |")
-        lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | --- |")
-        for label, probe in open_probes.items():
-            inv = record["inventory_at_read_nodes"].get(label, {})
-            w = probe["window_means"]
-            lines.append(
-                f"| `{label}` | {probe['radius']:.2f} | {probe['cumulative_radial_at_end']:.0f} | {fmt(probe['cumulative_radial_at_30'], 0)} | "
-                f"{probe['early_mean_radial']:.1f} | {w['2-11']:.1f} | {w['12-21']:.1f} | {w['22-31']:.1f} | {w['32-40']:.1f} | {probe['sign_changes']} | "
-                f"{fmt(inv.get('j_radial_mean_2_21'))} | {inv.get('content_2', '-')} / {inv.get('content_21', '-')} / {inv.get('content_40', '-')} | {probe['waited_intervals']} | {probe['body_momentum_at_end']} | {probe['in_flight_at_end']} |"
-            )
     if closed_probes:
-        lines.append("\n### The test things on the closed board: the push per interval per window of twenty, the settled push and the amplitude at the thing's Node\n")
+        lines.append("\n### The test things (the nine closed probe worlds): the push per interval per window of twenty, the settled push and the amplitude at the thing's Node\n")
         lines.append("| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Body's momentum at 120 | In flight at 120 | Standing-set search |")
         lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |")
         for label, probe in closed_probes.items():
@@ -630,20 +581,77 @@ def tables(record):
                 f"| `{label}` | {probe['radius']:.2f} | " + " | ".join(f"{w[k]:.1f}" for k in ("1-20", "21-40", "41-60", "61-80", "81-100", "101-120")) +
                 f" +- {probe['settled_push_error']:.0f} | {fmt(probe['settling_tick'])} | {probe['sign_changes']} | {fmt(amp.get('amplitude_before'))} | {fmt(amp.get('amplitude'))} | {fmt(amp.get('arrived'), 0)} | {fmt(amp.get('wave_fraction'), 3)} | {fmt(free.get('amplitude'))} | {probe['waited_intervals']} | {probe['body_momentum_at_end']} | {probe['in_flight_at_end']} | {search} |"
             )
-    lines.append("\n### The 1/r^2 fit per direction and the anisotropy\n")
-    lines.append("| Board | Direction | Quantity | Slope (log-log over three radii) | Standard error | Value at r = 8 | At r = 12 | Signs |")
-    lines.append("| --- | --- | --- | ---: | ---: | ---: | ---: | --- |")
-    for board in ("open", "closed"):
-        for direction, fits in record["fits"].get(board, {}).items():
-            for quantity, fit in fits.items():
-                if fit:
-                    lines.append(f"| {board} | {direction} | {quantity} | {fit['slope']:.2f} | {fmt(fit['error'], 2)} | {fit_value(fit, 8):.1f} | {fit_value(fit, 12):.1f} | {fit['signs']} |")
-    lines.append("\n| Board | Quantity | Axis / (111) at r = 8 | At r = 12 | Axis / (110) at r = 8 | At r = 12 |")
-    lines.append("| --- | --- | ---: | ---: | ---: | ---: |")
-    for board in ("open", "closed"):
-        for quantity, a in record["anisotropy"].get(board, {}).items():
-            lines.append(f"| {board} | {quantity} | {fmt(a.get('axis_over_111_at_8'), 3)} | {fmt(a.get('axis_over_111_at_12'), 3)} | {fmt(a.get('axis_over_110_at_8'), 3)} | {fmt(a.get('axis_over_110_at_12'), 3)} |")
+    fit_tables(lines, record, "closed")
+    open_probes_block(lines, record, open_probes)
+    if "pulse" in record["replays"]:
+        p = record["replays"]["pulse"]
+        lines.append("\n### The pulse (open board, measured earlier): the front per direction and the release off the planes\n")
+        lines.append("| Read Node | r | sqrt 3 r | First arrival (tick) | Peak (tick) | Peak content |")
+        lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
+        for label, f in p["fronts"].items():
+            r = record["read_nodes"][label]["radius"]
+            lines.append(f"| {label} | {r:.2f} | {math.sqrt(3) * r:.1f} | {fmt(f['first'])} | {fmt(f['peak_tick'])} | {f['peak']} |")
+        lines.append("\n| t | On the board | Escaped | On the axes | On the planes off the axes | Off the planes | Parked |")
+        lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+        for row in p["per_tick"]:
+            if row["tick"] in (1, 2, 3, 5, 10, 20, 30, 40):
+                f = row["fractions"]
+                lines.append(f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {f['axes']:.3f} | {f['planes_off_axes']:.3f} | {f['off_planes']:.3f} | {f['parked']:.3f} |")
+    if "standing" in record["replays"]:
+        s = record["replays"]["standing"]
+        lines.append("\n### The field of the thing at rest on the open board (measured earlier), shell by shell (L1 shells; content per Node / J_r per Node)\n")
+        ticks_shown = (1, 5, 10, 20, 30, 40)
+        lines.append("| k | Nodes | " + " | ".join(f"t = {t}" for t in ticks_shown) + " |")
+        lines.append("| ---: | ---: | " + " | ".join("---:" for _ in ticks_shown) + " |")
+        by_tick = {row["tick"]: row for row in s["per_tick"]}
+        for k in range(0, HALF + 1):
+            cells, nodes = [], None
+            for t in ticks_shown:
+                shell = next((x for x in by_tick[t]["l1"] if x["k"] == k), None)
+                if shell is None:
+                    cells.append("-")
+                    continue
+                nodes = shell["nodes"]
+                cells.append(f"{shell['per_node']:.0f} / {shell['jr_per_node']:.0f}")
+            lines.append(f"| {k} | {nodes} | " + " | ".join(cells) + " |")
+        lines.append("\n| t | On the board | Escaped | J_r per Node at k = 4 | 8 | 12 | Off the planes |")
+        lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+        for row in s["per_tick"]:
+            if row["tick"] in (1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40):
+                j = {x["k"]: x["jr_per_node"] for x in row["l1"]}
+                lines.append(f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} |")
+    fit_tables(lines, record, "open")
     return "\n".join(lines) + "\n"
+
+
+def fit_tables(lines, record, board):
+    lines.append(f"\n### The 1/r^2 fit per direction and the anisotropy ({board} board)\n")
+    lines.append("| Direction | Quantity | Slope (log-log over three radii) | Standard error | Value at r = 8 | At r = 12 | Signs |")
+    lines.append("| --- | --- | ---: | ---: | ---: | ---: | --- |")
+    for direction, fits in record["fits"].get(board, {}).items():
+        for quantity, fit in fits.items():
+            if fit:
+                lines.append(f"| {direction} | {quantity} | {fit['slope']:.2f} | {fmt(fit['error'], 2)} | {fit_value(fit, 8):.1f} | {fit_value(fit, 12):.1f} | {fit['signs']} |")
+    lines.append("\n| Quantity | Axis / (111) at r = 8 | At r = 12 | Axis / (110) at r = 8 | At r = 12 |")
+    lines.append("| --- | ---: | ---: | ---: | ---: |")
+    for quantity, a in record["anisotropy"].get(board, {}).items():
+        lines.append(f"| {quantity} | {fmt(a.get('axis_over_111_at_8'), 3)} | {fmt(a.get('axis_over_111_at_12'), 3)} | {fmt(a.get('axis_over_110_at_8'), 3)} | {fmt(a.get('axis_over_110_at_12'), 3)} |")
+
+
+def open_probes_block(lines, record, open_probes):
+    if open_probes:
+        lines.append("\n## The open board, measured earlier (recorded; not the series)\n\nThe eight open-board records below were made before the model owner's decision that only closed worlds are tested (Highlights 5.4, \"The board of a run is closed\"); they are kept as recorded and stand outside the series' reading.\n")
+        lines.append("\n### The test things on the open board: the pushed amount per interval and the inventory's J at the same Node\n")
+        lines.append("| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | In flight at 40 |")
+        lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | --- |")
+        for label, probe in open_probes.items():
+            inv = record["inventory_at_read_nodes"].get(label, {})
+            w = probe["window_means"]
+            lines.append(
+                f"| `{label}` | {probe['radius']:.2f} | {probe['cumulative_radial_at_end']:.0f} | {fmt(probe['cumulative_radial_at_30'], 0)} | "
+                f"{probe['early_mean_radial']:.1f} | {w['2-11']:.1f} | {w['12-21']:.1f} | {w['22-31']:.1f} | {w['32-40']:.1f} | {probe['sign_changes']} | "
+                f"{fmt(inv.get('j_radial_mean_2_21'))} | {inv.get('content_2', '-')} / {inv.get('content_21', '-')} / {inv.get('content_40', '-')} | {probe['waited_intervals']} | {probe['body_momentum_at_end']} | {probe['in_flight_at_end']} |"
+            )
 
 
 QUANTITIES = {

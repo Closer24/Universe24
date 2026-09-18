@@ -22,28 +22,29 @@ prefill at fill 12, "a third phase on one Port of a source", so the second
 content is 2^27). The body's momentum accumulates the pushes and steps a
 Link when a whole amount has accumulated on an axis: at 2^28 and 2^27 no
 body steps within 40 ticks at these pushes (of order 10^5 per interval,
-measured before the run), so both stay at rest for the whole run.
+measured before the run), so both stay at rest for the whole run. (The
+open-board form of these worlds, written first as a control, was dropped
+before it ran: only closed worlds are tested.)
 
-The worlds (`ticks` 40 each, open boundary, a margin of 12 empty Nodes
-beyond each body on every side; the fill's train reaches about 7 Links, so
-nothing escapes during the fill):
+The worlds (every one closed: `boundary` periodic, the model owner's
+decision of 2026-09-18 that the confrontation runs are made on a closed
+board and that only closed worlds are tested, so that a thing's shadows
+circulate and its field at rest is a steady circulation and not a passing
+wave; Highlights 5.4, "The board of a run is closed"; 120 ticks each with
+`standing_field` on, so the runner reports the shadow layer's fixed point or
+period, or the residual when there is none, and the pushes are read once the
+field has settled; a margin of 12 empty Nodes beyond each body on every side,
+the image of B across the boundary 25 Links from A on the axis):
 
-- `pp_d{4,6,8,12}.json`: A and B of 2^28 on the x axis at distance d, B at
-  (d, 0, 0) from A, the board [d + 25, 25, 25];
-- `pp_d8_110.json`, `pp_d8_111.json`: B at (8, 8, 0) (r = 11.31) and at
-  (8, 8, 8) (r = 13.86) from A, for the lattice's anisotropy;
-- `pq_d8.json`, `qq_d8.json`: the product law at d = 8 on the axis, A of 2^28
-  with B of 2^27, and both of 2^27, beside `pp_d8.json` (2^28 with 2^28):
-  three pairs of contents, and of whole charges, 3 x 2^28 and 3 x 2^27;
-- `pp_d{4,6,8,12}_closed.json`, `pp_d8_{110,111}_closed.json`, `pq_d8_closed.json`,
-  `qq_d8_closed.json`: the eight worlds again on a closed board
-  (`boundary` periodic, the same shape), the model owner's decision of
-  2026-09-18 that the confrontation runs are made on a closed board, so
-  that a thing's shadows circulate and its field at rest is a steady
-  circulation and not a passing wave; 120 ticks with `standing_field` on,
-  so the runner reports the shadow layer's fixed point or period, or the
-  residual when there is none, and the pushes are read once the field has
-  settled. The open-board worlds above are the control.
+- `pp_d{4,6,8,12}_closed.json`: A and B of 2^28 on the x axis at distance d,
+  B at (d, 0, 0) from A, the board [d + 25, 25, 25];
+- `pp_d8_110_closed.json`, `pp_d8_111_closed.json`: B at (8, 8, 0)
+  (r = 11.31) and at (8, 8, 8) (r = 13.86) from A, for the lattice's
+  anisotropy;
+- `pq_d8_closed.json`, `qq_d8_closed.json`: the product law at d = 8 on the
+  axis, A of 2^28 with B of 2^27, and both of 2^27, beside `pp_d8_closed.json`
+  (2^28 with 2^28): three pairs of contents, and of whole charges, 3 x 2^28
+  and 3 x 2^27.
 
 Run:  python examples/nature/a5s_law/make_worlds.py [--out DIR]
 """
@@ -63,7 +64,6 @@ COSTS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "s
 N = 64  # the one phase width of the world (Highlights 5.4, definitions; cleanup-law-v1)
 K = 1
 WAIT_PER_QUANTUM = 1
-TICKS = 40
 P = 1 << 28
 Q = 1 << 27
 PROTON_CHARGE = 3
@@ -122,7 +122,7 @@ def body(position, amount):
     }
 
 
-def world(model_id, offset, amount_a, amount_b, *, closed=False):
+def world(model_id, offset, amount_a, amount_b):
     a = (MARGIN, MARGIN, MARGIN)
     b = tuple(a[k] + offset[k] for k in range(3))
     shape = [max(a[k], b[k]) + MARGIN + 1 for k in range(3)]
@@ -130,13 +130,13 @@ def world(model_id, offset, amount_a, amount_b, *, closed=False):
         "schema_version": 1,
         "model_id": model_id,
         "shape": shape,
-        "boundary": "periodic" if closed else "open",
+        "boundary": "periodic",
         "dense_field": True,
-        **({"standing_field": True} if closed else {}),
+        "standing_field": True,
         "slots_per_node": 2,
         "link_ticks": 1,
         "normal_budget": 100000,
-        "ticks": CLOSED_TICKS if closed else TICKS,
+        "ticks": CLOSED_TICKS,
         "operation_costs": dict.fromkeys(COSTS, 1),
         "N": N,
         "K": K,
@@ -166,18 +166,14 @@ def world(model_id, offset, amount_a, amount_b, *, closed=False):
 
 
 def cases():
+    """Every world of the series is closed (the model owner, 2026-09-18: only
+    closed worlds are tested; Highlights 5.4, "The board of a run is closed")."""
     for d in AXIS_DISTANCES:
-        yield f"pp_d{d}", world(f"a5s-law-pp-d{d}", (d, 0, 0), P, P)
+        yield f"pp_d{d}_closed", world(f"a5s-law-pp-d{d}-closed", (d, 0, 0), P, P)
     for direction, offset in OFF_AXIS.items():
-        yield f"pp_d8_{direction}", world(f"a5s-law-pp-d8-{direction}", offset, P, P)
+        yield f"pp_d8_{direction}_closed", world(f"a5s-law-pp-d8-{direction}-closed", offset, P, P)
     for tag, (amount_a, amount_b) in PAIRS.items():
-        yield f"{tag}_d8", world(f"a5s-law-{tag}-d8", (8, 0, 0), amount_a, amount_b)
-    for d in AXIS_DISTANCES:
-        yield f"pp_d{d}_closed", world(f"a5s-law-pp-d{d}-closed", (d, 0, 0), P, P, closed=True)
-    for direction, offset in OFF_AXIS.items():
-        yield f"pp_d8_{direction}_closed", world(f"a5s-law-pp-d8-{direction}-closed", offset, P, P, closed=True)
-    for tag, (amount_a, amount_b) in PAIRS.items():
-        yield f"{tag}_d8_closed", world(f"a5s-law-{tag}-d8-closed", (8, 0, 0), amount_a, amount_b, closed=True)
+        yield f"{tag}_d8_closed", world(f"a5s-law-{tag}-d8-closed", (8, 0, 0), amount_a, amount_b)
 
 
 def main():

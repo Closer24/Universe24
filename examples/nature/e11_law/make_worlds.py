@@ -69,6 +69,11 @@ The worlds (`ticks` 40 each, open boundary):
   at the same Node in `standing.json` beside every probe's reading.
   One probe per world, because every push returns as field (point 3) and a
   probe's returns would pollute another probe's reading on the same line.
+- The series is the closed board (the model owner, 2026-09-18: only closed
+  worlds are tested; Highlights 5.4, "The board of a run is closed", PR
+  #314). The open-board worlds above are written as they were recorded
+  before that decision (eight of them ran; the three (111) probes were
+  never run) and stand outside the series' reading.
 - `probe_*_closed.json`: the nine probe worlds again on the closed board
   (`boundary` periodic, 120 ticks, `standing_field` on, as `standing_closed`):
   the pushed amount per interval at the test thing's Node once the field has
