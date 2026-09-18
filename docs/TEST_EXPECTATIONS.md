@@ -78,7 +78,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
 | `test_ray_polarization.py` | 7 | 0.30 | Issue #169 feature 11: polarization as a ray property, a transverse direction modulo a half turn in steps of the family's polarization circle or none, declared by a lamp, part of the merge identity, carried by a meeting's outputs from their source input unless declared, by a spread as the axial mean and by the return; the polarizer, an external body's coupling splitting an arriving ray by its declared table at the difference between the body's angle and the ray's polarization, the pass share on the pass Port with the body's angle, the rest in the sink, the shares below one quantum in the body's registers (`ray-polarization-v1`) |
 | `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`; the walk kept through a push since `ray-momentum-turn-v2`, [the walk kept through a push](#the-walk-kept-through-a-push)) |
-| `test_ray_viewer.py` | 5 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets, the compressed inline page and the events camera fit, pinned below (no browser) |
+| `test_ray_viewer.py` | 6 | 0.2 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets, the compressed inline page, the events camera fit and the GIF palette that keeps the families' colours, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -1403,6 +1403,21 @@ from the event stream alone (no per-tick recording, so no phase):
   twelve holds; 24 frames in six seconds is 250 ms a frame (the style's 120
   ms when no seconds are set). An unknown preset name, a preset with an
   unknown key and a `gif_preset` naming no preset are refused;
+- (l) the GIF palette (model owner, 2026-09-18, "the GIF has no colours":
+  the phone GIFs came out white and grey): `quantize` builds one palette
+  for the frames by maximum coverage, not by population. Pinned before the
+  change on a synthetic frame, 200 by 120 pixels of a dark blue gradient
+  (the scene with its vignette and grey lattice lines, 93 shades) with
+  twelve dots of four by five pixels in yellow (255, 196, 0), cyan
+  (34, 211, 255) and red (255, 59, 59), 240 saturated pixels, 1 percent of
+  the frame (a saturated pixel is one whose channels differ by more than
+  60): with 64 colours the median cut of the old palette left 160 of the
+  240, one colour's dots quantized to the greys of the gradient (on the
+  real frames, 1.5 percent saturated over 160000 pixels, it left none); the
+  new palette keeps every dot's colour within 24 per channel and the count
+  of saturated pixels within 5 percent of the frame's own, and holds the
+  background too (no background pixel moves by more than 24 per channel);
+  three frames with the dots at different places share the one palette;
 - (k) a tick cap (`extract_record(..., ticks=3)` on the six-tick fixture):
   the run's `ticks` is 3, `record.ticks_capped_from` is 6, no event is
   later than tick 3 and `ticks_data` has four rows; a cap at or above the

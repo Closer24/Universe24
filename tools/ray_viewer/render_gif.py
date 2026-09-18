@@ -358,13 +358,21 @@ def pad_to_one_size(frames: list[Image.Image]) -> list[Image.Image]:
 
 
 def quantize(frames: list[Image.Image], colors: int) -> list[Image.Image]:
-    """One adaptive palette from a montage of sample frames, no dithering."""
+    """One adaptive palette from a montage of sample frames, no dithering.
+
+    The palette is built by maximum coverage, not by population: the scene is
+    almost all dark background, and a median cut by population spent every
+    entry on its gradient and left the few saturated pixels of the rays and
+    heads, one percent of a frame, on the greys nearest them (the phone GIFs
+    came out without colour, model owner 2026-09-18)."""
     sample_ids = sorted({0, len(frames) // 4, len(frames) // 2, 3 * len(frames) // 4, len(frames) - 1})
     sample = frames[sample_ids[0]]
     montage = Image.new("RGB", (sample.width, sample.height * len(sample_ids)))
     for k, index in enumerate(sample_ids):
         montage.paste(frames[index], (0, k * sample.height))
-    palette = montage.quantize(colors=colors, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    palette = montage.quantize(
+        colors=colors, method=Image.Quantize.MAXCOVERAGE, dither=Image.Dither.NONE
+    )
     return [f.quantize(palette=palette, dither=Image.Dither.NONE) for f in frames]
 
 

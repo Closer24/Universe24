@@ -621,3 +621,77 @@ def test_viewer_fits_the_events_and_a_run_document_box():
     assert "if (r.fit && r.fit.lo && r.fit.hi) return pad(r.fit.lo, r.fit.hi);" in page
     readme = (ROOT / "tools/ray_viewer/README.md").read_text(encoding="utf-8")
     assert "`events` fits the Nodes of matter's events" in readme
+
+
+def _dark_frame_with_dots(seed):
+    """A dark blue gradient like the scene with its vignette, and twelve saturated dots."""
+    from PIL import Image
+
+    width, height = 200, 120
+    frame = Image.new("RGB", (width, height))
+    pixels = frame.load()
+    for y in range(height):
+        for x in range(width):
+            # The vignette: darker toward the edges; the lattice: grey lines every ten pixels.
+            edge = (
+                ((x - width // 2) ** 2 + (y - height // 2) ** 2)
+                * 60
+                // (width * width // 4 + height * height // 4)
+            )
+            shade = 70 - edge
+            if x % 10 == 0 or y % 10 == 0:
+                shade += 12 + (x * 7 + y * 3) % 20
+            pixels[x, y] = (shade, shade + 4, shade + 14)
+    dots = []
+    colours = [(255, 196, 0), (34, 211, 255), (255, 59, 59)]
+    for k in range(12):
+        x = (17 * k + 13 * seed) % (width - 4)
+        y = (29 * k + 7 * seed) % (height - 4)
+        colour = colours[k % 3]
+        for dx in range(4):
+            for dy in range(5):
+                pixels[x + dx, y + dy] = colour
+                dots.append((x + dx, y + dy, colour))
+    return frame, dots
+
+
+def _saturated(image):
+    data = image.convert("RGB").tobytes()
+    return sum(1 for p in zip(data[0::3], data[1::3], data[2::3], strict=True) if max(p) - min(p) > 60)
+
+
+def test_gif_palette_keeps_the_families_colours():
+    from PIL import Image
+
+    frames = [_dark_frame_with_dots(seed)[0] for seed in range(3)]
+    dots = [_dark_frame_with_dots(seed)[1] for seed in range(3)]
+    for frame, frame_dots in zip(frames, dots, strict=True):
+        assert 0.005 < len(frame_dots) / (frame.width * frame.height) < 0.015
+    # The old palette, a median cut by population, for the record: a third of the dots go grey.
+    montage = Image.new("RGB", (200, 120 * 3))
+    for k, frame in enumerate(frames):
+        montage.paste(frame, (0, 120 * k))
+    old = montage.quantize(colors=64, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    assert _saturated(frames[0]) == 240
+    assert _saturated(frames[0].quantize(palette=old, dither=Image.Dither.NONE)) == 160
+    quantized = RENDER.quantize(frames, 64)
+    assert len(quantized) == 3 and all(q.mode == "P" for q in quantized)
+    palettes = {bytes(q.getpalette()) for q in quantized}
+    assert len(palettes) == 1
+    for frame, frame_dots, q in zip(frames, dots, quantized, strict=True):
+        back = q.convert("RGB")
+        for x, y, colour in frame_dots:
+            got = back.getpixel((x, y))
+            assert max(abs(a - b) for a, b in zip(got, colour, strict=True)) <= 24, (x, y, got, colour)
+        want = _saturated(frame)
+        assert abs(_saturated(back) - want) <= 0.05 * want
+        dot_at = {(x, y) for x, y, _ in frame_dots}
+        worst = 0
+        source = frame.load()
+        for y in range(0, frame.height, 3):
+            for x in range(0, frame.width, 3):
+                if (x, y) in dot_at:
+                    continue
+                got, orig = back.getpixel((x, y)), source[x, y]
+                worst = max(worst, max(abs(a - b) for a, b in zip(got, orig, strict=True)))
+        assert worst <= 24
