@@ -1716,6 +1716,163 @@ per-Node reading is the inventory view, the reading the snapshot itself
 uses. `record.json` holds the readings; no runner record and no GIF were
 made.
 
+## The screen without a draw: a counter against a drawn mark, and interference in counts
+
+`e12_no_draw/` holds the worlds of
+[E12](../../docs/EXPERIMENTS.md#e12-the-screen-without-a-draw-a-counter-against-a-drawn-mark-and-interference-in-counts),
+written by `make_worlds.py`, the model owner's question of 2026-09-18: does
+the model need the Detector's draw at all? The screens (E6, E9) ran at
+setting [1, 1], no draw refused, and clicked in proportion to the intensity,
+so a Detector may be a counter (every whole quantum that arrives absorbed and
+counted, Highlights 5.4 "A click is an absorption") and the draw a declarable
+option. Part 1: E9's world (the ring radiating on seven marks, 240 ticks)
+with the marks at setting [1, 1] (a counter), [1, 2] and [1, 4] (a draw per
+arrival, the refused quanta returned), and the counter with another ticket
+seed, against the mean field of `mean_field.py`. Part 2: two point sources
+of light, external bodies of one `proton` family 8 Links apart, in phase and
+in antiphase, on a line of fifteen counters, without and with the catalog's
+`born_steering` over `[light, light]`. The criterion is written in the
+register entry before the run; `tests/test_screen_no_draw.py` pins the
+smallest world of the question
+([expectations](../../docs/TEST_EXPECTATIONS.md#the-screen-without-a-draw)).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| A counter | A Detector mark at `setting` [1, 1]: every arriving ray that carries no bit is drawn, the drawn number is always below the numerator times the modulus, so the bit is 1 and the ray clicks; the ticket stream advances once per drawn arrival and the outcome reads nothing of it. Under feature 2c (`detector-absorb-v1`) the clicked field content is absorbed into the mark's counter; before it, the clicked quantum spreads on with its bit | [Detector mark](../../docs/SPATIAL_FIELDS.md#detector-mark-detector-mark-v1); Highlights 3.19, 5.4 |
+| A mark with efficiency 1 / d | `setting` [1, d]: one draw per arriving ray, 1 with the share 1 / d of the draw range (a click), 0 otherwise (the ray returned on its line, unchanged, `detector_return`, no click); the ticket seed is the mark's own stream | [Detector return](../../docs/SPATIAL_FIELDS.md#detector-return-detector-return-v1); Highlights 3.19 |
+| Where a returned quantum goes | A returned field quantum reverses on the line it arrived by and walks back until the first content its family is the field of, or a coupled family, takes it (`field_returned`, its release unbooked: a negative step of the light line's `sourced`), or it escapes at the open boundary; no inverse split, a field ray having no event (the orchestrator's proposal of Highlights 5.5, implemented as stated) | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1) ("A returned field quantum") |
+| The intensity | The mean field: the split table [6, 1, 1, 1, 1, 1] over 11 as the linear map it is on average, stepped in floating point on the run's own board with the sources' releases and the marks absorbing, `mean_field.py`; the counter's predicted count is its 240-tick integral at the mark | [A5s, the mean field](#computed-after-the-run-the-split-tables-mean-field-at-large-distance); Highlights 3.5 |
+| The source, Part 1 | E9's ring: eight `electron` lamps of amount 4 on the unit square in the plane y = 5, the corner table, `light` `field_of` electron with `release` [1, 4] and `spread` [6, 1, 1, 1, 1, 1]; 40 quanta per interval from the cycle of tick 1 | [E9](#the-screen-with-a-loop-the-ring-radiating-on-seven-marks) |
+| A point source of light, Part 2 | An external body of the `proton` family (charge +3, `amount` 256, `phase` 0 or 4) at rest: every interval it releases floor(256 / 4) = 64 quanta of `light` on each of the six headings with its declared phase, booked as a source, and takes into its sink whatever arrives at its Node; it never moves, since no `momentum_table` is declared | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); Highlights 3.19 |
+| Coherent sources, in phase and in antiphase | Both bodies at `phase` 0; or the second at `phase` 4, half the circle of N = 8 (`phase_bits` 3). A body's phase does not advance (light's rate is 0 and the body has no clock), so the two sources are two clocks stopped at their phases | Highlights 3.3 |
+| Superposition on the way | Field content that reaches a Node combines by phase before it spreads: the amounts add per arriving heading and sign, the phase of the whole is the step nearest the coherent sum (`phase_of_sum`), the coherence is recorded and never applied to the amount | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1) ("The combination"); Highlights 3.5, 3.20 |
+| Interference as steering | `born_steering` over `[light, light]`, the catalog's table [8, 7, 4, 1, 0, 1, 4, 7]: two light rays resident at one Node meet, their sum leaves through +Y (Port 2) in the share table[d] / 8 and through -Y (Port 3) in the rest, d their phase difference; the outputs are fresh event rays that spread from the next Node. Declared, the rule makes light one layer with a rule, so the sources' own light meets itself wherever two light rays are resident | [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) ("Split by a table"); Highlights 3.3 |
+| The fringe period | N / r Links for an emitter of rate r (A1); here r = 0, the period is infinite, and the phase difference at every mark is the declared one | [A1](../../docs/EXPERIMENTS.md#a1-two-slit-intensities-against-the-born-rule); Highlights 3.3 |
+| The screen, Part 2 | Fifteen counters at (12, y, 4), y = 1 to 15, on the 16 x 17 x 9 open board, the sources at (1, 4, 4) and (1, 12, 4): symmetric under y -> 16 - y, no mark on a face | [Detector mark](../../docs/SPATIAL_FIELDS.md#detector-mark-detector-mark-v1) |
+| The dense mode | `dense_field` on the runner for the two plain Part 2 worlds at 240 ticks: the pure-field Nodes cycled as one vectorized step with the same integers, the marks and the bodies the engine's, the clicks and the ledger byte for byte the engine's; not admitted with a coupling on field rays, so the steering worlds run in the engine | [The dense mode](../../docs/SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1) |
+
+### Computed before the run
+
+The register entry's "Computed" item has the computation in full;
+`predictions.json` holds the numbers. Part 1, the mean field with the marks
+absorbing (quanta at each mark, the steady arrivals per interval and the
+240-tick integral): (7, 5, 5) 0.5817 and 132.6; (7, 4, 5) and (7, 6, 5)
+0.2742 and 60.8; (7, 3, 5) and (7, 7, 5) 0.2085 and 45.8; (7, 2, 5) and
+(7, 8, 5) 0.1700 and 36.9; with the marks transparent 193.6, 118.2, 92.9,
+70.0. A drawn mark at [1, d] is expected at 1 / d of the counter, with the
+binomial noise of a draw per arriving ray. At setting [1, 1] the record is
+independent of the ticket seed, one ticket consumed per drawn arrival and
+none for a pass. A return that walks back along the axis line into P1 ends
+there, unbooked; every other return escapes. Part 2, the mean field at the
+fifteen counters over 240 ticks: 53.0, 68.0, 86.9, 131.3, 100.6, 95.8,
+92.5, 91.4 from y = 1 to 8 and the mirror from 9 to 15 (1347.5 in all),
+the same in phase and in antiphase since the amounts add; under the
+coupling the field is turned toward +Y at phase difference 0 and toward -Y
+at 4, and the numbers are the run's to give.
+
+### What the runs show
+
+Run once each on 2026-09-18 on the engine of feature 2c (source
+`2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`); the
+register entry E12 carries every number, the digests and the verdict, and
+`record.json` every reading. The counts (quanta clicked per mark over 240
+ticks; the E9 board's marks from the axis outward, the pairs equal tick for
+tick):
+
+| World | Setting | (7, 5, 5) | (7, 4, 5), (7, 6, 5) | (7, 3, 5), (7, 7, 5) | (7, 2, 5), (7, 8, 5) | All | Returns | Mean field / d |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| `screen_d1`, the counter | [1, 1] | 109 | 38 | 25 | 15 | 265 | 0 | 132.6, 60.8, 45.8, 36.9 |
+| `screen_d2` | [1, 2] | 55 | 20 | 13 | 9 | 139 | 126 | 66.3, 30.4, 22.9, 18.5 |
+| `screen_d4` | [1, 4] | 25 | 9 | 6 | 5 | 65 | 200 | 33.2, 15.2, 11.4, 9.2 |
+
+The counter is E9's repeat under 2c to the click (265 absorbed, no pass, no
+return), its count growing through the run as an intensity (4, 14, 24, 19,
+29, 34, 33, 32, 42, 34 clicks per 24-tick window over the screen). Against
+the mean field its ratio falls outward, 0.82, 0.62, 0.55, 0.41 over 240
+ticks and 0.91, 0.80, 0.70, 0.61 over the last 96 ticks against the steady
+arrivals: the pattern is the intensity's up to the integer field's lag (a
+whole quantum leaves a Node only when a register reaches eleven), larger at
+the weaker marks and shrinking as the registers fill; the counter's light
+current is still growing at tick 240. The drawn marks see exactly the
+counter's arrivals: their clicks plus returns are 109, 38, 38, 25, 25, 15,
+15 at the same ticks in both worlds, and their counts are the counter's
+over d within the binomial noise (1.01 to 1.20 at [1, 2], 0.92 to 1.33 at
+[1, 4]). The returned quanta: 44 of 126 and 67 of 200 walked back along the
+axis line into the ring corner P1 = (2, 5, 5) and ended there unbooked
+(`field_returned` by `electron`, the light line's `sourced` 9516 and 9493
+against 9560), the rest escaped (74, 121) or were still walking at tick 240
+(8, 12); the ring's content stayed 32 at every tick. The rerun and the
+seed-7 world reproduce the counter's record event for event; every mark's
+tickets consumed are its drawn arrivals, one per click or return, none for
+a pass, and at [1, 1] the drawn number decides nothing.
+
+Part 2, the two sources on fifteen counters (quanta per mark, y = 1 to 15):
+
+| World | Ticks | y = 1 .. 8 | Sum | Mirror |
+| --- | ---: | --- | ---: | --- |
+| Mean field | 240 | 53.0, 68.0, 86.9, 131.3, 100.6, 95.8, 92.5, 91.4 | 1347.5 | yes |
+| `two_inphase` (dense) | 240 | 33, 46, 62, 104, 74, 68, 65, 65 | 969 | yes |
+| `two_antiphase` (dense) | 240 | 33, 46, 62, 104, 74, 68, 65, 65 | 969 | yes |
+| `two_inphase_e96`, `two_antiphase_e96` (engine) | 96 | 4, 7, 10, 24, 12, 10, 9, 8 | 160 | yes |
+| `two_inphase_steer` (engine) | 96 | 0, 0, 0, 0, 0, 0, 0, 0 | 0 | yes |
+| `two_antiphase_steer` (engine) | 96 | 0, 0, 0, 0, 0, 0, 0, 0 | 0 | yes |
+
+In phase and in antiphase the records are identical, click for click and in
+every ledger line (963 clicks, 969 quanta, six of amount 2; the bodies'
+sinks 13947 each): the coherent sum sets the phase of the combined content
+and never its amount, so a counter counts the same whatever the phases,
+and the pattern is the two sources' intensity (0.71 of the mean field, the
+two maxima facing the sources, no alternation along y). The engine's
+96-tick records are the first 96 ticks of the dense records. With
+`born_steering` declared over `[light, light]` the worlds are admitted
+(`ray_layer_families` `[["light"], ["proton"]]`) and the sources' own
+field meets itself at every Node where two light rays are resident: every
+meeting's sum leaves through +Y at phase difference 0 and through -Y at 4,
+so the field is turned off its way at once. In phase 43140 of the 48152
+quanta that escaped in 96 ticks left through the +Y face (165 through -Y);
+in antiphase 25527 through +Y and 9038 through -Y, the two sinks unequal
+(11070 at the phase-0 body, 6352 at the phase-4 body), the spreads' phases
+0 and 4 only; in both the field reaches x = 11 once and the screen at
+x = 12 never, so no counter clicks, against 160 quanta in the same 96 ticks
+without the coupling. No fringe appears: none of the geometric kind was
+possible (a body's release carries one fixed phase and light's rate is 0,
+so the period N / r is infinite and the phase difference on the screen is
+the declared one at every mark), and the coupling declared over one family
+at every meeting deflects the whole field before it arrives rather than
+confronting two paths at the screen. The plain answer for the model owner
+is in the register entry: nothing in these runs needs a draw; a counter
+gives the screen, the draw gives an efficiency, and interference in counts
+is not given by either.
+
+### Run and render
+
+```bash
+python examples/nature/e12_no_draw/make_worlds.py
+python examples/nature/e12_no_draw/mean_field.py
+R=runs-e12
+for w in screen_d1 screen_d2 screen_d4 screen_d1_seed7; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/e12_no_draw/${w}.json'), Path('$R/${w}'))"
+done
+PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/e12_no_draw/screen_d1.json'), Path('$R/screen_d1_rerun'))"
+for w in two_inphase two_antiphase; do
+  PYTHONPATH=src python -m event_universe --init examples/nature/e12_no_draw/${w}.json --output $R/${w} --dense-field
+  PYTHONPATH=src python -m event_universe --init examples/nature/e12_no_draw/${w}.json --output $R/${w}_e96 --ticks 96
+done
+for w in two_inphase_steer two_antiphase_steer; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/e12_no_draw/${w}.json'), Path('$R/${w}'))"
+done
+for w in screen_d1 screen_d1_rerun screen_d2 screen_d4 two_inphase_e96 two_antiphase_e96 two_inphase_steer two_antiphase_steer; do
+  PYTHONPATH=src python tools/ray_viewer/record_sidecar.py $R/${w}
+  python tools/ray_viewer/extract.py $R/${w} --sidecar $R/${w}/ray-recording.json --ticks 96 --label "E12: ${w}" --out $R/${w}/runs.json
+done
+python examples/nature/e12_no_draw/analyze.py $R --record examples/nature/e12_no_draw/record.json
+```
+
+The records stay outside the tree; the register entry E12 carries the
+fingerprints and `record.json` the readings. No GIF was rendered.
+
 ## A5: Coulomb's law through the spreading field
 
 `a5_coulomb/` holds the worlds of experiment

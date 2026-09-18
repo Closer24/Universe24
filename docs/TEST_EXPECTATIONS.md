@@ -86,6 +86,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
 | `test_ring_self_field.py` | 1 | (first run) | The ring under its own field of E10 in isolation: the nine worlds byte for byte what `make_worlds.py` writes, and the content-32 worlds for 16 ticks: the coupling `electron_field_turn` (`ray-momentum-turn-v2`) declared beside the corner table (`loop-binding-v1`), the corner-first record the control's event for event with no push, the turn-first record's eight pushes at tick 2 with their registers, the ring off its Nodes at tick 3, the group readings and the world ledger exact |
 | `test_screen_loop.py` | 1 | 7.7 | The screen with a loop source of E9 in isolation: the unit-square ring of `loop-binding-v1` with rays of amount 4 releasing its light (`released-field-v1`) that spreads by the catalog's table with the Node-owned remainder (`field-spreading-v1`, `field-remainder-v1`) onto seven Detector marks, the ring read as one group of content 32 while it radiates, the first clicks and the world ledger exact |
+| `test_screen_no_draw.py` | 1 | (first run) | The screen without a draw of E12 in isolation: one body of the `proton` family radiating its light onto five counters (marks at setting [1, 1]) on a 10 x 9 x 9 open board, the world files byte for byte what `make_worlds.py` writes, the clicks at the counters with their order pinned, the record independent of the marks' ticket seed, one ticket per drawn arrival, and the world ledger exact |
 | `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
 | `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
 | `test_spatial_interactions.py` | 16 | 0.05 | Atomic carrier/local-field exchange with delayed-commit guards |
@@ -3178,6 +3179,63 @@ rays release 40 per interval while on the board, seven intervals of eight
 rays and one of the four still on it, nothing after tick 9, and no light
 has reached the boundary), the control sourced 920, current 900, escaped
 20.
+
+## The screen without a draw
+
+`tests/test_screen_no_draw.py` is the isolated test of the run E12
+([the screen without a draw](../examples/nature/README.md#the-screen-without-a-draw-a-counter-against-a-drawn-mark-and-interference-in-counts),
+[E12](EXPERIMENTS.md#e12-the-screen-without-a-draw-a-counter-against-a-drawn-mark-and-interference-in-counts)),
+pinned here on 2026-09-18 before its first run, as Highlights 5.5 requires.
+It loads `examples/nature/e12_no_draw/make_worlds.py` from its file and
+checks that the eight world files are byte for byte what `cases()` writes;
+then it takes the smallest world of the question, `counter_world(seed)`
+(not written to disk): one external body of the `proton` family (charge +3,
+amount 64, phase 0) at (1, 4, 4) on a 10 x 9 x 9 open board, `link_ticks`
+1, `phase_bits` 3, `light` `field_of` proton with `release` [1, 4] (16
+quanta per heading per interval from the cycle of tick 0) and `spread`
+[6, 1, 1, 1, 1, 1], 32 ray slots, no rule, five Detector marks at (7, 2, 4)
+to (7, 6, 4) at setting [1, 1], run for 24 ticks through the runner with
+the marks' ticket seed 0 and again with seed 5, read from `run.json` and
+`events.jsonl`. One test.
+
+Written before the first run (the structure, all of it computed from the
+rules): both records carry `detector_mark: "detector-mark-v1"`,
+`external_body: "external-body-v1"`, `field_spreading:
+"field-spreading-v1"`, `field_remainder: "field-remainder-v1"`,
+`released_fields` `[{"field": "light", "field_of": "proton", "release":
+[1, 4]}]` and `ray_layer_families` with `light` and `proton` in layers of
+their own; `conserved_at_every_completed_tick` is true and every audit
+line is balanced at every completed tick; the proton line reads 0 at every
+tick (a body holds no rays of its family); the light line reads sourced
+96 t after tick t (six headings of 16 from the cycle of tick 0), with
+current + escaped + absorbed + absorbed_by_marks = sourced, the `absorbed`
+line the body's sink and, under feature 2c (`detector-absorb-v1`, when the
+record carries its identity), the `absorbed_by_marks` line the quanta the
+counters clicked, each mark's counter the quanta it clicked, every click
+carrying `absorbed` equal to its amount, and annulled 0. Every
+`detector_click` is of family `light`, bit 1, at one of the five marks,
+through the -X face (Port 1) or a transverse face; the first click is at
+the on-axis mark (7, 4, 4), at or after tick 6 (the mean field's first
+arrival at distance 6); a click at (7, 4 + k, 4) is mirrored at
+(7, 4 - k, 4) in the same tick with the same amount, the world being
+symmetric under y -> 8 - y; no `detector_return` exists (nothing is
+refused at [1, 1]), and under 2c no `detector_pass` either (the clicked
+content is absorbed and nothing carrying a bit spreads on); every mark's
+tickets consumed equal its clicks (one per drawn arrival). The seed-5
+record equals the seed-0 record event for event (`events.jsonl` identical
+once the host's `cost` is dropped, and identical with it), the ledger the
+same at every tick, and the two `initialization_sha256` differ. Pinned
+from the first run of this board (2026-09-18, engine commit `10edd1dd`,
+source `2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`,
+2.7 s) and written here then: nineteen clicks, each of amount 1 through
+the -X face (Port 1), fifteen at the on-axis mark (7, 4, 4) at ticks 7, 9,
+10, 11, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23 and 24 and two each at
+(7, 3, 4) and (7, 5, 4) at ticks 18 and 23, the outermost pair not yet;
+the light line after tick 24 sourced 2304, current 1344, escaped 660,
+absorbed 281 (the body's sink), absorbed by marks 19; the marks' counters
+light 0, 2, 15, 2, 0 and momentum (15, 0, 0) on the axis; 2492
+`field_spread` records. The test passed at its first run with these pins
+on the same engine.
 
 ## Catalog of nature
 
