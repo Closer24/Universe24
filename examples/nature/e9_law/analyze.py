@@ -187,7 +187,9 @@ def main() -> None:
             f"{screen['things_resident']}; the wall returned {screen['wall_returned_total']} "
             f"(peak {screen['wall_returned_peak']}); probes {screen['probes']}"
         )
-        print(f"extrema of the returned amount {screen['extrema_returned']}; of the push {screen['extrema_push']}")
+        print(
+            f"extrema of the returned amount {screen['extrema_returned']}; of the push {screen['extrema_push']}"
+        )
         print("| mark | returned | peak | first | J (x, y, z) | peak J_x |")
         print("| --- | ---: | ---: | ---: | --- | ---: |")
         for k, mark in enumerate(screen["marks"]):

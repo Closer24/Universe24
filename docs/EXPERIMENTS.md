@@ -373,11 +373,13 @@ states "exactly" and means integer equality at every tick.
     `one_slit_periodic`
     `fbda80979d1ef91e691f14e785b09f79ec30a000471798f1a6f3b95310458206`
     (the digests of the runs' `initialization.json`, written with the
-    family's `phase_bits` 6; the shipped closed-board worlds carry the
-    world's `N` since the cleanup of 2026-09-18 merged after the runs, the
-    same worlds in the law's one form, and the open-board worlds are no
-    longer shipped); `record.json` beside the worlds holds the closed
-    board's readings; the records stay outside the tree.
+    family's `phase_bits` 6 and `ray_slots` 24; the shipped closed-board
+    worlds carry the world's `N` and no ray slot budget since the cleanup
+    of 2026-09-18, parts 1 and 2, merged after the runs, and are
+    `bit_law_migration.migrate` of the runs' worlds, the same worlds in the
+    law's one form; the open-board worlds are no longer shipped);
+    `record.json` beside the worlds holds the closed board's readings; the
+    records stay outside the tree.
   - **Status.** measured, 2026-09-18, on the closed board (only closed
     worlds are tested, the model owner, 2026-09-18); outcome: no fringes
     in counts (no thing reached the screen); the push modulated at depth
@@ -2855,133 +2857,176 @@ sign rule, and its other couplings are catalog entries.
     only closed worlds are tested, PR #314, so the series carries no
     open-board world), with a wall of marks over the plane x = 11 closing
     the wrap in x, as A1's closed board has, so that the shadows leaving the
-    ring toward -X do not reach the screen from behind (121 marks beside
-    the screen's seven); the ring of E5 on the unit square
-    P0 = (1,5,5), P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6) under the `corner`
-    table, E6's seven marks at (7, 2, 5) to (7, 8, 5) at setting [1, 1],
-    N = 64 (the world's `N`, the cleanup of 2026-09-18), K = 4096,
-    `wait_per_quantum` 1, no `light`
-    family (there is no field family: the ring's field is electron shadows,
-    bit 0, point 12), the electron's `release` [1, 1] and 32 ray slots (the
-    cap of a coupled layer), rays of amount M = 32768 (content 262144): a
-    thing's shadow set per interval of the fill is at most its content
-    (`release` n at most d), so the content is what the instruction's size
-    of the set forces (256 quanta of an owner at the screen's Nodes); the
-    ring's eight corner lamps are eight things, since the engine makes every
-    disturbance type a distinct thing (a shared `thing` is refused: "every
-    disturbance type is a distinct thing"), so the ring's field is eight
-    shadow sets; `initial_field` `{"electron": {"fill": 5}}`, the longest
-    fill the prefill admits for this ring. Three worlds: `ring_screen` (no
-    clock), `ring_screen_clock` (`clock` true, 8 steps of 64 per interval
-    per ray, E9's eighth of a turn) and `ring_screen_clock_fill1` (the fill
-    of 1, the only one under which the engine completes a tick). 240 ticks
-    requested, run once each through `tools/run_series.py --jobs 3` on the
-    engine of `origin/main` at `1a88785` (the cleanup, the shadow's wait and
-    the wait that reads the amplitude merged, none of them touching what
-    fails here); `scan_fill.py` reproduces the refusals below through the
-    Simulation API (`scan.json`); `analyze.py` reads the records
-    (`record.json`). The same three worlds on the open board (12 x 11 x 11,
-    no back wall) were run first, earlier the same day, on the engine at
-    `ffa4a56`, before the decision; that measurement is recorded below and
-    is not in the series.
-  - **Result.** The engine refuses the ring with its shadow set. Read before
-    the runs and reproduced by `scan_fill.py` (40 ticks asked of each):
+    ring toward -X do not reach the screen from behind through the wrap
+    (121 marks beside the screen's seven; what passes beside the screen's
+    marks is returned by that wall toward -X, so the screen is reached from
+    both sides); the ring of E5 on the unit square P0 = (1,5,5),
+    P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6) under the `corner` table, E6's
+    seven marks at (7, 2, 5) to (7, 8, 5) at setting [1, 1], N = 64 (the
+    world's `N`, the cleanup of 2026-09-18), K = 4096, `wait_per_quantum` 1,
+    no `light` family (there is no field family: the ring's field is
+    electron shadows, bit 0, point 12), the electron's `release` [1, 1], no
+    ray slot budget (retired with the lanes, cleanup-law-v1 part 2, PR
+    #315), rays of amount M = 32768 (content 262144): a thing's shadow set
+    per interval of the fill is at most its content (`release` n at most
+    d), so the content is what the instruction's size of the set forces
+    (256 quanta of an owner at the screen's Nodes); the ring's eight corner
+    lamps are eight things, since the engine makes every disturbance type a
+    distinct thing (a shared `thing` is refused: "every disturbance type is
+    a distinct thing"), so the ring's field is eight shadow sets;
+    `initial_field` `{"electron": {"fill": 5}}`, declared when the engine
+    at `ffa4a56` admitted no longer fill (below). The clock a family
+    declares is 8 steps of 64 per interval per ray (content / K), E9's
+    eighth of a turn: the derivation's period 8, lambda_w = 8 / sqrt(3)
+    = 4.62 Links, lambda_w / 2 = 2.31 (DERIVATIONS.md 27 (v), 29). Three
+    worlds: `ring_screen` (no clock), `ring_screen_clock` (`clock` true) and
+    `ring_screen_clock_fill1` (the fill of 1, kept from the first
+    measurement as the third world). 240 ticks, run once each through
+    `tools/run_series.py --jobs 3` on the engine of `origin/main` at
+    `204a513` (the cleanup part 2 merged, the ray slot budget retired; 338
+    s, 355 s and 324 s, peak 860 to 865 MB, the dense mode on); the
+    screen's marks replayed by `examples/nature/a1_law/record_screen.py`
+    (`--screen-x 7 --wall-x 11`, probes on the axis at x = 3 to 7: a mark
+    that only returns shadows publishes no record, so the shadows returned
+    and the push J = the sum of amount x arrival heading at each mark's
+    Node are read from the mark's resident rays after every tick of a
+    replay checked against the run's events and fingerprint);
+    `scan_fill.py` reads which fills the engine admits (`scan.json`);
+    `analyze.py` reads the records (`record.json`). Measured first, earlier
+    the same day, on the engine at `ffa4a56` (recorded below, not in the
+    series): the same three worlds on the open board and then on this
+    closed board, both refused by the ray slot budget.
+  - **Result.** The three worlds complete their 240 ticks. The fills
+    (`scan_fill.py`, 40 ticks asked of each, the clocked ring): 1 to 8 and
+    16 all admitted and completed, 1,835,008 shadows at the start of the
+    fill of 1 rising to 25,427,968 at 16; the prefill's refusal of a third
+    phase on one Port of a source (fill 7 and above at `ffa4a56`) is not
+    met any more. The runs:
 
-    | Ray slots | Fill | Admitted | Failed at tick | Error |
-    | ---: | ---: | --- | ---: | --- |
-    | 24 | 1 | yes | 3 | ray slot budget exceeded |
-    | 24 | 2 | yes | 1 | ray slot budget exceeded |
-    | 24 | 3 | no | (the prefill) | ray slot budget exceeded |
-    | 24 | 8 | no | (the prefill) | the prefill cannot hold a third phase on one Port of a source |
-    | 32 | 1 | yes | 5 | ray slot budget exceeded |
-    | 32 | 2 | yes | 2 | ray slot budget exceeded |
-    | 32 | 3, 4, 5 | yes | 1 | ray slot budget exceeded |
-    | 32 | 6 | no | (the prefill) | ray slot budget exceeded |
-    | 32 | 7, 8, 16 | no | (the prefill) | the prefill cannot hold a third phase on one Port of a source |
-    | 64 | any | no | (parsing) | ray interactions require at most 32 selected ray slots in one layer |
+    | World | Fill | Clock | Status | Ticks | Shadows at the start | Things | Clicks | Returned by the screen over the run | Elapsed |
+    | --- | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+    | `ring_screen` | 5 | no | completed | 240 | 7,864,320 | 262,144 | 0 | 18,203,210 | 338 s |
+    | `ring_screen_clock` | 5 | yes | completed | 240 | 7,864,320 | 262,144 | 0 | 18,203,210 | 355 s |
+    | `ring_screen_clock_fill1` | 1 | yes | completed | 240 | 1,572,864 | 262,144 | 0 | 2,067,670 | 324 s |
 
-    The scan is the same on the closed board as on the open one (both
-    recorded in `scan.json`'s history: the table above was read first on
-    the open board at `ffa4a56` and again on the closed board at `1a88785`,
-    row for row). The runs on the closed board, once each
-    (`tools/run_series.py --jobs 3`, 7.4 to 7.8 s each, peak 792 to 811 MB,
-    the dense mode on):
+    The counts: 0 at every mark in every world over 240 ticks (no thing
+    leaves the ring: the real line 262,144 at every tick, nothing
+    converted, escaped or absorbed). The books, all three: nothing escaped
+    (the board is closed), nothing absorbed at home, nothing absorbed by
+    the marks, the momentum line 0 throughout, every ledger line balanced,
+    `conserved_at_every_completed_tick` and `real_conserved` true; the
+    shadow line 7,864,320 (1,572,864 under the fill of 1) at the start and
+    at tick 240. The clock: `ring_screen_clock` is identical to
+    `ring_screen` tick for tick (the same `state.json` digest, the same
+    ledger, the same screen record), since the prefill releases at phase 0
+    and a re-release keeps a shadow's phase, so the clock enters no shadow.
+    The screen, the fill of 5 (`record_screen.py`, `record.json`): the
+    seven marks returned 18,203,210 quanta over the run, peaking at 268,596
+    in tick 39, at phases 0 and 32 of 64 only (10,510,904 and 7,692,306),
+    from the axis outward 4,635,928 at (7, 5, 5), 1,704,908 and 1,716,270
+    at y = 4 and 6, 2,095,188 and 2,070,596 at y = 3 and 7, 2,992,160 and
+    2,988,160 at y = 2 and 8 (the outer marks are 5 Links from the ring's
+    plane through the wrap in y as well as 3 across it); the peak per tick
+    104,764 on the axis (tick 39), 17,530 and 17,904 beside it; the first
+    arrival at tick 1 on the axis and its neighbours (the prefilled shell
+    of five intervals already reaches x = 7). The push J at the marks'
+    Nodes summed over the run, (x, y, z), from y = 2 to 8: (76,034,
+    715,212, -33,498), (-72,536, 0, -28,684), (107,136, 0, -50,092),
+    (-247,026, 0, -219,682), (93,504, 0, -36,134), (-87,436, 0, -19,952),
+    (84,580, -721,512, -22,800): J_x changes sign mark by mark along the
+    screen, -247,026 on the axis (toward the ring: more arrives at that
+    Node from the back wall's side than from the ring's) against +107,136
+    and +93,504 beside it, a period of 2 Links; J_y is large at the two
+    outer marks only, opposite in sign, and 0 elsewhere; the peak J_x per
+    tick -68,156 on the axis. On the axis the peak amount per tick 116,920
+    at (3, 5, 5) at tick 1, 35,658 at (4, 5, 5) at tick 72, 30,316 at
+    (5, 5, 5) at tick 39, 39,398 at (6, 5, 5) at tick 92, 104,764 at
+    (7, 5, 5) at tick 39, and 9,386, 11,950, 10,092, 4,356, 12,766 at tick
+    240; the wall of 121 marks returned 95,453,010 quanta over the run
+    (peak 522,078 per tick). The fill of 1: 2,067,670 returned (peak
+    44,602 at tick 40; phases 0 and 32, 1,538,428 and 529,242), from the
+    axis outward 446,766, 213,916 and 209,562, 258,690 and 259,782, 346,746
+    and 332,208; J_x negative at every mark (-29,830 on the axis, -7,310
+    to -1,106 elsewhere), J_y 68,584 and -69,168 at the outer marks; the
+    first arrivals at ticks 4, 5, 6, 7 from the axis outward; the wall
+    returned 17,371,346.
 
-    | World | Fill | Clock | Status | Completed ticks | Shadows at the start | Things | Clicks | Shadows returned at the screen | Push at the screen |
-    | --- | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
-    | `ring_screen` | 5 | no | failed, "ray slot budget exceeded" | 0 | 8,126,464 | 262,144 | 0 | none (no tick completed) | none |
-    | `ring_screen_clock` | 5 | yes | failed, "ray slot budget exceeded" | 0 | 8,126,464 | 262,144 | 0 | none | none |
-    | `ring_screen_clock_fill1` | 1 | yes | failed at tick 5, "ray slot budget exceeded" | 4 | 1,835,008 | 262,144 | 0 | none whole before the failure | none |
-
-    The fill-1 record over its four ticks: the electron's real line 262,144
-    at every tick with no source, escape, absorption or conversion (the ring
-    bound); the shadow line 1,572,864 at the start and at tick 4, nothing
-    escaped (the board is closed), nothing absorbed at home, nothing
-    absorbed by the marks; every ledger line balanced,
-    `conserved_at_every_completed_tick` true; the events `spatial_cycle`
-    20, `spatial_sent` 104, `spatial_received` 16, `field_spread` 12, no
-    click. The counts: 0 at every mark in every world (no thing leaves the
-    ring). The fringes: not read, no run went past tick 4.
-
-    Measured first on the open board, earlier the same day (recorded, not
-    in the series): the same three worlds failed alike (2.8 to 2.9 s each,
-    peak 409 to 413 MB), 7,963,692 shadows at the start of the fill-5
-    worlds; the fill-1 record's shadow line 1,435,300 at tick 4 with
-    137,564 escaped through the open faces, 8 quanta returned by the mark
-    (7, 5, 5) at tick 4 at phase 0 with the push (8, 0, 0) there, none
-    elsewhere; the phases the mixing makes of a phase-0 set are 0 and 32 of
-    64 (a real-valued field, the half turn being the minus of point 24).
-  - **Reading.** Under the engine as it is, E9's ring cannot carry its
-    shadow set: a corner Node holds two things and receives the shadows of
-    eight owners through six Ports in the two phases the mixing makes of a
-    phase-0 set, up to 96 rays against the 32 a coupled layer admits
-    (`spatial_state.py`, `validate_rays`, "ray slot budget exceeded"), so
-    the run fails at the tick the shell of a fill of one interval comes
-    back to the corners (tick 5), and sooner for a longer fill; the prefill
-    itself refuses a fill beyond five intervals, because a source Node's
-    flight slots hold two phases per Port (`prefill.py`, `_depart`, "a third
-    phase on one Port of a source") and the mixing brings back more. Two
-    further readings from the code, before any run: the prefill releases at
-    phase 0 (`release_stock`, "a record has no phase of its own") and a
-    shadow that comes home is re-released with its own phase
-    (`rerelease_shadow`), so the clock a family declares enters none of its
-    shadows and the clocked variant declares a clock that the field never
-    reads; and a mark that only returns shadows publishes no record
-    (`spatial_node.py`, "a mark that only returns makes none"), so the
-    shadows returned and the push at a mark's Node are read by a Recorder
-    that replays the run (`examples/nature/a1_law/record_screen.py`). What
-    the engine gave, against the predictions: the counts 0 at every mark
-    (the settled rule, "a screen beside a ring at rest counts nothing",
-    given as far as the run went); the standing wave of section 29 in the
-    push, the fringes in counts and the effect of the clock: not given,
-    since no run completed; the failure is the engine's on a lawful world,
-    reported as such and not patched by this lane. Nothing is registered as
-    a law.
-  - **Fingerprint.** The closed board: source
-    `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5`, the
-    engine of `origin/main` at `1a88785` merged into the lane;
+    Measured first, on the engine at `ffa4a56` (recorded, not in the
+    series): the ray slot budget of a coupled layer (32 rays) refused the
+    ring with its shadow set, on the open board and on this closed board
+    alike, row for row: fills 1 to 5 admitted and failed at a corner ("ray
+    slot budget exceeded") at tick 5 under the fill of 1, tick 2 under 2
+    and tick 1 from 3 on (at 24 slots tick 3, 1 and refused at the
+    prefill), fill 6 refused by the prefill on the same budget, fills 7, 8
+    and 16 refused as "the prefill cannot hold a third phase on one Port of
+    a source"; the three worlds failed at 0, 0 and 4 completed ticks (2.8
+    to 2.9 s on the open board, 7.4 to 7.8 s on the closed one), 7,963,692
+    (open) and 8,126,464 (closed) quanta at the start of the fill-5 worlds;
+    the fill-1 record's four ticks: on the open board the shadow line
+    1,435,300 at tick 4 with 137,564 escaped through the open faces and 8
+    quanta returned by (7, 5, 5) at tick 4 at phase 0 with the push
+    (8, 0, 0); on the closed board nothing escaped and nothing whole
+    returned before the failure; the counts 0 in every case.
+  - **Reading.** What the engine gave, against the predictions. The counts:
+    0 at every mark over 240 ticks in all three worlds, the settled rule
+    ("a screen beside a ring at rest counts nothing"), given in full: no
+    thing leaves the ring, and the marks absorb nothing. The push: the
+    marks turn back the ring's shadows every tick, an amount falling from
+    the axis to its neighbours and rising again toward the outer marks
+    (which the wrap in y brings as close to the ring's plane as the axis),
+    and the push J_x along the screen alternates in sign mark by mark, a
+    period of 2 Links against the lambda_w / 2 = 2.31 of section 29's
+    standing wave in front of a mirror; but the clocked world is identical
+    to the unclocked one, tick for tick, so no wave of lambda_w is in the
+    run (the clock enters no shadow: the prefill releases at phase 0,
+    `release_stock`, and a re-release keeps the shadow's phase,
+    `rerelease_shadow`), and what arrived is at phases 0 and 32 only, the
+    two phases the mixing makes of a phase-0 set (the half turn being the
+    minus of point 24): the alternation is that of a real-valued shell
+    mixed on the lattice and reflected by the screen and the back wall, not
+    the standing wave of a monochromatic field, which this engine cannot
+    build by a fill. The fringes of the derivation (sections 29 and 30):
+    not given, for that reason; the integer rule is not what limits it (the
+    axis Node holds 10^4 to 10^5 quanta per tick). The effect of the clock:
+    none, as read from the code before the runs. The books hold on the
+    closed board: nothing escapes, the field of the ring at rest circulates
+    (Highlights 5.4, "The board of a run is closed"). Nothing is registered
+    as a law.
+  - **Fingerprint.** The series (the closed board, the engine with the
+    lanes): source
+    `67808df765d4bdfce1103fef3152d82149bc013070534a8459acc3ffaca5a828`,
+    the engine of `origin/main` at `204a513` merged into the lane;
     initialization `ring_screen`
-    `4351f0ff34987b678d7cf6a1c4eed1d27effe88959e6b404ddd4ce56c0040df5`,
+    `9e6343f9abde260cac2982d6331ed0d9d22f90aefb7d227f45743b5df0a693f3`,
     `ring_screen_clock`
-    `64c940104b8b69277bf07161f7e49fd28a9341aacfb9c3e77eeaad8409973918`,
+    `5dffb272940b01c3cfc70517a452492605e1fe5bb3c5d3cc617b24024f6c19ba`,
     `ring_screen_clock_fill1`
-    `545ce3c1314ec874427f02eb4687a68bb5458c87e2f1e5387739ec04372b789a`;
-    `record.json` and `scan.json` beside the worlds hold the closed board's
-    readings. The open board, measured first: source
-    `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`, the
-    engine of `origin/main` at `ffa4a56`; initialization `ring_screen`
+    `a85395bf9ff59430ae6397a0bf008ca8df3deca0a43f4244dfa98ebdf97cbaf9`;
+    `record.json` and `scan.json` beside the worlds hold the readings; the
+    ray viewer's GIF of `ring_screen`. Measured first, at `ffa4a56` (source
+    `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`):
+    the open board `ring_screen`
     `09d27693188e5d8222f55f771c7481d0ffa93c96fb65bee06d4c64de0a5461c7`,
     `ring_screen_clock`
     `31c8ef78e33d4c5b5cca4c547b9008392c3193ae42832d980819141e8f4e730c`,
     `ring_screen_clock_fill1`
     `6d6f60fa05c0d5a245c154d0cd482bb54659b1db4105e4425aac14c61bb3b794`
-    (those worlds declared the width as the family's `phase_bits` 6). The
-    records stay outside the tree.
+    (those worlds declared the width as the family's `phase_bits` 6); the
+    closed board at `1a88785` (source
+    `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5`)
+    `4351f0ff34987b678d7cf6a1c4eed1d27effe88959e6b404ddd4ce56c0040df5`,
+    `64c940104b8b69277bf07161f7e49fd28a9341aacfb9c3e77eeaad8409973918`,
+    `545ce3c1314ec874427f02eb4687a68bb5458c87e2f1e5387739ec04372b789a`
+    (those worlds carried `ray_slots` 32). The records stay outside the
+    tree.
   - **Status.** measured, 2026-09-18, on the closed board (only closed
-    worlds are tested, the model owner, 2026-09-18); outcome: refused by
-    the engine (the worlds fail at a corner's ray slot budget before the
-    shell reaches the screen, on the closed board as on the open one), the
-    counts 0 where read, the push and the fringes not read.
+    worlds are tested, the model owner, 2026-09-18), on the engine with the
+    lanes; outcome: the counts 0 at every mark over 240 ticks; the push
+    read, the returned amount largest on the axis and J_x alternating in
+    sign mark by mark out of a phase-0 shell, the clocked world identical
+    to the unclocked (no wave of lambda_w in the run), no fringe of the
+    derivation given; nothing escaped, the books balanced. Measured first
+    at `ffa4a56`: refused by the ray slot budget, since retired.
 
 ### E10. The ring meets its own field: the loop under its own light, contents 32 to 128
 

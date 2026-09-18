@@ -1908,12 +1908,16 @@ N = 64, one K, the electron's shadows given with the board (`initial_field`
 a wall of marks closing the wrap in x; the model owner's decisions of
 2026-09-18, Highlights 5.4: "The board of a run is closed", and only closed
 worlds are tested; the open board was measured first the same day and is
-recorded in the register entry). The engine refuses the ring with its
-shadow set (a corner's ray slot budget, the prefill's two phases per Port
-at a source), on the closed board as on the open one; `scan_fill.py`
-reproduces the refusals through the Simulation API and `analyze.py` reads
-the failed records; the register entry holds the tables and the
-fingerprints.
+recorded in the register entry). On the engine with the lanes (the ray
+slot budget retired, cleanup part 2) the three worlds complete their 240
+ticks: the counts 0 at every mark, the screen's marks turning back the
+ring's shadows with a push that alternates in sign mark by mark, the
+clocked world identical to the unclocked one; on the engine at `ffa4a56`
+the same worlds were refused at a corner's ray slot budget (measured first,
+recorded). `scan_fill.py` reads which fills the engine admits through the
+Simulation API, `../a1_law/record_screen.py` replays a run and records what
+the screen's marks turn back, and `analyze.py` reads the records; the
+register entry holds the tables and the fingerprints.
 
 ### Dictionary: each physical word next to the engine word
 
@@ -1931,14 +1935,17 @@ fingerprints.
 ```bash
 PYTHONPATH=src python examples/nature/e9_law/make_worlds.py
 PYTHONPATH=src python tools/run_series.py --jobs 3 --out runs-e9-law examples/nature/e9_law/ring_screen.json examples/nature/e9_law/ring_screen_clock.json examples/nature/e9_law/ring_screen_clock_fill1.json
+for w in ring_screen ring_screen_clock ring_screen_clock_fill1; do
+  PYTHONPATH=src python examples/nature/a1_law/record_screen.py runs-e9-law/$w/run --screen-x 7 --wall-x 11 --probe 3,5,5 --probe 4,5,5 --probe 5,5,5 --probe 6,5,5 --probe 7,5,5
+done
 PYTHONPATH=src python examples/nature/e9_law/scan_fill.py
 python examples/nature/e9_law/analyze.py runs-e9-law --record examples/nature/e9_law/record.json
-python tools/ray_viewer/extract.py runs-e9-law/ring_screen_clock_fill1/run --label "E9 under the law" --out runs-e9-law/runs.json
-python tools/ray_viewer/render_gif.py runs-e9-law/runs.json --output runs-e9-law/e9_law.gif --preset phone --side-by-side
+python tools/ray_viewer/extract.py runs-e9-law/ring_screen/run --label "E9 under the law: ring_screen" --out runs-e9-law/runs.json
+python tools/ray_viewer/render_gif.py runs-e9-law/runs.json --output examples/nature/e9_law/e9_law.gif --preset phone --side-by-side
 ```
 
-The records stay outside the tree (the failed runs keep their `run.json`
-and the events of their completed ticks).
+The records stay outside the tree (`state.json`, 21 MB per world, deleted
+after the reading).
 
 ## A1 under the law: one lamp, two slits and a screen of marks
 

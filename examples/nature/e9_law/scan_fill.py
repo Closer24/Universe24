@@ -40,9 +40,7 @@ def scan(ticks: int) -> dict:
         }
         tick = 0
         try:
-            initial = prepare_initialization(
-                parse_json_document(json.dumps(document).encode())
-            ).initial
+            initial = prepare_initialization(parse_json_document(json.dumps(document).encode())).initial
             with Simulation(initial) as world:
                 row["admitted"] = True
                 row["initial_shadows"] = int(world.totals()["electron"][0])

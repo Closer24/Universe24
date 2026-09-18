@@ -106,19 +106,24 @@ def page(title, body):
 def e9_page():
     worlds = E9["worlds"]
     scan = E9["scan"]["rows"]
+    five = worlds["ring_screen"]
+    clock = worlds["ring_screen_clock"]
     fill1 = worlds["ring_screen_clock_fill1"]
-    marks = [m["position"][1] for m in fill1["marks"] if m["position"][0] == 7]
-    counts = [0 for _ in marks]
-    shadow = fill1["ledger_last"]["shadow"]["electron"]
+    screen = five["screen"]
+    ys = screen["y"]
+    counts = [0 for _ in ys]
+    shadow = five["ledger_last"]["shadow"]["electron"]
+    same = five["screen"] == clock["screen"] and five["final_totals"] == clock["final_totals"]
     body = [
         "<h1>E9 repeated under the law of the bit (2026-09-18)</h1>",
-        "<p class='muted'>The ring of E5 with its prefilled shadow set on E6's screen of seven marks, on a closed board (periodic 12 x 11 x 11 with a wall of marks over the plane x = 11 closing the wrap in x; the model owner's decisions of 2026-09-18, Highlights 5.4: the board of a run is closed, and only closed worlds are tested), on the engine of origin/main at 1a88785. The engine refused the worlds: a corner Node's ray slot budget is exceeded by the shadows of the ring's eight owners in the two phases the mixing makes of a phase-0 set. The open board was measured first the same day, failing alike, and is recorded in the register entry. Nothing here is a law; the tables are what the engine gave.</p>",
-        "<h2>What was asked, what the engine gave</h2>",
-        "<ul><li>Counts of things per mark: <b>0 at every mark</b> in every world (no thing leaves the ring; no run completed more than four ticks).</li>"
-        f"<li>Shadows returned per mark and the pushed amount at each mark's Node: none whole before the failure (the fill-1 world's four ticks; the mark on the axis is 5 Links from the ring, the shell of one interval is not back at the corners before tick 5).</li>"
-        f"<li>Nothing escaped: the fill-1 world's shadow line {shadow['initial'][0]:,} at the start and {shadow['current'][0]:,} at tick 4, {shadow['escaped'][0]:,} escaped (on the open board, measured first, 137,564 of 1,572,864 had escaped by tick 4).</li>"
-        "<li>The clocked ring: declared (K = 4096, 8 steps of 64 per interval), but the prefill releases at phase 0 and a re-release keeps a shadow's phase, so the clock enters no shadow; the runs with and without the clock fail alike.</li>"
-        "<li>Fringes in counts or in the push: <b>not read</b>, no run went past tick 4.</li></ul>",
+        "<p class='muted'>The ring of E5 (eight electron rays of amount 32,768 on the unit square, bound under the corner table) with its prefilled shadow set on E6's screen of seven marks at x = 7, y = 2 to 8, on a closed board: periodic 12 x 11 x 11 with a wall of marks over the plane x = 11 closing the wrap in x (the model owner's decisions of 2026-09-18, Highlights 5.4: the board of a run is closed, and only closed worlds are tested). Engine of origin/main at 204a513, the ray slot budget retired with the lanes (cleanup part 2, PR #315); on the engine at ffa4a56 the same worlds were refused at a corner's ray slot budget (measured first the same day, on the open and on the closed board, recorded in the register entry). Nothing here is a law; the tables are what the engine gave.</p>",
+        "<h2>Headline</h2>",
+        f"<ul><li>Counts of things per mark: <b>0 at every mark</b> in every world over 240 ticks (no thing leaves the ring; the ring's real line {five['ledger_last']['real']['electron']['current'][0]:,} at every tick).</li>"
+        f"<li>Shadows returned by the screen over the run (the fill of 5): {screen['returned_total']:,} quanta, from the axis outward {screen['returned'][3]:,} at (7, 5, 5), {screen['returned'][2]:,} and {screen['returned'][4]:,}, {screen['returned'][1]:,} and {screen['returned'][5]:,}, {screen['returned'][0]:,} and {screen['returned'][6]:,} (the outer marks are 5 Links from the ring's plane through the wrap in y as well); peak per tick {screen['returned_per_tick_peak'][0]:,} at tick {screen['returned_per_tick_peak'][1]}. The wall of 121 marks returned {screen['wall_returned_total']:,}.</li>"
+        f"<li>The push J_x at the marks' Nodes, summed over the run, from y = 2 to 8: {[p[0] for p in screen['push']]}: it changes sign mark by mark along the screen, {screen['push'][3][0]:,} on the axis (toward the ring) against +{screen['push'][2][0]:,} and +{screen['push'][4][0]:,} beside it; J_y {screen['push'][0][1]:,} and {screen['push'][6][1]:,} at the outer marks, 0 elsewhere.</li>"
+        f"<li>The clock: the clocked world is <b>{'identical' if same else 'different'}</b> to the unclocked one, tick for tick (the prefill releases at phase 0 and a re-release keeps a shadow's phase, so the clock enters no shadow); phases at the screen {html.escape(json.dumps(screen['phases']))} of 64.</li>"
+        f"<li>Nothing escaped: the shadow line {shadow['initial'][0]:,} at the start and at tick 240, {shadow['escaped'][0]:,} escaped, {shadow['absorbed_at_home'][0]:,} absorbed at home; every ledger line balanced, conserved at every completed tick: {five['conserved_at_every_completed_tick']}.</li>"
+        "<li>Fringes: none in counts (0 everywhere); in the push, a sign alternating mark by mark (period 2 Links) out of a phase-0 shell, not the standing wave of lambda_w / 2 of DERIVATIONS.md 29 (no wave of lambda_w is in the run).</li></ul>",
         "<h2>The runs</h2>",
         table(
             [
@@ -130,6 +135,7 @@ def e9_page():
                 "Shadows at the start",
                 "Things",
                 "Clicks",
+                "Returned by the screen",
                 "Elapsed s",
             ],
             [
@@ -137,40 +143,68 @@ def e9_page():
                     n,
                     w["fill"],
                     "yes" if w["clock"] else "no",
-                    f"{w['status']}: {w['error']}",
+                    w["status"],
                     w["completed_ticks"],
                     f"{w['initial_totals']['electron'][0]:,}",
-                    f"{w['real_content'][0] if w['real_content'] else 262144:,}",
+                    f"{w['real_content'][-1] if w['real_content'] else 262144:,}",
                     w["clicks"],
+                    f"{w['screen']['returned_total']:,}" if w["screen"] else "",
                     w["elapsed_seconds"],
                 ]
                 for n, w in worlds.items()
             ],
         ),
-        "<h2>The refusals, reproduced (scan_fill.py)</h2>",
+        "<h2>The fills the engine admits (scan_fill.py, 40 ticks each)</h2>",
         table(
-            ["Ray slots", "Fill", "Admitted", "Failed at tick", "Error"],
+            ["Fill", "Admitted", "Shadows at the start", "Completed ticks", "Failed at tick", "Error"],
             [
                 [
-                    r["ray_slots"],
                     r["fill"],
                     "yes" if r["admitted"] else "no",
-                    r["failed_tick"] if r["failed_tick"] else "(the prefill)",
-                    r["error"],
+                    f"{r.get('initial_shadows', 0):,}",
+                    r.get("completed_ticks"),
+                    r["failed_tick"] or "",
+                    r["error"] or "",
                 ]
                 for r in scan
             ],
         ),
         "<h2>Counts per mark (things absorbed)</h2>",
-        f"<figure>{bars(marks, counts, 'Counts per mark', 'things')}<figcaption>The seven marks at x = 7, y = 2 to 8: zero things absorbed in every world.</figcaption></figure>",
-        "<h2>The fill-1 record, four ticks</h2>",
-        f"<p>Real electron line {fill1['ledger_last']['real']['electron']['current'][0]:,} at every tick (no source, escape, absorption or conversion); shadows {shadow['initial'][0]:,} at the start, {shadow['current'][0]:,} at tick 4, {shadow['escaped'][0]:,} escaped; every ledger line balanced, conserved at every completed tick: {fill1['conserved_at_every_completed_tick']}. Events: {html.escape(json.dumps(fill1['events']))}.</p>",
+        f"<figure>{bars(ys, counts, 'Counts per mark', 'things')}<figcaption>The seven marks at x = 7, y = 2 to 8: zero things absorbed in every world.</figcaption></figure>",
+        "<h2>What the screen returned, per mark</h2>",
+        f"<figure>{bars(ys, screen['returned'], 'Fill 5 against fill 1', 'quanta', fill1['screen']['returned'], 'fill 1')}<figcaption>The amount of shadows each mark turned back over 240 ticks: the fill of 5 (blue) and the fill of 1 (orange).</figcaption></figure>",
+        f"<figure>{bars(ys, screen['push_x'], 'Fill 5 against fill 1', 'quanta x Link', fill1['screen']['push_x'], 'fill 1')}<figcaption>J_x, the sum of amount x arrival heading (x component) over the shadows each mark turned back, summed over the run; positive toward +X, away from the ring.</figcaption></figure>",
+        table(
+            [
+                "Mark",
+                "Returned (5)",
+                "Peak per tick (5)",
+                "First arrival (5)",
+                "J (x, y, z) (5)",
+                "Returned (1)",
+                "J (x, y, z) (1)",
+            ],
+            [
+                [
+                    tuple(m),
+                    f"{screen['returned'][k]:,}",
+                    f"{screen['peak'][k]:,}",
+                    screen["first_arrival"][k],
+                    tuple(screen["push"][k]),
+                    f"{fill1['screen']['returned'][k]:,}",
+                    tuple(fill1["screen"]["push"][k]),
+                ]
+                for k, m in enumerate(screen["marks"])
+            ],
+        ),
+        "<h2>Probes on the axis</h2>",
+        f"<p>The peak amount of shadows per tick at a Node on the axis, (amount, tick), the fill of 5: {html.escape(json.dumps({k: (v['peak'], v['peak_tick']) for k, v in screen['probes'].items()}))}; the fill of 1: {html.escape(json.dumps({k: (v['peak'], v['peak_tick']) for k, v in fill1['screen']['probes'].items()}))}.</p>",
         gif_tag(
             GIFS["e9"],
-            "E9 under the law, the closed board: the ring with its one-interval shell, the four ticks the engine completed",
+            "E9 under the law, the closed board: the ring with its shell of five intervals, 240 ticks (ring_screen)",
         ),
         "<h2>Fingerprint</h2>",
-        f"<p><code>source_sha256 {fill1['source_sha256']}</code>, the engine of origin/main at 1a88785; initialization digests in docs/EXPERIMENTS.md; worlds and readers under examples/nature/e9_law/.</p>",
+        f"<p><code>source_sha256 {five['source_sha256']}</code>, the engine of origin/main at 204a513; initialization digests in docs/EXPERIMENTS.md; worlds, the scan and the reader under examples/nature/e9_law/, the Recorder examples/nature/a1_law/record_screen.py.</p>",
     ]
     return page("E9 under the law", "".join(body))
 

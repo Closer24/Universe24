@@ -11,28 +11,24 @@ ring's field is eight shadow sets, one per ray), rays of amount M = 32768 with
 content, so the content is what the size of the set requires: the screen's
 Nodes are to hold at least 256 quanta of an owner, DERIVATIONS.md section 30),
 the electron's shadows given with the board by `initial_field` `{"fill": 5}`,
-32 ray slots on the electron (the layer's cap), no `light` family (there is no
-field family: the ring's field is electron shadows, bit 0), no spread,
-steering, mass field or seed. The dense mode is the default where the world
-admits it.
+no `light` family (there is no field family: the ring's field is electron
+shadows, bit 0), no spread, steering, mass field or seed, and no ray slot
+budget (retired with the lanes, cleanup-law-v1 part 2, 2026-09-18). The dense
+mode is the default where the world admits it. The board is closed: periodic
+12 x 11 x 11 with a wall of marks over the plane x = 11 closing the wrap in x,
+as A1's closed board has (the model owner's decisions of 2026-09-18: the board
+of a run is closed, and only closed worlds are tested).
 
-The fill of 5 intervals is the longest the engine admits for this ring, read
-before the runs (2026-09-18, commit ffa4a56): at 24 slots the fill of 3
-exceeds the ray slot budget at a corner (the eight owners' shadows reflected
-at a source Node), at 32 slots the fill of 6 does, and from 7 the prefill
-refuses "a third phase on one Port of a source" (`prefill.py`, `_depart`:
-two flight layers per Port at a source, and the mixing brings back more
-phases than two); the engine is not changed by a run lane, so the ring's
-shadow set is five intervals of release, a shell that leaves, and not a
-standing set.
-
-Read before the runs as well: with any admitted fill the run itself fails at a
-corner with "ray slot budget exceeded" (`spatial_state.py`, `validate_rays`),
-at tick 5 under a fill of 1, tick 2 under 2 and tick 1 from 3 on: a corner
-receives the shadows of eight owners on six Ports in the two phases the mixing
-makes of a phase-0 set (0 and 32 of 64), up to 96 rays against the 32 a
-coupled layer admits. The worlds are written all the same and the failed runs
-are the record (`ring_screen_clock_fill1` is the fill of 1, the picture).
+The fill of 5 intervals was declared when the engine at ffa4a56 admitted no
+longer one (the prefill refused a third phase on one Port of a source from a
+fill of 7, and the ray slot budget failed every admitted fill at a corner
+within five ticks: the eight owners' shadows in the two phases the mixing
+makes of a phase-0 set, against the 32 rays a coupled layer admitted). On the
+engine with the lanes (origin/main at 204a513) every fill of the scan is
+admitted and runs (`scan_fill.py`: 1 to 8 and 16, 40 ticks each), the worlds
+keep the fill of 5 as declared, and `ring_screen_clock_fill1`, the fill of 1,
+stays as the third world. The three worlds complete their 240 ticks; the
+earlier refusals are recorded in the register entry.
 
 Two worlds: `ring_screen`, the ring without a clock (the electron family
 declares no `clock`; K is declared for the world all the same), and
