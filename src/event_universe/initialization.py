@@ -2821,6 +2821,10 @@ def parse_initial_state(document: object) -> InitialState:
             "dense_field requires a family with a shadow set on a board of ray fields, no "
             "local conservation audit and no polarization (dense-field-v1 under bit-law-v1)"
         )
+    if initial.standing_field and not initial.dense_field:
+        # The standing set is the dense layer's (standing-field-v1), checked once
+        # the layer's default is decided.
+        raise ValueError("standing_field requires the dense mode (standing-field-v1)")
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")
     if any(definition.rays for definition in initial.spatial_fields):

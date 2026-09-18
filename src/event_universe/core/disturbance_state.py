@@ -470,8 +470,6 @@ class InitialState:
         validate_dense_field_admission(self)
         if type(self.standing_field) is not int or self.standing_field < 0:
             raise ValueError("standing_field is a nonnegative number of intervals")
-        if self.standing_field and not self.dense_field:
-            raise ValueError("standing_field requires the dense mode (standing-field-v1)")
         if self.ray_delay:
             if self.computation_field is None:
                 raise ValueError("ray_delay requires computation_field")
