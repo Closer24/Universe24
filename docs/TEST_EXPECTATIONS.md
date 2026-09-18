@@ -3351,6 +3351,8 @@ agreed.
 
 ## Snapshots from the arrays, parallel series runs and the standing set
 
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d; `tests/test_perf_arrays.py`): the return is a field, so the line's bodies push each other through shares that turn back with the opposite sign and carry their momentum through the mixing; the layer repeats from tick 25 (the lamp's world from 32, the fallback still at tick 131), the residual after 10 intervals is 144 cells and 370 quanta, the momenta after 200 ticks (-97, -1, 0) and (98, 0, 0); the box's `state.json` digest is `ed563a8e5759f76615b8c30fd716e9597fbd0b697fc2bdb3253cff2e8214848f` (the parked entries carry `outbound` and `momentum`).
+
 `tests/test_perf_arrays.py` is the isolated test of the performance lane of
 2026-09-18 (`perf-arrays-v1`; [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)),
 pinned here before its first run and re-pinned the same day when the Node's
