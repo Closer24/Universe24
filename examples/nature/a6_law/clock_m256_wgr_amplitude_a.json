@@ -1,0 +1,540 @@
+{
+ "schema_version": 1,
+ "model_id": "a6-law-clock-m256-wgr-amplitude-a",
+ "shape": [
+  41,
+  41,
+  41
+ ],
+ "boundary": "periodic",
+ "dense_field": true,
+ "standing_field": true,
+ "slots_per_node": 2,
+ "link_ticks": 1,
+ "normal_budget": 100000,
+ "ticks": 300,
+ "N": 64,
+ "K": 1,
+ "wait_per_quantum": [
+  8729,
+  100
+ ],
+ "operation_costs": {
+  "receive": 1,
+  "read": 1,
+  "evaluate": 1,
+  "update": 1,
+  "couple": 1,
+  "route": 1,
+  "split": 1,
+  "send": 1,
+  "commit": 1
+ },
+ "wait_reads": "amplitude",
+ "fields": [
+  {
+   "name": "star",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "light",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "mirror",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "momentum",
+   "components": 3,
+   "units": "quantum times heading",
+   "signed": true,
+   "conserved": true,
+   "extensive": true
+  }
+ ],
+ "disturbance_types": [
+  {
+   "name": "clock_0",
+   "fields": [
+    "light",
+    "momentum"
+   ],
+   "defaults": {
+    "light": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "clock_1",
+   "fields": [
+    "light",
+    "momentum"
+   ],
+   "defaults": {
+    "light": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "clock_2",
+   "fields": [
+    "light",
+    "momentum"
+   ],
+   "defaults": {
+    "light": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "clock_3",
+   "fields": [
+    "light",
+    "momentum"
+   ],
+   "defaults": {
+    "light": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  }
+ ],
+ "spatial_fields": [
+  {
+   "field": "star",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 16,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "charge": 0,
+   "release": [
+    1,
+    4096
+   ]
+  },
+  {
+   "field": "light",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 8,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "charge": 0,
+   "clock": true
+  },
+  {
+   "field": "mirror",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 2,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "charge": 0
+  }
+ ],
+ "emissions": [
+  {
+   "type": "clock_0",
+   "field": "light",
+   "amount": 1,
+   "denominator": 1,
+   "heading": [
+    0,
+    1,
+    0
+   ],
+   "kerengonen_phase": 0
+  },
+  {
+   "type": "clock_1",
+   "field": "light",
+   "amount": 1,
+   "denominator": 1,
+   "heading": [
+    0,
+    -1,
+    0
+   ],
+   "kerengonen_phase": 0
+  },
+  {
+   "type": "clock_2",
+   "field": "light",
+   "amount": 1,
+   "denominator": 1,
+   "heading": [
+    0,
+    0,
+    1
+   ],
+   "kerengonen_phase": 0
+  },
+  {
+   "type": "clock_3",
+   "field": "light",
+   "amount": 1,
+   "denominator": 1,
+   "heading": [
+    0,
+    0,
+    -1
+   ],
+   "kerengonen_phase": 0
+  }
+ ],
+ "seeds": [
+  {
+   "position": [
+    20,
+    23,
+    20
+   ],
+   "type": "clock_0"
+  },
+  {
+   "position": [
+    20,
+    15,
+    20
+   ],
+   "type": "clock_1"
+  },
+  {
+   "position": [
+    20,
+    20,
+    28
+   ],
+   "type": "clock_2"
+  },
+  {
+   "position": [
+    20,
+    20,
+    15
+   ],
+   "type": "clock_3"
+  }
+ ],
+ "ray_interactions": [
+  {
+   "name": "gravity",
+   "participants": [
+    {
+     "type": "light"
+    },
+    {
+     "type": "star"
+    }
+   ],
+   "momentum_table": {
+    "star": -1
+   },
+   "reads": "content",
+   "invariants": [
+    {
+     "name": "energy",
+     "expression": {
+      "op": "add",
+      "args": [
+       {
+        "field": "amount",
+        "participant": 0
+       },
+       {
+        "field": "amount",
+        "participant": 1
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "name": "reflect",
+   "participants": [
+    {
+     "type": "light"
+    },
+    {
+     "type": "mirror"
+    }
+   ],
+   "outputs": [
+    {
+     "field": "light",
+     "amount": {
+      "of": 0
+     },
+     "heading": "reversed",
+     "phase": "same",
+     "input": 0
+    },
+    {
+     "field": "mirror",
+     "amount": {
+      "of": 1
+     },
+     "heading": "same",
+     "phase": "same",
+     "input": 1
+    }
+   ],
+   "invariants": [
+    {
+     "name": "energy",
+     "expression": {
+      "field": "amount"
+     }
+    }
+   ]
+  }
+ ],
+ "detectors": [],
+ "external_bodies": [
+  {
+   "position": [
+    20,
+    20,
+    20
+   ],
+   "family": "star",
+   "amount": 1048576,
+   "phase": 0
+  },
+  {
+   "position": [
+    20,
+    24,
+    20
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    22,
+    20
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    14,
+    20
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    16,
+    20
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    20,
+    29
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    20,
+    27
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    20,
+    14
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    20,
+    20,
+    16
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  }
+ ],
+ "initial_field": {
+  "star": {
+   "fill": 14
+  }
+ }
+}
