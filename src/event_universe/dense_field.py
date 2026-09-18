@@ -547,7 +547,7 @@ class DenseField:
                 new_phase = np.where(has_share, np.where(held > 0, combined, phase_b), held_phase)
             reg[..., targets] = held + share
             regph[..., targets] = new_phase
-        whole = reg // S
+        whole = reg.astype(np.int64) // S
         releasing = whole > 0
         rest = reg - whole * S
         released_phase = regph.copy()
@@ -987,7 +987,8 @@ class DenseField:
         the momentum they carry (node-is-ports-v1)."""
         found: list[Ray] = []
         for rank, sign in zip(*np.nonzero(family.wait_amt[position]), strict=True):
-            momentum = tuple(int(v) for v in family.wait_mom[position][rank, sign])
+            carried = family.wait_mom[position][rank, sign]
+            momentum = (int(carried[0]), int(carried[1]), int(carried[2]))
             found.append(
                 Ray(
                     int(family.heading_index[0]),
@@ -1016,7 +1017,8 @@ class DenseField:
         )
         found: dict[int, list[Ray]] = {}
         for rank, sign, port in zip(*np.nonzero(amounts[position]), strict=True):
-            momentum = tuple(int(v) for v in momenta[position][rank, sign, port])
+            carried = momenta[position][rank, sign, port]
+            momentum = (int(carried[0]), int(carried[1]), int(carried[2]))
             found.setdefault(int(port), []).append(
                 Ray(
                     int(family.heading_index[port]),
