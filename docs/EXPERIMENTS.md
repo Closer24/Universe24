@@ -1271,6 +1271,40 @@ states "exactly" and means integer equality at every tick.
   6 → 10, gives 0.079 against the amplitude's 0.091, two whole quanta
   against three, a coincidence of small integers and not a law; every
   pair with a frozen clock gives the horizon, not a redshift.
+- **Result (3) and (4), the bending and the Shapiro delay, `m256` at w = 1**
+  (twelve lines per world, 100 ticks, a straight pass arriving at tick 32;
+  no ledger line unbalanced; the standing set not reached, the residual
+  25 760 to 27 507 cells at the end). b = 3 (six lines, Euclidean 3 and
+  3.16): every line stops at x = 10 or 11, r = 5.8 to 6.8 from the star,
+  at tick 10 to 12, and never moves again, reading 63 to 81 quanta (68 to
+  85 under `amplitude`) in the 88 to 90 intervals it waits, the pushes on
+  every axis and in both senses (toward the star 16 to 37 quanta, away 6 to
+  31, along the line 25 to 36 forward, 10 to 16 back), the net transverse
+  push toward the star 2.2 quanta per line (3.2 under `amplitude`); none
+  arrives. b = 4: every line stops at x = 10 or 11, r = 6.4 to 7.2, at tick
+  10 to 13 (one at tick 70 at r = 4.1 under `amplitude`), 73 quanta per
+  line, net −23 (away; −21 under `amplitude`); none arrives. b = 6: every
+  line stops at x = 11 to 13, r = 6.8 to 7.9, at tick 11 to 14, 62 quanta
+  per line (74 under `amplitude`), net −1.7 (+25 under `amplitude`); none
+  arrives. b = 8: five of six lines read nothing and arrive at tick 32, the
+  delay 0 under both readings; the sixth (y = 8, z = 16) reads one quantum
+  at x = 20, four Links past the star's plane, turns toward the star at
+  tick 20, reads 64 to 68 more and stops at r = 5.4 (6.4 under `amplitude`)
+  at tick 43 (31). So the image: at b ≤ 6 the light thing of content 1
+  does not bend and does not pass, it enters the region r ≤ 7 where the
+  whole quanta of the field arrive faster than one per interval and is
+  frozen there (the horizon of the clocks above, r_h = 8.4 to 14.5 by the
+  derivation, 6 to 8 measured); at b = 8 it passes straight five times in
+  six and is captured once. Against GR's 4GM/b = 326, 244, 163, 122 rad at
+  b = 3, 4, 6, 8 (GM = 244.5, in the derivation's unit: every b of this
+  board is inside the capture radius b_c = GM), Newton's 2GM/b and the
+  derivation's GM/b = 82, 61, 41, 31: a mass this heavy captures, and the
+  register reads no angle. The Shapiro delay: 0 ticks on the ten lines
+  that arrived (b = 8), against GR's 2GM ln(4x_Ax_B/b²) = 1354 ticks,
+  round 6's (w/3) 0.537 √(GM) ln(1024/64) = 7.8 under `amplitude` and
+  round 5's 2.72 w GM/b = 83 under `amount`; a line that reads no whole
+  quantum is not late, and one that reads a whole quantum at this mass is
+  frozen. The weaker masses `m64` and `m16` below read the passes.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11

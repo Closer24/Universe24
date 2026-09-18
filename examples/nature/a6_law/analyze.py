@@ -132,7 +132,7 @@ def track(things, arrivals, ticks, shape):
     return paths, moved
 
 
-def pushes_of(momentum_line, thing, paths=None, bodies=()):
+def pushes_of(momentum_line, thing, paths=None, bodies=(), absorbed_tick=None):
     """The changes of a thing's momentum vector per tick (the momentum line is
     amount x heading plus the pushes carried), each classified: a change of
     one quantum on one axis is a push; a reversal at a mirror body's Node
@@ -152,6 +152,9 @@ def pushes_of(momentum_line, thing, paths=None, bodies=()):
         size = sum(abs(d) for d in delta)
         node = where.get(tick)
         previous = series[tick - 1]
+        if absorbed_tick is not None and tick >= absorbed_tick - 1 and not any(series[tick]):
+            # The thing absorbed at a mark leaves the momentum line: no push.
+            continue
         if size == 1 or node is None:
             # One quantum, or several read in a tick the thing did not move.
             pushes.append((tick, delta))
@@ -268,7 +271,9 @@ def analyze_bend(directory, metadata, world):
         b_nominal = abs(line[1] - STAR[1])
         side = 1 if line[1] > STAR[1] else -1
         dz = line[2] - STAR[2]
-        series, changes = pushes_of(metadata["momentum"], thing, paths[thing])
+        mark = (SIDE - 1, line[1], line[2])
+        click = click_at.get(mark)
+        series, changes = pushes_of(metadata["momentum"], thing, paths[thing], absorbed_tick=click)
         toward = away = along_back = along_forward = 0
         turn_tick = None
         for tick, delta in changes:
@@ -282,9 +287,12 @@ def analyze_bend(directory, metadata, world):
             away += max(-t, 0)
             along_back += max(-delta[0], 0)
             along_forward += max(delta[0], 0)
-        mark = (SIDE - 1, line[1], line[2])
-        click = click_at.get(mark)
         last_tick, last_node = paths[thing][-1]
+        # Where the thing stopped: its last Node, the distance from the star and
+        # the tick of its last move; a thing that never moved again from a
+        # Node inside the field is frozen there (it owes more than it pays).
+        stop_r = math.sqrt(sum((last_node[i] - STAR[i]) ** 2 for i in range(3)))
+        waits_after_stop = ticks - last_tick
         previous = paths[thing][-2][1] if len(paths[thing]) > 1 else None
         exit_heading = None
         if previous is not None:
@@ -305,9 +313,13 @@ def analyze_bend(directory, metadata, world):
                 "transverse_away": away,
                 "along_back": along_back,
                 "along_forward": along_forward,
-                "waits": (ticks if click is None else click) - sum(moved[thing][: ticks if click is None else click]),
+                # The waits before the click: the click tick is the arrival at
+                # the mark (no arrival event is written for it).
+                "waits": (ticks - sum(moved[thing])) if click is None else (click - (sum(moved[thing][: click - 1]) + 1)),
                 "last_tick": last_tick,
                 "last_node": list(last_node),
+                "stop_r": stop_r,
+                "waits_after_stop": waits_after_stop,
                 "exit_heading": exit_heading,
                 "exit_offset": [last_node[1] - line[1], last_node[2] - line[2]],
                 "captured": last_node == STAR or any(abs(last_node[i] - STAR[i]) for i in range(3)) == 0,
@@ -319,10 +331,15 @@ def analyze_bend(directory, metadata, world):
         arrived = [row for row in lines if row["click_tick"] is not None]
         turned = [row for row in lines if row["turn_tick"] is not None]
         net = [row["transverse_toward"] - row["transverse_away"] for row in lines]
+        frozen = [row for row in lines if row["click_tick"] is None and row["waits_after_stop"] >= 10]
         per_b[str(b_nominal)] = {
             "lines": len(lines),
             "arrived": len(arrived),
             "turned": len(turned),
+            "frozen": len(frozen),
+            "stop_x": [row["last_node"][0] for row in frozen],
+            "stop_r": [round(row["stop_r"], 2) for row in frozen],
+            "stop_ticks": [row["last_tick"] for row in frozen],
             "fraction_turned": len(turned) / len(lines),
             "mean_net_transverse_toward": sum(net) / len(net),
             "mean_quanta_read": sum(row["quanta_read"] for row in lines) / len(lines),
@@ -429,7 +446,7 @@ def main():
             print(head)
             for b, entry in result["per_b"].items():
                 print(
-                    f"  b={b}: arrived {entry['arrived']}/{entry['lines']} turned {entry['turned']} "
+                    f"  b={b}: arrived {entry['arrived']}/{entry['lines']} turned {entry['turned']} frozen {entry['frozen']} at x {entry['stop_x']} r {entry['stop_r']} since ticks {entry['stop_ticks']} "
                     f"net toward {entry['mean_net_transverse_toward']:.2f} quanta {entry['mean_quanta_read']:.2f} "
                     f"delays {entry['delays_of_arrived']} turn ticks {entry['turn_ticks']}"
                 )
@@ -448,7 +465,7 @@ def main():
                 ]
             elif result["kind"] == "bend":
                 small["passes"] = [
-                    {k: p[k] for k in ("line", "b", "click_tick", "delay", "quanta_read", "turn_tick", "transverse_toward", "transverse_away", "along_back", "along_forward", "exit_heading", "exit_offset", "last_node", "last_tick")}
+                    {k: p[k] for k in ("line", "b", "click_tick", "delay", "quanta_read", "turn_tick", "transverse_toward", "transverse_away", "along_back", "along_forward", "exit_heading", "exit_offset", "last_node", "last_tick", "stop_r", "waits_after_stop", "waits")}
                     for p in result["passes"]
                 ]
             record.append(small)

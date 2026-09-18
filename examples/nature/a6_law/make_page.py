@@ -146,6 +146,7 @@ def bend_rows(results):
                     "closed" if result["boundary"] == "periodic" else "open",
                     bb,
                     f"{entry['turned']}/{entry['lines']}",
+                    f"{entry['frozen']} at r = {min(entry['stop_r'])} to {max(entry['stop_r'])}" if entry["frozen"] else "0",
                     fmt(entry["mean_quanta_read"], 2),
                     fmt(entry["mean_net_transverse_toward"], 2),
                     fmt(alpha, 3),
@@ -292,7 +293,7 @@ figcaption { color: var(--muted); font-size: 12px; }
     body.append("<h2>3. The bending of a light thing</h2>")
     body.append(f"<p>{notes['bend']}</p>")
     body.append(bending_svg(results))
-    body.append(table(["world", "board", "b", "lines turned", "quanta read per line", "net transverse toward the star", "mean exit angle (rad)", "GR 4GM/b", "Newton 2GM/b", "derivation GM/b", "turn ticks"], bend_rows(results)))
+    body.append(table(["world", "board", "b", "lines pushed transversally", "lines frozen (where)", "quanta read per line", "net transverse toward the star", "mean exit angle (rad)", "GR 4GM/b", "Newton 2GM/b", "derivation GM/b", "turn ticks"], bend_rows(results)))
     body.append("<h2>4. The Shapiro delay</h2>")
     body.append(table(["world", "b", "lines arrived", "delays (ticks past the straight arrival)", "mean delay", "GR 2GM ln(4 x_A x_B / b^2)", "derivation, amplitude: (w/3) 0.537 sqrt(GM) ln(...)", "derivation, count: 2.72 w GM / b"], shapiro_rows(results)))
     body.append("<h2>5. The shadow's wait: the separating run</h2>")
