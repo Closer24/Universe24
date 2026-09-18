@@ -5193,17 +5193,24 @@ bit 1 anywhere; no momentum on a ray.
    family G arriving in the interval, and every parked share of G that
    reaches a unit there, is an event: it is absorbed by F's table for G.
    The table has two entries, the push (S3) and the fate of the amount:
-   *re-released* (the default for the free families, the matter shadows
-   read as gravity and electricity: the unit joins this interval's release
-   of the holder, S2.4, and its number and phase are gone), *kept* (light
-   absorbed: the unit joins M, paid, a click when the holder is a mark
-   that counts, S6) or *passed* (the table says pass: the unit is mixed as
-   at an empty Node and the holder is not pushed). What arrives with the
-   holder's own number is absorbed like the rest for its amount (re-
-   released, section 52 shows it must be) and, by the reading of section
-   54, for nothing else.
+   *read* (the default for the free families, the matter shadows read as
+   gravity and electricity: the holder takes the push and the unit goes
+   on by the mixing as at an empty Node, its number and phase kept),
+   *kept* (light absorbed: the unit joins M, paid, a click when the
+   holder is a mark that counts, S6) or *passed* (the table says pass:
+   mixed as at an empty Node and the holder not pushed). What arrives with
+   the holder's own number is sunk and re-released with the holder's
+   release (S2.4; R13, section 52 shows it must be) and, by section 54,
+   pushes nothing. *Amended on 2026-09-18 while the round was written*:
+   the draft first had the free families sunk and re-released at the
+   holder like its own number ("absorbed, released again"); section 54
+   (ii) finds that a point sink in a wave takes the gradient of the
+   intensity and not the flux, its push falling as 1/r³, so Newton's 1/r²
+   needs the free field to pass through a holder and be read; only what a
+   table keeps is sunk, and the owner's "absorbed" is, for a free family,
+   the reading.
 4. *Release.* The holder releases, in this interval, ρM units of its own
-   family plus every unit re-released in S2.3, one sixth through each Port
+   family plus every unit of its own number sunk in S2.3, one sixth through each Port
    with a remainder per Port (six parked shadows of its own number, R12
    with R13, section 46 (viii)), every share at the holder's phase of this
    interval, with the holder's numbers and its message. ρ is one rate for
@@ -5231,12 +5238,12 @@ counter of clock-readings-v1 and the amplitude of wait-reads-v1 (per group
 at the thing's Node, floored per interval; section 42 says what its
 remainder must do); the absorption into a counter of detector-absorb-v1
 and the resident thing. *New*: the release from held content every
-interval (R12, feature 19, not on `main`), the re-release of every
-absorbed unit at the holder's phase (R13 for every family, not only home),
-the absence of any return (return-field-v1 retired: no share ever turns
-back at a holder; it is absorbed and re-emitted), the step as a release
-and an absorption, and the wait of a quantum in flight (a hold per Node
-per family, section 55 (v)).
+interval (R12, feature 19, not on `main`), the re-release of the holder's
+own returning units at its phase (R13), the absence of any return
+(return-field-v1 retired: no share ever turns back at a holder; a free
+family's unit is read and goes on by the mixing, a kept one is content),
+the step as a release and an absorption, and the wait of a quantum in
+flight (a hold per Node per family, section 55 (v)).
 
 **S3. The readings (point 16 as amended, unchanged in content).** A
 whole unit of amount a with heading h (h = −e_p for an arrival through
@@ -5259,13 +5266,15 @@ absorbed after being read, never turned back.
 
 **S4. The number.** Every held content gets one number at its birth and
 stamps it on what it releases; a merge carries the numbers of both; a
-unit absorbed and re-released leaves with the holder's numbers and phase,
+unit kept and released again leaves with the holder's numbers and phase,
 its own gone: coherence is the last emitter, nothing inherits, nothing is
 orphaned (a field whose source ended is re-sourced from wherever its
-units are next absorbed, section 49 (iv)). The Node reads the number in
-one place only: which arrivals are one coherent sum (S2.2, S2.6). There is
-no home: the holder's own number is one number among those it absorbs
-(S2.3), and what "home" named is section 52's balance. *The engine has*:
+units are next kept, section 49 (iv)). The Node reads the number in two
+places: which arrivals are one coherent sum (S2.2, S2.6), and, at a
+holder, which arrivals are its own (S2.3: sunk and released again, no
+push) and which another's (read, and passed on by the mixing). That
+second reading is what "home" named, kept because section 52 and section
+54 (i) force it; there is no route and no return in it. *The engine has*:
 the owner axis of the dense layer, the owners set of the resident thing.
 *New*: no home rule, no route, no owner on a returning share.
 
@@ -5351,8 +5360,8 @@ counter as content.
 | The dense layer's arrays per family, owner, sign, flow, with momentum | the same arrays without the flow axis and without momentum |
 | The parked ninths, the largest-remainder mixing (node-mixing-v1) | unchanged (S2.2) |
 | The prefill as a stock (`initial_field` fill) | the fixed point at tick 0 at most (S7) |
-| The return with −Δp (return-field-v1) | none: absorbed and re-released (S2.3, S2.4) |
-| Home: absorbed and re-released with the thing | one number among all in S2.3 and S2.4; no rule |
+| The return with −Δp (return-field-v1) | none: a free family's unit is read and goes on by the mixing; a kept one is content (S2.3) |
+| Home: absorbed and re-released with the thing | the holder's own number sunk and released again, pushing nothing (S2.3, S2.4, section 54 (i)) |
 | The wait counter on the thing (clock-readings-v1), the amplitude (wait-reads-v1, floored) | the counter with a remainder, reading Σ_j\|u_j\| over other numbers (S2.6); a hold per Node for light in flight |
 | The accumulator step of the external body | the step of every held content, as a release and an absorption (S2.7, section 53) |
 | The click as an absorption into the counter | the same, of a whole q_γ assembled by the remainder rule per number (S5, S6) |
@@ -5361,10 +5370,12 @@ counter as content.
 
 **Verdict.** The law as points: **stated** (S1 to S10), with two words
 fixed (unit, q_F), one order of operations (S2), and the flags: the
-absorption of the holder's own number for amount only (section 52 and
-54), the step's timing (section 53), one ρ (section 52 (iv)), the wait of
-light in flight as a hold per Node (section 55 (v)), and q_γ as the
-message of light (S5, section 55 (vi) and (vii)).
+holder's own number sunk for the amount only and pushing nothing
+(sections 52 and 54 (i)), the free families read and passed, not sunk
+(section 54 (ii), the amendment of S2.3), the step's timing (section 53),
+one ρ (section 52 (iii)), the wait of light in flight as a hold per Node
+(section 55 (v)), and q_γ as the message of light (S5, section 55 (vi)
+and (vii)).
 
 ## 52. Round 8: a held content is stable; the balance in integers, one ρ, the rotation in flight, and the sparse source
 
@@ -5397,13 +5408,14 @@ of a free family ever leaves M: R12 costs nothing) nor grows (no unit of
 a free family ever enters M: every one is re-released), **exactly, in
 integers, at every interval**, and the only reading of home that gives
 this together with a flux equal to the emission is the re-release. What
-arrives with another number is re-released the same way (S2.3), so the
-holder's flux out is q + c, c the cross amount it absorbs: the field of A
-is partly re-sourced as B's, by c/q_B = 0.138 q_A/(d² q_B), below 1 % at
-d ≥ 4 for equal contents. In whole units the release is ⌊(q + h + c)/6 +
-ρ_p⌋ per Port with six registers on the holder (section 47 (i)), the
-arrivals are whole units with the ninths parked at the holder's Node and
-absorbed when they reach a unit, and M is untouched by any of it. In an
+arrives with another number is read and goes on by the mixing (S2.3 as
+amended by section 54 (ii)), so the holder's flux out is q + h − h = q
+and no field is re-sourced at another holder; only what a table keeps
+(light at a screen) enters M, paid. In whole units the release is
+⌊(q + h)/6 + ρ_p⌋ per Port with six registers on the holder (section 47
+(i)), the arrivals of the holder's own number are whole units with the
+ninths parked at its Node and sunk when they reach a unit, and M is
+untouched by any of it. In an
 interval the holder owes (S2.6) it releases nothing, so its flux in the
 mean is q (1 − w|u|), and the balance closes in the mean as before
 (released − home = escaped). Only the paid lines of light change M, by a
@@ -5643,3 +5655,652 @@ axis and 0.29 on (111) under T2**, below the field's 1/√3 in every
 direction; **1 under T1**, above it on the axes (T2 taken, flagged).
 Beyond the cap: **different law** (p unbounded, v saturated). In a
 potential: v = (p/M)(1 − w|u|), **reached** in form.
+
+## 54. Round 8: inertia; what a moving held content takes of its own field, and a co-moving pair of each other's
+
+**Rules used.** R12, R13 with the holder moving one Link every k intervals
+(S2.7 at v = 1/k, the timing immaterial for a field read in the mean over
+many steps), S3, section 46 (iv) (ε and h), section 26 (iii) (J = n v_g
+for the free wave), section 48 (iii) (the third law at rest). The
+committed script's `selfpush`, `scan` and `pair` subcommands: the mean
+field on 257 × 41² Nodes with a sponge of eight layers on every face in
+place of the edge (so that what is read at the holder is its own near
+field and not the 7 % mirror of section 46 (i)), period 16 unless said,
+q = 6 units per interval, 400 to 500 intervals with the last 128 to 256
+read, the window's two halves agreeing to three digits in every row
+quoted.
+
+**(i) One held content in uniform motion, its own field sunk and released
+again (R13).** The amount h it sinks per interval and the net momentum m
+of those units (amount × heading along the motion, positive when more
+comes from behind), both over q:
+
+```text
+v            0        1/8      1/4      1/2       1/4 at period 32       per Port at v = 1/4, period 32:
+h / q        2.120    1.218    0.722    0.172     0.992                  from behind 0.539 q,  from ahead 0.070 q,  each side 0.096 q
+m / q        0.000    0.267    0.415    0.158     0.470
+m / (v q)    —        2.14     1.66     0.32      1.88
+```
+
+A moving holder takes a net forward momentum from its own field of about
+2 q v per interval at small v, eight times more from behind than from
+ahead at v = 1/4, and sinks less of its field the faster it moves (h
+falls from 2.12 q to 0.17 q). The mechanism is the lattice's and not the
+continuum's radiation reaction: at every step the holder lands on the
+Node its own forward share of the previous interval has just reached and
+takes it whole ((q + h)/6 with the heading of the motion), and it
+abandons the standing set it had built at the Node it left, which is
+mixed there from then on and reaches it from behind; the returns to the
+old Node are lost to the home line. No emission weighting cancels it:
+with the release per Port weighted by 1 + α v e_p·x̂ the momentum at
+v = 1/8 falls from 0.267 q to 0.171, 0.122, 0.074 q at α = 2, 3, 4 (a
+zero near α ≈ 5.5), at v = 1/4 from 0.415 to 0.180 q at α = 4 and 0.175
+at α = 6 (no zero below the weights' cap), and at v = 1/2 it rises with
+α (0.158, 0.181, 0.202, 0.223 q at α = 0, 2, 3, 4); the recoil of the
+emission booked at release cannot cancel it either, since a share
+released with the heading h and sunk again with −h books −2σXah and not
+zero. Read by S3 it would be, for gravity, a drag dp/dt = −ε_g M m =
+−2.1 ε_g ρ M² v, that is dv/dt = −2.1 ε_g ρ M v per interval: a proton of
+2²⁸ at ρ = 3/2048 stops within one interval, a content of 32 within ten;
+for electricity a runaway, dv/dt = +2.1 ρ Q² v/M. **The law has no
+inertia for a single held content if its own number pushes it.** The
+rule that gives it inertia costs nothing new: **a unit of the holder's
+own number is sunk for its amount only** (R13 as it stands) **and pushes
+nothing and delays nothing**; the Node already sorts arrivals by number
+for the coherent sum, and a merged holder counts all its numbers as its
+own. This is the one place "home" survives: not a route, not a return,
+a number the holder does not read for momentum, as physics has no
+Coulomb self-force. With it, x_i(t) = p_i t/M to one Link for ever
+(section 53 (i)): **Newton's first law, reached** for one held content.
+
+**(ii) A co-moving pair: the sink reads the gradient, the pass reads
+the flux, and in motion the pair pushes itself.** Two held contents, A
+ahead and B behind on the axis at separation d, two numbers, each
+sinking its own field (R13). First at rest, with the other's field sunk
+at each holder and released again as the holder's (S2.3 as the draft
+first read the owner's "absorbed"), then let through and read (S2.3 as
+amended). The net momentum read at A over J = q/(4πd²), and the amount
+read at A over the count law 0.1378 q/d²:
+
+```text
+d                                    4         8         12        16        20
+sink:  m_A / J                      +0.864    +0.406    +0.302    +0.188    +0.126      (m_A itself falls as d^−3.2)
+       amount at A / n_law            1.78      1.67      1.57      1.50      1.75
+pass:  m_A / J                      +1.396    +1.083    +0.983    +0.918    +1.015      (the free wave's J: 1.41 at d = 4 in section 46 (iii), the law within 10 % beyond)
+       amount at A / n_law            1.12      0.99      0.93      0.90      1.02
+pass:  (m_A + m_B) / J              +0.003    +0.010    +0.019    +0.023    +0.023      (the sponge's asymmetry; the third law at rest)
+```
+
+A point sink in a wave takes an amount that falls as the intensity, 1/d²,
+and a net momentum that falls as its gradient, 1/d³: a sink returns
+nothing, so each of its six neighbours sends it its own common part u
+(B_p = u − 0), and the net along the axis is |u_near|² − |u_far|² ≈
+4|U|²/d³, not the flux J = n v_g that a Node of the free wave passes
+(section 26 (iii)). A holder that lets the field through and reads the
+arrivals reads J. **Newton's 1/r² needs the free field to pass through a
+holder and be read; sunk, it is a 1/r³ law.** This is the amendment of
+S2.3 (section 51): "absorbed" is, for a free family, the reading; only
+what a table keeps (light at a screen) is sunk.
+
+The same pair in uniform motion, both holders moving +x one Link every k
+intervals, the free field of each read at the other (the pass), the
+release isotropic in the lattice frame:
+
+```text
+period   d     v       m_A / J     m_B / J     (m_A + m_B) / J     (m_A + m_B) / (v J)      d / λ_w
+16       4     1/16    +1.224      −1.563      −0.340              −5.4                     0.43
+16       8     1/16    +0.995      −1.203      −0.208              −3.3                     0.87
+16       8     1/12    +1.008      −1.283      −0.276              −3.3
+16       8     1/10    +0.898      −1.151      −0.253              −2.5
+16       8     1/8     +0.863      −0.979      −0.116              −0.9
+16       8     1/4     +0.817      −3.011      −2.194              −8.8                     (B reads 10.6 times the count law: it runs into A's wave)
+16      12     1/16    +0.890      −0.931      −0.042              −0.7                     1.30
+16      16     1/16    +0.811      −0.881      −0.070              −1.1                     1.73
+16      20     1/16    +0.976      −1.034      −0.058              −0.9                     2.16
+16      24     1/16    +1.079      −0.960      +0.119              +1.9                     2.60
+32       8     1/16    +0.723      −1.410      −0.687              −11.0                    0.43
+32       8     1/12    +0.587      −1.482      −0.895              −10.7
+8        8     0       +0.684      −0.684      +0.000              —                        1.73     (at rest: the third law at period 8)
+8        8     1/16    +0.467      −0.782      −0.315              −5.0                     1.73
+8       12     1/16    +0.473      −0.572      −0.099              −1.6                     2.60
+8       16     1/16    +0.464      −0.732      −0.268              −4.3                     3.46
+8       20     1/16    +0.438      −0.600      −0.163              −2.6                     4.33
+```
+
+With the release isotropic in the lattice frame the pair takes a net
+momentum against its motion: B, behind, runs into A's wave and reads more
+of it than A, which B's wave must chase, reads of B's: at d = 8 and v =
+1/16 the two pushes differ by 21 % and the sum is −3.3 v J at period 16,
+−11 v J at period 32. Read by S3 this is, for a gravitating pair, a push
+forward on the pair of 3.3 ε_g M v J per interval, dv/dt = 3.3 v (GM/d²):
+**a bound pair in uniform motion accelerates itself along its motion at a
+few v times its own internal acceleration**, the same sign for an atom,
+whose parts attract by electricity, and a drag for like charges. For
+nature's numbers (the internal acceleration of a hydrogen atom 10²² m/s²,
+v/c_w of a thermal atom 10⁻⁵) it would be 10¹⁷ m/s². The size is not a
+constant of the law: it falls with the separation in wavelengths, from
+−5.4 v J at d/λ_w = 0.43 to −0.7 at 1.3 at period 16, and does not go to zero beyond it: −1.1, −0.9, +1.9 v J at d/λ_w = 1.7, 2.2, 2.6 at period 16, and −5.0, −1.6, −4.3, −2.6 v J at d/λ_w = 1.7 to 4.3 at period 8 (λ_w = 4.6), of order v J with a sign that changes with d.
+It is the lattice's, not the continuum's: a monopole of the scalar wave
+equation has no direction, so a source isotropic in the lattice frame is
+isotropic in every frame and the boosted field of section 26 (ii) gives a
+co-moving pair no net push at any v below 1/√3; what breaks it here is
+the source that sits k intervals at a Node and jumps (a dipole wobble of
+half a Link at the step frequency v), the six-Port structure of the
+release and the lattice's dispersion, and it is largest where the pair
+sits inside a wavelength. A per-Port weighting of the release by the
+holder's momentum, 1 + α v e_p·x̂, is not a fix and has no continuum
+counterpart: at d = 8, v = 1/16 the sum runs −4.9, −4.1, −3.3, −2.5 v J at
+α = −2, −1, 0, +1 and crosses zero near α ≈ 4, but at v = 1/12 the same
+weighting turns −3.3 into −19.6 v J, at v = 1/8 −0.9 into +5.7, at d = 12
+−0.7 into −9.8, and it inflates the amount read at the partner to 3 to
+34 times the count law with the window's halves no longer agreeing. The
+sign of the drift is the same at every d, v and period measured.
+
+**(iii) The third law in motion, and the books.** The pushes of a moving
+pair are unequal at first order in v by the amounts of the table, and
+the sum of the held momenta drifts by them; there is no ledger to close
+(S8): the field's momentum is neither conserved by the mixing nor booked,
+and the third law is a symmetry of the two fixed points that holds at
+rest exactly and in motion to the remainder of the table, which shrinks
+with d/λ_w inside a wavelength and stays of order v J, of either sign, out to the d = 4.3 λ_w measured.
+
+**Check.** Every number is the committed script's: `scan --ks 0 8 4 2
+--alphas 0`, `scan --ks 4 --alphas 1 2 3 4 6`, `scan --ks 8 2 --alphas
+2 3 4`, `selfpush --k 4 --period 32` for (i); `pair --mode sink` and
+`--mode pass` at `--k 0` for the rest table; `pair --mode pass` at the
+period, d, k and α of the motion table (L = 257, W = 41, 500 to 520
+ticks, the last 240 to 256 read, the sponge 8, the window's two halves
+agreeing to two digits in every row without a weighting); 20 to 50 s
+each. The 1/d³ of the sink is the algebra of B_p = u − A_p with A_p = 0
+at the sink's Ports; the continuum statement is the c_w-Lorentz
+invariance of the wave equation of section 26 (ii) applied to a scalar
+source.
+
+**Verdict.** One held content in uniform motion: **no inertia** if its
+own number pushes it (a drag or a runaway of 2.1 v times ρM or ρQ²/M per
+interval, no emission weighting cancelling it at every v); **Newton's
+first law reached** with the own number sunk for the amount alone
+(**forced**). A holder in a wave: the sink reads **1/r³** (Newton
+**lost**), the pass reads **1/r²** (**reached**; S2.3 amended). A
+co-moving pair: **no inertia at first order in v inside a wavelength of
+each other** (the pair pushes itself at 3 to 11 v times its internal
+acceleration at d ≈ λ_w, a lattice effect of the stepping source, no
+weighting of the release curing it); **not restored in the far field measured** (of order v J, of either sign, out to d = 4.3 λ_w); **needs the owner**: a release in the holder's own frame is no fix, and a lattice with a preferred frame for composite matter is what the law gives as written. The third law in
+motion: **to the remainder of the table**, no ledger.
+
+## 55. Round 8: the tests, one by one, under the law of the shadow
+
+**Rules used.** S1 to S9 of section 51; sections 52 to 54; the fixed point
+and the tests under it (sections 46 to 48, with S = 4πGM, G = ρ/(4π) at
+ε_g = 1); the amplitude reading and the four gravitational tests under it
+(sections 39 to 41); the index of a delayed field (section 35's check of
+option II-b); two slits and a mirror (section 29) and the integer wave
+(sections 30, 47 (iii)); Planck's relation (section 18); E = m (section
+7); the ladder (section 12) and the gravitational atom (section 11 (d)).
+The pair numbers at rest are the `pair --k 0` runs of the committed
+script (section 54's table).
+
+**(i) Newton and Coulomb.** At the fixed point a held content of content
+M_A has the flux q_A = ρM_A through every shell and the count and push of
+section 46 (iii). A held content B at r absorbs J_A = q_A/(4πr²)(1 + δ)
+units of net momentum per interval and reads them by S3:
+
+```text
+F_B = − ε_g M_B ρ M_A /(4π r²) (1 + δ) r̂,     G = ε_g ρ /(4π);          a_B = − G M_A / r²: the equivalence, nothing of M_B;
+F_B = + Q_A Q_B ρ /(4π r²) (1 + δ) r̂,          k_C = ρ /(4π);            the product law, the sign, nothing of M_A or M_B;
+```
+
+ζ = 1 (J = Φ for the wave, section 26 (iii)), δ the per-Node modulation
+of section 46 (iii) (the anisotropy (15/8)ω′²K₄ and the edge's ripple),
+ε_g the gravity reading's multiplier of (x), 1 in every run so far.
+**Reached** in form, as section 48 (i) and (ii), on one condition that
+section 54 (ii) found and S2.3 now carries: the holder lets the free
+field through (mixed at its Node as at any Node) and reads the net
+momentum of what arrives. Read so, a holder on the axis at d = 4, 8, 12,
+16, 20 from a source at period 16 takes 1.40, 1.08, 0.98, 0.92, 1.02
+q/(4πd²) per interval (the `pair --mode pass --k 0` runs, the sponge in
+place of the edge): the free wave's J with its near field at d = 4 (1.41
+in section 46 (iii)) and the flux law within 10 % beyond. Sunk instead
+(every unit absorbed and released again as the holder's, as the draft
+first read the owner's "absorbed"), the same holder takes 0.86, 0.41,
+0.30, 0.19, 0.13 q/(4πd²): a point sink in a wave takes the gradient of
+the intensity, ∝ 1/d³, and Newton is lost. A5s repeated on the open board
+reads the pass; the sum law A5s found (the push proportional to the
+other's set alone) was the engine's reading before charge-per-thing-v1
+(PR #322) and is not the law's.
+
+**(ii) The third law by symmetry.** There is no return: A's field
+absorbed at B pushes B, B's field absorbed at A pushes A, and the two
+pushes are ε_g M_B ρM_A/(4πd²)(1 + δ_B) and ε_g M_A ρM_B/(4πd²)(1 + δ_A):
+equal and opposite for one ρ (section 52 (iii)) up to δ_B − δ_A, which is
+zero for a pair placed symmetrically and the edge's ripple otherwise
+(section 48 (iii)). Measured at rest (period 16, both holders reading
+and passing, the sponge in place of the edge): +1.396 and −1.393 q/(4πd²)
+at d = 4, +1.083 and −1.073 at d = 8, +0.983 and −0.964 at d = 12, the
+sums 0.3, 1.0 and 1.9 % of either, the sponge's asymmetry (the pair sits
+nearer one face as d grows). What escapes: A's field and B's field, each
+passing through the other's holder unchanged, mirror images of one
+another, so the escaping momenta are equal and opposite as the pushes
+are; no ledger sums them (S8), since a push multiplies the read momentum
+by the cross-section and the mixing conserves no signed flux. **Reached**
+at rest in the mean field, exactly for a symmetric pair; in whole units
+to the rounding (4 % per window at N = 64, below 1 % at 256, section 47
+(ii)); **in motion, section 54 (ii)**: the symmetry breaks at first order
+in v, and the third law holds for a moving pair only under the release
+stated there.
+
+**(iii) The clock and the redshift.** A held content at r from a mass M
+reads |u_M| = 0.760 √(GM)/r per interval (section 48, S = 4πGM) and owes
+w per whole unit of it; in the intervals it owes, it neither advances its
+phase nor releases (S2.6), so its clock and its emission are one rate,
+
+```text
+ρ_eff / ρ = 1 − w |u_M|(r) = 1 − w · 0.760 √(G M) / r,       GR's 1 − GM/r at w = 1.316 √(G m)   (a body of owners of content m, section 48),
+z = w c₁ G M (1/r₁ − 1/r₂)  →  G M (1/r₁ − 1/r₂)   at that w,
+```
+
+section 40's law with section 48's coefficient, **reached** in form, the
+second order 0 or +x² against GR's −x²/2 (section 40) as before. New
+under the shadow law: the emission of a held content in a potential is
+slowed with its clock, so its flux is q(1 − w|u_M|) and the push it gives
+at a distance carries the factor: a mass deep in another's potential
+weighs less at infinity by 1 − GM/r at the GR w, which is the form of
+the redshift of a bound mass's energy in physics (M(1 − Φ) to first
+order), a consequence and not a rule. The light between two clocks is a
+wave stamped at the emitter's rate and read against the receiver's; the
+static index of (v) delays every crest alike, so z is the ratio of the
+two rates as written. Needs a run: the three rings of section 43 (x) in
+the formula layer, with the star's field the fixed point of section 46.
+
+**(iv) The mass a clock reads: the numbers of a body.** Round 6 left the
+composition open: one holder of content M gives |u| ∝ √M, and a body of
+k owners of content m each gives k√m, linear in M only for owners of one
+content. Under S4 a held content born at q_F carries one number and a
+body of k such contents carries k numbers, its field being k fields of
+flux ρq_F each, mixed apart and counted (S2.2); the wait reads the sum of
+their sizes,
+
+```text
+Σ_j |u_j| = k · 0.2143 √(ρ q_F) / r = 0.2143 √(ρ / q_F) · M / r,       M = k q_F:   linear in M,   w_GR = 1.316 √(G q_F),
+```
+
+one w per family's quantum, and one for the world if every family's
+quantum is a multiple of one q₀ (the ladder of hypothesis 12, section
+12: not reached). The identity that makes it computable: k fields of one
+phase mixed apart are k copies of one field of flux ρq_F, so the sum of
+their sizes is √k times the size of the one field of flux ρM the engine
+would mix as a whole; the reader may therefore multiply the size of the
+holder's one field by √(M_A/q_F), the root of the message's content in
+quanta of its family, one root per source per holder per interval, and
+the dense layer keeps one field per held content. **Reached** in form
+with that reading (the orchestrator's elaboration, flagged): a clock
+reads GM/r linearly in M for bodies of one family, and a body of two
+families reads Σ M_F/√q_F, which is linear in the total content only if
+the quanta are equal. Needs the owner: whether a merged content keeps
+its numbers as a set (S4, point 25) is the physical content of this
+reading, and the ladder is what would make w one for the world.
+
+**(v) The index of light, the bending and the Shapiro delay.** Light in
+flight pays the wait at every Node it crosses (S2.6, the orchestrator's
+(iii)): a quantum of the light family at a Node where the mass's field
+has the size |u_M| is held w|u_M| intervals, the fraction on the Node's
+counter for the family and one whole interval when it reaches one, which
+is section 35's option II-b with the amplitude in place of the count.
+Its check stands: a first-in-first-out hold of w at a fraction f of the
+Nodes gives k_in/k₀ = 1 + f w to first order and exactly the lattice
+dispersion with time doubled at f = 1, so the wave's index is
+
+```text
+n = 1 + w |u_M|(r) = 1 + w · 0.760 √(G M) / r  →  1 + G M / r   at the GR w of (iii)   (GR: 1 + 2GM/r for light).
+```
+
+Light is a wave and nothing else (S5), so there is no image apart from
+the front: the deflection is the tilt of the front, the gradient of the
+delay across the beam, and the delay is the path sum of the index over
+the pass, both integrals of section 41 with the wave's √3 intervals per
+Link:
+
+```text
+α = w ∫ ∂_b |u_M| dx = 2 w c₁ G M / b · X /√(b² + X²)  →  2 G M / b · X/√(b² + X²)   at the GR w;
+Δt = √3 w ∫ |u_M| dx = √3 · w c₁ G M · 2 asinh(X/b)  →  √3 G M · 2 asinh(X/b) intervals  =  G M · 2 asinh(X/b) in light's own Links of travel,
+```
+
+X the half-length of the pass, the push half of rounds 5 to 7 (Newton's
+corpuscle, GM/b on the image) gone with the path: nothing in flight is
+pushed. On 33³ (X = 16) at b = 3 to 8, with section 48 (v)'s measured
+path sums of |u| at the fixed point (0.998, 0.998, 1.009, 1.031, ≈ 1.00,
+0.974 at b = 3, 4, 5, 6, 7, 8, the value at 7 interpolated) in place of
+the ideal integral:
+
+```text
+b                                   3       4       5       6       7       8
+α / (2 G M / b)  ideal              0.983   0.970   0.954   0.937   0.916   0.894
+α / (2 G M / b)  at the fixed point 0.981   0.968   0.963   0.966   0.916   0.871
+Δt / (√3 G M)                       4.75    4.19    3.75    3.40    3.13    2.89        (2 asinh(16/b); ×1.000, 0.998, 1.009, 1.031, 1.00, 0.974 measured)
+```
+
+So the coefficient of the bending is **2GM/b, Einstein's space half and
+nothing else** (the parametrized post-Newtonian value at γ = 0, that is
+Newton's number by a different route), and the delay is **half of GR's
+2GM ln(4x_Ax_B/b²)**, both at the one w that gives GR's clock: **not
+whole**. What would make both whole at once, and why it is now possible
+where round 6 found no pair of w's: since light takes no push, the
+bending and the delay come from one index, as in GR, and both reach GR's
+value if light pays twice what a held content pays, w_γ = 2 w_m: α =
+4GM/b · X/√(b² + X²) and Δt = 2GM · 2asinh(X/b) in light's Links, GR's
+γ = 1 exactly to first order. Two readings of the factor. A declared w
+per family (point 16 admits one rule per pair of families): lawful,
+declared, not derived. Or the wait paid per lane: a quantum in flight
+crosses two lanes at every Node, in and out (point 25), while a held
+content sits on none and reads once per interval; if the wait is owed
+per lane crossed, w|u| each, light pays 2w|u| per Node and matter w|u|
+per interval with one w: the factor 2 of GR's light index from the two
+lanes of a Port. Neither is in the law as written; the second is
+recorded as hypothesis 19 and is the owner's. Two conditions on any run
+of it: the index exists only where the mass's field is a wave in whole
+units at the light's Nodes (section 47 (iii): q_M ≥ 1740 r²; on 33³ with
+S = 4πGM = 20 to 200 nowhere, so the star's field is a formula, section
+48 (v)), and the light itself must be a wave (q_γ ≥ 1740 r² at the
+screen, section 52 (v)) whose tilt is read as the centroid of the
+absorbed amount along a screen behind the mass. **Different law** with
+one w (2GM/b, half Shapiro); **reached** with light paying twice
+(flagged, hypothesis 19).
+
+**(vi) Two slits and Born.** The lamp is a held content with a clock
+M_L/K and a light table burning q_γ units per quantum; behind a wall of
+held contents with two slits its light is the wave of section 29, the
+optical fringes n(y) = n₁ + n₂ + 2√(n₁n₂) cos(2π d y/(λ_w L)) at full
+depth for equal slits, λ_w = 2π/k(ω′) with ω′ the lamp's rate less the
+light's rotation (section 52 (iv)). The screen is held content that keeps
+light (S6): every whole unit arriving is absorbed, the ninths park, and
+the parked amount of the family at a Node, across numbers (the number is
+gone at absorption, S4), reaches q_γ every q_γ/n(y) intervals: a click.
+So over T intervals the mark at y counts
+
+```text
+C(y) = ⌊ n(y) T / q_γ ⌋ ± 1:      Born's distribution by counting, exact in the mean, with a variance below 1 at every mark
+```
+
+(the register is an accumulator, section 11 (a)), where nature's counts
+are Poisson with a variance equal to the mean: **reached** in the
+distribution, **different law** in the statistics (sub-Poissonian counts,
+readable in A1 repeated as the variance of the counts per mark against
+their mean). Whether the quanta come one at a time or as a flood the
+time-averaged pattern is the same, as in nature; the model's quantum is
+not an individual (S9): one absorption per whole q_γ of amount, not per
+number, since a Node that kept the parts of different numbers apart would
+never assemble one. The coherence: the lamp's stamping must be steady
+over the run, and a lamp that burns a per interval chirps by a/K_turn in
+rate per interval (K_turn = KN), so a fringe at the path difference Δℓ
+intervals drifts by a T Δℓ/K_turn turns over T intervals: for A1's
+geometry (Δℓ ≈ 23 intervals at the first minimum, T = 200) a = 4 needs
+K_turn ≫ 1.8·10⁴, and K = 1 (K_turn = 64) washes every fringe within one
+interval, which is one reason no run under the law of the bit could show
+one. **Needs a run**: A1 with q_γ ≥ 2·10⁶ (section 52 (v)), K_turn ≥ 2²⁰,
+the lamp's rate M_L/K_turn ≢ 0 mod 1 (period 16: λ_w = 9.2), the screen's
+counts per mark and their variance.
+
+**(vii) The photoelectric threshold.** A click assembles q_γ, the light's
+birth amount, and by section 18 q_γ = K ν with ν the beat the light was
+born at: a table on the amount per quantum is a table on the frequency.
+The holder's table for light: absorb if q_γ ≥ W (the declared work of
+the family), releasing a held content of the electron family with the
+remainder q_γ − W as its momentum's magnitude (a step out of the screen,
+S2.7), else re-release (the light spreads on); the number of clicks per
+interval is n/q_γ, proportional to the intensity and inverse in the
+frequency, and the electron's momentum grows with ν and not with the
+intensity. **Reached as a table**, no run needed for the threshold; the
+electron's emission as held content stepping out is S2.7 as written.
+
+**(viii) Compton.** A quantum q_γ absorbed by a held electron of content
+M: M ← M + q_γ, p ← p + q_γ h (S3). Its re-emission is a table: what
+amount leaves, and it leaves as a spherical wave from the event at the
+holder's phase (S2.4), with no direction of its own; where it is next
+absorbed is the remainder rule's. The natural table re-emits what was
+absorbed, q_γ′ = q_γ, and gives no shift (Thomson's scattering); Compton's
+q_γ′ = q_γ/(1 + (q_γ/M)(1 − cos θ)) needs the electron's kinetic energy,
+which the books do not hold (section 7: E = m, p = Mv), and an angle θ
+between the incoming and the outgoing quantum, which a spherical
+re-emission does not have: the electron's recoil is along the incoming
+light whatever direction the light is next absorbed in. **Different
+law**: the shift is a declared table and the recoil is uncorrelated with
+the scattered direction; a run (a lamp, a held electron, a ring of marks)
+reads the angular distribution of the re-absorptions, isotropic here
+against Klein–Nishina.
+
+**(ix) Bell.** Unchanged, at most 2, for a reason one paragraph holds. A
+source is held content whose table releases two quanta of light at one
+event, each a wave of q_γ units spreading by the mixing with the phase
+relation the table stamps; each polarizer and each counter is held
+content whose table reads the local amount and the local phase against
+its own setting and absorbs whole q_γ by the remainder rule. Every click
+is therefore a deterministic function of the field at that Node and the
+setting there, and the field at a Node is a local variable fixed before
+the click by the wave's arrival; two such functions with independent
+settings obey Bell's inequality, S_CHSH ≤ 2, whatever the tables, and
+the model's quantum being no individual (S9) removes even the pairwise
+coincidence that a classical field picture would count. Nature has 2√2.
+**Different law**, as under the law of the bit; A2 reads it.
+
+**(x) Bound contents, and the hierarchy of the two readings.** The setup:
+a proton held at the centre (content M_p, whole charge +Q, its field the
+fixed point of section 46, a wave to r = 0.024 √(ρM_p)), an electron
+held at r with p = M_e v tangential (content M_e, charge −Q). The
+electric push per interval is Q²ρ/(4πr²) toward the proton (i), so a
+circular orbit has v² = ρQ²/(4πM_e r) at any r: Kepler's continuum
+(section 11 (d)), and it does not radiate, since the free field costs
+the electron nothing (R12): no radiative collapse, against classical
+physics and with quantum physics, for free. A ladder: **not reached**;
+nothing in the pushes reads a phase (section 18, 31) and the wait reads
+|u_p| only, which slows the clock and the speed alike at every r. The
+integer orbit (the hops of S2.7 on a circle, the pushes in whole units of
+1/M_p each with a remainder) closes only for rational parameters, a
+dense set with no spectrum. What the setup shows before any run, and
+what decides whether the atom can be run at all: the push a unit gives
+the electron is Q²/M_p (the charge reading) against ε_g M_e (the mass
+reading), so the electric-to-gravitational ratio is
+
+```text
+F_e / F_g = Q_A Q_B / (ε_g M_A M_B)     in lattice units, with ε_g = 1 as the readings stand (section 19: k_C = G);
+```
+
+and an orbit that reads the proton's field as a wave takes at least
+about 256 units per interval, J ≥ 148 ρM_p/r² … more exactly the wave's
+count n ≥ 256 at r gives ρM_p ≥ 1858 r², so the electron's v² = ρQ²/
+(4πM_e r) ≥ [Q²/(M_eM_p)] · 148 r; with v ≤ 1/2 (section 53) this is
+Q²/(M_eM_p) ≤ 1/(592 r): **an electron that orbits inside a wave is bound
+by gravity 592 r times more than by electricity when ε_g = 1**, and an
+orbit that reads no wave takes its pushes as rare whole units of Q²/M_p
+each, which for nature's ratio 2·10³⁹ throw it to the cap at the first
+unit. Nature's hierarchy cannot be run with ε_g = 1 and whole units. The
+way that keeps every rule and adds one number: the gravity reading
+carries a declared multiplier ε_g (point 16: "what the thing multiplies
+the message by"), G = ε_g ρ/(4π), k_C = ρ/(4π), and ε_g M_A M_B = 4.4·10⁻⁴⁰
+Q_A Q_B for the electron and the proton of nature; section 19's "k_C = G,
+new, testable" is then **out**, G/k_C being a constant of the coupling
+table like the sign. A world for the run at ε_g = 0 (or 2⁻³⁰): ρ = 1,
+M_p = 2¹⁷ (q_p = 1.3·10⁵, the wave to r = 8.7, N* = 5.6·10⁶ on the board),
+Q = 4, M_e = 64 (p must be a whole number and v = p/M ≤ 1/2, so a slow
+electron needs M_e ≫ 1), r = 8: v = 0.089, p = 6, the period 565
+intervals, one whole unit of push every 29 intervals, n(8) = 282 units
+read per interval, and the wait w ≤ 1/1024 or the electron freezes at
+|u_p| = 9.7 (the GR w of a world with ε_g = 2⁻³⁰ is 1.316 √(G q_F) =
+2·10⁻⁵, consistent). The electron's own field is a haze (q_e = 64 per
+interval), its push on the proton not 1/r², the proton's motion at
+M_p/M_e = 2048 times smaller in any case. **Needs a run** (the second
+world of section 56): whether the integer orbit at these numbers holds
+for ten periods, and the owner's decision on ε_g before any atom of
+nature's numbers is declared.
+
+**(xi) Pair creation.** A table at held content, as in nature it is at a
+nucleus: a whole quantum q_γ ≥ 2 q_e assembled at a holder whose table
+names it releases two held contents of the electron and the positron
+families (charges −Q and +Q, contents q_e each, so charge and amount are
+exact: q_γ − 2q_e stays on the holder or leaves as light by the table)
+through two Ports as steps (S2.7), the light's momentum q_γ h shared by
+the table among the three. Events happen only where content is held
+(S2.3), so light alone in the vacuum makes no pair, as in nature. The
+positron family is a declaration (the electron's tables with the
+opposite sign). **A table**; nothing to derive and nothing to run before
+the two worlds of section 56.
+
+**Check.** (i) and (ii): the `pair --mode pass --k 0` runs at d = 4 to
+20 and the `--mode sink` runs at the same d (section 54 (ii)'s table);
+(iii) to (v): the algebra of sections 40,
+41 and 48 with S = 4πGM and the path sums of section 48 (v); the table of
+(v) is 2X/(b√(b² + X²)) · b/2 and 2 asinh(X/b) at X = 16; (vi): the
+chirp is (a/K_turn) T Δℓ with Δℓ = 13 Links × √3; (x): the inequality is
+n(r) = 0.1378 ρM_p/r² ≥ 256 substituted in v² = ρQ²/(4πM_e r).
+
+**Verdict.** Newton and Coulomb: **reached** in form, G = ε_g ρ/(4π),
+k_C = ρ/(4π), with the free field passing through a holder and read
+(1.40, 1.08, 0.98, 0.92, 1.02 of q/(4πd²) at d = 4 to 20); **lost** if the
+holder sinks it (1/d³). The third law: **reached** at rest by symmetry
+(0.3 to 1.9 %), **section 54 (ii)** in motion. The clock and the redshift:
+**reached** in form at w = 1.316 √(Gq_F), with the emission slowed with
+the clock (**new**). The mass a clock reads: **linear in M** with one
+number per family quantum (flagged). The bending and Shapiro: **2GM/b
+and half** with one w (**different law**); **4GM/b and 2GM ln** if light
+pays twice (hypothesis 19, **flagged**). Two slits: **Born by counting**,
+sub-Poissonian (**different law** in the statistics), with q_γ ≥ 2·10⁶ and
+K_turn ≥ 2²⁰ for a fringe (**needs a run**). The photoelectric threshold:
+**a table on the amount, hence on the frequency**. Compton: **different
+law** (a table for the shift, no angular correlation). Bell: **≤ 2**.
+Bound contents: Kepler's continuum, no collapse, **no ladder**; the
+hierarchy **impossible at ε_g = 1** (a theorem), a declared ε_g (**needs
+the owner**), a world for the orbit (**needs a run**). Pair creation: **a
+table**.
+
+## 56. Round 8: the verdicts, the smallest engine, and the first three worlds
+
+| Claim under the law of the shadow | Round 8 | Derived, needs a run, or needs the owner |
+| --- | --- | --- |
+| The law as points | **stated** (section 51, S1 to S10), two words fixed (unit, q_F), the interval's order (S2), S2.3 amended while written (the free families read and passed, not sunk) | the owner: every point, and the flags of section 51's verdict |
+| A held content at rest neither evaporates nor grows | **reached exactly** in integers: M constant under R13; kept, it grows by 2.2 ρ per interval; destroyed, the flux is ε q and a shadow is lost (section 52 (i)) | derived; world 1 reads M and the three lines |
+| Home as a no-op for the amount | **forced** (section 52 (i)); the own number pushes nothing (section 54 (i)) | derived |
+| A bound on ρ | **new**: ρ < 6 ε(ω′) = 1.87, 0.56, 0.16 at periods 16, 32, 64 (0.024 clockless), or the near field condenses at the neighbour (section 52 (ii)) | derived |
+| One ρ for the world | **forced** by the third law (section 52 (iii)); light's rates are tables | derived |
+| The rotation in flight | **a gauge**; the wave's number is the holder's rate less the shadow's rotation, and must not vanish (section 52 (iv)) | the owner: what a matter shadow rotates by |
+| The field of a small content | **a parked haze, no 1/r² in any window** (section 47 (iii) read for matter); the electron of a run needs M ≥ 1740 r²/ρ, a lamp's quantum q_γ ≥ 1740 r² (section 52 (v)) | derived; the worlds' sizes follow |
+| The step | **forced** as a release and an absorption, the record on one share of amount M (section 53 (ii)) | the owner: the record on the share |
+| The speed of a held content | v = p/M by the accumulator (**Newton's first law by bookkeeping**); the bound **1/2 on an axis, 0.29 on (111) under T2**, below the field's 1/√3 everywhere; 1 under T1, above it (section 53 (iii)) | the owner: T2 (an event takes the interval) |
+| Beyond the cap; in a potential | **different law**: p unbounded, v saturated at 1/2; v = (p/M)(1 − w\|u\|), **reached** in form (section 53 (iv), (v)) | derived |
+| Inertia of one held content | **none** if its own number pushes it: a drag or a runaway of 2.1 v ρM (ρQ²/M) per interval, no emission weighting cancelling it at every v; **reached** with the own number sunk for the amount alone (section 54 (i)) | derived; the rule forced |
+| A holder in a wave | the sink reads **1/r³** (the gradient of the intensity); the pass reads **1/r²** (section 54 (ii)) | derived; S2.3 amended |
+| Inertia of a co-moving pair | **none at first order in v** with the release isotropic in the lattice frame: the pair pushes itself at 3.3 v times its internal acceleration at d = 8, v = 1/16; of order v J of either sign out to d = 4.3 λ_w in the far field measured; no weighting of the release cures it (section 54 (ii)) | the owner: the release in the holder's frame, or a preferred frame for composite matter |
+| Newton and Coulomb | **reached** in form, G = ε_g ρ/(4π), k_C = ρ/(4π), ζ = 1, the holder reading the free flux (1.40, 1.08, 0.98, 0.92, 1.02 of q/(4πd²) at d = 4 to 20) (section 55 (i)) | A5s repeated, open board (world 2) |
+| The third law | **reached** at rest by symmetry (0.3 to 1.9 %); in motion **to the order the release allows**; no ledger of field momentum (sections 54 (iii), 55 (ii)) | world 2 in motion |
+| The clock and the redshift | **reached** in form, 1 − w · 0.760 √(GM)/r, GR at w = 1.316 √(G q_F); the emission slowed with the clock (**new**) (section 55 (iii)) | the three rings, formula layer |
+| The mass a clock reads | **linear in M** with one number per family quantum, read as the size times √(M_A/q_F) (section 55 (iv)) | the owner: the numbers of a merged content; the ladder for one w |
+| The bending of light | **2GM/b · X/√(b² + X²)** with one w (Einstein's space half, the push half gone with the path); 4GM/b if light pays twice (section 55 (v)) | the owner: hypothesis 19 or a per-family w; A6 on the formula layer |
+| The Shapiro delay | **half of GR** with one w (GM · 2asinh(X/b) in light's Links); GR's with light paying twice (section 55 (v)) | the same |
+| Two slits and Born | **Born by counting**, sub-Poissonian; the lamp's chirp needs K_turn ≫ a T Δℓ (section 55 (vi)) | A1 repeated with q_γ ≥ 2·10⁶, K_turn ≥ 2²⁰ (world 3) |
+| The photoelectric threshold | **a table on the amount per quantum**, hence on the frequency (section 55 (vii)) | derived (a table) |
+| Compton | **different law**: the shift a table, the recoil uncorrelated with the scattered direction (section 55 (viii)) | the owner: the table; a run for the angular counts |
+| Bell | **≤ 2** (section 55 (ix)) | A2 |
+| Bound contents | Kepler's continuum, no collapse, **no ladder**; the hierarchy **impossible at ε_g = 1** (a theorem); ε_g declared (section 55 (x)) | the owner: ε_g; world 2's atom |
+| Pair creation | **a table** at held content (section 55 (xi)) | derived (a table) |
+
+**The smallest engine that implements the law (feature 20, field-only-v1):
+the Node rule in pseudo-code.** One family shown; the loops over families
+are outer. The dense layer's arrays are the shadows; a held content is a
+record at a Node; nothing else exists. The order is S2's.
+
+```text
+state per Node x, per family F, per number ν, per sign:
+    arrive[x, F, ν, p]      amount in units that arrived through Port p this interval, and its phase
+    park[x, F, ν, p]        the parked ninths below one unit, with their phase
+    hold[x, F]              the family's wait counter at the Node for quanta in flight (S2.6 for light; 0 if the owner strikes it)
+held content at x (at most one record per family):
+    (M, p[3], acc[3], phase, numbers, wait, tables)
+
+interval t, at every Node x, for every family F:
+  1  move:      arrive[x, F, ν, p] ← what x + e_p sent through its Port toward x at t − 1;  a Port with no Node beyond: escaped += what x sent
+  2  if x holds no content of F (an empty Node for F):
+        for each number ν:  (B_1..B_6) ← S · (A_1..A_6),  S = J/3 − I on the six arrivals as amplitudes   [node-mixing-v1, exact]
+                            share the whole units by |B_p|², park the ninths, each share at the phase of B_p
+        if hold is declared and another family's size Σ_j|u_j| is present: owe hold[x, F] += w·Σ_j|u_j|; while hold ≥ 1: keep this interval's outputs one interval, hold −= 1
+  3  else (x holds content of F, the record R):
+        for each number ν ≠ ν(R), each Port p, each whole unit a of family G arriving (park first, take whole units):
+            by R.tables[G]:  push:   R.p += σ_g ε_g R.M a h  +  σ_e (Q_G/M_G) R.Q a h        (h = −e_p; the message carries Q_G/M_G)
+                             amount: re-release → pool += a     |   kept → R.M += a (a click if R counts; the family's quantum assembled → the click table)   |   passed → mix as in 2
+        for each unit arriving with ν = ν(R):  pool += a                                     (home: the amount only, section 54)
+        wait:   R.wait += w · Σ_{j ≠ ν(R)} |u_j|;   if R.wait ≥ 1: R.wait −= 1; go to 6 with nothing released, no phase step, no accumulator
+        release: out ← ρ·R.M + pool  (whole units; the fraction on R's six registers);  send out/6 through each Port at R.phase with ν(R) and R's message
+                 plus what R.tables[light] emits (paid: R.M −= it)
+        clock:   R.phase += R.M / K  (mod N)
+        step:    for each axis i: acc[i] += p[i];  if some acc[i] ≥ M and no step in the previous interval (T2):
+                     send R whole through that Port as one share of amount M with R riding on it; acc[i] −= M; x holds nothing of F from now
+  4  a share of amount ≥ q_F arriving on one lane at a Node: held there as the record it carries (merged with a record of F already there by point 25)
+  5  books:  held + in flight + parked = released − escaped + the paid lines, per family, every interval
+  6  end
+```
+
+What is not in it, by design: a bit, a return, a trace, a home rule, a
+momentum on any share but the step's, a closed board, a stock given with
+the board (the prefill, if used, is the fixed point of section 46 written
+at tick 0 and booked as released before tick 0, section 49 (ii)), a draw.
+What is declared per world: ρ, K, N, w (and ε_g, the light tables, the
+click tables, q_F per family), the board and its held contents at tick 0.
+What the engine already has of it: 1 and 2 (node-mixing-v1,
+node-is-ports-v1, lanes-v1, dense-field-v1), the record's momentum and
+accumulators (external-body-v1), the counter and its table
+(detector-absorb-v1, node-is-ports-v1), the readings (clock-readings-v1,
+charge-per-thing-v1, wait-reads-v1's amplitude), the ledger. What is new:
+3 (the absorption of every unit at a holder, the re-release pool, the
+release every interval), 4 (the step as a share with a record), the hold
+of 2 for light if kept, and the retirement of the bit and the return.
+
+**The first three worlds to run on it.** Every world open, the dense
+layer, N = 256 (section 47 (ii): stationary window means; N = 64 drifts
+1.7 % of q per interval into standing content), K one for the world with
+the holder's rate M/K ≢ 0 mod N (period 16), ρ = 3/2048, w declared,
+ε_g = 1 unless the world says, T2 for the step, 400 intervals with the
+reading over 300 to 400, the shell means beside the per-Node values.
+
+1. **One held content and its field** (33³, the `proton` of 2²⁸ at the
+   centre, K = 2²⁶, q = 786 432). Read: the released, home and escaped
+   lines (q + h, h = 2.2 q, q at the fixed point, section 46 (vii)); M
+   unchanged at every interval (section 52 (i)); the flux through the
+   cubes of half-width 4, 8, 12 (1.00 q within 1 % by tick 128); the
+   shell means of n, J_r, |u| at r = 6 to 16 (0.147 q/r², q/(4πr²),
+   0.2143 √q/r within 3 %, slopes −2.00, −2.00, −1.00 ± 0.05); then the
+   same body given p = (M/16, 0, 0) at tick 200: it hops one Link every 16
+   intervals (section 53), its home line falls to 1.2 q (section 54's
+   table), and its momentum stays (M/16, 0, 0) to the unit if the own
+   number is absorbed for the amount only, or falls by 0.27 q ε_g M per
+   interval if it is not (section 54 (i)). What decides against the
+   derivation: a flux short of q by 3 %, a shell-mean slope outside ±0.1,
+   or a change of M.
+2. **Two held contents** (33³, two protons of 2²⁸ on the axis at d = 8,
+   placed symmetrically, then at d = 4 and 12; then the electron world of
+   section 55 (x): ρ = 1, M_p = 2¹⁷ at the centre with Q = +4, an electron
+   of M_e = 64, Q = −4 at r = 8 with p = (0, 6, 0), ε_g = 2⁻³⁰, w = 2⁻¹⁰,
+   K with the electron's rate ≢ 0). Read, for the protons: the push on
+   each per window against ε_g M ρ M/(4πd²) × (0.86, 0.41, 0.30 at d = 4,
+   8, 12: the absorbing holder's factors of section 54's table, to be
+   confirmed as the engine's), the two pushes equal and opposite within
+   the rounding (7·10⁻⁴ in the mean field); then both given p = (M/16, 0, 0)
+   at tick 200: the sum of the two pushes per window against 0 (the third
+   law in motion) and against −2.2 v J at d = 8 (section 54 (ii)): what the
+   engine gives here is the inertia verdict. For the atom: whether the
+   electron completes ten periods of 565 intervals at r = 8 ± 1, the
+   pushes arriving as whole units of 1/M_p with the remainder, and no
+   light emitted (R12 is free). What decides against: the pushes unequal
+   at rest beyond the rounding, or an orbit that spirals within three
+   periods.
+3. **A lamp, two slits and a screen** (45 × 65 × 17, open; the lamp a held
+   content of the `light` stock family at (4, 32, 8) with a clock at
+   period 16 (M_L/K_turn ≡ 1/16 mod 1), K_turn ≥ 2²⁰, a table burning one
+   quantum of q_γ = 2²¹ units per interval; the wall x = 16 of held
+   contents that keep light, the slits at y = 24 and 40; the screen x = 40
+   of held contents that keep light and count whole q_γ per family). Read:
+   the count per mark over ticks 200 to 400 against ⌊n(y) T/q_γ⌋ with
+   n(y) the two-slit law at λ_w = 9.24 and L = 24 (spacing 13.9 Links,
+   depth ≈ 1 for equal slits, section 29), the variance of the counts per
+   mark against their mean (below 1 here, equal to the mean in nature),
+   the one-slit control flat; then the same with the lamp burning one
+   quantum every 50 intervals (one at a time on the board): the same
+   pattern per unit of absorbed amount (section 55 (vi)). What decides
+   against: no modulation of depth above 0.5 at the optical spacing with
+   the control flat, or the counts' variance above their mean.

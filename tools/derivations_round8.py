@@ -15,7 +15,8 @@ field and not the edge's 7 % mirror (section 46 (i)). Subcommands:
              moving at v = 1/k, two fields (two numbers): the momentum each absorbs of the
              other's field per interval, and their sum (--d, --k, --alpha, --theta, ...);
              --theta is a phase lead theta v on the +x Port of every release (and a lag on -x),
-             0 for the law as written
+             0 for the law as written; --mode sink|pass says what a Node does with the other's
+             field: sink it and re-release it as its own, or mix it and read it (section 55 (i))
   scan       selfpush over k in (0, 8, 4, 2) and alpha in a list, one table
 
 Every number quoted in DERIVATIONS.md sections 52 to 54 comes from these subcommands with
@@ -133,10 +134,12 @@ def run_selfpush(L, W, k, alpha, period, q, ticks, sponge, measure, theta=0.0):
     return out
 
 
-def run_pair(L, W, d, k, alpha, period, q, ticks, sponge, measure, theta=0.0):
+def run_pair(L, W, d, k, alpha, period, q, ticks, sponge, measure, theta=0.0, mode="sink"):
     """Two held contents, A ahead at x_A and B behind at x_A - d, both moving +x at v = 1/k.
-    Two fields (numbers). Each Node absorbs both fields; its own is recycled (R13) and the other's
-    is re-released with its own number (S2.3, S2.4), so the absorbed cross amount joins its release."""
+    Two fields (numbers). Each Node sinks its own field and re-releases it (R13). The other's field:
+    mode "sink": absorbed at the Node and re-released with the Node's number (section 51's S2.3 as
+    first written); mode "pass": the Node mixes it as an empty Node does and only reads the net
+    momentum of its arrivals (the push as R4', section 55 (i) as amended)."""
     shape = (L, W, W)
     FA = np.zeros((6,) + shape, dtype=np.complex128)
     FB = np.zeros((6,) + shape, dtype=np.complex128)
@@ -161,10 +164,14 @@ def run_pair(L, W, d, k, alpha, period, q, ticks, sponge, measure, theta=0.0):
         cBA, mBA, _ = absorbed(FA, pb)  # A's field absorbed at B: the push on B
         phase = np.exp(2j * np.pi * t / period) if period > 0 else 1.0
         # A releases its own number: q + home + what it absorbed of B (re-released as A's)
-        BA[:, xa, cy, cy] = release(q + hA + cAB, weights, phase, lead)
-        BB[:, xa, cy, cy] = 0.0  # B's field is absorbed at A, nothing of it leaves A
-        BB[:, xb, cy, cy] = release(q + hB + cBA, weights, phase, lead)
-        BA[:, xb, cy, cy] = 0.0
+        if mode == "sink":
+            BA[:, xa, cy, cy] = release(q + hA + cAB, weights, phase, lead)
+            BB[:, xa, cy, cy] = 0.0  # B's field is absorbed at A, nothing of it leaves A
+            BB[:, xb, cy, cy] = release(q + hB + cBA, weights, phase, lead)
+            BA[:, xb, cy, cy] = 0.0
+        else:
+            BA[:, xa, cy, cy] = release(q + hA, weights, phase, lead)
+            BB[:, xb, cy, cy] = release(q + hB, weights, phase, lead)
         FA, _ = walk(BA, periodic=False)
         FB, _ = walk(BB, periodic=False)
         FA *= mask
@@ -174,6 +181,7 @@ def run_pair(L, W, d, k, alpha, period, q, ticks, sponge, measure, theta=0.0):
     m = last.mean(axis=0)
     J = q / (4 * np.pi * d * d)
     out = dict(
+        mode=mode,
         L=L,
         W=W,
         d=d,
@@ -239,6 +247,7 @@ def cmd_pair(args):
                 args.sponge,
                 args.measure,
                 args.theta,
+                args.mode,
             ),
             indent=1,
         )
@@ -296,6 +305,7 @@ def main():
         a.add_argument("--measure", type=int, default=128)
         if name == "pair":
             a.add_argument("--d", type=int, default=4)
+            a.add_argument("--mode", choices=("sink", "pass"), default="sink")
         if name == "scan":
             a.add_argument("--ks", type=int, nargs="+", default=[0, 8, 4, 2])
             a.add_argument("--alphas", type=float, nargs="+", default=[0.0])
