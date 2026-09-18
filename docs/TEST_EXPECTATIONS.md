@@ -33,6 +33,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
 | `test_dense_field.py` | 3 | 1.0 | The dense mode for boards that a field fills (`dense-field-v1`, [performance](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17)): the pure-field Nodes cycled as one vectorized step, one split step equal to `spread_content` (the registers, the releases, the phases, the bit), the hand-over of rays between the region and the engine's Nodes both ways, the same `state.json` and ledger as the engine alone, the unsupported worlds rejected, pinned below |
+| `test_perf_arrays.py` | 6 | 6.0 | The performance lane of 2026-09-18 (`perf-arrays-v1`, [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)): `state.json` written Node by Node from the engine and the dense arrays, byte for byte `json.dumps(snapshot)`; a series run one process per world byte-identical to a single run; the standing set (`standing-field-v1`): the layer kept fixed from its exact repeat, the things reading it as the stepping engine gives, the run's files identical, the fallback when a thing steps, the residual without a repeat, the refusals, pinned below |
 | `test_bit_law.py` | 19 | 2.2 | Feature 15, the law of the bit (`bit-law-v1`, the model owner's decision of 2026-09-18, Highlights 5.4): every ray carries one bit, 1 a thing and 0 its shadow, a ray of the same family; a shadow pushes a thing and walks home with -dp, home to a body and to a thing ray; a shadow meets its own thing without a push; a mark returns a shadow and counts nothing, catches things by its counter; the ledger's `returned` line and the things' own identity; the trace; the bit never changes; the things' content is constant between absorptions; a shadow-only board makes no event and the dense layer equals the engine; no lottery, two runs byte-identical; the retired keys rejected, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
@@ -3189,6 +3190,63 @@ engine alone and the dense mode give the same `state.json`, the same ledger
 same `final_totals`, the same `detector_marks` (the one mark's counter light
 equal to the totals, positive) and `detector_mark_totals`; the first run
 agreed.
+
+## Snapshots from the arrays, parallel series runs and the standing set
+
+`tests/test_perf_arrays.py` is the isolated test of the performance lane of
+2026-09-18 (`perf-arrays-v1`; [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)),
+pinned here before its first run. Two minimal worlds built as data: the
+*line*, 9 x 3 x 3 open, two bodies of the family `m` (charge -1, release
+1/65536 of an amount 2^24, 256 quanta per heading per fill interval) at
+(1, 1, 1) and (7, 1, 1), each reading the other's shadows by the momentum
+table `{m: 1}` on its charge, the split table [1, 1, 0, 0, 0, 0] (forward and
+back, nothing transverse), a fill of 8 intervals, the dense mode; the *box*,
+9 x 5 x 5 open, the same bodies at (2, 2, 2) and (6, 2, 2) under the
+catalog's table [6, 1, 1, 1, 1, 1] with 24 ray slots, so that parked shares
+fill the registers. The standing set's integers are those of the current
+split rule (`field-spreading-v1` with the Node-owned remainder) and are
+re-pinned when the rule changes (feature 16c, the Node mixes the six); the
+identities are not the rule's. Six cases:
+
+- `snapshot`: after 24 ticks of the box, in the dense mode and with the
+  engine alone, the text `snapshot_writer.write_snapshot` streams equals
+  `json.dumps(world.snapshot(), indent=2)` byte for byte (the dense case
+  lists the region's Nodes with their parked shares among the `parked`
+  entries, more than one); through the runner, `state.json` of the box for
+  24 ticks equals that text of a second world stepped the same 24 ticks plus
+  a line break, and its SHA-256 equals the digest the runner wrote before the
+  change (the pin of the migration, measured on the same world before the
+  writer existed).
+- `series`: `tools/run_series.py`'s `run_series` on the line and the box for
+  12 ticks each with two jobs: two `run` directories with `run.json`,
+  `state.json` and `log.txt`, both rows `completed` with `ticks` 12 and a
+  peak RSS above zero, `summary.json` and `summary.md` written, and every
+  `state.json` and ledger (`audit` of `run.json`) byte-identical to
+  `run_initialization` of the same world for the same ticks in the test's own
+  process; two worlds of one name refused.
+- `standing`: the line for 200 ticks with `standing_field: true`: the layer
+  repeats exactly after tick 119 (`standing_field_iterations` 119, the
+  residual `{cells: 0, amount: 0}`), is kept fixed for the remaining 81 ticks
+  (`standing_field_ticks` 81, `standing_field` true, no fallback), and the
+  things read it as the stepping engine gives: the momentum of both bodies
+  after every tick identical to the stepping run's (B's (2043, 0, 0) at the
+  end, A's the negation), the ledger balanced at every tick, `state.json` and
+  the ledger of the run byte-identical to the stepping run's.
+- `residual`: the same line with `standing_field: 50`: no repeat within 50
+  intervals, `standing_field` false, `standing_field_iterations` null, the
+  residual of the last comparison `{cells: 25, amount: 172}`, zero ticks
+  fixed, and the files identical to the stepping run's (the layer stepped
+  throughout).
+- `fallback`: the line with a lamp at (4, 0, 0) that pays out one thing ray
+  of amount 2 on +Y after 130 cycles (`dissolve`): the layer is fixed at 119,
+  the thing's packet changes the engine's part of the state at tick 131 and
+  the region falls back to stepping there (`standing_field_fallback` `{tick:
+  131, reason: ...}`, `standing_field` false, `standing_field_ticks` 11), and
+  the run's `state.json` and ledger are byte-identical to the stepping run's
+  of the same world: the fallback is exact.
+- `rejected`: `standing_field` on a world without the dense mode
+  (`dense_field: false`), a negative `standing_field`, and a non-integer one
+  are refused by the parser with the reason.
 
 ## The field's books
 

@@ -373,6 +373,11 @@ class InitialState:
     # cycled as one vectorized step; off unless declared, and admitted only for
     # the worlds the prototype supports (validate_dense_field_admission).
     dense_field: bool = False
+    # The standing set by a formula (standing-field-v1, Highlights 5.4 point 13):
+    # the dense layer is stepped until it repeats exactly, then kept fixed while
+    # the things read it; the value is the most intervals the layer is stepped
+    # before the run gives up on the fixed point, 0 for a world without the mode.
+    standing_field: int = 0
     sampling_profile: str = DETECTOR_ONLY
     # The Nodes whose Detector bit is set, each with its setting and ticket seed
     # (detector-mark-v1): the only place a draw exists.
@@ -450,6 +455,10 @@ class InitialState:
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")
         validate_dense_field_admission(self)
+        if type(self.standing_field) is not int or self.standing_field < 0:
+            raise ValueError("standing_field is a nonnegative number of intervals")
+        if self.standing_field and not self.dense_field:
+            raise ValueError("standing_field requires the dense mode (standing-field-v1)")
         if self.ray_delay:
             if self.computation_field is None:
                 raise ValueError("ray_delay requires computation_field")

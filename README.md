@@ -275,7 +275,9 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
-| `src/event_universe/dense_field.py` | The dense mode: a board's pure-field Nodes cycled as one vectorized integer step (`dense-field-v1`, off by default) |
+| `src/event_universe/dense_field.py` | The dense mode: a board's pure-field Nodes cycled as one vectorized integer step (`dense-field-v1`, off by default), and the standing set kept fixed from the layer's exact repeat (`standing-field-v1`) |
+| `src/event_universe/snapshot_writer.py` | `state.json` written Node by Node from the engine and the dense arrays, byte for byte the snapshot's JSON |
+| `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end |
 | `src/event_universe/fields/` | Generic field arithmetic, rays, spatial couplings and local rules |
 | `src/event_universe/diagnostics/` | Read-only observers, conservation audits and the optional disturbance renderer |
 | `src/event_universe/runner.py` | Initialization-based execution and optional visualization |

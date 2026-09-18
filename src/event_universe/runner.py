@@ -47,6 +47,7 @@ from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
+from event_universe.snapshot_writer import write_snapshot
 
 if TYPE_CHECKING:
     from event_universe.diagnostics.local_observer import LocalObserver
@@ -72,17 +73,22 @@ def run_initialization(
     observer: Path | None = None,
     node_workers: int = 1,
     dense_field: bool | None = None,
+    standing_field: bool | int | None = None,
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence.
 
     `dense_field` overrides the world's own `dense_field` key (dense-field-v1)
-    when given; the saved `initialization.json` is the input as read, and the run
-    record names the mode when it is on.
+    when given, `standing_field` the world's own `standing_field` key
+    (standing-field-v1: `True` looks for the layer's fixed point within the run's
+    ticks, an integer within that many intervals); the saved `initialization.json`
+    is the input as read, and the run record names the modes when they are on.
     """
     source = initialization.read_bytes()
     document = parse_json_document(source)
     if dense_field is not None and isinstance(document, dict):
         document = {**document, "dense_field": dense_field}
+    if standing_field is not None and isinstance(document, dict):
+        document = {**document, "standing_field": standing_field}
     validate_observer_selection(document, external=observer is not None)
     prepared = (
         prepare_initialization(document)
@@ -245,12 +251,19 @@ def _execute_run(
                             probe.capture(world.tick)
             except Exception as error:
                 failure = error
-            final = world.snapshot()
             final_bodies = {item["index"]: item for item in world.external_bodies()}
             if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
-                frames.append(final)
+                frames.append(world.snapshot())
             if probe is not None and (sampled_tick != world.tick or failure is not None):
                 probe.capture(world.tick)
+            # The final snapshot, Node by Node from the engine and the dense
+            # region's arrays (`snapshot_writer`): the same text as
+            # `json.dumps(world.snapshot(), indent=2)` without every Node held at
+            # once, the peak memory of a filled board's snapshot the arrays plus
+            # one Node (the performance review of 2026-09-18, A5s Run 2's r = 20).
+            with (output / "state.json").open("w", encoding="utf-8") as state_stream:
+                write_snapshot(world, state_stream)
+                state_stream.write("\n")
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": fingerprint,
@@ -361,6 +374,14 @@ def _execute_run(
         # every other world is byte for byte the same; a dense region writes no
         # per-Node events, its record being its totals per tick.
         metadata["dense_field"] = DENSE_FIELD
+    standing = world.standing_field_report()
+    if standing is not None:
+        # The standing set (standing-field-v1): recorded only when the world
+        # declares the mode: whether the layer was kept fixed to the end, the
+        # interval at which it repeated, the residual of the last comparison,
+        # the intervals it was kept fixed and the fallback, if a thing stepped.
+        metadata["standing_field_max_iterations"] = initial.standing_field
+        metadata.update(standing)
     spreading = spreading_field_names(initial.fields, initial.spatial_fields)
     if spreading:
         # Field spreading (field-spreading-v1): recorded only when a family declares
@@ -460,7 +481,6 @@ def _execute_run(
                 else f"carried-{initial.allocation_phase}-phase-v1"
             ),
         )
-    (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
     observation = None if probe is None else probe.recording()
     if observation is not None:
         metadata["observer"] = {
@@ -506,7 +526,21 @@ def main() -> None:
         action="store_true",
         help="Cycle the board's pure-field Nodes as one vectorized step (dense-field-v1)",
     )
+    parser.add_argument(
+        "--standing-field",
+        nargs="?",
+        const=-1,
+        type=int,
+        metavar="N",
+        help=(
+            "Step the dense layer to its fixed point and keep it fixed (standing-field-v1); "
+            "N the most intervals to look, the run's ticks by default"
+        ),
+    )
     args = parser.parse_args()
+    standing: bool | int | None = None
+    if args.standing_field is not None:
+        standing = True if args.standing_field < 0 else args.standing_field
     try:
         artifact = run_initialization(
             args.init,
@@ -517,6 +551,7 @@ def main() -> None:
             observer=args.observer,
             node_workers=args.node_workers,
             dense_field=True if args.dense_field else None,
+            standing_field=standing,
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")

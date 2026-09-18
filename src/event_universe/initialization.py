@@ -131,6 +131,18 @@ def _phase_value(value: object, label: str, phase_bits: int) -> int:
     return value
 
 
+def _standing_field(value: object, ticks: int) -> int:
+    """The standing set by a formula (standing-field-v1): `true` steps the dense
+    layer to its fixed point within the world's ticks, a positive integer within
+    that many intervals, `false` or absent leaves the layer stepping every
+    interval."""
+    if value is False:
+        return 0
+    if value is True:
+        return ticks
+    return _integer(value, "standing_field", 1)
+
+
 def _boolean(value: object, label: str) -> bool:
     if type(value) is not bool:
         raise ValueError(f"{label} must be a boolean")
@@ -2551,6 +2563,7 @@ def parse_initial_state(document: object) -> InitialState:
             "ray_delay",
             "focus",
             "dense_field",
+            "standing_field",
             "ray_phase_per_tick",
             "sampling_profile",
             "detectors",
@@ -2637,6 +2650,9 @@ def parse_initial_state(document: object) -> InitialState:
         ray_delay=_boolean(obj.get("ray_delay", False), "ray_delay"),
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
+        standing_field=_standing_field(
+            obj.get("standing_field", False), _integer(obj["ticks"], "ticks", 0)
+        ),
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
         detectors=_detectors(obj.get("detectors", []), fields, spatial),
         return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),

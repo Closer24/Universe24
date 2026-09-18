@@ -91,9 +91,15 @@ class DenseRegion(Protocol):
 
     def materialized_nodes(self, nodes: dict[Address3, SpatialNode]) -> dict[Address3, SpatialNode]: ...
 
+    def materialized_node(self, position: Address3, base: SpatialNode | None) -> SpatialNode: ...
+
+    def visited_slab(self, x: int) -> list[Address3]: ...
+
     def active_count(self) -> int: ...
 
     def claim(self, position: Address3) -> None: ...
+
+    def standing_report(self) -> dict[str, object] | None: ...
 
 
 class SpatialEngine:
@@ -700,7 +706,13 @@ class SpatialEngine:
         }
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:
-        states = self.nodes[position].states if position in self.nodes else self._blank_states()
+        return self.node_values(position, self.nodes.get(position))
+
+    def node_values(self, position: Address3, node: SpatialNode | None) -> dict[str, dict[str, object]]:
+        """The fields at one Node as the snapshot lists them, from the Node's state
+        (`node`, or a blank Node when None), so that a Node read one at a time from
+        the dense region's arrays is listed exactly as one held in `nodes`."""
+        states = node.states if node is not None else self._blank_states()
         result: dict[str, dict[str, object]] = {}
         for index, (definition, state) in enumerate(
             zip(self.initial.spatial_fields, states, strict=True)
@@ -712,7 +724,7 @@ class SpatialEngine:
                     local[component] = checked_work(local[component] + value)
             field.validate(pack(tuple(local)))
             if definition.rays:
-                node_rays = self.nodes[position].rays if position in self.nodes else ()
+                node_rays = node.rays if node is not None else ()
                 rays = tuple(ray for ray in (node_rays[index] if node_rays else ()) if not ray.parked)
                 local[0] = checked_work(local[0] + coherent_stock(rays, definition))
                 field.validate(pack(tuple(local)))
@@ -727,9 +739,7 @@ class SpatialEngine:
                 # (node-is-ports-v1), listed in the snapshot's `parked`.
                 result[field.name]["ray_count"] = sum(1 for ray in rays if not ray.parked)
             if definition.decay is not None and definition.decay.localizes:
-                localized = (
-                    self.nodes[position].localized if position in self.nodes else self._blank_localized()
-                )
+                localized = node.localized if node is not None else self._blank_localized()
                 result[field.name]["localized"] = unpack(localized[index])
         return result
 
@@ -888,60 +898,95 @@ class SpatialEngine:
         # group is read from the record by a reader, not listed here.
         result: dict[str, object] = {
             "spatial_fields": [
-                {
-                    "position": position,
-                    "fields": self.values(position),
-                    "cost": node.last_cost,
-                    "arrival_mask": node.arrival_mask,
-                    "delay_counts": node.delay_counts,
-                    "waiting_until": None if node.pending is None else node.pending.ready_tick,
-                }
-                for position, node in sorted(self.nodes.items())
+                self.node_entry(position, node) for position, node in sorted(self.nodes.items())
             ],
-            "spatial_baselines": {
-                self.initial.fields[d.field].name: unpack(d.baseline)
-                for d in self.initial.spatial_fields
-            },
-            "spatial_transfers": [
-                {
-                    "origin": p.origin,
-                    "target": self._neighbor(p.origin, p.port),
-                    "port": p.port,
-                    "arrival_tick": p.arrival_tick,
-                    "fields": {
-                        self.initial.fields[d.field].name: tuple(unpack(v) for v in p.fields[i])
-                        for i, d in enumerate(self.initial.spatial_fields)
-                    },
-                    "rays": sum(len(r) for r in p.rays),
-                }
-                for packets in self.links.values()
-                for p in packets
-                if p is not None
-            ],
+            "spatial_baselines": self.snapshot_baselines(),
+            "spatial_transfers": self.snapshot_transfers(),
         }
         # The parked shadows (node-is-ports-v1): what every Node holds below one
         # quantum per owner, sign and heading, in units of the family's split
         # denominator, and the traces (amount 0); the dense region's Nodes are
         # read as Node state here (`materialized`).
-        parked: list[dict[str, object]] = []
-        for position, node in sorted(self.nodes.items()):
-            if not node.rays:
-                continue
-            for index, definition in enumerate(self.initial.spatial_fields):
-                for ray in node.rays[index]:
-                    if ray.parked:
-                        parked.append(
-                            {
-                                "position": position,
-                                "family": self.initial.fields[definition.field].name,
-                                "owner": ray.owner,
-                                "sign": ray.source_sign,
-                                "heading": list(definition.headings[ray.heading]),
-                                "amount": ray.amount,
-                                "unit": parked_unit(definition),
-                                "phase": ray.phase,
-                                "bit": BIT_SHADOW,
-                            }
-                        )
-        result["parked"] = parked
+        result["parked"] = [
+            entry
+            for position, node in sorted(self.nodes.items())
+            for entry in self.parked_entries(position, node)
+        ]
         return result
+
+    def node_entry(self, position: Address3, node: SpatialNode) -> dict[str, object]:
+        """One Node's entry of the snapshot's `spatial_fields`."""
+        return {
+            "position": position,
+            "fields": self.node_values(position, node),
+            "cost": node.last_cost,
+            "arrival_mask": node.arrival_mask,
+            "delay_counts": node.delay_counts,
+            "waiting_until": None if node.pending is None else node.pending.ready_tick,
+        }
+
+    def parked_entries(self, position: Address3, node: SpatialNode) -> list[dict[str, object]]:
+        """One Node's entries of the snapshot's `parked` list: its parked shadows
+        and traces in the order its rays hold them (node-is-ports-v1)."""
+        if not node.rays:
+            return []
+        return [
+            {
+                "position": position,
+                "family": self.initial.fields[definition.field].name,
+                "owner": ray.owner,
+                "sign": ray.source_sign,
+                "heading": list(definition.headings[ray.heading]),
+                "amount": ray.amount,
+                "unit": parked_unit(definition),
+                "phase": ray.phase,
+                "bit": BIT_SHADOW,
+            }
+            for index, definition in enumerate(self.initial.spatial_fields)
+            for ray in node.rays[index]
+            if ray.parked
+        ]
+
+    def snapshot_baselines(self) -> dict[str, tuple[int, ...]]:
+        return {
+            self.initial.fields[d.field].name: unpack(d.baseline) for d in self.initial.spatial_fields
+        }
+
+    def snapshot_transfers(self) -> list[dict[str, object]]:
+        return [
+            {
+                "origin": p.origin,
+                "target": self._neighbor(p.origin, p.port),
+                "port": p.port,
+                "arrival_tick": p.arrival_tick,
+                "fields": {
+                    self.initial.fields[d.field].name: tuple(unpack(v) for v in p.fields[i])
+                    for i, d in enumerate(self.initial.spatial_fields)
+                },
+                "rays": sum(len(r) for r in p.rays),
+            }
+            for packets in self.links.values()
+            for p in packets
+            if p is not None
+        ]
+
+    def snapshot_nodes(self) -> Iterator[tuple[Address3, SpatialNode]]:
+        """Every Node of the snapshot in position order, one at a time: the engine's
+        own Nodes as they are and, in the dense mode, the region's visited Nodes
+        read as Node state one x-slab at a time (dense-field-v1), so that beside
+        the arrays no more than one slab's positions and one Node's state exist;
+        the same Nodes, in the same order and with the same content, as
+        `materialized` gives `nodes` for `snapshot`."""
+        if self.dense is None:
+            yield from sorted(self.nodes.items())
+            return
+        own: dict[int, list[Address3]] = {}
+        for position in self.nodes:
+            own.setdefault(position[0], []).append(position)
+        for x in range(self.initial.shape[0]):
+            region = set(self.dense.visited_slab(x))
+            for position in sorted(region.union(own.get(x, ()))):
+                if position in region:
+                    yield position, self.dense.materialized_node(position, self.nodes.get(position))
+                else:
+                    yield position, self.nodes[position]
