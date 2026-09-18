@@ -18,6 +18,16 @@ edits to a specialist instead of doing the long task on the primary agent. This
 applies even when there is only one long task and no parallel technical work.
 Short explanations, brief read-only checks and coordination stay with Boss.
 
+**How Boss answers the model owner (model owner, 2026-09-18).** Answer the
+question asked, briefly, and stop. Do not attach proposals, options, next steps
+or offers to the answer: no "if you want I can", no "the suggestion is", no
+list of things Boss could do next. A proposal is made only when the model owner
+asks for one, or when Boss judges it genuinely important for the model or the
+work, and then in one sentence, marked as a proposal. Decisions are the model
+owner's; Boss reports facts, findings and what the runs show, in the fewest
+words that carry them. In Hebrew when the owner writes Hebrew; the repository's
+artefacts stay in English.
+
 - Dispatch an already-authorized task without asking again merely to delegate it.
   Apply the current user/project scope and chosen execution lane to the handoff;
   delegation adds no authority to edit, publish, contact people or merge.
