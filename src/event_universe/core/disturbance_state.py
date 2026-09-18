@@ -347,6 +347,10 @@ class InitialState:
     # `clock`; 0 when no thing has a clock. The wait per whole quantum read
     # (point 23): w = n / d intervals, 1 by default.
     clock: int = 0
+    # N (the definitions of the law of the bit, the model owner, 2026-09-18): the
+    # number of steps of the phase circle, one for the world like K, declared
+    # once, 64 by default; every ray family's phase modulus is this.
+    phase_steps: int = 64
     wait_per_quantum: tuple[int, int] = (1, 1)
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
@@ -437,6 +441,18 @@ class InitialState:
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")
         validate_dense_field_admission(self)
+        if (
+            type(self.phase_steps) is not int
+            or not 2 <= self.phase_steps <= 4096
+            or self.phase_steps & (self.phase_steps - 1)
+        ):
+            raise ValueError("N is a power of two from 2 through 4096, one for the world")
+        for family_definition in self.spatial_fields:
+            if family_definition.rays and family_definition.phase_modulus != self.phase_steps:
+                raise ValueError(
+                    "every ray family's phase circle is the world's one N (the cleanup of "
+                    "2026-09-18, Highlights 5.4, the definitions of the law)"
+                )
         if type(self.standing_field) is not int or self.standing_field < 0:
             raise ValueError("standing_field is a nonnegative number of intervals")
         if type(self.least_delay_routing) is not bool:

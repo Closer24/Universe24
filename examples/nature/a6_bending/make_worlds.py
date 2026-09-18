@@ -26,7 +26,7 @@ The series (one world per case and form, `{form}_{case}.json`): the axis series
 b = 4, 6, 8, 12, 16 at N = 2^12 (`b4` .. `b16`), the control without the star
 (`control`), the star at twice the amount (`2m`), the slow massive ray, an
 electron of rest rate 1 with the light's content (`slow`), the N scan at b = 8
-(`n8`, `n10`, `n14`, `n16`, the light's `phase_bits`), the other side of the star
+(`n8`, `n10`, the world's `N`; `n14` and `n16` deleted with the bound N <= 4096), the other side of the star
 (`m4` .. `m16`, b = -4 .. -16), all on the register's board of 65 x 65 x 9 Nodes;
 and, on a cube of 49 x 33 x 33 that holds the (0, 1, 1) diagonal passes, the axis
 passes b = 4, 6, 8 (`c_b4`, `c_b6`, `c_b8`) and the diagonal passes at (0, d, d),
@@ -58,7 +58,10 @@ CUBE_STAR = (24, 16, 16)
 AXIS_B = (4, 6, 8, 12, 16)
 SCAN_B = 8
 BASE_BITS = 12
-SCAN_BITS = (8, 10, 14, 16)
+# The N scan stops at N = 4096 (12 bits, the base): N is one for the world and a
+# power of two up to 4096 since the cleanup of 2026-09-18 (the definitions of the
+# law); the n14 and n16 worlds of the first series are deleted.
+SCAN_BITS = (8, 10)
 CUBE_AXIS_B = (4, 6, 8)
 CUBE_DIAGONAL_D = (3, 4, 6)
 # The light's amount (its momentum register's scale, 2^18: the register reads the

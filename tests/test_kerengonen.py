@@ -287,11 +287,14 @@ def test_kerengonen_is_validated_and_identified(tmp_path):
     raw["emissions"][1]["kerengonen_phase"] = 4
     with pytest.raises(ValueError, match="kerengonen_phase"):
         parse_initial_state(raw)
-    # Every ray is a wave ray (wave-ray-family-v1): a plain field admits an emission
-    # phase below its declared width, and without a declared width only phase 0.
+    # Every ray is a wave ray (wave-ray-family-v1) on the world's one circle (the
+    # cleanup of 2026-09-18): a plain family admits an emission phase below N, the
+    # world's, 64 by default, and none at or above it.
     raw = two_lamps(4, 0)
     del raw["spatial_fields"][0]["kerengonen"]
     raw["emissions"][1]["kerengonen_phase"] = 2
+    assert parse_initial_state(raw).phase_steps == 64
+    raw["emissions"][1]["kerengonen_phase"] = 64
     with pytest.raises(ValueError, match="kerengonen_phase requires"):
         parse_initial_state(raw)
     raw = two_lamps(4, 1)

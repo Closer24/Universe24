@@ -147,7 +147,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 0,
       "release": [
         1,
@@ -198,7 +197,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 0
     },
     {
@@ -244,7 +242,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 0
     },
     {
@@ -290,7 +287,6 @@
         1,
         1
       ],
-      "phase_bits": 12,
       "charge": -3,
       "clock": true
     }
@@ -431,5 +427,6 @@
       "coupling": "launch"
     }
   ],
-  "K": 262144
+  "K": 262144,
+  "N": 4096
 }

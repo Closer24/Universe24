@@ -40,6 +40,12 @@ The rules, applied to a world document in place:
   and its `initial_field` entry are dropped, so no world of nature declares a
   field family.
 
+One N for the world (the definitions of the law, the model owner, 2026-09-18;
+`migrate_n`, applied by `migrate` as well): `phase_bits` leaves every spatial
+field and the world declares `N` once, the width its families declared, or
+nothing when none did (the default, 64); a coherence table's `phase_steps` is
+written at N.
+
 The clock, the decay table and one Link per interval (clock-readings-v1, the
 model owner's decisions of 2026-09-18, Highlights 5.4 points 19, 20, 21 and 23;
 `migrate_clock`, applied by `migrate` as well):
@@ -126,9 +132,39 @@ def migrate_clock(document: dict[str, Any]) -> dict[str, Any]:
     return document
 
 
+def migrate_n(document: dict[str, Any]) -> dict[str, Any]:
+    """One N for the world (the definitions of the law of the bit, the model
+    owner, 2026-09-18; the cleanup of the same day): the per-family `phase_bits`
+    leaves every spatial field and the world declares `N` once, the width the
+    families declared (2 to the power `phase_bits`, or a coherence table's
+    `phase_steps`; the largest when they differ, every coherence table then
+    written at N); a world whose families declared no width declares nothing
+    and runs at the default, 64."""
+    widths: set[int] = set()
+    fields = document.get("spatial_fields", [])
+    for entry in fields:
+        if "phase_bits" in entry:
+            bits = int(entry.pop("phase_bits"))
+            if bits > 0:
+                widths.add(1 << bits)
+        phased = entry.get("kerengonen")
+        if isinstance(phased, dict) and int(phased.get("phase_steps", 0)) > 1:
+            widths.add(int(phased["phase_steps"]))
+    if not widths:
+        return document
+    steps = max(widths)
+    document.setdefault("N", steps)
+    for entry in fields:
+        phased = entry.get("kerengonen")
+        if isinstance(phased, dict) and int(phased.get("phase_steps", 0)) > 1:
+            phased["phase_steps"] = document["N"]
+    return document
+
+
 def migrate(document: dict[str, Any]) -> dict[str, Any]:
     _node_is_ports(document)
     migrate_clock(document)
+    migrate_n(document)
     fields = document.get("spatial_fields", [])
     by_name = {entry["field"]: entry for entry in fields}
     renames: dict[str, str] = {}

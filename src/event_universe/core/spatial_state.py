@@ -237,8 +237,11 @@ PORT_HEADINGS: tuple[Heading, ...] = (
     (0, 0, -1),
 )
 # Every ray is a wave ray (Highlights 3.3 and 5.1, wave-ray-family-v1): the phase
-# every ray carries has the width its family declares, `phase_bits`, and every
-# phase advance or difference is a mask over 2^phase_bits, never a division. A
+# every ray carries is a step of the world's one circle of N steps (the
+# definitions of the law of the bit, 2026-09-18: N is declared once, like K, 64
+# by default; `phase_bits` here is log2 of that N, the same on every ray
+# family), and every phase advance or difference is a mask over N, never a
+# division. A
 # plain family is the special case with rest rate 0. The width has no bound in
 # the model; two host limits follow from what else stores a phase: the coherence
 # table of a Kerengonen field has one entry per phase step (at most 4096, twelve
@@ -1178,9 +1181,10 @@ class ShadowHome:
     outside: int = 0
 
 
+@lru_cache(maxsize=16)
 def steering_table(modulus: int) -> tuple[int, ...]:
     """The steering table of a phase width (Highlights 3.3 and 5.4, point 17:
-    computed once from the width, never declared), the Born split of two things
+    computed once from the world's N, never declared), the Born split of two things
     of one family that meet (section 5.2, a split indexed by the phase
     difference): the share that continues at a difference of d steps is
     cos^2(pi d / N) in N-ths, rounded to the nearest whole, N the modulus, in
@@ -1926,10 +1930,10 @@ class SpatialFieldDefinition:
     pace_denominator: int = 1
     # Scalar response readout: last-hop Port channels or complete resident ray headings.
     flux_projection: str = "ports"
-    # Every ray is a wave ray (wave-ray-family-v1): the width of the phase every
-    # ray of this family carries, the modulus being 2^phase_bits; 0 (one phase
-    # value, the plain field of existing worlds) unless declared, and log2 of
-    # phase_steps when a coherence table is declared without a width.
+    # Every ray is a wave ray (wave-ray-family-v1) on the world's one phase circle
+    # (the cleanup of 2026-09-18): log2 of the world's N, the modulus being
+    # 2^phase_bits, the same on every ray family; the parser sets it from N, and
+    # a typed caller may leave 0 (one phase value) or let a coherence table set it.
     phase_bits: int = 0
     # The family's charge per quantum, a bounded signed integer read by couplings
     # at a meeting and summed as charge x amount by the charge readout.

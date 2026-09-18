@@ -130,7 +130,6 @@
         1,
         1
       ],
-      "phase_bits": 12,
       "charge": 0,
       "release": [
         1,
@@ -181,7 +180,6 @@
         1,
         1
       ],
-      "phase_bits": 12,
       "charge": 0,
       "release": [
         1,
@@ -235,5 +233,6 @@
     }
   ],
   "ray_interactions": [],
-  "K": 64
+  "K": 64,
+  "N": 4096
 }

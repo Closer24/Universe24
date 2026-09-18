@@ -112,7 +112,6 @@
         1,
         1
       ],
-      "phase_bits": 8,
       "charge": -3,
       "release": [
         1,
@@ -163,7 +162,6 @@
         1,
         1
       ],
-      "phase_bits": 8,
       "charge": 3,
       "release": [
         1,
@@ -339,5 +337,6 @@
       "reads": "charge"
     }
   ],
-  "K": 4
+  "K": 4,
+  "N": 256
 }

@@ -38,25 +38,31 @@ ROOT = Path(__file__).resolve().parents[1]
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 COSTS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 AMOUNT = 1 << 24
-# The stepping engine's layer on the line repeats exactly after this tick, with
-# this period (node-mixing-v1: the mixing is the layer's step); with the lamp
-# of the fallback case beside the line, after LAMP_FIXED_POINT.
-FIXED_POINT = 25
-PERIOD = 1
-LAMP_FIXED_POINT = 32
-# The residual of the last comparison when the search stops after 10 intervals.
+# Re-pinned on 2026-09-18 in the cleanup under the law of the bit (one N for the
+# world, `cleanup-law-v1`): these worlds declared no phase width and ran on one
+# phase value, where a returning share carried no sign; on a circle of N steps
+# (N 2 here, the smallest, on which the half turn is one step) the returning
+# share is the minus, and the layer of the line, which repeated exactly after
+# tick 25 (period 1; after 32 with the lamp beside it) on one phase value, does
+# not repeat within 200 intervals: the standing-set search reports its residual
+# and the run steps the layer throughout, under the search and without it, with
+# the same files. The pins below are read from the run of 2026-09-18 at 32 ray
+# slots (the distinct phases hold more rays per Node than 24 slots).
+FIXED_POINT = None
+PERIOD = None
+# The residual of the last comparison when the search stops after 10 intervals,
+# and after the 200 intervals of the line and of the line with the lamp.
 SHORT_LIMIT = 10
-# Re-pinned 2026-09-18 (return-field-v1, part 2): the arrays carry the flow and
-# the momentum of every share, so the returning shares of the line, which were
-# the engine's Nodes' (one item of the residual for the whole engine part), are
-# array cells now (a momentum, three integers, one cell), and the residual
-# after 10 intervals reads the whole layer.
-SHORT_RESIDUAL = {"cells": 1640, "amount": 4002}
+SHORT_RESIDUAL = {"cells": 3727, "amount": 19162}
+LINE_RESIDUAL = {"cells": 323, "amount": 636}
+LAMP_RESIDUAL = {"cells": 563, "amount": 1394}
 # The momentum of the two bodies after 200 ticks of the line.
-FINAL_MOMENTA = [(-97, -1, 0), (98, 0, 0)]
-# The state.json digest of the box for 24 ticks, written by the runner of main at
-# 9c689f1 before the streamed writer existed (the pin of the migration).
-BOX_STATE_SHA256 = "ed563a8e5759f76615b8c30fd716e9597fbd0b697fc2bdb3253cff2e8214848f"
+FINAL_MOMENTA = [(-5013, 9, -1), (5158, -38, 33)]
+# The state.json digest of the box for 24 ticks, written by the streamed writer
+# of this rule at N 2 (2026-09-18); the pin of the migration, written by the
+# runner of main at 9c689f1 on one phase value, was
+# ed563a8e5759f76615b8c30fd716e9597fbd0b697fc2bdb3253cff2e8214848f.
+BOX_STATE_SHA256 = "96c50084d22dfefdd89aa854175f662a7b915358cbab4b3cc938703c8e97eefb"
 
 
 def field(name, components=1):
@@ -81,9 +87,13 @@ def body(position):
     }
 
 
-def document(shape, bodies, ticks, *, slots=24, fill=8):
+def document(shape, bodies, ticks, *, slots=32, fill=8):
     return {
         "schema_version": 1,
+        # One N for the world (the cleanup of 2026-09-18): the smallest circle,
+        # on which the returning share's half turn is one step; these worlds
+        # declared no width before that date and ran on one phase value.
+        "N": 2,
         "model_id": "perf-arrays-test-v1",
         "shape": list(shape),
         "boundary": "open",
@@ -114,7 +124,6 @@ def document(shape, bodies, ticks, *, slots=24, fill=8):
                 "ray_slots": slots,
                 "metric": "links",
                 "pace": [1, 1],
-                "phase_bits": 0,
                 "charge": -1,
                 "release": [1, 4096],
             }
@@ -268,22 +277,25 @@ def test_the_standing_set_is_the_layers_fixed_point_and_the_things_read_it(tmp_p
     tick, and the run's files are the stepping run's byte for byte."""
     momenta, audits, _, _, _ = stepped(line(), 200)
     standing_momenta, standing_audits, report, _, _ = stepped(dict(line(), standing_field=True), 200)
+    # One N for the world (2026-09-18): the layer does not repeat within 200
+    # intervals, the search reports its residual and the things read the layer as
+    # the stepping engine gives it, tick by tick, with the same files.
     assert report == {
-        "standing_field": True,
+        "standing_field": False,
         "standing_field_iterations": FIXED_POINT,
         "standing_field_period": PERIOD,
-        "standing_field_residual": {"cells": 0, "amount": 0},
-        "standing_field_ticks": 200 - FIXED_POINT,
+        "standing_field_residual": LINE_RESIDUAL,
+        "standing_field_ticks": 0,
         "standing_field_fallback": None,
     }
     assert standing_momenta == momenta
     assert momenta[-1] == FINAL_MOMENTA
-    assert any(any(vector) for tick in momenta[:FIXED_POINT] for vector in tick)
+    assert any(any(vector) for tick in momenta[:25] for vector in tick)
     assert audit_failure(standing_audits) is None and standing_audits == audits
     stepping = digests(written(tmp_path, "stepping", line()))
     fixed = digests(written(tmp_path, "standing", line(), standing_field=True))
     assert fixed[:2] == stepping[:2]
-    assert fixed[2]["standing_field"] is True and fixed[2]["standing_field_max_iterations"] == 200
+    assert fixed[2]["standing_field"] is False and fixed[2]["standing_field_max_iterations"] == 200
     assert "standing_field" not in stepping[2]
 
 
@@ -305,14 +317,16 @@ def test_a_thing_that_steps_under_the_standing_set_makes_the_run_fall_back_exact
     fallen = digests(written(tmp_path, "fallen", doc, standing_field=True))
     assert fallen[:2] == stepping[:2]
     record = fallen[2]
+    # One N for the world (2026-09-18): with the lamp beside the line the layer
+    # does not repeat either, so the run never fixes it and never falls back; the
+    # lamp's thing steps through a layer stepped throughout, the files the
+    # stepping run's.
     assert record["standing_field"] is False
-    assert record["standing_field_iterations"] == LAMP_FIXED_POINT
-    assert record["standing_field_period"] == PERIOD
-    assert record["standing_field_ticks"] == 131 - LAMP_FIXED_POINT - 1
-    assert record["standing_field_fallback"] == {
-        "tick": 131,
-        "reason": "a thing stepped or the things' Nodes changed",
-    }
+    assert record["standing_field_iterations"] is None
+    assert record["standing_field_period"] is None
+    assert record["standing_field_residual"] == LAMP_RESIDUAL
+    assert record["standing_field_ticks"] == 0
+    assert record["standing_field_fallback"] is None
     assert record["conserved_at_every_completed_tick"] is True
 
 

@@ -164,8 +164,8 @@ def scalar(name: str) -> JsonObject:
 
 
 def spatial_field(records: JsonObject, name: str, released: bool = False) -> JsonObject:
-    """The world's `spatial_fields` entry for one catalog ray, at the reference width:
-    its charge, its clock (a family with a clock declares `clock`, the world K) and,
+    """The world's `spatial_fields` entry for one catalog ray (the world runs at the
+    reference width, N 8): its charge, its clock (a family with a clock declares `clock`, the world K) and,
     with `released`, the shadow set its record declares (`release` on the family
     itself: a shadow is a ray of the same family, bit-law-v1)."""
     ray = records[name]
@@ -178,7 +178,6 @@ def spatial_field(records: JsonObject, name: str, released: bool = False) -> Jso
         "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": REFERENCE_BITS,
         "charge": ray["charge"],
     }
     if ray["clock"]:
@@ -225,6 +224,7 @@ def board(
         "normal_budget": 100000,
         "ticks": 2,
         "K": clock,
+        "N": 1 << REFERENCE_BITS,
         # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
         # tests/test_wait_rule.py; these worlds pin the catalog without it.
         "wait_per_quantum": 0,

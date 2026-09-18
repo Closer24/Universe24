@@ -104,6 +104,7 @@ def lamps(corners=(0, 1, 2, 3), l_phase=0):
 def document(rule, clock=1, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
     return {
         "schema_version": 1,
+        "N": 8,
         "K": clock,
         "model_id": "loop-binding-test-v1",
         "shape": [12, 12, 11],
@@ -163,7 +164,6 @@ def document(rule, clock=1, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "phase_bits": 3,
                 # The clock is the content (clock-readings-v1, 2026-09-18): a ray
                 # of 1 advances one step per interval at K 1 and one step every
                 # second interval at K 2; no rate is declared.

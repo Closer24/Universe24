@@ -92,7 +92,7 @@ def field(name, components=1):
     }
 
 
-def family(spread=None, phase_bits=0, clock=False):
+def family(spread=None, clock=False):
     entry = {
         "field": "m",
         "baseline": 0,
@@ -102,7 +102,6 @@ def family(spread=None, phase_bits=0, clock=False):
         "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": phase_bits,
         "charge": -1,
         "release": [1, 1],
     }
@@ -217,8 +216,11 @@ def document(
         "operation_costs": dict.fromkeys(COSTS, 1),
         "fields": [field("m"), field("momentum", 3)],
         "disturbance_types": list(types) or [RING],
-        "spatial_fields": [family(spread, phase_bits, bool(clock))],
+        "spatial_fields": [family(spread, bool(clock))],
         **({"K": clock} if clock else {}),
+        # One N for the world (the cleanup of 2026-09-18): the width these worlds
+        # declared per family, or the default 64 where they declared none.
+        **({"N": 1 << phase_bits} if phase_bits else {}),
         # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
         # tests/test_wait_rule.py; these worlds pin the pushes without it.
         "wait_per_quantum": 0,

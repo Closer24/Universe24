@@ -67,7 +67,6 @@ def family(name="m", spread=None, charge=-1):
         "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": 0,
         "charge": charge,
         "release": [1, 1],
     }

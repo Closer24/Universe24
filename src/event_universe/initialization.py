@@ -1306,15 +1306,28 @@ def _allowance(value: object, field: FieldDefinition, label: str) -> Payload:
     return pack(amounts)
 
 
+ONE_N = (
+    "phase_bits on a family was retired in the cleanup of 2026-09-18 (Highlights 5.4, the "
+    "definitions of the law of the bit, the model owner): N, the number of steps of the phase "
+    "circle, is one for the world like K, declared once as the world key N (64 by default); a "
+    "phase difference between any two rays is read on the one circle, so a width per family "
+    "means nothing"
+)
+DEFAULT_PHASE_STEPS = 64
+
+
 def _spatial_fields(
     value: object,
     fields: tuple[FieldDefinition, ...],
     schema_version: int = 1,
     clock: int = 0,
     wait: tuple[int, int] = (1, 1),
+    phase_steps_of_world: int = DEFAULT_PHASE_STEPS,
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
     names = _names(fields)
+    # One N for the world: every ray family's phase circle is the world's.
+    world_bits = phase_steps_of_world.bit_length() - 1
     for raw in _array(value, "spatial_fields", MAX_FIELDS):
         if isinstance(raw, dict) and ("rest_rate" in raw or "phase_advance" in raw):
             raise ValueError(
@@ -1390,10 +1403,12 @@ def _spatial_fields(
             if "spread" in obj or "steering" in obj:
                 raise ValueError(NOT_DECLARED_MIXING)
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
-            # Every ray is a wave ray (wave-ray-family-v1): the family declares the
-            # width of its phase, 2^phase_bits values, and its charge per quantum.
+            # Every ray is a wave ray (wave-ray-family-v1) on the world's one phase
+            # circle of N steps (the cleanup of 2026-09-18): a family declares its
+            # charge per quantum and no width.
             if "phase_bits" in obj:
-                phase_bits = _integer(obj["phase_bits"], "phase_bits", 0)
+                raise ValueError(ONE_N)
+            phase_bits = world_bits
             charge = _integer(obj.get("charge", 0), "spatial field charge")
             if "polarization_bits" in obj:
                 # Polarization (ray-polarization-v1): the width of the family's
@@ -1444,10 +1459,11 @@ def _spatial_fields(
                         raise ValueError(
                             "kerengonen phase_steps must be a power of two between 2 and 4096"
                         )
-                    table_bits = phase_steps.bit_length() - 1
-                    if "phase_bits" in obj and phase_bits != table_bits:
-                        raise ValueError("kerengonen phase_steps must equal 2 to the power phase_bits")
-                    phase_bits = table_bits
+                    if phase_steps != phase_steps_of_world:
+                        raise ValueError(
+                            "kerengonen phase_steps is the coherence table over the world's one "
+                            f"phase circle and must equal N ({phase_steps_of_world}); {ONE_N}"
+                        )
                 elif "capture" in phased:
                     raise ValueError("kerengonen.capture requires phase_steps, the coherence table")
                 capture = _text(phased.get("capture", "share"), "kerengonen.capture")
@@ -1496,13 +1512,15 @@ def _spatial_fields(
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
-            | {"phase_bits", "charge", "release", "spread", "steering", "polarization_bits", "clock"}
+            | {"charge", "release", "spread", "steering", "polarization_bits", "clock"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "flux_projection, phase_bits, charge, release, spread, steering, polarization_bits "
+                "flux_projection, charge, release, spread, steering, polarization_bits "
                 "and clock require ray transport"
             )
+        elif "phase_bits" in obj:
+            raise ValueError(ONE_N)
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
         axis = tuple(
@@ -2672,6 +2690,7 @@ def parse_initial_state(document: object) -> InitialState:
             "dense_field",
             "standing_field",
             "K",
+            "N",
             "wait_per_quantum",
             "detectors",
             "external_bodies",
@@ -2700,6 +2719,35 @@ def parse_initial_state(document: object) -> InitialState:
     # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
     # per interval, one integer for the world.
     clock = _integer(obj["K"], "K", 1) if "K" in obj else 0
+    # N (the definitions of the law of the bit, the model owner, 2026-09-18): the
+    # number of steps of the phase circle, one for the world like K, declared
+    # once, 64 by default, a power of two (the phase is a mask) up to the
+    # coherence table's bound.
+    # A world that declares no N but whose families declare one coherence table
+    # (`kerengonen.phase_steps`, a table with one entry per step of the circle)
+    # has declared its width once through that table; tables of two sizes are
+    # refused.
+    raw_spatial = obj.get("spatial_fields", [])
+    declared_tables = {
+        int(entry["kerengonen"]["phase_steps"])
+        for entry in (raw_spatial if isinstance(raw_spatial, list) else [])
+        if isinstance(entry, dict)
+        and isinstance(entry.get("kerengonen"), dict)
+        and type(entry["kerengonen"].get("phase_steps")) is int
+        and entry["kerengonen"]["phase_steps"] > 1
+    }
+    if "N" not in obj and len(declared_tables) > 1:
+        raise ValueError(
+            "the coherence tables of a world are written over its one phase circle: declare N "
+            f"once (the tables declare {sorted(declared_tables)} steps; {ONE_N})"
+        )
+    default_steps = next(iter(declared_tables)) if declared_tables else DEFAULT_PHASE_STEPS
+    phase_steps = _integer(obj.get("N", default_steps), "N", 0)
+    if phase_steps < 2 or phase_steps > MAX_PHASE_STEPS or phase_steps & (phase_steps - 1):
+        raise ValueError(
+            "N, the number of steps of the world's phase circle, is a power of two from 2 "
+            f"through {MAX_PHASE_STEPS} (64 by default; Highlights 5.4, the definitions of the law)"
+        )
     # The wait per whole quantum read (Highlights 5.4 point 23): w = n / d
     # intervals, an integer or [n, d], 1 by default.
     wait: tuple[int, int] = (1, 1)
@@ -2715,7 +2763,9 @@ def parse_initial_state(document: object) -> InitialState:
             wait = (numerator, denominator)
         else:
             wait = (_integer(raw_wait, "wait_per_quantum", 0), 1)
-    spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version, clock, wait)
+    spatial = _spatial_fields(
+        obj.get("spatial_fields", []), fields, schema_version, clock, wait, phase_steps
+    )
     if "computation_field" in obj and any(definition.rays for definition in spatial):
         raise ValueError(
             "computation_field on a board of ray fields was retired by clock-readings-v1 "
@@ -2777,6 +2827,7 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
         clock=clock,
+        phase_steps=phase_steps,
         wait_per_quantum=wait,
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),

@@ -1174,8 +1174,17 @@ def families(record: Record) -> list[dict[str, Any]]:
     for name in names:
         definition = spatial.get(name)
         kerengonen = dict(definition.get("kerengonen") or {}) if definition else {}
+        # One N for the world (the cleanup of 2026-09-18): the phase circle is the
+        # world's `N` (64 by default); a record before that date carries a width
+        # per family (`phase_bits`) or a coherence table's size.
         bits = None if definition is None else definition.get("phase_bits")
-        phase_steps = (1 << int(bits)) if isinstance(bits, int) else kerengonen.get("phase_steps")
+        phase_steps = (
+            None
+            if definition is None
+            else (1 << int(bits))
+            if isinstance(bits, int)
+            else initialization.get("N", kerengonen.get("phase_steps", 64))
+        )
         result.append(
             {
                 "name": name,
