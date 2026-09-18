@@ -1,7 +1,8 @@
 """The dense mode for boards that a field fills (dense-field-v1, docs/PERFORMANCE.md):
-the shadow-only Nodes of a board cycled as one vectorized step over integer arrays
-that applies the spread and remainder rule of field-spreading-v1 and
-field-remainder-v1 to every such Node at once, exactly; a ray leaving a dense Node
+the shadow-only Nodes of a board held as integer arrays and cycled by the mixing
+and remainder rule of node-mixing-v1 and field-remainder-v1, exactly as the
+engine's `spread_content` (since feature 16c, part 1, through it, Node by Node;
+the vectorized twin is part 2); a ray leaving a dense Node
 toward a sparse Node (a mark, a body, a lamp, a Node holding a returning or another
 family's ray) handed over as an ordinary packet and a packet leaving a sparse Node
 into the dense region absorbed into the arrays; the same `state.json` and the same
@@ -18,12 +19,18 @@ those of test_field_spreading.py, shadows given with the board; a mark returns
 every shadow and counts none (the `boundary` case's world, a thing radiating
 every interval, went with the law; the mark's return is read through the
 identity of the two modes).
+
+Re-pinned on 2026-09-18 under the Node's mixing (node-mixing-v1, Highlights 5.4
+point 24, feature 16c): the boards are built here (test_field_spreading.py went
+with the split table), nothing of the spread is declared, the `split` case reads
+the mixing's integers (a lone 12 sends 5 back at the opposite phase and 1 each
+other way, parking 3 ninths per heading; a lone 1 parks 4 ninths back and 1 each
+other way and fills a register of 10 to release) and the `rejected` case names a
+family without a shadow set.
 """
 
 import hashlib
-import importlib.util
 import json
-import sys
 from pathlib import Path
 
 import pytest
@@ -48,16 +55,95 @@ OWNER = 1
 SINGLE = (((6, 7, 7), 12, 0, 6),)
 
 
-def _spreading():
-    """The board builders of test_field_spreading.py, loaded as data."""
-    spec = importlib.util.spec_from_file_location(
-        "field_spreading_boards", ROOT / "tests" / "test_field_spreading.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module
+COSTS = {
+    name: 1
+    for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
+}
+
+
+def field(name):
+    return {
+        "name": name,
+        "components": 1,
+        "units": "quantum",
+        "signed": False,
+        "conserved": True,
+        "extensive": True,
+    }
+
+
+def vector(name):
+    return {
+        "name": name,
+        "components": 3,
+        "units": "quantum times heading",
+        "signed": True,
+        "conserved": True,
+        "extensive": True,
+    }
+
+
+def ray_field(name, advance, slots=16, **extra):
+    return {
+        "field": name,
+        "baseline": 0,
+        "transport": "ray",
+        "headings": HEADINGS,
+        "rays_per_tick": 1,
+        "ray_slots": slots,
+        "metric": "links",
+        "pace": [1, 1],
+        "phase_bits": 3,
+    } | extra
+
+
+def document(shadows, ticks=3, detectors=(), dense=False):
+    """The board: an open 13^3 lattice, the family `light` (an 8-step phase
+    advancing 0, nothing declared of its spread) and a never-seeded holder
+    (thing 1); `shadows` are (position, amount, heading index, phase) of `light`,
+    each a shadow of the holder given with the board as content that arrived on
+    its heading, spreading at its Node in the first cycle."""
+    raw = {
+        "schema_version": 1,
+        "model_id": "dense-field-test-v1",
+        "shape": [13, 13, 13],
+        "boundary": "open",
+        "slots_per_node": 2,
+        "link_ticks": 1,
+        "normal_budget": 100000,
+        "ticks": ticks,
+        "operation_costs": COSTS,
+        "fields": [field("light")],
+        "disturbance_types": [
+            {
+                "name": "holder",
+                "fields": ["light"],
+                "defaults": {"light": 0},
+                "transport": {"mode": "hold"},
+            }
+        ],
+        "spatial_fields": [ray_field("light", 0)],
+        "emissions": [],
+        "seeds": [],
+        "detectors": list(detectors),
+        "dense_field": dense,
+    }
+    if shadows:
+        raw["initial_field"] = {
+            "light": {
+                "rays": [
+                    {
+                        "position": list(position),
+                        "heading": HEADINGS[heading],
+                        "amount": amount,
+                        "phase": phase,
+                        "owner": OWNER,
+                    }
+                    for position, amount, heading, phase in shadows
+                ]
+            }
+        }
+    return raw
 
 
 def dense_document(raw):
@@ -149,24 +235,26 @@ def digests(path):
 
 
 # (a) split: one dense cycle at a Node against `spread_content` on the same input.
-# Pinned: the single shadow of 12 at phase 6 on +X (the `single` case of the field
-# spreading test) leaves 6 forward and 1 on each other heading, the registers
-# (6, 1, 1, 1, 1, 1) at phase 6; two shadows of 3 of opposite sign on +X leave 1
-# each forward at phase 0 and fill both blocks (7, 3, 3, 3, 3, 3); one quantum on
-# a forward register of 10 releases one forward and leaves (5, 1, 1, 1, 1, 1).
+# Pinned (node-mixing-v1): the single shadow of 12 at phase 6 on +X sends 5 back
+# on -X at phase 2 (the minus, a half turn) and 1 on each other heading at phase
+# 6, parking 3 ninths per heading, (3, 3, 3, 3, 3, 3); two shadows of 3 of
+# opposite sign on +X send 1 back each on -X at phase 4 and park 3 ninths per
+# heading in each sign's block; one quantum on +X with its +X register at 10
+# parks (1, 4, 1, 1, 1, 1), and the +X register at 11 releases one quantum
+# forward at its phase 0 and keeps 2.
 SPLIT_CASES = {
     "single": (
         (spread_ray(0, 12, 6),),
         (),
         (),
-        [(0, 0, 6, 6), *[(p, 0, 1, 6) for p in range(1, 6)]],
-        (6, 1, 1, 1, 1, 1),
+        [(1, 0, 5, 2), *[(p, 0, 1, 6) for p in (0, 2, 3, 4, 5)]],
+        (3, 3, 3, 3, 3, 3),
     ),
     "signs": (
         (spread_ray(0, 3, 0, 1), spread_ray(0, 3, 0, -1)),
         (),
         (),
-        [(0, -1, 1, 0), (0, 1, 1, 0)],
+        [(1, -1, 1, 4), (1, 1, 1, 4)],
         None,
     ),
     "release": (
@@ -174,7 +262,7 @@ SPLIT_CASES = {
         (10, 0, 0, 0, 0, 0),
         ZERO,
         [(0, 0, 1, 0)],
-        (5, 1, 1, 1, 1, 1),
+        (2, 4, 1, 1, 1, 1),
     ),
 }
 # Three Ports, two signs, three phases, registers filled at other phases: the
@@ -188,15 +276,14 @@ MIXED = (
 MIXED_REGISTERS = tuple(range(1, 19))
 MIXED_PHASES = tuple((3 * slot) % 8 for slot in range(18))
 # Three shadows of one sign on +X at phases 1, 2 and 3 (amounts 4, 4, 4): the phase
-# of the sum is 2, the registers take 12 x w mod 11.
+# of the sum is 2, one amplitude of 12 at that phase.
 THREE = (spread_ray(0, 4, 1), spread_ray(0, 4, 2), spread_ray(0, 4, 3))
 
 
 @pytest.mark.parametrize("case", ["split", "identity", "rejected"])
 def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, case):
-    boards = _spreading()
     if case == "split":
-        initial = parse_initial_state(dense_document(boards.document(SINGLE)))
+        initial = parse_initial_state(dense_document(document(SINGLE)))
         with Simulation(initial) as world:
             family = light(world)
             definition = family.definition
@@ -261,22 +348,22 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
         # mark that would catch every arrival counts nothing, a shadow is returned
         # and never counted (bit-law-v1), the marks' line of the ledger empty.
         for name, raw, ticks in (
-            ("single", boards.document(SINGLE), 3),
+            ("single", document(SINGLE), 3),
             (
                 "returned",
-                boards.document(SINGLE, ticks=8, detectors=[{"position": [8, 7, 7], "setting": [0, 1]}]),
+                document(SINGLE, ticks=8, detectors=[{"position": [8, 7, 7], "setting": [0, 1]}]),
                 8,
             ),
             (
                 "counter",
-                boards.document(SINGLE, ticks=8, detectors=[{"position": [8, 7, 7], "setting": [1, 1]}]),
+                document(SINGLE, ticks=8, detectors=[{"position": [8, 7, 7], "setting": [1, 1]}]),
                 8,
             ),
         ):
             records = {}
-            for mode, document in (("engine", engine_document(raw)), ("dense", dense_document(raw))):
+            for mode, chosen in (("engine", engine_document(raw)), ("dense", dense_document(raw))):
                 path = tmp_path / f"{name}_{mode}.json"
-                path.write_text(json.dumps(document), encoding="utf-8")
+                path.write_text(json.dumps(chosen), encoding="utf-8")
                 out = tmp_path / f"{name}_{mode}"
                 run_initialization(path, out, ticks=ticks)
                 metadata = json.loads((out / "run.json").read_text(encoding="utf-8"))
@@ -304,7 +391,7 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
         assert DENSE_FIELD == "dense-field-v1"
         # The runner's flag is the same switch.
         path = tmp_path / "flag.json"
-        path.write_text(json.dumps(engine_document(boards.document(SINGLE))))
+        path.write_text(json.dumps(engine_document(document(SINGLE))))
         run_initialization(path, tmp_path / "flag", ticks=3, dense_field=True)
         metadata = json.loads((tmp_path / "flag" / "run.json").read_text(encoding="utf-8"))
         assert metadata["dense_field"] == DENSE_FIELD
@@ -312,20 +399,25 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
             digests(tmp_path / "flag")["state.json"] == digests(tmp_path / "single_engine")["state.json"]
         )
         return
-    # (c) What the mode does not support is rejected at initialization.
-    base = boards.document(SINGLE)
-    for change in (
-        {"spatial_fields": [boards.ray_field("light", 0)]},
-        {
-            "fields": [boards.field("light"), boards.vector("momentum")],
-            "spatial_fields": [
-                boards.ray_field("light", 0, spread=boards.SPREAD),
-                {"field": "momentum", "baseline": [0, 0, 0], "transport": "outward"},
-            ],
-        },
-        {"spatial_fields": [boards.ray_field("light", 0, spread=boards.SPREAD, polarization_bits=1)]},
+    # (c) What the mode does not support is rejected at initialization: a world
+    # without a shadow set, an outward field beside the rays, polarization.
+    base = document(SINGLE)
+    without_shadows = {key: value for key, value in base.items() if key != "initial_field"}
+    for start, change in (
+        (without_shadows, {}),
+        (
+            base,
+            {
+                "fields": [field("light"), vector("momentum")],
+                "spatial_fields": [
+                    ray_field("light", 0),
+                    {"field": "momentum", "baseline": [0, 0, 0], "transport": "outward"},
+                ],
+            },
+        ),
+        (base, {"spatial_fields": [ray_field("light", 0, polarization_bits=1)]}),
     ):
-        raw = dict(base) | {"dense_field": True} | change
+        raw = dict(start) | {"dense_field": True} | change
         with pytest.raises(ValueError, match="dense_field"):
             parse_initial_state(raw)
     with pytest.raises(ValueError, match="parallel"):

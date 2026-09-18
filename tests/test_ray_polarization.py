@@ -461,11 +461,12 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
         return
     if case == "spread":
         # (e) Re-pinned under bit-law-v1 (2026-09-18): a lamp's light is a thing and
-        # a thing moves whole on its line; a family's spread table applies to its
-        # shadows alone, so the polarized content crosses the board unsplit, its
-        # polarization its own, and nothing reaches the transverse Nodes. (The
-        # axial mean of a spread's polarization is the shadows' rule, unchanged.)
-        spreading = {"polarization_bits": 3, "spread": [6, 1, 1, 1, 1, 1]}
+        # a thing moves whole on its line; only shadows spread, so the polarized
+        # content crosses the board unsplit, its polarization its own, and nothing
+        # reaches the transverse Nodes. (The axial mean of a spread's polarization
+        # is the shadows' rule, unchanged.) Re-pinned 2026-09-18 (node-mixing-v1):
+        # no table is declared, the spread of shadows being the Node's mixing.
+        spreading = {"polarization_bits": 3}
         for lamps, expected in (
             ([lamp((4, 7, 7), 11, 0, 2)], {(6, 7, 7): (11, 2, 2, 1)}),
             (

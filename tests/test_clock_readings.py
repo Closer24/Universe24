@@ -201,18 +201,23 @@ def test_the_computation_is_the_things_phase_steps_and_is_constant_between_absor
 def test_a_shadow_has_no_clock_and_two_contents_are_two_clocks():
     """(b) 9 x 3 x 3, K 2, N 8: e of 6 at (1, 1, 1) +X advances 3 steps per
     interval, f of 2 at (8, 2, 1) -X one; a shadow s of e at phase 5 and a
-    shadow u of f at phase 2 cross on the line (., 1, 2), one Link per interval,
-    their phases unchanged, sharing (3, 1, 2) after tick 2 with no event."""
+    shadow u of f at phase 2, leaving fresh from (2, 1, 2) and (4, 1, 2)
+    (re-pinned 2026-09-18, node-mixing-v1: a shadow no longer walks straight),
+    share (3, 1, 2) after tick 1 with their phases unchanged and no event, and
+    mix there in the cycle of tick 2, each alone (two owners do not mix), a
+    lone quantum parking whole."""
     m = family("m", charge=-1, clock=True)
     e = lamp("e", "m", 6, (1, 1, 1))
     f = lamp("f", "m", 2, (8, 2, 1), heading=MINUS_X)
+    s_fresh = shadow((2, 1, 2), X, 1, phase=5) | {"steps": 0}
+    u_fresh = shadow((4, 1, 2), MINUS_X, 2, phase=2) | {"steps": 0}
     doc = document(
         families=[m],
         lamps=[e, f],
         shape=(9, 3, 3),
         ticks=4,
         K=2,
-        shadows={"m": [shadow((1, 1, 2), X, 1, phase=5), shadow((5, 1, 2), MINUS_X, 2, phase=2)]},
+        shadows={"m": [s_fresh, u_fresh]},
     )
     result = run(doc, 4)
     for tick in range(1, 5):
@@ -221,11 +226,14 @@ def test_a_shadow_has_no_clock_and_two_contents_are_two_clocks():
         (thing_f,) = things_at(inventory, (8 - tick, 2, 1))
         assert (thing_e.phase, thing_e.remainder, thing_e.amount) == ((3 * tick) % 8, 0, 6)
         assert (thing_f.phase, thing_f.remainder, thing_f.amount) == (tick % 8, 0, 2)
-        (s,) = [r for r in shadows_at(inventory, (1 + tick, 1, 2)) if r.owner == 1]
-        (u,) = [r for r in shadows_at(inventory, (5 - tick, 1, 2)) if r.owner == 2]
-        assert (s.phase, s.owner, s.remainder, s.steps) == (5, 1, 0, tick)
-        assert (u.phase, u.owner, u.remainder, u.steps) == (2, 2, 0, tick)
-    assert len(shadows_at(result["inventories"][1], (3, 1, 2))) == 2
+    after_1 = result["inventories"][0]
+    (s,) = [r for r in shadows_at(after_1, (3, 1, 2)) if r.owner == 1]
+    (u,) = [r for r in shadows_at(after_1, (3, 1, 2)) if r.owner == 2]
+    assert (s.phase, s.owner, s.remainder, s.steps, s.parked) == (5, 1, 0, 1, 0)
+    assert (u.phase, u.owner, u.remainder, u.steps, u.parked) == (2, 2, 0, 1, 0)
+    assert all(
+        r.parked for tick in (2, 3, 4) for r in shadows_at(result["inventories"][tick - 1], (3, 1, 2))
+    )
     assert kinds(result["events"], (3, 1, 2)) == {}
     assert result["steps"] == [4, 8, 12, 16]
 
@@ -273,22 +281,29 @@ def test_k_and_n_bound_the_content_one_node_may_hold(K, content, accepted):
 def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulates_exactly():
     """(d) 9 x 5 x 3, K 4: a neutral thing n of 4 and a charged thing c of 4
     (charge +1 per quantum) each meet one shadow of a body of 32 with the whole
-    charge -1 after tick 2, the same shadow read twice: gravity, -1 x 1 x (0, 1,
-    0) x 4 = (0, -4, 0), turns each to -Y at its departure of tick 3 (the
-    content reached), 4 spent each; electricity, 1 x 1 x (0, 1, 0) x (-1 / 32)
-    x the thing's charge, is 0 on n and -1 / 32 on c, below one quantum: nothing
-    into c's momentum, the remainder (0, -1, 0) in units of 1 / 32 on it."""
+    charge -1 after tick 1 (re-pinned 2026-09-18, node-mixing-v1: the lamps one
+    Link before the meeting and the shadows fresh from the Node beside it), the
+    same shadow read twice: gravity, -1 x 1 x (0, 1, 0) x 4 = (0, -4, 0), turns
+    each to -Y at its departure of tick 2 (the content reached), 4 spent each;
+    electricity, 1 x 1 x (0, 1, 0) x (-1 / 32) x the thing's charge, is 0 on n
+    and -1 / 32 on c, below one quantum: nothing into c's momentum, the
+    remainder (0, -1, 0) in units of 1 / 32 on it."""
     n = family("n", charge=0, clock=True)
     c = family("c", charge=1, clock=True)
     e = family("e", charge=-1)
     star = {"position": [7, 4, 1], "family": "e", "amount": 32, "charge": -1}
     doc = document(
         families=[n, c, e],
-        lamps=[lamp("lamp_n", "n", 4, (1, 2, 1)), lamp("lamp_c", "c", 4, (1, 3, 1))],
+        lamps=[lamp("lamp_n", "n", 4, (2, 2, 1)), lamp("lamp_c", "c", 4, (2, 3, 1))],
         shape=(9, 5, 3),
         ticks=3,
         K=4,
-        shadows={"e": [shadow((3, 0, 1), PLUS_Y, 3), shadow((3, 1, 1), PLUS_Y, 3)]},
+        shadows={
+            "e": [
+                shadow((3, 1, 1), PLUS_Y, 3) | {"steps": 0},
+                shadow((3, 2, 1), PLUS_Y, 3) | {"steps": 0},
+            ]
+        },
         rules=[
             push(f"{reading}_{name}", {"e": sign}, reading, [{"type": name}, {"type": "e"}])
             for name in ("n", "c")
@@ -301,11 +316,11 @@ def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulat
     assert initial.spatial_fields[2].owner_charge(3) == -1
     assert initial.spatial_fields[2].push_denominator == 32
     result = run(doc, 3)
-    assert result["momentum"][1] == {1: [4, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
-    assert result["momentum"][2] == {1: [0, -4, 0], 2: [0, -4, 0], 3: [0, 0, 0]}
+    assert result["momentum"][0] == {1: [4, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
+    assert result["momentum"][1] == {1: [0, -4, 0], 2: [0, -4, 0], 3: [0, 0, 0]}
     after_3 = result["inventories"][2]
-    (neutral,) = things_at(after_3, (3, 1, 1), 0)
-    (charged,) = things_at(after_3, (3, 2, 1), 1)
+    (neutral,) = things_at(after_3, (3, 0, 1), 0)
+    (charged,) = things_at(after_3, (3, 1, 1), 1)
     assert (HEADINGS[neutral.heading], neutral.momentum, neutral.push_remainder) == (
         [0, -1, 0],
         None,
@@ -316,13 +331,14 @@ def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulat
         None,
         (0, -1, 0),
     )
+    # Each return walks its one step back and waits (settled rule (ii)).
     for position in ((3, 1, 1), (3, 2, 1)):
-        (home,) = shadows_at(after_3, position, 2)
+        (home,) = [r for r in shadows_at(after_3, position, 2) if not r.parked]
         assert (HEADINGS[home.heading], home.momentum, home.outbound, home.steps) == (
             [0, -1, 0],
             (0, 4, 0),
             0,
-            1,
+            0,
         )
     assert not {"ray_push", "decay_draw"} & set(kinds(result["events"]))
     with Simulation(initial) as world:

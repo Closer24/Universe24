@@ -277,33 +277,54 @@ RETURN_MODES = ("siblings", "straight", "annul")
 EXTERNAL_BODY = "external-body-v1"
 MAX_EXTERNAL_BODIES = 4096
 BODY_SINK = -1
-# Field spreading (Highlights 3.5, 3.17, 3.20 and 3.23, model owner 2026-09-17;
-# field-spreading-v1): light is the field, and the field spreads. A family that
-# declares `spread`, six weights in Port order relative to the arriving heading
-# (forward, backward, the four transverse in Port order), releases again at
-# every Node its content reaches: the outbound content that arrived is taken
-# off the Node, amounts add per arriving heading, the phase is the phase of the
-# coherent sum, each heading's content is shared by the table in whole quanta
-# and the remainder leaves whole through the entry the phase selects; the
-# departures are fresh field rays with no event. Huygens' principle in the
-# lattice's language: one catalog entry of the family, not an engine mechanism.
-FIELD_SPREADING = "field-spreading-v1"
-SPREAD_ENTRIES = 6
-SPREAD_BACKWARD = 1
-# The sub-quantum remainder (Highlights 3.5 and 3.17, model owner 2026-09-17;
-# field-remainder-v1): the shares the table gives a heading below one quantum
-# stay at the Node, per spreading family, owner, source sign and Port, in units
-# of 1/S where S is the table's total, their phase combined with each share's by
-# the coherence rule; a share that reaches S leaves as one whole quantum through
-# its heading in that interval, more if it reached kS, as a fresh eventless
-# shadow. Since the weights sum to S, what a Node holds this way of one family
-# is whole quanta in total, and the ledger counts it as shadow content. Since
-# node-is-ports-v1 the store is a parked shadow per owner, sign and Port among
-# the Node's rays (`Ray.parked`), eighteen at most per owner and family.
+# The Node mixes the six (Highlights 5.4, point 24, the model owner's decision of
+# 2026-09-18; node-mixing-v1): a shadow does not choose its next heading alone
+# and not in a pair. At every Node, in every interval, the shadows of one group
+# (one owner, source sign and polarization) that arrive through the six Ports
+# are six complex amplitudes, A_j = sqrt(amount_j) at the phase phi_j on the
+# family's phase circle of N steps (a Port with no arrival is 0), and the six
+# leaving amplitudes are B_h = (1/3) sum_j A_j - A_h: a third of the coherent
+# sum to every Port, less the arrival that came in through that Port, sent
+# back (the transmission-line matrix node, S = J/3 - I). The amounts leaving
+# are the total amount arriving, shared among the six Ports in proportion to
+# |B_h|^2 in whole quanta, the parts below one quantum parked in the Node's
+# remainder registers per heading (Highlights 3.17), and each leaving share
+# carries the phase of its B_h, the nearest step of N; a zero B_h sends
+# nothing. Nothing is declared: the third and the minus are what six equal
+# Ports and exact conservation allow, and N is the family's phase width. This
+# supersedes the split table of section 3.5 (field-spreading-v1) and the
+# pairwise steering of point 17 (phase-spread-v1) for shadows; the Born split
+# of two things that meet (section 5.2, `steering_table`) stands, and the
+# return of a shadow after a push stays a walk back on the trace, never mixed.
+# The arithmetic is the integers of the phase tables: the amplitude is the
+# integer square root of amount x MIXING_AMPLITUDE_SCALE^2, the phase factors
+# are the cosine and sine tables at PHASE_COSINE_SCALE, the weights |B_h|^2 are
+# the squared lengths of 3 B_h (the same ratios), reduced by a common shift to
+# MIXING_WEIGHT_BITS bits so that every product stays in 64-bit work, and the
+# total in ninths (MIXING_DENOMINATOR, the third squared) is apportioned by the
+# largest-remainder rule, ties to the lower Port, so that whole quanta leave
+# and the ninths below one quantum are parked: exact conservation, integers
+# only, deterministic. A lone arrival of 9 sends 4 back and 1 through each
+# other Port; two equal arrivals head on in phase send a/9 back each way and
+# 4a/9 through each transverse Port; two in antiphase are each sent back
+# whole.
+NODE_MIXING = "node-mixing-v1"
+MIXING_DENOMINATOR = 9
+MIXING_AMPLITUDE_SCALE = 32
+MIXING_WEIGHT_BITS = 28
+# The Node owns the sub-quantum remainder (Highlights 3.5 and 3.17, model owner
+# 2026-09-17; field-remainder-v1): the parts the mixing gives a heading below
+# one quantum are kept at the Node in a remainder register per family, owner,
+# source sign and Port, in ninths (MIXING_DENOMINATOR), with the register's
+# phase combined with each share's by the coherence rule; when a register
+# reaches nine it releases one whole quantum through its heading in that
+# interval, more if it reached 9k, as a fresh eventless shadow. Since the
+# apportionment is exact, a Node's registers of one family hold whole quanta
+# in total, and the ledger counts them as content.
+# Since node-is-ports-v1 the store is a parked shadow per owner, sign and Port
+# among the Node's rays (`Ray.parked`), in ninths (`parked_unit`), eighteen at
+# most per owner and family.
 FIELD_REMAINDER = "field-remainder-v1"
-# The phase-steered spread (Highlights 5.4, point 17; the model owner, 2026-09-18):
-# the shares of one owner that meet at a Node steer each other by the Born table.
-PHASE_SPREAD = "phase-spread-v1"
 REMAINDER_SIGNS = (-1, 0, 1)
 REMAINDER_SLOTS = 18
 # The dense mode for boards that a field fills (dense-field-v1; performance,
@@ -1101,22 +1122,22 @@ def family_owners(initial: InitialState, index: int) -> tuple[int, ...]:
 
 def shadow_family_names(initial: InitialState) -> list[dict[str, object]]:
     """The families with a shadow set for the run record (bit-law-v1): each with
-    its release ratio, its spread table and its owners, in field order."""
+    its release ratio, the width N of the phase circle its shadows mix on
+    (node-mixing-v1) and its owners, in field order."""
     return [
         {
             "field": initial.fields[definition.field].name,
             "release": [definition.release_numerator, definition.release_denominator],
-            "spread": list(definition.spread) if definition.spread else None,
-            "steering": list(definition.steering) if definition.spread else None,
+            "phase_width": definition.phase_modulus,
             "owners": list(definition.owners),
         }
         for definition in initial.spatial_fields
-        if definition.release_numerator
+        if definition.spread
     ]
 
 
-# Field spreading (field-spreading-v1). Every rule here reads the content that
-# arrived at one Node and the family's declared table; nothing reads another Node.
+# The spread of shadows (node-mixing-v1). Every rule here reads the content that
+# arrived at one Node and the family's phase width; nothing reads another Node.
 
 
 @dataclass(frozen=True, slots=True)
@@ -1166,37 +1187,17 @@ class ShadowHome:
     outside: int = 0
 
 
-def validate_spread_table(table: tuple[int, ...]) -> int:
-    """The split table of a spreading family: six nonnegative bounded weights in Port
-    order relative to the arriving heading, the backward weight positive (a
-    forward-only split piles the field on the diagonals and empties the axes,
-    Highlights 3.5) and the four transverse weights equal (the lattice has no
-    preferred transverse direction, Highlights 3.23). Returns the total, the
-    table's denominator."""
-    if (
-        type(table) is not tuple
-        or len(table) != SPREAD_ENTRIES
-        or any(type(weight) is not int or bounded(weight) < 0 for weight in table)
-    ):
-        raise ValueError(
-            "a spread table holds six nonnegative integer weights in Port order relative to "
-            "the arriving heading"
-        )
-    if table[SPREAD_BACKWARD] <= 0:
-        raise ValueError("a spread table must give the backward heading a positive weight")
-    if len(set(table[2:])) != 1:
-        raise ValueError("a spread table gives the four transverse headings one weight")
-    return bounded(sum(table))
-
-
 def steering_table(modulus: int) -> tuple[int, ...]:
-    """The steering table of a phase width (phase-spread-v1; Highlights 5.4, point
-    17: computed once from the width, never declared): the share that continues
-    at a difference of d steps is cos^2(pi d / N) in N-ths, rounded to the
-    nearest whole, N the modulus, in the fixed-point integer arithmetic of the
-    phase tables (N (1 + cos) / 2 with cos at nine decimals); the reference
-    table [8, 7, 4, 1, 0, 1, 4, 7] at eight steps, (1,) for a family without a
-    phase width (every share in phase)."""
+    """The steering table of a phase width (Highlights 3.3 and 5.4, point 17:
+    computed once from the width, never declared), the Born split of two things
+    of one family that meet (section 5.2, a split indexed by the phase
+    difference): the share that continues at a difference of d steps is
+    cos^2(pi d / N) in N-ths, rounded to the nearest whole, N the modulus, in
+    the fixed-point integer arithmetic of the phase tables (N (1 + cos) / 2 with
+    cos at nine decimals); the reference table [8, 7, 4, 1, 0, 1, 4, 7] at eight
+    steps, (1,) for a family without a phase width. Since node-mixing-v1
+    (Highlights 5.4, point 24) it steers no shadow: a shadow spreads by the
+    Node's mixing."""
     if type(modulus) is not int or not 1 <= modulus <= MAX_PHASE_STEPS:
         raise ValueError("a steering table is written for a phase width of at most 4096 steps")
     entries = []
@@ -1211,32 +1212,15 @@ def steering_table(modulus: int) -> tuple[int, ...]:
     return tuple(entries)
 
 
-def validate_steering_table(table: tuple[int, ...], modulus: int) -> None:
-    """A steering table (phase-spread-v1): one entry per phase step, each from 0
-    through the modulus (the share that continues, in N-ths), the entry at 0 the
-    whole (shares in phase continue forward)."""
-    if (
-        type(table) is not tuple
-        or len(table) != modulus
-        or any(type(weight) is not int or not 0 <= weight <= modulus for weight in table)
-    ):
-        raise ValueError(
-            "a steering table holds one entry per phase step, each from 0 through the modulus"
-        )
-    if table[0] != modulus:
-        raise ValueError(
-            "a steering table sends shares in phase forward whole: its entry at 0 is the modulus"
-        )
-
-
 def validate_spread_fields(
     definitions: tuple[SpatialFieldDefinition, ...], fields: tuple[FieldDefinition, ...]
 ) -> None:
-    """The admission of a spreading family (field-spreading-v1): the geometry of a
-    released field (a positive, conserved, unpaced unit-axial ray field on the
-    links metric with the six Port headings, zero baseline, no decay, no
-    self-exclusion) and a phase width of at most twelve bits, since the phase of
-    the content is the phase of the coherent sum over the table of its modulus."""
+    """The admission of a family whose shadows spread (node-mixing-v1, every
+    family with a shadow set): the geometry of a released field (a positive,
+    conserved, unpaced unit-axial ray field on the links metric with the six
+    Port headings, zero baseline, no decay, no self-exclusion) and a phase width
+    of at most twelve bits, since the mixing sums the amplitudes over the
+    cosine and sine tables of its modulus."""
     for definition in definitions:
         if not definition.spread:
             continue
@@ -1252,18 +1236,22 @@ def validate_spread_fields(
             or definition.decay is not None
             or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
         ):
-            raise ValueError("a spreading family requires a positive unit-axial unpaced ray field")
+            raise ValueError(
+                "a family with a shadow set requires a positive unit-axial unpaced ray field: "
+                "its shadows spread by the Node's mixing (node-mixing-v1)"
+            )
         if any(heading not in definition.headings for heading in PORT_HEADINGS):
-            raise ValueError("a spreading family requires the six Port headings")
+            raise ValueError("a family with a shadow set requires the six Port headings")
         if definition.phase_bits > MAX_TABLE_BITS:
             raise ValueError(
-                "a spreading family's phase width is at most twelve bits: the phase of its "
-                "content is the phase of the coherent sum over the cosine table of its modulus"
+                "a family with a shadow set has a phase width of at most twelve bits: the "
+                "Node mixes its shadows over the cosine and sine tables of its modulus"
             )
 
 
 def validate_spread_admission(initial: InitialState) -> None:
-    """A world with a spreading family runs under the shared Detector admission."""
+    """A world with a family whose shadows spread runs under the shared Detector
+    admission."""
     if not any(definition.spread for definition in initial.spatial_fields):
         return
     if (
@@ -1279,11 +1267,11 @@ def validate_spread_admission(initial: InitialState) -> None:
         or initial.field_rules
         or initial.spatial_interactions
     ):
-        raise ValueError("a spreading family requires the default fixed H=1 spatial clock")
+        raise ValueError("a family with a shadow set requires the default fixed H=1 spatial clock")
     validate_spread_fields(initial.spatial_fields, initial.fields)
     spreading = {definition.field for definition in initial.spatial_fields if definition.spread}
     if any(rule.field in spreading for rule in initial.spatial_couplings):
-        raise ValueError("a spreading family does not support coupled responses or absorption")
+        raise ValueError("a family with a shadow set does not support coupled responses or absorption")
 
 
 def validate_dense_field_admission(initial: InitialState) -> None:
@@ -1328,15 +1316,6 @@ def dense_field_admissible(initial: InitialState) -> bool:
     )
 
 
-def relative_ports(port: int) -> tuple[int, ...]:
-    """The six Ports in the order of a spread table for content arriving on the
-    heading of Port `port`: forward, that Port; backward, its opposite; then the
-    four transverse Ports in Port order."""
-    if type(port) is not int or not 0 <= port < 6:
-        raise ValueError("a relative Port order requires a Port index")
-    return (port, port ^ 1, *(other for other in range(6) if other >> 1 != port >> 1))
-
-
 def remainder_slot(sign: int, port: int, rank: int = 0) -> int:
     """The slot of one owner (its rank among the family's owners), source sign and
     Port in a family's parked block: eighteen per owner, owner-major (bit-law-v1)."""
@@ -1356,8 +1335,8 @@ def remainder_block_size(definition: SpatialFieldDefinition) -> int:
 
 def remainder_stock(block: tuple[int, ...], total: int) -> int:
     """The whole quanta a Node's parked shares of one family hold: their sum over
-    the table's total, exact because the weights sum to the total (the shares one
-    spread adds are a multiple of it) and a release takes a multiple of it."""
+    the parked unit, exact because the mixing parks a multiple of it (the total
+    in ninths is apportioned exactly) and a release takes a multiple of it."""
     held = 0
     for value in block:
         held = checked_work(held + value)
@@ -1371,11 +1350,11 @@ def remainder_stock(block: tuple[int, ...], total: int) -> int:
 
 
 def parked_unit(definition: SpatialFieldDefinition) -> int:
-    """The unit of a parked shadow's amount, declared once per family: the split
-    table's total S for a spreading family (a parked amount is in S-ths of a
-    quantum, below S), 1 for a family that does not spread (whose parked shadows
-    are traces of amount zero)."""
-    return sum(definition.spread) if definition.spread else 1
+    """The unit of a parked shadow's amount, one for every family whose shadows
+    spread: ninths, MIXING_DENOMINATOR (node-mixing-v1; a parked amount is in
+    ninths of a quantum, below nine), 1 for a family without a shadow set (whose
+    parked shadows are traces of amount zero)."""
+    return MIXING_DENOMINATOR if definition.spread else 1
 
 
 def parked_shadow(
@@ -1551,6 +1530,98 @@ def spread_polarization(rays: Rays, definition: SpatialFieldDefinition) -> int:
     return combined_polarization(tuple((ray.amount, ray.polarization) for ray in rays), definition)
 
 
+MIXING_OPPOSITE = (1, 0, 3, 2, 5, 4)
+
+
+def mixing_amplitude(amount: int) -> int:
+    """The amplitude of an arriving amount (node-mixing-v1): sqrt(amount) in units
+    of 1 / MIXING_AMPLITUDE_SCALE, the integer square root."""
+    if type(amount) is not int or amount < 0:
+        raise ValueError("an amplitude is the square root of a nonnegative amount")
+    return integer_sqrt(checked_work(amount * MIXING_AMPLITUDE_SCALE * MIXING_AMPLITUDE_SCALE))
+
+
+def mixing_tables(definition: SpatialFieldDefinition) -> tuple[tuple[int, ...], tuple[int, ...]]:
+    """The cosine and sine tables the mixing sums amplitudes over: the family's
+    (`spread_tables`), or the one-step circle (cos 1, sin 0 at the table's
+    scale) of a family without a phase width."""
+    tables = spread_tables(definition)
+    if tables is None:
+        return (PHASE_COSINE_SCALE,), (0,)
+    return tables
+
+
+def node_mixing(
+    arrivals: tuple[tuple[int, int], ...],
+    cosines: tuple[int, ...],
+    sines: tuple[int, ...],
+) -> tuple[tuple[int, int, int], ...]:
+    """The Node's mixing of one group (node-mixing-v1; Highlights 5.4, point 24):
+    `arrivals` are six (amount, phase) by travel heading in Port order (the
+    content that arrived walking that heading came in through the opposite
+    Port; amount 0 is no arrival), the tables are the family's phase circle of
+    N steps. Returns, per leaving heading in Port order, the whole quanta that
+    leave, the ninths below one quantum parked in that heading's register and
+    the phase of the leaving amplitude. The leaving amplitude of heading h is
+    B_h = (1/3) sum_j A_j - A_j(h), A_j(h) the arrival that came in through
+    Port h (the one walking the opposite heading); computed as 3 B_h, the same
+    ratios and the same phase. The total in ninths is shared in proportion to
+    |B_h|^2 by the largest-remainder rule, ties to the lower Port, so the
+    quanta leaving plus the ninths parked equal what arrived, exactly."""
+    if len(arrivals) != 6:
+        raise ValueError("the mixing takes one arrival per Port")
+    modulus = len(cosines)
+    mask = phase_mask(modulus) if modulus > 1 else 0
+    total = 0
+    xs, ys = [0] * 6, [0] * 6
+    for port, (amount, phase) in enumerate(arrivals):
+        if type(amount) is not int or amount < 0:
+            raise ValueError("an arrival is a nonnegative amount at a phase")
+        if not amount:
+            continue
+        total = checked_work(total + amount)
+        amplitude = mixing_amplitude(amount)
+        xs[port] = checked_work(amplitude * cosines[phase & mask])
+        ys[port] = checked_work(amplitude * sines[phase & mask])
+    if not total:
+        return tuple((0, 0, 0) for _ in range(6))
+    sum_x, sum_y = 0, 0
+    for port in range(6):
+        sum_x = checked_work(sum_x + xs[port])
+        sum_y = checked_work(sum_y + ys[port])
+    weights, phases = [0] * 6, [0] * 6
+    for heading in range(6):
+        entry = MIXING_OPPOSITE[heading]
+        cx = checked_work(sum_x - 3 * xs[entry])
+        cy = checked_work(sum_y - 3 * ys[entry])
+        if abs(cx) >= 1 << 31 or abs(cy) >= 1 << 31:
+            raise OverflowError("64-bit intermediate range exceeded")
+        weights[heading] = cx * cx + cy * cy
+        if weights[heading]:
+            best, best_projection = 0, None
+            for step in range(modulus):
+                projection = checked_work(cx * cosines[step] + cy * sines[step])
+                if best_projection is None or projection > best_projection:
+                    best, best_projection = step, projection
+            phases[heading] = best
+    weight_total = sum(weights)
+    shift = max(0, weight_total.bit_length() - MIXING_WEIGHT_BITS)
+    reduced = [weight >> shift for weight in weights]
+    reduced_total = sum(reduced)
+    units = checked_work(total * MIXING_DENOMINATOR)
+    quotas, remainders = [0] * 6, [0] * 6
+    for heading in range(6):
+        product = checked_work(units * reduced[heading])
+        quotas[heading], remainders[heading] = divmod(product, reduced_total)
+    short = units - sum(quotas)
+    for heading in sorted(range(6), key=lambda h: (-remainders[h], h))[:short]:
+        quotas[heading] += 1
+    return tuple(
+        (quotas[heading] // MIXING_DENOMINATOR, quotas[heading] % MIXING_DENOMINATOR, phases[heading])
+        for heading in range(6)
+    )
+
+
 def spread_content(
     index: int,
     rays: Rays,
@@ -1558,38 +1629,29 @@ def spread_content(
     registers: tuple[int, ...] = (),
     register_phases: tuple[int, ...] = (),
 ) -> tuple[Rays, FieldSpread, tuple[int, ...], tuple[int, ...]]:
-    """The spread of one family's shadows at a Node (field-spreading-v1,
-    field-remainder-v1, bit-law-v1, phase-spread-v1): the departures, one fresh
-    shadow per owner, Port, source sign, phase and polarization with content,
-    the record, and the Node's registers and their phases after the step. The
-    rays are the outbound shadows that arrived (at least one Link walked); a
-    thing moves whole and is never here. The shares of one owner (one owner,
-    source sign and polarization; shadows of different owners or of differing
-    polarization do not combine) combine by the coherence rule: their amount
-    unchanged, their phase the step nearest their coherent sum, which every
-    departure of theirs carries. A lone share, one that meets no other share of
-    its owner, spreads by the fixed split table (Highlights 3.5): the whole
-    quanta of content x weight / total leave on the six relative headings, and
-    the share below one quantum, content x weight mod total in units of
-    1/total, is added to the owner's register of that sign and Port (eighteen
-    registers per owner, owner-major by the owner's rank among the family's
-    declared owners), the register's phase combined with the share's by the
-    coherence rule; a register that reaches the total releases the whole quanta
-    it holds through its Port, with its phase, and keeps the rest. Shares that
-    meet steer (Highlights 5.4, point 17): each reads its phase difference to
-    the coherent sum of the others of its owner (a cancelled or tied sum reads
-    as step 0, as `phase_of_sum` does), continues on its own heading with the
-    whole quanta of content x steering[difference] / modulus, and sends the
-    rest apart through the four headings transverse to its own, rest // 4 each
-    and the remaining rest mod 4 quanta one to each of the first of them in
-    Port order; nothing of a steered share enters the registers. Each departure
-    carries the Port's heading, accumulators (0, 0, 0), its group's phase, no
-    rate, wait, delay or lag, steps 0, outbound 1, no event, its sign, its
-    owner and its group's polarization (a register's release the Node's
-    combined polarization). The total is exact: what arrived equals what leaves
-    plus the whole quanta the registers gained."""
-    table = definition.spread
-    total = validate_spread_table(table)
+    """The spread of one family's shadows at a Node (node-mixing-v1,
+    field-remainder-v1, bit-law-v1): the departures, one fresh shadow per
+    owner, Port, source sign, phase and polarization with content, the record,
+    and the Node's registers and their phases after the step. The rays are the
+    outbound shadows that arrived (at least one Link walked); a thing moves
+    whole and is never here. The shares of one group (one owner, source sign
+    and polarization; shadows of different owners or of differing polarization
+    do not mix) are the Node's mixing (`node_mixing`, Highlights 5.4, point
+    24): per travel heading the shadows of the group that arrived on it are one
+    amplitude, their amount at the step nearest their coherent sum; the six
+    amplitudes mix, the whole quanta leave through each heading at the phase
+    of its leaving amplitude and the ninths below one quantum go to the
+    group's register of that sign and Port (eighteen registers per owner,
+    owner-major by the owner's rank among the family's declared owners), the
+    register's phase combined with the share's by the coherence rule; a
+    register that reaches nine releases the whole quanta it holds through its
+    Port, with its phase, and keeps the rest. Each departure carries the Port's
+    heading, accumulators (0, 0, 0), its phase, no rate, wait, delay or lag,
+    steps 0, outbound 1, no event, its sign, its owner and its group's
+    polarization (a register's release the Node's combined polarization). The
+    total is exact: what arrived equals what leaves plus the whole quanta the
+    registers gained."""
+    total = MIXING_DENOMINATOR
     size = remainder_block_size(definition)
     held = list(registers) if registers else [0] * size
     held_phases = list(register_phases) if register_phases else [0] * size
@@ -1597,7 +1659,7 @@ def spread_content(
         raise ValueError("a remainder block holds eighteen registers and eighteen phases per owner")
     before = sum(held)
     arrived = [0] * 6
-    groups: dict[tuple[int, int, int], list[tuple[int, int, int]]] = {}
+    groups: dict[tuple[int, int, int], dict[int, list[tuple[int, int]]]] = {}
     for ray in rays:
         if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
             raise ValueError("a spread takes the outbound content that arrived at the Node")
@@ -1608,17 +1670,17 @@ def spread_content(
             raise ValueError("a spread requires content on a Port heading")
         port = PORT_HEADINGS.index(heading)
         arrived[port] = checked_work(arrived[port] + ray.amount)
-        groups.setdefault((ray.owner, ray.source_sign, ray.polarization), []).append(
-            (port, ray.amount, ray.phase)
-        )
+        groups.setdefault((ray.owner, ray.source_sign, ray.polarization), {}).setdefault(
+            port, []
+        ).append((ray.amount, ray.phase))
     phase = spread_phase(rays, definition)
     tables = spread_tables(definition)
+    cosines, sines = mixing_tables(definition)
     modulus = definition.phase_modulus
-    mask = phase_mask(modulus)
     amounts, released = [0] * 6, [0] * 6
     departing: dict[tuple[int, int, int, int, int], int] = {}
     ranks: dict[int, int] = {}
-    for (owner, sign, polarization), shares in sorted(groups.items()):
+    for (owner, sign, polarization), by_port in sorted(groups.items()):
         if owner not in ranks:
             if definition.owners:
                 if owner not in definition.owners:
@@ -1631,50 +1693,38 @@ def spread_content(
             else:
                 raise ValueError("a shadow's owner is one of its family's declared owners (bit-law-v1)")
         rank = ranks[owner]
-        terms = tuple((amount, share_phase) for _, amount, share_phase in shares)
-        group_phase = 0 if tables is None else _phase_of_sum(terms, tables[0], tables[1], modulus)
-        if len(shares) == 1:
-            # A lone share: the fixed split, its fractions into the registers.
-            ((port, content, _),) = shares
-            for weight, target in zip(table, relative_ports(port), strict=True):
-                whole, fraction = divmod(checked_work(content * weight), total)
-                if whole:
-                    amounts[target] = checked_work(amounts[target] + whole)
-                    sent = (owner, target, sign, group_phase, polarization)
-                    departing[sent] = checked_work(departing.get(sent, 0) + whole)
-                if fraction:
-                    slot = remainder_slot(sign, target, rank)
-                    if tables is None:
-                        held_phases[slot] = 0
-                    elif held[slot]:
-                        held_phases[slot] = _phase_of_sum(
-                            ((held[slot], held_phases[slot]), (fraction, group_phase)),
-                            tables[0],
-                            tables[1],
-                            modulus,
-                        )
-                    else:
-                        held_phases[slot] = group_phase
-                    held[slot] = checked_work(held[slot] + fraction)
-            continue
-        # Shares that meet (phase-spread-v1): each continues by the steering table
-        # at its phase difference to the others, and sends the rest apart.
-        for position, (port, content, share_phase) in enumerate(shares):
-            others = terms[:position] + terms[position + 1 :]
-            others_phase = 0 if tables is None else _phase_of_sum(others, tables[0], tables[1], modulus)
-            weight = definition.steering[(share_phase - others_phase) & mask]
-            forward = checked_work(content * weight) // modulus
-            if forward:
-                amounts[port] = checked_work(amounts[port] + forward)
-                sent = (owner, port, sign, group_phase, polarization)
-                departing[sent] = checked_work(departing.get(sent, 0) + forward)
-            each, extra = divmod(content - forward, 4)
-            for offset, target in enumerate(relative_ports(port)[2:]):
-                share = each + (1 if offset < extra else 0)
-                if share:
-                    amounts[target] = checked_work(amounts[target] + share)
-                    sent = (owner, target, sign, group_phase, polarization)
-                    departing[sent] = checked_work(departing.get(sent, 0) + share)
+        arrivals = []
+        for port in range(6):
+            terms = tuple(by_port.get(port, ()))
+            if not terms:
+                arrivals.append((0, 0))
+                continue
+            amount = 0
+            for term_amount, _ in terms:
+                amount = checked_work(amount + term_amount)
+            port_phase = 0 if tables is None else _phase_of_sum(terms, tables[0], tables[1], modulus)
+            arrivals.append((amount, port_phase))
+        for target, (whole, fraction, leaving_phase) in enumerate(
+            node_mixing(tuple(arrivals), cosines, sines)
+        ):
+            if whole:
+                amounts[target] = checked_work(amounts[target] + whole)
+                sent = (owner, target, sign, leaving_phase, polarization)
+                departing[sent] = checked_work(departing.get(sent, 0) + whole)
+            if fraction:
+                slot = remainder_slot(sign, target, rank)
+                if tables is None:
+                    held_phases[slot] = 0
+                elif held[slot]:
+                    held_phases[slot] = _phase_of_sum(
+                        ((held[slot], held_phases[slot]), (fraction, leaving_phase)),
+                        tables[0],
+                        tables[1],
+                        modulus,
+                    )
+                else:
+                    held_phases[slot] = leaving_phase
+                held[slot] = checked_work(held[slot] + fraction)
     owner_of_rank = definition.owners or (0,)
     release_polarization = spread_polarization(rays, definition)
     for rank in range(size // REMAINDER_SLOTS):
@@ -1726,12 +1776,13 @@ def spread_content(
     return departures, record, tuple(held), tuple(held_phases)
 
 
-def spreading_field_names(
+def mixing_field_names(
     fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
 ) -> list[dict[str, object]]:
-    """The spreading families for the run record: each with its table, in field order."""
+    """The families whose shadows spread, for the run record: each with the width
+    N of its phase circle, the mixing's one input, in field order."""
     return [
-        {"field": fields[definition.field].name, "spread": list(definition.spread)}
+        {"field": fields[definition.field].name, "phase_width": definition.phase_modulus}
         for definition in definitions
         if definition.spread
     ]
@@ -1814,16 +1865,12 @@ class SpatialFieldDefinition:
     # (`wait_per_quantum`, 1 by default), on every ray family.
     wait_numerator: int = 1
     wait_denominator: int = 1
-    # Field spreading (field-spreading-v1): the split table, six weights in Port
-    # order relative to the arriving heading; empty for a family that does not
-    # spread, the behaviour of every existing world.
-    spread: tuple[int, ...] = ()
-    # The steering table of the family (phase-spread-v1; Highlights 5.4, point
-    # 17): one entry per phase step, the share that continues at that phase
-    # difference in units of the modulus, computed once from the family's phase
-    # width by `steering_table`, never declared; the one table of every steering,
-    # the shadows' spread and two things of the family that meet by a split.
-    steering: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
+    # The family's shadows spread by the Node's mixing (node-mixing-v1): true for
+    # every family with a shadow set (a release, or a field given with the
+    # board), set by the world's initial state, never declared; a family without
+    # shadows has nothing to spread. Nothing else is declared of the spread: the
+    # mixing's one input is the family's phase width.
+    spread: bool = False
     # Polarization (ray-polarization-v1): the width of the family's polarization
     # circle, 2^polarization_bits steps per half turn; -1 when the world does not
     # declare it, which reads as the family's phase width (`polarization_modulus`).
@@ -1857,14 +1904,10 @@ class SpatialFieldDefinition:
             object.__setattr__(self, "cosine_table", phase_cosines(self.phase_steps))
             object.__setattr__(self, "sine_table", phase_sines(self.phase_steps))
         bounded(self.charge)
-        if self.spread:
-            if not self.rays:
-                raise ValueError("spread requires ray transport")
-            validate_spread_table(self.spread)
-            if self.phase_modulus <= MAX_PHASE_STEPS:
-                # The steering table (phase-spread-v1), from the family's width (a
-                # wider width is refused below).
-                object.__setattr__(self, "steering", steering_table(self.phase_modulus))
+        if type(self.spread) is not bool:
+            raise ValueError("a family's shadows spread by the Node's mixing, never by a declared table")
+        if self.spread and not self.rays:
+            raise ValueError("a shadow set requires ray transport")
         if (
             type(self.owners) is not tuple
             or any(type(v) is not int or not 0 <= v < MAX_THING_ID for v in self.owners)
@@ -3912,9 +3955,9 @@ def validate_external_bodies(initial: InitialState) -> None:
 def validate_thing_ids(initial: InitialState) -> None:
     """The identity of things (bit-law-v1): every disturbance type and every
     external body carries a thing id from 1 below MAX_THING_ID, and every family
-    with a shadow set or a spread table lists its owners, the things whose
-    shadows it carries (`family_owners`), which the initial state fills in when
-    the declaration leaves them empty."""
+    with a shadow set lists its owners, the things whose shadows it carries
+    (`family_owners`), which the initial state fills in when the declaration
+    leaves them empty."""
     for kind in initial.disturbances:
         if type(kind.thing) is not int or not 1 <= kind.thing < MAX_THING_ID:
             raise ValueError("a disturbance type's thing id is an integer from 1 below the id bound")
