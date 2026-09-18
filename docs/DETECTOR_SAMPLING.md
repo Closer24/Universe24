@@ -108,7 +108,10 @@ or absorption declared for it. The ray's `detector` field becomes `2`
 shares are untouched. A `detector_click` event is recorded with the Node's
 position, the tick of the arrival, the Port the ray came in through, the
 family (the ray field's name), the ray's amount and `bit` 1. The click is the
-record of that 1 and the only measurement.
+record of that 1 and the only measurement. Since 2026-09-18 the ray continues
+so only when the mark's coupling for its family is `pass`, the default for
+matter; a field quantum is absorbed into the mark's counter on its click, by
+default ([the click absorbs](#the-click-absorbs-detector-absorb-v1)).
 
 **0, RETURN.** The ray's `detector` field becomes `1` (a Detector event, bit
 0) and the ray is returned on its own line, reversed and otherwise unchanged
@@ -196,6 +199,70 @@ byte, unless a marked ray reaches a second mark or meets another ray. The
 viewer reads `detector_pass` as the kind `pass` and carries each ray's
 `bit`. The test is `test_detector_bit_property.py` ([Detector bit as a
 property](TEST_EXPECTATIONS.md#detector-bit-as-a-property)).
+
+## The click absorbs (`detector-absorb-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4 "A click is an absorption", model
+owner, 2026-09-18; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)
+feature 2c under step 3; issue #169): the field quantum a marked Node
+realizes ends there. On a draw of 1 the arriving field content is absorbed
+into the mark's exact counter, per family, booked on the audit as absorbed by
+marks with its momentum on the marks' line, and nothing of it spreads on: a
+photon is detected by being absorbed, and every measurement is paid (3.14). A
+draw of 0 stays [the return](#the-return-detector-return-v1), the ray sent
+back on its line unchanged, a perfect mirror; a ray carrying 1 still passes
+without a draw ([the bit read](#the-bit-read-detector-bit-property-v1)).
+Matter that draws 1 passes with the bit 1 as before, so the electron seen
+carries its mark.
+
+**The coupling.** How a mark meets each family on a click, absorb or pass, is
+its declared coupling in the catalog (`apparatus.detector.couplings.on_click`
+of `catalog/nature.json`), with absorb the default for a field family, one
+declared `field_of` another, and pass the default for matter (3.26): the
+mark's `detectors[]` entry writes `on_click` as `"absorb"` or `"pass"` for
+every ray family or as a mapping of ray family name to one of them, so a
+screen that stops electrons and a counter that lets light through are catalog
+entries. Any other value or an unknown family is rejected before a world
+exists; the engine's notion of a field family and the schema are in [spatial
+fields](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1).
+
+**The click.** The draw is the draw of [the mark](#the-detector-mark-detector-mark-v1),
+reading nothing from the ray; the coupling is read after the 1, by the ray's
+family alone. Under `absorb` the `detector_click` event records position,
+tick, Port, family, amount, `bit` 1 and `absorbed`, the amount, and the Node
+never holds the ray: it enters no reading, no meeting and no spread, and the
+mark's counter for the family and its momentum (amount x heading) grow by
+exactly what arrived. Under `pass` the ray continues with its bit 1 and the
+click is recorded as before, without `absorbed`. The bit is therefore the
+mark of content that passed a Detector without being absorbed, and the field
+a Node re-releases never carries the bit of what was realized, because what
+was realized is no longer there to spread. The mark's ticket stream moves
+once per draw either way; a replay redraws nothing.
+
+**The account.** The counter and the momentum are bounded Node metadata on
+the mark, like a body's sink: no rays, no history. Every line of the world
+ledger reads `absorbed_by_marks` beside `absorbed` (the bodies' sinks),
+initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks
+at every completed tick for amount, momentum and charge, and the marks' own
+lines (count, momentum, counters) stand beside the identity as the bodies'
+do; the local audit reads what a mark absorbed from the reception record and
+reports it as its `absorbed_by_marks` line ([the world
+ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)).
+
+**Why.** Decided on the finding of the loop screen (E9, 2026-09-17): with the
+clicked quantum spreading on, its bit left the marks along the screen and
+back toward the source and the screen stopped clicking at tick 72, a screen
+that remembers; a screen that absorbs counts, and its count grows as an
+intensity, which the two-slit run A1 needs. E9 was repeated under the rule on
+2026-09-18: 265 clicks in 240 ticks, every one absorbed, no pass, the count
+growing to the last tick
+([E9](EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks)).
+
+**Identity.** The runner records `detector_absorb: "detector-absorb-v1"` in
+`run.json` with `detector_marks`, `detector_mark_totals` and
+`detector_mark_momentum`, and the marks' lines in every ledger under `audit`.
+The test is `test_detector_absorb.py` ([A click is an
+absorption](TEST_EXPECTATIONS.md#a-click-is-an-absorption)).
 
 ## The decay draw (`decay-draw-v1`)
 

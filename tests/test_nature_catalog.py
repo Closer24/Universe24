@@ -393,6 +393,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "seed",
             "on_bit_1",
             "on_bit_0",
+            "on_click",
         }
         assert set(apparatus["external_body"]["couplings"]) == external
         assert apparatus["external_body"]["default_coupling"] in external
@@ -415,8 +416,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         # the bit a ray carries, decided and landed by feature 2b on 2026-09-17
         # (detector-bit-property-v1), each with its world key on the mark and the
         # values pass (the default) and draw.
-        bits = apparatus["detector"]["couplings"]
-        assert set(bits) == {"on_bit_1", "on_bit_0"}
+        mark_couplings = apparatus["detector"]["couplings"]
+        assert set(mark_couplings) == {"on_bit_1", "on_bit_0", "on_click"}
+        bits = {name: entry for name, entry in mark_couplings.items() if name != "on_click"}
         for name, entry in bits.items():
             assert (entry["status"], entry["world_key"], entry["engine"]) == (
                 "decided",
@@ -434,6 +436,19 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             {"bit": 0},
             "transmission, no draw",
         )
+        # A click is an absorption (Highlights 5.4, 2026-09-18; detector-absorb-v1,
+        # feature 2c): the coupling on a draw of 1, per family, absorb the default
+        # for a field family and pass for matter.
+        click = mark_couplings["on_click"]
+        assert (click["status"], click["world_key"], click["engine"]) == (
+            "decided",
+            "on_click",
+            {"identity": "detector-absorb-v1", "landed": True},
+        )
+        assert set(click["values"]) == {"absorb", "pass"} and "decided_by" not in click
+        assert not undecided(click)
+        assert click["default"] == "absorb for a field family, pass for matter"
+        assert "detector-absorb-v1" in apparatus["detector"]["engine"]["identity"]
         assert apparatus["external_body"]["engine"]["landed"]
         assert len(rays) == 12 and len(couplings) == 16
         # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
