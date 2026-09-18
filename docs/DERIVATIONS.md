@@ -26,7 +26,7 @@ is named. **Different law**: the rules give a definite law of another form,
 stated, with the run that would show the difference. **Not reached**: the
 rules as declared do not determine the quantity, and what would is stated
 plainly. **New** marks a formula the lattice gives that has no counterpart in
-known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts); round 6 (sections 39 to 44: the model owner's direction of 2026-09-18, the wait reads the amplitude, the coupling derived against the four gravitational tests, and whether any local reading falls as 1/r without the root, verified) is summarized in [section 43](#43-round-6-the-sizes-for-a6-the-separating-observable-and-the-verdicts); round 7 (sections 45 to 50: the model owner's decision of the evening of 2026-09-18, a thing emits and the stream leaves at the edge of an open board, derived as the fixed point of the emitting thing, its transient, its integer form and the tests, with the scratch script committed as `tools/derivations_round7.py`) is summarized in [section 50](#50-round-7-the-verdicts-and-the-run-plan).
+known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts); round 6 (sections 39 to 44: the model owner's direction of 2026-09-18, the wait reads the amplitude, the coupling derived against the four gravitational tests, and whether any local reading falls as 1/r without the root, verified) is summarized in [section 43](#43-round-6-the-sizes-for-a6-the-separating-observable-and-the-verdicts); round 7 (sections 45 to 50: the model owner's decision of the evening of 2026-09-18, a thing emits and the stream leaves at the edge of an open board, derived as the fixed point of the emitting thing, its transient, its integer form and the tests, with the scratch script committed as `tools/derivations_round7.py`) is summarized in [section 50](#50-round-7-the-verdicts-and-the-run-plan); round 8 (sections 51 to 56: the model owner's decision of the same evening, the law of the shadow, only shadows and events, written as points in the mathematician's draft and derived on the fixed point of round 7, with the scratch script committed as `tools/derivations_round8.py`) is summarized in [section 56](#56-round-8-the-verdicts-the-smallest-engine-and-the-first-three-worlds).
 
 ## 0. Units, notation and the operator
 
@@ -5123,3 +5123,245 @@ line; the near-field correction to the image at b ≤ 6 derived in closed
 form (the reactive field of a point source in the mesh); and the
 radiated fraction ε(ω₀) of a point source in closed form (measured
 ∝ ω₀^1.8).
+
+## 51. Round 8: the law of the shadow in points, a draft for the model owner
+
+Round 8 (2026-09-18, the evening, after PR #323) takes the model owner's
+decision of the same evening (Highlights 5.4, "The law of the shadow: only
+shadows and events"): "No real and shadow. There is only shadow. There are
+events, which are a whole quantum. That is all. The shadow spreads like a
+ray from the event." This section writes the law as points, the
+mathematician's draft for the owner to keep or strike point by point,
+each with what today's engine already has and what is new; sections 52 to
+55 derive its consequences on the fixed point of round 7 (sections 46 to
+49, cited and not repeated); section 56 gives the verdicts, the smallest
+engine that implements the law, and the first three worlds to run on it.
+As in every round: bottom-up from the stated rules, no physics assumed,
+no engine run, no edit to the engine; the numbers of sections 52 to 54
+come from `tools/derivations_round8.py` (committed, an iteration of the
+stated rules on a box of 41³ to 129 × 41² Nodes, seconds to a minute
+each), cited after each derivation and never used as its source. Nothing
+below is a decision: every point is the orchestrator's and the
+mathematician's reading of the owner's words, flagged as such, and the
+owner's sentence outranks it wherever they differ.
+
+**Two words fixed first, since the owner's "quantum" carries both.** A
+*unit* is one quantum of amount, the integer the books count and the
+mixing shares (section 30). The *quantum of a family*, q_F, is the whole
+number of units every held content of that family is a multiple of
+(Highlights 5.4, definitions, "its quantum, of which every thing of it is
+a whole multiple"); for light it is the amount a quantum was born with,
+carried as its message. The owner's "an event is a whole quantum" is read
+below as: a whole unit arriving at held content is an event, and a whole
+q_F assembled at held content is the event a table acts on (a click, a
+capture, a step). Where the two differ the text says which.
+
+**S1. The objects.** (a) A Node is its six Ports and nothing else (point
+22). On every Port, per family, per number and per sign, the shadows that
+arrived in the interval: an amount in units, a phase on the circle of N
+steps, the heading (the Port), and the message (the emitter's content and
+its whole charge; for light, the birth amount). A shadow carries no bit,
+no momentum, no step count and no owner beyond its number. Below one unit
+it is parked at the Node in ninths (point 22). (b) Held content: at a
+Node, per family, a content M in units (a whole multiple of q_F), a
+momentum p ∈ ℤ³ with three accumulators, a phase φ, the set of numbers it
+carries (one at birth, all of them after a merge, point 25), a wait
+counter, and the family's declared tables (what it does with each family
+that arrives, what it emits, when it breaks). Matter is held content and
+nothing else; light is never held longer than a table says (S5). *The
+engine has*: (a) is the dense layer's arrays per family, owner and sign
+with the parked ninths (`reg`), less the flow axis and the momentum arrays
+of return-field-v1 and less the bit of bit-law-v1; (b) is the external
+body (content, momentum with its accumulators, phase, `momentum_table`),
+the mark's resident thing (content per family, momentum, owners, the
+`on_click` table) and the stock of a source, which are three objects
+today. *New*: one object, held content, in place of the three; no ray of
+bit 1 anywhere; no momentum on a ray.
+
+**S2. The interval.** In this order, at every Node, every interval:
+
+1. *Move.* What left through a Port in interval t is at the neighbour at
+   the end of t and is that Node's arrival in t + 1 (R2); through a Port
+   with no Node beyond it, it escapes and is booked (R14).
+2. *Mix.* At a Node holding no content of the arriving family, the six
+   arrivals of one number are one coherent sum and leave by S = J/3 − I,
+   the amounts shared in whole units by |B_p|², the ninths parked, each
+   share at the phase of its sum (R10, section 26; the integer rule of
+   section 30); shadows of different numbers are mixed apart and counted
+   together. Nothing is declared here and no event happens.
+3. *Absorb.* At a Node holding content of family F, every whole unit of
+   family G arriving in the interval, and every parked share of G that
+   reaches a unit there, is an event: it is absorbed by F's table for G.
+   The table has two entries, the push (S3) and the fate of the amount:
+   *re-released* (the default for the free families, the matter shadows
+   read as gravity and electricity: the unit joins this interval's release
+   of the holder, S2.4, and its number and phase are gone), *kept* (light
+   absorbed: the unit joins M, paid, a click when the holder is a mark
+   that counts, S6) or *passed* (the table says pass: the unit is mixed as
+   at an empty Node and the holder is not pushed). What arrives with the
+   holder's own number is absorbed like the rest for its amount (re-
+   released, section 52 shows it must be) and, by the reading of section
+   54, for nothing else.
+4. *Release.* The holder releases, in this interval, ρM units of its own
+   family plus every unit re-released in S2.3, one sixth through each Port
+   with a remainder per Port (six parked shadows of its own number, R12
+   with R13, section 46 (viii)), every share at the holder's phase of this
+   interval, with the holder's numbers and its message. ρ is one rate for
+   the world (section 52 (iv): not per family). The release costs the
+   holder nothing. What its emission table says of light is released
+   beside it, paid from M (S5).
+5. *The clock.* φ advances by M/K steps of N, K one for the world (point
+   19), in every interval the holder does not wait.
+6. *The wait.* The holder reads Σ_j |u_j| over the numbers at its Node
+   that are not its own, |u_j| the size of the coherent sum of number j's
+   six arrivals (R11, section 39), and owes w intervals per whole unit of
+   it, the fraction kept on the counter; in an interval it owes, it does
+   not release, does not advance its phase and does not step. A quantum
+   of light in flight pays the same at every Node it crosses (S5).
+7. *The step.* Each accumulator adds its component of p; when one reaches
+   M the whole content is released through that Port as a ray of amount M
+   carrying its record (p less M on that axis, φ, the numbers, the wait
+   counter) and is held at the neighbour on arrival: a release and an
+   absorption, one Link, no walk (section 53 for the timing and the bound).
+
+*The engine has*: 1, 2 and the parked shares exactly (node-mixing-v1,
+node-is-ports-v1, lanes-v1, dense-field-v1); the accumulator step of the
+external body (external-body-v1, "motion by fields only"); the wait
+counter of clock-readings-v1 and the amplitude of wait-reads-v1 (per group
+at the thing's Node, floored per interval; section 42 says what its
+remainder must do); the absorption into a counter of detector-absorb-v1
+and the resident thing. *New*: the release from held content every
+interval (R12, feature 19, not on `main`), the re-release of every
+absorbed unit at the holder's phase (R13 for every family, not only home),
+the absence of any return (return-field-v1 retired: no share ever turns
+back at a holder; it is absorbed and re-emitted), the step as a release
+and an absorption, and the wait of a quantum in flight (a hold per Node
+per family, section 55 (v)).
+
+**S3. The readings (point 16 as amended, unchanged in content).** A
+whole unit of amount a with heading h (h = −e_p for an arrival through
+Port p) absorbed by held content of family F, content M, whole charge q,
+from a message of content M_A and whole charge q_A:
+
+```text
+gravity:      Δp = − M · a h                        (toward the emitter; the equivalence: a = F/M reads nothing of M),
+electricity:  Δp = + (q_A / M_A) · q · a h          (like charges apart; nothing of M),
+light:        Δp = + a h,  M ← M + a                (absorbed whole; a click where the holder counts),
+```
+
+the two free readings applied to the same unit of a matter shadow; the
+cross-section is the content for gravity and the whole charge for
+electricity, as point 16 says, and the message carries q_A/M_A. The wait
+reads the size, not the amount (S2.6). *The engine has*: both readings
+(clock-readings-v1's `push_of`, charge-per-thing-v1); the amplitude
+(wait-reads-v1). *New*: nothing in the readings; only that the unit is
+absorbed after being read, never turned back.
+
+**S4. The number.** Every held content gets one number at its birth and
+stamps it on what it releases; a merge carries the numbers of both; a
+unit absorbed and re-released leaves with the holder's numbers and phase,
+its own gone: coherence is the last emitter, nothing inherits, nothing is
+orphaned (a field whose source ended is re-sourced from wherever its
+units are next absorbed, section 49 (iv)). The Node reads the number in
+one place only: which arrivals are one coherent sum (S2.2, S2.6). There is
+no home: the holder's own number is one number among those it absorbs
+(S2.3), and what "home" named is section 52's balance. *The engine has*:
+the owner axis of the dense layer, the owners set of the resident thing.
+*New*: no home rule, no route, no owner on a returning share.
+
+**S5. Light.** A paid family: a held content releases it only by its
+emission table, spending its content (a lamp burns, a transition emits
+a = ΔM at the change of the emitter's rate, section 18); it is absorbed
+only by a table, into content (a click, a capture, the photoelectric
+table of section 55 (vii)), or passed. In flight it is a shadow like every
+other: it spreads by the mixing at the field's speed 1/√3, its phase
+stamped at release and rotating by its message over K per interval, which
+is a uniform rotation of the whole field of that message and changes no
+amount and no fringe (section 52 (v)); its message is its birth amount
+a = q_γ, and a whole q_γ assembled at a holder by the remainder rule, per
+number, is the event a light table acts on: one absorption per quantum.
+It pays the wait at every Node it crosses (S2.6), so light in a
+potential has an index (section 55 (v)). *The engine has*: the light
+family as a wave-ray family, the funded emission of a source, the click
+as an absorption into the counter. *New*: light as a spreading shadow
+with a message, never a ray on one path; the quantum q_γ assembled by the
+remainder rule per number; the wait in flight.
+
+**S6. The mark.** Held content whose table for a family says *kept* and
+counts: a screen is matter, its count is content, a click is the
+absorption of a whole quantum (q_γ of light; the whole content of a
+matter content that steps into it), and a mark that misses is a table
+(*passed* one arrival in d). It is pushed by what it absorbs and slowed by
+what it reads like every holder, and it re-releases the free shadows it
+absorbs like every holder. There is no draw and nothing returns from a
+mark. *The engine has*: the mark with its resident thing and its
+`on_click` table (detector-absorb-v1, node-is-ports-v1, feature 16h's
+retirement of the mark's exception). *New*: nothing but the absence of the
+return.
+
+**S7. The open edge.** The board's edge is infinity: a share sent through
+a Port with no Node beyond escapes and is booked (R14); it reflects 7 % of
+the amount as a mirror does (section 46 (i)), which the reading of the
+law in shell means tolerates and a matched edge would remove (section 49
+(vii)). No world of a confrontation is closed (Theorem 2, section 45).
+*The engine has*: the open boundary of the dense layer. *New*: the closed
+board and the prefill as a stock are retired; the prefill survives only
+as the fixed point written at tick 0 (section 49 (ii)).
+
+**S8. The books.** Per family and per interval: held (the contents),
+in flight, parked, released (free, R12 and the re-releases), escaped, and
+the paid lines of light (emitted from content, absorbed into content);
+held + in flight + parked = Σ released − Σ escaped + the paid lines, exact
+in units at every interval. Charge lives on held content alone and every
+table conserves it. Momentum lives on held content alone and changes only
+by the pushes; no ledger of the field's momentum exists (S1: a shadow
+carries none; section 26: the mixing conserves no signed flux), so the
+third law is not a ledger identity but the symmetry of the two fixed
+points, section 55 (ii), and the sum of the held momenta is constant only
+in the steady state and only for one ρ. Point 7's "the books are kept per
+bit" is retired with the bit. *The engine has*: the ledger per family and
+per bit, the escaped line, the audit. *New*: one bit, hence one ledger
+per family; the momentum lines of the shadows retired; the released line
+of R12.
+
+**S9. What is random.** Nothing. What a mark does not know is which
+number's units and how many arrive in the interval; the remainder rule
+decides which Node of a screen reaches a whole quantum first; the only
+uncertainty in the model is the observer's (point 8), and Bell's bound is
+section 55 (ix).
+
+**S10. Retired with the bit.** The bit and its inheritance; the return
+(a shadow turned back at a meeting, its −Δp and its momentum arrays); the
+trace and the step count; home as a rule (it is R13's re-release of one
+number among all); the walk back of a missed thing; the draw and the
+ticket seed; the per-family phase width; the closed board and the prefill
+as a stock; "a thing has one path" (nothing has a path: a held content is
+at one Node and steps, a quantum in flight is everywhere its amplitude
+is). Kept from the law of the bit: the mixing (24), the lanes (25), the
+remainder rule (22), the readings (16, 18), charge per thing (16 as
+amended), the clock as content over K (19), the wait reading the size
+(23 as amended), the step by the accumulator (21, read as section 53), the
+label as coherence, the emission (R12), the open board (R14), the mark's
+counter as content.
+
+| What the engine has today | Under the law of the shadow |
+| --- | --- |
+| Rays of bit 1 (things) and bit 0 (shadows), one path per thing | shadows only; held content at Nodes; no path |
+| The external body, the mark's resident thing, a source's stock | one object: held content (S1 (b)) |
+| The dense layer's arrays per family, owner, sign, flow, with momentum | the same arrays without the flow axis and without momentum |
+| The parked ninths, the largest-remainder mixing (node-mixing-v1) | unchanged (S2.2) |
+| The prefill as a stock (`initial_field` fill) | the fixed point at tick 0 at most (S7) |
+| The return with −Δp (return-field-v1) | none: absorbed and re-released (S2.3, S2.4) |
+| Home: absorbed and re-released with the thing | one number among all in S2.3 and S2.4; no rule |
+| The wait counter on the thing (clock-readings-v1), the amplitude (wait-reads-v1, floored) | the counter with a remainder, reading Σ_j\|u_j\| over other numbers (S2.6); a hold per Node for light in flight |
+| The accumulator step of the external body | the step of every held content, as a release and an absorption (S2.7, section 53) |
+| The click as an absorption into the counter | the same, of a whole q_γ assembled by the remainder rule per number (S5, S6) |
+| The emission (feature 19, not on `main`) | R12 for every held content, R13 for every absorbed unit (S2.4) |
+| The ledger per family and per bit | per family; the released and escaped lines; no field momentum (S8) |
+
+**Verdict.** The law as points: **stated** (S1 to S10), with two words
+fixed (unit, q_F), one order of operations (S2), and the flags: the
+absorption of the holder's own number for amount only (section 52 and
+54), the step's timing (section 53), one ρ (section 52 (iv)), the wait of
+light in flight as a hold per Node (section 55 (v)), and q_γ as the
+message of light (S5, section 55 (vi) and (vii)).
