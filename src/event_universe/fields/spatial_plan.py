@@ -491,6 +491,7 @@ class SpatialLaw:
         blocks: list[tuple[int, ...]],
         block_phases: list[tuple[int, ...]],
         block_momenta: list[tuple[int, ...]],
+        presence: dict[int, int] | None = None,
     ) -> FieldSpread | None:
         """Field spreading (field-spreading-v1, Highlights 3.5): every Node that
         content of a spreading family reaches releases it again by the declared
@@ -525,6 +526,24 @@ class SpatialLaw:
         blocks[index], block_phases[index], block_momenta[index] = after, after_phases, after_momenta
         meter.charge("split", len(departures))
         meter.charge("update", REMAINDER_SLOTS)
+        if definition.shadow_wait_reads == "field" and definition.shadow_wait_numerator and presence:
+            # The shadow's wait, the field reading (shadow-wait-v1): every
+            # departure of an owner from this Node, the mixing's and the parked
+            # shares' releases alike, owes n / d intervals per whole quantum of
+            # the other owners' shadows that arrived here this interval.
+            total = sum(presence.values())
+            departures = tuple(
+                replace(
+                    ray,
+                    owed=checked_work(
+                        checked_work(total - presence.get(ray.owner, 0))
+                        * definition.shadow_wait_numerator
+                    ),
+                )
+                if total > presence.get(ray.owner, 0)
+                else ray
+                for ray in departures
+            )
         # The momentum the shares carry in flight moves with them and stays on
         # the shadows (return-field-v1): the spread books nothing on the
         # momentum field.
@@ -788,6 +807,16 @@ class SpatialLaw:
             register_phases_held.append(block_phases)
             register_momenta_held.append(block_momenta)
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
+        # The shadow's wait, the field reading (shadow-wait-v1): the whole quanta
+        # of shadows at the Node this interval per owner, as they arrived, over
+        # every family; a share that mixes here owes the wait for every quantum
+        # of another owner's. The parked ninths never count.
+        presence: dict[int, int] = {}
+        if any(definition.shadow_wait_reads == "field" for definition in self.definitions):
+            for bundle in resident_rays:
+                for ray in bundle:
+                    if ray.detector == BIT_SHADOW and ray.steps >= 1:
+                        presence[ray.owner] = checked_work(presence.get(ray.owner, 0) + ray.amount)
         # The real slots of the six out-lanes this interval (lanes-v1, Highlights
         # 5.4 point 25), one set for every family of the Node: a lane carries one
         # real ray, whatever its family.
@@ -1106,6 +1135,7 @@ class SpatialLaw:
                         registers_held,
                         register_phases_held,
                         register_momenta_held,
+                        presence,
                     )
                     if spread is not None:
                         spreads.append(spread)

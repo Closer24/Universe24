@@ -316,6 +316,17 @@ def _turn(
             returned = replace(earlier, momentum=summed if any(summed) else None)
         else:
             returned = return_shadow(shadow, definitions[kind], carried)
+        if definitions[kind].shadow_wait_reads == "thing":
+            # The shadow's wait, the thing reading (shadow-wait-v1): the share read
+            # by a thing owes n / d intervals per whole quantum of the push it
+            # gave, before it leaves this Node; read twice, the sum.
+            quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+            returned = replace(
+                returned,
+                owed=checked_work(
+                    returned.owed + checked_work(quanta * definitions[kind].shadow_wait_numerator)
+                ),
+            )
         validate_rays((returned,), definitions[kind], fields[definitions[kind].field])
         candidate[kind][ray_slot] = returned
         taken[shadow_slot] = receiver_slot
