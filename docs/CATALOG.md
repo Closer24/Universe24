@@ -5,9 +5,10 @@ data file that declares what exists on the board of the one generic engine, by
 the model owner's decision of 2026-09-17 ([Highlights](HIGHLIGHTS.md) 3.26 and
 3.30). It is exactly two things:
 
-- the **rays** of nature: every family as a ray record (rest rate, charge,
-  phase width, its field family and release, polarization since feature 11,
-  later colour);
+- the **rays** of nature: every family as a ray record (content and clock,
+  charge, phase width, the size of its shadow set, polarization since
+  feature 11, later colour; a rest rate and a field family until
+  2026-09-18);
   matter, light and fields are all ray records; beneath them the
   **couplings**, what happens when ray A meets ray B, one table each;
 - the **apparatus**: the Detector and the external body, the declarations an
@@ -25,13 +26,15 @@ decides it. Nothing is invented in its place.
 
 Highlights 3.26 (approved 2026-09-17): the engine performs only the simple
 operations, a step on a Link, a phase advance, a split by a declared table, a
-sum, and the one draw at a marked Node. Anything that does not change how a
+sum, and the one draw at a marked Node (no draw since 2026-09-18, Highlights
+5.4, point 14). Anything that does not change how a
 ray moves between events is a family property in the catalog or a coupling
 table, read only at a meeting, exactly as charge is. Forces and polarization
 are catalog entries, not engine mechanisms; the strong interaction is quark
 families, colour, the gluon as the quark's own field and binding couplings;
 the weak interaction is an N-to-M conversion at the tick of a bound group that
-draws as a Detector. The catalog therefore adds no rule to the engine: a
+draws as a Detector (since 2026-09-18 by a decay table, point 20). The
+catalog therefore adds no rule to the engine: a
 family the engine cannot run yet is data waiting for its feature (issue #169,
 [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)), and no engine
 rule is named after a family. Highlights 3.30: one property engine, families
@@ -49,10 +52,10 @@ rule already takes. A test pins the file's contract
 
 | Unit | Declaration | World key |
 | --- | --- | --- |
-| m₀, the rest rate | One phase step per interval, the rest rate of the electron ([hypothesis 12](HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding), hypothesis 14); every rest rate is an integer multiple of it and light is 0; a rest rate is the ray's mass as a clock (Highlights 3.3) | `kerengonen.phase_advance` |
+| m₀, the content | One quantum of content, the electron's rung; a thing's content is its mass and its clock, content / K phase steps per interval with one K for the world, and light has no clock (Highlights 5.4, point 19; `clock-readings-v1`, 2026-09-18); until that date the rest rate, one phase step per interval for the electron, every rate an integer multiple of it ([hypothesis 12](HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding), hypothesis 14) | `content` and `clock` on the family, `K` on the world; `kerengonen.phase_advance` refused |
 | e/3, the charge unit 3 | Every charge is an integer number of thirds of the elementary charge e, so that quarks are integers: up +2, down −1, electron −3, positron +3, proton +3, neutron 0; `charge × amount` summed over a meeting's rays is the invariant the engine appends to every coupling | `charge`, per quantum |
-| The phase width | 2^`phase_bits` steps per turn; a phase is an integer from 0 below that, an advance or a difference a mask with it less one. A phase is read only at a meeting and only as a difference, so the width is the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): eight steps resolve the Born table, the register's boards use 8 (256 steps), the reference table is written at 3 (8 steps), and a wider circle is allowed but never required; A11's 75-bit phase is a check that a wide width leaks into no coupling | `phase_bits`, one width per world |
-| The lag width | The modulus of the lag register in which a field ray's delay is carried and spent as one interval of wait when it reaches that modulus; declared per family, of any width because it enters no phase sum; it, not the phase circle, is the N of hypothesis 14 on the delay. Open under feature 8b: the turn, the transverse part of the lag, landed on 2026-09-17 as the momentum register of a free ray (`ray-momentum-turn-v1`, a resolution of one part in the ray's amount, no modulus), and the delay is counted in phase steps until a run needs its own modulus; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17), until which N is an input | the `lag_bits` entry: world key open |
+| The phase width | 2^`phase_bits` steps per turn; a phase is an integer from 0 below that, an advance or a difference a mask with it less one. A phase is read only at a meeting and only as a difference, so the width is the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): eight steps resolve the Born table, the register's boards use 8 (256 steps), the reference table is written at 3 (8 steps), and a wider circle is allowed but never required; A11's 75-bit phase is a check that a wide width leaks into no coupling; since 2026-09-18 the steering table is computed from N = 2^`phase_bits`, declared by no one, and the Node's mixing reads N (Highlights 5.4, points 17 and 24) | `phase_bits`, one width per world |
+| The lag width | Retired on 2026-09-18 with the delay and the word register (Highlights 5.4, points 21 and 22); the file's `lag_bits` entry records the form before that date, when it was the modulus of the lag register in which a field ray's delay is carried and spent as one interval of wait when it reaches that modulus; declared per family, of any width because it enters no phase sum; it, not the phase circle, is the N of hypothesis 14 on the delay. Open under feature 8b: the turn, the transverse part of the lag, landed on 2026-09-17 as the momentum register of a free ray (`ray-momentum-turn-v1`, a resolution of one part in the ray's amount, no modulus), and the delay is counted in phase steps until a run needs its own modulus; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17), until which N is an input | the `lag_bits` entry: world key open |
 | The quantum | The content of a ray, a bounded integer; the energy of the invariants is the amount, the momentum is amount × heading | `amount` |
 
 ## The records
@@ -84,7 +87,14 @@ carried on the field ray as a visible property, like the Detector's bit
 set by the engine at the release, read by couplings and never the phase;
 feature 12 carries it, and `electron_field_turn.opposite_charge` closes with
 it (A5). A field ray is a ray with an empty event record, rest rate 0 and
-charge 0, and nothing else. Its `polarization` key, `transverse`, and
+charge 0, and nothing else. Since 2026-09-18 (Highlights 5.4, point 12;
+`bit-law-v1`) there is no field family: `kind: field` and `field_of` on
+`light` and `gluon` record the form before that date, a shadow being a ray
+of its owner's family with bit 0 and `release` the size of a family's shadow
+set; a family's `spread` is retired by the Node's mixing (point 24,
+`node-mixing-v1`), `source_sign` is the sign of the owner's charge a shadow
+carries, and light emitted at an event is a thing of the light family. Its
+`polarization` key, `transverse`, and
 `polarization_bits`, `"default"` (feature 11, `ray-polarization-v1`,
 2026-09-17; decided by A12): every light ray carries a transverse direction
 modulo a half turn, an integer step of a circle of 2^`polarization_bits`
@@ -185,7 +195,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 
 | Entry | What is undecided | Decided by |
 | --- | --- | --- |
-| `lag_bits.world_key` | The key that declares the lag modulus per family for the delay on the ray's own axis, the N of hypothesis 14 on the lag register and not on the phase; the turn is the momentum register of feature 8b since 2026-09-17; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17) | feature 8b, hypothesis 16 |
+| `lag_bits.world_key` | The key that declares the lag modulus per family for the delay on the ray's own axis, the N of hypothesis 14 on the lag register and not on the phase; the turn is the momentum register of feature 8b since 2026-09-17; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17); the delay and the lag register are retired on 2026-09-18 (Highlights 5.4, points 21 and 22), the entry standing in the file until it is migrated | feature 8b, hypothesis 16 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
 | `rays.muon.content` | The muon's rung on the ladder, k × 206.768 28 | A10 |
@@ -226,25 +236,25 @@ it uses; the layers follow.
 | `charge` | `spatial_fields[].charge` |
 | `phase_bits` | `spatial_fields[].phase_bits`, the same for every ray of the world |
 | `polarization` and `polarization_bits` | `spatial_fields[].polarization_bits` (the phase width when absent), `emissions[].polarization` on a lamp, `polarization` on a meeting's output; the electron's `polarization_bits` 1 is spin |
-| A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release`; a world that holds both charged families declares the light family once per releaser, as it does the mass field, and a world whose light no charge releases writes neither key |
+| `release`, the size of the shadow set | `spatial_fields[].release` on the family itself and `initial_field`, the prefill (`bit-law-v1`); `field_of` is refused since 2026-09-18 (no field family, Highlights 5.4, point 12) and the mass field is retired (point 18); until that date `spatial_fields[].field_of` declared the light family once per releaser |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
 | `apparatus.detector` | `detectors[]` with `position`, `setting` (the mark's table `[n, d]`, no seed: there is no lottery) and the optional `on_click` (`"absorb"`, the default for every family, or `"pass"`, for every ray family or per family, the resident thing's table, `detector-absorb-v1`), and the world's `return_mode`; the couplings on the bit and a rule's `bit` key are retired (`bit-law-v1`) |
 | `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` (the body's content) and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"`, `"polarizer"` or a declared rule's name), `momentum_table` with its `reads` (`"content"` or `"charge"`, what the body multiplies the shadows' message by, `bit-law-v1` point 16) and `thing` (its identity, the owner its shadows carry) ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once; a polarizer body writes `polarizer` (`family`, `angle`, `pass`, `table`, `unpolarized`) beside `coupling` ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)); a body radiates nothing, its shadows are given with the board (`initial_field`, `bit-law-v1`) |
 | A bound group | A loop: rays circulating on a ring of Nodes under the corner table, one `ray_interactions` rule with outputs per binding coupling, as `examples/nature/ring.json` declares the unit-square electron ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop binding](LOOP_BINDING.md); Highlights 3.4, 2026-09-17); nothing holds and no key names the group, which a reader finds in the record. The held form (a rule without outputs assigning `delay` 1, `ray_delay`) was removed by feature 14 on 2026-09-17 |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
-| A bound group's decay | `draw: [n, d]` (the group's `decay.setting`) and `seed` on the conversion's `ray_interactions` rule, declared before the group's corner table: the meeting draws once from the Node's ticket stream and fires the conversion on 1, the Node marked by the declaration for that draw ([a decaying group draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1), `decay-draw-v1`, 2026-09-17) |
+| A bound group's decay | `decay: {"after_periods": n}` or `{"content_at_most": c}` on the conversion's `ray_interactions` rule, declared before the group's corner table: the group breaks at the meeting where the condition on its own state is met, nothing drawn (Highlights 5.4, point 20; `clock-readings-v1`, 2026-09-18); `draw` and `seed` are refused (the `decay-draw-v1` of 2026-09-17, [a decaying group draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1)) |
 
-A bound group's decay draw has its world key since 2026-09-17 (`draw` and
-`seed` on the conversion's rule, `decay-draw-v1`; the neutron's ring under
+A bound group's decay has its world key since 2026-09-18 (`decay` on the
+conversion's rule, the table of `clock-readings-v1`; the neutron's ring under
 `quark_binding` is not yet declared, so `weak_conversion` stays open);
 colour has no world key yet; its catalog records wait for it, and no
 engine rule is added for it
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
 Polarization has its keys since feature 11 (2026-09-17, above).
-The split table of feature 12 has its world key, `spread` on a ray spatial
-field, and the light family declares it (`field-spreading-v1`,
-2026-09-17), with `source_sign` the sign the engine puts on every released
-ray.
+The split table of feature 12 (`spread` on a ray spatial field,
+`field-spreading-v1`, 2026-09-17) is retired since 2026-09-18 by the Node's
+mixing (`node-mixing-v1`, Highlights 5.4, point 24), which declares
+nothing; `source_sign` is the sign of the owner's charge on a shadow.
 
 ## What the catalog is not
 

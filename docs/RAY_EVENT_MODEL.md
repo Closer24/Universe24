@@ -22,6 +22,43 @@ where the two differ, Highlights is the text to follow and this document is
 corrected. The [Detector-only sampling contract](DETECTOR_SAMPLING.md)
 (`detector-only-v1`) is preserved and made concrete here.
 
+## 0. The law of the bit (2026-09-18)
+
+The model owner's decision of 2026-09-18, the law of the bit ([Highlights](HIGHLIGHTS.md)
+5.4: the definitions, points 1 to 25, "A thing does not emit", "Every action
+is a message that returns" and the five settled rules), supersedes the
+sentences of sections 1 to 7 below that it names, and the restatement of it
+is [postulate 25](../POSTULATES.md#25-the-law-of-the-bit-the-thing-or-its-shadow).
+In short: every ray carries one bit, 1 a thing (*real*) and 0 its shadow, a
+ray of the same family with no mass and no clock, and there is no field
+family, no light and no matter as kinds (points 1, 9, 12; 3.3). A thing moves
+whole, one Link per interval, and turns by its momentum, a property it
+carries, when a component reaches its content (point 21); its clock is its
+content / K (point 19); it has one path and its bit never changes at a
+meeting (point 10). Its shadows are given with the board and circulate, and
+nothing is released per interval ("A thing does not emit"); a shadow spreads
+by the Node's mixing, the coherent sum of one owner's arrivals shared among
+the six Ports, a third of the sum less the arrival through each Port sent
+back, with nothing declared and N the one input (point 24); the split table
+and the pairwise steering are retired for shadows, and the steering table,
+computed from N, serves two things of one family (point 17). A shadow meeting
+a thing pushes it by the thing's reading, content for gravity and charge for
+electricity (point 16), and turns back with its heading reversed and its
+momentum inverted, a field from then on, mixing at every Node and absorbed
+wherever it reaches its owner: no step counter, no trace, no chase, no
+inverse split (point 3); a push is not an event (point 15), and the thing
+pays a tick per whole quantum it reads (point 23). A mark draws nothing: it
+absorbs a thing into its resident thing by its declared table, or passes it,
+and returns a shadow; there is no seed and no lottery, and a decay is a
+table (points 6, 14, 20). The books are kept per bit with no source line
+(point 7); a Node is its six Ports, two lanes each, one real ray and one
+shadow per owner per lane per interval, with no queue and no wait but the
+clock's; the remainder is a parked shadow, a mark's counter a resident thing,
+the apparatus things with declared tables (points 22, 25). Implemented:
+`bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`, `node-is-ports-v1` and
+`lanes-v1` (section 6); pending: the return as a field (point 3 as amended,
+in place of the walk on the trace those features implement).
+
 ## 1. Definitions
 
 The system has exactly two definitions, **event** and **ray**: a ray carries
@@ -61,7 +98,8 @@ two interactions: the same event, the same family properties, one Node per
 Link interval, one heading, a straight line. A ray carries information: it is
 what was split off from an event, its own share of what happened there, and
 all the information is on the rays. From its event, every ray carries the
-number of steps it has made. Every ray carries the information of the last
+number of steps it has made (for a shadow retired on 2026-09-18, section 0:
+its return is a field with no step count). Every ray carries the information of the last
 event it was involved in; if that event was at a Detector, the ray records
 that it was a Detector event and the bit drawn, 1 or 0, and the bit is all
 the Detector adds. The information of the last event, its Ports and shares,
@@ -101,7 +139,9 @@ for light, whose phase does not advance along its own line; an interaction
 changes it as the declared coupling says; a bound group advances it once per
 interval it is held. A light ray carries the phase of the clock that emitted
 it at the moment of emission and delivers it unchanged, so the frequency of
-light is the rate of its emitter's clock. Interference of light follows from
+light is the rate of its emitter's clock. Since 2026-09-18 the rate is the
+thing's content / K and a shadow has no clock (Highlights 5.4, point 19).
+Interference of light follows from
 this alone: two paths of different length reach one place at one time only
 if their rays were emitted at different times, so they carry different
 emission phases, and the difference is the emitter's rate times the
@@ -118,7 +158,9 @@ phase difference δ it splits the shared content between the two candidate
 Ports in the ratio cos²(δ/2) to sin²(δ/2), as a declared table of bounded
 integer ratios with the remainder owned as Highlights 3.17 requires, so that
 click intensities follow the Born rule with nothing read by any Detector. It
-is declared, not derived. The Detector reads none of this; the
+is declared, not derived. Since 2026-09-18 the table is computed from the
+family's phase width N and declared by no one (Highlights 5.4, point 17).
+The Detector reads none of this; the
 probability of a click is already in how much content reached it.
 
 **Detector.** Every Node carries one bit: Detector or not. The mark is
@@ -161,7 +203,9 @@ returned a ray with 0, that value travels with the ray through the inverse
 split to the partner's line, and the second Detector of the pair receives it
 on the ray that reaches it. Because a marked Node is a Node
 like any other, everything else about it (rays crossing, interactions of
-other families, fields) is unchanged.
+other families, fields) is unchanged. Superseded on 2026-09-18 (section 0):
+a mark draws nothing and has no seed; it absorbs a thing by its declared
+table and returns a shadow (Highlights 5.4, points 6 and 14).
 
 **Return.** A returning ray retraces its own trajectory: it reverses its
 heading and walks back exactly the number of steps it has made since its
@@ -199,7 +243,12 @@ information survives only in the record). If something is at the Node, a
 bound group or other rays, the returning ray meets it by the declared
 coupling in every mode. For a ray-interaction event whose inputs were
 consumed, the returning ray cancels its own share only and continues along
-the event's output lines; nothing is left at the Node.
+the event's output lines; nothing is left at the Node. Superseded on
+2026-09-18 for a shadow (section 0): its return is a field, the same shadow
+with its heading reversed and its momentum inverted, mixing at every Node
+and absorbed wherever it reaches its owner, with no step count and no
+inverse split (Highlights 5.4, point 3); what a mark does with a seeded
+thing it misses is the settled rule (iii).
 
 **Information.** Everything on the board is a transfer of information. An
 event is a splitting of information: each ray carries its own share of what
@@ -282,7 +331,14 @@ heavy Node. The delay is larger on the side nearer the heavy Node, so the
 ray bends toward it; that bending is a change of momentum, and the
 returning field ray carries the opposite momentum back to the heavy Node,
 which is drawn toward the ray. Gravity is this bending by delay; it is not
-inserted as a force, nothing is absorbed, and momentum is exact.
+inserted as a force, nothing is absorbed, and momentum is exact. Superseded
+on 2026-09-18 (section 0): the field of a thing is its shadow set, rays of
+its own family with bit 0, given with the board; a shadow spreads by the
+Node's mixing, pushes a thing by the thing's reading and turns back as a
+field with its momentum inverted; nothing delays a ray and there is no
+output clock; gravity is the push read times the content of what is pushed,
+and the wait per whole quantum read is where the bending beyond Newton's
+comes from (Highlights 5.4, points 3, 9, 12, 16, 21, 23 and 24).
 
 **The release does not wait for the clock (model owner, 2026-09-17;
 Highlights 3.5).** A field release is information, not a departure of
@@ -302,7 +358,9 @@ because the number of paths to a Node after k steps is the multinomial
 count, which is rotationally symmetric to leading order; whether the
 bending of a passing ray is the same on an axis and on a diagonal is a
 measurable prediction (experiment A6 of the
-[experiments register](EXPERIMENTS.md)), not an assumption.
+[experiments register](EXPERIMENTS.md)), not an assumption. Superseded on
+2026-09-18 (Highlights 5.4, "A thing does not emit"): nothing is released
+per interval; the shadows are given with the board and circulate.
 
 **Light is the field, and the field spreads (model owner, 2026-09-17;
 Highlights 3.5).** Light and the field of a charge are one family of the
@@ -337,7 +395,11 @@ charge filling space with its net momentum through a Node falling as 1/r²
 photon as the far field arriving a whole quantum at a time, and diffraction
 with a wall as a body that absorbs follow from it, none inserted. This is
 feature 12 of section 6; until it lands the field lives on the six axis
-lines of its source and light goes straight.
+lines of its source and light goes straight. Superseded on 2026-09-18
+(section 0): there is no field family and light emitted at an event is a
+thing of the light family (point 12), the Node's mixing replaces the split
+table (point 24), and the remainder is a shadow parked at the Node (point
+22).
 
 **Speed is a clock slowing (model owner, 2026-09-17; Highlights 3.28).**
 Everything on the board moves at one Link per interval; there is no other
@@ -355,7 +417,9 @@ from its rays spending intervals on Links instead of resident
 [experiments register](EXPERIMENTS.md)). This is why mass, time dilation
 and gravity are one bookkeeping of integer delays read from different
 tables, and why the tables, not the engine, are what the confrontation runs
-test.
+test. Superseded on 2026-09-18 (Highlights 5.4, points 9, 21 and 23): every
+ray moves one Link per interval, a thing delays nothing, and the one wait is
+the tick a thing pays per whole quantum it reads.
 
 **Matter.** There is no matter in the model at this stage. Matter is the name
 for rays bound in one Node: for example a neutron ray and a proton ray held
@@ -438,7 +502,10 @@ comes from the spreading law, since a bound group is rays that must keep
 moving and bind again every interval, so only the closed patterns the
 binding table can hold exist; a body that does not spread has no closure
 condition and any amount is allowed. It is feature 7b of the migration in
-section 6, after feature 7, `external-body-v1`, done on 2026-09-17.
+section 6, after feature 7, `external-body-v1`, done on 2026-09-17. Since
+2026-09-18 a thing with declared tables, its shadows given with the board,
+radiating nothing (Highlights 5.4, point 22 and the settled rule (v);
+`node-is-ports-v1`).
 
 ## 2. The single generic rule
 
@@ -470,6 +537,11 @@ declared coupling between their families decides one of:
   the other arrivals that drew 1, 0 means the Node returns that arrival on
   its own line in the opposite direction.
 
+Since 2026-09-18 the third case is no draw (section 0): a mark absorbs a
+thing by its declared table and returns a shadow (Highlights 5.4, points 6
+and 14), and a shadow meeting a thing is a push and a return, not an
+interaction of the table (points 3 and 15).
+
 Nothing else decides anything. A ray alone at a Node never interacts. A Node
 never holds a ray without a declared binding coupling. Binding is the
 interaction whose result is zero events: the rays stay at the Node and
@@ -496,18 +568,33 @@ ray, with its event's Ports, shares and steps 0; (5) depart, each ray
 through its Port when that face's clock is ready. The two marks, the
 Detector and the external body, are the whole apparatus of a world: they
 are the only places where the board does something the tables do not say,
-and both are declarations in the initial file, never physics.
+and both are declarations in the initial file, never physics. Since
+2026-09-18 (section 0): a Node has no output clocks and no departure waits
+for one (point 21), the one wait being the tick of point 23; a mark draws
+nothing, it absorbs a thing and returns a shadow (points 6, 14); a shadow
+meeting a thing is a push and a return (point 3), the shadows of one owner
+are mixed among the six Ports (point 24), and the tables of step (3) stand
+for a thing meeting a thing.
 
 The rule in the form Highlights 3.27 requires:
 
 | Question | Answer under this model |
 | --- | --- |
-| Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the mark if the Node carries one, a Detector mark (mark, setting, ticket seed) or an external body (Highlights 3.19). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
+| Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the mark if the Node carries one, a Detector mark (mark, setting, ticket seed) or an external body (Highlights 3.19). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room (superseded for real rays on a lane on 2026-09-18 by Highlights 5.4, point 25: one real ray per lane per interval, a thing stepping into a lane only if it is free, two real rays of one family on one lane being one; no queue, no wait) |
 | What arrived | The rays delivered through the six Ports this interval, met layer by layer (a layer is a set of families that couple; rays of families with no declared coupling never meet); a resident bound group counts as arrived every interval |
 | What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval carrying no bit, independently, the kind of ray making no difference since every ray is a wave ray (an arrival carrying 1 passes without a draw and an arrival carrying 0 is a transmission and is never drawn, by the marked Node's declared coupling with this default, the draw on every arrival the declarable alternative; Highlights 5.4, 2026-09-17, feature 2b implementing both); the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to; the bit a marked Node set travels with the ray as a visible property, inherited by the outputs of any event the ray takes part in and readable by a catalog coupling and read by a later Detector as above (feature 2b, after feature 10; Highlights 5.4, 2026-09-17) |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a marked Node the click on 1 only, the pass being the measurement; a return (0) is not a measurement and records no outcome; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count, and what its inverse split transmits travels the lines the event sent to, one Link per interval. No message, no registry answer, nothing that skips a Node |
+
+Since 2026-09-18 (section 0) the table reads with the law of the bit: the
+state is on the ray with its bit and, for a thing, its momentum, a shadow
+carrying no step count, and a Node is its six Ports, two lanes each, with
+its parked shadows; what operates is the tables for a thing meeting a thing,
+the push and the return for a shadow meeting a thing, the mixing for the
+shadows of one owner, and the mark's declared table, with no draw; it takes
+one interval per Link, with the wait of point 23; and what crosses a Link is
+at most one real ray and one shadow per owner per lane.
 
 ## 3. Pairs, the carried bit and the price
 
@@ -561,7 +648,10 @@ Pair identity becomes the trajectory,
 so two pairs born at one Node in one tick are distinct, which closes the
 birth-code collision found on 16 September 2026 by the Bell and postulate 22
 study (`examples/research/bell-postulate-22/`, deleted on 2026-09-17 with the
-bond registry).
+bond registry). Since 2026-09-18 (section 0) no mark draws and a shadow's
+return is a field; what a mark that misses a thing does is Highlights 5.4,
+point 6, and the price of this section is re-derived by hypothesis 11 and
+A13 under the law.
 
 **Entanglement is the name for siblings of one event (2026-09-17, Highlights
 3.20).** Entanglement is the shared last-event record of siblings and nothing
@@ -619,6 +709,11 @@ every such set; Highlights 3.20 is the text to follow.
   N-to-M contract already enforces; no interaction can create more
   alternatives than the Node has Ports.
 
+Since 2026-09-18 the one door for randomness is closed (Highlights 5.4,
+point 14), the field is the shadow set of a thing (point 12), and the recoil
+is the shadow's return as a field (point 3); the bullets above describe the
+form of 2026-09-17.
+
 ## 5. What the current engine does differently
 
 | Today | Under this model |
@@ -631,6 +726,11 @@ every such set; Highlights 3.20 is the text to follow.
 | A record can hold, wait at zero cost and be updated in place | Nothing holds except a bound group under a declared binding coupling |
 | An event is any local change at a Node | An event is a change of trajectory leaving an interaction; crossing a Node is not an event |
 | Alternatives live in a separate quantum owner (deferred graph, event network) | Alternatives are the up-to-six events of each interaction, all on the board |
+
+Since 2026-09-18 the right-hand column reads with the law of the bit
+(section 0): the marked-Node lottery is no lottery, a mark absorbing things
+and returning shadows; a field ray is a shadow, given with the board, and its
+return is a field.
 
 ## 6. Migration, in order
 
@@ -1114,7 +1214,42 @@ as its corner meetings, the survival law per meeting; the Node counts as
 marked by the declaration; see [a decaying group
 draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1).)
 
+**Features 15 to 18, the law of the bit (model owner, 2026-09-18; section
+0).** Feature 15, `bit-law-v1` (done 2026-09-18): the bit on every ray, a
+thing or its shadow, `field_of` retired, shadows given with the board
+(`initial_field`), the push by the declared reading and the shadow's return,
+the mark absorbing things and returning shadows with no seed and no draw,
+the ledger per bit ([the law of the
+bit](SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1)). Feature 16b,
+`clock-readings-v1` (done 2026-09-18): the clock as content / K, one shadow
+set read twice, the decay table, one Link per interval with the step by
+momentum, the wait per whole quantum read ([the clock and the
+readings](SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1)).
+Feature 16c, `node-mixing-v1` (done 2026-09-18): the Node mixes the six,
+nothing declared, the split table and the pairwise steering
+(`phase-spread-v1`) retired for shadows ([the Node mixes the
+six](SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1)). Feature 17,
+`node-is-ports-v1` (done 2026-09-18): the parked shadow, the resident
+thing, the source that spends content, the apparatus as things, the names
+`real` and `shadow` ([a Node is its six
+Ports](SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1)).
+Feature 18, `lanes-v1` (done 2026-09-18): a Port is two lanes, one real
+ray and one shadow per owner per lane, slots not lists, the lane a
+condition on the step and not a queue, two real rays of one family on one
+lane one real ray ([a Port is two
+lanes](SPATIAL_FIELDS.md#a-port-is-two-lanes-lanes-v1)). Pending: the
+return as a field (point 3 as amended, retiring the trace and the walk home
+those features implement). Retired from the engine by them: `detector-bit-property-v1`,
+`decay-draw-v1`, `field-spreading-v1` and `phase-spread-v1`.
+
 ## 7. Acceptance criteria for the first implementation slice
+
+The criteria below are those of the first slice (2026-09-17). Since
+2026-09-18 the law of the bit (section 0) replaces the draw, the walk back
+and the delay in them, and the tests of features 15 to 17
+(`tests/test_bit_law.py`, `tests/test_node_mixing.py`,
+`tests/test_clock_readings.py`, `tests/test_wait_rule.py`,
+`tests/test_node_is_ports.py`) pin the current behaviour.
 
 - A transfer through a marked Node draws 1 or 0; on 1 the Node's behavior is
   identical to the unmarked Node (same events, same totals); on 0 the
@@ -1208,6 +1343,12 @@ was has changed: the returned ray reversed its share, so the event lost that
 share, and the information is never lost, it chases the share it cancels. If
 the share is delayed and caught, momentum and everything else are conserved
 at the Node where they meet.
+
+Settled on 2026-09-18 by the law of the bit (section 0): what a returned
+field quantum does once the field spreads (Highlights 5.5): it is a shadow,
+turned back with its heading reversed and its momentum inverted and mixed at
+every Node, with no walk and no inverse split (Highlights 5.4, points 3 and
+6).
 
 Deferred on 2026-09-17 (Highlights 3.26), not open: polarization is feature
 11, and the strong and weak interactions and decay are catalog entries on the

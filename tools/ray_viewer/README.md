@@ -15,7 +15,7 @@ here that touches the engine.
   its family colour, a short segment from its Node along its heading
   (`sizes.head_links` 0.5 of the Link, `ray_width_px` 3; `head_links` 1
   draws the whole Link), a tiny momentum arrow at the head along its
-  momentum register (its heading unless a push turned it,
+  momentum (the momentum register until 2026-09-18; its heading unless a push turned it,
   `ray-momentum-turn-v1`; the extractor writes it as the segment's
   `momentum`) whose length is that momentum times `sizes.momentum_arrow_px_per_quantum`
   (1.75 px, so 14 px for an electron of 8, with an `arrowhead_px` 5 head;
@@ -32,7 +32,7 @@ here that touches the engine.
   none, is available (`draw.labels.rays`) and off by default, so that nothing
   on the board reads as text.
 - A family declared as a field (`field_of` in its `spatial_fields` entry,
-  feature 7) is drawn faint and thin, with a short trail, no arrowhead and no
+  feature 7; since 2026-09-18 a shadow, a ray with bit 0, `bit-law-v1`) is drawn faint and thin, with a short trail, no arrowhead and no
   label. A release, the field rays leaving a Node with the ray that crosses
   it, is its own event kind, `release`: no marker, no caption line, and the
   source ray's trail runs through it unbroken.

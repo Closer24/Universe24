@@ -275,7 +275,10 @@ amount: registers outside the key, like a ray's steps. Its amount is of any
 width and is never a key dimension, which is why the "spreading not
 enforced" flag costs nothing in the table. The Detector (detector-mark-v1):
 the draw is outside any table, one unsalted draw per arrival; its two
-outcomes, click on 1 and return on 0, are two rows.
+outcomes, click on 1 and return on 0, are two rows. (The form before
+2026-09-18: since the law of the bit a body radiates nothing, its shadows
+being given with the board, and a mark draws nothing, Highlights 5.4, points
+14 and 22.)
 
 Consequence: the tables are feasible only for the collision step on the
 reduced key, with the ray-event bookkeeping (steps, event Ports, shares,
@@ -344,6 +347,10 @@ and the registers move with the Node. The region's Nodes read back as Node
 state for the totals, the snapshot and the inventory view; a dense Node
 publishes no per-Node event, the record of a dense region being its totals
 per tick, so the mode is not for records that need per-Node field events.
+Since 2026-09-18 the dense mode is the shadow layer of the law of the bit
+(Highlights 5.4, point 13): it applies the Node's mixing (`node-mixing-v1`)
+with the parked shadows of `node-is-ports-v1` in place of the split and
+remainder rule measured here.
 The acceptance test is byte identity of `state.json` and of the world ledger.
 
 Measured on Linux with Python 3.14.0rc2 and numpy 2.5.3 on 2026-09-17, one
