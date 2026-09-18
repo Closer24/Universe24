@@ -1237,7 +1237,7 @@ states "exactly" and means integer equality at every tick.
   dedicated machine (703 to 1319 s per axis world at four at a time, 2.5 to
   2.9 GB peak; the three 33^3 worlds were killed by the machine's memory
   limit at four at a time beside the replays and were run again two at a
-  time), the `run.json` of every world kept in `records/` beside the worlds,
+  time), the `run.json` of every world kept gzipped in `records/` beside the worlds,
   the readings in `record.json` and `tables.md`, the page in `a5s_law.html`.
   The open-board form of the eight worlds, written first as the control, was
   dropped before it ran by the model owner's decision of the same hour that
@@ -1329,10 +1329,11 @@ states "exactly" and means integer equality at every tick.
   `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5` (the
   package of `main` at `1a88785` merged into the branch, as E11 repeated; no
   engine change on the branch), the initializations in
-  `examples/nature/a5s_law/records/*.json` (the `run.json` of the seven
+  `examples/nature/a5s_law/records/*.json.gz` (the `run.json` of the seven
   recorded worlds, `initialization_sha256` inside each), the worlds the
-  files beside them at this commit; `pp_d8_111_closed.json` written and not
-  recorded.
+  files beside them at this commit less the family key `ray_slots`, retired
+  by `main` after the runs (PR #315; the physics unchanged);
+  `pp_d8_111_closed.json` written and not recorded.
 - **Status.** partial, measured on 2026-09-18 for seven of eight closed
   worlds at the fingerprint above, one replayed for the momentum in flight;
   recorded here; superseded the same evening by the model owner's decision
@@ -3858,7 +3859,7 @@ sign rule, and its other couplings are catalog entries.
   wave, 0 for standing flat-band content, up to 2 for six arrivals in one
   phase) beside it. The records were made with `tools/run_series.py --jobs
   4` on a dedicated machine (4 cores, 16 GB; 479 to 1016 s per world, 2.5 GB
-  peak each), the `run.json` of every world kept in `records/` beside the
+  peak each), the `run.json` of every world kept gzipped in `records/` beside the
   worlds, the readings in `record.json` and `tables.md`, the page in
   `e11_law.html`. Stated before the run: the prefill drops what reaches the
   lamp's Node during the fill, so the probe worlds whose lamp lies within
@@ -3997,13 +3998,16 @@ sign rule, and its other couplings are catalog entries.
   `051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5` (the
   package of `main` at `1a88785` merged into the branch: features 15 to 18,
   16d parts 1 and 2, 16e, 16f, `cleanup-law-v1`; no engine change on the
-  branch), the initializations in `examples/nature/e11_law/records/*_closed.json`
+  branch), the initializations in `examples/nature/e11_law/records/*_closed.json.gz`
   (the `run.json` of every world, `initialization_sha256` inside each;
   `standing_closed`
   `872d63acd3178537f31b577b40aed15e7185d36b62aa59637210ed91fcf568da`), the
-  worlds the files beside them at this commit. The open board, earlier:
+  worlds the files beside them at this commit less the family key
+  `ray_slots`, which `main` retired with the lanes after the runs (PR #315)
+  and the engine now refuses: the shipped worlds drop it, their textual
+  fingerprint changing and their physics not. The open board, earlier:
   source `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`
-  (`main` at `ffa4a56`), `records/{pulse,standing,probe_axis_*,probe_110_*}.json`,
+  (`main` at `ffa4a56`), `records/{pulse,standing,probe_axis_*,probe_110_*}.json.gz`,
   whose worlds carried the per-family `phase_bits` 6 that the migration to
   the world key `N` rewrites (the physics unchanged).
 - **Status.** measured on 2026-09-18 for the ten closed worlds at the

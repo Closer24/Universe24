@@ -133,14 +133,13 @@ def field(name, components=1):
     }
 
 
-def family(name, charge, slots, **extra):
+def family(name, charge, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "charge": charge,
@@ -236,8 +235,8 @@ def world(model_id, half, fill, probe=None, *, closed=False):
         "fields": [field("proton"), field("electron"), field("momentum", 3)],
         "disturbance_types": types,
         "spatial_fields": [
-            family("proton", PROTON_CHARGE, 24, release=RELEASE),
-            family("electron", ELECTRON_CHARGE, 8, clock=True),
+            family("proton", PROTON_CHARGE, release=RELEASE),
+            family("electron", ELECTRON_CHARGE, clock=True),
         ],
         "emissions": emissions,
         "seeds": seeds,
@@ -259,7 +258,10 @@ def cases():
     for direction, (offsets, heading, letter) in PROBES.items():
         for offset in offsets:
             name = f"probe_{direction}_{letter}{offset[0]}_closed"
-            yield name, world(f"e11-law-{name.replace('_', '-')}", HALF, FILL, (offset, heading), closed=True)
+            yield (
+                name,
+                world(f"e11-law-{name.replace('_', '-')}", HALF, FILL, (offset, heading), closed=True),
+            )
 
 
 def main():

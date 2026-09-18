@@ -72,11 +72,6 @@ RELEASE = [1, 512]
 FILL = 12
 MARGIN = 12
 AXIS_DISTANCES = (4, 6, 8, 12)
-# The proton family's slot budget: on a closed board the outgoing and the
-# returning shares of two owners on six headings in two phases meet at one
-# Node, more than the 24 of E11 (no rule couples the family here, so the
-# layer cap of 32 does not apply).
-SLOTS = 64
 # The closed board (the model owner's decision of 2026-09-18, landing during
 # these runs): `boundary` periodic, the same board, the shadows circulating,
 # run three times as long with `standing_field` on so that the runner reports
@@ -97,14 +92,13 @@ def field(name, components=1):
     }
 
 
-def family(name, charge, slots, **extra):
+def family(name, charge, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "charge": charge,
@@ -153,8 +147,8 @@ def world(model_id, offset, amount_a, amount_b):
             }
         ],
         "spatial_fields": [
-            family("proton", PROTON_CHARGE, SLOTS, release=RELEASE),
-            family("electron", ELECTRON_CHARGE, 8, clock=True),
+            family("proton", PROTON_CHARGE, release=RELEASE),
+            family("electron", ELECTRON_CHARGE, clock=True),
         ],
         "emissions": [],
         "seeds": [],

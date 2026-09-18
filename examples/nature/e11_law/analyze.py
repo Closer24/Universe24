@@ -150,7 +150,10 @@ def settling_tick(rows, key, window=SETTLE_WINDOW, tolerance=SETTLE_TOLERANCE):
         return None
     final = sum(values[n - window :]) / window
     scale = abs(final) if final else 1.0
-    ok = [abs(sum(values[s : s + window]) / window - final) <= tolerance * scale for s in range(0, n - window + 1)]
+    ok = [
+        abs(sum(values[s : s + window]) / window - final) <= tolerance * scale
+        for s in range(0, n - window + 1)
+    ]
     t = n - window
     while t > 0 and ok[t - 1]:
         t -= 1
@@ -206,7 +209,9 @@ def probe_reading(record, offset, heading, closed=False):
         "settled_push_error": standard_error([r["push_radial"] for r in last]),
         "settled_push_before": sum(r["push_radial"] for r in before) / len(before) if before else None,
         "settling_tick": settling_tick(rows, "push_radial") if closed else None,
-        "sign_changes": sum(1 for x, y in zip(rows, rows[1:], strict=False) if x["push_radial"] * y["push_radial"] < 0),
+        "sign_changes": sum(
+            1 for x, y in zip(rows, rows[1:], strict=False) if x["push_radial"] * y["push_radial"] < 0
+        ),
         "body_momentum_at_end": rows[-1]["body_momentum"],
         # Filled from the replay (the momentum on the shadows and on the probe
         # read from the engine's arrays and Nodes): `in_flight_at_end` and
@@ -214,8 +219,10 @@ def probe_reading(record, offset, heading, closed=False):
         "in_flight_at_end": None,
         "world_momentum_zero_every_tick": None,
         "recoil_home_fraction": (
-            -sum(rows[-1]["body_momentum"][k] * radial[k] for k in range(3)) / rows[-1]["cumulative_radial"]
-            if rows[-1]["cumulative_radial"] else None
+            -sum(rows[-1]["body_momentum"][k] * radial[k] for k in range(3))
+            / rows[-1]["cumulative_radial"]
+            if rows[-1]["cumulative_radial"]
+            else None
         ),
         "waited_intervals": sum(1 for r in rows if r["computation"] == 0 and r["tick"] >= 2),
     }
@@ -244,7 +251,13 @@ def fit_slope(points):
     intercept = my - slope * mx
     residual = sum((y - (intercept + slope * x)) ** 2 for x, y in zip(xs, ys, strict=True))
     error = math.sqrt(residual / (n - 2) / sxx) if n > 2 else None
-    return {"slope": slope, "intercept": intercept, "error": error, "points": n, "signs": [1 if y > 0 else -1 for r, y in points if y]}
+    return {
+        "slope": slope,
+        "intercept": intercept,
+        "error": error,
+        "points": n,
+        "signs": [1 if y > 0 else -1 for r, y in points if y],
+    }
 
 
 def fit_value(fit, r):
@@ -329,14 +342,22 @@ def arrivals_at(world, index, position):
     spatial = world._spatial
     family = spatial.dense.families[index]
     rays = []
-    amounts, phases, momenta = family.arr_amt[position], family.arr_ph[position], family.arr_mom[position]
+    amounts, phases, momenta = (
+        family.arr_amt[position],
+        family.arr_ph[position],
+        family.arr_mom[position],
+    )
     for cell in zip(*np.nonzero(amounts), strict=True):
         rank, flow, sign, port, layer = (int(c) for c in cell)
-        rays.append(family.ray(rank, flow, sign, port, int(amounts[cell]), int(phases[cell]), momenta[cell]))
+        rays.append(
+            family.ray(rank, flow, sign, port, int(amounts[cell]), int(phases[cell]), momenta[cell])
+        )
     rays.extend(family.overflow.get(position, ()))
     node = spatial.nodes.get(position)
     if node is not None and node.rays:
-        rays.extend(ray for ray in node.rays[index] if ray.detector == 0 and not ray.parked and ray.steps >= 1)
+        rays.extend(
+            ray for ray in node.rays[index] if ray.detector == 0 and not ray.parked and ray.steps >= 1
+        )
     return rays
 
 
@@ -404,7 +425,9 @@ def replay(document, ticks, read_nodes, log=print, shells=True):
                         n = int(mask.sum())
                         if n == 0:
                             continue
-                        content = int(out_total[mask].sum() + ret_total[mask].sum() + park_total[mask].sum())
+                        content = int(
+                            out_total[mask].sum() + ret_total[mask].sum() + park_total[mask].sum()
+                        )
                         rows.append(
                             {
                                 "k": k,
@@ -453,7 +476,11 @@ def replay(document, ticks, read_nodes, log=print, shells=True):
             row["body_momentum"] = [list(b["momentum"]) for b in world.external_bodies()]
             row["shadow_momentum"], row["real_momentum"] = momenta(world, index)
             row["world_zero"] = all(
-                row["shadow_momentum"][k] + row["real_momentum"][k] + sum(b[k] for b in row["body_momentum"]) + int(world.audit()["fields"]["momentum"]["escaped"][k]) == 0
+                row["shadow_momentum"][k]
+                + row["real_momentum"][k]
+                + sum(b[k] for b in row["body_momentum"])
+                + int(world.audit()["fields"]["momentum"]["escaped"][k])
+                == 0
                 for k in range(3)
             )
             per_tick.append(row)
@@ -473,12 +500,21 @@ def identity_of(per_tick, run):
     here, so the bodies' line stands for it); all four True is the identity."""
     audit = run["audit"]
     checks = {
-        "shadows_on_board": [row["on_board"] for row in per_tick] == list(run["shadow_content"][: len(per_tick)]),
-        "escaped": all(row["escaped"] == audit[i]["shadow"]["proton"]["escaped"][0] for i, row in enumerate(per_tick)),
-        "body_momentum": all(
-            row["body_momentum"][0] == list(run["momentum"][i].get(str(BODY_THING), [0, 0, 0])) for i, row in enumerate(per_tick)
+        "shadows_on_board": [row["on_board"] for row in per_tick]
+        == list(run["shadow_content"][: len(per_tick)]),
+        "escaped": all(
+            row["escaped"] == audit[i]["shadow"]["proton"]["escaped"][0]
+            for i, row in enumerate(per_tick)
         ),
-        "balanced": all(row["balanced"] == (bool(audit[i]["balanced"]) and bool(audit[i].get("real_conserved", True))) for i, row in enumerate(per_tick)),
+        "body_momentum": all(
+            row["body_momentum"][0] == list(run["momentum"][i].get(str(BODY_THING), [0, 0, 0]))
+            for i, row in enumerate(per_tick)
+        ),
+        "balanced": all(
+            row["balanced"]
+            == (bool(audit[i]["balanced"]) and bool(audit[i].get("real_conserved", True)))
+            for i, row in enumerate(per_tick)
+        ),
     }
     if all("real_momentum" in row for row in per_tick) and str(PROBE_THING) in run["momentum"][-1]:
         # The probe's momentum line of the record is its own amount x heading
@@ -508,12 +544,20 @@ def replay_world(job):
     document = json.loads(Path(world_path).read_text(encoding="utf-8"))
     run = json.loads(Path(run_path).read_text(encoding="utf-8"))
     started = time.perf_counter()
-    per_tick, ledgers = replay(document, run["completed_ticks"], labels, log=lambda _: None, shells=shells)
+    per_tick, ledgers = replay(
+        document, run["completed_ticks"], labels, log=lambda _: None, shells=shells
+    )
     identity = identity_of(per_tick, run)
     shadow_lines = json.loads(json.dumps([entry["shadow"] for entry in ledgers]))
     identity["ledger_shadow_line"] = shadow_lines == [entry["shadow"] for entry in run["audit"]]
     Path(cache_path).write_text(
-        json.dumps({"per_tick": per_tick, "identity": identity, "seconds": round(time.perf_counter() - started, 1)}),
+        json.dumps(
+            {
+                "per_tick": per_tick,
+                "identity": identity,
+                "seconds": round(time.perf_counter() - started, 1),
+            }
+        ),
         encoding="utf-8",
     )
     return name, identity["identical"], round(time.perf_counter() - started, 1)
@@ -549,6 +593,7 @@ def settled_reading(per_tick, labels, window=SETTLE_WINDOW):
     before = per_tick[-2 * window : -window]
     settled = {}
     for k in range(0, HALF + 1):
+
         def shell(row, key, k=k):
             return next((x[key] for x in row.get("l1", ()) if x["k"] == k), None)
 
@@ -561,12 +606,27 @@ def settled_reading(per_tick, labels, window=SETTLE_WINDOW):
     nodes = {}
     for label in labels:
         nodes[label] = {
-            key: mean_over(rows, lambda r, key=key, label=label: r["read_nodes"][label][key.removesuffix("_before")])
-            for key in ("content", "content_before", "j_radial", "j_radial_before", "amplitude", "amplitude_before", "arrived", "wave_fraction")
+            key: mean_over(
+                rows, lambda r, key=key, label=label: r["read_nodes"][label][key.removesuffix("_before")]
+            )
+            for key in (
+                "content",
+                "content_before",
+                "j_radial",
+                "j_radial_before",
+                "amplitude",
+                "amplitude_before",
+                "arrived",
+                "wave_fraction",
+            )
             for rows in ((before if key.endswith("_before") else last),)
         }
-        nodes[label]["settling_tick_content"] = settling_tick([{"tick": r["tick"], "v": r["read_nodes"][label]["content"]} for r in per_tick], "v")
-        nodes[label]["settling_tick_amplitude"] = settling_tick([{"tick": r["tick"], "v": r["read_nodes"][label]["amplitude"]} for r in per_tick], "v")
+        nodes[label]["settling_tick_content"] = settling_tick(
+            [{"tick": r["tick"], "v": r["read_nodes"][label]["content"]} for r in per_tick], "v"
+        )
+        nodes[label]["settling_tick_amplitude"] = settling_tick(
+            [{"tick": r["tick"], "v": r["read_nodes"][label]["amplitude"]} for r in per_tick], "v"
+        )
     return settled, nodes
 
 
@@ -596,7 +656,9 @@ def standing_line(w):
 def tables(record):
     lines = []
     lines.append("### The books per bit\n")
-    lines.append("| World | Board | Ticks | World line balanced | Real line | Shadow line | `real_conserved` | Shadows at start | At the end | Escaped | Runner s | Source |")
+    lines.append(
+        "| World | Board | Ticks | World line balanced | Real line | Shadow line | `real_conserved` | Shadows at start | At the end | Escaped | Runner s | Source |"
+    )
     lines.append("| --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |")
     for name, row in record["worlds"].items():
         b = row["books"]
@@ -614,62 +676,99 @@ def tables(record):
     if "standing_closed" in record["replays"]:
         c = record["replays"]["standing_closed"]
         w = record["worlds"]["standing_closed"]
-        lines.append("\n### The standing world (`standing_closed`): the field of the thing at rest on the closed board, `boundary` periodic, 120 ticks, `standing_field` on\n")
-        lines.append(f"The runner's standing-set search: {standing_line(w)}. Shadows on the board at every tick: {w['shadows_initial']} (escaped {w['escaped']}). Off the planes, mean of the last twenty ticks: {c['off_planes_last_20']:.3f}. The replay identical to the record tick by tick (shadows on the board, escapes, the body's momentum, the books): {c['ledger_identical_to_record']}.\n")
-        lines.append("| k (L1) | Nodes | Content per Node, ticks 81-100 | 101-120 | J_r per Node, 81-100 | 101-120 |")
+        lines.append(
+            "\n### The standing world (`standing_closed`): the field of the thing at rest on the closed board, `boundary` periodic, 120 ticks, `standing_field` on\n"
+        )
+        lines.append(
+            f"The runner's standing-set search: {standing_line(w)}. Shadows on the board at every tick: {w['shadows_initial']} (escaped {w['escaped']}). Off the planes, mean of the last twenty ticks: {c['off_planes_last_20']:.3f}. The replay identical to the record tick by tick (shadows on the board, escapes, the body's momentum, the books): {c['ledger_identical_to_record']}.\n"
+        )
+        lines.append(
+            "| k (L1) | Nodes | Content per Node, ticks 81-100 | 101-120 | J_r per Node, 81-100 | 101-120 |"
+        )
         lines.append("| ---: | ---: | ---: | ---: | ---: | ---: |")
         nodes_of = {x["k"]: x["nodes"] for x in c["per_tick"][-1]["l1"]}
         for k, v in c["settled"].items():
             if v["per_node"] is None:
                 continue
-            lines.append(f"| {k} | {nodes_of.get(int(k), '-')} | {v['per_node_before']:.0f} | {v['per_node']:.0f} | {v['jr_per_node_before']:.0f} | {v['jr_per_node']:.0f} |")
-        lines.append("\n| Read Node (free field) | r | Content, ticks 81-100 | 101-120 | Settled from tick | J_r, 81-100 | 101-120 | Amplitude, 81-100 | 101-120 | Settled from tick | Wave fraction |")
+            lines.append(
+                f"| {k} | {nodes_of.get(int(k), '-')} | {v['per_node_before']:.0f} | {v['per_node']:.0f} | {v['jr_per_node_before']:.0f} | {v['jr_per_node']:.0f} |"
+            )
+        lines.append(
+            "\n| Read Node (free field) | r | Content, ticks 81-100 | 101-120 | Settled from tick | J_r, 81-100 | 101-120 | Amplitude, 81-100 | 101-120 | Settled from tick | Wave fraction |"
+        )
         lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
         for label, v in c["settled_read_nodes"].items():
             r = record["read_nodes"][label]["radius"]
-            lines.append(f"| {label} | {r:.2f} | {v['content_before']:.0f} | {v['content']:.0f} | {fmt(v['settling_tick_content'])} | {v['j_radial_before']:.1f} | {v['j_radial']:.1f} | {v['amplitude_before']:.1f} | {v['amplitude']:.1f} | {fmt(v['settling_tick_amplitude'])} | {fmt(v['wave_fraction'], 3)} |")
-        lines.append("\n| t | On the board | Content per Node at k = 4 | 8 | 12 | J_r per Node at k = 4 | 8 | 12 | Off the planes | Parked | Step s |")
+            lines.append(
+                f"| {label} | {r:.2f} | {v['content_before']:.0f} | {v['content']:.0f} | {fmt(v['settling_tick_content'])} | {v['j_radial_before']:.1f} | {v['j_radial']:.1f} | {v['amplitude_before']:.1f} | {v['amplitude']:.1f} | {fmt(v['settling_tick_amplitude'])} | {fmt(v['wave_fraction'], 3)} |"
+            )
+        lines.append(
+            "\n| t | On the board | Content per Node at k = 4 | 8 | 12 | J_r per Node at k = 4 | 8 | 12 | Off the planes | Parked | Step s |"
+        )
         lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
         for row in c["per_tick"]:
             if row["tick"] in (1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120):
                 j = {x["k"]: x["jr_per_node"] for x in row["l1"]}
                 n = {x["k"]: x["per_node"] for x in row["l1"]}
-                lines.append(f"| {row['tick']} | {row['on_board']} | {n.get(4, 0):.0f} | {n.get(8, 0):.0f} | {n.get(12, 0):.0f} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} | {row['fractions']['parked']:.3f} | {row['seconds']} |")
+                lines.append(
+                    f"| {row['tick']} | {row['on_board']} | {n.get(4, 0):.0f} | {n.get(8, 0):.0f} | {n.get(12, 0):.0f} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} | {row['fractions']['parked']:.3f} | {row['seconds']} |"
+                )
     open_probes = {k: v for k, v in record["probes"].items() if not v["closed"]}
     closed_probes = {k: v for k, v in record["probes"].items() if v["closed"]}
     if closed_probes:
-        lines.append("\n### The test things (the nine closed probe worlds): the push per interval per window of twenty, the settled push and the amplitude at the thing's Node\n")
-        lines.append("| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Cumulative push at 120 | Body's momentum at 120 | Recoil home | In flight on the shadows at 120 (replay) | Probe + shadows + body = 0 every tick (replay) | Standing-set search |")
-        lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | --- | --- |")
+        lines.append(
+            "\n### The test things (the nine closed probe worlds): the push per interval per window of twenty, the settled push and the amplitude at the thing's Node\n"
+        )
+        lines.append(
+            "| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Cumulative push at 120 | Body's momentum at 120 | Recoil home | In flight on the shadows at 120 (replay) | Probe + shadows + body = 0 every tick (replay) | Standing-set search |"
+        )
+        lines.append(
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | --- | --- |"
+        )
         for label, probe in closed_probes.items():
             w = probe["window_means"]
             amp = record["amplitude_at_probes"].get(label, {})
-            free = record["replays"].get("standing_closed", {}).get("settled_read_nodes", {}).get(label, {})
-            sf = (record["worlds"][f"probe_{label}"].get("standing_field") or {})
+            free = (
+                record["replays"].get("standing_closed", {}).get("settled_read_nodes", {}).get(label, {})
+            )
+            sf = record["worlds"][f"probe_{label}"].get("standing_field") or {}
             search = f"{sf.get('standing_field')}, iterations {sf.get('standing_field_iterations')}, residual {(sf.get('standing_field_residual') or {}).get('amount', '-')}"
             lines.append(
-                f"| `{label}` | {probe['radius']:.2f} | " + " | ".join(f"{w[k]:.1f}" for k in ("1-20", "21-40", "41-60", "61-80", "81-100", "101-120")) +
-                f" +- {probe['settled_push_error']:.0f} | {fmt(probe['settling_tick'])} | {probe['sign_changes']} | {fmt(amp.get('amplitude_before'))} | {fmt(amp.get('amplitude'))} | {fmt(amp.get('arrived'), 0)} | {fmt(amp.get('wave_fraction'), 3)} | {fmt(free.get('amplitude'))} | {probe['waited_intervals']} | {probe['cumulative_radial_at_end']:.0f} | {probe['body_momentum_at_end']} | {fmt(100 * probe['recoil_home_fraction'], 1) if probe['recoil_home_fraction'] is not None else '-'} % | {probe['in_flight_at_end'] if probe['in_flight_at_end'] is not None else 'not read'} | {probe['world_momentum_zero_every_tick'] if probe['world_momentum_zero_every_tick'] is not None else 'not read'} | {search} |"
+                f"| `{label}` | {probe['radius']:.2f} | "
+                + " | ".join(
+                    f"{w[k]:.1f}" for k in ("1-20", "21-40", "41-60", "61-80", "81-100", "101-120")
+                )
+                + f" +- {probe['settled_push_error']:.0f} | {fmt(probe['settling_tick'])} | {probe['sign_changes']} | {fmt(amp.get('amplitude_before'))} | {fmt(amp.get('amplitude'))} | {fmt(amp.get('arrived'), 0)} | {fmt(amp.get('wave_fraction'), 3)} | {fmt(free.get('amplitude'))} | {probe['waited_intervals']} | {probe['cumulative_radial_at_end']:.0f} | {probe['body_momentum_at_end']} | {fmt(100 * probe['recoil_home_fraction'], 1) if probe['recoil_home_fraction'] is not None else '-'} % | {probe['in_flight_at_end'] if probe['in_flight_at_end'] is not None else 'not read'} | {probe['world_momentum_zero_every_tick'] if probe['world_momentum_zero_every_tick'] is not None else 'not read'} | {search} |"
             )
     fit_tables(lines, record, "closed")
     open_probes_block(lines, record, open_probes)
     if "pulse" in record["replays"]:
         p = record["replays"]["pulse"]
-        lines.append("\n### The pulse (open board, measured earlier): the front per direction and the release off the planes\n")
+        lines.append(
+            "\n### The pulse (open board, measured earlier): the front per direction and the release off the planes\n"
+        )
         lines.append("| Read Node | r | sqrt 3 r | First arrival (tick) | Peak (tick) | Peak content |")
         lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
         for label, f in p["fronts"].items():
             r = record["read_nodes"][label]["radius"]
-            lines.append(f"| {label} | {r:.2f} | {math.sqrt(3) * r:.1f} | {fmt(f['first'])} | {fmt(f['peak_tick'])} | {f['peak']} |")
-        lines.append("\n| t | On the board | Escaped | On the axes | On the planes off the axes | Off the planes | Parked |")
+            lines.append(
+                f"| {label} | {r:.2f} | {math.sqrt(3) * r:.1f} | {fmt(f['first'])} | {fmt(f['peak_tick'])} | {f['peak']} |"
+            )
+        lines.append(
+            "\n| t | On the board | Escaped | On the axes | On the planes off the axes | Off the planes | Parked |"
+        )
         lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
         for row in p["per_tick"]:
             if row["tick"] in (1, 2, 3, 5, 10, 20, 30, 40):
                 f = row["fractions"]
-                lines.append(f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {f['axes']:.3f} | {f['planes_off_axes']:.3f} | {f['off_planes']:.3f} | {f['parked']:.3f} |")
+                lines.append(
+                    f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {f['axes']:.3f} | {f['planes_off_axes']:.3f} | {f['off_planes']:.3f} | {f['parked']:.3f} |"
+                )
     if "standing" in record["replays"]:
         s = record["replays"]["standing"]
-        lines.append("\n### The field of the thing at rest on the open board (measured earlier), shell by shell (L1 shells; content per Node / J_r per Node)\n")
+        lines.append(
+            "\n### The field of the thing at rest on the open board (measured earlier), shell by shell (L1 shells; content per Node / J_r per Node)\n"
+        )
         ticks_shown = (1, 5, 10, 20, 30, 40)
         lines.append("| k | Nodes | " + " | ".join(f"t = {t}" for t in ticks_shown) + " |")
         lines.append("| ---: | ---: | " + " | ".join("---:" for _ in ticks_shown) + " |")
@@ -684,36 +783,56 @@ def tables(record):
                 nodes = shell["nodes"]
                 cells.append(f"{shell['per_node']:.0f} / {shell['jr_per_node']:.0f}")
             lines.append(f"| {k} | {nodes} | " + " | ".join(cells) + " |")
-        lines.append("\n| t | On the board | Escaped | J_r per Node at k = 4 | 8 | 12 | Off the planes |")
+        lines.append(
+            "\n| t | On the board | Escaped | J_r per Node at k = 4 | 8 | 12 | Off the planes |"
+        )
         lines.append("| ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
         for row in s["per_tick"]:
             if row["tick"] in (1, 2, 3, 5, 10, 15, 20, 25, 30, 35, 40):
                 j = {x["k"]: x["jr_per_node"] for x in row["l1"]}
-                lines.append(f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} |")
+                lines.append(
+                    f"| {row['tick']} | {row['on_board']} | {row['escaped']} | {j.get(4, 0):.0f} | {j.get(8, 0):.0f} | {j.get(12, 0):.0f} | {row['fractions']['off_planes']:.3f} |"
+                )
     fit_tables(lines, record, "open")
     return "\n".join(lines) + "\n"
 
 
 def fit_tables(lines, record, board):
     lines.append(f"\n### The 1/r^2 fit per direction and the anisotropy ({board} board)\n")
-    lines.append("| Direction | Quantity | Slope (log-log over three radii) | Standard error | Value at r = 8 | At r = 12 | Signs |")
+    lines.append(
+        "| Direction | Quantity | Slope (log-log over three radii) | Standard error | Value at r = 8 | At r = 12 | Signs |"
+    )
     lines.append("| --- | --- | ---: | ---: | ---: | ---: | --- |")
     for direction, fits in record["fits"].get(board, {}).items():
         for quantity, fit in fits.items():
             if fit:
-                lines.append(f"| {direction} | {quantity} | {fit['slope']:.2f} | {fmt(fit['error'], 2)} | {fit_value(fit, 8):.1f} | {fit_value(fit, 12):.1f} | {fit['signs']} |")
-    lines.append("\n| Quantity | Axis / (111) at r = 8 | At r = 12 | Axis / (110) at r = 8 | At r = 12 |")
+                lines.append(
+                    f"| {direction} | {quantity} | {fit['slope']:.2f} | {fmt(fit['error'], 2)} | {fit_value(fit, 8):.1f} | {fit_value(fit, 12):.1f} | {fit['signs']} |"
+                )
+    lines.append(
+        "\n| Quantity | Axis / (111) at r = 8 | At r = 12 | Axis / (110) at r = 8 | At r = 12 |"
+    )
     lines.append("| --- | ---: | ---: | ---: | ---: |")
     for quantity, a in record["anisotropy"].get(board, {}).items():
-        lines.append(f"| {quantity} | {fmt(a.get('axis_over_111_at_8'), 3)} | {fmt(a.get('axis_over_111_at_12'), 3)} | {fmt(a.get('axis_over_110_at_8'), 3)} | {fmt(a.get('axis_over_110_at_12'), 3)} |")
+        lines.append(
+            f"| {quantity} | {fmt(a.get('axis_over_111_at_8'), 3)} | {fmt(a.get('axis_over_111_at_12'), 3)} | {fmt(a.get('axis_over_110_at_8'), 3)} | {fmt(a.get('axis_over_110_at_12'), 3)} |"
+        )
 
 
 def open_probes_block(lines, record, open_probes):
     if open_probes:
-        lines.append("\n## The open board, measured earlier (recorded; not the series)\n\nThe eight open-board records below were made before the model owner's decision that only closed worlds are tested (Highlights 5.4, \"The board of a run is closed\"); they are kept as recorded and stand outside the series' reading.\n")
-        lines.append("\n### The test things on the open board: the pushed amount per interval and the inventory's J at the same Node\n")
-        lines.append("| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | Recoil home | Ledger momentum lines at 40 (current, returned, escaped) |")
-        lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | ---: | --- | --- |")
+        lines.append(
+            "\n## The open board, measured earlier (recorded; not the series)\n\nThe eight open-board records below were made before the model owner's decision that only closed worlds are tested (Highlights 5.4, \"The board of a run is closed\"); they are kept as recorded and stand outside the series' reading.\n"
+        )
+        lines.append(
+            "\n### The test things on the open board: the pushed amount per interval and the inventory's J at the same Node\n"
+        )
+        lines.append(
+            "| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | Recoil home | Ledger momentum lines at 40 (current, returned, escaped) |"
+        )
+        lines.append(
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | ---: | --- | --- |"
+        )
         for label, probe in open_probes.items():
             inv = record["inventory_at_read_nodes"].get(label, {})
             w = probe["window_means"]
@@ -737,20 +856,35 @@ QUANTITIES = {
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("runs", type=Path, nargs="+")
     parser.add_argument("--worlds", type=Path, default=HERE)
     parser.add_argument("--record", type=Path, default=HERE / "record.json")
     parser.add_argument("--tables", type=Path, default=HERE / "tables.md")
     parser.add_argument("--no-replay", action="store_true")
     parser.add_argument("--replay-jobs", type=int, default=1, help="replays at once (processes)")
-    parser.add_argument("--identity", type=Path, default=None, help="a second run.json of `standing` (another source) to compare with the record read")
-    parser.add_argument("--prior-record", type=Path, default=None, help="an earlier record.json whose replay rows stand in for a world whose replay cache is absent (no new replay is made for it)")
+    parser.add_argument(
+        "--identity",
+        type=Path,
+        default=None,
+        help="a second run.json of `standing` (another source) to compare with the record read",
+    )
+    parser.add_argument(
+        "--prior-record",
+        type=Path,
+        default=None,
+        help="an earlier record.json whose replay rows stand in for a world whose replay cache is absent (no new replay is made for it)",
+    )
     args = parser.parse_args(argv)
     labels = read_node_labels()
     record = {
         "experiment": "E11 repeated under the law of the bit (2026-09-18)",
-        "read_nodes": {label: {"offset": list(o), "radius": math.sqrt(sum(c * c for c in o))} for label, o in labels.items()},
+        "read_nodes": {
+            label: {"offset": list(o), "radius": math.sqrt(sum(c * c for c in o))}
+            for label, o in labels.items()
+        },
         "worlds": {},
         "probes": {},
         "replays": {},
@@ -779,17 +913,37 @@ def main(argv=None):
             "shadows_initial": run["shadow_content"][0] if run["shadow_content"] else None,
             "shadows_final": run["shadow_content"][-1] if run["shadow_content"] else None,
             "escaped": run["escaped_totals"]["proton"][0],
-            "body_positions_fixed": all(p[1:] == run["external_bodies"][0]["positions"][0][1:] for p in run["external_bodies"][0]["positions"]),
+            "body_positions_fixed": all(
+                p[1:] == run["external_bodies"][0]["positions"][0][1:]
+                for p in run["external_bodies"][0]["positions"]
+            ),
             "boundary": documents[name]["boundary"],
-            "standing_field": {k: run.get(k) for k in ("standing_field", "standing_field_iterations", "standing_field_period", "standing_field_residual", "standing_field_ticks", "standing_field_fallback", "standing_field_max_iterations")} if "standing_field" in run else None,
+            "standing_field": {
+                k: run.get(k)
+                for k in (
+                    "standing_field",
+                    "standing_field_iterations",
+                    "standing_field_period",
+                    "standing_field_residual",
+                    "standing_field_ticks",
+                    "standing_field_fallback",
+                    "standing_field_max_iterations",
+                )
+            }
+            if "standing_field" in run
+            else None,
         }
         if name.startswith("probe_"):
             parts = name.split("_")
             direction, tag, closed = parts[1], parts[2], name.endswith("_closed")
             offsets, heading, letter = PROBES[direction]
             offset = next(o for o in offsets if f"{letter}{o[0]}" == tag)
-            record["probes"][f"{direction}_{tag}" + ("_closed" if closed else "")] = probe_reading(run, offset, heading, closed=closed)
-        print(f"{name}: {run['status']} {run['completed_ticks']} ticks, books balanced at every tick: {all(x['balanced'] for x in b)}")
+            record["probes"][f"{direction}_{tag}" + ("_closed" if closed else "")] = probe_reading(
+                run, offset, heading, closed=closed
+            )
+        print(
+            f"{name}: {run['status']} {run['completed_ticks']} ticks, books balanced at every tick: {all(x['balanced'] for x in b)}"
+        )
     if args.identity and "standing" in record["worlds"]:
         earlier, _ = load_record(args.runs, "standing")
         later = json.loads(args.identity.read_text(encoding="utf-8"))
@@ -797,10 +951,14 @@ def main(argv=None):
             "world": "standing",
             "earlier_source": earlier["source_sha256"],
             "later_source": later["source_sha256"],
-            "audit_identical": [e["fields"] for e in earlier["audit"]] == [e["fields"] for e in later["audit"]],
+            "audit_identical": [e["fields"] for e in earlier["audit"]]
+            == [e["fields"] for e in later["audit"]],
             "shadow_content_identical": earlier["shadow_content"] == later["shadow_content"],
             "momentum_identical": earlier["momentum"] == later["momentum"],
-            "elapsed_seconds": {"earlier": earlier["elapsed_seconds"], "later": later["elapsed_seconds"]},
+            "elapsed_seconds": {
+                "earlier": earlier["elapsed_seconds"],
+                "later": later["elapsed_seconds"],
+            },
         }
     if not args.no_replay:
         to_replay = [n for n in ("pulse", "standing", "standing_closed") if n in record["worlds"]]
@@ -816,7 +974,16 @@ def main(argv=None):
                 from_prior.add(name)
                 continue
             shells = not name.startswith("probe_")
-            jobs.append((name, str(args.worlds / f"{name}.json"), str(found[name] / name / "run" / "run.json"), str(cache), labels, shells))
+            jobs.append(
+                (
+                    name,
+                    str(args.worlds / f"{name}.json"),
+                    str(found[name] / name / "run" / "run.json"),
+                    str(cache),
+                    labels,
+                    shells,
+                )
+            )
         if jobs:
             print(f"replaying {[j[0] for j in jobs]} in-process, {args.replay_jobs} at once")
             if args.replay_jobs > 1:
@@ -838,8 +1005,12 @@ def main(argv=None):
                 entry = dict(prior["replays"][name])
                 entry["from_prior_record"] = str(args.prior_record)
                 record["replays"][name] = entry
-                record["amplitude_at_probes"][label + "_closed"] = prior["amplitude_at_probes"][label + "_closed"]
-                print(f"  {name}: the earlier record's replay rows (identity there: {entry.get('identity', {}).get('identical')})")
+                record["amplitude_at_probes"][label + "_closed"] = prior["amplitude_at_probes"][
+                    label + "_closed"
+                ]
+                print(
+                    f"  {name}: the earlier record's replay rows (identity there: {entry.get('identity', {}).get('identical')})"
+                )
                 continue
             cache = found[name] / name / "replay.json"
             cached = json.loads(cache.read_text(encoding="utf-8"))
@@ -849,26 +1020,47 @@ def main(argv=None):
             if "identity" in cached:
                 identity["ledger_shadow_line"] = cached["identity"].get("ledger_shadow_line")
             identical = identity["identical"]
-            entry = {"per_tick": per_tick, "identity": identity, "ledger_identical_to_record": identical, "replay_seconds": cached.get("seconds")}
+            entry = {
+                "per_tick": per_tick,
+                "identity": identity,
+                "ledger_identical_to_record": identical,
+                "replay_seconds": cached.get("seconds"),
+            }
             document = documents[name]
             if name == "pulse":
                 entry["fronts"] = {label: front(per_tick, label) for label in labels}
-                entry["release"] = 6 * (document["external_bodies"][0]["amount"] // document["spatial_fields"][0]["release"][1])
+                entry["release"] = 6 * (
+                    document["external_bodies"][0]["amount"]
+                    // document["spatial_fields"][0]["release"][1]
+                )
             if name == "standing_closed":
                 entry["settled"], entry["settled_read_nodes"] = settled_reading(per_tick, labels)
-                entry["off_planes_last_20"] = mean_over(per_tick[-SETTLE_WINDOW:], lambda r: r["fractions"]["off_planes"])
+                entry["off_planes_last_20"] = mean_over(
+                    per_tick[-SETTLE_WINDOW:], lambda r: r["fractions"]["off_planes"]
+                )
             if name == "standing":
                 for label in labels:
                     series = [row["read_nodes"][label] for row in per_tick]
-                    early = [s["j_radial"] for s, row in zip(series, per_tick, strict=True) if EARLY[0] <= row["tick"] <= EARLY[1]]
+                    early = [
+                        s["j_radial"]
+                        for s, row in zip(series, per_tick, strict=True)
+                        if EARLY[0] <= row["tick"] <= EARLY[1]
+                    ]
                     record["inventory_at_read_nodes"][label] = {
                         "j_radial_mean_2_21": sum(early) / len(early) if early else None,
-                        "j_radial_cumulative_2_40": sum(s["j_radial"] for s, row in zip(series, per_tick, strict=True) if row["tick"] >= 2),
+                        "j_radial_cumulative_2_40": sum(
+                            s["j_radial"]
+                            for s, row in zip(series, per_tick, strict=True)
+                            if row["tick"] >= 2
+                        ),
                         "content_2": series[1]["content"],
                         "content_21": series[20]["content"],
                         "content_40": series[-1]["content"],
                         "min_content_2_40": min(s["content"] for s in series[1:]),
-                        "amplitude_mean_2_21": mean_over([r for r in per_tick if EARLY[0] <= r["tick"] <= EARLY[1]], lambda r, label=label: r["read_nodes"][label]["amplitude"]),
+                        "amplitude_mean_2_21": mean_over(
+                            [r for r in per_tick if EARLY[0] <= r["tick"] <= EARLY[1]],
+                            lambda r, label=label: r["read_nodes"][label]["amplitude"],
+                        ),
                     }
             if name.startswith("probe_"):
                 label = name.removeprefix("probe_").removesuffix("_closed")
@@ -891,14 +1083,31 @@ def main(argv=None):
                 probe["in_flight_at_end"] = per_tick[-1].get("shadow_momentum")
                 probe["world_momentum_zero_every_tick"] = identity.get("world_zero_every_tick")
                 probe["in_flight_per_tick"] = [row.get("shadow_momentum") for row in per_tick]
-                entry = {"identity": identity, "ledger_identical_to_record": identical, "replay_seconds": cached.get("seconds"), "read_node": [row["read_nodes"][label] for row in per_tick], "momenta": [(row.get("real_momentum"), row.get("shadow_momentum"), row["body_momentum"]) for row in per_tick]}
+                entry = {
+                    "identity": identity,
+                    "ledger_identical_to_record": identical,
+                    "replay_seconds": cached.get("seconds"),
+                    "read_node": [row["read_nodes"][label] for row in per_tick],
+                    "momenta": [
+                        (row.get("real_momentum"), row.get("shadow_momentum"), row["body_momentum"])
+                        for row in per_tick
+                    ],
+                }
             record["replays"][name] = entry
             print(f"  {name}: ledger identical to the record: {identical}")
     for board in ("open", "closed"):
         suffix = "_closed" if board == "closed" else ""
         for direction in PROBES:
-            probes = [(p["radius"], p) for label, p in record["probes"].items() if label.startswith(direction + "_") and label.endswith(suffix) and (board == "closed" or not p["closed"])]
-            record["fits"][board][direction] = {q: fit_slope([(r, read(p)) for r, p in probes]) for q, read in QUANTITIES[board].items()}
+            probes = [
+                (p["radius"], p)
+                for label, p in record["probes"].items()
+                if label.startswith(direction + "_")
+                and label.endswith(suffix)
+                and (board == "closed" or not p["closed"])
+            ]
+            record["fits"][board][direction] = {
+                q: fit_slope([(r, read(p)) for r, p in probes]) for q, read in QUANTITIES[board].items()
+            }
             if board == "open":
                 points_inv = [
                     (record["read_nodes"][label]["radius"], inv["j_radial_mean_2_21"])
@@ -907,12 +1116,34 @@ def main(argv=None):
                 ]
                 record["fits"][board][direction]["inventory_j_2_21"] = fit_slope(points_inv)
             else:
-                amps = [(record["read_nodes"][label.removesuffix("_closed")]["radius"], a["amplitude"]) for label, a in record["amplitude_at_probes"].items() if label.startswith(direction + "_")]
+                amps = [
+                    (record["read_nodes"][label.removesuffix("_closed")]["radius"], a["amplitude"])
+                    for label, a in record["amplitude_at_probes"].items()
+                    if label.startswith(direction + "_")
+                ]
                 record["fits"][board][direction]["amplitude_at_probe_101_120"] = fit_slope(amps)
                 free = record["replays"].get("standing_closed", {}).get("settled_read_nodes", {})
-                record["fits"][board][direction]["free_amplitude_101_120"] = fit_slope([(record["read_nodes"][label]["radius"], v["amplitude"]) for label, v in free.items() if label.startswith(direction + "_")])
-                record["fits"][board][direction]["free_j_101_120"] = fit_slope([(record["read_nodes"][label]["radius"], v["j_radial"]) for label, v in free.items() if label.startswith(direction + "_")])
-                record["fits"][board][direction]["free_content_101_120"] = fit_slope([(record["read_nodes"][label]["radius"], v["content"]) for label, v in free.items() if label.startswith(direction + "_")])
+                record["fits"][board][direction]["free_amplitude_101_120"] = fit_slope(
+                    [
+                        (record["read_nodes"][label]["radius"], v["amplitude"])
+                        for label, v in free.items()
+                        if label.startswith(direction + "_")
+                    ]
+                )
+                record["fits"][board][direction]["free_j_101_120"] = fit_slope(
+                    [
+                        (record["read_nodes"][label]["radius"], v["j_radial"])
+                        for label, v in free.items()
+                        if label.startswith(direction + "_")
+                    ]
+                )
+                record["fits"][board][direction]["free_content_101_120"] = fit_slope(
+                    [
+                        (record["read_nodes"][label]["radius"], v["content"])
+                        for label, v in free.items()
+                        if label.startswith(direction + "_")
+                    ]
+                )
         quantities = set()
         for fits in record["fits"][board].values():
             quantities.update(fits)
@@ -920,7 +1151,10 @@ def main(argv=None):
             a = {}
             for other in ("111", "110"):
                 for r in (8, 12):
-                    fa, fo = record["fits"][board].get("axis", {}).get(quantity), record["fits"][board].get(other, {}).get(quantity)
+                    fa, fo = (
+                        record["fits"][board].get("axis", {}).get(quantity),
+                        record["fits"][board].get(other, {}).get(quantity),
+                    )
                     va, vo = fit_value(fa, r), fit_value(fo, r)
                     a[f"axis_over_{other}_at_{r}"] = va / vo if va and vo else None
             record["anisotropy"][board][quantity] = a

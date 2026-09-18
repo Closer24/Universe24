@@ -2763,7 +2763,7 @@ probe-free worlds in-process for the shells and the nine closed probe worlds
 for the amplitude at the test thing's Node and the momentum on the shadows
 (`--prior-record` takes an earlier record's rows for a world whose replay
 cache is gone); `record.json` holds every number, `tables.md` the tables of
-the register's entry, `records/` the `run.json` of every recorded world (its
+the register's entry, `records/` the gzipped `run.json` of every recorded world (its
 fingerprint inside) and `e11_law.html` the page for the model owner. The
 same evening the model owner reversed the rule the series was made under (a
 thing emits, nothing is given with the board, the board of a run is open;
@@ -2802,8 +2802,9 @@ python examples/nature/e11_law/build_page.py --title "E11 repeated under the law
 `analyze.py` takes several run directories and reads each world from the
 first that holds it (the open records and the closed records of the entry
 were made in two series); a replay is cached as `<name>/replay.json` beside
-the run. The `run.json` of every recorded world is kept in `records/` beside
-the worlds (`events.jsonl` and `state.json` are larger than 20 MB and are
+the run. The `run.json` of every recorded world is kept gzipped in `records/`
+beside the worlds (a plain `.json` under `examples/` is read as a shipped
+initialization by the tests) (`events.jsonl` and `state.json` are larger than 20 MB and are
 not kept; `analyze.py` reads `records/` through a directory laid out as
 `<name>/run/run.json`); `record.json` and `tables.md` hold the readings.
 
@@ -2823,7 +2824,7 @@ board of E11 repeated, recorded before it, is that entry's control).
 `analyze.py` reads the runner's records (and replays worlds in-process for
 the momentum in flight, `--replay NAME` or `--replay-all`); `record.json`
 holds every number, `tables.md` the tables of the register's entry,
-`records/` the `run.json` of every recorded world and `a5s_law.html` the
+`records/` the gzipped `run.json` of every recorded world and `a5s_law.html` the
 page for the model owner. The series is partial: seven of the eight worlds
 are recorded (`pp_d8_111_closed` was killed by the machine's memory limit
 and its rerun stopped on the model owner's word) and one replayed; the same

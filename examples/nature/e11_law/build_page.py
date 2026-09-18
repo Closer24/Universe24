@@ -2,6 +2,7 @@
 record and a GIF (embedded as a data URI). Usage:
   python build_page.py --title T --tables tables.md --gif file.gif --notes notes.md --out page.html
 """
+
 import argparse
 import base64
 import html
@@ -24,7 +25,11 @@ def md_to_html(text):
             cells = [r.strip().strip("|").split("|") for r in rows]
             head = cells[0]
             body = [r for r in cells[1:] if not all(re.fullmatch(r"\s*:?-+:?\s*", c) for c in r)]
-            out.append("<table><thead><tr>" + "".join(f"<th>{inline(c.strip())}</th>" for c in head) + "</tr></thead><tbody>")
+            out.append(
+                "<table><thead><tr>"
+                + "".join(f"<th>{inline(c.strip())}</th>" for c in head)
+                + "</tr></thead><tbody>"
+            )
             for r in body:
                 out.append("<tr>" + "".join(f"<td>{inline(c.strip())}</td>" for c in r) + "</tr>")
             out.append("</tbody></table>")
