@@ -306,7 +306,7 @@ def _execute_run(
         "shadow_content": shadow_content,
         "momentum": momentum,
         # A Node is its six Ports (node-is-ports-v1, Highlights 5.4 point 22): the
-        # parked shadows, the traces, the resident thing of a mark and the source
+        # parked shadows, the resident thing of a mark and the source
         # that spends its content are the engine's only behaviour.
         "node_is_ports": NODE_IS_PORTS,
         # A Port is two lanes (lanes-v1, Highlights 5.4 point 25): one real ray

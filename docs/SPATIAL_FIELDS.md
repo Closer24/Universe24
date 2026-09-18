@@ -260,14 +260,13 @@ between arrival and the next cycle; there is no octant stock.
 
 ```json
 {"field": "radiation", "baseline": 0, "transport": "ray",
- "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64, "ray_slots": 512}
+ "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64}
 ```
 
 | Key | Contract |
 | --- | --- |
 | `headings` | One to 65536 nonzero integer vectors, components at most 4096 in magnitude; the emission sequence |
 | `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
-| `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
 | `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
 | `phase_bits`, `charge`, `kerengonen` | The family's phase width, charge per quantum and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
 | `field_of` | Optional, with `release`: the name of the ray family this field is the field of ([released field](#field-as-the-rays-information-released-field-v1)) |
@@ -284,26 +283,13 @@ local `value`, and node values report `ray_count`. A coupling reaction that
 amends a departing packet leaves the rays on that port untouched, so rays pass
 through Nodes whose carriers respond to them.
 
-A record that emits rays and moves one link meets, at the next Node, exactly the
-rays it emitted on the cycle it departed whose first DDA step took the same
-port. With `"self_exclusion": true` the record carries two rows per emission
-rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its last departure
-(zero while it stays), and every coupling it evaluates after arriving reads the
-sampled flux and value with those rays subtracted. The work is bounded by
-`rays_per_tick`, uses only the record's own registers and the port it left
-through, and reads no ray identity or remote state. The reconstructed rays
-carry the departure's event state, so they match exactly the rays of that
-emission event: a ray of another event, another record's or the same record's
-earlier cycle, never merges with them
-([ray state](#ray-state-ray-event-state-v1)) and is not subtracted. An
-emitter that moves at link speed therefore meets the rays of its earlier
-cycles as distinct events and treats them as foreign. Rays that return later,
-from any distance, are not excluded: this is one-link exclusion of the
-emitter's own wake, not a general self-field law. Schema 2 decay attenuates each
-ray on arrival with the same ratio and residue rules as octant stock. Open
-boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
-weights, vector fields, field rules, spatial interactions, `node_execution` and
-the shared field clock. Host work per Node is bounded by `ray_slots`. An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
+The one-Link `self_exclusion` of the record form (a record subtracting, at the
+next Node, the rays it emitted on the cycle it departed from the flux and value
+it samples, carried as two rows per emission rule) is retired with the
+record-as-owner field program (Highlights 5.4 point 22 and the settled rule
+(v); the cleanup of 2026-09-18, part 2): the key is refused naming the rule,
+the rows of the record are always empty, and the rays a thing releases are
+its shadows, which it meets at home (point 3 as amended).
 
 The inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
@@ -773,9 +759,9 @@ states for one layer; a ray of a layer that has no rule, or whose rules do
 not fire, crosses unchanged with its event record intact. Rules of
 different layers therefore fire independently in the same cycle, and a ray
 of one layer is never a participant, a blocker or a merge partner of a ray
-of another: the indexed selector's 32-slot participant capacity is a bound
-per layer (the declared `ray_slots` of the fields of one layer with a rule
-sum to at most 32), rays of different fields never merge, and there is no
+of another: the participants of a meeting are what the lanes hold (`lanes-v1`;
+the 32-slot capacity per layer went with `ray_slots` on 2026-09-18), rays of
+different fields never merge, and there is no
 occupied channel and no capacity rule between layers. The Node's proposal
 stays one atomic commit: a failed guard or invariant in any layer rejects
 the interval's proposal before any owner changes, as before. A world with a
@@ -872,8 +858,8 @@ invariant does.
 Bounds and admission: two to six participants, one to six outputs, one table
 split per pair of outputs, the admission of every ray interaction (schema 1,
 `link_ticks` 1, positive unit-axial unpaced fields, no decay, no absorption
-on the selected fields), and at most `ray_slots` rays per field after the
-meeting; more is an explicit failure. The outputs are new rays with
+on the selected fields); the participants and the outputs are what the lanes
+hold (`lanes-v1`). The outputs are new rays with
 accumulators (0, 0, 0) and pace wait 0. No draw anywhere unless the rule
 declares `draw`, the decay setting of a conversion, and then the meeting
 draws once from the Node's ticket stream and fires on 1 only, and its
@@ -947,13 +933,90 @@ retired and the engine still carried is deleted, not kept behind an option:
   standing-set search reports its residual), and the A6 `n14` and `n16`
   worlds deleted with the bound.
 
-Not done in this cleanup and listed on its pull request: the record-as-owner
+- **"Home" through the generic mechanism** (the model owner, 2026-09-18,
+  point 3 as amended; the second part of the cleanup). The special branch
+  that skipped the push when a shadow met its own thing is deleted
+  (`_turn` and the body's meeting): the generic push is applied and the
+  return of zero steps, the same shadow with its sign flipped at the same
+  Node, hands -push back in the same cycle, before any step decision, so the
+  sum is zero, the thing is what it was, and the shadow is absorbed at home
+  and re-released as before. The two halves are booked, not hidden: a
+  `RayPush` pair with `home` 1 on the plan, summed per family on the
+  `spatial_cycle` record as `home_pushes` (`push`, `return`), and on the
+  `spatial_received` record of a body likewise. "Home" names that result
+  and is no rule of its own; the engine computes the zero directly.
+
+- **The body's recoil on its own line** (pull request #285 Remaining; the
+  second part of the cleanup). A body under a table (`node-is-ports-v1`)
+  moved momentum between the lines of the things it met and the difference
+  was booked as the momentum field's source at its Node. Now `_body_cycle`
+  takes that difference off the source line and gives its opposite to the
+  body (`body_pushed`), a mirror taking twice what it reverses; since a
+  body's line is beside the identity (its content enters no sum), what it
+  took is booked on the `returned` line, as the momentum a shadow hands a
+  body is. The source line of a world with a mirror body reads zero
+  (`tests/test_node_is_ports.py` (g), `tests/test_external_body.py` (d),
+  the catalog's mirror world), the mirror bodies of those worlds re-pinned at
+  4096 so the momentum they take fits under their amount. "Bodies as things"
+  (#286) was already the engine's: a body reads what arrives once per table,
+  waits for nothing, and refuses a charge that does not divide its amount.
+
+- **The prefill's coherent merge** (the A6 lane's finding, 2026-09-18). The
+  fill refused a fill longer than about 30 intervals at N 64 because a third
+  phase would land on one Port of the source; under points 24 and 25 the
+  shares of one owner on one lane are one coherent sum, so `prefill._depart`
+  merges the third phase with the layer it meets: the amount summed and the
+  phase the phase of the sum over the family's mixing tables
+  (`_phase_of_sum`), never refusing (`tests/test_bit_law.py` (f')).
+
+- **The ray slot budget retired** (the interference lane's finding,
+  2026-09-18: `examples/nature/screen_loop.json`, E9's ring radiating on
+  marks, was refused at a corner for `ray_slots`). Under `lanes-v1` a Node's
+  state is bounded by its twelve lanes, one real ray and one shadow per owner
+  on each, beside the parked shadows and the rays at rest, so a budget per
+  family is a retired concept: the key is refused naming point 25
+  (`RAY_SLOTS_RETIRED`), the definition has no `ray_slots`, and the checks
+  that read it (`validate_rays`, the meeting's outputs, the dense field's
+  count per Node, the 32 slots per layer of `validate_ray_participants`) are
+  deleted; `rays_per_tick` is at most 4096 on its own. No lawful world is
+  refused for slots (`tests/test_lanes.py` (g)), every world of the
+  repository lost the key, and `examples/nature/bit_law_migration.py` drops
+  it.
+
+- **The electricity reading and the whole charge** (the field lane's finding,
+  2026-09-18, on the pull request's list): the engine reads the pushed
+  thing's charge per quantum (`push_of`), so the push of an asymmetric pair
+  scales with the pusher's shadow set (F_B / F_A about 4 for contents 2^28
+  and 2^26) where point 16's worked example, with the charge of a thing
+  whole (an electron of content 32 and charge -1), gives the product of the
+  charges. The reading of the whole charge was implemented and measured on
+  this branch: with a family's charge declared per quantum a thing's whole
+  charge is its amount times that charge, so every push of s quanta on a
+  thing of content C read s x C x q_o x q_p, at or beyond the content for
+  any shadow set of two or more quanta ("faster than a ray" in the worlds of
+  `tests/test_return_field.py` and `tests/test_shadow_wait.py`, B of 1000
+  pushed 9000 by nine shares), and the catalog's electron of 20 turned at its
+  first push. The finding stands, and its fix is a declaration, the
+  model owner's: a family's charge as the charge of one thing, whole, over
+  the content of the thing (the law's electron), not per quantum; the
+  engine's per-quantum reading is kept until then.
+
+- **A body at rest occupies no lane** (the A6 lane's finding, 2026-09-18: a
+  mirror body on the X axis refused a light thing arriving on +X because the
+  body's token headed +X and claimed the out-lane). A body does not move, so
+  its token never departs and claims no lane: `forward_rays` keeps a thing
+  whose owner is at rest (`LaneClaims.at_rest`, the bodies' identities given
+  by `SpatialLaw.body_things`) and the Node strips it after the cycle as
+  before; a body is reachable from every Port
+  (`tests/test_external_body.py` (f)).
+
+Not done in the first part and listed on its pull request: the record-as-owner
 field program (the settled rule (v): the outward octant field, the
 couplings of records, the mirror, slit, dissolve, capture and self-exclusion
 of that form, `computation_field` and its delay keys, `node_execution`), the
-generic "home" (point 3: the push and its return of zero steps summed at one
-Node), the body's recoil on its own line, and the stale paragraphs of the
-older documents.
+body's recoil on its own line, and the stale paragraphs of the older
+documents; the second part takes them up (the two bullets above, and the
+rest below in this section as it lands).
 
 ### Wave-ray families (`wave-ray-family-v1`)
 
@@ -988,9 +1051,9 @@ overrides the family's rate and requires the key. The phase is the one value
 with its own declared width (issue #169, 2026-09-17); two host limits follow
 from what else stores it. The coherence table has at most 4096 entries, so a
 phase wider than twelve bits has no table. A ray interaction views the phase
-as a stored value (`MAX_VALUE`, thirty bits) and a self-exclusion row stores
-it likewise, so `ray_interactions` on the family and `self_exclusion` require
-`phase_bits` at most 30. Everything else (content, steps, shares, headings)
+as a stored value (`MAX_VALUE`, thirty bits), so `ray_interactions` on the
+family require a width at most 30 (`self_exclusion` is retired, the settled
+rule (v)). Everything else (content, steps, shares, headings)
 keeps 32-bit storage and 64-bit intermediates.
 
 `RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
@@ -1030,7 +1093,7 @@ of the ray family F:
 
 ```json
 {"field": "G", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
- "rays_per_tick": 1, "ray_slots": 16, "field_of": "electron", "release": [1, 4],
+ "rays_per_tick": 1, "field_of": "electron", "release": [1, 4],
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
@@ -1274,7 +1337,7 @@ family and not an engine mechanism. A ray family declares it with `spread`:
 
 ```json
 {"field": "light", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
- "rays_per_tick": 1, "ray_slots": 16, "spread": [6, 1, 1, 1, 1, 1],
+ "rays_per_tick": 1, "spread": [6, 1, 1, 1, 1, 1],
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
@@ -2357,7 +2420,8 @@ tick, `registers` until node-is-ports-v1). Shadows are given with the board: `in
 T}` (T intervals of the fill, each thing releasing its shadow set of
 `release` x stock per heading, rounded to whole quanta per Node and heading
 with the fractions in the Node's remainder registers, reflected at sources and
-marks, nothing dropped, booked as initial content) or `{"rays": [...]}` (a
+marks, nothing dropped, a third phase of one owner on one lane merged by the
+coherence rule, booked as initial content) or `{"rays": [...]}` (a
 profile of shadows with `position`, `heading`, `amount`, `phase`, `sign`,
 `owner`, `steps` 0 or 1); nothing is released during a run. A mark returns a
 shadow without counting it, and catches things by its setting `[n, d]` read as
@@ -2914,11 +2978,27 @@ record the same). `amplitude`, on every ray family of the world
   units of 1 / 32 (`MIXING_AMPLITUDE_SCALE`: 32 is the amplitude of one
   quantum, 288 of 81 quanta, 96 of 9), the six summed on the family's phase
   circle, and the size of the sum in the same units (the integer square root
-  of x^2 + y^2 over the tables' scale, the floor at each step); its whole
-  units of amplitude are the sum over 32, the floor. Two owners' shares are
-  two sums, never one; one owner's shares from two Ports half a turn apart
-  give the size of their difference (81 and 9 in antiphase: 288 - 96 = 192,
-  six units, where their amounts are 90).
+  of x^2 + y^2 over the tables' scale, the floor at each step). Two owners'
+  shares are two sums, never one; one owner's shares from two Ports half a
+  turn apart give the size of their difference (81 and 9 in antiphase: 288 -
+  96 = 192, six units, where their amounts are 90).
+- **The remainder** (part 2, derivations round 6, section 42). The size joins
+  what the thing holds below a whole unit, `Ray.wait_remainder` (in 32nds of
+  one quantum's amplitude, one accumulator on the thing across the groups it
+  reads, part of the merge identity, 0 on a shadow and under `amount`); the
+  whole units are read now and the rest stays on the thing, a whole unit
+  charged as soon as the accumulator reaches 32, exact integers, nothing
+  lost, as the electricity reading keeps `push_remainder`. So a thing far
+  from a source, where the size is below a unit per interval, still reads
+  the field in the mean: 10 of 32nds per interval (2 and 3 quanta in
+  antiphase, 55 - 45) owes an interval at the fourth, the seventh, the tenth
+  meeting, floor(10 k / 32) after k, and over 100 intervals of any sizes the
+  total owed is floor(total / 32) exactly.
+- **The unit.** The engine's w (`wait_per_quantum`) counts one interval per
+  whole quantum of amplitude read, the whole units times the content
+  through `push_of`; the derivation (DERIVATIONS.md section 42) reads |u|
+  where the engine reads 3|u|, so the derivation's w is the document's w
+  divided by 3, and a run that wants the derivation's w declares 3w.
 - **The wait.** The units are read as the push reads the amount, by the
   rule's reading (point 16: times the thing's content, or the owner's charge
   over its content times the thing's charge, `push_of` on the units in place
@@ -3121,9 +3201,7 @@ after arrival (`amount x fraction / fraction_denominator`, or the whole ray),
 adds it to its own field of the same name and, with `momentum_field`,
 `share x heading` to that vector; the rest of the ray is forwarded. Absorption
 happens before forwarding and before this cycle's emission joins the residents,
-so a record never swallows its fresh rays; with `self_exclusion` the rays of its
-own last departure are left alone by their complete ray key. Absorbers act in
-slot order.
+so a record never swallows its fresh rays. Absorbers act in slot order.
 
 A funded emission may carry a `"dissolve": {"after_ticks": N, "over_ticks": K}`
 schedule instead of an amount: the record emits nothing for its first `N`
@@ -3227,7 +3305,7 @@ field's rate. Without the key the field is the plain `isotropic-ray-field-v1`,
 a wave-ray family with rest rate 0 and no coherence table, which still admits
 a `kerengonen_phase` below its declared width; a `kerengonen_advance` on an
 emission requires the key. The runner records the identity
-`kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+`kerengonen-ray-field-v1`. The double-slit probe (`examples/kerengonen-double-slit/`, deleted on 2026-09-18)
 measures the fringe on a line of absorbers.
 
 Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
@@ -3261,9 +3339,12 @@ wavelength, and the de Broglie probe (`examples/de-broglie/`, deleted on 2026-09
 measures the fringe spacing it gives. A ray without its own advance uses the
 field's.
 
-A mirror is the same rule turned around. The absorbed row also keeps the
-heading of the largest share, and an emission with
-`"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sends its whole amount back as
+The mirror of the record form, `kerengonen_mirror`, is retired with the
+record-as-owner field program (the settled rule (v); the cleanup of
+2026-09-18, part 2) and refused naming the rule; a mirror is an external body
+with a table since `node-is-ports-v1`. Until then a mirror was the same rule
+turned around: the absorbed row also kept the heading of the largest share,
+and an emission with `"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sent its whole amount back as
 one ray along the mirror image of that heading across the named axis, at the
 carried phase and advance when `"kerengonen_phase": "carried"` is set. A
 diagonal mirror, `"xy"`, `"xz"` or `"yz"`, swaps the two named components
@@ -3276,10 +3357,11 @@ then holds a standing wave: the reading along the line repeats every
 `phase_steps / (2 x advance)` links, as the
 mirror probe (`examples/kerengonen-mirror/`, deleted on 2026-09-17) measures.
 Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_advance` on an emission requires the key, and a carried phase or a
-`kerengonen_mirror` requires its coherence table. The runner records the
-identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
-measures the fringe on a line of absorbers.
+`kerengonen_advance` on an emission requires the key, and a carried phase
+requires its coherence table. The runner records the
+identity `kerengonen-ray-field-v1`. The double-slit probe of the record form
+(`examples/kerengonen-double-slit/`, deleted on 2026-09-18 with the program)
+measured the fringe on a line of absorbers.
 
 ### Euclidean pace (`"metric": "euclidean"`)
 
@@ -3348,8 +3430,8 @@ evidence about that profile, not about the current model.
 Load-delayed rays remain visible to absorption. Surviving residents, fresh
 emissions, owned carrier stock and retained pace state commit together, before
 observers see the result. Every retained ray and every incoming ray bundle is
-validated before it is merged, and the field's `ray_slots` is the only bound on
-residency. There is no occupied channel and no capacity rule
+validated before it is merged, and the lanes are the only bound on residency
+(`lanes-v1`). There is no occupied channel and no capacity rule
 ([Highlights](HIGHLIGHTS.md) 5.1): rays leaving a Node on one Link in one
 interval travel together in one packet, and nothing is pushed back or made to
 wait for room. The former refusal to begin a field cycle while a Node's

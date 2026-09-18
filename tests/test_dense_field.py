@@ -93,14 +93,13 @@ def vector(name):
     }
 
 
-def ray_field(name, advance, slots=16, **extra):
+def ray_field(name, advance, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
     } | extra

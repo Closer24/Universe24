@@ -46,8 +46,8 @@ AMOUNT = 1 << 24
 # tick 25 (period 1; after 32 with the lamp beside it) on one phase value, does
 # not repeat within 200 intervals: the standing-set search reports its residual
 # and the run steps the layer throughout, under the search and without it, with
-# the same files. The pins below are read from the run of 2026-09-18 at 32 ray
-# slots (the distinct phases hold more rays per Node than 24 slots).
+# the same files. The pins below are read from the run of 2026-09-18 (at 32 ray
+# slots, when the budget existed; the lanes bound the Node since).
 FIXED_POINT = None
 PERIOD = None
 # The residual of the last comparison when the search stops after 10 intervals,
@@ -87,7 +87,7 @@ def body(position):
     }
 
 
-def document(shape, bodies, ticks, *, slots=32, fill=8):
+def document(shape, bodies, ticks, *, fill=8):
     return {
         "schema_version": 1,
         # One N for the world (the cleanup of 2026-09-18): the smallest circle,
@@ -121,7 +121,6 @@ def document(shape, bodies, ticks, *, slots=32, fill=8):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 1,
-                "ray_slots": slots,
                 "metric": "links",
                 "pace": [1, 1],
                 "charge": -1,

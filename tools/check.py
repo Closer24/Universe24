@@ -12,12 +12,6 @@ ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS = {
-    "examples/generic-ray-coupling/finite-residence.json": ("tests/test_native_ray_coupling.py",),
-    "examples/generic-ray-coupling/evidence.py": ("tests/test_ray_coupling_evidence.py",),
-    "examples/generic-ray-coupling/render_gif.py": ("tests/test_ray_coupling_evidence.py",),
-    "examples/generic-ray-coupling/run_experiments.py": ("tests/test_ray_coupling_evidence.py",),
-    "examples/generic-ray-coupling/compare_controls.py": ("tests/test_ray_coupling_evidence.py",),
-    "examples/kerengonen-double-slit/run_experiments.py": ("tests/test_kerengonen.py",),
     "examples/local_lorentz_field.json": ("tests/test_node_state_contract.py",),
     "catalog/nature.json": ("tests/test_nature_catalog.py",),
     "docs/CATALOG.md": ("tests/test_nature_catalog.py",),

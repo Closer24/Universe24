@@ -79,7 +79,6 @@ def test_the_inverted_share_leaves_reversed_mixes_and_reaches_its_owner():
         bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
     )
-    doc["spatial_fields"][0]["ray_slots"] = 32
     result = run(doc, 5)
     events = result["events"]
     # Tick 1: the shell mixes, 36 back home to A, 9 on to B, which is pushed
@@ -210,7 +209,6 @@ def test_no_trace_no_wait_and_every_share_moves(tmp_path):
         bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
     )
-    doc["spatial_fields"][0]["ray_slots"] = 32
     result = run(doc, 5)
     assert all(entry["amount"] >= 1 for entry in result["snapshot"]["parked"])
     previous = {}
@@ -317,7 +315,6 @@ def test_the_dense_layer_agrees_with_the_engine():
         bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
     )
-    a["spatial_fields"][0]["ray_slots"] = 32
     b = document(
         ticks=4,
         bodies=[

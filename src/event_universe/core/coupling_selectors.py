@@ -56,6 +56,7 @@ def matches_pair(rule: PairRule, left: int, right: int) -> bool:
 def participant_groups(
     rule: InteractionDefinition | SpatialInteractionDefinition,
     records: tuple[DisturbanceRecord | None, ...],
+    capacity: int = MAX_SLOTS,
 ) -> tuple[tuple[int, ...], ...]:
     """Greedily select disjoint groups in role order and then local slot order.
 
@@ -63,7 +64,7 @@ def participant_groups(
     with a different assignment, and conditions do not alter this selection.
     """
     roles = _participant_roles(rule)
-    if type(records) is not tuple or len(records) > MAX_SLOTS:
+    if type(records) is not tuple or len(records) > capacity:
         raise ValueError("indexed interactions require bounded participant and record counts")
     available = {slot for slot, record in enumerate(records) if record is not None}
     groups: list[tuple[int, ...]] = []

@@ -49,6 +49,41 @@ option; a world that writes a deleted key is refused:
   `test_kerengonen`, `test_loop_binding`, and every module that declared a
   width now declares `N`.
 
+Part 2, the same day (`cleanup/law-of-the-bit-2`):
+
+- keys refused, each naming its rule: `ray_slots` on a spatial field
+  (`lanes-v1`: the lanes bound the Node, no budget per family; the
+  definition has no `ray_slots`, `rays_per_tick` is at most 4096 on its
+  own); `self_exclusion` on a spatial field, `kerengonen.capture` and
+  `kerengonen_mirror` on an emission (the record-as-owner field program,
+  Highlights 5.4 point 22 and the settled rule (v)); the `capture` and
+  `self_exclusion` fields of `SpatialFieldDefinition` and the `mirror` field
+  of `EmissionDefinition` are gone, `participant_groups` takes a `capacity`;
+- the record-as-owner program's test modules deleted (`test_kerengonen`,
+  `test_energy_audit`, `test_ray_integration_guards`,
+  `test_ray_merge_contracts`, `test_native_ray_coupling`,
+  `test_spatial_coupling`, `test_spatial_interactions`,
+  `test_spatial_transport`, `test_spatial_decay`,
+  `test_ray_coupling_evidence`, `test_local_field_rules`,
+  `test_node_rule_contract`) with `examples/generic-ray-coupling/` and
+  `examples/kerengonen-double-slit/`; the slot budget's case of
+  `test_ray_field`;
+- the ledger: the `shadow_sources` line (always zero since
+  `node-is-ports-v1`) is gone with `record_shadow_sources`; a body under a
+  table takes the recoil on its own line, booked on `returned`; the prefill
+  merges a third phase on one lane by the coherence rule; "home" is the
+  generic push and its zero-step return, booked as `home_pushes`;
+- `examples/nature/bit_law_migration.py` drops `ray_slots` and no longer
+  scales slots per layer; every world of the repository lost the key;
+- a body at rest claims no lane (`LaneClaims.at_rest`,
+  `SpatialLaw.body_things`; its token never departs); the electricity
+  reading of the whole charge (the field lane's finding) is measured and on
+  the list, a declaration of the charge per thing being the model owner's;
+  the record-as-owner
+  program's engine (the outward octant field, the record couplings, the load
+  delay of departures, `node_execution`, the record's self-exclusion rows) and
+  the corner turn's sourced line remain on the pull request's list.
+
 ## A click is an absorption, landed on 2026-09-18 (`detector-absorb-v1`)
 
 Issue #169, feature 2c ([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1);
@@ -746,7 +781,7 @@ answered at a distance, kept a register at a Node or made a ray wait for room
   received count, node cost, rays, tick and ray hold;
 - the pre-planning refusal "outgoing spatial links are occupied": there is no
   occupied channel and no capacity rule, rays leaving on one Link in one
-  interval travel in one packet bounded by `ray_slots`, and
+  interval travel in one packet, and
   `SpatialNode.require_free_links` rejects at commit a departure that would
   overwrite a packet still in transit, a host scheduling error rather than a
   physical rule;
@@ -942,7 +977,8 @@ only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
   interval.
 - The 32-slot participant capacity of `validate_ray_participants` is now a
   bound per layer with a rule (the `ray_slots` of that layer's fields sum to
-  at most 32) instead of over every selected field.
+  at most 32) instead of over every selected field (retired with `ray_slots`
+  on 2026-09-18, `lanes-v1`: the lanes bound the Node).
 - The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
   (the derived layers as sorted lists of field names) in `run.json` beside
   `ray_state`.

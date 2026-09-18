@@ -161,7 +161,6 @@ def document(rule, clock=1, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 1,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 # The clock is the content (clock-readings-v1, 2026-09-18): a ray

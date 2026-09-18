@@ -27,14 +27,12 @@ from event_universe.core.spatial_state import (
     SpatialCouplingResult,
     SpatialFieldDefinition,
     SpatialState,
-    advance_ray,
     ray_momentum,
     validate_rays,
     zero_spatial_state,
 )
 
 from .disturbances import evaluate
-from .rays import emit_rays
 from .spatial import add_populations, emission_amount, emit, split_outward
 
 
@@ -88,8 +86,8 @@ def sample_fluxes(
             validate_rays(rays[index], definition, field)
             result[definition.field] = pack(ray_momentum(rays[index], definition))
             if meter is not None:
-                meter.charge("read", 6 + 4 * definition.ray_slots)
-                meter.charge("update", 3 + 6 * definition.ray_slots)
+                meter.charge("read", 6 + 4 * len(rays[index]))
+                meter.charge("update", 3 + 6 * len(rays[index]))
             continue
         for payload in state.delivered:
             field.validate(payload)
@@ -253,60 +251,6 @@ class SpatialCouplingLaw:
     spatial_definitions: tuple[SpatialFieldDefinition, ...] = ()
     emissions: tuple[EmissionDefinition, ...] = dataclass_field(default=(), kw_only=True)
 
-    def _without_own_rays(
-        self, record: DisturbanceRecord, sample: Values, fluxes: Values, meter: CostMeter
-    ) -> tuple[Values, Values]:
-        """Subtract the record's own one-link-old rays from the local sample it reads.
-
-        Uses only the record's bookkeeping: the amount each rule emitted on the cycle
-        it departed, its heading cursor and the port it left through. The rays whose
-        first step took that port reached this Node together with the record. Work is
-        bounded by rays_per_tick; no ray identity and no remote state is read.
-        """
-        if not record.emission_departed or record.channel_code < 2 or not fluxes:
-            return sample, fluxes
-        port = record.channel_code - 2
-        sample_list, flux_list = list(sample), list(fluxes)
-        changed = False
-        for rule_index, rule in enumerate(self.emissions):
-            definition = self.spatial_definitions[rule.spatial_field]
-            if not definition.self_exclusion or not matches_type(rule, record.type_index):
-                continue
-            if rule_index >= len(record.emission_departed):
-                continue
-            amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
-            if not amount:
-                continue
-            rays, _ = emit_rays(
-                amount, cursor, definition, meter, phase, advance, rule.heading, rule.polarization
-            )
-            own = 0
-            own_rays = []
-            for ray in rays:
-                first_port, _ = advance_ray(ray, definition.headings[ray.heading])
-                meter.charge("evaluate")
-                if first_port == port:
-                    own = checked_work(own + ray.amount)
-                    own_rays.append(ray)
-            if not own_rays or (not own and definition.flux_projection == "ports"):
-                continue
-            flux = list(unpack(flux_list[definition.field]))
-            if definition.flux_projection == "carried_heading":
-                own_heading = ray_momentum(tuple(own_rays), definition)
-                flux = list(subtract_components(tuple(flux), own_heading))
-                meter.charge("read", 4 * len(own_rays))
-                meter.charge("update", 6 * len(own_rays) + 2)
-            else:
-                axis, sign = port // 2, (1 if port % 2 == 0 else -1)
-                flux[axis] = checked_work(flux[axis] - sign * own)
-            flux_list[definition.field] = pack(tuple(flux))
-            value = list(unpack(sample_list[definition.field]))
-            value[0] = checked_work(value[0] - own)
-            sample_list[definition.field] = pack(tuple(value))
-            meter.charge("update", 2)
-            changed = True
-        return (tuple(sample_list), tuple(flux_list)) if changed else (sample, fluxes)
-
     def sample(self, states: tuple[SpatialState, ...]) -> Values:
         return sample_values(states, self.spatial_definitions, self.fields)
 
@@ -437,8 +381,8 @@ class SpatialCouplingLaw:
             meter.charge("read", 9 + (6 if components == 1 else 0))
             meter.charge("update", 8 * components + (3 if components == 1 else 0))
             if spatial_definition.flux_projection == "carried_heading":
-                meter.charge("read", 4 * spatial_definition.ray_slots)
-                meter.charge("update", 6 * spatial_definition.ray_slots)
+                meter.charge("read", 4 * len(spatial_definition.headings))
+                meter.charge("update", 6 * len(spatial_definition.headings))
         updated = list(records)
         reaction = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -474,11 +418,8 @@ class SpatialCouplingLaw:
                         continue
                 local_sample = sample if not slot_samples else slot_samples.get(slot, sample)
                 local_fluxes = fluxes if not slot_fluxes else slot_fluxes.get(slot, fluxes)
-                record_sample, record_fluxes = self._without_own_rays(
-                    record, local_sample, local_fluxes, meter
-                )
                 request = evaluate(
-                    definition.expression, record.values, record_sample, meter, record_fluxes
+                    definition.expression, record.values, local_sample, meter, local_fluxes
                 )
                 before = unpack(record.values[definition.field])
                 if definition.mode == "rotation":

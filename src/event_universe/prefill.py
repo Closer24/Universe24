@@ -165,7 +165,13 @@ def _depart(
 ) -> None:
     """One departure of a source into the region's flight arrays, an outgoing share
     (flow 0), on the given layer, merged with what is there when the phases
-    agree, on the other layer otherwise."""
+    agree, on the other layer otherwise; a third phase on one Port of a source
+    is merged by the coherence rule with the first layer's share (Highlights 5.4,
+    points 24 and 25: the shares of one owner on one lane are one coherent sum,
+    the amount summed and the phase the sum's), never refused (the cleanup of
+    2026-09-18, on the A6 lane's finding: a fill longer than about 30 intervals
+    at N = 64 refused a third phase)."""
+    from event_universe.core.spatial_state import _phase_of_sum
     from event_universe.dense_field import LAYERS
 
     fly_amt = family.fly_amt  # type: ignore[attr-defined]
@@ -180,7 +186,15 @@ def _depart(
         if int(fly_ph[position][(*cell, candidate)]) == phase:
             fly_amt[position][(*cell, candidate)] = int(slots[candidate]) + amount
             return
-    raise ValueError("the prefill cannot hold a third phase on one Port of a source")
+    held_amount, held_phase = int(slots[layer]), int(fly_ph[position][(*cell, layer)])
+    merged_phase = _phase_of_sum(
+        ((held_amount, held_phase), (amount, phase)),
+        tuple(int(v) for v in family.mix_cosines),  # type: ignore[attr-defined]
+        tuple(int(v) for v in family.mix_sines),  # type: ignore[attr-defined]
+        int(family.modulus),  # type: ignore[attr-defined]
+    )
+    fly_amt[position][(*cell, layer)] = held_amount + amount
+    fly_ph[position][(*cell, layer)] = merged_phase
 
 
 def owner_nodes(
