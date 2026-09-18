@@ -5,11 +5,20 @@ board, those holding nothing but shadows of families with a shadow set, are
 held as integer arrays and cycled by the spatial law's mixing and remainder
 rule (`core/spatial_state.py`, `node_mixing` and `spread_content`; [the Node
 mixes the six](../../docs/SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1)),
-with the same integers: since node-mixing-v1 (feature 16c, part 1) every Node
-of the region that holds arrivals is cycled by `spread_content` itself, ray by
-ray, through the fallback that served the overflow, with its parked shares
-(`reg`, the parked shadows of node-is-ports-v1 in ninths); the vectorized twin
-of the mixing is part 2. The departures walk one Link with the family's phase
+with the same integers, as one vectorized step over every such Node at once
+(node-mixing-v1, feature 16c, part 2): per owner and sign the shadows that
+arrived on each heading are one amplitude (their amount at the phase of their
+coherent sum), the six amplitudes mix (a third of the coherent sum to every
+Port, less the arrival through it sent back), the total in ninths is shared
+among the six headings by the squared leaving amplitudes with the
+largest-remainder rule, the whole quanta leave at the phase of their leaving
+amplitude and the ninths below one quantum join the Node's parked shares
+(`reg`, the parked shadows of node-is-ports-v1 in ninths), each share's phase
+combined with the parked one's by the coherence rule (`phase_of_sum` over the
+family's integer cosine and sine tables, in the order the engine combines
+them), a parked share at one quantum leaving whole with its phase; a Node
+holding more shadows than the arrays' layers is cycled by `spread_content`
+itself, ray by ray. The departures walk one Link with the family's phase
 advance, the open boundary absorbing what walks out, per family, owner and
 sign. Since bit-law-v1 (2026-09-18) the region is the
 board's shadow layer (point 13 of the law): it holds shadows alone, the bit-0
@@ -63,6 +72,10 @@ from event_universe.core.spatial_engine import SpatialEngine
 from event_universe.core.spatial_node import SpatialNode
 from event_universe.core.spatial_state import (
     BIT_SHADOW,
+    MIXING_AMPLITUDE_SCALE,
+    MIXING_DENOMINATOR,
+    MIXING_OPPOSITE,
+    MIXING_WEIGHT_BITS,
     POLARIZATION_NONE,
     PORT_HEADINGS,
     REMAINDER_SLOTS,
@@ -71,6 +84,7 @@ from event_universe.core.spatial_state import (
     SpatialFieldDefinition,
     SpatialPacket,
     merge_rays,
+    mixing_tables,
     park_shares,
     parked_shadow,
     parked_shares,
@@ -95,8 +109,13 @@ SIGNS = 3
 AMOUNT = np.int32
 PHASE = np.int16
 PORT = np.int8
-# The six unit-axial headings in Port order, as an array.
+# The six unit-axial headings in Port order, as an array, and the opposite of
+# each (the travel heading of the arrival that came in through a Port).
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
+OPPOSITE = np.array(MIXING_OPPOSITE, dtype=np.int64)
+# The Ports ranked against each other for the largest-remainder rule: [k, h] is
+# whether Port k comes before Port h on a tie.
+EARLIER = np.arange(6)[:, None] < np.arange(6)[None, :]
 
 
 class DenseFamily:
@@ -127,6 +146,11 @@ class DenseFamily:
         # The parked shares' unit: ninths (node-mixing-v1).
         self.total = parked_unit(definition)
         self.modulus = definition.phase_modulus
+        # The tables the mixing sums amplitudes over: the family's, or the
+        # one-step circle of a family without a phase width (`mixing_tables`).
+        mixing = mixing_tables(definition)
+        self.mix_cosines = np.array(mixing[0], dtype=np.int64)
+        self.mix_sines = np.array(mixing[1], dtype=np.int64)
         self.mask = phase_mask(self.modulus)
         # A shadow has no clock (clock-readings-v1): the region's phases never advance.
         self.advance = 0
@@ -180,6 +204,17 @@ class DenseFamily:
         assert self.cosines is not None and self.sines is not None
         projection = x[..., None] * self.cosines + y[..., None] * self.sines
         return np.argmax(projection, axis=-1).astype(np.int64)
+
+    def combine(
+        self, held: np.ndarray, hph: np.ndarray, share: np.ndarray, sph: np.ndarray
+    ) -> np.ndarray:
+        """The parked share's phase after a share joins it, elementwise: the step
+        nearest held e^(i held phase) + share e^(i share phase), exactly
+        `_phase_of_sum` in the engine's order."""
+        assert self.cosines is not None and self.sines is not None
+        x = held * self.cosines[hph] + share * self.cosines[sph]
+        y = held * self.sines[hph] + share * self.sines[sph]
+        return self._nearest_step(x, y)
 
 
 def plain_ray(ray: Ray, definition: SpatialFieldDefinition, family: DenseFamily | None = None) -> bool:
@@ -282,12 +317,11 @@ class DenseField:
         return self._active
 
     def cycle(self, tick: int) -> None:
-        """The spread of every dense Node with content (node-mixing-v1,
-        field-remainder-v1): every Node with arrivals is cycled by
-        `spread_content` itself, ray by ray, with its parked shares (the fallback
-        that served the overflow; the vectorized twin is part 2 of feature 16c),
-        the departures kept in flight until the delivery and the cost of each
-        cycle as the spatial law would meter it."""
+        """The spread of every dense Node with content, at once (node-mixing-v1,
+        field-remainder-v1): the same integers as `spread_content` at each, the
+        departures kept in flight until the delivery and the cost of each cycle
+        as the spatial law would meter it. A Node holding more shadows than the
+        arrays' layers is cycled by `spread_content` itself, ray by ray."""
         dense = self.owner == 0
         prices = self.prices
         ports_any = np.zeros((*self.shape, 6), dtype=bool)
@@ -295,9 +329,6 @@ class DenseField:
         family_cost = np.zeros(self.shape, dtype=np.int64)
         has_arrivals = np.zeros(self.shape, dtype=bool)
         for family in self.families.values():
-            arrived = (family.arr_amt > 0).any(axis=(3, 4, 5, 6))
-            for x, y, z in zip(*np.nonzero(arrived), strict=True):
-                family.overflow.setdefault((int(x), int(y), int(z)), [])
             fallback = self._fallback(family)
             count, family_ports = self._arrivals(family)
             for position, (rays, ports, _) in fallback.items():
@@ -315,6 +346,10 @@ class DenseField:
             has_arrivals |= present
             if not present.any():
                 continue
+            departures, phase = self._mix(family)
+            released, released_phase = self._release(family)
+            layer_0, layer_1, phase_1 = self._departures(departures, released, phase, released_phase)
+            self._place_departures(family, layer_0, layer_1, phase, phase_1)
             for position, (_, _, departed) in fallback.items():
                 self._place_rays(family, position, departed)
             outgoing = family.fly_amt > 0
@@ -409,6 +444,131 @@ class DenseField:
         count = present.sum(axis=(3, 4, 5, 6)).astype(np.int64)
         ports = present.any(axis=(3, 4, 6))
         return count, ports
+
+    def _mix(self, family: DenseFamily) -> tuple[np.ndarray, np.ndarray]:
+        """The Node's mixing at every dense Node, per owner and sign (node-mixing-v1;
+        Highlights 5.4, point 24), exactly `node_mixing`: the shadows that
+        arrived on each heading are one amplitude, sqrt(amount) in 32nds at
+        the step nearest their coherent sum; the leaving amplitude of each
+        heading is the coherent sum less three times the arrival that came in
+        through its Port (3 B_h, the same ratios and phase); the total in
+        ninths is shared by the squared leaving amplitudes, reduced by a common
+        shift to MIXING_WEIGHT_BITS bits, with the largest-remainder rule,
+        ties to the lower Port; the whole quanta are the departures per
+        heading, at the phase of the leaving amplitude, and the ninths below
+        one quantum join the parked shares, each share's phase combined with
+        the parked one's by the coherence rule. Returns the departures and
+        their phases per owner, sign and heading."""
+        amounts = family.arr_amt.astype(np.int64)
+        phases = family.arr_ph.astype(np.int64)
+        owners = len(family.owners)
+        shape = (*self.shape, owners, SIGNS, 6)
+        amount = amounts.sum(axis=6)
+        if amount.max(initial=0) > MAX_VALUE:
+            raise ValueError("value exceeds the disturbance integer bound")
+        if family.cosines is None or family.sines is None:
+            port_phase = np.zeros(shape, dtype=np.int64)
+        else:
+            x = (amounts * family.cosines[phases]).sum(axis=6)
+            y = (amounts * family.sines[phases]).sum(axis=6)
+            port_phase = family._nearest_step(x, y)
+        # The amplitudes, the integer square root of amount x 32^2.
+        scaled = amount * (MIXING_AMPLITUDE_SCALE * MIXING_AMPLITUDE_SCALE)
+        root = np.floor(np.sqrt(scaled.astype(np.float64))).astype(np.int64)
+        root = np.where(root * root > scaled, root - 1, root)
+        root = np.where((root + 1) * (root + 1) <= scaled, root + 1, root)
+        ax = root * family.mix_cosines[port_phase]
+        ay = root * family.mix_sines[port_phase]
+        cx = ax.sum(axis=-1, keepdims=True) - 3 * ax[..., OPPOSITE]
+        cy = ay.sum(axis=-1, keepdims=True) - 3 * ay[..., OPPOSITE]
+        if max(int(np.abs(cx).max(initial=0)), int(np.abs(cy).max(initial=0))) >= 1 << 31:
+            raise OverflowError("64-bit intermediate range exceeded")
+        weights = cx * cx + cy * cy
+        weight_total = weights.sum(axis=-1)
+        bits = np.zeros(weight_total.shape, dtype=np.int64)
+        for bit in range(1, 64):
+            bits = np.where((weight_total >> (bit - 1)) > 0, bit, bits)
+        shift = np.maximum(bits - MIXING_WEIGHT_BITS, 0)
+        reduced = weights >> shift[..., None]
+        reduced_total = reduced.sum(axis=-1)
+        present = reduced_total > 0
+        divisor = np.where(present, reduced_total, 1)
+        units = amount.sum(axis=-1) * MIXING_DENOMINATOR
+        product = units[..., None] * reduced
+        quotas = product // divisor[..., None]
+        remainders = product - quotas * divisor[..., None]
+        short = units - quotas.sum(axis=-1)
+        # The largest remainders first, ties to the lower Port: a Port gets one
+        # more when fewer Ports rank ahead of it than the shortfall.
+        ahead = (
+            (remainders[..., :, None] > remainders[..., None, :])
+            | ((remainders[..., :, None] == remainders[..., None, :]) & EARLIER)
+        ).sum(axis=-2)
+        quotas = np.where(present[..., None], quotas + (ahead < short[..., None]), 0)
+        whole = quotas // MIXING_DENOMINATOR
+        share = quotas - whole * MIXING_DENOMINATOR
+        if family.cosines is None or family.sines is None:
+            leaving_phase = np.zeros(shape, dtype=np.int64)
+        else:
+            leaving_phase = np.where(weights > 0, family._nearest_step(cx, cy), 0)
+        # The ninths below one quantum join the parked shares, with their phases.
+        reg, regph = family.reg, family.regph
+        held = reg.astype(np.int64)
+        held_phase = regph.astype(np.int64)
+        has_share = share > 0
+        if family.cosines is None:
+            new_phase = np.where(has_share, 0, held_phase)
+        else:
+            combined = family.combine(held, held_phase, share, leaving_phase)
+            new_phase = np.where(has_share, np.where(held > 0, combined, leaving_phase), held_phase)
+        reg[...] = held + share
+        regph[...] = new_phase
+        return whole, leaving_phase
+
+    @staticmethod
+    def _release(family: DenseFamily) -> tuple[np.ndarray, np.ndarray]:
+        """Every parked share at S or more leaves whole with its phase and resets
+        its phase when it empties (field-remainder-v1)."""
+        S = family.total
+        reg, regph = family.reg, family.regph
+        held = reg.astype(np.int64)
+        whole = held // S
+        releasing = whole > 0
+        rest = held - whole * S
+        released_phase = regph.astype(np.int64)
+        reg[...] = np.where(releasing, rest, held)
+        regph[...] = np.where(releasing & (rest == 0), 0, released_phase)
+        return whole, released_phase
+
+    @staticmethod
+    def _departures(
+        departures: np.ndarray,
+        released: np.ndarray,
+        phase: np.ndarray,
+        released_phase: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """The two layers per owner, sign and Port: the mixing's quanta at the
+        leaving amplitude's phase and the parked share's release at its phase,
+        one ray when the phases are equal (the departures of one Port merge)."""
+        same = (released > 0) & (departures > 0) & (released_phase == phase)
+        layer_0 = departures + np.where(same, released, 0)
+        layer_1 = np.where(same, 0, released)
+        return layer_0, layer_1, released_phase
+
+    @staticmethod
+    def _place_departures(
+        family: DenseFamily,
+        layer_0: np.ndarray,
+        layer_1: np.ndarray,
+        phase: np.ndarray,
+        phase_1: np.ndarray,
+    ) -> None:
+        if max(int(layer_0.max(initial=0)), int(layer_1.max(initial=0))) > MAX_VALUE:
+            raise ValueError("value exceeds the disturbance integer bound")
+        family.fly_amt[..., 0] = layer_0
+        family.fly_ph[..., 0] = np.where(layer_0 > 0, phase, 0)
+        family.fly_amt[..., 1] = layer_1
+        family.fly_ph[..., 1] = np.where(layer_1 > 0, phase_1, 0)
 
     # -- the shadows walking home (node-is-ports-v1) ---------------------------
 
