@@ -47,16 +47,19 @@ against `snapshot()` in both modes and the digest of a small world's
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | pp_r8, fill 24 (`995d66e`) | 48 | 14.4 MB | 6.15 s | 6.47 s | 119.7 MB | 73.1 MB | `78685a35` |
 | pp_r12d, fill 80 (`995d66e`) | 16 | 590 MB | 557.6 s | 559.6 s | 2900 MB | 1693 MB | `c997474b` |
-| pp_r16d, fill 100 (`995d66e`) | 16 | PP_R16_STATE | PP_R16_BEFORE_WALL | PP_R16_AFTER_WALL | PP_R16_BEFORE_RSS | PP_R16_AFTER_RSS | PP_R16_DIGEST |
+| pp_r16d, fill 100 (`995d66e`) | 16 | 985 MB | 1675 s | 1671 s | 4909 MB | 3787 MB | `df31d04b` |
 | pp_r8, fill 24 (`9c689f1`, the mixing) | 48 | 15.3 MB | 3.64 s | 4.04 s | 117.9 MB | 60.2 MB | `7258f621` |
 
 The wall is unchanged (the per-Node reading is the same work, done one
-Node at a time); the peak falls to the arrays and the step's temporaries:
-on the 146 k board the snapshot no longer sets the peak (1.7 GB is the
-dense step's own, about 6 KB per Node of arrays and intermediates during the
-fill, as the review measured). The projection for the r = 20 board (662 k
-Nodes) is the same 6 KB per Node, about 4 GB, instead of the 11.4 GB at
-which the runner was killed; r = 24 (1.14 M Nodes) about 7 GB.
+Node at a time); the peak falls to the arrays and the step's temporaries,
+which now set it: 1.7 GB on the 146 k board and 3.8 GB on the 342 k board,
+about 11 KB per Node (two owners, the int32 amounts and int16 phases of
+node-is-ports-v1 with the step's int64 intermediates during the fill),
+against 20 KB and 14 KB per Node before, where the snapshot's objects and
+text came on top of the arrays. The projection for the r = 20 board (662 k
+Nodes) is about 7 GB instead of the 11.4 GB at which the runner was killed
+while writing its snapshot; r = 24 (1.14 M Nodes) about 13 GB, the bigger
+machine's.
 
 ### 2. A series run one process per core
 
