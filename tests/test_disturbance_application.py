@@ -70,6 +70,9 @@ for name in sys.modules:
 def test_headless_runs_conserve_and_save_only_data(example, tmp_path, monkeypatch):
     original_import = builtins.__import__
     original_snapshot = Simulation.snapshot
+    # The final report is streamed Node by Node (`snapshot_stream`, the
+    # performance lane of 2026-09-18); a visual capture would call `snapshot`.
+    original_stream = Simulation.snapshot_stream
     snapshots = []
 
     def reject_visuals(name, *args, **kwargs):
@@ -80,8 +83,13 @@ def test_headless_runs_conserve_and_save_only_data(example, tmp_path, monkeypatc
         snapshots.append(self.tick)
         return original_snapshot(self)
 
+    def count_stream(self):
+        snapshots.append(self.tick)
+        return original_stream(self)
+
     monkeypatch.setattr(builtins, "__import__", reject_visuals)
     monkeypatch.setattr(Simulation, "snapshot", count_snapshot)
+    monkeypatch.setattr(Simulation, "snapshot_stream", count_stream)
     initial = ROOT / "examples" / f"{example}.json"
     artifact = run_initialization(initial, tmp_path)
     metadata = json.loads(artifact.read_text(encoding="utf-8"))

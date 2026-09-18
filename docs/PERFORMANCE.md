@@ -1,5 +1,136 @@
 # Run performance
 
+## Snapshots from the arrays, parallel series runs and the standing set (2026-09-18)
+
+The performance lane of 2026-09-18 (`perf-arrays-v1`; the model owner's
+instruction to make the engine use a bigger machine without changing any
+rule of the law; the [review before feature 15](#the-dense-mode-measured-before-adoption-2026-09-17)
+named the final snapshot as the fourth, bigger optimization). Measured on
+Linux with Python 3.14.0rc2 and numpy 2.5.3, 4 cores (Xeon 2.80 GHz), 15 GB,
+no GPU, one run at a time in its own process through
+`event_universe.runner.run_initialization`, the wall of the whole runner
+call, files included, and the peak RSS of the process
+(`resource.getrusage(RUSAGE_SELF).ru_maxrss`); seconds are one run each and
+carry the machine's noise (about 5 %). The worlds of items 1 and 2 are the
+A5s bodies at rest with the field given with the board: `pp_r8.json`
+(19 x 11 x 11) with `initial_field` `{"fill": 24}` on both families for 48
+ticks, and the Run 2 boxes `pp_r12d.json` (61 x 49 x 49) and `pp_r16d.json`
+(81 x 65 x 65) with a fill of 80 and 100 intervals for 16 ticks (the fill
+reaches every Node of the board before the first tick, so the snapshot is a
+filled board's, the case that killed the r = 20 runner of
+[A5s Run 2](EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest)
+at 11.4 GB); the worlds are the shipped files with the key added, written
+outside the tree. The three items were measured on `main` at `995d66e`
+(before) against the same commit with the change (after), and item 1 again
+on `main` at `9c689f1` (after features 16b and 16c: the mixing is the
+layer's step, a body's whole charge a multiple of its amount, the phase
+width 0 so that the fill holds the mixing's phases) against the branch
+merged on it. Every `state.json` digest below is the same before and after.
+
+### 1. The final snapshot written Node by Node
+
+`state.json` was `json.dumps(world.snapshot(), indent=2)`: every Node of the
+board read as Node state (`materialized_nodes`, about 16 KB per filled Node
+in objects) and the whole text built in memory. It is now streamed
+(`event_universe/snapshot_writer.py` over `DisturbanceEngine.snapshot_stream`):
+the per-Node lists (`spatial_fields`, `parked`, `nodes`, `transfers`) one
+entry at a time, the dense region's Nodes read one at a time from its
+arrays one x-slab at a time (`SpatialEngine.snapshot_nodes`,
+`DenseField.materialized_node`, `visited_slab`), the text laid out as the
+encoder lays it out, so the file is byte for byte what it was; the peak
+memory of the snapshot is the arrays plus one slab's positions, one Node's
+state and one entry's text. `tests/test_perf_arrays.py` pins the identity
+against `snapshot()` in both modes and the digest of a small world's
+`state.json` against `main`'s.
+
+| World | Ticks | `state.json` | Wall before | Wall after | Peak RSS before | Peak RSS after | Digest |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| pp_r8, fill 24 (`995d66e`) | 48 | 14.4 MB | 6.15 s | 6.47 s | 119.7 MB | 73.1 MB | `78685a35` |
+| pp_r12d, fill 80 (`995d66e`) | 16 | 590 MB | 557.6 s | 559.6 s | 2900 MB | 1693 MB | `c997474b` |
+| pp_r16d, fill 100 (`995d66e`) | 16 | 985 MB | 1675 s | 1671 s | 4909 MB | 3787 MB | `df31d04b` |
+| pp_r8, fill 24 (`9c689f1`, the mixing) | 48 | 15.3 MB | 3.64 s | 4.04 s | 117.9 MB | 60.2 MB | `7258f621` |
+
+The wall is unchanged (the per-Node reading is the same work, done one
+Node at a time); the peak falls to the arrays and the step's temporaries,
+which now set it: 1.7 GB on the 146 k board and 3.8 GB on the 342 k board,
+about 11 KB per Node (two owners, the int32 amounts and int16 phases of
+node-is-ports-v1 with the step's int64 intermediates during the fill),
+against 20 KB and 14 KB per Node before, where the snapshot's objects and
+text came on top of the arrays. The projection for the r = 20 board (662 k
+Nodes) is about 7 GB instead of the 11.4 GB at which the runner was killed
+while writing its snapshot; r = 24 (1.14 M Nodes) about 13 GB, the bigger
+machine's.
+
+### 2. A series run one process per core
+
+`tools/run_series.py` launches the worlds of a series as separate processes,
+at most `--jobs` at once (the cores by default), each `python -m
+event_universe --init WORLD --output OUT/<name>/run` with its own `log.txt`,
+its peak RSS read by `wait4`, and a summary table (`summary.md`,
+`summary.json`, printed): status, ticks, the runner's seconds, the wall,
+the peak RSS, the digests of `state.json` and of the ledger, the
+conservation flag. The engine is untouched and every run is the runner's:
+the test pins each `state.json` and ledger byte-identical to the same world
+run alone in the test's process. Measured with four copies of the pp_r8
+fill world (`9c689f1`, 48 ticks each, one core each; the runs' own seconds
+and peaks in the summaries):
+
+| Jobs | Wall of the series | Runner seconds per run (min - max) | Peak RSS per run (min - max) |
+| ---: | ---: | ---: | ---: |
+| 1 | 16.6 s | 3.84 - 3.88 s | 61.2 - 61.3 MB |
+| 4 | 6.4 s | 5.57 - 6.03 s | 61.0 - 61.2 MB |
+
+The four runs at once take 2.6 times less wall than one after the other on
+the three cores that were free (a fourth core carried another measurement
+throughout; each run alone takes 3.9 s, and four at once slow each other to
+5.6 - 6.0 s, memory bandwidth shared), every file byte-identical to the run
+alone (`7258f621` for all four in both settings); the peak of each process
+is its own, so a series of n worlds needs n times one world's peak, which
+is what `--jobs` bounds.
+
+### 3. The standing set by a formula
+
+With `standing_field` (the world key or the runner's `--standing-field
+[N]`; [the standing set](SPATIAL_FIELDS.md#the-standing-set-standing-field-v1))
+the dense region compares its state after every delivery with the states
+before it (the arrays, the whole rays beside them, the owners, the engine's
+Nodes' resident rays and the packets the engine delivers), the layer's step
+an opaque operator: whatever rule it applies, a state equal to the previous
+one is a fixed point and one equal to an earlier state of the window (1024
+deliveries) a cycle of that period; from there the cycle is skipped and the
+delivery replays the cycle's flows (the packets handed to the engine's Nodes,
+the escapes booked), so the things read the standing set exactly as the
+stepping engine gives it and the run's files are the stepping run's byte
+for byte; the engine's part of the state is checked every interval and a
+thing that steps makes the region step again from the fixed arrays,
+exactly. Looking costs one copy of the arrays per delivery (the previous
+state, for the residual) and a digest of them (the window's comparison).
+
+Measured, the same worlds through the runner with and without the mode:
+
+| World | Ticks | Rule | Repeat | Fixed | Wall without | Wall with | Peak RSS without | Peak RSS with | Files |
+| --- | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| The test's line, 9 x 3 x 3, two bodies 3 Links apart | 200 | the mixing (`9c689f1`) | after tick 30, period 1 | 170 ticks | 0.47 s | 0.39 s | 45.6 MB | 46.0 MB | identical |
+| pp_r8, fill 24 | 48 | the mixing (`9c689f1`) | none within 48 (residual 22,125 cells, 45,859 quanta at the last comparison) | 0 | 4.01 s | 4.60 s | 60.2 MB | 65.2 MB | identical |
+| The line of 65 Nodes, two bodies 62 Links apart, the split table [1, 1, 0, 0, 0, 0] (`995d66e`) | 1200 | field-spreading-v1 | none within 1200 (residual 96 cells, 96 quanta at every comparison) | 0 | 18.3 s | 25.0 s | 61.8 MB | 67.2 MB | identical |
+
+What the operator gives today: on an open board the exact repeat is the
+parked residue, reached once every shadow has escaped or parked, after the
+pushes on the things at rest have ended (the line's momenta stop changing
+before tick 30; under the split table the 9-Node line repeated after 119
+intervals and the 65-Node line not within 1200, its residual constant, a
+cycle longer than the window or none; the filled pp_r8 board is still
+draining at tick 48, 45,859 quanta moved at the last comparison); the field
+of a thing at rest that stands with its pushes going on is not a fixed
+point of the integer step under either rule, and the mode reports the
+residual and steps on. Looking costs about 15 % of the wall on pp_r8 (the
+copy and the digest of the arrays per delivery) and one copy of the arrays
+in memory until the search ends; the gain, where the repeat comes, is the
+whole dense step per interval after it (0.47 to 0.39 s on the line, 170 of
+200 intervals fixed). The mode stands as written against the operator;
+whether a standing field with pushes exists is the rule's question, not the
+host's.
+
 ## Ray-event engine: Local Focus measured (2026-09-17)
 
 Measured on Linux with Python 3.14.0rc2 on 2026-09-17 at head `f64b3f7`,
