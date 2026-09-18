@@ -923,27 +923,127 @@ states "exactly" and means integer equality at every tick.
   the unit of action in the derivation, not the engine); a diagonal α
   outside its band (the lattice, Highlights 3.5, recorded under 3.23), each
   stated as which.
-- **Status.** planned; waits for feature 12, field spreading (Highlights
-  3.5, 2026-09-17): until it lands the field lives on the six axis lines of
-  its source, so the diagonal passes meet no field and the clause comparing
-  the axis with the diagonal measures nothing; with it the field fills the
-  board and the lattice's anisotropy is the residue this entry measures. The
-  N-scan part of the criterion ran on 2026-09-17 as the acceptance test of
-  feature 8 (`test_ray_binding.py`, a test, not this experiment): a bound
-  group of mass N / 4 phase steps per interval, b = 4, the delay table `[4,
-  4, 4, 4, 4, 4]` per unit of field amount, gave G_eff · N² = 64 exactly for
-  N = 2^8, 2^10, 2^12 and 2^16, by the construction of the delay in phase
-  steps of a content-fixed field amount
-  ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
-  The five b, the exponent, the linearity in M and the external body remain
-  to be run here. Under Highlights 5.5 (2026-09-17) the lag modulus N and
-  the mass field's release are inputs until hypotheses 16 and 17 say what
-  fixes them: this entry confronts the forms, the exponent -1 in b and G_eff
-  · N² constant, and not the value of G. Runnable after feature 8b
-  (`ray-momentum-turn-v1`, 2026-09-17), the gradual turn of a free ray by a
-  coupling's `momentum_table`, for the deflection measured as a momentum
-  register.
-
+- **Status.** measured on 2026-09-18 on the engine of `main` at `9cc830f`
+  (no engine change on the branch; source
+  `25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038`, the
+  fingerprints of the forty-six worlds in `record.json`), as
+  `examples/nature/a6_bending/` (`make_worlds.py`, `predict.py`,
+  `analyze.py`, the dictionary and the computation in the
+  [README](../examples/nature/README.md#a6-light-bending-by-a-mass);
+  `tests/test_a6_bending.py`). The mechanism the delay table drives today,
+  read from the code before the series: `Ray.lag` of `ray-binding-v1`, spent
+  as one Link toward the lagging side when a transverse component reaches
+  the light's phase modulus N = 2^`phase_bits` (`lag_bits` open) and as one
+  interval of wait on the ray's own axis, not the momentum register of
+  feature 8b; and two facts of the engine that the spreading field exposes:
+  a meeting with outputs takes one field ray per interval (`participant_groups`
+  selects one group and the light's slot is used; the rays at a Node are
+  ordered by heading, so the ray met is the ±X one whenever field arrives
+  from ahead or behind, every interval on a filled board), and its output is
+  a fresh ray whose lag is that meeting's delay alone (`_output`), so nothing
+  accumulates. The pre-registered form therefore predicts no bending at any
+  b, N or M, and the series was run in both forms: `delay_*`, the catalog's
+  `mass_field_delay` with the table `[1, 1, 1, 1, 1, 1]` per 1 declared
+  before the run, and `turn_*`, the momentum register the status names
+  (`ray-momentum-turn-v2`, `momentum_table` `{"mass_field": -1}`). The
+  construction and its deviations, each stated before the run: the star an
+  external body of the catalog's `neutron` (no charge, its only field the
+  mass field, its rest rate declared 1 for the run), amount 2^28, release
+  [1, 2^15], 8192 quanta per heading per interval, instead of 2^6 m₀: the
+  body's amount is both the source of its field (through the release) and
+  its inertia (the accumulator that steps a Link at a whole amount), and 2^6
+  gives at most 64 quanta per heading, 3.8 net quanta over the whole pass at
+  b = 16 in the mean field, which resolves no exponent to ± 0.1, and an
+  inertia below one photon of the amount the resolution needs; so M is
+  2^28 m₀ by the body's amount, 2M is 2^29 at the same release, and the
+  forms (the exponent, the linearity, the N scan, the diagonal, the ratio)
+  are what the run reads, G_eff's value a convention of M and the release as
+  the entry allows; the light one ray of 2^18 (the register reads the
+  deflection to one part in 2^18 and the DDA completes no transverse Link
+  over the pass), without `spread` and without polarization; the lamp plain
+  (a marked Node draws on every arriving field ray) and one Node below a
+  launcher body at the start of the ray's line, a declared coupling of the
+  body sending the ray out on +X after 192 intervals of `delay`, so that the
+  ray passes the star in a field 192 ticks old (the mean field's pass at
+  b = 16 within 0.5 % of the box's steady state) at ticks 193 to 258 of 260;
+  the mass field, the star and the launcher at `phase_bits` 3 (read nowhere;
+  the spread's admission allows at most 12 and the coherent sum costs one
+  pass over the circle per register) and the light at the case's N, 2^12 in
+  the b series and 2^8, 2^10, 2^14, 2^16 at b = 8; the slow ray an electron
+  of rest rate 1 (every ray moves one Link per interval; slow is a nonzero
+  rate); the momentum field bound to the light by the lamp's `recoil_field`
+  and to the mass field by an unseeded lamp; the board the entry's 65 × 65
+  × 9 (the smallest with the boundary 2b beyond the farthest pass in z as
+  well, 65 deep, is 275 k Nodes and 6 GB, outside the machine and the
+  budget), so the (0, 1, 1) diagonal passes, which leave a slab 9 deep, ran
+  on a cube of 49 × 33 × 33 with their own axis passes at b = 4, 6, 8 for the
+  comparison (a ray along (1, 1, 0) is not expressible: a heading is a Port
+  heading and a register is set only by a push); the other side and the
+  diagonal run after the axis series passed its ledger and control checks.
+  The mean field of the split table (`predict.py`, the kernel of A5s's
+  `mean_field_gauss.py`) on exactly these boxes and schedule predicted,
+  before the run, the transverse push on the light 3417.70, 1660.36, 862.41,
+  269.84 and 94.32 quanta at b = 4, 6, 8, 12, 16 (α = 0.0130367, 0.0063337,
+  0.0032898, 0.0010294, 0.0003598), the exponent −2.59 ± 0.21 on this board
+  (a slab 9 deep drains the field through z; the same pass at the steady
+  state on boards 17 and 33 deep −1.95 and −1.59, in free space −1.38 ± 0.03
+  over b = 4 to 16 and −1.20 over 8 to 32, the local exponent −1.11 to −1.13
+  between 16 and 32: the model's own law approaches −1 from below, the
+  unscattered beam 8192 (6/11)^(b−1), 39 % of the push at b = 4 and 1 % at
+  16, and the lattice's short-range anisotropy steepening it at these b),
+  the linearity exact, the N scan flat (a register has no modulus), the
+  light's α equal to the slow ray's, and the diagonal 0.49, 0.59 and 0.71 of
+  the cube's axis fit at b = 4.24, 5.66, 8.49 (the axis fed by the beam).
+  Measured, the turn form (`record.json`; the register at the end of the
+  pass, α = atan2(|p_⊥|, p_x)): b = 4, 6, 8, 12, 16 the registers (262144, −3423, 0), (262144, −1661, 0), (262144, −862, 0), (262144, −269, 0), (262144, −93, 0), α = 0.013057, 0.0063361, 0.0032883, 0.0010262, 0.0003548 (the mean field 3417.70, 1660.36, 862.41, 269.84, 94.32; ratios 1.0016, 1.0004, 0.9995, 0.9969, 0.9860), the pushes 295, 281, 274, 248, 214 per pass, the first at tick 198 at x = 5; the other side (262144, +3423, 0) to (262144, +93, 0), the exact mirror; 2M (262144, −1727, 0), α = 0.0065879; the N scan (262144, −862, 0) at every N; the slow ray (262144, −862, 0); the control (262144, 0, 0) with no push; the cube's axis (262144, −3697, 0), (262144, −2019, 0), (262144, −1246, 0) at b = 4, 6, 8 and the diagonal (262144, −1169, −1169), (262144, −900, −900), (262144, −578, −578) at d = 3, 4, 6; every ray escaping on its line at (64, y, 4) at tick 258 (the DDA completes no transverse Link); the star's register (0, 222, 0), (0, 26, 0), (0, 4, 0), (0, 0, 0), (0, 0, 0) at b = 4 to 16 and its sink about 2.087 × 10^6 per pass.
+  Measured, the delay form: the register (262144, 0, 0) in every one of the twenty-three worlds, no push, the escape on the line at tick 258, one meeting per Node on the line (66 to 91 per pass) with the lag on x alone, the star's register at most (−2, 2, 0) (the returned field rays' recoil).
+  The criterion clause by clause, the turn form: (1) pass, momentum exact,
+  every ledger line balanced and `conserved_at_every_completed_tick` at all
+  260 ticks of all twenty-three worlds, the bodies' momentum line the star's
+  register (222, 26, 4, 0, 0 on y at b = 4 to 16, the recoils' net after the
+  spread); (2) pass, the control straight (the register (262144, 0, 0), no
+  push, the escape at (64, 40, 4) at tick 258); (3) pass, the ray bends
+  toward the star on both sides (p_y < 0 above, > 0 below, p_z = 0 at every
+  b); (4) fail, the exponent −2.595 ± 0.210 against −1.0 ± 0.1, the lattice and the
+  board (the mean field's −2.59 on this slab, reproduced within 0.4 % (the fit of the prediction on these boxes −2.586 ± 0.207);
+  the model's free-space law −1.38 at these b, Highlights 3.5 and 3.23, the
+  beam and the slab recorded, not hidden); (5) pass, α at 2M is 2.0035 α at
+  M (1727 against 862 quanta); (6) fail, G_eff N² grows as N² (the register
+  is N-independent: (262144, −862, 0) at N = 2^8, 2^10, 2^12, 2^14, 2^16, G_eff N² =
+  1.61 × 10^−6, 2.57 × 10^−5, 4.11 × 10^−4, 6.58 × 10^−3, 0.105 (G_eff = α b / 4M = 2.45 × 10^−11 at every N, G_eff N = 6.27 × 10^−9 to 1.61 × 10^−6)), G_eff itself constant over the five N; the cause is not the
+  engine: a push has no modulus, and the entry's own construction, M fixed
+  in m₀ with a fixed table, cannot give 1/N² in either form (the delay form,
+  had it accumulated, gives α = Σlag / N ∝ 1/N, G_eff N constant; the test of
+  feature 8 got N² by scaling the mass with N); the identification named in
+  the fail clause: with m₀ = h/(N δt c²) the unit of action m₀ c² δt is h/N,
+  so ħ is N/2π in units of (m₀, Link, interval) and G = ħc/(N m₀)² is
+  1/(2πN) there, G_eff N constant, while the 1/N² of the model owner's
+  statement holds only if m₀ is ħ/(δt c²), one radian per interval rather
+  than one step; (7) fail, the diagonal 0.486, 0.587, 0.711 of the cube's axis fit at
+  b = 4.24, 5.66, 8.49 against 1 ± 1/8, the lattice (Highlights 3.5, 3.23,
+  recorded: the mean field's 0.49, 0.59, 0.71 reproduced), the axis pass fed
+  by the unscattered beam at short range; the ratio light/slow 1.0000
+  exactly (the same push on the same content, the register the same to the
+  quantum), reported against 2: the momentum form gives no factor 2 since
+  the push reads the field's momentum and nothing of the ray's rate; the
+  engine's push against the mean field's prediction within 1.4 % in every
+  case (the ratios 1.0016, 1.0004, 0.9995, 0.9969, 0.9860 on the axis, 1.0001, 1.0004, 0.9989 on the cube's axis, 0.9959, 0.9980, 1.0033 on the diagonal, 1.0013 at 2M, the same 0.9995 at every N and for the slow ray), the mean field the expectation of the
+  engine's integers here as in A5s. The delay form: (1) pass and (2) pass as
+  above; (3) fail, no bending on either side (the register unchanged, the
+  escape on the line at the straight tick in all twenty-three worlds, the
+  meetings one per Node with the lag on x alone); (4) to (7) fail with α = 0
+  at every b, N and M and on the diagonal, and the ratio light/slow
+  undefined (0/0); the cause the engine as stated above, the pre-registered
+  form of the coupling not runnable on a spreading field until a meeting
+  takes every field ray at the Node and its output keeps the input's lag, a
+  change of `ray-binding-v1` this run does not make. Run times 130 to 306 s per world in the dense mode, two worlds at a time beside another job, 8760 s in all, the predictor 851 s;
+  viewer documents for `turn_b4`, `turn_b16`, `turn_control`, `delay_b4`,
+  `delay_b16`, `delay_control` beside the records, which stay outside the
+  tree. What this run does not decide: the value of G (Highlights 5.5), the
+  release ratio and the table (inputs, hypothesis 17); what it contradicts
+  in Highlights 3.28's "G_eff across the phase width" and hypothesis 14: the
+  constancy of G_eff N² was the construction of the test of feature 8 (the
+  mass scaled with N) and not a property of either coupling at fixed M.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11
