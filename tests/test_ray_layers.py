@@ -276,7 +276,13 @@ def turned(heading, steps, phase):
     )
 
 
-@pytest.mark.parametrize("declared", ["a_and_b", "a_only"])
+# The case "a_and_b" was deleted on 2026-09-18 with feature 18 (lanes-v1,
+# Highlights 5.4 point 25, the model owner's decision on the case it left open):
+# with the b rule declared, a turned b ray and the c ray are given one lane at
+# the meeting Node, two real rays of different families, a meeting the table of
+# the pair decides, which no departure holds; the world declares none, and its
+# premise, an unruled family crossing a ruled one on one lane, has no lawful form.
+@pytest.mark.parametrize("declared", ["a_only"])
 def test_rules_of_different_layers_fire_in_one_interval_and_an_unruled_family_crosses(
     tmp_path, declared
 ):

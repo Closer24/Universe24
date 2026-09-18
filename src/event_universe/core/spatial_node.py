@@ -1013,6 +1013,20 @@ class SpatialNode(SpatialNodeState):
             ),
             **(
                 {
+                    # The momentum the things spent on their steps this cycle
+                    # (clock-readings-v1), on the momentum field's line, read
+                    # by the local audit as momentum that left the rays here.
+                    "spent": {
+                        field.name: plan.spent_delta[i]
+                        for i, field in enumerate(services.initial.fields)
+                        if any(plan.spent_delta[i])
+                    }
+                }
+                if plan.spent_delta
+                else {}
+            ),
+            **(
+                {
                     "rule_delta": {
                         field.name: plan.rule_delta[i]
                         for i, field in enumerate(services.initial.fields)

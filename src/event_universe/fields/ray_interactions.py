@@ -254,7 +254,7 @@ def _turn(
         if not sign or shadow_slot in used or views[shadow_slot] is None:
             continue
         shadow = rays[kind][ray_slot]
-        if shadow.detector != BIT_SHADOW or shadow.owner == ray.owner:
+        if shadow.detector != BIT_SHADOW or shadow.owner in (ray.owner, *ray.owners):
             continue
         if taken.get(shadow_slot, receiver_slot) != receiver_slot:
             continue
@@ -421,7 +421,7 @@ def _meet(
                     and kind < len(rule.momentum_table)
                     and rule.momentum_table[kind]
                     and rays[kind][kind_slot].detector == BIT_SHADOW
-                    and rays[kind][kind_slot].owner != thing.owner
+                    and rays[kind][kind_slot].owner not in (thing.owner, *thing.owners)
                     and taken.get(other, slot) == slot
                 ]
                 if not shadows:
