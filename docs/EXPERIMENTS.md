@@ -1305,6 +1305,34 @@ states "exactly" and means integer equality at every tick.
   round 5's 2.72 w GM/b = 83 under `amount`; a line that reads no whole
   quantum is not late, and one that reads a whole quantum at this mass is
   frozen. The weaker masses `m64` and `m16` below read the passes.
+- **Result (1) and (2) at `m64`, w = 1** (S = 384, GM = 61.1; eight
+  cavities per reading, 300 ticks; the standing set not reached but nearly,
+  the residual 41 to 152 cells and 0 to 272 quanta at the end; every ledger
+  line balanced). Under `amount`: r = 3 (3.16) frozen from tick 2, 238
+  waits and 176 quanta in 240 intervals, then turned out at tick 241; r = 4
+  (4.12) 0.889, one wait, 3 quanta, out at tick 10; r = 5 (5.10) 0.957 and
+  0.970, one wait, 2 quanta, out at ticks 24 and 34; r = 6 (6.08) 0.991
+  and 0.992, one wait, 2 quanta, out at 108 and 130; r = 8 and 10 read
+  nothing, rate 1.000, stayed. Under `amplitude`: the same at every cavity
+  but r = 3 (0.012: 165 waits and 161 quanta in 167 intervals, out at tick
+  168, a third fewer waits for the same field) and one of the r = 6 clocks
+  (nothing read, 1.000). Pooled fits: `amount` A = 1.136 (rss 0.592), B =
+  5.98 (rss 0.346); `amplitude` A = 1.127 (rss 0.591), B = 5.95 (rss
+  0.346); A/GM = 0.019 against GR's 1; round 6's halved coefficient at
+  w = 1 is 0.70 and round 5's 26.5. Against `m256`: A = 3.54 → 1.14 and B =
+  14.4 → 5.98 for S = 1536 → 384, a factor 3.1 and 2.4 for a factor 4 in
+  S (round 6 gives √S, 2; round 5 gives S, 4), but the fit is of a step,
+  the frozen radius moving from 5 to 3 with the reach of the whole quanta,
+  and the redshift 5 → 8 within batch a is 0.045 (2 quanta against none),
+  6 → 10 within batch b 0.009 and 0.008 (`amount`), 0 and 0.008
+  (`amplitude`), against GR's 15.9 · (61.1/244.5) = 4.0 at the GR w, round
+  6's 0.045 and round 5's 0.45 at w = 1.
+- **The controls.** Without the star every clock runs at 1.000 in both
+  batches (no wait, no push, the thing bouncing between its mirrors for 300
+  intervals), the standing set of the empty board reached after 66
+  intervals with the period 64 (the clocks' bounce on the phase circle of
+  64) and replayed for 234; every bending line arrives at tick 32 with no
+  push, the standing set reached after 34 intervals with the period 1.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11

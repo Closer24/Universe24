@@ -189,8 +189,10 @@ def mass_of(metadata, world):
     for entry in world.get("spatial_fields", []):
         if entry["field"] == "star" and "release" in entry:
             numerator, denominator = entry["release"]
-            amount = next(b["amount"] for b in world["external_bodies"] if b["family"] == "star")
-            x = amount * numerator // denominator
+            amounts = [b["amount"] for b in world["external_bodies"] if b["family"] == "star"]
+            if not amounts:
+                return None  # a control without the star
+            x = amounts[0] * numerator // denominator
             flux = 6 * x
             return {"X": x, "S": flux, "GM": flux / (2 * math.pi)}
     return None
