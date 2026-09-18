@@ -16,7 +16,15 @@ from .disturbance_state import (
     bounded,
 )
 from .node_services import port_count
-from .spatial_state import FieldInteractionGuard, Rays, SpatialBundle, SpatialPlan, SpatialState
+from .spatial_state import (
+    BIT_THING,
+    PORT_HEADINGS,
+    FieldInteractionGuard,
+    Rays,
+    SpatialBundle,
+    SpatialPlan,
+    SpatialState,
+)
 
 
 def _tuple(value: object, maximum: int, size: int | None = None) -> None:
@@ -284,6 +292,17 @@ def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:
     _tuple(plan.rays, degree, degree)
     for port_rays in plan.rays:
         validate_ray_bundle(initial, port_rays)
+        # A Port is two lanes (lanes-v1, Highlights 5.4 point 25): an out-lane
+        # carries at most one real ray per interval, whatever its family; the
+        # lane is one direction of a Port, so a ray on one of the six Port lines.
+        reals = sum(
+            1
+            for definition, family_rays in zip(initial.spatial_fields, port_rays, strict=True)
+            for ray in family_rays
+            if ray.detector == BIT_THING and definition.headings[ray.heading] in PORT_HEADINGS
+        )
+        if reals > 1:
+            raise ValueError("two real rays on one lane (Highlights 5.4, point 25)")
 
 
 def validate_ray_bundle(
