@@ -674,6 +674,13 @@ class Ray:
     # interval at a time, an interval in which the thing neither moves nor steps
     # nor advances its phase; 0 on a shadow, which pays nothing.
     owed: int = 0
+    # The amplitude reading's remainder (wait-reads-v1, feature 16f part 2): the
+    # units of amplitude below a whole one that a thing has read, in units of
+    # 1 / MIXING_AMPLITUDE_SCALE of one quantum's amplitude (32 a whole unit),
+    # accumulated across the groups it reads as the electricity reading keeps
+    # `push_remainder`, a whole unit charged to the wait as soon as it reaches
+    # 32, nothing lost; 0 on a shadow and under the amount reading.
+    wait_remainder: int = 0
     # A parked shadow (node-is-ports-v1, Highlights 5.4 point 22): 1 on a shadow
     # at rest at its Node, never forwarded and outside the slot budget. With an
     # amount it is what the Node holds below one quantum of its owner on the
@@ -2523,6 +2530,15 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
                 raise ValueError("a ray push remainder stays below one quantum in units of 1 / D")
         if type(ray.remainder) is not int or type(ray.periods) is not int or ray.periods < 0:
             raise ValueError("a ray clock remainder and its passages are nonnegative integers")
+        if (
+            type(ray.wait_remainder) is not int
+            or not 0 <= ray.wait_remainder < MIXING_AMPLITUDE_SCALE
+            or (ray.detector == BIT_SHADOW and ray.wait_remainder)
+        ):
+            raise ValueError(
+                "a thing's amplitude remainder stays below one unit of 32 (wait-reads-v1); a "
+                "shadow keeps none"
+            )
         bounded(ray.periods)
         if (
             type(ray.owed) is not int
@@ -3276,6 +3292,7 @@ RayMergeKey = tuple[
     int,
     int,
     tuple[int, ...],
+    int,
 ]
 
 
@@ -3305,6 +3322,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.owed,
         ray.parked,
         ray.owners,
+        ray.wait_remainder,
     )
 
 
@@ -3349,6 +3367,7 @@ def merge_rays(rays: Rays) -> Rays:
             owed=key[18],
             parked=key[19],
             owners=key[20],
+            wait_remainder=key[21],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount or key[19]
