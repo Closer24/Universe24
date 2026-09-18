@@ -122,7 +122,9 @@ def pooled_fit_rows(results):
         if result["kind"] != "clock" or not result["star_on"] or result["boundary"] != "periodic":
             continue
         key = (result["mass"]["X"], result["wait_reads"], result["w"])
-        groups.setdefault(key, []).extend((c["r_euclid"], 1.0 - c["rate"]) for c in result["clocks"] if c["rate"] is not None)
+        groups.setdefault(key, []).extend(
+            (c["r_euclid"], 1.0 - c["rate"]) for c in result["clocks"] if c["rate"] is not None
+        )
     rows = []
     for (x, reading, w), points in sorted(groups.items()):
         gm = 6 * x / (2 * math.pi)
@@ -154,7 +156,7 @@ def redshift_rows(results):
         gm = result["mass"]["GM"] if result["mass"] else None
         w = result["w"]
         clocks = sorted(result["clocks"], key=lambda c: (c["r"], c["axis"]))
-        for near, far in zip(clocks, clocks[1:]):
+        for near, far in zip(clocks, clocks[1:], strict=False):
             if near["rate"] is None or far["rate"] is None or near["rate"] == 0 or near["r"] == far["r"]:
                 continue
             z = far["rate"] / near["rate"] - 1
@@ -187,7 +189,9 @@ def bend_rows(results):
                     "closed" if result["boundary"] == "periodic" else "open",
                     bb,
                     f"{entry['turned']}/{entry['lines']}",
-                    f"{entry['frozen']} at r = {min(entry['stop_r'])} to {max(entry['stop_r'])}" if entry["frozen"] else "0",
+                    f"{entry['frozen']} at r = {min(entry['stop_r'])} to {max(entry['stop_r'])}"
+                    if entry["frozen"]
+                    else "0",
                     fmt(entry["mean_quanta_read"], 2),
                     fmt(entry["mean_net_transverse_toward"], 2),
                     fmt(alpha, 3),
@@ -236,7 +240,9 @@ def sep_rows(results):
                 result["model"].replace("a6-law-", ""),
                 result["shadow_wait"] or "absent",
                 "yes" if result["mass_on"] else "no",
-                result["receiver_first_move_tick"] if result["receiver_first_move_tick"] is not None else "never",
+                result["receiver_first_move_tick"]
+                if result["receiver_first_move_tick"] is not None
+                else "never",
                 ", ".join(str(t) for t in result["receiver_first_waits"][:8]) or "-",
                 result["receiver_moved"],
             ]
@@ -260,23 +266,43 @@ def bending_svg(results):
     def sy(y):
         return height - bottom - (height - bottom - top) * y / ymax
 
-    parts = [f'<svg viewBox="0 0 {width} {height}" width="100%" role="img" aria-label="deflection against 1 over b">']
+    parts = [
+        f'<svg viewBox="0 0 {width} {height}" width="100%" role="img" aria-label="deflection against 1 over b">'
+    ]
     parts.append(f'<rect x="0" y="0" width="{width}" height="{height}" fill="var(--panel)"/>')
-    parts.append(f'<line x1="{left}" y1="{sy(0)}" x2="{width - right}" y2="{sy(0)}" stroke="var(--ink)"/>')
+    parts.append(
+        f'<line x1="{left}" y1="{sy(0)}" x2="{width - right}" y2="{sy(0)}" stroke="var(--ink)"/>'
+    )
     parts.append(f'<line x1="{left}" y1="{sy(0)}" x2="{left}" y2="{top}" stroke="var(--ink)"/>')
     for b in (3, 4, 6, 8):
         x = 1 / b
-        parts.append(f'<line x1="{sx(x)}" y1="{sy(0)}" x2="{sx(x)}" y2="{sy(0) + 5}" stroke="var(--ink)"/>')
-        parts.append(f'<text x="{sx(x)}" y="{sy(0) + 18}" font-size="12" text-anchor="middle" fill="var(--ink)">1/{b}</text>')
+        parts.append(
+            f'<line x1="{sx(x)}" y1="{sy(0)}" x2="{sx(x)}" y2="{sy(0) + 5}" stroke="var(--ink)"/>'
+        )
+        parts.append(
+            f'<text x="{sx(x)}" y="{sy(0) + 18}" font-size="12" text-anchor="middle" fill="var(--ink)">1/{b}</text>'
+        )
     for y in (0.5, 1.0, 1.5):
-        parts.append(f'<text x="{left - 6}" y="{sy(y) + 4}" font-size="12" text-anchor="end" fill="var(--ink)">{y}</text>')
-    parts.append(f'<text x="{width / 2}" y="{height - 4}" font-size="12" text-anchor="middle" fill="var(--ink)">1 / b (Links)</text>')
-    parts.append(f'<text x="14" y="{height / 2}" font-size="12" text-anchor="middle" fill="var(--ink)" transform="rotate(-90 14 {height / 2})">deflection (rad)</text>')
-    for factor, colour, name in ((4, "#c0392b", f"GR 4GM/b (GM = {gm:.0f})"), (2, "#2980b9", "Newton 2GM/b"), (1, "#27ae60", "derivation GM/b")):
+        parts.append(
+            f'<text x="{left - 6}" y="{sy(y) + 4}" font-size="12" text-anchor="end" fill="var(--ink)">{y}</text>'
+        )
+    parts.append(
+        f'<text x="{width / 2}" y="{height - 4}" font-size="12" text-anchor="middle" fill="var(--ink)">1 / b (Links)</text>'
+    )
+    parts.append(
+        f'<text x="14" y="{height / 2}" font-size="12" text-anchor="middle" fill="var(--ink)" transform="rotate(-90 14 {height / 2})">deflection (rad)</text>'
+    )
+    for factor, colour in ((4, "#c0392b"), (2, "#2980b9"), (1, "#27ae60")):
         x_end = min(xmax, ymax / (factor * gm)) if gm else xmax
-        parts.append(f'<line x1="{sx(0)}" y1="{sy(0)}" x2="{sx(x_end)}" y2="{sy(factor * gm * x_end)}" stroke="{colour}" stroke-width="2"/>')
-    parts.append(f'<line x1="{sx(0)}" y1="{sy(math.pi / 2)}" x2="{sx(xmax)}" y2="{sy(math.pi / 2)}" stroke="var(--muted)" stroke-dasharray="4 4"/>')
-    parts.append(f'<text x="{sx(xmax) - 4}" y="{sy(math.pi / 2) - 4}" font-size="11" text-anchor="end" fill="var(--muted)">a whole turn of content 1: pi/2</text>')
+        parts.append(
+            f'<line x1="{sx(0)}" y1="{sy(0)}" x2="{sx(x_end)}" y2="{sy(factor * gm * x_end)}" stroke="{colour}" stroke-width="2"/>'
+        )
+    parts.append(
+        f'<line x1="{sx(0)}" y1="{sy(math.pi / 2)}" x2="{sx(xmax)}" y2="{sy(math.pi / 2)}" stroke="var(--muted)" stroke-dasharray="4 4"/>'
+    )
+    parts.append(
+        f'<text x="{sx(xmax) - 4}" y="{sy(math.pi / 2) - 4}" font-size="11" text-anchor="end" fill="var(--muted)">a whole turn of content 1: pi/2</text>'
+    )
     markers = {}
     palette = ["#8e44ad", "#d35400", "#16a085", "#7f8c8d", "#2c3e50", "#f39c12"]
     for result in results:
@@ -286,11 +312,22 @@ def bending_svg(results):
         colour = markers.setdefault(label, palette[len(markers) % len(palette)])
         for b, entry in result["per_b"].items():
             x, y = 1 / int(b), entry["fraction_turned"] * math.pi / 2
-            parts.append(f'<circle cx="{sx(x)}" cy="{sy(y)}" r="5" fill="{colour}" fill-opacity="0.8"><title>{esc(label)} b = {b}: {y:.3f} rad</title></circle>')
+            parts.append(
+                f'<circle cx="{sx(x)}" cy="{sy(y)}" r="5" fill="{colour}" fill-opacity="0.8"><title>{esc(label)} b = {b}: {y:.3f} rad</title></circle>'
+            )
     legend_y = top + 10
-    for name, colour in (("GR 4GM/b", "#c0392b"), ("Newton 2GM/b", "#2980b9"), ("derivation GM/b", "#27ae60"), *markers.items()):
-        parts.append(f'<rect x="{left + 10}" y="{legend_y - 8}" width="10" height="10" fill="{colour}"/>')
-        parts.append(f'<text x="{left + 26}" y="{legend_y + 1}" font-size="11" fill="var(--ink)">{esc(name)}</text>')
+    for label, colour in (
+        ("GR 4GM/b", "#c0392b"),
+        ("Newton 2GM/b", "#2980b9"),
+        ("derivation GM/b", "#27ae60"),
+        *markers.items(),
+    ):
+        parts.append(
+            f'<rect x="{left + 10}" y="{legend_y - 8}" width="10" height="10" fill="{colour}"/>'
+        )
+        parts.append(
+            f'<text x="{left + 26}" y="{legend_y + 1}" font-size="11" fill="var(--ink)">{esc(label)}</text>'
+        )
         legend_y += 15
     parts.append("</svg>")
     return "\n".join(parts)
@@ -303,8 +340,12 @@ def probe_table(probe):
     half = len(axis) // 2
     radii = list(range(1, len(axis[0]) + 1))
     late = [sum(row[i] for row in axis[half:]) / max(1, len(axis) - half) for i in range(len(radii))]
-    rows = [[r, fmt(v, 2), fmt(r * r * v, 1)] for r, v in zip(radii, late) if r <= 12]
-    return table(["r", "whole quanta per interval (ticks 20 to 40)", "r^2 n(r)"], rows, f"The probe: X = {probe['X']}, fill {probe['fill']}, on the +Y axis")
+    rows = [[r, fmt(v, 2), fmt(r * r * v, 1)] for r, v in zip(radii, late, strict=True) if r <= 12]
+    return table(
+        ["r", "whole quanta per interval (ticks 20 to 40)", "r^2 n(r)"],
+        rows,
+        f"The probe: X = {probe['X']}, fill {probe['fill']}, on the +Y axis",
+    )
 
 
 def page(results, gif_uri, probe, fingerprint, notes):
@@ -322,43 +363,192 @@ p.note { color: var(--muted); } code { font-size: 90%; }
 figure { margin: 1em 0; } figure img { max-width: 100%; height: auto; display: block; border: 1px solid var(--line); }
 figcaption { color: var(--muted); font-size: 12px; }
 """
-    body = [f"<h1>A6 repeated under the law of the bit (2026-09-18)</h1>"]
+    body = ["<h1>A6 repeated under the law of the bit (2026-09-18)</h1>"]
     body.append(f"<p>{notes['intro']}</p>")
-    body.append(f"<p class='note'>Source fingerprint (SHA-256 of the package files, recorded by every run): <code>{esc(fingerprint)}</code>. The records stay outside the tree; <code>record.json</code> beside this page is the analyzer's summary.</p>")
+    body.append(
+        f"<p class='note'>Source fingerprint (SHA-256 of the package files, recorded by every run): <code>{esc(fingerprint)}</code>. The records stay outside the tree; <code>record.json</code> beside this page is the analyzer's summary.</p>"
+    )
     body.append("<h2>1. The clock of a thing at rest</h2>")
     body.append(f"<p>{notes['clock']}</p>")
-    body.append(table(["world", "board", "r (Euclidean)", "half-axis", "rate", "waits", "quanta read (net, per push tick)", "ticks stayed", "left at tick"], clock_rows(results), "Per cavity: the rate (moving intervals over intervals) while the thing stayed between its mirrors."))
-    body.append(table(["world", "A (1/r fit)", "rss", "B (1/r^2 fit)", "rss", "A / GM (GR: 1 at the GR w)", "GR", "derivation, amplitude: (w/3) 0.537 sqrt(GM) / 2", "derivation, count: (sqrt3 w/2) GM / 2"], clock_fit_rows(results), "The deficit 1 - rate fitted through the origin; the derivation's coefficients halved for a cavity that reads every other interval."))
-    body.append(table(["mass", "reading", "w", "cavities", "A (1/r)", "rss", "B (1/r^2)", "rss", "A / GM (GR: 1 at the GR w)", "derivation, amplitude (halved)", "derivation, count (halved)"], pooled_fit_rows(results), "The two slopes: the cavities of both batches pooled per mass, reading and w."))
+    body.append(
+        table(
+            [
+                "world",
+                "board",
+                "r (Euclidean)",
+                "half-axis",
+                "rate",
+                "waits",
+                "quanta read (net, per push tick)",
+                "ticks stayed",
+                "left at tick",
+            ],
+            clock_rows(results),
+            "Per cavity: the rate (moving intervals over intervals) while the thing stayed between its mirrors.",
+        )
+    )
+    body.append(
+        table(
+            [
+                "world",
+                "A (1/r fit)",
+                "rss",
+                "B (1/r^2 fit)",
+                "rss",
+                "A / GM (GR: 1 at the GR w)",
+                "GR",
+                "derivation, amplitude: (w/3) 0.537 sqrt(GM) / 2",
+                "derivation, count: (sqrt3 w/2) GM / 2",
+            ],
+            clock_fit_rows(results),
+            "The deficit 1 - rate fitted through the origin; the derivation's coefficients halved for a cavity that reads every other interval.",
+        )
+    )
+    body.append(
+        table(
+            [
+                "mass",
+                "reading",
+                "w",
+                "cavities",
+                "A (1/r)",
+                "rss",
+                "B (1/r^2)",
+                "rss",
+                "A / GM (GR: 1 at the GR w)",
+                "derivation, amplitude (halved)",
+                "derivation, count (halved)",
+            ],
+            pooled_fit_rows(results),
+            "The two slopes: the cavities of both batches pooled per mass, reading and w.",
+        )
+    )
     body.append("<h2>2. The redshift between two radii</h2>")
-    body.append(table(["world", "r_near -> r_far", "z = rate(far)/rate(near) - 1", "GR: GM (1/r1 - 1/r2)", "derivation, amplitude", "derivation, count"], redshift_rows(results)))
+    body.append(
+        table(
+            [
+                "world",
+                "r_near -> r_far",
+                "z = rate(far)/rate(near) - 1",
+                "GR: GM (1/r1 - 1/r2)",
+                "derivation, amplitude",
+                "derivation, count",
+            ],
+            redshift_rows(results),
+        )
+    )
     body.append("<h2>3. The bending of a light thing</h2>")
     body.append(f"<p>{notes['bend']}</p>")
     body.append(bending_svg(results))
-    body.append(table(["world", "board", "b", "lines pushed transversally", "lines frozen (where)", "quanta read per line", "net transverse toward the star", "mean exit angle (rad)", "GR 4GM/b", "Newton 2GM/b", "derivation GM/b", "turn ticks"], bend_rows(results)))
+    body.append(
+        table(
+            [
+                "world",
+                "board",
+                "b",
+                "lines pushed transversally",
+                "lines frozen (where)",
+                "quanta read per line",
+                "net transverse toward the star",
+                "mean exit angle (rad)",
+                "GR 4GM/b",
+                "Newton 2GM/b",
+                "derivation GM/b",
+                "turn ticks",
+            ],
+            bend_rows(results),
+        )
+    )
     body.append("<h2>4. The Shapiro delay</h2>")
-    body.append(table(["world", "b", "lines arrived", "delays (ticks past the straight arrival)", "mean delay", "GR 2GM ln(4 x_A x_B / b^2)", "derivation, amplitude: (w/3) 0.537 sqrt(GM) ln(...)", "derivation, count: 2.72 w GM / b"], shapiro_rows(results)))
+    body.append(
+        table(
+            [
+                "world",
+                "b",
+                "lines arrived",
+                "delays (ticks past the straight arrival)",
+                "mean delay",
+                "GR 2GM ln(4 x_A x_B / b^2)",
+                "derivation, amplitude: (w/3) 0.537 sqrt(GM) ln(...)",
+                "derivation, count: 2.72 w GM / b",
+            ],
+            shapiro_rows(results),
+        )
+    )
     body.append("<h2>5. The shadow's wait: the separating run</h2>")
     body.append(f"<p>{notes['sep']}</p>")
-    body.append(table(["world", "shadow_wait", "mass", "receiver's first move (tick)", "receiver's first waits (ticks)", "receiver moved (intervals)"], sep_rows(results)))
+    body.append(
+        table(
+            [
+                "world",
+                "shadow_wait",
+                "mass",
+                "receiver's first move (tick)",
+                "receiver's first waits (ticks)",
+                "receiver moved (intervals)",
+            ],
+            sep_rows(results),
+        )
+    )
     body.append("<h2>The field the runs read</h2>")
     body.append(f"<p>{notes['probe']}</p>")
     body.append(probe_table(probe))
     if gif_uri:
         body.append("<h2>One rendering</h2>")
-        body.append(f"<figure><img src='{gif_uri}' alt='the bending world rendered by the ray viewer'><figcaption>{esc(notes['gif'])}</figcaption></figure>")
+        body.append(
+            f"<figure><img src='{gif_uri}' alt='the bending world rendered by the ray viewer'><figcaption>{esc(notes['gif'])}</figcaption></figure>"
+        )
     body.append("<h2>Fingerprints</h2>")
-    rows = [[r["model"].replace("a6-law-", ""), r["status"], r["ticks"], fmt(r["elapsed_seconds"], 0), "yes" if r["all_balanced"] else "no", str(r["standing"].get("standing_field_iterations")), str(r["standing"].get("standing_field_residual")), r["source_sha256"][:16], r["initialization_sha256"][:16]] for r in results]
-    body.append(table(["world", "status", "ticks", "seconds", "ledger balanced", "standing set found after", "last residual", "source sha256", "world sha256"], rows))
-    return f"<!DOCTYPE html>\n<html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>A6 under the law</title><style>{css}</style></head><body>\n" + "\n".join(body) + "\n</body></html>\n"
+    rows = [
+        [
+            r["model"].replace("a6-law-", ""),
+            r["status"],
+            r["ticks"],
+            fmt(r["elapsed_seconds"], 0),
+            "yes" if r["all_balanced"] else "no",
+            str(r["standing"].get("standing_field_iterations")),
+            str(r["standing"].get("standing_field_residual")),
+            r["source_sha256"][:16],
+            r["initialization_sha256"][:16],
+        ]
+        for r in results
+    ]
+    body.append(
+        table(
+            [
+                "world",
+                "status",
+                "ticks",
+                "seconds",
+                "ledger balanced",
+                "standing set found after",
+                "last residual",
+                "source sha256",
+                "world sha256",
+            ],
+            rows,
+        )
+    )
+    return (
+        f"<!DOCTYPE html>\n<html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>A6 under the law</title><style>{css}</style></head><body>\n"
+        + "\n".join(body)
+        + "\n</body></html>\n"
+    )
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--record", type=Path, required=True)
     parser.add_argument("--gif", type=Path)
     parser.add_argument("--probe", type=Path)
-    parser.add_argument("--notes", type=Path, required=True, help="JSON with the page's paragraphs: intro, clock, bend, sep, probe, gif")
+    parser.add_argument(
+        "--notes",
+        type=Path,
+        required=True,
+        help="JSON with the page's paragraphs: intro, clock, bend, sep, probe, gif",
+    )
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     results = json.loads(args.record.read_text(encoding="utf-8"))

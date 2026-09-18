@@ -16,9 +16,8 @@ import json
 import time
 from pathlib import Path
 
-import numpy as np
-
 import make_worlds
+import numpy as np
 
 from event_universe import Simulation
 from event_universe.initialization import parse_initial_state
@@ -29,7 +28,9 @@ def probe(x_per_heading, fill, ticks, *, side, b, out):
     make_worlds.SHAPE = (side, side, side)
     make_worlds.STAR = (side // 2, side // 2, side // 2)
     make_worlds.MASSES = {"probe": (x_per_heading, fill)}
-    document = make_worlds.bending_world("probe", mass="probe", wait_name="w1", reading="amount", impacts=(), ticks=ticks)
+    document = make_worlds.bending_world(
+        "probe", mass="probe", wait_name="w1", reading="amount", impacts=(), ticks=ticks
+    )
     # The star alone: one lamp type declared, nothing seeded, nothing emitted.
     document["disturbance_types"] = [make_worlds.lamp("lamp_0", (1, 0, 0))[0]]
     star = make_worlds.STAR
@@ -76,11 +77,16 @@ def probe(x_per_heading, fill, ticks, *, side, b, out):
     print("  r            : " + " ".join(f"{r:6d}" for r in radii))
     print("  n(r) all     : " + " ".join(f"{v:6.3f}" for v in axis.mean(axis=0)))
     print("  n(r) 2nd half: " + " ".join(f"{v:6.3f}" for v in axis[half:].mean(axis=0)))
-    print("  r^2 n(r) 2nd : " + " ".join(f"{r * r * v:6.2f}" for r, v in zip(radii, axis[half:].mean(axis=0))))
+    print(
+        "  r^2 n(r) 2nd : "
+        + " ".join(f"{r * r * v:6.2f}" for r, v in zip(radii, axis[half:].mean(axis=0), strict=True))
+    )
     print("  n(diag d) 2nd: " + " ".join(f"{v:6.3f}" for v in diag[half:].mean(axis=0)))
     print("  parked(r)    : " + " ".join(f"{parked()[n]:6.2f}" for n in axis_nodes))
     print(f"  line b = {b}, per x, 2nd half: " + " ".join(f"{v:4.2f}" for v in line[half:].mean(axis=0)))
-    print(f"  line b = {b}, sum over x per tick: first half {line[:half].sum(axis=1).mean():.2f}, second half {line[half:].sum(axis=1).mean():.2f}")
+    print(
+        f"  line b = {b}, sum over x per tick: first half {line[:half].sum(axis=1).mean():.2f}, second half {line[half:].sum(axis=1).mean():.2f}"
+    )
     result = {
         "X": x_per_heading,
         "fill": fill,
@@ -99,7 +105,9 @@ def probe(x_per_heading, fill, ticks, *, side, b, out):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--x", type=int, default=16)
     parser.add_argument("--fill", type=int, default=14)
     parser.add_argument("--ticks", type=int, default=40)

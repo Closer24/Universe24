@@ -116,7 +116,7 @@ def track(things, arrivals, ticks, shape):
         for thing in sorted(things):
             here = at[thing]
             best = None
-            for index, (position, amount) in enumerate(events):
+            for index, (position, _amount) in enumerate(events):
                 if index in used:
                     continue
                 if neighbours(position, here, shape):
@@ -144,7 +144,6 @@ def pushes_of(momentum_line, thing, paths=None, bodies=(), absorbed_tick=None):
     series = [tuple(row.get(key, (0, 0, 0))) for row in momentum_line]
     where = {tick: node for tick, node in (paths or [])}
     pushes = []
-    heading = None
     for tick in range(1, len(series)):
         delta = tuple(series[tick][i] - series[tick - 1][i] for i in range(3))
         if not any(delta):
@@ -163,7 +162,12 @@ def pushes_of(momentum_line, thing, paths=None, bodies=(), absorbed_tick=None):
         if reversal and tuple(node) in bodies:
             continue
         after = series[tick]
-        direction = tuple((1 if after[i] > 0 else -1 if after[i] < 0 else 0) if abs(after[i]) == max(abs(a) for a in after) else 0 for i in range(3))
+        direction = tuple(
+            (1 if after[i] > 0 else -1 if after[i] < 0 else 0)
+            if abs(after[i]) == max(abs(a) for a in after)
+            else 0
+            for i in range(3)
+        )
         pushes.append((tick, direction))
     return series, pushes
 
@@ -206,14 +210,17 @@ def analyze_clock(directory, metadata, world):
     paths, moved = track(things, arrivals, ticks, shape)
     star_on = any(body["family"] == "star" for body in world["external_bodies"])
     rows = []
-    for thing, (name, seed, heading) in sorted(things.items()):
+    for thing, (_name, seed, heading) in sorted(things.items()):
         # The cavity's axis is the launch heading; its r the offset along it
         # (the nominal r of the batch), its Euclidean r with the one-Link
         # offset aside of the axis.
         axis = heading
         r = sum((seed[i] - STAR[i]) * axis[i] for i in range(3))
         r_euclid = math.sqrt(sum((seed[i] - STAR[i]) ** 2 for i in range(3)))
-        mirrors = {tuple(seed[i] + heading[i] for i in range(3)), tuple(seed[i] - heading[i] for i in range(3))}
+        mirrors = {
+            tuple(seed[i] + heading[i] for i in range(3)),
+            tuple(seed[i] - heading[i] for i in range(3)),
+        }
         cavity = {seed, *mirrors}
         series, changes = pushes_of(metadata["momentum"], thing, paths[thing], mirrors)
         left_tick = None
@@ -267,7 +274,7 @@ def analyze_bend(directory, metadata, world):
     click_at = {tuple(click["position"]): click["tick"] for click in clicks}
     star_on = any(body["family"] == "star" for body in world["external_bodies"])
     rows = []
-    for thing, (name, seed, heading) in sorted(things.items()):
+    for thing, (_name, seed, _heading) in sorted(things.items()):
         line = seed
         b = math.hypot(line[1] - STAR[1], line[2] - STAR[2])
         b_nominal = abs(line[1] - STAR[1])
@@ -298,7 +305,10 @@ def analyze_bend(directory, metadata, world):
         previous = paths[thing][-2][1] if len(paths[thing]) > 1 else None
         exit_heading = None
         if previous is not None:
-            exit_heading = [((last_node[i] - previous[i] + shape[i] // 2) % shape[i]) - shape[i] // 2 for i in range(3)]
+            exit_heading = [
+                ((last_node[i] - previous[i] + shape[i] // 2) % shape[i]) - shape[i] // 2
+                for i in range(3)
+            ]
         rows.append(
             {
                 "thing": thing,
@@ -317,7 +327,9 @@ def analyze_bend(directory, metadata, world):
                 "along_forward": along_forward,
                 # The waits before the click: the click tick is the arrival at
                 # the mark (no arrival event is written for it).
-                "waits": (ticks - sum(moved[thing])) if click is None else (click - (sum(moved[thing][: click - 1]) + 1)),
+                "waits": (ticks - sum(moved[thing]))
+                if click is None
+                else (click - (sum(moved[thing][: click - 1]) + 1)),
                 "last_tick": last_tick,
                 "last_node": list(last_node),
                 "stop_r": stop_r,
@@ -346,7 +358,9 @@ def analyze_bend(directory, metadata, world):
             "mean_net_transverse_toward": sum(net) / len(net),
             "mean_quanta_read": sum(row["quanta_read"] for row in lines) / len(lines),
             "delays_of_arrived": [row["delay"] for row in arrived],
-            "mean_delay_of_arrived": (sum(row["delay"] for row in arrived) / len(arrived)) if arrived else None,
+            "mean_delay_of_arrived": (sum(row["delay"] for row in arrived) / len(arrived))
+            if arrived
+            else None,
             "turn_ticks": [row["turn_tick"] for row in turned],
         }
     return {
@@ -369,7 +383,10 @@ def analyze_sep(directory, metadata, world):
     paths, moved = track(things, arrivals, ticks, shape)
     thing = 1
     _, seed, heading = things[thing]
-    mirrors = {tuple(seed[i] + heading[i] for i in range(3)), tuple(seed[i] - heading[i] for i in range(3))}
+    mirrors = {
+        tuple(seed[i] + heading[i] for i in range(3)),
+        tuple(seed[i] - heading[i] for i in range(3)),
+    }
     series, changes = pushes_of(metadata["momentum"], thing, paths[thing], mirrors)
     waits = [tick + 1 for tick, m in enumerate(moved[thing]) if not m]
     return {
@@ -426,7 +443,9 @@ def analyze(run):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("runs", nargs="+")
     parser.add_argument("--out", type=Path)
     parser.add_argument("--record", type=Path)
@@ -443,7 +462,9 @@ def main():
                 for c in result["clocks"]
             )
             fits = result["fits"]
-            print(f"{head} | {rates} | A/r {fits['1/r']['coefficient']} rss {fits['1/r']['rss']} | B/r^2 {fits['1/r^2']['coefficient']} rss {fits['1/r^2']['rss']}")
+            print(
+                f"{head} | {rates} | A/r {fits['1/r']['coefficient']} rss {fits['1/r']['rss']} | B/r^2 {fits['1/r^2']['coefficient']} rss {fits['1/r^2']['rss']}"
+            )
         elif result["kind"] == "bend":
             print(head)
             for b, entry in result["per_b"].items():
@@ -453,7 +474,9 @@ def main():
                     f"delays {entry['delays_of_arrived']} turn ticks {entry['turn_ticks']}"
                 )
         else:
-            print(f"{head} | first move {result['receiver_first_move_tick']} waits {result['receiver_first_waits']}")
+            print(
+                f"{head} | first move {result['receiver_first_move_tick']} waits {result['receiver_first_waits']}"
+            )
     if args.out:
         args.out.write_text(json.dumps(results, indent=1) + "\n", encoding="utf-8")
     if args.record:
@@ -462,12 +485,46 @@ def main():
             small = {k: v for k, v in result.items() if k not in ("passes", "clocks")}
             if result["kind"] == "clock":
                 small["clocks"] = [
-                    {k: c[k] for k in ("r", "r_euclid", "axis", "rate", "stayed_ticks", "left_tick", "waits_in_cavity", "quanta_read_in_cavity", "push_ticks_in_cavity")}
+                    {
+                        k: c[k]
+                        for k in (
+                            "r",
+                            "r_euclid",
+                            "axis",
+                            "rate",
+                            "stayed_ticks",
+                            "left_tick",
+                            "waits_in_cavity",
+                            "quanta_read_in_cavity",
+                            "push_ticks_in_cavity",
+                        )
+                    }
                     for c in result["clocks"]
                 ]
             elif result["kind"] == "bend":
                 small["passes"] = [
-                    {k: p[k] for k in ("line", "b", "click_tick", "delay", "quanta_read", "turn_tick", "transverse_toward", "transverse_away", "along_back", "along_forward", "exit_heading", "exit_offset", "last_node", "last_tick", "stop_r", "waits_after_stop", "waits")}
+                    {
+                        k: p[k]
+                        for k in (
+                            "line",
+                            "b",
+                            "click_tick",
+                            "delay",
+                            "quanta_read",
+                            "turn_tick",
+                            "transverse_toward",
+                            "transverse_away",
+                            "along_back",
+                            "along_forward",
+                            "exit_heading",
+                            "exit_offset",
+                            "last_node",
+                            "last_tick",
+                            "stop_r",
+                            "waits_after_stop",
+                            "waits",
+                        )
+                    }
                     for p in result["passes"]
                 ]
             record.append(small)

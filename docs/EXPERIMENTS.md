@@ -1841,7 +1841,11 @@ states "exactly" and means integer equality at every tick.
 - **Fingerprint.** Every run of the series: `source_sha256`
   `3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349`, the
   engine of `main` at `3b4a31c` merged into the branch at `16dbd39`; each
-  world's `initialization_sha256` in `record.json`; Python 3.14.0rc2,
+  world's `initialization_sha256` in `record.json` (the run's world files
+  declared `ray_slots`, which `main` retired the same afternoon with
+  lanes-v1's cleanup; the files in the tree are the same worlds without
+  that key, so that they parse on the current engine, and the run's own
+  files are preserved with the records); Python 3.14.0rc2,
   numpy 2.5.3, four cores, 16 GB, four runs at a time, 6.3 s per tick on
   33³ (2160 to 2260 s per clock world, 640 to 700 s per bending world, 830
   to 1700 s per separating world). The GIF of the page is `tools/ray_viewer`

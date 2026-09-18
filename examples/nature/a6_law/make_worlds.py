@@ -202,7 +202,6 @@ def family(name, slots, *, clock=False, release=None):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "charge": 0,
@@ -314,7 +313,10 @@ def lamp(name, heading):
 def body(position, name, x_per_heading):
     """An external body of `name` at `position` releasing `x_per_heading`
     quanta per heading per interval of the prefill; the body and its release."""
-    return {"position": list(position), "family": name, "amount": AMOUNT, "phase": 0}, [1, AMOUNT // x_per_heading]
+    return {"position": list(position), "family": name, "amount": AMOUNT, "phase": 0}, [
+        1,
+        AMOUNT // x_per_heading,
+    ]
 
 
 def cavity(index, centre, axis):
@@ -332,7 +334,9 @@ def cavity(index, centre, axis):
     return kind, emission, seed, mirrors
 
 
-def clock_world(name, *, mass, wait_name, reading, batch, star_on=True, boundary=BOUNDARY, ticks=CLOCK_TICKS):
+def clock_world(
+    name, *, mass, wait_name, reading, batch, star_on=True, boundary=BOUNDARY, ticks=CLOCK_TICKS
+):
     """The clock world: the four cavities of `batch` (BATCHES), each on a half-axis
     at its r from the star, open on its four sides."""
     kinds, emissions, seeds, bodies = [], [], [], []
@@ -344,7 +348,9 @@ def clock_world(name, *, mass, wait_name, reading, batch, star_on=True, boundary
         seeds.append(seed)
         bodies.extend(mirrors)
     star, release = body(STAR, "star", MASSES[mass][0])
-    document = base(f"a6-law-{name.replace('_', '-')}", ticks, waits(mass)[wait_name], reading, "law", boundary) | {
+    document = base(
+        f"a6-law-{name.replace('_', '-')}", ticks, waits(mass)[wait_name], reading, "law", boundary
+    ) | {
         "fields": [scalar("star"), scalar("light"), scalar("mirror"), MOMENTUM],
         "disturbance_types": kinds,
         "spatial_fields": [
@@ -364,7 +370,9 @@ def clock_world(name, *, mass, wait_name, reading, batch, star_on=True, boundary
     return document
 
 
-def bending_world(name, *, mass, wait_name, reading, impacts, star_on=True, boundary=BOUNDARY, ticks=BEND_TICKS):
+def bending_world(
+    name, *, mass, wait_name, reading, impacts, star_on=True, boundary=BOUNDARY, ticks=BEND_TICKS
+):
     """One bending world: six lines per b in `impacts`, a mark at x = 40 on each,
     the star at the centre when `star_on`."""
     lines = [(b, side, dz) for b in impacts for side, dz in LINE_OFFSETS]
@@ -377,7 +385,9 @@ def bending_world(name, *, mass, wait_name, reading, impacts, star_on=True, boun
         seeds.append({"position": [0, y, z], "type": f"lamp_{index}"})
         marks.append({"position": [SHAPE[0] - 1, y, z], "setting": [1, 1]})
     star, release = body(STAR, "star", MASSES[mass][0])
-    document = base(f"a6-law-{name.replace('_', '-')}", ticks, waits(mass)[wait_name], reading, "law", boundary) | {
+    document = base(
+        f"a6-law-{name.replace('_', '-')}", ticks, waits(mass)[wait_name], reading, "law", boundary
+    ) | {
         "fields": [scalar("star"), scalar("light"), MOMENTUM],
         "disturbance_types": kinds,
         "spatial_fields": [family("star", 16, release=release), family("light", 8, clock=True)],
@@ -430,19 +440,33 @@ def cases():
         for batch in ("a", "b"):
             for reading in ("amount", "amplitude"):
                 name = f"clock_m256_{wait_name}_{reading}_{batch}"
-                yield name, clock_world(name, mass="m256", wait_name=wait_name, reading=reading, batch=batch)
+                yield (
+                    name,
+                    clock_world(name, mass="m256", wait_name=wait_name, reading=reading, batch=batch),
+                )
     for impacts in BENDING_PAIRS:
         tail = f"b{impacts[0]}_{impacts[1]}"
         for reading in ("amount", "amplitude"):
             name = f"bend_m256_w1_{reading}_{tail}"
-            yield name, bending_world(name, mass="m256", wait_name="w1", reading=reading, impacts=impacts)
+            yield (
+                name,
+                bending_world(name, mass="m256", wait_name="w1", reading=reading, impacts=impacts),
+            )
     for impacts in BENDING_PAIRS:
         tail = f"b{impacts[0]}_{impacts[1]}"
         name = f"bend_control_{tail}"
-        yield name, bending_world(name, mass="m256", wait_name="w1", reading="amount", impacts=impacts, star_on=False)
+        yield (
+            name,
+            bending_world(
+                name, mass="m256", wait_name="w1", reading="amount", impacts=impacts, star_on=False
+            ),
+        )
     for batch in ("a", "b"):
         name = f"clock_control_{batch}"
-        yield name, clock_world(name, mass="m256", wait_name="w1", reading="amount", batch=batch, star_on=False)
+        yield (
+            name,
+            clock_world(name, mass="m256", wait_name="w1", reading="amount", batch=batch, star_on=False),
+        )
     for option in ("law", "thing", "field"):
         yield f"sep_{option}", separating_world(f"sep_{option}", option=option)
     yield "sep_nomass", separating_world("sep_nomass", option="law", mass_on=False)
@@ -463,13 +487,18 @@ def cases():
         tail = f"b{impacts[0]}_{impacts[1]}"
         for reading in ("amount", "amplitude"):
             name = f"bend_m256_wgr_{reading}_{tail}"
-            yield name, bending_world(name, mass="m256", wait_name="wgr", reading=reading, impacts=impacts)
+            yield (
+                name,
+                bending_world(name, mass="m256", wait_name="wgr", reading=reading, impacts=impacts),
+            )
     for option in ("law", "thing", "field"):
         yield f"sep_{option}_m256", separating_world(f"sep_{option}_m256", option=option, mass="m256")
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--out", type=Path, default=Path(__file__).resolve().parent)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
