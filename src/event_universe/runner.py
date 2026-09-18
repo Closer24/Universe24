@@ -25,6 +25,7 @@ from event_universe.core.spatial_state import (
     FIELD_REMAINDER,
     INVERSE_SPLIT,
     LOOP_BINDING,
+    NODE_IS_PORTS,
     NODE_MIXING,
     RAY_BINDING,
     RAY_EVENT_STATE,
@@ -159,11 +160,11 @@ def _execute_run(
     )
     # The content of the things per completed tick (bit-law-v1, point 11), and
     # whether the things' own identity held at every completed tick (point 7),
-    # and the register line of every thing per completed tick (point 15).
-    things_content: list[int] = []
-    shadows_content: list[int] = []
-    registers: list[dict[str, list[int]]] = []
-    things_conserved = True
+    # and the momentum of every thing per completed tick (point 15).
+    real_content: list[int] = []
+    shadow_content: list[int] = []
+    momentum: list[dict[str, list[int]]] = []
+    real_conserved = True
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
@@ -197,11 +198,11 @@ def _execute_run(
                     returned = world.returned_totals()
                     ledger = world.audit()
                     audit.append(ledger)
-                    things_conserved = things_conserved and bool(ledger.get("things_conserved", True))
-                    things_content.append(world.things_content())
-                    shadows_content.append(world.shadows_content())
-                    registers.append(
-                        {str(thing): value for thing, value in world.thing_registers().items()}
+                    real_conserved = real_conserved and bool(ledger.get("real_conserved", True))
+                    real_content.append(world.real_content())
+                    shadow_content.append(world.shadow_content())
+                    momentum.append(
+                        {str(thing): value for thing, value in world.thing_momentum().items()}
                     )
                     # The conservation line: initial + sources = current + dissipated
                     # + escaped + annulled + absorbed_by_bodies + absorbed_by_marks +
@@ -270,18 +271,22 @@ def _execute_run(
         "shadow_families": shadow_family_names(initial),
         # The field given with the board (`initial_field`): the fill, the exact
         # integer transient of the split table (whole quanta per Node and Port,
-        # the shares below one quantum in the remainder registers), or the size of
-        # the declared profile; booked as initial content.
+        # the shares below one quantum parked at the Node), or the size of the
+        # declared profile; booked as initial content.
         "initial_field": {
             initial.fields[initial.spatial_fields[index].field].name: (
                 {"fill": entry.fill} if entry.fill else {"rays": len(entry.rays)}
             )
             for index, entry in sorted(initial.initial_field.items())
         },
-        "things_conserved": things_conserved,
-        "things_content": things_content,
-        "shadows_content": shadows_content,
-        "registers": registers,
+        "real_conserved": real_conserved,
+        "real_content": real_content,
+        "shadow_content": shadow_content,
+        "momentum": momentum,
+        # A Node is its six Ports (node-is-ports-v1, Highlights 5.4 point 22): the
+        # parked shadows, the traces, the resident thing of a mark and the source
+        # that spends its content are the engine's only behaviour.
+        "node_is_ports": NODE_IS_PORTS,
         "shadows": [
             {"thing": owner, "rays": count[0], "amount": count[1]}
             for owner, count in world.shadow_counts().items()
@@ -308,8 +313,9 @@ def _execute_run(
         ],
         "external_body_totals": world.external_body_totals(),
         "external_body_momentum": world.external_body_momentum(),
-        # The Detector marks after the run (detector-absorb-v1): each with its counter
-        # per family and the momentum of what it absorbed, and the marks' lines.
+        # The Detector marks after the run (node-is-ports-v1): each with the thing
+        # resident at it, what it absorbed per bit and family with its momentum,
+        # and the marks' lines.
         "detector_marks": world.detector_marks(),
         "detector_mark_totals": world.detector_mark_totals(),
         "detector_mark_momentum": world.detector_mark_momentum(),

@@ -401,76 +401,55 @@
   "apparatus": {
     "detector": {
       "world_key": "detectors",
-      "engine": {"identity": "detector-mark-v1, with detector-return-v1, inverse-split-v1, detector-bit-property-v1 and detector-absorb-v1", "landed": true},
+      "engine": {"identity": "detector-mark-v1, with detector-return-v1, inverse-split-v1, detector-absorb-v1, bit-law-v1 and node-is-ports-v1", "landed": true},
       "declaration": {
         "position": "the marked Node, one mark per position",
-        "setting": "[n, d], the pass share of the draw, 1 <= d, 0 <= n <= d; 1 is a source that always passes, 0 returns every arrival",
-        "seed": "the start of the mark's own ticket stream",
-        "on_bit_1": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 1 (the coupling on_bit_1 below)",
-        "on_bit_0": "optional, \"pass\" (the default) or \"draw\": what the mark does with a ray carrying 0 (the coupling on_bit_0 below)",
-        "on_click": "optional, \"absorb\" or \"pass\" for every ray family, or a mapping of ray family name to one of them: what the mark does with a ray that draws 1 (the coupling on_click below); a family not named keeps the default, absorb for a field family and pass for matter"
+        "setting": "[n, d], the mark's table, 1 <= d, 0 <= n <= d: the k-th thing to arrive is caught when k mod d < n, else returned on its steps to its birth event (bit-law-v1, point 14: no lottery); 1 catches every thing, 0 returns every arrival; a shadow is always returned and never counted",
+        "on_click": "optional, \"absorb\" (the default for every family) or \"pass\", for every ray family or as a mapping of ray family name to one of them: the declared table of the thing resident at the mark, what it does with a thing the mark catches (the coupling on_click below)"
       },
-      "does": "For each transfer that arrives carrying no bit it draws 1 or 0, the only lottery in the model, once per arrival and independently for up to six in one interval. 1: the click is the measurement and its record, and the ray meets the mark's coupling on_click for its family (Highlights 5.4, A click is an absorption, model owner, 2026-09-18; detector-absorb-v1, feature 2c): a field quantum, the default for a family declared field_of another, is absorbed into the mark's exact counter for its family with its momentum on the mark's line, booked on the audit as absorbed by marks, and nothing of it spreads on, a photon detected by being absorbed; matter, the default for every other family, passes with the bit 1, so the electron seen carries its mark. 0: the ray is returned on its line unchanged, back the steps it has made, to its event Node, where it performs the inverse split by the world's return_mode (siblings, straight, annul). Its draw reads nothing else of the ray and obeys no table (Highlights 3.19, 5.4). It reads the bit a ray already carries (Highlights 5.4, 2026-09-17; detector-bit-property-v1, feature 2b): a ray carrying 1 passes without a draw, a ray carrying 0 is a transmission and is never drawn, and only a ray carrying no bit is drawn; how it meets each bit is its declared coupling below, pass without a draw by default and draw on request, the pass recorded as a detector_pass event. The bit is a property of the ray like charge: a coupling reads it as the ray property detector (0 none, 1 a draw of 0, 2 a draw of 1), and the outputs of every meeting a marked ray takes part in inherit it, the highest bit of the inputs unless the coupling declares bit (highest, none, or of an input).",
+      "does": "It is a Node whose Detector bit is set, and what it holds is a thing resident at it (Highlights 5.4, point 22, node-is-ports-v1; the law of the bit, bit-law-v1): a thing that arrives is caught by the mark's table, the k-th arrival when k mod d < n, and the click is an absorption into the resident thing, whose content grows by the absorbed amount and whose momentum by the absorbed momentum (booked on the audit as absorbed by marks, the click recording the amount), unless the resident's table on_click says pass for its family, when the thing walks on with its bit; a thing the table misses is returned on its line, back the steps it has made, to its birth event, where it performs the inverse split of its share (a seeded thing leaves its seed Node again on its original heading, settled rule (iii)). A shadow that arrives is returned on its steps without a draw and without a count, a mark counts nothing of a field (point 6), unless the resident is its home: a shadow of a thing the mark absorbed is absorbed into the resident on its shadows line, with the momentum it carries, and makes no event (settled rule (iv)). There is no draw, no seed and no counter: the only uncertainty is whether a 0 or a 1 arrives (point 8), and the resident is the record of what the mark has absorbed, per bit and per family, with its momentum and the identities it is made of.",
       "couplings": {
-        "on_bit_1": {
-          "status": "decided",
-          "world_key": "on_bit_1",
-          "engine": {"identity": "detector-bit-property-v1", "landed": true},
-          "reads": {"bit": 1},
-          "values": {"pass": "the ray passes without a draw and a detector_pass event records it (the default)", "draw": "the draw of detector-mark-v1 on that arrival, as for a ray carrying no bit"},
-          "default": "pass without a draw",
-          "alternative": "draw",
-          "note": "What a marked Node does with a ray carrying 1 (Highlights 5.4, model owner, 2026-09-17; landed 2026-09-17 as feature 2b of issue #169): the ray is already realized and passes without a draw, as a measurement repeated in the same basis repeats its result, and it enters the declared coupling or continues on its line exactly as a pass does; a mark that wants the draw of detector-mark-v1 on every arrival writes on_bit_1 draw on its detectors[] entry."
-        },
-        "on_bit_0": {
-          "status": "decided",
-          "world_key": "on_bit_0",
-          "engine": {"identity": "detector-bit-property-v1", "landed": true},
-          "reads": {"bit": 0},
-          "values": {"pass": "the ray passes without a draw and a detector_pass event records it (the default)", "draw": "the draw of detector-mark-v1 on that arrival, as for a ray carrying no bit"},
-          "default": "transmission, no draw",
-          "alternative": "draw",
-          "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17; landed 2026-09-17 as feature 2b of issue #169): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; a mark that wants the draw writes on_bit_0 draw. A ray carrying no bit is drawn as the does above says, and a ray on its walk back is not an arrival and is never drawn (detector-return-v1)."
-        },
         "on_click": {
           "status": "decided",
           "world_key": "on_click",
           "engine": {"identity": "detector-absorb-v1", "landed": true},
           "reads": {"bit": "none (the draw of 1)", "family": "the arriving ray's"},
-          "values": {"absorb": "the quantum ends in the mark's exact counter for its family, its momentum on the mark's line, booked as absorbed by marks; the click records the absorbed amount and nothing of the quantum is delivered to the Node or spread on (the default for a field family, one declared field_of another)", "pass": "the ray continues with the bit 1 as at an unmarked Node, the click of detector-mark-v1 (the default for matter, every family not declared field_of another)"},
-          "default": "absorb for a field family, pass for matter",
+          "values": {"absorb": "the thing ends in the thing resident at the mark, on its things line with its momentum, booked as absorbed by marks; the click records the absorbed amount and nothing of the thing is delivered to the Node (the default for every family, bit-law-v1)", "pass": "the thing continues with its bit 1 as at an unmarked Node, the click of detector-mark-v1"},
+          "default": "absorb for every family",
           "alternative": "the other value, per family or for every family",
-          "note": "What a marked Node does with a ray that draws 1 (Highlights 5.4, A click is an absorption, model owner, 2026-09-18; landed 2026-09-18 as feature 2c of issue #169): the field quantum a marked Node realizes ends there, a photon is detected by being absorbed and every measurement is paid, while matter that draws 1 passes with its mark; a screen that stops electrons writes on_click {\"electron\": \"absorb\"} on its detectors[] entry and a counter that lets light through writes on_click {\"light\": \"pass\"}. The bit is therefore the mark of content that passed a Detector without being absorbed, and the field a Node re-releases never carries the bit of what was realized. Decided on the loop screen (E9, 2026-09-17): with the clicked quantum spreading on, its bit left the marks along the screen and back toward the source and the screen stopped clicking at tick 72; a screen that absorbs counts, and its count grows as an intensity (E9 repeated under the rule on 2026-09-18)."
+          "note": "What a marked Node does with a thing it catches (Highlights 5.4, A click is an absorption, model owner, 2026-09-18; landed 2026-09-18 as feature 2c of issue #169, restated under bit-law-v1 and node-is-ports-v1): the thing a marked Node realizes ends there, absorbed into the thing resident at the mark, a photon detected by being absorbed and every measurement paid; a counter that lets a family through writes on_click {\"light\": \"pass\"} on its detectors[] entry. Decided on the loop screen (E9, 2026-09-17): with the clicked quantum spreading on, its bit left the marks along the screen and the screen stopped clicking at tick 72; a screen that absorbs counts, and its count grows as an intensity (E9 repeated under the rule on 2026-09-18)."
         }
       },
-      "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its decay ratio is the draw setting of its conversion's rule, the Node marked by that declaration for the meeting's draw (weak_conversion, decay-draw-v1, 2026-09-17). A passive Recorder or Renderer is not a Detector."
+      "note": "A source is a thing that spends its content by its emission table (Highlights 5.4, point 22): a lamp burns content, nothing is injected and nothing is sourced; the marked Node of the earlier form is no longer required of a source. A bound group that can decay breaks by a declared condition on its own state, a table (point 20). A passive Recorder or Renderer is not a Detector."
     },
     "external_body": {
       "world_key": "external_bodies",
-      "engine": {"identity": "external-body-v1", "landed": true},
+      "engine": {"identity": "external-body-v1, with bit-law-v1 and node-is-ports-v1", "landed": true},
       "declaration": {
         "position": "the Node that holds all of it; one body per Node, never on a Detector",
-        "family": "a ray id of this catalog, or the apparatus family below; never a field family",
-        "amount": "a positive integer of any width: it enters no sum and only sets how much field leaves per interval",
+        "family": "a ray id of this catalog, or the apparatus family below",
+        "amount": "a positive integer of any width: the body's content, entering no sum (it releases nothing: its shadows are given with the board, bit-law-v1)",
         "charge": "optional, in thirds of e, read by couplings as the family's charge is",
-        "phase": "optional, the phase its field rays carry, below the world's width; 0 by default",
+        "phase": "optional, the phase its shadows carry, below the world's width; 0 by default",
         "initial_momentum": "optional, a unit-axial heading and a pace [n, d] of Links per interval, n at most d; the momentum is the whole quanta of amount x n / d on that axis; absent for a body at rest",
         "coupling": "optional, \"sink\" (the default, the absorber below), \"polarizer\" (with the polarizer declaration below) or the name of a declared coupling below",
-        "momentum_table": "optional, family id to sign: -1 attraction toward the source of an arriving field ray that ends in the sink, 1 repulsion",
+        "momentum_table": "optional, family id to sign: -1 attraction toward the owner of an arriving shadow of that family, 1 repulsion; the shadow pushes the body and turns back on its steps with the opposite momentum (bit-law-v1, point 3)",
+        "reads": "with momentum_table: \"content\" or \"charge\", what the body multiplies the shadows' message by (bit-law-v1, point 16)",
+        "thing": "optional, the body's identity, the owner its shadows carry (bit-law-v1); by default one past the disturbance types and the bodies before it",
         "polarizer": "with coupling polarizer: {family: the ray it polarizes, angle: an integer step of that family's polarization circle, pass: a unit-axial heading (+X by default), table: one entry per step of the circle in steps-ths, unpolarized: the pass share of an unpolarized ray, the table's mean by default} (ray-polarization-v1, feature 11)"
       },
-      "does": "It radiates as any bound group does: every interval it releases the field declared field_of its family on all six headings, one ray per heading of amount floor(amount x n / d) by that field's release, with its declared phase, booked as an explicitly accounted source, so its gravity and its electric field are the ordinary field rays of the model; it never spreads (never splits, binds, unbinds, converts or decays, its whole content at one Node, no ray of its family at its Node) and is not pushed by matter, whatever arrives being met by its coupling, the sink by default, where it ends in the body's exact sink counter for its family and on the audit's absorbed_by_bodies line; its motion is caused by fields only: a field ray of a family its momentum_table names that ends in its sink changes its momentum by sign x amount x heading, nothing else moves it, its velocity is momentum over amount kept as an exact accumulator per axis that steps it one Link when a whole amount has accumulated, and the audit carries the bodies' momentum as its own line. On the Node it is bounded metadata like the mark: the kind, the declaration, the momentum with its accumulators and one exact sink counter per family; no rays, no history. It stands outside the mass ladder (hypothesis 12). When the back-reaction is wanted, a bound group with a large amount is declared instead (Highlights 3.19).",
+      "does": "It is a thing with declared tables (Highlights 5.4, point 22, node-is-ports-v1): its amount is its content, its identity `thing` is the owner its shadows carry, and it radiates nothing, its shadows being given with the board (`initial_field`, bit-law-v1) and circulating, a shadow that comes home to it absorbed back and released again from where it is. It never spreads (never splits, binds, unbinds, converts or decays, its whole content at one Node) and it is a border of the board: whatever thing arrives is met by its declared table, the sink by default, where it ends in the body's exact sink for its family and on the audit's absorbed_by_bodies line; whatever shadow of another thing arrives is returned on its steps, pushing the body by sign x amount x heading read as `reads` declares when its momentum_table names the shadow's family, and carrying the opposite momentum home. Its motion is caused by its momentum alone: the pushes it takes accumulate per axis and step it one Link when a whole content has accumulated, never faster than a ray, and the audit carries the bodies' momentum as its own line. On the Node it is bounded metadata: the kind, the declaration, the momentum with its accumulators and one exact sink per family; no rays, no history. It stands outside the mass ladder (hypothesis 12). When the back-reaction is wanted, a bound group with a large amount is declared instead (Highlights 3.19).",
       "coupling_form": "Under a declared coupling the body is the participant that never changes: the rule has one role that selects the body's family alone and returns it once among its outputs, and the other roles name the families it meets. Each interval the Node adds one token of the body's family (amount 1, heading +X, the body's phase) to the residents, the rule fires over the token and the arriving rays as an ordinary meeting, and the Node strips the token's output before anything leaves, requiring it back unchanged or the cycle fails. A family the rule does not name, and every returning ray, ends in the sink. In the couplings of this catalog \"any\" and \"same\" stand for the met family and \"body\" for the body's family; a world writes the names.",
       "apparatus_family": {
         "name": "apparatus",
         "rest_rate": 0,
         "charge": 0,
         "field": [],
-        "note": "The family a world gives a piece of apparatus (a mirror, a beam splitter, a phase plate, a slit, a polarizer, a wall) under a declared coupling: rest rate 0, because the token must come back with the body's phase and a family's rest rate advances it on the token's departure (external-body-v1, this slice); no charge and no field; named by no coupling but the body's own, so it is its own layer and radiates nothing. A star or a fixed proton is a body of the ray of nature it stands for and radiates that ray's field."
+        "note": "The family a world gives a piece of apparatus (a mirror, a beam splitter, a phase plate, a slit, a polarizer, a wall, a screen, a beam stop) under a declared table: rest rate 0, because the token must come back with the body's phase and a family's rest rate advances it on the token's departure; no charge and no shadows; named by no coupling but the body's own, so it is its own layer. A star or a fixed proton is a body of the ray of nature it stands for, whose shadows are given with the board."
       },
       "default_coupling": "absorber",
       "couplings": ["absorber", "mirror", "beam_splitter", "phase_plate", "slit", "polarizer"],
-      "note": "Stands for a star, a neutron star, a fixed proton, a large charge or a piece of apparatus, and in a rendering carries its own picture, never mistaken for matter. Landed on 2026-09-17 as feature 7b of issue #169 (RAY_EVENT_MODEL.md, step 7)."
+      "note": "Stands for a star, a neutron star, a fixed proton, a large charge or a piece of apparatus, and in a rendering carries its own picture, never mistaken for matter. Landed on 2026-09-17 as feature 7b of issue #169 (RAY_EVENT_MODEL.md, step 7); a thing with declared tables since node-is-ports-v1 (feature 17, 2026-09-18)."
     }
   },
   "experiments": {

@@ -27,6 +27,7 @@ from event_universe.core.spatial_state import (
     BIT_SHADOW,
     MIXING_DENOMINATOR,
     NODE_MIXING,
+    PORT_HEADINGS,
     Ray,
     node_mixing,
     phase_cosines,
@@ -112,10 +113,25 @@ def document(shadows, *, ticks=1, phase_bits=3, holders=1, dense=None):
     return doc
 
 
+def parked_blocks(snapshot):
+    """The parked shares of sign 0 per (Node, owner): the ninths and their phases
+    in Port order, read from the parked shadows of the snapshot (node-is-ports-v1)."""
+    blocks = {}
+    for entry in snapshot["parked"]:
+        if entry["sign"] != 0 or not entry["amount"]:
+            continue
+        key = (tuple(entry["position"]), entry["owner"])
+        amounts, phases = blocks.setdefault(key, ([0] * 6, [0] * 6))
+        port = PORT_HEADINGS.index(tuple(entry["heading"]))
+        amounts[port], phases[port] = entry["amount"], entry["phase"]
+    return blocks
+
+
 def run(doc, ticks):
-    """Per tick the board (every Node's rays as (amount, heading, phase, owner),
-    sorted), the ledger and the shadows' content; the events; the registers of
-    sign 0 per (Node, owner) after every tick."""
+    """Per tick the board (every Node's rays on their way as (amount, heading,
+    phase, owner), sorted, the parked shares beside them left out), the ledger
+    and the shadows' content; the events; the parked shares of sign 0 per
+    (Node, owner) after every tick, in Port order with their phases."""
     events = []
     boards, ledgers, contents, registers = [], [], [], []
     with Simulation(parse_initial_state(doc), observer=events.append) as world:
@@ -127,20 +143,15 @@ def run(doc, ticks):
                         (ray.amount, tuple(HEADINGS[ray.heading]), ray.phase, ray.owner)
                         for family in node.rays
                         for ray in family
+                        if not ray.parked
                     )
                     for node in world.inventory_view().nodes
-                    if any(node.rays)
+                    if any(not ray.parked for family in node.rays for ray in family)
                 }
             )
             ledgers.append(world.audit())
-            contents.append(world.shadows_content())
-            registers.append(
-                {
-                    (tuple(entry["position"]), entry["owner"]): (entry["registers"], entry["phases"])
-                    for entry in world.snapshot()["field_remainders"]
-                    if entry["sign"] == 0
-                }
-            )
+            contents.append(world.shadow_content())
+            registers.append(parked_blocks(world.snapshot()))
     return {
         "boards": boards,
         "ledgers": ledgers,
@@ -159,7 +170,7 @@ def no_node_events(events):
 
 
 def balanced(result):
-    return all(entry["balanced"] and entry["things_conserved"] for entry in result["ledgers"])
+    return all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
 
 
 def lone(heading, amount, phase=0, sign=0):
@@ -419,7 +430,7 @@ def test_nothing_is_declared_and_the_runner_records_the_mixing(tmp_path):
         {"field": "m", "release": [1, 1], "phase_width": 8, "owners": [1]}
     ]
     assert not {"phase_spread", "field_spreading", "spreading_fields"} & metadata.keys()
-    assert metadata["shadows_content"] == [9, 9]
+    assert metadata["shadow_content"] == [9, 9]
     recorded = [
         json.loads(line) for line in (tmp_path / "out" / "events.jsonl").read_text().splitlines()
     ]

@@ -8,7 +8,7 @@ from typing import TypeVar
 from .disturbance_state import DisturbanceRecord, LocalPlan
 from .event_resolution import Planner as DisturbancePlanner
 from .plan_reuse import PlanReuse
-from .spatial_state import Rays, Remainders, SpatialPlan, SpatialState, Traces
+from .spatial_state import Rays, SpatialPlan, SpatialState
 
 SpatialPlanner = Callable[
     [
@@ -18,10 +18,7 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        Remainders,
-        Remainders,
         int,
-        Traces,
     ],
     SpatialPlan,
 ]
@@ -57,15 +54,11 @@ class SpatialPlanningInput:
     rays: tuple[Rays, ...] = ()
     # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
     ray_hold: int = 0
-    # The Node's remainder registers and their phases (field-remainder-v1).
-    remainders: Remainders = ()
-    remainder_phases: Remainders = ()
     # The Node's ticket state before the cycle (decay-draw-v1): part of the
     # request, so that a reused plan never replays a draw at another state.
+    # The parked shadows, the shares below one quantum and the traces read by
+    # the shadows walking home, are among `rays` (node-is-ports-v1).
     detector_ticket: int = 0
-    # The Node's trace register (bit-law-v1): the Port the last thing of each
-    # owner left by, read by the shadows walking home; part of the request.
-    traces: Traces = ()
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -103,10 +96,7 @@ def finish_local_cycle(
                     request.node_cost,
                     request.rays,
                     request.ray_hold,
-                    request.remainders,
-                    request.remainder_phases,
                     request.detector_ticket,
-                    request.traces,
                 )
             else:
                 result = None
@@ -134,10 +124,7 @@ def _plan_spatial_batch(
             item.node_cost,
             item.rays,
             item.ray_hold,
-            item.remainders,
-            item.remainder_phases,
             item.detector_ticket,
-            item.traces,
         )
         for item in items
     )
@@ -195,10 +182,7 @@ class NodeExecution:
         node_cost: int = 0,
         rays: tuple[Rays, ...] = (),
         ray_hold: int = 0,
-        remainders: Remainders = (),
-        remainder_phases: Remainders = (),
         detector_ticket: int = 0,
-        traces: Traces = (),
     ) -> SpatialPlan:
         request = SpatialPlanningInput(
             states,
@@ -207,10 +191,7 @@ class NodeExecution:
             node_cost,
             rays,
             ray_hold,
-            remainders,
-            remainder_phases,
             detector_ticket,
-            traces,
         )
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 

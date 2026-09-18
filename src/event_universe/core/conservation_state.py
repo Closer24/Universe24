@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .disturbance_state import Address3, DisturbanceRecord, Expression
-    from .spatial_state import Rays, Remainders, SpatialPopulations, SpatialState
+    from .spatial_state import Rays, SpatialPopulations, SpatialState
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,9 +35,11 @@ class InventoryNode:
     records: tuple[DisturbanceRecord | None, ...]
     spatial: tuple[SpatialState, ...]
     incoming_spatial: tuple[SpatialState, ...] = ()
+    # The resident rays per spatial field, on their way or waiting, and beside
+    # them the parked shadows (node-is-ports-v1): the shares below one quantum,
+    # in units of the family's split denominator, and the traces (amount 0).
     rays: tuple[Rays, ...] = ()
-    # The remainder registers of the spreading families (field-remainder-v1).
-    remainders: Remainders = ()
+    parked: tuple[Rays, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

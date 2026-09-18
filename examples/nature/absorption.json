@@ -318,8 +318,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         1,
         0,
@@ -332,8 +330,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         1,
@@ -346,8 +342,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         1,
@@ -360,8 +354,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         -1,
         0,
@@ -374,8 +366,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         -1,
         0,
@@ -388,8 +378,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         -1,
@@ -402,8 +390,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         -1,
@@ -416,8 +402,6 @@
       "field": "electron",
       "amount": 1,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         1,
         0,
@@ -430,8 +414,6 @@
       "field": "light",
       "amount": 3,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         0,

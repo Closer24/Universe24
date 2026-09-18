@@ -32,26 +32,21 @@ from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
     BIT_SHADOW,
     BIT_THING,
-    MIXING_DENOMINATOR,
-    REMAINDER_SIGNS,
-    REMAINDER_SLOTS,
     ExternalBody,
     Rays,
-    Remainders,
     SpatialBundle,
     SpatialFieldDefinition,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
-    Traces,
-    blank_remainders,
     coherent_stock,
     held_stock,
+    parked_stock,
+    parked_unit,
     ray_charge,
     ray_momentum,
     ray_momentum_vector,
     ray_stock,
-    remainder_stock,
     validate_rays,
 )
 from .topology import neighbor_address
@@ -64,10 +59,7 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        Remainders,
-        Remainders,
         int,
-        Traces,
     ],
     SpatialPlan,
 ]
@@ -146,8 +138,12 @@ class SpatialEngine:
         # The external bodies by declared position, installed on their Nodes when
         # they are created; a body that steps carries its mark to the next Node.
         self._bodies = {body.position: body for body in initial.external_bodies}
-        # Host scheduling index only: retain physical registers in self.nodes.
+        # Host scheduling index only: the physical state is in self.nodes.
         self._active: set[Address3] = set()
+        # The totals once per tick (node-is-ports-v1, the performance review):
+        # memoized per bit and cleared by every step of the engine that moves
+        # content (begin, deliver, close, the prefill).
+        self._totals_memo: dict[int | None, list[list[int]]] = {}
         # The dense mode's region (dense-field-v1), attached by the composition
         # when the world declares `dense_field`; None cycles every Node here.
         self.dense: DenseRegion | None = None
@@ -225,7 +221,12 @@ class SpatialEngine:
         """Read the initial line again after the field given with the board was
         installed (bit-law-v1, `initial_field`): the prefill is the things'
         presence, booked as initial, not a source."""
+        self.invalidate_totals()
         self._initial_totals = self.totals()
+
+    def invalidate_totals(self) -> None:
+        """Forget the memoized totals: the engine's content moved."""
+        self._totals_memo.clear()
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
         result = []
@@ -255,8 +256,6 @@ class SpatialEngine:
                 # The Node's counter (bit-law-v1, point 14): every Node's starts at 0.
                 detector_ticket=0,
                 body=self._bodies.pop(position, None),
-                remainders=blank_remainders(self.initial.spatial_fields),
-                remainder_phases=blank_remainders(self.initial.spatial_fields),
             )
             self._active.add(position)
         elif position not in self._active:
@@ -307,6 +306,7 @@ class SpatialEngine:
     ) -> None:
         if tick % self.initial.link_ticks:
             return
+        self.invalidate_totals()
         self._field_tick = tick
         emitter_types = selected_type_set(self.initial.emissions)
         coupled_types = selected_type_set(
@@ -347,7 +347,7 @@ class SpatialEngine:
     def materialized(self) -> Iterator[None]:
         """Read the dense region's Nodes as Node state (dense-field-v1): within the
         block `nodes` also holds the Nodes the region owns, each with its resident
-        rays, registers, arrivals and cost, so a snapshot or an inventory view
+        and parked rays, arrivals and cost, so a snapshot or an inventory view
         reads every Node the same way; the engine's own Nodes are untouched."""
         if self.dense is None:
             yield
@@ -439,6 +439,7 @@ class SpatialEngine:
             self._event("spatial_escaped", tick, packet.origin, port=packet.port, escaped=escaped)
 
     def deliver(self, tick: int, residents: Mapping[Address3, DisturbanceNode] | None = None) -> None:
+        self.invalidate_totals()
         ready: dict[Address3, list[SpatialPacket]] = {}
         for origin, packets in self.links.active_items():
             for port, packet in enumerate(packets):
@@ -482,6 +483,7 @@ class SpatialEngine:
 
     def close(self, tick: int, residents: Mapping[Address3, DisturbanceNode]) -> None:
         """Deliver a closing clock notice only to the active local field owners."""
+        self.invalidate_totals()
         if self.initial.node_execution:
             for position in sorted(self._active):
                 try:
@@ -493,27 +495,42 @@ class SpatialEngine:
         """The content the engine holds, per field; with `bit` (bit-law-v1) the
         things' share alone (BIT_THING: the octant stock, the deposits, the
         resident and travelling things, a polarizer's held quanta) or the
-        shadows' alone (BIT_SHADOW: the shadows resident and travelling, the
-        remainder registers, the dense region)."""
+        shadows' alone (BIT_SHADOW: the shadows resident, parked and travelling,
+        the dense region). Computed once per tick per bit (node-is-ports-v1): the
+        memo is cleared whenever the engine moves content."""
+        memo = self._totals_memo.get(bit)
+        if memo is not None:
+            return [list(line) for line in memo]
+        result = self._totals(bit)
+        self._totals_memo[bit] = [list(line) for line in result]
+        return result
+
+    def _totals(self, bit: int | None) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]
         volume = self.initial.shape[0] * self.initial.shape[1] * self.initial.shape[2]
         things = bit != BIT_SHADOW
         shadows = bit != BIT_THING
 
         def taken(rays: Rays) -> Rays:
+            # A parked shadow is counted by `parked_stock`, in its own unit.
             if bit is None:
-                return rays
-            return tuple(ray for ray in rays if ray.detector == bit)
+                return tuple(ray for ray in rays if not ray.parked)
+            return tuple(ray for ray in rays if ray.detector == bit and not ray.parked)
+
+        def parked(index: int, definition: SpatialFieldDefinition) -> None:
+            # The parked shadows hold whole quanta in total per Node
+            # (field-remainder-v1), in units of the family's split denominator.
+            if not definition.spread:
+                return
+            for position in self._active:
+                node = self.nodes[position]
+                if node.rays and any(ray.parked for ray in node.rays[index]):
+                    result[definition.field][0] += parked_stock(node.rays[index], definition)
 
         for index, definition in enumerate(self.initial.spatial_fields):
             if not things:
                 # The octant stock, the deposits and the baseline are things.
-                if definition.spread:
-                    for node in self.nodes.values():
-                        if node.remainders and node.remainders[index]:
-                            result[definition.field][0] += remainder_stock(
-                                node.remainders[index], MIXING_DENOMINATOR
-                            )
+                parked(index, definition)
                 if definition.rays:
                     for position in self._active:
                         node = self.nodes[position]
@@ -554,15 +571,10 @@ class SpatialEngine:
             # without enumerating idle history.
             for component, value in enumerate(self.localized[definition.field]):
                 result[definition.field][component] += value
-            if definition.spread and shadows:
-                # The remainder registers hold whole quanta in total (field-remainder-v1).
-                for node in self.nodes.values():
-                    if node.remainders and node.remainders[index]:
-                        result[definition.field][0] += remainder_stock(
-                            node.remainders[index], MIXING_DENOMINATOR
-                        )
+            if shadows:
+                parked(index, definition)
             if definition.rays:
-                # A polarizer body's registers hold whole quanta of the family it
+                # A polarizer body's held shares hold whole quanta of the family it
                 # polarizes (ray-polarization-v1), content without momentum.
                 for body in self._located_bodies():
                     if body.polarizer is not None and body.polarizer.family == index:
@@ -585,17 +597,17 @@ class SpatialEngine:
                                 for axis, value in enumerate(ray_momentum(rays, definition)):
                                     result[definition.momentum_field][axis] += value
         if self.dense is not None and shadows:
-            # The content the dense region owns (dense-field-v1): its resident
-            # shadows, its registers' whole quanta and what is in flight between
+            # The content the dense region owns (dense-field-v1): its resident,
+            # parked, returning and waiting shadows and what is in flight between
             # its Nodes; shadows all (bit-law-v1).
             self.dense.add_totals(result)
         return result
 
-    def thing_registers(self) -> dict[int, list[int]]:
-        """The register of every thing (bit-law-v1, point 15): per thing id, the
-        momentum of its rays (their registers, or amount x heading), resident or
-        travelling, and of its body; a push is the field's arithmetic on this
-        line, not an event."""
+    def thing_momentum(self) -> dict[int, list[int]]:
+        """The momentum of every thing (bit-law-v1, point 15; Highlights 5.4 point
+        22): per thing id, the momentum of its rays (what a push set, or amount x
+        heading), resident or travelling, and of its body; a push is the field's
+        arithmetic on this line, not an event."""
         result: dict[int, list[int]] = {}
         bundles: list[tuple[SpatialFieldDefinition, Rays]] = []
         for position in self._active:
@@ -621,8 +633,8 @@ class SpatialEngine:
     def shadow_counts(self) -> dict[int, list[int]]:
         """The shadows per thing (bit-law-v1, the amendment's point d): for each
         owner the number of shadow rays and their amount, over the resident and
-        travelling shadows, the dense region's included; the registers' quanta
-        belong to no ray yet and are not counted."""
+        travelling shadows, the dense region's included; a parked shadow is below
+        one quantum, or a trace, and is not counted."""
         result: dict[int, list[int]] = {}
         bundles: list[Rays] = []
         for position in self._active:
@@ -634,7 +646,7 @@ class SpatialEngine:
                     bundles.extend(packet.rays)
         for rays in bundles:
             for ray in rays:
-                if ray.detector == BIT_SHADOW:
+                if ray.detector == BIT_SHADOW and not ray.parked:
                     entry = result.setdefault(ray.owner, [0, 0])
                     entry[0] += 1
                     entry[1] = checked_work(entry[1] + ray.amount)
@@ -645,7 +657,7 @@ class SpatialEngine:
     def charge_totals(self) -> dict[str, int]:
         """The charge readout of every ray field: charge x amount summed over the things
         resident at active Nodes and in flight on Links, the owners totals() reads; a
-        shadow carries no charge (bit-law-v1), so the registers and the dense region
+        shadow carries no charge (bit-law-v1), so the parked shadows and the dense region
         hold none."""
         result: dict[str, int] = {}
         for index, definition in enumerate(self.initial.spatial_fields):
@@ -701,7 +713,7 @@ class SpatialEngine:
             field.validate(pack(tuple(local)))
             if definition.rays:
                 node_rays = self.nodes[position].rays if position in self.nodes else ()
-                rays = node_rays[index] if node_rays else ()
+                rays = tuple(ray for ray in (node_rays[index] if node_rays else ()) if not ray.parked)
                 local[0] = checked_work(local[0] + coherent_stock(rays, definition))
                 field.validate(pack(tuple(local)))
             result[field.name] = {
@@ -711,7 +723,9 @@ class SpatialEngine:
                 "populations": tuple(unpack(v) for v in state.populations),
             }
             if definition.rays:
-                result[field.name]["ray_count"] = len(rays)
+                # The rays on their way; a parked shadow is the Node's memory
+                # (node-is-ports-v1), listed in the snapshot's `parked`.
+                result[field.name]["ray_count"] = sum(1 for ray in rays if not ray.parked)
             if definition.decay is not None and definition.decay.localizes:
                 localized = (
                     self.nodes[position].localized if position in self.nodes else self._blank_localized()
@@ -799,7 +813,7 @@ class SpatialEngine:
                     for i, definition in enumerate(self.initial.spatial_fields)
                     if body.sink[i]
                 },
-                # A polarizer's registers and their phases (ray-polarization-v1),
+                # A polarizer's held shares and their phases (ray-polarization-v1),
                 # sign-major -1, 0, 1 then pass and sink, in units of 1/D.
                 **(
                     {}
@@ -810,34 +824,44 @@ class SpatialEngine:
         return [found[index] for index in sorted(found)]
 
     def detector_marks(self) -> list[dict[str, object]]:
-        """Every Detector mark (detector-absorb-v1), in declaration order: its Node,
-        its counter per family (the nonzero entries) and the momentum of what it
-        absorbed; a mark whose Node was never created has absorbed nothing."""
+        """Every Detector mark (node-is-ports-v1), in declaration order: its Node
+        and the thing resident at it, what the mark has absorbed per bit, `real`
+        (the things) and `shadow` (the shadows home to it), per family (the
+        nonzero entries), its momentum and the owners it is made of; a mark whose Node was never created has
+        absorbed nothing."""
         result: list[dict[str, object]] = []
         for declared in self.initial.detectors:
             node = self.nodes.get(declared.position)
             mark = declared if node is None or node.detector is None else node.detector
-            counter = {
-                self.initial.fields[definition.field].name: mark.counter[i]
-                for i, definition in enumerate(self.initial.spatial_fields)
-                if i < len(mark.counter) and mark.counter[i]
-            }
+            resident = mark.resident
             result.append(
                 {
                     "position": list(mark.position),
-                    "momentum": list(mark.momentum),
-                    "counter": counter,
-                    # The things the mark absorbed, whose shadows are home to it.
-                    **({"things": list(mark.things)} if mark.things else {}),
+                    "resident": {
+                        "real": {
+                            self.initial.fields[definition.field].name: resident.things[i]
+                            for i, definition in enumerate(self.initial.spatial_fields)
+                            if i < len(resident.things) and resident.things[i]
+                        },
+                        "shadow": {
+                            self.initial.fields[definition.field].name: resident.shadows[i]
+                            for i, definition in enumerate(self.initial.spatial_fields)
+                            if i < len(resident.shadows) and resident.shadows[i]
+                        },
+                        "momentum": list(resident.momentum),
+                        "owners": list(resident.owners),
+                    },
                 }
             )
         return result
 
     def detector_mark_momentum(self) -> tuple[int, int, int]:
-        """The marks' momentum line of the audit: the exact sum over every mark."""
+        """The marks' momentum line of the audit: the exact sum over every resident."""
         total = [0, 0, 0]
         for item in self.detector_marks():
-            momentum = item["momentum"]
+            resident = item["resident"]
+            assert isinstance(resident, dict)
+            momentum = resident["momentum"]
             assert isinstance(momentum, list)
             for axis in range(3):
                 total[axis] = checked_work(total[axis] + momentum[axis])
@@ -854,6 +878,8 @@ class SpatialEngine:
         return (total[0], total[1], total[2])
 
     def snapshot(self) -> dict[str, object]:
+        """The engine's Nodes and Links as plain data; the dense region's Nodes read
+        as Node state for the per-Node entries, its parked shadows from its arrays."""
         with self.materialized():
             return self._snapshot()
 
@@ -869,8 +895,6 @@ class SpatialEngine:
                     "arrival_mask": node.arrival_mask,
                     "delay_counts": node.delay_counts,
                     "waiting_until": None if node.pending is None else node.pending.ready_tick,
-                    # The trace register (bit-law-v1), only when set.
-                    **({"traces": [list(entry) for entry in node.traces]} if node.traces else {}),
                 }
                 for position, node in sorted(self.nodes.items())
             ],
@@ -895,35 +919,29 @@ class SpatialEngine:
                 if p is not None
             ],
         }
-        if any(definition.spread for definition in self.initial.spatial_fields):
-            # The remainder registers (field-remainder-v1): every nonzero block of a
-            # family and sign at a Node, for a Renderer and the record.
-            remainders: list[dict[str, object]] = []
-            for position, node in sorted(self.nodes.items()):
-                for index, definition in enumerate(self.initial.spatial_fields):
-                    if (
-                        not definition.spread
-                        or index >= len(node.remainders)
-                        or not any(node.remainders[index])
-                    ):
-                        continue
-                    block, phases = node.remainders[index], node.remainder_phases[index]
-                    owners = definition.owners or (0,)
-                    for rank in range(len(block) // REMAINDER_SLOTS):
-                        for sign in REMAINDER_SIGNS:
-                            start = rank * REMAINDER_SLOTS + (sign + 1) * 6
-                            values = block[start : start + 6]
-                            if any(values):
-                                remainders.append(
-                                    {
-                                        "position": position,
-                                        "family": self.initial.fields[definition.field].name,
-                                        "owner": owners[rank],
-                                        "sign": sign,
-                                        "registers": list(values),
-                                        "phases": list(phases[start : start + 6]),
-                                        "total": MIXING_DENOMINATOR,
-                                    }
-                                )
-            result["field_remainders"] = remainders
+        # The parked shadows (node-is-ports-v1): what every Node holds below one
+        # quantum per owner, sign and heading, in units of the family's split
+        # denominator, and the traces (amount 0); the dense region's Nodes are
+        # read as Node state here (`materialized`).
+        parked: list[dict[str, object]] = []
+        for position, node in sorted(self.nodes.items()):
+            if not node.rays:
+                continue
+            for index, definition in enumerate(self.initial.spatial_fields):
+                for ray in node.rays[index]:
+                    if ray.parked:
+                        parked.append(
+                            {
+                                "position": position,
+                                "family": self.initial.fields[definition.field].name,
+                                "owner": ray.owner,
+                                "sign": ray.source_sign,
+                                "heading": list(definition.headings[ray.heading]),
+                                "amount": ray.amount,
+                                "unit": parked_unit(definition),
+                                "phase": ray.phase,
+                                "bit": BIT_SHADOW,
+                            }
+                        )
+        result["parked"] = parked
         return result

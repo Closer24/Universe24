@@ -76,8 +76,10 @@ def document(
                 "field": "energy",
                 "amount": amount,
                 "denominator": 1,
-                "source": source,
-                **({"recoil_field": "momentum"} if recoil and not source else {}),
+                # node-is-ports-v1: an emission on a ray family is paid from the
+                # type's content and recoils into its momentum; `source` is only
+                # written to be rejected.
+                **({"source": True} if source else {}),
             }
         ],
         "seeds": [{"position": [CENTER] * 3, "type": "emitter"}],
@@ -133,12 +135,19 @@ def test_funded_emission_is_clipped_to_the_record_stock():
 
 
 def test_audit_still_rejects_external_sources_and_recoil_needs_funding():
-    with pytest.raises(ValueError, match="closed internal transfers"):
+    # node-is-ports-v1: a source is a thing that spends its content; an unfunded
+    # source and a declared recoil field are the retired form.
+    with pytest.raises(ValueError, match="node-is-ports-v1"):
         parse_initial_state(document(headings=[[1, 0, 0]], rays_per_tick=1, source=True))
-    raw = document(headings=[[1, 0, 0]], rays_per_tick=1, source=True)
+    raw = document(headings=[[1, 0, 0]], rays_per_tick=1)
     del raw["conservation"]
     raw["emissions"][0]["recoil_field"] = "momentum"
-    with pytest.raises(ValueError, match="recoil_field requires"):
+    with pytest.raises(ValueError, match="node-is-ports-v1"):
+        parse_initial_state(raw)
+    raw = document(headings=[[1, 0, 0]], rays_per_tick=1)
+    raw["disturbance_types"][0]["fields"] = ["energy"]
+    del raw["disturbance_types"][0]["defaults"]["momentum"]
+    with pytest.raises(ValueError, match="momentum field"):
         parse_initial_state(raw)
     # Edge case: the escaping ray quanta are counted as measured escape, not loss.
     world = Simulation(
@@ -222,8 +231,6 @@ def test_absorber_with_self_exclusion_does_not_eat_its_own_wake():
             "field": "energy",
             "amount": 2,
             "denominator": 1,
-            "source": False,
-            "recoil_field": "momentum",
         }
     )
     raw["disturbance_types"][1]["defaults"] = {"energy": 40, "momentum": [1, 0, 0]}
