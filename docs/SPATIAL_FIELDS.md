@@ -2203,6 +2203,59 @@ only, naming ray families that are not among its participants, signs -1 or
 (unit-axial, unpaced, no decay). No draw, no new arithmetic beyond the
 body's; nothing else changes.
 
+### The law of the bit (`bit-law-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4, the model owner's decision of
+2026-09-18 with the amendments of that day; issue #169, feature 15): every ray
+carries one bit, `detector` 1 a thing and 0 its shadow, a ray of the same
+family as its thing (there is no field family: `field_of` is retired, a family
+declares its own `release`, the size of its things' shadow sets, and its own
+`spread`, the shadows' split table). A thing has a stable id, `thing` on its
+disturbance type or external body (the type's index from 1, then the bodies),
+stamped on every ray as `owner`. Things move whole and turn by pushes; shadows
+spread by the family's table, have no mass, no clock (their phase never
+advances) and no delay, and cost no computation of their own. A shadow meeting
+a thing of another owner under a coupling with a `momentum_table` pushes it by
+sign x amount x heading read times the thing's content (`reads: "content"`) or
+times the shadow's source sign and the thing's charge (`reads: "charge"`; the
+key is required beside every momentum table, point 16), turns back on its own
+steps carrying -dp and walks home, following the Node trace its owner left
+(`traces`, the Port the largest thing of each owner left a Node by, at most
+sixteen owners per Node), is absorbed back and released again reversed; a
+shadow meeting its own thing is home, never a push; a push is not an event
+(point 15: no `ray_push`, the runner records the per-thing `registers` line per
+tick). Shadows are given with the board: `initial_field` per family, `{"fill":
+T}` (T intervals of the fill, each thing releasing its shadow set of
+`release` x stock per heading, rounded to whole quanta per Node and heading
+with the fractions in the Node's remainder registers, reflected at sources and
+marks, nothing dropped, booked as initial content) or `{"rays": [...]}` (a
+profile of shadows with `position`, `heading`, `amount`, `phase`, `sign`,
+`owner`, `steps` 0 or 1); nothing is released during a run. A mark returns a
+shadow without counting it, and catches things by its setting `[n, d]` read as
+a counter: the k-th arrival is absorbed when k mod d < n, else returned (point
+14, no lottery: `seed` is accepted and never read; two runs are byte-identical;
+`on_click` "absorb" is the default for every family); a mark that absorbs a
+thing becomes the home of that thing's shadows, absorbing each that returns
+into the same counter. An external body absorbs things into its sink and
+returns shadows (pushing itself by its table when it names the family), and
+radiates nothing; bodies, marks and the board's edge are the border. The
+ledger: `initial + sourced = current + escaped + annulled + absorbed +
+absorbed_by_marks + returned` per family, and per bit (`things`, `shadows`,
+`things_conserved`): a shadow is initial content, never sourced, and its
+homecoming crosses no border (point 7), so `returned` carries only the
+momentum shadows bring home; every ray family of a world with one momentum
+field is bound to it. Events happen only at Nodes that hold a thing (point
+13): a Node holding shadows alone publishes no record, and the dense mode is
+the shadow layer, the default wherever a world admits it. The runner records
+`bit_law`, `shadow_families`, `initial_field`, `things_content` and
+`shadows_content` per tick, `registers`, `shadows` and `things_conserved`.
+Identity `bit-law-v1`; isolated test `tests/test_bit_law.py`
+([expectations](TEST_EXPECTATIONS.md#the-law-of-the-bit)); old worlds are
+migrated textually by `examples/nature/bit_law_migration.py`. The catalog's
+textual migration, the decay table (point 20), the speed rule (point 21), the
+restated readings of point 18 and the rest rate of point 19 follow in feature
+16.
+
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.16 and 3.28;
