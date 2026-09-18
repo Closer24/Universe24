@@ -174,12 +174,17 @@ def shadow(position, heading, amount=1, owner=1, sign=-1, steps=None):
     return entry
 
 
-def body(position, thing=None, table=None, amount=100):
+def body(position, thing=None, table=None, amount=100, charge=None):
     """A body of `amount` quanta of `m` with the whole charge -amount, the
     family's -1 per quantum (clock-readings-v1: its shadows carry its whole
     charge and its content, and the electricity reading divides the one by the
-    other)."""
-    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -amount}
+    other), or the whole `charge` given."""
+    entry = {
+        "position": list(position),
+        "family": "m",
+        "amount": amount,
+        "charge": -amount if charge is None else charge,
+    }
     if table is not None:
         entry["momentum_table"] = table
         entry["reads"] = "charge"

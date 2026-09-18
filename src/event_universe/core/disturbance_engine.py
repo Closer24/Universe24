@@ -672,8 +672,8 @@ class DisturbanceEngine:
         }
 
     def _shadow_lines(self, name: str) -> dict[str, tuple[int, ...]]:
-        """The shadows' share of a line (bit-law-v1): their re-releases on the source
-        line, their escapes on the escaped line."""
+        """The shadows' share of a line (bit-law-v1): their escapes on the escaped
+        line, what the marks absorbed at home on theirs."""
         return {
             field.name: (
                 (0,) * field.components
@@ -807,11 +807,10 @@ class DisturbanceEngine:
         }
         # The things' and the shadows' own lines per ray family (bit-law-v1, point
         # 7): the things conserve exactly with no source line but their own
-        # emissions and conversions; what the shadows re-released or lost is
-        # read off the sourced and the escaped lines.
+        # emissions and conversions; a shadow is never sourced (node-is-ports-v1),
+        # and what the shadows lost is read off the escaped line.
         current_things, current_shadows = self.totals(BIT_THING), self.totals(BIT_SHADOW)
-        shadow_sources, shadow_escaped, shadow_taken = (
-            self._shadow_lines("shadow_sources"),
+        shadow_escaped, shadow_taken = (
             self._shadow_lines("shadow_escaped"),
             self._shadow_lines("shadow_absorbed_by_marks"),
         )
@@ -829,7 +828,7 @@ class DisturbanceEngine:
             # initial = current + escaped + absorbed_at_home.
             things[name] = thing_line(
                 initial_things[name],
-                tuple(a - b for a, b in zip(sources[name], shadow_sources[name], strict=True)),
+                sources[name],
                 current_things[name],
                 tuple(a - b for a, b in zip(escaped[name], shadow_escaped[name], strict=True)),
                 tuple(
@@ -856,9 +855,7 @@ class DisturbanceEngine:
             per_quantum = definition.charge
             charge[name] = ledger_line(
                 initial_charge[name],
-                checked_work(
-                    (sources.get(name, (0,))[0] - shadow_sources.get(name, (0,))[0]) * per_quantum
-                ),
+                checked_work(sources.get(name, (0,))[0] * per_quantum),
                 current_charge[name],
                 escaped_charge[name],
                 checked_work(absorbed.get(name, (0,))[0] * per_quantum),

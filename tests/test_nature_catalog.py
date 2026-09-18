@@ -748,13 +748,15 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         # -5 under the mirror, less its 5 before, is what the body takes with the
         # opposite sign, 10, on its momentum, beside the identity (the momentum
         # field's returned line), nothing sourced; the lamp's recoil -5 stays in
-        # the totals. The phase plate's token is written on the ray's own heading
-        # and shares its lane, so under lanes-v1 (Highlights 5.4, point 25) the
-        # departure is refused until bodies are things with their own line (the
-        # cleanup pins the refusal; the coordinator holds the question of #293).
+        # the totals. The phase plate's token is written on the ray's own heading;
+        # a body at rest claims no lane (the A6 lane's finding, 2026-09-18: the
+        # token never departs), so the ray goes on to (9,7,7) with its phase plus
+        # the setting, 1 + 3, the token counted as one quantum on +X in the
+        # event's shares, the momentum line whole and the body's own line zero
+        # (until then the departure was refused under lanes-v1 naming point 25).
         for name, position, product, ray_momentum in (
             ("mirror", (7, 7, 7), event_ray(1, 5, 1, 3, (1, 5, 0, 0, 0, 0)), -5),
-            ("phase_plate", (9, 7, 7), None, 5),
+            ("phase_plate", (9, 7, 7), event_ray(0, 5, 4, 1, (6, 0, 0, 0, 0, 0)), 5),
         ):
             assert [types_of(p) for p in couplings[name]["participants"][:1]] == [["any"]]
             declared = {"position": [8, 7, 7], "family": piece["name"], "amount": 4096, "coupling": name}
@@ -765,10 +767,6 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                 [with_names(rule(name, couplings[name]))],
                 [declared],
             )
-            if product is None:
-                with pytest.raises(ValueError, match="point 25"):
-                    run(document)
-                continue
             simulation = run(document)
             assert rays_at(simulation, position) == [product]
             assert rays_at(simulation, (8, 7, 7)) == []

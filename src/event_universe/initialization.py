@@ -51,7 +51,6 @@ from .core.integer import checked_work
 from .core.spatial_state import (
     BODY_POLARIZER,
     BODY_SINK,
-    CAPTURE_MODES,
     CHARGE_INVARIANT,
     CLICK_COUPLINGS,
     CLICK_DEFAULT,
@@ -71,6 +70,7 @@ from .core.spatial_state import (
     RAY_PROPERTIES,
     RAY_SLOTS_RETIRED,
     RAY_WRITABLE,
+    RECORD_PROGRAM_RETIRED,
     DecayDefinition,
     DetectorMark,
     EmissionDefinition,
@@ -1387,11 +1387,9 @@ def _spatial_fields(
         if transport == "local" and schema_version != 1:
             raise ValueError("local spatial transport requires schema_version 1")
         ray_keys = {"headings", "rays_per_tick"}
-        self_exclusion = False
         phase_steps, family_clock = 0, 0
         phase_bits, charge = 0, 0
         polarization_bits = -1
-        capture = "share"
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
         flux_projection = "ports"
@@ -1409,7 +1407,8 @@ def _spatial_fields(
                     raise ValueError("release must not exceed the source's amount")
             if "spread" in obj or "steering" in obj:
                 raise ValueError(NOT_DECLARED_MIXING)
-            self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
+            if "self_exclusion" in obj:
+                raise ValueError(RECORD_PROGRAM_RETIRED.format(key="self_exclusion"))
             # Every ray is a wave ray (wave-ray-family-v1) on the world's one phase
             # circle of N steps (the cleanup of 2026-09-18): a family declares its
             # charge per quantum and no width.
@@ -1427,11 +1426,6 @@ def _spatial_fields(
                         "a ray interaction views the polarization as a stored value: "
                         "polarization_bits is at most 30"
                     )
-            if self_exclusion and phase_bits > MAX_STORED_PHASE_BITS:
-                raise ValueError(
-                    "self_exclusion stores the departure phase as a bounded value: it requires "
-                    "phase_bits at most 30"
-                )
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
                 raise ValueError("spatial field metric must be links or euclidean")
@@ -1454,12 +1448,9 @@ def _spatial_fields(
                         "point 19, 2026-09-18): a thing's clock is its content, content / K steps "
                         "per interval; declare clock true on the family and K on the world"
                     )
-                phased = _object(
-                    obj["kerengonen"],
-                    "kerengonen",
-                    {"phase_steps", "capture"},
-                    set(),
-                )
+                if isinstance(obj["kerengonen"], dict) and "capture" in obj["kerengonen"]:
+                    raise ValueError(RECORD_PROGRAM_RETIRED.format(key="kerengonen.capture"))
+                phased = _object(obj["kerengonen"], "kerengonen", {"phase_steps"}, set())
                 if "phase_steps" in phased:
                     phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
                     if phase_steps > MAX_PHASE_STEPS or phase_steps & (phase_steps - 1):
@@ -1471,14 +1462,6 @@ def _spatial_fields(
                             "kerengonen phase_steps is the coherence table over the world's one "
                             f"phase circle and must equal N ({phase_steps_of_world}); {ONE_N}"
                         )
-                elif "capture" in phased:
-                    raise ValueError("kerengonen.capture requires phase_steps, the coherence table")
-                capture = _text(phased.get("capture", "share"), "kerengonen.capture")
-                if capture not in CAPTURE_MODES:
-                    raise ValueError(
-                        "kerengonen.capture must be share or threshold: the lottery capture was "
-                        "deleted on 2026-09-17, only a Node whose Detector bit is set may draw"
-                    )
             if "clock" in obj:
                 # The clock (clock-readings-v1, Highlights 5.4 point 19): a family
                 # whose things have a clock, content / K steps of phase per
@@ -1517,11 +1500,11 @@ def _spatial_fields(
                 raise ValueError("rays_per_tick is at most 4096")
         elif (
             ray_keys
-            | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            | {"kerengonen", "metric", "pace", "flux_projection"}
             | {"charge", "release", "spread", "steering", "polarization_bits", "clock"}
         ) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, self_exclusion, kerengonen, metric, pace, "
+                "headings, rays_per_tick, kerengonen, metric, pace, "
                 "flux_projection, charge, release, spread, steering, polarization_bits "
                 "and clock require ray transport"
             )
@@ -1552,10 +1535,8 @@ def _spatial_fields(
                 transport,
                 headings,
                 rays_per_tick,
-                self_exclusion,
                 phase_steps,
                 family_clock,
-                capture,
                 metric=metric,
                 pace_numerator=pace_numerator,
                 pace_denominator=pace_denominator,
@@ -1709,47 +1690,12 @@ def _emissions(
             )
             dissolve_after = _integer(schedule["after_ticks"], "emission.dissolve.after_ticks", 0)
             dissolve_over = _integer(schedule["over_ticks"], "emission.dissolve.over_ticks", 1)
-        mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]] | None = None
         if "kerengonen_mirror" in obj:
-            if not spatial[index].coherent:
-                raise ValueError(
-                    "kerengonen_mirror requires a kerengonen ray field with a coherence table"
-                )
-            axis = _text(obj["kerengonen_mirror"], "emission.kerengonen_mirror")
-            if axis in ("x", "y", "z"):
-                # A mirror across the plane normal to one axis: that component flips.
-                mirror = cast(
-                    tuple[tuple[int, int], tuple[int, int], tuple[int, int]],
-                    tuple((i, -1 if "xyz"[i] == axis else 1) for i in range(3)),
-                )
-            elif axis in ("xy", "xz", "yz"):
-                # A mirror across the diagonal plane of two axes: they swap.
-                first, second = "xyz".index(axis[0]), "xyz".index(axis[1])
-                order = [0, 1, 2]
-                order[first], order[second] = second, first
-                mirror = cast(
-                    tuple[tuple[int, int], tuple[int, int], tuple[int, int]],
-                    tuple((order[i], 1) for i in range(3)),
-                )
-            else:
-                raise ValueError("kerengonen_mirror must be x, y, z, xy, xz or yz")
-            for heading in spatial[index].headings:
-                image = tuple(heading[source] * sign for source, sign in mirror)
-                if image not in spatial[index].headings:
-                    raise ValueError(
-                        "kerengonen_mirror requires the heading sequence to contain every mirror image"
-                    )
-            if recoil is None:
-                raise ValueError(
-                    "kerengonen_mirror requires the emitter's momentum field: a mirror takes the "
-                    "momentum it reverses"
-                )
+            raise ValueError(RECORD_PROGRAM_RETIRED.format(key="kerengonen_mirror"))
         fixed_heading: int | None = None
         if "heading" in obj:
             if not spatial[index].rays:
                 raise ValueError("emission.heading requires a ray field")
-            if mirror is not None:
-                raise ValueError("emission.heading cannot be combined with kerengonen_mirror")
             fixed = cast(
                 tuple[int, int, int],
                 tuple(
@@ -1785,7 +1731,6 @@ def _emissions(
                 carried,
                 advance,
                 advance_denominator,
-                mirror,
                 dissolve_after,
                 dissolve_over,
                 fixed_heading,
@@ -2935,14 +2880,6 @@ def parse_initial_state(document: object) -> InitialState:
                 if any(item.field == target for item in initial.spatial_fields):
                     raise ValueError("ray momentum field cannot also own spatial populations")
                 bindings[index] = target
-            if (
-                (definition.kerengonen or definition.decay is not None)
-                and definition.self_exclusion
-                and any(rule.mode != "absorb" for rule in initial.spatial_couplings)
-            ):
-                raise ValueError(
-                    "phased or decaying self-exclusion supports absorption only, not response sampling"
-                )
         # bit-law-v1: a shadow of any family carries -dp home, so a world with one
         # momentum field binds every ray family to it; the ledger's momentum line
         # is exact for all of them.
@@ -2973,15 +2910,13 @@ def parse_initial_state(document: object) -> InitialState:
         if any(len(rule.participants) > capacity for rule in initial.interactions):
             raise ValueError("interaction participant count exceeds slots_per_node")
     for rule in initial.emissions:
-        if (rule.phase_carried or rule.mirror is not None) and not any(
+        if rule.phase_carried and not any(
             coupling.mode == "absorb"
             and coupling.field == initial.spatial_fields[rule.spatial_field].field
             and set(selected_types(coupling)) & set(selected_types(rule))
             for coupling in initial.spatial_couplings
         ):
-            raise ValueError(
-                "a carried kerengonen_phase or kerengonen_mirror requires an absorb rule on the same field"
-            )
+            raise ValueError("a carried kerengonen_phase requires an absorb rule on the same field")
     _validate_conversions(initial)
     if "conservation" in obj:
         initial = replace(initial, conservation=_conservation(obj["conservation"], initial))

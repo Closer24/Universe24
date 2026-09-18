@@ -373,3 +373,28 @@ def test_an_external_body_radiates_absorbs_reflects_and_moves_by_fields_only(tmp
         assert positions_of(world, "star") == set()
         assert len(positions_of(world, "light")) == 1
     assert not any(e["event"] in ("external_body_absorbed", "external_body_step") for e in events)
+
+
+@pytest.mark.parametrize("heading", range(6))
+def test_a_body_at_rest_is_reachable_from_every_port(heading):
+    """(f): the A6 lane's finding of 2026-09-18: a mirror body on the X axis refused
+    a light thing arriving on +X, because the body's token (heading +X) claimed
+    the +X out-lane under lanes-v1 and a real of another family on a taken lane
+    is refused. A body at rest occupies no lane (it does not move), so its token
+    claims none (`LaneClaims.at_rest`). Pinned before the first run: a lamp of 2
+    two Links from the mirror of 4096 on each of the six Ports in turn; its thing
+    reaches the body after two ticks, is reversed, and is back at the lamp's Node
+    after four, with the momentum of the light reversed (this board declares no
+    momentum field, so the mirror's own line reads nothing)."""
+    lamp = at((7, 7, 7), heading ^ 1, 2)
+    with Simulation(
+        parse_initial_state(document([MIRROR_BODY], [(lamp, "light", 2, heading)], (MIRROR,), ticks=4))
+    ) as world:
+        for _ in range(4):
+            world.step()
+        assert positions_of(world, "light") == {lamp}
+        (ray,) = rays_at(world, lamp, "light")
+        assert HEADINGS[ray.heading] == HEADINGS[heading ^ 1] and ray.amount == 2
+        assert momentum_of(world, "light") == tuple(-2 * c for c in HEADINGS[heading])
+        assert body_at(world, 0)["momentum"] == [0, 0, 0]
+        assert world.audit()["balanced"]

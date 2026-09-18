@@ -283,26 +283,13 @@ local `value`, and node values report `ray_count`. A coupling reaction that
 amends a departing packet leaves the rays on that port untouched, so rays pass
 through Nodes whose carriers respond to them.
 
-A record that emits rays and moves one link meets, at the next Node, exactly the
-rays it emitted on the cycle it departed whose first DDA step took the same
-port. With `"self_exclusion": true` the record carries two rows per emission
-rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its last departure
-(zero while it stays), and every coupling it evaluates after arriving reads the
-sampled flux and value with those rays subtracted. The work is bounded by
-`rays_per_tick`, uses only the record's own registers and the port it left
-through, and reads no ray identity or remote state. The reconstructed rays
-carry the departure's event state, so they match exactly the rays of that
-emission event: a ray of another event, another record's or the same record's
-earlier cycle, never merges with them
-([ray state](#ray-state-ray-event-state-v1)) and is not subtracted. An
-emitter that moves at link speed therefore meets the rays of its earlier
-cycles as distinct events and treats them as foreign. Rays that return later,
-from any distance, are not excluded: this is one-link exclusion of the
-emitter's own wake, not a general self-field law. Schema 2 decay attenuates each
-ray on arrival with the same ratio and residue rules as octant stock. Open
-boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
-weights, vector fields, field rules, spatial interactions, `node_execution` and
-the shared field clock. The Node's state is bounded by its lanes (`lanes-v1`; the `ray_slots` budget was retired on 2026-09-18). An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
+The one-Link `self_exclusion` of the record form (a record subtracting, at the
+next Node, the rays it emitted on the cycle it departed from the flux and value
+it samples, carried as two rows per emission rule) is retired with the
+record-as-owner field program (Highlights 5.4 point 22 and the settled rule
+(v); the cleanup of 2026-09-18, part 2): the key is refused naming the rule,
+the rows of the record are always empty, and the rays a thing releases are
+its shadows, which it meets at home (point 3 as amended).
 
 The inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
@@ -996,6 +983,33 @@ retired and the engine still carried is deleted, not kept behind an option:
   repository lost the key, and `examples/nature/bit_law_migration.py` drops
   it.
 
+- **The electricity reading and the whole charge** (the field lane's finding,
+  2026-09-18, on the pull request's list): the engine reads the pushed
+  thing's charge per quantum (`push_of`), so the push of an asymmetric pair
+  scales with the pusher's shadow set (F_B / F_A about 4 for contents 2^28
+  and 2^26) where point 16's worked example, with the charge of a thing
+  whole (an electron of content 32 and charge -1), gives the product of the
+  charges. The reading of the whole charge was implemented and measured on
+  this branch: with a family's charge declared per quantum a thing's whole
+  charge is its amount times that charge, so every push of s quanta on a
+  thing of content C read s x C x q_o x q_p, at or beyond the content for
+  any shadow set of two or more quanta ("faster than a ray" in the worlds of
+  `tests/test_return_field.py` and `tests/test_shadow_wait.py`, B of 1000
+  pushed 9000 by nine shares), and the catalog's electron of 20 turned at its
+  first push. The finding stands, and its fix is a declaration, the
+  model owner's: a family's charge as the charge of one thing, whole, over
+  the content of the thing (the law's electron), not per quantum; the
+  engine's per-quantum reading is kept until then.
+
+- **A body at rest occupies no lane** (the A6 lane's finding, 2026-09-18: a
+  mirror body on the X axis refused a light thing arriving on +X because the
+  body's token headed +X and claimed the out-lane). A body does not move, so
+  its token never departs and claims no lane: `forward_rays` keeps a thing
+  whose owner is at rest (`LaneClaims.at_rest`, the bodies' identities given
+  by `SpatialLaw.body_things`) and the Node strips it after the cycle as
+  before; a body is reachable from every Port
+  (`tests/test_external_body.py` (f)).
+
 Not done in the first part and listed on its pull request: the record-as-owner
 field program (the settled rule (v): the outward octant field, the
 couplings of records, the mirror, slit, dissolve, capture and self-exclusion
@@ -1037,9 +1051,9 @@ overrides the family's rate and requires the key. The phase is the one value
 with its own declared width (issue #169, 2026-09-17); two host limits follow
 from what else stores it. The coherence table has at most 4096 entries, so a
 phase wider than twelve bits has no table. A ray interaction views the phase
-as a stored value (`MAX_VALUE`, thirty bits) and a self-exclusion row stores
-it likewise, so `ray_interactions` on the family and `self_exclusion` require
-`phase_bits` at most 30. Everything else (content, steps, shares, headings)
+as a stored value (`MAX_VALUE`, thirty bits), so `ray_interactions` on the
+family require a width at most 30 (`self_exclusion` is retired, the settled
+rule (v)). Everything else (content, steps, shares, headings)
 keeps 32-bit storage and 64-bit intermediates.
 
 `RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
@@ -3171,9 +3185,7 @@ after arrival (`amount x fraction / fraction_denominator`, or the whole ray),
 adds it to its own field of the same name and, with `momentum_field`,
 `share x heading` to that vector; the rest of the ray is forwarded. Absorption
 happens before forwarding and before this cycle's emission joins the residents,
-so a record never swallows its fresh rays; with `self_exclusion` the rays of its
-own last departure are left alone by their complete ray key. Absorbers act in
-slot order.
+so a record never swallows its fresh rays. Absorbers act in slot order.
 
 A funded emission may carry a `"dissolve": {"after_ticks": N, "over_ticks": K}`
 schedule instead of an amount: the record emits nothing for its first `N`
@@ -3277,7 +3289,7 @@ field's rate. Without the key the field is the plain `isotropic-ray-field-v1`,
 a wave-ray family with rest rate 0 and no coherence table, which still admits
 a `kerengonen_phase` below its declared width; a `kerengonen_advance` on an
 emission requires the key. The runner records the identity
-`kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+`kerengonen-ray-field-v1`. The double-slit probe (`examples/kerengonen-double-slit/`, deleted on 2026-09-18)
 measures the fringe on a line of absorbers.
 
 Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
@@ -3311,9 +3323,12 @@ wavelength, and the de Broglie probe (`examples/de-broglie/`, deleted on 2026-09
 measures the fringe spacing it gives. A ray without its own advance uses the
 field's.
 
-A mirror is the same rule turned around. The absorbed row also keeps the
-heading of the largest share, and an emission with
-`"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sends its whole amount back as
+The mirror of the record form, `kerengonen_mirror`, is retired with the
+record-as-owner field program (the settled rule (v); the cleanup of
+2026-09-18, part 2) and refused naming the rule; a mirror is an external body
+with a table since `node-is-ports-v1`. Until then a mirror was the same rule
+turned around: the absorbed row also kept the heading of the largest share,
+and an emission with `"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sent its whole amount back as
 one ray along the mirror image of that heading across the named axis, at the
 carried phase and advance when `"kerengonen_phase": "carried"` is set. A
 diagonal mirror, `"xy"`, `"xz"` or `"yz"`, swaps the two named components
@@ -3326,10 +3341,11 @@ then holds a standing wave: the reading along the line repeats every
 `phase_steps / (2 x advance)` links, as the
 mirror probe (`examples/kerengonen-mirror/`, deleted on 2026-09-17) measures.
 Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_advance` on an emission requires the key, and a carried phase or a
-`kerengonen_mirror` requires its coherence table. The runner records the
-identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
-measures the fringe on a line of absorbers.
+`kerengonen_advance` on an emission requires the key, and a carried phase
+requires its coherence table. The runner records the
+identity `kerengonen-ray-field-v1`. The double-slit probe of the record form
+(`examples/kerengonen-double-slit/`, deleted on 2026-09-18 with the program)
+measured the fringe on a line of absorbers.
 
 ### Euclidean pace (`"metric": "euclidean"`)
 

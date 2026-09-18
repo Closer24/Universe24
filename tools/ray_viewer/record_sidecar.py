@@ -4,8 +4,9 @@ The runner writes no per-tick ray listing, so the phase of every Link and the
 ray-event fields (``steps``, ``outbound``, ``event_ports``, ``event_shares``,
 ``detector``) are not in its record. This tool replays the preserved
 ``initialization.json`` through the Simulation API for the recorded number of
-ticks, captures every tick with ``examples/generic-ray-coupling/evidence.capture``
-(the copy of resident and Link rays the evidence tests use), checks that the
+ticks, captures every tick with ``capture`` below (the copy of resident and Link
+rays the evidence tool of the record-as-owner program used, kept here since
+that program's deletion on 2026-09-18), checks that the
 replay's event stream equals the runner's ``events.jsonl`` line for line and
 that the source fingerprint equals ``run.json``'s, and only then writes the
 sidecar. It is a Recorder in the sense of Highlights 3.29 and 3.30: it reads
@@ -20,9 +21,8 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import importlib.util
 import json
-import sys
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
@@ -32,7 +32,6 @@ from event_universe.json_documents import parse_json_document
 from event_universe.runner import source_fingerprint
 
 ROOT = Path(__file__).resolve().parents[2]
-EVIDENCE = ROOT / "examples" / "generic-ray-coupling" / "evidence.py"
 COPIED_KEYS = (
     "model",
     "source_sha256",
@@ -49,15 +48,62 @@ COPIED_KEYS = (
 )
 
 
-def capture_function() -> Any:
-    """The evidence tool's ``capture``, loaded from its file (it is not a package)."""
-    spec = importlib.util.spec_from_file_location("ray_coupling_evidence", EVIDENCE)
-    if spec is None or spec.loader is None:
-        raise ValueError(f"cannot load {EVIDENCE}")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module.capture
+def owned_rays(world: Any) -> list[dict[str, Any]]:
+    """Copy all real resident and Link ray owners, including complete metadata."""
+    spatial = world._spatial
+    if spatial is None:
+        return []
+    owners: list[dict[str, Any]] = []
+
+    def append(bundle: Any, location: dict[str, Any]) -> None:
+        for index, rays in enumerate(bundle):
+            definition = world.initial.spatial_fields[index]
+            name = world.initial.fields[definition.field].name
+            for slot, ray in enumerate(rays):
+                if getattr(ray, "parked", 0):
+                    # A parked shadow is the Node's memory (node-is-ports-v1), not a ray on its way.
+                    continue
+                owners.append(
+                    {
+                        **location,
+                        "field": name,
+                        "slot": slot,
+                        "heading_vector": list(definition.headings[ray.heading]),
+                        "phase_steps": definition.phase_steps,
+                        "ray": asdict(ray),
+                    }
+                )
+
+    for position, node in sorted(spatial.nodes.items()):
+        append(node.rays, {"owner": "node", "position": list(position)})
+    for bank in spatial.links.values():
+        for packet in bank:
+            if packet is not None:
+                append(
+                    packet.rays,
+                    {
+                        "owner": "link",
+                        "origin": list(packet.origin),
+                        "target": spatial._neighbor(packet.origin, packet.port),
+                        "port": packet.port,
+                        "arrival_tick": packet.arrival_tick,
+                    },
+                )
+    return owners
+
+
+def capture(world: Any) -> dict[str, Any]:
+    """Copied canonical display state and detailed ray inventory at one tick."""
+    return {
+        "tick": world.tick,
+        "rays": owned_rays(world),
+        "snapshot": world.snapshot(),
+        "totals": world.totals(),
+        "escaped_totals": world.escaped_totals(),
+        "source_totals": world.source_totals(),
+        "dissipation_totals": world.dissipation_totals(),
+        "spatial_accounting": world.spatial_accounting(),
+    }
 
 
 def replay(run: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
@@ -69,7 +115,6 @@ def replay(run: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
         raise ValueError("initialization.json differs from the run's initialization_sha256")
     if source_fingerprint() != metadata["source_sha256"]:
         raise ValueError("this source tree is not the one that made the run (source_sha256)")
-    capture = capture_function()
     initial = prepare_initialization(parse_json_document(source)).initial
     events: list[dict[str, Any]] = []
     frames: list[dict[str, Any]] = []
@@ -97,9 +142,7 @@ def write_sidecar(run: Path, out: Path | None = None) -> Path:
     directory = run if run.is_dir() else run.parent
     target = out or directory / "ray-recording.json"
     sidecar: dict[str, Any] = {key: metadata.get(key) for key in COPIED_KEYS}
-    sidecar["recorded_by"] = (
-        "tools/ray_viewer/record_sidecar.py: replay through Simulation + evidence.capture"
-    )
+    sidecar["recorded_by"] = "tools/ray_viewer/record_sidecar.py: replay through Simulation + capture"
     sidecar["frames"] = frames
     target.write_text(json.dumps(sidecar) + "\n", encoding="utf-8")
     return target

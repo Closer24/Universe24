@@ -212,7 +212,6 @@ class SpatialAccounting:
         absorbed: list[list[int]] | None = None,
         absorbed_by_marks: list[list[int]] | None = None,
         returned: list[list[int]] | None = None,
-        shadow_sources: list[list[int]] | None = None,
         shadow_absorbed_by_marks: list[list[int]] | None = None,
         spent: list[list[int]] | None = None,
         computation: list[int] | None = None,
@@ -225,7 +224,6 @@ class SpatialAccounting:
         self.__absorbed = [] if absorbed is None else absorbed
         self.__absorbed_by_marks = [] if absorbed_by_marks is None else absorbed_by_marks
         self.__returned = [] if returned is None else returned
-        self.__shadow_sources = [] if shadow_sources is None else shadow_sources
         self.__shadow_absorbed_by_marks = (
             [] if shadow_absorbed_by_marks is None else shadow_absorbed_by_marks
         )
@@ -263,12 +261,6 @@ class SpatialAccounting:
         """What came home (bit-law-v1): the amounts of the shadows absorbed back into
         their things and the momentum delivered outside the identity."""
         add_audit_delta(self.__returned, values)
-
-    def record_shadow_sources(self, values: Values) -> None:
-        """The re-releases (bit-law-v1): the shadows that left again, booked on the
-        source line and on this line, so that the things' own identity reads the
-        sources less them."""
-        add_audit_delta(self.__shadow_sources, values)
 
     def record_spent(self, values: Values) -> None:
         """The momentum the things spent on their steps (clock-readings-v1, the
@@ -592,7 +584,6 @@ class SpatialNode(SpatialNodeState):
         services: SpatialServices,
         absorbed: list[list[int]],
         returned: list[list[int]],
-        sourced: list[list[int]],
         home_by_family: dict[int, list[int]],
         notes: list[dict[str, object]],
         home_pushes: dict[int, list[list[int]]],
@@ -1693,7 +1684,6 @@ class SpatialNode(SpatialNodeState):
         # What came home at the body and what pushed it (bit-law-v1): the returned
         # line, the re-release on the source line, and per family for the record.
         returned = [[0] * field.components for field in services.initial.fields]
-        sourced = [[0] * field.components for field in services.initial.fields]
         home_by_family: dict[int, list[int]] = {}
         # The two halves of the body meeting its own shadows this interval, per
         # family: the pushes and their zero-step returns (the cleanup of 2026-09-18).
@@ -1785,7 +1775,6 @@ class SpatialNode(SpatialNodeState):
                         services,
                         absorbed,
                         returned,
-                        sourced,
                         home_by_family,
                         returns,
                         home_pushes,
@@ -1917,9 +1906,6 @@ class SpatialNode(SpatialNodeState):
             )
         if any(any(values) for values in returned):
             services.accounting.record_returned(tuple(tuple(values) for values in returned))
-        if any(any(values) for values in sourced):
-            services.accounting.record_sources(tuple(tuple(values) for values in sourced))
-            services.accounting.record_shadow_sources(tuple(tuple(values) for values in sourced))
         # Read-only, post-commit summaries. State.delivered uses travel ports;
         # a receiver sees the opposite side. Retain zero readings on used
         # ports so cancellation is distinct from no completed reception.
