@@ -88,14 +88,13 @@ def scalar(name):
     }
 
 
-def ray_family(name, slots, rate, charge, **extra):
+def ray_family(name, rate, charge, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": PHASE_BITS,
@@ -183,8 +182,8 @@ def screen_world(setting, seed, *, ticks=TICKS):
             for _, name, _ in lamps()
         ],
         "spatial_fields": [
-            ray_family("electron", 8, RING_RATE, ELECTRON_CHARGE),
-            ray_family("light", 24, 0, 0, field_of="electron", release=RELEASE, spread=SPREAD),
+            ray_family("electron", RING_RATE, ELECTRON_CHARGE),
+            ray_family("light", 0, 0, field_of="electron", release=RELEASE, spread=SPREAD),
         ],
         "emissions": [
             {
@@ -246,8 +245,8 @@ def fringe_world(second_phase, steer, *, ticks=TICKS, amount=SOURCE_AMOUNT):
             }
         ],
         "spatial_fields": [
-            ray_family("proton", 2, 0, SOURCE_CHARGE),
-            ray_family("light", 32, 0, 0, field_of="proton", release=RELEASE, spread=SPREAD),
+            ray_family("proton", 0, SOURCE_CHARGE),
+            ray_family("light", 0, 0, field_of="proton", release=RELEASE, spread=SPREAD),
         ],
         "emissions": [
             {

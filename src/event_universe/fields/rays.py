@@ -8,7 +8,7 @@ from event_universe.core.spatial_state import (
     BIT_SHADOW,
     BIT_THING,
     MAX_HEADINGS,
-    MAX_RAY_SLOTS,
+    MAX_RAYS_PER_TICK,
     POLARIZATION_NONE,
     PORT_HEADINGS,
     Ray,
@@ -50,10 +50,8 @@ def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefi
         raise ValueError("ray transport requires one to 65536 headings")
     for heading in definition.headings:
         validate_heading(heading)
-    if not 1 <= definition.ray_slots <= MAX_RAY_SLOTS:
-        raise ValueError("ray_slots must be between 1 and 4096")
-    if not 1 <= definition.rays_per_tick <= definition.ray_slots:
-        raise ValueError("rays_per_tick must be between 1 and ray_slots")
+    if not 1 <= definition.rays_per_tick <= MAX_RAYS_PER_TICK:
+        raise ValueError("rays_per_tick must be between 1 and 4096")
     if definition.coherent and len(definition.cosine_table) != definition.phase_steps:
         raise ValueError("ray phase law must be prepared before transport")
 
@@ -129,10 +127,15 @@ class LaneClaims:
     hold one slot; a second real of another key on a taken lane is refused, as
     no Port ever sends two."""
 
-    __slots__ = ("taken",)
+    __slots__ = ("at_rest", "taken")
 
-    def __init__(self) -> None:
+    def __init__(self, at_rest: tuple[int, ...] = ()) -> None:
         self.taken: list[tuple[int, RayMergeKey] | None] = [None] * 6
+        # The things at rest at the Node (the external bodies, by identity): a
+        # body does not move, so its token never departs and claims no lane
+        # (`forward_rays`; the A6 lane's finding, 2026-09-18: a body at rest is
+        # reachable from every Port).
+        self.at_rest = at_rest
 
     def free(self, port: int) -> bool:
         return self.taken[port] is None
@@ -272,6 +275,13 @@ def forward_rays(
         meter.charge("route")
         if not ray.outbound and ray.steps == 0 and ray.detector == BIT_THING:
             # At its event Node (a thing).
+            kept.append(ray)
+            continue
+        if ray.detector == BIT_THING and ray.owner in claims.at_rest:
+            # A thing at rest (an external body's token, node-is-ports-v1): it
+            # does not move, departs through no Port and claims no lane, so the
+            # body is reachable from every Port (the A6 lane's finding,
+            # 2026-09-18); the Node strips it after the cycle.
             kept.append(ray)
             continue
         if ray.detector == BIT_SHADOW and ray.owed:

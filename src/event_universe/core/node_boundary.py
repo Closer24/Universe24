@@ -278,7 +278,7 @@ def validate_spatial_plan(
 
 
 def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:
-    """Outgoing rays: six ports, one tuple per spatial field, each within its slot budget."""
+    """Outgoing rays: six ports, one tuple per spatial field, each validated."""
     has_rays = any(definition.rays for definition in initial.spatial_fields)
     validate_ray_bundle(initial, plan.kept_rays, optional=True)
     _tuple(plan.rays, port_count(initial))

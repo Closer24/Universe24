@@ -4,7 +4,6 @@ from dataclasses import replace
 
 from event_universe.core.coupling_selectors import participant_groups
 from event_universe.core.disturbance_state import (
-    MAX_SLOTS,
     CostMeter,
     DisturbanceRecord,
     FieldDefinition,
@@ -247,7 +246,8 @@ def _turn(
     """A thing turns by momentum (ray-momentum-turn-v3 under clock-readings-v1,
     Highlights 5.4 points 3, 15, 16 and 18): the coupling's one unnamed
     participant, a thing, is pushed by every resident outbound shadow of a family
-    the table names that is not its own, the group's shadow among them, each
+    the table names, its own shadows among them (whose push and zero-step return
+    cancel in the same cycle, the home of point 3 as amended), each
     push the rule's reading of the shadow's message (`push_of`: the table's sign
     x amount x heading x the thing's content, or x the owner's charge over its
     content x the thing's charge, the latter accumulated exactly on the thing's
@@ -275,7 +275,7 @@ def _turn(
         if not sign or shadow_slot in used or views[shadow_slot] is None:
             continue
         shadow = rays[kind][ray_slot]
-        if shadow.detector != BIT_SHADOW or shadow.owner in (ray.owner, *ray.owners):
+        if shadow.detector != BIT_SHADOW:
             continue
         if taken.get(shadow_slot, receiver_slot) != receiver_slot:
             continue
@@ -293,6 +293,23 @@ def _turn(
             ray.push_remainder,
         )
         before = ray_momentum_vector(ray, definition)
+        if shadow.owner in (ray.owner, *ray.owners):
+            # A thing meeting its own shadow is the same rule with a round trip
+            # of length zero (the law of the bit, point 3 as amended, the model
+            # owner, 2026-09-18): the generic push, then the return of zero steps,
+            # the same shadow with its sign flipped at the same Node, handing
+            # -push back to its owner in the same cycle, before any step
+            # decision; the two halves sum to zero, so the thing is what it
+            # was, and the shadow is absorbed at home below (`_homecoming`).
+            # "Home" names that result and is no rule of its own; the engine
+            # computes the zero directly, booking both halves.
+            pushed = pushed_ray(ray, push, definition)
+            meter.charge("update", 4)
+            if turns is not None:
+                after = ray_momentum_vector(pushed, definition)
+                turns.append(RayPush(index, ray.amount, before, after, kind, shadow.amount, heading, 1))
+                turns.append(RayPush(index, ray.amount, after, before, kind, shadow.amount, heading, 1))
+            continue
         wait_quanta: int | None = None
         if definition.wait_reads == "amplitude":
             # The wait reads the amplitude (wait-reads-v1, a declared coupling
@@ -421,9 +438,8 @@ def _meet(
     rays (`periods`, read by `after_periods`) and continues to the next rule in
     declared order, whose outputs carry the count on. A false guard is no
     meeting under the rule and counts nothing. Nothing is drawn."""
+    # The participants are what the lanes hold (lanes-v1): no capacity of its own.
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
-    if len(owners) > MAX_SLOTS:
-        raise ValueError("ray coupling exceeds the bounded participant capacity")
     # ray-polarization-v1: the polarization component is read when a rule of the
     # layer names it; a layer whose rules do not reads the view it read before.
     components = (
@@ -473,8 +489,10 @@ def _meet(
             # receiver role's families, is pushed by every resident outbound
             # shadow of a family the table names that is not its own, whatever
             # role that shadow's family is written in; the shadows of its own
-            # family push it too, when their owner is another thing. One push
-            # per receiver in slot order; the guard is read over the receiver's
+            # family push it too, its own shadows among them, whose push the
+            # return of zero steps undoes in the same cycle (the home of point 3
+            # as amended, the cleanup of 2026-09-18). One push per receiver in
+            # slot order; the guard is read over the receiver's
             # view and the first shadow's, in role order.
             if receiver < 0:
                 continue
@@ -495,7 +513,6 @@ def _meet(
                     and kind < len(rule.momentum_table)
                     and rule.momentum_table[kind]
                     and rays[kind][kind_slot].detector == BIT_SHADOW
-                    and rays[kind][kind_slot].owner not in (thing.owner, *thing.owners)
                     and taken.get(other, slot) == slot
                     and not rides_with(
                         rays[kind][kind_slot], thing, definitions[kind], definitions[index]
@@ -531,7 +548,7 @@ def _meet(
             else view
             for slot, ((index, ray_slot), view) in enumerate(zip(owners, views, strict=True))
         )
-        for group in participant_groups(rule, available):
+        for group in participant_groups(rule, available, capacity=len(available)):
             group_views = tuple(views[slot] for slot in group)
             assert all(view is not None for view in group_views)
             if rule.outputs:
@@ -639,8 +656,4 @@ def apply_ray_interactions(
             costs,
             turns,
         )
-    result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
-    for index, bundle in enumerate(result):
-        if len(bundle) > definitions[index].ray_slots:
-            raise ValueError("ray meeting outputs exceed the field's ray slots")
-    return result
+    return tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)

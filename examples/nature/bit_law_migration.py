@@ -20,8 +20,9 @@ The rules, applied to a world document in place:
 - (node-is-ports-v1) a mark loses `seed` (there is no lottery and no counter);
 
 - a spatial field with `field_of` X loses the key; its `release` and `spread`
-  move to X (X's own declaration wins when it has one), and X's `ray_slots`
-  become the larger of the two, since X now carries its things and its shadows;
+  move to X (X's own declaration wins when it has one);
+- (lanes-v1, the cleanup of 2026-09-18) every spatial field loses `ray_slots`:
+  the Node's state is bounded by its lanes and no budget per family exists;
 - everywhere a rule, a body or a mark names the field family (a participant's
   `type`, an output's `field`, a `momentum_table` key, an `on_click` key), it
   names the owner instead, the first entry winning when two fold into one, and
@@ -172,6 +173,8 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
         # The Node mixes the six (node-mixing-v1): no table of the spread is declared.
         entry.pop("spread", None)
         entry.pop("steering", None)
+        # The lanes bound the Node (lanes-v1): no ray slot budget per family.
+        entry.pop("ray_slots", None)
         if "field_of" not in entry:
             continue
         owner = entry.pop("field_of")
@@ -179,7 +182,6 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
         target = by_name[owner]
         if "release" in entry:
             target.setdefault("release", entry.pop("release"))
-        target["ray_slots"] = max(int(target.get("ray_slots", 0)), int(entry.get("ray_slots", 0)))
     if not renames:
         _drop_orphan_families(document)
         return document
@@ -221,7 +223,6 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
     for mark in document.get("detectors", []):
         if isinstance(mark.get("on_click"), dict):
             mark["on_click"] = rekey(mark["on_click"])
-    _cap_layers(document)
     _drop_orphan_families(document)
     return document
 
@@ -328,46 +329,3 @@ def _node_is_ports(document: dict[str, Any]) -> None:
             kind["defaults"].setdefault(momentum, [0, 0, 0])
     for mark in document.get("detectors", []):
         mark.pop("seed", None)
-
-
-def _cap_layers(document: dict[str, Any]) -> None:
-    """The engine admits at most 32 selected ray slots in one layer (the families a
-    rule couples). Two things of coupled families that now carry their shadows
-    in their own families may exceed it; their slots are scaled down to fit, in
-    proportion, so that the world parses. Such a world must be declared again on
-    the final law before it is run (the slots are then its own decision)."""
-    fields = document.get("spatial_fields", [])
-    by_name = {entry["field"]: entry for entry in fields}
-    parent = {name: name for name in by_name}
-
-    def root(name: str) -> str:
-        while parent[name] != name:
-            name = parent[name]
-        return name
-
-    selected: set[str] = set()
-    for rule in document.get("ray_interactions", []):
-        names: list[str] = []
-        for role in rule.get("participants", []):
-            kinds = role["type"] if isinstance(role["type"], list) else [role["type"]]
-            names.extend(kinds)
-        for output in rule.get("outputs", []):
-            if isinstance(output.get("field"), str) and output["field"] in by_name:
-                names.append(output["field"])
-        names.extend(rule.get("momentum_table", {}))
-        names = [name for name in names if name in by_name]
-        selected.update(names)
-        for name in names[1:]:
-            parent[root(name)] = root(names[0])
-    layers: dict[str, list[str]] = {}
-    for name in by_name:
-        layers.setdefault(root(name), []).append(name)
-    for members in layers.values():
-        if not selected.intersection(members):
-            continue
-        total = sum(int(by_name[name].get("ray_slots", 0)) for name in members)
-        if total <= 32:
-            continue
-        for name in members:
-            slots = int(by_name[name].get("ray_slots", 0))
-            by_name[name]["ray_slots"] = max(1, slots * 32 // total)

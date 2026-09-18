@@ -1055,11 +1055,6 @@ class DenseField:
             family.arr_mom += momenta
             present = (family.arr_amt > 0).any(axis=(3, 4, 5, 6, 7))
             self.visited |= present
-            count = (family.arr_amt > 0).sum(axis=(3, 4, 5, 6, 7))
-            for position, rays in family.overflow.items():
-                count[position] += len(rays)
-            if count.max(initial=0) > family.definition.ray_slots:
-                raise ValueError("ray slot budget exceeded")
         for target, packets in handed.items():
             ready.setdefault(target, []).extend(packets)
         return ready, absorbed, handed

@@ -37,7 +37,7 @@ class InventoryNode:
     incoming_spatial: tuple[SpatialState, ...] = ()
     # The resident rays per spatial field, on their way or waiting, and beside
     # them the parked shadows (node-is-ports-v1): the shares below one quantum,
-    # in units of the family's split denominator, and the traces (amount 0).
+    # in units of the family's split denominator.
     rays: tuple[Rays, ...] = ()
     parked: tuple[Rays, ...] = ()
 

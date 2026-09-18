@@ -256,7 +256,7 @@ once per draw either way; a replay redraws nothing.
 **The account.** The counter and the momentum are bounded Node metadata on
 the mark, like a body's sink: no rays, no history. Every line of the world
 ledger reads `absorbed_by_marks` beside `absorbed` (the bodies' sinks),
-initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks
+initial + sourced = current + escaped + absorbed + absorbed_by_marks (+ returned + spent on the momentum line; the `annulled` term deleted with the return modes on 2026-09-18, `cleanup-law-v1`)
 at every completed tick for amount, momentum and charge, and the marks' own
 lines (count, momentum, counters) stand beside the identity as the bodies'
 do; the local audit reads what a mark absorbed from the reception record and
@@ -391,7 +391,7 @@ couplings and before forwarding, so the transmission leaves the Node on that
 cycle like an emission. Nothing stays at the Node: the returned ray is
 consumed by the split in every mode.
 
-**The mode.** The world key `return_mode` ([disturbances](DISTURBANCES.md#json-schema-versions-1-and-2),
+**The mode (deleted on 2026-09-18, `cleanup-law-v1`: the one behaviour at an event Node is the sibling transmission; `return_mode`, `straight`, `annul` and the annulled sink are gone, and the paragraphs below describe the interim form).** The world key `return_mode` ([disturbances](DISTURBANCES.md#json-schema-versions-1-and-2),
 default `siblings`) selects what the returned ray does. Its own Port is the
 Port its event sent it through, the first step of its event heading (its own
 heading negated).
@@ -468,12 +468,12 @@ share it chases is a declared coupling, not part of this rule.
 position, tick (the cycle's label), `family`, `mode`, `ports` (the Ports
 transmitted to, in Port order), `amounts` (the amount per Port), `amount`
 (the returned share), `bit` (the ray's Detector bit, 0 or 1), `restored`
-and, in `annul`, `annulled` per field. It precedes the cycle's
+(and, until the cleanup, in `annul`, `annulled` per field). It precedes the cycle's
 `spatial_cycle` record.
 
-**Identity.** The runner records `inverse_split: "inverse-split-v1"` and
-`return_mode` in `run.json` beside `detector_return`, and `annulled_totals`
-beside `escaped_totals`. No new draw: a world without a mark has no returned
+**Identity.** The runner records `inverse_split: "inverse-split-v1"` in
+`run.json` beside `detector_return` (`return_mode` and `annulled_totals`
+until the cleanup of 2026-09-18). No new draw: a world without a mark has no returned
 ray and runs byte for byte as before.
 
 ## External exchange implementation boundary
@@ -500,9 +500,9 @@ that stream seeded by the mark's `seed`. Closed by `detector-return-v1`
 return of the same wave ray reversed on its line, unchanged, entering no
 coupling on the way back and resident at its event Node at `steps` 0.
 Closed by `inverse-split-v1` ([the inverse split](#the-inverse-split-inverse-split-v1)):
-the transmission of the returned share to the sibling lines of its event by
-the world's `return_mode`, the restore and funding through the event's
-input, and the annulled sink. The following definitions are still open:
+the transmission of the returned share to the sibling lines of its event
+(the world's `return_mode` and the annulled sink until the cleanup of
+2026-09-18), the restore and funding through the event's input. The following definitions are still open:
 
 | Owner | Missing definition | Acceptance after closure |
 | --- | --- | --- |
@@ -540,9 +540,9 @@ of the bit the mark's evidence is `tests/test_bit_law.py` and
    tick, through no coupling and no absorption, to rest at its event Node
    with the phase it left with; the momentum total is unchanged and the
    audits exact every tick ([Detector return](TEST_EXPECTATIONS.md#detector-return)).
-7. A returned ray at its event Node transmits its share by the world's
-   `return_mode`: to the sibling lines with its phase and bit, straight
-   through, or into the annulled sink with the conservation line exact; the
+7. A returned ray at its event Node transmits its share to the sibling
+   lines with its phase and bit (the `straight` and `annul` modes deleted on
+   2026-09-18) with the conservation line exact; the
    event's input takes the share back and funds the transmission in one
    interval ([Inverse split](TEST_EXPECTATIONS.md#inverse-split)).
 8. The cancellation where the transmission meets the share it chases and

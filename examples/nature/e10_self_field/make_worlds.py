@@ -66,14 +66,13 @@ def lamps():
     return result
 
 
-def ray_family(name, slots, rate, charge, **extra):
+def ray_family(name, rate, charge, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": PHASE_BITS,
@@ -204,8 +203,8 @@ def _world(amount, variant, *, ticks=TICKS):
             for _, name, _ in lamps()
         ],
         "spatial_fields": [
-            ray_family("electron", 8, RATE, CHARGE),
-            ray_family("light", 24, 0, 0, field_of="electron", release=RELEASE, spread=SPREAD),
+            ray_family("electron", RATE, CHARGE),
+            ray_family("light", 0, 0, field_of="electron", release=RELEASE, spread=SPREAD),
         ],
         "emissions": [
             {

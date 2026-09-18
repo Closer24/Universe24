@@ -96,7 +96,6 @@ def document(shape, families, lamps, ticks, ray_interactions=None, n=8):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 6,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 **extra,
@@ -235,7 +234,11 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         ({"kerengonen": {"phase_steps": 16}}, {}, "must equal N"),
         ({"kerengonen": {"phase_steps": 12}}, {}, "power of two"),
         ({"kerengonen": {"phase_advance": 8}}, {}, "clock-readings-v1"),
-        ({"kerengonen": {"capture": "threshold"}}, {}, "capture requires"),
+        # The record-as-owner field program is retired (the settled rule (v), the
+        # cleanup of 2026-09-18): its keys are refused naming the rule.
+        ({"kerengonen": {"capture": "threshold"}}, {}, "settled rule"),
+        ({"self_exclusion": True}, {}, "settled rule"),
+        ({}, {"kerengonen_mirror": "x"}, "settled rule"),
         ({"clock": True}, {"kerengonen_phase": "carried"}, "coherence table"),
         # One N for the world (the cleanup of 2026-09-18): a width on a family is
         # refused naming the definitions of the law.
