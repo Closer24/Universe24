@@ -1,423 +1,414 @@
 {
- "schema_version": 1,
- "model_id": "a5-coulomb-ee-b6",
- "shape": [
-  97,
-  49,
-  49
- ],
- "boundary": "open",
- "slots_per_node": 2,
- "link_ticks": 1,
- "normal_budget": 100000,
- "ticks": 74,
- "operation_costs": {
-  "receive": 1,
-  "read": 1,
-  "evaluate": 1,
-  "update": 1,
-  "couple": 1,
-  "route": 1,
-  "split": 1,
-  "send": 1,
-  "commit": 1
- },
- "fields": [
-  {
-   "name": "electron_a",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
+  "schema_version": 1,
+  "model_id": "a5-coulomb-ee-b6",
+  "shape": [
+    97,
+    49,
+    49
+  ],
+  "boundary": "open",
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 74,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
   },
-  {
-   "name": "electron_b",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  },
-  {
-   "name": "light_a",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  },
-  {
-   "name": "light_b",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  },
-  {
-   "name": "momentum",
-   "components": 3,
-   "units": "quantum times heading",
-   "signed": true,
-   "conserved": true,
-   "extensive": true
-  }
- ],
- "disturbance_types": [
-  {
-   "name": "lamp_a",
-   "fields": [
-    "electron_a",
-    "momentum"
-   ],
-   "defaults": {
-    "electron_a": 64,
-    "momentum": [
-     0,
-     0,
-     0
-    ]
-   },
-   "transport": {
-    "mode": "hold"
-   }
-  },
-  {
-   "name": "lamp_b",
-   "fields": [
-    "electron_b",
-    "momentum"
-   ],
-   "defaults": {
-    "electron_b": 64,
-    "momentum": [
-     0,
-     0,
-     0
-    ]
-   },
-   "transport": {
-    "mode": "hold"
-   }
-  }
- ],
- "spatial_fields": [
-  {
-   "field": "electron_a",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 16,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 12,
-   "charge": -3,
-   "kerengonen": {
-    "phase_advance": 1
-   },
-   "release": [
-    1,
-    4
-   ]
-  },
-  {
-   "field": "electron_b",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 16,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 12,
-   "charge": -3,
-   "kerengonen": {
-    "phase_advance": 1
-   },
-   "release": [
-    1,
-    4
-   ]
-  },
-  {
-   "field": "light_a",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 30,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 12,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 0
-   }
-  },
-  {
-   "field": "light_b",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 30,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 12,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 0
-   }
-  }
- ],
- "emissions": [
-  {
-   "type": "lamp_a",
-   "field": "electron_a",
-   "amount": 64,
-   "denominator": 1,
-   "heading": [
-    1,
-    0,
-    0
-   ],
-   "kerengonen_phase": 0
-  },
-  {
-   "type": "lamp_b",
-   "field": "electron_b",
-   "amount": 64,
-   "denominator": 1,
-   "heading": [
-    -1,
-    0,
-    0
-   ],
-   "kerengonen_phase": 0
-  }
- ],
- "seeds": [
-  {
-   "position": [
-    0,
-    21,
-    24
-   ],
-   "type": "lamp_a"
-  },
-  {
-   "position": [
-    96,
-    27,
-    24
-   ],
-   "type": "lamp_b"
-  }
- ],
- "ray_interactions": [
-  {
-   "name": "electron_field_turn_a",
-   "participants": [
+  "fields": [
     {
-     "type": "electron_a"
+      "name": "electron_a",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     },
     {
-     "type": "electron_b"
-    }
-   ],
-   "momentum_table": {
-    "electron_b": 1
-   },
-   "invariants": [
-    {
-     "name": "energy",
-     "expression": {
-      "op": "add",
-      "args": [
-       {
-        "field": "amount",
-        "participant": 0
-       },
-       {
-        "field": "amount",
-        "participant": 1
-       }
-      ]
-     }
-    }
-   ],
-   "reads": "charge"
-  },
-  {
-   "name": "electron_field_turn_b",
-   "participants": [
-    {
-     "type": "electron_b"
+      "name": "electron_b",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     },
     {
-     "type": "electron_a"
-    }
-   ],
-   "momentum_table": {
-    "electron_a": 1
-   },
-   "invariants": [
+      "name": "light_a",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
     {
-     "name": "energy",
-     "expression": {
-      "op": "add",
-      "args": [
-       {
-        "field": "amount",
-        "participant": 0
-       },
-       {
-        "field": "amount",
-        "participant": 1
-       }
-      ]
-     }
+      "name": "light_b",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "quantum times heading",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
     }
-   ],
-   "reads": "charge"
-  }
- ]
+  ],
+  "disturbance_types": [
+    {
+      "name": "lamp_a",
+      "fields": [
+        "electron_a",
+        "momentum"
+      ],
+      "defaults": {
+        "electron_a": 64,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "lamp_b",
+      "fields": [
+        "electron_b",
+        "momentum"
+      ],
+      "defaults": {
+        "electron_b": 64,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "electron_a",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 16,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 12,
+      "charge": -3,
+      "release": [
+        1,
+        4
+      ],
+      "clock": true
+    },
+    {
+      "field": "electron_b",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 16,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 12,
+      "charge": -3,
+      "release": [
+        1,
+        4
+      ],
+      "clock": true
+    },
+    {
+      "field": "light_a",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 30,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 12,
+      "charge": 0
+    },
+    {
+      "field": "light_b",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 30,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 12,
+      "charge": 0
+    }
+  ],
+  "emissions": [
+    {
+      "type": "lamp_a",
+      "field": "electron_a",
+      "amount": 64,
+      "denominator": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "lamp_b",
+      "field": "electron_b",
+      "amount": 64,
+      "denominator": 1,
+      "heading": [
+        -1,
+        0,
+        0
+      ],
+      "kerengonen_phase": 0
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        0,
+        21,
+        24
+      ],
+      "type": "lamp_a"
+    },
+    {
+      "position": [
+        96,
+        27,
+        24
+      ],
+      "type": "lamp_b"
+    }
+  ],
+  "ray_interactions": [
+    {
+      "name": "electron_field_turn_a",
+      "participants": [
+        {
+          "type": "electron_a"
+        },
+        {
+          "type": "electron_b"
+        }
+      ],
+      "momentum_table": {
+        "electron_b": 1
+      },
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "amount",
+                "participant": 0
+              },
+              {
+                "field": "amount",
+                "participant": 1
+              }
+            ]
+          }
+        }
+      ],
+      "reads": "charge"
+    },
+    {
+      "name": "electron_field_turn_b",
+      "participants": [
+        {
+          "type": "electron_b"
+        },
+        {
+          "type": "electron_a"
+        }
+      ],
+      "momentum_table": {
+        "electron_a": 1
+      },
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "amount",
+                "participant": 0
+              },
+              {
+                "field": "amount",
+                "participant": 1
+              }
+            ]
+          }
+        }
+      ],
+      "reads": "charge"
+    }
+  ],
+  "K": 64
 }

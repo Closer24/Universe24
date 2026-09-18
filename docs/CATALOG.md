@@ -58,7 +58,7 @@ rule already takes. A test pins the file's contract
 ## The records
 
 **A ray** (`rays.<id>`; the id is the world's field name): `kind` (`ray`,
-`field` or `bound_group`), `rest_rate` (in m₀, or `"undecided"`), `charge`
+`field` or `bound_group`), `content` (in m₀, or `"undecided"`; since clock-readings-v1, 2026-09-18, the rung is the content, a thing's mass and its clock) and `clock` (whether the family's things have one), `charge`
 (in thirds of e), `phase_bits` (`"default"`: the world's one width), `field`
 (the ids of its field rays: its own field and, if massive, the mass field)
 and `note`. A `field` ray adds `field_of` (the rays that release it) and
@@ -188,23 +188,22 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `lag_bits.world_key` | The key that declares the lag modulus per family for the delay on the ray's own axis, the N of hypothesis 14 on the lag register and not on the phase; the turn is the momentum register of feature 8b since 2026-09-17; what fixes N is hypothesis 16 (Highlights 5.5, 2026-09-17) | feature 8b, hypothesis 16 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
-| `rays.muon.rest_rate` | The muon's rung on the ladder, k × 206.768 28 | A10 |
-| `rays.neutrino.rest_rate` | The neutrino's rung | hypothesis 12 |
-| `rays.antineutrino.rest_rate` | The antineutrino's rung | hypothesis 12 |
-| `rays.up.rest_rate` | The up quark's rung | hypothesis 12 |
-| `rays.down.rest_rate` | The down quark's rung | hypothesis 12 |
+| `rays.muon.content` | The muon's rung on the ladder, k × 206.768 28 | A10 |
+| `rays.neutrino.content` | The neutrino's rung | hypothesis 12 |
+| `rays.antineutrino.content` | The antineutrino's rung | hypothesis 12 |
+| `rays.up.content` | The up quark's rung | hypothesis 12 |
+| `rays.down.content` | The down quark's rung | hypothesis 12 |
 | `rays.gluon.release` | The release ratio of the quark's field; what fixes a release ratio is hypothesis 17 | hypothesis 13, hypothesis 17 |
 | `rays.gluon.colour` | How a gluon ray carries its releaser's colour | hypothesis 13 |
-| `rays.proton.rest_rate` | The proton's rung, k × 1836.152 67 | A10 |
-| `rays.neutron.rest_rate` | The neutron's retained content | hypothesis 12 |
-| `rays.mass_field.release` | The release ratio of the computation field; what fixes a release ratio is hypothesis 17 (Highlights 5.5, 2026-09-17) | A6, hypothesis 17 |
+| `rays.proton.content` | The proton's rung, k × 1836.152 67 | A10 |
+| `rays.neutron.content` | The neutron's retained content | hypothesis 12 |
 | `couplings.electron_field_turn.strength_table` | The integer table over field content and charge product; with a `momentum_table` in place of the outputs (`ray-momentum-turn-v1`, feature 8b) the turn is gradual, sign x amount x heading of every field ray met, and the table's role is the field's amount | A5 |
 | `couplings.electron_field_turn.opposite_charge` | The heading rule when the charges differ in sign; closes with `rays.light.source_sign`, the sign carried on the field ray (feature 12) | A5 |
 | `couplings.recoil_return.outputs` | What the returning field ray does at its releaser | A5 |
-| `couplings.mass_field_delay.outputs[0].delay.table` | The delay table, six entries per Port, per unit of field amount | A6 |
 | `couplings.electron_proton_binding.binding_energy_ladder` | Whether bound trajectories have discrete retained energies, and their ladder | A8 |
 | `couplings.quark_binding.outputs` | The three-quark corner table (an outputs rule whose loop closes, loop-binding-v1) | hypothesis 12 |
 | `couplings.gluon_gluon_binding.outputs` | The field-to-field corner table, the one catalog line by which gluon rays close into a string between quarks (Highlights 3.26, 2026-09-17; an outputs rule whose loop closes, loop-binding-v1) | hypothesis 13 |
+| `couplings.weak_conversion.decay.after_periods` | The meeting under the rule at which the neutron breaks, its decay table (Highlights 5.4 point 20, clock-readings-v1) | A9 |
 | `couplings.weak_conversion.shares` | The neutron's content shared among proton, electron and antineutrino | A9 |
 | `couplings.weak_conversion.headings` | The headings of the three products | A9 |
 | `couplings.pauli_exclusion.outputs` | What two electrons of opposite spin bind to (feature 11): the Born-form corner table with the guard on spin, loop-binding-v1 | hypothesis 12 |
@@ -223,7 +222,7 @@ it uses; the layers follow.
 | Catalog | World file |
 | --- | --- |
 | The ray id | `fields[].name` and `spatial_fields[].field` |
-| `rest_rate` | `spatial_fields[].kerengonen.phase_advance` |
+| `content`, `clock` | the thing's amount; `spatial_fields[].clock` with the world's `K` (clock-readings-v1; `kerengonen.phase_advance` is refused) |
 | `charge` | `spatial_fields[].charge` |
 | `phase_bits` | `spatial_fields[].phase_bits`, the same for every ray of the world |
 | `polarization` and `polarization_bits` | `spatial_fields[].polarization_bits` (the phase width when absent), `emissions[].polarization` on a lamp, `polarization` on a meeting's output; the electron's `polarization_bits` 1 is spin |

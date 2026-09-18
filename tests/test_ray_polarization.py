@@ -66,7 +66,7 @@ def ray_field(name, **extra):
         "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
-        "kerengonen": {"phase_steps": 8, "phase_advance": 0},
+        "kerengonen": {"phase_steps": 8},
     } | extra
 
 

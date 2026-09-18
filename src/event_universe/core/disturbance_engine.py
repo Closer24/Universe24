@@ -656,6 +656,33 @@ class DisturbanceEngine:
             if field.conserved
         }
 
+    def spent_totals(self) -> dict[str, tuple[int, ...]]:
+        """The momentum the things spent on their steps (clock-readings-v1, the
+        settled rule (i)), per field: on the momentum field's line, initial +
+        sources = current + dissipated + escaped + annulled + absorbed_by_bodies +
+        absorbed_by_marks + returned + spent; zero on every other field."""
+        return {
+            field.name: (
+                (0,) * field.components if self._spatial is None else tuple(self._spatial.spent[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
+    def phase_steps(self) -> int:
+        """The phase steps the things have made since the start (clock-readings-v1,
+        point 11): the world's computation, a running total; the runner records
+        the difference per tick."""
+        return 0 if self._spatial is None else self._spatial.computation[0]
+
+    def _momentum_fields(self) -> set[str]:
+        """The names of the fields a ray family is bound to as its momentum field."""
+        return {
+            self.initial.fields[definition.momentum_field].name
+            for definition in self.initial.spatial_fields
+            if definition.rays and definition.momentum_field is not None
+        }
+
     def _shadow_lines(self, name: str) -> dict[str, tuple[int, ...]]:
         """The shadows' share of a line (bit-law-v1): their re-releases on the source
         line, their escapes on the escaped line."""
@@ -775,6 +802,9 @@ class DisturbanceEngine:
             self.detector_mark_totals(),
             self.returned_totals(),
         )
+        # The spent line (clock-readings-v1): on the momentum field's line alone,
+        # the momentum the things spent on their steps.
+        spent, momentum_fields = self.spent_totals(), self._momentum_fields()
         fields = {
             name: ledger_line(
                 values,
@@ -785,6 +815,7 @@ class DisturbanceEngine:
                 absorbed[name],
                 taken[name],
                 returned[name],
+                spent[name] if name in momentum_fields else None,
             )
             for name, values in initial_totals.items()
         }

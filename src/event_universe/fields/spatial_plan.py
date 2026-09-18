@@ -66,7 +66,7 @@ from event_universe.core.spatial_state import (
 
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
-from .ray_interactions import Draws, Turns, apply_ray_interactions
+from .ray_interactions import Turns, apply_ray_interactions
 from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
@@ -160,7 +160,7 @@ class SpatialLaw:
                     ray,
                     definition.headings[ray.heading],
                     definition.phase_modulus,
-                    definition.phase_advance,
+                    definition.clock,
                 )
                 meter.charge("evaluate")
                 if first_port == port:
@@ -175,8 +175,9 @@ class SpatialLaw:
             if rule.field == definition.field and matches_type(rule, record.type_index):
                 if rule_index < len(record.absorbed_phases):
                     stored, advance, heading = unpack(record.absorbed_phases[rule_index])
-                    step = advance if advance >= 0 else definition.phase_advance
-                    return (stored + step) & definition.phase_mask, advance, heading
+                    # A record has no clock of its own (clock-readings-v1: the clock
+                    # is a thing ray's content); the carried wave keeps its phase.
+                    return stored & definition.phase_mask, advance, heading
                 return 0, -1, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
@@ -820,11 +821,13 @@ class SpatialLaw:
         # register, which the momentum readout below reads, so the push and the
         # recoil's reversal are booked together as the meeting's momentum change.
         turns: Turns = []
-        # The draws of the decaying rules (decay-draw-v1): the Node's ticket state
-        # enters as input and leaves with the last draw, never hidden in the law;
-        # the content their conversions moved between families, per field.
-        draws: Draws = []
+        # The content the decays moved between families, per field
+        # (clock-readings-v1, point 20: a group breaks by its declared table).
         converted: list[tuple[int, int]] = []
+        # The departures' account (clock-readings-v1): the things' phase steps
+        # this cycle (point 11) and the momentum they spent on their steps.
+        phase_steps = 0
+        spent = [[0] * field.components for field in self.fields]
         if self.ray_interactions:
             met = apply_ray_interactions(
                 tuple(tuple(bundle) for bundle in resident_rays),
@@ -835,8 +838,6 @@ class SpatialLaw:
                 self.costs,
                 self.layers,
                 turns,
-                draws,
-                detector_ticket,
             )
             for index, definition in enumerate(self.definitions):
                 if definition.rays and definition.momentum_field is not None:
@@ -851,11 +852,11 @@ class SpatialLaw:
                             (definition.momentum_field, (delta[0], delta[1], delta[2]))
                         )
                 if definition.rays:
-                    # The content a decaying conversion moved between families
-                    # (decay-draw-v1): what a family lost or gained at this meeting
-                    # is booked as that family's source, the families summing to
-                    # zero since the total amount is exact; a rule without `draw`
-                    # keeps every family's stock, so this is zero for it.
+                    # The content a decay moved between families (point 20): what
+                    # a family lost or gained at this meeting is booked as that
+                    # family's source, the families summing to zero since the
+                    # total amount is exact; a rule without `decay` keeps every
+                    # family's stock, so this is zero for it.
                     moved = checked_work(ray_stock(met[index]) - ray_stock(tuple(resident_rays[index])))
                     if moved:
                         converted.append((definition.field, moved))
@@ -945,10 +946,16 @@ class SpatialLaw:
                     cursor_before = unpack(allocation[index])[0]
                     phase, advance, absorbed_heading = rule.phase, -1, -1
                     if rule.phase_carried or rule.mirror is not None:
-                        # Huygens: continue the wave absorbed last cycle, one advance on.
+                        # Huygens: continue the wave absorbed last cycle, one interval
+                        # on: the re-emitted content's clock step, amount // K
+                        # (clock-readings-v1; a record keeps no remainder).
                         phase, advance, absorbed_heading = self._carried_phase(record, definition)
                         if not rule.phase_carried:
                             phase, advance = rule.phase, -1
+                        elif definition.clock:
+                            phase = (
+                                phase + unpack(amount)[0] // definition.clock
+                            ) & definition.phase_mask
                     if rule.advance is not None:
                         # De Broglie: the rays' own advance per link from the emitter's state.
                         raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
@@ -1122,7 +1129,9 @@ class SpatialLaw:
                     if spread is not None:
                         spreads.append(spread)
                 if ray_hold:
-                    ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)
+                    ports, fresh_kept, account = forward_rays(
+                        tuple(emitted_rays[index]), definition, meter
+                    )
                     kept = merge_rays(
                         hold_rays(
                             tuple(resident_rays[index]), definition, meter, advance_phase=ray_hold == 2
@@ -1130,9 +1139,23 @@ class SpatialLaw:
                         + fresh_kept
                     )
                 else:
-                    ports, kept = forward_rays(
+                    ports, kept, account = forward_rays(
                         tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
                     )
+                phase_steps = checked_work(phase_steps + account.phase_steps)
+                if any(account.spent):
+                    # The steps of the things (clock-readings-v1, the settled rule
+                    # (i)): the momentum each step dropped is spent, on the
+                    # momentum field's line when the family is bound to one.
+                    if definition.momentum_field is None:
+                        raise ValueError(
+                            "a thing that steps by its momentum requires its family bound to a "
+                            "momentum field (clock-readings-v1)"
+                        )
+                    for axis, value in enumerate(account.spent):
+                        spent[definition.momentum_field][axis] = checked_work(
+                            spent[definition.momentum_field][axis] + value
+                        )
                 # What stays at the Node beside the kept rays (node-is-ports-v1): the
                 # shares below one quantum after the spread, parked again; the traces,
                 # the Port the largest thing of each owner leaves this Node by (ties
@@ -1269,5 +1292,6 @@ class SpatialLaw:
             homecomings=tuple(homecomings),
             returned_delta=tuple(tuple(v) for v in returned) if any(any(v) for v in returned) else (),
             ray_pushes=tuple(turns),
-            decay_draws=tuple(draws),
+            spent_delta=tuple(tuple(v) for v in spent) if any(any(v) for v in spent) else (),
+            phase_steps=phase_steps,
         )

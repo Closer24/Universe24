@@ -1,460 +1,450 @@
 {
- "schema_version": 1,
- "model_id": "a6-bending-delay-b16",
- "shape": [
-  65,
-  65,
-  9
- ],
- "boundary": "open",
- "dense_field": true,
- "slots_per_node": 2,
- "link_ticks": 1,
- "normal_budget": 100000,
- "ticks": 260,
- "operation_costs": {
-  "receive": 1,
-  "read": 1,
-  "evaluate": 1,
-  "update": 1,
-  "couple": 1,
-  "route": 1,
-  "split": 1,
-  "send": 1,
-  "commit": 1
- },
- "fields": [
-  {
-   "name": "neutron",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
+  "schema_version": 1,
+  "model_id": "a6-bending-delay-b16",
+  "shape": [
+    65,
+    65,
+    9
+  ],
+  "boundary": "open",
+  "dense_field": true,
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 260,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
   },
-  {
-   "name": "mass_field",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  },
-  {
-   "name": "light",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  },
-  {
-   "name": "launcher",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  },
-  {
-   "name": "momentum",
-   "components": 3,
-   "units": "quantum times heading",
-   "signed": true,
-   "conserved": true,
-   "extensive": true
-  }
- ],
- "disturbance_types": [
-  {
-   "name": "lamp",
-   "fields": [
-    "light",
-    "momentum"
-   ],
-   "defaults": {
-    "light": 262144,
-    "momentum": [
-     0,
-     0,
-     0
-    ]
-   },
-   "transport": {
-    "mode": "hold"
-   }
-  },
-  {
-   "name": "idle_mass_field",
-   "fields": [
-    "mass_field",
-    "momentum"
-   ],
-   "defaults": {
-    "mass_field": 1,
-    "momentum": [
-     0,
-     0,
-     0
-    ]
-   },
-   "transport": {
-    "mode": "hold"
-   }
-  }
- ],
- "spatial_fields": [
-  {
-   "field": "neutron",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 16,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 3,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 1
-   },
-   "release": [
-    1,
-    32768
-   ]
-  },
-  {
-   "field": "mass_field",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 16,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 3,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 0
-   }
-  },
-  {
-   "field": "light",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 8,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 12,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 0
-   }
-  },
-  {
-   "field": "launcher",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 2,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 3,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 0
-   }
-  }
- ],
- "emissions": [
-  {
-   "type": "lamp",
-   "field": "light",
-   "amount": 262144,
-   "denominator": 1,
-   "heading": [
-    0,
-    1,
-    0
-   ],
-   "kerengonen_phase": 0
-  },
-  {
-   "type": "idle_mass_field",
-   "field": "mass_field",
-   "amount": 1,
-   "denominator": 1,
-   "heading": [
-    1,
-    0,
-    0
-   ],
-   "kerengonen_phase": 0
-  }
- ],
- "seeds": [
-  {
-   "position": [
-    0,
-    47,
-    4
-   ],
-   "type": "lamp"
-  }
- ],
- "ray_interactions": [
-  {
-   "name": "launch",
-   "participants": [
+  "fields": [
     {
-     "type": "light"
+      "name": "neutron",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     },
     {
-     "type": "launcher"
-    }
-   ],
-   "outputs": [
-    {
-     "field": "light",
-     "amount": {
-      "of": 0
-     },
-     "heading": 0,
-     "phase": "same",
-     "delay": 192,
-     "input": 0
+      "name": "mass_field",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     },
     {
-     "field": "launcher",
-     "amount": {
-      "of": 1
-     },
-     "heading": "same",
-     "phase": "same",
-     "input": 1
-    }
-   ],
-   "invariants": [
-    {
-     "name": "energy",
-     "expression": {
-      "field": "amount"
-     }
-    }
-   ]
-  },
-  {
-   "name": "mass_field_delay",
-   "participants": [
-    {
-     "type": "light"
+      "name": "light",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     },
     {
-     "type": "neutron"
-    }
-   ],
-   "outputs": [
+      "name": "launcher",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
     {
-     "field": "light",
-     "amount": {
-      "of": 0
-     },
-     "heading": "same",
-     "phase": "same",
-     "delay": {
-      "of": 1,
-      "table": [
-       1,
-       1,
-       1,
-       1,
-       1,
-       1
+      "name": "momentum",
+      "components": 3,
+      "units": "quantum times heading",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "lamp",
+      "fields": [
+        "light",
+        "momentum"
       ],
-      "per": 1
-     }
+      "defaults": {
+        "light": 262144,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
     },
     {
-     "field": "neutron",
-     "amount": {
-      "of": 1
-     },
-     "heading": "reversed",
-     "input": 1
+      "name": "idle_mass_field",
+      "fields": [
+        "mass_field",
+        "momentum"
+      ],
+      "defaults": {
+        "mass_field": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
     }
-   ],
-   "invariants": [
+  ],
+  "spatial_fields": [
     {
-     "name": "energy",
-     "expression": {
-      "field": "amount"
-     }
+      "field": "neutron",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 16,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 3,
+      "charge": 0,
+      "release": [
+        1,
+        32768
+      ],
+      "clock": true
+    },
+    {
+      "field": "mass_field",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 16,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 3,
+      "charge": 0
+    },
+    {
+      "field": "light",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 8,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 12,
+      "charge": 0
+    },
+    {
+      "field": "launcher",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 2,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 3,
+      "charge": 0
     }
-   ]
-  }
- ],
- "external_bodies": [
-  {
-   "position": [
-    32,
-    32,
-    4
-   ],
-   "family": "neutron",
-   "amount": 268435456,
-   "momentum_table": {
-    "neutron": -1
-   },
-   "reads": "content"
-  },
-  {
-   "position": [
-    0,
-    48,
-    4
-   ],
-   "family": "launcher",
-   "amount": 1,
-   "coupling": "launch"
-  }
- ]
+  ],
+  "emissions": [
+    {
+      "type": "lamp",
+      "field": "light",
+      "amount": 262144,
+      "denominator": 1,
+      "heading": [
+        0,
+        1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "idle_mass_field",
+      "field": "mass_field",
+      "amount": 1,
+      "denominator": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "kerengonen_phase": 0
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        0,
+        47,
+        4
+      ],
+      "type": "lamp"
+    }
+  ],
+  "ray_interactions": [
+    {
+      "name": "launch",
+      "participants": [
+        {
+          "type": "light"
+        },
+        {
+          "type": "launcher"
+        }
+      ],
+      "outputs": [
+        {
+          "field": "light",
+          "amount": {
+            "of": 0
+          },
+          "heading": 0,
+          "phase": "same",
+          "delay": 192,
+          "input": 0
+        },
+        {
+          "field": "launcher",
+          "amount": {
+            "of": 1
+          },
+          "heading": "same",
+          "phase": "same",
+          "input": 1
+        }
+      ],
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "field": "amount"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mass_field_delay",
+      "participants": [
+        {
+          "type": "light"
+        },
+        {
+          "type": "neutron"
+        }
+      ],
+      "outputs": [
+        {
+          "field": "light",
+          "amount": {
+            "of": 0
+          },
+          "heading": "same",
+          "phase": "same",
+          "delay": {
+            "of": 1,
+            "table": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "per": 1
+          }
+        },
+        {
+          "field": "neutron",
+          "amount": {
+            "of": 1
+          },
+          "heading": "reversed",
+          "input": 1
+        }
+      ],
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "field": "amount"
+          }
+        }
+      ]
+    }
+  ],
+  "external_bodies": [
+    {
+      "position": [
+        32,
+        32,
+        4
+      ],
+      "family": "neutron",
+      "amount": 268435456,
+      "momentum_table": {
+        "neutron": -1
+      },
+      "reads": "content"
+    },
+    {
+      "position": [
+        0,
+        48,
+        4
+      ],
+      "family": "launcher",
+      "amount": 1,
+      "coupling": "launch"
+    }
+  ],
+  "K": 1
 }

@@ -186,33 +186,37 @@ RAY_BINDING = "ray-binding-v1"
 # declared delay at their event Node without meeting anything there and leave,
 # and a group is read from the record by a reader (tools/ray_viewer/extract.py).
 LOOP_BINDING = "loop-binding-v1"
-# A decaying group draws (Highlights 3.26 and 3.19, decay-draw-v1): a bound group
-# that can decay is a source, and a source is a Detector, so at each of its
-# ticks, its corner meetings in the loop form, it draws with its declared ratio
-# as the setting, 1 = the conversion fires, 0 = the group ticks on unchanged. A
-# ray_interactions rule with outputs may declare `draw: [n, d]` and its `seed`:
-# when its participants meet, the meeting draws once from the Node's ticket
-# stream, the unsalted draw of detector-mark-v1, and on 1 the rule fires; on 0
-# it does not, and the meeting continues to the next rule in declared order.
-# The declaration marks the Node for that draw, so the only draw in the model
-# is still at a marked Node; nothing else in the world draws.
-DECAY_DRAW = "decay-draw-v1"
-# A free ray turns by momentum (Highlights 3.5, 3.14, 3.16 and 3.28,
-# ray-momentum-turn-v2): a ray's direction is its momentum vector, three integers
-# carried as its momentum, by default amount x heading, the line its event gave
-# it; the DDA walks the momentum at every departure, one Link per interval, so
-# a ray with momentum (7, -1, 0) takes seven +x Links per -y Link. A coupling
-# without outputs whose momentum_table names a participant family pushes the
-# one participant it does not name by sign x amount x heading of every field
-# ray it meets, as the external body's table pushes the body, the field ray
-# returned reversed; the push stamps no event and changes no amount, phase or
-# bit. The heading index stays the ray's line for the rules that read it. A
-# push keeps the walk (v2, 2026-09-17): the DDA's three accumulators carry over
-# and continue against the new momentum, so a ray pushed at every interval
-# walks the DDA line of its running momentum; v1 reset them at every push,
-# which the helium-orbit run (E8) showed steps such a ray along its momentum's
-# dominant axis alone.
-RAY_MOMENTUM_TURN = "ray-momentum-turn-v2"
+# The clock is the content, the two readings, the decay table and one Link per
+# interval (Highlights 5.4 points 11, 16, 18, 19, 20 and 21 and the settled rule
+# (i), the model owner's decisions of 2026-09-18; clock-readings-v1, feature 16b):
+# a thing of a family that declares `clock` advances its phase by content / K
+# steps per interval, K the world's one integer, the remainder kept exactly on
+# the thing (`remainder`); a shadow and a family without a clock (light) never
+# advance. A shadow carries its owner's id; its owner's charge is its family's
+# (a shadow is a ray of its owner's family) and its owner's content is read by
+# the owner's id from the family's owner table. The gravity reading of a push is
+# sign x amount x heading x the content of what is pushed; the electricity
+# reading is sign x amount x heading x (the owner's charge / the owner's
+# content) x the charge of what is pushed, accumulated exactly on the pushed
+# thing in units of 1 / D (D the least common multiple of the owners' contents,
+# `push_remainder`), the whole units into its momentum. A decay is a declared
+# condition on the group's state (`decay` on a rule with outputs: the n-th
+# meeting under the rule, or the group's content at most c), never a draw. The
+# momentum a thing carries accumulates its pushes and sets its direction only:
+# at a departure, the first axis whose component reaches the thing's content
+# turns the thing to that axis and drops by the content, which the ledger books
+# as spent; every ray moves one Link per interval.
+CLOCK_READINGS = "clock-readings-v1"
+# A thing turns by momentum (Highlights 3.5, 3.14, 3.16 and 5.4 point 21,
+# ray-momentum-turn-v3 under clock-readings-v1): a coupling without outputs
+# whose momentum_table names a participant family pushes the one participant it
+# does not name by the declared reading of every shadow it meets, as the
+# external body's table pushes the body, the shadow returned reversed with -dp;
+# the push stamps no event and changes no amount, phase or bit. The momentum is
+# a property of the thing beside its amount and its phase, the pushes it has
+# taken and not yet spent on a step (`step_thing`); the DDA staircase of v2,
+# which walked the register as a line, is retired with the settled rule (i).
+RAY_MOMENTUM_TURN = "ray-momentum-turn-v3"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -498,6 +502,9 @@ class ExternalBody:
     polarizer: Polarizer | None = None
     held: tuple[int, ...] = ()
     held_phases: tuple[int, ...] = ()
+    # The electricity reading's remainder (clock-readings-v1, point 16): per axis
+    # in units of 1 / D of the body's family, the sign of the push kept.
+    push_remainder: tuple[int, int, int] = (0, 0, 0)
 
     def __post_init__(self) -> None:
         if type(self.index) is not int or not 0 <= self.index < MAX_EXTERNAL_BODIES:
@@ -530,7 +537,7 @@ class ExternalBody:
         if type(self.phase) is not int or self.phase < 0:
             raise ValueError("an external body phase must be a nonnegative integer")
         bounded(self.charge)
-        for vector in (self.momentum, self.accumulators):
+        for vector in (self.momentum, self.accumulators, self.push_remainder):
             if type(vector) is not tuple or len(vector) != 3:
                 raise ValueError("an external body momentum requires three integers")
             for value in vector:
@@ -599,14 +606,13 @@ class Ray:
     # family; a visible property like the Detector bit, never encoded in the
     # phase, read by no rule of the engine.
     source_sign: int = 0
-    # The momentum (ray-momentum-turn-v2, Highlights 3.16 and 5.4 point 22): a
-    # property of the thing, three integers, or None for the default amount x
-    # heading, the line of its heading index. Set by a push, the DDA walks it in
-    # place of the heading, the accumulators kept through the push
-    # (continued_walk); a push that brings it back to the default clears it, so
-    # a ray that resumes its line is the ray it was. Negated by a return with
-    # the heading; extensive, so merging rays adds it as it adds their amounts.
-    # On a shadow walking home it is -dp, the momentum it carries back.
+    # The momentum (clock-readings-v1, Highlights 5.4 point 21 and the settled
+    # rule (i)): on a thing, the pushes it has taken and not yet spent on a step,
+    # three integers, or None for none; a thing's momentum as the ledger reads it
+    # is amount x heading plus this (`ray_momentum_vector`). At a departure the
+    # first axis whose component reaches the amount turns the thing to that axis
+    # and drops by the amount (`step_thing`). On a shadow walking home, -dp of the
+    # push it gave. Extensive, so merging rays adds it as it adds their amounts.
     momentum: tuple[int, int, int] | None = None
     # Polarization (ray-polarization-v1, Highlights 3.26): the transverse direction
     # modulo a half turn in steps of the family's polarization circle
@@ -619,6 +625,24 @@ class Ray:
     # of the merge identity; a shadow at a Node holding a thing of its owner is
     # home, and a momentum table never pushes a thing with its own shadow.
     owner: int = 0
+    # The clock's remainder (clock-readings-v1, point 19): a thing of a clock
+    # family advances its phase by (remainder + amount) // K steps per interval
+    # and keeps the rest here, below K; 0 on a shadow and on a family without a
+    # clock. The electricity reading's remainder (point 16), per axis in units
+    # of 1 / D (the family's `push_denominator`), the sign of the push kept, so
+    # that a push below one quantum accumulates exactly; (0, 0, 0) on a shadow.
+    # The passages (point 20): how many meetings under a rule with a `decay`
+    # condition this thing has come through without the group breaking, carried
+    # by the outputs of the corner table; 0 on a shadow and on a fresh thing.
+    remainder: int = 0
+    push_remainder: tuple[int, int, int] = (0, 0, 0)
+    periods: int = 0
+    # The intervals a thing owes for the whole quanta it read (Highlights 5.4
+    # point 23, clock-readings-v1): w per whole quantum of push taken, w = n / d
+    # the world's `wait_per_quantum`, kept in units of 1 / d and spent one
+    # interval at a time, an interval in which the thing neither moves nor steps
+    # nor advances its phase; 0 on a shadow, which pays nothing.
+    owed: int = 0
     # A parked shadow (node-is-ports-v1, Highlights 5.4 point 22): 1 on a shadow
     # at rest at its Node, never forwarded and outside the slot budget. With an
     # amount it is what the Node holds below one quantum of its owner on the
@@ -1768,11 +1792,13 @@ class SpatialFieldDefinition:
     self_exclusion: bool = False
     # Kerengonen (phased rays): the coherence table, one entry per phase step of
     # one turn (2^phase_bits entries, a power of two up to 4096; 0 is no table),
-    # and the family's rest rate, the steps its phase advances every interval
-    # (0 for light and for the plain field). A ray's own advance overrides the
-    # rest rate (kerengonen_advance); every advance is a mask over the width.
+    # and the clock (clock-readings-v1, Highlights 5.4 point 19): K, the world's
+    # content per phase step per interval, for a family whose things have a
+    # clock (a thing advances its phase by content / K steps per interval, the
+    # remainder kept on the thing), 0 for light and for the plain field, whose
+    # rays carry the phase of what emitted them. No family declares a rate.
     phase_steps: int = 0
-    phase_advance: int = 0
+    clock: int = 0
     # Kerengonen only: how an absorber takes a ray. "share" takes the coherent
     # share of its amount; "threshold" takes the whole ray when that share reaches
     # one half and leaves it otherwise. Neither draws: the only draw in the model
@@ -1809,6 +1835,22 @@ class SpatialFieldDefinition:
     release_numerator: int = 0
     release_denominator: int = 1
     owners: tuple[int, ...] = ()
+    # The owners' contents and charges (clock-readings-v1, point 18): per owner
+    # in the order of `owners`, the stock each was declared with (a type's
+    # default of the family's field, a body's amount, 1 for an owner known only
+    # from a profile) and its whole charge (the charge per quantum, the family's
+    # or the body's declared, times that stock), what a shadow carries as its
+    # owner's content and charge, read by the owner's id; and D, the least
+    # common multiple of the owners' contents over the world's families, the
+    # unit of the electricity reading's remainder.
+    owner_contents: tuple[int, ...] = ()
+    owner_charges: tuple[int, ...] = ()
+    push_denominator: int = 1
+    # The wait per whole quantum read (Highlights 5.4 point 23, clock-readings-v1):
+    # w = wait_numerator / wait_denominator intervals, the world's one constant
+    # (`wait_per_quantum`, 1 by default), on every ray family.
+    wait_numerator: int = 1
+    wait_denominator: int = 1
     # The family's shadows spread by the Node's mixing (node-mixing-v1): true for
     # every family with a shadow set (a release, or a field given with the
     # board), set by the world's initial state, never declared; a family without
@@ -1858,6 +1900,35 @@ class SpatialFieldDefinition:
             or tuple(sorted(set(self.owners))) != self.owners
         ):
             raise ValueError("a family's owners are distinct thing ids in ascending order")
+        if type(self.owner_contents) is not tuple or (
+            self.owner_contents
+            and (
+                len(self.owner_contents) != len(self.owners)
+                or any(type(v) is not int or v < 1 for v in self.owner_contents)
+            )
+        ):
+            raise ValueError("a family's owner contents are one positive integer per owner")
+        if type(self.owner_charges) is not tuple or (
+            self.owner_charges
+            and (
+                len(self.owner_charges) != len(self.owners)
+                or any(type(v) is not int for v in self.owner_charges)
+            )
+        ):
+            raise ValueError("a family's owner charges are one integer per owner")
+        if type(self.push_denominator) is not int or self.push_denominator < 1:
+            raise ValueError("a family's push denominator is a positive integer")
+        if (
+            type(self.wait_numerator) is not int
+            or type(self.wait_denominator) is not int
+            or self.wait_numerator < 0
+            or self.wait_denominator < 1
+        ):
+            raise ValueError("the wait per quantum is a rational n / d, n at least 0 and d at least 1")
+        if type(self.clock) is not int or self.clock < 0:
+            raise ValueError("a family's clock is K, a nonnegative integer (clock-readings-v1)")
+        if self.clock and not self.phase_bits:
+            raise ValueError("a clock requires a phase width: phase_bits at least 1 (clock-readings-v1)")
         if type(self.polarization_bits) is not int or self.polarization_bits < -1:
             raise ValueError("polarization_bits must be a nonnegative integer")
         if self.polarization_bits >= 0 and not self.rays:
@@ -1898,8 +1969,26 @@ class SpatialFieldDefinition:
 
     @property
     def kerengonen(self) -> bool:
-        """The family declares a phase rule: a coherence table or a nonzero rest rate."""
-        return self.phase_steps > 0 or self.phase_advance > 0
+        """The family declares a phase rule: a coherence table or a clock."""
+        return self.phase_steps > 0 or self.clock > 0
+
+    def owner_content(self, owner: int) -> int:
+        """The content of one owner of the family (clock-readings-v1, point 18):
+        what its shadows carry as their owner's content, read by the owner's id
+        from the owner table; a shadow of an owner the table does not hold
+        carries no content and is refused by the electricity reading."""
+        if owner in self.owners and self.owner_contents:
+            return self.owner_contents[self.owners.index(owner)]
+        return 0
+
+    def owner_charge(self, owner: int) -> int:
+        """The charge of one owner of the family (clock-readings-v1, point 18): its
+        whole charge, what its shadows carry as their owner's charge, read by the
+        owner's id from the owner table; over the owner's content it is the
+        family's charge per quantum for a thing of a type."""
+        if owner in self.owners and self.owner_charges:
+            return self.owner_charges[self.owners.index(owner)]
+        return 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -2153,26 +2242,13 @@ class SpatialPlan:
     # The pushes of free rays this cycle, one per field ray met by a coupling's
     # momentum table (ray-momentum-turn-v1).
     ray_pushes: tuple[RayPush, ...] = ()
-    # The draws of the decaying rules this cycle, one per meeting of such a rule,
-    # in the order they were taken from the Node's ticket stream (decay-draw-v1);
-    # the last one carries the stream's state after the cycle.
-    decay_draws: tuple[DecayDraw, ...] = ()
-
-
-@dataclass(frozen=True, slots=True)
-class DecayDraw:
-    """The record of one draw of a decaying rule for the Node to publish
-    (decay-draw-v1): plain bounded integers, as the Node state contract requires.
-    The rule's index among the world's declared ray interactions, its setting
-    `[n, d]`, the ticket state the draw left the Node's stream in, and the bit,
-    1 = the conversion fired.
-    """
-
-    rule: int
-    numerator: int
-    denominator: int
-    ticket: int
-    bit: int
+    # The momentum the things spent on their steps this cycle, per field
+    # (clock-readings-v1, the settled rule (i)): on the momentum field, the
+    # content x heading each step dropped from a thing's momentum, booked spent.
+    spent_delta: Values = ()
+    # The phase steps of the things this cycle (clock-readings-v1, point 11): the
+    # world's computation per interval is their sum over its Nodes.
+    phase_steps: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -2265,15 +2341,42 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray heading index is outside the configured sequence")
         validate_heading(definition.headings[ray.heading])
         if ray.momentum is not None:
-            # ray-momentum-turn-v1: a momentum is three stored integers, not all zero.
+            # A momentum is three stored integers (clock-readings-v1: the pushes a
+            # thing has not spent, or -dp on a shadow walking home; zero admitted).
             if type(ray.momentum) is not tuple or len(ray.momentum) != 3:
                 raise ValueError("a ray momentum requires three integers")
             for value in ray.momentum:
                 if type(value) is not int:
                     raise ValueError("a ray momentum requires three integers")
                 bounded(value)
-            if not any(ray.momentum):
-                raise ValueError("a ray momentum must not be the zero vector")
+        if type(ray.push_remainder) is not tuple or len(ray.push_remainder) != 3:
+            raise ValueError("a ray push remainder requires three integers")
+        for value in ray.push_remainder:
+            if (
+                type(value) is not int
+                or not -definition.push_denominator < value < definition.push_denominator
+            ):
+                raise ValueError("a ray push remainder stays below one quantum in units of 1 / D")
+        if type(ray.remainder) is not int or type(ray.periods) is not int or ray.periods < 0:
+            raise ValueError("a ray clock remainder and its passages are nonnegative integers")
+        bounded(ray.periods)
+        if type(ray.owed) is not int or ray.owed < 0 or (ray.detector == BIT_SHADOW and ray.owed):
+            raise ValueError("the intervals a thing owes are a nonnegative integer; a shadow owes none")
+        bounded(ray.owed)
+        if ray.detector == BIT_THING and definition.clock:
+            # The clock (clock-readings-v1, point 19): the remainder below K, and
+            # the content bounded by K and N, content / K below half the circle.
+            if not 0 <= ray.remainder < definition.clock:
+                raise ValueError("a thing's clock remainder stays below K (clock-readings-v1)")
+            if 2 * abs(ray.amount) >= definition.clock * definition.phase_modulus:
+                raise ValueError(
+                    "a thing's content / K must stay below half the phase circle N / 2: "
+                    "K and N bound the content one Node may hold (clock-readings-v1, point 19)"
+                )
+        elif ray.remainder or (ray.detector == BIT_SHADOW and (ray.periods or any(ray.push_remainder))):
+            raise ValueError(
+                "a shadow and a family without a clock carry no remainder (clock-readings-v1)"
+            )
         length = vector_length(ray_vector(ray, definition))
         if type(ray.accumulators) is not tuple or len(ray.accumulators) != 3:
             raise ValueError("a ray requires three integer accumulators")
@@ -2369,42 +2472,34 @@ def vector_length(vector: Heading) -> int:
 
 
 def ray_vector(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
-    """The vector the ray's DDA walks (ray-momentum-turn-v1): its momentum
-    when a push set one, else the heading of its line, which is the default
-    momentum amount x heading up to the amount. A shadow walks its heading
-    always (bit-law-v1): its momentum, when set, is what it carries home,
-    not its direction."""
-    if ray.momentum is not None and ray.detector == BIT_THING:
-        return ray.momentum
+    """The vector a ray walks: the heading of its line, always (clock-readings-v1,
+    Highlights 5.4 point 21: every ray moves one Link per interval on its heading;
+    a thing's momentum sets the direction it takes next at a departure,
+    `step_thing`, never the line it walks now). The DDA walks a heading of the
+    table that is not unit-axial as before."""
     return definition.headings[ray.heading]
 
 
 def ray_line(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
-    """The line a ray occupies ahead of it: the heading of its index, or, for a
-    thing with a momentum set by a push, the unit-axial heading of the momentum's
-    dominant axis, the axis of the largest component, ties to the lowest axis as
-    the DDA takes them."""
-    if ray.momentum is None or ray.detector != BIT_THING:
-        return definition.headings[ray.heading]
-    momentum = ray.momentum
-    axis = max(range(3), key=lambda i: (abs(momentum[i]), -i))
-    return PORT_HEADINGS[2 * axis + (0 if momentum[axis] > 0 else 1)]
+    """The line a ray occupies ahead of it: the heading of its index (the register's
+    dominant axis of ray-momentum-turn-v2 is retired with the DDA walk)."""
+    return definition.headings[ray.heading]
 
 
 def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
-    """One thing's momentum as the ledger reads it: its momentum when a push set
-    one, else amount x heading (ray-momentum-turn-v1). The sign of a returning
-    thing is the caller's. A shadow's momentum is `ledger_momentum` (bit-law-v1):
-    zero outbound, the momentum it carries home on the walk back."""
+    """One thing's momentum as the ledger reads it (clock-readings-v1): amount x
+    heading, its motion, plus the momentum it carries, the pushes not yet spent
+    on a step. The sign of a returning thing is the caller's. A shadow's momentum
+    is `ledger_momentum` (bit-law-v1): zero outbound, the momentum it carries home
+    on the walk back."""
     if ray.detector != BIT_THING:
         return ray.momentum if ray.momentum is not None and not ray.outbound else (0, 0, 0)
-    if ray.momentum is not None:
-        return ray.momentum
     heading = definition.headings[ray.heading]
+    carried = ray.momentum if ray.momentum is not None else (0, 0, 0)
     return (
-        checked_work(ray.amount * heading[0]),
-        checked_work(ray.amount * heading[1]),
-        checked_work(ray.amount * heading[2]),
+        checked_work(ray.amount * heading[0] + carried[0]),
+        checked_work(ray.amount * heading[1] + carried[1]),
+        checked_work(ray.amount * heading[2] + carried[2]),
     )
 
 
@@ -2435,53 +2530,71 @@ def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition)
     return ray.momentum
 
 
-def continued_walk(
-    ray: Ray, momentum: tuple[int, int, int], definition: SpatialFieldDefinition
-) -> tuple[int, int, int]:
-    """The walk's progress carried through a push (ray-momentum-turn-v2). The three
-    accumulators are, per axis, the momentum-intervals banked toward the next Link
-    on that axis: every interval deposits the momentum's component, and a Link on
-    the axis withdraws the momentum's Manhattan length (`dda_step`). A push changes
-    the deposit and the price, not the balance, so the accumulators carry over and
-    continue against the new momentum. A ray without a push walked the heading
-    of its line at the table's scale, and the default momentum is amount x that
-    heading, so its balance is lifted by the amount (the DDA on a vector scaled
-    takes the same Ports from accumulators scaled with it), exactly. A balance the
-    new momentum cannot hold, an accumulator outside the admissible (-length,
-    length] of the new length (the push shrank the momentum below what was
-    banked), starts the walk over at (0, 0, 0), as every push did under v1."""
-    scale = 1 if ray.momentum is not None else ray.amount
-    kept = (
-        checked_work(ray.accumulators[0] * scale),
-        checked_work(ray.accumulators[1] * scale),
-        checked_work(ray.accumulators[2] * scale),
-    )
-    length = vector_length(momentum)
-    if all(-length < value <= length for value in kept):
-        return kept
-    return (0, 0, 0)
-
-
 def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDefinition) -> Ray:
-    """The ray after a push (ray-momentum-turn-v2): its momentum moved by the push
-    and its walk kept (`continued_walk`), amount, phase, bit, heading index and
-    event record untouched. A momentum back at the default amount x heading is
-    cleared and the walk starts over, so the ray resumes its line as the ray it
-    was; a push that would leave no direction fails closed, since a ray never
-    stops."""
-    before = ray_momentum_vector(ray, definition)
+    """The thing after a push (clock-readings-v1, Highlights 5.4 points 15 and
+    23): the push added to the momentum it carries, and the whole quanta it read,
+    the push's components in quanta, owed as intervals of wait, w each
+    (`owed`, in units of 1 / d); amount, phase, bit, heading, walk and event
+    record untouched. A momentum back at zero is cleared, so a thing whose
+    pushes cancelled is the thing it was; a push never stops a thing, whose line
+    is its heading."""
+    carried = ray.momentum if ray.momentum is not None else (0, 0, 0)
     after = (
-        bounded(checked_work(before[0] + push[0])),
-        bounded(checked_work(before[1] + push[1])),
-        bounded(checked_work(before[2] + push[2])),
+        bounded(checked_work(carried[0] + push[0])),
+        bounded(checked_work(carried[1] + push[1])),
+        bounded(checked_work(carried[2] + push[2])),
     )
-    if not any(after):
-        raise ValueError("a push cannot stop a ray: its momentum would be the zero vector")
-    heading = definition.headings[ray.heading]
-    default = tuple(checked_work(ray.amount * component) for component in heading)
-    if after == default:
-        return replace(ray, momentum=None, accumulators=(0, 0, 0))
-    return replace(ray, momentum=after, accumulators=continued_walk(ray, after, definition))
+    quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+    owed = bounded(checked_work(ray.owed + checked_work(quanta * definition.wait_numerator)))
+    return replace(ray, momentum=after if any(after) else None, owed=owed)
+
+
+def step_thing(ray: Ray, definition: SpatialFieldDefinition) -> tuple[Ray, tuple[int, int, int]]:
+    """The step of a thing at its departure (clock-readings-v1, Highlights 5.4
+    point 21 and the settled rule (i)): the momentum a thing carries sets the
+    direction it takes next and never its speed. The first axis (x before y
+    before z) whose component has reached the thing's content turns the thing to
+    that axis, the sign of the component choosing the sense, and the momentum
+    drops by the content on that axis; at most one step per departure. A step
+    is a change of heading: a component on the thing's own direction, however
+    large, turns it nowhere and drops nothing (the thing is on that axis
+    already; the pushes it carries stay its momentum). Returns
+    the thing on its new heading, its walk started over when the heading
+    changed, and the momentum spent: what the step took off the thing's
+    momentum as the ledger reads it (amount x heading plus the pushes carried),
+    content x the heading before the step, booked on the momentum field's spent
+    line. A thing without a momentum, a shadow and a thing walking back step
+    nowhere."""
+    if ray.detector != BIT_THING or ray.momentum is None or not ray.outbound:
+        return ray, (0, 0, 0)
+    content = abs(ray.amount)
+    for axis in range(3):
+        component = ray.momentum[axis]
+        if abs(component) < content:
+            continue
+        sign = 1 if component > 0 else -1
+        target = PORT_HEADINGS[2 * axis + (0 if sign > 0 else 1)]
+        if target == definition.headings[ray.heading]:
+            continue
+        if target not in definition.headings:
+            raise ValueError("a step requires the unit-axial heading in the family's sequence")
+        momentum = list(ray.momentum)
+        momentum[axis] = bounded(checked_work(component - sign * content))
+        heading = definition.headings.index(target)
+        before = definition.headings[ray.heading]
+        spent = (
+            checked_work(content * before[0]),
+            checked_work(content * before[1]),
+            checked_work(content * before[2]),
+        )
+        stepped = replace(
+            ray,
+            heading=heading,
+            accumulators=ray.accumulators if heading == ray.heading else (0, 0, 0),
+            momentum=(momentum[0], momentum[1], momentum[2]) if any(momentum) else None,
+        )
+        return stepped, spent
+    return ray, (0, 0, 0)
 
 
 def turn_receiver(rule: InteractionDefinition) -> int | None:
@@ -2522,15 +2635,30 @@ def dda_step(accumulators: tuple[int, int, int], heading: Heading) -> tuple[int,
     return port, (advanced[0], advanced[1], advanced[2])
 
 
-def ray_phase_step(ray: Ray, phase_advance: int) -> int:
-    """The signed phase step of one Link: the ray's own advance or the field's, forward
-    while outbound and backward on the walk back, so a returned ray reaches its event
-    Node with the phase it left with. A shadow has no clock (bit-law-v1, point 9):
-    its phase never advances, whatever its family's rate."""
-    if ray.detector != BIT_THING:
-        return 0
-    step = ray.advance if ray.advance >= 0 else phase_advance
-    return step if ray.outbound else -step
+def clock_step(ray: Ray, clock: int) -> tuple[int, int]:
+    """One interval of a thing's clock (clock-readings-v1, Highlights 5.4 point
+    19): the signed phase step and the remainder after it. Forward, the thing
+    advances by (remainder + content) // K steps and keeps the rest, below K;
+    on the walk back it undoes exactly that interval, floor((remainder - content)
+    / K) steps, so a returned thing reaches its event Node with the phase and the
+    remainder it left with. A shadow has no clock (bit-law-v1, point 9), nor has
+    a family without one (light carries the phase of what emitted it): step 0,
+    remainder 0."""
+    if ray.detector != BIT_THING or clock <= 0:
+        return 0, 0
+    total = ray.remainder + ray.amount if ray.outbound else ray.remainder - ray.amount
+    step = total // clock
+    return step, total - step * clock
+
+
+def tick_clock(ray: Ray, phase_modulus: int, clock: int) -> Ray:
+    """The ray after one interval of its clock: its phase moved by the step,
+    masked by the width, and its remainder kept."""
+    step, remainder = clock_step(ray, clock)
+    if not step and remainder == ray.remainder:
+        return ray
+    phase = (ray.phase + step) & phase_mask(phase_modulus) if phase_modulus else ray.phase
+    return replace(ray, phase=phase, remainder=remainder)
 
 
 def phase_mask(phase_modulus: int) -> int:
@@ -2542,16 +2670,15 @@ def phase_mask(phase_modulus: int) -> int:
     return phase_modulus - 1 if phase_modulus else 0
 
 
-def advance_ray(
-    ray: Ray, heading: Heading, phase_modulus: int = 0, phase_advance: int = 0
-) -> tuple[int, Ray]:
-    """Walk one Link: the DDA port, the step count and the phase.
+def advance_ray(ray: Ray, heading: Heading, phase_modulus: int = 0, clock: int = 0) -> tuple[int, Ray]:
+    """Walk one Link: the DDA port, the step count and the clock.
 
-    An outbound ray counts its steps up and its phase forward by its rate; a
-    returning ray counts both down. The phase is masked by the modulus, a power of
-    two (2^phase_bits); a plain family has rate 0 and its phase stays. A returning
-    ray with no steps left is at its event Node, and what it does there is not
-    defined in this slice, so walking it further is refused.
+    An outbound ray counts its steps up and its clock forward, content / K steps
+    of phase with the remainder kept (`clock_step`, clock-readings-v1); a
+    returning ray counts both down. The phase is masked by the modulus, a power
+    of two (2^phase_bits); a family without a clock (K 0) keeps its phase. A
+    returning ray with no steps left is at its event Node, and what it does
+    there is not defined in this slice, so walking it further is refused.
     """
     port, accumulators = dda_step(ray.accumulators, heading)
     if ray.outbound:
@@ -2564,10 +2691,8 @@ def advance_ray(
         steps = 0
     else:
         raise ValueError("a returning ray with no steps left is at its event Node")
-    phase = ray.phase
-    if phase_modulus:
-        phase = (ray.phase + ray_phase_step(ray, phase_advance)) & phase_mask(phase_modulus)
-    return port, replace(ray, accumulators=accumulators, phase=phase, steps=steps)
+    moved = replace(ray, accumulators=accumulators, steps=steps)
+    return port, tick_clock(moved, phase_modulus, clock)
 
 
 def event_stamp(rays: Rays, headings: tuple[Heading, ...]) -> tuple[int, EventShares]:
@@ -2786,11 +2911,17 @@ RayMergeKey = tuple[
     int,
     int,
     int,
+    tuple[int, int, int],
+    int,
+    int,
+    int,
 ]
 
 
 def ray_merge_key(ray: Ray) -> RayMergeKey:
-    """The identity of a ray's line and event: everything but its amount, in a fixed order."""
+    """The identity of a ray's line and event: everything but its amount, in a fixed
+    order; the clock's remainder, the push remainder and the passages are part of
+    it (clock-readings-v1)."""
     return (
         ray.heading,
         ray.accumulators,
@@ -2808,6 +2939,10 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.momentum,
         ray.polarization,
         ray.owner,
+        ray.remainder,
+        ray.push_remainder,
+        ray.periods,
+        ray.owed,
         ray.parked,
     )
 
@@ -2848,10 +2983,14 @@ def merge_rays(rays: Rays) -> Rays:
             momentum=_merged_momentum(key[13], counts[key]),
             polarization=key[14],
             owner=key[15],
-            parked=key[16],
+            remainder=key[16],
+            push_remainder=key[17],
+            periods=key[18],
+            owed=key[19],
+            parked=key[20],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
-        if amount or key[16]
+        if amount or key[20]
     )
 
 
@@ -2871,7 +3010,7 @@ def _merge_order(key: RayMergeKey) -> tuple[object, ...]:
     the polarization, the owner and the parked flag last, so that rays without one
     keep the order they had."""
     momentum = key[13]
-    return (*key[:13], momentum is not None, momentum or (0, 0, 0), key[14], key[15], key[16])
+    return (*key[:13], momentum is not None, momentum or (0, 0, 0), *key[14:])
 
 
 def ray_stock(rays: Rays) -> int:
@@ -3084,13 +3223,6 @@ def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
     return ticket_bit(ticket, mark.pass_numerator, mark.pass_denominator)
 
 
-def decay_draw_declared(initial: InitialState) -> bool:
-    """Whether the world declares a decaying rule, one with `draw` (decay-draw-v1);
-    the runner records the identity when it does, and a world without one runs
-    byte-identically to what it was."""
-    return any(rule.draw is not None for rule in initial.ray_interactions)
-
-
 def click_coupling(mark: DetectorMark, index: int, definition: SpatialFieldDefinition) -> int:
     """What the mark does with a thing of spatial field `index` that draws 1
     (detector-absorb-v1 under bit-law-v1): its declared `on_click` for that
@@ -3290,25 +3422,62 @@ def push_of(
     reads: str,
     content: int,
     charge: int,
-) -> tuple[int, int, int]:
-    """The push one shadow gives a thing (bit-law-v1, points 3 and 16): the table's
-    sign x the shadow's amount x its heading, read times the thing's content
-    (`reads` "content") or times the shadow's source sign and the thing's
-    charge (`reads` "charge"); -1 is attraction toward the source, which lies
-    opposite the arriving heading, for a positive product."""
-    if reads == "content":
-        factor = content
-    elif reads == "charge":
-        factor = shadow.source_sign * charge
-    else:
-        raise ValueError("a momentum table reads content or charge (bit-law-v1, point 16)")
+    remainder: tuple[int, int, int] = (0, 0, 0),
+) -> tuple[tuple[int, int, int], tuple[int, int, int]]:
+    """The push one shadow gives a thing, the two readings of point 16 (Highlights
+    5.4 points 16 and 18, clock-readings-v1): the whole push and the pushed
+    thing's push remainder after it. The gravity reading, `reads` "content": the
+    table's sign x the shadow's amount x its heading x the content of what is
+    pushed, exact, the remainder untouched. The electricity reading, `reads`
+    "charge": the table's sign x the shadow's amount x its heading x (the owner's
+    charge / the owner's content) x the charge of what is pushed, the owner's
+    charge and content read by the owner's id from the family's owner table (a
+    shadow is a ray of its owner's family: the owner's whole charge, its charge
+    per quantum times its stock) and the charge of what is pushed being its
+    charge per quantum, the family's for a thing and the declared for a body;
+    the product is accumulated per axis in units of 1 / D, D the family's
+    push denominator (a multiple of every owner's content), on the pushed thing's
+    remainder, and the whole units go into the momentum, the rounding toward
+    zero so that a push below one quantum of either sign accumulates exactly
+    and the remainder keeps its sign. The table's -1 is attraction toward the
+    source, which lies opposite the arriving heading, for a positive product."""
     heading = definition.headings[shadow.heading]
-    scale = checked_work(checked_work(sign * shadow.amount) * factor)
-    return (
-        checked_work(scale * heading[0]),
-        checked_work(scale * heading[1]),
-        checked_work(scale * heading[2]),
+    if reads == "content":
+        scale = checked_work(checked_work(sign * shadow.amount) * content)
+        return (
+            (
+                checked_work(scale * heading[0]),
+                checked_work(scale * heading[1]),
+                checked_work(scale * heading[2]),
+            ),
+            remainder,
+        )
+    if reads != "charge":
+        raise ValueError("a momentum table reads content or charge (bit-law-v1, point 16)")
+    owner_content = definition.owner_content(shadow.owner)
+    if owner_content <= 0:
+        raise ValueError(
+            "the electricity reading needs the shadow's owner's content: the owner is not in "
+            "the family's owner table (clock-readings-v1, point 18)"
+        )
+    denominator = definition.push_denominator
+    if denominator % owner_content:
+        raise ValueError("the family's push denominator is a multiple of every owner's content")
+    scale = checked_work(
+        checked_work(
+            checked_work(sign * shadow.amount)
+            * checked_work(definition.owner_charge(shadow.owner) * charge)
+        )
+        * (denominator // owner_content)
     )
+    whole = [0, 0, 0]
+    kept = [0, 0, 0]
+    for axis in range(3):
+        total = checked_work(remainder[axis] + checked_work(scale * heading[axis]))
+        units = abs(total) // denominator
+        whole[axis] = units if total >= 0 else -units
+        kept[axis] = total - whole[axis] * denominator
+    return (whole[0], whole[1], whole[2]), (kept[0], kept[1], kept[2])
 
 
 def body_pushed(body: ExternalBody, push: tuple[int, int, int]) -> ExternalBody:

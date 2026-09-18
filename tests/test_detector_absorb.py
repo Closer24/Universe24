@@ -63,6 +63,7 @@ def marks(matter="absorb"):
 def document(detectors, ticks=TICKS):
     return {
         "schema_version": 1,
+        "K": AMOUNT,
         "model_id": "detector-absorb-test-v1",
         "shape": [15, 15, 15],
         "boundary": "periodic",
@@ -121,7 +122,9 @@ def document(detectors, ticks=TICKS):
                 "metric": "links",
                 "pace": [1, 1],
                 "charge": CHARGE,
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
+                # The clock is the content (clock-readings-v1): one step per interval at K.
+                "clock": True,
             }
         ],
         "emissions": [
@@ -343,18 +346,19 @@ def test_the_click_keys_are_validated_and_the_helpers_are_exact():
     assert click_coupling(declared, 0, quanta) == CLICK_PASS
     assert CLICK_DEFAULT == -1
     # The absorption into the resident thing (node-is-ports-v1): its things line
-    # sized on the first take, the momentum amount x heading, or the momentum a
-    # push set, added exactly; a shadow home to it goes on its shadows line.
+    # sized on the first take, the momentum amount x heading plus the pushes the
+    # thing carries (clock-readings-v1), added exactly; a shadow home to it goes
+    # on its shadows line with the momentum it carries.
     taken = detector_absorb(plain, 0, (Ray(2, ZERO, 3), Ray(5, ZERO, 1, momentum=(1, -1, 0))), quanta, 1)
-    assert (taken.resident.things, taken.resident.momentum) == ((4,), (1, 2, 0))
+    assert (taken.resident.things, taken.resident.momentum) == ((4,), (1, 2, -1))
     again = detector_absorb(taken, 0, (Ray(0, ZERO, 4, detector=BIT_THING),), quanta, 1)
-    assert (again.resident.things, again.resident.momentum) == ((8,), (5, 2, 0))
+    assert (again.resident.things, again.resident.momentum) == ((8,), (5, 2, -1))
     home = detector_absorb(
         again, 0, (Ray(1, ZERO, 2, detector=BIT_SHADOW, outbound=0, momentum=(-1, 0, 0)),), quanta, 1
     )
     assert (home.resident.things, home.resident.shadows, home.resident.momentum) == (
         (8,),
         (2,),
-        (4, 2, 0),
+        (4, 2, -1),
     )
     assert again.position == A and again.on_click == () and again.resident.owners == (0,)

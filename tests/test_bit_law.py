@@ -13,6 +13,15 @@ declarations are rejected (g); the mark is the home of what it absorbed (h);
 the ledger per bit with the border lines (i); a thing reads the shadows'
 message by its content or by its charge, as declared (j).
 
+Re-pinned on 2026-09-18 under clock-readings-v1 (feature 16b, Highlights 5.4
+points 16, 18, 19 and 21): a family declares no rest rate, `m` declares
+`clock` and the world `K` (world (a): K 2, so a thing of 2 advances one step
+per interval as before); the electricity reading multiplies by the owner's
+whole charge over its content, so a body of 100 quanta of `m` declares the
+whole charge -100 and pushes as it did at -1 per quantum; a thing's `momentum` is the
+pushes it carries, its register line amount x heading plus that; the momentum
+line carries `spent`.
+
 Re-pinned on 2026-09-18 under node-is-ports-v1 (feature 17, Highlights 5.4
 point 22 and the settled rules): a lamp is a thing that spends its content
 (no `source`, no `recoil_field`), a prefilled shadow starts with its Link
@@ -67,7 +76,7 @@ def field(name, components=1):
     }
 
 
-def family(spread=None, phase_bits=0, rate=0):
+def family(spread=None, phase_bits=0, clock=False):
     entry = {
         "field": "m",
         "baseline": 0,
@@ -79,9 +88,10 @@ def family(spread=None, phase_bits=0, rate=0):
         "pace": [1, 1],
         "phase_bits": phase_bits,
         "charge": -1,
-        "kerengonen": {"phase_advance": rate},
         "release": [1, 1],
     }
+    if clock:
+        entry["clock"] = True
     if spread is not None:
         entry["spread"] = spread
     return entry
@@ -150,7 +160,11 @@ def shadow(position, heading, amount=1, owner=1, sign=-1, steps=None):
 
 
 def body(position, thing=None, table=None, amount=100):
-    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -1}
+    """A body of `amount` quanta of `m` with the whole charge -amount, the
+    family's -1 per quantum (clock-readings-v1: its shadows carry its whole
+    charge and its content, and the electricity reading divides the one by the
+    other)."""
+    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -amount}
     if table is not None:
         entry["momentum_table"] = table
         entry["reads"] = "charge"
@@ -171,7 +185,7 @@ def document(
     spread=None,
     fill=None,
     phase_bits=0,
-    rate=0,
+    clock=0,
     dense=None,
     rules=(TURN,),
 ):
@@ -187,7 +201,11 @@ def document(
         "operation_costs": dict.fromkeys(COSTS, 1),
         "fields": [field("m"), field("momentum", 3)],
         "disturbance_types": list(types) or [RING],
-        "spatial_fields": [family(spread, phase_bits, rate)],
+        "spatial_fields": [family(spread, phase_bits, bool(clock))],
+        **({"K": clock} if clock else {}),
+        # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
+        # tests/test_wait_rule.py; these worlds pin the pushes without it.
+        "wait_per_quantum": 0,
         "emissions": list(emissions),
         "seeds": list(seeds),
         "ray_interactions": [deepcopy(rule) for rule in rules],
@@ -282,7 +300,7 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         bodies=[body((3, 2, 2))],
         shadows=[shadow((3, 2, 2), MINUS_X, owner=3, steps=0)],
         phase_bits=2,
-        rate=1,
+        clock=2,
     )
     assert parse_initial_state(doc).spatial_fields[0].owners == (1, 2, 3)
     result = run(doc, 5)
@@ -357,6 +375,7 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         "absorbed": (1, 0, 0),
         "absorbed_by_marks": (0, 0, 0),
         "returned": (1, 0, 0),
+        "spent": (0, 0, 0),
     }
     assert line(ledger, "charge", "m") == {
         "initial": -2,
@@ -829,10 +848,11 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
         2: [4 + pushes[1][0], 0, 0],
         3: [0, 0, 0],
     }
-    for y, push, amount in ((1, pushes[0], 2), (3, pushes[1], 4)):
+    for y, push in ((1, pushes[0]), (3, pushes[1])):
         rays = [r for r in rays_at(result["inventories"][2], (4, y, 2)) if not r.parked]
+        # The momentum a thing carries is the pushes it took (clock-readings-v1).
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
-            (BIT_THING, y // 2 + 1, (amount + push[0], 0, 0), 1, 3),
+            (BIT_THING, y // 2 + 1, (push[0], 0, 0), 1, 3),
         ]
         rays = [r for r in rays_at(result["inventories"][2], (3, y, 2)) if not r.parked]
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [

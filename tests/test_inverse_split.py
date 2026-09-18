@@ -99,7 +99,7 @@ def document(mode, ticks=10):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
             }
         ],
         "emissions": [
@@ -150,12 +150,13 @@ def ray(heading, amount, steps, outbound, phase, bit, ports, shares):
 
 
 def arm_a(tick):
-    """Arm A's ray after tick t: out to the mark, returned there, back at X at tick 6."""
+    """Arm A's ray after tick t: out to the mark, returned there, back at X at tick 6.
+    The phase stays 0 (clock-readings-v1, 2026-09-18: no rest rate, no clock)."""
     if tick <= 2:
-        return ((7 + tick, 7, 7), ray(0, SHARE, tick, 1, tick, BIT_THING, PAIR_PORTS, PAIR_SHARES))
+        return ((7 + tick, 7, 7), ray(0, SHARE, tick, 1, 0, BIT_THING, PAIR_PORTS, PAIR_SHARES))
     if tick <= 6:
         back = 6 - tick
-        return ((7 + back, 7, 7), ray(1, SHARE, back, 0, back, BIT_THING, PAIR_PORTS, PAIR_SHARES))
+        return ((7 + back, 7, 7), ray(1, SHARE, back, 0, 0, BIT_THING, PAIR_PORTS, PAIR_SHARES))
     return None
 
 
@@ -163,7 +164,7 @@ def arm_b(tick):
     """Arm B's ray after tick t: one Link per tick along -X, free, around the torus."""
     return (
         ((7 - tick) % 15, 7, 7),
-        ray(1, SHARE, tick, 1, tick % 8, BIT_THING, PAIR_PORTS, PAIR_SHARES),
+        ray(1, SHARE, tick, 1, 0, BIT_THING, PAIR_PORTS, PAIR_SHARES),
     )
 
 
@@ -173,7 +174,7 @@ def transmission(tick):
     steps = tick - 6
     return (
         (7 - steps, 7, 7),
-        ray(1, SHARE, steps, 1, steps, BIT_THING, 1 << 1, (0, SHARE, 0, 0, 0, 0)),
+        ray(1, SHARE, steps, 1, 0, BIT_THING, 1 << 1, (0, SHARE, 0, 0, 0, 0)),
     )
 
 

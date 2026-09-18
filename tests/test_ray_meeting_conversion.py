@@ -160,7 +160,7 @@ def document(outputs, invariants, delta, audit=True, ticks=4):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
             }
         ],
         "emissions": [
@@ -249,25 +249,27 @@ CASES = {
         [ENERGY, MOMENTUM],
         0,
         (
-            product(2, 2, 2, 60, FOUR_SHARES),
-            product(3, 2, 2, 60, FOUR_SHARES),
-            product(4, 3, 5, 60, FOUR_SHARES),
-            product(5, 3, 1, 60, FOUR_SHARES),
+            # The inputs' phases are 0 since clock-readings-v1 (2026-09-18: the
+            # family declares no clock), so the outputs read 0, 0, 3 and 7.
+            product(2, 2, 0, 60, FOUR_SHARES),
+            product(3, 2, 0, 60, FOUR_SHARES),
+            product(4, 3, 3, 60, FOUR_SHARES),
+            product(5, 3, 7, 60, FOUR_SHARES),
         ),
     ),
-    "table_0": (table_split(), [ENERGY], 0, (product(2, 10, 2, 4, (0, 0, 10, 0, 0, 0)),)),
-    "table_4": (table_split(), [ENERGY], 4, (product(3, 10, 6, 8, (0, 0, 0, 10, 0, 0)),)),
+    "table_0": (table_split(), [ENERGY], 0, (product(2, 10, 0, 4, (0, 0, 10, 0, 0, 0)),)),
+    "table_4": (table_split(), [ENERGY], 4, (product(3, 10, 4, 8, (0, 0, 0, 10, 0, 0)),)),
     "table_2": (
         table_split(),
         [ENERGY],
         2,
-        (product(2, 5, 2, 12, (0, 0, 5, 5, 0, 0)), product(3, 5, 4, 12, (0, 0, 5, 5, 0, 0))),
+        (product(2, 5, 0, 12, (0, 0, 5, 5, 0, 0)), product(3, 5, 2, 12, (0, 0, 5, 5, 0, 0))),
     ),
     "table_1": (
         table_split(),
         [ENERGY],
         1,
-        (product(2, 8, 2, 12, (0, 0, 8, 2, 0, 0)), product(3, 2, 3, 12, (0, 0, 8, 2, 0, 0))),
+        (product(2, 8, 0, 12, (0, 0, 8, 2, 0, 0)), product(3, 2, 1, 12, (0, 0, 8, 2, 0, 0))),
     ),
 }
 # The momentum a split moves between the two Ports, booked as an accounted source.
@@ -294,7 +296,7 @@ def test_a_meeting_replaces_its_rays_by_declared_outputs_split_by_the_table_or_i
     if case == "broken":
         # (c) Outputs that break an invariant are rejected before any owner changes,
         # by the meeting itself and in the run; malformed tables at initialization.
-        residents = (emitted(0, 2, 2), emitted(1, 2, 2))
+        residents = (emitted(0, 2, 0), emitted(1, 2, 0))
         for outputs, message in (
             (four(amounts=(2, 2, 3, 4)), "violates conservation of amount"),
             (four(ports=(2, 2, 4, 5)), "violates invariant momentum"),
@@ -344,7 +346,7 @@ def test_a_meeting_replaces_its_rays_by_declared_outputs_split_by_the_table_or_i
             assert lamp(world, 1) == {"a": (0,), "momentum": (5, 0, 0)}
         elif tick == 2:
             residents = rays_at(world, CENTER)
-            assert residents == [emitted(0, 2, 2), emitted(1, 2, (2 + delta) % 8)]
+            assert residents == [emitted(0, 2, 0), emitted(1, 2, delta % 8)]
             # (a), (b) The meeting: the inputs are replaced by the declared outputs,
             # each a new event ray with steps 0 and the mask and shares of the meeting.
             assert meet(initial, residents) == (products,)
@@ -356,7 +358,7 @@ def test_a_meeting_replaces_its_rays_by_declared_outputs_split_by_the_table_or_i
                 walked = product(
                     ray.heading,
                     ray.amount,
-                    (ray.phase + tick - 2) % 8,
+                    ray.phase,  # no clock: the phase stays (clock-readings-v1)
                     ray.event_ports,
                     ray.event_shares,
                     steps=tick - 2,

@@ -107,6 +107,7 @@ def scalar(name):
 def document(rules, ticks=4):
     return {
         "schema_version": 1,
+        "K": 5,
         "model_id": "ray-layers-test-v1",
         "shape": [15, 15, 15],
         "boundary": "periodic",
@@ -160,7 +161,9 @@ def document(rules, ticks=4):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
+                # The clock is the content (clock-readings-v1): one step per interval at K.
+                "clock": True,
             }
             for name in ("a", "b", "c")
         ],
