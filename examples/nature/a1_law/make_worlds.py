@@ -2,7 +2,8 @@
 2026-09-18): one lamp of the light family behind a wall with two slits, a
 screen of marks behind the wall, the lamp's shadow set given with the board.
 
-The law's form throughout: N = 64 (`phase_bits` 6), one K for the world,
+The law's form throughout: N = 64 (the world's one phase circle, declared once
+like K; the cleanup of 2026-09-18), one K for the world,
 `wait_per_quantum` 1, no field family (the lamp's field is light shadows, bit
 0, of the lamp's owner), no spread, steering, mass field or seed, the dense
 mode where the world admits it.
@@ -59,7 +60,7 @@ HERE = Path(__file__).resolve().parent
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 OPERATIONS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 SHAPE = [45, 65, 17]
-PHASE_BITS = 6
+N = 64
 K = 1
 TICKS = 200
 LAMP = (4, 32, 8)
@@ -138,6 +139,7 @@ def world(open_slits, name, stock=LAMP_STOCK, periodic=False):
         "normal_budget": 100000,
         "ticks": TICKS,
         "K": K,
+        "N": N,
         "wait_per_quantum": 1,
         "operation_costs": {name: 1 for name in OPERATIONS},
         "fields": [
@@ -169,7 +171,6 @@ def world(open_slits, name, stock=LAMP_STOCK, periodic=False):
                 "ray_slots": 24,
                 "metric": "links",
                 "pace": [1, 1],
-                "phase_bits": PHASE_BITS,
                 "charge": 0,
                 "release": list(RELEASE),
                 "clock": True,

@@ -12,6 +12,7 @@
  "normal_budget": 100000,
  "ticks": 200,
  "K": 1,
+ "N": 64,
  "wait_per_quantum": 1,
  "operation_costs": {
   "receive": 1,
@@ -106,7 +107,6 @@
     1,
     1
    ],
-   "phase_bits": 6,
    "charge": 0,
    "release": [
     1,

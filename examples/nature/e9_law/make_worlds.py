@@ -3,8 +3,8 @@
 the prefilled shadow set of one thing, mixed at every Node.
 
 The world is `examples/nature/screen_loop.json` migrated by
-`bit_law_migration.migrate` and then declared on the law: N = 64 (`phase_bits`
-6), one K for the world, `wait_per_quantum` 1, the ring's eight corner lamps
+`bit_law_migration.migrate` and then declared on the law: N = 64 (the world's one
+phase circle, declared once like K), one K for the world, `wait_per_quantum` 1, the ring's eight corner lamps
 eight things (the engine makes every disturbance type a distinct thing, so the
 ring's field is eight shadow sets, one per ray), rays of amount M = 32768 with
 `release` [1, 1] (a thing's shadow set per interval of the fill is at most its
@@ -55,7 +55,7 @@ sys.path.insert(0, str(HERE.parent))
 from bit_law_migration import migrate  # noqa: E402
 
 SOURCE = HERE.parent / "screen_loop.json"
-PHASE_BITS = 6
+N = 64
 RING_AMOUNT = 32768
 K = 4096
 FILL = 5
@@ -76,7 +76,7 @@ def ring_world(*, clock: bool, fill: int = FILL) -> dict:
     document["fields"] = [f for f in document["fields"] if f["name"] != "light"]
     document["spatial_fields"] = [f for f in document["spatial_fields"] if f["field"] != "light"]
     (electron,) = document["spatial_fields"]
-    electron["phase_bits"] = PHASE_BITS
+    document["N"] = N
     electron["release"] = list(RELEASE)
     electron["ray_slots"] = RAY_SLOTS
     electron.pop("clock", None)

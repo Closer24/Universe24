@@ -2847,7 +2847,9 @@ sign rule, and its other couplings are catalog entries.
     on the law: board 12 x 11 x 11 open, the ring of E5 on the unit square
     P0 = (1,5,5), P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6) under the `corner`
     table, E6's seven marks at (7, 2, 5) to (7, 8, 5) at setting [1, 1],
-    `phase_bits` 6 (N = 64), K = 4096, `wait_per_quantum` 1, no `light`
+    N = 64 (declared by the runs' worlds as the family's `phase_bits` 6, by
+    the shipped worlds as the world's `N` since the cleanup of 2026-09-18
+    merged after the runs), K = 4096, `wait_per_quantum` 1, no `light`
     family (there is no field family: the ring's field is electron shadows,
     bit 0, point 12), the electron's `release` [1, 1] and 32 ray slots (the
     cap of a coupled layer), rays of amount M = 32768 (content 262144): a

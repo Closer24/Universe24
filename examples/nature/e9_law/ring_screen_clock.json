@@ -230,7 +230,6 @@
     1,
     1
    ],
-   "phase_bits": 6,
    "charge": -3,
    "release": [
     1,
@@ -528,6 +527,7 @@
   }
  ],
  "K": 4096,
+ "N": 64,
  "wait_per_quantum": 1,
  "initial_field": {
   "electron": {
