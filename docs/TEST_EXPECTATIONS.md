@@ -38,7 +38,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
 | `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
-| `test_wait_reads.py` | 4 | 0.5 | Feature 16f, the wait reads the amplitude as a declared coupling option (`wait-reads-v1`): absent or `amount`, a record byte-identical to main (a); `amplitude`, the size of the coherent sum of the pushing owner's shadows at the thing's Node in whole units, 81 quanta nine, 9 quanta three, two owners never one sum (b); shares in antiphase from two Ports the size of their difference, 192 of 32nds (c); the dense layer and the engine alone agree (d) |
+| `test_wait_reads.py` | 7 | 1.0 | Feature 16f, the wait reads the amplitude as a declared coupling option (`wait-reads-v1`): absent or `amount`, a record byte-identical to main (a); `amplitude`, the size of the coherent sum of the pushing owner's shadows at the thing's Node in whole units, 81 quanta nine, 9 quanta three, two owners never one sum (b); shares in antiphase from two Ports the size of their difference, 192 of 32nds (c); the dense layer and the engine alone agree (d); part 2, the units below a whole one accumulating on the thing: 10 per meeting owes floor(10 k / 32) (e), 4506 over 100 meetings owes 140 exactly (f), the remainder riding on the thing in a world and 0 under amount (g) |
 | `test_shadow_wait.py` | 8 | 1.0 | Feature 16e, the shadow's wait as a declared world option (`shadow-wait-v1`): absent, a record byte-identical to main (a); read by a thing, the share turned back owes the count per whole quantum of its push before it leaves (b); read by the field, every departure owes the count per whole quantum of another owner's arrivals at the Node, parked ninths never (c); the count exact, d spent per interval (d); the dense layer and the engine alone agree (e) |
 | `test_return_field.py` | 6 | 1.5 | Feature 16d, the return is a field (`return-field-v1`, Highlights 5.4 point 3 as amended): the inverted share leaving the pushed body reversed and mixing, the owner's momentum line receiving what reaches it with the books exact per interval and the momentum in flight on the shadows (a); a returning share pushing a third thing with the opposite sign (b); a returning share absorbed at its owner with no push (c); no trace, no wait, every share moving, the identity recorded (d); a head-on push taken exactly once, the share riding the Link with the thing on the same lane and pushing nothing at the next Node (f); the dense layer and the engine alone agreeing on the worlds of (a) and (b) over four ticks, the returning shares in the arrays with their momentum (e) |
 | `test_lanes.py` | 10 | 2.2 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; two reals of one family given one lane one real ray (amounts, momentum and charge exact, the phase the coherent sum's, the owners a set) that is home to a shadow of each owner, things of two families on one lane refused; the record of a world with no contested lane byte-identical, pinned below; no lawful world refused for slots (`ray_slots` retired on 2026-09-18, refused naming lanes-v1; `examples/nature/screen_loop.json` parses and runs eight ticks balanced) |
@@ -1756,6 +1756,34 @@ alone decides its departure. Computed from the rules before the run:
 - (d) the world of (b) with `amplitude` under the engine alone and under the
   shadow layer, twelve ticks: the inventories, the ledgers, the momenta, the
   bodies, the shadows and the final parked entries equal.
+
+Part 2 (feature 16f, the remainder; derivations round 6, section 42; pinned
+2026-09-18 before the run): the units of amplitude below a whole one
+accumulate on the thing (`wait_remainder`, 32nds of one quantum's amplitude),
+a whole unit charged as soon as they reach 32. The meeting alone, cycle after
+cycle, through `apply_ray_interactions` on the world's rule (the thing of 1
+at its Node, met by the shares fed to it, its state carried on, nothing
+walked), `phase_bits` 2:
+
+- (e) 2 quanta at phase 0 from +X and 3 at phase 2 from +Y, one owner: the
+  amplitudes 45 and 55 half a turn apart, the size 10 of 32nds per meeting;
+  after k meetings the thing owes floor(10 k / 32) and carries 10 k mod 32,
+  the whole units charged at the 4th, 7th, 10th, 13th, 16th and 20th meeting,
+  31 owed and 8 carried after 100; its momentum (-2 k, -3 k, 0), its push
+  remainder (0, 0, 0); under `amount` one meeting owes 5 and carries 0.
+- (f) meeting k feeds 1 + (k mod 7) quanta at phase 0 from +X (the amplitudes
+  32, 45, 55, 64, 71, 78, 84 of 1 to 7 quanta) and at every even k one
+  quantum at phase 2 from +Y (32 less): the sizes sum to 4506 over 100
+  meetings (14 rounds of 429, then 45 and 55, less 50 x 32), the thing owing
+  floor(total / 32) and carrying total mod 32 at every meeting, 140 and 26 at
+  the end; under `amount` it owes the 447 quanta of push (14 rounds of 28,
+  then 2 and 3, plus the 50 antiphase quanta) and carries 0.
+- (g) in the world of (c) with 2 and 3 in antiphase: the pushes (-2, -3, 0),
+  the size 10, nothing owed, 10 carried; the thing steps to -X at its
+  departure of tick 2 (the x component reached its content) and is at (1,2,2)
+  after tick 2 with steps 2, carrying (-1, -3, 0) and the remainder 10;
+  under `amount` it owes 5 (4 after tick 2) at (2,2,2) and every thing of the
+  run carries 0.
 
 ## A click is an absorption
 

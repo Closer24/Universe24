@@ -2978,11 +2978,27 @@ record the same). `amplitude`, on every ray family of the world
   units of 1 / 32 (`MIXING_AMPLITUDE_SCALE`: 32 is the amplitude of one
   quantum, 288 of 81 quanta, 96 of 9), the six summed on the family's phase
   circle, and the size of the sum in the same units (the integer square root
-  of x^2 + y^2 over the tables' scale, the floor at each step); its whole
-  units of amplitude are the sum over 32, the floor. Two owners' shares are
-  two sums, never one; one owner's shares from two Ports half a turn apart
-  give the size of their difference (81 and 9 in antiphase: 288 - 96 = 192,
-  six units, where their amounts are 90).
+  of x^2 + y^2 over the tables' scale, the floor at each step). Two owners'
+  shares are two sums, never one; one owner's shares from two Ports half a
+  turn apart give the size of their difference (81 and 9 in antiphase: 288 -
+  96 = 192, six units, where their amounts are 90).
+- **The remainder** (part 2, derivations round 6, section 42). The size joins
+  what the thing holds below a whole unit, `Ray.wait_remainder` (in 32nds of
+  one quantum's amplitude, one accumulator on the thing across the groups it
+  reads, part of the merge identity, 0 on a shadow and under `amount`); the
+  whole units are read now and the rest stays on the thing, a whole unit
+  charged as soon as the accumulator reaches 32, exact integers, nothing
+  lost, as the electricity reading keeps `push_remainder`. So a thing far
+  from a source, where the size is below a unit per interval, still reads
+  the field in the mean: 10 of 32nds per interval (2 and 3 quanta in
+  antiphase, 55 - 45) owes an interval at the fourth, the seventh, the tenth
+  meeting, floor(10 k / 32) after k, and over 100 intervals of any sizes the
+  total owed is floor(total / 32) exactly.
+- **The unit.** The engine's w (`wait_per_quantum`) counts one interval per
+  whole quantum of amplitude read, the whole units times the content
+  through `push_of`; the derivation (DERIVATIONS.md section 42) reads |u|
+  where the engine reads 3|u|, so the derivation's w is the document's w
+  divided by 3, and a run that wants the derivation's w declares 3w.
 - **The wait.** The units are read as the push reads the amount, by the
   rule's reading (point 16: times the thing's content, or the owner's charge
   over its content times the thing's charge, `push_of` on the units in place

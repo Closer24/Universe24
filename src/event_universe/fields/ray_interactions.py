@@ -266,8 +266,10 @@ def _turn(
     definition = definitions[index]
     taken[receiver_slot] = receiver_slot
     # The groups whose amplitude this rule's wait has read for this thing
-    # (wait-reads-v1): once per group of shadows arriving.
+    # (wait-reads-v1): once per group of shadows arriving; and the thing's
+    # remainder of amplitude below a whole unit, carried across the groups.
     amplitudes_read: set[tuple[int, int, int, int]] = set()
+    wait_remainder = ray.wait_remainder
     for shadow_slot, (kind, ray_slot) in enumerate(owners):
         sign = rule.momentum_table[kind] if kind < len(rule.momentum_table) else 0
         if not sign or shadow_slot in used or views[shadow_slot] is None:
@@ -329,7 +331,11 @@ def _turn(
                     and (member.owner, member.source_sign, member.polarization, member.outbound) == group
                 )
                 meter.charge("evaluate", len(members))
-                units = arrival_amplitude(members, definitions[kind]) // MIXING_AMPLITUDE_SCALE
+                # The remainder (feature 16f part 2): the size joins what the
+                # thing holds below a whole unit, the whole units are read now
+                # and the rest stays on the thing, exact, as `push_remainder`.
+                size = checked_work(wait_remainder + arrival_amplitude(members, definitions[kind]))
+                units, wait_remainder = divmod(size, MIXING_AMPLITUDE_SCALE)
                 if units:
                     unit_push, _ = push_of(
                         sign,
@@ -340,7 +346,11 @@ def _turn(
                         definition.charge,
                     )
                     wait_quanta = abs(unit_push[0]) + abs(unit_push[1]) + abs(unit_push[2])
-        ray = replace(pushed_ray(ray, push, definition, wait_quanta), push_remainder=remainder)
+        ray = replace(
+            pushed_ray(ray, push, definition, wait_quanta),
+            push_remainder=remainder,
+            wait_remainder=wait_remainder,
+        )
         meter.charge("update", 4)
         carried = (-push[0], -push[1], -push[2])
         earlier = candidate[kind][ray_slot] if shadow_slot in taken else None
