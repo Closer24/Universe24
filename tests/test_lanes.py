@@ -161,71 +161,72 @@ def test_a_table_with_two_outputs_on_one_heading_is_refused():
     parse([_output("same", 0), _output("reversed", 1)])
 
 
-THING_A = ((4, 10, 10), "m", 8, 0)
-THING_B = ((10, 16, 10), "m", 8, 3)
-FROM_BELOW = ((10, 4, 10), "f", 1, 2)
+THING_A = ((9, 10, 10), "m", 8, 0)
+THING_B = ((10, 11, 10), "m", 8, 3)
+FROM_BELOW = ((10, 9, 10), "f", 1, 2)
+CENTER = (10, 10, 10)
 
 
 def test_a_thing_steps_into_a_lane_only_if_the_lane_is_free():
     # (d) A is pushed at C by the shadow from -Y; B is already on -Y and keeps
     # its lane; A keeps +X with its momentum accumulated and steps at the next
-    # Node. Both move one Link every interval.
+    # Node. Both move one Link every interval. Re-pinned on 2026-09-18 under
+    # node-mixing-v1 on the geometry of test_ray_momentum_turn (a): one Link
+    # from C each, so the shadow meets the things before it mixes anywhere.
     events = []
-    raw = turn_document((THING_A, THING_B, FROM_BELOW), [turn({"f": -1})], 20)
+    raw = turn_document((THING_A, THING_B, FROM_BELOW), [turn({"f": -1})], 15)
     world = Simulation(parse_initial_state(raw), observer=events.append)
-    for t in range(1, 21):
+    for t in range(1, 16):
         world.step()
         assert balanced(world)
         assert world.totals()["f"] == (1,) and world.escaped_totals()["f"] == (0,)
-        assert world.totals()["m"] == ((16,) if t <= 16 else (8,) if t == 17 else (0,))
+        assert world.totals()["m"] == ((16,) if t <= 11 else (8,) if t == 12 else (0,))
         current = momentum_line(world)
-        if t <= 6:
-            # After tick 6 both things and the shadow are at C together.
-            at_a, at_b = (4 + t, 10, 10), (10, 16 - t, 10)
-            expected = {at_a: [ray(0, 8, t & 7, t, 0)], at_b: [ray(3, 8, t & 7, t, 3)]}
-            if t == 6:
-                expected = {at_a: [ray(0, 8, 6, 6, 0), ray(3, 8, 6, 6, 3)]}
-            assert {at: turn_rays(world, at, "m") for at in expected} == expected
-            assert positions_of(world, "m") == set(expected)
-            assert turn_rays(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 1, t)]
+        if t == 1:
+            # Both things and the shadow are at C together.
+            assert turn_rays(world, CENTER, "m") == [ray(0, 8, 1, 1, 0), ray(3, 8, 1, 1, 3)]
+            assert turn_rays(world, CENTER, "f") == [shadow_ray(2, 1, 1)]
+            assert positions_of(world, "m") == {CENTER}
             assert world.thing_momentum() == {1: [8, 0, 0], 2: [0, -8, 0]}
             assert current["current"] == ZERO and current["spent"] == ZERO
             continue
-        # The shadow, turned back at C, walks -Y to (10, 4, 10) and waits there.
-        assert turn_rays(world, (10, max(16 - t, 4), 10), "f") == [
-            shadow_ray(3, 1, max(12 - t, 0), (0, 8, 0))
-        ]
-        if t == 7:
-            assert turn_rays(world, (11, 10, 10), "m") == [ray(0, 8, 7, 7, 0, momentum=(0, -8, 0))]
-            assert turn_rays(world, (10, 9, 10), "m") == [ray(3, 8, 7, 7, 3)]
+        # The shadow, turned back at C, walks its one step to (10, 9, 10) and waits.
+        assert positions_of(world, "f") == {(10, 9, 10)}
+        assert turn_rays(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 0, (0, 8, 0))]
+        if t == 2:
+            assert turn_rays(world, (11, 10, 10), "m") == [ray(0, 8, 2, 2, 0, momentum=(0, -8, 0))]
+            assert turn_rays(world, (10, 9, 10), "m") == [ray(3, 8, 2, 2, 3)]
             assert positions_of(world, "m") == {(11, 10, 10), (10, 9, 10)}
             assert world.thing_momentum() == {1: [8, -8, 0], 2: [0, -8, 0]}
             assert current["current"] == ZERO and current["spent"] == ZERO
             assert current["escaped"] == ZERO
             continue
-        a_at, b_at = (11, 17 - t, 10), (10, 16 - t, 10)
+        a_at, b_at = (11, 12 - t, 10), (10, 11 - t, 10)
         assert positions_of(world, "m") == {at for at in (a_at, b_at) if at[1] >= 0}
-        if t <= 17:
+        if t <= 12:
             assert turn_rays(world, a_at, "m") == [ray(3, 8, t & 7, t, 0)]
-        if t <= 16:
+        if t <= 11:
             assert turn_rays(world, b_at, "m") == [ray(3, 8, t & 7, t, 3)]
         assert world.thing_momentum() == (
-            {1: [0, -8, 0], 2: [0, -8, 0]} if t <= 16 else {1: [0, -8, 0]} if t == 17 else {}
+            {1: [0, -8, 0], 2: [0, -8, 0]} if t <= 11 else {1: [0, -8, 0]} if t == 12 else {}
         )
         assert current["spent"] == (8, 0, 0)
-        assert current["escaped"] == (ZERO if t <= 16 else (0, -8, 0) if t == 17 else (0, -16, 0))
-        assert current["current"] == ((-8, 0, 0) if t <= 16 else (-8, 8, 0) if t == 17 else (-8, 16, 0))
+        assert current["escaped"] == (ZERO if t <= 11 else (0, -8, 0) if t == 12 else (0, -16, 0))
+        assert current["current"] == ((-8, 0, 0) if t <= 11 else (-8, 8, 0) if t == 12 else (-8, 16, 0))
     assert pushes_of(events) == []
-    # The control: alone, the thing steps at C in the cycle of tick 7.
-    control = Simulation(parse_initial_state(turn_document((THING_A, FROM_BELOW), [turn({"f": -1})], 7)))
-    for _ in range(7):
+    # The control: alone, the thing steps at C in the cycle of tick 2.
+    control = Simulation(parse_initial_state(turn_document((THING_A, FROM_BELOW), [turn({"f": -1})], 2)))
+    for _ in range(2):
         control.step()
-    assert turn_rays(control, (10, 9, 10), "m") == [ray(3, 8, 7, 7, 0)]
+    assert turn_rays(control, (10, 9, 10), "m") == [ray(3, 8, 2, 2, 0)]
     assert momentum_line(control)["spent"] == (8, 0, 0)
 
 
 def test_two_owners_shadows_share_a_lane_one_slot_each():
-    # (e)
+    # (e) Re-pinned on 2026-09-18 under node-mixing-v1: the two shadows that
+    # have walked a Link mix at (3, 2, 2) in the cycle of tick 1, each sending
+    # its whole quanta back through -X and parking the ninths; the fresh
+    # shadow of owner 1 walks on to (4, 2, 2).
     kind1, emission1, seed1 = lamp("e1", 0, (1, 2, 2))
     kind2, emission2, seed2 = lamp("e2", 0, (1, 3, 3))
     doc = document(
@@ -250,15 +251,26 @@ def test_two_owners_shadows_share_a_lane_one_slot_each():
         "escaped": (0,),
         "absorbed_at_home": (0,),
     }
-    rays = result["rays"][0][(4, 2, 2)][0]
-    assert sorted((r.owner, r.amount, r.steps) for r in rays) == [(1, 2, 1), (1, 3, 2), (2, 6, 2)]
-    slots = node_lanes(rays, definition)
-    assert all(slot is None for slot in slots.real)
-    lane = lane_index(1, LANE_IN)
-    assert (slots.shadow[lane][0].amount, slots.shadow[lane][0].steps) == (5, 1)
-    assert (slots.shadow[lane][1].amount, slots.shadow[lane][1].steps) == (6, 2)
-    assert sum(1 for entries in slots.shadow for slot in entries if slot is not None) == 2
-    assert slots.parked == () and slots.resident == ()
+    # Two owners' shadows on the -X lane into (2, 2, 2): one slot each.
+    back = node_lanes(result["rays"][0][(2, 2, 2)][0], definition)
+    assert all(slot is None for slot in back.real)
+    lane = lane_index(0, LANE_IN)
+    assert (back.shadow[lane][0].amount, back.shadow[lane][0].steps) == (1, 1)
+    assert (back.shadow[lane][1].amount, back.shadow[lane][1].steps) == (2, 1)
+    assert sum(1 for entries in back.shadow for slot in entries if slot is not None) == 2
+    assert back.parked == () and back.resident == ()
+    # The parked ninths at (3, 2, 2) are outside the lanes: six per owner.
+    parked = node_lanes(result["parked"][0][(3, 2, 2)][0], definition)
+    assert sorted((r.owner, r.amount) for r in parked.parked) == [(1, 3)] * 6 + [(2, 6)] * 6
+    assert all(slot is None for slot in parked.real)
+    assert sum(1 for entries in parked.shadow for slot in entries if slot is not None) == 0
+    # The fresh shadow of owner 1 on the +X lane into (4, 2, 2).
+    on = node_lanes(result["rays"][0][(4, 2, 2)][0], definition)
+    assert (on.shadow[lane_index(1, LANE_IN)][0].amount, on.shadow[lane_index(1, LANE_IN)][0].steps) == (
+        2,
+        1,
+    )
+    assert on.shadow[lane_index(1, LANE_IN)][1] is None
 
 
 def test_the_record_of_a_world_with_no_contested_lane_is_unchanged(tmp_path):

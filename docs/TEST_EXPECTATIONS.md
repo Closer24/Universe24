@@ -3421,41 +3421,50 @@ run, all of it computed from the rules:
   message naming point 25 and outputs 0 and 1; two outputs on Port 0 likewise;
   outputs `"same"` of input 0 and `"reversed"` of input 1 parse (their
   coincidence is a meeting's, decided there).
-- (d) the contested lane: the world of test_ray_momentum_turn (a) with a
-  second thing: lamp A of 8 at (4,10,10) heading +X (thing 1), lamp B of 8 at
-  (10,16,10) heading -Y (thing 2), the shadow of 1 from -Y at (10,4,10) with
-  sign 1 under `turn({"f": -1})`. After ticks 1 to 6: A at (4 + t, 10, 10), B
-  at (10, 16 - t, 10), the shadow at (10, 4 + t, 10), all with steps t, A and
-  B with phase t & 7 (after tick 6 all three are at C together, the pin
-  corrected before the first passing run on 2026-09-18: the first draft listed
-  A and B at C as if each were alone); `thing_momentum` {1: (8,0,0), 2:
-  (0,-8,0)}, the momentum line current (0,0,0). In the cycle of tick 7 at C = (10,10,10) the
-  shadow pushes A, the first thing in slot order, by (0,-8,0) and turns back
-  on -Y carrying (0,8,0); B, already on -Y, keeps its lane, and A, whose
-  momentum has reached its content on Y, finds the -Y lane taken: it keeps +X
-  with its momentum (0,-8,0) accumulated. After tick 7: A at (11,10,10)
-  (heading +X, phase 7, steps 7, momentum (0,-8,0)), B at (10,9,10) (heading
-  -Y, phase 7, steps 7), the shadow at (10,9,10) (steps 5, -Y, momentum
-  (0,8,0)); `thing_momentum` {1: (8,-8,0), 2: (0,-8,0)}; the momentum line
-  current (0,0,0), spent (0,0,0), escaped (0,0,0). At its departure of tick 8
-  A steps to -Y, the lane free: after tick t >= 8, A at (11, 17 - t, 10)
-  (heading -Y, phase t & 7, steps t, no momentum), B at (10, 16 - t, 10), one
-  Link each per interval; the shadow walks back to (10,4,10) after tick 12
-  and waits; `thing_momentum` {1: (0,-8,0), 2: (0,-8,0)} through tick 16; the
-  momentum line current (-8,0,0) and spent (8,0,0) from tick 8. B leaves the
-  board after tick 17 (escaped (0,-8,0), current (-8,8,0), `m` 8) and A after
-  tick 18 (escaped (0,-16,0), current (-8,16,0), `m` 0); `f` 1 and nothing of
-  it escaped at every tick; the books balanced at every tick; no `ray_push`.
-  The control without B: A at (10,9,10) after tick 7 with spent (8,0,0), as
+- (d) the contested lane: the world of test_ray_momentum_turn (a) under
+  node-mixing-v1 with a second thing: lamp A of 8 at (9,10,10) heading +X
+  (thing 1), lamp B of 8 at (10,11,10) heading -Y (thing 2), the shadow of 1
+  from -Y at (10,9,10) with sign 1 and steps 0 under `turn({"f": -1})`
+  (re-derived on 2026-09-18 when node-mixing-v1 merged: a shadow that has
+  walked a Link mixes at every Node, so the three start one Link from C =
+  (10,10,10) as test_ray_momentum_turn does). After tick 1 all three are at
+  C: A (heading +X, phase 1, steps 1), B (heading -Y, phase 1, steps 1), the
+  shadow (+Y, steps 1); `thing_momentum` {1: (8,0,0), 2: (0,-8,0)}, the
+  momentum line current (0,0,0). In the cycle of tick 2 at C the shadow
+  pushes A, the first thing in slot order, by (0,-8,0) and turns back on -Y
+  carrying (0,8,0); B, already on -Y, keeps its lane, and A, whose momentum
+  has reached its content on Y, finds the -Y lane taken: it keeps +X with its
+  momentum (0,-8,0) accumulated. After tick 2: A at (11,10,10) (heading +X,
+  phase 2, steps 2, momentum (0,-8,0)), B at (10,9,10) (heading -Y, phase 2,
+  steps 2), the shadow at (10,9,10) with its steps spent (0, -Y, momentum
+  (0,8,0)), waiting there from then on; `thing_momentum` {1: (8,-8,0), 2:
+  (0,-8,0)}; the momentum line current (0,0,0), spent (0,0,0), escaped
+  (0,0,0). At its departure of tick 3 A steps to -Y, the lane free: after
+  tick t >= 3, A at (11, 12 - t, 10) (heading -Y, phase t & 7, steps t, no
+  momentum), B at (10, 11 - t, 10), one Link each per interval;
+  `thing_momentum` {1: (0,-8,0), 2: (0,-8,0)} through tick 11; the momentum
+  line current (-8,0,0) and spent (8,0,0) from tick 3. B leaves the board
+  after tick 12 (escaped (0,-8,0), current (-8,8,0), `m` 8) and A after tick
+  13 (escaped (0,-16,0), current (-8,16,0), `m` 0); `f` 1 and nothing of it
+  escaped at every tick; the books balanced at every tick; no `ray_push`.
+  The control without B: A at (10,9,10) after tick 2 with spent (8,0,0), as
   test_ray_momentum_turn pins.
-- (e) two owners' shadows on one lane: two lamps of content 0 (things 1 and
-  2, nothing emitted) at (1,2,2) and (1,3,3) on 8x5x5, and at (3,2,2) on +X
-  three shadows: owner 1 amount 3 with steps 1, owner 1 amount 2 with steps
-  0, owner 2 amount 6 with steps 1. After tick 1 all three are at (4,2,2)
-  (steps 2, 1 and 2), and the Node's lanes read: lane 2 (Port 1, in) shadow
-  slot 0 amount 5 (3 + 2, steps 1, one sum) and slot 1 amount 6 (steps 2),
-  every other shadow slot and every real slot empty; `shadow_content` 11,
-  `real_content` 0, the shadow line initial 11 and current 11.
+- (e) two owners' shadows on one lane (re-derived on 2026-09-18 under
+  node-mixing-v1): two lamps of content 0 (things 1 and 2, nothing emitted)
+  at (1,2,2) and (1,3,3) on 8x5x5, and at (3,2,2) on +X three shadows: owner
+  1 amount 3 with steps 1, owner 1 amount 2 with steps 0, owner 2 amount 6
+  with steps 1. In the cycle of tick 1 the two shadows that have walked a
+  Link mix at (3,2,2), each alone: four ninths back through -X, the whole
+  quanta 1 (of 3) and 2 (of 6), and the rest parked in ninths, 3 and 6 on
+  each of the six headings; the fresh shadow of 2 walks on to (4,2,2). After
+  tick 1 the lanes read: at (2,2,2) lane 0 (Port 0, in) shadow slot 0 amount
+  1 and slot 1 amount 2 (steps 1 each), one slot per owner, every other
+  shadow slot and every real slot empty, nothing parked or at rest; at
+  (3,2,2) twelve parked shadows, (owner 1, 3 ninths) and (owner 2, 6 ninths)
+  on every heading, outside the lanes, every slot empty; at (4,2,2) lane 2
+  (Port 1, in) shadow slot 0 amount 2 (steps 1) and slot 1 empty;
+  `shadow_content` 11, `real_content` 0, the shadow line initial 11 and
+  current 11.
 - (f) the record unchanged: `examples/nature/ring.json` for 8 ticks:
   `events.jsonl` sha256
   091f6666d75ec307bf5d13f3f82123fab34c1d68524bade9b59d9fdbdcf20420 and
