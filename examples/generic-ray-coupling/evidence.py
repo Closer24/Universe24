@@ -20,6 +20,9 @@ def owned_rays(world):
             definition = world.initial.spatial_fields[index]
             name = world.initial.fields[definition.field].name
             for slot, ray in enumerate(rays):
+                if getattr(ray, "parked", 0):
+                    # A parked shadow is the Node's memory (node-is-ports-v1), not a ray on its way.
+                    continue
                 owners.append(
                     {
                         **location,

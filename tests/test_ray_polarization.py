@@ -143,7 +143,6 @@ def document(lamps, bodies=(), rules=(), detectors=(), ticks=6, light=None, fami
                 "field": "light",
                 "amount": item["amount"],
                 "denominator": 1,
-                "source": False,
                 "heading": HEADINGS[item["heading"]],
                 "kerengonen_phase": 0,
             }
@@ -327,7 +326,7 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
         # absorbed record for the quantum the sink register released.
         records = [e for e in events if e["event"] == "polarizer"]
         assert [
-            (e["tick"], e["passed"], e["sunk"], e["held"], e["released"], e["registers"])
+            (e["tick"], e["passed"], e["sunk"], e["held"], e["released"], e["held_after"])
             for e in records
         ] == [
             (3, 4, 0, [3, 5], [0, 0], [0, 0, 3, 5, 0, 0]),
@@ -395,7 +394,7 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
         raw = document(
             [lamp((4, 7, 7), 8, 0, 0)],
             [polarizer_body(2)],
-            detectors=[{"position": [9, 7, 7], "setting": [0, 1], "seed": 0}],
+            detectors=[{"position": [9, 7, 7], "setting": [0, 1]}],
             ticks=7,
         )
         world = Simulation(parse_initial_state(raw), observer=events.append)

@@ -140,31 +140,35 @@ from the engine and from the file.
 
 **The apparatus** (`apparatus.detector`, `apparatus.external_body`):
 `world_key`, `engine`, `declaration` (the keys a world writes), `does` and
-`note`. Both are landed: the Detector (`detector-mark-v1`,
-`detector-return-v1`, `inverse-split-v1`) and the external body
-(`external-body-v1`, feature 7b), whose record also states the coupling form
-(the body is the participant that never changes, its token returned once
-among the outputs) and the `apparatus_family` a world gives a mirror, a
-splitter or a plate under a declared coupling: rest rate 0, since the token
-must come back with the body's phase, no charge, no field.
-The Detector's record also lists its `couplings` on the bit a ray already
-carries (Highlights 5.4, model owner, 2026-09-17; feature 2b,
-`detector-bit-property-v1`, landed 2026-09-17), two decided entries with
-their world keys on the mark's `detectors[]` entry: `on_bit_1`, a ray
-carrying 1 passes without a draw; `on_bit_0`, a ray carrying 0 is a
-transmission and is never drawn; only a ray carrying no bit is drawn. Each
-key takes `"pass"` (the default) or `"draw"`, the draw of `detector-mark-v1`
-on that arrival ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
-The third coupling, `on_click` (Highlights 5.4 "A click is an absorption",
-model owner, 2026-09-18; feature 2c, `detector-absorb-v1`, landed
-2026-09-18), is what the mark does with a ray that draws 1: `"absorb"`, the
-quantum ending in the mark's exact counter for its family with its momentum
-on the marks' line, booked as absorbed by marks, nothing of it spreading on;
-or `"pass"`, the ray continuing with the bit 1. Absorb is the default for a
-field family (one declared `field_of` another) and pass for matter, and the
-world key takes one value for every ray family or a mapping of family name
-to one, so a screen that stops electrons and a counter that lets light
-through are entries ([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)).
+`note`. Both are landed and both are things since node-is-ports-v1
+(Highlights 5.4, point 22; feature 17, 2026-09-18): the Detector
+(`detector-mark-v1`, `detector-return-v1`, `inverse-split-v1`,
+`detector-absorb-v1`, `bit-law-v1`, `node-is-ports-v1`), a Node whose bit is
+set with a thing resident at it, what the mark has absorbed per bit and per
+family with its momentum and the identities it is made of, no seed and no
+counter; and the external body (`external-body-v1`, feature 7b), a thing with
+declared tables, whose record also states the coupling form (the body is the
+participant that never changes, its token returned once among the outputs)
+and the `apparatus_family` a world gives a mirror, a splitter, a plate, a
+wall, a screen or a beam stop under a declared table: rest rate 0, since the
+token must come back with the body's phase, no charge, no shadows. A body
+radiates nothing: its shadows are given with the board (`initial_field`).
+The Detector's record lists its one coupling, `on_click` (Highlights 5.4 "A
+click is an absorption", model owner, 2026-09-18; feature 2c,
+`detector-absorb-v1`, landed 2026-09-18), the declared table of the resident
+thing: what the mark does with a thing it catches by its `setting`, the k-th
+arrival when k mod d < n, `"absorb"`, the thing ending in the resident on its
+things line with its momentum, booked as absorbed by marks, nothing of it
+spreading on; or `"pass"`, the thing continuing with its bit 1. Absorb is the
+default for every family, and the world key takes one value for every ray
+family or a mapping of family name to one, so a counter that lets light
+through is an entry ([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)).
+A shadow is returned without a draw and never counted, unless the resident
+is its home, when it is absorbed on the resident's shadows line without an
+event ([a Node is its six Ports](SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1)).
+The couplings on the bit a ray carries (`on_bit_1`, `on_bit_0`,
+`detector-bit-property-v1`) went with the law of the bit: the bit never
+changes at a meeting, and a mark reads it, never a coupling on it.
 
 `layers` is a note only: layers are derived from the couplings
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), never declared.
@@ -224,8 +228,8 @@ it uses; the layers follow.
 | `polarization` and `polarization_bits` | `spatial_fields[].polarization_bits` (the phase width when absent), `emissions[].polarization` on a lamp, `polarization` on a meeting's output; the electron's `polarization_bits` 1 is spin |
 | A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release`; a world that holds both charged families declares the light family once per releaser, as it does the mass field, and a world whose light no charge releases writes neither key |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
-| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, the optional `on_bit_1` and `on_bit_0` (`"pass"` or `"draw"`, the couplings on the bit a ray carries, `detector-bit-property-v1`), the optional `on_click` (`"absorb"` or `"pass"` for every ray family or per family, the coupling on a draw of 1, `detector-absorb-v1`), and the world's `return_mode`; a coupling's `bit` (`"highest"`, `"none"`, `{"of": i}`) is the `bit` key of its `ray_interactions` rule |
-| `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"`, `"polarizer"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once; a polarizer body writes `polarizer` (`family`, `angle`, `pass`, `table`, `unpolarized`) beside `coupling` ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)) |
+| `apparatus.detector` | `detectors[]` with `position`, `setting` (the mark's table `[n, d]`, no seed: there is no lottery) and the optional `on_click` (`"absorb"`, the default for every family, or `"pass"`, for every ray family or per family, the resident thing's table, `detector-absorb-v1`), and the world's `return_mode`; the couplings on the bit and a rule's `bit` key are retired (`bit-law-v1`) |
+| `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` (the body's content) and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"`, `"polarizer"` or a declared rule's name), `momentum_table` with its `reads` (`"content"` or `"charge"`, what the body multiplies the shadows' message by, `bit-law-v1` point 16) and `thing` (its identity, the owner its shadows carry) ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once; a polarizer body writes `polarizer` (`family`, `angle`, `pass`, `table`, `unpolarized`) beside `coupling` ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)); a body radiates nothing, its shadows are given with the board (`initial_field`, `bit-law-v1`) |
 | A bound group | A loop: rays circulating on a ring of Nodes under the corner table, one `ray_interactions` rule with outputs per binding coupling, as `examples/nature/ring.json` declares the unit-square electron ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop binding](LOOP_BINDING.md); Highlights 3.4, 2026-09-17); nothing holds and no key names the group, which a reader finds in the record. The held form (a rule without outputs assigning `delay` 1, `ray_delay`) was removed by feature 14 on 2026-09-17 |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 | A bound group's decay | `draw: [n, d]` (the group's `decay.setting`) and `seed` on the conversion's `ray_interactions` rule, declared before the group's corner table: the meeting draws once from the Node's ticket stream and fires the conversion on 1, the Node marked by the declaration for that draw ([a decaying group draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1), `decay-draw-v1`, 2026-09-17) |

@@ -111,7 +111,6 @@ def document(shape, families, lamps, ticks, ray_interactions=None):
                 "field": lamp["field"],
                 "amount": lamp["stock"],
                 "denominator": 1,
-                "source": False,
                 **lamp.get("emission", {}),
             }
             for lamp in lamps

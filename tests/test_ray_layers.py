@@ -173,8 +173,6 @@ def document(rules, ticks=4):
                 "field": family,
                 "amount": 5,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "heading": HEADINGS[heading],
             }
             for index, (family, _, heading) in enumerate(LAMPS)

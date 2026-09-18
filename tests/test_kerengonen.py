@@ -158,16 +158,12 @@ def two_lamps(steps, advance, separation=6, ticks=8, absorber=None, phase_b=0):
                 "field": "quanta",
                 "amount": 4,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
             },
             {
                 "type": "lamp_b",
                 "field": "quanta",
                 "amount": 4,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "kerengonen_phase": phase_b,
             },
         ],
@@ -395,8 +391,6 @@ def huygens_document(lamp_b_phase=0, carried=True, ticks=12):
             "transport": {"mode": "hold"},
         }
     )
-    for rule in raw["emissions"]:
-        del rule["recoil_field"]
     raw["emissions"][0]["amount"] = 8
     raw["emissions"][1]["amount"] = 4
     if lamp_b_phase:
@@ -406,7 +400,6 @@ def huygens_document(lamp_b_phase=0, carried=True, ticks=12):
         "field": "quanta",
         "amount": {"field": "quanta"},
         "denominator": 1,
-        "source": False,
     }
     if carried:
         slit_emission["kerengonen_phase"] = "carried"
@@ -485,16 +478,12 @@ def mirror_document(advance=4, mirror_x=6, ticks=24, phase_b=0):
             "field": "quanta",
             "amount": 8,
             "denominator": 1,
-            "source": False,
-            "recoil_field": "momentum",
         },
         {
             "type": "mirror",
             "field": "quanta",
             "amount": {"field": "quanta"},
             "denominator": 1,
-            "source": False,
-            "recoil_field": "momentum",
             "kerengonen_phase": "carried",
             "kerengonen_mirror": "x",
         },
@@ -556,8 +545,10 @@ def test_the_mirror_emission_is_validated():
     with pytest.raises(ValueError, match="mirror image"):
         parse_initial_state(raw)
     raw = mirror_document()
-    del raw["emissions"][1]["recoil_field"]
-    with pytest.raises(ValueError, match="recoil_field"):
+    # node-is-ports-v1: the mirror's type holds the momentum it reverses.
+    raw["disturbance_types"][3]["fields"] = ["quanta"]
+    del raw["disturbance_types"][3]["defaults"]["momentum"]
+    with pytest.raises(ValueError, match="momentum field"):
         parse_initial_state(raw)
     raw = mirror_document()
     raw["emissions"][1]["kerengonen_mirror"] = "w"
@@ -636,7 +627,6 @@ def dissolving_document(after=3, over=4, stock=10, ticks=12, moving=False):
         {
             "type": "particle",
             "field": "quanta",
-            "source": False,
             "dissolve": {"after_ticks": after, "over_ticks": over},
         }
     ]
@@ -664,7 +654,11 @@ def test_a_dissolving_record_pays_its_initial_stock_out_on_the_schedule():
     assert stocks == [10, 10, 10, 7, 4, 1, 0, 0, 0]
     assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 10
     # A moving particle keeps flying while it holds quanta and stops when empty; the
-    # schedule counts its own cycles wherever it is.
+    # schedule counts its own cycles wherever it is. Under node-is-ports-v1 every
+    # emission recoils into the particle's momentum, its direction field: three
+    # quanta out along +X per cycle turn its momentum (4, 0, 0) to (1, 0, 0),
+    # (-2, 0, 0) and (-5, 0, 0), so it reaches 0 and walks back to -2, where it
+    # stops when empty (every action is a message that returns).
     world = Simulation(parse_initial_state(dissolving_document(moving=True)))
     positions = []
     for _ in range(9):
@@ -676,14 +670,14 @@ def test_a_dissolving_record_pays_its_initial_stock_out_on_the_schedule():
             if r is not None and r.type_index == 0
         ]
         positions.append(found[0] if found else None)
-    assert positions[0] == -3 and positions[5] == 2 and positions[6] == positions[8] == 2
+    assert positions[:6] == [-3, -2, -1, 0, -1, -2] and positions[6] == positions[8] == -2
     assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 10
 
 
 def test_dissolution_is_validated():
     raw = dissolving_document()
     raw["emissions"][0]["source"] = True
-    with pytest.raises(ValueError, match="funded emission on a ray field"):
+    with pytest.raises(ValueError, match="node-is-ports-v1"):
         parse_initial_state(raw)
     raw = dissolving_document()
     del raw["emissions"][0]["dissolve"]

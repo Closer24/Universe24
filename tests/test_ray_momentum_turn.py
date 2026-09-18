@@ -21,7 +21,10 @@ Re-pinned on 2026-09-18 under bit-law-v1 (only a shadow pushes, given with the
 board; a push is not an event; the momentum line is exact at zero until a shadow
 escapes) and on the same day under clock-readings-v1 (the step in place of the
 DDA walk, the content reading, `spent`, K 8 for the thing of 8, the wait per
-quantum read pinned in test_wait_rule.py and 0 here).
+quantum read pinned in test_wait_rule.py and 0 here), and under node-is-ports-v1
+(a lamp is a thing that spends its content; a shadow whose steps are spent on
+its walk back waits at that Node at rest, settled rule (ii), so nothing of `f`
+ever leaves the board).
 """
 
 import hashlib
@@ -177,9 +180,7 @@ def document(lamps, rules, ticks):
                 "field": family,
                 "amount": amount,
                 "denominator": 1,
-                "source": False,
                 "heading": HEADINGS[heading],
-                "recoil_field": "momentum",
                 "kerengonen_phase": 0,
             }
             for index, (_, family, amount, heading) in enumerate(things)
@@ -284,33 +285,40 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # drops to nothing and the ledger books (8, 0, 0), its motion on +X,
         # spent. Thing and shadow then walk -Y together, one Link per interval,
         # the shadow's steps down to 0 at (10, 4, 10) after tick 12 and on, and
-        # both leave the board after tick 17 with equal and opposite momentum.
+        # the thing walks on and leaves the board after tick 16 with (0, -8, 0);
+        # the shadow, its steps spent, waits at (10, 4, 10) at rest (settled rule
+        # (ii) of node-is-ports-v1), so the momentum line reads current (-8, 8, 0)
+        # and escaped (0, -8, 0) from tick 17.
         raw = document((THING, FROM_BELOW), [turn({"f": -1})], 20)
         world = Simulation(parse_initial_state(raw), observer=events.append)
         for t in range(1, 21):
             world.step()
             assert world.totals()["m"] == ((8,) if t <= 16 else (0,))
-            assert world.totals()["f"] == ((1,) if t <= 16 else (0,))
+            assert world.totals()["f"] == (1,) and world.escaped_totals()["f"] == (0,)
             line = momentum_line(world)
-            assert line["initial"] == ZERO and line["sourced"] == ZERO
-            assert line["escaped"] == ZERO and line["returned"] == ZERO
-            assert line["current"] == (ZERO if t <= 6 else (-8, 0, 0))
+            assert line["initial"] == ZERO and line["sourced"] == ZERO and line["returned"] == ZERO
+            assert line["escaped"] == (ZERO if t <= 16 else (0, -8, 0))
+            assert line["current"] == (ZERO if t <= 6 else (-8, 0, 0) if t <= 16 else (-8, 8, 0))
             assert line["spent"] == (ZERO if t <= 6 else (8, 0, 0))
             assert balanced(world)
             if t <= 6:
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
                 assert rays_at(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 1, t)]
-                assert world.thing_registers() == {1: [8, 0, 0]}
+                assert world.thing_momentum() == {1: [8, 0, 0]}
                 continue
+            # The shadow walks back its steps to (10, 4, 10) and waits there.
+            assert positions_of(world, "f") == {(10, max(16 - t, 4), 10)}
+            assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
+                shadow_ray(3, 1, max(12 - t, 0), (0, 8, 0))
+            ]
             if t <= 16:
                 at = (10, 16 - t, 10)
-                assert positions_of(world, "m") == {at} and positions_of(world, "f") == {at}
+                assert positions_of(world, "m") == {at}
                 assert rays_at(world, at, "m") == [ray(3, 8, t & 7, t, 0)]
-                assert rays_at(world, at, "f") == [shadow_ray(3, 1, max(12 - t, 0), (0, 8, 0))]
-                assert world.thing_registers() == {1: [0, -8, 0]}
+                assert world.thing_momentum() == {1: [0, -8, 0]}
             else:
-                assert positions_of(world, "m") == set() and positions_of(world, "f") == set()
-                assert world.thing_registers() == {}
+                assert positions_of(world, "m") == set()
+                assert world.thing_momentum() == {}
         assert pushes_of(events) == []
         metadata, records, _ = run(tmp_path, raw, 20)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v3"
@@ -319,16 +327,17 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["accounting_balanced_at_every_completed_tick"]
         assert pushes_of(records) == []
-        assert metadata["final_totals"] == {"m": [0], "f": [0], "momentum": [-8, 0, 0]}
+        assert metadata["final_totals"] == {"m": [0], "f": [1], "momentum": [-8, 8, 0]}
         assert metadata["spent_totals"] == {"m": [0], "f": [0], "momentum": [8, 0, 0]}
-        assert metadata["registers"][6] == {"1": [0, -8, 0]}
+        assert metadata["momentum"][6] == {"1": [0, -8, 0]}
         return
     if case == "cancel":
         # (b) The same push and, in the same cycle, a shadow of 1 from +Y: the
         # pushes (0, -8, 0) and (0, 8, 0) cancel, the thing carries no momentum,
         # steps nowhere and walks on +X as the thing it was; each shadow walks
-        # home with the opposite of its own push and the momentum line is exact
-        # at zero with nothing spent.
+        # home with the opposite of its own push, waits at its Node of the board
+        # once its steps are spent, and the momentum line is exact at zero with
+        # nothing spent.
         raw = document((THING, FROM_BELOW, FROM_ABOVE), [turn({"f": -1})], 14)
         world = Simulation(parse_initial_state(raw), observer=events.append)
         for t in range(1, 15):
@@ -340,17 +349,17 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             assert balanced(world)
             assert positions_of(world, "m") == {(4 + t, 10, 10)}
             assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-            assert world.thing_registers() == {1: [8, 0, 0]}
+            assert world.thing_momentum() == {1: [8, 0, 0]}
             if t == 6:
                 assert rays_at(world, CENTER, "f") == [shadow_ray(2, 1, 6), shadow_ray(3, 1, 6)]
             elif t < 6:
                 assert rays_at(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 1, t)]
                 assert rays_at(world, (10, 16 - t, 10), "f") == [shadow_ray(3, 1, t)]
             else:
-                assert rays_at(world, (10, 16 - t, 10), "f") == [
+                assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
                     shadow_ray(3, 1, max(12 - t, 0), (0, 8, 0))
                 ]
-                assert rays_at(world, (10, 4 + t, 10), "f") == [
+                assert rays_at(world, (10, min(4 + t, 16), 10), "f") == [
                     shadow_ray(2, 1, max(12 - t, 0), (0, -8, 0))
                 ]
         assert pushes_of(events) == []
@@ -382,7 +391,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
                 continue
             assert rays_at(world, (16 - t, 10, 10), "m") == [ray(1, 8, t & 7, t, 0)]
             assert rays_at(world, (4 + t, 10, 10), "f") == [shadow_ray(0, 1, max(12 - t, 0), (8, 0, 0))]
-            assert world.thing_registers() == {1: [-8, 0, 0]}
+            assert world.thing_momentum() == {1: [-8, 0, 0]}
         assert pushes_of(events) == []
         return
     if case == "along":
@@ -402,7 +411,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
                 continue
             assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0, (8, 0, 0))]
             assert rays_at(world, (4 + t, 10, 10), "f") == [shadow_ray(0, 1, max(12 - t, 0), (-8, 0, 0))]
-            assert world.thing_registers() == {1: [16, 0, 0]}
+            assert world.thing_momentum() == {1: [16, 0, 0]}
         assert pushes_of(events) == []
         return
     if case == "identical":

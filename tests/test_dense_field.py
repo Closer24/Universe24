@@ -297,7 +297,7 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
             assert records["engine"][2] == {"light": [12]}, name
             if name != "single":
                 (mark,), totals = records["engine"][3]
-                assert mark["counter"] == {} and totals == {"light": [0]}
+                assert mark["resident"]["real"] == {} and totals == {"light": [0]}
                 assert records["engine"][1][-1]["fields"]["light"]["absorbed_by_marks"] == [0]
             # A Node holding shadows alone publishes no event under either mode.
             assert records["engine"][0]["events.jsonl"] == records["dense"][0]["events.jsonl"]

@@ -25,9 +25,8 @@ from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     BIT_THING,
     Rays,
-    Remainders,
     ledger_momentum,
-    remainder_stock,
+    parked_stock,
 )
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
@@ -139,7 +138,7 @@ class LocalConservationAudit:
         self,
         populations: tuple[tuple[tuple[int, ...], ...], ...],
         rays: tuple[Rays, ...] = (),
-        remainders: Remainders = (),
+        parked: tuple[Rays, ...] = (),
     ) -> Quantity:
         """Octant stock feeds the declared expressions; rays add their own quanta.
 
@@ -162,9 +161,11 @@ class LocalConservationAudit:
                     components[component] = checked_work(components[component] + value)
             if definition.rays and rays and index < len(rays):
                 for ray in rays[index]:
+                    if ray.parked:
+                        continue
                     components[0] = checked_work(components[0] + ray.amount)
                     # The momentum as the ledger reads it (bit-law-v1): a thing its
-                    # register or amount x heading, negated on its walk back
+                    # momentum or amount x heading, negated on its walk back
                     # (detector-return-v1); a shadow zero outbound and -dp on its
                     # walk home. A thing's charge is charge x amount; a shadow
                     # carries none (ray-event-audit-v1).
@@ -172,12 +173,10 @@ class LocalConservationAudit:
                         intrinsic[axis] = checked_work(intrinsic[axis] + value)
                     if ray.detector == BIT_THING:
                         charge = checked_work(charge + checked_work(ray.amount * definition.charge))
-            if definition.spread and remainders and index < len(remainders) and remainders[index]:
-                # The Node's remainder registers hold whole quanta in total, content
-                # without momentum (field-remainder-v1).
-                held = remainder_stock(remainders[index], sum(definition.spread))
-                components[0] = checked_work(components[0] + held)
-                charge = checked_work(charge + checked_work(held * definition.charge))
+            if definition.spread and parked and index < len(parked) and parked[index]:
+                # The Node's parked shadows hold whole quanta in total, shadow
+                # content without momentum or charge (node-is-ports-v1).
+                components[0] = checked_work(components[0] + parked_stock(parked[index], definition))
             values[definition.field] = pack(tuple(components))
         energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
         return (
@@ -261,9 +260,7 @@ class LocalConservationAudit:
         nodes: dict[Address3, Quantity] = {}
         for node in view.nodes:
             amount = self._spatial(
-                tuple(state.populations for state in node.spatial),
-                node.rays,
-                node.remainders,
+                tuple(state.populations for state in node.spatial), node.rays, node.parked
             )
             if node.incoming_spatial:
                 amount = _add(amount, self._spatial(tuple(s.populations for s in node.incoming_spatial)))

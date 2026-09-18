@@ -26,6 +26,7 @@ from event_universe.core.spatial_state import (
     Polarizer,
     Ray,
     RayPush,
+    Resident,
     ShadowHome,
     SpatialNodeState,
     SpatialPacket,
@@ -58,6 +59,7 @@ STATE_RECORDS = (
     ShadowHome,
     RayPush,
     Polarizer,
+    Resident,
     Polarized,
 )
 

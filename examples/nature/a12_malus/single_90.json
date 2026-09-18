@@ -154,7 +154,6 @@
       "field": "light",
       "amount": 256,
       "denominator": 1,
-      "source": false,
       "heading": [
         1,
         0,
@@ -184,8 +183,7 @@
       "setting": [
         1,
         1
-      ],
-      "seed": 0
+      ]
     },
     {
       "position": [
@@ -196,8 +194,7 @@
       "setting": [
         1,
         1
-      ],
-      "seed": 0
+      ]
     }
   ],
   "ray_interactions": [],

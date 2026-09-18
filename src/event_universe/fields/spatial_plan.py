@@ -30,7 +30,6 @@ from event_universe.core.spatial_state import (
     NodeFieldRuleDefinition,
     Ray,
     Rays,
-    Remainders,
     ShadowHome,
     SpatialCouplingDefinition,
     SpatialFieldDefinition,
@@ -38,11 +37,13 @@ from event_universe.core.spatial_state import (
     SpatialPlan,
     SpatialPopulations,
     SpatialState,
-    Traces,
     advance_ray,
     coherence,
     leave_trace,
     merge_rays,
+    park_shares,
+    parked_shares,
+    parked_unit,
     phase_of_sum,
     port_heading,
     pushed_ray,
@@ -555,7 +556,13 @@ class SpatialLaw:
         is booked. One record per shadow."""
         definition = self.definitions[index]
         resident = residents[index]
-        due = [ray for ray in resident if ray.detector == BIT_SHADOW and ray.steps >= 1]
+        # A shadow that arrived, or one waiting at rest for a thing of its owner
+        # to pass (node-is-ports-v1, settled rule (ii)).
+        due = [
+            ray
+            for ray in resident
+            if ray.detector == BIT_SHADOW and not ray.parked and (ray.steps >= 1 or not ray.outbound)
+        ]
         if not due:
             return []
         owners_here: dict[int, tuple[str, int, int]] = {}
@@ -650,22 +657,31 @@ class SpatialLaw:
             resident[:] = [ray for ray in resident if ray not in ended]
         return taken
 
-    def _follow_traces(self, index: int, resident: list[Ray], traces: Traces, meter: CostMeter) -> None:
+    def _follow_traces(
+        self, index: int, resident: list[Ray], parked: Rays, meter: CostMeter
+    ) -> list[Ray]:
         """A shadow walking home whose steps are spent follows the trace of its owner
-        (bit-law-v1, point 3): where the Node's register says which Port the last
-        thing of that owner left by, the shadow takes that line; where it says
-        nothing, the shadow walks on straight (the proposal of Highlights 5.5)."""
+        (bit-law-v1, point 3; settled rule (ii) of node-is-ports-v1): where a
+        zero-amount parked shadow of that owner says which Port the last thing of
+        it left by, the shadow takes that line; where none does, the shadow waits
+        at the Node, a zero-step shadow at rest, until a thing of its owner passes
+        (and is then home). Returns the shadows that wait, taken off `resident`."""
         definition = self.definitions[index]
+        waiting: list[Ray] = []
         for slot, ray in enumerate(resident):
             if ray.detector != BIT_SHADOW or ray.outbound or ray.steps:
                 continue
-            port = trace_of(traces, ray.owner)
+            port = trace_of(parked, ray.owner, definition)
             if not 0 <= port < 6:
+                waiting.append(ray)
                 continue
             heading = port_heading(port, definition)
             if heading != ray.heading:
                 resident[slot] = replace(ray, heading=heading, accumulators=(0, 0, 0))
                 meter.charge("update")
+        if waiting:
+            resident[:] = [ray for ray in resident if ray not in waiting]
+        return waiting
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
         validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
@@ -759,32 +775,18 @@ class SpatialLaw:
         node_cost: int | None = None,
         rays: tuple[Rays, ...] = (),
         ray_hold: int = 0,
-        remainders: Remainders = (),
-        remainder_phases: Remainders = (),
         detector_ticket: int = 0,
-        traces: Traces = (),
     ) -> SpatialPlan:
         """One Node's spatial plan from its local input alone: the law reads no clock
         (the Node checks its tick before planning), so equal inputs give equal plans
-        at any tick, which is what the plan-reuse key relies on. `traces` is the
-        Node's trace register (bit-law-v1), read by the shadows walking home and
-        written by the things that leave."""
+        at any tick, which is what the plan-reuse key relies on. The parked
+        shadows among `rays` (node-is-ports-v1) are the shares below one quantum
+        the spread reads and writes and the traces the shadows walking home read
+        and the things that leave write."""
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
         if type(detector_ticket) is not int or bounded(detector_ticket) < 0:
             raise ValueError("the Node's ticket state must be a nonnegative bounded integer")
-        # The Node's remainder registers (field-remainder-v1): one block per spreading
-        # family, empty blocks where none were given; returned after the step.
-        registers_held: list[tuple[int, ...]] = [
-            (remainders[index] if remainders and index < len(remainders) else ())
-            or ((0,) * REMAINDER_SLOTS if definition.spread else ())
-            for index, definition in enumerate(self.definitions)
-        ]
-        register_phases_held: list[tuple[int, ...]] = [
-            (remainder_phases[index] if remainder_phases and index < len(remainder_phases) else ())
-            or ((0,) * REMAINDER_SLOTS if definition.spread else ())
-            for index, definition in enumerate(self.definitions)
-        ]
         if self.ray_interactions and ray_hold:
             raise ValueError("ray interactions do not support a second ray hold clock")
         if bounded(received_count) < 0:
@@ -792,10 +794,22 @@ class SpatialLaw:
         has_rays = any(definition.rays for definition in self.definitions)
         # Rays that arrived on the previous link; this cycle's emission joins them
         # only after absorption, so a record never swallows its own fresh rays.
+        # The parked shadows stay aside: the shares below one quantum as the block
+        # the spread step reads (field-remainder-v1), the traces as they are.
         resident_rays: list[list[Ray]] = [
-            list(rays[index]) if rays and index < len(rays) else []
+            [ray for ray in rays[index] if not ray.parked] if rays and index < len(rays) else []
             for index in range(len(self.definitions))
         ]
+        parked_rays: list[Rays] = [
+            tuple(ray for ray in rays[index] if ray.parked) if rays and index < len(rays) else ()
+            for index in range(len(self.definitions))
+        ]
+        registers_held: list[tuple[int, ...]] = []
+        register_phases_held: list[tuple[int, ...]] = []
+        for index, definition in enumerate(self.definitions):
+            block, block_phases = parked_shares(parked_rays[index], definition)
+            registers_held.append(block)
+            register_phases_held.append(block_phases)
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
         meter = CostMeter(self.costs)
         # The momentum a meeting moves between lines (ray-meeting-conversion-v1): a
@@ -1046,7 +1060,6 @@ class SpatialLaw:
         outgoing_phases: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         outgoing_rays: list[list[Rays]] = [[] for _ in range(6)]
         kept_rays: list[Rays] = [() for _ in self.definitions]
-        traces_after: Traces = traces
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -1082,12 +1095,13 @@ class SpatialLaw:
                     if RETURN_MODES[split.mode] == "annul":
                         absorbed = checked_work(absorbed + split.amount)
                 registers_before = (
-                    remainder_stock(registers_held[index], sum(definition.spread))
+                    remainder_stock(registers_held[index], parked_unit(definition))
                     if definition.spread
                     else 0
                 )
                 # The shadows home at this Node come in and leave again (bit-law-v1),
-                # before the spread; those whose steps are spent follow the trace.
+                # before the spread; those whose steps are spent follow the trace
+                # or wait for their owner (node-is-ports-v1, settled rule (ii)).
                 homecomings.extend(
                     self._homecoming(
                         index,
@@ -1099,7 +1113,7 @@ class SpatialLaw:
                         meter,
                     )
                 )
-                self._follow_traces(index, resident_rays[index], traces, meter)
+                waiting = self._follow_traces(index, resident_rays[index], parked_rays[index], meter)
                 if definition.spread:
                     spread = self._spread(
                         index,
@@ -1142,10 +1156,15 @@ class SpatialLaw:
                         spent[definition.momentum_field][axis] = checked_work(
                             spent[definition.momentum_field][axis] + value
                         )
-                validate_rays(kept, definition, field)
-                kept_rays[index] = kept
-                # The trace (bit-law-v1): the Port the largest thing of each owner
-                # leaves this Node by, ties to the lowest Port.
+                # What stays at the Node beside the kept rays (node-is-ports-v1): the
+                # shares below one quantum after the spread, parked again; the traces,
+                # the Port the largest thing of each owner leaves this Node by (ties
+                # to the lowest Port) replacing the owner's; the shadows waiting.
+                parked_after: Rays = tuple(ray for ray in parked_rays[index] if not ray.amount)
+                if definition.spread:
+                    parked_after += park_shares(
+                        registers_held[index], register_phases_held[index], definition
+                    )
                 departures: dict[int, tuple[int, int]] = {}
                 for port, port_rays in enumerate(ports):
                     for ray in port_rays:
@@ -1153,9 +1172,19 @@ class SpatialLaw:
                             best = departures.get(ray.owner)
                             if best is None or ray.amount > best[0]:
                                 departures[ray.owner] = (ray.amount, port)
-                for owner, (_, port) in sorted(departures.items()):
-                    traces_after = leave_trace(traces_after, owner, port)
-                before_rays = ray_stock(tuple(rays[index])) if rays and index < len(rays) else 0
+                if all(heading in definition.headings for heading in PORT_HEADINGS):
+                    # A family whose lines are not the six Port headings has no
+                    # heading to park a trace on, and no shadow of its own to read it.
+                    for owner, (_, port) in sorted(departures.items()):
+                        parked_after = leave_trace(parked_after, owner, port, definition)
+                kept = merge_rays(kept + parked_after + tuple(waiting))
+                validate_rays(kept, definition, field)
+                kept_rays[index] = kept
+                before_rays = (
+                    ray_stock(tuple(ray for ray in rays[index] if not ray.parked))
+                    if rays and index < len(rays)
+                    else 0
+                )
                 before_rays = checked_work(
                     before_rays
                     + source[definition.field][0]
@@ -1163,12 +1192,14 @@ class SpatialLaw:
                     + registers_before
                 )
                 # What came home this cycle left the residents and leaves again
-                # among the kept rays, nothing booked (bit-law-v1, point 7).
-                after_rays = checked_work(absorbed + ray_stock(kept))
+                # among the kept rays, nothing booked (bit-law-v1, point 7); the
+                # parked shares are whole quanta in total (field-remainder-v1).
+                after_rays = checked_work(
+                    absorbed + ray_stock(tuple(ray for ray in kept if not ray.parked))
+                )
                 if definition.spread:
-                    # What the registers hold after the step (field-remainder-v1).
                     after_rays = checked_work(
-                        after_rays + remainder_stock(registers_held[index], sum(definition.spread))
+                        after_rays + remainder_stock(registers_held[index], parked_unit(definition))
                     )
                 for port_rays in ports:
                     after_rays = checked_work(after_rays + ray_stock(port_rays))
@@ -1260,9 +1291,6 @@ class SpatialLaw:
             spreads=tuple(spreads),
             homecomings=tuple(homecomings),
             returned_delta=tuple(tuple(v) for v in returned) if any(any(v) for v in returned) else (),
-            remainders=tuple(registers_held),
-            remainder_phases=tuple(register_phases_held),
-            traces=traces_after,
             ray_pushes=tuple(turns),
             spent_delta=tuple(tuple(v) for v in spent) if any(any(v) for v in spent) else (),
             phase_steps=phase_steps,

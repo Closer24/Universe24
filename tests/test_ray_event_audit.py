@@ -79,9 +79,7 @@ def emission(kind, name, amount, heading):
         "field": name,
         "amount": amount,
         "denominator": 1,
-        "source": False,
         "heading": HEADINGS[heading],
-        "recoil_field": "momentum",
         "kerengonen_phase": 0,
     }
 
@@ -208,9 +206,9 @@ def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=N
 
 def world_lines(ledger):
     """The world ledger without its per-bit readouts (bit-law-v1: `things`,
-    `shadows`, `things_conserved`, pinned in test_bit_law.py), which hold here."""
-    assert ledger["things_conserved"]
-    return {k: v for k, v in ledger.items() if k not in ("things", "shadows", "things_conserved")}
+    `shadows`, `real_conserved`, pinned in test_bit_law.py), which hold here."""
+    assert ledger["real_conserved"]
+    return {k: v for k, v in ledger.items() if k not in ("real", "shadow", "real_conserved")}
 
 
 def expected_ledger(mode, tick, source=True, body=False):
@@ -269,10 +267,12 @@ def expected_ledger(mode, tick, source=True, body=False):
     }
     # The marks' own lines (detector-absorb-v1, 2026-09-18): the one mark at MARK,
     # which absorbed nothing (it returns the plus arm, and nothing else reaches it).
+    # The marks' lines (node-is-ports-v1): what the resident things hold per bit.
     marks = {
         "count": 1,
         "momentum": (0, 0, 0),
-        "counter": {name: item["absorbed_by_marks"] for name, item in fields.items()},
+        "real": {name: item["absorbed_by_marks"] for name, item in fields.items()},
+        "shadow": {name: (0,) * len(item["absorbed_by_marks"]) for name, item in fields.items()},
     }
     return {
         "tick": tick,
@@ -373,7 +373,7 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     assert first_run["accounting_balanced_at_every_completed_tick"]
     assert first_run["completed_ticks"] == TICKS and audit_failure(first_run["audit"]) is None
     assert first_run["external_body_totals"] == as_json(ledgers[-1]["bodies"]["sink"])
-    assert first_run["detector_mark_totals"] == as_json(ledgers[-1]["marks"]["counter"])
+    assert first_run["detector_mark_totals"] == as_json(ledgers[-1]["marks"]["real"])
     assert first_run["detector_absorb"] == "detector-absorb-v1"
     # (e) A record altered by hand after the run, one ray's charge at the tick of
     # the return, is reported by tick and line from the integers alone.

@@ -314,8 +314,6 @@
       "field": "proton",
       "amount": 6,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         1,
         0,
@@ -328,8 +326,6 @@
       "field": "neutron",
       "amount": 6,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         1,
@@ -342,8 +338,6 @@
       "field": "proton",
       "amount": 6,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         -1,
         0,
@@ -356,8 +350,6 @@
       "field": "neutron",
       "amount": 6,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         -1,
@@ -370,8 +362,6 @@
       "field": "light",
       "amount": 2,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         1,
         0,
@@ -384,8 +374,6 @@
       "field": "light",
       "amount": 6,
       "denominator": 1,
-      "source": false,
-      "recoil_field": "momentum",
       "heading": [
         0,
         1,

@@ -192,7 +192,6 @@ def lamp_line(stock, ticks):
                 "field": "light",
                 "amount": 1,
                 "denominator": 1,
-                "source": False,
                 "heading": [1, 0, 0],
                 "kerengonen_phase": 0,
             }
@@ -216,12 +215,14 @@ def test_a_node_in_a_steady_field_reuses_its_plan_across_ticks_and_a_counting_la
         for _ in range(8):
             world.step()
             hits.append(world.execution_report()["spatial_plan_reuse"]["hits"])
-        # bit-law-v1 (2026-09-18): the trace register a thing writes at a Node it
-        # leaves is part of the plan's key, so every Node on the line evaluates
-        # twice, before and after its first departure: 18 evaluations, 15 hits.
-        assert hits == [0, 0, 0, 1, 3, 6, 10, 15]
+        # node-is-ports-v1 (2026-09-18): the trace a thing leaves at a Node is a
+        # zero-amount parked shadow among its rays, part of the plan's key, and
+        # a Node holding one stays active with the same input, so every Node on
+        # the line evaluates once with the trace and reuses from then on: 13
+        # evaluations, 20 hits.
+        assert hits == [0, 0, 1, 3, 6, 10, 15, 20]
         report = world.execution_report()["spatial_plan_reuse"]
-        assert (report["requests"], report["evaluations"], report["hits"]) == (33, 18, 15)
+        assert (report["requests"], report["evaluations"], report["hits"]) == (33, 13, 20)
         assert world.totals() == {"light": (9,)}
         assert world.escaped_totals() == {"light": (3,)}
 
@@ -323,8 +324,8 @@ def test_a_reuse_hit_is_served_a_validated_plan_and_a_miss_validates(monkeypatch
             assert checks["execution"] == at_execution_before
             assert_same_world(reused, plain)
         report = reused.execution_report()["spatial_plan_reuse"]
-        assert (report["requests"], report["evaluations"], report["hits"]) == (33, 18, 15)
-        assert checks == {"execution": 18, "node": 33}
+        assert (report["requests"], report["evaluations"], report["hits"]) == (33, 13, 20)
+        assert checks == {"execution": 13, "node": 33}
     checks.update(execution=0, node=0)
     with Simulation(parse_initial_state(body_document((SINK_BODY,)))) as world:
         for _ in range(4):

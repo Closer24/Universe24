@@ -41,6 +41,7 @@ from event_universe.core.spatial_state import (
     FIELD_SPREADING,
     Ray,
     merge_rays,
+    parked_shares,
     ray_merge_key,
     relative_ports,
     spread_content,
@@ -185,18 +186,21 @@ def positions_of(world, family="light"):
 
 
 def registers_at(world, position, family="light"):
-    """The Node's remainder block of one family: eighteen registers and their phases."""
-    node = world._spatial.nodes[position]
+    """The Node's parked shadows of one family (node-is-ports-v1) as the block the
+    spread step reads: eighteen shares and their phases per owner."""
     index = family_index(world, family)
-    return node.remainders[index], node.remainder_phases[index]
+    node = next((n for n in world.inventory_view().nodes if n.position == position), None)
+    parked = node.parked[index] if node is not None and node.parked else ()
+    return parked_shares(parked, world.initial.spatial_fields[index])
 
 
 def remainder_map(world, family="light"):
     """Every nonzero block of sign 0 on the board, by position."""
+    index = family_index(world, family)
     return {
         n.position: registers_at(world, n.position, family)[0][6:12]
         for n in world.inventory_view().nodes
-        if n.remainders and any(n.remainders[family_index(world, family)])
+        if n.parked and any(ray.amount for ray in n.parked[index])
     }
 
 
@@ -339,23 +343,30 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["final_totals"] == {"light": [12]}
         assert metadata["source_totals"] == {"light": [0]}
-        assert metadata["things_content"] == [0, 0, 0] and metadata["shadows_content"] == [12] * 3
+        assert metadata["real_content"] == [0, 0, 0] and metadata["shadow_content"] == [12] * 3
         recorded = [
             json.loads(line)
             for line in (tmp_path / "out" / "events.jsonl").read_text(encoding="utf-8").splitlines()
         ]
         assert no_node_events(recorded)
         state = json.loads((tmp_path / "out" / "state.json").read_text(encoding="utf-8"))
-        assert len(state["field_remainders"]) == 8
-        assert state["field_remainders"][0] == {
-            "position": [5, 7, 7],
-            "family": "light",
-            "owner": OWNER,
-            "sign": 0,
-            "registers": [1, 6, 1, 1, 1, 1],
-            "phases": [6, 6, 6, 6, 6, 6],
-            "total": 11,
+        # The shares below one quantum are parked shadows (node-is-ports-v1): one
+        # per Node, owner, sign and heading, in units of the table's total.
+        assert len({tuple(entry["position"]) for entry in state["parked"]}) == 8
+        first = [entry for entry in state["parked"] if entry["position"] == [5, 7, 7]]
+        assert {tuple(entry["heading"]): (entry["amount"], entry["phase"]) for entry in first} == {
+            (1, 0, 0): (1, 6),
+            (-1, 0, 0): (6, 6),
+            (0, 1, 0): (1, 6),
+            (0, -1, 0): (1, 6),
+            (0, 0, 1): (1, 6),
+            (0, 0, -1): (1, 6),
         }
+        assert all(
+            (entry["family"], entry["owner"], entry["sign"], entry["unit"], entry["bit"])
+            == ("light", OWNER, 0, 11, 0)
+            for entry in first
+        )
         return
     if case in SUPERPOSITION:
         # (b) Two shadows of one owner meeting at a Node combine by phase and steer

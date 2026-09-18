@@ -65,8 +65,6 @@ def lamp(name, family_name, amount, position, heading=X, phase=0):
         "field": family_name,
         "amount": amount,
         "denominator": 1,
-        "source": False,
-        "recoil_field": "momentum",
         "heading": heading,
         "kerengonen_phase": phase,
     }
@@ -136,13 +134,13 @@ def document(*, families, lamps, shape, ticks, K, shadows=None, marks=(), rules=
 
 def run(doc, ticks):
     events = []
-    steps, contents, inventories, registers = [], [], [], []
+    steps, contents, inventories, momentum = [], [], [], []
     with Simulation(parse_initial_state(doc), observer=events.append) as world:
         for _ in range(ticks):
             world.step()
             steps.append(world.phase_steps())
-            contents.append(world.things_content())
-            registers.append(world.thing_registers())
+            contents.append(world.real_content())
+            momentum.append(world.thing_momentum())
             inventories.append(
                 {node.position: node.rays for node in world.inventory_view().nodes if any(node.rays)}
             )
@@ -151,7 +149,7 @@ def run(doc, ticks):
         "events": events,
         "steps": steps,
         "contents": contents,
-        "registers": registers,
+        "momentum": momentum,
         "inventories": inventories,
     }
 
@@ -195,7 +193,7 @@ def test_the_computation_is_the_things_phase_steps_and_is_constant_between_absor
     run_initialization(source, tmp_path / "out")
     metadata = json.loads((tmp_path / "out" / "run.json").read_text())
     assert metadata["computation_per_tick"] == per_tick
-    assert metadata["things_content"] == result["contents"]
+    assert metadata["real_content"] == result["contents"]
     assert metadata["clock_readings"] == "clock-readings-v1" and metadata["K"] == 2
     assert metadata["wait_per_quantum"] == [0, 1]
 
@@ -303,8 +301,8 @@ def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulat
     assert initial.spatial_fields[2].owner_charge(3) == -1
     assert initial.spatial_fields[2].push_denominator == 32
     result = run(doc, 3)
-    assert result["registers"][1] == {1: [4, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
-    assert result["registers"][2] == {1: [0, -4, 0], 2: [0, -4, 0], 3: [0, 0, 0]}
+    assert result["momentum"][1] == {1: [4, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
+    assert result["momentum"][2] == {1: [0, -4, 0], 2: [0, -4, 0], 3: [0, 0, 0]}
     after_3 = result["inventories"][2]
     (neutral,) = things_at(after_3, (3, 1, 1), 0)
     (charged,) = things_at(after_3, (3, 2, 1), 1)

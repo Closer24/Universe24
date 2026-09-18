@@ -169,8 +169,6 @@ def document(outputs, invariants, delta, audit=True, ticks=4):
                 "field": "a",
                 "amount": 5,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "heading": HEADINGS[heading],
                 "kerengonen_phase": phase,
             }

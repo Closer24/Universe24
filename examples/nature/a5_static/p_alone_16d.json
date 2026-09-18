@@ -181,14 +181,12 @@
       "field": "light_a",
       "amount": 1,
       "denominator": 1,
-      "source": false,
       "heading": [
         1,
         0,
         0
       ],
-      "kerengonen_phase": 0,
-      "recoil_field": "momentum"
+      "kerengonen_phase": 0
     }
   ],
   "seeds": [],

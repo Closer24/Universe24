@@ -122,7 +122,6 @@ def document(bodies, lamps=(), rules=(), families=("star",), ticks=6):
                 "field": family,
                 "amount": amount,
                 "denominator": 1,
-                "source": False,
                 "heading": HEADINGS[heading],
                 "kerengonen_phase": 0,
             }

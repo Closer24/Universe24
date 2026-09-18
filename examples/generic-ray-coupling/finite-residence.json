@@ -106,28 +106,24 @@
       "field": "wave",
       "amount": 5,
       "denominator": 1,
-      "source": false,
       "heading": [
         1,
         0,
         0
       ],
-      "kerengonen_phase": 7,
-      "recoil_field": "momentum"
+      "kerengonen_phase": 7
     },
     {
       "type": "right_source",
       "field": "wave",
       "amount": 5,
       "denominator": 1,
-      "source": false,
       "heading": [
         -1,
         0,
         0
       ],
-      "kerengonen_phase": 7,
-      "recoil_field": "momentum"
+      "kerengonen_phase": 7
     }
   ],
   "seeds": [
