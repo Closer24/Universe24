@@ -317,11 +317,20 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
     if case == "identity":
         # (c) The same worlds, the engine alone and with the dense mode: the same
         # `state.json` and the same ledger, the runner naming the mode when on.
+        # `counter` (added 2026-09-18, detector-absorb-v1): the `source` board with
+        # the mark set to click on every arrival, so the field quanta the region
+        # hands it are absorbed into its counter at the engine's Node under both
+        # modes, the marks' line of the ledger and `detector_marks` equal.
         for name, raw, ticks in (
             ("single", boards.document((((5, 7, 7), 12, 0, 6),)), 4),
             (
                 "source",
                 boards.charged_world(False, 12, [{"position": [8, 7, 7], "setting": [0, 1], "seed": 1}]),
+                12,
+            ),
+            (
+                "counter",
+                boards.charged_world(False, 12, [{"position": [8, 7, 7], "setting": [1, 1], "seed": 1}]),
                 12,
             ),
         ):
@@ -336,10 +345,24 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
                     metadata["status"] == "completed" and metadata["conserved_at_every_completed_tick"]
                 )
                 assert metadata.get("dense_field") == (DENSE_FIELD if mode == "dense" else None)
-                records[mode] = (digests(out), metadata["audit"], metadata["final_totals"])
+                records[mode] = (
+                    digests(out),
+                    metadata["audit"],
+                    metadata["final_totals"],
+                    (metadata["detector_marks"], metadata["detector_mark_totals"]),
+                )
             assert records["engine"][0]["state.json"] == records["dense"][0]["state.json"], name
             assert records["engine"][1] == records["dense"][1], name
             assert records["engine"][2] == records["dense"][2], name
+            assert records["engine"][3] == records["dense"][3], name
+            if name == "counter":
+                # The mark counted under both modes: the quanta the region handed it
+                # (detector-absorb-v1), none of them spread on from its Node.
+                (mark,), totals = records["engine"][3]
+                assert mark["counter"] == {"light": totals["light"][0]} and totals["light"][0] > 0
+                assert (
+                    records["engine"][1][-1]["fields"]["light"]["absorbed_by_marks"] == totals["light"]
+                )
             # The dense region writes no per-Node events: the record differs.
             assert records["engine"][0]["events.jsonl"] != records["dense"][0]["events.jsonl"]
         assert DENSE_FIELD == "dense-field-v1"

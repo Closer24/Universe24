@@ -609,6 +609,28 @@ class DisturbanceEngine:
             if field.conserved
         }
 
+    def detector_mark_totals(self) -> dict[str, tuple[int, ...]]:
+        """Content the Detector marks absorbed on their clicks (detector-absorb-v1),
+        per family: the second explicitly accounted sink, initial + sources = current
+        + dissipated + escaped + annulled + absorbed_by_bodies + absorbed_by_marks."""
+        return {
+            field.name: (
+                (0,) * field.components
+                if self._spatial is None
+                else tuple(self._spatial.absorbed_by_marks[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
+    def detector_marks(self) -> list[dict[str, object]]:
+        """Every Detector mark with its Node, its counter per family and its momentum."""
+        return [] if self._spatial is None else self._spatial.detector_marks()
+
+    def detector_mark_momentum(self) -> tuple[int, int, int]:
+        """The marks' momentum line of the audit."""
+        return (0, 0, 0) if self._spatial is None else self._spatial.detector_mark_momentum()
+
     def external_bodies(self) -> list[dict[str, object]]:
         """Every external body with its Node, momentum, accumulators and sink."""
         return [] if self._spatial is None else self._spatial.external_bodies()
@@ -657,21 +679,30 @@ class DisturbanceEngine:
     def audit(self) -> dict[str, object]:
         """The world ledger at the current tick (ray-event-audit-v1): one line per
         conserved field (amount per family, momentum) and one per ray family
-        (charge), each reading initial, sourced, current, escaped, annulled and
-        absorbed with initial + sourced = current + escaped + annulled + absorbed
-        exact, and the external bodies' own lines (count, momentum, charge, sinks).
-        Read-only, like the totals it is built from."""
+        (charge), each reading initial, sourced, current, escaped, annulled,
+        absorbed and absorbed_by_marks with initial + sourced = current + escaped +
+        annulled + absorbed + absorbed_by_marks exact, and the external bodies' and
+        the Detector marks' own lines (count, momentum, charge, sinks; count,
+        momentum, counters). Read-only, like the totals it is built from."""
         initial_totals, initial_charge = self._ledger_initial
         totals, sources = self.totals(), self.source_totals()
-        # The absorbed line is what the external bodies' sinks took (external-body-v1).
-        escaped, annulled, absorbed = (
+        # The absorbed line is what the external bodies' sinks took (external-body-v1);
+        # absorbed_by_marks what the marks absorbed on their clicks (detector-absorb-v1).
+        escaped, annulled, absorbed, taken = (
             self.escaped_totals(),
             self.annulled_totals(),
             self.external_body_totals(),
+            self.detector_mark_totals(),
         )
         fields = {
             name: ledger_line(
-                values, sources[name], totals[name], escaped[name], annulled[name], absorbed[name]
+                values,
+                sources[name],
+                totals[name],
+                escaped[name],
+                annulled[name],
+                absorbed[name],
+                taken[name],
             )
             for name, values in initial_totals.items()
         }
@@ -692,6 +723,7 @@ class DisturbanceEngine:
                 escaped_charge[name],
                 checked_work(annulled.get(name, (0,))[0] * per_quantum),
                 checked_work(absorbed.get(name, (0,))[0] * per_quantum),
+                checked_work(taken.get(name, (0,))[0] * per_quantum),
             )
         body_charge = 0
         for body in self.initial.external_bodies:
@@ -702,7 +734,12 @@ class DisturbanceEngine:
             "charge": body_charge,
             "sink": absorbed,
         }
-        return world_ledger(self.tick, fields, charge, bodies)
+        marks = {
+            "count": len(self.initial.detectors),
+            "momentum": self.detector_mark_momentum(),
+            "counter": taken,
+        }
+        return world_ledger(self.tick, fields, charge, bodies, marks)
 
     @staticmethod
     def _bookkeeping(record: DisturbanceRecord) -> dict[str, object]:

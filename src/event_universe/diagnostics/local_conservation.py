@@ -5,7 +5,7 @@ state or contributes computation cost to the model. Measurements are explicitly
 configured candidate quantities, not physical laws inferred from field names.
 """
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from typing import cast
 
 from event_universe.core.conservation_state import (
@@ -89,6 +89,11 @@ class LocalConservationAudit:
         # source at the Node that released it, the world total (ray-event-audit-v1).
         self.sourced: Quantity = ZERO
         self._pending_annulled: dict[Address3, Quantity] = {}
+        # Content a Detector mark absorbed on a click (detector-absorb-v1): the world
+        # total and what each Node's mark absorbed since its last check, read from
+        # the reception record before the Node is checked.
+        self.absorbed_by_marks: Quantity = ZERO
+        self._pending_absorbed: dict[Address3, Quantity] = {}
         # What each Node spread since its last check (field-spreading-v1): the
         # content that arrived and was taken off the Node, given back to its
         # residual because its departures are measured as a release.
@@ -201,6 +206,34 @@ class LocalConservationAudit:
                     if momentum is not None:
                         for axis in range(3):
                             intrinsic[axis] = checked_work(intrinsic[axis] + momentum[axis])
+        energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
+        return (
+            energy,
+            checked_work(px + intrinsic[0]),
+            checked_work(py + intrinsic[1]),
+            checked_work(pz + intrinsic[2]),
+            charge,
+        )
+
+    def _absorbed(self, event: dict[str, object]) -> Quantity:
+        """The quantity a Detector mark absorbed on its clicks in one reception
+        (detector-absorb-v1): per family the amount through the declared energy
+        expression, the momentum the record carries (amount x heading, a register
+        where a push set one) as the intrinsic momentum, charge x amount."""
+        if self.definition.spatial is None:
+            return ZERO
+        taken = cast(dict[str, dict[str, object]], event.get("absorbed_by_mark", {}))
+        values = [pack((0,) * field.components) for field in self.initial.fields]
+        intrinsic = [0, 0, 0]
+        charge = 0
+        for definition in self.initial.spatial_fields:
+            name = self.initial.fields[definition.field].name
+            if definition.rays and name in taken:
+                amount = cast(int, taken[name]["amount"])
+                values[definition.field] = pack((amount,))
+                charge = checked_work(charge + checked_work(amount * definition.charge))
+                for axis, value in enumerate(cast(Sequence[int], taken[name]["momentum"])):
+                    intrinsic[axis] = checked_work(intrinsic[axis] + value)
         energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
         return (
             energy,
@@ -348,6 +381,13 @@ class LocalConservationAudit:
             return
         if event.get("event") not in EVENTS:
             return
+        if event.get("event") == "spatial_received" and event.get("absorbed_by_mark"):
+            # What the Node's mark absorbed on its clicks left it for the marks'
+            # sink, not for a Link (detector-absorb-v1), read before the check.
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            amount = self._absorbed(event)
+            self._pending_absorbed[position] = _add(self._pending_absorbed.get(position, ZERO), amount)
+            self.absorbed_by_marks = _add(self.absorbed_by_marks, amount)
         tick = cast(int, event["tick"])
         try:
             self._check(tick, str(event["event"]))
@@ -394,6 +434,7 @@ class LocalConservationAudit:
             | incoming.keys()
             | outgoing.keys()
             | self._pending_spread.keys()
+            | self._pending_absorbed.keys()
         )
         for position in sorted(positions):
             before, after = self._nodes.get(position, ZERO), nodes.get(position, ZERO)
@@ -401,6 +442,8 @@ class LocalConservationAudit:
             residual = _add(_subtract(after, before), _subtract(sent, arrived))
             # What the Node annulled left it for the explicit sink, not for a Link.
             residual = _add(residual, self._pending_annulled.pop(position, ZERO))
+            # What the Node's mark absorbed on a click left it for the marks' sink.
+            residual = _add(residual, self._pending_absorbed.pop(position, ZERO))
             # What the Node released as a field came from no owner: a source.
             residual = _subtract(residual, sourced.get(position, ZERO))
             # What the Node spread it held itself: its departures were measured as a
@@ -440,5 +483,6 @@ class LocalConservationAudit:
             "current": _plain(self.current_total, self.charged),
             "escaped": _plain(self.escaped, self.charged),
             "annulled": _plain(self.annulled, self.charged),
+            "absorbed_by_marks": _plain(self.absorbed_by_marks, self.charged),
             "failure": self.failure,
         }

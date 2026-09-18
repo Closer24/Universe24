@@ -89,6 +89,21 @@ DETECTOR_BIT_PROPERTY = "detector-bit-property-v1"
 # What a mark declares for a ray carrying a bit: pass it without a draw, or draw.
 BIT_PASS, BIT_DRAW = 0, 1
 BIT_COUPLINGS = ("pass", "draw")
+# A click is an absorption (Highlights 5.4, model owner 2026-09-18;
+# detector-absorb-v1, feature 2c): the field quantum a marked Node realizes ends
+# there. On a draw of 1 the arriving content of a field family, a family
+# declared field_of another (released-field-v1: the eventless field ray), is
+# absorbed into the mark's exact counter for that family, its momentum onto the
+# mark's momentum, booked on the audit as absorbed by marks, and nothing of it is
+# delivered to the Node's rays or spread on; matter that draws 1 passes with the
+# bit 1 as before. How a mark meets each family on a click is its declared
+# coupling (on_click), absorb the default for a field family and pass for matter.
+DETECTOR_ABSORB = "detector-absorb-v1"
+# What a mark does with a ray that draws 1, per spatial field: pass it with the
+# bit 1 (detector-mark-v1) or absorb it; CLICK_DEFAULT reads the family's
+# default at the draw (absorb when the family is declared field_of, else pass).
+CLICK_PASS, CLICK_ABSORB, CLICK_DEFAULT = 0, 1, -1
+CLICK_COUPLINGS = ("pass", "absorb")
 # What a meeting's outputs inherit: the highest of the inputs' bits (the default),
 # no bit, or the bit of input i (a nonnegative index, the participant's role).
 BIT_HIGHEST, BIT_NONE = -1, -2
@@ -268,8 +283,14 @@ class DetectorMark:
     (detector-bit-property-v1): `on_bit_1` and `on_bit_0` are BIT_PASS (the
     default: the ray passes without a draw) or BIT_DRAW (the draw of
     detector-mark-v1 on that arrival); `bit_keys` is 1 when the world file wrote
-    either key, read by the runner's identity record alone. Nothing here is a
-    record, stock or a reading of any ray.
+    either key, read by the runner's identity record alone. What the mark does
+    with a ray that draws 1 is its coupling per spatial field (detector-absorb-v1):
+    `on_click` holds CLICK_PASS, CLICK_ABSORB or CLICK_DEFAULT per spatial field
+    index, empty for all defaults, and `click_keys` is 1 when the world file wrote
+    the key. The mark's one exact counter, `counter` per spatial field (empty
+    until the first absorption), and `momentum`, the momentum of what it absorbed,
+    are bounded metadata like a body's sink. Nothing here is a record, stock or a
+    reading of any ray.
     """
 
     position: Address3
@@ -279,6 +300,10 @@ class DetectorMark:
     on_bit_1: int = BIT_PASS
     on_bit_0: int = BIT_PASS
     bit_keys: int = 0
+    on_click: tuple[int, ...] = ()
+    click_keys: int = 0
+    counter: tuple[int, ...] = ()
+    momentum: tuple[int, int, int] = (0, 0, 0)
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -295,6 +320,18 @@ class DetectorMark:
             raise ValueError("a Detector mark meets a carried bit by pass or draw")
         if self.bit_keys not in (0, 1):
             raise ValueError("a Detector mark declares its bit keys as 0 or 1")
+        if type(self.on_click) is not tuple or any(
+            value not in (CLICK_PASS, CLICK_ABSORB, CLICK_DEFAULT) for value in self.on_click
+        ):
+            raise ValueError("a Detector mark meets a click by absorb or pass")
+        if self.click_keys not in (0, 1):
+            raise ValueError("a Detector mark declares its click key as 0 or 1")
+        if type(self.counter) is not tuple or any(type(v) is not int or v < 0 for v in self.counter):
+            raise ValueError("a Detector mark counter holds nonnegative integers")
+        if type(self.momentum) is not tuple or len(self.momentum) != 3:
+            raise ValueError("a Detector mark momentum requires three integers")
+        for value in self.momentum:
+            checked_work(value)
 
 
 @dataclass(frozen=True, slots=True)
@@ -2683,6 +2720,40 @@ def detector_bit_property_declared(initial: InitialState) -> bool:
     )
 
 
+def field_family(definition: SpatialFieldDefinition) -> bool:
+    """Whether a ray family is a field family in the engine's terms: one declared
+    `field_of` another family (released-field-v1), whose rays are the eventless field
+    rays a release and a spread make. Every other family is matter to a click."""
+    return definition.field_of is not None
+
+
+def click_coupling(mark: DetectorMark, index: int, definition: SpatialFieldDefinition) -> int:
+    """What the mark does with a ray of spatial field `index` that draws 1
+    (detector-absorb-v1): its declared `on_click` for that family, or the catalog
+    default, CLICK_ABSORB for a field family and CLICK_PASS for matter."""
+    declared = mark.on_click[index] if index < len(mark.on_click) else CLICK_DEFAULT
+    if declared != CLICK_DEFAULT:
+        return declared
+    return CLICK_ABSORB if field_family(definition) else CLICK_PASS
+
+
+def detector_absorb(
+    mark: DetectorMark, index: int, rays: Rays, definition: SpatialFieldDefinition, fields: int
+) -> DetectorMark:
+    """The click as an absorption (detector-absorb-v1): the arriving rays of one
+    family that drew 1 end in the mark's exact counter for that family, and their
+    momentum, amount x heading (a register where a push set one), in the mark's
+    momentum. `fields` sizes the counter, one entry per spatial field, on the first
+    absorption; nothing else of the mark changes."""
+    counter = list(mark.counter) or [0] * fields
+    momentum = list(mark.momentum)
+    for ray in rays:
+        counter[index] = checked_work(counter[index] + ray.amount)
+        for axis, value in enumerate(ray_momentum_vector(ray, definition)):
+            momentum[axis] = checked_work(momentum[axis] + value)
+    return replace(mark, counter=tuple(counter), momentum=(momentum[0], momentum[1], momentum[2]))
+
+
 def validate_detector_marks(initial: InitialState) -> None:
     """Marks are admitted under the shared Detector admission, one mark per Node."""
     if type(initial.detectors) is not tuple or len(initial.detectors) > MAX_DETECTORS:
@@ -2698,6 +2769,10 @@ def validate_detector_marks(initial: InitialState) -> None:
         if mark.position in positions:
             raise ValueError("a Node carries one Detector mark")
         positions.add(mark.position)
+        if len(mark.on_click) not in (0, len(initial.spatial_fields)):
+            raise ValueError("a Detector mark declares on_click per spatial field")
+        if len(mark.counter) not in (0, len(initial.spatial_fields)):
+            raise ValueError("a Detector mark counter has one entry per spatial field")
     ray_fields = [definition for definition in initial.spatial_fields if definition.rays]
     if (
         initial.schema_version != 1

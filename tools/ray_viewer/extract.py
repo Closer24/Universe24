@@ -263,6 +263,8 @@ class Builder:
     clicks: list[dict[str, Any]] = field(default_factory=list)
     passes: list[dict[str, Any]] = field(default_factory=list)
     absorptions: dict[tuple[Position, int], list[dict[str, Any]]] = field(default_factory=dict)
+    # The clicks that absorbed the ray (detector-absorb-v1), by Node and tick.
+    absorbing_clicks: dict[tuple[Position, int], list[dict[str, Any]]] = field(default_factory=dict)
     notes: dict[tuple[Position, int], dict[str, Any]] = field(default_factory=dict)
     sources: dict[int, Amounts] = field(default_factory=dict)
     generic: list[dict[str, Any]] = field(default_factory=list)
@@ -303,6 +305,11 @@ class Builder:
 
     def add_click(self, event: dict[str, Any]) -> None:
         self.clicks.append(event)
+        if int(event.get("absorbed") or 0):
+            # A click that absorbed the quantum (detector-absorb-v1): the ray ends at
+            # the mark, and the receiver's reading leaves its amount out.
+            key = (position_of(event["position"]), int(event["tick"]))
+            self.absorbing_clicks.setdefault(key, []).append(event)
 
     def add_pass(self, event: dict[str, Any]) -> None:
         """A marked Node read the bit a ray carries and let it pass without a draw
@@ -368,6 +375,11 @@ def resolve_amounts(builder: Builder, ray_families: set[str] | None = None) -> l
             for taken in builder.absorptions.get((transit.target, transit.arrival), []):
                 if int(taken.get("port", -1)) == entry:
                     add_amounts(transit.amounts, str(taken["family"]), [int(taken["amount"])])
+            # Likewise what a mark absorbed on a click (detector-absorb-v1): the click
+            # names the Port, the family and the absorbed amount.
+            for click in builder.absorbing_clicks.get((transit.target, transit.arrival), []):
+                if int(click.get("port", -1)) == entry:
+                    add_amounts(transit.amounts, str(click["family"]), [int(click["absorbed"])])
         for family, values in transit.amounts.items():
             if any(values) and (ray_families is None or family in ray_families):
                 units.append(Unit(transit, family, values))
@@ -623,20 +635,37 @@ def resolve(
             arrived_field: list[Chain] = [u.chain for u in field_ins if u.chain is not None]
             for click in clicks_at.get((node, tick), []):
                 port = int(click.get("port", -1))
-                clicked = next((c for c in arrived + arrived_field if c.last_port == port ^ 1), None)
+                family = click.get("family")
+                clicked = next(
+                    (
+                        c
+                        for c in arrived + arrived_field
+                        if c.last_port == port ^ 1 and c.family == family and c.end is None
+                    ),
+                    None,
+                )
+                absorbed = int(click.get("absorbed") or 0)
                 marker = new_event(
                     tick,
                     node,
                     "click",
-                    "Detector PASS",
+                    "Detector PASS, absorbed" if absorbed else "Detector PASS",
                     port=port,
-                    family=click.get("family"),
+                    family=family,
                     amount=click.get("amount"),
                     bit=click.get("bit", 1),
+                    **({"absorbed": absorbed} if absorbed else {}),
                 )
                 if clicked is not None:
-                    marker.inputs.append(clicked.identifier)
                     clicked.bit = int(click.get("bit", 1))
+                    if absorbed:
+                        # The click absorbed the quantum (detector-absorb-v1): the ray
+                        # ends at the mark (its input) and nothing of it goes on.
+                        end_chain(clicked, tick, node, "absorbed", marker)
+                        arrived = [c for c in arrived if c is not clicked]
+                        arrived_field = [c for c in arrived_field if c is not clicked]
+                    else:
+                        marker.inputs.append(clicked.identifier)
             for passed in passes_at.get((node, tick), []):
                 # A marked Node read the ray's bit and let it pass without a draw
                 # (detector-bit-property-v1): a marker like a click, the ray unchanged.
@@ -1243,6 +1272,7 @@ def event_caption(event: Event, chains: list[Chain]) -> str:
         return (
             f"{text}: {detail.get('family')} {detail.get('amount')} through"
             f" {PORT_NAMES[int(detail.get('port', 0))]}, bit {detail.get('bit')}"
+            + (f", absorbed {detail['absorbed']}" if detail.get("absorbed") else "")
         )
     if event.kind == "escape":
         return f"{text}: {amounts_text(detail.get('escaped'))} through {', '.join(PORT_NAMES[p] for p in event.ports)}"
@@ -1298,6 +1328,9 @@ def tick_captions(
     frames_by_tick = {int(f["tick"]): f for f in (record.frames or []) if "tick" in f}
     escaped: Amounts = {name: [0] * len(values) for name, values in initial.items()}
     sourced: Amounts = {name: [0] * len(values) for name, values in initial.items()}
+    # What the sinks took through the tick: the bodies' (external-body-v1) and the
+    # marks' on their clicks (detector-absorb-v1), read from the events.
+    absorbed: Amounts = {name: [0] * len(values) for name, values in initial.items()}
     events_by_tick: dict[int, list[Event]] = {}
     outputs_by_tick: dict[int, list[Event]] = {}
     for event in resolution.events:
@@ -1334,16 +1367,23 @@ def tick_captions(
             if event.kind == "escape":
                 target = field_escaped_now if event.field else escaped_now
                 sum_amounts(target, event.detail.get("escaped", {}))
+            elif event.kind == "absorption":
+                sum_amounts(absorbed, event.detail.get("absorbed", {}))
+            elif event.kind == "click" and event.detail.get("absorbed"):
+                add_amounts(absorbed, str(event.detail.get("family")), [int(event.detail["absorbed"])])
         frame = frames_by_tick.get(tick)
         totals = frame.get("totals") if frame else None
         recorded_escaped = frame.get("escaped_totals") if frame else None
         in_world: Amounts = {}
-        for name in set(initial) | set(sourced) | set(escaped):
-            width = len(initial.get(name) or sourced.get(name) or escaped.get(name) or [0])
+        for name in set(initial) | set(sourced) | set(escaped) | set(absorbed):
+            width = len(
+                initial.get(name) or sourced.get(name) or escaped.get(name) or absorbed.get(name) or [0]
+            )
             in_world[name] = [
                 initial.get(name, [0] * width)[i]
                 + sourced_before.get(name, [0] * width)[i]
                 - escaped.get(name, [0] * width)[i]
+                - absorbed.get(name, [0] * width)[i]
                 for i in range(width)
             ]
         listed_all = [
@@ -1359,6 +1399,7 @@ def tick_captions(
                 "bound": bound,
                 "sourced": {k: list(v) for k, v in sourced.items()},
                 "escaped": {k: list(v) for k, v in escaped.items()},
+                "absorbed": {k: list(v) for k, v in absorbed.items()},
                 "in_world": in_world,
                 "totals": totals,
                 "recorded_escaped": recorded_escaped,
@@ -1388,6 +1429,9 @@ def conservation(record: Record) -> dict[str, Any]:
         "final_totals": metadata.get("final_totals"),
         "escaped_totals": metadata.get("escaped_totals"),
         "source_totals": metadata.get("source_totals"),
+        # The two sinks (external-body-v1, detector-absorb-v1), when recorded.
+        "external_body_totals": metadata.get("external_body_totals"),
+        "detector_mark_totals": metadata.get("detector_mark_totals"),
         # The world ledger per completed tick (ray-event-audit-v1), when recorded.
         "audit": metadata.get("audit"),
     }
@@ -1451,7 +1495,9 @@ def chain_document(
 
 
 def eye_document(events: list[Event], marks: list[dict[str, Any]]) -> dict[str, Any]:
-    """The physical picture (Highlights 5.4): the marked Nodes and the list of PASS clicks."""
+    """The physical picture (Highlights 5.4): the marked Nodes and the list of PASS
+    clicks, each with what it absorbed (detector-absorb-v1), the hits per Node and the
+    counts per Node, the absorbed amount summed, a mark's counter as an intensity."""
     clicks = [
         {
             "tick": event.tick,
@@ -1460,18 +1506,23 @@ def eye_document(events: list[Event], marks: list[dict[str, Any]]) -> dict[str, 
             "amount": event.detail.get("amount"),
             "bit": event.detail.get("bit", 1),
             "port": event.detail.get("port"),
+            "absorbed": int(event.detail.get("absorbed") or 0),
         }
         for event in events
         if event.kind == "click"
     ]
     hits: dict[str, int] = {}
+    counts: dict[str, int] = {}
     for click in clicks:
         key = ",".join(str(v) for v in click["node"])
         hits[key] = hits.get(key, 0) + 1
+        if click["absorbed"]:
+            counts[key] = counts.get(key, 0) + click["absorbed"]
     return {
         "marks": [{"pos": m["pos"], "setting": m["setting"]} for m in marks],
         "clicks": clicks,
         "hits": hits,
+        "counts": counts,
     }
 
 
