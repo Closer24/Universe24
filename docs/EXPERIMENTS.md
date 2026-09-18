@@ -1152,12 +1152,16 @@ states "exactly" and means integer equality at every tick.
   `a6_law.html`; the README row in
   [examples/nature](../examples/nature/README.md#a6-under-the-law-the-four-gravitational-tests)).
   A closed board (`boundary` `periodic`, the model owner's decision of
-  2026-09-18) of 41 × 41 × 41 Nodes with the mass at its centre (20, 20,
-  20), so that the field wraps around 20 Links from the mass on every axis,
-  beyond the farthest clock (r = 10, its outer mirror at 11) and the
-  farthest bending line (b = 8); the prefill of F intervals reaches the
-  Manhattan radius F before tick 0, so the wrap-around meets itself at the
-  boundary planes at tick 20 − F = 6 of the run for the fill of 14. The
+  2026-09-18) of 33 × 33 × 33 Nodes with the mass at its centre (16, 16,
+  16), so that the field wraps around 16 Links from the mass on every axis,
+  beyond the farthest clock (r = 10, its outer mirror at 11), the farthest
+  bending line (b = 8) and the reach of the field's whole quanta (r = 8, the
+  probe below); the prefill of F intervals reaches the Manhattan radius F
+  before tick 0, so the wrap-around meets itself at the boundary planes at
+  tick 16 − F = 2 of the run for the fill of 14 (a cube of 41 was tried
+  first, the wrap-around at 20: its runs take 5 GB each and 10 s per tick,
+  two at a time on the machine of the day, 16 GB and four cores, and the
+  series did not fit). The
   field settled before it is read: `standing_field` declared, the dense
   region looking for a repeat of its state within the run and replaying the
   cycle from then on, the record carrying the iterations to the cycle and
@@ -1174,11 +1178,11 @@ states "exactly" and means integer equality at every tick.
   `{"star": −1}` read by content (one shadow quantum read is one whole step
   toward the source of that shadow at the next departure when the push is
   transverse to the heading, and w intervals of wait). (1), (2): four
-  cavities per world, one on each half-axis +Y, −Y, +Z, −Z (a mirror body's
-  token heads +X and lanes-v1 refuses a light thing leaving a mirror on +X),
+  cavities per world, one on each half-axis +Y, −Y, +Z, −Z,
   each a light thing between two mirror bodies (`mirror`, the coupling
   `reflect`) at r − 1 and r + 1 along the half-axis, launched outward from
-  the centre at tick 0, so that it alternates between the centre and a
+  the centre at tick 0 (a mirror body's token heads +X and lanes-v1 refuses
+  a light thing leaving a mirror on +X, so no cavity lies on the X axis), so that it alternates between the centre and a
   mirror and reads the field at the centre on every other interval; a
   closed cavity of six walls shields the clock completely (a body returns
   every shadow, the WIP smoke run of the morning), so the cavity is open on
@@ -1190,26 +1194,26 @@ states "exactly" and means integer equality at every tick.
   `m256` under both readings at w = 1 and at the GR w, `m64` under both at
   w = 1, one control per batch without the star, batch `a` of `m256` on an
   open board. (3), (4): twelve lines parallel to X per world, six per b
-  (y = 20 ± b, z = 20 and 20 ± 1), b = 3 and 6 in one world and 4 and 8 in
+  (y = 16 ± b, z = 16 and 16 ± 1), b = 3 and 6 in one world and 4 and 8 in
   the other (sixteen thing types at most), one light thing per line
   launched at x = 0 on +X at tick 0, a mark (setting [1, 1]) at x = 40 on
-  each line recording the arrival tick, 40 for a straight pass, x_A = x_B =
-  20; 100 ticks; `m256` under both readings at w = 1 and the GR w, `m64` and
+  each line recording the arrival tick, 32 for a straight pass, x_A = x_B =
+  16; 100 ticks; `m256` under both readings at w = 1 and the GR w, `m64` and
   `m16` under `amount` at w = 1, the two controls without the star, one open
   board. (5): a source body A of the family `source` (X = 1024, fill 14) at
-  (16, 4, 10) and a receiver B, a light thing in a Y cavity at (36, 24, 30)
+  (14, 2, 8) and a receiver B, a light thing in a Y cavity at (30, 18, 24)
   whose coupling names `source` only, on the body diagonal through both,
   the mass M at the centre at impact parameter √72 = 8.5 from the line,
   M with X = 7 (S = 42, the S = 40 of section 37) and once more `m256`;
-  A's front at Manhattan radius 14 at tick 0, B at Manhattan distance 60
-  from A; `shadow_wait` absent, `thing` and `field` at w = 1, and the
+  A's front at Manhattan radius 14 at tick 0, B at Manhattan distance 48
+  (Euclidean 27.7) from A; `shadow_wait` absent, `thing` and `field` at w = 1, and the
   control without M; 150 ticks. Recorded per run: the runner's record
   (`run.json`: the momentum line per thing per tick, the ledger, the
   standing set's record, the fingerprint), the events (every arrival of a
   light thing), the world; the records stay outside the tree, the
   analyzer's `record.json` beside the worlds.
-- **The field the runs read** (the probe, before the series): on this board
-  the whole quanta of the prefilled field are a transient that parks as
+- **The field the runs read** (the probe, before the series, on the 41³
+  board): the whole quanta of the prefilled field are a transient that parks as
   ninths within about 100 intervals (X = 16: 855 quanta arriving per
   interval at tick 1, 182 at tick 40, 1159 of 1440 parked; X = 256: 18 631
   at tick 1, 10 936 at tick 40, 10 566 of 21 504 parked), reaching r = 4 at

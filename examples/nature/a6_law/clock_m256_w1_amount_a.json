@@ -2,9 +2,9 @@
  "schema_version": 1,
  "model_id": "a6-law-clock-m256-w1-amount-a",
  "shape": [
-  41,
-  41,
-  41
+  33,
+  33,
+  33
  ],
  "boundary": "periodic",
  "dense_field": true,
@@ -330,33 +330,33 @@
  "seeds": [
   {
    "position": [
-    21,
-    23,
-    20
+    17,
+    19,
+    16
    ],
    "type": "clock_0"
   },
   {
    "position": [
-    21,
-    15,
-    20
+    17,
+    11,
+    16
    ],
    "type": "clock_1"
   },
   {
    "position": [
-    21,
-    20,
-    28
+    17,
+    16,
+    24
    ],
    "type": "clock_2"
   },
   {
    "position": [
-    21,
-    20,
-    15
+    17,
+    16,
+    11
    ],
    "type": "clock_3"
   }
@@ -439,9 +439,9 @@
  "external_bodies": [
   {
    "position": [
-    20,
-    20,
-    20
+    16,
+    16,
+    16
    ],
    "family": "star",
    "amount": 1048576,
@@ -449,79 +449,79 @@
   },
   {
    "position": [
-    21,
-    24,
-    20
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
-    22,
-    20
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
-    14,
-    20
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
-    16,
-    20
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
-    20,
-    29
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
-    20,
-    27
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
-    20,
-    14
-   ],
-   "family": "mirror",
-   "amount": 1,
-   "coupling": "reflect"
-  },
-  {
-   "position": [
-    21,
+    17,
     20,
     16
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    18,
+    16
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    10,
+    16
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    12,
+    16
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    16,
+    25
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    16,
+    23
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    16,
+    10
+   ],
+   "family": "mirror",
+   "amount": 1,
+   "coupling": "reflect"
+  },
+  {
+   "position": [
+    17,
+    16,
+    12
    ],
    "family": "mirror",
    "amount": 1,

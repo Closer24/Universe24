@@ -2634,10 +2634,10 @@ leaves the release ratio and the table as inputs.
 
 `a6_law/` holds the worlds of A6 repeated under the law of the bit
 ([EXPERIMENTS.md](../../docs/EXPERIMENTS.md#a6-repeated-under-the-law-of-the-bit-2026-09-18)):
-`make_worlds.py` writes them (a closed 41³ board with the mass at its centre
+`make_worlds.py` writes them (a closed 33³ board with the mass at its centre
 and the field settled by `standing_field`; two-mirror cavity clocks on the Y
 and Z half-axes at r = 3, 5, 8 and 4, 6, 10; twelve bending lines per world
-with a mark at x = 40 for the Shapiro delay; the separating run of
+with a mark at x = 32 for the Shapiro delay; the separating run of
 DERIVATIONS.md section 37 with a source body and a receiver in a cavity; the
 masses X = 256, 64 and 16 quanta per heading per interval of the fill; the
 open-board controls), `analyze.py` reads the records (the cavities' rates

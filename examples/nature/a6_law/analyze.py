@@ -43,9 +43,17 @@ import json
 import math
 from pathlib import Path
 
-SIDE = 41
+SIDE = 33  # set per world from its shape by `analyze`
 STAR = (SIDE // 2, SIDE // 2, SIDE // 2)
 STRAIGHT_TICK = SIDE - 1
+
+
+def set_board(shape):
+    """The board's side, its centre (the star) and the straight arrival tick."""
+    global SIDE, STAR, STRAIGHT_TICK
+    SIDE = shape[0]
+    STAR = (shape[0] // 2, shape[1] // 2, shape[2] // 2)
+    STRAIGHT_TICK = SIDE - 1
 
 
 def load(run):
@@ -351,6 +359,7 @@ def analyze_sep(directory, metadata, world):
 
 def analyze(run):
     directory, metadata, world = load(run)
+    set_board(world["shape"])
     model = metadata["model"]
     if "clock" in model:
         result = analyze_clock(directory, metadata, world)
@@ -372,6 +381,7 @@ def analyze(run):
             "all_balanced": all(entry["balanced"] for entry in audit),
             "conserved_at_every_completed_tick": metadata["conserved_at_every_completed_tick"],
             "boundary": metadata.get("boundary"),
+            "side": SIDE,
             "K": metadata["K"],
             "N": metadata.get("N"),
             "wait_per_quantum": metadata["wait_per_quantum"],

@@ -167,7 +167,8 @@ def shapiro_rows(results):
         w = result["w"]
         for b, entry in sorted(result["per_b"].items(), key=lambda kv: int(kv[0])):
             bb = int(b)
-            log = math.log(4 * 20 * 20 / bb**2)
+            half = result.get("side", 33) // 2
+            log = math.log(4 * half * half / bb**2)
             rows.append(
                 [
                     world_label(result),
@@ -293,7 +294,7 @@ figcaption { color: var(--muted); font-size: 12px; }
     body.append(bending_svg(results))
     body.append(table(["world", "board", "b", "lines turned", "quanta read per line", "net transverse toward the star", "mean exit angle (rad)", "GR 4GM/b", "Newton 2GM/b", "derivation GM/b", "turn ticks"], bend_rows(results)))
     body.append("<h2>4. The Shapiro delay</h2>")
-    body.append(table(["world", "b", "lines arrived", "delays (ticks past 40)", "mean delay", "GR 2GM ln(4 x_A x_B / b^2)", "derivation, amplitude: (w/3) 0.537 sqrt(GM) ln(...)", "derivation, count: 2.72 w GM / b"], shapiro_rows(results)))
+    body.append(table(["world", "b", "lines arrived", "delays (ticks past the straight arrival)", "mean delay", "GR 2GM ln(4 x_A x_B / b^2)", "derivation, amplitude: (w/3) 0.537 sqrt(GM) ln(...)", "derivation, count: 2.72 w GM / b"], shapiro_rows(results)))
     body.append("<h2>5. The shadow's wait: the separating run</h2>")
     body.append(f"<p>{notes['sep']}</p>")
     body.append(table(["world", "shadow_wait", "mass", "receiver's first move (tick)", "receiver's first waits (ticks)", "receiver moved (intervals)"], sep_rows(results)))

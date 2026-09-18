@@ -2,9 +2,9 @@
  "schema_version": 1,
  "model_id": "a6-law-bend-m256-wgr-amount-b4-8",
  "shape": [
-  41,
-  41,
-  41
+  33,
+  33,
+  33
  ],
  "boundary": "periodic",
  "dense_field": true,
@@ -521,96 +521,96 @@
   {
    "position": [
     0,
-    24,
-    20
+    20,
+    16
    ],
    "type": "lamp_0"
   },
   {
    "position": [
     0,
-    24,
-    21
+    20,
+    17
    ],
    "type": "lamp_1"
   },
   {
    "position": [
     0,
-    24,
-    19
+    20,
+    15
    ],
    "type": "lamp_2"
   },
   {
    "position": [
     0,
-    16,
-    20
+    12,
+    16
    ],
    "type": "lamp_3"
   },
   {
    "position": [
     0,
-    16,
-    21
+    12,
+    17
    ],
    "type": "lamp_4"
   },
   {
    "position": [
     0,
-    16,
-    19
+    12,
+    15
    ],
    "type": "lamp_5"
   },
   {
    "position": [
     0,
-    28,
-    20
+    24,
+    16
    ],
    "type": "lamp_6"
   },
   {
    "position": [
     0,
-    28,
-    21
+    24,
+    17
    ],
    "type": "lamp_7"
   },
   {
    "position": [
     0,
-    28,
-    19
+    24,
+    15
    ],
    "type": "lamp_8"
   },
   {
    "position": [
     0,
-    12,
-    20
+    8,
+    16
    ],
    "type": "lamp_9"
   },
   {
    "position": [
     0,
-    12,
-    21
+    8,
+    17
    ],
    "type": "lamp_10"
   },
   {
    "position": [
     0,
-    12,
-    19
+    8,
+    15
    ],
    "type": "lamp_11"
   }
@@ -653,9 +653,9 @@
  "detectors": [
   {
    "position": [
-    40,
-    24,
-    20
+    32,
+    20,
+    16
    ],
    "setting": [
     1,
@@ -664,9 +664,9 @@
   },
   {
    "position": [
-    40,
-    24,
-    21
+    32,
+    20,
+    17
    ],
    "setting": [
     1,
@@ -675,9 +675,9 @@
   },
   {
    "position": [
-    40,
-    24,
-    19
+    32,
+    20,
+    15
    ],
    "setting": [
     1,
@@ -686,75 +686,9 @@
   },
   {
    "position": [
-    40,
-    16,
-    20
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    40,
-    16,
-    21
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    40,
-    16,
-    19
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    40,
-    28,
-    20
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    40,
-    28,
-    21
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    40,
-    28,
-    19
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    40,
+    32,
     12,
-    20
+    16
    ],
    "setting": [
     1,
@@ -763,9 +697,9 @@
   },
   {
    "position": [
-    40,
+    32,
     12,
-    21
+    17
    ],
    "setting": [
     1,
@@ -774,9 +708,75 @@
   },
   {
    "position": [
-    40,
+    32,
     12,
-    19
+    15
+   ],
+   "setting": [
+    1,
+    1
+   ]
+  },
+  {
+   "position": [
+    32,
+    24,
+    16
+   ],
+   "setting": [
+    1,
+    1
+   ]
+  },
+  {
+   "position": [
+    32,
+    24,
+    17
+   ],
+   "setting": [
+    1,
+    1
+   ]
+  },
+  {
+   "position": [
+    32,
+    24,
+    15
+   ],
+   "setting": [
+    1,
+    1
+   ]
+  },
+  {
+   "position": [
+    32,
+    8,
+    16
+   ],
+   "setting": [
+    1,
+    1
+   ]
+  },
+  {
+   "position": [
+    32,
+    8,
+    17
+   ],
+   "setting": [
+    1,
+    1
+   ]
+  },
+  {
+   "position": [
+    32,
+    8,
+    15
    ],
    "setting": [
     1,
@@ -787,9 +787,9 @@
  "external_bodies": [
   {
    "position": [
-    20,
-    20,
-    20
+    16,
+    16,
+    16
    ],
    "family": "star",
    "amount": 1048576,

@@ -2,9 +2,9 @@
  "schema_version": 1,
  "model_id": "a6-law-clock-m256-wgr-amplitude-b",
  "shape": [
-  41,
-  41,
-  41
+  33,
+  33,
+  33
  ],
  "boundary": "periodic",
  "dense_field": true,
@@ -334,33 +334,33 @@
  "seeds": [
   {
    "position": [
-    21,
-    24,
-    20
+    17,
+    20,
+    16
    ],
    "type": "clock_0"
   },
   {
    "position": [
-    21,
-    14,
-    20
+    17,
+    10,
+    16
    ],
    "type": "clock_1"
   },
   {
    "position": [
-    21,
-    20,
-    30
+    17,
+    16,
+    26
    ],
    "type": "clock_2"
   },
   {
    "position": [
-    21,
-    20,
-    14
+    17,
+    16,
+    10
    ],
    "type": "clock_3"
   }
@@ -443,9 +443,9 @@
  "external_bodies": [
   {
    "position": [
-    20,
-    20,
-    20
+    16,
+    16,
+    16
    ],
    "family": "star",
    "amount": 1048576,
@@ -453,9 +453,9 @@
   },
   {
    "position": [
+    17,
     21,
-    25,
-    20
+    16
    ],
    "family": "mirror",
    "amount": 1,
@@ -463,9 +463,9 @@
   },
   {
    "position": [
-    21,
-    23,
-    20
+    17,
+    19,
+    16
    ],
    "family": "mirror",
    "amount": 1,
@@ -473,9 +473,9 @@
   },
   {
    "position": [
-    21,
-    13,
-    20
+    17,
+    9,
+    16
    ],
    "family": "mirror",
    "amount": 1,
@@ -483,9 +483,9 @@
   },
   {
    "position": [
-    21,
-    15,
-    20
+    17,
+    11,
+    16
    ],
    "family": "mirror",
    "amount": 1,
@@ -493,9 +493,9 @@
   },
   {
    "position": [
-    21,
-    20,
-    31
+    17,
+    16,
+    27
    ],
    "family": "mirror",
    "amount": 1,
@@ -503,9 +503,9 @@
   },
   {
    "position": [
-    21,
-    20,
-    29
+    17,
+    16,
+    25
    ],
    "family": "mirror",
    "amount": 1,
@@ -513,9 +513,9 @@
   },
   {
    "position": [
-    21,
-    20,
-    13
+    17,
+    16,
+    9
    ],
    "family": "mirror",
    "amount": 1,
@@ -523,9 +523,9 @@
   },
   {
    "position": [
-    21,
-    20,
-    15
+    17,
+    16,
+    11
    ],
    "family": "mirror",
    "amount": 1,

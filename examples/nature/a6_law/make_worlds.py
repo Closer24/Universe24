@@ -6,13 +6,16 @@ lanes-v1, return-field-v1, shadow-wait-v1, wait-reads-v1), with nothing declared
 of the spread and nothing released during a run.
 
 The board is closed (`boundary` `periodic`, the model owner's decision of
-2026-09-18, Highlights 5.4 "The board of a run is closed"): a cube of 41 Nodes a
-side with the mass at its centre (20, 20, 20), so that the field wraps around
-20 Links from the mass on every axis, beyond the farthest clock (r = 10, its
-outer mirror at 11) and the farthest bending line (b = 8); a fill of F
+2026-09-18, Highlights 5.4 "The board of a run is closed"): a cube of 33 Nodes a
+side with the mass at its centre (16, 16, 16), so that the field wraps around
+16 Links from the mass on every axis, beyond the farthest clock (r = 10, its
+outer mirror at 11) and the farthest bending line (b = 8), and beyond the reach
+of the field's whole quanta (r = 8 at X = 256, the probe below); a fill of F
 intervals reaches the Manhattan radius F before tick 0, so the wrap-around
-meets itself at the boundary planes at tick 20 - F of the run (tick 6 for a
-fill of 14). The field is settled before it is read: `standing_field` is
+meets itself at the boundary planes at tick 16 - F of the run (tick 2 for a
+fill of 14). A cube of 41 was tried first (the wrap-around at 20): its runs
+take 5 GB each and 10 s per tick, two at a time on the machine of the day
+(16 GB), and the series did not fit. The field is settled before it is read: `standing_field` is
 declared, so the dense region looks for a repeat of its state (a fixed point or
 a cycle) within the run and replays the cycle from then on; the run's record
 carries the iterations to the cycle and the residual (standing-field-v1). One
@@ -33,8 +36,8 @@ derivation's GM = S / (2 pi) (DERIVATIONS.md section 34). The masses: `m256`
 admits on this board (it refuses a third phase on one Port of the source
 once the returning shares come home; 20 is refused). The probe
 (`probe_field.py`) reads the whole quanta of the prefilled field on this
-board: a transient that parks as ninths within about 100 intervals, reaching
-r = 4 at X = 16 and r = 8 at X = 256, so `m256` is the mass whose field the
+41^3 board: a transient that parks as ninths within about 100 intervals,
+reaching r = 4 at X = 16 and r = 8 at X = 256, so `m256` is the mass whose field the
 clocks at r = 3 to 8 read at all, and `m64` and `m16` read the scaling with
 S beside it.
 
@@ -76,20 +79,20 @@ batch `a` world of `m256` on an open board.
 
 Bending worlds (`bend_{mass}_{w}_{reading}_b{b1}_{b2}`): twelve lines parallel
 to X, six per impact parameter (b = 3 and 6 in one world, 4 and 8 in the
-other, a world holding at most sixteen thing types), at y = 20 + b and 20 - b,
-z = 20 and 20 +- 1 (the Euclidean b of the offset lines sqrt(b^2 + 1)), one
+other, a world holding at most sixteen thing types), at y = 16 + b and 16 - b,
+z = 16 and 16 +- 1 (the Euclidean b of the offset lines sqrt(b^2 + 1)), one
 light thing per line launched at x = 0 on +X at tick 0, and a mark (setting
-[1, 1]: every thing absorbed, every shadow returned) at x = 40 on each line
-recording the arrival tick: a straight pass arrives at tick 40, and x_A = x_B
-= 20 for the Shapiro delay. 100 ticks. `m256` under both readings at w = 1
+[1, 1]: every thing absorbed, every shadow returned) at x = 32 on each line
+recording the arrival tick: a straight pass arrives at tick 32, and x_A = x_B
+= 16 for the Shapiro delay. 100 ticks. `m256` under both readings at w = 1
 and at the GR w, `m64` and `m16` under `amount` at w = 1; `bend_control_*`
 is the same without the star, `bend_open_b3_6` the m256 w = 1 amount world
 on an open board.
 
 The separating run (`sep_{option}`, DERIVATIONS.md section 37 (ix) and 43 (x)):
 a source body A of the family `source` (X = 1024, fill 14: the whole quanta
-of a weaker source never reach B, the probe above) at (16, 4, 10) and a
-receiver B, a light thing in a Y cavity at (36, 24, 30), on the body diagonal
+of a weaker source never reach B, the probe above) at (14, 2, 8) and a
+receiver B, a light thing in a Y cavity at (30, 18, 24), on the body diagonal
 through both, the mass M (X = 7, S = 42, GM = 6.7, the S = 40 of section 37)
 at the centre at impact parameter sqrt(72) = 8.5 from the line, and once more
 with M = `m256`, whose whole quanta fill r <= 8 around it and are what the
@@ -97,7 +100,7 @@ with M = `m256`, whose whole quanta fill r <= 8 around it and are what the
 (`{"source": -1}`), so its momentum first moves at the first whole quantum of
 A's field that reaches it, the front of A's field having crossed M's field on
 the way; A's front stands at Manhattan radius 14 at tick 0 and B is at
-Manhattan distance 60 from A. The options: `law` (no `shadow_wait`), `thing`
+Manhattan distance 48 from A (Euclidean 27.7). The options: `law` (no `shadow_wait`), `thing`
 and `field` (`shadow_wait` {"per_quantum": 1, "reads": ...}, feature 16e);
 `sep_nomass` is `law` without M; `sep_{option}_m256` the same with M = `m256`.
 150 ticks.
@@ -120,7 +123,7 @@ HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 N = 64  # the phase circle, one for the world (model owner, 2026-09-18)
 K = 1
 LIGHT = 1
-SIDE = 41
+SIDE = 33
 SHAPE = (SIDE, SIDE, SIDE)
 STAR = (SIDE // 2, SIDE // 2, SIDE // 2)
 AMOUNT = 1 << 20
@@ -145,8 +148,8 @@ BATCHES = {
     "b": (((0, 1, 0), 4), ((0, -1, 0), 6), ((0, 0, 1), 10), ((0, 0, -1), 6)),
 }
 # The separating run: A, B and the mass, DERIVATIONS.md section 37 (ix).
-SEP_SOURCE = (16, 4, 10)
-SEP_RECEIVER = (36, 24, 30)
+SEP_SOURCE = (14, 2, 8)
+SEP_RECEIVER = (30, 18, 24)
 SEP_SOURCE_X, SEP_SOURCE_FILL = 1024, 14
 
 

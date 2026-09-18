@@ -2,9 +2,9 @@
  "schema_version": 1,
  "model_id": "a6-law-sep-field-m256",
  "shape": [
-  41,
-  41,
-  41
+  33,
+  33,
+  33
  ],
  "boundary": "periodic",
  "dense_field": true,
@@ -301,9 +301,9 @@
  "seeds": [
   {
    "position": [
-    36,
-    24,
-    30
+    30,
+    18,
+    24
    ],
    "type": "clock_0"
   }
@@ -386,9 +386,9 @@
  "external_bodies": [
   {
    "position": [
-    20,
-    20,
-    20
+    16,
+    16,
+    16
    ],
    "family": "star",
    "amount": 1048576,
@@ -396,9 +396,9 @@
   },
   {
    "position": [
-    16,
-    4,
-    10
+    14,
+    2,
+    8
    ],
    "family": "source",
    "amount": 1048576,
@@ -406,9 +406,9 @@
   },
   {
    "position": [
-    36,
-    25,
-    30
+    30,
+    19,
+    24
    ],
    "family": "mirror",
    "amount": 1,
@@ -416,9 +416,9 @@
   },
   {
    "position": [
-    36,
-    23,
-    30
+    30,
+    17,
+    24
    ],
    "family": "mirror",
    "amount": 1,
