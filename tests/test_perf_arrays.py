@@ -30,13 +30,20 @@ ROOT = Path(__file__).resolve().parents[1]
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 COSTS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 AMOUNT = 1 << 24
-LINE_TABLE = [1, 1, 0, 0, 0, 0]
-BOX_TABLE = [6, 1, 1, 1, 1, 1]
-# The stepping engine's layer on the line repeats exactly after this tick.
-FIXED_POINT = 119
-# The state.json digest of the box for 24 ticks, written by the runner before
-# the streamed writer existed (the pin of the migration).
-BOX_STATE_SHA256 = "059d4133b3f58b9a9848c7658607f4bcebc7a1070747ba26356fe0f429f4139f"
+# The stepping engine's layer on the line repeats exactly after this tick, with
+# this period (node-mixing-v1: the mixing is the layer's step); with the lamp
+# of the fallback case beside the line, after LAMP_FIXED_POINT.
+FIXED_POINT = 30
+PERIOD = 1
+LAMP_FIXED_POINT = 27
+# The residual of the last comparison when the search stops after 10 intervals.
+SHORT_LIMIT = 10
+SHORT_RESIDUAL = {"cells": 1316, "amount": 3573}
+# The momentum of the two bodies after 200 ticks of the line.
+FINAL_MOMENTA = [(-186, 0, -1), (191, 2, 0)]
+# The state.json digest of the box for 24 ticks, written by the runner of main at
+# 9c689f1 before the streamed writer existed (the pin of the migration).
+BOX_STATE_SHA256 = "d59b8025ce40ab49bf91367c24ae496e465cfaaa24e6abbea4c4f4fcae146761"
 
 
 def field(name, components=1):
@@ -55,13 +62,13 @@ def body(position):
         "position": list(position),
         "family": "m",
         "amount": AMOUNT,
-        "charge": -1,
+        "charge": -AMOUNT,
         "momentum_table": {"m": 1},
         "reads": "charge",
     }
 
 
-def document(shape, bodies, spread, ticks, *, slots=8, fill=8):
+def document(shape, bodies, ticks, *, slots=24, fill=8):
     return {
         "schema_version": 1,
         "model_id": "perf-arrays-test-v1",
@@ -73,6 +80,9 @@ def document(shape, bodies, spread, ticks, *, slots=8, fill=8):
         "ticks": ticks,
         "operation_costs": dict.fromkeys(COSTS, 1),
         "fields": [field("m"), field("momentum", 3)],
+        # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
+        # tests/test_wait_rule.py; these worlds pin the flows without it.
+        "wait_per_quantum": 0,
         "disturbance_types": [
             {
                 "name": "ring",
@@ -93,9 +103,7 @@ def document(shape, bodies, spread, ticks, *, slots=8, fill=8):
                 "pace": [1, 1],
                 "phase_bits": 0,
                 "charge": -1,
-                "kerengonen": {"phase_advance": 0},
-                "release": [1, 65536],
-                "spread": spread,
+                "release": [1, 4096],
             }
         ],
         "emissions": [],
@@ -128,11 +136,11 @@ def document(shape, bodies, spread, ticks, *, slots=8, fill=8):
 
 
 def line(ticks=200):
-    return document((9, 3, 3), [(1, 1, 1), (7, 1, 1)], LINE_TABLE, ticks)
+    return document((9, 3, 3), [(2, 1, 1), (5, 1, 1)], ticks)
 
 
 def box(ticks=24):
-    return document((9, 5, 5), [(2, 2, 2), (6, 2, 2)], BOX_TABLE, ticks, slots=24)
+    return document((9, 5, 5), [(3, 2, 2), (6, 2, 2)], ticks)
 
 
 def late_lamp(doc):
@@ -250,13 +258,14 @@ def test_the_standing_set_is_the_layers_fixed_point_and_the_things_read_it(tmp_p
     assert report == {
         "standing_field": True,
         "standing_field_iterations": FIXED_POINT,
-        "standing_field_period": 1,
+        "standing_field_period": PERIOD,
         "standing_field_residual": {"cells": 0, "amount": 0},
         "standing_field_ticks": 200 - FIXED_POINT,
         "standing_field_fallback": None,
     }
     assert standing_momenta == momenta
-    assert momenta[-1] == [(-2043, 0, 0), (2043, 0, 0)]
+    assert momenta[-1] == FINAL_MOMENTA
+    assert any(any(vector) for tick in momenta[:FIXED_POINT] for vector in tick)
     assert audit_failure(standing_audits) is None and standing_audits == audits
     stepping = digests(written(tmp_path, "stepping", line()))
     fixed = digests(written(tmp_path, "standing", line(), standing_field=True))
@@ -267,14 +276,14 @@ def test_the_standing_set_is_the_layers_fixed_point_and_the_things_read_it(tmp_p
 
 def test_without_a_repeat_the_layer_keeps_stepping_and_the_residual_is_reported(tmp_path):
     stepping = digests(written(tmp_path, "stepping", line()))
-    short = digests(written(tmp_path, "short", line(), standing_field=50))
+    short = digests(written(tmp_path, "short", line(), standing_field=SHORT_LIMIT))
     assert short[:2] == stepping[:2]
     record = short[2]
     assert record["standing_field"] is False and record["standing_field_iterations"] is None
     assert record["standing_field_period"] is None
-    assert record["standing_field_residual"] == {"cells": 25, "amount": 172}
+    assert record["standing_field_residual"] == SHORT_RESIDUAL
     assert record["standing_field_ticks"] == 0 and record["standing_field_fallback"] is None
-    assert record["standing_field_max_iterations"] == 50
+    assert record["standing_field_max_iterations"] == SHORT_LIMIT
 
 
 def test_a_thing_that_steps_under_the_standing_set_makes_the_run_fall_back_exactly(tmp_path):
@@ -284,8 +293,9 @@ def test_a_thing_that_steps_under_the_standing_set_makes_the_run_fall_back_exact
     assert fallen[:2] == stepping[:2]
     record = fallen[2]
     assert record["standing_field"] is False
-    assert record["standing_field_iterations"] == FIXED_POINT
-    assert record["standing_field_ticks"] == 11
+    assert record["standing_field_iterations"] == LAMP_FIXED_POINT
+    assert record["standing_field_period"] == PERIOD
+    assert record["standing_field_ticks"] == 131 - LAMP_FIXED_POINT - 1
     assert record["standing_field_fallback"] == {
         "tick": 131,
         "reason": "a thing stepped or the things' Nodes changed",

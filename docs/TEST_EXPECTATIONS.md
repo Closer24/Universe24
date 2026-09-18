@@ -3281,18 +3281,20 @@ agreed.
 
 `tests/test_perf_arrays.py` is the isolated test of the performance lane of
 2026-09-18 (`perf-arrays-v1`; [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)),
-pinned here before its first run. Two minimal worlds built as data: the
-*line*, 9 x 3 x 3 open, two bodies of the family `m` (charge -1, release
-1/65536 of an amount 2^24, 256 quanta per heading per fill interval) at
-(1, 1, 1) and (7, 1, 1), each reading the other's shadows by the momentum
-table `{m: 1}` on its charge, the split table [1, 1, 0, 0, 0, 0] (forward and
-back, nothing transverse), a fill of 8 intervals, the dense mode; the *box*,
-9 x 5 x 5 open, the same bodies at (2, 2, 2) and (6, 2, 2) under the
-catalog's table [6, 1, 1, 1, 1, 1] with 24 ray slots, so that parked shares
-fill the registers. The standing set's integers are those of the current
-split rule (`field-spreading-v1` with the Node-owned remainder) and are
-re-pinned when the rule changes (feature 16c, the Node mixes the six); the
-identities are not the rule's. Six cases:
+pinned here before its first run and re-pinned the same day when the Node's
+mixing (`node-mixing-v1`, feature 16c) and the clock readings
+(`clock-readings-v1`, feature 16b) became the layer's step and the schema
+(no split table, no `kerengonen`, a body's whole charge a multiple of its
+amount, `wait_per_quantum` 0 as the bit-law test pins its pushes). Two
+minimal worlds built as data: the *line*, 9 x 3 x 3 open, two bodies of the
+family `m` (amount 2^24, whole charge -2^24, release 1/4096 of the amount:
+4096 quanta per heading per fill interval) at (2, 1, 1) and (5, 1, 1), each
+reading the other's shadows by the momentum table `{m: 1}` on its charge, a
+fill of 8 intervals, the dense mode, the mixing the only spread; the *box*,
+9 x 5 x 5 open, the same bodies at (3, 2, 2) and (6, 2, 2). The standing
+set's integers are the current rule's (the mixing with the Node-owned
+remainder) and are re-pinned when the rule changes; the identities are not
+the rule's. Six cases:
 
 - `snapshot`: after 24 ticks of the box, in the dense mode and with the
   engine alone, the text `snapshot_writer.write_snapshot` streams equals
@@ -3300,9 +3302,9 @@ identities are not the rule's. Six cases:
   lists the region's Nodes with their parked shares among the `parked`
   entries, more than one); through the runner, `state.json` of the box for
   24 ticks equals that text of a second world stepped the same 24 ticks plus
-  a line break, and its SHA-256 equals the digest the runner wrote before the
-  change (the pin of the migration, measured on the same world before the
-  writer existed).
+  a line break, and its SHA-256 equals the digest the runner of `main` at
+  `9c689f1` wrote on the same world before the writer existed (the pin of
+  the migration).
 - `series`: `tools/run_series.py`'s `run_series` on the line and the box for
   12 ticks each with two jobs: two `run` directories with `run.json`,
   `state.json` and `log.txt`, both rows `completed` with `ticks` 12 and a
@@ -3311,25 +3313,28 @@ identities are not the rule's. Six cases:
   `run_initialization` of the same world for the same ticks in the test's own
   process; two worlds of one name refused.
 - `standing`: the line for 200 ticks with `standing_field: true`: the layer
-  repeats exactly after tick 119 (`standing_field_iterations` 119, the
-  residual `{cells: 0, amount: 0}`), is kept fixed for the remaining 81 ticks
-  (`standing_field_ticks` 81, `standing_field` true, no fallback), and the
-  things read it as the stepping engine gives: the momentum of both bodies
-  after every tick identical to the stepping run's (B's (2043, 0, 0) at the
-  end, A's the negation), the ledger balanced at every tick, `state.json` and
-  the ledger of the run byte-identical to the stepping run's.
-- `residual`: the same line with `standing_field: 50`: no repeat within 50
-  intervals, `standing_field` false, `standing_field_iterations` null, the
-  residual of the last comparison `{cells: 25, amount: 172}`, zero ticks
-  fixed, and the files identical to the stepping run's (the layer stepped
-  throughout).
+  repeats exactly after tick 30 with period 1 (`standing_field_iterations`
+  30, `standing_field_period` 1, the residual `{cells: 0, amount: 0}`), is
+  kept fixed for the remaining 170 ticks (`standing_field_ticks` 170,
+  `standing_field` true, no fallback), and the things read it as the stepping
+  engine gives: the momentum of both bodies after every tick identical to the
+  stepping run's, pushes taken before the fixed point (a nonzero momentum
+  within the first 30 ticks) and (-186, 0, -1) and (191, 2, 0) at the end,
+  the ledger balanced at every tick, `state.json` and the ledger of the run
+  byte-identical to the stepping run's.
+- `residual`: the same line with `standing_field: 10`: no repeat within 10
+  intervals, `standing_field` false, `standing_field_iterations` and
+  `standing_field_period` null, the residual of the last comparison
+  `{cells: 1316, amount: 3573}`, zero ticks fixed, and the files identical
+  to the stepping run's (the layer stepped throughout).
 - `fallback`: the line with a lamp at (4, 0, 0) that pays out one thing ray
-  of amount 2 on +Y after 130 cycles (`dissolve`): the layer is fixed at 119,
-  the thing's packet changes the engine's part of the state at tick 131 and
-  the region falls back to stepping there (`standing_field_fallback` `{tick:
-  131, reason: ...}`, `standing_field` false, `standing_field_ticks` 11), and
-  the run's `state.json` and ledger are byte-identical to the stepping run's
-  of the same world: the fallback is exact.
+  of amount 2 on +Y after 130 cycles (`dissolve`): the layer is fixed after
+  tick 27 (period 1), the thing's packet changes the engine's part of the
+  state at tick 131 and the region falls back to stepping there
+  (`standing_field_fallback` `{tick: 131, reason: ...}`, `standing_field`
+  false, `standing_field_ticks` 103), and the run's `state.json` and ledger
+  are byte-identical to the stepping run's of the same world: the fallback
+  is exact.
 - `rejected`: `standing_field` on a world without the dense mode
   (`dense_field: false`), a negative `standing_field`, and a non-integer one
   are refused by the parser with the reason.
