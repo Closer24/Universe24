@@ -20,10 +20,14 @@ Euclidean distance); the three pairs of contents at d = 8 give the product
 law (the settled push on each body against the product of the whole charges,
 and against each body's own and the other's charge).
 
-With `--replay NAME` the named world is also replayed through the Simulation
-API and the momentum in flight is read from the inventory (every shadow's
-`momentum`, on its way and parked) and checked against the ledger's reading
-and against the record's momentum lines tick by tick.
+With `--replay NAME` (or `--replay-all`) a world is also replayed through the
+Simulation API and the momentum in flight is read per tick from the engine's
+arrays and Nodes (every shadow's `momentum`, on its way and parked; with
+`--inventory` the inventory view is summed as well and checked equal), and
+the bodies' momenta plus the momentum in flight plus the escaped are checked
+to sum to zero at every tick (the runner's ledger line of the momentum field
+does not sum the momentum carried on rays, so the world's zero is read here);
+the replay's momentum lines are checked against the record's.
 
 Run:  PYTHONPATH=src python examples/nature/a5s_law/analyze.py RUNS_DIR [--closed CLOSED_RUNS_DIR] [--record record.json] [--tables tables.md] [--replay pq_d8_closed]
 """
@@ -70,15 +74,13 @@ def read_world(run, offset, amount_a, amount_b):
             row[f"push_{key}_line"] = sum(push[k] * line[k] for k in range(3))
             row[f"p_{key}_line"] = sum(vector[k] * line[k] for k in range(3))
         things = [row["p_a"][k] + row["p_b"][k] for k in range(3)]
-        line = entry["fields"]["momentum"]
-        current, returned = list(line["current"]), list(line["returned"])
+        ledger = entry["fields"]["momentum"]
         row["things_sum"] = things
-        # The ledger's `current` is the momentum on rays, here the shadows'
-        # alone (no real ray on the board); the bodies' momentum is the
-        # `returned` line, so the world's zero is current + returned + escaped.
-        row["in_flight"] = current
-        row["returned"] = returned
-        row["momentum_escaped"] = list(line["escaped"])
+        # The runner's ledger line of the momentum field does not sum the
+        # momentum carried on rays: the momentum in flight is read by the
+        # replay (`--replay`), and the world's zero there.
+        row["ledger_momentum"] = {"current": list(ledger["current"]), "returned": list(ledger["returned"]), "escaped": list(ledger["escaped"])}
+        row["momentum_escaped"] = list(ledger["escaped"])
         row["balanced"] = bool(entry["balanced"])
         row["real_balanced"] = all(x["balanced"] for x in entry["real"].values())
         row["shadow_balanced"] = all(x["balanced"] for x in entry["shadow"].values())
@@ -108,7 +110,9 @@ def read_world(run, offset, amount_a, amount_b):
         "settled_push_a_before": sum(r["push_a_line"] for r in before) / len(before) if before else None,
         "p_b_line_at_end": rows[-1]["p_b_line"],
         "p_a_line_at_end": rows[-1]["p_a_line"],
-        "in_flight_at_end": rows[-1]["in_flight"],
+        "bodies_sum_at_end": rows[-1]["things_sum"],
+        "in_flight_at_end": None,
+        "world_zero_every_tick": None,
         "offset": list(offset),
         "distance": math.sqrt(sum(c * c for c in offset)),
         "amount_a": amount_a,
@@ -135,12 +139,9 @@ def read_world(run, offset, amount_a, amount_b):
             1 for x, y in zip(rows, rows[1:], strict=False) if x["push_b_line"] * y["push_b_line"] < 0
         ),
         "books_every_tick": all(r["balanced"] and r["real_balanced"] and r["shadow_balanced"] and r["real_conserved"] for r in rows),
-        "closed_every_tick": all(
-            all(r["things_sum"][k] + r["in_flight"][k] + r["momentum_escaped"][k] == 0 for k in range(3))
-            and r["returned"] == r["things_sum"]
-            for r in rows
-        ),
+        "bodies_line_matches": all(r["bodies_line"] == r["things_sum"] for r in rows),
         "escaped_momentum_at_end": rows[-1]["momentum_escaped"],
+        "ledger_momentum_at_end": rows[-1]["ledger_momentum"],
     }
 
 
@@ -190,9 +191,41 @@ def fit_value(fit, r):
     return math.exp(fit["intercept"] + fit["slope"] * math.log(r)) if fit else None
 
 
-def replay_in_flight(document, ticks, log=print):
-    """The momentum in flight on the shadows read from the inventory per tick,
-    beside the bodies' momenta and the ledger's current."""
+def shadow_momentum(world, index=0):
+    """The momentum in flight on the shadows after a tick: the layer's arrays
+    (arrivals, departures, parked ninths), the whole rays beside them and the
+    engine's Nodes' shadows; equal to the inventory view's sum (checked on a
+    small closed world, and on `pq_d8_closed` with `--inventory`)."""
+    import numpy as np
+
+    spatial = world._spatial
+    family = spatial.dense.families[index]
+    axes = tuple(range(family.arr_mom.ndim - 1))
+    total = (
+        family.arr_mom.astype(np.int64).sum(axis=axes)
+        + family.fly_mom.astype(np.int64).sum(axis=axes)
+        + family.reg_mom.astype(np.int64).sum(axis=tuple(range(family.reg_mom.ndim - 1)))
+    )
+    total = [int(c) for c in total]
+    for rays in family.overflow.values():
+        for ray in rays:
+            if ray.momentum is not None:
+                for k in range(3):
+                    total[k] += ray.momentum[k]
+    for node in spatial.nodes.values():
+        if not node.rays:
+            continue
+        for ray in node.rays[index]:
+            if ray.detector == 0 and ray.momentum is not None:
+                for k in range(3):
+                    total[k] += ray.momentum[k]
+    return total
+
+
+def replay_in_flight(document, ticks, log=print, inventory=False):
+    """The momentum in flight on the shadows per tick, read from the engine's
+    arrays and Nodes (and, with `inventory`, from the inventory view as well,
+    the two checked equal), beside the bodies' momenta and the ledger's lines."""
     from event_universe import Simulation
     from event_universe.initialization import parse_initial_state
 
@@ -200,13 +233,17 @@ def replay_in_flight(document, ticks, log=print):
     with Simulation(parse_initial_state(document)) as world:
         for tick in range(1, ticks + 1):
             world.step()
-            in_flight = [0, 0, 0]
-            for node in world.inventory_view().nodes:
-                for rays in list(node.rays) + list(node.parked):
-                    for ray in rays:
-                        if ray.detector == 0 and ray.momentum is not None:
-                            for k in range(3):
-                                in_flight[k] += ray.momentum[k]
+            in_flight = shadow_momentum(world)
+            if inventory:
+                from_inventory = [0, 0, 0]
+                for node in world.inventory_view().nodes:
+                    for rays in list(node.rays) + list(node.parked):
+                        for ray in rays:
+                            if ray.detector == 0 and ray.momentum is not None:
+                                for k in range(3):
+                                    from_inventory[k] += ray.momentum[k]
+                if from_inventory != in_flight:
+                    raise AssertionError(f"tick {tick}: the arrays read {in_flight}, the inventory {from_inventory}")
             bodies = [list(b["momentum"]) for b in world.external_bodies()]
             ledger = world.audit()
             rows.append(
@@ -214,12 +251,20 @@ def replay_in_flight(document, ticks, log=print):
                     "tick": tick,
                     "bodies": bodies,
                     "in_flight_inventory": in_flight,
+                    "sum": [bodies[0][k] + bodies[1][k] + in_flight[k] for k in range(3)],
                     "ledger_current": list(ledger["fields"]["momentum"]["current"]),
                     "ledger_escaped": list(ledger["fields"]["momentum"]["escaped"]),
                 }
             )
             log(f"  tick {tick} bodies {bodies} in flight {in_flight} escaped {rows[-1]['ledger_escaped']}")
     return rows
+
+
+def replay_job(job):
+    """One replay (a worker of the pool): the world's name, its file, its ticks."""
+    name, world_path, ticks, inventory = job
+    document = json.loads(Path(world_path).read_text(encoding="utf-8"))
+    return name, replay_in_flight(document, ticks, log=lambda _: None, inventory=inventory)
 
 
 def fmt(value, digits=1):
@@ -233,28 +278,28 @@ def fmt(value, digits=1):
 def tables(record):
     w = record["worlds"]
     lines = ["### The books per bit, the rest and the momentum in flight\n"]
-    lines.append("| World | r | Contents A, B | Ticks | Books per bit balanced | Things + in flight + escaped = 0 | Bodies at rest | Shadows at start / at the end | Escaped | First push on B | Runner s |")
+    lines.append("| World | r | Contents A, B | Ticks | Books per bit balanced | Bodies + shadows in flight = 0 every tick (replay) | Bodies at rest | Shadows at start / at the end | Escaped | First push on B | Runner s |")
     lines.append("| --- | ---: | --- | ---: | --- | --- | --- | --- | ---: | ---: | ---: |")
     for name, r in w.items():
         lines.append(
             f"| `{name}` | {r['distance']:.2f} | 2^{int(math.log2(r['amount_a']))}, 2^{int(math.log2(r['amount_b']))} | {r['completed_ticks']} | "
-            f"{'every tick' if r['books_every_tick'] else 'NO'} | {'every tick' if r['closed_every_tick'] else 'NO'} | {'yes' if r['bodies_at_rest'] else 'NO'} | "
+            f"{'every tick' if r['books_every_tick'] else 'NO'} | {'every tick' if r['world_zero_every_tick'] else ('NO' if r['world_zero_every_tick'] is False else 'not replayed')} | {'yes' if r['bodies_at_rest'] else 'NO'} | "
             f"{r['shadows_initial']} / {r['shadows_final']} | {r['escaped']} | {fmt(r['first_push_tick_b'])} | {fmt(r['elapsed_seconds'])} |"
         )
     closed = w
     if closed:
         lines.append("\n### The push per interval on B along the line from A, per window of twenty, the settled push and the standing-set search (every world closed: `boundary` periodic, 120 ticks, `standing_field` on)\n")
-        lines.append("| World | r | Contents A, B | Books per bit | Things + in flight + escaped = 0 | At rest | Standing set found | Iterations | Period | Residual (cells, amount) | Push on B, ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Push on A, 101-120 | Sign changes | p_B at 120 | p_A at 120 | In flight at 120 (x) | Runner s |")
-        lines.append("| --- | ---: | --- | --- | --- | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+        lines.append("| World | r | Contents A, B | Books per bit | Things + in flight + escaped = 0 | At rest | Standing set found | Iterations | Period | Residual (cells, amount) | Push on B, ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Push on A, 101-120 | Sign changes | p_B at 120 | p_A at 120 | p_A + p_B at 120 | In flight on the shadows at 120 (replay) | Runner s |")
+        lines.append("| --- | ---: | --- | --- | --- | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | ---: |")
         for name, r in closed.items():
             sf = r.get("standing_field") or {}
             win = r["windows"]
             cells = " | ".join(f"{win[k]['push_b']:.0f}" if k in win else "-" for k in ("1-20", "21-40", "41-60", "61-80", "81-100", "101-120"))
             res = sf.get("standing_field_residual") or {}
             lines.append(
-                f"| `{name}` | {r['distance']:.2f} | 2^{int(math.log2(r['amount_a']))}, 2^{int(math.log2(r['amount_b']))} | {'every tick' if r['books_every_tick'] else 'NO'} | {'every tick' if r['closed_every_tick'] else 'NO'} | {'yes' if r['bodies_at_rest'] else 'NO'} | "
+                f"| `{name}` | {r['distance']:.2f} | 2^{int(math.log2(r['amount_a']))}, 2^{int(math.log2(r['amount_b']))} | {'every tick' if r['books_every_tick'] else 'NO'} | {'every tick' if r['world_zero_every_tick'] else ('NO' if r['world_zero_every_tick'] is False else 'not replayed')} | {'yes' if r['bodies_at_rest'] else 'NO'} | "
                 f"{sf.get('standing_field')} | {fmt(sf.get('standing_field_iterations'))} | {fmt(sf.get('standing_field_period'))} | {res.get('cells', '-')}, {res.get('amount', '-')} | {cells} +- {r['settled_push_b_error']:.0f} | {fmt(r['settling_tick_b'])} | {r['settled_push_a']:.0f} | {r['sign_changes_b']} | "
-                f"{r['p_b_line_at_end']:.0f} | {r['p_a_line_at_end']:.0f} | {r['in_flight_at_end'][0]} | {fmt(r['elapsed_seconds'])} |"
+                f"{r['p_b_line_at_end']:.0f} | {r['p_a_line_at_end']:.0f} | {r['bodies_sum_at_end']} | {r['in_flight_at_end']} | {fmt(r['elapsed_seconds'])} |"
             )
         lines.append("\n### The scaling with d (the axis worlds, like contents 2^28), the anisotropy and the product law\n")
         lines.append("| Quantity (the axis worlds) | Slope (log-log over d = 4, 6, 8, 12) | Standard error | Fit at d = 8 | Fit at d = 11.31 | Fit at d = 13.86 |")
@@ -280,13 +325,13 @@ def tables(record):
         n = len(rp["rows"])
         shown = (1, 2, 3, 4, 5, 8, 10, 15, 20, 25, 30, 35, 40) if n <= 40 else (1, 2, 3, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120)
         lines.append(f"\n### The recoil through the field: `{rp['world']}` replayed, the momentum in flight from the inventory\n")
-        lines.append("| Tick | p_A | p_B | In flight (inventory) | Ledger current | Escaped | Sum |")
+        lines.append("| Tick | p_A | p_B | In flight on the shadows | Ledger current | Escaped | Sum |")
         lines.append("| ---: | --- | --- | --- | --- | --- | --- |")
         for row in rp["rows"]:
             if row["tick"] in shown:
                 total = [row["bodies"][0][k] + row["bodies"][1][k] + row["in_flight_inventory"][k] + row["ledger_escaped"][k] for k in range(3)]
                 lines.append(f"| {row['tick']} | {row['bodies'][0]} | {row['bodies'][1]} | {row['in_flight_inventory']} | {row['ledger_current']} | {row['ledger_escaped']} | {total} |")
-        lines.append(f"\nThe momentum in flight read from the inventory equals the ledger's current line at every tick: {rp['inventory_matches_ledger']}; the replay's momentum lines equal the record's: {rp['matches_record']}; the two things' momenta plus the momentum in flight plus the escaped sum to zero at every tick: {rp.get('sum_zero_every_tick')}.\n")
+        lines.append(f"\nThe replay's momentum lines equal the record's: {rp['matches_record']}; the two things' momenta plus the momentum in flight on the shadows plus the escaped sum to zero at every tick: {rp.get('sum_zero_every_tick')}.\n")
     return "\n".join(lines) + "\n"
 
 
@@ -297,6 +342,9 @@ def main(argv=None):
     parser.add_argument("--record", type=Path, default=HERE / "record.json")
     parser.add_argument("--tables", type=Path, default=HERE / "tables.md")
     parser.add_argument("--replay", action="append", default=[], help="a world to replay in-process for the momentum in flight (repeatable)")
+    parser.add_argument("--replay-all", action="store_true", help="replay every world of the series")
+    parser.add_argument("--replay-jobs", type=int, default=1, help="replays at once (processes)")
+    parser.add_argument("--inventory", action="store_true", help="read the momentum in flight from the inventory view as well and check it equal (slow)")
     parser.add_argument("--closed", type=Path, default=None, help="the runs directory (kept for the earlier form of the command; RUNS_DIR is read when absent)")
     args = parser.parse_args(argv)
     documents = dict(cases())
@@ -315,7 +363,6 @@ def main(argv=None):
         for rp in record["replays"].values():
             # The checks are re-read from the rows (the ledger's `current` is the
             # shadows' momentum; the bodies' is the `returned` line).
-            rp["inventory_matches_ledger"] = all(row["in_flight_inventory"] == row["ledger_current"] for row in rp["rows"])
             rp["sum_zero_every_tick"] = all(
                 all(row["bodies"][0][k] + row["bodies"][1][k] + row["in_flight_inventory"][k] + row["ledger_escaped"][k] == 0 for k in range(3))
                 for row in rp["rows"]
@@ -329,7 +376,7 @@ def main(argv=None):
         offset = tuple(b["position"][k] - a["position"][k] for k in range(3))
         record["worlds"][name] = read_world(run, offset, a["amount"], b["amount"])
         r = record["worlds"][name]
-        print(f"{name}: {r['status']} {r['completed_ticks']} ticks, books {r['books_every_tick']}, closed {r['closed_every_tick']}, at rest {r['bodies_at_rest']}, settled push on B {r['settled_push_b']:.0f}")
+        print(f"{name}: {r['status']} {r['completed_ticks']} ticks, books {r['books_every_tick']}, at rest {r['bodies_at_rest']}, settled push on B {r['settled_push_b']:.0f}")
     closed_axis = [(d, record["worlds"].get(f"pp_d{d}_closed")) for d in AXIS_DISTANCES]
     closed_axis = [(d, r) for d, r in closed_axis if r]
     closed_quantities = {
@@ -370,23 +417,33 @@ def main(argv=None):
             "p_b_120": r["p_b_line_at_end"],
             "p_a_120": r["p_a_line_at_end"],
         }
-    for name in args.replay:
-        if name not in record["worlds"] or name in record["replays"]:
-            continue
-        document = json.loads((args.worlds / f"{name}.json").read_text(encoding="utf-8"))
-        print(f"replaying {name} in-process for the momentum in flight")
-        rows = replay_in_flight(document, record["worlds"][name]["completed_ticks"])
+    names = [n for n in (list(record["worlds"]) if args.replay_all else args.replay) if n in record["worlds"] and n not in record["replays"]]
+    jobs = [(name, str(args.worlds / f"{name}.json"), record["worlds"][name]["completed_ticks"], args.inventory) for name in names]
+    if jobs:
+        print(f"replaying {[j[0] for j in jobs]} in-process for the momentum in flight, {args.replay_jobs} at once")
+    if args.replay_jobs > 1 and len(jobs) > 1:
+        import multiprocessing
+
+        with multiprocessing.get_context("spawn").Pool(args.replay_jobs) as pool:
+            results = dict(pool.imap_unordered(replay_job, jobs))
+    else:
+        results = dict(replay_job(job) for job in jobs)
+    for name in names:
+        rows = results[name]
         recorded = record["worlds"][name]["ticks"]
         record["replays"][name] = {
             "world": name,
             "rows": rows,
-            "inventory_matches_ledger": all(row["in_flight_inventory"] == row["ledger_current"] for row in rows),
             "matches_record": all(row["bodies"] == [rec["p_a"], rec["p_b"]] for row, rec in zip(rows, recorded, strict=True)),
             "sum_zero_every_tick": all(
                 all(row["bodies"][0][k] + row["bodies"][1][k] + row["in_flight_inventory"][k] + row["ledger_escaped"][k] == 0 for k in range(3))
                 for row in rows
             ),
         }
+    for name, rp in record["replays"].items():
+        if name in record["worlds"]:
+            record["worlds"][name]["in_flight_at_end"] = rp["rows"][-1]["in_flight_inventory"]
+            record["worlds"][name]["world_zero_every_tick"] = rp["sum_zero_every_tick"]
     args.record.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
     text = tables(record)
     args.tables.write_text(text, encoding="utf-8")

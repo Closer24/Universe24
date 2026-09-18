@@ -37,7 +37,13 @@ the replay against the record; they never change the engine):
    DERIVATIONS.md section 39 (|u| is that over three). The replay is checked
    against the record tick by tick (the shadows on the board, the escapes,
    the body's momentum line and the books; `identity_of`), so the reading
-   belongs to the fingerprinted run. `pulse` and `standing` (open) and
+   belongs to the fingerprinted run; on a probe world the replay also reads,
+   per tick, the momentum on the shadows (the arrays' momentum cells, the
+   whole rays beside them, the engine's Nodes) and on the probe (its
+   register), and checks that probe + shadows + body + escaped is zero at
+   every tick (the runner's ledger line of the momentum field does not sum
+   the momentum carried on rays, so the world's zero is read here).
+   `pulse` and `standing` (open) and
    `standing_closed` are replayed for the shells; every closed probe world is
    replayed for the amplitude at the test thing's own Node (the engine's
    Node, the probe returning the shares it reads).
@@ -178,11 +184,7 @@ def probe_reading(record, offset, heading, closed=False):
                 "push_radial": sum(push[k] * radial[k] for k in range(3)),
                 "cumulative_radial": sum(carried[k] * radial[k] for k in range(3)),
                 "body_momentum": body_vector,
-                # The ledger's `current` is the momentum on rays, the probe's and
-                # the shadows' together; a body's is its `returned` line.
-                "in_flight": [current[k] - vector[k] for k in range(3)],
-                "world_zero": all(current[k] + returned[k] + escaped[k] == 0 for k in range(3)),
-                "body_is_returned_line": returned == body_vector,
+                "ledger_momentum": {"current": current, "returned": returned, "escaped": escaped},
                 "computation": record["computation_per_tick"][tick - 1],
             }
         )
@@ -206,8 +208,11 @@ def probe_reading(record, offset, heading, closed=False):
         "settling_tick": settling_tick(rows, "push_radial") if closed else None,
         "sign_changes": sum(1 for x, y in zip(rows, rows[1:], strict=False) if x["push_radial"] * y["push_radial"] < 0),
         "body_momentum_at_end": rows[-1]["body_momentum"],
-        "in_flight_at_end": rows[-1]["in_flight"],
-        "world_momentum_zero_every_tick": all(r["world_zero"] and r["body_is_returned_line"] for r in rows),
+        # Filled from the replay (the momentum on the shadows and on the probe
+        # read from the engine's arrays and Nodes): `in_flight_at_end` and
+        # `world_momentum_zero_every_tick`.
+        "in_flight_at_end": None,
+        "world_momentum_zero_every_tick": None,
         "recoil_home_fraction": (
             -sum(rows[-1]["body_momentum"][k] * radial[k] for k in range(3)) / rows[-1]["cumulative_radial"]
             if rows[-1]["cumulative_radial"] else None
@@ -281,6 +286,40 @@ def read_board(world, index, shape):
                 continue
             (out if ray.outbound else ret)[(ports[ray.heading], *position)] += ray.amount
     return out, ret, park_ninths // family.total
+
+
+def momenta(world, index):
+    """The momentum on rays after a tick: on the shadows (the layer's arrays of
+    arrivals, departures and parked ninths, the whole rays beside them and the
+    engine's Nodes' shadows; checked equal to the inventory view's sum on a
+    small closed world) and on the real rays (a thing's register, the pushes
+    it has taken); the bodies' is `external_bodies()`."""
+    spatial = world._spatial
+    family = spatial.dense.families[index]
+    axes = tuple(range(family.arr_mom.ndim - 1))
+    shadows = (
+        family.arr_mom.astype(np.int64).sum(axis=axes)
+        + family.fly_mom.astype(np.int64).sum(axis=axes)
+        + family.reg_mom.astype(np.int64).sum(axis=tuple(range(family.reg_mom.ndim - 1)))
+    )
+    shadows = [int(c) for c in shadows]
+    real = [0, 0, 0]
+    for rays in family.overflow.values():
+        for ray in rays:
+            if ray.momentum is not None:
+                for k in range(3):
+                    shadows[k] += ray.momentum[k]
+    for node in spatial.nodes.values():
+        if not node.rays:
+            continue
+        for family_rays in node.rays:
+            for ray in family_rays:
+                if ray.momentum is None:
+                    continue
+                target = shadows if ray.detector == 0 else real
+                for k in range(3):
+                    target[k] += ray.momentum[k]
+    return shadows, real
 
 
 def arrivals_at(world, index, position):
@@ -412,6 +451,11 @@ def replay(document, ticks, read_nodes, log=print, shells=True):
             ledgers.append(ledger)
             row["balanced"] = bool(ledger["balanced"]) and bool(ledger.get("real_conserved", True))
             row["body_momentum"] = [list(b["momentum"]) for b in world.external_bodies()]
+            row["shadow_momentum"], row["real_momentum"] = momenta(world, index)
+            row["world_zero"] = all(
+                row["shadow_momentum"][k] + row["real_momentum"][k] + sum(b[k] for b in row["body_momentum"]) + int(world.audit()["fields"]["momentum"]["escaped"][k]) == 0
+                for k in range(3)
+            )
             per_tick.append(row)
             log(
                 f"  tick {tick} {stepped:.2f}s on board {total} escaped {row['escaped']} "
@@ -436,6 +480,22 @@ def identity_of(per_tick, run):
         ),
         "balanced": all(row["balanced"] == (bool(audit[i]["balanced"]) and bool(audit[i].get("real_conserved", True))) for i, row in enumerate(per_tick)),
     }
+    if all("real_momentum" in row for row in per_tick) and str(PROBE_THING) in run["momentum"][-1]:
+        # The probe's momentum line of the record is its own amount x heading
+        # plus the register the replay reads.
+        heading = None
+        for row, line in zip(per_tick, run["momentum"], strict=True):
+            probe = line.get(str(PROBE_THING))
+            if probe is None:
+                continue
+            if heading is None:
+                heading = [probe[k] - row["real_momentum"][k] for k in range(3)]
+            if [probe[k] - heading[k] for k in range(3)] != row["real_momentum"]:
+                checks["probe_momentum"] = False
+                break
+        else:
+            checks["probe_momentum"] = True
+        checks["world_zero_every_tick"] = all(row["world_zero"] for row in per_tick)
     checks["identical"] = all(checks.values())
     return checks
 
@@ -579,7 +639,7 @@ def tables(record):
     closed_probes = {k: v for k, v in record["probes"].items() if v["closed"]}
     if closed_probes:
         lines.append("\n### The test things (the nine closed probe worlds): the push per interval per window of twenty, the settled push and the amplitude at the thing's Node\n")
-        lines.append("| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Cumulative push at 120 | Body's momentum at 120 | Recoil home | In flight at 120 | Probe + shadows + body = 0 every tick | Standing-set search |")
+        lines.append("| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Cumulative push at 120 | Body's momentum at 120 | Recoil home | In flight on the shadows at 120 (replay) | Probe + shadows + body = 0 every tick (replay) | Standing-set search |")
         lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | --- | --- |")
         for label, probe in closed_probes.items():
             w = probe["window_means"]
@@ -652,7 +712,7 @@ def open_probes_block(lines, record, open_probes):
     if open_probes:
         lines.append("\n## The open board, measured earlier (recorded; not the series)\n\nThe eight open-board records below were made before the model owner's decision that only closed worlds are tested (Highlights 5.4, \"The board of a run is closed\"); they are kept as recorded and stand outside the series' reading.\n")
         lines.append("\n### The test things on the open board: the pushed amount per interval and the inventory's J at the same Node\n")
-        lines.append("| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | Recoil home | In flight at 40 | Probe + shadows + body + escaped = 0 every tick |")
+        lines.append("| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | Recoil home | Ledger momentum lines at 40 (current, returned, escaped) |")
         lines.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | ---: | --- | --- |")
         for label, probe in open_probes.items():
             inv = record["inventory_at_read_nodes"].get(label, {})
@@ -660,7 +720,7 @@ def open_probes_block(lines, record, open_probes):
             lines.append(
                 f"| `{label}` | {probe['radius']:.2f} | {probe['cumulative_radial_at_end']:.0f} | {fmt(probe['cumulative_radial_at_30'], 0)} | "
                 f"{probe['early_mean_radial']:.1f} | {w['2-11']:.1f} | {w['12-21']:.1f} | {w['22-31']:.1f} | {w['32-40']:.1f} | {probe['sign_changes']} | "
-                f"{fmt(inv.get('j_radial_mean_2_21'))} | {inv.get('content_2', '-')} / {inv.get('content_21', '-')} / {inv.get('content_40', '-')} | {probe['waited_intervals']} | {probe['body_momentum_at_end']} | {fmt(100 * probe['recoil_home_fraction'], 1) if probe['recoil_home_fraction'] is not None else '-'} % | {probe['in_flight_at_end']} | {probe['world_momentum_zero_every_tick']} |"
+                f"{fmt(inv.get('j_radial_mean_2_21'))} | {inv.get('content_2', '-')} / {inv.get('content_21', '-')} / {inv.get('content_40', '-')} | {probe['waited_intervals']} | {probe['body_momentum_at_end']} | {fmt(100 * probe['recoil_home_fraction'], 1) if probe['recoil_home_fraction'] is not None else '-'} % | {probe['ticks'][-1]['ledger_momentum']} |"
             )
 
 
@@ -810,7 +870,11 @@ def main(argv=None):
                 }
                 # The shells are not read for a probe world; keep the per-tick
                 # read-Node rows only.
-                entry = {"identity": identity, "ledger_identical_to_record": identical, "replay_seconds": cached.get("seconds"), "read_node": [row["read_nodes"][label] for row in per_tick]}
+                probe = record["probes"][label + "_closed"]
+                probe["in_flight_at_end"] = per_tick[-1].get("shadow_momentum")
+                probe["world_momentum_zero_every_tick"] = identity.get("world_zero_every_tick")
+                probe["in_flight_per_tick"] = [row.get("shadow_momentum") for row in per_tick]
+                entry = {"identity": identity, "ledger_identical_to_record": identical, "replay_seconds": cached.get("seconds"), "read_node": [row["read_nodes"][label] for row in per_tick], "momenta": [(row.get("real_momentum"), row.get("shadow_momentum"), row["body_momentum"]) for row in per_tick]}
             record["replays"][name] = entry
             print(f"  {name}: ledger identical to the record: {identical}")
     for board in ("open", "closed"):
