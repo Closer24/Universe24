@@ -35,6 +35,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
 | `test_decay_draw.py` | 1 | 1.05 | Issue #169 feature 13: a decaying group draws at its corner meetings; a rule with outputs that declares `draw: [n, d]` and `seed` draws once per meeting of its participants from the Node's ticket stream, the unsalted draw of `detector-mark-v1`, fires on 1 and yields to the next rule on 0, the ring surviving with the law (1 - n/d)^k over k meetings, the draws recorded and the tickets consumed equal to the meetings, a world without `draw` never calling the ticket rule (`decay-draw-v1`) |
 | `test_dense_field.py` | 4 | 1.0 | The dense mode for boards that a field fills (`dense-field-v1`, [performance](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17)): the pure-field Nodes cycled as one vectorized step, one split step equal to `spread_content` (the registers, the releases, the phases, the bit), the hand-over of rays between the region and the engine's Nodes both ways, the same `state.json` and ledger as the engine alone, the unsupported worlds rejected, pinned below |
+| `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
 | `test_detector_bit_property.py` | 13 | 0.44 | Issue #169 feature 2b: a marked Node reads the bit a ray carries and passes it without a draw unless the mark declares `draw`, the outputs of a meeting inherit the bit, a guard reads it (`detector-bit-property-v1`) |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
@@ -1124,6 +1125,109 @@ or `a_swap` alone. Pinned before the first run:
 
 Existing worlds keep their amounts, phases, totals, audits and charges: a
 world whose rules select one layer meets the same owners in the same order.
+## A click is an absorption
+
+`tests/test_detector_absorb.py` is the isolated test of `detector-absorb-v1`
+([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1),
+[the click absorbs](DETECTOR_SAMPLING.md#the-click-absorbs-detector-absorb-v1);
+Highlights 5.4, model owner, 2026-09-18; issue #169, feature 2c), pinned here
+on 2026-09-18 before its first run, as Highlights 5.5 requires. The board,
+under the shared Detector admission: periodic 15 x 15 x 15, `link_ticks` 1,
+`metric: "links"`, pace 1/1, the six unit-axial headings; a lamp at (5,7,7)
+holding 4 `quanta` (charge -2, rest rate 1 on an 8-step phase, 8 ray slots)
+emits them once along +X in the cycle of tick 0, funded, recoiling into
+`momentum`; `G` (rest rate 0, no charge, 16 slots) is the field of `quanta`
+with `release` [1, 4] and no `spread`; four marks with setting 1/1 and seed 0:
+A (6,8,7) with no coupling key, B (6,6,7) with `on_click: {"G": "pass"}`, C
+(9,7,7) with `on_click: {"quanta": "absorb"}` (or no key in the second test),
+E (6,7,6) with `on_click: "absorb"`; a `conservation` block reading energy as
+quanta + G on the right side and momentum from the `momentum` field. Six ticks
+through the Simulation API and through the runner. Written before the first
+run, all of it computed from the rules:
+
+- (a) the field: the quanta ray is at (6,7,7) after tick 1 and releases G
+  floor(4 / 4) = 1 on the five headings other than its own (+X) in the cycle
+  of tick 1, so G 1 arrives at (5,7,7), A, B, (6,7,8) and E at tick 2; the ray
+  releases again from (7,7,7) in the cycle of tick 2 and from (8,7,7) in the
+  cycle of tick 3, and at C, where it is absorbed at tick 4, it releases
+  nothing, so G sourced reads 0, 5, 10, 15, 15, 15 after ticks 1 to 6;
+- (b) the clicks of tick 2, in Node order: B draws 1 (seed 0 at 1/1) and passes
+  the G quantum with the bit 1 (a `detector_click` through Port 2, the +Y face,
+  family G, amount 1, bit 1, no `absorbed` entry; the ray at B after tick 2
+  with heading 3, amount 1, outbound, bit 2); E draws 1 and absorbs it (the
+  click through Port 4, the +Z face, with `absorbed` 1; E's counter (0, 1) by
+  spatial-field index, quanta then G, its momentum (0, 0, -1), its Node holding
+  no G ray); A draws 1 and absorbs it by the default of a field family (the
+  click through Port 3, the -Y face, `absorbed` 1; counter (0, 1), momentum
+  (0, 1, 0), no G ray at A, A's ticket 1 after the draw); the quantum at
+  (5,7,7) and at (6,7,8) walks on unmarked;
+- (c) the click of tick 4: C absorbs the matter ray under its declared
+  coupling (the click through Port 1, the -X face, family quanta, amount 4,
+  bit 1, `absorbed` 4; counter (4, 0), momentum (4, 0, 0)), and from tick 4 no
+  quanta ray exists in the world; B's counter stays empty; five Detector
+  events in all, no pass, no return, no inverse split;
+- (d) the world ledger at every tick, every line balanced: G initial 0,
+  sourced as in (a), current sourced minus 2 from tick 2, escaped, annulled
+  and absorbed 0, `absorbed_by_marks` 2 from tick 2; quanta initial 4, current
+  4 through tick 3 and 0 from tick 4, `absorbed_by_marks` 4 from tick 4;
+  momentum initial (0, 0, 0), sourced (0, 0, 0), current (0, 0, 0) through
+  tick 3 and (-4, 0, 0) from tick 4 (the lamp's recoil, its ray gone),
+  `absorbed_by_marks` (4, 0, 0) from tick 4; the charge line quanta initial -8,
+  current -8 then 0, `absorbed_by_marks` -8 from tick 4; the marks' lines:
+  count 4, momentum (0, 1, -1) from tick 2 and (4, 1, -1) from tick 4, the
+  counter per field equal to the `absorbed_by_marks` line; `detector_mark_totals`
+  and `detector_mark_momentum` the same; the spatial accounting's
+  `absorbed_by_marks` G 2 and quanta 4; `detector_marks` after the run: A
+  momentum [0, 1, 0] counter {G: 1}, B [0, 0, 0] {}, C [4, 0, 0] {quanta: 4},
+  E [0, 0, -1] {G: 1};
+- (e) the local audit passes at every tick and reports `absorbed_by_marks`
+  energy 6 (4 quanta and 2 G through the declared expression), momentum
+  (4, 1, -1), charge -8, with initial + sourced = current + escaped + annulled
+  + absorbed_by_marks for energy and charge;
+- (f) the runner: `detector_absorb: "detector-absorb-v1"`, `detector_marks`
+  as in (d), `detector_mark_totals` {quanta: [4], G: [2], momentum:
+  [4, 0, 0]}, `detector_mark_momentum` [4, 1, -1],
+  `conserved_at_every_completed_tick` and
+  `accounting_balanced_at_every_completed_tick` true, the local audit passed
+  with its line, `final_totals` quanta 0, G 13, momentum (-4, 0, 0); the
+  `spatial_received` records of A and E at tick 2 and of C at tick 4 carry
+  `absorbed_by_mark` (per family the amount and its momentum: G 1 with
+  (0, 1, 0) at A, G 1 with (0, 0, -1) at E, quanta 4 with (4, 0, 0) at C) and
+  no other reception record carries the key; the Detector events of
+  `events.jsonl` are those of (b) and (c); a second run replays byte for byte;
+- (g) with C on the defaults (no `on_click`), the matter ray passes C at tick
+  4 with the bit 1 and the click without `absorbed`, C's counter empty and its
+  momentum zero after tick 4, the one quanta ray in the world realized
+  (amount 4, bit 2, outbound), the momentum line's current (0, 0, 0) and the
+  marks' momentum (0, 1, -1); the reading stops at tick 4, since the field
+  the ray releases beyond C reaches C at tick 6 and is absorbed there;
+- (h) a world whose three marks A, B and E all declare `on_click: "pass"`, run
+  through the runner: three clicks, none carrying `absorbed`, no reception
+  record carrying `absorbed_by_mark`, `detector_mark_totals` zero,
+  `detector_mark_momentum` (0, 0, 0), every counter empty, the G line's
+  `absorbed_by_marks` 0 at every tick, the ledger's identity and the local
+  audit exact;
+- (i) rejected before a world exists, and by the configuration preflight:
+  `on_click` "maybe" or 5 (must be absorb, pass or a mapping), {"G": "draw"}
+  (on_click.G must be absorb or pass), {"photon": "absorb"} and {"momentum":
+  "absorb"} (an unknown ray family); `DetectorMark` with an `on_click` entry
+  outside pass, absorb and default, or a negative counter; `DetectorMark(A, 1,
+  1, 0)` equals the record with every field at its default; `click_coupling`
+  reads pass for quanta and absorb for G on a plain mark (`field_family` false
+  and true) and the declared value on a declared one; `detector_absorb` sizes
+  the counter on the first take (one entry per spatial field) and adds amount
+  x heading, or the register where a push set one, exactly: rays of 3 on +Y
+  and of 1 with the register (1, -1, 0) give counter (0, 4) and momentum
+  (1, 2, 0), then quanta 4 on +X gives (4, 4) and (5, 2, 0), the mark's
+  position, seed and `on_click` untouched.
+
+The first run of the test on 2026-09-18 agreed with every integer above; the
+board first held a fifth mark D (6,7,8) with setting 0/1 to show the return
+untouched, removed before the first passing run because a returned field
+quantum in a world without `spread` reaches the inverse split of feature 4
+with no event (the return of a field quantum is the spreading test's case
+`returned`); the return of a matter ray is the return test's.
+
 ## Ray viewer extraction
 
 `test_ray_viewer.py` builds its board inline under the shared Detector
@@ -1523,6 +1627,33 @@ and `rejected`. Pinned before the first run:
 
 A world that declares no `field_of` runs byte-identically: the suite is the
 regression, and its run record carries `released_fields: []`.
+
+Re-pinned on 2026-09-18 under `detector-absorb-v1` (Highlights 5.4, "A click
+is an absorption": a click on a ray of a field family absorbs it into the
+mark's counter, a click on matter passes it as before), computed from the pins
+above before the run: `G` is the field of `quanta`, so the three G clicks at
+(4,1,1) (ticks 3, 4 and 6, G 1 each) absorb their quantum and the quanta click
+of tick 4 passes. The click markers of G read "Detector PASS, absorbed" with
+`absorbed` 1 in their detail, the quanta click "Detector PASS" without it; each
+absorbed G ray ends at (4,1,1) in the tick of its click with `end.kind`
+`absorbed` and the click as its event, and its transit into (4,1,1) keeps the
+amount the receiver's reading leaves out. The absorbed quanta no longer escape:
+the +X axial G of the tick-1 release (absorbed at tick 3) is not among the
+tick-4 escapes and the +X G riding with the quanta ray (absorbed at tick 4) not
+among the tick-5 escapes, so the field escapes are 4, 5, 9, 8 carrying G 8, 9,
+9, 8 (were 4, 6, 10, 8 and 8, 10, 10, 8), `escaped_totals` G 34 (was 36),
+`final_totals` G 3 (was 4: the +X G released at (1,1,1) at tick 3 is absorbed
+at tick 6 instead of resting at (4,1,1)), `source_totals` G 40 unchanged, and
+the extracted `conservation` carries `detector_mark_totals` G 3 and
+`external_body_totals` zero; `in_world` G, now initial plus the sources
+through the previous tick minus the escapes and minus what the sinks took, is
+0, 0, 10, 11, 11, 12, 3 (was 0, 0, 10, 12, 12, 12, 4), the rows' `absorbed` G
+0, 0, 0, 1, 2, 2, 3; the captions of ticks 3, 4 and 6 name the absorbed G
+click with "absorbed 1" and the field escapes of ticks 4 and 5 read G 9; the
+eye view lists the four clicks with `absorbed` 1, 0, 1, 1, `hits` four at
+"4,1,1" and `counts` {"4,1,1": 3}; 36 rays, no pass, everything else as
+pinned. The record read at the first run on the new engine agreed line for
+line.
 
 ## External body
 
@@ -2912,6 +3043,30 @@ tick 24: 920, 784, 136); 2759 `field_spread` records; the group read from
 tick 1 to tick 31 over 248 electron rays, `ray_layer_families`
 `[["electron"], ["light"]]`.
 
+Re-pinned on 2026-09-18 under `detector-absorb-v1` (Highlights 5.4, "A click
+is an absorption"), written before the run on the new engine: `light` is
+declared `field_of` `electron`, so every click absorbs its quantum into the
+mark's counter, the click carrying `absorbed` 1, and nothing of it spreads on
+from the mark; the seven clicks stay at ticks 11, 15, 18, 22, 27, 27 and 31 at
+the on-axis mark (the mark's spread of the clicked content reached nothing
+that arrives back at the mark within 32 ticks: its backward register held 7 of
+11 and its forward departures' backward shares at (8, 5, 5) 3 of 11), and no
+`detector_pass` exists, since no ray carries a bit; the light line gains
+`absorbed_by_marks`, the clicks through the tick, 7 after tick 31, with
+current + escaped + absorbed_by_marks = sourced, the marks' lines count 7,
+momentum (the clicks, 0, 0) (every click through the -X face, heading +X) and
+counters equal to the line; `detector_marks` in `run.json` lists the seven
+marks with the on-axis one's counter light 7 and momentum (7, 0, 0); no
+`field_spread` record at a mark; the electron and momentum lines and the group
+reading unchanged; the eye view's clicks carry `absorbed` 1 and `counts`
+{"7,5,5": 7}. Read from the first run on the new engine (2026-09-18, 2.5 s)
+and pinned then: the light line after tick 32 sourced 1240, current 1009
+(was 1016: the seven absorbed quanta and the registers they no longer fill),
+escaped 224 (unchanged within 32 ticks), absorbed by marks 7 (on the way,
+tick 16: 600, 528, 70, 2; tick 24: 920, 780, 136, 4); 2749 `field_spread`
+records (were 2759: the seven spreads of the clicked quanta at the mark and
+three fewer downstream).
+
 ## The ring meets its own field
 
 `tests/test_ring_self_field.py` is the isolated test of the run E10
@@ -3469,3 +3624,13 @@ on and without the local audit, which the mode rejects. Four cases:
   participants are the spreading family are rejected at initialization with
   the named reason; `node_workers` 2 is rejected at the simulation; a world
   without the key runs the engine alone (`dense_field` false, no region).
+
+The `identity` case gained `counter` on 2026-09-18 (`detector-absorb-v1`, the
+click as an absorption), written before its first run: the `source` board
+with the mark at (8,7,7) set to 1/1, so the quanta the region hands it click
+and are absorbed into its counter at the engine's Node under both modes; the
+engine alone and the dense mode give the same `state.json`, the same ledger
+(its light line's `absorbed_by_marks` equal to `detector_mark_totals`), the
+same `final_totals`, the same `detector_marks` (the one mark's counter light
+equal to the totals, positive) and `detector_mark_totals`; the first run
+agreed.
