@@ -2681,7 +2681,7 @@ and `e11_law.html` the page for the model owner.
 
 ```bash
 PYTHONPATH=src python examples/nature/e11_law/make_worlds.py
-PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/e11_law examples/nature/e11_law/pulse.json examples/nature/e11_law/standing.json examples/nature/e11_law/probe_axis_r*.json examples/nature/e11_law/probe_110_m?.json examples/nature/e11_law/probe_111_m?.json
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/e11_law examples/nature/e11_law/pulse.json examples/nature/e11_law/standing.json examples/nature/e11_law/probe_axis_r*.json examples/nature/e11_law/probe_110_m?.json examples/nature/e11_law/probe_111_m?.json   # the open control, recorded on the earlier engine; the (111) probes were not run (only closed worlds are run since the owner's decision during the series)
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/e11_law_closed examples/nature/e11_law/standing_closed.json examples/nature/e11_law/probe_*_closed.json
 PYTHONPATH=src python examples/nature/e11_law/analyze.py artifacts/e11_law artifacts/e11_law_closed --replay-jobs 4 --record examples/nature/e11_law/record.json --tables examples/nature/e11_law/tables.md
 python tools/ray_viewer/extract.py artifacts/e11_law_closed/probe_axis_r8_closed/run --label "E11 under the law, closed board: the probe at (8, 0, 0)" --out artifacts/e11_law_closed/probe_axis_r8_closed/runs.json
@@ -2706,9 +2706,12 @@ written by `make_worlds.py` on the law: `pp_d{4,6,8,12}.json` (two bodies of
 (8, 8, 0) and (8, 8, 8) from A) and `pq_d8.json`, `qq_d8.json` (the product
 law: 2^28 with 2^27, and 2^27 with 2^27), and the same eight worlds again on
 the closed board the model owner decided the confrontation runs are made on
-(`*_closed.json`: `boundary` periodic, 120 ticks, `standing_field` on), the
-open-board worlds being the control. `analyze.py` reads the runner's records
-(and replays one world per board in-process for the momentum in flight);
+(`*_closed.json`: `boundary` periodic, 120 ticks, `standing_field` on). The
+open-board worlds are written and not run: the model owner's decision of
+2026-09-18, during these runs, that only closed worlds are run (the open
+board of E11 repeated, recorded before it, is that entry's control).
+`analyze.py` reads the runner's records (and replays one world in-process
+for the momentum in flight);
 `record.json` holds every number, `tables.md` the tables of the register's
 entry, `records/` the `run.json` of every recorded world and `a5s_law.html`
 the page for the model owner.
@@ -2730,9 +2733,8 @@ the page for the model owner.
 
 ```bash
 PYTHONPATH=src python examples/nature/a5s_law/make_worlds.py
-PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/a5s_law examples/nature/a5s_law/pp_d4.json examples/nature/a5s_law/pp_d6.json examples/nature/a5s_law/pp_d8.json examples/nature/a5s_law/pp_d12.json examples/nature/a5s_law/pp_d8_110.json examples/nature/a5s_law/pp_d8_111.json examples/nature/a5s_law/pq_d8.json examples/nature/a5s_law/qq_d8.json
 PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/a5s_law_closed examples/nature/a5s_law/*_closed.json
-PYTHONPATH=src python examples/nature/a5s_law/analyze.py artifacts/a5s_law --closed artifacts/a5s_law_closed --replay pq_d8 --replay pq_d8_closed --record examples/nature/a5s_law/record.json --tables examples/nature/a5s_law/tables.md
+PYTHONPATH=src python examples/nature/a5s_law/analyze.py artifacts/a5s_law --closed artifacts/a5s_law_closed --replay pq_d8_closed --record examples/nature/a5s_law/record.json --tables examples/nature/a5s_law/tables.md
 python tools/ray_viewer/extract.py artifacts/a5s_law_closed/pq_d8_closed/run --label "A5s under the law, closed board: 2^28 and 2^27 at d = 8" --out artifacts/a5s_law_closed/pq_d8_closed/runs.json
 python tools/ray_viewer/render_gif.py artifacts/a5s_law_closed/pq_d8_closed/runs.json --output artifacts/a5s_law_closed/pq_d8_closed/a5s_law.gif
 python examples/nature/e11_law/build_page.py --title "A5s repeated under the law of the bit" --tables examples/nature/a5s_law/tables.md --notes NOTES.md --gif artifacts/a5s_law_closed/pq_d8_closed/a5s_law.gif --out examples/nature/a5s_law/a5s_law.html
