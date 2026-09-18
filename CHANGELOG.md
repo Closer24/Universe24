@@ -3,6 +3,49 @@
 All notable changes to Universe24, the reference implementation of Reality
 Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
+## Unreleased
+
+### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
+
+- A new engine mode beside the old one, `event_universe/shadow/`, selected by
+  a world's `"law": "shadow"` key ([the law of the shadow](docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)):
+  only shadows and events. Matter is content held at Nodes; every ray is a
+  shadow, a whole quantum in flight that moves one Link per interval and
+  spreads by the Node's mixing, the dense layer's kernels by import; an event
+  is a whole quantum at a Node with content, absorbed, held or released again
+  by the holder's table (the free families read at a holder and passed on,
+  the push by the holder's content and charge; light kept, the click, or
+  re-released; the own number sunk for its amount and pushing nothing); a
+  held content releases its field at the world's rate, a lamp spends its
+  light; the wait reads the size; the step is the accumulator's, at most
+  once in two intervals (round 8's Node rule, DERIVATIONS.md sections 51 to
+  56); the books per family close at every tick. The old engine, its worlds and its
+  tests are untouched ([migration](docs/MIGRATION.md#the-law-of-the-shadow-a-new-engine-mode-on-2026-09-18-field-only-v1)).
+- The worlds `examples/shadow/` (one content, two contents, two slits and
+  the one-slit control) and the isolated test `tests/test_field_only.py`
+  ([expectations](docs/TEST_EXPECTATIONS.md#the-law-of-the-shadow)), the
+  numbers from DERIVATIONS.md round 7.
+
+### Charge per thing (`charge-per-thing-v1`, feature 16g, 2026-09-18)
+
+- The charge of a thing is one declared number of its family, whatever its
+  content (the model owner, Highlights 5.4 point 16 as amended): a family's
+  `charge` and a body's are the charge of one thing, whole, never a charge
+  per quantum. The electricity reading multiplies the shadow's message (its
+  owner's charge over its content, unchanged) by the whole charge of what is
+  pushed; the worked example of point 16 holds exactly, a body of 1000 quanta
+  with charge 1 is pushed by nine units and not nine thousand, and the
+  catalog's electron of 20 does not turn at its first push.
+- The charge readout, the ledger's charge line and the local audit count the
+  whole charge of things: a merged ray of k things carries k times the
+  family's charge (the identities a merge keeps), a record's stock the things
+  it has not yet emitted, a shadow none; every table conserves it (the
+  appended invariant sums the things' charges; a join keeps every identity).
+- `run.json` records `charge_per_thing`; the refusal of a pushed body whose
+  charge was not a multiple of its amount is gone. No example world's
+  declaration changes; the tests whose bodies declared `-amount` to mean -1
+  per quantum re-declare it ([migration](docs/MIGRATION.md#charge-per-thing-on-2026-09-18-charge-per-thing-v1)).
+
 ## 0.3.1 - 2026-09-15
 
 Concept DOI 10.5281/zenodo.22738746 (the version DOI is listed on the Zenodo

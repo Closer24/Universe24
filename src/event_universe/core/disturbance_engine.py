@@ -36,7 +36,7 @@ from .spatial_engine import (
     SpatialPlanner,
 )
 from .spatial_node import SpatialNode
-from .spatial_state import BIT_SHADOW, BIT_THING, SpatialPlan
+from .spatial_state import BIT_SHADOW, BIT_THING, SpatialPlan, record_things
 from .topology import neighbor_address
 
 EventSink = Callable[[dict[str, object]], None]
@@ -112,6 +112,10 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
+        # The charge of the records carried out through an open boundary, per
+        # field (charge-per-thing-v1): a record holding stock of a charged family
+        # is one thing not yet emitted, the family's charge once.
+        self._escaped_record_charge = [0] * len(initial.fields)
         # Absorption runs inside the spatial plan; only response rules need the coupler.
         response_rules = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
         self._coupled_types = selected_type_set(response_rules, initial.spatial_interactions)
@@ -405,6 +409,19 @@ class DisturbanceEngine:
         for index, payload in enumerate(packet.record.values):
             for component, value in enumerate(unpack(payload)):
                 self._escaped_totals[index][component] += value
+        for index, definition in enumerate(self.initial.spatial_fields):
+            if definition.rays and definition.charge:
+                things = record_things(
+                    self.initial,
+                    packet.record.type_index,
+                    index,
+                    unpack(packet.record.values[definition.field])[0],
+                )
+                if things:
+                    self._escaped_record_charge[definition.field] = checked_work(
+                        self._escaped_record_charge[definition.field]
+                        + checked_work(things * definition.charge)
+                    )
         links = list(self._links[origin])
         links[slot] = None
         self._links[origin] = tuple(links)
@@ -672,8 +689,8 @@ class DisturbanceEngine:
         }
 
     def _shadow_lines(self, name: str) -> dict[str, tuple[int, ...]]:
-        """The shadows' share of a line (bit-law-v1): their re-releases on the source
-        line, their escapes on the escaped line."""
+        """The shadows' share of a line (bit-law-v1): their escapes on the escaped
+        line, what the marks absorbed at home on theirs."""
         return {
             field.name: (
                 (0,) * field.components
@@ -737,37 +754,40 @@ class DisturbanceEngine:
         return {} if self._spatial is None else self._spatial.accounting()
 
     def charge_totals(self) -> dict[str, int]:
-        """The charge readout per ray field, charge x amount over the owners totals()
-        reads: the rays resident at active Nodes and in flight on Links
-        (wave-ray-family-v1) and, since ray-event-audit-v1, the stock of the
-        family a record holds, resident or in transit; read-only, like the other
-        totals."""
+        """The charge readout per ray field, the charge of the things over the owners
+        totals() reads (charge-per-thing-v1): the whole charge of every thing
+        resident at active Nodes and in flight on Links (wave-ray-family-v1) and,
+        since ray-event-audit-v1, the stock of the family a record holds, resident
+        or in transit, the things it is at the record's emission amount
+        (`record_things`), each with the family's charge; read-only, like the
+        other totals."""
         if self._spatial is None:
             return {}
         result = self._spatial.charge_totals()
         records = [r for node in self._nodes.values() for r in node.records if r is not None]
         records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
-        for definition in self.initial.spatial_fields:
+        for index, definition in enumerate(self.initial.spatial_fields):
             if not definition.rays or definition.charge == 0:
                 continue
             name = self.initial.fields[definition.field].name
             for record in records:
                 stock = decode(record.values[definition.field][0])
-                result[name] = checked_work(result[name] + checked_work(stock * definition.charge))
+                things = record_things(self.initial, record.type_index, index, stock)
+                if things:
+                    result[name] = checked_work(result[name] + checked_work(things * definition.charge))
         return result
 
     def escaped_charge_totals(self) -> dict[str, int]:
         """The charge that left the world through an open boundary, per ray field:
-        charge x amount of every escaped ray, and of the stock of the family a
-        record carried out (ray-event-audit-v1)."""
+        the charge of every escaped thing, and of every record that carried stock
+        of the family out, one thing each (ray-event-audit-v1, charge-per-thing-v1)."""
         if self._spatial is None:
             return {}
         result = self._spatial.escaped_charge_totals()
         for definition in self.initial.spatial_fields:
             if definition.rays and definition.charge:
                 name = self.initial.fields[definition.field].name
-                stock = self._escaped_totals[definition.field][0]
-                result[name] = checked_work(result[name] + checked_work(stock * definition.charge))
+                result[name] = checked_work(result[name] + self._escaped_record_charge[definition.field])
         return result
 
     def audit(self) -> dict[str, object]:
@@ -807,11 +827,10 @@ class DisturbanceEngine:
         }
         # The things' and the shadows' own lines per ray family (bit-law-v1, point
         # 7): the things conserve exactly with no source line but their own
-        # emissions and conversions; what the shadows re-released or lost is
-        # read off the sourced and the escaped lines.
+        # emissions and conversions; a shadow is never sourced (node-is-ports-v1),
+        # and what the shadows lost is read off the escaped line.
         current_things, current_shadows = self.totals(BIT_THING), self.totals(BIT_SHADOW)
-        shadow_sources, shadow_escaped, shadow_taken = (
-            self._shadow_lines("shadow_sources"),
+        shadow_escaped, shadow_taken = (
             self._shadow_lines("shadow_escaped"),
             self._shadow_lines("shadow_absorbed_by_marks"),
         )
@@ -829,7 +848,7 @@ class DisturbanceEngine:
             # initial = current + escaped + absorbed_at_home.
             things[name] = thing_line(
                 initial_things[name],
-                tuple(a - b for a, b in zip(sources[name], shadow_sources[name], strict=True)),
+                sources[name],
                 current_things[name],
                 tuple(a - b for a, b in zip(escaped[name], shadow_escaped[name], strict=True)),
                 tuple(
@@ -844,25 +863,34 @@ class DisturbanceEngine:
                 tuple(a + b for a, b in zip(shadow_taken[name], returned[name], strict=True)),
             )
         current_charge, escaped_charge = self.charge_totals(), self.escaped_charge_totals()
+        # Charge is per thing (charge-per-thing-v1): every line of the charge
+        # ledger counts the whole charge of the things it holds, where the amount
+        # lines count amounts. A record's stock is one thing not yet emitted, so
+        # an emission sources no charge; what the meetings sourced is a thing a
+        # decay moved between families; the sinks and the marks count the things
+        # they took. A shadow carries no charge (bit-law-v1), so the re-releases
+        # on the source line and the shadows home at a mark are no charge.
+        sourced_charge, absorbed_charge, marks_charge = (
+            ({}, {}, {})
+            if self._spatial is None
+            else (
+                self._spatial.sourced_charge_totals(),
+                self._spatial.absorbed_charge_totals(),
+                self._spatial.marks_charge_totals(),
+            )
+        )
         charge = {}
         for definition in self.initial.spatial_fields:
             if not definition.rays:
                 continue
             name = self.initial.fields[definition.field].name
-            # Charge is per quantum, so what a family sourced or absorbed reads as
-            # charge x that amount; the world's and the escaped charge are
-            # read over their owners. A shadow carries no charge (bit-law-v1), so
-            # the re-releases on the source line are not charge sourced.
-            per_quantum = definition.charge
             charge[name] = ledger_line(
                 initial_charge[name],
-                checked_work(
-                    (sources.get(name, (0,))[0] - shadow_sources.get(name, (0,))[0]) * per_quantum
-                ),
+                sourced_charge[name],
                 current_charge[name],
                 escaped_charge[name],
-                checked_work(absorbed.get(name, (0,))[0] * per_quantum),
-                checked_work((taken.get(name, (0,))[0] - shadow_taken.get(name, (0,))[0]) * per_quantum),
+                absorbed_charge[name],
+                marks_charge[name],
             )
         body_charge = 0
         for body in self.initial.external_bodies:

@@ -96,7 +96,6 @@ def document(shape, families, lamps, ticks, ray_interactions=None, n=8):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 6,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 **extra,
@@ -235,7 +234,11 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         ({"kerengonen": {"phase_steps": 16}}, {}, "must equal N"),
         ({"kerengonen": {"phase_steps": 12}}, {}, "power of two"),
         ({"kerengonen": {"phase_advance": 8}}, {}, "clock-readings-v1"),
-        ({"kerengonen": {"capture": "threshold"}}, {}, "capture requires"),
+        # The record-as-owner field program is retired (the settled rule (v), the
+        # cleanup of 2026-09-18): its keys are refused naming the rule.
+        ({"kerengonen": {"capture": "threshold"}}, {}, "settled rule"),
+        ({"self_exclusion": True}, {}, "settled rule"),
+        ({}, {"kerengonen_mirror": "x"}, "settled rule"),
         ({"clock": True}, {"kerengonen_phase": "carried"}, "coherence table"),
         # One N for the world (the cleanup of 2026-09-18): a width on a family is
         # refused naming the definitions of the law.
@@ -299,10 +302,13 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         assert MATTER_PHASES[tick - 1] == (77 + 4 * tick) % 256
         assert world.totals() == {"light": (4,), "matter": (4,)}
 
-    # (c) Charge: rays of charge +1 and -1 with amounts 3 and 5 read -2 at every
-    # tick, through a meeting that reverses both headings; charge x amount is an
-    # invariant of the declared interaction, and an interaction that would change
-    # the total charge is rejected at validation.
+    # (c) Charge: two things, of charge +1 and -1 and contents 3 and 5, read 0 at
+    # every tick, through a meeting that reverses both headings; the charge of
+    # the things is an invariant of the declared interaction, and an interaction
+    # that would change the total charge is rejected at validation. Re-pinned
+    # 2026-09-18 (charge-per-thing-v1, Highlights 5.4 point 16 as amended): a
+    # family's charge is the charge of one of its things, whole, whatever its
+    # content, and the readouts count things, not quanta (3 - 5 = -2 before).
     # `detector` joined the view on 2026-09-17 (detector-bit-property-v1, feature
     # 2b): the Detector bit a ray carries, read-only like family and charge; and
     # `polarization` on 2026-09-17 (ray-polarization-v1, feature 11), read-only in
@@ -343,17 +349,19 @@ def test_every_ray_is_a_wave_ray(tmp_path):
     charge = next(invariant for invariant in rule.invariants if invariant.name == CHARGE_INVARIANT)
     assert evaluate(
         charge.expression, (), (), CostMeter(initial.operation_costs), participants=views
-    ) == (-2,)
-    assert ray_charge((Ray(0, (0, 0, 0), 3), Ray(1, (0, 0, 0), 4)), initial.spatial_fields[1]) == -7
+    ) == (0,)
+    # Two things of the minus family read two charges, whatever their contents.
+    assert ray_charge((Ray(0, (0, 0, 0), 3), Ray(1, (0, 0, 0), 4)), initial.spatial_fields[1]) == -2
     world = Simulation(initial)
     # Since ray-event-audit-v1 (2026-09-17) the readout counts the stock a record
-    # holds of a charged family, the owners totals() reads; it read 0 and 0 before
-    # the first tick before feature 10, over rays alone.
-    assert world.charge_totals() == {"plus": 3, "minus": -5}
+    # holds of a charged family, the owners totals() reads (one thing not yet
+    # emitted since charge-per-thing-v1); it read 0 and 0 before the first tick
+    # before feature 10, over rays alone.
+    assert world.charge_totals() == {"plus": 1, "minus": -1}
     for _tick in range(1, 7):
         world.step()
-        assert world.charge_totals() == {"plus": 3, "minus": -5}
-        assert sum(world.charge_totals().values()) == -2
+        assert world.charge_totals() == {"plus": 1, "minus": -1}
+        assert sum(world.charge_totals().values()) == 0
         assert world.totals() == {"plus": (3,), "minus": (5,)}
     # After the meeting at (4, 2, 2) in tick 3 both rays are events of that one
     # interaction (Ports +X and -X, shares 5 and 3) walking apart, four Links on.

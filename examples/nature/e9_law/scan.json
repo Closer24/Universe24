@@ -1,0 +1,78 @@
+{
+ "source_sha256": "67808df765d4bdfce1103fef3152d82149bc013070534a8459acc3ffaca5a828",
+ "ticks": 40,
+ "rows": [
+  {
+   "fill": 1,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 1835008,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 2,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 3407872,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 3,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 4980736,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 4,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 6553600,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 5,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 8126464,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 6,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 9699328,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 7,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 11272192,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 8,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 12845056,
+   "completed_ticks": 40
+  },
+  {
+   "fill": 16,
+   "admitted": true,
+   "failed_tick": null,
+   "error": null,
+   "initial_shadows": 25427968,
+   "completed_ticks": 40
+  }
+ ]
+}

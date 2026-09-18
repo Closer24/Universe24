@@ -144,7 +144,7 @@ recording (21 x 11 x 7, open boundary, two `hold` lamps emitting electron 8
 toward each other on parallel lines, G released `[1, 4]`, `phase_steps` 8,
 the `turn` interaction) for 24 and for 96 ticks, and the pair-lamp Detector
 world of `tests/test_inverse_split.py` (15 x 15 x 15 periodic, arm A returned
-at the mark three Links out, `return_mode` `siblings`) for 48 ticks. The
+at the mark three Links out, the sibling transmission, then `return_mode` `siblings`) for 48 ticks. The
 earlier measurement of the pre-prune engine is [PR #134](https://github.com/Closer24/Universe24/pull/134)
 (2026-09-15, sparse carrier 57.95% shorter, straight-ray field 20.74%); it is
 prior art for the method, not reused here.
@@ -163,7 +163,7 @@ fall in ticks 3 to 24, where the two mirror-image electrons and their parallel
 G columns present equal planning inputs in the same tick; ticks 25 to 96 add
 148 requests and no hit. The Detector world has one lamp and no symmetric
 Node, so no spatial plan repeats; its 33 carrier hits are the lamp's unchanged
-`hold` record, and `return_mode` `straight` and `annul` behave the same (no
+`hold` record, and the `straight` and `annul` return modes of that day (deleted on 2026-09-18) behaved the same (no
 spatial hit, identical records). Carrier phase visits are equal with and
 without Focus (144, 576 and 144) because the only carrier Nodes in these
 worlds are the lamps; ray Nodes belong to the spatial engine, whose active
@@ -249,7 +249,7 @@ and Detector bit:
   bit, about 4.7 x 10^7 per ray, so 147,456 x (4.7 x 10^7)^2, about 3 x 10^20
   entries, plus the unbounded tick and the records of lamp Nodes.
 - Growth. With one phase per ray the count is 384^N in the ray count N, and
-  6,144^N at 128 phase values (`phase_bits` 7; 6 x 8 x 128 per ray): two rays
+  6,144^N at 128 phase values (N 128, then `phase_bits` 7; 6 x 8 x 128 per ray): two rays
   3.8 x 10^7 entries (2.4 GB packed), three rays at eight steps 5.7 x 10^7
   (3.6 GB packed), three rays at 128 values 2.3 x 10^11 (15 TB packed). On
   the difference key N rays carry N - 1 differences, 48^N x P^(N-1) rows for
@@ -528,8 +528,9 @@ second arrival while a lamp whose stock counts down never hits.
 
 Reproduction, without a committed script: write the five inputs (the two
 electron worlds from the builder of `tests/test_released_field.py` with
-`shape` `[21, 11, 7]`, `boundary` `open` and, for the one-lamp world, `G`'s
-`ray_slots` 4096); in one process per source call
+`shape` `[21, 11, 7]` and `boundary` `open`; the one-lamp world declared `G`'s
+`ray_slots` 4096 until the key was retired with the lanes on 2026-09-18); in
+one process per source call
 `run_initialization(path, output, ticks=N)` once per world and hash the three
 records as described, reading the counters from `run.json`; then build
 `prepare_initialization(document).initial` and time

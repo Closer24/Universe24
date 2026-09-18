@@ -40,6 +40,7 @@ class Simulation(DisturbanceEngine):
             # bit-law-v1: the identity of the things of each type, stamped on
             # what a record emits and read by the shadows that come home.
             things=tuple(kind.thing for kind in initial.disturbances),
+            body_things=tuple(body.thing for body in initial.external_bodies),
         )
         super().__init__(
             initial,

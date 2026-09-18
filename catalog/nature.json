@@ -19,7 +19,7 @@
     "charge": {
       "unit": "e/3",
       "per_e": 3,
-      "note": "Every charge is an integer number of thirds of the elementary charge e, so that quarks are integers (up +2, down -1) and the electron is -3; charge x amount summed over the rays of a meeting is an invariant the engine appends to every coupling (wave-ray-family-v1). The world key is charge, per quantum."
+      "note": "Every charge is an integer number of thirds of the elementary charge e, so that quarks are integers (up +2, down -1) and the electron is -3; the charge of the things summed over the rays of a meeting is an invariant the engine appends to every coupling (wave-ray-family-v1). The world key is charge, the charge of one thing of the family, whole, whatever its content (Highlights 5.4 point 16 as amended, the model owner, 2026-09-18; charge-per-thing-v1): an electron of 64 quanta is -3 as the electron of 1 is, never a charge per quantum; a thing multiplies an electric message by it whole, and its shadows carry its charge over its content as their message."
     },
     "phase": {
       "unit": "step",
@@ -947,7 +947,7 @@
         "position": "the Node that holds all of it; one body per Node, never on a Detector",
         "family": "a ray id of this catalog, or the apparatus family below",
         "amount": "a positive integer of any width: the body's content, entering no sum (it releases nothing: its shadows are given with the board, bit-law-v1)",
-        "charge": "optional, in thirds of e, read by couplings as the family's charge is",
+        "charge": "optional, in thirds of e, the body's whole charge, what it multiplies an electric message by (charge-per-thing-v1) and, over its amount, the message its shadows carry",
         "phase": "optional, the phase its shadows carry, below the world's N; 0 by default",
         "initial_momentum": "optional, a unit-axial heading and a pace [n, d] of Links per interval, n at most d; the momentum is the whole quanta of amount x n / d on that axis; absent for a body at rest",
         "coupling": "optional, \"sink\" (the default, the absorber below), \"polarizer\" (with the polarizer declaration below) or the name of a declared coupling below",

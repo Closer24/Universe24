@@ -211,10 +211,12 @@ clicks took, and its momentum is that content's, amount x heading, so the
 momentum stays exact whether or not the family binds a momentum field. A
 returning ray reads its momentum as its share on
 the event's heading, its own heading negated (`detector-return-v1`), and its
-charge as charge x amount like any ray; charge is per quantum, so the charge
-a family sourced, annulled or absorbed is its charge times that amount, and
-the world's and the escaped charge are read over their owners, the stock a
-record holds of a charged family included. Dissipation (schema 2) is a loss
+charge as the whole charge of the thing it is like any ray; charge is per
+thing (`charge-per-thing-v1`, 2026-09-18; per quantum before), so every line
+counts the charge of things: what a decay moved between families is sourced,
+what the sinks and the marks took is absorbed, and the world's and the
+escaped charge are read over their owners, the things a record's stock has
+not yet emitted included. Dissipation (schema 2) is a loss
 and no line: a dissipative world does not balance this ledger, and the
 spatial accounting's `balanced` keeps reading it.
 

@@ -4,7 +4,8 @@
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("The law of the bit")
 before the first run. Every ray carries one bit, 1 a thing and 0 its shadow, a ray
 of the same family: a shadow pushes a thing it meets and walks home with -dp,
-home to a body (a) and to a thing ray (c); a thing's own shadow never pushes it;
+home to a body (a) and to a thing ray (c); a thing's own shadow pushes it and
+its return of zero steps undoes it in the same cycle, the two halves booked (c');
 two bodies push each other through their shadows and take the -dp back (b); a
 mark returns a shadow and counts nothing, and catches things by its counter
 table, no lottery (d); a shadow-only board makes no event and the dense layer
@@ -99,7 +100,6 @@ def family(spread=None, clock=False):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
         "charge": -1,
@@ -174,12 +174,21 @@ def shadow(position, heading, amount=1, owner=1, sign=-1, steps=None):
     return entry
 
 
-def body(position, thing=None, table=None, amount=100):
-    """A body of `amount` quanta of `m` with the whole charge -amount, the
-    family's -1 per quantum (clock-readings-v1: its shadows carry its whole
-    charge and its content, and the electricity reading divides the one by the
-    other)."""
-    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -amount}
+def body(position, thing=None, table=None, amount=100, charge=None):
+    """A body of `amount` quanta of `m` with the whole charge -amount by default,
+    so that its shadows' message, its charge over its content (clock-readings-v1,
+    point 18), is -1 per quantum of shadow, or the whole `charge` given. A body
+    declares its own charge, whole, and multiplies an electric message by it
+    (charge-per-thing-v1, 2026-09-18): a body a table pushes gives `charge`, the
+    worlds here -10 on 100 quanta, so that between two such bodies the message
+    (-1/10) times the charge (-10) is the one unit per quantum of shadow they
+    pinned under the per-quantum reading."""
+    entry = {
+        "position": list(position),
+        "family": "m",
+        "amount": amount,
+        "charge": -amount if charge is None else charge,
+    }
     if table is not None:
         entry["momentum_table"] = table
         entry["reads"] = "charge"
@@ -392,12 +401,14 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         "returned": (1, 0, 0),
         "spent": (0, 0, 0),
     }
+    # Re-pinned 2026-09-18 (charge-per-thing-v1): the thing of 2 is one thing of
+    # the family's charge -1, whole, held by its lamp and then sunk by the body.
     assert line(ledger, "charge", "m") == {
-        "initial": -2,
+        "initial": -1,
         "sourced": 0,
         "current": 0,
         "escaped": 0,
-        "absorbed": -2,
+        "absorbed": -1,
         "absorbed_by_marks": 0,
         "returned": 0,
     }
@@ -420,7 +431,10 @@ def test_two_bodies_push_each_other_and_take_back_the_recoil():
     grows by one every tick, the push and the receipt in turn."""
     doc = document(
         ticks=6,
-        bodies=[body((2, 2, 2), 3, table={"m": 1}), body((3, 2, 2), 4, table={"m": 1})],
+        bodies=[
+            body((2, 2, 2), 3, table={"m": 1}, charge=-10),
+            body((3, 2, 2), 4, table={"m": 1}, charge=-10),
+        ],
         shadows=[shadow((2, 2, 2), X, owner=3, steps=0), shadow((3, 2, 2), MINUS_X, owner=4, steps=0)],
     )
     result = run(doc, 6)
@@ -490,6 +504,59 @@ def test_a_thing_meets_its_own_shadow_without_a_push():
     looped = run(closed, 12)
     assert looped["contents"] == [2] * 12 and looped["shadows"] == [1] * 12
     assert all(entry["balanced"] and entry["real_conserved"] for entry in looped["ledgers"])
+
+
+def test_home_is_the_push_and_its_return_of_zero_steps_booked_and_cancelling():
+    """(c'): "home" is no rule of its own (the model owner, 2026-09-18, point 3 as
+    amended; the cleanup of that day): a thing meeting its own shadow takes the
+    generic push, and the return of zero steps, the same shadow with its sign
+    flipped at the same Node, hands -push back in the same cycle, before any step
+    decision; the two halves are booked on the cycle record (`home_pushes`) and
+    sum to zero, so the thing is what it was and the shadow is absorbed at home
+    as before. The world of (c): the push of the lamp's own shadow of 2 on -X,
+    read by charge (the owner's charge -1, whole, over its content 2, the
+    thing's charge -1, the table's sign 1; charge-per-thing-v1, 2026-09-18: a
+    shadow of 1 read half a quantum before, so the shadow is two quanta here),
+    is (-1, 0, 0); the return (1, 0, 0). The world of (b): each body's own
+    shadow, home at the even ticks, is pushed by the body's table and returned
+    in the same interval, (1,0,0) and (-1,0,0) at body 3, the opposite at body
+    4, on the reception record (`home_pushes`), and the bodies' momenta are
+    what (b) pins."""
+    kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
+    doc = document(
+        ticks=5,
+        types=[kind, RING],
+        emissions=[emission],
+        seeds=[seed],
+        shadows=[shadow((3, 2, 2), MINUS_X, amount=2, owner=1, steps=0)],
+    )
+    result = run(doc, 5)
+    cycles = [e for e in result["events"] if e["event"] == "spatial_cycle" and e.get("home_pushes")]
+    assert [(e["tick"], tuple(e["position"]), e["home_pushes"]) for e in cycles] == [
+        (1, (2, 2, 2), {"m": {"push": (-1, 0, 0), "return": (1, 0, 0)}})
+    ]
+    assert cycles[0]["returned"] == {"m": {"amount": 2, "momentum": (0, 0, 0)}}
+    assert all(r == {1: [2, 0, 0]} for r in result["momentum"])
+    assert not {"ray_push", "shadow_home"} & set(kinds(result["events"]))
+    assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
+    pair = document(
+        ticks=6,
+        bodies=[
+            body((2, 2, 2), 3, table={"m": 1}, charge=-10),
+            body((3, 2, 2), 4, table={"m": 1}, charge=-10),
+        ],
+        shadows=[shadow((2, 2, 2), X, owner=3, steps=0), shadow((3, 2, 2), MINUS_X, owner=4, steps=0)],
+    )
+    result = run(pair, 6)
+    received = [e for e in result["events"] if e["event"] == "spatial_received" and e.get("home_pushes")]
+    assert [(e["tick"], tuple(e["position"]), e["home_pushes"]) for e in received] == [
+        (tick, position, {"m": {"push": (sign, 0, 0), "return": (-sign, 0, 0)}})
+        for tick in (2, 4, 6)
+        for position, sign in (((2, 2, 2), 1), ((3, 2, 2), -1))
+    ]
+    for tick, (a, b) in enumerate(result["bodies_per_tick"], start=1):
+        assert (a, b) == ([-tick, 0, 0], [tick, 0, 0]), tick
+    assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
 
 
 def test_a_mark_returns_shadows_and_counts_things_by_its_table(tmp_path):
@@ -686,6 +753,45 @@ def test_the_fill_gives_the_board_the_bodys_shadows_exactly():
     assert amounts[(4, 2, 2)] == [4] * 6
     assert all(r.steps == 0 and r.outbound for r in held[(4, 2, 2)])
     assert sum(sum(a) for a in amounts.values()) == 120 and parked == 12 * 9
+
+
+def test_the_fill_merges_a_third_phase_on_one_lane_by_the_coherence_rule():
+    """(f'): a fill longer than about 30 intervals at N 64 laid a third phase on
+    one Port of the source and was refused (the A6 lane's finding, 2026-09-18);
+    under Highlights 5.4 points 24 and 25 the shares of one owner on one lane are
+    one coherent sum, so the fill merges them: the amount summed, the phase the
+    sum's. A fill of 200 intervals at N 64 from the body of 11 parses, the field
+    given with the board is exact (the initial line equals the shadow content,
+    the books open balanced) and the body's shell is the coherent sum: the six
+    fresh shares at (4,2,2) read from the run of 2026-09-18, on -X 1 at phase 0
+    beside 19 at the half turn (32), on -Y 6 and on -Z 5 at phase 0, on +Z and
+    on +X 20 at the half turn, nothing fresh on +Y; 3196 quanta on 202 Nodes
+    and 6003 ninths parked. A fill of 2 is what (f) pins."""
+    doc = document(ticks=1, bodies=[body((4, 2, 2), amount=11)], fill=200, dense=False, rules=())
+    doc["N"] = 64
+    initial = parse_initial_state(doc)
+    with Simulation(initial) as world:
+        ledger = world.audit()
+        assert ledger["balanced"] and ledger["fields"]["m"]["initial"] == (world.shadow_content(),)
+        assert world.shadow_content() == 3196 and world.real_content() == 0
+        held = {
+            node.position: [r for r in node.rays[0] if not r.parked]
+            for node in world.inventory_view().nodes
+            if any(node.rays)
+        }
+        parked = sum(entry["amount"] for entry in world.snapshot()["parked"])
+    assert sorted((HEADINGS[r.heading], r.amount, r.phase) for r in held[(4, 2, 2)]) == sorted(
+        [
+            (MINUS_X, 1, 0),
+            (MINUS_X, 19, 32),
+            ([0, -1, 0], 6, 0),
+            ([0, 0, -1], 5, 0),
+            ([0, 0, 1], 20, 32),
+            (X, 20, 32),
+        ]
+    )
+    assert all(r.steps == 0 and r.outbound for r in held[(4, 2, 2)])
+    assert len(held) == 202 and parked == 6003
 
 
 def test_a_mark_is_the_home_of_the_shadows_of_what_it_absorbed():

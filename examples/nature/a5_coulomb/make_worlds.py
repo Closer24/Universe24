@@ -49,14 +49,13 @@ TAIL = 8
 CHARGES = {"electron": -3, "positron": 3, "neutral": 0}
 
 
-def family(name, charge, advance, slots, **extra):
+def family(name, charge, advance, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": PHASE_BITS,
@@ -117,10 +116,10 @@ def _world(case, b, *, spread=True, shape=SHAPE, ticks=None):
     fields = ["light_a", "light_b"]
     spread_key = {"spread": SPREAD} if spread else {}
     spatial = [
-        family(matter[0], charge_a, 1, 2),
-        family(matter[1], charge_b, 1, 2),
-        family(fields[0], 0, 0, 30, field_of=matter[0], release=RELEASE, **spread_key),
-        family(fields[1], 0, 0, 30, field_of=matter[1], release=RELEASE, **spread_key),
+        family(matter[0], charge_a, 1),
+        family(matter[1], charge_b, 1),
+        family(fields[0], 0, 0, field_of=matter[0], release=RELEASE, **spread_key),
+        family(fields[1], 0, 0, field_of=matter[1], release=RELEASE, **spread_key),
     ]
     rules = []
     if case != "nn":

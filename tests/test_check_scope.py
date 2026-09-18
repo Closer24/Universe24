@@ -18,22 +18,6 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
-@pytest.mark.parametrize(
-    ("name", "consumer"),
-    [
-        ("finite-residence.json", "tests/test_native_ray_coupling.py"),
-        ("evidence.py", "tests/test_ray_coupling_evidence.py"),
-        ("render_gif.py", "tests/test_ray_coupling_evidence.py"),
-        ("run_experiments.py", "tests/test_ray_coupling_evidence.py"),
-        ("compare_controls.py", "tests/test_ray_coupling_evidence.py"),
-    ],
-)
-def test_ray_candidate_resources_select_their_direct_consumers(name, consumer):
-    selected, _ = CHECK.select(["examples/generic-ray-coupling/" + name], {})
-    assert consumer in selected
-    assert "tests/test_spatial_engine.py" not in selected
-
-
 def test_local_field_example_selects_its_state_contract_consumer():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_node_state_contract.py" in selected

@@ -76,14 +76,13 @@ DENSE_OPPOSITE_DISTANCE = 16
 DENSE_CONTROL_DISTANCE = 16
 
 
-def family(name, charge, slots, **extra):
+def family(name, charge, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": PHASE_BITS,
@@ -136,7 +135,7 @@ def _world(case, offset, *, margin=MARGIN, ticks=None, dense=False):
     matter = [name_a]
     fields = ["light_a"]
     bodies = []
-    spatial = [family(name_a, charge_a, 2)]
+    spatial = [family(name_a, charge_a)]
     if kinds[1] is None:
         # The control: one body alone, its table naming its own light, whose
         # backward spread returns to it from all sides.
@@ -147,14 +146,14 @@ def _world(case, offset, *, margin=MARGIN, ticks=None, dense=False):
         charge_b = CHARGES[kinds[1]]
         matter.append(name_b)
         fields.append("light_b")
-        spatial.append(family(name_b, charge_b, 2))
+        spatial.append(family(name_b, charge_b))
         sign = 1 if charge_a * charge_b > 0 else -1
         bodies.append(body(a, name_a, charge_a, {"light_b": sign}))
         bodies.append(body(b, name_b, charge_b, {"light_a": sign}))
         axis = offset[1] == 0
         tag = f"{case}_{'r' if axis else 'd'}{offset[0]}{'d' if dense else ''}"
     for matter_name, field_name in zip(matter, fields, strict=True):
-        spatial.append(family(field_name, 0, 8, field_of=matter_name, release=RELEASE, spread=SPREAD))
+        spatial.append(family(field_name, 0, field_of=matter_name, release=RELEASE, spread=SPREAD))
     return tag, {
         "schema_version": 1,
         "model_id": f"a5-static-{tag.replace('_', '-')}",

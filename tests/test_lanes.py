@@ -432,7 +432,9 @@ def test_a_merged_thing_is_home_to_the_shadows_of_every_owner_it_carries():
     # The passing thing's record (its event's shares of 4) with the amounts added.
     merged = replace(p_ray(4), amount=5, owners=(2,), momentum=(2, 0, 0))
     assert node_rays_at(rays[3], (3, 2, 2)) == (merged,)
-    assert ray_charge((merged,), definition) == -5
+    # Re-pinned 2026-09-18 (charge-per-thing-v1): the merged ray is two things of
+    # the family's charge -1, read off the identities it carries, not its quanta.
+    assert ray_charge((merged,), definition) == -2
     # A Node remembers no departure (return-field-v1, 2026-09-18): no trace at M.
     assert (4, 2, 2) not in parked[3]
     for t in (5, 6, 7):
@@ -492,3 +494,22 @@ def test_two_real_families_on_one_lane_are_refused():
     claims.claim(0, definition.field, Ray(0, ZERO, 3, steps=2, owner=1))
     with pytest.raises(ValueError, match="different families"):
         claims.claim(0, definition.field + 1, Ray(0, ZERO, 3, steps=2, owner=2))
+
+
+def test_no_lawful_world_is_refused_for_ray_slots():
+    """(g): the ray slot budget per family is retired with the lanes (the cleanup
+    of 2026-09-18, on the interference lane's finding: the ring of
+    `examples/nature/screen_loop.json`, E9's ring radiating on marks, was refused
+    at a corner for `ray_slots`). A Node's state is bounded by its twelve lanes,
+    one real ray and one shadow per owner on each, beside the parked shadows and
+    the rays at rest; `ray_slots` is refused naming lanes-v1, and screen_loop.json
+    parses and runs eight ticks with its books balanced."""
+    doc = json.loads((ROOT / "examples/nature/screen_loop.json").read_text(encoding="utf-8"))
+    initial = parse_initial_state(doc)
+    with Simulation(initial) as world:
+        for _ in range(8):
+            world.step()
+        assert world.audit()["balanced"]
+    doc["spatial_fields"][0]["ray_slots"] = 24
+    with pytest.raises(ValueError, match="ray_slots was retired by lanes-v1"):
+        parse_initial_state(doc)

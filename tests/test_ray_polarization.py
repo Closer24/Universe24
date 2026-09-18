@@ -63,7 +63,6 @@ def ray_field(name, **extra):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
         "kerengonen": {"phase_steps": 8},
@@ -498,7 +497,6 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
             transport="ray",
             headings=tuple(tuple(h) for h in HEADINGS),
             rays_per_tick=1,
-            ray_slots=16,
             phase_bits=3,
             polarization_bits=3,
         )

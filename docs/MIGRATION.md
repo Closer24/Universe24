@@ -6,6 +6,95 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The law of the shadow, a new engine mode, on 2026-09-18 (`field-only-v1`)
+
+Feature 20 ([the law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1);
+Highlights 5.4, the model owner's decision of 2026-09-18, the evening): the
+field-only engine, `event_universe/shadow/`, beside the old one. Nothing of
+the old engine is deleted or changed in behaviour:
+
+- a world with `"law": "shadow"` runs on the new engine; every other world
+  runs as before, byte for byte. The old parser refuses `law` as an unknown
+  key; the new parser refuses every key of the old schema by name
+  (`schema_version`, `fields`, `disturbance_types`, `seeds`, `spatial_fields`,
+  `emissions`, `spatial_seeds`, `detectors`, `external_bodies`,
+  `initial_field`, `ray_interactions`, `couplings`, `interactions`,
+  `dense_field`, `standing_field`, `wait_reads`, `shadow_wait`,
+  `slots_per_node`, `link_ticks`, `normal_budget`, `operation_costs`) and a
+  closed board;
+- the runner's switches `--observer`, `--visualize`, `--dense-field`,
+  `--standing-field` and `--node-workers` above 1 are refused for a world of
+  the law; `tools/run_series.py` runs such worlds as any;
+- `event_universe.configuration_validation` gains the kind `shadow`
+  (discriminated by `law`), `--kind shadow` on its command line;
+- `event_universe.dense_field`: the mixing kernels `DenseField._mix`,
+  `_apportion`, `_release`, `_departures` and `_place_departures` are the
+  module-level `mix_arrivals`, `apportion_carried`, `release_parked`,
+  `merge_departures` and `place_departures` over a `MixingArrays` protocol
+  (the methods delegate; a caller of the methods is unaffected);
+- `event_universe.snapshot_writer.write_snapshot` takes any `SnapshotSource`
+  (an object with `snapshot_stream`), the engine as before;
+- `run.json` of a world of the law has its own keys (`law`, `numbers`,
+  `audit` of the new books, `held_content`, `shadow_content`, `momentum`,
+  `contents`, `escaped`) and none of the old engine's markers; `state.json`
+  its own layout (`law`, `contents`, `nodes`); `events.jsonl` its own kinds
+  (`home`, `read`, `click`, `rerelease`, `step`, `merged`, `escaped`);
+- a content's `table` maps a family to `read`, `keep`, `rerelease` or
+  `pass` (round 8's fates): a free family is read and passes on, a paid one
+  is kept (the click) or re-released pooled with the holder's release.
+
+## Charge per thing, on 2026-09-18 (`charge-per-thing-v1`)
+
+Feature 16g ([charge per thing](SPATIAL_FIELDS.md#charge-per-thing-charge-per-thing-v1);
+Highlights 5.4 point 16 as amended by the model owner, 2026-09-18). No world
+key is added or removed; the meaning of one changes:
+
+- `spatial_fields[i].charge` is the charge of one thing of the family, whole,
+  whatever its content (an electron -3 in thirds of e on 1 quantum or on 64),
+  no longer a charge per quantum. A world whose family charge meant "per
+  quantum" on things of more than one quantum (a family of charge -1 whose
+  things are 100 quanta, meant as -100 whole) declares the whole charge it
+  means; the example worlds and the catalog declare the charge of a thing
+  already and change nothing (the A5 worlds' electrons of 64 quanta were read
+  as -192 whole before and are -3 now, their pushes 64 times smaller: the
+  decided physics, the product of the charges).
+- `external_bodies[i].charge` is the body's whole charge, as before, and it
+  is what the body multiplies an electric message by: a body a table pushes
+  is no longer refused when its charge is not a multiple of its amount, and a
+  body of 1000 quanta declaring 1000 to mean 1 per quantum now means 1000
+  whole and is pushed a thousandfold; declare the charge the body has (the
+  tests' bodies of 100 that meant -1 per quantum declare -10, so that their
+  shadows' message, -10 / 100, times the charge is what they pinned; those
+  of 1000 pushed by a body of 81 declare -1; `tests/test_perf_arrays.py`
+  declares -4096 on 2^24).
+- readouts: `charge_totals()`, `escaped_charge_totals()`, the ledger's
+  `charge` lines, `conservation_report()["charge"]` and `ray_charge` count
+  the whole charge of things (a merged ray of k things k times the family's
+  charge, a record's stock the things it has not yet emitted, `record_things`)
+  instead of charge x amount; a run's `audit` and the runner's conservation
+  flag read these. `run.json` gains `charge_per_thing`.
+- `RAY_PROPERTIES.charge`, the view a coupling reads, is the whole charge of
+  the thing the ray is; the appended `charge` invariant of a meeting is the
+  per-ray readout `{"field": "charge"}` summed over inputs and outputs
+  (`charge x amount` before); `InteractionDefinition` gains
+  `output_identities`; a meeting's outputs carry their source input's further
+  owners, a join (the plain sum of the inputs) every input's; a Born product
+  that took the whole content of a corner carries the other thing's identity.
+- `SpatialPlan` gains `charge_delta`; `SpatialAccounting` gains
+  `sourced_charge`, `absorbed_charge` and `absorbed_charge_by_marks`;
+  `SpatialEngine` the same lists and `sourced_charge_totals()`,
+  `absorbed_charge_totals()`, `marks_charge_totals()`; the reception record's
+  `absorbed_by_mark` entries carry `charge`; `ExternalBody` and
+  `SpatialFieldDefinition` keep their `charge` fields with the new meaning;
+  `push_of` takes the pushed thing's whole charge (`thing_charge`).
+- tests re-pinned, each with a dated reason: `test_wave_ray_families` (c),
+  `test_lanes` (h), `test_nature_catalog` (the charge readouts and the
+  electron's push), `test_bit_law` ((a)'s charge line, the pushed bodies of
+  (b) and (c')), `test_return_field`, `test_shadow_wait`, `test_perf_arrays`
+  (declarations), `test_loop_binding` (identities stripped from the lines it
+  reads), `test_clock_readings` (a docstring); new module
+  `tests/test_charge_per_thing.py`.
+
 ## The engine clean under the law of the bit, on 2026-09-18 (`cleanup-law-v1`)
 
 The cleanup lane of 2026-09-18 ([the engine clean](SPATIAL_FIELDS.md#the-engine-clean-under-the-law-of-the-bit-cleanup-law-v1)),
@@ -48,6 +137,41 @@ option; a world that writes a deleted key is refused:
   `test_return_field` (a), `test_perf_arrays`, `test_wave_ray_families`,
   `test_kerengonen`, `test_loop_binding`, and every module that declared a
   width now declares `N`.
+
+Part 2, the same day (`cleanup/law-of-the-bit-2`):
+
+- keys refused, each naming its rule: `ray_slots` on a spatial field
+  (`lanes-v1`: the lanes bound the Node, no budget per family; the
+  definition has no `ray_slots`, `rays_per_tick` is at most 4096 on its
+  own); `self_exclusion` on a spatial field, `kerengonen.capture` and
+  `kerengonen_mirror` on an emission (the record-as-owner field program,
+  Highlights 5.4 point 22 and the settled rule (v)); the `capture` and
+  `self_exclusion` fields of `SpatialFieldDefinition` and the `mirror` field
+  of `EmissionDefinition` are gone, `participant_groups` takes a `capacity`;
+- the record-as-owner program's test modules deleted (`test_kerengonen`,
+  `test_energy_audit`, `test_ray_integration_guards`,
+  `test_ray_merge_contracts`, `test_native_ray_coupling`,
+  `test_spatial_coupling`, `test_spatial_interactions`,
+  `test_spatial_transport`, `test_spatial_decay`,
+  `test_ray_coupling_evidence`, `test_local_field_rules`,
+  `test_node_rule_contract`) with `examples/generic-ray-coupling/` and
+  `examples/kerengonen-double-slit/`; the slot budget's case of
+  `test_ray_field`;
+- the ledger: the `shadow_sources` line (always zero since
+  `node-is-ports-v1`) is gone with `record_shadow_sources`; a body under a
+  table takes the recoil on its own line, booked on `returned`; the prefill
+  merges a third phase on one lane by the coherence rule; "home" is the
+  generic push and its zero-step return, booked as `home_pushes`;
+- `examples/nature/bit_law_migration.py` drops `ray_slots` and no longer
+  scales slots per layer; every world of the repository lost the key;
+- a body at rest claims no lane (`LaneClaims.at_rest`,
+  `SpatialLaw.body_things`; its token never departs); the electricity
+  reading of the whole charge (the field lane's finding) is measured and on
+  the list, a declaration of the charge per thing being the model owner's;
+  the record-as-owner
+  program's engine (the outward octant field, the record couplings, the load
+  delay of departures, `node_execution`, the record's self-exclusion rows) and
+  the corner turn's sourced line remain on the pull request's list.
 
 ## A click is an absorption, landed on 2026-09-18 (`detector-absorb-v1`)
 
@@ -746,7 +870,7 @@ answered at a distance, kept a register at a Node or made a ray wait for room
   received count, node cost, rays, tick and ray hold;
 - the pre-planning refusal "outgoing spatial links are occupied": there is no
   occupied channel and no capacity rule, rays leaving on one Link in one
-  interval travel in one packet bounded by `ray_slots`, and
+  interval travel in one packet, and
   `SpatialNode.require_free_links` rejects at commit a departure that would
   overwrite a packet still in transit, a host scheduling error rather than a
   physical rule;
@@ -942,7 +1066,8 @@ only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
   interval.
 - The 32-slot participant capacity of `validate_ray_participants` is now a
   bound per layer with a rule (the `ray_slots` of that layer's fields sum to
-  at most 32) instead of over every selected field.
+  at most 32) instead of over every selected field (retired with `ray_slots`
+  on 2026-09-18, `lanes-v1`: the lanes bound the Node).
 - The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
   (the derived layers as sorted lists of field names) in `run.json` beside
   `ray_state`.

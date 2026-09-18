@@ -44,8 +44,10 @@ def world_b(amount, option=None, ticks=6):
         ticks=ticks,
         bodies=[
             body((0, 2, 2), 3, amount=81),
-            body((1, 2, 2), 5, table={"m": 1}, amount=1000),
-            body((2, 2, 2), 4, table={"m": 1}, amount=1000),
+            # charge-per-thing-v1 (2026-09-18): a pushed body multiplies A's
+            # message (-81 / 81) by its whole charge, -1, one unit per quantum.
+            body((1, 2, 2), 5, table={"m": 1}, amount=1000, charge=-1),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-1),
         ],
         shadows=[shadow((1, 2, 2), X, amount=amount, owner=3, steps=0)],
     )

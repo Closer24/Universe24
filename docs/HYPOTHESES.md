@@ -690,3 +690,30 @@ couplings.
   which read the local amplitude with K as a constant. Taken up only if the
   runs under the current reading fail in a way this would cure, or the model
   owner asks.
+
+## 19. The wait per lane: light's index twice the clock's slowing from the two lanes of a Port
+
+- **Statement (the mathematician's candidate of 2026-09-18, the evening, recorded
+  and not acted on; DERIVATIONS.md section 55 (v)).** Under the law of the
+  shadow light in flight is a wave and takes no push, so its bending and its
+  Shapiro delay come from one index, n = 1 + w|u_M|, as in general relativity
+  they come from one metric; with the one w that gives GR's clock the index is
+  1 + GM/r, half of GR's 1 + 2GM/r, and the bending is 2GM/b, half of Einstein's.
+  Both reach GR's values if a quantum of light pays the wait twice per Node. The
+  candidate rule: the wait is owed per lane crossed (Highlights 5.4, point 25: a
+  Port is two lanes, in and out). A quantum in flight crosses two lanes at every
+  Node and owes 2w|u_M| per Node; a held content crosses none and reads once per
+  interval, owing w|u_M|. One w then gives the clock 1 − GM/r, the redshift, the
+  bending 4GM/b and the delay 2GM ln(4x_Ax_B/b²) to first order, the
+  parametrized post-Newtonian γ = 1.
+- **What it would need.** A hold per Node per family for a quantum in flight
+  (DERIVATIONS.md section 35's option II-b with the amplitude), which is Node
+  state beyond the six Ports unless it is written as the family's remainder
+  counter at the Node; and the mass's field a wave in whole units at the light's
+  Nodes (q_M ≥ 1740 r², section 47 (iii)), or the formula layer.
+- **What would refute it.** A6 repeated on the formula layer with light as a wave:
+  the tilt of the front read at a screen behind the mass against 4GM/b ·
+  X/√(b² + X²), and the arrival of the crest against 2GM · 2asinh(X/b) in light's
+  Links of travel; a per-family w declared instead (point 16) gives the same
+  numbers and is the alternative if the lane rule is struck.
+- **Status.** Open; the model owner's.

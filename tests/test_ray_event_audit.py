@@ -61,14 +61,13 @@ def field(name, components=1, signed=False):
     }
 
 
-def ray_field(name, slots=8, **extra):
+def ray_field(name, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "kerengonen": {"phase_steps": 8},

@@ -260,16 +260,15 @@ between arrival and the next cycle; there is no octant stock.
 
 ```json
 {"field": "radiation", "baseline": 0, "transport": "ray",
- "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64, "ray_slots": 512}
+ "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64}
 ```
 
 | Key | Contract |
 | --- | --- |
 | `headings` | One to 65536 nonzero integer vectors, components at most 4096 in magnitude; the emission sequence |
 | `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
-| `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
 | `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
-| `phase_bits`, `charge`, `kerengonen` | The family's phase width, charge per quantum and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
+| `phase_bits`, `charge`, `kerengonen` | The family's phase width, the charge of one of its things (whole, whatever its content: [charge per thing](#charge-per-thing-charge-per-thing-v1)) and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
 | `field_of` | Optional, with `release`: the name of the ray family this field is the field of ([released field](#field-as-the-rays-information-released-field-v1)) |
 | `release` | With `field_of`: `[n, d]`, `1 <= n <= d`, the share of the source's amount each released ray carries per Node crossed |
 
@@ -284,26 +283,13 @@ local `value`, and node values report `ray_count`. A coupling reaction that
 amends a departing packet leaves the rays on that port untouched, so rays pass
 through Nodes whose carriers respond to them.
 
-A record that emits rays and moves one link meets, at the next Node, exactly the
-rays it emitted on the cycle it departed whose first DDA step took the same
-port. With `"self_exclusion": true` the record carries two rows per emission
-rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its last departure
-(zero while it stays), and every coupling it evaluates after arriving reads the
-sampled flux and value with those rays subtracted. The work is bounded by
-`rays_per_tick`, uses only the record's own registers and the port it left
-through, and reads no ray identity or remote state. The reconstructed rays
-carry the departure's event state, so they match exactly the rays of that
-emission event: a ray of another event, another record's or the same record's
-earlier cycle, never merges with them
-([ray state](#ray-state-ray-event-state-v1)) and is not subtracted. An
-emitter that moves at link speed therefore meets the rays of its earlier
-cycles as distinct events and treats them as foreign. Rays that return later,
-from any distance, are not excluded: this is one-link exclusion of the
-emitter's own wake, not a general self-field law. Schema 2 decay attenuates each
-ray on arrival with the same ratio and residue rules as octant stock. Open
-boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
-weights, vector fields, field rules, spatial interactions, `node_execution` and
-the shared field clock. Host work per Node is bounded by `ray_slots`. An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
+The one-Link `self_exclusion` of the record form (a record subtracting, at the
+next Node, the rays it emitted on the cycle it departed from the flux and value
+it samples, carried as two rows per emission rule) is retired with the
+record-as-owner field program (Highlights 5.4 point 22 and the settled rule
+(v); the cleanup of 2026-09-18, part 2): the key is refused naming the rule,
+the rows of the record are always empty, and the rays a thing releases are
+its shadows, which it meets at home (point 3 as amended).
 
 The inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
@@ -773,9 +759,9 @@ states for one layer; a ray of a layer that has no rule, or whose rules do
 not fire, crosses unchanged with its event record intact. Rules of
 different layers therefore fire independently in the same cycle, and a ray
 of one layer is never a participant, a blocker or a merge partner of a ray
-of another: the indexed selector's 32-slot participant capacity is a bound
-per layer (the declared `ray_slots` of the fields of one layer with a rule
-sum to at most 32), rays of different fields never merge, and there is no
+of another: the participants of a meeting are what the lanes hold (`lanes-v1`;
+the 32-slot capacity per layer went with `ray_slots` on 2026-09-18), rays of
+different fields never merge, and there is no
 occupied channel and no capacity rule between layers. The Node's proposal
 stays one atomic commit: a failed guard or invariant in any layer rejects
 the interval's proposal before any owner changes, as before. A world with a
@@ -821,11 +807,11 @@ without a declaration, so no family total changes and the spatial
 accounting's `rule_delta` is zero (a rule that declares `draw` is the one
 exception: its outputs may change family, the total amount still exact,
 [a decaying group draws](#a-decaying-group-draws-decay-draw-v1)). Every
-output is a ray of its `field` with
-that family's charge per quantum, and the charge readout of feature 9
-(`charge x amount` of one ray, summed over the inputs and over the outputs) is
-appended to every meeting's invariants as the `charge` invariant, checked like
-the declared ones. Momentum is a declared invariant, as in the
+output is a thing of its `field` with that family's charge, whole, and the
+charge readout of feature 9 (the charge of the thing each ray is, summed over
+the inputs and over the outputs; [charge per thing](#charge-per-thing-charge-per-thing-v1))
+is appended to every meeting's invariants as the `charge` invariant, checked
+like the declared ones. Momentum is a declared invariant, as in the
 [shared coupling contract](SHARED_RAY_COUPLING.md): the adapter hardcodes no
 physical formula. A false guard leaves the group untouched; a failed check
 rejects the interval's proposal before any owner changes. The arithmetic is
@@ -872,8 +858,8 @@ invariant does.
 Bounds and admission: two to six participants, one to six outputs, one table
 split per pair of outputs, the admission of every ray interaction (schema 1,
 `link_ticks` 1, positive unit-axial unpaced fields, no decay, no absorption
-on the selected fields), and at most `ray_slots` rays per field after the
-meeting; more is an explicit failure. The outputs are new rays with
+on the selected fields); the participants and the outputs are what the lanes
+hold (`lanes-v1`). The outputs are new rays with
 accumulators (0, 0, 0) and pace wait 0. No draw anywhere unless the rule
 declares `draw`, the decay setting of a conversion, and then the meeting
 draws once from the Node's ticket stream and fires on 1 only, and its
@@ -947,13 +933,72 @@ retired and the engine still carried is deleted, not kept behind an option:
   standing-set search reports its residual), and the A6 `n14` and `n16`
   worlds deleted with the bound.
 
-Not done in this cleanup and listed on its pull request: the record-as-owner
+- **"Home" through the generic mechanism** (the model owner, 2026-09-18,
+  point 3 as amended; the second part of the cleanup). The special branch
+  that skipped the push when a shadow met its own thing is deleted
+  (`_turn` and the body's meeting): the generic push is applied and the
+  return of zero steps, the same shadow with its sign flipped at the same
+  Node, hands -push back in the same cycle, before any step decision, so the
+  sum is zero, the thing is what it was, and the shadow is absorbed at home
+  and re-released as before. The two halves are booked, not hidden: a
+  `RayPush` pair with `home` 1 on the plan, summed per family on the
+  `spatial_cycle` record as `home_pushes` (`push`, `return`), and on the
+  `spatial_received` record of a body likewise. "Home" names that result
+  and is no rule of its own; the engine computes the zero directly.
+
+- **The body's recoil on its own line** (pull request #285 Remaining; the
+  second part of the cleanup). A body under a table (`node-is-ports-v1`)
+  moved momentum between the lines of the things it met and the difference
+  was booked as the momentum field's source at its Node. Now `_body_cycle`
+  takes that difference off the source line and gives its opposite to the
+  body (`body_pushed`), a mirror taking twice what it reverses; since a
+  body's line is beside the identity (its content enters no sum), what it
+  took is booked on the `returned` line, as the momentum a shadow hands a
+  body is. The source line of a world with a mirror body reads zero
+  (`tests/test_node_is_ports.py` (g), `tests/test_external_body.py` (d),
+  the catalog's mirror world), the mirror bodies of those worlds re-pinned at
+  4096 so the momentum they take fits under their amount. "Bodies as things"
+  (#286) was already the engine's: a body reads what arrives once per table,
+  waits for nothing, and refuses a charge that does not divide its amount.
+
+- **The prefill's coherent merge** (the A6 lane's finding, 2026-09-18). The
+  fill refused a fill longer than about 30 intervals at N 64 because a third
+  phase would land on one Port of the source; under points 24 and 25 the
+  shares of one owner on one lane are one coherent sum, so `prefill._depart`
+  merges the third phase with the layer it meets: the amount summed and the
+  phase the phase of the sum over the family's mixing tables
+  (`_phase_of_sum`), never refusing (`tests/test_bit_law.py` (f')).
+
+- **The ray slot budget retired** (the interference lane's finding,
+  2026-09-18: `examples/nature/screen_loop.json`, E9's ring radiating on
+  marks, was refused at a corner for `ray_slots`). Under `lanes-v1` a Node's
+  state is bounded by its twelve lanes, one real ray and one shadow per owner
+  on each, beside the parked shadows and the rays at rest, so a budget per
+  family is a retired concept: the key is refused naming point 25
+  (`RAY_SLOTS_RETIRED`), the definition has no `ray_slots`, and the checks
+  that read it (`validate_rays`, the meeting's outputs, the dense field's
+  count per Node, the 32 slots per layer of `validate_ray_participants`) are
+  deleted; `rays_per_tick` is at most 4096 on its own. No lawful world is
+  refused for slots (`tests/test_lanes.py` (g)), every world of the
+  repository lost the key, and `examples/nature/bit_law_migration.py` drops
+  it.
+
+- **A body at rest occupies no lane** (the A6 lane's finding, 2026-09-18: a
+  mirror body on the X axis refused a light thing arriving on +X because the
+  body's token headed +X and claimed the out-lane). A body does not move, so
+  its token never departs and claims no lane: `forward_rays` keeps a thing
+  whose owner is at rest (`LaneClaims.at_rest`, the bodies' identities given
+  by `SpatialLaw.body_things`) and the Node strips it after the cycle as
+  before; a body is reachable from every Port
+  (`tests/test_external_body.py` (f)).
+
+Not done in the first part and listed on its pull request: the record-as-owner
 field program (the settled rule (v): the outward octant field, the
 couplings of records, the mirror, slit, dissolve, capture and self-exclusion
 of that form, `computation_field` and its delay keys, `node_execution`), the
-generic "home" (point 3: the push and its return of zero steps summed at one
-Node), the body's recoil on its own line, and the stale paragraphs of the
-older documents.
+body's recoil on its own line, and the stale paragraphs of the older
+documents; the second part takes them up (the two bullets above, and the
+rest below in this section as it lands).
 
 ### Wave-ray families (`wave-ray-family-v1`)
 
@@ -975,7 +1020,7 @@ applies what the catalog says and holds no phase rule of its own.
 | `phase_bits` | Optional, ray transport only: the width of the phase every ray of the family carries, an integer at least 0. The phase is an integer from 0 below 2^`phase_bits`, and every phase advance and difference is a mask with 2^`phase_bits` - 1, never a division. Default 0 (one phase value: the plain field of every existing world), or log2 of `kerengonen.phase_steps` when a coherence table is declared, so an existing Kerengonen world keeps its modulus (8 phase steps is `phase_bits` 3); both given, they must agree. The model sets no upper bound: Python integers are unbounded, and a Rust or GPU port uses a two-word type above 64 bits |
 | `kerengonen.phase_advance` | The family's rest rate: the steps its phase advances every interval, an integer from 0 below 2^`phase_bits`, bounded by the width and not by `MAX_VALUE`; required with the `kerengonen` key, 0 without it. Light is a family with rest rate 0: a plain field with a declared width, or the key with `phase_advance` 0 |
 | `kerengonen.phase_steps` | Optional with the key: the coherence table of the Kerengonen coupling (below), one entry per phase step of one turn, 2^`phase_bits` entries, a power of two from 2 to 4096 (at most twelve bits). A family with a rest rate and no table meets readers and absorbers without coherence gating; `capture`, a carried phase and a mirror require the table |
-| `charge` | Optional, ray transport only: the family's charge per quantum, a bounded signed integer, default 0 |
+| `charge` | Optional, ray transport only: the charge of one thing of the family, whole, whatever its content, a bounded signed integer, default 0 ([charge per thing](#charge-per-thing-charge-per-thing-v1), 2026-09-18; per quantum before) |
 
 An emission stamps its `kerengonen_phase` on any ray field of the declared
 width, a plain field included: the ray carries the emitter's phase along its
@@ -988,23 +1033,26 @@ overrides the family's rate and requires the key. The phase is the one value
 with its own declared width (issue #169, 2026-09-17); two host limits follow
 from what else stores it. The coherence table has at most 4096 entries, so a
 phase wider than twelve bits has no table. A ray interaction views the phase
-as a stored value (`MAX_VALUE`, thirty bits) and a self-exclusion row stores
-it likewise, so `ray_interactions` on the family and `self_exclusion` require
-`phase_bits` at most 30. Everything else (content, steps, shares, headings)
+as a stored value (`MAX_VALUE`, thirty bits), so `ray_interactions` on the
+family require a width at most 30 (`self_exclusion` is retired, the settled
+rule (v)). Everything else (content, steps, shares, headings)
 keeps 32-bit storage and 64-bit intermediates.
 
 `RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
 gains two read-only properties: `family`, the index of the ray's spatial
-field, and `charge`, the family's charge per quantum (and, since
+field, and `charge`, the whole charge of the thing the ray is (the family's
+charge, one declared number whatever the content, times the things a merged
+ray carries; [charge per thing](#charge-per-thing-charge-per-thing-v1),
+2026-09-18; the family's charge per quantum before) (and, since
 `detector-bit-property-v1`, a third, `detector`; since
-`ray-polarization-v1`, a fourth, `polarization`). Charge is per quantum
-because amounts merge and split; the charge readout of a bundle is `charge x
-amount` summed over its rays (`ray_charge`), and `charge_totals()` reads it
-per ray field over the rays resident at active Nodes and in flight on Links,
-the owners `totals()` reads (escaped charge and the runner's conservation flag
-are feature 10). The readout is an invariant of every declared ray
-interaction: the parser appends `charge`, `charge x amount` summed over the
-participants, to the rule's invariants, checked like the declared ones, exact
+`ray-polarization-v1`, a fourth, `polarization`). The charge readout of a
+bundle is the charge of each thing summed over its things (`ray_charge`), and
+`charge_totals()` reads it per ray field over the rays resident at active
+Nodes and in flight on Links, the owners `totals()` reads (escaped charge and
+the runner's conservation flag are feature 10). The readout is an invariant
+of every declared ray interaction: the parser appends `charge`, the things'
+charges summed over the participants, to the rule's invariants, checked like
+the declared ones, exact
 before and after; a declared invariant named `charge` is refused, an
 assignment to `family` or `charge` is refused as read-only, and a rule may
 declare at most fifteen invariants of its own.
@@ -1030,7 +1078,7 @@ of the ray family F:
 
 ```json
 {"field": "G", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
- "rays_per_tick": 1, "ray_slots": 16, "field_of": "electron", "release": [1, 4],
+ "rays_per_tick": 1, "field_of": "electron", "release": [1, 4],
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
@@ -1274,7 +1322,7 @@ family and not an engine mechanism. A ray family declares it with `spread`:
 
 ```json
 {"field": "light", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
- "rays_per_tick": 1, "ray_slots": 16, "spread": [6, 1, 1, 1, 1, 1],
+ "rays_per_tick": 1, "spread": [6, 1, 1, 1, 1, 1],
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
@@ -1772,12 +1820,15 @@ readouts of this document:
 - `charge_totals()` reads charge x amount per ray family over the owners
   `totals()` reads: the rays resident at active Nodes and in flight on Links
   and, since this feature, the stock a record holds of the family, resident
-  or in transit (a lamp holding a charged quantum holds its charge);
-  `escaped_charge_totals()` is the charge x amount of every escaped ray, and
-  of stock a record carried out; the charge a family sourced, annulled or
-  absorbed is its charge per quantum times that amount;
+  or in transit (a lamp holding a thing not yet emitted holds its charge;
+  since [charge per thing](#charge-per-thing-charge-per-thing-v1) every line
+  counts the whole charge of things, `record_things` for a stock);
+  `escaped_charge_totals()` is the charge of every escaped thing, and of the
+  things a record carried out; the charge a family sourced is what a decay
+  moved between families, and the charge absorbed is that of the things the
+  sinks and the marks took;
 - a returning ray reads its momentum as its share on the event's heading
-  (`ray_momentum`, `detector-return-v1`) and its charge as charge x amount
+  (`ray_momentum`, `detector-return-v1`) and its charge as the thing's, whole,
   like any ray, in every line.
 
 The runner records `ray_event_audit: "ray-event-audit-v1"`, the ledger of
@@ -2357,7 +2408,8 @@ tick, `registers` until node-is-ports-v1). Shadows are given with the board: `in
 T}` (T intervals of the fill, each thing releasing its shadow set of
 `release` x stock per heading, rounded to whole quanta per Node and heading
 with the fractions in the Node's remainder registers, reflected at sources and
-marks, nothing dropped, booked as initial content) or `{"rays": [...]}` (a
+marks, nothing dropped, a third phase of one owner on one lane merged by the
+coherence rule, booked as initial content) or `{"rays": [...]}` (a
 profile of shadows with `position`, `heading`, `amount`, `phase`, `sign`,
 `owner`, `steps` 0 or 1); nothing is released during a run. A mark returns a
 shadow without counting it, and catches things by its setting `[n, d]` read as
@@ -2491,14 +2543,14 @@ The rule ([Highlights](HIGHLIGHTS.md) 5.4 points 11, 16, 18, 19, 20, 21 and
   owner's id; its owner's charge and content are read by that id from the
   family's owner table (`SpatialFieldDefinition.owner_contents`,
   `owner_charges`: a type's default stock of the family's field with the
-  family's charge per quantum times that stock, a body's amount with its
-  declared whole charge, 1 and 0 for an owner known from a profile alone). The
-  gravity reading, `reads: "content"`: dp = sign x amount x heading x the
+  family's charge, whole, a body's amount with its declared whole charge, 1
+  and 0 for an owner known from a profile alone; [charge per thing](#charge-per-thing-charge-per-thing-v1)).
+  The gravity reading, `reads: "content"`: dp = sign x amount x heading x the
   content of what is pushed, exact. The electricity reading, `reads:
   "charge"`: dp = sign x amount x heading x (the owner's charge / the owner's
-  content) x the charge per quantum of what is pushed (the family's for a
-  thing, the declared charge over the amount for a body, which must divide
-  it), accumulated per axis in units of 1 / D on the pushed thing's
+  content) x the whole charge of what is pushed (the family's for a thing,
+  times the things a merged ray carries; the declared charge for a body;
+  never a charge per quantum), accumulated per axis in units of 1 / D on the pushed thing's
   `push_remainder` (D the least common multiple of every owner's content over
   the world, `push_denominator` on every family), the whole units into the
   momentum, rounded toward zero so that a push below one quantum of either
@@ -2546,8 +2598,10 @@ The rule ([Highlights](HIGHLIGHTS.md) 5.4 points 11, 16, 18, 19, 20, 21 and
 Choices where the text was open, flagged for the owner: the clock is declared
 per family as `clock: true` (the text says a family declares only its charge
 and its tables; something must tell light from an electron); a body's declared
-`charge` is its whole charge; a type owner's charge is the family's charge per
-quantum times its stock; the electricity remainder rounds toward zero; a
+`charge` is its whole charge; a type owner's charge is the family's charge
+(whole, since [charge per thing](#charge-per-thing-charge-per-thing-v1); the
+family's charge per quantum times its stock before); the electricity
+remainder rounds toward zero; a
 component reaching the content on the thing's own direction drops nothing;
 `after_periods` counts the group's meetings under the rule, so a world that
 means full circuits of a ring of L corners declares n x L or guards the rule
@@ -2955,6 +3009,117 @@ record the same). `amplitude`, on every ray family of the world
 Identity `wait-reads-v1`; isolated test `tests/test_wait_reads.py`
 ([expectations](TEST_EXPECTATIONS.md#the-wait-reads-the-amplitude)).
 
+### Charge per thing (`charge-per-thing-v1`)
+
+Feature 16g, the model owner's decision of 2026-09-18 ("charge per thing",
+[Highlights 5.4 point 16 as amended](HIGHLIGHTS.md#54-the-detector)): the
+charge of a thing is one declared number of its family, whatever its content
+(an electron -1, a proton +1, a body its own declared charge), never a charge
+per quantum. It is what a thing multiplies an electric message by, whole; it
+adds when two things of one family become one ray on a lane (point 25) and
+every table conserves it. The source's charge over its content stays in the
+reading, since a shadow set is proportional to its thing's content (point
+18): that quotient is the field's charge per quantum, the message a shadow
+carries. Why: every electron carries one e and every proton one e at 1836
+times the mass, so charge does not go with mass; charge is conserved where
+content changes; the rule itself says the electric push does not depend on
+the mass of what is pushed, and a charge per quantum is a charge proportional
+to mass (the cleanup measured it: a thing of 1000 quanta pushed a
+thousandfold, faster than a ray); and charge comes in whole units because it
+is a property of the thing.
+
+- **The declaration.** A family's `charge` is the charge of one of its things
+  (the world key is unchanged; its meaning is); a body's `charge` is its whole
+  charge, as it was. The owner table reads a thing of a type with the family's
+  charge and its stock as content (`_with_owner_contents`), a body with its
+  declared charge and its amount, so the message of a shadow, its owner's
+  charge over its owner's content, is the field's charge per quantum: -3 / 20
+  for the catalog's electron of 20 quanta, -3 / 1 for the electron of the
+  catalog's unit. The refusal of a body whose charge was not a multiple of its
+  amount is gone: a body of 1000 quanta declares the charge 1.
+- **The electricity reading.** `push_of`, `reads: "charge"`: dp = sign x
+  amount x heading x (the owner's charge / the owner's content) x the whole
+  charge of what is pushed, the family's for a thing (times the things a
+  merged ray carries, `thing_charge`), the declared for a body; the 1 / D
+  accumulation on `push_remainder` is unchanged. The worked example of point
+  16 holds exactly: an electron of content 32 and charge -1 and a proton of
+  content 64 and charge +1, their shadow sets proportional to their contents,
+  push each other by 1 and -1 under electricity and by 2048 and -2048 under
+  gravity (`tests/test_charge_per_thing.py` (a)); a body of 1000 quanta with
+  the charge 1 pushed by a shadow of 9 of a body of 81 with the charge -81
+  takes 9, not 9000 (b); the catalog's electron of 20 pushed by a shadow of 1
+  of another takes 9 / 20 of a quantum into its remainder and does not turn
+  (d).
+- **The readout counts things.** The charge of a ray is the family's charge
+  times the things it is, one plus its further owners: the engine's slot for
+  "the things merged" is `Ray.owners`, the identities a merge of point 25
+  keeps, so a merged ray of k things carries k times the family's charge
+  (`thing_charge`, `ray_charge`; `tests/test_lanes.py` (h) re-pinned -2 for
+  the merged thing of 5 quanta). `RAY_PROPERTIES.charge`, the view a coupling
+  reads, is this whole charge. The record's stock is the things it has not yet
+  emitted: a source emits its thing whole (point 25), so a stock paid out by
+  a constant directed emission of amount a is ceil(stock / a) things, and a
+  stock without such an emission one thing while positive (`record_things`).
+  A shadow carries none, as before.
+- **The ledger.** The charge line of the world ledger and the local audit
+  count the whole charge of things on every line: `current` over the rays and
+  the stocks, `escaped` over the escaped things and the records carried out,
+  `absorbed` the things the bodies' sinks took (a polarizer books the charge
+  of what arrived less what passed on), `absorbed_by_marks` the things the
+  marks absorbed (on the reception record's `absorbed_by_mark` entry as
+  `charge`, which the local audit reads), and `sourced` what the meetings did
+  to the readout (`SpatialPlan.charge_delta`: a decay moving a thing between
+  families, or a table changing the count of things), so the line stays exact
+  (`initial + sourced = current + escaped + absorbed + absorbed_by_marks`);
+  an emission is no source, the stock becoming the thing. The accumulators
+  are per spatial field on the `SpatialAccounting` (`sourced_charge`,
+  `absorbed_charge`, `absorbed_charge_by_marks`).
+- **Every table conserves it.** The appended `charge` invariant of a meeting
+  sums the things' charges over the inputs and over the outputs (the per-ray
+  readout `{"field": "charge"}`; `charge x amount` before). An output's
+  charge view is the sum of the charges of the inputs whose identities it
+  carries (`InteractionDefinition.output_identities`): its source input
+  (`input`, 0 by default), or every input it sums when its amount is the
+  plain sum of the inputs, a join, which keeps every identity as a lane merge
+  does (`Ray.owners`, the charges added; a join above the family's K and N
+  bound still fails closed). A share of a split carries the identity its
+  `input` names, its content the steering's; when the table sends the whole
+  content one way, the empty product is no ray and hands its identities to
+  its partner, which is then one real ray of both things, as two things given
+  one lane are (point 25). The static check of `ray-event-audit-v1` (an
+  output's family charge equals its sources' families') stands. Momentum
+  tables read the whole charge of the thing they push, its own shadows at
+  home included.
+- **Worlds.** No example world's declaration relied on charge x content: the
+  catalog's families declare the charge of a thing in thirds of e (the
+  electron -3 on content 1, whole and per quantum alike), the A5 worlds'
+  families -3 and +3 (their electrons of 64 quanta were read as -192 whole
+  before and are -3 now, so their pushes are 64 times smaller, the decided
+  physics: the product of the charges, content-independent; the A5 record's
+  turns are not reproduced at these contents, see the pull request), the A5s,
+  E11 and helium bodies +3 and +6 whole (the per-quantum reading refused them
+  under a table, not being multiples of their amounts; they run now). The
+  tests whose bodies declared -amount to mean -1 per quantum re-declare what
+  the decision means (`tests/test_bit_law.py` (b), `tests/test_return_field.py`,
+  `tests/test_shadow_wait.py`, `tests/test_perf_arrays.py`, each dated).
+- **Open, for the model owner** (not decided here): the charge of a split's
+  share (each product carries the identity its `input` names and the family's
+  whole charge; two products naming one input carry one identity twice, the
+  ledger booking the count on `sourced`); the count of things a sweep
+  emission makes (one event, up to six rays: the readout counts each ray a
+  thing, and a lamp's stock one thing per constant directed emission); the
+  identity of a thing whose lamp pays its stock out in several things (one
+  owner, several things: the owner's content is the stock, so the shadows'
+  message is the charge over the stock, not over the thing); light's charge
+  0 on a merged ray of many quanta (0, whatever the count); a returned ray
+  joining its siblings by an inverse split (the count drops by one; no world
+  of the repository does this with a charged family).
+
+Identity `charge-per-thing-v1` (`run.json` records `charge_per_thing`);
+isolated test `tests/test_charge_per_thing.py`
+([expectations](TEST_EXPECTATIONS.md#charge-per-thing)); the migration note
+in [MIGRATION.md](MIGRATION.md#charge-per-thing-on-2026-09-18-charge-per-thing-v1).
+
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 Restated on 2026-09-18 under `clock-readings-v1` (above): the momentum a
@@ -3122,6 +3287,180 @@ part of the lag, the turn, is what this register carries with no modulus
 but the ray's amount, of any width because it enters no phase sum
 (Highlights 3.28).
 
+### The law of the shadow (`field-only-v1`)
+
+Feature 20, the model owner's decision of 2026-09-18, the evening
+([Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "The law of the shadow:
+only shadows and events"): "No real and shadow. There is only shadow. There
+are events, which are a whole quantum. That is all. The shadow spreads like a
+ray from the event." A new engine mode beside the old one
+(`event_universe/shadow/`), selected by a world's `"law": "shadow"` key; the
+old engine and its worlds are untouched, each refuses the other's worlds by
+name (`parse_shadow_world` refuses every key of the old schema, the old
+parser refuses `law`), and the runner (`run_initialization`,
+`python -m event_universe`) dispatches on the key, refusing its old switches
+(`--observer`, `--visualize`, `--dense-field`, `--standing-field`,
+`--node-workers` above 1) for a world of this law. Derived first in
+DERIVATIONS.md round 7 (sections 45 to 50), whose numbers the worlds and the
+test take, and the Node rule of round 8 (branch `docs/derivations-8`,
+sections 51 to 56) the interval follows.
+
+**The board.** Open (a closed board is refused: the edge is infinity, what
+leaves is booked as escaped). Per Node and family: the twelve lanes' shadow
+slots, one per number (the content whose field a shadow is), an amount, a
+phase, a heading, a momentum carried; the remainder registers of point 22
+(per number and Port, in ninths); and, at a Node with content, the held
+content (`Holder`: an amount per family, a momentum, a phase, a number, a
+whole charge, a table). The layer of one family is the dense layer's arrays
+(`ShadowLayer`, the axes x, y, z, number, Port, layer; perf-arrays-v1), and
+the mixing, the parked releases and the departure layers are the dense
+layer's kernels by import
+(`dense_field.mix_arrivals`, `apportion_carried`, `release_parked`,
+`merge_departures`, `place_departures`, moved to module level over a
+`MixingArrays` protocol on 2026-09-18; the old engine's results are byte for
+byte the same). The nearest phase step of a sum is computed exactly over a
+bounded window of candidates (`layer.nearest_step`, `step_window`: the tables'
+rounding to 1/256 bounds how far from the nearest step the greatest rounded
+projection can lie).
+
+**The interval** (`ShadowSimulation.step`, round 8's S2, in this order):
+(1) every shadow in flight moves one Link, a paid family's phase turning by
+its amount over K (a cell below K does not turn; a matter shadow does not
+turn, round 8 section 52 (iv)), the escapes booked; (2) at every Node the
+size of the coherent sum of each number's arrivals is formed
+(`ShadowLayer.sizes`, the amplitude the mixing forms, in 32nds of one
+quantum's, `arrival_amplitude`'s integers); a held content reads the sizes of
+the other numbers at its Node, and the quanta of a paid family in flight
+read the free families' sizes at the Node they cross, each owing one
+interval per whole unit at the world's `wait_per_quantum` n / d, a remainder
+carried (on the holder, or per Node and number, in 1 / (32 d)); a holder
+that owes neither releases, turns its phase nor steps that interval;
+arrivals that owe neither mix nor move (a frozen cell, later arrivals of the
+number joining them as one amplitude per Port, the countdown theirs); (3) a
+held content meets the whole quanta that arrive at its Node: its own
+number's are home, sunk for their amount alone and pooled to leave again
+with its release, pushing nothing (R13; round 8 sections 52 (i) and 54 (i):
+the only reading that keeps a content constant, gives the flux of the
+emission and Newton's first law); another number's are met by its table,
+`read` (the default for a free family: the push taken and the units left to
+mix on as at an empty Node; round 8 section 54 (ii): a sink reads the
+gradient of the intensity, 1/r^3, the pass reads the flux, 1/r^2), `keep`
+(the default for a paid family, the click: the push taken and the amount
+joining the holder's content), `rerelease` (the push taken, the amount
+pooled to leave again with the holder's release and number) or `pass` (no
+push, the units mix on); (4) at every Node the shadows of one number mix
+(node-mixing-v1), the remainders park and release, the departures go into
+flight; (5) a held content releases: per free family it holds, content x
+the world's `release` n / d per Port with a remainder per Port; the pooled
+amount six-fold with a remainder; a lamp its declared rate on its headings,
+spending its content; every release stamped with the holder's number and
+current phase; nothing in an interval it owes or in the interval after a
+step; (6) the holder's phase turns by its content over K with a remainder
+(refused when a step would reach half the circle); each accumulator adds
+its component of the momentum, held at the content while a step is not
+allowed, and the first axis (x before y before z) whose accumulator has
+reached the content steps the content one Link that way, the accumulator
+giving back the content and the momentum untouched (round 8 section 53:
+v = p / M, Newton's first law by bookkeeping), at most once per interval and
+never in the interval after a step (T2, an event takes the interval: the
+speed bound a half Link per interval on an axis, below the field's 1 / sqrt
+3), `fixed` never; a step onto a held content merges the two into the
+resident (amounts, momentum and charge added, the resident's number, phase
+and table kept), a step off the board escapes with its content.
+
+**The push** (point 16 as amended, [charge per thing](#charge-per-thing-charge-per-thing-v1);
+round 8 S3): a unit of a free family with heading h pushes by -M a h (the
+gravity reading, toward the emitter, the holder's content M the
+cross-section) and by +(q_A / M_A) q a h (the electric reading, the owner's
+whole charge over its declared content times the holder's whole charge q,
+kept exactly in units of 1 / D on the holder, `push_remainder`, D the least
+common multiple of the charged contents' declared amounts, the whole units
+into the momentum); a unit of a paid family pushes by +a h, its own
+momentum. The holder's own number pushes nothing. A shadow carries no
+momentum and there is no ledger of the field's momentum (S8): the momentum
+lives on held content and changes only by the pushes, and the third law is
+the symmetry of the two fields, exact at rest for a symmetric pair (round 8
+section 55 (ii)).
+
+**The books** (`ShadowSimulation.books`, the runner's `audit` per tick),
+exact at every interval: per family the held line, initial + absorbed (the
+clicks) = current + spent (the lamps) + escaped (contents off the board);
+the shadows' line, initial (the declared `initial_shadows`) + released (the
+fresh emission, the lamps, the pooled releases) = current (the arrivals, the
+departures in flight, the parked ninths' whole quanta) + escaped + absorbed
+(home, the clicks, the re-releases; what is pooled is on the absorbed line
+until its release); the momentum line reports the held momentum, the sum of
+the pushes; the charge, the sum over the holders. At the fixed point of a
+content at rest, released - absorbed = escaped = the emission (round 7
+section 49 (i)).
+
+**The world.** `law` "shadow"; `model_id`; `shape`; `boundary` "open";
+`ticks`; `K`; `N` (64 by default, a power of two from 2 through 4096);
+`release` `[n, d]` per Port heading per interval per quantum of held content
+of a free family; `wait_per_quantum` (1 by default; an integer or `[n, d]`;
+0 for no wait); `families` (`name`, `kind` `free` or `paid`, `charge` of a
+held content of a free family); `contents` (`position`, `family`, `amount`
+with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`, `table`
+family name to `read` | `keep` | `rerelease` | `pass` with `read` the
+default for a free family and `keep` for a paid one, `lamp` `{rate: [n, d],
+headings}` on a content of a paid family); `initial_shadows` (optional,
+a declared profile booked as initial content; the default is an empty board
+that the emission fills). Every content is numbered at parsing in declaration
+order; the numbers whose quanta a family can carry are the contents that
+hold it free, the lamps of it and the contents whose table re-releases it. Refused, naming the law: any old key, a closed board, a lamp
+on a free family, a charge on a paid family, two contents at one Node, a
+table naming an unknown family or rule, a content at or past K x N / 2, N
+not a power of two, a repeated lamp heading. `event_universe.configuration_validation`
+reports a world of the law as kind `shadow`.
+
+**The record.** `run.json` carries `law` "field-only-v1", the world's keys,
+`numbers` (the contents' numbers, positions and families), the books per
+completed tick (`audit`) with `conserved_at_every_completed_tick`, the
+per-tick `held_content`, `shadow_content` and `momentum` lines, the
+contents' final states (`contents`: position, held per family, content,
+phase, charge, momentum and accumulators, intervals waited, phase steps,
+steps, what each met per family by rule, the push taken) and the escapes;
+`events.jsonl` one record per event (`home`, `read`, `click`, `rerelease`,
+`step`, `merged`, `escaped`) with the tick, the Node, the holder, the
+family, the number, the amount and the push; `state.json`, through
+`snapshot_writer.write_snapshot` (its source a `SnapshotSource` since this
+feature), the contents and every Node with content (arrivals, departures and
+parked shares per number and heading, with their phases and the intervals a
+cell waits). `tools/run_series.py` runs these worlds as any. The
+readings the tests make are the engine's (`shell_readings`: the shell mean
+of the count, the radial flow and the size; `cube_flux`: Gauss's flux through
+a closed surface), read-only.
+
+**What does not exist here**: no thing ray, no bit, no return, no momentum
+on a shadow, no home other than the pooled re-release of the own number, no
+chase, no trace, no per-quantum charge, no closed board, no prefilled field
+by a fill (a profile only), no `wait_reads` or `shadow_wait` option (the
+size is the reading), no draw. The
+example worlds are `examples/shadow/` ([README](../examples/shadow/README.md));
+the isolated test is `tests/test_field_only.py`
+([expectations](TEST_EXPECTATIONS.md#the-law-of-the-shadow)).
+
+**Choices where the text was open, flagged for the model owner** (the PR's
+"Needs a decision"; the readings of round 8 sections 51 to 56 taken where
+they decide): the free families are read at a holder and pass on, only a
+table keeps or re-releases (section 54 (ii)); a held content's own quanta
+are sunk for their amount and push nothing (sections 52 (i), 54 (i)); the
+step is the accumulator's with T2 (section 53), the holder object moving to
+the neighbour at the end of the interval and merging with what it finds;
+`fixed` declares an apparatus held in place; a paid family's push is its
+unit's own momentum, a lamp does not recoil (the momentum changes only by
+the pushes, S8); the electric quotient reads the owner's declared content;
+a re-emitting slit stamps its own number on the light, and two numbers
+never interfere (point 24), so the two-slit worlds use openings in the wall
+(measured both ways on 2026-09-18: re-emitting slits give two humps and no
+fringes); the wait of light in flight is charged once, at its arrival, from
+the free families' sizes at the Node, and quanta that join a waiting cell
+wait its countdown; the phase circle N is the world's (round 7 section 47
+(ii); this engine's remainder rule sheds about 1.5 % of the emission per
+interval into standing content at N = 64 and at N = 256 alike, the parked
+release at the register's combined phase being the source); the gravity
+reading's multiplier epsilon_g of section 55 (x) is not declared (1).
+
 ### Funded emission and absorption
 
 A field whose emitting type also carries a scalar field of the same name may
@@ -3137,9 +3476,7 @@ after arrival (`amount x fraction / fraction_denominator`, or the whole ray),
 adds it to its own field of the same name and, with `momentum_field`,
 `share x heading` to that vector; the rest of the ray is forwarded. Absorption
 happens before forwarding and before this cycle's emission joins the residents,
-so a record never swallows its fresh rays; with `self_exclusion` the rays of its
-own last departure are left alone by their complete ray key. Absorbers act in
-slot order.
+so a record never swallows its fresh rays. Absorbers act in slot order.
 
 A funded emission may carry a `"dissolve": {"after_ticks": N, "over_ticks": K}`
 schedule instead of an amount: the record emits nothing for its first `N`
@@ -3243,7 +3580,7 @@ field's rate. Without the key the field is the plain `isotropic-ray-field-v1`,
 a wave-ray family with rest rate 0 and no coherence table, which still admits
 a `kerengonen_phase` below its declared width; a `kerengonen_advance` on an
 emission requires the key. The runner records the identity
-`kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+`kerengonen-ray-field-v1`. The double-slit probe (`examples/kerengonen-double-slit/`, deleted on 2026-09-18)
 measures the fringe on a line of absorbers.
 
 Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
@@ -3277,9 +3614,12 @@ wavelength, and the de Broglie probe (`examples/de-broglie/`, deleted on 2026-09
 measures the fringe spacing it gives. A ray without its own advance uses the
 field's.
 
-A mirror is the same rule turned around. The absorbed row also keeps the
-heading of the largest share, and an emission with
-`"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sends its whole amount back as
+The mirror of the record form, `kerengonen_mirror`, is retired with the
+record-as-owner field program (the settled rule (v); the cleanup of
+2026-09-18, part 2) and refused naming the rule; a mirror is an external body
+with a table since `node-is-ports-v1`. Until then a mirror was the same rule
+turned around: the absorbed row also kept the heading of the largest share,
+and an emission with `"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sent its whole amount back as
 one ray along the mirror image of that heading across the named axis, at the
 carried phase and advance when `"kerengonen_phase": "carried"` is set. A
 diagonal mirror, `"xy"`, `"xz"` or `"yz"`, swaps the two named components
@@ -3292,10 +3632,11 @@ then holds a standing wave: the reading along the line repeats every
 `phase_steps / (2 x advance)` links, as the
 mirror probe (`examples/kerengonen-mirror/`, deleted on 2026-09-17) measures.
 Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_advance` on an emission requires the key, and a carried phase or a
-`kerengonen_mirror` requires its coherence table. The runner records the
-identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
-measures the fringe on a line of absorbers.
+`kerengonen_advance` on an emission requires the key, and a carried phase
+requires its coherence table. The runner records the
+identity `kerengonen-ray-field-v1`. The double-slit probe of the record form
+(`examples/kerengonen-double-slit/`, deleted on 2026-09-18 with the program)
+measured the fringe on a line of absorbers.
 
 ### Euclidean pace (`"metric": "euclidean"`)
 
@@ -3364,8 +3705,8 @@ evidence about that profile, not about the current model.
 Load-delayed rays remain visible to absorption. Surviving residents, fresh
 emissions, owned carrier stock and retained pace state commit together, before
 observers see the result. Every retained ray and every incoming ray bundle is
-validated before it is merged, and the field's `ray_slots` is the only bound on
-residency. There is no occupied channel and no capacity rule
+validated before it is merged, and the lanes are the only bound on residency
+(`lanes-v1`). There is no occupied channel and no capacity rule
 ([Highlights](HIGHLIGHTS.md) 5.1): rays leaving a Node on one Link in one
 interval travel together in one packet, and nothing is pushed back or made to
 wait for room. The former refusal to begin a field cycle while a Node's

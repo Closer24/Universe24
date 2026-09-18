@@ -162,8 +162,14 @@ class SpatialEngine:
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
         # The charge that left the world through an open boundary, per spatial
-        # field: charge x amount of every escaped ray (ray-event-audit-v1).
+        # field: the charge of every escaped thing (ray-event-audit-v1,
+        # charge-per-thing-v1), and the other lines of the charge ledger per
+        # spatial field: what the meetings sourced (a thing moved between
+        # families), what ended in a body's sink and what a mark absorbed.
         self.escaped_charge = [0] * len(initial.spatial_fields)
+        self.sourced_charge = [0] * len(initial.spatial_fields)
+        self.absorbed_charge = [0] * len(initial.spatial_fields)
+        self.absorbed_charge_by_marks = [0] * len(initial.spatial_fields)
         # Content that ended in an external body's sink (external-body-v1).
         self.absorbed = [[0] * field.components for field in initial.fields]
         # Content a Detector mark absorbed on a click (detector-absorb-v1), with the
@@ -179,7 +185,6 @@ class SpatialEngine:
         # running total.
         self.spent = [[0] * field.components for field in initial.fields]
         self.computation = [0]
-        self.shadow_sources = [[0] * field.components for field in initial.fields]
         self.shadow_escaped = [[0] * field.components for field in initial.fields]
         self.shadow_absorbed_by_marks = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
@@ -204,10 +209,12 @@ class SpatialEngine:
                 self.absorbed,
                 self.absorbed_by_marks,
                 self.returned,
-                self.shadow_sources,
                 self.shadow_absorbed_by_marks,
                 self.spent,
                 self.computation,
+                sourced_charge=self.sourced_charge,
+                absorbed_charge=self.absorbed_charge,
+                absorbed_charge_by_marks=self.absorbed_charge_by_marks,
             ),
             balance_guard,
             field_guard,
@@ -386,8 +393,8 @@ class SpatialEngine:
         A returning thing never reaches the boundary before its event Node, which
         its steps bound; one that would escape has no event Node in the world, and
         the engine fails closed instead of recording an escape (detector-return-v1).
-        A shadow walking home has no event Node: it follows the traces until
-        something takes it, and escapes like any ray otherwise (bit-law-v1, the
+        A shadow has no event Node: it is a field absorbed wherever it reaches its
+        owner (return-field-v1), and escapes like any ray otherwise (bit-law-v1, the
         amendment's point d: escapes are the only loss). A packet of shadows alone
         leaves no record: events happen at Nodes that hold a thing (point 13).
         """
@@ -648,7 +655,7 @@ class SpatialEngine:
         """The shadows per thing (bit-law-v1, the amendment's point d): for each
         owner the number of shadow rays and their amount, over the resident and
         travelling shadows, the dense region's included; a parked shadow is below
-        one quantum, or a trace, and is not counted."""
+        one quantum and is not counted."""
         result: dict[int, list[int]] = {}
         bundles: list[Rays] = []
         for position in self._active:
@@ -669,10 +676,12 @@ class SpatialEngine:
         return dict(sorted(result.items()))
 
     def charge_totals(self) -> dict[str, int]:
-        """The charge readout of every ray field: charge x amount summed over the things
-        resident at active Nodes and in flight on Links, the owners totals() reads; a
-        shadow carries no charge (bit-law-v1), so the parked shadows and the dense region
-        hold none."""
+        """The charge readout of every ray field: the whole charge of every thing
+        (`ray_charge`, charge-per-thing-v1) summed over the things resident at
+        active Nodes and in flight on Links, the owners totals() reads; a shadow
+        carries no charge (bit-law-v1), so the parked shadows and the dense region
+        hold none, and the shares a polarizer holds below one quantum are booked
+        as absorbed when it takes them, so they hold none either."""
         result: dict[str, int] = {}
         for index, definition in enumerate(self.initial.spatial_fields):
             if not definition.rays:
@@ -686,12 +695,30 @@ class SpatialEngine:
                 for packet in packets:
                     if packet is not None and packet.rays:
                         total = checked_work(total + ray_charge(packet.rays[index], definition))
-            if definition.charge:
-                for body in self._located_bodies():
-                    if body.polarizer is not None and body.polarizer.family == index:
-                        total = checked_work(total + checked_work(held_stock(body) * definition.charge))
             result[self.initial.fields[definition.field].name] = total
         return result
+
+    def _charge_lines(self, values: list[int]) -> dict[str, int]:
+        return {
+            self.initial.fields[definition.field].name: values[index]
+            for index, definition in enumerate(self.initial.spatial_fields)
+            if definition.rays
+        }
+
+    def sourced_charge_totals(self) -> dict[str, int]:
+        """What the meetings did to the charge of the things, per ray field
+        (charge-per-thing-v1): a thing a decay moved between families."""
+        return self._charge_lines(self.sourced_charge)
+
+    def absorbed_charge_totals(self) -> dict[str, int]:
+        """The charge of the things that ended in an external body's sink, per ray
+        field (charge-per-thing-v1)."""
+        return self._charge_lines(self.absorbed_charge)
+
+    def marks_charge_totals(self) -> dict[str, int]:
+        """The charge of the things the Detector marks absorbed on their clicks,
+        per ray field (charge-per-thing-v1)."""
+        return self._charge_lines(self.absorbed_charge_by_marks)
 
     def _located_bodies(self) -> list[ExternalBody]:
         """Every external body, at its Node or on a Link while it steps."""
@@ -913,7 +940,7 @@ class SpatialEngine:
         }
         # The parked shadows (node-is-ports-v1): what every Node holds below one
         # quantum per owner, sign and heading, in units of the family's split
-        # denominator, and the traces (amount 0); the dense region's Nodes are
+        # denominator; the dense region's Nodes are
         # read as Node state here (`materialized`).
         result["parked"] = [
             entry
