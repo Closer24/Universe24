@@ -2,22 +2,27 @@
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Detector return")
 before the first run: one world per unit-axial heading, a lamp three Links
-before a marked Node with setting 1/2 and seed 3 (one draw, bit 0), a sail one
-Link before it absorbing half of what passes outbound, and the exact tick table
-of the one ray from emission through the return to steps 0 at its event Node,
-where the inverse split of a one-line event restores it to the lamp
-(inverse-split-v1).
+before a marked Node, a sail one Link before it absorbing half of what passes
+outbound, and the exact tick table of the one ray from emission through the
+return to steps 0 at its event Node, where the inverse split of a one-line
+event restores it to the lamp (inverse-split-v1).
+
+Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1, point 14: there
+is no lottery): the mark's setting is its counter table, [0, 1] here, a mark
+that catches nothing and returns every thing by its table (the draw of 0 of the
+old world); the seed is retired, the counter stands at 1 after the one arrival,
+and a return names the thing's owner.
 """
 
 import json
+from dataclasses import replace
 
 import pytest
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import pack
 from event_universe.core.spatial_state import (
-    DETECTOR_BIT_0,
-    DETECTOR_NONE,
+    BIT_THING,
     DETECTOR_RETURN,
     Ray,
     SpatialPacket,
@@ -27,27 +32,26 @@ from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
 MARK = (7, 7, 7)
-SEED = 3
 AMOUNT = 8
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z], closed under negation.
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
-# The one draw of the world, seed 3 at setting 1/2: the first draw of the mark test.
-TICKET_AFTER_DRAW = 144814
+# The mark's counter after the one arrival of the world.
+TICKET_AFTER_DRAW = 1
 # After tick t: Links from the lamp, heading index offset (0 the emitted heading, 1 its
 # negation), amount, steps, outbound, phase, Detector bit, the share of the ray's event.
 TICK_TABLE = {
-    1: (1, 0, 8, 1, 1, 1, DETECTOR_NONE, 8),
-    2: (2, 0, 8, 2, 1, 2, DETECTOR_NONE, 8),
-    3: (3, 1, 4, 3, 0, 3, DETECTOR_BIT_0, 8),
-    4: (2, 1, 4, 2, 0, 2, DETECTOR_BIT_0, 8),
-    5: (1, 1, 4, 1, 0, 1, DETECTOR_BIT_0, 8),
-    6: (0, 1, 4, 0, 0, 0, DETECTOR_BIT_0, 8),
+    1: (1, 0, 8, 1, 1, 1, BIT_THING, 8),
+    2: (2, 0, 8, 2, 1, 2, BIT_THING, 8),
+    3: (3, 1, 4, 3, 0, 3, BIT_THING, 8),
+    4: (2, 1, 4, 2, 0, 2, BIT_THING, 8),
+    5: (1, 1, 4, 1, 0, 1, BIT_THING, 8),
+    6: (0, 1, 4, 0, 0, 0, BIT_THING, 8),
     # The inverse split of a one-line event: no sibling line, the share restored to
     # the lamp in the cycle after its arrival (inverse-split-v1); the lamp, a source
     # that emits what it holds, then emits the 4 again as a new one-line event on
     # the cycle after the restored record reaches the field plan.
     7: None,
-    8: (1, 0, 4, 1, 1, 1, DETECTOR_NONE, 4),
+    8: (1, 0, 4, 1, 1, 1, BIT_THING, 4),
 }
 
 
@@ -180,14 +184,16 @@ def document(port, marked=True, boundary="periodic", ticks=8):
         },
     }
     if marked:
-        raw["detectors"] = [{"position": list(MARK), "setting": [1, 2], "seed": SEED}]
+        raw["detectors"] = [{"position": list(MARK), "setting": [0, 1]}]
     return raw
 
 
 def rays_in(world):
     """Every ray in the world with its Node."""
+    # bit-law-v1 (2026-09-18): a ray carries its thing's identity (`owner`); this
+    # module pins lines and events, not identities (test_bit_law does).
     return [
-        (node.position, ray)
+        (node.position, replace(ray, owner=0))
         for node in world.inventory_view().nodes
         for rays in node.rays
         for ray in rays
@@ -281,6 +287,7 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
             "port": port ^ 1,
             "family": "quanta",
             "amount": 4,
+            "owner": 1,
         },
         {
             "event": "inverse_split",
@@ -291,7 +298,6 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
             "ports": (),
             "amounts": (),
             "amount": 4,
-            "bit": 0,
             "restored": True,
             "annulled": {},
         },

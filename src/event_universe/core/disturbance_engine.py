@@ -27,7 +27,7 @@ from .node_execution import NodeExecution, SpatialPlanningInput
 from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
-from .ray_event_audit import ledger_line, world_ledger
+from .ray_event_audit import Line, ledger_line, world_ledger
 from .spatial_engine import (
     SpatialCoupler,
     SpatialDecayer,
@@ -36,7 +36,7 @@ from .spatial_engine import (
     SpatialPlanner,
 )
 from .spatial_node import SpatialNode
-from .spatial_state import SpatialPlan
+from .spatial_state import BIT_SHADOW, BIT_THING, SpatialPlan
 from .topology import neighbor_address
 
 EventSink = Callable[[dict[str, object]], None]
@@ -159,8 +159,21 @@ class DisturbanceEngine:
             node.records = tuple(records)
 
         # The world ledger's initial lines (ray-event-audit-v1): what the world
-        # holds before the first tick, per conserved field and per ray family.
-        self._ledger_initial = (self.totals(), self.charge_totals())
+        # holds before the first tick, per conserved field and per ray family, and
+        # the things' and the shadows' shares of it (bit-law-v1).
+        self.refresh_ledger_initial()
+
+    def refresh_ledger_initial(self) -> None:
+        """Read the ledger's initial lines again, after the field given with the
+        board was installed (bit-law-v1, `initial_field`)."""
+        if self._spatial is not None:
+            self._spatial.refresh_initial_totals()
+        self._ledger_initial = (
+            self.totals(),
+            self.charge_totals(),
+            self.totals(BIT_THING),
+            self.totals(BIT_SHADOW),
+        )
 
     @property
     def _observer(self) -> EventSink | None:
@@ -515,20 +528,23 @@ class DisturbanceEngine:
             for i in self.initial.disturbances[record.type_index].fields
         }
 
-    def totals(self) -> dict[str, tuple[int, ...]]:
-        """Read-only totals include resident originals during waits and link-owned packets."""
+    def totals(self, bit: int | None = None) -> dict[str, tuple[int, ...]]:
+        """Read-only totals include resident originals during waits and link-owned
+        packets; with `bit` the things' share (BIT_THING: the records and the
+        engine's things) or the shadows' (BIT_SHADOW) alone (bit-law-v1)."""
         values = (
             [[0] * field.components for field in self.initial.fields]
             if self._spatial is None
-            else self._spatial.totals()
+            else self._spatial.totals(bit)
         )
         records = [r for node in self._nodes.values() for r in node.records if r is not None]
         records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
-        for record in records:
-            for i, components in enumerate(record.values):
-                for c, code in enumerate(components):
-                    values[i][c] += decode(code)
-        if isinstance(self._resolver, CommitResolver):
+        if bit != BIT_SHADOW:
+            for record in records:
+                for i, components in enumerate(record.values):
+                    for c, code in enumerate(components):
+                        values[i][c] += decode(code)
+        if bit != BIT_SHADOW and isinstance(self._resolver, CommitResolver):
             for i, components in enumerate(self._resolver.inventory()):
                 for c, value in enumerate(components):
                     values[i][c] += value
@@ -623,6 +639,65 @@ class DisturbanceEngine:
             if field.conserved
         }
 
+    def returned_totals(self) -> dict[str, tuple[int, ...]]:
+        """What came home (bit-law-v1), per field: the shadows absorbed back into
+        their things, whose re-release is on the source line, and the momentum
+        delivered outside the identity; initial + sources = current + dissipated +
+        escaped + annulled + absorbed_by_bodies + absorbed_by_marks + returned."""
+        return {
+            field.name: (
+                (0,) * field.components if self._spatial is None else tuple(self._spatial.returned[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
+    def _shadow_lines(self, name: str) -> dict[str, tuple[int, ...]]:
+        """The shadows' share of a line (bit-law-v1): their re-releases on the source
+        line, their escapes on the escaped line."""
+        return {
+            field.name: (
+                (0,) * field.components
+                if self._spatial is None
+                else tuple(getattr(self._spatial, name)[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
+    def things_content(self) -> int:
+        """The content of the things (bit-law-v1, point 11): the amount of every
+        thing of every ray family, resident, travelling or held by a record;
+        constant between the absorptions of a mark, as the computation is."""
+        things = self.totals(BIT_THING)
+        total = 0
+        for definition in self.initial.spatial_fields:
+            if definition.rays:
+                name = self.initial.fields[definition.field].name
+                total = checked_work(total + things.get(name, (0,))[0])
+        return total
+
+    def shadows_content(self) -> int:
+        """The content of the shadows (bit-law-v1): the amount of every shadow of
+        every ray family, resident, in flight or held in a Node's remainder
+        registers, the dense region's included; constant but for what escaped
+        the board and what a mark absorbed as the home of an absorbed thing."""
+        shadows = self.totals(BIT_SHADOW)
+        total = 0
+        for definition in self.initial.spatial_fields:
+            if definition.rays:
+                name = self.initial.fields[definition.field].name
+                total = checked_work(total + shadows.get(name, (0,))[0])
+        return total
+
+    def thing_registers(self) -> dict[int, list[int]]:
+        """The register line of every thing (bit-law-v1, point 15): thing id to momentum."""
+        return {} if self._spatial is None else self._spatial.thing_registers()
+
+    def shadow_counts(self) -> dict[int, list[int]]:
+        """The shadows per thing (bit-law-v1): owner to [rays, amount]."""
+        return {} if self._spatial is None else self._spatial.shadow_counts()
+
     def detector_marks(self) -> list[dict[str, object]]:
         """Every Detector mark with its Node, its counter per family and its momentum."""
         return [] if self._spatial is None else self._spatial.detector_marks()
@@ -684,15 +759,17 @@ class DisturbanceEngine:
         annulled + absorbed + absorbed_by_marks exact, and the external bodies' and
         the Detector marks' own lines (count, momentum, charge, sinks; count,
         momentum, counters). Read-only, like the totals it is built from."""
-        initial_totals, initial_charge = self._ledger_initial
+        initial_totals, initial_charge, initial_things, initial_shadows = self._ledger_initial
         totals, sources = self.totals(), self.source_totals()
         # The absorbed line is what the external bodies' sinks took (external-body-v1);
-        # absorbed_by_marks what the marks absorbed on their clicks (detector-absorb-v1).
-        escaped, annulled, absorbed, taken = (
+        # absorbed_by_marks what the marks absorbed on their clicks (detector-absorb-v1);
+        # returned what came home (bit-law-v1).
+        escaped, annulled, absorbed, taken, returned = (
             self.escaped_totals(),
             self.annulled_totals(),
             self.external_body_totals(),
             self.detector_mark_totals(),
+            self.returned_totals(),
         )
         fields = {
             name: ledger_line(
@@ -703,9 +780,49 @@ class DisturbanceEngine:
                 annulled[name],
                 absorbed[name],
                 taken[name],
+                returned[name],
             )
             for name, values in initial_totals.items()
         }
+        # The things' and the shadows' own lines per ray family (bit-law-v1, point
+        # 7): the things conserve exactly with no source line but their own
+        # emissions and conversions; what the shadows re-released or lost is
+        # read off the sourced and the escaped lines.
+        current_things, current_shadows = self.totals(BIT_THING), self.totals(BIT_SHADOW)
+        shadow_sources, shadow_escaped, shadow_taken = (
+            self._shadow_lines("shadow_sources"),
+            self._shadow_lines("shadow_escaped"),
+            self._shadow_lines("shadow_absorbed_by_marks"),
+        )
+        things: dict[str, Line] = {}
+        shadows: dict[str, Line] = {}
+        for definition in self.initial.spatial_fields:
+            if not definition.rays:
+                continue
+            name = self.initial.fields[definition.field].name
+            if name not in initial_totals:
+                continue
+            zero = (0,) * len(initial_totals[name])
+            things[name] = ledger_line(
+                initial_things[name],
+                tuple(a - b for a, b in zip(sources[name], shadow_sources[name], strict=True)),
+                current_things[name],
+                tuple(a - b for a, b in zip(escaped[name], shadow_escaped[name], strict=True)),
+                annulled[name],
+                absorbed[name],
+                tuple(a - b for a, b in zip(taken[name], shadow_taken[name], strict=True)),
+                zero,
+            )
+            shadows[name] = ledger_line(
+                initial_shadows[name],
+                shadow_sources[name],
+                current_shadows[name],
+                shadow_escaped[name],
+                zero,
+                zero,
+                shadow_taken[name],
+                returned[name],
+            )
         current_charge, escaped_charge = self.charge_totals(), self.escaped_charge_totals()
         charge = {}
         for definition in self.initial.spatial_fields:
@@ -714,16 +831,19 @@ class DisturbanceEngine:
             name = self.initial.fields[definition.field].name
             # Charge is per quantum, so what a family sourced, annulled or absorbed
             # reads as charge x that amount; the world's and the escaped charge are
-            # read over their owners.
+            # read over their owners. A shadow carries no charge (bit-law-v1), so
+            # the re-releases on the source line are not charge sourced.
             per_quantum = definition.charge
             charge[name] = ledger_line(
                 initial_charge[name],
-                checked_work(sources.get(name, (0,))[0] * per_quantum),
+                checked_work(
+                    (sources.get(name, (0,))[0] - shadow_sources.get(name, (0,))[0]) * per_quantum
+                ),
                 current_charge[name],
                 escaped_charge[name],
                 checked_work(annulled.get(name, (0,))[0] * per_quantum),
                 checked_work(absorbed.get(name, (0,))[0] * per_quantum),
-                checked_work(taken.get(name, (0,))[0] * per_quantum),
+                checked_work((taken.get(name, (0,))[0] - shadow_taken.get(name, (0,))[0]) * per_quantum),
             )
         body_charge = 0
         for body in self.initial.external_bodies:
@@ -739,7 +859,7 @@ class DisturbanceEngine:
             "momentum": self.detector_mark_momentum(),
             "counter": taken,
         }
-        return world_ledger(self.tick, fields, charge, bodies, marks)
+        return world_ledger(self.tick, fields, charge, bodies, marks, things, shadows)
 
     @staticmethod
     def _bookkeeping(record: DisturbanceRecord) -> dict[str, object]:

@@ -30,22 +30,25 @@ from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
 from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
+    BIT_SHADOW,
+    BIT_THING,
     REMAINDER_SIGNS,
+    REMAINDER_SLOTS,
     ExternalBody,
     Rays,
     Remainders,
     SpatialBundle,
+    SpatialFieldDefinition,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    Traces,
     blank_remainders,
     coherent_stock,
-    decay_seed,
-    decay_ticket_seed,
     held_stock,
-    holds_source_stock,
     ray_charge,
     ray_momentum,
+    ray_momentum_vector,
     ray_stock,
     remainder_stock,
     validate_rays,
@@ -63,6 +66,7 @@ SpatialPlanner = Callable[
         Remainders,
         Remainders,
         int,
+        Traces,
     ],
     SpatialPlan,
 ]
@@ -90,11 +94,13 @@ class DenseRegion(Protocol):
 
     def add_totals(self, result: list[list[int]]) -> None: ...
 
-    def add_charge_totals(self, result: dict[str, int]) -> None: ...
+    def shadow_counts(self, result: dict[int, list[int]]) -> None: ...
 
     def materialized_nodes(self, nodes: dict[Address3, SpatialNode]) -> dict[Address3, SpatialNode]: ...
 
     def active_count(self) -> int: ...
+
+    def claim(self, position: Address3) -> None: ...
 
 
 class SpatialEngine:
@@ -136,10 +142,6 @@ class SpatialEngine:
         # The Detector marks by position, installed on each marked Node when it is
         # created; a Node without a mark never draws.
         self._marks = {mark.position: mark for mark in initial.detectors}
-        # The seed of the decaying rules' declaration (decay-draw-v1), from which an
-        # unmarked Node's ticket stream starts, salted by its position; None when
-        # no rule draws, and then an unmarked Node's ticket stays 0 and is never used.
-        self._decay_seed = decay_seed(initial.ray_interactions)
         # The external bodies by declared position, installed on their Nodes when
         # they are created; a body that steps carries its mark to the next Node.
         self._bodies = {body.position: body for body in initial.external_bodies}
@@ -166,6 +168,14 @@ class SpatialEngine:
         # Content a Detector mark absorbed on a click (detector-absorb-v1), with the
         # momentum field's components when one is bound.
         self.absorbed_by_marks = [[0] * field.components for field in initial.fields]
+        # What came home (bit-law-v1): the shadows absorbed back into their things
+        # and the momentum delivered outside the identity; the re-releases, on the
+        # source line and here; and the shadows that escaped, on the escaped line
+        # and here, so that the things' own identity reads both lines less these.
+        self.returned = [[0] * field.components for field in initial.fields]
+        self.shadow_sources = [[0] * field.components for field in initial.fields]
+        self.shadow_escaped = [[0] * field.components for field in initial.fields]
+        self.shadow_absorbed_by_marks = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
         if initial.spatial_computation_delay:
             components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
@@ -188,6 +198,9 @@ class SpatialEngine:
                 self.annulled,
                 self.absorbed,
                 self.absorbed_by_marks,
+                self.returned,
+                self.shadow_sources,
+                self.shadow_absorbed_by_marks,
             ),
             balance_guard,
             field_guard,
@@ -203,8 +216,14 @@ class SpatialEngine:
             node.states = tuple(states)
             self.values(seed.position)
         for body in initial.external_bodies:
-            # A body's Node exists and is active from the start: it radiates.
+            # A body's Node exists and is active from the start.
             self._at(body.position)
+        self._initial_totals = self.totals()
+
+    def refresh_initial_totals(self) -> None:
+        """Read the initial line again after the field given with the board was
+        installed (bit-law-v1, `initial_field`): the prefill is the things'
+        presence, booked as initial, not a source."""
         self._initial_totals = self.totals()
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
@@ -232,13 +251,8 @@ class SpatialEngine:
                 localized=self._blank_localized(),
                 rays=tuple(() for _ in self.initial.spatial_fields),
                 detector=mark,
-                detector_ticket=(
-                    mark.seed
-                    if mark is not None
-                    else 0
-                    if self._decay_seed is None
-                    else decay_ticket_seed(self._decay_seed, position)
-                ),
+                # The Node's counter (bit-law-v1, point 14): every Node's starts at 0.
+                detector_ticket=0,
                 body=self._bodies.pop(position, None),
                 remainders=blank_remainders(self.initial.spatial_fields),
                 remainder_phases=blank_remainders(self.initial.spatial_fields),
@@ -303,7 +317,7 @@ class SpatialEngine:
             if any(
                 record is not None and record.type_index in emitter_types | coupled_types
                 for record in records
-            ) or any(holds_source_stock(record, self.initial.spatial_fields) for record in records):
+            ):
                 positions.add(position)
         ordered = tuple(sorted(positions))
         if execution is not None and execution.parallel:
@@ -358,15 +372,16 @@ class SpatialEngine:
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
         """No receiving node exists outside; terminal stock escapes without exterior decay.
 
-        A returning ray never reaches the boundary before its event Node, which its
-        steps bound; one that would escape has no event Node in the world, and the
-        engine fails closed instead of recording an escape (detector-return-v1). A
-        returned field quantum of a spreading family has no event Node: it walks
-        back until something takes it, and escapes like any ray otherwise
-        (field-spreading-v1, the proposal of Highlights 5.5).
+        A returning thing never reaches the boundary before its event Node, which
+        its steps bound; one that would escape has no event Node in the world, and
+        the engine fails closed instead of recording an escape (detector-return-v1).
+        A shadow walking home has no event Node: it follows the traces until
+        something takes it, and escapes like any ray otherwise (bit-law-v1, the
+        amendment's point d: escapes are the only loss). A packet of shadows alone
+        leaves no record: events happen at Nodes that hold a thing (point 13).
         """
-        for definition, rays in zip(self.initial.spatial_fields, packet.rays or (), strict=False):
-            if any(not ray.outbound and (ray.event_ports or not definition.spread) for ray in rays):
+        for rays in packet.rays or ():
+            if any(not ray.outbound and ray.detector == BIT_THING for ray in rays):
                 raise ValueError("a returning ray cannot escape: its event Node is not in the world")
         if packet.body is not None:
             raise ValueError("an external body cannot leave the world: its Node must exist")
@@ -381,6 +396,7 @@ class SpatialEngine:
                     amounts[definition.field][component] = checked_work(
                         amounts[definition.field][component] + value
                     )
+        witnessed = any(any(amounts[i]) for i in range(len(amounts)))
         for index, rays in enumerate(packet.rays):
             if rays:
                 definition = self.initial.spatial_fields[index]
@@ -395,6 +411,18 @@ class SpatialEngine:
                         amounts[definition.momentum_field][axis] = checked_work(
                             amounts[definition.momentum_field][axis] + value
                         )
+                shadows = tuple(ray for ray in rays if ray.detector == BIT_SHADOW)
+                if shadows:
+                    self.shadow_escaped[definition.field][0] = checked_work(
+                        self.shadow_escaped[definition.field][0] + ray_stock(shadows)
+                    )
+                    if definition.momentum_field is not None:
+                        for axis, value in enumerate(ray_momentum(shadows, definition)):
+                            self.shadow_escaped[definition.momentum_field][axis] = checked_work(
+                                self.shadow_escaped[definition.momentum_field][axis] + value
+                            )
+                if any(ray.detector == BIT_THING for ray in rays):
+                    witnessed = True
         for index, values in enumerate(amounts):
             for component, value in enumerate(values):
                 self.escaped[index][component] += value
@@ -406,7 +434,8 @@ class SpatialEngine:
             for i, field in enumerate(self.initial.fields)
             if any(amounts[i])
         }
-        self._event("spatial_escaped", tick, packet.origin, port=packet.port, escaped=escaped)
+        if witnessed:
+            self._event("spatial_escaped", tick, packet.origin, port=packet.port, escaped=escaped)
 
     def deliver(self, tick: int, residents: Mapping[Address3, DisturbanceNode] | None = None) -> None:
         ready: dict[Address3, list[SpatialPacket]] = {}
@@ -459,10 +488,49 @@ class SpatialEngine:
                 finally:
                     self.links.refresh(position)
 
-    def totals(self) -> list[list[int]]:
+    def totals(self, bit: int | None = None) -> list[list[int]]:
+        """The content the engine holds, per field; with `bit` (bit-law-v1) the
+        things' share alone (BIT_THING: the octant stock, the deposits, the
+        resident and travelling things, a polarizer's held quanta) or the
+        shadows' alone (BIT_SHADOW: the shadows resident and travelling, the
+        remainder registers, the dense region)."""
         result = [[0] * field.components for field in self.initial.fields]
         volume = self.initial.shape[0] * self.initial.shape[1] * self.initial.shape[2]
+        things = bit != BIT_SHADOW
+        shadows = bit != BIT_THING
+
+        def taken(rays: Rays) -> Rays:
+            if bit is None:
+                return rays
+            return tuple(ray for ray in rays if ray.detector == bit)
+
         for index, definition in enumerate(self.initial.spatial_fields):
+            if not things:
+                # The octant stock, the deposits and the baseline are things.
+                if definition.spread:
+                    for node in self.nodes.values():
+                        if node.remainders and node.remainders[index]:
+                            result[definition.field][0] += remainder_stock(
+                                node.remainders[index], sum(definition.spread)
+                            )
+                if definition.rays:
+                    for position in self._active:
+                        node = self.nodes[position]
+                        if node.rays:
+                            rays = taken(node.rays[index])
+                            result[definition.field][0] += ray_stock(rays)
+                            if definition.momentum_field is not None:
+                                for axis, value in enumerate(ray_momentum(rays, definition)):
+                                    result[definition.momentum_field][axis] += value
+                    for packets in self.links.values():
+                        for packet in packets:
+                            if packet is not None and packet.rays:
+                                rays = taken(packet.rays[index])
+                                result[definition.field][0] += ray_stock(rays)
+                                if definition.momentum_field is not None:
+                                    for axis, value in enumerate(ray_momentum(rays, definition)):
+                                        result[definition.momentum_field][axis] += value
+                continue
             for component, value in enumerate(unpack(definition.baseline)):
                 result[definition.field][component] += volume * value
             inventories = [self.nodes[position].states[index].populations for position in self._active]
@@ -485,7 +553,7 @@ class SpatialEngine:
             # without enumerating idle history.
             for component, value in enumerate(self.localized[definition.field]):
                 result[definition.field][component] += value
-            if definition.spread:
+            if definition.spread and shadows:
                 # The remainder registers hold whole quanta in total (field-remainder-v1).
                 for node in self.nodes.values():
                     if node.remainders and node.remainders[index]:
@@ -502,28 +570,82 @@ class SpatialEngine:
                 for position in self._active:
                     node = self.nodes[position]
                     if node.rays:
-                        result[definition.field][0] += ray_stock(node.rays[index])
+                        rays = taken(node.rays[index])
+                        result[definition.field][0] += ray_stock(rays)
                         if definition.momentum_field is not None:
-                            for axis, value in enumerate(ray_momentum(node.rays[index], definition)):
+                            for axis, value in enumerate(ray_momentum(rays, definition)):
                                 result[definition.momentum_field][axis] += value
                 for packets in self.links.values():
                     for packet in packets:
                         if packet is not None and packet.rays:
-                            result[definition.field][0] += ray_stock(packet.rays[index])
+                            rays = taken(packet.rays[index])
+                            result[definition.field][0] += ray_stock(rays)
                             if definition.momentum_field is not None:
-                                for axis, value in enumerate(
-                                    ray_momentum(packet.rays[index], definition)
-                                ):
+                                for axis, value in enumerate(ray_momentum(rays, definition)):
                                     result[definition.momentum_field][axis] += value
-        if self.dense is not None:
-            # The content the dense region owns (dense-field-v1): its resident rays,
-            # its registers' whole quanta and what is in flight between its Nodes.
+        if self.dense is not None and shadows:
+            # The content the dense region owns (dense-field-v1): its resident
+            # shadows, its registers' whole quanta and what is in flight between
+            # its Nodes; shadows all (bit-law-v1).
             self.dense.add_totals(result)
         return result
 
+    def thing_registers(self) -> dict[int, list[int]]:
+        """The register of every thing (bit-law-v1, point 15): per thing id, the
+        momentum of its rays (their registers, or amount x heading), resident or
+        travelling, and of its body; a push is the field's arithmetic on this
+        line, not an event."""
+        result: dict[int, list[int]] = {}
+        bundles: list[tuple[SpatialFieldDefinition, Rays]] = []
+        for position in self._active:
+            node = self.nodes[position]
+            if node.rays:
+                bundles.extend(zip(self.initial.spatial_fields, node.rays, strict=True))
+        for packets in self.links.values():
+            for packet in packets:
+                if packet is not None and packet.rays:
+                    bundles.extend(zip(self.initial.spatial_fields, packet.rays, strict=True))
+        for definition, rays in bundles:
+            for ray in rays:
+                if ray.detector == BIT_THING:
+                    entry = result.setdefault(ray.owner, [0, 0, 0])
+                    for axis, value in enumerate(ray_momentum_vector(ray, definition)):
+                        entry[axis] = checked_work(entry[axis] + value)
+        for body in self._located_bodies():
+            entry = result.setdefault(body.thing, [0, 0, 0])
+            for axis in range(3):
+                entry[axis] = checked_work(entry[axis] + body.momentum[axis])
+        return dict(sorted(result.items()))
+
+    def shadow_counts(self) -> dict[int, list[int]]:
+        """The shadows per thing (bit-law-v1, the amendment's point d): for each
+        owner the number of shadow rays and their amount, over the resident and
+        travelling shadows, the dense region's included; the registers' quanta
+        belong to no ray yet and are not counted."""
+        result: dict[int, list[int]] = {}
+        bundles: list[Rays] = []
+        for position in self._active:
+            node = self.nodes[position]
+            bundles.extend(node.rays)
+        for packets in self.links.values():
+            for packet in packets:
+                if packet is not None and packet.rays:
+                    bundles.extend(packet.rays)
+        for rays in bundles:
+            for ray in rays:
+                if ray.detector == BIT_SHADOW:
+                    entry = result.setdefault(ray.owner, [0, 0])
+                    entry[0] += 1
+                    entry[1] = checked_work(entry[1] + ray.amount)
+        if self.dense is not None:
+            self.dense.shadow_counts(result)
+        return dict(sorted(result.items()))
+
     def charge_totals(self) -> dict[str, int]:
-        """The charge readout of every ray field: charge x amount summed over the rays
-        resident at active Nodes and in flight on Links, the owners totals() reads."""
+        """The charge readout of every ray field: charge x amount summed over the things
+        resident at active Nodes and in flight on Links, the owners totals() reads; a
+        shadow carries no charge (bit-law-v1), so the registers and the dense region
+        hold none."""
         result: dict[str, int] = {}
         for index, definition in enumerate(self.initial.spatial_fields):
             if not definition.rays:
@@ -537,18 +659,11 @@ class SpatialEngine:
                 for packet in packets:
                     if packet is not None and packet.rays:
                         total = checked_work(total + ray_charge(packet.rays[index], definition))
-            if definition.spread and definition.charge:
-                for node in self.nodes.values():
-                    if node.remainders and node.remainders[index]:
-                        held = remainder_stock(node.remainders[index], sum(definition.spread))
-                        total = checked_work(total + checked_work(held * definition.charge))
             if definition.charge:
                 for body in self._located_bodies():
                     if body.polarizer is not None and body.polarizer.family == index:
                         total = checked_work(total + checked_work(held_stock(body) * definition.charge))
             result[self.initial.fields[definition.field].name] = total
-        if self.dense is not None:
-            self.dense.add_charge_totals(result)
         return result
 
     def _located_bodies(self) -> list[ExternalBody]:
@@ -610,8 +725,17 @@ class SpatialEngine:
         for definition in self.initial.spatial_fields:
             index = definition.field
             expected = tuple(
-                start + source + reaction + transformed - loss - escaped - annulled - absorbed - taken
-                for start, source, reaction, transformed, loss, escaped, annulled, absorbed, taken in zip(
+                start
+                + source
+                + reaction
+                + transformed
+                - loss
+                - escaped
+                - annulled
+                - absorbed
+                - taken
+                - returned
+                for start, source, reaction, transformed, loss, escaped, annulled, absorbed, taken, returned in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
@@ -621,6 +745,7 @@ class SpatialEngine:
                     self.annulled[index],
                     self.absorbed[index],
                     self.absorbed_by_marks[index],
+                    self.returned[index],
                     strict=True,
                 )
             )
@@ -635,6 +760,7 @@ class SpatialEngine:
                 "annulled": tuple(self.annulled[index]),
                 "absorbed_by_bodies": tuple(self.absorbed[index]),
                 "absorbed_by_marks": tuple(self.absorbed_by_marks[index]),
+                "returned": tuple(self.returned[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(
                     {"transformations": tuple(self.transformations[index])}
@@ -696,7 +822,13 @@ class SpatialEngine:
                 if i < len(mark.counter) and mark.counter[i]
             }
             result.append(
-                {"position": list(mark.position), "momentum": list(mark.momentum), "counter": counter}
+                {
+                    "position": list(mark.position),
+                    "momentum": list(mark.momentum),
+                    "counter": counter,
+                    # The things the mark absorbed, whose shadows are home to it.
+                    **({"things": list(mark.things)} if mark.things else {}),
+                }
             )
         return result
 
@@ -736,6 +868,8 @@ class SpatialEngine:
                     "arrival_mask": node.arrival_mask,
                     "delay_counts": node.delay_counts,
                     "waiting_until": None if node.pending is None else node.pending.ready_tick,
+                    # The trace register (bit-law-v1), only when set.
+                    **({"traces": [list(entry) for entry in node.traces]} if node.traces else {}),
                 }
                 for position, node in sorted(self.nodes.items())
             ],
@@ -773,19 +907,22 @@ class SpatialEngine:
                     ):
                         continue
                     block, phases = node.remainders[index], node.remainder_phases[index]
-                    for sign in REMAINDER_SIGNS:
-                        start = (sign + 1) * 6
-                        values = block[start : start + 6]
-                        if any(values):
-                            remainders.append(
-                                {
-                                    "position": position,
-                                    "family": self.initial.fields[definition.field].name,
-                                    "sign": sign,
-                                    "registers": list(values),
-                                    "phases": list(phases[start : start + 6]),
-                                    "total": sum(definition.spread),
-                                }
-                            )
+                    owners = definition.owners or (0,)
+                    for rank in range(len(block) // REMAINDER_SLOTS):
+                        for sign in REMAINDER_SIGNS:
+                            start = rank * REMAINDER_SLOTS + (sign + 1) * 6
+                            values = block[start : start + 6]
+                            if any(values):
+                                remainders.append(
+                                    {
+                                        "position": position,
+                                        "family": self.initial.fields[definition.field].name,
+                                        "owner": owners[rank],
+                                        "sign": sign,
+                                        "registers": list(values),
+                                        "phases": list(phases[start : start + 6]),
+                                        "total": sum(definition.spread),
+                                    }
+                                )
             result["field_remainders"] = remainders
         return result

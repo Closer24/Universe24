@@ -181,12 +181,7 @@
       "kerengonen": {
         "phase_advance": 0
       },
-      "charge": 0,
-      "field_of": "proton",
-      "release": [
-        1,
-        749
-      ]
+      "charge": 0
     },
     {
       "field": "proton",
@@ -225,7 +220,7 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 2,
+      "ray_slots": 24,
       "metric": "links",
       "pace": [
         1,
@@ -235,7 +230,11 @@
       "kerengonen": {
         "phase_advance": 0
       },
-      "charge": 3
+      "charge": 3,
+      "release": [
+        1,
+        749
+      ]
     },
     {
       "field": "launcher",
@@ -375,11 +374,11 @@
           "type": "electron"
         },
         {
-          "type": "light_of_nucleus"
+          "type": "proton"
         }
       ],
       "momentum_table": {
-        "light_of_nucleus": -1
+        "proton": -1
       },
       "invariants": [
         {
@@ -398,7 +397,8 @@
             ]
           }
         }
-      ]
+      ],
+      "reads": "charge"
     },
     {
       "name": "phase_plate",
@@ -457,8 +457,9 @@
       "charge": 6,
       "coupling": "phase_plate",
       "momentum_table": {
-        "light_of_nucleus": -1
-      }
+        "proton": -1
+      },
+      "reads": "charge"
     },
     {
       "position": [

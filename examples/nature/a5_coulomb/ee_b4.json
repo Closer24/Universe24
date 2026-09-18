@@ -140,7 +140,7 @@
     ]
    ],
    "rays_per_tick": 1,
-   "ray_slots": 2,
+   "ray_slots": 16,
    "metric": "links",
    "pace": [
     1,
@@ -150,7 +150,19 @@
    "charge": -3,
    "kerengonen": {
     "phase_advance": 1
-   }
+   },
+   "release": [
+    1,
+    4
+   ],
+   "spread": [
+    6,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
   },
   {
    "field": "electron_b",
@@ -189,7 +201,7 @@
     ]
    ],
    "rays_per_tick": 1,
-   "ray_slots": 2,
+   "ray_slots": 16,
    "metric": "links",
    "pace": [
     1,
@@ -199,7 +211,19 @@
    "charge": -3,
    "kerengonen": {
     "phase_advance": 1
-   }
+   },
+   "release": [
+    1,
+    4
+   ],
+   "spread": [
+    6,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
   },
   {
    "field": "light_a",
@@ -248,20 +272,7 @@
    "charge": 0,
    "kerengonen": {
     "phase_advance": 0
-   },
-   "field_of": "electron_a",
-   "release": [
-    1,
-    4
-   ],
-   "spread": [
-    6,
-    1,
-    1,
-    1,
-    1,
-    1
-   ]
+   }
   },
   {
    "field": "light_b",
@@ -310,20 +321,7 @@
    "charge": 0,
    "kerengonen": {
     "phase_advance": 0
-   },
-   "field_of": "electron_b",
-   "release": [
-    1,
-    4
-   ],
-   "spread": [
-    6,
-    1,
-    1,
-    1,
-    1,
-    1
-   ]
+   }
   }
  ],
  "emissions": [
@@ -382,11 +380,11 @@
      "type": "electron_a"
     },
     {
-     "type": "light_b"
+     "type": "electron_b"
     }
    ],
    "momentum_table": {
-    "light_b": 1
+    "electron_b": 1
    },
    "invariants": [
     {
@@ -405,7 +403,8 @@
       ]
      }
     }
-   ]
+   ],
+   "reads": "charge"
   },
   {
    "name": "electron_field_turn_b",
@@ -414,11 +413,11 @@
      "type": "electron_b"
     },
     {
-     "type": "light_a"
+     "type": "electron_a"
     }
    ],
    "momentum_table": {
-    "light_a": 1
+    "electron_a": 1
    },
    "invariants": [
     {
@@ -437,7 +436,8 @@
       ]
      }
     }
-   ]
+   ],
+   "reads": "charge"
   }
  ]
 }

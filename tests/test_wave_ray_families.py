@@ -137,7 +137,13 @@ def document(shape, families, lamps, ticks, ray_interactions=None):
 
 def rays_of(world):
     """Every Node holding a ray, with its bundles per spatial field, for exact comparison."""
-    return {node.position: node.rays for node in world.inventory_view().nodes if any(node.rays)}
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    return {
+        node.position: tuple(tuple(replace(ray, owner=0) for ray in bundle) for bundle in node.rays)
+        for node in world.inventory_view().nodes
+        if any(node.rays)
+    }
 
 
 def reflect(charge_assignment=None, invariant_name="amount"):

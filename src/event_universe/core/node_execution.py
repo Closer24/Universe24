@@ -8,7 +8,7 @@ from typing import TypeVar
 from .disturbance_state import DisturbanceRecord, LocalPlan
 from .event_resolution import Planner as DisturbancePlanner
 from .plan_reuse import PlanReuse
-from .spatial_state import Rays, Remainders, SpatialPlan, SpatialState
+from .spatial_state import Rays, Remainders, SpatialPlan, SpatialState, Traces
 
 SpatialPlanner = Callable[
     [
@@ -21,6 +21,7 @@ SpatialPlanner = Callable[
         Remainders,
         Remainders,
         int,
+        Traces,
     ],
     SpatialPlan,
 ]
@@ -62,6 +63,9 @@ class SpatialPlanningInput:
     # The Node's ticket state before the cycle (decay-draw-v1): part of the
     # request, so that a reused plan never replays a draw at another state.
     detector_ticket: int = 0
+    # The Node's trace register (bit-law-v1): the Port the last thing of each
+    # owner left by, read by the shadows walking home; part of the request.
+    traces: Traces = ()
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -102,6 +106,7 @@ def finish_local_cycle(
                     request.remainders,
                     request.remainder_phases,
                     request.detector_ticket,
+                    request.traces,
                 )
             else:
                 result = None
@@ -132,6 +137,7 @@ def _plan_spatial_batch(
             item.remainders,
             item.remainder_phases,
             item.detector_ticket,
+            item.traces,
         )
         for item in items
     )
@@ -192,6 +198,7 @@ class NodeExecution:
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
         detector_ticket: int = 0,
+        traces: Traces = (),
     ) -> SpatialPlan:
         request = SpatialPlanningInput(
             states,
@@ -203,6 +210,7 @@ class NodeExecution:
             remainders,
             remainder_phases,
             detector_ticket,
+            traces,
         )
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 

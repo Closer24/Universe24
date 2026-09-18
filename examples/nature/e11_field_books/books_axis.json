@@ -181,7 +181,7 @@
     ]
    ],
    "rays_per_tick": 1,
-   "ray_slots": 2,
+   "ray_slots": 24,
    "metric": "links",
    "pace": [
     1,
@@ -191,7 +191,11 @@
    "charge": 3,
    "kerengonen": {
     "phase_advance": 0
-   }
+   },
+   "release": [
+    1,
+    4096
+   ]
   },
   {
    "field": "light",
@@ -240,12 +244,7 @@
    "charge": 0,
    "kerengonen": {
     "phase_advance": 0
-   },
-   "field_of": "proton",
-   "release": [
-    1,
-    4096
-   ]
+   }
   }
  ],
  "emissions": [
@@ -296,11 +295,11 @@
      "type": "electron"
     },
     {
-     "type": "light"
+     "type": "proton"
     }
    ],
    "momentum_table": {
-    "light": -1
+    "proton": -1
    },
    "invariants": [
     {
@@ -319,7 +318,8 @@
       ]
      }
     }
-   ]
+   ],
+   "reads": "charge"
   }
  ],
  "external_bodies": [
@@ -333,8 +333,9 @@
    "amount": 1048576,
    "charge": 3,
    "momentum_table": {
-    "light": -1
-   }
+    "proton": -1
+   },
+   "reads": "charge"
   }
  ]
 }

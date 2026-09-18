@@ -71,42 +71,53 @@ MAX_RAY_SLOTS = 4096
 RAY_EVENT_STATE = "ray-event-state-v1"
 EventShares = tuple[int, int, int, int, int, int]
 NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
-# The Detector bit carried by a ray: no Detector event, or a Detector event
-# that drew 0 or 1. Every created ray carries 0; a marked Node sets 1 or 2 on
-# arrival (detector_draw). The order of the three values is the order of the
-# inheritance below: 1 over 0 over none.
-DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
-# The Detector's bit as a property of the ray (Highlights 5.4, 2026-09-17,
-# detector-bit-property-v1): the bit travels with the ray like charge. A coupling
-# reads it at a meeting as the read-only ray property `detector`; the outputs of
-# every meeting a marked ray takes part in inherit it, the highest bit of the
-# inputs unless the rule declares `bit` (inherited_bit); and a marked Node reads
-# it: a ray carrying 1 is already realized and passes without a draw, a ray
-# carrying 0 is a transmission and is never drawn, only a ray carrying no bit is
-# drawn, each by the mark's declared coupling (on_bit_1, on_bit_0), pass being
-# the default and draw the draw of detector-mark-v1 on that arrival.
-DETECTOR_BIT_PROPERTY = "detector-bit-property-v1"
-# What a mark declares for a ray carrying a bit: pass it without a draw, or draw.
-BIT_PASS, BIT_DRAW = 0, 1
-BIT_COUPLINGS = ("pass", "draw")
+# The law of the bit (Highlights 5.4, model owner 2026-09-18; bit-law-v1,
+# feature 15 of issue #169): every ray carries one bit, and the bit says what
+# the ray is: BIT_THING, the thing itself, or BIT_SHADOW, its shadow, the
+# field. There is no ray without a bit and nothing else distinguishes rays
+# (Highlights 3.3: there is no light and no matter). The bit is set at birth:
+# what is born from content is a thing (a seeded ray, a ray emitted at an
+# event, the pieces of a split, the outputs of every meeting, the
+# transmissions of an inverse split, a body's token); what is placed as a
+# thing's field (the prefilled field of `initial_field`, the departures of a
+# spread, a shadow re-released when it comes home) is a shadow. A thing moves
+# whole on its line and turns by the pushes it takes; a shadow spreads by the
+# table, has no mass, no clock (its phase never advances, whatever its family's
+# rate) and no delay, and moves at the causal speed. A shadow meeting a thing
+# under a momentum table gives the thing the push the table declares and turns
+# back on its own steps carrying its amount and the opposite momentum, -dp, in
+# its register, walks home to the thing that released it (its owner, by the
+# trace the owner leaves at every Node it departs), and is absorbed back and
+# re-released; a shadow meeting the thing that released it is home, never a
+# push; a thing meeting a thing is the declared tables; a shadow meeting a
+# shadow is the coherent sum of the spread; a marked Node returns a shadow
+# without a draw and counts nothing of it, and draws for a thing, absorbing it
+# on 1 (or passing it where the mark says pass) and returning it on 0. The
+# read-only ray property `detector` is this bit. The old values (0 none, 1 a
+# draw of 0, 2 a draw of 1; detector-bit-property-v1) are retired with the
+# marks' on_bit couplings, the rules' `bit` key and the detector_pass record.
+BIT_LAW = "bit-law-v1"
+BIT_SHADOW, BIT_THING = 0, 1
+# Every thing has a stable identity (the model owner, 2026-09-18): a small
+# integer declared on its source (`thing` on a disturbance type or an external
+# body, by default the source's place in the declarations), carried by every ray
+# of the thing as `owner`, stamped on the shadows the thing's field is made of and
+# kept through their spread, return and re-release; two things of one family are
+# told apart by it, and a shadow whose owner is at the Node it reaches is home.
+MAX_THING_ID = 1 << 20
 # A click is an absorption (Highlights 5.4, model owner 2026-09-18;
-# detector-absorb-v1, feature 2c): the field quantum a marked Node realizes ends
-# there. On a draw of 1 the arriving content of a field family, a family
-# declared field_of another (released-field-v1: the eventless field ray), is
-# absorbed into the mark's exact counter for that family, its momentum onto the
-# mark's momentum, booked on the audit as absorbed by marks, and nothing of it is
-# delivered to the Node's rays or spread on; matter that draws 1 passes with the
-# bit 1 as before. How a mark meets each family on a click is its declared
-# coupling (on_click), absorb the default for a field family and pass for matter.
+# detector-absorb-v1, feature 2c): the thing a marked Node realizes ends there.
+# On a draw of 1 the arriving thing is absorbed into the mark's exact counter
+# for its family, its momentum onto the mark's momentum, booked on the audit as
+# absorbed by marks, and nothing of it is delivered to the Node's rays; the
+# draw is the mark's efficiency (bit-law-v1). How a mark meets each family on a
+# click is its declared coupling (on_click): absorb, the default for every
+# family, or pass, the ray continuing on its line.
 DETECTOR_ABSORB = "detector-absorb-v1"
-# What a mark does with a ray that draws 1, per spatial field: pass it with the
-# bit 1 (detector-mark-v1) or absorb it; CLICK_DEFAULT reads the family's
-# default at the draw (absorb when the family is declared field_of, else pass).
+# What a mark does with a ray that draws 1, per spatial field: pass it on its
+# line or absorb it; CLICK_DEFAULT reads the default, absorb (bit-law-v1).
 CLICK_PASS, CLICK_ABSORB, CLICK_DEFAULT = 0, 1, -1
 CLICK_COUPLINGS = ("pass", "absorb")
-# What a meeting's outputs inherit: the highest of the inputs' bits (the default),
-# no bit, or the bit of input i (a nonnegative index, the participant's role).
-BIT_HIGHEST, BIT_NONE = -1, -2
 # Layers of event spacetime (Highlights 5.1): a layer is a set of families that
 # couple, and a meeting exists only inside a layer. Layers are derived, never
 # declared: the connected components of the ray fields over the participants
@@ -118,12 +129,37 @@ Layers = tuple[tuple[int, ...], ...]
 # meeting Node, an amount may be split by a declared table indexed by the phase
 # difference of two inputs, and every family's stock is exact across the event.
 RAY_MEETING = "ray-meeting-conversion-v1"
-# The field as the ray's information (Highlights 3.5, 3.14, 3.15 and 3.28): a ray
-# field declared with field_of is the field of that family, released at every
-# Node a ray of the family crosses as one ray per heading, booked as a source;
-# a meeting of a field ray is an ordinary declared rule whose outputs return it
-# reversed as the recoil. A field has no field.
+# The field as the ray's information (Highlights 3.5, 3.14, 3.15 and 3.28).
+# Since bit-law-v1 (2026-09-18) a shadow is a ray of the SAME family as its
+# thing with the bit 0 (there is no separate field family: `field_of` collapsed
+# into family + bit), and a thing does not emit its field: the family's
+# `release` ratio is the declared size of a thing's shadow set (the whole
+# quanta of amount x n / d per heading and interval of the prefill, the field
+# given with the board by `initial_field`), a thing releases nothing on its
+# own, and a shadow that comes home leaves again from where the thing now is.
+# A shadow has no shadow.
 RELEASED_FIELD = "released-field-v1"
+# The field given with the board (bit-law-v1, the model owner's amendment of
+# 2026-09-18): `initial_field` declares, per field family, either the steady
+# state of the declared things computed by the split table's mean field in
+# exact integers (`fill`, the intervals of the transient, from every body and
+# every seeded record holding the origin family), or a profile of shadows
+# (`rays`), booked as `initial`, the thing's presence and not a source.
+INITIAL_FIELD_MODES = ("fill", "rays")
+# The trace a thing leaves at a Node (bit-law-v1, point 3 of the law): the Port
+# the last thing of each owner left by, bounded to the most recent owners, so
+# that a shadow walking home follows the thing that released it if it moved;
+# TRACE_END in place of a Port where the thing ended, absorbed by a mark, which
+# is then the home of its shadows (the model owner, 2026-09-18, PR #270).
+MAX_TRACES = 16
+TRACE_END = 6
+# The 0-meets-1 table (bit-law-v1, point 16, the model owner, 2026-09-18): per
+# pair of families one rule for what the thing multiplies the shadows' message
+# by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
+# x heading x the thing's content, the acceleration content-independent) or
+# "charge" (a charged family's shadow, dp = sign x amount x heading x the
+# shadow's source sign x the thing's charge); no default.
+PUSH_READS = ("content", "charge")
 # Gravity by delay (Highlights 3.28, ray-binding-v1): a meeting output may carry
 # a delay by a declared table per the Port the field ray came through, a lag of
 # the output's face clock in phase steps that turns the ray toward the lagging
@@ -277,33 +313,32 @@ POLARIZER_SLOTS = 6
 class DetectorMark:
     """A Node's Detector bit with its setting and ticket seed: bounded Node metadata.
 
-    The setting is the pass share of the draw range, an explicit rational with no
-    default; the seed starts the mark's own ticket stream. What the mark does with
-    a ray that already carries a bit is its declared coupling
-    (detector-bit-property-v1): `on_bit_1` and `on_bit_0` are BIT_PASS (the
-    default: the ray passes without a draw) or BIT_DRAW (the draw of
-    detector-mark-v1 on that arrival); `bit_keys` is 1 when the world file wrote
-    either key, read by the runner's identity record alone. What the mark does
-    with a ray that draws 1 is its coupling per spatial field (detector-absorb-v1):
+    The setting is the mark's efficiency (bit-law-v1), the declared table "catch
+    n things in every d" read by the mark's own counter, an explicit rational
+    with no default; `seed` is retired (point 14 of the law: there is no
+    lottery), kept at 0 so that old worlds and records parse, never read. What
+    the mark does with a thing
+    that draws 1 is its coupling per spatial field (detector-absorb-v1):
     `on_click` holds CLICK_PASS, CLICK_ABSORB or CLICK_DEFAULT per spatial field
-    index, empty for all defaults, and `click_keys` is 1 when the world file wrote
-    the key. The mark's one exact counter, `counter` per spatial field (empty
-    until the first absorption), and `momentum`, the momentum of what it absorbed,
-    are bounded metadata like a body's sink. Nothing here is a record, stock or a
-    reading of any ray.
+    index, empty for all defaults (absorb), and `click_keys` is 1 when the world
+    file wrote the key. A shadow is returned without a draw and never counted.
+    The mark's one exact counter, `counter` per spatial field (empty until the
+    first absorption), and `momentum`, the momentum of what it absorbed, are
+    bounded metadata like a body's sink; `things` are the ids of the things it
+    absorbed, sorted: the mark is the home of their shadows, and each of them
+    that returns is absorbed into the same counter with its momentum (the model
+    owner, 2026-09-18). Nothing here is a record, stock or a reading of any ray.
     """
 
     position: Address3
     pass_numerator: int
     pass_denominator: int
-    seed: int
-    on_bit_1: int = BIT_PASS
-    on_bit_0: int = BIT_PASS
-    bit_keys: int = 0
+    seed: int = 0
     on_click: tuple[int, ...] = ()
     click_keys: int = 0
     counter: tuple[int, ...] = ()
     momentum: tuple[int, int, int] = (0, 0, 0)
+    things: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -314,12 +349,11 @@ class DetectorMark:
             raise ValueError("a Detector setting requires a positive denominator")
         if not 0 <= bounded(self.pass_numerator) <= self.pass_denominator:
             raise ValueError("a Detector setting must be a rational from 0 through 1")
-        if type(self.seed) is not int or not 0 <= self.seed < TICKET_MODULUS:
-            raise ValueError("a Detector seed must stay below the ticket modulus")
-        if any(value not in (BIT_PASS, BIT_DRAW) for value in (self.on_bit_1, self.on_bit_0)):
-            raise ValueError("a Detector mark meets a carried bit by pass or draw")
-        if self.bit_keys not in (0, 1):
-            raise ValueError("a Detector mark declares its bit keys as 0 or 1")
+        if type(self.seed) is not int or self.seed != 0:
+            raise ValueError(
+                "a Detector mark has no seed (bit-law-v1, point 14: there is no lottery); "
+                "its counter starts at 0"
+            )
         if type(self.on_click) is not tuple or any(
             value not in (CLICK_PASS, CLICK_ABSORB, CLICK_DEFAULT) for value in self.on_click
         ):
@@ -332,6 +366,12 @@ class DetectorMark:
             raise ValueError("a Detector mark momentum requires three integers")
         for value in self.momentum:
             checked_work(value)
+        if (
+            type(self.things) is not tuple
+            or any(type(v) is not int or not 0 <= v < MAX_THING_ID for v in self.things)
+            or tuple(sorted(set(self.things))) != self.things
+        ):
+            raise ValueError("a Detector mark's things are distinct thing ids in ascending order")
 
 
 @dataclass(frozen=True, slots=True)
@@ -376,12 +416,13 @@ class ExternalBody:
     """The external body mark of a Node (external-body-v1): bounded Node metadata.
 
     The declaration (position, family as a spatial field index, amount of any
-    width, charge, the released field's index or -1, the coupling as a ray
-    interaction index, BODY_SINK or BODY_POLARIZER with its polarizer declaration,
+    width, charge, the coupling as a ray interaction index, BODY_SINK or
+    BODY_POLARIZER with its polarizer declaration,
     the released phase, the momentum table as one sign per spatial field), the
     momentum with its three exact accumulators, one exact sink counter per spatial
     field and, for a polarizer, six remainder registers with their phases
-    (ray-polarization-v1). No rays, no history.
+    (ray-polarization-v1). The body's identity as a thing, `thing` (bit-law-v1):
+    the owner its shadows carry. No rays, no history.
     """
 
     index: int
@@ -389,13 +430,17 @@ class ExternalBody:
     family: int
     amount: int
     charge: int = 0
-    field: int = -1
     coupling: int = BODY_SINK
     phase: int = 0
     signs: tuple[int, ...] = ()
     momentum: tuple[int, int, int] = (0, 0, 0)
     accumulators: tuple[int, int, int] = (0, 0, 0)
     sink: tuple[int, ...] = ()
+    thing: int = 0
+    # What the body multiplies the shadows' message by (bit-law-v1, point 16): the
+    # index of "content" or "charge" in PUSH_READS, required beside a momentum
+    # table; -1 without one.
+    reads: int = -1
     # The polarizer (ray-polarization-v1): the declaration, and the registers that
     # own the shares below one quantum in units of 1/D, D the table's length,
     # sign-major (-1, 0, 1) then pass and sink, with a phase each; () otherwise.
@@ -414,8 +459,6 @@ class ExternalBody:
             raise ValueError("an external body amount must be a positive integer")
         if type(self.family) is not int or self.family < 0:
             raise ValueError("an external body family must be a spatial field index")
-        if type(self.field) is not int or self.field < -1:
-            raise ValueError("an external body field must be a spatial field index or -1")
         if type(self.coupling) is not int or self.coupling < BODY_POLARIZER:
             raise ValueError("an external body coupling must be a rule index, the sink or a polarizer")
         if (self.coupling == BODY_POLARIZER) != (self.polarizer is not None):
@@ -445,8 +488,17 @@ class ExternalBody:
             raise ValueError("an external body accumulator stays below its amount")
         if type(self.signs) is not tuple or any(sign not in (-1, 0, 1) for sign in self.signs):
             raise ValueError("an external body momentum table holds signs -1, 0 or 1")
+        if any(self.signs) and not 0 <= self.reads < len(PUSH_READS):
+            raise ValueError(
+                "a momentum table declares what the body multiplies the shadows' message by: "
+                "reads content or charge (bit-law-v1, point 16)"
+            )
+        if not any(self.signs) and self.reads != -1:
+            raise ValueError("reads is declared beside a momentum table")
         if type(self.sink) is not tuple or any(type(v) is not int or v < 0 for v in self.sink):
             raise ValueError("an external body sink holds nonnegative counters")
+        if type(self.thing) is not int or not 0 <= self.thing < MAX_THING_ID:
+            raise ValueError("an external body thing id is an integer below the id bound")
 
 
 @dataclass(frozen=True, slots=True)
@@ -474,12 +526,14 @@ class Ray:
     # the walk back; 1 while the ray travels on its event's heading, 0 once it
     # is reversed on its line; the six-bit mask of the Ports the event sent to
     # and the amount it sent through each (six fixed entries, port order, zero
-    # where the mask bit is zero); the Detector bit of the event, 0 for none.
+    # where the mask bit is zero); the bit of the law (bit-law-v1): BIT_THING,
+    # the thing itself, or BIT_SHADOW, its shadow, set at birth and read by every
+    # step of the Node's law. A shadow has no event, no delay and no clock.
     steps: int = 0
     outbound: int = 1
     event_ports: int = 0
     event_shares: EventShares = NO_EVENT_SHARES
-    detector: int = DETECTOR_NONE
+    detector: int = BIT_THING
     # Bending by delay (ray-binding-v1, Highlights 3.28): the lag of the ray's
     # output-face clocks in phase steps, one signed integer per axis, positive
     # toward the +axis Port. A transverse lag that reaches the phase modulus is
@@ -508,6 +562,11 @@ class Ray:
     # unpolarized ray, which every existing world's ray is. Part of the merge
     # identity; read by the polarizer and by a coupling's guard, nowhere else.
     polarization: int = POLARIZATION_NONE
+    # The owner (bit-law-v1): the identity of the thing this ray is, or of the
+    # thing whose shadow it is; 0 for a thing born of no declared source. Part
+    # of the merge identity; a shadow at a Node holding a thing of its owner is
+    # home, and a momentum table never pushes a thing with its own shadow.
+    owner: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -515,6 +574,8 @@ Rays = tuple[Ray, ...]
 # integers in units of 1/S, sign-major (-1, 0, 1) then Port, or () for a family
 # that does not spread; the phases likewise.
 Remainders = tuple[tuple[int, ...], ...]
+# The trace register of a Node (bit-law-v1): (owner, Port) pairs, most recent last.
+Traces = tuple[tuple[int, int], ...]
 
 # Structural non-owning projections used by the ordinary indexed evaluator.
 RAY_PROPERTIES = (
@@ -527,9 +588,9 @@ RAY_PROPERTIES = (
     # that family's charge per quantum, read-only views for a coupling at a meeting.
     FieldDefinition("family", 1, "spatial field index", False, False),
     FieldDefinition("charge", 1, "charge per quantum", True, False),
-    # detector-bit-property-v1: the Detector bit the ray carries, as the engine
-    # stores it (0 none, 1 a draw of 0, 2 a draw of 1), a read-only view.
-    FieldDefinition("detector", 1, "Detector bit", False, False),
+    # bit-law-v1: the bit the ray carries, 1 a thing and 0 a shadow, a read-only
+    # view; a rule meets things alone, so a guard reads 1 here.
+    FieldDefinition("detector", 1, "the bit of the law", False, False),
     # ray-polarization-v1: the polarization the ray carries, a step of the family's
     # polarization circle or -1 for none, a read-only view in a guard; a meeting's
     # output declares its own (`polarization` on the output).
@@ -677,6 +738,11 @@ def validate_ray_participants(
             # the ray the named field rays push. A table on a rule that assigns was
             # the push of a bound group (bound-group-motion-v1), removed on
             # 2026-09-17 by loop-binding-v1.
+            if rule.reads not in PUSH_READS:
+                raise ValueError(
+                    "a momentum table declares what the thing multiplies the shadows' message "
+                    "by: reads content or charge (bit-law-v1, point 16)"
+                )
             participants = {kind for role in rule.participants for kind in role}
             if (
                 rule.outputs
@@ -696,6 +762,8 @@ def validate_ray_participants(
                     "a momentum table on a coupling of free rays names every role but the one ray it turns"
                 )
             selected.update(kind for kind, sign in enumerate(rule.momentum_table) if sign)
+        elif rule.reads:
+            raise ValueError("reads is declared beside a momentum table")
     for layer in ray_layers(definitions, rules):
         # The indexed selector's capacity bounds one meeting, and a meeting exists
         # only inside a layer: fields of different layers never share it.
@@ -810,48 +878,39 @@ def validate_ray_coupling(initial: InitialState) -> None:
 def validate_released_fields(
     definitions: tuple[SpatialFieldDefinition, ...], fields: tuple[FieldDefinition, ...]
 ) -> None:
-    """The admission of a released field (released-field-v1): a positive, conserved,
-    unpaced unit-axial ray field on the links metric with the six Port headings,
-    the field of another such ray field with the same phase steps, which is not
-    itself a field of anything, released as a rational at most 1."""
+    """The admission of a family with a shadow set (released-field-v1 under
+    bit-law-v1): a positive, conserved, unpaced unit-axial ray family on the
+    links metric with the six Port headings, whose `release` is a rational at
+    most 1, the size of its things' shadow sets. A family without a release
+    declares the ratio 0 / 1."""
     for definition in definitions:
-        if definition.field_of is None:
-            if definition.release_numerator or definition.release_denominator != 1:
-                raise ValueError("a release ratio requires field_of")
-            continue
-        if type(definition.field_of) is not int or not 0 <= definition.field_of < len(definitions):
-            raise ValueError("field_of refers to an unavailable spatial field")
-        origin = definitions[definition.field_of]
-        if origin is definition or origin.field == definition.field:
-            raise ValueError("a family is not its own field")
-        if origin.field_of is not None:
-            raise ValueError("a field has no field")
         numerator, denominator = definition.release_numerator, definition.release_denominator
+        if not numerator:
+            if denominator != 1:
+                raise ValueError("a family without a release declares the ratio 0 / 1")
+            continue
         if not 1 <= bounded(numerator) <= bounded(denominator):
             raise ValueError("release must be a rational from 1 / d through 1")
-        for member in (definition, origin):
-            field = fields[member.field]
-            if (
-                not member.rays
-                or field.signed
-                or not field.conserved
-                or any(unpack(member.baseline))
-                or member.euclidean
-                or member.pace_numerator != member.pace_denominator
-                or member.self_exclusion
-                or member.decay is not None
-                or any(sum(abs(c) for c in heading) != 1 for heading in member.headings)
-            ):
-                raise ValueError("a released field requires positive unit-axial unpaced ray fields")
+        field = fields[definition.field]
+        if (
+            not definition.rays
+            or field.signed
+            or not field.conserved
+            or any(unpack(definition.baseline))
+            or definition.euclidean
+            or definition.pace_numerator != definition.pace_denominator
+            or definition.self_exclusion
+            or definition.decay is not None
+            or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
+        ):
+            raise ValueError("a released field requires positive unit-axial unpaced ray fields")
         if any(heading not in definition.headings for heading in PORT_HEADINGS):
             raise ValueError("a released field requires the six Port headings")
-        if definition.phase_modulus != origin.phase_modulus:
-            raise ValueError("a released field carries its source's phase steps: one phase width")
 
 
 def validate_released_field_admission(initial: InitialState) -> None:
-    """A world with a released field runs under the shared Detector admission."""
-    if not any(definition.field_of is not None for definition in initial.spatial_fields):
+    """A world with a shadow set runs under the shared Detector admission."""
+    if not any(definition.release_numerator for definition in initial.spatial_fields):
         return
     if (
         initial.schema_version != 1
@@ -869,11 +928,7 @@ def validate_released_field_admission(initial: InitialState) -> None:
         raise ValueError("a released field requires the default fixed H=1 spatial clock")
     validate_released_fields(initial.spatial_fields, initial.fields)
     involved = {
-        definition.field for definition in initial.spatial_fields if definition.field_of is not None
-    } | {
-        initial.spatial_fields[definition.field_of].field
-        for definition in initial.spatial_fields
-        if definition.field_of is not None
+        definition.field for definition in initial.spatial_fields if definition.release_numerator
     }
     if any(rule.field in involved for rule in initial.spatial_couplings):
         raise ValueError("a released field does not support coupled responses or absorption")
@@ -892,39 +947,27 @@ def charge_sign(charge: int) -> int:
 
 
 def _released(
-    amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None, sign: int = 0
+    amount: int,
+    phase: int,
+    definition: SpatialFieldDefinition,
+    skip: Heading | None,
+    sign: int = 0,
+    owner: int = 0,
 ) -> Rays:
+    """Shadows of one owner, one per Port heading but `skip`, fresh (steps 0)."""
     return tuple(
-        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase, source_sign=sign)
+        Ray(
+            definition.headings.index(heading),
+            (0, 0, 0),
+            amount,
+            phase=phase,
+            detector=BIT_SHADOW,
+            source_sign=sign,
+            owner=owner,
+        )
         for heading in PORT_HEADINGS
         if heading != skip
     )
-
-
-def release_field(
-    rays: Rays,
-    definition: SpatialFieldDefinition,
-    origin: SpatialFieldDefinition,
-) -> Rays:
-    """The field rays a bundle of source rays releases at the Node it is at
-    (released-field-v1): one ray per Port heading except the source ray's own,
-    each with the released amount and the source's phase, no event (mask 0,
-    steps 0). The heading the source travels on is the source's own line ahead of
-    it, which at link speed the source itself occupies, so it releases nothing
-    there and a straight ray never shares a Node with its own field. A ray that
-    waits at a Node under a declared delay releases the same five headings in
-    every interval it is there (the release does not wait for the clock,
-    Highlights 3.5); the six-heading release of a held ray went with the held
-    form on 2026-09-17 (loop-binding-v1). Every released ray carries the sign of
-    the source family's charge (`source_sign`)."""
-    released: list[Ray] = []
-    sign = charge_sign(origin.charge)
-    for ray in rays:
-        amount = release_amount(ray.amount, definition)
-        if amount <= 0:
-            continue
-        released.extend(_released(amount, ray.phase, definition, ray_line(ray, origin), sign))
-    return tuple(released)
 
 
 def motion_step(
@@ -953,45 +996,45 @@ def motion_step(
     return port, (advanced[0], advanced[1], advanced[2])
 
 
-def release_stock(
-    stock: int, definition: SpatialFieldDefinition, origin: SpatialFieldDefinition | None = None
-) -> Rays:
-    """The field rays resident content releases once per interval: one ray per Port
-    heading, all six, from the stock a record holds, with phase 0 (a record has no
-    phase of its own in this slice) and the sign of the origin family's charge."""
+def release_stock(stock: int, definition: SpatialFieldDefinition, owner: int = 0) -> Rays:
+    """The shadows of one interval of the prefill from a thing's stock (bit-law-v1,
+    `initial_field`): one per Port heading, all six, the whole quanta of stock x
+    n / d, phase 0 (a record has no phase of its own), the sign of the family's
+    charge and the owner's id. A thing releases nothing during a run; this is the
+    size X of its shadow set per interval of the fill."""
     amount = release_amount(stock, definition)
-    sign = 0 if origin is None else charge_sign(origin.charge)
-    return _released(amount, 0, definition, None, sign) if amount > 0 else ()
+    return (
+        _released(amount, 0, definition, None, charge_sign(definition.charge), owner)
+        if amount > 0
+        else ()
+    )
 
 
-def holds_source_stock(
-    record: DisturbanceRecord | None, definitions: tuple[SpatialFieldDefinition, ...]
-) -> bool:
-    """Whether a resident record holds stock of a family that has a released field."""
-    if record is None:
-        return False
-    for definition in definitions:
-        if definition.field_of is None:
-            continue
-        field = definitions[definition.field_of].field
-        if field < len(record.values) and unpack(record.values[field])[0] > 0:
-            return True
-    return False
+def family_owners(initial: InitialState, index: int) -> tuple[int, ...]:
+    """The things whose shadows a family carries (bit-law-v1): the ids of the
+    disturbance types that hold the family's stock, of the external bodies of
+    the family and of the owners of its declared profile, sorted."""
+    definition = initial.spatial_fields[index]
+    owners = {kind.thing for kind in initial.disturbances if definition.field in kind.fields}
+    owners |= {body.thing for body in initial.external_bodies if body.family == index}
+    entry = initial.initial_field.get(index)
+    if entry is not None:
+        owners |= {ray.owner for ray in entry.rays}
+    return tuple(sorted(owners))
 
 
-def released_field_names(
-    fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
-) -> list[dict[str, object]]:
-    """The released fields for the run record: each field ray family with the family
-    it is the field of and its release ratio, in field order."""
+def shadow_family_names(initial: InitialState) -> list[dict[str, object]]:
+    """The families with a shadow set for the run record (bit-law-v1): each with
+    its release ratio, its spread table and its owners, in field order."""
     return [
         {
-            "field": fields[definition.field].name,
-            "field_of": fields[definitions[definition.field_of].field].name,
+            "field": initial.fields[definition.field].name,
             "release": [definition.release_numerator, definition.release_denominator],
+            "spread": list(definition.spread) if definition.spread else None,
+            "owners": list(definition.owners),
         }
-        for definition in definitions
-        if definition.field_of is not None
+        for definition in initial.spatial_fields
+        if definition.release_numerator
     ]
 
 
@@ -1025,19 +1068,25 @@ class FieldSpread:
 
 
 @dataclass(frozen=True, slots=True)
-class ReturnedField:
-    """The record of one returned field quantum that ended (field-spreading-v1; the
-    orchestrator's proposal of Highlights 5.5, pending the model owner's decision):
-    plain bounded integers. The spatial field, the amount, the Port index of the
-    heading it walked on, the spatial field of the content that took it (-1 for the
-    record that emitted it) and 1 when it was restored to that record's stock, 0
-    when its release was unbooked as a source."""
+class ShadowHome:
+    """The record of one shadow that came home (bit-law-v1, point 3 of the law and
+    the amendment's re-release): plain bounded integers. The spatial field, the
+    amount, the owner, the Port index of the heading the shadow walked in on, the
+    momentum it delivered (-dp of the push it gave, zero for a shadow returned by
+    a mark or one that met its own thing), whom it was absorbed back into (`to`:
+    0 a thing ray, 1 a record, 2 an external body) and the Port index it left
+    again through (the heading it arrived from, reversed)."""
 
     field: int
     amount: int
+    owner: int
     port: int
-    by: int
-    restored: int
+    momentum: tuple[int, int, int]
+    to: int
+    out_port: int
+    # 1 when the momentum left the identity the ledger measures (a record without
+    # a recoil field), booked on the returned line; 0 when a register took it.
+    outside: int = 0
 
 
 def validate_spread_table(table: tuple[int, ...]) -> int:
@@ -1123,10 +1172,10 @@ def validate_spread_admission(initial: InitialState) -> None:
 def validate_dense_field_admission(initial: InitialState) -> None:
     """What the dense mode's prototype supports (dense-field-v1): a spreading
     family on a board of ray fields only, no local conservation audit (a dense
-    Node publishes no per-Node events for it to read), no polarization (the
-    dense region carries unpolarized content), and no ray interaction two of
-    whose participants can be spreading families (a coupling on field rays
-    inside the dense region, which no engine Node would meet)."""
+    Node publishes no per-Node events for it to read) and no polarization (the
+    dense region carries unpolarized content). Since bit-law-v1 the region is
+    the board's shadow layer: it holds shadows alone, and a coupling between a
+    thing and a shadow fires at the thing's Node, the engine's."""
     if not initial.dense_field:
         return
     spreading = {index for index, definition in enumerate(initial.spatial_fields) if definition.spread}
@@ -1148,14 +1197,18 @@ def validate_dense_field_admission(initial: InitialState) -> None:
             "dense_field does not support polarization (ray-polarization-v1): the prototype "
             "carries unpolarized field content only"
         )
-    for rule in initial.ray_interactions:
-        roles = sum(1 for role in rule.participants if any(kind in spreading for kind in role))
-        if roles >= 2:
-            raise ValueError(
-                f"dense_field does not support the ray interaction {rule.name!r}: two of its "
-                "participants can be spreading families, a coupling on field rays inside the "
-                "dense region"
-            )
+
+
+def dense_field_admissible(initial: InitialState) -> bool:
+    """Whether the dense mode can be the board's shadow layer (bit-law-v1, point
+    13): a spreading family on a board of ray fields only, no local conservation
+    audit and no polarization; the default wherever it holds."""
+    return (
+        any(definition.spread for definition in initial.spatial_fields)
+        and all(definition.rays for definition in initial.spatial_fields)
+        and initial.conservation is None
+        and not polarization_declared(initial)
+    )
 
 
 def relative_ports(port: int) -> tuple[int, ...]:
@@ -1167,23 +1220,34 @@ def relative_ports(port: int) -> tuple[int, ...]:
     return (port, port ^ 1, *(other for other in range(6) if other >> 1 != port >> 1))
 
 
-def remainder_slot(sign: int, port: int) -> int:
-    """The register of one source sign and Port in a family's block of eighteen."""
+def remainder_slot(sign: int, port: int, rank: int = 0) -> int:
+    """The register of one owner (its rank among the family's owners), source sign
+    and Port in a family's block: eighteen per owner, owner-major (bit-law-v1)."""
     if sign not in REMAINDER_SIGNS or type(port) is not int or not 0 <= port < 6:
         raise ValueError("a remainder register is named by a source sign and a Port")
-    return (sign + 1) * 6 + port
+    if type(rank) is not int or rank < 0:
+        raise ValueError("a remainder register is named by an owner's rank")
+    return rank * REMAINDER_SLOTS + (sign + 1) * 6 + port
+
+
+def remainder_block_size(definition: SpatialFieldDefinition) -> int:
+    """The registers of one spreading family at a Node: eighteen per owner of the
+    family, eighteen for a family with no declared owner (bit-law-v1)."""
+    return REMAINDER_SLOTS * max(1, len(definition.owners)) if definition.spread else 0
 
 
 def blank_remainders(definitions: tuple[SpatialFieldDefinition, ...]) -> Remainders:
-    """Empty registers: a block of eighteen zeros per spreading family, () otherwise."""
-    return tuple((0,) * REMAINDER_SLOTS if definition.spread else () for definition in definitions)
+    """Empty registers: a block of eighteen zeros per owner of a spreading family,
+    () otherwise."""
+    return tuple((0,) * remainder_block_size(definition) for definition in definitions)
 
 
 def validate_remainders(
     remainders: Remainders, phases: Remainders, definitions: tuple[SpatialFieldDefinition, ...]
 ) -> None:
-    """One block per spatial field: eighteen nonnegative bounded integers and as many
-    phases below the family's width for a spreading family, nothing for the rest."""
+    """One block per spatial field: eighteen nonnegative bounded integers per owner
+    and as many phases below the family's width for a spreading family, nothing
+    for the rest."""
     if (
         type(remainders) is not tuple
         or type(phases) is not tuple
@@ -1196,15 +1260,16 @@ def validate_remainders(
             if block or block_phases:
                 raise ValueError("only a spreading family owns remainder registers")
             continue
+        size = remainder_block_size(definition)
         if (
             type(block) is not tuple
             or type(block_phases) is not tuple
-            or len(block) != REMAINDER_SLOTS
-            or len(block_phases) != REMAINDER_SLOTS
+            or len(block) != size
+            or len(block_phases) != size
             or any(type(v) is not int or bounded(v) < 0 for v in block)
             or any(type(p) is not int or not 0 <= p < definition.phase_modulus for p in block_phases)
         ):
-            raise ValueError("a remainder block holds eighteen registers and eighteen phases")
+            raise ValueError("a remainder block holds eighteen registers and eighteen phases per owner")
 
 
 def remainder_stock(block: tuple[int, ...], total: int) -> int:
@@ -1305,56 +1370,74 @@ def spread_content(
     registers: tuple[int, ...] = (),
     register_phases: tuple[int, ...] = (),
 ) -> tuple[Rays, FieldSpread, tuple[int, ...], tuple[int, ...]]:
-    """The spread of one family's content at a Node (field-spreading-v1,
-    field-remainder-v1): the departures, one fresh field ray per Port, source
-    sign and phase with content, the record, and the Node's registers and their
-    phases after the step. The rays are the outbound content that arrived (at
-    least one Link walked). Amounts add per arriving heading and source sign,
-    content of opposite signs at one Node combining by phase as content does and
-    keeping its sign per ray; the phase of the whole is the phase of the coherent
-    sum and its Detector bit the catalog default, 1 outranks 0 outranks none.
-    Each heading's content is shared over the six relative headings: the whole
-    quanta of content x weight / total leave, and the share below one quantum,
-    content x weight mod total in units of 1/total, is added to the Node's
-    register of that sign and Port, the register's phase combined with the
-    share's by the coherence rule; a register that reaches the total releases
+    """The spread of one family's shadows at a Node (field-spreading-v1,
+    field-remainder-v1, bit-law-v1): the departures, one fresh shadow per owner,
+    Port, source sign and phase with content, the record, and the Node's
+    registers and their phases after the step. The rays are the outbound shadows
+    that arrived (at least one Link walked); a thing moves whole and is never
+    here. Amounts add per owner, arriving heading and source sign; the phase of
+    the whole is the phase of the coherent sum over every shadow at the Node,
+    whatever its owner (shadow meets shadow: the phase sum, point 5 of the law),
+    and every departure of this spread carries it. Each owner's content on each
+    heading is shared over the six relative headings: the whole quanta of
+    content x weight / total leave, and the share below one quantum, content x
+    weight mod total in units of 1/total, is added to the owner's register of
+    that sign and Port (eighteen registers per owner, owner-major by the owner's
+    rank among the family's declared owners), the register's phase combined with
+    the share's by the coherence rule; a register that reaches the total releases
     the whole quanta it holds through its Port, with its phase, and keeps the
     rest. Each departure carries the Port's heading, accumulators (0, 0, 0), its
-    phase, the family's rate, no wait, delay or lag, steps 0, outbound 1, no
-    event and its sign. The total is exact: what arrived equals what leaves plus
-    the whole quanta the registers gained."""
+    phase, no rate, wait, delay or lag, steps 0, outbound 1, no event, its sign
+    and its owner. The total is exact: what arrived equals what leaves plus the
+    whole quanta the registers gained."""
     table = definition.spread
     total = validate_spread_table(table)
-    held = list(registers) if registers else [0] * REMAINDER_SLOTS
-    held_phases = list(register_phases) if register_phases else [0] * REMAINDER_SLOTS
-    if len(held) != REMAINDER_SLOTS or len(held_phases) != REMAINDER_SLOTS:
-        raise ValueError("a remainder block holds eighteen registers and eighteen phases")
+    size = remainder_block_size(definition)
+    held = list(registers) if registers else [0] * size
+    held_phases = list(register_phases) if register_phases else [0] * size
+    if len(held) != size or len(held_phases) != size:
+        raise ValueError("a remainder block holds eighteen registers and eighteen phases per owner")
     before = sum(held)
     arrived = [0] * 6
-    by_sign: dict[tuple[int, int], int] = {}
+    by_sign: dict[tuple[int, int, int], int] = {}
     for ray in rays:
         if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
             raise ValueError("a spread takes the outbound content that arrived at the Node")
+        if ray.detector != BIT_SHADOW:
+            raise ValueError("a spread takes shadows: a thing moves whole on its line (bit-law-v1)")
         heading = definition.headings[ray.heading]
         if heading not in PORT_HEADINGS:
             raise ValueError("a spread requires content on a Port heading")
         port = PORT_HEADINGS.index(heading)
         arrived[port] = checked_work(arrived[port] + ray.amount)
-        key = (port, ray.source_sign)
+        key = (ray.owner, port, ray.source_sign)
         by_sign[key] = checked_work(by_sign.get(key, 0) + ray.amount)
     phase = spread_phase(rays, definition)
     tables = spread_tables(definition)
     amounts, released = [0] * 6, [0] * 6
-    departing: dict[tuple[int, int, int], int] = {}
-    for (port, sign), content in sorted(by_sign.items()):
+    departing: dict[tuple[int, int, int, int], int] = {}
+    ranks: dict[int, int] = {}
+    for (owner, port, sign), content in sorted(by_sign.items()):
+        if owner not in ranks:
+            if definition.owners:
+                if owner not in definition.owners:
+                    raise ValueError(
+                        "a shadow's owner is one of its family's declared owners (bit-law-v1)"
+                    )
+                ranks[owner] = definition.owners.index(owner)
+            elif owner == 0:
+                ranks[owner] = 0
+            else:
+                raise ValueError("a shadow's owner is one of its family's declared owners (bit-law-v1)")
+        rank = ranks[owner]
         for weight, target in zip(table, relative_ports(port), strict=True):
             whole, fraction = divmod(checked_work(content * weight), total)
             if whole:
                 amounts[target] = checked_work(amounts[target] + whole)
-                sent = (target, sign, phase)
+                sent = (owner, target, sign, phase)
                 departing[sent] = checked_work(departing.get(sent, 0) + whole)
             if fraction:
-                slot = remainder_slot(sign, target)
+                slot = remainder_slot(sign, target, rank)
                 if tables is None:
                     held_phases[slot] = 0
                 elif held[slot]:
@@ -1367,24 +1450,24 @@ def spread_content(
                 else:
                     held_phases[slot] = phase
                 held[slot] = checked_work(held[slot] + fraction)
-    for sign in REMAINDER_SIGNS:
-        for target in range(6):
-            slot = remainder_slot(sign, target)
-            whole, rest = divmod(held[slot], total)
-            if not whole:
-                continue
-            held[slot] = rest
-            amounts[target] = checked_work(amounts[target] + whole)
-            released[target] = checked_work(released[target] + whole)
-            sent = (target, sign, held_phases[slot])
-            departing[sent] = checked_work(departing.get(sent, 0) + whole)
-            if not rest:
-                held_phases[slot] = 0
-    bit = max(ray.detector for ray in rays)
+    owner_of_rank = definition.owners or (0,)
+    for rank in range(size // REMAINDER_SLOTS):
+        for sign in REMAINDER_SIGNS:
+            for target in range(6):
+                slot = remainder_slot(sign, target, rank)
+                whole, rest = divmod(held[slot], total)
+                if not whole:
+                    continue
+                held[slot] = rest
+                amounts[target] = checked_work(amounts[target] + whole)
+                released[target] = checked_work(released[target] + whole)
+                sent = (owner_of_rank[rank], target, sign, held_phases[slot])
+                departing[sent] = checked_work(departing.get(sent, 0) + whole)
+                if not rest:
+                    held_phases[slot] = 0
     # ray-polarization-v1: the polarization of the whole is one polarization, the
     # axial mean of the taken content, carried by every departure of this spread,
-    # the registers' releases included (a register stores no polarization, as it
-    # stores no bit).
+    # the registers' releases included (a register stores no polarization).
     polarization = spread_polarization(rays, definition)
     departures = tuple(
         Ray(
@@ -1392,11 +1475,12 @@ def spread_content(
             (0, 0, 0),
             bounded(amount),
             phase=departure_phase,
-            detector=bit,
+            detector=BIT_SHADOW,
             source_sign=sign,
             polarization=polarization,
+            owner=owner,
         )
-        for (port, sign, departure_phase), amount in sorted(departing.items())
+        for (owner, port, sign, departure_phase), amount in sorted(departing.items())
         if amount
     )
     stored, fraction = divmod(sum(held) - before, total)
@@ -1478,12 +1562,16 @@ class SpatialFieldDefinition:
     # The family's charge per quantum, a bounded signed integer read by couplings
     # at a meeting and summed as charge x amount by the charge readout.
     charge: int = 0
-    # Released field (released-field-v1): the spatial-field index of the family
-    # whose field this ray field is, and the release ratio, the share of the
-    # source's amount each released ray carries per Node crossed.
-    field_of: int | None = None
+    # The shadow set (released-field-v1 under bit-law-v1): the release ratio, the
+    # share of a thing's amount each of its shadows carries, 0 / 1 for a family
+    # whose things have no shadows; and the owners, the ids of the things whose
+    # shadows the family carries (the types holding its stock, the bodies of the
+    # family, the owners of its declared profile), sorted, filled in by the
+    # world's initial state when left empty; the remainder registers of a
+    # spread are per owner in this order.
     release_numerator: int = 0
     release_denominator: int = 1
+    owners: tuple[int, ...] = ()
     # Field spreading (field-spreading-v1): the split table, six weights in Port
     # order relative to the arriving heading; empty for a family that does not
     # spread, the behaviour of every existing world.
@@ -1525,6 +1613,12 @@ class SpatialFieldDefinition:
             if not self.rays:
                 raise ValueError("spread requires ray transport")
             validate_spread_table(self.spread)
+        if (
+            type(self.owners) is not tuple
+            or any(type(v) is not int or not 0 <= v < MAX_THING_ID for v in self.owners)
+            or tuple(sorted(set(self.owners))) != self.owners
+        ):
+            raise ValueError("a family's owners are distinct thing ids in ascending order")
         if type(self.polarization_bits) is not int or self.polarization_bits < -1:
             raise ValueError("polarization_bits must be a nonnegative integer")
         if self.polarization_bits >= 0 and not self.rays:
@@ -1779,6 +1873,10 @@ class SpatialNodeState:
     # (field-remainder-v1): one block of eighteen per spreading family.
     remainders: Remainders = ()
     remainder_phases: Remainders = ()
+    # The trace register (bit-law-v1): (owner, Port) pairs, the Port the last
+    # thing of each owner left this Node by, the most recent last, at most
+    # MAX_TRACES; a shadow walking home follows it once its steps are spent.
+    traces: Traces = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -1808,13 +1906,20 @@ class SpatialPlan:
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
     body_port: int = -1
-    # The spreads of this cycle, one per spreading family whose content arrived,
-    # and the returned field quanta that ended here (field-spreading-v1).
+    # The spreads of this cycle, one per spreading family whose content arrived
+    # (field-spreading-v1), and the shadows that came home here (bit-law-v1).
     spreads: tuple[FieldSpread, ...] = ()
-    returned: tuple[ReturnedField, ...] = ()
+    homecomings: tuple[ShadowHome, ...] = ()
+    # What came home this cycle, per field (bit-law-v1): the amounts of the
+    # shadows absorbed back, and on the momentum field the momentum delivered
+    # to an owner the identity does not measure (a record without a recoil
+    # field); the re-release is booked on `source_delta`.
+    returned_delta: Values = ()
     # The remainder registers after this cycle (field-remainder-v1).
     remainders: Remainders = ()
     remainder_phases: Remainders = ()
+    # The trace register after this cycle (bit-law-v1).
+    traces: Traces = ()
     # The pushes of free rays this cycle, one per field ray met by a coupling's
     # momentum table (ray-momentum-turn-v1).
     ray_pushes: tuple[RayPush, ...] = ()
@@ -1863,9 +1968,9 @@ class InverseSplit:
 
     Plain bounded integers, as the Node state contract requires: the spatial
     field, the mode as its index in RETURN_MODES, the Ports transmitted to with
-    the amount per Port, the returned share, the ray's Detector bit (0 or 1, or -1
-    for none), 1 when the share was first restored to the event's input at the
-    Node, and, in annul mode, the per-field content that left the world.
+    the amount per Port, the returned share, 1 when the share was first restored
+    to the event's input at the Node, and, in annul mode, the per-field content
+    that left the world. A returned ray is a thing (bit-law-v1).
     """
 
     field: int
@@ -1873,7 +1978,6 @@ class InverseSplit:
     ports: tuple[int, ...]
     amounts: tuple[int, ...]
     amount: int
-    bit: int
     restored: int
     annulled: Values = ()
 
@@ -1983,8 +2087,14 @@ def validate_ray_event_state(ray: Ray) -> None:
     for port, share in enumerate(ray.event_shares):
         if bounded(share) and not ray.event_ports >> port & 1:
             raise ValueError("ray event shares must be zero where the event sent nothing")
-    if ray.detector not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1):
-        raise ValueError("ray detector must be 0 (none), 1 (bit 0) or 2 (bit 1)")
+    if ray.detector not in (BIT_SHADOW, BIT_THING):
+        raise ValueError("ray detector must be 0 (a shadow) or 1 (a thing), the bit of the law")
+    if type(ray.owner) is not int or not 0 <= ray.owner < MAX_THING_ID:
+        raise ValueError("ray owner must be a thing id below the id bound")
+    if ray.detector == BIT_SHADOW and (
+        ray.event_ports or ray.interaction_delay or any(ray.lag) or ray.advance != -1
+    ):
+        raise ValueError("a shadow carries no event, no delay, no lag and no clock (bit-law-v1)")
 
 
 def vector_length(vector: Heading) -> int:
@@ -2006,18 +2116,20 @@ def vector_length(vector: Heading) -> int:
 def ray_vector(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
     """The vector the ray's DDA walks (ray-momentum-turn-v1): its momentum register
     when a push set one, else the heading of its line, which is the default
-    register amount x heading up to the amount."""
-    if ray.momentum is not None:
+    register amount x heading up to the amount. A shadow walks its heading
+    always (bit-law-v1): its register, when set, is the momentum it carries home,
+    not its direction."""
+    if ray.momentum is not None and ray.detector == BIT_THING:
         return ray.momentum
     return definition.headings[ray.heading]
 
 
 def ray_line(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
-    """The line a ray occupies ahead of it, for the release geometry
-    (released-field-v1): the heading of its index, or, for a ray with a momentum
-    register, the unit-axial heading of the register's dominant axis, the axis of
-    the largest component, ties to the lowest axis as the DDA takes them."""
-    if ray.momentum is None:
+    """The line a ray occupies ahead of it: the heading of its index, or, for a
+    thing with a momentum register, the unit-axial heading of the register's
+    dominant axis, the axis of the largest component, ties to the lowest axis as
+    the DDA takes them."""
+    if ray.momentum is None or ray.detector != BIT_THING:
         return definition.headings[ray.heading]
     momentum = ray.momentum
     axis = max(range(3), key=lambda i: (abs(momentum[i]), -i))
@@ -2025,9 +2137,12 @@ def ray_line(ray: Ray, definition: SpatialFieldDefinition) -> Heading:
 
 
 def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
-    """One ray's momentum as the ledger reads it: its register when a push set one,
-    else amount x heading (ray-momentum-turn-v1). The sign of a returning ray is the
-    caller's."""
+    """One thing's momentum as the ledger reads it: its register when a push set
+    one, else amount x heading (ray-momentum-turn-v1). The sign of a returning
+    thing is the caller's. A shadow's momentum is `ledger_momentum` (bit-law-v1):
+    zero outbound, the momentum it carries home on the walk back."""
+    if ray.detector != BIT_THING:
+        return ray.momentum if ray.momentum is not None and not ray.outbound else (0, 0, 0)
     if ray.momentum is not None:
         return ray.momentum
     heading = definition.headings[ray.heading]
@@ -2036,6 +2151,18 @@ def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[i
         checked_work(ray.amount * heading[1]),
         checked_work(ray.amount * heading[2]),
     )
+
+
+def ledger_momentum(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
+    """One ray's momentum on the ledger's lines, signed (bit-law-v1, Highlights 3.15
+    and 5.4 point 7): a thing reads its register or amount x heading, negated on
+    its walk back (its share on the event's heading, detector-return-v1); a
+    shadow is free, it reads zero while outbound and, on its walk home, the
+    register the push gave it, -dp, the momentum it carries back to its owner."""
+    vector = ray_momentum_vector(ray, definition)
+    if ray.detector == BIT_THING and not ray.outbound:
+        return (-vector[0], -vector[1], -vector[2])
+    return vector
 
 
 def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
@@ -2103,11 +2230,14 @@ def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDef
 
 
 def turn_receiver(rule: InteractionDefinition) -> int | None:
-    """The role a momentum table on a coupling of free rays pushes
-    (ray-momentum-turn-v1): a table that names a participant family is the free
-    ray's table, and the one role the table does not name receives every push.
-    None for a rule without a table or a table naming no participant; -1 when
-    the roles do not give one receiver."""
+    """The role a momentum table on a coupling pushes (ray-momentum-turn-v1 under
+    bit-law-v1): the thing met. A table that names a participant family is the
+    shadows' table; the one role the table does not name receives every push,
+    and when every role's families are named (a thing met by the shadows of its
+    own family, [[electron], [electron]] with the table naming electron) the
+    first role is the thing and the others its shadows' families. None for a
+    rule without a table or a table naming no participant; -1 when the roles
+    do not give one receiver."""
     if not rule.momentum_table:
         return None
     named = {kind for kind, sign in enumerate(rule.momentum_table) if sign}
@@ -2119,6 +2249,8 @@ def turn_receiver(rule: InteractionDefinition) -> int | None:
     pushers = [
         index for index, role in enumerate(rule.participants) if all(kind in named for kind in role)
     ]
+    if not receivers and len(pushers) == len(rule.participants):
+        return 0
     if len(receivers) != 1 or len(receivers) + len(pushers) != len(rule.participants):
         return -1
     return receivers[0]
@@ -2138,7 +2270,10 @@ def dda_step(accumulators: tuple[int, int, int], heading: Heading) -> tuple[int,
 def ray_phase_step(ray: Ray, phase_advance: int) -> int:
     """The signed phase step of one Link: the ray's own advance or the field's, forward
     while outbound and backward on the walk back, so a returned ray reaches its event
-    Node with the phase it left with."""
+    Node with the phase it left with. A shadow has no clock (bit-law-v1, point 9):
+    its phase never advances, whatever its family's rate."""
+    if ray.detector != BIT_THING:
+        return 0
     step = ray.advance if ray.advance >= 0 else phase_advance
     return step if ray.outbound else -step
 
@@ -2202,14 +2337,12 @@ def event_stamp(rays: Rays, headings: tuple[Heading, ...]) -> tuple[int, EventSh
     )
 
 
-def stamp_event(rays: Rays, headings: tuple[Heading, ...], detector: int = DETECTOR_NONE) -> Rays:
+def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
     """Make the given rays the events of one interaction: fresh outbound trajectories
-    with no steps walked, each carrying the mask and shares of that interaction and
-    the Detector bit the event's outputs inherit (detector-bit-property-v1): none
-    for an emission, the bit the inputs hand down for a meeting (inherited_bit) and
-    the returned ray's bit for an inverse split."""
-    if detector not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1):
-        raise ValueError("an event stamps the Detector bit 0 (none), 1 (bit 0) or 2 (bit 1)")
+    with no steps walked, each carrying the mask and shares of that interaction.
+    What is born at an event is a thing (bit-law-v1, point 1): an emission, the
+    outputs of a meeting, the pieces of a split, the transmissions of an inverse
+    split; each keeps its owner."""
     mask, shares = event_stamp(rays, headings)
     return tuple(
         replace(
@@ -2218,27 +2351,10 @@ def stamp_event(rays: Rays, headings: tuple[Heading, ...], detector: int = DETEC
             outbound=1,
             event_ports=mask,
             event_shares=shares,
-            detector=detector,
+            detector=BIT_THING,
         )
         for ray in rays
     )
-
-
-def inherited_bit(bits: tuple[int, ...], rule: int = BIT_HIGHEST) -> int:
-    """The Detector bit the outputs of one meeting inherit from its inputs
-    (detector-bit-property-v1, Highlights 5.4): by default the highest bit among
-    the inputs in the order 1 over 0 over none, which is the order of the stored
-    values; BIT_NONE stamps no bit; a nonnegative rule is the index of the input
-    whose bit the outputs carry."""
-    if any(bit not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1) for bit in bits):
-        raise ValueError("a meeting inherits Detector bits 0 (none), 1 (bit 0) or 2 (bit 1)")
-    if rule == BIT_HIGHEST:
-        return max(bits, default=DETECTOR_NONE)
-    if rule == BIT_NONE:
-        return DETECTOR_NONE
-    if type(rule) is not int or not 0 <= rule < len(bits):
-        raise ValueError("a meeting's bit rule names an input by its role index")
-    return bits[rule]
 
 
 def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
@@ -2255,6 +2371,8 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     negated = (-heading[0], -heading[1], -heading[2])
     if negated not in definition.headings:
         raise ValueError("a return requires the negated heading in the field's sequence")
+    if ray.detector != BIT_THING:
+        raise ValueError("a shadow turns back by return_shadow (bit-law-v1)")
     momentum = ray.momentum
     if momentum is not None:
         # ray-momentum-turn-v1: the same ray reversed walks its register back.
@@ -2269,6 +2387,73 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         outbound=0,
         momentum=momentum,
     )
+
+
+def return_shadow(
+    ray: Ray, definition: SpatialFieldDefinition, momentum: tuple[int, int, int] = (0, 0, 0)
+) -> Ray:
+    """A shadow turned back on its own steps (bit-law-v1, points 3 and 6): the
+    same shadow reversed on the line it arrived by, its steps kept to walk back,
+    its amount, phase, sign and owner what arrived, carrying home in its register
+    the opposite of the momentum it gave (-dp; none when it gave none, as at a
+    mark). A shadow walks its heading, never its register."""
+    if ray.detector != BIT_SHADOW or not ray.outbound:
+        raise ValueError("return_shadow turns back an outbound shadow")
+    heading = definition.headings[ray.heading]
+    negated = (-heading[0], -heading[1], -heading[2])
+    if negated not in definition.headings:
+        raise ValueError("a return requires the negated heading in the field's sequence")
+    for value in momentum:
+        checked_work(value)
+    return replace(
+        ray,
+        heading=definition.headings.index(negated),
+        accumulators=(0, 0, 0),
+        wait=0,
+        outbound=0,
+        momentum=(momentum[0], momentum[1], momentum[2]) if any(momentum) else None,
+    )
+
+
+def rerelease_shadow(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
+    """A shadow that came home leaves again from where its thing is (bit-law-v1,
+    the amendment's point c): a fresh outbound shadow on the heading it arrived
+    from reversed, back out along its line, with its amount, phase, sign and
+    owner, no steps, no register."""
+    heading = definition.headings[ray.heading]
+    negated = (-heading[0], -heading[1], -heading[2])
+    if negated not in definition.headings:
+        raise ValueError("a re-release requires the negated heading in the field's sequence")
+    return Ray(
+        definition.headings.index(negated),
+        (0, 0, 0),
+        ray.amount,
+        phase=ray.phase,
+        detector=BIT_SHADOW,
+        source_sign=ray.source_sign,
+        polarization=ray.polarization,
+        owner=ray.owner,
+    )
+
+
+def leave_trace(traces: Traces, owner: int, port: int) -> Traces:
+    """The trace register after a thing of `owner` left through `port` (bit-law-v1),
+    or ended here (TRACE_END, absorbed by the Node's mark): the owner's entry
+    moved to the end with the new Port, the register bounded to the most recent
+    MAX_TRACES owners."""
+    if type(port) is not int or not 0 <= port <= TRACE_END:
+        raise ValueError("a trace is a Port or the end of a thing")
+    kept = tuple(entry for entry in traces if entry[0] != owner) + ((owner, port),)
+    return kept[-MAX_TRACES:]
+
+
+def trace_of(traces: Traces, owner: int) -> int:
+    """The Port the last thing of `owner` left this Node by, TRACE_END where it
+    ended, or -1 for none."""
+    for entry in traces:
+        if entry[0] == owner:
+            return entry[1]
+    return -1
 
 
 def event_port(ray: Ray, definition: SpatialFieldDefinition) -> int:
@@ -2339,11 +2524,12 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
             ray.advance,
             source_sign=ray.source_sign,
             polarization=ray.polarization,
+            owner=ray.owner,
         )
         for port, amount in zip(ports, amounts, strict=True)
         if amount
     )
-    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays), ray.detector)
+    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays))
     return stamped, ports
 
 
@@ -2362,6 +2548,7 @@ RayMergeKey = tuple[
     tuple[int, int, int],
     int,
     tuple[int, int, int] | None,
+    int,
     int,
 ]
 
@@ -2384,6 +2571,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.source_sign,
         ray.momentum,
         ray.polarization,
+        ray.owner,
     )
 
 
@@ -2421,6 +2609,7 @@ def merge_rays(rays: Rays) -> Rays:
             source_sign=key[12],
             momentum=_merged_register(key[13], counts[key]),
             polarization=key[14],
+            owner=key[15],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount
@@ -2443,7 +2632,7 @@ def _merge_order(key: RayMergeKey) -> tuple[object, ...]:
     the polarization last (ray-polarization-v1), so that rays without one keep the
     order they had."""
     momentum = key[13]
-    return (*key[:13], momentum is not None, momentum or (0, 0, 0), key[14])
+    return (*key[:13], momentum is not None, momentum or (0, 0, 0), key[14], key[15])
 
 
 def ray_stock(rays: Rays) -> int:
@@ -2462,18 +2651,19 @@ def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, i
     """
     result = [0, 0, 0]
     for ray in rays:
-        sign = 1 if ray.outbound else -1
-        for axis, value in enumerate(ray_momentum_vector(ray, definition)):
-            result[axis] = checked_work(result[axis] + sign * value)
+        for axis, value in enumerate(ledger_momentum(ray, definition)):
+            result[axis] = checked_work(result[axis] + value)
     return result[0], result[1], result[2]
 
 
 def ray_charge(rays: Rays, definition: SpatialFieldDefinition) -> int:
     """The charge readout of one bundle: the family's charge per quantum times the amount,
-    summed over its rays as a 64-bit intermediate (wave-ray-family-v1)."""
+    summed over its things as a 64-bit intermediate (wave-ray-family-v1). A shadow
+    carries the sign of its owner's charge as a message and no charge (bit-law-v1)."""
     total = 0
     for ray in rays:
-        total = checked_work(total + checked_work(ray.amount * definition.charge))
+        if ray.detector == BIT_THING:
+            total = checked_work(total + checked_work(ray.amount * definition.charge))
     return total
 
 
@@ -2633,74 +2823,26 @@ CAPTURE_MODES = ("share", "threshold")
 TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
 
 
-def next_ticket(state: int, salt: int) -> int:
-    """Advance a local ticket state: a multiplicative congruence plus a salt.
-
-    The Detector mark draws unsalted (salt 0): its stream depends on its seed and
-    the order of its arrivals alone, never on what arrives.
-    """
-    if not 0 <= state < TICKET_MODULUS:
-        raise ValueError("ticket state must stay below the ticket modulus")
-    return (state * 48271 + salt + 1) % TICKET_MODULUS
-
-
-def ticket_draw(state: int) -> int:
-    """The number a ticket state draws: its square modulo the ticket modulus.
-
-    The state itself is affine in its salts, so two marks that met the same
-    arrivals would draw numbers a fixed distance apart; the square breaks that,
-    so two Detectors with their own seeds draw independently for every arrival.
-    """
-    return checked_work(state * state) % TICKET_MODULUS
-
-
 def ticket_bit(ticket: int, numerator: int, denominator: int) -> tuple[int, int]:
-    """One unsalted draw from a Node's ticket stream at a setting: the next ticket
-    state and the bit, 1 = PASS.
-
-    The bit is 1 when the drawn number times the setting's denominator is below
-    the numerator times the ticket modulus, so the setting is the pass share of
-    the draw range: 1 / 1 always passes and 0 / 1 never does. The product is a
-    64-bit intermediate. The draw reads nothing from the ray or the meeting it is
-    drawn for. The Detector mark draws with its own setting (detector_draw); a
-    decaying rule draws with its `draw` setting at its meeting (decay-draw-v1).
-    """
-    state = next_ticket(ticket, 0)
-    number = ticket_draw(state)
-    passes = checked_work(number * denominator) < checked_work(numerator * TICKET_MODULUS)
-    return state, int(passes)
+    """One step of a Node's counter at a setting (bit-law-v1, point 14: there is no
+    lottery): the next count and the bit, 1 = PASS. The k-th arrival, k the
+    count before it, passes when k mod d < n, so the setting [n, d] is a
+    declared table, "pass n arrivals in every d" (1 / 1 always passes, 0 / 1
+    never), like a mirror's or a splitter's; the count wraps at the ticket
+    modulus. The step reads nothing from the ray or the meeting it is taken for.
+    The Detector mark counts with its own setting (detector_draw); a decaying
+    rule with its `draw` setting at its meeting (decay-draw-v1)."""
+    if not 0 <= ticket < TICKET_MODULUS:
+        raise ValueError("ticket state must stay below the ticket modulus")
+    if denominator < 1 or not 0 <= numerator <= denominator:
+        raise ValueError("a setting is a rational from 0 through 1")
+    passes = ticket % denominator < numerator
+    return (ticket + 1) % TICKET_MODULUS, int(passes)
 
 
 def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
-    """One unsalted draw of a marked Node: the next ticket state and the bit, 1 = PASS."""
+    """One step of a marked Node's counter: the next count and the bit, 1 = PASS."""
     return ticket_bit(ticket, mark.pass_numerator, mark.pass_denominator)
-
-
-def decay_seed(rules: tuple[InteractionDefinition, ...]) -> int | None:
-    """The seed of the declaration that marks the Nodes a decaying rule may fire at
-    (decay-draw-v1): the seeds of the rules that declare `draw`, folded in declared
-    order by the ticket rule (the first seed as the state, each further seed one
-    salted step); None when no rule draws, and then no unmarked Node has a stream.
-    """
-    state: int | None = None
-    for rule in rules:
-        if rule.draw is None:
-            continue
-        state = rule.seed if state is None else next_ticket(state, rule.seed)
-    return state
-
-
-def decay_ticket_seed(seed: int, position: Address3) -> int:
-    """The start of an unmarked Node's ticket stream under a decaying declaration
-    (decay-draw-v1): the declaration's seed salted once by each coordinate of the
-    Node, so that two corners of one ring draw independently, as two marks with
-    their own seeds do (the square in ticket_draw breaks the affine relation).
-    A Node that carries a mark keeps the mark's seed: one stream per Node.
-    """
-    state = seed
-    for coordinate in position:
-        state = next_ticket(state, coordinate)
-    return state
 
 
 def decay_draw_declared(initial: InitialState) -> bool:
@@ -2710,48 +2852,40 @@ def decay_draw_declared(initial: InitialState) -> bool:
     return any(rule.draw is not None for rule in initial.ray_interactions)
 
 
-def detector_bit_property_declared(initial: InitialState) -> bool:
-    """Whether the world declares the rule of detector-bit-property-v1 anywhere: a mark
-    that writes `on_bit_1` or `on_bit_0`, or a ray interaction that declares `bit`.
-    The runner records the identity when it does; a world that declares neither
-    runs the same rule with its defaults and its record is what it was."""
-    return any(mark.bit_keys for mark in initial.detectors) or any(
-        rule.bit_declared for rule in initial.ray_interactions
-    )
-
-
-def field_family(definition: SpatialFieldDefinition) -> bool:
-    """Whether a ray family is a field family in the engine's terms: one declared
-    `field_of` another family (released-field-v1), whose rays are the eventless field
-    rays a release and a spread make. Every other family is matter to a click."""
-    return definition.field_of is not None
-
-
 def click_coupling(mark: DetectorMark, index: int, definition: SpatialFieldDefinition) -> int:
-    """What the mark does with a ray of spatial field `index` that draws 1
-    (detector-absorb-v1): its declared `on_click` for that family, or the catalog
-    default, CLICK_ABSORB for a field family and CLICK_PASS for matter."""
+    """What the mark does with a thing of spatial field `index` that draws 1
+    (detector-absorb-v1 under bit-law-v1): its declared `on_click` for that
+    family, or the default, CLICK_ABSORB for every family."""
     declared = mark.on_click[index] if index < len(mark.on_click) else CLICK_DEFAULT
-    if declared != CLICK_DEFAULT:
-        return declared
-    return CLICK_ABSORB if field_family(definition) else CLICK_PASS
+    return CLICK_ABSORB if declared == CLICK_DEFAULT else declared
 
 
 def detector_absorb(
     mark: DetectorMark, index: int, rays: Rays, definition: SpatialFieldDefinition, fields: int
 ) -> DetectorMark:
-    """The click as an absorption (detector-absorb-v1): the arriving rays of one
-    family that drew 1 end in the mark's exact counter for that family, and their
-    momentum, amount x heading (a register where a push set one), in the mark's
-    momentum. `fields` sizes the counter, one entry per spatial field, on the first
-    absorption; nothing else of the mark changes."""
+    """The click as an absorption (detector-absorb-v1 under bit-law-v1): the
+    arriving things of one family that were caught end in the mark's exact
+    counter for that family, and their momentum, amount x heading (a register
+    where a push set one), in the mark's momentum; the mark becomes the home of
+    their shadows (`things`), and each shadow of theirs that returns to it ends
+    in the same counter with the momentum it carries. `fields` sizes the
+    counter, one entry per spatial field, on the first absorption; nothing else
+    of the mark changes."""
     counter = list(mark.counter) or [0] * fields
     momentum = list(mark.momentum)
+    things = set(mark.things)
     for ray in rays:
         counter[index] = checked_work(counter[index] + ray.amount)
-        for axis, value in enumerate(ray_momentum_vector(ray, definition)):
+        for axis, value in enumerate(ledger_momentum(ray, definition)):
             momentum[axis] = checked_work(momentum[axis] + value)
-    return replace(mark, counter=tuple(counter), momentum=(momentum[0], momentum[1], momentum[2]))
+        if ray.detector == BIT_THING:
+            things.add(ray.owner)
+    return replace(
+        mark,
+        counter=tuple(counter),
+        momentum=(momentum[0], momentum[1], momentum[2]),
+        things=tuple(sorted(things)),
+    )
 
 
 def validate_detector_marks(initial: InitialState) -> None:
@@ -2872,12 +3006,13 @@ def heading_pace(definition: SpatialFieldDefinition, heading: int) -> tuple[int,
 
 
 def body_release(body: ExternalBody, definition: SpatialFieldDefinition, port: int = -1) -> Rays:
-    """The field rays a body releases once per interval: one per Port heading, each
-    the whole quanta of amount x n / d, with the body's declared phase, no event;
-    booked as a source by the Node. In an interval the body steps through a Port,
-    that heading is its own line ahead of it, which its ray occupies, and it
-    releases nothing there (no self-field, Highlights 3.5). The amount enters no
-    sum: the product is a Python integer and only the released ray amount is bounded."""
+    """The shadows of a body for one interval of the prefill (bit-law-v1): one per
+    Port heading of its own family, each the whole quanta of amount x n / d by
+    the family's release, with the body's declared phase, the sign of its charge
+    and its id, no event. A body releases nothing during a run. In an interval
+    the body steps through a Port, that heading is its own line ahead of it, and
+    it releases nothing there (no self-field, Highlights 3.5). The amount enters
+    no sum: the product is a Python integer and only the ray amount is bounded."""
     amount = (body.amount * definition.release_numerator) // definition.release_denominator
     if amount <= 0:
         return ()
@@ -2888,26 +3023,56 @@ def body_release(body: ExternalBody, definition: SpatialFieldDefinition, port: i
         definition,
         skip,
         charge_sign(body.charge),
+        body.thing,
     )
 
 
 def body_absorb(
     body: ExternalBody, index: int, rays: Rays, definition: SpatialFieldDefinition
 ) -> ExternalBody:
-    """The sink: the arriving rays of one family end in the body's exact counter for
-    that family, and a field ray of a family the momentum table names changes the
-    momentum by sign x amount x heading (-1 is attraction toward the source, which
-    lies opposite the arriving heading). The body's content never changes."""
+    """The sink: the arriving things of one family end in the body's exact counter
+    for that family. A body is not pushed by matter (Highlights 3.19), and since
+    bit-law-v1 a thing is what arrives here; the body's content never changes."""
     sink = list(body.sink)
-    momentum = list(body.momentum)
-    sign = body.signs[index] if index < len(body.signs) else 0
     for ray in rays:
         sink[index] = checked_work(sink[index] + ray.amount)
-        if sign:
-            heading = definition.headings[ray.heading]
-            for axis in range(3):
-                momentum[axis] = checked_work(momentum[axis] + sign * ray.amount * heading[axis])
-    return replace(body, sink=tuple(sink), momentum=(momentum[0], momentum[1], momentum[2]))
+    return replace(body, sink=tuple(sink))
+
+
+def push_of(
+    sign: int,
+    shadow: Ray,
+    definition: SpatialFieldDefinition,
+    reads: str,
+    content: int,
+    charge: int,
+) -> tuple[int, int, int]:
+    """The push one shadow gives a thing (bit-law-v1, points 3 and 16): the table's
+    sign x the shadow's amount x its heading, read times the thing's content
+    (`reads` "content") or times the shadow's source sign and the thing's
+    charge (`reads` "charge"); -1 is attraction toward the source, which lies
+    opposite the arriving heading, for a positive product."""
+    if reads == "content":
+        factor = content
+    elif reads == "charge":
+        factor = shadow.source_sign * charge
+    else:
+        raise ValueError("a momentum table reads content or charge (bit-law-v1, point 16)")
+    heading = definition.headings[shadow.heading]
+    scale = checked_work(checked_work(sign * shadow.amount) * factor)
+    return (
+        checked_work(scale * heading[0]),
+        checked_work(scale * heading[1]),
+        checked_work(scale * heading[2]),
+    )
+
+
+def body_pushed(body: ExternalBody, push: tuple[int, int, int]) -> ExternalBody:
+    """The body's momentum after a push (bit-law-v1, point 3): sign x amount x
+    heading of a shadow of a family its momentum table names, or -dp brought home
+    by a shadow it released. Nothing else moves it."""
+    momentum = tuple(checked_work(a + b) for a, b in zip(body.momentum, push, strict=True))
+    return replace(body, momentum=(momentum[0], momentum[1], momentum[2]))
 
 
 def body_step(body: ExternalBody) -> tuple[int, ExternalBody]:
@@ -2935,9 +3100,10 @@ def body_coupled_families(body: ExternalBody, initial: InitialState) -> frozense
 
 def body_token(body: ExternalBody) -> Ray:
     """The body as the participant of its coupling rule that never changes: one
-    quantum of its family at the Node, heading 0, no event; the Node strips the
-    rule's unchanged output of it before anything leaves."""
-    return Ray(0, (0, 0, 0), 1, phase=body.phase)
+    quantum of its family at the Node, heading 0, no event, a thing of the body's
+    identity; the Node strips the rule's unchanged output of it before anything
+    leaves."""
+    return Ray(0, (0, 0, 0), 1, phase=body.phase, owner=body.thing)
 
 
 @dataclass(frozen=True, slots=True)
@@ -3024,9 +3190,6 @@ def polarize_content(
     held = list(body.held) if body.held else [0] * POLARIZER_SLOTS
     phases = list(body.held_phases) if body.held_phases else [0] * POLARIZER_SLOTS
     sink = list(body.sink)
-    momentum = list(body.momentum)
-    push = body.signs[index] if index < len(body.signs) else 0
-    bit = max((ray.detector for ray in rays), default=DETECTOR_NONE)
     passing: list[Ray] = []
     records: list[Polarized] = []
     for ray in sorted(rays, key=ray_merge_key):
@@ -3043,17 +3206,13 @@ def polarize_content(
                     bounded(passed),
                     phase=ray.phase,
                     advance=ray.advance,
-                    detector=ray.detector,
                     source_sign=ray.source_sign,
                     polarization=polarizer.angle,
+                    owner=ray.owner,
                 )
             )
         if sunk:
             sink[index] = checked_work(sink[index] + sunk)
-            if push:
-                arriving = definition.headings[ray.heading]
-                for axis in range(3):
-                    momentum[axis] = checked_work(momentum[axis] + push * sunk * arriving[axis])
         released = [0, 0]
         for output, fraction in ((0, pass_fraction), (1, sink_fraction)):
             if not fraction:
@@ -3083,9 +3242,9 @@ def polarize_content(
                         (0, 0, 0),
                         bounded(whole),
                         phase=phases[slot],
-                        detector=bit,
                         source_sign=ray.source_sign,
                         polarization=polarizer.angle,
+                        owner=ray.owner,
                     )
                 )
             else:
@@ -3106,16 +3265,8 @@ def polarize_content(
                 tuple(held),
             )
         )
-    after = replace(
-        body,
-        sink=tuple(sink),
-        momentum=(momentum[0], momentum[1], momentum[2]),
-        held=tuple(held),
-        held_phases=tuple(phases),
-    )
-    stamped = tuple(
-        stamp_event((ray,), (heading,), ray.detector)[0] for ray in merge_rays(tuple(passing))
-    )
+    after = replace(body, sink=tuple(sink), held=tuple(held), held_phases=tuple(phases))
+    stamped = tuple(stamp_event((ray,), (heading,))[0] for ray in merge_rays(tuple(passing)))
     return after, stamped, tuple(records)
 
 
@@ -3155,11 +3306,9 @@ def validate_external_bodies(initial: InitialState) -> None:
         if body.position in positions:
             raise ValueError("a Node carries one external body and no Detector mark beside it")
         positions.add(body.position)
-        if body.family >= len(initial.spatial_fields) or body.field >= len(initial.spatial_fields):
+        if body.family >= len(initial.spatial_fields):
             raise ValueError("an external body family must name a ray spatial field")
         family = initial.spatial_fields[body.family]
-        if family.field_of is not None:
-            raise ValueError("an external body holds a family, not a field")
         if (
             not family.rays
             or family.euclidean
@@ -3169,9 +3318,6 @@ def validate_external_bodies(initial: InitialState) -> None:
             or any(heading not in family.headings for heading in PORT_HEADINGS)
         ):
             raise ValueError("an external body requires a unit-axial unpaced ray family")
-        released = [i for i, d in enumerate(initial.spatial_fields) if d.field_of == body.family]
-        if body.field != (released[0] if released else -1):
-            raise ValueError("an external body radiates the released field of its family")
         if body.phase >= family.phase_modulus:
             raise ValueError("an external body phase must be below its family's phase width")
         if len(body.signs) != len(initial.spatial_fields) or len(body.sink) != len(
@@ -3218,17 +3364,99 @@ def validate_external_bodies(initial: InitialState) -> None:
             raise ValueError("an external body coupling returns the body once, unchanged")
 
 
+def validate_thing_ids(initial: InitialState) -> None:
+    """The identity of things (bit-law-v1): every disturbance type and every
+    external body carries a thing id from 1 below MAX_THING_ID, and every family
+    with a shadow set or a spread table lists its owners, the things whose
+    shadows it carries (`family_owners`), which the initial state fills in when
+    the declaration leaves them empty."""
+    for kind in initial.disturbances:
+        if type(kind.thing) is not int or not 1 <= kind.thing < MAX_THING_ID:
+            raise ValueError("a disturbance type's thing id is an integer from 1 below the id bound")
+    for body in initial.external_bodies:
+        if not 1 <= body.thing < MAX_THING_ID:
+            raise ValueError("an external body's thing id is an integer from 1 below the id bound")
+    for index, definition in enumerate(initial.spatial_fields):
+        if not definition.rays or not (definition.spread or definition.release_numerator):
+            continue
+        expected = family_owners(initial, index)
+        if definition.owners != expected:
+            raise ValueError(
+                f"the family {initial.fields[definition.field].name!r} lists its owners, the things "
+                f"whose shadows it carries: {list(expected)} (bit-law-v1)"
+            )
+
+
+def validate_initial_field(initial: InitialState) -> None:
+    """The field given with the board (bit-law-v1, `initial_field`): each entry names
+    a ray family, a `fill` of at least one interval (the family then declares a
+    release, the size of its things' shadow sets), or `rays`, a profile of
+    shadows on Nodes of the board with Port headings of the family, each of an
+    owner the family lists."""
+    for index, entry in initial.initial_field.items():
+        if not 0 <= index < len(initial.spatial_fields) or not initial.spatial_fields[index].rays:
+            raise ValueError("initial_field names a ray spatial field")
+        definition = initial.spatial_fields[index]
+        if entry.fill:
+            if not definition.release_numerator:
+                raise ValueError("an initial_field fill requires a family with a release, a shadow set")
+            if not 1 <= entry.fill <= MAX_VALUE:
+                raise ValueError("an initial_field fill is a positive bounded number of intervals")
+        for ray in entry.rays:
+            if any(c >= length for c, length in zip(ray.position, initial.shape, strict=True)):
+                raise ValueError("an initial_field ray must be within shape")
+            if ray.heading not in PORT_HEADINGS or ray.heading not in definition.headings:
+                raise ValueError("an initial_field ray walks a Port heading of its family")
+            if not 1 <= ray.amount <= MAX_VALUE:
+                raise ValueError("an initial_field ray amount is a positive bounded integer")
+            if not 0 <= ray.phase < definition.phase_modulus:
+                raise ValueError("an initial_field ray phase is below the family's phase width")
+            if ray.sign not in (-1, 0, 1):
+                raise ValueError("an initial_field ray sign is -1, 0 or 1")
+            if not 0 <= ray.owner < MAX_THING_ID:
+                raise ValueError("an initial_field ray owner is a thing id below the id bound")
+            if definition.owners and ray.owner not in definition.owners:
+                raise ValueError("an initial_field ray owner is one of its family's owners")
+            if ray.steps not in (0, 1):
+                raise ValueError("an initial_field ray has walked one Link (1) or none (0)")
+
+
+@dataclass(frozen=True, slots=True)
+class InitialShadow:
+    """One shadow of a declared profile (`initial_field.rays`): placed at its Node
+    as content that arrived on its heading (`steps` 1, the default, spreading
+    there at the first cycle) or as content leaving the Node at the first cycle
+    (`steps` 0, a fresh shadow on its way)."""
+
+    position: Address3
+    heading: Heading
+    amount: int
+    phase: int = 0
+    sign: int = 0
+    owner: int = 0
+    steps: int = 1
+
+
+@dataclass(frozen=True, slots=True)
+class InitialFieldDefinition:
+    """The field of one family given with the board (bit-law-v1): `fill`, the
+    intervals of the split table's transient from every thing of the origin family
+    at rest (0 for none), and `rays`, a declared profile."""
+
+    fill: int = 0
+    rays: tuple[InitialShadow, ...] = ()
+
+
 def external_body_names(initial: InitialState) -> list[dict[str, object]]:
     """The declared bodies for the run record, in declaration order."""
     return [
         {
             "index": body.index,
+            "thing": body.thing,
             "family": initial.fields[initial.spatial_fields[body.family].field].name,
             "amount": body.amount,
             "charge": body.charge,
-            "field": (
-                None if body.field < 0 else initial.fields[initial.spatial_fields[body.field].field].name
-            ),
+            **({"reads": PUSH_READS[body.reads]} if body.reads >= 0 else {}),
             "coupling": (
                 "sink"
                 if body.coupling == BODY_SINK

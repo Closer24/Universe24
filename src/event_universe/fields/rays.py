@@ -5,6 +5,7 @@ from dataclasses import replace
 from event_universe.core.disturbance_state import CostMeter, FieldDefinition, bounded
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
+    BIT_THING,
     MAX_HEADINGS,
     MAX_RAY_SLOTS,
     POLARIZATION_NONE,
@@ -111,18 +112,19 @@ def forward_rays(
     On the links metric every ray is due every tick and the Node keeps none. On
     the Euclidean metric a ray hops when its wait passes its heading's pace; a
     ray that waits stays resident, and its phase still advances with the tick,
-    forward while outbound and backward on the walk back. A returning ray with
+    forward while outbound and backward on the walk back. A returning thing with
     no steps left is at its event Node and stays resident, inert, with its phase
-    unchanged, until the inverse split (detector-return-v1).
+    unchanged, until the inverse split (detector-return-v1). A shadow walking
+    home whose steps are spent walks on (bit-law-v1): the trace of its owner, if
+    the Node holds one, was read by the planner before this.
     """
     outgoing: list[list[Ray]] = [[] for _ in range(6)]
     kept: list[Ray] = []
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
-        if not ray.outbound and ray.steps == 0 and (ray.event_ports or not definition.spread):
-            # At its event Node; a returned field quantum of a spreading family has
-            # none and walks on along its line (field-spreading-v1, Highlights 5.5).
+        if not ray.outbound and ray.steps == 0 and ray.detector == BIT_THING:
+            # At its event Node (a thing).
             kept.append(ray)
             continue
         if ray.interaction_delay:

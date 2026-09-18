@@ -15,10 +15,10 @@ from event_universe.configuration_validation import (
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
+    BIT_LAW,
     DECAY_DRAW,
     DENSE_FIELD,
     DETECTOR_ABSORB,
-    DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
     EXTERNAL_BODY,
@@ -35,11 +35,10 @@ from event_universe.core.spatial_state import (
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
     decay_draw_declared,
-    detector_bit_property_declared,
     external_body_names,
     polarization_declared,
     ray_layer_names,
-    released_field_names,
+    shadow_family_names,
     spreading_field_names,
 )
 from event_universe.disturbance_api import Simulation
@@ -153,16 +152,23 @@ def _execute_run(
     # The world ledger per completed tick (ray-event-audit-v1); the conservation
     # flag is true when every line of every completed tick balances.
     audit: list[dict[str, object]] = []
-    # Whether any free ray was pushed (ray-momentum-turn-v1).
-    turned = False
+    # Whether the world declares a push (ray-momentum-turn-v2 under bit-law-v1):
+    # a momentum table on a coupling or on a body; a push writes no event.
+    turned = any(rule.momentum_table for rule in initial.ray_interactions) or any(
+        any(body.signs) for body in initial.external_bodies
+    )
+    # The content of the things per completed tick (bit-law-v1, point 11), and
+    # whether the things' own identity held at every completed tick (point 7),
+    # and the register line of every thing per completed tick (point 15).
+    things_content: list[int] = []
+    shadows_content: list[int] = []
+    registers: list[dict[str, list[int]]] = []
+    things_conserved = True
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
         def record(event: dict[str, object]) -> None:
-            nonlocal turned
             stream.write(json.dumps(event) + "\n")
-            if event.get("event") == "ray_push":
-                turned = True
             if probe is not None:
                 probe.receive(event)
 
@@ -188,21 +194,31 @@ def _execute_run(
                     annulled = world.annulled_totals()
                     absorbed = world.external_body_totals()
                     taken = world.detector_mark_totals()
-                    audit.append(world.audit())
+                    returned = world.returned_totals()
+                    ledger = world.audit()
+                    audit.append(ledger)
+                    things_conserved = things_conserved and bool(ledger.get("things_conserved", True))
+                    things_content.append(world.things_content())
+                    shadows_content.append(world.shadows_content())
+                    registers.append(
+                        {str(thing): value for thing, value in world.thing_registers().items()}
+                    )
                     # The conservation line: initial + sources = current + dissipated
-                    # + escaped + annulled + absorbed_by_bodies + absorbed_by_marks at
-                    # every completed tick, the sources holding what the bodies
-                    # released and the marks' line what their clicks absorbed.
+                    # + escaped + annulled + absorbed_by_bodies + absorbed_by_marks +
+                    # returned at every completed tick (bit-law-v1), the sources
+                    # holding the re-releases and the marks' line what their clicks
+                    # absorbed.
                     balanced = all(
                         tuple(
-                            value + loss + out + gone + sunk + clicked
-                            for value, loss, out, gone, sunk, clicked in zip(
+                            value + loss + out + gone + sunk + clicked + home
+                            for value, loss, out, gone, sunk, clicked, home in zip(
                                 totals[name],
                                 losses[name],
                                 escaped[name],
                                 annulled[name],
                                 absorbed[name],
                                 taken[name],
+                                returned[name],
                                 strict=True,
                             )
                         )
@@ -246,14 +262,30 @@ def _execute_run(
         "detector_absorb": DETECTOR_ABSORB,
         "inverse_split": INVERSE_SPLIT,
         "return_mode": initial.return_mode,
-        # The Detector's bit as a property (detector-bit-property-v1): recorded when
-        # the world declares the rule anywhere (a mark's on_bit keys, a rule's bit);
-        # a world that declares neither runs the defaults and its record is unchanged.
-        **(
-            {"detector_bit_property": DETECTOR_BIT_PROPERTY}
-            if detector_bit_property_declared(initial)
-            else {}
-        ),
+        # The law of the bit (bit-law-v1, the model owner's decision of 2026-09-18):
+        # the engine's only behaviour, so it is recorded in every record, with the
+        # families whose things have shadows, the things' own identity, the
+        # content of the things per completed tick and the shadows per thing.
+        "bit_law": BIT_LAW,
+        "shadow_families": shadow_family_names(initial),
+        # The field given with the board (`initial_field`): the fill, the exact
+        # integer transient of the split table (whole quanta per Node and Port,
+        # the shares below one quantum in the remainder registers), or the size of
+        # the declared profile; booked as initial content.
+        "initial_field": {
+            initial.fields[initial.spatial_fields[index].field].name: (
+                {"fill": entry.fill} if entry.fill else {"rays": len(entry.rays)}
+            )
+            for index, entry in sorted(initial.initial_field.items())
+        },
+        "things_conserved": things_conserved,
+        "things_content": things_content,
+        "shadows_content": shadows_content,
+        "registers": registers,
+        "shadows": [
+            {"thing": owner, "rays": count[0], "amount": count[1]}
+            for owner, count in world.shadow_counts().items()
+        ],
         "wave_ray": WAVE_RAY_FAMILY,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [
@@ -269,7 +301,6 @@ def _execute_run(
         # A decaying group draws (decay-draw-v1): recorded when a rule declares
         # `draw`; a world without one runs and records exactly as before.
         **({"decay_draw": DECAY_DRAW} if decay_draw_declared(initial) else {}),
-        "released_fields": released_field_names(initial.fields, initial.spatial_fields),
         "external_body": EXTERNAL_BODY,
         "external_bodies": [
             declared | {"positions": trajectories[index], "final": final_bodies.get(index)}
@@ -301,6 +332,7 @@ def _execute_run(
         "localized_totals": world.localized_totals(),
         "escaped_totals": world.escaped_totals(),
         "annulled_totals": world.annulled_totals(),
+        "returned_totals": world.returned_totals(),
         "accounting_balanced_at_every_completed_tick": accounting,
         "fields": [field.name for field in initial.fields],
         "disturbance_types": [kind.name for kind in initial.disturbances],
@@ -310,8 +342,8 @@ def _execute_run(
         "execution": world.execution_report(),
     }
     if turned:
-        # A free ray turned by momentum (ray-momentum-turn-v1): recorded only when a
-        # push happened, so the record of every other world is byte for byte the same.
+        # A thing turns by momentum (ray-momentum-turn-v2): recorded when the world
+        # declares a push, so the record of every other world is byte for byte the same.
         metadata["ray_momentum_turn"] = RAY_MOMENTUM_TURN
     if polarization_declared(initial):
         # Polarization (ray-polarization-v1): recorded only when the world declares

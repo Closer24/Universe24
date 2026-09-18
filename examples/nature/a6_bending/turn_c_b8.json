@@ -141,7 +141,7 @@
     ]
    ],
    "rays_per_tick": 1,
-   "ray_slots": 2,
+   "ray_slots": 16,
    "metric": "links",
    "pace": [
     1,
@@ -151,7 +151,19 @@
    "charge": 0,
    "kerengonen": {
     "phase_advance": 1
-   }
+   },
+   "release": [
+    1,
+    32768
+   ],
+   "spread": [
+    6,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
   },
   {
    "field": "mass_field",
@@ -200,20 +212,7 @@
    "charge": 0,
    "kerengonen": {
     "phase_advance": 0
-   },
-   "field_of": "neutron",
-   "release": [
-    1,
-    32768
-   ],
-   "spread": [
-    6,
-    1,
-    1,
-    1,
-    1,
-    1
-   ]
+   }
   },
   {
    "field": "light",
@@ -402,11 +401,11 @@
      "type": "light"
     },
     {
-     "type": "mass_field"
+     "type": "neutron"
     }
    ],
    "momentum_table": {
-    "mass_field": -1
+    "neutron": -1
    },
    "invariants": [
     {
@@ -425,7 +424,8 @@
       ]
      }
     }
-   ]
+   ],
+   "reads": "content"
   }
  ],
  "external_bodies": [
@@ -438,8 +438,9 @@
    "family": "neutron",
    "amount": 268435456,
    "momentum_table": {
-    "mass_field": -1
-   }
+    "neutron": -1
+   },
+   "reads": "content"
   },
   {
    "position": [

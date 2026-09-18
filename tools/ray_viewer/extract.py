@@ -39,6 +39,12 @@ SILENT_KINDS = (
     # that ends at a Node is a field chain that stops there.
     "field_spread",
     "field_returned",
+    # Under the law of the bit (bit-law-v1): a shadow returned by a mark walks
+    # home on its own line, one that comes home leaves again, and a push on a
+    # body is read from the body's momentum; each is silent on the page.
+    "shadow_return",
+    "shadow_home",
+    "external_body_pushed",
 )
 # Event kinds the default caption lists (a style file can choose others).
 CAPTION_KINDS = ("meeting", "deflection", "conversion", "click", "pass", "return", "arrival", "split")
@@ -1142,9 +1148,16 @@ def read_ring(
 
 
 def is_field_family(name: str, definition: dict[str, Any] | None) -> bool:
-    """A field family: declared with ``field_of`` (feature 7) or named as a field."""
-    if definition is not None and (definition.get("field_of") or definition.get("release")):
+    """A field family in a record made before the law of the bit: declared with
+    ``field_of`` (feature 7) or named as a field. Since bit-law-v1 (2026-09-18) a
+    shadow is a ray of its thing's family with the bit 0, so a family with a
+    ``release`` carries things and shadows both and is not a field family; a
+    recorded field family name of an older record still reads as (family, bit 0)
+    through ``chain_document``."""
+    if definition is not None and definition.get("field_of"):
         return True
+    if definition is not None and definition.get("release") and "field_of" not in definition:
+        return False
     return "field" in name.lower()
 
 
@@ -1438,7 +1451,7 @@ def conservation(record: Record) -> dict[str, Any]:
 
 
 def chain_document(
-    chain: Chain, family_flags: dict[str, bool], group: int | None = None
+    chain: Chain, family_flags: dict[str, bool], group: int | None = None, bit_law: bool = False
 ) -> dict[str, Any]:
     segments = []
     for index, unit in enumerate(chain.units):
@@ -1469,14 +1482,25 @@ def chain_document(
                 "escaped": unit.transit.escaped,
             }
         )
-    # The ray recording, when the record carries one, says what bit the ray carries
-    # (0 none, 1 a draw of 0, 2 a draw of 1); the events say it otherwise.
+    # The ray recording, when the record carries one, says what bit the ray carries:
+    # under bit-law-v1 the bit of the law (0 a shadow, 1 a thing); in an older
+    # record 0 none, 1 a draw of 0, 2 a draw of 1; the events say it otherwise.
     recorded_bits = [unit.detector for unit in chain.units if unit.detector is not None]
-    bit = {0: None, 1: 0, 2: 1}.get(recorded_bits[-1], chain.bit) if recorded_bits else chain.bit
+    if recorded_bits:
+        bit = recorded_bits[-1] if bit_law else {0: None, 1: 0, 2: 1}.get(recorded_bits[-1], chain.bit)
+    else:
+        bit = chain.bit
+    # A shadow (bit 0 under the law) is drawn as a field ray, a thing as matter; an
+    # older record's field family reads as (family, bit 0).
+    field = family_flags.get(chain.family, False)
+    if bit_law:
+        field = bit == 0
+    elif field and bit is None:
+        bit = 0
     return {
         "id": chain.identifier,
         "family": chain.family,
-        "field": family_flags.get(chain.family, False),
+        "field": field,
         "amount": chain.amount,
         "bit": bit,
         "origin": {
@@ -1628,7 +1652,10 @@ def extract_record(
         "couplings": couplings(record),
         "conservation": conservation(record),
         "event_kinds": kinds,
-        "rays": [chain_document(c, flags, group_of.get(c.identifier)) for c in resolution.chains],
+        "rays": [
+            chain_document(c, flags, group_of.get(c.identifier), "bit_law" in metadata)
+            for c in resolution.chains
+        ],
         "events": [event_document(e, resolution.chains) for e in resolution.events],
         "eye": eye_document(resolution.events, marks),
         # The bound groups read from the record (loop-binding-v1, Highlights 3.4).

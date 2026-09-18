@@ -39,6 +39,9 @@ class Simulation(DisturbanceEngine):
             least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
             sampling_profile=initial.sampling_profile,
             return_mode=initial.return_mode,
+            # bit-law-v1: the identity of the things of each type, stamped on
+            # what a record emits and read by the shadows that come home.
+            things=tuple(kind.thing for kind in initial.disturbances),
         )
         super().__init__(
             initial,
@@ -103,6 +106,14 @@ class Simulation(DisturbanceEngine):
                 raise ValueError("dense_field does not support parallel Node execution")
             assert self._spatial is not None
             self._spatial.dense = DenseField(initial, self._spatial)
+        if initial.initial_field and self._spatial is not None:
+            # The field given with the board (bit-law-v1, `initial_field`): the
+            # shadows of every thing, planned by the split table's mean field in
+            # exact integers and installed before the first tick, booked as initial.
+            from event_universe.prefill import install_initial_field
+
+            install_initial_field(initial, self._spatial, self._nodes)
+            self.refresh_ledger_initial()
         self._audit: LocalConservationAudit | None = None
         if initial.conservation is not None:
             from event_universe.diagnostics.local_conservation import LocalConservationAudit

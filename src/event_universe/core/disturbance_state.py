@@ -1,6 +1,8 @@
 """Fixed, domain-neutral schemas for initialization-defined disturbances."""
 
-from dataclasses import dataclass
+from collections.abc import Mapping
+from dataclasses import dataclass, replace
+from types import MappingProxyType
 from typing import TYPE_CHECKING, NamedTuple
 
 from .sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
@@ -14,6 +16,7 @@ if TYPE_CHECKING:
         ExternalBody,
         FieldGroupDefinition,
         FieldInteractionGuard,
+        InitialFieldDefinition,
         NodeFieldRuleDefinition,
         SpatialCouplingDefinition,
         SpatialFieldDefinition,
@@ -142,6 +145,10 @@ class DisturbanceDefinition:
     updates: tuple[UpdateRule, ...] = ()
     cost_field: int | None = None
     checks: tuple[Invariant, ...] = ()
+    # The identity of the thing a record of this type is (bit-law-v1): the owner
+    # every ray it emits carries and every shadow of its field is stamped with;
+    # the world key `thing`, by default the type's place in the declarations.
+    thing: int = 1
 
 
 @dataclass(frozen=True, slots=True)
@@ -228,12 +235,12 @@ class InteractionDefinition:
     # sign per spatial field, -1 attraction toward the source of an arriving field
     # ray of that family, 1 repulsion, 0 for a family the table does not name.
     momentum_table: tuple[int, ...] = ()
-    # The Detector bit the outputs of a meeting of rays inherit
-    # (detector-bit-property-v1, `inherited_bit` in spatial_state): -1 the highest
-    # bit of the inputs (the default), -2 none, or the index of the input whose
-    # bit they carry; `bit_declared` when the world file wrote the `bit` key.
-    bit: int = -1
-    bit_declared: bool = False
+    # What the thing multiplies the shadows' message by (bit-law-v1, point 16):
+    # "content" (a mass family's shadow: dp = sign x amount x heading x the
+    # thing's content, so the acceleration is content-independent) or "charge"
+    # (a charged family's shadow: dp = sign x amount x heading x the shadow's
+    # source sign x the thing's charge); required beside a momentum table.
+    reads: str = ""
     # Whether the rule names the polarization of a ray (ray-polarization-v1): a
     # guard or an invariant reading it, or an output declaring it. A meeting whose
     # layer holds no such rule reads the view of detector-bit-property-v1 and is
@@ -244,6 +251,10 @@ class InteractionDefinition:
     # input i (its source input by default), (1, v) the value v (-1 none, or a
     # step of the output field's circle). Empty for a rule without outputs.
     output_polarization: tuple[tuple[int, int], ...] = ()
+    # The source input of each output of a meeting of rays (bit-law-v1): the
+    # input whose identity (`owner`) the output carries, its `input` key, input
+    # 0 by default. Empty for a rule without outputs.
+    output_sources: tuple[int, ...] = ()
     # The decay setting of a conversion (decay-draw-v1): the pass share [n, d] of
     # the one draw its meeting takes from the Node's ticket stream, None for a
     # rule that fires without a draw; `seed` starts the stream of a Node the
@@ -372,26 +383,55 @@ class InitialState:
     # The external bodies of the world (external-body-v1): declared marks, one per
     # Node, in declaration order; a world without one is unchanged.
     external_bodies: tuple[ExternalBody, ...] = ()
+    # The field given with the board (bit-law-v1, `initial_field`): per spatial
+    # field index, the fill of the split table's transient or a declared profile
+    # of shadows; a thing does not emit its field, its shadows circulate.
+    initial_field: Mapping[int, InitialFieldDefinition] = MappingProxyType({})
 
     def __post_init__(self) -> None:
         from .spatial_state import (
             RETURN_MODES,
+            family_owners,
             validate_dense_field_admission,
             validate_detector_marks,
             validate_external_bodies,
+            validate_initial_field,
             validate_ray_coupling,
             validate_released_field_admission,
             validate_spread_admission,
+            validate_thing_ids,
         )
 
         if self.return_mode not in RETURN_MODES:
             raise ValueError("return_mode must be siblings, straight or annul")
+        # The owners of every family with a shadow set (bit-law-v1): filled in
+        # from the things of the world when the declaration leaves them empty.
+        if any(
+            definition.rays
+            and not definition.owners
+            and (definition.spread or definition.release_numerator)
+            for definition in self.spatial_fields
+        ):
+            object.__setattr__(
+                self,
+                "spatial_fields",
+                tuple(
+                    replace(definition, owners=family_owners(self, index))
+                    if definition.rays
+                    and not definition.owners
+                    and (definition.spread or definition.release_numerator)
+                    else definition
+                    for index, definition in enumerate(self.spatial_fields)
+                ),
+            )
         validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
         validate_ray_coupling(self)
         validate_released_field_admission(self)
         validate_spread_admission(self)
         validate_detector_marks(self)
         validate_external_bodies(self)
+        validate_thing_ids(self)
+        validate_initial_field(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

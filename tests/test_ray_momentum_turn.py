@@ -12,16 +12,26 @@ test_momentum_turn_walk.py) leaves these integers as they were.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("A free ray turns by
 momentum") before the first run.
+
+Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1): only a shadow
+pushes, so the field rays of `f` are shadows given with the board
+(`initial_field.f.rays`, fresh at the old lamps' Nodes, sign 1), the coupling
+reads the thing's charge (`m` charge 1: the push is sign x amount x heading as
+before), a push is not an event (no `ray_push`; the register is read from the
+ray), a returned shadow carries -push and the `momentum` line is exact at zero
+until a shadow escapes, and a run's record carries the law's identities.
 """
 
 import hashlib
 import json
+from dataclasses import replace
 
 import pytest
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import InteractionDefinition
 from event_universe.core.spatial_state import (
+    BIT_SHADOW,
     RAY_MOMENTUM_TURN,
     Ray,
     ray_line,
@@ -45,12 +55,14 @@ ENERGY = {
 
 
 def turn(table, participants=({"type": "m"}, {"type": "f"})):
-    """The coupling of a free ray with a field ray: no outputs, no assignments, the
-    table names the field family and the ray it does not name is pushed."""
+    """The coupling of a thing with a shadow: no outputs, no assignments, the
+    table names the shadows' family and the thing it does not name is pushed."""
     return {
         "name": "turn",
         "participants": list(participants),
         "momentum_table": table,
+        # bit-law-v1, point 16 (2026-09-18): the push reads the thing's charge, 1.
+        "reads": "charge",
         "invariants": [ENERGY],
     }
 
@@ -80,7 +92,7 @@ def field(name, components=1, signed=False):
 
 
 def ray_field(name, advance):
-    return {
+    entry = {
         "field": name,
         "baseline": 0,
         "transport": "ray",
@@ -92,11 +104,18 @@ def ray_field(name, advance):
         "phase_bits": 3,
         "kerengonen": {"phase_advance": advance},
     }
+    if name == "m":
+        entry["charge"] = 1
+    return entry
 
 
 def document(lamps, rules, ticks):
-    """The board: `lamps` are (position, family, amount, heading index); every
-    emission keeps its recoil on the lamp's `momentum` vector."""
+    """The board: `lamps` are (position, family, amount, heading index); a lamp
+    of `m` emits a thing whose recoil stays on the lamp's `momentum` vector; a
+    "lamp" of `f` is a fresh shadow given with the board at that Node (bit-law-v1:
+    only a shadow pushes)."""
+    things = [lamp for lamp in lamps if lamp[1] == "m"]
+    shadows = [lamp for lamp in lamps if lamp[1] == "f"]
     return {
         "schema_version": 1,
         "model_id": "ray-momentum-turn-test-v1",
@@ -128,9 +147,23 @@ def document(lamps, rules, ticks):
                 "defaults": {family: amount, "momentum": [0, 0, 0]},
                 "transport": {"mode": "hold"},
             }
-            for index, (_, family, amount, _) in enumerate(lamps)
+            for index, (_, family, amount, _) in enumerate(things)
         ],
         "spatial_fields": [ray_field("m", 1), ray_field("f", 0)],
+        "initial_field": {
+            "f": {
+                "rays": [
+                    {
+                        "position": list(position),
+                        "heading": HEADINGS[heading],
+                        "amount": amount,
+                        "sign": 1,
+                        "steps": 0,
+                    }
+                    for position, _, amount, heading in shadows
+                ]
+            }
+        },
         "emissions": [
             {
                 "type": f"lamp_{index}",
@@ -142,11 +175,11 @@ def document(lamps, rules, ticks):
                 "recoil_field": "momentum",
                 "kerengonen_phase": 0,
             }
-            for index, (_, family, amount, heading) in enumerate(lamps)
+            for index, (_, family, amount, heading) in enumerate(things)
         ],
         "seeds": [
             {"position": list(position), "type": f"lamp_{index}"}
-            for index, (position, _, _, _) in enumerate(lamps)
+            for index, (position, _, _, _) in enumerate(things)
         ],
         "ray_interactions": list(rules),
     }
@@ -158,7 +191,10 @@ def rays_at(world, position, family):
         [f.name for f in world.initial.fields].index(family)
     )
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
-    return sorted(node.rays[index], key=ray_merge_key) if node is not None and node.rays else []
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    rays = node.rays[index] if node is not None and node.rays else ()
+    return sorted((replace(ray, owner=0) for ray in rays), key=ray_merge_key)
 
 
 def positions_of(world, family):
@@ -180,6 +216,21 @@ def ray(heading, amount, phase, steps, port, accumulators=ZERO, momentum=None):
     )
 
 
+def shadow_ray(heading, amount, steps, port, momentum=None):
+    """A shadow of `f` given with the board, or the same returned with -push
+    (bit-law-v1: bit 0, sign 1, no phase, walking back with `outbound` 0)."""
+    return Ray(
+        heading,
+        ZERO,
+        amount,
+        steps=steps,
+        outbound=0 if momentum is not None else 1,
+        detector=BIT_SHADOW,
+        source_sign=1,
+        momentum=momentum,
+    )
+
+
 def momentum_line(world):
     return world.audit()["fields"]["momentum"]
 
@@ -190,21 +241,8 @@ def balanced(world):
 
 
 def pushes_of(events):
-    return [
-        (
-            e["tick"],
-            tuple(e["position"]),
-            e["family"],
-            e["amount"],
-            tuple(e["before"]),
-            tuple(e["after"]),
-            e["field"],
-            e["field_amount"],
-            tuple(e["field_heading"]),
-        )
-        for e in events
-        if e["event"] == "ray_push"
-    ]
+    """A push is not an event (bit-law-v1, point 15): none is ever recorded."""
+    return [e for e in events if e["event"] == "ray_push"]
 
 
 def run(tmp_path, raw, ticks):
@@ -253,12 +291,14 @@ STEEP_PORTS = [2, 0, 2, 0, 2, 2, 0, 2, 0, 2]
 # The record of the world without a momentum table on a coupling of free rays,
 # byte for byte that of the source before ray-momentum-turn-v1 (events.jsonl);
 # state.json re-pinned on 2026-09-17 when loop-binding-v1 removed the snapshot's
-# `bound_groups` key. The bound group of bound-group-motion-v1 went with that
-# feature.
+# `bound_groups` key. Both re-pinned on 2026-09-18 under bit-law-v1: the record
+# carries the law's identities (`owner` on every ray, the `bit_law` and the
+# contents per tick in run.json) and the two lamps' rays are two things meeting
+# by the declared table.
 IDENTICAL = {
     "meeting": (
-        "7ee9f730782a5c4de8cbc611751382cd48347005c9c4af0a557175ce7bdfec4d",
-        "d824629b8e7570a3b7aab55fab2f7c286e885f10116133bbb9fc4fa99d4160bc",
+        "fc8e94668cf9519941581377834eeeb2773f136e7734a68a9d198915216f896c",
+        "30449bd97ce8884cf3e3e30deb7f1afa3eb770306b743efc514b12ad4b34614d",
     ),
 }
 
@@ -290,32 +330,31 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             assert world.totals()["f"] == ((2,) if t <= 16 else (0,))
             assert world.escaped_totals()["f"] == ((0,) if t <= 16 else (2,))
             line = momentum_line(world)
-            assert line["initial"] == ZERO
-            assert line["sourced"] == (ZERO if t <= 6 else (0, -6, 0))
-            assert line["escaped"] == (ZERO if t <= 16 else (0, -2, 0))
-            assert line["current"] == (ZERO if t <= 6 else (0, -6, 0) if t <= 16 else (0, -4, 0))
+            assert line["initial"] == ZERO and line["sourced"] == ZERO
+            assert line["escaped"] == (ZERO if t <= 16 else (0, 2, 0))
+            assert line["current"] == (ZERO if t <= 16 else (0, -2, 0))
             assert balanced(world)
             if t <= 6:
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-                assert rays_at(world, (10, 4 + t, 10), "f") == [ray(2, 2, 0, t, 2)]
+                assert rays_at(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 2, t, 2)]
                 continue
             at, accumulators = TURN_PATH[t - 7]
             assert positions_of(world, "m") == {at}
             assert rays_at(world, at, "m") == [ray(0, 8, t & 7, t, 0, accumulators, (8, -2, 0))]
             if t <= 16:
-                assert rays_at(world, (10, 16 - t, 10), "f") == [ray(3, 2, 0, t - 6, 3)]
+                assert rays_at(world, (10, 16 - t, 10), "f") == [
+                    shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
+                ]
             else:
                 assert positions_of(world, "f") == set()
-        assert pushes_of(events) == [
-            (6, CENTER, "m", 8, (8, 0, 0), (8, -2, 0), "f", 2, (0, 1, 0)),
-        ]
+        assert pushes_of(events) == []
         metadata, records, _ = run(tmp_path, raw, 18)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v2"
         assert "bound_group_motion" not in metadata
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["accounting_balanced_at_every_completed_tick"]
-        assert pushes_of(records) == pushes_of(events)
-        assert metadata["final_totals"] == {"m": [8], "f": [0], "momentum": [0, -4, 0]}
+        assert pushes_of(records) == []
+        assert metadata["final_totals"] == {"m": [8], "f": [0], "momentum": [0, -2, 0]}
         return
     if case == "cancel":
         # (b) The same push, then a field ray of 2 from +Y two Links on: the
@@ -328,8 +367,8 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             world.step()
             assert world.totals()["m"] == (8,) and world.totals()["f"] == (4,)
             line = momentum_line(world)
-            assert line["sourced"] == (ZERO if t <= 6 else (0, -6, 0) if t <= 8 else ZERO)
-            assert line["current"] == line["sourced"] and line["escaped"] == ZERO
+            assert line["sourced"] == ZERO
+            assert line["current"] == ZERO and line["escaped"] == ZERO
             assert balanced(world)
             if t <= 6:
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
@@ -337,20 +376,19 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             if t <= 8:
                 at, accumulators = TURN_PATH[t - 7]
                 assert rays_at(world, at, "m") == [ray(0, 8, t & 7, t, 0, accumulators, (8, -2, 0))]
-                assert rays_at(world, (12, 18 - t, 10), "f") == [ray(3, 2, 0, t, 3)]
+                assert rays_at(world, (12, 18 - t, 10), "f") == [shadow_ray(3, 2, t, 3)]
             else:
                 assert positions_of(world, "m") == {(4 + t, 10, 10)}
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-                assert rays_at(world, (12, t + 2, 10), "f") == [ray(2, 2, 0, t - 8, 2)]
-            assert rays_at(world, (10, 16 - t, 10), "f") == [ray(3, 2, 0, t - 6, 3)]
-        assert pushes_of(events) == [
-            (6, CENTER, "m", 8, (8, 0, 0), (8, -2, 0), "f", 2, (0, 1, 0)),
-            (8, (12, 10, 10), "m", 8, (8, -2, 0), (8, 0, 0), "f", 2, (0, -1, 0)),
-        ]
+                assert rays_at(world, (12, t + 2, 10), "f") == [shadow_ray(2, 2, 16 - t, 2, (0, -2, 0))]
+            assert rays_at(world, (10, 16 - t, 10), "f") == [
+                shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
+            ]
+        assert pushes_of(events) == []
         metadata, records, _ = run(tmp_path, raw, 14)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN
         assert metadata["conserved_at_every_completed_tick"]
-        assert pushes_of(records) == pushes_of(events)
+        assert pushes_of(records) == []
         assert metadata["final_totals"] == {"m": [8], "f": [4], "momentum": [0, 0, 0]}
         return
     if case == "steep":
@@ -367,8 +405,8 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             world.step()
             assert world.totals()["m"] == (2,) and world.totals()["f"] == (3,)
             line = momentum_line(world)
-            assert line["sourced"] == (ZERO if t <= 6 else (0, -3, 0))
-            assert line["current"] == line["sourced"] and line["escaped"] == ZERO
+            assert line["sourced"] == ZERO
+            assert line["current"] == ZERO and line["escaped"] == ZERO
             assert balanced(world)
             if t <= 6:
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 2, t & 7, t, 0)]
@@ -378,10 +416,10 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             (turned,) = rays_at(world, at, "m")
             assert turned == ray(0, 2, t & 7, t, 0, accumulators, (2, 3, 0))
             assert ray_line(turned, initial.spatial_fields[0]) == (0, 1, 0)
-            assert rays_at(world, (10, 16 - t, 10), "f") == [ray(3, 3, 0, t - 6, 3)]
-        assert pushes_of(events) == [
-            (6, CENTER, "m", 2, (2, 0, 0), (2, 3, 0), "f", 3, (0, 1, 0)),
-        ]
+            assert rays_at(world, (10, 16 - t, 10), "f") == [
+                shadow_ray(3, 3, max(12 - t, 0), 3, (0, -3, 0))
+            ]
+        assert pushes_of(events) == []
         metadata, _, _ = run(tmp_path, raw, 16)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN
         assert metadata["conserved_at_every_completed_tick"]
@@ -431,6 +469,6 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
     for _ in range(6):
         world.step()
     assert rays_at(world, CENTER, "m") == [ray(0, 2, 6, 6, 0)]
-    assert rays_at(world, CENTER, "f") == [ray(1, 2, 0, 6, 1)]
+    assert rays_at(world, CENTER, "f") == [shadow_ray(1, 2, 6, 1)]
     with pytest.raises(ValueError, match="cannot stop a ray"):
         world.step()

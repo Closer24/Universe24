@@ -9,6 +9,7 @@ Node under the shared Detector admission.
 """
 
 import json
+from dataclasses import replace
 
 import pytest
 
@@ -187,7 +188,11 @@ def rays_at(world, position):
     node = next((n for n in world.inventory_view().nodes if n.position == position), None)
     if node is None or not node.rays:
         return []
-    return sorted((ray for bundle in node.rays for ray in bundle), key=lambda ray: ray.heading)
+    # bit-law-v1 (2026-09-18): a ray carries the identity of the thing that emitted
+    # it (`owner`); this module pins lines and events, not identities (test_bit_law does).
+    return sorted(
+        (replace(ray, owner=0) for bundle in node.rays for ray in bundle), key=lambda ray: ray.heading
+    )
 
 
 def lamp(world, type_index):
