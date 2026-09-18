@@ -118,21 +118,24 @@ def _fill(
             for rank, sign, port, amount, phase in placed:
                 _depart(family, position, rank, sign, port, amount, phase, 1)
         reflections = {}
-        amounts, phases = region._walk(family)
-        hits = np.nonzero(engine_mask[..., None, None, None, None] & (amounts > 0))
-        for x, y, z, rank, sign, port, layer in zip(*hits, strict=True):
+        # A prefill's shares are outgoing (flow 0) and carry no momentum.
+        amounts, phases, momenta = region._walk(family)
+        hits = np.nonzero(engine_mask[..., None, None, None, None, None] & (amounts > 0))
+        for x, y, z, rank, flow, sign, port, layer in zip(*hits, strict=True):
             position = (int(x), int(y), int(z))
-            amount = int(amounts[x, y, z, rank, sign, port, layer])
-            phase = int(phases[x, y, z, rank, sign, port, layer])
-            amounts[x, y, z, rank, sign, port, layer] = 0
-            phases[x, y, z, rank, sign, port, layer] = 0
+            cell = (x, y, z, rank, flow, sign, port, layer)
+            amount = int(amounts[cell])
+            phase = int(phases[cell])
+            amounts[cell] = 0
+            phases[cell] = 0
             if position in reflecting:
                 reflections.setdefault(position, []).append(
                     (int(rank), int(sign), int(port) ^ 1, amount, phase)
                 )
         family.arr_amt += amounts
         family.arr_ph += phases
-        region.visited |= (family.arr_amt > 0).any(axis=(3, 4, 5, 6))
+        family.arr_mom += momenta
+        region.visited |= (family.arr_amt > 0).any(axis=(3, 4, 5, 6, 7))
     fresh: dict[Address3, list[Ray]] = {}
     for position, placed in reflections.items():
         for rank, sign, port, amount, phase in placed:
@@ -160,20 +163,22 @@ def _depart(
     phase: int,
     layer: int,
 ) -> None:
-    """One departure of a source into the region's flight arrays, on the given layer,
-    merged with what is there when the phases agree, on the other layer otherwise."""
+    """One departure of a source into the region's flight arrays, an outgoing share
+    (flow 0), on the given layer, merged with what is there when the phases
+    agree, on the other layer otherwise."""
     from event_universe.dense_field import LAYERS
 
     fly_amt = family.fly_amt  # type: ignore[attr-defined]
     fly_ph = family.fly_ph  # type: ignore[attr-defined]
-    slots = fly_amt[position][rank, sign, port]
+    cell = (rank, 0, sign, port)
+    slots = fly_amt[position][cell]
     for candidate in (layer, *range(LAYERS)):
         if slots[candidate] == 0:
-            fly_amt[position][rank, sign, port, candidate] = amount
-            fly_ph[position][rank, sign, port, candidate] = phase
+            fly_amt[position][(*cell, candidate)] = amount
+            fly_ph[position][(*cell, candidate)] = phase
             return
-        if int(fly_ph[position][rank, sign, port, candidate]) == phase:
-            fly_amt[position][rank, sign, port, candidate] = int(slots[candidate]) + amount
+        if int(fly_ph[position][(*cell, candidate)]) == phase:
+            fly_amt[position][(*cell, candidate)] = int(slots[candidate]) + amount
             return
     raise ValueError("the prefill cannot hold a third phase on one Port of a source")
 

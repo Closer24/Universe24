@@ -46,7 +46,12 @@ PERIOD = 1
 LAMP_FIXED_POINT = 32
 # The residual of the last comparison when the search stops after 10 intervals.
 SHORT_LIMIT = 10
-SHORT_RESIDUAL = {"cells": 144, "amount": 370}
+# Re-pinned 2026-09-18 (return-field-v1, part 2): the arrays carry the flow and
+# the momentum of every share, so the returning shares of the line, which were
+# the engine's Nodes' (one item of the residual for the whole engine part), are
+# array cells now (a momentum, three integers, one cell), and the residual
+# after 10 intervals reads the whole layer.
+SHORT_RESIDUAL = {"cells": 1640, "amount": 4002}
 # The momentum of the two bodies after 200 ticks of the line.
 FINAL_MOMENTA = [(-97, -1, 0), (98, 0, 0)]
 # The state.json digest of the box for 24 ticks, written by the runner of main at
