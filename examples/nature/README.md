@@ -35,7 +35,13 @@ and one electron ray under a body's field with the books per tick, in
 [below](#the-fields-books-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting),
 and (N) the worlds of experiment A6, light bending by a mass, a light ray
 passing a star through its spreading mass field, in `a6_bending/`,
-[below](#a6-light-bending-by-a-mass).
+[below](#a6-light-bending-by-a-mass), and (O) and (P) the first confrontation
+runs under the law of the bit, E11 repeated in `e11_law/` (one thing at rest,
+its field given with the board and read shell by shell and by test things)
+and A5s repeated in `a5s_law/` (two things at rest reading each other's
+shadows by their charge),
+[below](#e11-repeated-under-the-law-of-the-bit-the-field-of-one-thing-at-rest)
+and [below](#a5s-repeated-under-the-law-of-the-bit-two-things-at-rest).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
@@ -2629,3 +2635,85 @@ committed record is `record.json`):
 
 The value of G stays undecided (Highlights 5.5): the run reads the forms and
 leaves the release ratio and the table as inputs.
+
+## E11 repeated under the law of the bit: the field of one thing at rest
+
+`e11_law/` holds the worlds of
+[E11 repeated under the law of the bit (2026-09-18)](../../docs/EXPERIMENTS.md#e11-repeated-under-the-law-of-the-bit-2026-09-18),
+the first confrontation of the engine of features 15 to 18 and 16d (part 1)
+with round 4 of the derivations, written by `make_worlds.py` on the law and
+never by hand: `pulse.json` (one release of 2^19 quanta on each of the six
+headings of a body at the centre of a 41^3 board, for the front and the
+fraction off the coordinate planes), `standing.json` (the body of 2^28 at the
+centre of a 33^3 board with its shadow set of 37748736 quanta given by
+`initial_field` `{"fill": 12}`, read shell by shell) and nine
+`probe_{axis,110,111}_*.json` (the standing world with one test thing of
+content 1 at rest at a read Node, three radii per direction). `analyze.py`
+reads the runner's records and replays the two probe-free worlds in-process
+for the shells; `record.json` holds every number and `tables.md` the
+tables of the register's entry.
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| A charge at rest, +e (a proton) | An external body of the catalog's `proton` family (charge 3 per quantum), `amount` 2^28, `charge` 3 x 2^28 (its whole charge, a multiple of its amount), at its Node for the whole run; it has no clock and radiates nothing | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1); Highlights 5.4, points 12, 22 and "A thing does not emit" |
+| The field of the charge | The body's shadows, rays of the `proton` family with the bit 0, given with the board: `initial_field` `{"proton": {"fill": 12}}` with `release` [1, 512], twelve intervals of the fill in which the body releases 2^19 per Port heading, every Node mixes what arrives (point 24) and what comes back to the body is reflected; 6 x 2^19 x 12 = 37748736 quanta, the largest fill the prefill admits (13 needs a third phase layer at the source) | [The law of the bit](../../docs/SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1), [the Node mixes the six](../../docs/SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1); `event_universe/prefill.py` |
+| The phase circle | `phase_bits` 6 on every family, N = 64 (the engine's per-family key for the world's one N) | Highlights 5.4, definitions (N) |
+| The clock | `K` 1 on the world and `clock` true on the `electron` family: the test thing of one quantum advances one step per interval; the body has no clock | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) |
+| A test thing (a probe) | A real ray of the catalog's `electron` family, content 1, emitted by a lamp (`probe`) one Link outward of the read Node and heading inward, so that it stands at the read Node after tick 1; its coupling `read` over [electron, proton], `momentum_table` `{"proton": 1}` with `reads` "content", so each push is +amount x heading x 1: the signed flux J of the body's shadows at its Node, in quanta, and the thing's momentum line per tick is the pushed amount | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) (the two readings); Highlights 5.4, points 15 and 16 |
+| The probe at rest | Point 23: a thing pays a tick per whole quantum it reads (`wait_per_quantum` 1), so a probe that reads thousands of quanta never moves again and its `computation_per_tick` is 0 while it waits; the runner's `momentum` line (thing 2) per tick is read by `analyze.py` | [The wait per quantum read](../../docs/TEST_EXPECTATIONS.md#the-wait-per-quantum-read) |
+| Why the probe heads inward | One meeting, one push (return-field-v1): a share that arrives through the Port the thing arrived by rides with it and pushes nothing; heading inward, the ignored lane carries the wave's small backward share, and the outgoing wave is read whole; the inventory's J at the same Node in `standing.json` stands beside every probe's reading | [The return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1) |
+| The return, the recoil | Every shadow that pushes the probe turns back with the opposite sign carrying -dp and mixes on as field; what reaches the body is absorbed with its momentum, so the body's momentum line (thing 3) is the recoil that came home through the field, and the ledger's momentum line stays zero with the rest in flight on the shadows | [The return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1); Highlights 5.4, point 3 |
+| A shell | L1: the Nodes at |dx| + |dy| + |dz| = k from the body; Euclidean: those whose distance rounds to k; per shell the content (on their way and parked, whole quanta) and J_r, the sum over shadows of +-amount x (heading . r) / |r| | `analyze.py` |
+| The books per bit | The runner's `audit` per completed tick: the world line, the real line (initial + converted = current + escaped + absorbed) and the shadow line (initial = current + escaped + absorbed_at_home), `real_conserved` | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) ("The source") |
+| The board | 33^3 (r = 16) open, the body at (16, 16, 16), 40 ticks; the pulse on 41^3 so that the front at t / sqrt 3 = 17.3 is still on the board at t = 30; the dense mode (`dense_field` true), the shadow layer of point 13 | Highlights 5.4, point 13 |
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/e11_law/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/e11_law examples/nature/e11_law/pulse.json examples/nature/e11_law/standing.json examples/nature/e11_law/probe_*.json
+PYTHONPATH=src python examples/nature/e11_law/analyze.py artifacts/e11_law --record examples/nature/e11_law/record.json --tables examples/nature/e11_law/tables.md
+python tools/ray_viewer/extract.py artifacts/e11_law/probe_axis_r8/run --label "E11 under the law: the probe at (8, 0, 0)" --out artifacts/e11_law/probe_axis_r8/runs.json
+python tools/ray_viewer/render_gif.py artifacts/e11_law/probe_axis_r8/runs.json --output artifacts/e11_law/probe_axis_r8/e11_law.gif
+```
+
+The runner's records stay outside the tree (`run.json` of every world is kept
+under `artifacts/` of the run's branch; `events.jsonl` and `state.json` are
+larger than 20 MB and are not kept); `record.json` and `tables.md` beside the
+worlds hold the readings.
+
+## A5s repeated under the law of the bit: two things at rest
+
+`a5s_law/` holds the worlds of
+[A5s repeated under the law of the bit (2026-09-18)](../../docs/EXPERIMENTS.md#a5s-repeated-under-the-law-of-the-bit-2026-09-18),
+written by `make_worlds.py` on the law: `pp_d{4,6,8,12}.json` (two bodies of
+2^28 on the x axis at distance d), `pp_d8_110.json` and `pp_d8_111.json` (B at
+(8, 8, 0) and (8, 8, 8) from A) and `pq_d8.json`, `qq_d8.json` (the product
+law: 2^28 with 2^27, and 2^27 with 2^27). `analyze.py` reads the runner's
+records (and replays one world in-process for the momentum in flight);
+`record.json` holds every number and `tables.md` the tables of the register's
+entry.
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| Two charges at rest | Two external bodies of the `proton` family, `amount` 2^28 (or 2^27), `charge` 3 x amount, at rest for the whole run (`positions` per tick in `run.json`), A at (12, 12, 12), B at A + (d, 0, 0), (8, 8, 0) or (8, 8, 8) | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1); Highlights 3.19, 5.4 point 22 |
+| The field of each charge | Its shadow set given with the board, `initial_field` `{"proton": {"fill": 12}}` with `release` [1, 512]: 37748736 quanta for a body of 2^28 (2^19 per heading per interval of the fill), 18874368 for 2^27; both sets in one family, told apart by their owner | [The law of the bit](../../docs/SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1); Highlights 5.4, points 12 and 18 |
+| The Coulomb force on a charge | The body's `momentum_table` `{"proton": 1}` with `reads` "charge": every shadow of the other body that arrives pushes it by +amount x heading x (the owner's charge / the owner's content) x the body's charge per quantum = 9 x amount x heading, away from the source (repulsion, the sign of the charge product), and turns back with the opposite sign carrying -dp; a shadow of its own is home and never a push; the push per interval is the change of the body's momentum per tick, read from the runner's `momentum` line (things 2 and 3) | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) (the electricity reading); Highlights 5.4, points 3 and 16 |
+| Newton's third law through the field | The returned shadows carry -dp to the owner, who takes it when they reach it; between the push and the arrival the momentum is in flight on the shadows: the ledger's momentum line (`fields.momentum.current`, the things' and the shadows' together) stays at its initial zero at every tick, so the two bodies' momenta plus the momentum in flight (and what escaped with the shadows) sum to zero every interval | [The return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1); Highlights 5.4, "A meeting is reported to its owner" |
+| The product law | Three pairs of contents at d = 8, (2^28, 2^28), (2^28, 2^27), (2^27, 2^27): the push on each body against the product of the whole charges, and against each body's own and the other's charge | Highlights 5.4, point 16; DERIVATIONS.md section 31 |
+| The scaling with d | The push on B along the line from A, per window of ten intervals and cumulative at tick 40, over d = 4, 6, 8, 12; the (110) and (111) worlds against the axis fit at the same Euclidean distance | DERIVATIONS.md sections 27 (v) and 31 |
+| The board | [d + 25, 25, 25] Nodes (33 x 33 x 25 and 33^3 off the axis), open, a margin of 12 beyond each body, 40 ticks, the dense mode, N = 64, K 1, `wait_per_quantum` 1 | Highlights 5.4 |
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/a5s_law/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/a5s_law examples/nature/a5s_law/pp_d4.json examples/nature/a5s_law/pp_d6.json examples/nature/a5s_law/pp_d8.json examples/nature/a5s_law/pp_d12.json examples/nature/a5s_law/pp_d8_110.json examples/nature/a5s_law/pp_d8_111.json examples/nature/a5s_law/pq_d8.json examples/nature/a5s_law/qq_d8.json
+PYTHONPATH=src python examples/nature/a5s_law/analyze.py artifacts/a5s_law --replay pq_d8 --record examples/nature/a5s_law/record.json --tables examples/nature/a5s_law/tables.md
+python tools/ray_viewer/extract.py artifacts/a5s_law/pq_d8/run --label "A5s under the law: 2^28 and 2^27 at d = 8" --out artifacts/a5s_law/pq_d8/runs.json
+python tools/ray_viewer/render_gif.py artifacts/a5s_law/pq_d8/runs.json --output artifacts/a5s_law/pq_d8/a5s_law.gif
+```
