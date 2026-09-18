@@ -1,0 +1,488 @@
+{
+  "package_version": "0.2.0",
+  "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+  "initialization_sha256": "09d27693188e5d8222f55f771c7481d0ffa93c96fb65bee06d4c64de0a5461c7",
+  "model": "e9-law-ring-screen",
+  "schema_version": 1,
+  "sampling_profile": "detector-only-v1",
+  "ray_state": "ray-event-state-v1",
+  "detector_mark": "detector-mark-v1",
+  "detector_return": "detector-return-v1",
+  "detector_absorb": "detector-absorb-v1",
+  "inverse_split": "inverse-split-v1",
+  "return_mode": "siblings",
+  "bit_law": "bit-law-v1",
+  "shadow_families": [
+    {
+      "field": "electron",
+      "release": [
+        1,
+        1
+      ],
+      "phase_width": 64,
+      "owners": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "initial_field": {
+    "electron": {
+      "fill": 5
+    }
+  },
+  "real_conserved": true,
+  "real_content": [],
+  "shadow_content": [],
+  "momentum": [],
+  "node_is_ports": "node-is-ports-v1",
+  "lanes": "lanes-v1",
+  "clock_readings": "clock-readings-v1",
+  "K": 4096,
+  "wait_per_quantum": [
+    1,
+    1
+  ],
+  "computation_per_tick": [],
+  "spent_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "shadows": [
+    {
+      "thing": 1,
+      "rays": 900,
+      "amount": 985993
+    },
+    {
+      "thing": 2,
+      "rays": 900,
+      "amount": 985993
+    },
+    {
+      "thing": 3,
+      "rays": 1099,
+      "amount": 1079020
+    },
+    {
+      "thing": 4,
+      "rays": 1099,
+      "amount": 1079020
+    },
+    {
+      "thing": 5,
+      "rays": 1094,
+      "amount": 1078977
+    },
+    {
+      "thing": 6,
+      "rays": 1094,
+      "amount": 1078977
+    },
+    {
+      "thing": 7,
+      "rays": 894,
+      "amount": 985942
+    },
+    {
+      "thing": 8,
+      "rays": 894,
+      "amount": 985942
+    }
+  ],
+  "wave_ray": "wave-ray-family-v1",
+  "ray_layers": "ray-layers-v1",
+  "ray_layer_families": [
+    [
+      "electron"
+    ]
+  ],
+  "ray_meeting": "ray-meeting-conversion-v1",
+  "released_field": "released-field-v1",
+  "ray_binding": "ray-binding-v1",
+  "loop_binding": "loop-binding-v1",
+  "external_body": "external-body-v1",
+  "external_bodies": [],
+  "external_body_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "external_body_momentum": [
+    0,
+    0,
+    0
+  ],
+  "detector_marks": [
+    {
+      "position": [
+        7,
+        2,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    },
+    {
+      "position": [
+        7,
+        3,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    },
+    {
+      "position": [
+        7,
+        4,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    },
+    {
+      "position": [
+        7,
+        5,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    },
+    {
+      "position": [
+        7,
+        6,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    },
+    {
+      "position": [
+        7,
+        7,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    },
+    {
+      "position": [
+        7,
+        8,
+        5
+      ],
+      "resident": {
+        "real": {},
+        "shadow": {},
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "owners": []
+      }
+    }
+  ],
+  "detector_mark_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "detector_mark_momentum": [
+    0,
+    0,
+    0
+  ],
+  "boundary": "open",
+  "elapsed_seconds": 2.765017172001535,
+  "status": "failed",
+  "error": "ray slot budget exceeded",
+  "requested_ticks": 240,
+  "completed_ticks": 0,
+  "tick": 1,
+  "display": "none",
+  "initial_totals": {
+    "electron": [
+      7963692
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "final_totals": {
+    "electron": [
+      8525606
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "local_conservation": {
+    "status": "not_configured"
+  },
+  "source_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "conserved_at_every_completed_tick": true,
+  "ray_event_audit": "ray-event-audit-v1",
+  "audit": [],
+  "dissipation_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "localized_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "escaped_totals": {
+    "electron": [
+      61928
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "annulled_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "returned_totals": {
+    "electron": [
+      0
+    ],
+    "momentum": [
+      0,
+      0,
+      0
+    ]
+  },
+  "accounting_balanced_at_every_completed_tick": true,
+  "fields": [
+    "electron",
+    "momentum"
+  ],
+  "disturbance_types": [
+    "corner_0_r",
+    "corner_0_l",
+    "corner_1_r",
+    "corner_1_l",
+    "corner_2_r",
+    "corner_2_l",
+    "corner_3_r",
+    "corner_3_l"
+  ],
+  "shape": [
+    12,
+    11,
+    11
+  ],
+  "link_ticks": 1,
+  "computation": {
+    "model_operations_cost": 1488,
+    "local_cycles_started": 4
+  },
+  "execution": {
+    "backend": "serial",
+    "node_workers": 1,
+    "disturbance_node_tasks": 0,
+    "spatial_node_tasks": 0,
+    "parallel_batches": 0,
+    "largest_batch": 0,
+    "carrier_plan_reuse": {
+      "capacity": 4096,
+      "entries": 0,
+      "requests": 4,
+      "evaluations": 4,
+      "hits": 0
+    },
+    "spatial_plan_reuse": {
+      "capacity": 4096,
+      "entries": 0,
+      "requests": 5,
+      "evaluations": 5,
+      "hits": 0
+    },
+    "focus_requested": true,
+    "focus_enabled": true,
+    "focus_fallback": null,
+    "carrier_phase_visits": 8,
+    "carrier_transport": {
+      "active_banks": 0,
+      "bank_visits": 0
+    },
+    "spatial_transport": {
+      "active_banks": 5,
+      "bank_visits": 5
+    },
+    "awake_carrier_nodes": 4
+  },
+  "dense_field": "dense-field-v1",
+  "node_mixing": "node-mixing-v1",
+  "return_field": "return-field-v1",
+  "field_remainder": "field-remainder-v1",
+  "mixing_fields": [
+    {
+      "field": "electron",
+      "phase_width": 64
+    }
+  ],
+  "spatial_fields": [
+    "electron"
+  ],
+  "spatial_transport": "straight-rays",
+  "emission_interval_ticks": 1,
+  "self_field_filter": "unsupported",
+  "spatial_metric": "links",
+  "spatial_policy": "isotropic-ray-field-v1",
+  "spatial_accounting": {
+    "electron": {
+      "initial": [
+        7701548
+      ],
+      "current": [
+        8525606
+      ],
+      "sources": [
+        0
+      ],
+      "reactions": [
+        262144
+      ],
+      "dissipated": [
+        0
+      ],
+      "localized": [
+        0
+      ],
+      "escaped": [
+        61928
+      ],
+      "annulled": [
+        0
+      ],
+      "absorbed_by_bodies": [
+        0
+      ],
+      "absorbed_by_marks": [
+        0
+      ],
+      "returned": [
+        0
+      ],
+      "spent": [
+        0
+      ],
+      "balanced": false
+    }
+  },
+  "spatial_background": "immutable; excluded from decay",
+  "spatial_decay_residue": [
+    null
+  ],
+  "allocation_phase": "straight",
+  "spatial_allocation": "carried-straight-phase-v1"
+}

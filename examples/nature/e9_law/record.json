@@ -1,0 +1,636 @@
+{
+ "worlds": {
+  "ring_screen": {
+   "model": "e9-law-ring-screen",
+   "status": "failed",
+   "error": "ray slot budget exceeded",
+   "requested_ticks": 240,
+   "completed_ticks": 0,
+   "elapsed_seconds": 2.77,
+   "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+   "initialization_sha256": "09d27693188e5d8222f55f771c7481d0ffa93c96fb65bee06d4c64de0a5461c7",
+   "dense_field": "dense-field-v1",
+   "K": 4096,
+   "phase_width": 6,
+   "clock": false,
+   "fill": 5,
+   "ray_slots": 32,
+   "ring_amount": 32768,
+   "owners": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "initial_totals": {
+    "electron": [
+     7963692
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "final_totals": {
+    "electron": [
+     8525606
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "escaped_totals": {
+    "electron": [
+     61928
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "real_content": [],
+   "shadow_content": [],
+   "conserved_at_every_completed_tick": true,
+   "real_conserved": true,
+   "ledger_last": null,
+   "events": {
+    "cycle_committed": 4,
+    "cycle_started": 4,
+    "spatial_cycle": 4,
+    "spatial_sent": 24
+   },
+   "clicks": 0,
+   "marks": [
+    {
+     "position": [
+      7,
+      2,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      3,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      4,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      5,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      6,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      7,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      8,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    }
+   ]
+  },
+  "ring_screen_clock": {
+   "model": "e9-law-ring-screen-clock",
+   "status": "failed",
+   "error": "ray slot budget exceeded",
+   "requested_ticks": 240,
+   "completed_ticks": 0,
+   "elapsed_seconds": 2.77,
+   "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+   "initialization_sha256": "31c8ef78e33d4c5b5cca4c547b9008392c3193ae42832d980819141e8f4e730c",
+   "dense_field": "dense-field-v1",
+   "K": 4096,
+   "phase_width": 6,
+   "clock": true,
+   "fill": 5,
+   "ray_slots": 32,
+   "ring_amount": 32768,
+   "owners": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "initial_totals": {
+    "electron": [
+     7963692
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "final_totals": {
+    "electron": [
+     8525606
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "escaped_totals": {
+    "electron": [
+     61928
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "real_content": [],
+   "shadow_content": [],
+   "conserved_at_every_completed_tick": true,
+   "real_conserved": true,
+   "ledger_last": null,
+   "events": {
+    "cycle_committed": 4,
+    "cycle_started": 4,
+    "spatial_cycle": 4,
+    "spatial_sent": 24
+   },
+   "clicks": 0,
+   "marks": [
+    {
+     "position": [
+      7,
+      2,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      3,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      4,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      5,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      6,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      7,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      8,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    }
+   ]
+  },
+  "ring_screen_clock_fill1": {
+   "model": "e9-law-ring-screen-clock-fill1",
+   "status": "failed",
+   "error": "ray slot budget exceeded",
+   "requested_ticks": 240,
+   "completed_ticks": 4,
+   "elapsed_seconds": 2.91,
+   "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+   "initialization_sha256": "6d6f60fa05c0d5a245c154d0cd482bb54659b1db4105e4425aac14c61bb3b794",
+   "dense_field": "dense-field-v1",
+   "K": 4096,
+   "phase_width": 6,
+   "clock": true,
+   "fill": 1,
+   "ray_slots": 32,
+   "ring_amount": 32768,
+   "owners": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "initial_totals": {
+    "electron": [
+     1835008
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "final_totals": {
+    "electron": [
+     1803640
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "escaped_totals": {
+    "electron": [
+     207732
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "real_content": [
+    262144,
+    262144,
+    262144,
+    262144
+   ],
+   "shadow_content": [
+    1558304,
+    1537284,
+    1491308,
+    1435300
+   ],
+   "conserved_at_every_completed_tick": true,
+   "real_conserved": true,
+   "ledger_last": {
+    "tick": 4,
+    "electron": {
+     "initial": [
+      1835008
+     ],
+     "sourced": [
+      0
+     ],
+     "current": [
+      1697444
+     ],
+     "escaped": [
+      137564
+     ],
+     "annulled": [
+      0
+     ],
+     "absorbed": [
+      0
+     ],
+     "absorbed_by_marks": [
+      0
+     ],
+     "returned": [
+      0
+     ],
+     "balanced": true
+    },
+    "momentum": {
+     "initial": [
+      0,
+      0,
+      0
+     ],
+     "sourced": [
+      0,
+      0,
+      0
+     ],
+     "current": [
+      0,
+      0,
+      0
+     ],
+     "escaped": [
+      0,
+      0,
+      0
+     ],
+     "annulled": [
+      0,
+      0,
+      0
+     ],
+     "absorbed": [
+      0,
+      0,
+      0
+     ],
+     "absorbed_by_marks": [
+      0,
+      0,
+      0
+     ],
+     "returned": [
+      0,
+      0,
+      0
+     ],
+     "spent": [
+      0,
+      0,
+      0
+     ],
+     "balanced": true
+    },
+    "real": {
+     "electron": {
+      "initial": [
+       262144
+      ],
+      "converted": [
+       0
+      ],
+      "current": [
+       262144
+      ],
+      "escaped": [
+       0
+      ],
+      "absorbed": [
+       0
+      ],
+      "balanced": true
+     }
+    },
+    "shadow": {
+     "electron": {
+      "initial": [
+       1572864
+      ],
+      "current": [
+       1435300
+      ],
+      "escaped": [
+       137564
+      ],
+      "absorbed_at_home": [
+       0
+      ],
+      "balanced": true
+     }
+    }
+   },
+   "events": {
+    "cycle_committed": 20,
+    "cycle_started": 20,
+    "field_spread": 12,
+    "spatial_cycle": 20,
+    "spatial_received": 16,
+    "spatial_sent": 104
+   },
+   "clicks": 0,
+   "marks": [
+    {
+     "position": [
+      7,
+      2,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      3,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      4,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      5,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      6,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      7,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    },
+    {
+     "position": [
+      7,
+      8,
+      5
+     ],
+     "real": {},
+     "shadow": {}
+    }
+   ]
+  }
+ },
+ "scan": {
+  "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+  "ticks": 40,
+  "rows": [
+   {
+    "ray_slots": 24,
+    "fill": 1,
+    "admitted": true,
+    "failed_tick": 3,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 1835008
+   },
+   {
+    "ray_slots": 24,
+    "fill": 2,
+    "admitted": true,
+    "failed_tick": 1,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 3393312
+   },
+   {
+    "ray_slots": 24,
+    "fill": 3,
+    "admitted": false,
+    "failed_tick": null,
+    "error": "ray slot budget exceeded"
+   },
+   {
+    "ray_slots": 24,
+    "fill": 8,
+    "admitted": false,
+    "failed_tick": null,
+    "error": "the prefill cannot hold a third phase on one Port of a source"
+   },
+   {
+    "ray_slots": 32,
+    "fill": 1,
+    "admitted": true,
+    "failed_tick": 5,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 1835008
+   },
+   {
+    "ray_slots": 32,
+    "fill": 2,
+    "admitted": true,
+    "failed_tick": 2,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 3393312
+   },
+   {
+    "ray_slots": 32,
+    "fill": 3,
+    "admitted": true,
+    "failed_tick": 1,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 4930592
+   },
+   {
+    "ray_slots": 32,
+    "fill": 4,
+    "admitted": true,
+    "failed_tick": 1,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 6452084
+   },
+   {
+    "ray_slots": 32,
+    "fill": 5,
+    "admitted": true,
+    "failed_tick": 1,
+    "error": "ray slot budget exceeded",
+    "initial_shadows": 7963692
+   },
+   {
+    "ray_slots": 32,
+    "fill": 6,
+    "admitted": false,
+    "failed_tick": null,
+    "error": "ray slot budget exceeded"
+   },
+   {
+    "ray_slots": 32,
+    "fill": 7,
+    "admitted": false,
+    "failed_tick": null,
+    "error": "the prefill cannot hold a third phase on one Port of a source"
+   },
+   {
+    "ray_slots": 32,
+    "fill": 8,
+    "admitted": false,
+    "failed_tick": null,
+    "error": "the prefill cannot hold a third phase on one Port of a source"
+   },
+   {
+    "ray_slots": 32,
+    "fill": 16,
+    "admitted": false,
+    "failed_tick": null,
+    "error": "the prefill cannot hold a third phase on one Port of a source"
+   }
+  ]
+ }
+}

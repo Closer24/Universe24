@@ -1,0 +1,36 @@
+{"event": "spatial_cycle", "tick": 0, "position": [1, 5, 5], "cost": 365, "source_delta": {}}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 5], "port": 0, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 5], "port": 1, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 5], "port": 2, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 5], "port": 3, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 5], "port": 4, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 5], "port": 5, "arrival_tick": 1}
+{"event": "spatial_cycle", "tick": 0, "position": [1, 5, 6], "cost": 365, "source_delta": {}}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 6], "port": 0, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 6], "port": 1, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 6], "port": 2, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 6], "port": 3, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 6], "port": 4, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [1, 5, 6], "port": 5, "arrival_tick": 1}
+{"event": "spatial_cycle", "tick": 0, "position": [2, 5, 5], "cost": 365, "source_delta": {}}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 5], "port": 0, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 5], "port": 1, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 5], "port": 2, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 5], "port": 3, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 5], "port": 4, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 5], "port": 5, "arrival_tick": 1}
+{"event": "spatial_cycle", "tick": 0, "position": [2, 5, 6], "cost": 365, "source_delta": {}}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 6], "port": 0, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 6], "port": 1, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 6], "port": 2, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 6], "port": 3, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 6], "port": 4, "arrival_tick": 1}
+{"event": "spatial_sent", "tick": 0, "position": [2, 5, 6], "port": 5, "arrival_tick": 1}
+{"event": "cycle_started", "tick": 0, "position": [1, 5, 5], "cost": 372, "ready_tick": 0, "next_tick": 1}
+{"event": "cycle_committed", "tick": 0, "position": [1, 5, 5], "cost": 372, "transfers": 0}
+{"event": "cycle_started", "tick": 0, "position": [1, 5, 6], "cost": 372, "ready_tick": 0, "next_tick": 1}
+{"event": "cycle_committed", "tick": 0, "position": [1, 5, 6], "cost": 372, "transfers": 0}
+{"event": "cycle_started", "tick": 0, "position": [2, 5, 5], "cost": 372, "ready_tick": 0, "next_tick": 1}
+{"event": "cycle_committed", "tick": 0, "position": [2, 5, 5], "cost": 372, "transfers": 0}
+{"event": "cycle_started", "tick": 0, "position": [2, 5, 6], "cost": 372, "ready_tick": 0, "next_tick": 1}
+{"event": "cycle_committed", "tick": 0, "position": [2, 5, 6], "cost": 372, "transfers": 0}

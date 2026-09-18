@@ -35,7 +35,13 @@ and one electron ray under a body's field with the books per tick, in
 [below](#the-fields-books-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting),
 and (N) the worlds of experiment A6, light bending by a mass, a light ray
 passing a star through its spreading mass field, in `a6_bending/`,
-[below](#a6-light-bending-by-a-mass).
+[below](#a6-light-bending-by-a-mass),
+and (O) the worlds of E9 repeated under the law of the bit, the ring with
+its prefilled shadow set on the screen of seven marks, in `e9_law/`,
+[below](#e9-under-the-law-the-ring-with-its-shadow-set-on-the-screen),
+and (P) the worlds of A1 repeated under the law of the bit, one lamp behind
+a wall with two slits and a screen of marks, in `a1_law/`,
+[below](#a1-under-the-law-one-lamp-two-slits-and-a-screen-of-marks).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
@@ -1890,6 +1896,83 @@ python examples/nature/e12_no_draw/analyze.py $R --record examples/nature/e12_no
 
 The records stay outside the tree; the register entry E12 carries the
 fingerprints and `record.json` the readings. No GIF was rendered.
+
+## E9 under the law: the ring with its shadow set on the screen
+
+`e9_law/` holds the worlds of
+[E9 repeated under the law of the bit](../../docs/EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks)
+(2026-09-18), written by `make_worlds.py` from `screen_loop.json` through
+`bit_law_migration.migrate`: the ring of E5 on E6's screen of seven marks,
+N = 64, one K, the electron's shadows given with the board (`initial_field`
+`fill`), no field family, the dense mode. The engine refuses the ring with
+its shadow set (a corner's ray slot budget, the prefill's two phases per
+Port at a source); `scan_fill.py` reproduces the refusals through the
+Simulation API and `analyze.py` reads the failed records; the register
+entry holds the tables and the fingerprints.
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| An electron at rest | The ring of E5: eight `electron` rays of amount 32768 on the unit square in the plane y = 5, one of each sense at every corner, under `corner`; eight disturbance types, eight things (every type a distinct thing) | [Binding as a loop](../../docs/SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1); [the law of the bit](../../docs/SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1) |
+| Its field | The electron's own shadows, bit 0, of each ray's owner: `release` [1, 1] (a thing's set per interval of the fill is at most its content), `initial_field` `{"electron": {"fill": 5}}`, mixed at every Node by the family's width `phase_bits` 6 | Highlights 5.4 points 12, 22, 24; [the Node mixes the six](../../docs/SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1); [prefill](../../src/event_universe/prefill.py) |
+| The clock | `clock` true on the electron with K = 4096: 8 steps of 64 per interval per ray (`ring_screen_clock`); no `clock` in `ring_screen`; the prefill releases at phase 0 and a re-release keeps the shadow's phase, so the clock enters no shadow | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) |
+| The screen | Seven marks at (7, 2, 5) to (7, 8, 5), setting [1, 1]: a thing that arrives is absorbed into the mark's resident thing and counted; a shadow is returned as it is, uncounted and unrecorded | Highlights 5.4 point 6; [a Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) |
+| The wait | `wait_per_quantum` 1 | Highlights 5.4 point 23 |
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/e9_law/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-e9-law examples/nature/e9_law/ring_screen.json examples/nature/e9_law/ring_screen_clock.json examples/nature/e9_law/ring_screen_clock_fill1.json
+PYTHONPATH=src python examples/nature/e9_law/scan_fill.py
+python examples/nature/e9_law/analyze.py runs-e9-law --record examples/nature/e9_law/record.json
+python tools/ray_viewer/extract.py runs-e9-law/ring_screen_clock_fill1/run --label "E9 under the law" --out runs-e9-law/runs.json
+python tools/ray_viewer/render_gif.py runs-e9-law/runs.json --output runs-e9-law/e9_law.gif --preset phone --side-by-side
+```
+
+The records stay outside the tree (the failed runs keep their `run.json`
+and the events of their completed ticks).
+
+## A1 under the law: one lamp, two slits and a screen of marks
+
+`a1_law/` holds the worlds of
+[A1 repeated under the law of the bit](../../docs/EXPERIMENTS.md#a1-two-slit-intensities-against-the-born-rule)
+(2026-09-18), written by `make_worlds.py`: one lamp of light with a clock
+behind a wall with two slits, a screen of marks 24 Links behind the wall,
+the lamp's shadow set given with the board, N = 64, one K, the dense mode;
+`two_slits` and the control `one_slit`. `record_screen.py` replays a run and
+records what the screen's marks turn back tick by tick (a mark that only
+returns publishes nothing); `analyze.py` reads the records and writes
+`record.json`; the register entry holds the tables and the fingerprints.
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| The lamp, a source of photons | A type `lamp` holding `light` 2^22 and the world's momentum at (4, 32, 8), emitting a light thing of amount 4 along +X every interval at `kerengonen_phase` 0, paid from its stock; the emitted thing carries the lamp's `thing` id | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) ("The source") |
+| The lamp's clock | `clock` true on `light`, K = 1: a thing of amount 4 advances 4 steps of 64 per interval, the period 16 of the derivation; lambda_w = N K / (sqrt(3) x 4) = 9.24 Links; the lamp itself, a record, has no phase, so every photon leaves at phase 0 and every shadow of the prefill is at phase 0 | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1); DERIVATIONS.md 27 (v), 29 |
+| The lamp's field | The light shadows of owner 1: `release` [1, 1], `initial_field` `{"light": {"fill": 8}}` (the longest fill the prefill admits for a lamp), a shell of eight intervals of release, mixed at every Node | Highlights 5.4 points 22, 24; [prefill](../../src/event_universe/prefill.py) |
+| The wall with two slits | The plane x = 16 of marks at [1, 1] but the columns y = 24 and y = 40 (d = 16): a mark absorbs a thing and returns a shadow, as a wall does; the control closes y = 24 | Highlights 5.4 point 6 |
+| The screen | The row x = 40, y = 1 to 63, z = 8 of marks at [1, 1] (L = 24) | Highlights 5.4 point 6 |
+| The push at a mark's Node | J = the sum of amount x arrival heading over the shadows the mark turned back in the interval, read by `record_screen.py` from the mark's resident rays; a returning share counts with the opposite sign | DERIVATIONS.md section 0 (J); [the return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1) |
+| A photon meeting the lamp's shadows | Home: the shadow is absorbed and re-released, no push; the lamp's things are its own | Highlights 5.4 point 3; [the return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1) ("Home") |
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/a1_law/make_worlds.py
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-a1-law examples/nature/a1_law/two_slits.json examples/nature/a1_law/one_slit.json
+for w in two_slits one_slit; do
+  PYTHONPATH=src python examples/nature/a1_law/record_screen.py runs-a1-law/$w/run --screen-x 40 --wall-x 16 --probe 17,24,8 --probe 17,40,8 --probe 18,24,8 --probe 18,40,8 --probe 28,32,8 --probe 39,32,8
+  python tools/ray_viewer/extract.py runs-a1-law/$w/run --label "A1 under the law: $w" --out runs-a1-law/$w/runs.json
+done
+python examples/nature/a1_law/analyze.py runs-a1-law --record examples/nature/a1_law/record.json
+python tools/ray_viewer/render_gif.py runs-a1-law/two_slits/runs.json --output runs-a1-law/a1_law.gif --preset phone --side-by-side
+```
+
+The records stay outside the tree (`state.json`, 6 MB per world, deleted
+after the reading).
 
 ## A5: Coulomb's law through the spreading field
 

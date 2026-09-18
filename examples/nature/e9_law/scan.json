@@ -1,0 +1,104 @@
+{
+ "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+ "ticks": 40,
+ "rows": [
+  {
+   "ray_slots": 24,
+   "fill": 1,
+   "admitted": true,
+   "failed_tick": 3,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 1835008
+  },
+  {
+   "ray_slots": 24,
+   "fill": 2,
+   "admitted": true,
+   "failed_tick": 1,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 3393312
+  },
+  {
+   "ray_slots": 24,
+   "fill": 3,
+   "admitted": false,
+   "failed_tick": null,
+   "error": "ray slot budget exceeded"
+  },
+  {
+   "ray_slots": 24,
+   "fill": 8,
+   "admitted": false,
+   "failed_tick": null,
+   "error": "the prefill cannot hold a third phase on one Port of a source"
+  },
+  {
+   "ray_slots": 32,
+   "fill": 1,
+   "admitted": true,
+   "failed_tick": 5,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 1835008
+  },
+  {
+   "ray_slots": 32,
+   "fill": 2,
+   "admitted": true,
+   "failed_tick": 2,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 3393312
+  },
+  {
+   "ray_slots": 32,
+   "fill": 3,
+   "admitted": true,
+   "failed_tick": 1,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 4930592
+  },
+  {
+   "ray_slots": 32,
+   "fill": 4,
+   "admitted": true,
+   "failed_tick": 1,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 6452084
+  },
+  {
+   "ray_slots": 32,
+   "fill": 5,
+   "admitted": true,
+   "failed_tick": 1,
+   "error": "ray slot budget exceeded",
+   "initial_shadows": 7963692
+  },
+  {
+   "ray_slots": 32,
+   "fill": 6,
+   "admitted": false,
+   "failed_tick": null,
+   "error": "ray slot budget exceeded"
+  },
+  {
+   "ray_slots": 32,
+   "fill": 7,
+   "admitted": false,
+   "failed_tick": null,
+   "error": "the prefill cannot hold a third phase on one Port of a source"
+  },
+  {
+   "ray_slots": 32,
+   "fill": 8,
+   "admitted": false,
+   "failed_tick": null,
+   "error": "the prefill cannot hold a third phase on one Port of a source"
+  },
+  {
+   "ray_slots": 32,
+   "fill": 16,
+   "admitted": false,
+   "failed_tick": null,
+   "error": "the prefill cannot hold a third phase on one Port of a source"
+  }
+ ]
+}
