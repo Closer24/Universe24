@@ -5,8 +5,8 @@ it at three radii on an axis, on (110) and on (111).
 
 Every world is written on the law as the engine of 2026-09-18 states it
 (bit-law-v1, node-mixing-v1, clock-readings-v1, node-is-ports-v1, lanes-v1,
-return-field-v1): N = 64 (`phase_bits` 6 on every family, the per-family key
-the engine still reads), one K for the world (1: a thing of one quantum
+return-field-v1, cleanup-law-v1): N = 64 declared once for the world (the
+per-family `phase_bits` is retired), one K for the world (1: a thing of one quantum
 advances one step per interval), `wait_per_quantum` 1, the dense mode, no
 `spread`, `steering`, `mass_field` or `seed` key, no `field_of`, no release
 during the run. The thing at rest is an external body of the catalog's
@@ -69,6 +69,14 @@ The worlds (`ticks` 40 each, open boundary):
   at the same Node in `standing.json` beside every probe's reading.
   One probe per world, because every push returns as field (point 3) and a
   probe's returns would pollute another probe's reading on the same line.
+- `probe_*_closed.json`: the nine probe worlds again on the closed board
+  (`boundary` periodic, 120 ticks, `standing_field` on, as `standing_closed`):
+  the pushed amount per interval at the test thing's Node once the field has
+  settled, and the amplitude at its Node (the size of the coherent sum of the
+  arriving shadows, `arrival_amplitude` of wait-reads-v1, formed by
+  `analyze.py` from the arrivals of the replay exactly as the engine forms it;
+  no world declares `wait_reads`, so the closed probes differ from the open
+  ones by the boundary, the ticks and the standing-set search alone).
 
 Run:  python examples/nature/e11_law/make_worlds.py [--out DIR]
 """
@@ -85,7 +93,7 @@ from bit_law_migration import migrate  # noqa: E402
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 COSTS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
-PHASE_BITS = 6  # N = 64, the model owner's one width (Highlights 5.4, definitions)
+N = 64  # the one phase width of the world (Highlights 5.4, definitions; cleanup-law-v1)
 K = 1
 WAIT_PER_QUANTUM = 1
 TICKS = 40
@@ -130,7 +138,6 @@ def family(name, charge, slots, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": PHASE_BITS,
         "charge": charge,
     } | extra
 
@@ -218,6 +225,7 @@ def world(model_id, half, fill, probe=None, *, closed=False):
         "normal_budget": 100000,
         "ticks": CLOSED_TICKS if closed else TICKS,
         "operation_costs": dict.fromkeys(COSTS, 1),
+        "N": N,
         "K": K,
         "wait_per_quantum": WAIT_PER_QUANTUM,
         "fields": [field("proton"), field("electron"), field("momentum", 3)],
@@ -243,6 +251,10 @@ def cases():
         for offset in offsets:
             name = f"probe_{direction}_{letter}{offset[0]}"
             yield name, world(f"e11-law-{name.replace('_', '-')}", HALF, FILL, (offset, heading))
+    for direction, (offsets, heading, letter) in PROBES.items():
+        for offset in offsets:
+            name = f"probe_{direction}_{letter}{offset[0]}_closed"
+            yield name, world(f"e11-law-{name.replace('_', '-')}", HALF, FILL, (offset, heading), closed=True)
 
 
 def main():

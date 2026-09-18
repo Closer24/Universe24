@@ -23,6 +23,7 @@
   "send": 1,
   "commit": 1
  },
+ "N": 64,
  "K": 1,
  "wait_per_quantum": 1,
  "fields": [
@@ -115,7 +116,6 @@
     1,
     1
    ],
-   "phase_bits": 6,
    "charge": 3,
    "release": [
     1,
@@ -165,7 +165,6 @@
     1,
     1
    ],
-   "phase_bits": 6,
    "charge": -3,
    "clock": true
   }

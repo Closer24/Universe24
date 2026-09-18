@@ -2646,12 +2646,18 @@ never by hand: `pulse.json` (one release of 2^19 quanta on each of the six
 headings of a body at the centre of a 41^3 board, for the front and the
 fraction off the coordinate planes), `standing.json` (the body of 2^28 at the
 centre of a 33^3 board with its shadow set of 37748736 quanta given by
-`initial_field` `{"fill": 12}`, read shell by shell) and nine
+`initial_field` `{"fill": 12}`, read shell by shell), nine
 `probe_{axis,110,111}_*.json` (the standing world with one test thing of
-content 1 at rest at a read Node, three radii per direction). `analyze.py`
-reads the runner's records and replays the two probe-free worlds in-process
-for the shells; `record.json` holds every number and `tables.md` the
-tables of the register's entry.
+content 1 at rest at a read Node, three radii per direction), and, on the
+closed board the model owner decided the confrontation runs are made on
+(2026-09-18), `standing_closed.json` and nine `probe_*_closed.json` (the same
+worlds with `boundary` periodic, 120 ticks and `standing_field` on). The
+open-board worlds are the control. `analyze.py` reads the runner's records,
+replays the three probe-free worlds in-process for the shells and the nine
+closed probe worlds for the amplitude at the test thing's Node; `record.json`
+holds every number, `tables.md` the tables of the register's entry,
+`records/` the `run.json` of every recorded world (its fingerprint inside)
+and `e11_law.html` the page for the model owner.
 
 ### Dictionary: each physical word next to the engine word
 
@@ -2659,7 +2665,7 @@ tables of the register's entry.
 | --- | --- | --- |
 | A charge at rest, +e (a proton) | An external body of the catalog's `proton` family (charge 3 per quantum), `amount` 2^28, `charge` 3 x 2^28 (its whole charge, a multiple of its amount), at its Node for the whole run; it has no clock and radiates nothing | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1); Highlights 5.4, points 12, 22 and "A thing does not emit" |
 | The field of the charge | The body's shadows, rays of the `proton` family with the bit 0, given with the board: `initial_field` `{"proton": {"fill": 12}}` with `release` [1, 512], twelve intervals of the fill in which the body releases 2^19 per Port heading, every Node mixes what arrives (point 24) and what comes back to the body is reflected; 6 x 2^19 x 12 = 37748736 quanta, the largest fill the prefill admits (13 needs a third phase layer at the source) | [The law of the bit](../../docs/SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1), [the Node mixes the six](../../docs/SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1); `event_universe/prefill.py` |
-| The phase circle | `phase_bits` 6 on every family, N = 64 (the engine's per-family key for the world's one N) | Highlights 5.4, definitions (N) |
+| The phase circle | `N` 64 declared once on the world (the per-family `phase_bits` is retired, cleanup-law-v1) | Highlights 5.4, definitions (N) |
 | The clock | `K` 1 on the world and `clock` true on the `electron` family: the test thing of one quantum advances one step per interval; the body has no clock | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) |
 | A test thing (a probe) | A real ray of the catalog's `electron` family, content 1, emitted by a lamp (`probe`) one Link outward of the read Node and heading inward, so that it stands at the read Node after tick 1; its coupling `read` over [electron, proton], `momentum_table` `{"proton": 1}` with `reads` "content", so each push is +amount x heading x 1: the signed flux J of the body's shadows at its Node, in quanta, and the thing's momentum line per tick is the pushed amount | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) (the two readings); Highlights 5.4, points 15 and 16 |
 | The probe at rest | Point 23: a thing pays a tick per whole quantum it reads (`wait_per_quantum` 1), so a probe that reads thousands of quanta never moves again and its `computation_per_tick` is 0 while it waits; the runner's `momentum` line (thing 2) per tick is read by `analyze.py` | [The wait per quantum read](../../docs/TEST_EXPECTATIONS.md#the-wait-per-quantum-read) |
@@ -2668,21 +2674,28 @@ tables of the register's entry.
 | A shell | L1: the Nodes at |dx| + |dy| + |dz| = k from the body; Euclidean: those whose distance rounds to k; per shell the content (on their way and parked, whole quanta) and J_r, the sum over shadows of +-amount x (heading . r) / |r| | `analyze.py` |
 | The books per bit | The runner's `audit` per completed tick: the world line, the real line (initial + converted = current + escaped + absorbed) and the shadow line (initial = current + escaped + absorbed_at_home), `real_conserved` | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) ("The source") |
 | The board | 33^3 (r = 16) open, the body at (16, 16, 16), 40 ticks; the pulse on 41^3 so that the front at t / sqrt 3 = 17.3 is still on the board at t = 30; the dense mode (`dense_field` true), the shadow layer of point 13 | Highlights 5.4, point 13 |
+| The closed board | `boundary` periodic on the same 33^3 (a shadow that leaves one face enters the opposite one; the image of the body is 33 Links away on every axis), 120 ticks, `standing_field` true: the runner's standing-set search reports the tick after which the layer repeated (a fixed point or a cycle) and the ticks kept fixed, or the residual at the last comparison (the cells and the quanta that still changed); `analyze.py` reads the field at the settled state, the mean over the last twenty ticks, and the settling tick, the first from which every later window of twenty stays within 10 % of the last | Highlights 5.4, "The board of a run is closed"; [the standing set](../../docs/SPATIAL_FIELDS.md#the-standing-set-standing-field-v1) |
+| The amplitude a thing reads (the potential's face of the field) | The size of the coherent sum of the shadows that arrived at the thing's Node in an interval, per group (owner, sign, flow), the engine's `arrival_amplitude` of wait-reads-v1 (per travel heading the amount at the phase of its sum, its amplitude the integer square root in 32nds, the six summed on the circle of N steps, the size of the sum in quanta^(1/2)), formed by `analyze.py` from the arrivals of the replay (the layer's arrays and the engine's Node) since the record carries no per-tick amplitude; no world declares `wait_reads`, so the push and the wait are point 23's as on the open board; it is |sum_p A_p| = 3 \|u\| of DERIVATIONS.md section 39, and the wave fraction |sum A|^2 / (3 n) is 1 for a pure wave and 0 for standing flat-band content | [The wait reads the amplitude](../../docs/SPATIAL_FIELDS.md#the-wait-reads-the-amplitude-a-declared-option-wait-reads-v1); DERIVATIONS.md section 39 |
 
 ### Run and render
 
 ```bash
 PYTHONPATH=src python examples/nature/e11_law/make_worlds.py
-PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/e11_law examples/nature/e11_law/pulse.json examples/nature/e11_law/standing.json examples/nature/e11_law/probe_*.json
-PYTHONPATH=src python examples/nature/e11_law/analyze.py artifacts/e11_law --record examples/nature/e11_law/record.json --tables examples/nature/e11_law/tables.md
-python tools/ray_viewer/extract.py artifacts/e11_law/probe_axis_r8/run --label "E11 under the law: the probe at (8, 0, 0)" --out artifacts/e11_law/probe_axis_r8/runs.json
-python tools/ray_viewer/render_gif.py artifacts/e11_law/probe_axis_r8/runs.json --output artifacts/e11_law/probe_axis_r8/e11_law.gif
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/e11_law examples/nature/e11_law/pulse.json examples/nature/e11_law/standing.json examples/nature/e11_law/probe_axis_r*.json examples/nature/e11_law/probe_110_m?.json examples/nature/e11_law/probe_111_m?.json
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/e11_law_closed examples/nature/e11_law/standing_closed.json examples/nature/e11_law/probe_*_closed.json
+PYTHONPATH=src python examples/nature/e11_law/analyze.py artifacts/e11_law artifacts/e11_law_closed --replay-jobs 4 --record examples/nature/e11_law/record.json --tables examples/nature/e11_law/tables.md
+python tools/ray_viewer/extract.py artifacts/e11_law_closed/probe_axis_r8_closed/run --label "E11 under the law, closed board: the probe at (8, 0, 0)" --out artifacts/e11_law_closed/probe_axis_r8_closed/runs.json
+python tools/ray_viewer/render_gif.py artifacts/e11_law_closed/probe_axis_r8_closed/runs.json --output artifacts/e11_law_closed/probe_axis_r8_closed/e11_law.gif
+python examples/nature/e11_law/build_page.py --title "E11 repeated under the law of the bit" --tables examples/nature/e11_law/tables.md --notes NOTES.md --gif artifacts/e11_law_closed/probe_axis_r8_closed/e11_law.gif --out examples/nature/e11_law/e11_law.html
 ```
 
-The runner's records stay outside the tree (`run.json` of every world is kept
-under `artifacts/` of the run's branch; `events.jsonl` and `state.json` are
-larger than 20 MB and are not kept); `record.json` and `tables.md` beside the
-worlds hold the readings.
+`analyze.py` takes several run directories and reads each world from the
+first that holds it (the open records and the closed records of the entry
+were made in two series); a replay is cached as `<name>/replay.json` beside
+the run. The `run.json` of every recorded world is kept in `records/` beside
+the worlds (`events.jsonl` and `state.json` are larger than 20 MB and are
+not kept; `analyze.py` reads `records/` through a directory laid out as
+`<name>/run/run.json`); `record.json` and `tables.md` hold the readings.
 
 ## A5s repeated under the law of the bit: two things at rest
 
@@ -2691,10 +2704,14 @@ worlds hold the readings.
 written by `make_worlds.py` on the law: `pp_d{4,6,8,12}.json` (two bodies of
 2^28 on the x axis at distance d), `pp_d8_110.json` and `pp_d8_111.json` (B at
 (8, 8, 0) and (8, 8, 8) from A) and `pq_d8.json`, `qq_d8.json` (the product
-law: 2^28 with 2^27, and 2^27 with 2^27). `analyze.py` reads the runner's
-records (and replays one world in-process for the momentum in flight);
-`record.json` holds every number and `tables.md` the tables of the register's
-entry.
+law: 2^28 with 2^27, and 2^27 with 2^27), and the same eight worlds again on
+the closed board the model owner decided the confrontation runs are made on
+(`*_closed.json`: `boundary` periodic, 120 ticks, `standing_field` on), the
+open-board worlds being the control. `analyze.py` reads the runner's records
+(and replays one world per board in-process for the momentum in flight);
+`record.json` holds every number, `tables.md` the tables of the register's
+entry, `records/` the `run.json` of every recorded world and `a5s_law.html`
+the page for the model owner.
 
 ### Dictionary: each physical word next to the engine word
 
@@ -2706,14 +2723,17 @@ entry.
 | Newton's third law through the field | The returned shadows carry -dp to the owner, who takes it when they reach it; between the push and the arrival the momentum is in flight on the shadows: the ledger's momentum line (`fields.momentum.current`, the things' and the shadows' together) stays at its initial zero at every tick, so the two bodies' momenta plus the momentum in flight (and what escaped with the shadows) sum to zero every interval | [The return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1); Highlights 5.4, "A meeting is reported to its owner" |
 | The product law | Three pairs of contents at d = 8, (2^28, 2^28), (2^28, 2^27), (2^27, 2^27): the push on each body against the product of the whole charges, and against each body's own and the other's charge | Highlights 5.4, point 16; DERIVATIONS.md section 31 |
 | The scaling with d | The push on B along the line from A, per window of ten intervals and cumulative at tick 40, over d = 4, 6, 8, 12; the (110) and (111) worlds against the axis fit at the same Euclidean distance | DERIVATIONS.md sections 27 (v) and 31 |
-| The board | [d + 25, 25, 25] Nodes (33 x 33 x 25 and 33^3 off the axis), open, a margin of 12 beyond each body, 40 ticks, the dense mode, N = 64, K 1, `wait_per_quantum` 1 | Highlights 5.4 |
+| The board | [d + 25, 25, 25] Nodes (33 x 33 x 25 and 33^3 off the axis), open, a margin of 12 beyond each body, 40 ticks, the dense mode, `N` 64 declared once on the world, K 1, `wait_per_quantum` 1 | Highlights 5.4 |
+| The closed board | The same board with `boundary` periodic (the image of B on the far side of A is d + 25 - d = 25 Links away on the axis, or 18.4 and 22.5 Links off it), 120 ticks, `standing_field` true (the runner's standing-set search: the repeat's tick or the residual at the last comparison); the push on each body once settled is its mean per interval over ticks 101 to 120, with every window of twenty and the settling tick, the first from which every later window stays within 10 % of the last | Highlights 5.4, "The board of a run is closed"; [the standing set](../../docs/SPATIAL_FIELDS.md#the-standing-set-standing-field-v1) |
 
 ### Run and render
 
 ```bash
 PYTHONPATH=src python examples/nature/a5s_law/make_worlds.py
-PYTHONPATH=src python tools/run_series.py --jobs 2 --out artifacts/a5s_law examples/nature/a5s_law/pp_d4.json examples/nature/a5s_law/pp_d6.json examples/nature/a5s_law/pp_d8.json examples/nature/a5s_law/pp_d12.json examples/nature/a5s_law/pp_d8_110.json examples/nature/a5s_law/pp_d8_111.json examples/nature/a5s_law/pq_d8.json examples/nature/a5s_law/qq_d8.json
-PYTHONPATH=src python examples/nature/a5s_law/analyze.py artifacts/a5s_law --replay pq_d8 --record examples/nature/a5s_law/record.json --tables examples/nature/a5s_law/tables.md
-python tools/ray_viewer/extract.py artifacts/a5s_law/pq_d8/run --label "A5s under the law: 2^28 and 2^27 at d = 8" --out artifacts/a5s_law/pq_d8/runs.json
-python tools/ray_viewer/render_gif.py artifacts/a5s_law/pq_d8/runs.json --output artifacts/a5s_law/pq_d8/a5s_law.gif
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/a5s_law examples/nature/a5s_law/pp_d4.json examples/nature/a5s_law/pp_d6.json examples/nature/a5s_law/pp_d8.json examples/nature/a5s_law/pp_d12.json examples/nature/a5s_law/pp_d8_110.json examples/nature/a5s_law/pp_d8_111.json examples/nature/a5s_law/pq_d8.json examples/nature/a5s_law/qq_d8.json
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out artifacts/a5s_law_closed examples/nature/a5s_law/*_closed.json
+PYTHONPATH=src python examples/nature/a5s_law/analyze.py artifacts/a5s_law --closed artifacts/a5s_law_closed --replay pq_d8 --replay pq_d8_closed --record examples/nature/a5s_law/record.json --tables examples/nature/a5s_law/tables.md
+python tools/ray_viewer/extract.py artifacts/a5s_law_closed/pq_d8_closed/run --label "A5s under the law, closed board: 2^28 and 2^27 at d = 8" --out artifacts/a5s_law_closed/pq_d8_closed/runs.json
+python tools/ray_viewer/render_gif.py artifacts/a5s_law_closed/pq_d8_closed/runs.json --output artifacts/a5s_law_closed/pq_d8_closed/a5s_law.gif
+python examples/nature/e11_law/build_page.py --title "A5s repeated under the law of the bit" --tables examples/nature/a5s_law/tables.md --notes NOTES.md --gif artifacts/a5s_law_closed/pq_d8_closed/a5s_law.gif --out examples/nature/a5s_law/a5s_law.html
 ```

@@ -1,17 +1,18 @@
 {
  "schema_version": 1,
- "model_id": "e11-law-pulse",
+ "model_id": "e11-law-probe-110-m3-closed",
  "shape": [
-  41,
-  41,
-  41
+  33,
+  33,
+  33
  ],
- "boundary": "open",
+ "boundary": "periodic",
  "dense_field": true,
+ "standing_field": true,
  "slots_per_node": 2,
  "link_ticks": 1,
  "normal_budget": 100000,
- "ticks": 40,
+ "ticks": 120,
  "operation_costs": {
   "receive": 1,
   "read": 1,
@@ -55,6 +56,24 @@
  "disturbance_types": [
   {
    "name": "idle",
+   "fields": [
+    "electron",
+    "momentum"
+   ],
+   "defaults": {
+    "electron": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "probe",
    "fields": [
     "electron",
     "momentum"
@@ -169,15 +188,71 @@
    "clock": true
   }
  ],
- "emissions": [],
- "seeds": [],
- "ray_interactions": [],
- "external_bodies": [
+ "emissions": [
+  {
+   "type": "probe",
+   "field": "electron",
+   "amount": 1,
+   "denominator": 1,
+   "heading": [
+    -1,
+    0,
+    0
+   ],
+   "kerengonen_phase": 0
+  }
+ ],
+ "seeds": [
   {
    "position": [
     20,
-    20,
-    20
+    19,
+    16
+   ],
+   "type": "probe"
+  }
+ ],
+ "ray_interactions": [
+  {
+   "name": "read",
+   "participants": [
+    {
+     "type": "electron"
+    },
+    {
+     "type": "proton"
+    }
+   ],
+   "momentum_table": {
+    "proton": 1
+   },
+   "reads": "content",
+   "invariants": [
+    {
+     "name": "energy",
+     "expression": {
+      "op": "add",
+      "args": [
+       {
+        "field": "amount",
+        "participant": 0
+       },
+       {
+        "field": "amount",
+        "participant": 1
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "external_bodies": [
+  {
+   "position": [
+    16,
+    16,
+    16
    ],
    "family": "proton",
    "amount": 268435456,
@@ -187,7 +262,7 @@
  "detectors": [],
  "initial_field": {
   "proton": {
-   "fill": 1
+   "fill": 12
   }
  }
 }

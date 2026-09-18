@@ -35,7 +35,8 @@ nothing escapes during the fill):
 - `pq_d8.json`, `qq_d8.json`: the product law at d = 8 on the axis, A of 2^28
   with B of 2^27, and both of 2^27, beside `pp_d8.json` (2^28 with 2^28):
   three pairs of contents, and of whole charges, 3 x 2^28 and 3 x 2^27;
-- `pp_d{4,6,8,12}_closed.json`: the axis series again on a closed board
+- `pp_d{4,6,8,12}_closed.json`, `pp_d8_{110,111}_closed.json`, `pq_d8_closed.json`,
+  `qq_d8_closed.json`: the eight worlds again on a closed board
   (`boundary` periodic, the same shape), the model owner's decision of
   2026-09-18 that the confrontation runs are made on a closed board, so
   that a thing's shadows circulate and its field at rest is a steady
@@ -59,7 +60,7 @@ from bit_law_migration import migrate  # noqa: E402
 
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 COSTS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
-PHASE_BITS = 6
+N = 64  # the one phase width of the world (Highlights 5.4, definitions; cleanup-law-v1)
 K = 1
 WAIT_PER_QUANTUM = 1
 TICKS = 40
@@ -106,7 +107,6 @@ def family(name, charge, slots, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": PHASE_BITS,
         "charge": charge,
     } | extra
 
@@ -138,6 +138,7 @@ def world(model_id, offset, amount_a, amount_b, *, closed=False):
         "normal_budget": 100000,
         "ticks": CLOSED_TICKS if closed else TICKS,
         "operation_costs": dict.fromkeys(COSTS, 1),
+        "N": N,
         "K": K,
         "wait_per_quantum": WAIT_PER_QUANTUM,
         "fields": [field("proton"), field("electron"), field("momentum", 3)],
@@ -173,6 +174,10 @@ def cases():
         yield f"{tag}_d8", world(f"a5s-law-{tag}-d8", (8, 0, 0), amount_a, amount_b)
     for d in AXIS_DISTANCES:
         yield f"pp_d{d}_closed", world(f"a5s-law-pp-d{d}-closed", (d, 0, 0), P, P, closed=True)
+    for direction, offset in OFF_AXIS.items():
+        yield f"pp_d8_{direction}_closed", world(f"a5s-law-pp-d8-{direction}-closed", offset, P, P, closed=True)
+    for tag, (amount_a, amount_b) in PAIRS.items():
+        yield f"{tag}_d8_closed", world(f"a5s-law-{tag}-d8-closed", (8, 0, 0), amount_a, amount_b, closed=True)
 
 
 def main():
