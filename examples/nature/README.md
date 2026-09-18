@@ -28,7 +28,10 @@ chain, a polarized beam through polarizer bodies, in `a12_malus/`,
 [below](#a12-maluss-law-and-the-three-polarizer-chain),
 and (L) the worlds of E10, the ring of (I) meeting its own field under the
 catalog's turn declared beside the corner table, at contents 32, 64 and
-128, in `e10_self_field/`, [below](#the-ring-meets-its-own-field).
+128, in `e10_self_field/`, [below](#the-ring-meets-its-own-field),
+and (M) the worlds of experiment A6, light bending by a mass, a light ray
+passing a star through its spreading mass field, in `a6_bending/`,
+[below](#a6-light-bending-by-a-mass).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
@@ -37,8 +40,8 @@ with its records kept,
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
-((E) in its section here), never repeated as tests, and (G), (J) and (K) are
-confrontation runs of section A of the register. Nothing here is a law of
+((E) in its section here), never repeated as tests, and (G), (J), (K) and
+(M) are confrontation runs of section A of the register. Nothing here is a law of
 nature; every number is a declaration written before the run.
 
 Since 2026-09-17 (feature 14, binding as a loop, `loop-binding-v1`;
@@ -1899,3 +1902,194 @@ python examples/nature/a12_malus/analyze.py runs/a12/single_* runs/a12/chain_* -
 The sidecar (`ray-recording.json`) gives the viewer each ray's polarization;
 the records stay outside the tree, the fingerprints in the register's entry
 are their register line, and `record.json` holds the integers.
+
+## A6: light bending by a mass
+
+`a6_bending/` holds the worlds of experiment
+[A6](../../docs/EXPERIMENTS.md#a6-light-bending-by-a-bound-group-and-g_eff-n²-over-n--28-to-216)
+of the register, run on 2026-09-18 on `main` at `9cc830f` (features 12, 12b,
+7b, 8b, 14 and the dense mode of PR #251 in it; no engine change on the
+branch): a star, an external body at rest, radiating its mass field, which
+spreads by the catalog's table with the Node-owned remainder and fills the
+board under the dense mode; one light ray passing it at impact parameter b;
+the coupling of the light with the mass field in two forms, each its own
+series of twenty-three worlds written by `make_worlds.py` beside them and
+never by hand, `{form}_{case}.json`:
+
+- `delay_*`, the pre-registered form, the catalog's `mass_field_delay` as
+  `ray-binding-v1` writes it (the delay table on the light output of a
+  meeting with outputs, the field ray returned reversed);
+- `turn_*`, the form the entry's status names for the deflection "measured as
+  a momentum register" (`ray-momentum-turn-v2`, feature 8b): a
+  `momentum_table` rule pushing the light's momentum register by the field
+  rays it meets, each returned reversed.
+
+The cases: `b{4,6,8,12,16}` (the axis series at N = 2^12), `control` (no
+star), `2m` (the star at twice the amount), `slow` (an electron ray of rest
+rate 1 with the light's content), `n{8,10,14,16}` (the N scan at b = 8, the
+light's `phase_bits`), `m{4,6,8,12,16}` (the other side of the star), all on
+the register's board of 65 × 65 × 9 Nodes; `c_b{4,6,8}` and `c_d{3,4,6}` (the
+axis and the (0, 1, 1) diagonal passes on a cube of 49 × 33 × 33 that holds
+the diagonal). `predict.py` writes the mean field's prediction for exactly
+these worlds into `predictions.json` before the run; `analyze.py` reads the
+records and evaluates the criterion clause by clause per form;
+`record.json` is its small committed record, which `tests/test_a6_bending.py`
+reads. The measured outcome is in the register's entry and summarized
+[below](#what-the-bending-runs-show).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| The star, a mass M at rest | An external body (`external_bodies`) of the catalog's family `neutron` (no charge, its only field the mass field), `amount` 2^28 (2^29 in `2m`), at rest (no `initial_momentum`), `momentum_table` `{"mass_field": -1}` (every field ray that returns to it, the recoil among them, draws it toward the ray); its mass is its amount (Highlights 3.19), the neutron's rest rate declared 1 for this run (A10 decides its rung), so M = 2^28 m₀ | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); Highlights 3.19, 3.28 |
+| The computation field, the information that the star is heavy | `mass_field`, `field_of` `neutron`, `release` [1, 32768]: every interval the body releases one ray per Port heading of floor(2^28 / 2^15) = 8192 quanta, booked as a source; the field amount is the mass's message, M over the release ratio, an input until hypothesis 17 | catalog, `mass_field`; Highlights 3.5, 3.28 |
+| The field filling space | `spread` [6, 1, 1, 1, 1, 1] on `mass_field`, the Node-owned remainder (`field-remainder-v1`); the board's pure-field Nodes cycled by the dense mode (`dense_field` true) with the same integers | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1); [the dense mode](../../docs/SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1) |
+| The light ray | The family `light`, rate 0, no `spread` (a beam, not the spreading light of the catalog), `phase_bits` N's exponent (12 in the b series; 8, 10, 14, 16 in the N scan); one ray of amount 2^18 (its momentum register's scale: the deflection is read to one part in 2^18 and the DDA completes no transverse Link over the pass) | catalog, `light`; [ray-momentum-turn-v2](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2) |
+| The lamp | A record holding 2^18 of `light` one Node below the launcher, emitting it at tick 0 on +Y with `recoil_field` momentum; plain, not marked: a marked Node draws on every arriving field ray and would return half the field that reaches it | [Funded emission](../../docs/SPATIAL_FIELDS.md#funded-emission-and-absorption) |
+| The launch of the ray into a filled board | A second external body, `launcher`, amount 1, `coupling` `launch`, at (0, y, z), the start of the ray's line: the declared meeting `launch` sends the arriving ray out on Port +X (`heading` 0) with an integer `delay` of 192 intervals, so the ray leaves at tick 193 and is at x = k at tick 193 + k, passing the star in a field 192 ticks old (the mean field's pass at b = 16 within 0.5 % of the steady state in this box); the body's sink takes the field that reaches its Node (3 quanta over a run) | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1), "a declared coupling"; [meetings](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) |
+| The impact parameter b | The ray's line parallel to x through the star's Node offset by (0, b, 0): b = 4, 6, 8, 12, 16 above the star (`b{b}`), −b below it (`m{b}`); on the cube (0, b, 0) and (0, d, d) with Euclidean b = d√2 = 4.24, 5.66, 8.49 | A6, "Run" |
+| Gravity as bending by delay (the pre-registered form) | `mass_field_delay`, the catalog's coupling: a meeting of `light` and `mass_field` whose light output keeps amount, heading and phase and declares `"delay": {"of": 1, "table": [1, 1, 1, 1, 1, 1], "per": 1}`, one phase step of lag per quantum of field met on the side of the Port the field ray came in through, spent as one Link toward that side when it reaches the light's phase modulus N; the field output reversed (the recoil) | [Binding and gravity by delay](../../docs/SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1); catalog, `mass_field_delay` |
+| Gravity as a turn by the field's momentum (the form the status names) | `mass_field_turn`: a `ray_interactions` rule over `light` and `mass_field` with `momentum_table` `{"mass_field": -1}` and no outputs: every field ray at the light's Node pushes its register by −amount × heading (toward the source of the field ray) and is returned reversed; the DDA walks the register | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2); Highlights 3.14, 3.16 |
+| The deflection α | The angle of the ray's momentum register at the end of its pass, atan2(\|p_⊥\|, p_x), read from its `spatial_escaped` record (the register less the field quanta that left in the same packet) and from the `ray_push` records tick by tick; in the delay form the heading and the register never change and α is read from the path (a sideways Link) and the lag | `analyze.py` |
+| The slow massive ray | `slow`: the family `electron` (rest rate 1, charge −3), amount 2^18, on the b = 8 line with the same rules; every ray moves one Link per interval, so "slow" is a nonzero rest rate, the entry's reading | catalog, `electron`; Highlights 3.28 |
+| The control | `control`: the same world without the star; the ray must reach x = 64 on its line at tick 258 with its register unchanged | A6, "Run" |
+| Momentum, exact | The world ledger's momentum line, bound to `light` by the lamp's `recoil_field` and to `mass_field` by an unseeded lamp `idle_mass_field` (the engine's one way to bind it); every push, reversal, spread and absorption an explicitly accounted source; the bodies' momentum line the star's register | [Audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1); Highlights 3.15 |
+| The phase width N | The light's `phase_bits`; the mass field and the star at 3 bits (their phase is read nowhere: every release at phase 0; the spread's admission allows at most 12 bits and the coherent sum of a spread costs one pass over the circle per register) | Highlights 3.28; [field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), admission |
+| G_eff(N) | α b / (4 M) with M = 2^28 (the body's amount in m₀) and b in Links; its products with N and N² over the N scan | A6, "Run" |
+| The board | [65, 65, 9] Nodes, open, the star at (32, 32, 4), the register's board; the diagonal passes on [49, 33, 33] with the star at (24, 16, 16); 260 ticks | A6, "Run" and its deviations |
+
+### Computed before the run
+
+Read from the engine's code on the first look (the small world of the test,
+25 × 25 × 9, b = 4, ten intervals of launch delay), before the series:
+
+- The delay table drives the lag register `Ray.lag` of `ray-binding-v1`
+  (`fields/ray_interactions.py`, the loop over `rule.lags` in `_convert`),
+  spent by `_spend_lag` (`fields/rays.py`) as one Link toward the lagging
+  side when a transverse component reaches the light's phase modulus and as
+  one interval of wait on the ray's own axis; it does not feed the momentum
+  register of feature 8b. The modulus is the light's `phase_bits` since
+  `lag_bits` is open.
+- A meeting with outputs takes one field ray per interval: `participant_groups`
+  (`core/coupling_selectors.py`) selects one group per role in slot order and
+  the light's slot is used by the first; the rays at a Node are ordered by
+  their merge key, heading first, so the field ray met is the one heading −X
+  or +X whenever content arrives from ahead or behind, which in a spreading
+  field is every interval. Its lag lands on the ray's own axis, never on a
+  transverse one.
+- The output of a meeting is a fresh ray (`_output`, lag (0, 0, 0), steps 0,
+  a new event) carrying only that meeting's delay: nothing accumulates from
+  Node to Node, and a lag that reached N would be spent only at a departure
+  from a Node where no field ray was met. In the test's small world the lag
+  after the meetings of ticks 15 to 35 is (3, 0, 0), (−3, 0, 0), ...,
+  (−188, 0, 0) at the star's x, ..., (−2, 0, 0): one interval's delay each,
+  on x, and the light leaves the board on its line with its heading.
+
+So the pre-registered form predicts no bending at any b, N or M: the ray
+goes straight, its register unchanged, and the criterion's bending clauses
+fail by the engine (the meeting's one field ray per interval and the fresh
+output), stated before the series and measured by it. The form the status
+names, the momentum register, reads every field ray at the Node (`_turn`,
+in slot order) and keeps the register through the pass, so the series was
+run in both forms and the criterion is evaluated for each.
+
+The mean field of the split table (`predict.py`, the kernel of
+`a5_static/mean_field_gauss.py`, the expectation of the engine's integers)
+on exactly the run's boxes and schedule, the light pushed at every Node by
+minus the arrivals' amount × heading and sending them back reversed:
+
+| case | b | predicted push on the light | α = atan2(\|p_⊥\|, p_x) | the box's steady state | beam 8192 (6/11)^(b−1) | beam / push |
+| --- | --- | --- | --- | --- | --- | --- |
+| `b4` | 4 | (0, −3417.70, 0) | 0.0130367 | 0.0130369 | 1329.4 | 0.39 |
+| `b6` | 6 | (0, −1660.36, 0) | 0.0063337 | 0.0063340 | 395.5 | 0.24 |
+| `b8` | 8 | (0, −862.41, 0) | 0.0032898 | 0.0032902 | 117.7 | 0.14 |
+| `b12` | 12 | (0, −269.84, 0) | 0.0010294 | 0.0010298 | 10.4 | 0.04 |
+| `b16` | 16 | (0, −94.32, 0) | 0.0003598 | 0.0003603 | 0.9 | 0.01 |
+| `m{b}` | −b | the same with +p_y | the same | | | |
+| `2m` | 8 | (0, −1724.82, 0) | 0.0065796 | | | |
+| `n{8,10,14,16}`, `slow` | 8 | as `b8` (the light's width and the ray's rate are read nowhere in the mean field) | 0.0032898 | | | |
+| `c_b4` | 4 | (0, −3696.76, 0) | 0.0141011 | 0.0142760 | 1329.4 | 0.36 |
+| `c_b6` | 6 | (0, −2018.16, 0) | 0.0076985 | 0.0079787 | 395.5 | 0.20 |
+| `c_b8` | 8 | (0, −1247.42, 0) | 0.0047585 | 0.0051286 | 117.7 | 0.09 |
+| `c_d3` | 4.24 | (0, −1173.79, −1173.79) | 0.0063323 | 0.0065284 | 0 | 0 |
+| `c_d4` | 5.66 | (0, −901.77, −901.77) | 0.0048648 | 0.0051233 | 0 | 0 |
+| `c_d6` | 8.49 | (0, −576.09, −576.09) | 0.0031079 | 0.0034627 | 0 | 0 |
+
+The log-log exponent of the predicted α over b = 4, 6, 8, 12, 16 on the
+register's board is −2.59 ± 0.21 (the box's steady state −2.58): the board
+is a slab 9 deep, the open faces 4 Links from the star and from the ray's
+line on both sides in z, so the field escapes through z within a few Links
+and the flux along the line falls far faster than 1/b². The same pass at
+the steady state on 65 × 65 × 17 gives −1.95 ± 0.09 and on 65 × 65 × 33
+−1.59 ± 0.02; in free space (an octant of half-width 96 with mirrored
+faces, the line's tails beyond |x| = 96 cut) α = 0.0142978, 0.0080656,
+0.0052398, 0.0030039, 0.0021331, 0.0013574, 0.0009809 at b = 4, 6, 8, 12,
+16, 24, 32, the exponent −1.38 ± 0.03 over 4 to 16 and −1.20 ± 0.03 over 8
+to 32, the local exponent −1.41, −1.50, −1.37, −1.19, −1.11, −1.13 between
+consecutive b: the model's own steady free-space law approaches −1 from
+below, with the unscattered beam (a third of the push at b = 4, one
+percent at b = 16) and the lattice's short-range anisotropy steepening it
+at these b. So on any board this machine can run in the budget the
+criterion's exponent −1.0 ± 0.1 is not the mean field's expectation, and
+the run's exponent is read against the mean field's on its own box, the
+entry's clause evaluated as written beside it. The cube's axis fit is
+−1.56 ± 0.05 and the diagonal α at equal Euclidean b is 0.49, 0.59 and
+0.71 of it at b = 4.24, 5.66, 8.49: the lattice's anisotropy of the split
+table at short range, the axis fed by the beam that never scatters (A5s
+found 0.16 to 0.48 for the push on a body), so the diagonal clause's 1/8 is
+not the mean field's expectation either. The linearity in M is exact in the
+mean field (2.000), the N scan flat (the register has no modulus, so
+G_eff(N) is one number and G_eff N² grows as N²), and the light's α equals
+the slow ray's (the same push on the same content: the ratio 1, against 2).
+Whether the pass gathers a whole Link: the momentum register needs no
+modulus; the DDA at α ≤ 0.0131 completes no transverse Link in 64 Links,
+as intended, and the register reads the deflection to one part in 2^18.
+Under the delay form, a whole Link would need a lag of N in one meeting
+followed by a Node without field, which never happens on a filled board;
+the largest single meeting is the beam at the star's x, 1329 phase steps
+at b = 4 against N = 4096.
+
+Memory and time, measured on the register's board before the series: 0.39
+s per tick with the board full (10 µs per Node and tick, the phase width
+of the spreading family 3 bits), 130 s per world of 260 ticks alone and
+about 300 s with two worlds and another run sharing the machine, 121 MB of
+`state.json`; the cube 0.55 s per tick.
+
+### What the bending runs show
+
+Measured on 2026-09-18 (the register's entry has the clause table; the
+committed record is `record.json`):
+
+- **The momentum form bends, and bends like the mean field.** The light's
+  register at the end of its pass is (262144, −3423, 0), (262144, −1661, 0),
+  (262144, −862, 0), (262144, −269, 0), (262144, −93, 0) at b = 4, 6, 8, 12,
+  16, within 1.4 % of the split table's prediction in every one of the
+  twenty-three worlds (within 0.2 % up to b = 12); the other side of the star
+  is the exact mirror; twice the mass gives 2.0035 times the deflection; the
+  ledger balances at every tick and the star's register holds the recoils'
+  net. The engine's integers are the mean field's expectation here as in A5s.
+- **The delay form bends nothing.** The pre-registered coupling leaves the
+  register (262144, 0, 0) in all twenty-three worlds: a meeting takes one
+  field ray per interval, the ±X one on a filled board, so the lag lands on
+  the ray's own axis, and the output is a fresh ray carrying one meeting's
+  delay, so nothing accumulates (stated before the series, reproduced in
+  every world).
+- **The exponent is the board's, not 1/b.** α over b = 4 to 16 falls as
+  b^−2.6 ± 0.2, the mean field's own value on this slab (−2.59); on deeper
+  boards the mean field gives −1.95 and −1.59, in free space −1.38 over these
+  b and −1.20 over b = 8 to 32, approaching −1 from below at long range
+  (Highlights 3.5, 3.23: the beam 8192 (6/11)^(b−1) and the lattice's
+  short-range anisotropy). The diagonal passes are 0.49, 0.59, 0.71 of the
+  axis at equal Euclidean b, again the mean field's numbers.
+- **Light and a slow ray bend alike.** The same push on the same content
+  gives the same register to the quantum (ratio 1, not 2): the push reads the
+  field's momentum and nothing of the ray's rate.
+- **G_eff N² is not constant; G_eff is.** The register is the same at N = 2^8
+  to 2^16, since a push has no modulus and the mass is fixed in m₀; the N²
+  constancy of feature 8's test came from scaling the mass with N. The
+  derivation in the entry gives G_eff N constant for m₀ = h/(N δt c²) and
+  1/N² only for m₀ = ħ/(δt c²); which unit the model owner means decides
+  Highlights 3.28 and hypothesis 14.
+
+The value of G stays undecided (Highlights 5.5): the run reads the forms and
+leaves the release ratio and the table as inputs.

@@ -1,0 +1,5833 @@
+{
+ "runs": [
+  {
+   "run": "../runs-a6/delay_2m",
+   "model": "a6-bending-delay-2m",
+   "form": "delay",
+   "case": "2m",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 536870912,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 150.09892492400104,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "a3526f51d3c5f4d651b54961d2362bf93b5942f84c141be185517bb59ec50343",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 107,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 4173628,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1724.8189027426608,
+    -2.4202861936828413e-14
+   ],
+   "predicted_alpha": 0.006579567005655153,
+   "predicted_steady_alpha": 0.006580247023858296,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_b12",
+   "model": "a6-bending-delay-b12",
+   "form": "delay",
+   "case": "b12",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    44,
+    4
+   ],
+   "offset": [
+    0,
+    12,
+    0
+   ],
+   "b": 12.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 135.6457685150017,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "fe774f3eab0625f38103f8edf72eeea1c9aa9a5242a6e073b802aa935217cc47",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    44,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 89,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -269.8443515595301,
+    -3.2682190287403046e-15
+   ],
+   "predicted_alpha": 0.0010293741464595678,
+   "predicted_steady_alpha": 0.0010298322495964792,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_b16",
+   "model": "a6-bending-delay-b16",
+   "form": "delay",
+   "case": "b16",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    48,
+    4
+   ],
+   "offset": [
+    0,
+    16,
+    0
+   ],
+   "b": 16.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 143.87286048399983,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "bdd7f14ac2764dea138c69f9b3e87ccef27b6b841d7ded705823e92b87e8edb0",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    48,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 84,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -94.31804815295591,
+    5.273559366969494e-16
+   ],
+   "predicted_alpha": 0.0003597947848627479,
+   "predicted_steady_alpha": 0.00036030033226459006,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_b4",
+   "model": "a6-bending-delay-b4",
+   "form": "delay",
+   "case": "b4",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    36,
+    4
+   ],
+   "offset": [
+    0,
+    4,
+    0
+   ],
+   "b": 4.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 306.09683083799973,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "273c15bf764c984fad74f5a5629d196385c0235305b5b37d2aa1d06a46f78b15",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    36,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 105,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    2,
+    0
+   ],
+   "star_absorbed": 2086772,
+   "bodies_momentum_line": [
+    -1,
+    2,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -3417.6984377719264,
+    4.3021142204224816e-15
+   ],
+   "predicted_alpha": 0.013036746274062632,
+   "predicted_steady_alpha": 0.013036894035172303,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_b6",
+   "model": "a6-bending-delay-b6",
+   "form": "delay",
+   "case": "b6",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    38,
+    4
+   ],
+   "offset": [
+    0,
+    6,
+    0
+   ],
+   "b": 6.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 227.33090686700234,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "70f3592ca03d475a06c8d4beb4ee37853434fdeeb650e2b98a59ce03f48c3661",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    38,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 97,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086769,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1660.3648546077673,
+    1.5251688800788088e-14
+   ],
+   "predicted_alpha": 0.006333704575548896,
+   "predicted_steady_alpha": 0.006333957746924175,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_b8",
+   "model": "a6-bending-delay-b8",
+   "form": "delay",
+   "case": "b8",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 176.3318349830006,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "a097829bbad66a562d073e29b5aa3e56044bcc804397164903acd5cb3a678179",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_c_b4",
+   "model": "a6-bending-delay-c-b4",
+   "form": "delay",
+   "case": "c_b4",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    20,
+    16
+   ],
+   "offset": [
+    0,
+    4,
+    0
+   ],
+   "b": 4.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 185.9125279589971,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "f7a6183ae5db92bd81959ddc538627de483874f614b06a2523956d5156c68e13",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    20,
+    16
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    -2,
+    2,
+    0
+   ],
+   "star_absorbed": 2163282,
+   "bodies_momentum_line": [
+    -2,
+    2,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -3696.7636950894034,
+    8.881784197001252e-15
+   ],
+   "predicted_alpha": 0.014101099659336248,
+   "predicted_steady_alpha": 0.014275991393759107,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_c_b6",
+   "model": "a6-bending-delay-c-b6",
+   "form": "delay",
+   "case": "c_b6",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    22,
+    16
+   ],
+   "offset": [
+    0,
+    6,
+    0
+   ],
+   "b": 6.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 202.93194832000154,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "cb82c7e5ffbc894b1e0a4389678deab28c655e2778eb9b0eefd58674b0d09d2e",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    22,
+    16
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2163106,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -2018.1597308124847,
+    -9.814371537686384e-14
+   ],
+   "predicted_alpha": 0.007698516313403378,
+   "predicted_steady_alpha": 0.007978659281669555,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_c_b8",
+   "model": "a6-bending-delay-c-b8",
+   "form": "delay",
+   "case": "c_b8",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    24,
+    16
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 188.27572837499974,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "e24d4eddd47e4a889a2ae30873d5b15461d346014d952baab504c2ea8b09c3b3",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    24,
+    16
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2162902,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1247.4188033430603,
+    1.7763568394002505e-15
+   ],
+   "predicted_alpha": 0.004758489182038657,
+   "predicted_steady_alpha": 0.005128562333901518,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_c_d3",
+   "model": "a6-bending-delay-c-d3",
+   "form": "delay",
+   "case": "c_d3",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    19,
+    19
+   ],
+   "offset": [
+    0,
+    3,
+    3
+   ],
+   "b": 4.242640687119285,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 196.9539244410007,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "f7c8dee5c9581f73a6401899d6d0de306e05a1030af80ac1203ad5fc46faea8c",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    19,
+    19
+   ],
+   "straight": true,
+   "meetings_on_line": 95,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2163259,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1173.7873033929745,
+    -1173.7873033929745
+   ],
+   "predicted_alpha": 0.006332259127205107,
+   "predicted_steady_alpha": 0.006528370187599351,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_c_d4",
+   "model": "a6-bending-delay-c-d4",
+   "form": "delay",
+   "case": "c_d4",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    20,
+    20
+   ],
+   "offset": [
+    0,
+    4,
+    4
+   ],
+   "b": 5.656854249492381,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 198.47513808700023,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "0d444d91a3c415a37ecbf0e30bae1b032f36f37219da8e7281cb80c4d1bd3713",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    20,
+    20
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2163137,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -901.7705444798755,
+    -901.7705444798756
+   ],
+   "predicted_alpha": 0.004864830297493369,
+   "predicted_steady_alpha": 0.005123348023298109,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_c_d6",
+   "model": "a6-bending-delay-c-d6",
+   "form": "delay",
+   "case": "c_d6",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    22,
+    22
+   ],
+   "offset": [
+    0,
+    6,
+    6
+   ],
+   "b": 8.48528137423857,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 186.6351510380009,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "68d6ae1800d31676eab866995378c3e7bc1b03410ec4469c08f01ce328e9ecd0",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    22,
+    22
+   ],
+   "straight": true,
+   "meetings_on_line": 95,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2162854,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -576.086387938185,
+    -576.086387938185
+   ],
+   "predicted_alpha": 0.003107858886279695,
+   "predicted_steady_alpha": 0.003462663637867958,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_control",
+   "model": "a6-bending-delay-control",
+   "form": "delay",
+   "case": "control",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": null,
+   "amount": null,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "b": 0.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 47.39015870100047,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "0aa420e1afb9f8f7a243525e8589f45558e73e29c8cb08011af46ff03c78de59",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 1,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": null,
+   "star_absorbed": null,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "predicted_alpha": 0.0,
+   "predicted_steady_alpha": 0.0,
+   "push_ratio": null
+  },
+  {
+   "run": "../runs-a6/delay_m12",
+   "model": "a6-bending-delay-m12",
+   "form": "delay",
+   "case": "m12",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    20,
+    4
+   ],
+   "offset": [
+    0,
+    -12,
+    0
+   ],
+   "b": 12.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 128.32254743999874,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "9dc721df3c203fbba6bb13310211686dd5bd45377eb69d1d6484bb56781305ea",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    20,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 89,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    269.8443515595301,
+    -8.673617379884035e-17
+   ],
+   "predicted_alpha": 0.0010293741464595678,
+   "predicted_steady_alpha": 0.0010298322482875117,
+   "push_ratio": 0.0
+  },
+  {
+   "run": "../runs-a6/delay_m16",
+   "model": "a6-bending-delay-m16",
+   "form": "delay",
+   "case": "m16",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    16,
+    4
+   ],
+   "offset": [
+    0,
+    -16,
+    0
+   ],
+   "b": 16.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 134.38042087699796,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "436b2b364215bfbaa964dcf8a7f941a1a678ac6c2de99096c5ae64715c6f0804",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    16,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 84,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    94.31804815295588,
+    -3.481590016285452e-15
+   ],
+   "predicted_alpha": 0.0003597947848627478,
+   "predicted_steady_alpha": 0.00036030032966457784,
+   "push_ratio": 0.0
+  },
+  {
+   "run": "../runs-a6/delay_m4",
+   "model": "a6-bending-delay-m4",
+   "form": "delay",
+   "case": "m4",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    28,
+    4
+   ],
+   "offset": [
+    0,
+    -4,
+    0
+   ],
+   "b": 4.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 135.51138926699787,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "6581ee3642ea86cfc1043f7f209987c918065ffa0d96cdb9e1a459462091502d",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    28,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 105,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    -2,
+    0
+   ],
+   "star_absorbed": 2086772,
+   "bodies_momentum_line": [
+    -1,
+    -2,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    3417.6984377719264,
+    -9.804657086220914e-15
+   ],
+   "predicted_alpha": 0.013036746274062632,
+   "predicted_steady_alpha": 0.013036894033213547,
+   "push_ratio": 0.0
+  },
+  {
+   "run": "../runs-a6/delay_m6",
+   "model": "a6-bending-delay-m6",
+   "form": "delay",
+   "case": "m6",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    26,
+    4
+   ],
+   "offset": [
+    0,
+    -6,
+    0
+   ],
+   "b": 6.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 136.0186204110032,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "74f3ee6dbea430508305d2d83ccef72e57d7c47c2181a39b0cd6e50e6b174fba",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    26,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 97,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086769,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    1660.3648546077673,
+    3.792799407875691e-14
+   ],
+   "predicted_alpha": 0.006333704575548896,
+   "predicted_steady_alpha": 0.006333957747165053,
+   "push_ratio": 0.0
+  },
+  {
+   "run": "../runs-a6/delay_m8",
+   "model": "a6-bending-delay-m8",
+   "form": "delay",
+   "case": "m8",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    24,
+    4
+   ],
+   "offset": [
+    0,
+    -8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 133.14370300999872,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "4c61923f96f69c1ea28b044a809af648f5953684c4949f8f23b08e2b24acbda6",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    24,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    862.4094513713303,
+    6.1374516580059435e-15
+   ],
+   "predicted_alpha": 0.0032898191074722137,
+   "predicted_steady_alpha": 0.003290158681491617,
+   "push_ratio": 0.0
+  },
+  {
+   "run": "../runs-a6/delay_n10",
+   "model": "a6-bending-delay-n10",
+   "form": "delay",
+   "case": "n10",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 10,
+   "modulus": 1024,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 180.54457493500013,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "968f560ae43047432e663bfff60ed093de5fb695924242fabab55d5aee0603d3",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_n14",
+   "model": "a6-bending-delay-n14",
+   "form": "delay",
+   "case": "n14",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 14,
+   "modulus": 16384,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 265.4552680880006,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "b27bd77b981ab0b8046c45973238f3e7278402c9f7ae214bf68400116502c7e1",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_n16",
+   "model": "a6-bending-delay-n16",
+   "form": "delay",
+   "case": "n16",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 16,
+   "modulus": 65536,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 258.0294321809997,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "67e1418f3554919233c3cc29d26a868ec6dd94358fbb8ab95981b69092a163ba",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_n8",
+   "model": "a6-bending-delay-n8",
+   "form": "delay",
+   "case": "n8",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 8,
+   "modulus": 256,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 180.71737018299973,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "a9b76bdbcd2b8716e54284a064514c399ed766f9ba34e92a6ef94c2c4f560bc8",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/delay_slow",
+   "model": "a6-bending-delay-slow",
+   "form": "delay",
+   "case": "slow",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "electron",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 1,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_delay",
+   "table": {
+    "of": 1,
+    "table": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "per": 1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 148.67410518299948,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "2904180c130edcd0ae43e477176fc0281c0ba55b24cb6c36c84ac2e8aeafda79",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    -1,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    -1,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": -0.0
+  },
+  {
+   "run": "../runs-a6/turn_2m",
+   "model": "a6-bending-turn-2m",
+   "form": "turn",
+   "case": "2m",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 536870912,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 293.81273816199973,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "c8ab72f31188d121efce070bbabf5b58d37ca77ec9d0ced43816f5df0859bc6c",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 304,
+   "first_push": [
+    194,
+    [
+     1,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -1727,
+    0
+   ],
+   "register": [
+    262144,
+    -1727,
+    0
+   ],
+   "alpha": 0.006587886870759934,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 105,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    8,
+    0
+   ],
+   "star_absorbed": 4173644,
+   "bodies_momentum_line": [
+    0,
+    8,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1724.8189027426608,
+    -2.4202861936828413e-14
+   ],
+   "predicted_alpha": 0.006579567005655153,
+   "predicted_steady_alpha": 0.006580247023858296,
+   "push_ratio": 1.0012645369631972
+  },
+  {
+   "run": "../runs-a6/turn_b12",
+   "model": "a6-bending-turn-b12",
+   "form": "turn",
+   "case": "b12",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    44,
+    4
+   ],
+   "offset": [
+    0,
+    12,
+    0
+   ],
+   "b": 12.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 295.85929911600033,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "08735519f21da25e77b21f4dacf90270daa72d4ec706b1504712f5e8f363e5d2",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 248,
+   "first_push": [
+    198,
+    [
+     5,
+     44,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -269,
+    0
+   ],
+   "register": [
+    262144,
+    -269,
+    0
+   ],
+   "alpha": 0.0010261532042764828,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    44,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 85,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -269.8443515595301,
+    -3.2682190287403046e-15
+   ],
+   "predicted_alpha": 0.0010293741464595678,
+   "predicted_steady_alpha": 0.0010298322495964792,
+   "push_ratio": 0.9968709681909209
+  },
+  {
+   "run": "../runs-a6/turn_b16",
+   "model": "a6-bending-turn-b16",
+   "form": "turn",
+   "case": "b16",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    48,
+    4
+   ],
+   "offset": [
+    0,
+    16,
+    0
+   ],
+   "b": 16.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 281.8452199800013,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "9da586897e64ba1ab1f75a857bac3672a51cd407cbd4aa3edcfa0e1a6587dc72",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 214,
+   "first_push": [
+    199,
+    [
+     6,
+     48,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -93,
+    0
+   ],
+   "register": [
+    262144,
+    -93,
+    0
+   ],
+   "alpha": 0.0003547668308195318,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    48,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 76,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -94.31804815295591,
+    5.273559366969494e-16
+   ],
+   "predicted_alpha": 0.0003597947848627479,
+   "predicted_steady_alpha": 0.00036030033226459006,
+   "push_ratio": 0.986025493754722
+  },
+  {
+   "run": "../runs-a6/turn_b4",
+   "model": "a6-bending-turn-b4",
+   "form": "turn",
+   "case": "b4",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    36,
+    4
+   ],
+   "offset": [
+    0,
+    4,
+    0
+   ],
+   "b": 4.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 127.00038612400022,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "598d042d63e9ae394736cd6f560bf7366d0f67b18e88b85b0e7818380a8510e7",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 295,
+   "first_push": [
+    196,
+    [
+     3,
+     36,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -3423,
+    0
+   ],
+   "register": [
+    262144,
+    -3423,
+    0
+   ],
+   "alpha": 0.01305696668667827,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    36,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 102,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    222,
+    0
+   ],
+   "star_absorbed": 2087039,
+   "bodies_momentum_line": [
+    0,
+    222,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -3417.6984377719264,
+    4.3021142204224816e-15
+   ],
+   "predicted_alpha": 0.013036746274062632,
+   "predicted_steady_alpha": 0.013036894035172303,
+   "push_ratio": 1.0015512083130218
+  },
+  {
+   "run": "../runs-a6/turn_b6",
+   "model": "a6-bending-turn-b6",
+   "form": "turn",
+   "case": "b6",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    38,
+    4
+   ],
+   "offset": [
+    0,
+    6,
+    0
+   ],
+   "b": 6.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 125.50566289100243,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "b7e5fc88504d9724a187e2b83dcecf6e0d243ce867ab719496f257862288f1da",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 281,
+   "first_push": [
+    197,
+    [
+     4,
+     38,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -1661,
+    0
+   ],
+   "register": [
+    262144,
+    -1661,
+    0
+   ],
+   "alpha": 0.0063361273657079374,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    38,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 97,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    26,
+    0
+   ],
+   "star_absorbed": 2086808,
+   "bodies_momentum_line": [
+    0,
+    26,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1660.3648546077673,
+    1.5251688800788088e-14
+   ],
+   "predicted_alpha": 0.006333704575548896,
+   "predicted_steady_alpha": 0.006333957746924175,
+   "push_ratio": 1.000382533628359
+  },
+  {
+   "run": "../runs-a6/turn_b8",
+   "model": "a6-bending-turn-b8",
+   "form": "turn",
+   "case": "b8",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 298.18877966799846,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "8ca6b69325af818d225d73f48eeb467c924fb2e8bfcb6f5c3c2cd46fc59b45db",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -862,
+    0
+   ],
+   "register": [
+    262144,
+    -862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": 0.9995252239285187
+  },
+  {
+   "run": "../runs-a6/turn_c_b4",
+   "model": "a6-bending-turn-c-b4",
+   "form": "turn",
+   "case": "c_b4",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    20,
+    16
+   ],
+   "offset": [
+    0,
+    4,
+    0
+   ],
+   "b": 4.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 267.2655803609996,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "1d4661c8532dd893db68aefbf1a8a2b32b3beb57d1e2e39629ff12d3af7e283d",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 286,
+   "first_push": [
+    194,
+    [
+     1,
+     20,
+     16
+    ]
+   ],
+   "push_sum": [
+    0,
+    -3697,
+    0
+   ],
+   "register": [
+    262144,
+    -3697,
+    0
+   ],
+   "alpha": 0.01410200091179139,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    20,
+    16
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    222,
+    0
+   ],
+   "star_absorbed": 2163548,
+   "bodies_momentum_line": [
+    0,
+    222,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -3696.7636950894034,
+    8.881784197001252e-15
+   ],
+   "predicted_alpha": 0.014101099659336248,
+   "predicted_steady_alpha": 0.014275991393759107,
+   "push_ratio": 1.0000639221032468
+  },
+  {
+   "run": "../runs-a6/turn_c_b6",
+   "model": "a6-bending-turn-c-b6",
+   "form": "turn",
+   "case": "c_b6",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    22,
+    16
+   ],
+   "offset": [
+    0,
+    6,
+    0
+   ],
+   "b": 6.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 244.65120194799965,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "8b9b591e586dfa21d268e600eb082669cbda98ecdfb04058516edc821cce2dcc",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 286,
+   "first_push": [
+    194,
+    [
+     1,
+     22,
+     16
+    ]
+   ],
+   "push_sum": [
+    0,
+    -2019,
+    0
+   ],
+   "register": [
+    262144,
+    -2019,
+    0
+   ],
+   "alpha": 0.007701721495926725,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    22,
+    16
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    27,
+    0
+   ],
+   "star_absorbed": 2163146,
+   "bodies_momentum_line": [
+    0,
+    27,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -2018.1597308124847,
+    -9.814371537686384e-14
+   ],
+   "predicted_alpha": 0.007698516313403378,
+   "predicted_steady_alpha": 0.007978659281669555,
+   "push_ratio": 1.0004163541540774
+  },
+  {
+   "run": "../runs-a6/turn_c_b8",
+   "model": "a6-bending-turn-c-b8",
+   "form": "turn",
+   "case": "c_b8",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    24,
+    16
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 248.24158023400014,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "7f102fbec82b3a734ce12af0e1d4b3440acbcff9d350826129fb381151cf5c82",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 284,
+   "first_push": [
+    194,
+    [
+     1,
+     24,
+     16
+    ]
+   ],
+   "push_sum": [
+    0,
+    -1246,
+    0
+   ],
+   "register": [
+    262144,
+    -1246,
+    0
+   ],
+   "alpha": 0.004753076999217182,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    24,
+    16
+   ],
+   "straight": true,
+   "meetings_on_line": 94,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2162909,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -1247.4188033430603,
+    1.7763568394002505e-15
+   ],
+   "predicted_alpha": 0.004758489182038657,
+   "predicted_steady_alpha": 0.005128562333901518,
+   "push_ratio": 0.9988626086609742
+  },
+  {
+   "run": "../runs-a6/turn_c_d3",
+   "model": "a6-bending-turn-c-d3",
+   "form": "turn",
+   "case": "c_d3",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    19,
+    19
+   ],
+   "offset": [
+    0,
+    3,
+    3
+   ],
+   "b": 4.242640687119285,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 201.72398995600088,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "91806f97754f5cfc5130a826fbc2d95d50c79d2f01c6a4315b7889636a628089",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 286,
+   "first_push": [
+    194,
+    [
+     1,
+     19,
+     19
+    ]
+   ],
+   "push_sum": [
+    0,
+    -1169,
+    -1169
+   ],
+   "register": [
+    262144,
+    -1169,
+    -1169
+   ],
+   "alpha": 0.006306433630440407,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    19,
+    19
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    4,
+    4
+   ],
+   "star_absorbed": 2163274,
+   "bodies_momentum_line": [
+    0,
+    4,
+    4
+   ],
+   "predicted_push": [
+    0.0,
+    -1173.7873033929745,
+    -1173.7873033929745
+   ],
+   "predicted_alpha": 0.006332259127205107,
+   "predicted_steady_alpha": 0.006528370187599351,
+   "push_ratio": 0.9959214898822502
+  },
+  {
+   "run": "../runs-a6/turn_c_d4",
+   "model": "a6-bending-turn-c-d4",
+   "form": "turn",
+   "case": "c_d4",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    20,
+    20
+   ],
+   "offset": [
+    0,
+    4,
+    4
+   ],
+   "b": 5.656854249492381,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 201.66485206200014,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "c2df414a22550f6e9f260bbd0cf65d43c6d30e6162e22833a9111c6cb300afaa",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 286,
+   "first_push": [
+    194,
+    [
+     1,
+     20,
+     20
+    ]
+   ],
+   "push_sum": [
+    0,
+    -900,
+    -900
+   ],
+   "register": [
+    262144,
+    -900,
+    -900
+   ],
+   "alpha": 0.004855278795747895,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    20,
+    20
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    2,
+    2
+   ],
+   "star_absorbed": 2163142,
+   "bodies_momentum_line": [
+    0,
+    2,
+    2
+   ],
+   "predicted_push": [
+    0.0,
+    -901.7705444798755,
+    -901.7705444798756
+   ],
+   "predicted_alpha": 0.004864830297493369,
+   "predicted_steady_alpha": 0.005123348023298109,
+   "push_ratio": 0.9980365909147135
+  },
+  {
+   "run": "../runs-a6/turn_c_d6",
+   "model": "a6-bending-turn-c-d6",
+   "form": "turn",
+   "case": "c_d6",
+   "shape": [
+    49,
+    33,
+    33
+   ],
+   "star": [
+    24,
+    16,
+    16
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    22,
+    22
+   ],
+   "offset": [
+    0,
+    6,
+    6
+   ],
+   "b": 8.48528137423857,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 199.4631669829978,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "f188d52fcbcfbfb2c4ae8f32204c8f95323bd5d95bba3312748ccc30dc519560",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 286,
+   "first_push": [
+    194,
+    [
+     1,
+     22,
+     22
+    ]
+   ],
+   "push_sum": [
+    0,
+    -578,
+    -578
+   ],
+   "register": [
+    262144,
+    -578,
+    -578
+   ],
+   "alpha": 0.0031181823340982596,
+   "escape_tick": 242,
+   "escape_position": [
+    48,
+    22,
+    22
+   ],
+   "straight": true,
+   "meetings_on_line": 96,
+   "line_nodes_cycled": 49,
+   "star_final_momentum": [
+    0,
+    1,
+    1
+   ],
+   "star_absorbed": 2162855,
+   "bodies_momentum_line": [
+    0,
+    1,
+    1
+   ],
+   "predicted_push": [
+    0.0,
+    -576.086387938185,
+    -576.086387938185
+   ],
+   "predicted_alpha": 0.003107858886279695,
+   "predicted_steady_alpha": 0.003462663637867958,
+   "push_ratio": 1.0033217449706873
+  },
+  {
+   "run": "../runs-a6/turn_control",
+   "model": "a6-bending-turn-control",
+   "form": "turn",
+   "case": "control",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": null,
+   "amount": null,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "b": 0.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 73.1480771289971,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "3fe0f536f00eeac786ff970e1a28400fbe48cf8dca6c494d637d28899b0705e3",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": null,
+   "dense": "dense-field-v1",
+   "pushes": 0,
+   "first_push": null,
+   "push_sum": [
+    0,
+    0,
+    0
+   ],
+   "register": [
+    262144,
+    0,
+    0
+   ],
+   "alpha": 0.0,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 1,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": null,
+   "star_absorbed": null,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "predicted_alpha": 0.0,
+   "predicted_steady_alpha": 0.0,
+   "push_ratio": null
+  },
+  {
+   "run": "../runs-a6/turn_m12",
+   "model": "a6-bending-turn-m12",
+   "form": "turn",
+   "case": "m12",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    20,
+    4
+   ],
+   "offset": [
+    0,
+    -12,
+    0
+   ],
+   "b": 12.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 150.99342752200027,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "62eee46c59502822116e63bc535122d07d1666eb8293f1c0e12b4198719bb1c2",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 248,
+   "first_push": [
+    198,
+    [
+     5,
+     20,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    269,
+    0
+   ],
+   "register": [
+    262144,
+    269,
+    0
+   ],
+   "alpha": 0.0010261532042764828,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    20,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 85,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    269.8443515595301,
+    -8.673617379884035e-17
+   ],
+   "predicted_alpha": 0.0010293741464595678,
+   "predicted_steady_alpha": 0.0010298322482875117,
+   "push_ratio": 0.9968709681909209
+  },
+  {
+   "run": "../runs-a6/turn_m16",
+   "model": "a6-bending-turn-m16",
+   "form": "turn",
+   "case": "m16",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    16,
+    4
+   ],
+   "offset": [
+    0,
+    -16,
+    0
+   ],
+   "b": 16.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 204.07705459700082,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "83bd5c228a8d1883ee03aee26dd851c0645102f8f807ee5e6a411ad118eef2c4",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 214,
+   "first_push": [
+    199,
+    [
+     6,
+     16,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    93,
+    0
+   ],
+   "register": [
+    262144,
+    93,
+    0
+   ],
+   "alpha": 0.0003547668308195318,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    16,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 76,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    0,
+    0
+   ],
+   "star_absorbed": 2086768,
+   "bodies_momentum_line": [
+    0,
+    0,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    94.31804815295588,
+    -3.481590016285452e-15
+   ],
+   "predicted_alpha": 0.0003597947848627478,
+   "predicted_steady_alpha": 0.00036030032966457784,
+   "push_ratio": 0.9860254937547224
+  },
+  {
+   "run": "../runs-a6/turn_m4",
+   "model": "a6-bending-turn-m4",
+   "form": "turn",
+   "case": "m4",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    28,
+    4
+   ],
+   "offset": [
+    0,
+    -4,
+    0
+   ],
+   "b": 4.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 250.0159270389995,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "bc871a70e517e6e23c5d2eb82ec91a63c74cadaa4b9cd1d956de831330e0bdbc",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 295,
+   "first_push": [
+    196,
+    [
+     3,
+     28,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    3423,
+    0
+   ],
+   "register": [
+    262144,
+    3423,
+    0
+   ],
+   "alpha": 0.01305696668667827,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    28,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 102,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    -222,
+    0
+   ],
+   "star_absorbed": 2087039,
+   "bodies_momentum_line": [
+    0,
+    -222,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    3417.6984377719264,
+    -9.804657086220914e-15
+   ],
+   "predicted_alpha": 0.013036746274062632,
+   "predicted_steady_alpha": 0.013036894033213547,
+   "push_ratio": 1.0015512083130218
+  },
+  {
+   "run": "../runs-a6/turn_m6",
+   "model": "a6-bending-turn-m6",
+   "form": "turn",
+   "case": "m6",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    26,
+    4
+   ],
+   "offset": [
+    0,
+    -6,
+    0
+   ],
+   "b": 6.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 245.88976331099911,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "9305328ca8ad7a6ce85eb948d1364a6074af47aee697cb6f8db5dab108458165",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 281,
+   "first_push": [
+    197,
+    [
+     4,
+     26,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    1661,
+    0
+   ],
+   "register": [
+    262144,
+    1661,
+    0
+   ],
+   "alpha": 0.0063361273657079374,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    26,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 97,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    -26,
+    0
+   ],
+   "star_absorbed": 2086808,
+   "bodies_momentum_line": [
+    0,
+    -26,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    1660.3648546077673,
+    3.792799407875691e-14
+   ],
+   "predicted_alpha": 0.006333704575548896,
+   "predicted_steady_alpha": 0.006333957747165053,
+   "push_ratio": 1.000382533628359
+  },
+  {
+   "run": "../runs-a6/turn_m8",
+   "model": "a6-bending-turn-m8",
+   "form": "turn",
+   "case": "m8",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    24,
+    4
+   ],
+   "offset": [
+    0,
+    -8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 150.976468138997,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "fe6f845e022f64fa7c30554ca83ee36743d4c707ae054d3911c0b0886411a8e6",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     24,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    862,
+    0
+   ],
+   "register": [
+    262144,
+    862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    24,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    -4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    -4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    862.4094513713303,
+    6.1374516580059435e-15
+   ],
+   "predicted_alpha": 0.0032898191074722137,
+   "predicted_steady_alpha": 0.003290158681491617,
+   "push_ratio": 0.9995252239285188
+  },
+  {
+   "run": "../runs-a6/turn_n10",
+   "model": "a6-bending-turn-n10",
+   "form": "turn",
+   "case": "n10",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 10,
+   "modulus": 1024,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 129.86531069099874,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "4d808abf00f316b6057ba176324c4a20507581160d3824ff54240329efac852b",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -862,
+    0
+   ],
+   "register": [
+    262144,
+    -862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": 0.9995252239285187
+  },
+  {
+   "run": "../runs-a6/turn_n14",
+   "model": "a6-bending-turn-n14",
+   "form": "turn",
+   "case": "n14",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 14,
+   "modulus": 16384,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 147.1933080859999,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "ac5577633b1dac40728085140c9b4ba9d9db4186a053bc32b2701c8b14a6fecc",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -862,
+    0
+   ],
+   "register": [
+    262144,
+    -862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": 0.9995252239285187
+  },
+  {
+   "run": "../runs-a6/turn_n16",
+   "model": "a6-bending-turn-n16",
+   "form": "turn",
+   "case": "n16",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 16,
+   "modulus": 65536,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 143.0271003830021,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "670cee0e6379021cb16d4408c83ba4510508917c92eb5dd65ae45281d9a1869f",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -862,
+    0
+   ],
+   "register": [
+    262144,
+    -862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": 0.9995252239285187
+  },
+  {
+   "run": "../runs-a6/turn_n8",
+   "model": "a6-bending-turn-n8",
+   "form": "turn",
+   "case": "n8",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "light",
+   "bits": 8,
+   "modulus": 256,
+   "rate": 0,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 137.3011830200012,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "74f1f78ac24c66a29eff3fb5272ff50bcf544add041b265412cd8192abf23c1b",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -862,
+    0
+   ],
+   "register": [
+    262144,
+    -862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": 0.9995252239285187
+  },
+  {
+   "run": "../runs-a6/turn_slow",
+   "model": "a6-bending-turn-slow",
+   "form": "turn",
+   "case": "slow",
+   "shape": [
+    65,
+    65,
+    9
+   ],
+   "star": [
+    32,
+    32,
+    4
+   ],
+   "amount": 268435456,
+   "line": [
+    0,
+    40,
+    4
+   ],
+   "offset": [
+    0,
+    8,
+    0
+   ],
+   "b": 8.0,
+   "ray": "electron",
+   "bits": 12,
+   "modulus": 4096,
+   "rate": 1,
+   "light": 262144,
+   "launch_delay": 192,
+   "release": [
+    1,
+    32768
+   ],
+   "rule": "mass_field_turn",
+   "table": {
+    "mass_field": -1
+   },
+   "status": "completed",
+   "error": null,
+   "ticks": 260,
+   "elapsed_seconds": 296.3004523540003,
+   "source_sha256": "25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038",
+   "initialization_sha256": "b95d704237514b5d36826e42651a6e624f7ee8b178278f1deabeb6b5cc0b8d24",
+   "all_balanced": true,
+   "conserved_at_every_completed_tick": true,
+   "momentum_turn": "ray-momentum-turn-v2",
+   "dense": "dense-field-v1",
+   "pushes": 274,
+   "first_push": [
+    198,
+    [
+     5,
+     40,
+     4
+    ]
+   ],
+   "push_sum": [
+    0,
+    -862,
+    0
+   ],
+   "register": [
+    262144,
+    -862,
+    0
+   ],
+   "alpha": 0.0032882571913421684,
+   "escape_tick": 258,
+   "escape_position": [
+    64,
+    40,
+    4
+   ],
+   "straight": true,
+   "meetings_on_line": 91,
+   "line_nodes_cycled": 65,
+   "star_final_momentum": [
+    0,
+    4,
+    0
+   ],
+   "star_absorbed": 2086773,
+   "bodies_momentum_line": [
+    0,
+    4,
+    0
+   ],
+   "predicted_push": [
+    0.0,
+    -862.4094513713304,
+    -1.2101430968414206e-14
+   ],
+   "predicted_alpha": 0.003289819107472214,
+   "predicted_steady_alpha": 0.0032901586872370464,
+   "push_ratio": 0.9995252239285187
+  }
+ ],
+ "clauses": {
+  "turn": [
+   {
+    "clause": "momentum exact at every tick (ledger balanced, conserved_at_every_completed_tick, the bodies' line)",
+    "pass": true,
+    "numbers": {
+     "2m": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       8,
+       0
+      ]
+     },
+     "b12": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "b16": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "b4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       222,
+       0
+      ]
+     },
+     "b6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       26,
+       0
+      ]
+     },
+     "b8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     },
+     "c_b4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       222,
+       0
+      ]
+     },
+     "c_b6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       27,
+       0
+      ]
+     },
+     "c_b8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     },
+     "c_d3": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       4
+      ]
+     },
+     "c_d4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       2,
+       2
+      ]
+     },
+     "c_d6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       1,
+       1
+      ]
+     },
+     "control": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "m12": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "m16": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "m4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       -222,
+       0
+      ]
+     },
+     "m6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       -26,
+       0
+      ]
+     },
+     "m8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       -4,
+       0
+      ]
+     },
+     "n10": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     },
+     "n14": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     },
+     "n16": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     },
+     "n8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     },
+     "slow": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       4,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "clause": "control goes straight (no star: the register unchanged, the escape on the line at the straight tick)",
+    "pass": true,
+    "numbers": {
+     "register": [
+      262144,
+      0,
+      0
+     ],
+     "escape": [
+      64,
+      40,
+      4
+     ],
+     "tick": 258,
+     "pushes": 0
+    }
+   },
+   {
+    "clause": "bends toward the body on both sides (p_y < 0 above the star, > 0 below, p_z = 0)",
+    "pass": true,
+    "numbers": {
+     "sides": {
+      "b4": {
+       "register": [
+        262144,
+        -3423,
+        0
+       ],
+       "toward": true
+      },
+      "m4": {
+       "register": [
+        262144,
+        3423,
+        0
+       ],
+       "toward": true
+      },
+      "b6": {
+       "register": [
+        262144,
+        -1661,
+        0
+       ],
+       "toward": true
+      },
+      "m6": {
+       "register": [
+        262144,
+        1661,
+        0
+       ],
+       "toward": true
+      },
+      "b8": {
+       "register": [
+        262144,
+        -862,
+        0
+       ],
+       "toward": true
+      },
+      "m8": {
+       "register": [
+        262144,
+        862,
+        0
+       ],
+       "toward": true
+      },
+      "b12": {
+       "register": [
+        262144,
+        -269,
+        0
+       ],
+       "toward": true
+      },
+      "m12": {
+       "register": [
+        262144,
+        269,
+        0
+       ],
+       "toward": true
+      },
+      "b16": {
+       "register": [
+        262144,
+        -93,
+        0
+       ],
+       "toward": true
+      },
+      "m16": {
+       "register": [
+        262144,
+        93,
+        0
+       ],
+       "toward": true
+      }
+     },
+     "both_sides_run": true
+    }
+   },
+   {
+    "clause": "log-log exponent of alpha over b = [4, 6, 8, 12, 16] within (-1.1, -0.9)",
+    "pass": false,
+    "numbers": {
+     "points": [
+      [
+       4.0,
+       0.01305696668667827
+      ],
+      [
+       6.0,
+       0.0063361273657079374
+      ],
+      [
+       8.0,
+       0.0032882571913421684
+      ],
+      [
+       12.0,
+       0.0010261532042764828
+      ],
+      [
+       16.0,
+       0.0003547668308195318
+      ]
+     ],
+     "fit": {
+      "exponent": -2.595338316702505,
+      "standard_error": 0.2099444060962965,
+      "intercept": -0.5306696381733156,
+      "points": 5,
+      "zeros": 0
+     },
+     "predicted_fit": {
+      "exponent": -2.5855160805717965,
+      "standard_error": 0.20682110864952563,
+      "intercept": -0.548175861046154,
+      "points": 5,
+      "zeros": 0
+     },
+     "beam_fraction": {
+      "b4": {
+       "beam": 1329.4305033809162,
+       "fraction": 0.3889841446185643
+      },
+      "b6": {
+       "beam": 395.5330423282064,
+       "fraction": 0.23822055810838294
+      },
+      "b8": {
+       "beam": 117.67925226293744,
+       "fraction": 0.13645403824808955
+      },
+      "b12": {
+       "beam": 10.416796047590115,
+       "fraction": 0.03860297978218779
+      },
+      "b16": {
+       "beam": 0.9220796173537863,
+       "fraction": 0.009776279677230455
+      }
+     }
+    }
+   },
+   {
+    "clause": "alpha at 2M equals 2 alpha at M within 0.0625 relative (b = 8)",
+    "pass": true,
+    "numbers": {
+     "alpha_M": 0.0032882571913421684,
+     "alpha_2M": 0.006587886870759934,
+     "ratio": 2.003458515381808
+    }
+   },
+   {
+    "clause": "G_eff(N) N^2 constant over N = 2^[8, 10, 12, 14, 16] within 0.0625 of its value at N = 2^12 (b = 8)",
+    "pass": false,
+    "numbers": {
+     "scan": {
+      "8": {
+       "N": 256,
+       "alpha": 0.0032882571913421684,
+       "register": [
+        262144,
+        -862,
+        0
+       ],
+       "G_eff": 2.4499425227509204e-11,
+       "G_eff_N": 6.271852858242356e-09,
+       "G_eff_N2": 1.6055943317100432e-06
+      },
+      "10": {
+       "N": 1024,
+       "alpha": 0.0032882571913421684,
+       "register": [
+        262144,
+        -862,
+        0
+       ],
+       "G_eff": 2.4499425227509204e-11,
+       "G_eff_N": 2.5087411432969424e-08,
+       "G_eff_N2": 2.568950930736069e-05
+      },
+      "12": {
+       "N": 4096,
+       "alpha": 0.0032882571913421684,
+       "register": [
+        262144,
+        -862,
+        0
+       ],
+       "G_eff": 2.4499425227509204e-11,
+       "G_eff_N": 1.003496457318777e-07,
+       "G_eff_N2": 0.00041103214891777105
+      },
+      "14": {
+       "N": 16384,
+       "alpha": 0.0032882571913421684,
+       "register": [
+        262144,
+        -862,
+        0
+       ],
+       "G_eff": 2.4499425227509204e-11,
+       "G_eff_N": 4.013985829275108e-07,
+       "G_eff_N2": 0.006576514382684337
+      },
+      "16": {
+       "N": 65536,
+       "alpha": 0.0032882571913421684,
+       "register": [
+        262144,
+        -862,
+        0
+       ],
+       "G_eff": 2.4499425227509204e-11,
+       "G_eff_N": 1.6055943317100432e-06,
+       "G_eff_N2": 0.10522423012294939
+      }
+     },
+     "G_eff_N_constant": false,
+     "G_eff_constant": true
+    }
+   },
+   {
+    "clause": "diagonal alpha at equal Euclidean b within 0.125 of the axial (the cube's axis fit)",
+    "pass": false,
+    "numbers": {
+     "cube_axis": [
+      [
+       4.0,
+       0.01410200091179139
+      ],
+      [
+       6.0,
+       0.007701721495926725
+      ],
+      [
+       8.0,
+       0.004753076999217182
+      ]
+     ],
+     "cube_fit": {
+      "exponent": -1.5639014097017665,
+      "standard_error": 0.05162557039715472,
+      "intercept": -2.0848362149254838,
+      "points": 3,
+      "zeros": 0
+     },
+     "diagonal": {
+      "c_d3": {
+       "b": 4.242640687119285,
+       "alpha": 0.006306433630440407,
+       "register": [
+        262144,
+        -1169,
+        -1169
+       ],
+       "axis_fit": 0.012971969415219897,
+       "ratio": 0.48615853372589085
+      },
+      "c_d4": {
+       "b": 5.656854249492381,
+       "alpha": 0.004855278795747895,
+       "register": [
+        262144,
+        -900,
+        -900
+       ],
+       "axis_fit": 0.008272067121508148,
+       "ratio": 0.5869486700759131
+      },
+      "c_d6": {
+       "b": 8.48528137423857,
+       "alpha": 0.0031181823340982596,
+       "register": [
+        262144,
+        -578,
+        -578
+       ],
+       "axis_fit": 0.004387576295287712,
+       "ratio": 0.7106844700221417
+      }
+     }
+    }
+   },
+   {
+    "clause": "reported: alpha(light) / alpha(slow ray) at equal b and M, against 2",
+    "pass": null,
+    "numbers": {
+     "alpha_light": 0.0032882571913421684,
+     "alpha_slow": 0.0032882571913421684,
+     "ratio": 1.0,
+     "registers": {
+      "light": [
+       262144,
+       -862,
+       0
+      ],
+      "slow": [
+       262144,
+       -862,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "clause": "reported: the ray's transverse push over the mean field's prediction, per case",
+    "pass": null,
+    "numbers": {
+     "ratios": {
+      "2m": 1.0012645369631972,
+      "b12": 0.9968709681909209,
+      "b16": 0.986025493754722,
+      "b4": 1.0015512083130218,
+      "b6": 1.000382533628359,
+      "b8": 0.9995252239285187,
+      "c_b4": 1.0000639221032468,
+      "c_b6": 1.0004163541540774,
+      "c_b8": 0.9988626086609742,
+      "c_d3": 0.9959214898822502,
+      "c_d4": 0.9980365909147135,
+      "c_d6": 1.0033217449706873,
+      "m12": 0.9968709681909209,
+      "m16": 0.9860254937547224,
+      "m4": 1.0015512083130218,
+      "m6": 1.000382533628359,
+      "m8": 0.9995252239285188,
+      "n10": 0.9995252239285187,
+      "n14": 0.9995252239285187,
+      "n16": 0.9995252239285187,
+      "n8": 0.9995252239285187,
+      "slow": 0.9995252239285187
+     },
+     "max_deviation": 0.013974506245277962
+    }
+   }
+  ],
+  "delay": [
+   {
+    "clause": "momentum exact at every tick (ledger balanced, conserved_at_every_completed_tick, the bodies' line)",
+    "pass": true,
+    "numbers": {
+     "2m": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "b12": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "b16": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "b4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       2,
+       0
+      ]
+     },
+     "b6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "b8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "c_b4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -2,
+       2,
+       0
+      ]
+     },
+     "c_b6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "c_b8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "c_d3": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "c_d4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "c_d6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "control": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "m12": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "m16": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       0,
+       0,
+       0
+      ]
+     },
+     "m4": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       -2,
+       0
+      ]
+     },
+     "m6": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "m8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "n10": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "n14": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "n16": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "n8": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     },
+     "slow": {
+      "balanced": true,
+      "conserved": true,
+      "status": "completed",
+      "bodies_momentum_line": [
+       -1,
+       0,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "clause": "control goes straight (no star: the register unchanged, the escape on the line at the straight tick)",
+    "pass": true,
+    "numbers": {
+     "register": [
+      262144,
+      0,
+      0
+     ],
+     "escape": [
+      64,
+      40,
+      4
+     ],
+     "tick": 258,
+     "pushes": 0
+    }
+   },
+   {
+    "clause": "bends toward the body on both sides (p_y < 0 above the star, > 0 below, p_z = 0)",
+    "pass": false,
+    "numbers": {
+     "sides": {
+      "b4": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "m4": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "b6": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "m6": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "b8": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "m8": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "b12": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "m12": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "b16": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      },
+      "m16": {
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "toward": false
+      }
+     },
+     "both_sides_run": true
+    }
+   },
+   {
+    "clause": "log-log exponent of alpha over b = [4, 6, 8, 12, 16] within (-1.1, -0.9)",
+    "pass": false,
+    "numbers": {
+     "points": [
+      [
+       4.0,
+       0.0
+      ],
+      [
+       6.0,
+       0.0
+      ],
+      [
+       8.0,
+       0.0
+      ],
+      [
+       12.0,
+       0.0
+      ],
+      [
+       16.0,
+       0.0
+      ]
+     ],
+     "fit": {
+      "exponent": null,
+      "standard_error": null,
+      "intercept": null,
+      "points": 0,
+      "zeros": 5
+     },
+     "predicted_fit": {
+      "exponent": -2.5855160805717965,
+      "standard_error": 0.20682110864952563,
+      "intercept": -0.548175861046154,
+      "points": 5,
+      "zeros": 0
+     },
+     "beam_fraction": {
+      "b4": {
+       "beam": 1329.4305033809162,
+       "fraction": 0.3889841446185643
+      },
+      "b6": {
+       "beam": 395.5330423282064,
+       "fraction": 0.23822055810838294
+      },
+      "b8": {
+       "beam": 117.67925226293744,
+       "fraction": 0.13645403824808955
+      },
+      "b12": {
+       "beam": 10.416796047590115,
+       "fraction": 0.03860297978218779
+      },
+      "b16": {
+       "beam": 0.9220796173537863,
+       "fraction": 0.009776279677230455
+      }
+     }
+    }
+   },
+   {
+    "clause": "alpha at 2M equals 2 alpha at M within 0.0625 relative (b = 8)",
+    "pass": false,
+    "numbers": {
+     "alpha_M": 0.0,
+     "alpha_2M": 0.0,
+     "ratio": null
+    }
+   },
+   {
+    "clause": "G_eff(N) N^2 constant over N = 2^[8, 10, 12, 14, 16] within 0.0625 of its value at N = 2^12 (b = 8)",
+    "pass": false,
+    "numbers": {
+     "scan": {
+      "8": {
+       "N": 256,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "G_eff": 0.0,
+       "G_eff_N": 0.0,
+       "G_eff_N2": 0.0
+      },
+      "10": {
+       "N": 1024,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "G_eff": 0.0,
+       "G_eff_N": 0.0,
+       "G_eff_N2": 0.0
+      },
+      "12": {
+       "N": 4096,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "G_eff": 0.0,
+       "G_eff_N": 0.0,
+       "G_eff_N2": 0.0
+      },
+      "14": {
+       "N": 16384,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "G_eff": 0.0,
+       "G_eff_N": 0.0,
+       "G_eff_N2": 0.0
+      },
+      "16": {
+       "N": 65536,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "G_eff": 0.0,
+       "G_eff_N": 0.0,
+       "G_eff_N2": 0.0
+      }
+     },
+     "G_eff_N_constant": null,
+     "G_eff_constant": null
+    }
+   },
+   {
+    "clause": "diagonal alpha at equal Euclidean b within 0.125 of the axial (the cube's axis fit)",
+    "pass": false,
+    "numbers": {
+     "cube_axis": [
+      [
+       4.0,
+       0.0
+      ],
+      [
+       6.0,
+       0.0
+      ],
+      [
+       8.0,
+       0.0
+      ]
+     ],
+     "cube_fit": {
+      "exponent": null,
+      "standard_error": null,
+      "intercept": null,
+      "points": 0,
+      "zeros": 3
+     },
+     "diagonal": {
+      "c_d3": {
+       "b": 4.242640687119285,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "axis_fit": null,
+       "ratio": null
+      },
+      "c_d4": {
+       "b": 5.656854249492381,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "axis_fit": null,
+       "ratio": null
+      },
+      "c_d6": {
+       "b": 8.48528137423857,
+       "alpha": 0.0,
+       "register": [
+        262144,
+        0,
+        0
+       ],
+       "axis_fit": null,
+       "ratio": null
+      }
+     }
+    }
+   },
+   {
+    "clause": "reported: alpha(light) / alpha(slow ray) at equal b and M, against 2",
+    "pass": null,
+    "numbers": {
+     "alpha_light": 0.0,
+     "alpha_slow": 0.0,
+     "ratio": null,
+     "registers": {
+      "light": [
+       262144,
+       0,
+       0
+      ],
+      "slow": [
+       262144,
+       0,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "clause": "reported: the ray's transverse push over the mean field's prediction, per case",
+    "pass": null,
+    "numbers": {
+     "ratios": {
+      "2m": -0.0,
+      "b12": -0.0,
+      "b16": -0.0,
+      "b4": -0.0,
+      "b6": -0.0,
+      "b8": -0.0,
+      "c_b4": -0.0,
+      "c_b6": -0.0,
+      "c_b8": -0.0,
+      "c_d3": -0.0,
+      "c_d4": -0.0,
+      "c_d6": -0.0,
+      "m12": 0.0,
+      "m16": 0.0,
+      "m4": 0.0,
+      "m6": 0.0,
+      "m8": 0.0,
+      "n10": -0.0,
+      "n14": -0.0,
+      "n16": -0.0,
+      "n8": -0.0,
+      "slow": -0.0
+     },
+     "max_deviation": 1.0
+    }
+   }
+  ]
+ }
+}

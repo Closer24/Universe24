@@ -29,6 +29,7 @@ Feature tests of issue #169 join this table as they land.
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
 | `test_a5_static.py` | 5 | 10.8 | Experiment A5s (`examples/nature/a5_static/`): the fifteen worlds byte for byte what `make_worlds.py` writes and the pinned geometry, the r = 4 like-charge world's first eight ticks (the registers, the ledger, no step), the committed record of the measured series (the window sums, the exponent, the diagonal, the control, the verdicts), and Run 2's six dense worlds with the mean field's predictions written before it, pinned below |
+| `test_a6_bending.py` | 4 | 40 | Experiment A6 (`examples/nature/a6_bending/`): the forty-six worlds of the two forms byte for byte what `make_worlds.py` writes and the pinned geometry, the small world of each form re-run for 40 ticks (the turn form's register per tick and first push, the delay form's lag per tick on the ray's own axis alone and no heading change), the mean field's predictions written before the series, and the committed record of the measured series (the registers, the exponent, the N scan, the diagonal, the verdicts), pinned below |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
@@ -3295,6 +3296,118 @@ measured record, the fourth and fifth before Run 2:
   band r {0.2: 21, 0.1: 26}; and the r = 12 row recomputed by
   `predict_dense.predict(12, 24)`: the same t50, t90, ticks, first push, box
   and quarter board, and the three pushes within 1e-9.
+
+## A6 light bending
+
+`test_a6_bending.py` pins the worlds, the small worlds, the predictions and
+the record of experiment A6
+([register](EXPERIMENTS.md#a6-light-bending-by-a-bound-group-and-g_eff-n²-over-n--28-to-216);
+`examples/nature/a6_bending/`, the dictionary in its
+[README](../examples/nature/README.md#a6-light-bending-by-a-mass)). Four
+tests, the first three pinned before the series, the fourth from the
+measured record:
+
+- the forty-six world files are byte for byte what `make_worlds.all_cases`
+  writes (`json.dumps(indent=1)` and a newline), in the order `turn_b4`,
+  `turn_b6`, `turn_b8`, `turn_b12`, `turn_b16`, `turn_control`, `turn_2m`,
+  `turn_slow`, `turn_n8`, `turn_n10`, `turn_n14`, `turn_n16`, `turn_m4`, ...,
+  `turn_m16`, `turn_c_b4`, `turn_c_b6`, `turn_c_b8`, `turn_c_d3`, `turn_c_d4`,
+  `turn_c_d6`, then the same twenty-three cases of the `delay` form, and each
+  is the pinned geometry: `model_id` `a6-bending-<name with dashes>`, shape
+  [65, 65, 9] with the star at (32, 32, 4) (the cube cases [49, 33, 33] with
+  the star at (24, 16, 16)), open, `dense_field` true, no `conservation` and
+  no `polarization` key, 260 ticks; the star an external body of the family
+  `neutron`, amount 2^28 (2^29 in `2m`), `momentum_table` `{"mass_field":
+  -1}`, absent in `control`; the launcher body of the family `launcher`,
+  amount 1, `coupling` `launch`, at (0, y, z) on the ray's line, the line
+  through the star's Node offset by (0, b, 0) for `b{b}` and `m{b}` (b
+  negative), (0, 8, 0) for `control`, `2m`, `slow` and `n{bits}`, (0, b, 0)
+  and (0, d, d) on the cube; the lamp seeded one Node below the launcher;
+  `mass_field` `field_of` `neutron` with `release` [1, 32768] and `spread`
+  [6, 1, 1, 1, 1, 1] at `phase_bits` 3, `neutron` at 3, the ray's family
+  (`light`, rate 0; `electron`, rate 1, charge −3, in `slow`) at the case's
+  width, 12 but for `n{bits}`; the `launch` rule first, its ray output on
+  Port 0 with `delay` 192 and `input` 0, then the form's rule over the ray
+  and `mass_field`: `mass_field_delay` with the output's `delay` `{"of": 1,
+  "table": [1, 1, 1, 1, 1, 1], "per": 1}`, heading and phase `same`, and the
+  field reversed from input 1; or `mass_field_turn` with `momentum_table`
+  `{"mass_field": -1}` and no outputs; the lamp's emission of 2^18 on +Y with
+  `recoil_field` momentum and the unseeded `idle_mass_field` lamp;
+- `small_world(form)` (25 × 25 × 9, the star at (12, 12, 4), b = 4, the
+  launch after 10 intervals, 40 ticks) re-run through the Simulation for
+  both forms: the light at the launcher (0, 16, 4) heading +Y with steps 1
+  after tick 1, heading +X with steps 0 from tick 2 to 11 (waiting), at
+  (t − 11, 16, 4) heading +X from tick 12 to 35, gone from tick 36, the
+  ledger balanced at the end, the light escaped whole; the turn form: no
+  lag, the register None until tick 14 and (262147, −2, 0), (262153, −9, 0),
+  (262164, −22, 0), (262179, −48, 0), (262203, −93, 0), (262236, −166, 0),
+  (262280, −289, 0), (262332, −485, 0), (262392, −791, 0), (262264, −2189,
+  0), (262230, −2499, 0), (262204, −2700, 0), (262187, −2832, 0), (262174,
+  −2917, 0), (262164, −2973, 0), (262158, −3009, 0), (262154, −3033, 0),
+  (262150, −3049, 0), (262148, −3059, 0), (262147, −3065, 0), (262146,
+  −3069, 0) after ticks 15 to 35, the steps counting up, 124 `ray_push`
+  records, the first at tick 14 at (3, 16, 4) by a field ray of amount 3
+  heading −X (the register (262144, 0, 0) to (262147, 0, 0)), the escape at
+  tick 36 from (24, 16, 4) with momentum (262144, −3072, 0), the star's
+  register [0, 219, 0] with accumulators [−24, 2831, 0] and sink 291901, the
+  launcher's sink 211; the delay form: no push, the register None, a meeting
+  at every Node from tick 15 (steps 1 at every tick from 15 to 35, a fresh
+  event), the lag (3, 0, 0), (−3, 0, 0), (−2, 0, 0), (−4, 0, 0), (−7, 0, 0),
+  (−13, 0, 0), (−21, 0, 0), (−35, 0, 0), (−52, 0, 0), (−75, 0, 0), (−188, 0,
+  0), (−63, 0, 0), (−45, 0, 0), (−31, 0, 0), (−22, 0, 0), (−15, 0, 0), (−10,
+  0, 0), (−7, 0, 0), (−5, 0, 0), (−3, 0, 0), (−2, 0, 0) after ticks 15 to 35
+  (on the ray's own axis alone, one meeting's delay, never accumulated,
+  never a transverse component, no heading change), the escape at tick 36
+  from (24, 16, 4) with the packet's momentum (262145, 0, 0) (the light's
+  262144 and one field quantum), the star's register [−1, 2, 0] with
+  accumulators [−11, 9, 0] and sink 291649, the launcher's sink 216;
+- `predictions.json`, written by `predict.py` before the series (the release
+  8192 per heading, the light 2^18, the launch delay 192, 260 ticks): one row
+  per case, the transverse push on the light over its pass −3417.70,
+  −1660.36, −862.41, −269.84, −94.32 at b = 4, 6, 8, 12, 16 (two decimals,
+  the x and z components zero), α = atan2(|p_⊥|, p_x) of the register
+  0.0130367, 0.0063337, 0.0032898, 0.0010294, 0.0003598 (seven decimals),
+  the box's steady-state α 0.0130369, 0.0063340, 0.0032902, 0.0010298,
+  0.0003603, the beam 8192 (6/11)^(b−1) 1329.4, 395.5, 117.7, 10.4, 0.9,
+  the other side `m{b}` the same push with the opposite sign, the cube's
+  axis 0.0141011, 0.0076985, 0.0047585 and diagonal 0.0063323, 0.0048648,
+  0.0031079 (the diagonal push equal on y and z, zero on x), `2m` 0.0065796,
+  the N scan and the slow ray as `b8`, the control 0; the axis fit −2.586 ±
+  0.207, the cube's −1.562 ± 0.050, the diagonal over the cube's fit 0.4883,
+  0.5880, 0.7077; the steady exponent on boards 9, 17 and 33 deep −2.585,
+  −1.951, −1.587; free space at half-width 96 α 0.0142978, 0.0052398,
+  0.0021331, 0.0009809 at b = 4, 8, 16, 32 with the fits −1.384 over 4 to 16
+  and −1.198 over 8 to 32; and the b = 4 row recomputed by
+  `predict.transient_pass` to 1e-6, 64 per-tick pushes from tick 194 to the
+  Node x = 64;
+
+- `record.json`, the committed record of the measured series (2026-09-18,
+  written by `analyze.py` from the forty-six records, the expectations
+  pinned from its first reading): one row per form and case with the world's
+  initialization digest (equal to the file's SHA-256 in the tree), one source
+  fingerprint for all, status completed at 260 ticks in the dense mode, every
+  ledger balanced and conserved at every completed tick, the escape on the
+  line at tick 258 = 192 + 65 + 1 (`straight`), and the light's register at
+  the end of its pass: the delay form (262144, 0, 0) with no push in every
+  world; the turn form (262144, −3423, 0), (262144, −1661, 0), (262144,
+  −862, 0), (262144, −269, 0), (262144, −93, 0) at b = 4, 6, 8, 12, 16 from
+  295, 281, 274, 248, 214 pushes, the other side the exact mirror, 2M
+  (262144, −1727, 0), the N scan and the slow ray (262144, −862, 0) as b = 8,
+  the cube's axis (262144, −3697, 0), (262144, −2019, 0), (262144, −1246, 0)
+  and the diagonal (262144, −1169, −1169), (262144, −900, −900), (262144,
+  −578, −578), the control unchanged; the register the light plus the sum of
+  the pushes; the star's final register the bodies' momentum line ((0, 222,
+  0), (0, 26, 0), (0, 4, 0), 0, 0 on the axis, the mirror on the other side,
+  (0, 4, 4), (0, 2, 2), (0, 1, 1) on the diagonal; at most (−2, 2, 0) in the
+  delay form); α = atan2(|p_⊥|, p_x) of each register. The clause table: the
+  turn form's exponent −2.595 ± 0.210 (recomputed by `analyze.fit` from the
+  five α), the linearity 2.0035, one register at every N with `G_eff`
+  constant and the N² clause failed, the diagonal 0.4862, 0.5869, 0.7107 of
+  the cube's axis fit (exponent −1.564), the light/slow ratio exactly 1.0,
+  the largest deviation from the mean field 0.014; the verdicts in the
+  criterion's order [pass, pass, pass, fail, pass, fail, fail, reported,
+  reported] for the turn form and [pass, pass, fail, fail, fail, fail, fail,
+  reported, reported] for the delay form.
 
 ## The split table's mean field
 
