@@ -2629,3 +2629,13 @@ committed record is `record.json`):
 
 The value of G stays undecided (Highlights 5.5): the run reads the forms and
 leaves the release ratio and the table as inputs.
+
+## A6 under the law: the four gravitational tests (in progress)
+
+`a6_law/` holds the worlds of A6 repeated under the law of the bit
+([EXPERIMENTS.md](../../docs/EXPERIMENTS.md#a6-repeated-under-the-law-of-the-bit-2026-09-18)):
+`make_worlds.py` writes them (a closed 25³ board, the star a prefilled body,
+light things of content 1 on six lines per impact parameter, the clock read
+from their waits by radius), `analyze.py` reads the records and
+`probe_field.py` reads the prefilled field's profile through the API (an
+exploration tool, not a Renderer of records). The series has not run yet.

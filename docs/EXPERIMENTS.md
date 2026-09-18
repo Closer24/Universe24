@@ -1118,6 +1118,61 @@ states "exactly" and means integer equality at every tick.
   in Highlights 3.28's "G_eff across the phase width" and hypothesis 14: the
   constancy of G_eff N² was the construction of the test of feature 8 (the
   mass scaled with N) and not a property of either coupling at fixed M.
+### A6 repeated under the law of the bit (2026-09-18)
+
+- **Claim.** The four gravitational tests against Einstein under the law of
+  the bit with the wait of point 23 (features 15 to 18, 16e, 16f;
+  DERIVATIONS.md rounds 3 to 6): (1) a clock at r against 1 − GM/r (fitted
+  to A/r and B/r²), (2) the redshift between two radii, (3) the bending of a
+  light thing's path at b = 3, 4, 6, 8 against 4GM/b (GR), 2GM/b (Newton)
+  and GM/b (round 5), (4) the Shapiro delay against 2GM ln(4x_Ax_B/b²) and
+  round 5's 2.72 w GM/b; each under the option absent, `shadow_wait` `thing`
+  and `field`, and `wait_reads` `amount` and `amplitude`, at w = 1 and 11/9.
+- **Features.** 15 (bit-law-v1), 16b (clock-readings-v1), 16c
+  (node-mixing-v1), 16d (return-field-v1), 17 (node-is-ports-v1), 18
+  (lanes-v1), 16e (shadow-wait-v1), 16f (wait-reads-v1); N = 64, K = 1.
+- **Run.** `examples/nature/a6_law/` (`make_worlds.py`, `analyze.py`,
+  `probe_field.py`): a 25 × 25 × 25 board (r ≤ 12, the machine's budget of
+  the day), closed (`periodic`, the model owner's decision of 2026-09-18;
+  one open-board control of each kind), the star an external body of amount
+  2^20 at the centre (a thing at rest cannot be held: every ray moves, a held
+  record has no clock) with its field given by `initial_field` `fill`: X
+  quanta per heading per fill interval, `m16` (X = 16, 15 intervals, 1440
+  quanta, S = 96) and `m256` (X = 256, 12 intervals on the closed board, 14
+  on the open one, S = 1536); light things of content 1 (clock declared, K 1)
+  on six lines per b (y = 12 ± b, z = 12 and 12 ± 1), circulating on the
+  closed board so that every lap is a pass; the gravity coupling the
+  momentum table `{"star": -1}` read by content.
+- **Status.** in progress (WIP commit of 2026-09-18, the lane moving to a
+  dedicated machine); no world of the series has completed yet. Measured so
+  far, on `main` at `6a682e0` (source fingerprint recorded per run), by the
+  probe `probe_field.py` and the smoke runs: (a) the prefill refuses a fill
+  longer than about 30 intervals at X = 1 and 14 at X ≥ 64 (open board; 12
+  at X = 256 on the closed one), "the prefill cannot hold a third phase on
+  one Port of a source"; (b) the whole-quanta field of the body under the
+  mixing is a parked residue: at X = 1 every quantum is parked within 3
+  Links by tick 30; at X = 16 (fill 15) the arrival rate at r = 1 to 5 on the
+  axis is 8.3, 7.0, 1.07, 0.22, 0.02 quanta per Node per interval (first 30
+  ticks), zero beyond, decaying 40 % over 60 ticks, the line at b = 4
+  reading 0.55 quanta per pass and b ≥ 6 nothing; at X = 256 (fill 14) 23,
+  23, 16, 13, 7.8, 1.8, 0.35 at r = 1 to 7, the line at b = 8 reading 0 to 1
+  per pass and b = 6 fifteen to twenty-five (inside the horizon w n ≥ 1);
+  (c) in the smoke run at X = 16 (open board, b = ±4, 40 ticks) the three
+  light things on the +4 lines arrived straight at tick 24 with no quantum
+  read, and the one on the −4 line read one quantum at tick 14, turned a
+  whole Port toward the star, and froze in the core (the horizon), with
+  every ledger line balanced; (d) a cavity of six reflecting Nodes around a
+  clock shields it completely (no quantum reaches its centre), and a mirror
+  body on the X axis refuses a light thing arriving on +X (lanes-v1: the
+  body's token heads +X), so the clock at r is to be read from the passing
+  light things instead: the intervals they moved over the intervals they
+  spent at Nodes at Euclidean distance r, binned over lines and laps (one
+  quantum read is one whole step under the content reading, so no thing of
+  content 1 rests in a field). The six ring numbers of round 6 (r = 8, 16,
+  32) are not reachable on this board and this field. Next: the bending
+  series on the closed board (200 ticks, eight laps), the analyzer's radius
+  bins, the options, the record, the page.
+
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11
