@@ -50,6 +50,30 @@ Node state for the totals, the snapshot and the inventory view
 (`materialized_nodes`), so `state.json` and the ledger are the acceptance test
 of the mode (docs/PERFORMANCE.md).
 
+The standing set by a formula (standing-field-v1; Highlights 5.4, points 11
+and 13: the field of things at rest is a standing set, computed once). With
+`standing_field` declared, the region compares its state after every
+delivery with the one before it, the layer's step function being an opaque
+operator here (whatever spread rule it applies): the arrays, the whole rays
+beside them, the owners, the engine's Nodes' resident rays and the packets
+the engine delivers this interval. When a state equals an earlier one (the
+previous state: a fixed point; one of the last `STANDING_WINDOW` states: a
+cycle of that period) the layer has reached the standing set of that
+operator, the states the stepping engine would keep reaching, and from then
+on the region is kept fixed: its cycle is skipped, its delivery hands the
+engine's Nodes the packets of the corresponding interval of the cycle, books
+its escapes and takes the engine's packets into the fixed arrays, exactly the
+flows the stepping engine computed for that interval. Every interval the
+engine's part of the state is checked against the cycle's; a thing that
+steps, a body's packet into the layer or a mark absorbing a thing changes it,
+and the region falls back to stepping from the fixed arrays, at that delivery
+(the cycle it skipped is run late, on the same arrays the engine's cycle left
+untouched) and says so in its record. Without a repeat within the declared
+intervals the layer keeps stepping and the record carries the residual of
+the last comparison with the previous state. The ledger balances under the
+fixed layer because its flows are those of intervals the stepping engine
+computed.
+
 Bounded integers throughout: amounts are below MAX_VALUE, phases below the
 family's modulus, products and sums in signed 64-bit intermediates as the
 engine's `checked_work` requires; the arrays hold amounts as int32 (MAX_VALUE
@@ -60,8 +84,9 @@ grow, and the bounds are checked there.
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Mapping
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -116,6 +141,65 @@ OPPOSITE = np.array(MIXING_OPPOSITE, dtype=np.int64)
 # The Ports ranked against each other for the largest-remainder rule: [k, h] is
 # whether Port k comes before Port h on a tie.
 EARLIER = np.arange(6)[:, None] < np.arange(6)[None, :]
+# The arrays of a family the layer's step reads and writes (standing-field-v1).
+_ARRAYS = (
+    "arr_amt",
+    "arr_ph",
+    "reg",
+    "regph",
+    "fly_amt",
+    "fly_ph",
+    "ret_amt",
+    "ret_ph",
+    "ret_mom",
+    "ret_steps",
+    "wait_amt",
+    "wait_ph",
+    "wait_mom",
+    "trace",
+)
+# The engine's part of the layer's state: its Nodes' resident rays and the
+# packets it delivers this interval, by value.
+_Signature = tuple[
+    tuple[tuple[Address3, tuple[Rays, ...]], ...],
+    tuple[tuple[Address3, Address3, int, tuple[Rays, ...], bool], ...],
+]
+
+
+@dataclass(frozen=True)
+class _LayerState:
+    """One delivery's state of the layer, copied for the comparison."""
+
+    arrays: list[np.ndarray]
+    overflow: list[tuple[tuple[Address3, tuple[Ray, ...]], ...]]
+    signature: _Signature
+
+
+@dataclass(frozen=True)
+class _Interval:
+    """One stepped delivery's record while looking for the standing set: the
+    digest of the layer's state after it, the engine's part of the state at its
+    start, the packets it handed to the engine's Nodes (target, origin, Port,
+    rays) and the escapes it booked per field and component on the escaped line
+    and the shadows' own."""
+
+    digest: bytes
+    signature: _Signature
+    handed: tuple[tuple[Address3, Address3, int, tuple[Rays, ...]], ...]
+    escaped: tuple[list[list[int]], list[list[int]]]
+
+
+@dataclass(frozen=True)
+class _StandingSet:
+    """The standing set's flows, replayed interval by interval while the layer
+    is kept fixed: the intervals of one period of the cycle, in order."""
+
+    cycle: tuple[_Interval, ...]
+
+
+# The states kept to find a cycle of the layer: a repeat of the previous state
+# is a fixed point, of an earlier one within the window a cycle of that period.
+STANDING_WINDOW = 1024
 
 
 class DenseFamily:
@@ -334,6 +418,174 @@ class DenseField:
             self.owner[position] = 1
             self.engine_positions.add(position)
         self._active = 0
+        # The standing set (standing-field-v1): the intervals left to look for
+        # the fixed point (0: not looking), the state of the previous delivery
+        # to compare with, the fixed point's flows once found, and the record.
+        self._standing_limit = initial.standing_field
+        self._previous: _LayerState | None = None
+        self._intervals: list[_Interval] = []
+        self.standing: _StandingSet | None = None
+        self._standing_phase = 0
+        self._standing_record: dict[str, object] | None = None
+        if self._standing_limit:
+            self._standing_record = {
+                "standing_field": False,
+                "standing_field_iterations": None,
+                "standing_field_period": None,
+                "standing_field_residual": None,
+                "standing_field_ticks": 0,
+                "standing_field_fallback": None,
+            }
+
+    # -- the standing set (standing-field-v1) ----------------------------------
+
+    def standing_report(self) -> dict[str, object] | None:
+        """The standing set's record: None for a world without the mode."""
+        return None if self._standing_record is None else dict(self._standing_record)
+
+    def _layer_state(self, signature: _Signature) -> _LayerState:
+        """The state the layer's step reads and writes, copied: the arrays and the
+        whole rays beside them per family, the owners, and the engine's part (its
+        Nodes' resident rays and the packets it delivered this interval)."""
+        arrays: list[np.ndarray] = []
+        overflow: list[tuple[tuple[Address3, tuple[Ray, ...]], ...]] = []
+        for family in self.families.values():
+            arrays.extend(getattr(family, name).copy() for name in _ARRAYS)
+            overflow.append(tuple((k, tuple(v)) for k, v in sorted(family.overflow.items())))
+        arrays.append(self.owner.copy())
+        return _LayerState(arrays, overflow, signature)
+
+    def _engine_signature(self, ready: Mapping[Address3, list[SpatialPacket]]) -> _Signature:
+        nodes = tuple(
+            (position, node.rays)
+            for position, node in sorted(self.engine.nodes.items())
+            if any(node.rays)
+        )
+        packets = tuple(
+            (target, packet.origin, packet.port, packet.rays, packet.body is not None)
+            for target in sorted(ready)
+            for packet in ready[target]
+        )
+        return nodes, packets
+
+    def _digest(self, signature: _Signature) -> bytes:
+        """The digest of the layer's state after a delivery, over the arrays
+        without a copy, the whole rays beside them and the engine's part."""
+        digest = hashlib.blake2b(digest_size=32)
+        for family in self.families.values():
+            for name in _ARRAYS:
+                digest.update(np.ascontiguousarray(getattr(family, name)))
+            digest.update(repr(sorted(family.overflow.items())).encode())
+        digest.update(np.ascontiguousarray(self.owner))
+        digest.update(repr(signature).encode())
+        return digest.digest()
+
+    @staticmethod
+    def _residual(before: _LayerState, after: _LayerState) -> dict[str, int]:
+        """How far two consecutive states are apart: the array cells that differ
+        and the sum of the absolute differences of the amounts (the parked shares
+        in their own units), plus the whole rays and the engine's part when they
+        differ."""
+        cells = 0
+        amount = 0
+        for a, b in zip(before.arrays, after.arrays, strict=True):
+            differing = a != b
+            cells += int(differing.sum())
+            if a.dtype == AMOUNT:
+                amount += int(np.abs(a.astype(np.int64) - b.astype(np.int64)).sum())
+        other = int(before.overflow != after.overflow) + int(before.signature != after.signature)
+        return {"cells": cells + other, "amount": amount}
+
+    def _settle(
+        self,
+        tick: int,
+        ready: Mapping[Address3, list[SpatialPacket]],
+        signature: _Signature,
+        handed: Mapping[Address3, list[SpatialPacket]],
+        escaped: tuple[list[list[int]], list[list[int]]],
+    ) -> None:
+        """After a stepped delivery while looking for the standing set: compare
+        with the previous delivery's state (the residual) and with the states of
+        the window (a repeat, of the previous state or of an earlier one, is the
+        standing set: a fixed point or a cycle of that period); at a repeat
+        freeze the layer with the cycle's flows, at the limit give up."""
+        record = self._standing_record
+        assert record is not None
+        current = self._layer_state(signature)
+        previous, self._previous = self._previous, None
+        if previous is not None:
+            record["standing_field_residual"] = self._residual(previous, current)
+        interval = _Interval(
+            self._digest(signature),
+            signature,
+            tuple(
+                (target, packet.origin, packet.port, packet.rays)
+                for target in sorted(handed)
+                for packet in handed[target]
+            ),
+            escaped,
+        )
+        for index in range(len(self._intervals) - 1, -1, -1):
+            if self._intervals[index].digest == interval.digest:
+                cycle = (*self._intervals[index + 1 :], interval)
+                record["standing_field"] = True
+                record["standing_field_iterations"] = tick
+                record["standing_field_period"] = len(cycle)
+                self._standing_limit = 0
+                self._intervals = []
+                self.standing = _StandingSet(cycle)
+                self._standing_phase = 0
+                return
+        if tick >= self._standing_limit:
+            self._standing_limit = 0
+            self._intervals = []
+            return
+        self._previous = current
+        self._intervals.append(interval)
+        del self._intervals[:-STANDING_WINDOW]
+
+    def _escape_counters(self) -> tuple[list[list[int]], list[list[int]]]:
+        return (
+            [list(line) for line in self.engine.escaped],
+            [list(line) for line in self.engine.shadow_escaped],
+        )
+
+    def _deliver_standing(
+        self, tick: int, ready: dict[Address3, list[SpatialPacket]]
+    ) -> tuple[dict[Address3, list[SpatialPacket]], list[SpatialPacket]]:
+        """The delivery under the fixed layer: the flows of the corresponding
+        interval of the cycle, the arrays untouched."""
+        standing = self.standing
+        assert standing is not None and self._standing_record is not None
+        interval = standing.cycle[self._standing_phase]
+        self._standing_phase = (self._standing_phase + 1) % len(standing.cycle)
+        absorbed: list[SpatialPacket] = []
+        for target in list(ready):
+            if not self.owner[target]:
+                absorbed.extend(ready.pop(target))
+        for counters, deltas in zip(
+            (self.engine.escaped, self.engine.shadow_escaped), interval.escaped, strict=True
+        ):
+            for line, gone in zip(counters, deltas, strict=True):
+                for component, value in enumerate(gone):
+                    if value:
+                        line[component] += value
+        for target, origin, port, rays in interval.handed:
+            ready.setdefault(target, []).append(
+                SpatialPacket(tick, origin, port, self.blank_bundle, rays=rays)
+            )
+        ticks = self._standing_record["standing_field_ticks"]
+        assert isinstance(ticks, int)
+        self._standing_record["standing_field_ticks"] = ticks + 1
+        return ready, absorbed
+
+    def _fall_back(self, tick: int, reason: str) -> None:
+        """A thing stepped or the things' Nodes changed: the layer steps again from
+        the fixed arrays, and the record says so."""
+        assert self._standing_record is not None
+        self.standing = None
+        self._standing_record["standing_field"] = False
+        self._standing_record["standing_field_fallback"] = {"tick": tick, "reason": reason}
 
     # -- the cycle -------------------------------------------------------------
 
@@ -347,6 +599,8 @@ class DenseField:
         departures kept in flight until the delivery and the cost of each cycle
         as the spatial law would meter it. A Node holding more shadows than the
         arrays' layers is cycled by `spread_content` itself, ray by ray."""
+        if self.standing is not None:
+            return
         dense = self.owner == 0
         prices = self.prices
         ports_any = np.zeros((*self.shape, 6), dtype=bool)
@@ -774,7 +1028,46 @@ class DenseField:
         """Walk the region's departures one Link, count the escapes, decide the owner
         of every Node that receives something, absorb the engine's packets to dense
         Nodes and hand the engine the packets of dense Nodes to its own. Returns the
-        packets left for the engine to deliver and the packets absorbed."""
+        packets left for the engine to deliver and the packets absorbed. Under the
+        standing set (standing-field-v1) the fixed point's flows are replayed
+        instead, unless the engine's part of the state changed, when the layer
+        steps again from this interval on."""
+        if self.standing is not None:
+            carried = residents is not None and any(
+                not self.owner[position] and any(record is not None for record in carrier.records)
+                for position, carrier in residents.items()
+            )
+            expected = self.standing.cycle[self._standing_phase].signature
+            if not carried and self._engine_signature(ready) == expected:
+                return self._deliver_standing(tick, ready)
+            self._fall_back(tick, "a thing stepped or the things' Nodes changed")
+            self.cycle(tick)
+        looking = self._standing_limit > 0
+        signature: _Signature = self._engine_signature(ready) if looking else ((), ())
+        counters = self._escape_counters() if looking else ([], [])
+        ready, absorbed, handed = self._deliver_stepping(tick, ready, residents)
+        if looking:
+            after = self._escape_counters()
+            escaped = tuple(
+                [
+                    [now - then for now, then in zip(line, before, strict=True)]
+                    for line, before in zip(lines, past, strict=True)
+                ]
+                for lines, past in zip(after, counters, strict=True)
+            )
+            self._settle(tick, ready, signature, handed, (escaped[0], escaped[1]))
+        return ready, absorbed
+
+    def _deliver_stepping(
+        self,
+        tick: int,
+        ready: dict[Address3, list[SpatialPacket]],
+        residents: Mapping[Address3, DisturbanceNode] | None,
+    ) -> tuple[
+        dict[Address3, list[SpatialPacket]], list[SpatialPacket], dict[Address3, list[SpatialPacket]]
+    ]:
+        """The delivery of a stepped interval; returns also the packets handed to
+        the engine's Nodes, the standing set's flows when the layer repeats."""
         incoming = {index: self._walk(family) for index, family in self.families.items()}
         returning = {index: self._walk_returns(family) for index, family in self.families.items()}
         engine_incoming = self._engine_receivers(incoming) | self._engine_receivers(returning)
@@ -824,7 +1117,7 @@ class DenseField:
                 raise ValueError("ray slot budget exceeded")
         for target, packets in handed.items():
             ready.setdefault(target, []).extend(packets)
-        return ready, absorbed
+        return ready, absorbed, handed
 
     def _walk(self, family: DenseFamily) -> tuple[np.ndarray, np.ndarray]:
         """The departures one Link on: what arrives at each Node per owner, sign,
@@ -1206,61 +1499,71 @@ class DenseField:
         result = dict(nodes)
         for x, y, z in zip(*np.nonzero(self.visited & (self.owner == 0)), strict=True):
             position = (int(x), int(y), int(z))
-            base = nodes.get(position)
-            node = replace(base) if base is not None else self._fresh(position)
-            rays = list(node.rays) or [() for _ in self.initial.spatial_fields]
-            states = list(node.states)
-            mask = [0] * 6
-            for index, family in self.families.items():
-                definition = family.definition
-                found: list[Ray] = []
-                delivered = [0] * 6
-                amounts = family.arr_amt[position]
-                for rank, sign, port, layer in zip(*np.nonzero(amounts > 0), strict=True):
-                    amount = int(amounts[rank, sign, port, layer])
-                    found.append(
-                        Ray(
-                            int(family.heading_index[port]),
-                            (0, 0, 0),
-                            amount,
-                            phase=int(family.arr_ph[position][rank, sign, port, layer]),
-                            steps=1,
-                            detector=BIT_SHADOW,
-                            source_sign=int(sign) - 1,
-                            owner=family.owners[int(rank)],
-                        )
-                    )
-                    delivered[int(port)] += amount
-                    mask[int(port) ^ 1] = 1
-                for ray in family.overflow.get(position, ()):
-                    found.append(ray)
-                    port = family.port_of[ray.heading]
-                    delivered[port] += ray.amount
-                    mask[port ^ 1] = 1
-                # A return is delivered as no flux, as the engine delivers it.
-                for port, back in self._returning_rays(family, position).items():
-                    found.extend(back)
-                    mask[port ^ 1] = 1
-                owners = len(family.owners)
-                found.extend(
-                    park_shares(
-                        engine_block(tuple(int(v) for v in family.reg[position].reshape(-1)), owners),
-                        engine_block(tuple(int(v) for v in family.regph[position].reshape(-1)), owners),
-                        (),
-                        definition,
-                    )
-                )
-                rays[index] = merge_rays(tuple(found))
-                states[index] = replace(
-                    states[index], delivered=tuple(pack((amount,)) for amount in delivered)
-                )
-            node.rays = tuple(rays)
-            node.states = tuple(states)
-            node.arrival_mask = tuple(mask)
-            node.last_cost = int(self.cost[position])
-            node.received_count = sum(mask)
-            result[position] = node
+            result[position] = self.materialized_node(position, nodes.get(position))
         return result
+
+    def visited_slab(self, x: int) -> list[Address3]:
+        """The region's visited Nodes in one x-slab of the board, in position order:
+        what `materialized_nodes` would read there, listed without reading it, so
+        that a snapshot can be written one Node at a time (the performance review
+        of 2026-09-18: the final snapshot of a filled board no longer holds every
+        Node as an object)."""
+        found = np.nonzero(self.visited[x] & (self.owner[x] == 0))
+        return [(x, int(y), int(z)) for y, z in zip(*found, strict=True)]
+
+    def materialized_node(self, position: Address3, base: SpatialNode | None) -> SpatialNode:
+        """One Node the region owns, read as Node state from the arrays: the Node
+        `materialized_nodes` gives at that position (`base` the engine's Node there,
+        if it holds one)."""
+        node = replace(base) if base is not None else self._fresh(position)
+        rays = list(node.rays) or [() for _ in self.initial.spatial_fields]
+        states = list(node.states)
+        mask = [0] * 6
+        for index, family in self.families.items():
+            definition = family.definition
+            found: list[Ray] = []
+            delivered = [0] * 6
+            amounts = family.arr_amt[position]
+            for rank, sign, port, layer in zip(*np.nonzero(amounts > 0), strict=True):
+                amount = int(amounts[rank, sign, port, layer])
+                found.append(
+                    Ray(
+                        int(family.heading_index[port]),
+                        (0, 0, 0),
+                        amount,
+                        phase=int(family.arr_ph[position][rank, sign, port, layer]),
+                        steps=1,
+                        detector=BIT_SHADOW,
+                        source_sign=int(sign) - 1,
+                        owner=family.owners[int(rank)],
+                    )
+                )
+                delivered[int(port)] += amount
+                mask[int(port) ^ 1] = 1
+            for ray in family.overflow.get(position, ()):
+                found.append(ray)
+                port = family.port_of[ray.heading]
+                delivered[port] += ray.amount
+                mask[port ^ 1] = 1
+            owners = len(family.owners)
+            found.extend(
+                park_shares(
+                    engine_block(tuple(int(v) for v in family.reg[position].reshape(-1)), owners),
+                    engine_block(tuple(int(v) for v in family.regph[position].reshape(-1)), owners),
+                    (),
+                    definition,
+                )
+            )
+            rays[index] = merge_rays(tuple(found))
+            states[index] = replace(
+                states[index], delivered=tuple(pack((amount,)) for amount in delivered)
+            )
+        node.rays = tuple(rays)
+        node.states = tuple(states)
+        node.arrival_mask = tuple(mask)
+        node.last_cost = int(self.cost[position])
+        node.received_count = sum(mask)
+        return node
 
     def _fresh(self, position: Address3) -> SpatialNode:
         """A Node the engine never created, as `SpatialEngine._at` would create it,

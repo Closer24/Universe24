@@ -2316,6 +2316,9 @@ for w in pp_r12d pp_r16d pe_r16d p_alone_16d pp_r20d pp_r24d; do
   PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/a5_static/$w.json'), Path('runs/a5sd/$w'))"
 done
 python examples/nature/a5_static/analyze_dense.py runs/a5sd/pp_r12d runs/a5sd/pp_r16d runs/a5sd/pp_r20d runs/a5sd/pp_r24d runs/a5sd/pe_r16d runs/a5sd/p_alone_16d --out runs/a5sd/summary.json --record examples/nature/a5_static/record_dense.json
+# The same six worlds one process per core instead of one after the other (tools/run_series.py, 2026-09-18):
+# each run the runner's, byte for byte, with its own log and artifacts under runs/a5sd/<name>/run and a summary table
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/a5sd examples/nature/a5_static/{pp_r12d,pp_r16d,pe_r16d,p_alone_16d,pp_r20d,pp_r24d}.json
 ```
 
 The computation after the run (about ten minutes on one core; `--only-free`

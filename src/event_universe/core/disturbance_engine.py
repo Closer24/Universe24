@@ -1,6 +1,6 @@
 """Local scheduling and ownership for initialization-defined disturbances."""
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
 from dataclasses import replace
 from threading import Lock
 from types import MappingProxyType
@@ -932,6 +932,14 @@ class DisturbanceEngine:
             extra["movement_credit"] = (record.rate_remainder_code - 1, record.rate_credit_denominator)
         return {"bookkeeping": extra} if extra else {}
 
+    def standing_field_report(self) -> dict[str, object] | None:
+        """The standing set's record (standing-field-v1): whether the dense layer
+        was kept fixed, the intervals to its fixed point, the residual and the
+        fallback, from the region; None for a world without the mode."""
+        if self._spatial is None or self._spatial.dense is None:
+            return None
+        return self._spatial.dense.standing_report()
+
     def snapshot(self) -> dict[str, object]:
         """Plain data for headless reports or an explicitly requested renderer."""
         return {
@@ -940,39 +948,75 @@ class DisturbanceEngine:
             "boundary": self.initial.boundary,
             "escaped_totals": self.escaped_totals(),
             "nodes": [
-                {
-                    "position": position,
-                    "cost": node.last_cost,
-                    "committed_cost": node.committed_cost,
-                    "arrival_mask": node.arrival_mask,
-                    "delay_counts": node.delay_counts,
-                    "available_tick": node.available_tick,
-                    "waiting_until": None if node.pending is None else node.pending.ready_tick,
-                    "disturbances": [
-                        {
-                            "type": self.initial.disturbances[r.type_index].name,
-                            "values": self.record_values(r),
-                            "channel": r.channel_code - 1,
-                            **self._bookkeeping(r),
-                        }
-                        for r in node.records
-                        if r is not None
-                    ],
-                }
-                for position, node in sorted(self._nodes.items())
+                self._carrier_entry(position, node) for position, node in sorted(self._nodes.items())
             ],
             "transfers": [
-                {
-                    "origin": p.origin,
-                    "target": self.neighbor(p.origin, p.port),
-                    "port": p.port,
-                    "arrival_tick": p.arrival_tick,
-                    "type": self.initial.disturbances[p.record.type_index].name,
-                    "values": self.record_values(p.record),
-                    **self._bookkeeping(p.record),
-                }
+                self._transfer_entry(p)
                 for packets in self._links.values()
                 for p in packets
                 if p is not None
             ],
+        }
+
+    def snapshot_stream(self) -> Iterator[tuple[str, object]]:
+        """`snapshot` as (key, value) pairs in its order, the per-Node lists
+        (`spatial_fields`, `parked`, `nodes`, `transfers`) as iterators over one
+        entry at a time and every other value as `snapshot` holds it, so that a
+        writer can put the snapshot on a stream without holding every Node: in
+        the dense mode the region's Nodes are read one at a time from its arrays
+        (`SpatialEngine.snapshot_nodes`, dense-field-v1), and the peak memory of
+        the final snapshot is the arrays plus one slab's positions and one Node."""
+        spatial = self._spatial
+        if spatial is not None:
+            yield "spatial_fields", (spatial.node_entry(p, n) for p, n in spatial.snapshot_nodes())
+            yield "spatial_baselines", spatial.snapshot_baselines()
+            yield "spatial_transfers", spatial.snapshot_transfers()
+            yield (
+                "parked",
+                (e for p, n in spatial.snapshot_nodes() for e in spatial.parked_entries(p, n)),
+            )
+        yield "tick", self.tick
+        yield "boundary", self.initial.boundary
+        yield "escaped_totals", self.escaped_totals()
+        yield "nodes", (self._carrier_entry(p, n) for p, n in sorted(self._nodes.items()))
+        yield (
+            "transfers",
+            (
+                self._transfer_entry(p)
+                for packets in self._links.values()
+                for p in packets
+                if p is not None
+            ),
+        )
+
+    def _carrier_entry(self, position: Address3, node: DisturbanceNode) -> dict[str, object]:
+        return {
+            "position": position,
+            "cost": node.last_cost,
+            "committed_cost": node.committed_cost,
+            "arrival_mask": node.arrival_mask,
+            "delay_counts": node.delay_counts,
+            "available_tick": node.available_tick,
+            "waiting_until": None if node.pending is None else node.pending.ready_tick,
+            "disturbances": [
+                {
+                    "type": self.initial.disturbances[r.type_index].name,
+                    "values": self.record_values(r),
+                    "channel": r.channel_code - 1,
+                    **self._bookkeeping(r),
+                }
+                for r in node.records
+                if r is not None
+            ],
+        }
+
+    def _transfer_entry(self, p: Packet) -> dict[str, object]:
+        return {
+            "origin": p.origin,
+            "target": self.neighbor(p.origin, p.port),
+            "port": p.port,
+            "arrival_tick": p.arrival_tick,
+            "type": self.initial.disturbances[p.record.type_index].name,
+            "values": self.record_values(p.record),
+            **self._bookkeeping(p.record),
         }

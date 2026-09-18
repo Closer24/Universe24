@@ -133,6 +133,18 @@ def _phase_value(value: object, label: str, phase_bits: int) -> int:
     return value
 
 
+def _standing_field(value: object, ticks: int) -> int:
+    """The standing set by a formula (standing-field-v1): `true` steps the dense
+    layer to its fixed point within the world's ticks, a positive integer within
+    that many intervals, `false` or absent leaves the layer stepping every
+    interval."""
+    if value is False:
+        return 0
+    if value is True:
+        return ticks
+    return _integer(value, "standing_field", 1)
+
+
 def _boolean(value: object, label: str) -> bool:
     if type(value) is not bool:
         raise ValueError(f"{label} must be a boolean")
@@ -2680,6 +2692,7 @@ def parse_initial_state(document: object) -> InitialState:
             "ray_delay",
             "focus",
             "dense_field",
+            "standing_field",
             "ray_phase_per_tick",
             "K",
             "wait_per_quantum",
@@ -2800,6 +2813,9 @@ def parse_initial_state(document: object) -> InitialState:
         wait_per_quantum=wait,
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
+        standing_field=_standing_field(
+            obj.get("standing_field", False), _integer(obj["ticks"], "ticks", 0)
+        ),
         ray_phase_per_tick=False,
         detectors=_detectors(obj.get("detectors", []), fields, spatial),
         return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
@@ -2819,6 +2835,10 @@ def parse_initial_state(document: object) -> InitialState:
             "dense_field requires a family with a shadow set on a board of ray fields, no "
             "local conservation audit and no polarization (dense-field-v1 under bit-law-v1)"
         )
+    if initial.standing_field and not initial.dense_field:
+        # The standing set is the dense layer's (standing-field-v1), checked once
+        # the layer's default is decided.
+        raise ValueError("standing_field requires the dense mode (standing-field-v1)")
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")
     if any(definition.rays for definition in initial.spatial_fields):
