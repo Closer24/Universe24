@@ -192,6 +192,24 @@ states "exactly" and means integer equality at every tick.
   with the other side's setting by less than 3 standard errors
   (no-signalling; a larger shift is a fail whatever S is), and every pair
   with a return must be counted unpaired, not dropped.
+- **Restated under the law of the bit (model owner, 2026-09-18; Highlights
+  5.4, points 6, 10, 14 and "The price").** The pair is two things of one
+  birth event, each carrying the source clock's phase; things move whole on
+  their lines, so the arms need no spreading family and the wait on feature
+  12 above is void. There is no draw: a mark meets a 0 or a 1, and what it
+  meets was decided at birth and along the one path; a mark that misses a
+  thing (its declared table, one arrival in d) returns it on its own steps to
+  the birth event, where the inverse split sends its value along the
+  partner's line at one Link per interval. Each outcome therefore depends
+  only on the local setting and the arriving thing, and the pairs counted are
+  a fair sample because the table reads nothing of the ray. The prediction
+  is S ≤ 2 for spacelike settings, without qualification: the model's
+  declared limit. The criterion above stands with "draw" read as "table";
+  a value above 2 + 3σ_S in this geometry contradicts the law and stops the
+  register's Bell entries until understood. `return_mode` is retired: the
+  return is the missed thing walking back its steps. The splitters, phase
+  plates and recombiners are things with declared tables (point 22). Waits
+  for features 15 to 17.
 - **Status.** planned; waits for feature 12, field spreading (Highlights
   3.5, 2026-09-17): the pair's light rays are field content, spreading by
   the split table of their family and combining by phase where they meet,
@@ -237,6 +255,19 @@ states "exactly" and means integer equality at every tick.
   another run), or a marginal that moves with the other side's setting
   (signalling: the table as declared is not admissible against physics), or
   an inexact meeting.
+- **Restated under the law of the bit (model owner, 2026-09-18).** The
+  model's own prediction in this geometry is the same as A2's: S ≤ 2, the
+  declared limit. What line 2 of hypothesis 11 described is not a claim of
+  the model but of a table: when Bob's path is longer than the round trip
+  through Alice's mark (128 intervals), the value Alice's missed thing
+  carries back through the birth event reaches Bob's line while Bob's thing
+  is still on it, and the two meet as things meet, by a declared table (point
+  4); only such a declared joint table could give more than 2, and the model
+  does not supply one. The output-clock delay on Bob's line is retired (point
+  21: every ray moves one Link per interval); the delay is a longer path, at
+  least 129 Links more on Bob's arm. A3 therefore tests a declared table, not
+  the law, and runs only if the owner declares one; the criterion stands
+  with "draw" read as "table". Waits for features 15 to 17.
 - **Status.** planned.
 
 ### A4. Single-Detector PASS statistics against the declared setting
@@ -272,6 +303,22 @@ states "exactly" and means integer equality at every tick.
   99.9 percent quantile for 57 degrees of freedom; the replay's click
   sequence equals the run's bit for bit; initial = current + escaped +
   annulled at every tick. Fail: any one.
+- **Restated under the law of the bit (model owner, 2026-09-18; Highlights
+  5.4, points 6 and 14).** There is no draw. A thing that arrives at a mark
+  is absorbed and counted; a mark of setting n/d misses by a declared table,
+  one arrival in d returned on its steps, deterministic, so the click count
+  over M arrivals is exactly ⌊M·n/d⌋ up to the table's phase, not a binomial
+  variable, and two runs of one world are byte-identical. The binomial
+  criterion of the Born rule below therefore no longer applies to the
+  counts; what A4 tests under the law is (i) never a click on both sides of
+  a splitter for one quantum (a thing is whole, one path), (ii) the counted
+  fraction equal to the setting exactly, (iii) independence of two marks
+  (their tables run separately). The binomial statistics of nature, if they
+  are to come from the model, must come from the histories of the arrivals
+  (their births and paths), which this run's regular source does not vary;
+  a run with a source of varied phase and timing is the test of that.
+  `return_mode` annul is retired; a returned thing walks back to its birth
+  event. Waits for features 15 to 17.
 - **Status.** planned.
 
 ### A5. Electron-electron repulsion through released fields
@@ -1213,6 +1260,21 @@ states "exactly" and means integer equality at every tick.
   are exact component by component, and the electron's energy never exceeds
   782 keV; no proton group ever fires. Fail: any one; a survival curve that
   is not memoryless is a fail of the draw as the decay against nature.
+- **Restated under the law of the bit (model owner, 2026-09-18; Highlights
+  5.4, points 14 and 20).** The decay draw is retired: a decay is a declared
+  condition on the group's own state (its content, its phase pattern, the
+  number of its periods), a table like every meeting of things, and its
+  outputs are things. A population of identical groups with identical
+  histories then decays at one moment, not exponentially; the exponential
+  survival of nature, if the model gives it, must come from the variety of
+  the groups' states and phases at birth and of what their shadows meet.
+  What A9 tests under the law: (i) the conversion fires when and only when
+  the declared condition is met, with charge, amount and momentum exact;
+  (ii) the survival curve of 4096 groups born with varied phases and
+  contents (a declared spread), read against the exponential; (iii) the
+  proton and the bound neutron never meet their condition. The half-life
+  formula above is void; the run's settings n/d become the table's
+  condition. Waits for features 15 to 17 and the owner's table.
 - **Status.** planned.
 
 ### A10. The mass ladder against the known spectrum

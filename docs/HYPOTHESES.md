@@ -425,6 +425,25 @@ ray, holds for a ray carrying no bit only, so the price of Highlights 5.4
 this rule by this hypothesis and experiment A13 before it is quoted again;
 lines 1 to 3 stand as recorded until then.
 
+Restated under the law of the bit (model owner, 2026-09-18; Highlights 5.4):
+there is no draw. A mark meets a 0 or a 1, decided at the ray's birth and
+along its one path; a mark that misses a thing returns it by its declared
+table, one arrival in d, on its own steps to the birth event, where the
+inverse split carries its value along the partner's line at one Link per
+interval. Line 1 therefore reads: each outcome depends only on the local
+setting and the arriving thing, the counted pairs are a fair sample because
+the table reads nothing, and S ≤ 2 for spacelike settings, without
+qualification: the model's declared limit, in every geometry. Line 2 is not
+a prediction of the model: a value carried back can meet the partner's thing
+on a longer arm, and what that meeting gives is a declared table of things
+meeting (point 4), which the model does not supply; A3 tests a table if one
+is declared. Line 3 is void: nothing reads the ray at a mark and nothing is
+drawn, so there is no detection loophole to declare and no shared sequence.
+The three outcomes above reduce to two: at most 2 in the symmetric geometry
+(the model's limit, stated and kept) or above 2 there (the law is wrong
+somewhere, to be understood before anything else). A2 runs after features
+15 to 17.
+
 ## 12. One mass ladder, and the composite spectrum from binding
 
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.4) a rest mass
