@@ -83,7 +83,7 @@ Feature tests of issue #169 join this table as they land.
 
 Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the sampling profile and the lottery capture are gone with `core/sampling_contract.py` (their two tests deleted), the `ray_hold` second clock and the `ray_delay` / `ray_phase_per_tick` world keys are deleted (unknown keys), so the direct-caller case has two entries (`absorb`, `routing`) and the clock case three.
 
-`test_native_ray_coupling.py` uses the canonical
+`test_native_ray_coupling.py` (deleted on 2026-09-18 with the record-as-owner program) used the canonical
 finite residence input (`examples/generic-ray-coupling/finite-residence.json`, deleted on 2026-09-18 with the record-as-owner program).
 Two funded axial rays of amount five arrive with phase zero at tick one; after
 the next two intervals both are resident with `(phase, delay)` equal to `(1,1)`
@@ -119,7 +119,7 @@ explicit-zero and field-fallback cases, per-field threshold captures that
 draw nothing, whole negative threshold rays with insufficient/exact stock, delayed-owner
 rejection before stale commits, immutable carrier routing/unrelated fields,
 expired emission metadata and conflicting momentum or unsupported response
-bindings. `test_kerengonen.py` retains the actual recoil configuration through
+bindings. `test_kerengonen.py` (deleted on 2026-09-18 with the record-as-owner program) retained the actual recoil configuration through
 the ordinary runner identity test. Coherence work is quadratic in the configured
 local phase/ray count; it is bounded relative to world size for fixed capacities,
 not a claim of linear host work.
@@ -152,7 +152,7 @@ integration layer on the same day. The dated results stay in
 [validation](VALIDATION.md).
 
 ## Integer Node execution
-`test_node_rule_contract.py` checks six-record frozen permutations, generic vector
+`test_node_rule_contract.py` (deleted on 2026-09-18 with the record-as-owner program) checked six-record frozen permutations, generic vector
 widths, explicit fired-rule duration, nonadditive policy rejection and independent
 arrival presence. `test_node_conservation.py` checks complete-owner readouts and
 rejects nonlinear merge drift (13 becomes 25), unequal momentum, overflow and
@@ -312,7 +312,7 @@ not establish those laws for arbitrary configured disturbances.
 `test_spatial_transport.py` checks independent signed scalar/vector partitions,
 octant signs, bounded phases, odd weights and overflow rejection.
 
-`test_spatial_coupling.py` checks all signed rotation axes, explicit noncommuting
+`test_spatial_coupling.py` (deleted on 2026-09-18 with the record-as-owner program) checked all signed rotation axes, explicit noncommuting
 axis order, carried fractions, exact carrier norm, equal-and-opposite field
 reaction, pre-emission local samples, frozen delayed proposals, reaction
 overflow atomicity, field/type renaming, scalar flux and headless execution.
@@ -1545,8 +1545,8 @@ world (i)'s lamps hold six quanta each (real initial 12, current 4, absorbed
 `seed` on a mark is rejected. In `tests/test_ray_momentum_turn.py` the recoil
 shadow waits at (10,4,10) once its steps are spent and nothing of f escapes;
 in `tests/test_plan_reuse.py` a Node holding a trace reuses its plan (13
-evaluations, 20 hits); in `tests/test_kerengonen.py` the dissolving moving
-particle recoils from its own emissions and walks back to -2.
+evaluations, 20 hits); in `tests/test_kerengonen.py` (deleted on 2026-09-18) the dissolving moving
+particle recoiled from its own emissions and walked back to -2.
 
 ## The return is a field
 
@@ -3935,7 +3935,7 @@ the local audit reads: after tick 3 the pair of 3 passed C on +X carrying
 (0,-1,0), the eighth, and the pair of 11 passed on +Z carrying (0,0,1), the
 ninth; the world's momentum (3, 7, 11), the lamps never restored, no inverse
 split, the counter at nine, the marked world equal to the control through
-tick 2); the four cases of `tests/test_kerengonen.py` pass as pinned. A
+tick 2); the four cases of `tests/test_kerengonen.py` passed as pinned (the module deleted on 2026-09-18). A
 merged thing above its family's K and N bound is the decay table's business
 (point 20), so `validate_rays` leaves it to that. The case `a_and_b` of
 `tests/test_ray_layers.py` was deleted on 2026-09-18: a turned b ray and the
