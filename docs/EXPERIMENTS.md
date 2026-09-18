@@ -525,7 +525,8 @@ states "exactly" and means integer equality at every tick.
   this entry measures the force between two static sources directly.
 - **Features.** 7b, 12, 12b (on 1, 7, 9, 10).
 - **Run.** Two external bodies at rest (`external-body-v1`, Highlights
-  3.19): body A of a family of the proton's charge (+3 per quantum), body
+  3.19): body A of a family of the proton's charge (+3, the body's whole
+  charge; charge-per-thing-v1, 2026-09-18), body
   B of the proton's charge for the like-charge series and of the electron's
   (−3) for the opposite-charge series, each of amount 2^28 radiating its
   light on all six headings every interval by `release` [1, 65536], 4096

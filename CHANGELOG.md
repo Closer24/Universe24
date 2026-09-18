@@ -3,6 +3,28 @@
 All notable changes to Universe24, the reference implementation of Reality
 Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
+## Unreleased
+
+### Charge per thing (`charge-per-thing-v1`, feature 16g, 2026-09-18)
+
+- The charge of a thing is one declared number of its family, whatever its
+  content (the model owner, Highlights 5.4 point 16 as amended): a family's
+  `charge` and a body's are the charge of one thing, whole, never a charge
+  per quantum. The electricity reading multiplies the shadow's message (its
+  owner's charge over its content, unchanged) by the whole charge of what is
+  pushed; the worked example of point 16 holds exactly, a body of 1000 quanta
+  with charge 1 is pushed by nine units and not nine thousand, and the
+  catalog's electron of 20 does not turn at its first push.
+- The charge readout, the ledger's charge line and the local audit count the
+  whole charge of things: a merged ray of k things carries k times the
+  family's charge (the identities a merge keeps), a record's stock the things
+  it has not yet emitted, a shadow none; every table conserves it (the
+  appended invariant sums the things' charges; a join keeps every identity).
+- `run.json` records `charge_per_thing`; the refusal of a pushed body whose
+  charge was not a multiple of its amount is gone. No example world's
+  declaration changes; the tests whose bodies declared `-amount` to mean -1
+  per quantum re-declare it ([migration](docs/MIGRATION.md#charge-per-thing-on-2026-09-18-charge-per-thing-v1)).
+
 ## 0.3.1 - 2026-09-15
 
 Concept DOI 10.5281/zenodo.22738746 (the version DOI is listed on the Zenodo

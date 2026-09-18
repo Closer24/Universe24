@@ -3941,3 +3941,84 @@ merged thing above its family's K and N bound is the decay table's business
 `tests/test_ray_layers.py` was deleted on 2026-09-18: a turned b ray and the
 c ray are given one lane at the meeting Node, two real rays of different
 families with no table naming both, which no departure holds; `a_only` stands.
+
+## Charge per thing
+
+`tests/test_charge_per_thing.py` is the isolated test of `charge-per-thing-v1`
+([charge per thing](SPATIAL_FIELDS.md#charge-per-thing-charge-per-thing-v1);
+Highlights 5.4 point 16 as amended by the model owner on 2026-09-18, feature
+16g), pinned here on 2026-09-18 before its first run, as Highlights 5.5
+requires. The boards are those of `tests/test_bit_law.py` (open 10 x 5 x 5,
+`link_ticks` 1, costs 1, the six Port headings, `wait_per_quantum` 0) and a
+board of its own for the worked example. Written before the first run, all of
+it computed from the rules:
+
+- (a) the worked example of point 16: two families, `e` of charge -1 and `p`
+  of charge +1, each with the full release, and a lamp of each, of 32 and 64
+  quanta (things 1 and 2), the tables of attraction (-1) reading the charge;
+  the owner table reads thing 1 as content 32 and charge -1 and thing 2 as
+  content 64 and charge 1, D 64. The proton, read by the electron's shadow of
+  32 arriving on +X, takes -1 x 32 x (+X) x (-1 / 32) x (+1) = (1, 0, 0), the
+  electron, read by the proton's shadow of 64 arriving on -X, -1 x 64 x (-X)
+  x (1 / 64) x (-1) = (-1, 0, 0), equal and opposite; under gravity
+  (-2048, 0, 0) and (2048, 0, 0). The same at 256 and 1024 quanta (where the
+  per-quantum reading gave the proton four times the electron's push). A
+  shadow of 1 of the electron pushes the proton 1 / 32 of a quantum: the
+  remainder (D / 32, 0, 0), and 32 such shadows are one quantum with the
+  remainder zero.
+- (b) A, a body of 81 with the charge -81 (its message -1 per quantum of
+  shadow), and B, a body of 1000 quanta with the whole charge 1 under
+  `{"m": 1}` read by charge, A's shadow of 9 fresh at (1,2,2) on +X: `push_of`
+  gives (-9, 0, 0) with no remainder; in the world B holds (-9, 0, 0) after
+  ticks 1 and 2 (the per-quantum reading's whole-charge measurement was 9000,
+  faster than a ray), the share turned back carries (9, 0, 0), fresh at B's
+  Node after tick 1 and at (1,2,2) with one step after tick 2; both bodies
+  stay where they are through six ticks and never step; every ledger
+  balanced.
+- (c) two things of `m` (charge -1) of 4 and 1 quanta and of owners 1 and 2
+  given one out-lane merge into one ray of 5 with the further owner 2, whose
+  charge is -2 (`thing_charge`, `ray_charge`). A table `join` (2 to 1, the sum
+  of the inputs on +X) between lamps `e` and `f` of 2 quanta at (1,2,2) on +X
+  and (5,2,2) on -X: the rule's `output_identities` is ((0, 1),); the appended
+  `charge` invariant is the per-ray readout, -1 on a view of one thing and -2
+  on a view carrying two; the things meet at (3,2,2) after tick 2 and the
+  joined ray of 4, owner 1 with the further owner 2, is at (4,2,2) on +X after
+  tick 3; the charge line reads -2 current and 0 sourced at every tick, the
+  content 4, every ledger balanced.
+- (d) the smallest board of the catalog's electron: `m` of charge -3 with a
+  clock, K 20, a lamp of 20 (thing 1) at (1,2,2) on +X, a second lamp of 20
+  (thing 2) that holds its thing, and a shadow of 1 of thing 2 fresh at
+  (2,3,2) on -Y, the table `{"m": 1}` read by charge. After tick 1 the thing
+  and the shadow are at (2,2,2); in the cycle of tick 2 the push is 1 x 1 x
+  (0,-1,0) x (-3 / 20) x (-3) = 9 / 20 of a quantum: the thing goes on along
+  +X, at (3,2,2) after tick 2 and (4,2,2) after tick 3, its momentum none and
+  its remainder (0, -9, 0) in units of 1 / 20 (the per-quantum reading gave
+  (0, -9, 0) whole; the whole-charge measurement of the cleanup, 180, a turn
+  at the first push); the shadow turns back carrying nothing, at (2,3,2)
+  after tick 2; the world reads -6 at every tick, the thing in its lamp
+  counted whole; every ledger balanced.
+- (e) the parser: the electron world's owner table reads (-3, -3) over
+  contents (20, 20); a body of 1000 quanta with the charge 1 under a table
+  parses (the per-quantum reading refused a charge that was not a multiple of
+  the amount), its charge 1, the owners of `m` (1, 3, 4) with charges
+  (-1, -81, 1) and contents (4, 81, 1000); a charge that is not an integer is
+  refused naming the external body charge; the runner records
+  `charge_per_thing` as `charge-per-thing-v1`, the electron world's charge
+  line -6 at both ticks, conserved at every completed tick; a world with no
+  record and no thing reads 0.
+
+Re-pinned the same day under the decision, each with a dated reason:
+`tests/test_wave_ray_families.py` (c) (two things of +1 and -1 read 0, the
+invariant on the views 0, `ray_charge` of two things -2, the readout {1, -1}),
+`tests/test_lanes.py` (h) (the merged thing of 5 quanta and two owners reads
+-2), `tests/test_nature_catalog.py` (one thing per family reads its charge,
+the electron world -6, the electron of 20 keeps its heading with the
+remainder (0, -9, 0)), `tests/test_bit_law.py` ((a)'s charge line -1; the
+bodies a table pushes in (b) and (c') declare -10 on 100 quanta, and (c')'s
+own shadow is two quanta, so that the message times the charge is the one
+unit per quantum these worlds pinned), `tests/test_return_field.py` and
+`tests/test_shadow_wait.py` (the pushed bodies of 1000 declare -1, those of
+729 and 1000 in (c) -27), `tests/test_perf_arrays.py` (the family and the
+bodies declare -4096 on 2^24 quanta: every pin holds), and
+`tests/test_loop_binding.py` reads lines without identities (a Born product
+that took the whole content carries the other thing's identity).

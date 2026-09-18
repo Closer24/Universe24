@@ -1212,9 +1212,10 @@ def _with_owner_contents(initial: InitialState) -> InitialState:
     Highlights 5.4 point 18): what a shadow carries as its owner's content, read
     by the owner's id; a type's default stock of the family's field, a body's
     amount, 1 for an owner known from a profile alone, with the owner's whole
-    charge (the family's charge per quantum times that stock for a type, the
-    declared charge of a body); and D, the least common
-    multiple of every owner's content over the world, the unit of the
+    charge (the family's charge for a thing of a type, the declared charge of a
+    body: charge-per-thing-v1, one declared number whatever the content; over
+    the content it is the message the owner's shadows carry); and D, the least
+    common multiple of every owner's content over the world, the unit of the
     electricity reading's remainder, the same on every family."""
     contents: list[tuple[int, ...]] = []
     charges: list[tuple[int, ...]] = []
@@ -1230,11 +1231,12 @@ def _with_owner_contents(initial: InitialState) -> InitialState:
                 stock = abs(unpack(kind.defaults[definition.field])[0])
                 if stock > by_owner.get(kind.thing, 0):
                     by_owner[kind.thing] = stock
-                    charge_of[kind.thing] = checked_work(definition.charge * stock)
+                    # A thing of a type carries the family's charge, whole
+                    # (charge-per-thing-v1), whatever its content.
+                    charge_of[kind.thing] = definition.charge
         for body in initial.external_bodies:
             # A body's declared charge is its whole charge (a star, a proton of
-            # +3 in thirds), over its amount the charge per quantum its shadows
-            # carry.
+            # +3 in thirds), over its amount the message its shadows carry.
             if body.family == index and body.amount >= by_owner.get(body.thing, 0):
                 by_owner[body.thing] = body.amount
                 charge_of[body.thing] = body.charge
@@ -1410,12 +1412,14 @@ def _spatial_fields(
             if "self_exclusion" in obj:
                 raise ValueError(RECORD_PROGRAM_RETIRED.format(key="self_exclusion"))
             # Every ray is a wave ray (wave-ray-family-v1) on the world's one phase
-            # circle of N steps (the cleanup of 2026-09-18): a family declares its
-            # charge per quantum and no width.
+            # circle of N steps (the cleanup of 2026-09-18): a family declares the
+            # charge of one of its things, whole, whatever its content
+            # (charge-per-thing-v1, Highlights 5.4 point 16 as amended), and no
+            # width.
             if "phase_bits" in obj:
                 raise ValueError(ONE_N)
             phase_bits = world_bits
-            charge = _integer(obj.get("charge", 0), "spatial field charge")
+            charge = _integer(obj.get("charge", 0), "spatial field charge (the charge of a thing)")
             if "polarization_bits" in obj:
                 # Polarization (ray-polarization-v1): the width of the family's
                 # polarization circle, 2^polarization_bits steps per half turn; the
@@ -2269,10 +2273,11 @@ def _ray_interactions(
             rule = replace(rule, decay=(kind, _integer(value, f"decay.{kind}", bound)))
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
-        # wave-ray-family-v1: charge x amount summed over the participants is an
-        # invariant of every declared ray interaction, checked like the declared ones.
-        # A meeting with outputs carries it as a per-ray readout summed over its
-        # inputs and over its outputs, appended by _ray_meeting after the same check.
+        # wave-ray-family-v1: the charge of the things summed over the participants
+        # (charge-per-thing-v1) is an invariant of every declared ray interaction,
+        # checked like the declared ones. A meeting with outputs carries it as a
+        # per-ray readout summed over its inputs and over its outputs, appended by
+        # _ray_meeting after the same check.
         if not rule.outputs:
             if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
                 raise ValueError(
@@ -2325,8 +2330,12 @@ def _ray_meeting(
     # each output carries.
     names_polarization = False
     output_polarization: list[tuple[int, int]] = []
-    # bit-law-v1: the source input of each output, whose identity it carries.
+    # bit-law-v1: the source input of each output, whose identity it carries;
+    # charge-per-thing-v1: the inputs whose identities it carries, its source
+    # alone or every input it sums (a join keeps both, point 25), whose charges
+    # sum to the output's charge view.
     output_sources: list[int] = []
+    output_identities: list[tuple[int, ...]] = []
     # lanes-v1 (Highlights 5.4 point 25): a table gives its outputs distinct
     # lanes, so no two outputs leave on one heading: the same Port, or the same
     # or the reversed heading of the same input.
@@ -2400,6 +2409,15 @@ def _ray_meeting(
                 amount_expression = ref("amount", of_index)
                 amount_sources[position] = (of_index,)
             assignments.append(Assignment(position, 0, parser.parse(amount_expression, 1)))
+        # The identities the output carries (charge-per-thing-v1): every input
+        # when it is the plain sum of the inputs (a join, the merge of point 25:
+        # the owners kept as a set, the charges added), its source input
+        # otherwise (a share of a split carries the identity its `input` names,
+        # its content the steering's; a literal amount is a thing of its source).
+        joined = position not in tables and position not in rests and type(amount) is not int
+        if joined:
+            joined = _object(amount, "output.amount", {"of"}, {"of"})["of"] == "sum"
+        output_identities.append(every_input if joined else (source,))
         heading = item["heading"]
         if heading == "same":
             heading_expression: object = ref("heading", source)
@@ -2445,9 +2463,18 @@ def _ray_meeting(
         # integer, and a shadow delays nothing.
         delay = _integer(item.get("delay", 0), "output.delay", 0)
         assignments.append(Assignment(position, 4, parser.parse(delay, 1)))
-        # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
+        # wave-ray-family-v1: an output is a ray of its field; its charge view
+        # (charge-per-thing-v1) is the charge of the things whose identities it
+        # carries, the sum of those inputs' charge views, or the field's charge
+        # (0, by the check below) for a literal amount that takes no input.
         assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
-        assignments.append(Assignment(position, 6, parser.parse(definition.charge, 1)))
+        if type(item["amount"]) is int:
+            charge_expression: object = definition.charge
+        else:
+            charge_expression = ref("charge", output_identities[position][0])
+            for named in output_identities[position][1:]:
+                charge_expression = {"op": "add", "args": [charge_expression, ref("charge", named)]}
+        assignments.append(Assignment(position, 6, parser.parse(charge_expression, 1)))
         # ray-polarization-v1: the output's polarization, its source input's by
         # default (`"same"`), `"none"`, a step of its field's circle, or input i's:
         # (0, i) reads input i's, (1, v) is the value v; no assignment, so a world
@@ -2470,9 +2497,11 @@ def _ray_meeting(
     if any(target not in tables for target in rests.values()):
         raise ValueError("rest_of requires an output split by a table")
     # ray-event-audit-v1: a meeting cannot change the total charge. Every output
-    # carries its family's charge per quantum on the amount it takes from its
-    # source inputs, so that charge must equal every source family's; a literal
-    # amount takes nothing from an input and requires an uncharged family.
+    # is a thing of its family with its family's charge (charge-per-thing-v1),
+    # and it takes its content from its source inputs, so that charge must equal
+    # every source family's (a thing keeps its charge through a table); a
+    # literal amount takes nothing from an input and requires an uncharged
+    # family. The count of things per family is the appended invariant's.
     for position, kind in enumerate(outputs):
         sources = amount_sources.get(rests.get(position, position), ())
         charges = {spatial[k].charge for i in sources for k in selections[i]}
@@ -2510,14 +2539,13 @@ def _ray_meeting(
             "the charge invariant is declared for every ray interaction; "
             "do not declare another invariant named charge"
         )
-    # wave-ray-family-v1: charge x amount of one ray, summed over the inputs and over
-    # the outputs, is an invariant of every meeting.
+    # wave-ray-family-v1: the charge of one ray, the whole charge of the thing it
+    # is (charge-per-thing-v1), summed over the inputs and over the outputs, is
+    # an invariant of every meeting: every table conserves the charge of things.
     invariants.append(
         Invariant(
             CHARGE_INVARIANT,
-            _Expressions(RAY_PROPERTIES, every_field).parse(
-                {"op": "mul", "args": [{"field": "charge"}, {"field": "amount"}]}
-            ),
+            _Expressions(RAY_PROPERTIES, every_field).parse({"field": "charge"}),
         )
     )
     when = parser.parse(obj["when"], 1) if "when" in obj else None
@@ -2534,6 +2562,7 @@ def _ray_meeting(
         polarization_declared=names_polarization,
         output_polarization=tuple(output_polarization),
         output_sources=tuple(output_sources),
+        output_identities=tuple(output_identities),
     )
 
 

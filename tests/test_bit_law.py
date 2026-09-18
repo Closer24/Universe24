@@ -175,10 +175,14 @@ def shadow(position, heading, amount=1, owner=1, sign=-1, steps=None):
 
 
 def body(position, thing=None, table=None, amount=100, charge=None):
-    """A body of `amount` quanta of `m` with the whole charge -amount, the
-    family's -1 per quantum (clock-readings-v1: its shadows carry its whole
-    charge and its content, and the electricity reading divides the one by the
-    other), or the whole `charge` given."""
+    """A body of `amount` quanta of `m` with the whole charge -amount by default,
+    so that its shadows' message, its charge over its content (clock-readings-v1,
+    point 18), is -1 per quantum of shadow, or the whole `charge` given. A body
+    declares its own charge, whole, and multiplies an electric message by it
+    (charge-per-thing-v1, 2026-09-18): a body a table pushes gives `charge`, the
+    worlds here -10 on 100 quanta, so that between two such bodies the message
+    (-1/10) times the charge (-10) is the one unit per quantum of shadow they
+    pinned under the per-quantum reading."""
     entry = {
         "position": list(position),
         "family": "m",
@@ -397,12 +401,14 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         "returned": (1, 0, 0),
         "spent": (0, 0, 0),
     }
+    # Re-pinned 2026-09-18 (charge-per-thing-v1): the thing of 2 is one thing of
+    # the family's charge -1, whole, held by its lamp and then sunk by the body.
     assert line(ledger, "charge", "m") == {
-        "initial": -2,
+        "initial": -1,
         "sourced": 0,
         "current": 0,
         "escaped": 0,
-        "absorbed": -2,
+        "absorbed": -1,
         "absorbed_by_marks": 0,
         "returned": 0,
     }
@@ -425,7 +431,10 @@ def test_two_bodies_push_each_other_and_take_back_the_recoil():
     grows by one every tick, the push and the receipt in turn."""
     doc = document(
         ticks=6,
-        bodies=[body((2, 2, 2), 3, table={"m": 1}), body((3, 2, 2), 4, table={"m": 1})],
+        bodies=[
+            body((2, 2, 2), 3, table={"m": 1}, charge=-10),
+            body((3, 2, 2), 4, table={"m": 1}, charge=-10),
+        ],
         shadows=[shadow((2, 2, 2), X, owner=3, steps=0), shadow((3, 2, 2), MINUS_X, owner=4, steps=0)],
     )
     result = run(doc, 6)
@@ -504,33 +513,38 @@ def test_home_is_the_push_and_its_return_of_zero_steps_booked_and_cancelling():
     flipped at the same Node, hands -push back in the same cycle, before any step
     decision; the two halves are booked on the cycle record (`home_pushes`) and
     sum to zero, so the thing is what it was and the shadow is absorbed at home
-    as before. The world of (c): the push of the lamp's own shadow of 1 on -X,
-    read by charge (the owner's whole charge -2 over its content 2, the thing's
-    charge -1, the table's sign 1), is (-1, 0, 0); the return (1, 0, 0). The
-    world of (b): each body's own shadow, home at the even ticks, is pushed by
-    the body's table and returned in the same interval, (1,0,0) and (-1,0,0) at
-    body 3, the opposite at body 4, on the reception record (`home_pushes`),
-    and the bodies' momenta are what (b) pins."""
+    as before. The world of (c): the push of the lamp's own shadow of 2 on -X,
+    read by charge (the owner's charge -1, whole, over its content 2, the
+    thing's charge -1, the table's sign 1; charge-per-thing-v1, 2026-09-18: a
+    shadow of 1 read half a quantum before, so the shadow is two quanta here),
+    is (-1, 0, 0); the return (1, 0, 0). The world of (b): each body's own
+    shadow, home at the even ticks, is pushed by the body's table and returned
+    in the same interval, (1,0,0) and (-1,0,0) at body 3, the opposite at body
+    4, on the reception record (`home_pushes`), and the bodies' momenta are
+    what (b) pins."""
     kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
     doc = document(
         ticks=5,
         types=[kind, RING],
         emissions=[emission],
         seeds=[seed],
-        shadows=[shadow((3, 2, 2), MINUS_X, owner=1, steps=0)],
+        shadows=[shadow((3, 2, 2), MINUS_X, amount=2, owner=1, steps=0)],
     )
     result = run(doc, 5)
     cycles = [e for e in result["events"] if e["event"] == "spatial_cycle" and e.get("home_pushes")]
     assert [(e["tick"], tuple(e["position"]), e["home_pushes"]) for e in cycles] == [
         (1, (2, 2, 2), {"m": {"push": (-1, 0, 0), "return": (1, 0, 0)}})
     ]
-    assert cycles[0]["returned"] == {"m": {"amount": 1, "momentum": (0, 0, 0)}}
+    assert cycles[0]["returned"] == {"m": {"amount": 2, "momentum": (0, 0, 0)}}
     assert all(r == {1: [2, 0, 0]} for r in result["momentum"])
     assert not {"ray_push", "shadow_home"} & set(kinds(result["events"]))
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     pair = document(
         ticks=6,
-        bodies=[body((2, 2, 2), 3, table={"m": 1}), body((3, 2, 2), 4, table={"m": 1})],
+        bodies=[
+            body((2, 2, 2), 3, table={"m": 1}, charge=-10),
+            body((3, 2, 2), 4, table={"m": 1}, charge=-10),
+        ],
         shadows=[shadow((2, 2, 2), X, owner=3, steps=0), shadow((3, 2, 2), MINUS_X, owner=4, steps=0)],
     )
     result = run(pair, 6)

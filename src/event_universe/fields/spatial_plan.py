@@ -42,6 +42,7 @@ from event_universe.core.spatial_state import (
     parked_unit,
     phase_of_sum,
     pushed_ray,
+    ray_charge,
     ray_layers,
     ray_line,
     ray_momentum,
@@ -712,6 +713,9 @@ class SpatialLaw:
         # The content the decays moved between families, per field
         # (clock-readings-v1, point 20: a group breaks by its declared table).
         converted: list[tuple[int, int]] = []
+        # What the meetings did to the charge of the things, per spatial field
+        # (charge-per-thing-v1): the charge readout after the tables less before.
+        charge_delta = [0] * len(self.definitions)
         # The departures' account (clock-readings-v1): the things' phase steps
         # this cycle (point 11) and the momentum they spent on their steps.
         phase_steps = 0
@@ -748,6 +752,13 @@ class SpatialLaw:
                     moved = checked_work(ray_stock(met[index]) - ray_stock(tuple(resident_rays[index])))
                     if moved:
                         converted.append((definition.field, moved))
+                    # The charge of the things after the tables less before
+                    # (charge-per-thing-v1): a thing moved between families by a
+                    # decay, or a table that changed the count of things.
+                    charge_delta[index] = checked_work(
+                        ray_charge(met[index], definition)
+                        - ray_charge(tuple(resident_rays[index]), definition)
+                    )
             resident_rays = [list(bundle) for bundle in met]
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
@@ -1133,4 +1144,5 @@ class SpatialLaw:
             ray_pushes=tuple(turns),
             spent_delta=tuple(tuple(v) for v in spent) if any(any(v) for v in spent) else (),
             phase_steps=phase_steps,
+            charge_delta=tuple(charge_delta) if any(charge_delta) else (),
         )

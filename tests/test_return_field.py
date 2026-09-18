@@ -76,7 +76,10 @@ def test_the_inverted_share_leaves_reversed_mixes_and_reaches_its_owner():
     heading +X, the body B of 1000 with the table {"m": 1} at (2,2,2)."""
     doc = document(
         ticks=5,
-        bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
+        bodies=[
+            body((0, 2, 2), 3, amount=81),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-1),
+        ],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
     )
     result = run(doc, 5)
@@ -147,8 +150,8 @@ def test_a_returning_share_pushes_a_third_thing_with_the_opposite_sign():
         ticks=4,
         bodies=[
             body((0, 2, 2), 3, amount=81),
-            body((1, 2, 2), 5, table={"m": 1}, amount=1000),
-            body((2, 2, 2), 4, table={"m": 1}, amount=1000),
+            body((1, 2, 2), 5, table={"m": 1}, amount=1000, charge=-1),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-1),
         ],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=0)],
     )
@@ -175,8 +178,11 @@ def test_a_returning_share_reaching_its_owner_is_absorbed_with_no_push():
     doc = document(
         ticks=4,
         bodies=[
-            body((1, 2, 2), 3, table={"m": 1}, amount=729),
-            body((2, 2, 2), 4, table={"m": 1}, amount=1000),
+            # charge-per-thing-v1 (2026-09-18): the owner's message is its charge
+            # over its content, -27 / 729, and the pushed body multiplies by its
+            # whole charge, -27, the product the one unit per quantum pinned here.
+            body((1, 2, 2), 3, table={"m": 1}, amount=729, charge=-27),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-27),
         ],
         shadows=[shadow((1, 2, 2), X, amount=9, owner=3, steps=0)],
     )
@@ -206,7 +212,10 @@ def test_no_trace_no_wait_and_every_share_moves(tmp_path):
 
     doc = document(
         ticks=5,
-        bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
+        bodies=[
+            body((0, 2, 2), 3, amount=81),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-1),
+        ],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
     )
     result = run(doc, 5)
@@ -312,15 +321,18 @@ def test_the_dense_layer_agrees_with_the_engine():
     their momentum in its arrays (feature 16d, part 2)."""
     a = document(
         ticks=4,
-        bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
+        bodies=[
+            body((0, 2, 2), 3, amount=81),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-1),
+        ],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
     )
     b = document(
         ticks=4,
         bodies=[
             body((0, 2, 2), 3, amount=81),
-            body((1, 2, 2), 5, table={"m": 1}, amount=1000),
-            body((2, 2, 2), 4, table={"m": 1}, amount=1000),
+            body((1, 2, 2), 5, table={"m": 1}, amount=1000, charge=-1),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000, charge=-1),
         ],
         shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=0)],
     )
