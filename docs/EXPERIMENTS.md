@@ -1226,6 +1226,51 @@ states "exactly" and means integer equality at every tick.
   of the fill 136 s at a peak of 4.6 GB. So `m256` is the mass whose field
   the clocks at r = 3 to 8 read at all, and the clocks at r = 10 and the
   lines at b = 8 read the tail of the transient or nothing.
+- **Result (1), the clock, `m256` at w = 1** (eight cavities, two worlds
+  per reading, 300 ticks; the rate is the intervals moved over the intervals
+  the thing stayed between its mirrors, the deficit 1 − rate; the standing
+  set was not reached in 300 intervals in any of the four runs, the field of
+  the closed board circulating at the end with a residual of 15 947 to
+  17 224 array cells and 25 741 to 27 910 quanta between consecutive states,
+  20 837 quanta of shadow on the board throughout; every ledger line
+  balanced). Under `amount`: r = 3 (Euclidean 3.16) rate 0.0067, 298 waits,
+  1339 quanta read in 271 push ticks, never left; r = 4 (4.12) 0.0067, 298
+  waits, 629 quanta; r = 5 (5.10, −Y) 0.0133, 296 waits, 391 quanta; r = 5
+  (5.10, −Z) 0.0133, 296 waits, 356 quanta; r = 6 (6.08, −Y) 0.923, one
+  wait, 3 quanta, turned out of the cavity at tick 14; r = 6 (6.08, −Z)
+  0.042, 274 waits, 216 quanta, out at tick 287; r = 8 (8.06) 0.982, one
+  wait, 2 quanta, out at tick 56; r = 10 (10.05) 0.996, one wait, 2 quanta,
+  out at tick 238. Under `amplitude`: the same rates at every cavity but
+  the −Z clock at r = 6 (0.048, 236 waits, 198 quanta, out at tick 249),
+  the frozen clocks reading 1334, 623, 386, 352 quanta. The fits of the
+  deficit through the origin over the eight cavities: `amount` A/r with
+  A = 3.538 (rss 0.900), B/r² with B = 14.38 (rss 1.077); `amplitude`
+  A = 3.535 (rss 0.895), B = 14.37 (rss 1.070); per world, batch a A = 3.66
+  and B = 13.3, batch b A = 3.35 and B = 17.2, under both readings alike.
+  Against GM = 244.5: A/GM = 0.0145 (GR's coefficient is 1 at the GR w;
+  round 6's `amplitude` coefficient at w = 1, halved for a cavity that
+  reads every other interval, is (w/3) 0.537 √(GM)/2 = 1.40, round 5's
+  count (√3 w/2) GM/2 = 106). What came out is a step, not a slope: inside
+  r = 5 the clock is frozen (it reads one to four quanta in every interval
+  it stays, w n > 1, the horizon of section 43 (ix): r_h = 0.93 √(wGM) =
+  14.5 under the count, w · 0.537 √(GM) = 8.4 under the amplitude), and
+  from r = 6 outward it reads two or three whole quanta of the transient's
+  tail in its first 12 to 236 intervals and the first transverse one turns
+  it out of the open cavity; the two readings differ nowhere a clock is
+  frozen (both exceed one unit per interval) and nowhere it is sparse (a
+  single quantum is one unit of amplitude), and by 14 % of the waits at the
+  one cavity that read tens of quanta over hundreds of intervals (274
+  against 236).
+- **Result (2), the redshift, `m256` at w = 1.** Within one world, z =
+  rate(r_far)/rate(r_near) − 1: batch a, 5 → 8 (5.10 → 8.06): 72.8 (a frozen
+  clock against a running one); batch b, 6 → 10 (6.08 → 10.05): 0.079
+  with the −Y clock at 6 and 22.7 with the −Z one; 4 → 6: 137 and 5.3.
+  Against GR's GM(1/r_near − 1/r_far) = 15.9 for 6 → 10 at the GR w,
+  round 6's (w/3) 0.537 √(GM)(1/r₁ − 1/r₂)/2 = 0.091 at w = 1 and round 5's
+  (√3 w/2) GM (1/r₁² − 1/r₂²)/2 = 1.80: the one pair of running clocks,
+  6 → 10, gives 0.079 against the amplitude's 0.091, two whole quanta
+  against three, a coincidence of small integers and not a law; every
+  pair with a frozen clock gives the horizon, not a redshift.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11
