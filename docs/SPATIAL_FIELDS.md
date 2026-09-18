@@ -1447,7 +1447,11 @@ whose spatial fields are all ray fields, without the local conservation audit
 without a ray interaction two of whose participants can be spreading families
 (a coupling on field rays inside the region), one Node worker; the runner's
 `--dense-field` flag is the same switch, and the run record carries
-`dense_field: "dense-field-v1"` only when the mode is on.
+`dense_field: "dense-field-v1"` only when the mode is on. Since
+`return-field-v1` (feature 16d, part 2, 2026-09-18) the arrays carry the flow
+and the momentum of every share, so a returning share is the region's like
+any other, mixed in its own group with its momentum apportioned as
+`spread_content` does ([the return is a field](#the-return-is-a-field-return-field-v1)).
 `test_dense_field.py` ([expectations](TEST_EXPECTATIONS.md#the-dense-mode))
 is the test. Since the performance lane of 2026-09-18 (`perf-arrays-v1`,
 [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18))
@@ -2561,12 +2565,12 @@ behaviour, with no declarable alternative:
   register leaves the engine with the stores it named. The runner's per-tick
   `registers` line is `momentum` (the momentum of every thing per tick, keyed
   by thing id, from its rays and its body).
-- **Performance.** The dense region's arrays hold amounts as int32, phases
-  as int16 and flags as int8; the engine's totals are computed once per tick
+- **Performance.** The dense region's arrays hold amounts and momenta as
+  int32 and phases as int16; the engine's totals are computed once per tick
   per bit and memoized until content moves. Its `ret_*`, `wait_*` and `trace`
-  arrays are dormant since `return-field-v1` (a returning share is the
-  engine's until the dense sign axis lands) and the per-Node snapshot still
-  reads the region's Nodes as Node state.
+  arrays went with the walk back under `return-field-v1` (part 2: the region
+  carries the flow and the momentum of every share in its arrays) and the
+  per-Node snapshot still reads the region's Nodes as Node state.
 
 Identity `node-is-ports-v1`, recorded in `run.json` as `node_is_ports`;
 isolated test `tests/test_node_is_ports.py`
@@ -2729,12 +2733,30 @@ behaviour, with no declarable alternative:
   default, 0 for a fresh one) and the chase of `return-chase-v1` (never
   merged): a Node remembers no departure, no shadow waits, every share on its
   way moves one Link per interval.
-- **The dense region.** Until the dense sign axis lands (part 2 of feature
-  16d), a share that carries momentum or that returns (`outbound` 0), parked
-  or on its way, is the engine's: the region refuses it (`plain_ray`) and the
-  Node holding or receiving it is cycled by the engine; the region's parked
-  block stays the outgoing eighteen per owner (`engine_block`,
-  `region_block`).
+- **The dense region** (part 2 of feature 16d, 2026-09-18). The arrays of
+  the shadow layer (`event_universe/dense_field.py`) carry the flow of every
+  share beside its sign (the axes owner, flow, sign, Port, layer) and the
+  momentum it carries (`arr_mom`, `fly_mom`, `reg_mom`, three integers per
+  cell): a returning share lives in the arrays like any share, mixes in its
+  own group (owner, flow, sign) at every dense Node, and the momentum a group
+  carries goes with its shares over the twelve outputs of the mixing, the
+  whole quanta per heading then the ninths, in proportion to their ninths,
+  exact per axis by the largest remainder with the ties to the lower slot
+  (`DenseField._apportion`, the vectorized `apportion_momentum`); the parked
+  ninths hold their part and a release takes the register's momentum in
+  proportion to what it releases, toward zero, the whole when the register
+  empties (`_release`, the vectorized `momentum_part`); a share that walks
+  off an open board takes its momentum with it, booked on the momentum
+  field's escaped lines. The parked block of a dense Node is the engine's,
+  thirty-six slots per owner cell for cell (`DenseFamily.block`,
+  `set_block`), so the two exchange it as it is when a Node changes hands,
+  and `plain_ray` admits a returning or a momentum-carrying share, parked or
+  on its way. The `ret_*`, `wait_*` and `trace` arrays of node-is-ports-v1
+  are deleted with the rule they served. The identity of the two modes,
+  board, parked shares, ledgers and momenta over four ticks of the worlds
+  (a) and (b), is `tests/test_return_field.py` (e); one dense cycle of a
+  returning share against `spread_content` is the `returning` sub-case of
+  `tests/test_dense_field.py`.
 
 Identity `return-field-v1`, recorded in `run.json` as `return_field`;
 isolated test `tests/test_return_field.py`
