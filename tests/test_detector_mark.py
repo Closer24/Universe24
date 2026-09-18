@@ -38,7 +38,7 @@ HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 PINNED_BITS = (1, 0, 1, 0, 1, 0)
 # Nine arrivals by tick 3: the six of tick 1 and the three merged pairs that turn
 # back to the mark (lanes-v1, 2026-09-18).
-FINAL_TICKET = 9
+FINAL_ARRIVALS = 9
 # Re-pinned on 2026-09-18 with feature 18 (lanes-v1, Highlights 5.4 point 25, the
 # model owner's decision on its open case): a returned ray and the passing ray of
 # the opposite lamp are given one lane at the mark, so they are one real ray with
@@ -251,7 +251,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
         def forbidden(*args):
             pytest.fail("an unmarked Node stepped a counter")
 
-        patched.setattr("event_universe.core.spatial_state.ticket_bit", forbidden)
+        patched.setattr("event_universe.core.spatial_state.table_catch", forbidden)
         control = Simulation(
             parse_initial_state(document(marked=False)),
             observer=lambda event: (
@@ -386,7 +386,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     # lamp on its lane (lanes-v1, 2026-09-18), so no inverse split happens.
     assert splits == []
     node = world._spatial.nodes[CENTER]
-    assert node.detector == initial.detectors[0] and node.detector_ticket == FINAL_TICKET
+    assert node.detector == initial.detectors[0] and node.arrivals == FINAL_ARRIVALS
     # (d) A replay writes the same events and the same run record, and redraws nothing.
     path = tmp_path / "marked.json"
     path.write_text(json.dumps(document()), encoding="utf-8")
@@ -408,7 +408,6 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     ]
     assert first_run["detector_mark"] == DETECTOR_MARK == "detector-mark-v1"
     assert first_run["detector_return"] == "detector-return-v1"
-    assert first_run["sampling_profile"] == "detector-only-v1"
     assert first_run["ray_state"] == "ray-event-state-v1"
     assert first_run["conserved_at_every_completed_tick"] and first_run["final_totals"]["quanta"] == [21]
     # (e) A mark without a setting, a setting outside 0 through 1, a negative seed

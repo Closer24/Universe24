@@ -34,7 +34,7 @@ from .test_loop_binding import document as ring_document
 PLUS_Y = [0, 1, 0]
 
 
-def family(name, charge=0, clock=False, phase_bits=3):
+def family(name, charge=0, clock=False):
     entry = {
         "field": name,
         "baseline": 0,
@@ -44,7 +44,6 @@ def family(name, charge=0, clock=False, phase_bits=3):
         "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": phase_bits,
         "charge": charge,
         "release": [1, 1],
     }
@@ -108,6 +107,7 @@ def document(*, families, lamps, shape, ticks, K, shadows=None, marks=(), rules=
     """A board of open boundary; `lamps` are (kind, emission, seed) triples."""
     doc = {
         "schema_version": 1,
+        "N": 8,
         "model_id": "clock-readings-test-v1",
         "shape": list(shape),
         "boundary": "open",

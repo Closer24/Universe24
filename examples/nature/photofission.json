@@ -210,7 +210,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 3,
       "clock": true
     },
@@ -257,7 +256,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 0,
       "clock": true
     },
@@ -304,7 +302,6 @@
         1,
         1
       ],
-      "phase_bits": 3,
       "charge": 0
     }
   ],
@@ -558,5 +555,6 @@
       ]
     }
   ],
-  "K": 6
+  "K": 6,
+  "N": 8
 }

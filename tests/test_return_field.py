@@ -20,9 +20,14 @@ reading of the definition of a meeting, to be confirmed by the model owner): a
 head-on push is taken exactly once, the share turned back rides the Link with
 the thing it pushed on the same lane, arrives at the next Node through the Port
 the thing arrived by and pushes nothing there; the thing's momentum line shows
-one push and the share carries -dp once. The worlds are those of the law of
-the bit.
+one push and the share carries -dp once; (e) the dense layer (the default
+where admitted) and the engine alone agree on the worlds of (a) and (b) over
+four ticks, board, parked shares, ledgers and momenta (part 2 of the feature:
+the returning shares live in the arrays with their momentum and mix in their
+own group). The worlds are those of the law of the bit.
 """
+
+from copy import deepcopy
 
 from event_universe import Simulation
 from event_universe.core import spatial_state
@@ -89,18 +94,24 @@ def test_the_inverted_share_leaves_reversed_mixes_and_reaches_its_owner():
     # sends 1 back to A and 21 on to B. A receives 2 with (-1, 0, 0); B is
     # pushed (21, 0, 0) by the outgoing 21 and (-4, 0, 0) by the returning 4,
     # which turns back once more carrying nothing; the 21 turns back with
-    # (-21, 0, 0). Tick 5: the same at the next round, A receiving 6 with
-    # (-2, 0, 0), B pushed (-7, 0, 0) net.
+    # (-21, 0, 0). Tick 5: the next round. Re-pinned on 2026-09-18 in the cleanup
+    # (one N for the world, `cleanup-law-v1`): this world declared no width and
+    # ran on one phase value, where the returning share carried no sign; on the
+    # circle of N steps (64, the default) the returning share is the minus, so
+    # at the second round the returning and the outgoing shares of one owner sum
+    # apart at (1,2,2): A receives 3 with (-2, 0, 0) (6 with (-2, 0, 0) on one
+    # phase value) and B is pushed (8, 0, 0) net ((-7, 0, 0) before); the books
+    # close either way.
     assert homes(events, (0, 2, 2)) == [
         (1, {"amount": 36, "momentum": (0, 0, 0)}),
         (3, {"amount": 2, "momentum": (-1, 0, 0)}),
-        (5, {"amount": 6, "momentum": (-2, 0, 0)}),
+        (5, {"amount": 3, "momentum": (-2, 0, 0)}),
     ]
     assert moving_at(result["inventories"][2], (2, 2, 2)) == [
         (MINUS_X, 21, 0, 0, 1, (-21, 0, 0)),
         (MINUS_X, 4, 0, 1, -1, None),
     ]
-    assert [b[1] for b in result["bodies_per_tick"]] == [[9, 0, 0]] * 2 + [[26, 0, 0]] * 2 + [[19, 0, 0]]
+    assert [b[1] for b in result["bodies_per_tick"]] == [[9, 0, 0]] * 2 + [[26, 0, 0]] * 2 + [[34, 0, 0]]
     assert [b[0] for b in result["bodies_per_tick"]] == [[0, 0, 0]] * 2 + [[-1, 0, 0]] * 2 + [[-3, 0, 0]]
     # The books close at every interval with the momentum in flight on the shadows.
     with Simulation(parse_initial_state(doc)) as world:
@@ -282,7 +293,6 @@ def test_a_head_on_push_is_taken_exactly_once():
         "sourced": (0, 0, 0),
         "current": (0, 0, 0),
         "escaped": (0, 0, 0),
-        "annulled": (0, 0, 0),
         "absorbed": (0, 0, 0),
         "absorbed_by_marks": (0, 0, 0),
         "returned": (0, 0, 0),
@@ -294,3 +304,58 @@ def test_a_head_on_push_is_taken_exactly_once():
         for t in range(1, 5):
             world.step()
             assert momentum_in_flight(world) == ([0, 0, 0] if t == 1 else [-2, 0, 0])
+
+
+def test_the_dense_layer_agrees_with_the_engine():
+    """(e): the worlds of (a) and (b) under the engine alone and under the shadow
+    layer (the default where admitted, dense-field-v1): one board, one set of
+    parked shares, one ledger and one momentum on every thing, body and shadow
+    at every tick, four ticks; the region carries the returning shares and
+    their momentum in its arrays (feature 16d, part 2)."""
+    a = document(
+        ticks=4,
+        bodies=[body((0, 2, 2), 3, amount=81), body((2, 2, 2), 4, table={"m": 1}, amount=1000)],
+        shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=1)],
+    )
+    a["spatial_fields"][0]["ray_slots"] = 32
+    b = document(
+        ticks=4,
+        bodies=[
+            body((0, 2, 2), 3, amount=81),
+            body((1, 2, 2), 5, table={"m": 1}, amount=1000),
+            body((2, 2, 2), 4, table={"m": 1}, amount=1000),
+        ],
+        shadows=[shadow((1, 2, 2), X, amount=81, owner=3, steps=0)],
+    )
+    for name, doc in (("a", a), ("b", b)):
+        assert parse_initial_state(deepcopy(doc)).dense_field
+        engine = run(deepcopy(doc) | {"dense_field": False}, 4)
+        dense = run(deepcopy(doc), 4)
+        for key in ("inventories", "ledgers", "momentum", "bodies_per_tick", "shadows"):
+            assert engine[key] == dense[key], (name, key)
+        # The region lists every owner of the family, the engine alone the owners
+        # with a shadow on its way: the counts agree where they count something.
+        assert [{o: c for o, c in counts.items() if c != [0, 0]} for counts in engine["counts"]] == [
+            {o: c for o, c in counts.items() if c != [0, 0]} for counts in dense["counts"]
+        ], name
+        assert engine["snapshot"]["parked"] == dense["snapshot"]["parked"], name
+        assert engine["bodies"] == dense["bodies"], name
+        assert all(entry["balanced"] and entry["real_conserved"] for entry in dense["ledgers"]), name
+    # In (a) the transverse Nodes are the region's, and after tick 4 each holds
+    # in its arrays the returning ninth's momentum, (-1, 0, 0) on the 4 ninths
+    # back toward (1,2,2) (flow 1, sign 1, the Port toward (1,2,2)).
+    with Simulation(parse_initial_state(a)) as world:
+        for _ in range(4):
+            world.step()
+        region = world._spatial.dense
+        assert region is not None
+        (family,) = region.families.values()
+        rank = family.rank[3]
+        for position, port in (((1, 1, 2), 2), ((1, 3, 2), 3), ((1, 2, 1), 4), ((1, 2, 3), 5)):
+            assert region.owner[position] == 0
+            assert family.reg[position][rank, 1, 2].tolist() == [1, 1, 1, 1, 1, 1][:port] + [4] + [1] * (
+                5 - port
+            )
+            assert family.reg_mom[position][rank, 1, 2].tolist() == [
+                [-1, 0, 0] if p == port else [0, 0, 0] for p in range(6)
+            ]

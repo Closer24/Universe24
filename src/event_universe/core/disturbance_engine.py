@@ -605,22 +605,10 @@ class DisturbanceEngine:
             if field.conserved
         }
 
-    def annulled_totals(self) -> dict[str, tuple[int, ...]]:
-        """Content that left the world at an inverse split in annul mode (inverse-split-v1):
-        an explicitly accounted sink, initial = current + escaped + annulled."""
-        return {
-            field.name: (
-                (0,) * field.components if self._spatial is None else tuple(self._spatial.annulled[i])
-            )
-            for i, field in enumerate(self.initial.fields)
-            if field.conserved
-        }
-
     def external_body_totals(self) -> dict[str, tuple[int, ...]]:
         """Content that ended in an external body's sink (external-body-v1), per family:
         an explicitly accounted sink, initial + sources = current + dissipated +
-        escaped + annulled + absorbed_by_bodies, the sources holding what the bodies
-        released."""
+        escaped + absorbed_by_bodies."""
         return {
             field.name: (
                 (0,) * field.components if self._spatial is None else tuple(self._spatial.absorbed[i])
@@ -632,7 +620,7 @@ class DisturbanceEngine:
     def detector_mark_totals(self) -> dict[str, tuple[int, ...]]:
         """Content the Detector marks absorbed on their clicks (detector-absorb-v1),
         per family: the second explicitly accounted sink, initial + sources = current
-        + dissipated + escaped + annulled + absorbed_by_bodies + absorbed_by_marks."""
+        + dissipated + escaped + absorbed_by_bodies + absorbed_by_marks."""
         return {
             field.name: (
                 (0,) * field.components
@@ -647,7 +635,7 @@ class DisturbanceEngine:
         """What came home (bit-law-v1), per field: the shadows absorbed back into
         their things, whose re-release is on the source line, and the momentum
         delivered outside the identity; initial + sources = current + dissipated +
-        escaped + annulled + absorbed_by_bodies + absorbed_by_marks + returned."""
+        escaped + absorbed_by_bodies + absorbed_by_marks + returned."""
         return {
             field.name: (
                 (0,) * field.components if self._spatial is None else tuple(self._spatial.returned[i])
@@ -659,7 +647,7 @@ class DisturbanceEngine:
     def spent_totals(self) -> dict[str, tuple[int, ...]]:
         """The momentum the things spent on their steps (clock-readings-v1, the
         settled rule (i)), per field: on the momentum field's line, initial +
-        sources = current + dissipated + escaped + annulled + absorbed_by_bodies +
+        sources = current + dissipated + escaped + absorbed_by_bodies +
         absorbed_by_marks + returned + spent; zero on every other field."""
         return {
             field.name: (
@@ -785,9 +773,9 @@ class DisturbanceEngine:
     def audit(self) -> dict[str, object]:
         """The world ledger at the current tick (ray-event-audit-v1): one line per
         conserved field (amount per family, momentum) and one per ray family
-        (charge), each reading initial, sourced, current, escaped, annulled,
-        absorbed and absorbed_by_marks with initial + sourced = current + escaped +
-        annulled + absorbed + absorbed_by_marks exact, and the external bodies' and
+        (charge), each reading initial, sourced, current, escaped, absorbed and
+        absorbed_by_marks with initial + sourced = current + escaped + absorbed +
+        absorbed_by_marks exact, and the external bodies' and
         the Detector marks' own lines (count, momentum, charge, sinks; count,
         momentum, counters). Read-only, like the totals it is built from."""
         initial_totals, initial_charge, initial_things, initial_shadows = self._ledger_initial
@@ -795,9 +783,8 @@ class DisturbanceEngine:
         # The absorbed line is what the external bodies' sinks took (external-body-v1);
         # absorbed_by_marks what the marks absorbed on their clicks (detector-absorb-v1);
         # returned what came home (bit-law-v1).
-        escaped, annulled, absorbed, taken, returned = (
+        escaped, absorbed, taken, returned = (
             self.escaped_totals(),
-            self.annulled_totals(),
             self.external_body_totals(),
             self.detector_mark_totals(),
             self.returned_totals(),
@@ -811,7 +798,6 @@ class DisturbanceEngine:
                 sources[name],
                 totals[name],
                 escaped[name],
-                annulled[name],
                 absorbed[name],
                 taken[name],
                 returned[name],
@@ -839,7 +825,7 @@ class DisturbanceEngine:
                 continue
             # The lines per bit (node-is-ports-v1, no sourced line anywhere): the
             # things' initial + converted = current + escaped + absorbed (into a
-            # body, into the thing resident at a mark or annulled), the shadows'
+            # body or into the thing resident at a mark), the shadows'
             # initial = current + escaped + absorbed_at_home.
             things[name] = thing_line(
                 initial_things[name],
@@ -847,10 +833,8 @@ class DisturbanceEngine:
                 current_things[name],
                 tuple(a - b for a, b in zip(escaped[name], shadow_escaped[name], strict=True)),
                 tuple(
-                    a + b + c - d
-                    for a, b, c, d in zip(
-                        annulled[name], absorbed[name], taken[name], shadow_taken[name], strict=True
-                    )
+                    a + b - c
+                    for a, b, c in zip(absorbed[name], taken[name], shadow_taken[name], strict=True)
                 ),
             )
             shadows[name] = shadow_line(
@@ -865,8 +849,8 @@ class DisturbanceEngine:
             if not definition.rays:
                 continue
             name = self.initial.fields[definition.field].name
-            # Charge is per quantum, so what a family sourced, annulled or absorbed
-            # reads as charge x that amount; the world's and the escaped charge are
+            # Charge is per quantum, so what a family sourced or absorbed reads as
+            # charge x that amount; the world's and the escaped charge are
             # read over their owners. A shadow carries no charge (bit-law-v1), so
             # the re-releases on the source line are not charge sourced.
             per_quantum = definition.charge
@@ -877,7 +861,6 @@ class DisturbanceEngine:
                 ),
                 current_charge[name],
                 escaped_charge[name],
-                checked_work(annulled.get(name, (0,))[0] * per_quantum),
                 checked_work(absorbed.get(name, (0,))[0] * per_quantum),
                 checked_work((taken.get(name, (0,))[0] - shadow_taken.get(name, (0,))[0]) * per_quantum),
             )

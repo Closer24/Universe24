@@ -18,6 +18,7 @@ from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     BIT_SHADOW,
     BIT_THING,
+    MIXING_AMPLITUDE_SCALE,
     PORT_HEADINGS,
     RAY_PROPERTIES,
     RAY_VIEW_COMPONENTS,
@@ -27,6 +28,7 @@ from event_universe.core.spatial_state import (
     RayPush,
     Rays,
     SpatialFieldDefinition,
+    arrival_amplitude,
     push_of,
     pushed_ray,
     ray_layers,
@@ -174,20 +176,6 @@ def _convert(
                 periods=0 if rule.decay is not None else source.periods,
             ),
         )
-    for lag in rule.lags:
-        # ray-binding-v1, Highlights 3.28: the delay by the declared table, per the
-        # Port the source input came through, the whole quanta of amount x entry /
-        # unit in phase steps, laid on the output's face clock on that side.
-        kind, source = inputs[lag.source]
-        port = PORT_HEADINGS.index(definitions[kind].headings[source.heading]) ^ 1
-        delay = checked_work(source.amount * lag.table[port]) // lag.per
-        meter.charge("evaluate")
-        axis, negative = divmod(port, 2)
-        target, ray = produced[lag.output]
-        clocks = list(ray.lag)
-        clocks[axis] = checked_work(clocks[axis] + (-delay if negative else delay))
-        produced[lag.output] = (target, replace(ray, lag=(clocks[0], clocks[1], clocks[2])))
-        meter.charge("update")
     stock: dict[int, int] = {}
     for kind, ray in inputs:
         stock[kind] = checked_work(stock.get(kind, 0) + ray.amount)
@@ -277,6 +265,9 @@ def _turn(
     assert ray is not None
     definition = definitions[index]
     taken[receiver_slot] = receiver_slot
+    # The groups whose amplitude this rule's wait has read for this thing
+    # (wait-reads-v1): once per group of shadows arriving.
+    amplitudes_read: set[tuple[int, int, int, int]] = set()
     for shadow_slot, (kind, ray_slot) in enumerate(owners):
         sign = rule.momentum_table[kind] if kind < len(rule.momentum_table) else 0
         if not sign or shadow_slot in used or views[shadow_slot] is None:
@@ -300,7 +291,39 @@ def _turn(
             ray.push_remainder,
         )
         before = ray_momentum_vector(ray, definition)
-        ray = replace(pushed_ray(ray, push, definition), push_remainder=remainder)
+        wait_quanta: int | None = None
+        if definition.wait_reads == "amplitude":
+            # The wait reads the amplitude (wait-reads-v1, a declared coupling
+            # option): once per group of the shadows arriving at this Node (the
+            # mixing's group: owner, sign, polarization, flow), the size of their
+            # coherent sum in whole units of amplitude (32 at the engine's scale
+            # is one quantum's), read as the push reads the amount (point 16);
+            # the push itself reads the amount as before.
+            group = (shadow.owner, shadow.source_sign, shadow.polarization, shadow.outbound)
+            wait_quanta = 0
+            if group not in amplitudes_read:
+                amplitudes_read.add(group)
+                members = tuple(
+                    member
+                    for member in rays[kind]
+                    if member.detector == BIT_SHADOW
+                    and not member.parked
+                    and member.steps >= 1
+                    and (member.owner, member.source_sign, member.polarization, member.outbound) == group
+                )
+                meter.charge("evaluate", len(members))
+                units = arrival_amplitude(members, definitions[kind]) // MIXING_AMPLITUDE_SCALE
+                if units:
+                    unit_push, _ = push_of(
+                        sign,
+                        replace(shadow, amount=units),
+                        definitions[kind],
+                        rule.reads,
+                        ray.amount,
+                        definition.charge,
+                    )
+                    wait_quanta = abs(unit_push[0]) + abs(unit_push[1]) + abs(unit_push[2])
+        ray = replace(pushed_ray(ray, push, definition, wait_quanta), push_remainder=remainder)
         meter.charge("update", 4)
         carried = (-push[0], -push[1], -push[2])
         earlier = candidate[kind][ray_slot] if shadow_slot in taken else None
@@ -316,6 +339,17 @@ def _turn(
             returned = replace(earlier, momentum=summed if any(summed) else None)
         else:
             returned = return_shadow(shadow, definitions[kind], carried)
+        if definitions[kind].shadow_wait_reads == "thing":
+            # The shadow's wait, the thing reading (shadow-wait-v1): the share read
+            # by a thing owes n / d intervals per whole quantum of the push it
+            # gave, before it leaves this Node; read twice, the sum.
+            quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+            returned = replace(
+                returned,
+                owed=checked_work(
+                    returned.owed + checked_work(quanta * definitions[kind].shadow_wait_numerator)
+                ),
+            )
         validate_rays((returned,), definitions[kind], fields[definitions[kind].field])
         candidate[kind][ray_slot] = returned
         taken[shadow_slot] = receiver_slot

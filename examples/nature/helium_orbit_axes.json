@@ -32,14 +32,6 @@
       "extensive": true
     },
     {
-      "name": "light_of_nucleus",
-      "components": 1,
-      "units": "quantum",
-      "signed": false,
-      "conserved": true,
-      "extensive": true
-    },
-    {
       "name": "proton",
       "components": 1,
       "units": "quantum",
@@ -128,55 +120,8 @@
         1,
         1
       ],
-      "phase_bits": 8,
       "charge": -3,
       "clock": true
-    },
-    {
-      "field": "light_of_nucleus",
-      "baseline": 0,
-      "transport": "ray",
-      "headings": [
-        [
-          1,
-          0,
-          0
-        ],
-        [
-          -1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
-          -1,
-          0
-        ],
-        [
-          0,
-          0,
-          1
-        ],
-        [
-          0,
-          0,
-          -1
-        ]
-      ],
-      "rays_per_tick": 1,
-      "ray_slots": 24,
-      "metric": "links",
-      "pace": [
-        1,
-        1
-      ],
-      "phase_bits": 8,
-      "charge": 0
     },
     {
       "field": "proton",
@@ -221,7 +166,6 @@
         1,
         1
       ],
-      "phase_bits": 8,
       "charge": 3,
       "release": [
         1,
@@ -271,7 +215,6 @@
         1,
         1
       ],
-      "phase_bits": 8,
       "charge": 0
     }
   ],
@@ -459,5 +402,6 @@
       "coupling": "launch"
     }
   ],
-  "K": 256
+  "K": 256,
+  "N": 256
 }

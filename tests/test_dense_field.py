@@ -27,12 +27,22 @@ the mixing's integers (a lone 12 sends 5 back at the opposite phase and 1 each
 other way, parking 3 ninths per heading; a lone 1 parks 4 ninths back and 1 each
 other way and fills a register of 10 to release) and the `rejected` case names a
 family without a shadow set.
+
+Re-pinned on 2026-09-18 under the return as a field (return-field-v1, feature
+16d, part 2): the arrays carry the flow of every share beside its sign and the
+momentum it carries, the parked block of a Node being the engine's thirty-six
+slots per owner cell for cell, so the `split` case reads the engine's block as
+it is, and a `returning` sub-case mixes a returning share of 12 carrying
+(-12, 0, 0): the same integers as the outgoing 12, in the returning group, the
+momentum over the twelve outputs by the largest remainder, -5 on the 5 back,
+-1 on each of the other five quanta and -1 on the +X and the -X ninths.
 """
 
 import hashlib
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from event_universe import Simulation
@@ -44,7 +54,6 @@ from event_universe.core.spatial_state import (
     remainder_slot,
     spread_content,
 )
-from event_universe.dense_field import engine_block, region_block
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
@@ -94,7 +103,6 @@ def ray_field(name, advance, slots=16, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": 3,
     } | extra
 
 
@@ -106,6 +114,7 @@ def document(shadows, ticks=3, detectors=(), dense=False):
     its heading, spreading at its Node in the first cycle."""
     raw = {
         "schema_version": 1,
+        "N": 8,
         "model_id": "dense-field-test-v1",
         "shape": [13, 13, 13],
         "boundary": "open",
@@ -157,15 +166,17 @@ def engine_document(raw):
     return dict(raw) | {"dense_field": False}
 
 
-def spread_ray(heading, amount, phase, sign=0):
+def spread_ray(heading, amount, phase, sign=0, outbound=1, momentum=None):
     return Ray(
         heading,
         (0, 0, 0),
         amount,
         phase=phase,
         steps=1,
+        outbound=outbound,
         detector=BIT_SHADOW,
         source_sign=sign,
+        momentum=momentum,
         owner=OWNER,
     )
 
@@ -184,48 +195,43 @@ def light(world):
 
 def place(family, position, port, ray):
     """One arrived shadow into the arrays at a Node, on its travel Port."""
-    rank = family.rank[ray.owner]
-    sign = ray.source_sign + 1
-    layers = family.arr_amt[position][rank, sign, port]
-    layer = next(index for index in range(len(layers)) if layers[index] == 0)
-    family.arr_amt[position][rank, sign, port, layer] = ray.amount
-    family.arr_ph[position][rank, sign, port, layer] = ray.phase
+    assert family.place(position, ray, port)
 
 
 def departures_of(family, position):
-    """The departures in flight at a Node as (port, sign, amount, phase) rows."""
+    """The departures in flight at a Node as (port, sign, amount, phase, flow,
+    momentum) rows, the flow as `Ray.outbound` reads it."""
     rows = []
     amounts = family.fly_amt[position]
-    for rank in range(amounts.shape[0]):
-        for sign in range(3):
-            for port in range(6):
-                for layer in range(amounts.shape[3]):
-                    amount = int(amounts[rank, sign, port, layer])
-                    if amount:
-                        rows.append(
-                            (
-                                port,
-                                sign - 1,
-                                amount,
-                                int(family.fly_ph[position][rank, sign, port, layer]),
-                            )
-                        )
-    return sorted(rows)
+    for rank, flow, sign, port, layer in zip(*np.nonzero(amounts > 0), strict=True):
+        cell = (rank, flow, sign, port, layer)
+        carried = tuple(int(v) for v in family.fly_mom[position][cell])
+        rows.append(
+            (
+                int(port),
+                int(sign) - 1,
+                int(amounts[cell]),
+                int(family.fly_ph[position][cell]),
+                0 if flow else 1,
+                carried if any(carried) else None,
+            )
+        )
+    return sorted(rows, key=repr)
 
 
 def rows_of(rays):
-    return sorted((r.heading, r.source_sign, r.amount, r.phase) for r in rays)
-
-
-def block_of(family, position):
-    return tuple(int(v) for v in family.reg[position].reshape(-1)), tuple(
-        int(v) for v in family.regph[position].reshape(-1)
+    return sorted(
+        ((r.heading, r.source_sign, r.amount, r.phase, r.outbound, r.momentum) for r in rays), key=repr
     )
 
 
+def block_of(family, position):
+    """The Node's parked block and its phases, the engine's thirty-six slots."""
+    return family.block(position)[:2]
+
+
 def set_block(family, position, registers, phases):
-    family.reg[position] = [[registers[i : i + 6] for i in range(0, 18, 6)]]
-    family.regph[position] = [[phases[i : i + 6] for i in range(0, 18, 6)]]
+    family.set_block(position, tuple(registers), tuple(phases), (0,) * (3 * len(registers)))
 
 
 def digests(path):
@@ -242,30 +248,45 @@ def digests(path):
 # opposite sign on +X send 1 back each on -X at phase 4 and park 3 ninths per
 # heading in each sign's block; one quantum on +X with its +X register at 10
 # parks (1, 4, 1, 1, 1, 1), and the +X register at 11 releases one quantum
-# forward at its phase 0 and keeps 2.
+# forward at its phase 0 and keeps 2. A returning share of 12 of sign 1 carrying
+# (-12, 0, 0) (return-field-v1, part 2) mixes the same way in its own group and
+# parks in the returning block of its sign (slots 30 to 35), the momentum over
+# the twelve outputs by the largest remainder: the wholes' weights 9, 45, 9, 9,
+# 9, 9 and the ninths' 3 each over 108 give -1, -5, -1, -1, -1, -1 on the quanta
+# and the two units left to the +X and -X ninths. Each entry: the rays, the
+# registers and phases of the sign-0 outgoing block, the departure rows and the
+# block to check as (its first slot, its six values).
 SPLIT_CASES = {
     "single": (
         (spread_ray(0, 12, 6),),
         (),
         (),
-        [(1, 0, 5, 2), *[(p, 0, 1, 6) for p in (0, 2, 3, 4, 5)]],
-        (3, 3, 3, 3, 3, 3),
+        [(1, 0, 5, 2, 1, None), *[(p, 0, 1, 6, 1, None) for p in (0, 2, 3, 4, 5)]],
+        (6, (3, 3, 3, 3, 3, 3)),
     ),
     "signs": (
         (spread_ray(0, 3, 0, 1), spread_ray(0, 3, 0, -1)),
         (),
         (),
-        [(1, -1, 1, 4), (1, 1, 1, 4)],
+        [(1, -1, 1, 4, 1, None), (1, 1, 1, 4, 1, None)],
         None,
     ),
     "release": (
         (spread_ray(0, 1, 0),),
         (10, 0, 0, 0, 0, 0),
         ZERO,
-        [(0, 0, 1, 0)],
-        (2, 4, 1, 1, 1, 1),
+        [(0, 0, 1, 0, 1, None)],
+        (6, (2, 4, 1, 1, 1, 1)),
+    ),
+    "returning": (
+        (spread_ray(0, 12, 6, 1, outbound=0, momentum=(-12, 0, 0)),),
+        (),
+        (),
+        [(1, 1, 5, 2, 0, (-5, 0, 0)), *[(p, 1, 1, 6, 0, (-1, 0, 0)) for p in (0, 2, 3, 4, 5)]],
+        (30, (3, 3, 3, 3, 3, 3)),
     ),
 }
+RETURNING_MOMENTA = (0,) * 90 + (-1, 0, 0, -1, 0, 0) + (0,) * 12
 # Three Ports, two signs, three phases, registers filled at other phases: the
 # oracle is `spread_content`.
 MIXED = (
@@ -292,42 +313,49 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
             # Node is the engine's until the region takes it back).
             position = (7, 7, 7)
             for name, (rays, registers, phases, expected, block) in SPLIT_CASES.items():
-                held = tuple(registers) and engine_block(ZERO + tuple(registers) + ZERO, 1) or ()
-                held_phases = tuple(phases) and engine_block(ZERO + tuple(phases) + ZERO, 1) or ()
+                held = ZERO + tuple(registers) + ZERO + ZERO * 3 if registers else ()
+                held_phases = ZERO + tuple(phases) + ZERO + ZERO * 3 if phases else ()
                 for ray in rays:
                     place(family, position, ray.heading, ray)
                 if held:
                     set_block(family, position, held, held_phases)
                 region(world).cycle(0)
-                oracle, record, after, after_phases, _ = spread_content(
+                oracle, record, after, after_phases, after_momenta = spread_content(
                     family.index, rays, definition, held, held_phases
                 )
-                assert departures_of(family, position) == rows_of(oracle) == sorted(expected), name
-                assert block_of(family, position) == (
-                    region_block(after, 1),
-                    region_block(after_phases, 1),
+                assert (
+                    departures_of(family, position) == rows_of(oracle) == sorted(expected, key=repr)
                 ), name
+                assert block_of(family, position) == (after, after_phases), name
+                assert family.block(position)[2] == after_momenta, name
                 if block is not None:
-                    assert after[6:12] == block, name
+                    start, values = block
+                    assert after[start : start + 6] == values, name
+                if name == "returning":
+                    assert after_momenta == RETURNING_MOMENTA
+                else:
+                    assert not any(after_momenta), name
                 assert region(world).active_count() == 1
                 family.fly_amt[...] = 0
+                family.fly_mom[...] = 0
                 family.reg[position] = 0
                 family.regph[position] = 0
+                family.reg_mom[position] = 0
             # The mixed case: the combination order of the registers, Port by Port,
             # the releases included.
             for ray in MIXED:
                 place(family, position, ray.heading, ray)
-            set_block(family, position, MIXED_REGISTERS, MIXED_PHASES)
+            set_block(family, position, MIXED_REGISTERS + ZERO * 3, MIXED_PHASES + ZERO * 3)
             region(world).cycle(0)
             oracle, record, after, after_phases, _ = spread_content(
                 family.index,
                 MIXED,
                 definition,
-                engine_block(MIXED_REGISTERS, 1),
-                engine_block(MIXED_PHASES, 1),
+                MIXED_REGISTERS + ZERO * 3,
+                MIXED_PHASES + ZERO * 3,
             )
             assert departures_of(family, position) == rows_of(oracle)
-            assert block_of(family, position) == (region_block(after, 1), region_block(after_phases, 1))
+            assert block_of(family, position) == (after, after_phases)
             assert record.stored == (sum(after) - sum(MIXED_REGISTERS)) // family.total
             assert after[remainder_slot(1, 4)] != MIXED_REGISTERS[remainder_slot(1, 4)]
             family.fly_amt[...] = 0
@@ -345,7 +373,7 @@ def test_dense_region_cycles_pure_field_nodes_exactly_as_the_engine(tmp_path, ca
             region(world).cycle(0)
             oracle, record, after, after_phases, _ = spread_content(family.index, THREE, definition)
             assert departures_of(family, position) == rows_of(oracle)
-            assert block_of(family, position) == (region_block(after, 1), region_block(after_phases, 1))
+            assert block_of(family, position) == (after, after_phases)
             assert record.phase == 2 and family.overflow == {}
         return
     if case == "identity":

@@ -182,7 +182,6 @@ def line(readout, name, ledger):
             "sourced",
             "current",
             "escaped",
-            "annulled",
             "absorbed",
             "absorbed_by_marks",
         )
@@ -222,7 +221,6 @@ def test_a_click_absorbs_a_thing_by_default(tmp_path):
             "sourced": (0,),
             "current": (AMOUNT - taken,),
             "escaped": (0,),
-            "annulled": (0,),
             "absorbed": (0,),
             "absorbed_by_marks": (taken,),
         }

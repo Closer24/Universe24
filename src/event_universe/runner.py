@@ -28,7 +28,6 @@ from event_universe.core.spatial_state import (
     LOOP_BINDING,
     NODE_IS_PORTS,
     NODE_MIXING,
-    RAY_BINDING,
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
@@ -36,6 +35,8 @@ from event_universe.core.spatial_state import (
     RAY_POLARIZATION_PROPERTY,
     RELEASED_FIELD,
     RETURN_FIELD,
+    SHADOW_WAIT,
+    WAIT_READS,
     WAVE_RAY_FAMILY,
     external_body_names,
     mixing_field_names,
@@ -204,7 +205,6 @@ def _execute_run(
                     totals, sources = world.totals(), world.source_totals()
                     losses = world.dissipation_totals()
                     escaped = world.escaped_totals()
-                    annulled = world.annulled_totals()
                     absorbed = world.external_body_totals()
                     taken = world.detector_mark_totals()
                     returned = world.returned_totals()
@@ -221,19 +221,18 @@ def _execute_run(
                     computation.append(steps_after - steps_before)
                     steps_before = steps_after
                     # The conservation line: initial + sources = current + dissipated
-                    # + escaped + annulled + absorbed_by_bodies + absorbed_by_marks +
+                    # + escaped + absorbed_by_bodies + absorbed_by_marks +
                     # returned + spent at every completed tick (bit-law-v1,
                     # clock-readings-v1), the sources holding the re-releases, the
                     # marks' line what their clicks absorbed and spent what the
                     # things' steps took off their momentum.
                     balanced = all(
                         tuple(
-                            value + loss + out + gone + sunk + clicked + home + stepped
-                            for value, loss, out, gone, sunk, clicked, home, stepped in zip(
+                            value + loss + out + sunk + clicked + home + stepped
+                            for value, loss, out, sunk, clicked, home, stepped in zip(
                                 totals[name],
                                 losses[name],
                                 escaped[name],
-                                annulled[name],
                                 absorbed[name],
                                 taken[name],
                                 returned[name],
@@ -281,13 +280,11 @@ def _execute_run(
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
         "model": initial.model_id,
         "schema_version": initial.schema_version,
-        "sampling_profile": initial.sampling_profile,
         "ray_state": RAY_EVENT_STATE,
         "detector_mark": DETECTOR_MARK,
         "detector_return": DETECTOR_RETURN,
         "detector_absorb": DETECTOR_ABSORB,
         "inverse_split": INVERSE_SPLIT,
-        "return_mode": initial.return_mode,
         # The law of the bit (bit-law-v1, the model owner's decision of 2026-09-18):
         # the engine's only behaviour, so it is recorded in every record, with the
         # families whose things have shadows, the things' own identity, the
@@ -320,6 +317,7 @@ def _execute_run(
         # the things' steps (the settled rule (i)).
         "clock_readings": CLOCK_READINGS,
         "K": initial.clock,
+        "N": initial.phase_steps,
         "wait_per_quantum": list(initial.wait_per_quantum),
         "computation_per_tick": computation,
         "spent_totals": world.spent_totals(),
@@ -337,7 +335,6 @@ def _execute_run(
         ],
         "ray_meeting": RAY_MEETING,
         "released_field": RELEASED_FIELD,
-        "ray_binding": RAY_BINDING,
         "loop_binding": LOOP_BINDING,
         "external_body": EXTERNAL_BODY,
         "external_bodies": [
@@ -370,7 +367,6 @@ def _execute_run(
         "dissipation_totals": world.dissipation_totals(),
         "localized_totals": world.localized_totals(),
         "escaped_totals": world.escaped_totals(),
-        "annulled_totals": world.annulled_totals(),
         "returned_totals": world.returned_totals(),
         "accounting_balanced_at_every_completed_tick": accounting,
         "fields": [field.name for field in initial.fields],
@@ -412,6 +408,20 @@ def _execute_run(
         metadata["return_field"] = RETURN_FIELD
         metadata["field_remainder"] = FIELD_REMAINDER
         metadata["mixing_fields"] = mixing
+    if initial.shadow_wait is not None:
+        # The shadow's wait (shadow-wait-v1), a declared option: recorded only
+        # when a world declares it, so every other record is byte for byte the same.
+        metadata["shadow_wait"] = SHADOW_WAIT
+        metadata["shadow_wait_option"] = {
+            "per_quantum": list(initial.shadow_wait),
+            "reads": initial.shadow_wait_reads,
+        }
+    if initial.wait_reads == "amplitude":
+        # The wait reads the amplitude (wait-reads-v1), a declared coupling
+        # option: recorded only when declared, so every other record, the
+        # default "amount" declared or not, is byte for byte the same.
+        metadata["wait_reads"] = WAIT_READS
+        metadata["wait_reads_option"] = initial.wait_reads
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
@@ -488,11 +498,6 @@ def _execute_run(
                 else f"directional-departure-delay-{initial.delay_direction}-v1"
             ),
             least_delay_routing=initial.least_delay_routing,
-        )
-    if initial.ray_delay:
-        metadata.update(
-            ray_delay=True,
-            ray_phase="per-tick-and-link" if initial.ray_phase_per_tick else "per-link",
         )
     if initial.spatial_fields:
         metadata.update(

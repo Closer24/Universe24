@@ -7,7 +7,8 @@
     "The catalog is exactly two things: the rays of nature, with the couplings that say what happens when ray A meets ray B, a table; and the apparatus, the Detector and the external body, the declarations an experimenter places on the board that obey no table.",
     "The engine only reads this file: a world file selects rays from it and places apparatus, and nothing else exists on the board (Highlights 3.26, 3.30).",
     "A value the model owner has not decided is the string \"undecided\", beside a decided_by that names the experiment (docs/EXPERIMENTS.md) or the hypothesis (docs/HYPOTHESES.md) that decides it; nothing is invented in its place.",
-    "Every value is an exact integer or a ratio [n, d] of exact integers; there are no floats. JSON has no comments, so a note key carries the explanation."
+    "Every value is an exact integer or a ratio [n, d] of exact integers; there are no floats. JSON has no comments, so a note key carries the explanation.",
+    "Under the law of the bit (Highlights 5.4, the model owner, 2026-09-18; the cleanup of the same day) there is no field family: a shadow is a ray of its owner's family with the bit 0, every ray record is a family of things, its shadow set the release ratio it declares, and the phase circle is one for the world, N, declared once beside K."
   ],
   "units": {
     "content": {
@@ -22,61 +23,35 @@
     },
     "phase": {
       "unit": "step",
-      "note": "A phase is an integer from 0 below N = 2^phase_bits; an advance and a difference are masks with N - 1, never a division."
+      "note": "A phase is an integer from 0 below N, the number of steps of the phase circle, one for the world like K (Highlights 5.4, the definitions of the law, the model owner, 2026-09-18): declared once as the world key N, 64 by default, a power of two from 2 through 4096; an advance and a difference are masks with N - 1, never a division. A phase difference between any two rays, of one family or of two, is read on the one circle, so a width per family means nothing: the per-family phase_bits of the engine and of this file are retired in the cleanup of 2026-09-18. The steering table of two things of one family that meet is computed from N (point 17), and the Node's mixing of shadows reads N (point 24); the register's boards ran at 256 steps and the reference Born table is written at 8, both declared as N."
     },
     "amount": {
       "unit": "quantum",
       "note": "The content of a ray, a bounded integer; the energy of the invariants is the amount, the momentum is amount x heading."
     }
   },
-  "phase_bits": {
-    "default": 8,
-    "reference_table": 3,
-    "note": "2^phase_bits phase steps per turn, the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): a phase is read only at a meeting and only as a difference, so eight steps resolve the Born table and a wider circle is allowed but never required. 8 (256 steps) is the width of the register's boards and 3 (8 steps) the width of the reference Born table; a world declares one width for all its rays, since a field and the ray that releases it must share it (released-field-v1). The weakness of gravity does not live in the phase: the N of hypothesis 14 is the lag modulus below, and A11's 75-bit phase is a check that a wide width leaks into no coupling."
-  },
-  "lag_bits": {
-    "status": "open",
-    "world_key": "undecided",
-    "engine": {
-      "identity": "feature 8b of issue #169: the turn landed as the momentum register (ray-momentum-turn-v1, 2026-09-17); the lag's own modulus for the delay is open, after feature 10",
-      "landed": false
-    },
-    "decided_by": [
-      "feature 8b",
-      "hypothesis 16"
-    ],
-    "note": "The width of the lag register (Highlights 3.28, 2026-09-17): the delay a field ray lays on the ray it meets is carried in a lag register with its own declared modulus per family, spent as one interval of wait when it reaches that modulus. That modulus, not the phase circle, is the N of hypothesis 14 on the delay, of any width because it enters no phase sum; a world declares it per family as it declares phase_bits, the runs of hypothesis 14 and A6 declaring their four N on it. The transverse part of the lag, the turn, is since feature 8b the momentum register of the ray (ray-momentum-turn-v1): integers of any width walked by the DDA, a resolution of one part in the ray's amount and no modulus, exactly as a heading is carried with a resolution of one part in 2^30 through six Ports. The engine counts the delay in phase steps (ray-binding-v1), so the two moduli are one for the delay and those runs set them equal; the world key stays open under feature 8b until a run needs a finer delay. What fixes N, the top of the mass ladder, the resolution the spreading field needs, or nothing, is hypothesis 16 (Highlights 5.5, 2026-09-17); until it is answered N is an input and the model predicts the form 1/N^2, not the value of G."
-  },
   "rays": {
     "light": {
-      "kind": "field",
+      "kind": "ray",
       "content": 0,
       "clock": false,
-      "field_of": [
-        "electron",
-        "positron",
-        "proton"
-      ],
-      "release": [
-        1,
-        4
-      ],
       "charge": 0,
-      "phase_bits": "default",
-      "field": [],
+      "release": "undecided",
       "polarization": "transverse",
       "polarization_bits": "default",
-      "source_sign": "releaser",
-      "note": "The electromagnetic field in ray form (Highlights 3.5, model owner, 2026-09-17): light and the field of a charge are one family, and a photon is one quantum of it. No mass and no charge (Highlights 3.3): its phase does not advance along its line, so a ray carries the phase of the clock that emitted it, the emitter's at emission, and delivers it unchanged, and the frequency of light is its emitter's rate. It is released by the electron and the positron as their field, at every Node the releaser is at, one ray per Port heading except a traveling releaser's own, of amount floor(amount x 1 / 4), with the releaser's phase (the ratio tests/test_released_field.py declares; A5 confronts it with Coulomb's law), and by the proton, whose charge +3 has the same field: a body of the proton family (the fixed proton of A8, the helium nucleus of E4) radiates it on all six headings by the release its world declares, and a bound group proton releases it from its retained content; and it is emitted at an event by any source, a lamp or an atom; nothing distinguishes the ray a charge releases from the light an atom emits but its amount, its phase and its event, and an absorption is its meeting with a bound group (examples/nature, 2026-09-17). Charge 0: a release is booked as a source (Highlights 3.15), so a charge on this family would be created with it; the sign of the charge a released ray stands for is its releaser's, read from the two families that meet by the coupling (electron_field_turn, A5) or by a body's momentum_table; what an electron does at the light a proton released, the attraction of opposite charges, is that coupling's open opposite_charge entry (A5), which the helium-ion run (E4) stands in for with a world-local rule. A field has no field. The engine names one family per field_of, so a world that holds both charged families declares this family once per releaser today, as it declares the mass field, and a world whose light no charge releases declares neither field_of nor release. The spread of light in shadow form is the Node's mixing of the six Ports (Highlights 5.4, point 24, the model owner, 2026-09-18; node-mixing-v1, feature 16c): at every Node the shadows of one owner that arrive are one coherent sum, each Port sends a third of it less the arrival through it, sent back, the amounts leaving shared by the squared sizes of the six sums in whole quanta with the ninths below one quantum owned by the Node per family, owner, sign and heading (Highlights 3.17; field-remainder-v1), and nothing of it is declared, the family's phase width being its one input; the spread entry of feature 12 (the six-weight split table [6, 1, 1, 1, 1, 1], field-spreading-v1, 2026-09-17, chosen over the phase-selected heading of the screen run E6) and the pairwise steering of feature 16a are retired for shadows, and a world that writes spread or steering on a family is refused. The source_sign entry says that the sign of the releaser's charge travels on every light ray as a visible property (Highlights 3.5, the field is matter's message about itself): -1 from the electron, +1 from the positron and from a body of the proton family by its declared charge, 0 from a lamp's emission, set by the engine at the release and kept through spreading, merging (opposite signs stay two rays), the return and the inverse split, read by a coupling as the Detector bit is, never encoded in the phase; the attraction of opposite charges (electron_field_turn's open opposite_charge entry, A5) reads it. Polarization (feature 11, Highlights 3.26; decided by A12 on 2026-09-17, ray-polarization-v1): the polarization entry transverse says that every light ray carries a transverse direction modulo a half turn, an integer step of a circle of 2^polarization_bits steps per half turn (the world key polarization_bits on the family, the family's phase width by default, default here), or none for an unpolarized ray, which every ray a charge releases is; 0 is the first transverse lattice axis of the ray's heading (+Y for a ray on +X) and half the circle the second (+Z), which are the two states of Highlights 3.26, and the steps between them are the transverse direction 3.26 allows for the circular case, without the handedness bit, which no ray carries. A lamp declares the polarization of what it emits (the world key polarization on the emission); rays merge only at equal polarization; a meeting's outputs carry their source input's unless the output declares one; a spread carries the axial mean of what it takes; the return keeps it; the engine reads it nowhere but at the polarizer coupling and in a coupling's guard. A12 confronted it with Malus's law and the three-polarizer chain on 2026-09-17 (its entry holds the numbers): the intermediate polarizer's angle is carried through the chain, since the property is the direction and not one of two states. Under the law of the bit (bit-law-v1, 2026-09-18) and clock-readings-v1: a shadow is a ray of the same family as its thing with the bit 0, so kind field and field_of are legacy words of this file (the catalog's worlds case awaits the textual migration of the families, feature 16b's remaining list); light has no clock (clock false: a photon carries the phase of what emitted it) and no content on the ladder."
+      "decided_by": {
+        "release": "hypothesis 17"
+      },
+      "note": "The electromagnetic quantum as a family of things (Highlights 3.5 and 5.4 point 12, the model owner, 2026-09-17 and 2026-09-18): a photon is one quantum of it, emitted at an event by any source, a lamp or an atom, and absorbed at its meeting with a bound group or at a mark; light is the field of nothing and no family is its field. No mass and no charge (Highlights 3.3): no clock (clock false), so a ray carries the phase of the clock that emitted it, the emitter's at emission, and delivers it unchanged, and the frequency of light is its emitter's rate (point 19: a photon emitted at a transition carries the emitter's change of content and beats at the emitter's change of rate, E = h nu). The field of a charge is not this family: under the law of the bit the field of an electron is the electron's own shadows, rays of the electron family with the bit 0, given with the board (initial_field) and circulating, their set the release of the electron's record; the light family's own shadow set (whether a photon's content casts a shadow read by gravity) is undecided, hypothesis 17's, and until then a world declares no release on light. The families electron_field and positron_field of 2026-09-17, then light as a field family with field_of and source_sign, are retired: a shadow carries its owner's charge sign and content as its message, set by the engine, and the sign is no declaration of this file. Polarization (feature 11, Highlights 3.26; decided by A12 on 2026-09-17, ray-polarization-v1): the polarization entry transverse says that every light ray carries a transverse direction modulo a half turn, an integer step of a circle of 2^polarization_bits steps per half turn (the world key polarization_bits on the family, the world's phase circle by default, default here), or none for an unpolarized ray; 0 is the first transverse lattice axis of the ray's heading (+Y for a ray on +X) and half the circle the second (+Z), which are the two states of Highlights 3.26, and the steps between them are the transverse direction 3.26 allows for the circular case, without the handedness bit, which no ray carries. A lamp declares the polarization of what it emits (the world key polarization on the emission); rays merge only at equal polarization; a meeting's outputs carry their source input's unless the output declares one; the return keeps it; the engine reads it nowhere but at the polarizer coupling and in a coupling's guard. A12 confronted it with Malus's law and the three-polarizer chain on 2026-09-17 (its entry holds the numbers): the intermediate polarizer's angle is carried through the chain, since the property is the direction and not one of two states. Two things of this family meeting on one lane are one ray of many quanta (Highlights 5.4 point 25: light has no bound)."
     },
     "electron": {
       "kind": "ray",
       "content": 1,
       "clock": true,
       "charge": -3,
-      "phase_bits": "default",
-      "field": [
-        "light"
+      "release": [
+        1,
+        4
       ],
       "spin": "undecided",
       "polarization_bits": 1,
@@ -87,33 +62,33 @@
         "mass_kev": 511,
         "note": "the register's value for A9; a measured number for comparison, not a lattice value"
       },
-      "note": "Content 1, the unit m_0 (hypotheses 12 and 14; Highlights 5.4 point 19, clock-readings-v1): its mass and its clock are its content, content / K phase steps per interval at the world's K. Charge -1 e, that is -3 in thirds. Its own field is light, the electromagnetic field in ray form (Highlights 3.5, 2026-09-17; the family electron_field until that date), and, for gravity, the mass field of its content. A10 decides whether the electron is the first rung of the ladder at the real N; until then every other rest rate is written as a multiple of the electron's. Spin, the two-state polarization of the electron family (feature 11, ray-polarization-v1, 2026-09-17), is the same ray property as light's polarization at one bit, polarization_bits 1 (the world key on the family): the steps 0 and 1, or none; the engine gives it no other meaning, and it is read only by pauli_exclusion, whose table the composite spectrum of hypothesis 12 decides, which is what spin stands undecided for. The mass field is retired (Highlights 5.4 point 18, 2026-09-18): gravity and electricity are the electron's one shadow set read twice, times the content of what is pushed (reads content) and times the owner's charge over its content times the charge of what is pushed (reads charge)."
+      "note": "Content 1, the unit m_0 (hypotheses 12 and 14; Highlights 5.4 point 19, clock-readings-v1): its mass and its clock are its content, content / K phase steps per interval at the world's K. Charge -1 e, that is -3 in thirds. Its field is its own shadow set (Highlights 5.4 point 12, the law of the bit, 2026-09-18): rays of this family with the bit 0, carrying its identity, charge and content as their message, given with the board and circulating, their set release times its content per heading (the ratio the electric runs declare; A5 confronts it with Coulomb's law); gravity and electricity are that one shadow set read twice (point 18), times the content of what is pushed (reads content) and times the owner's charge over its content times the charge of what is pushed (reads charge); light, the family electron_field of 2026-09-17 and the mass field are no longer its field. A10 decides whether the electron is the first rung of the ladder at the real N; until then every other content is written as a multiple of the electron's. Spin, the two-state polarization of the electron family (feature 11, ray-polarization-v1, 2026-09-17), is the same ray property as light's polarization at one bit, polarization_bits 1 (the world key on the family): the steps 0 and 1, or none; the engine gives it no other meaning, and it is read only by pauli_exclusion, whose table the composite spectrum of hypothesis 12 decides, which is what spin stands undecided for."
     },
     "positron": {
       "kind": "ray",
       "content": 1,
       "clock": true,
       "charge": 3,
-      "phase_bits": "default",
-      "field": [
-        "light"
+      "release": [
+        1,
+        4
       ],
       "spin": "undecided",
       "polarization_bits": 1,
       "decided_by": {
         "spin": "hypothesis 12"
       },
-      "note": "The electron's antiparticle: the same rest rate, charge +1 e (+3 in thirds), its own field light, as the electron's is (Highlights 3.5, 2026-09-17; the family positron_field until that date), the sign of the charge its released rays stand for being the positron's, read by the coupling that meets them. A5 runs it against an electron for the attraction of opposite charges."
+      "note": "The electron's antiparticle: the same content and clock, charge +1 e, that is +3 in thirds, spin the same property at one bit; its field is its own shadow set, read as the electron's (Highlights 5.4 points 12, 16 and 18, the law of the bit, 2026-09-18), so the attraction of opposite charges is the product of the two charges in the electricity reading and no separate declaration."
     },
     "muon": {
       "kind": "ray",
       "content": "undecided",
       "clock": true,
       "charge": -3,
-      "phase_bits": "default",
-      "field": [],
+      "release": "undecided",
       "decided_by": {
-        "content": "A10"
+        "content": "A10",
+        "release": "hypothesis 17"
       },
       "note": "A charged ray of the electron's kind on a higher rung of the ladder: its rest rate is k x 206.768 28 for the electron's rung k, and A10 finds the smallest k at which the muon, tau and proton ratios are all integers at one N (hypothesis 12); the ladder value is undecided until then. No entry of the register places a muon ray on a board, so its field, light as for every charge (Highlights 3.5, 2026-09-17), and its couplings are declared in its record when one does; its mass field is declared because it is massive."
     },
@@ -122,10 +97,10 @@
       "content": "undecided",
       "clock": true,
       "charge": 0,
-      "phase_bits": "default",
-      "field": [],
+      "release": "undecided",
       "decided_by": {
-        "content": "hypothesis 12"
+        "content": "hypothesis 12",
+        "release": "hypothesis 17"
       },
       "note": "A neutral ray. On the ladder its rest rate is an integer number of steps like every rest mass, and no entry of the register fixes its rung; it joins the field_of list of mass_field when its rest rate is declared nonzero. No coupling of the register reads a neutrino."
     },
@@ -134,10 +109,10 @@
       "content": "undecided",
       "clock": true,
       "charge": 0,
-      "phase_bits": "default",
-      "field": [],
+      "release": "undecided",
       "decided_by": {
-        "content": "hypothesis 12"
+        "content": "hypothesis 12",
+        "release": "hypothesis 17"
       },
       "note": "The neutrino's antiparticle, the third product of weak_conversion (A9): A9 holds energy and momentum exact at the conversion, which bounds its rung without deciding it."
     },
@@ -146,10 +121,7 @@
       "content": "undecided",
       "clock": true,
       "charge": 2,
-      "phase_bits": "default",
-      "field": [
-        "gluon"
-      ],
+      "release": "undecided",
       "colour": {
         "values": [
           0,
@@ -159,19 +131,17 @@
         "note": "a property of the ray with three values, set by the world per ray and read only at a meeting by quark_binding and gluon_gluon_binding; no engine rule reads it (Highlights 3.26); catalog work after feature 10"
       },
       "decided_by": {
-        "content": "hypothesis 12"
+        "content": "hypothesis 12",
+        "release": "hypothesis 17"
       },
-      "note": "A quark family (Highlights 3.26): charge +2/3 e, that is +2 in thirds; colour a property with three values; its own field is the gluon. Its rung on the ladder is a catalog value that hypothesis 12 leaves to the composite spectrum."
+      "note": "A quark family (Highlights 3.26): charge +2/3 e, that is +2 in thirds; colour a property with three values; its field is its own shadow set (Highlights 5.4 point 12, 2026-09-18: the strong field of a quark is the quark's shadows, of this family with the bit 0), and the gluon is a family of real rays it emits at events (Highlights 3.26 as amended); the size of its shadow set is hypothesis 17's. Its rung on the ladder is a catalog value that hypothesis 12 leaves to the composite spectrum."
     },
     "down": {
       "kind": "ray",
       "content": "undecided",
       "clock": true,
       "charge": -1,
-      "phase_bits": "default",
-      "field": [
-        "gluon"
-      ],
+      "release": "undecided",
       "colour": {
         "values": [
           0,
@@ -181,22 +151,17 @@
         "note": "as for up"
       },
       "decided_by": {
-        "content": "hypothesis 12"
+        "content": "hypothesis 12",
+        "release": "hypothesis 17"
       },
-      "note": "A quark family: charge -1/3 e, that is -1 in thirds; colour as for up; its own field is the gluon. Its rung on the ladder is left to the composite spectrum of hypothesis 12."
+      "note": "A quark family: charge -1/3 e, that is -1 in thirds; colour as for up; its field is its own shadow set (Highlights 5.4 point 12, 2026-09-18: the strong field of a quark is the quark's shadows, of this family with the bit 0), and the gluon is a family of real rays it emits at events (Highlights 3.26 as amended); the size of its shadow set is hypothesis 17's. Its rung on the ladder is left to the composite spectrum of hypothesis 12."
     },
     "gluon": {
-      "kind": "field",
+      "kind": "ray",
       "content": 0,
       "clock": false,
-      "field_of": [
-        "up",
-        "down"
-      ],
-      "release": "undecided",
       "charge": 0,
-      "phase_bits": "default",
-      "field": [],
+      "release": "undecided",
       "colour": "undecided",
       "decided_by": {
         "release": [
@@ -205,7 +170,7 @@
         ],
         "colour": "hypothesis 13"
       },
-      "note": "The quark's own field in ray form (Highlights 3.26, 3.5), released by up and down as light is by the electron. Its release ratio, and how a gluon ray carries its releaser's colour (a property of the ray, or one field family per colour; the engine names one family per field_of today), are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding. What fixes a release ratio, the symmetry of Highlights 3.27 and the path counting of 3.5, or nothing, is hypothesis 17 (Highlights 5.5, 2026-09-17); until it is answered the ratio is an input and the model predicts the form 1/r^2, not the value of the coupling."
+      "note": "A family of real rays with colour charge, emitted at events as light is (Highlights 3.26 as amended by the model owner on 2026-09-18, under the law of the bit): there is no field family, so the strong field of a quark is the quark's own shadows (Highlights 5.4, point 12), and the gluon is a family of things, bit 1, differing from light in that it carries colour charge and so is itself pushed. No content on the ladder and no clock, like light: a gluon carries the phase of the event that emitted it. How a gluon ray carries its colour (colour, a property of the ray with three values, read only at a meeting, or one family per colour) and the size of its own shadow set (release: whether and how a gluon's content casts a shadow) are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding, the string of E7, and the field between quarks that closes into loops of gluon rays is read with the gluon as a thing family. What fixes a shadow set's size, the symmetry of Highlights 3.27 and the path counting of 3.5, or nothing, is hypothesis 17 (Highlights 5.5, 2026-09-17); until it is answered the ratio is an input and the model predicts the form 1/r^2, not the value of the coupling. The gluon entry as a field family (kind field, field_of up and down) is retired."
     },
     "proton": {
       "kind": "bound_group",
@@ -217,9 +182,9 @@
       },
       "binding": "quark_binding",
       "charge": 3,
-      "phase_bits": "default",
-      "field": [
-        "light"
+      "release": [
+        1,
+        4
       ],
       "decided_by": {
         "content": "A10"
@@ -228,7 +193,7 @@
         "mass_kev": 938272,
         "note": "the register's value for A9; the ratio to the electron, 1836.152 67, is the one A10 fits"
       },
-      "note": "Matter (Highlights 3.4): two up and one down quark rays on a ring of Nodes under quark_binding (since 2026-09-17 a corner table, loop-binding-v1; held at one Node under the interim form before), colour-neutral, charge +3 in thirds (+1 e). Its rest rate is its retained content, the ladder rung A10 fits; its fields are light, the field of its charge (Highlights 3.5, 2026-09-17), and the mass field of its retained content, for gravity (Highlights 3.28), and the gluon is released through its members. In A8 it stands as an external body of this family, charge +3, amount M_p, radiating light; when its recoil is wanted it is this bound group. No coupling converts it: the proton is stable."
+      "note": "Matter (Highlights 3.4): two up and one down quark rays on a ring of Nodes under quark_binding (since 2026-09-17 a corner table, loop-binding-v1; held at one Node under the interim form before), colour-neutral, charge +3 in thirds (+1 e). Its rest rate is its retained content, the ladder rung A10 fits; its field is its own shadow set (Highlights 5.4 points 12 and 18, 2026-09-18), read twice, for gravity times the content of what is pushed and for electricity times its charge over its content times the charge of what is pushed; light and the mass field are no longer its fields, and gluons are emitted at the events of its members. In A8 it stands as an external body of this family, charge +3, amount M_p, radiating light; when its recoil is wanted it is this bound group. No coupling converts it: the proton is stable."
     },
     "neutron": {
       "kind": "bound_group",
@@ -240,19 +205,19 @@
       },
       "binding": "quark_binding",
       "charge": 0,
-      "phase_bits": "default",
-      "field": [],
+      "release": "undecided",
       "decay": {
         "coupling": "weak_conversion"
       },
       "decided_by": {
-        "content": "hypothesis 12"
+        "content": "hypothesis 12",
+        "release": "hypothesis 17"
       },
       "reference": {
         "mass_kev": 939565,
         "note": "the register's value for A9"
       },
-      "note": "Matter: one up and two down quark rays on a ring of Nodes under quark_binding (since 2026-09-17 a corner table, loop-binding-v1), colour-neutral, charge 0. Its rest rate is its retained content, the composite spectrum of hypothesis 12; A9 runs its decay and A14 may run it as the moving bound group. Its own field is the mass field, and the gluon is released through its members, as for the proton. Its decay is a table on weak_conversion, not a draw (Highlights 5.4 point 20, clock-readings-v1, 2026-09-18)."
+      "note": "Matter: one up and two down quark rays on a ring of Nodes under quark_binding (since 2026-09-17 a corner table, loop-binding-v1), colour-neutral, charge 0. Its rest rate is its retained content, the composite spectrum of hypothesis 12; A9 runs its decay and A14 may run it as the moving bound group. Its field is its own shadow set, read by gravity alone since its charge is 0 (Highlights 5.4 points 12 and 18, 2026-09-18), its size hypothesis 17's; gluons are emitted at the events of its members, as for the proton. Its decay is a table on weak_conversion, not a draw (Highlights 5.4 point 20, clock-readings-v1, 2026-09-18)."
     }
   },
   "couplings": {
@@ -304,7 +269,7 @@
     "electron_field_turn": {
       "status": "decided",
       "engine": {
-        "identity": "released-field-v1 with ray-meeting-conversion-v1",
+        "identity": "ray-momentum-turn-v3 under bit-law-v1 and clock-readings-v1 (a momentum table with its reading)",
         "landed": true
       },
       "participants": [
@@ -312,92 +277,36 @@
           "type": "electron"
         },
         {
-          "type": "light"
+          "type": "electron"
         }
       ],
-      "outputs": [
-        {
-          "field": "electron",
-          "amount": {
-            "of": 0
-          },
-          "heading": "same",
-          "input": 1,
-          "phase": {
-            "of": 0
-          }
-        },
-        {
-          "field": "light",
-          "amount": {
-            "of": 1
-          },
-          "heading": "reversed",
-          "input": 1
-        }
-      ],
+      "momentum_table": {
+        "electron": 1
+      },
+      "reads": "charge",
       "invariants": [
         {
           "name": "energy",
           "expression": {
-            "field": "amount"
-          }
-        }
-      ],
-      "strength_table": "undecided",
-      "opposite_charge": "undecided",
-      "decided_by": {
-        "strength_table": "A5",
-        "opposite_charge": "A5"
-      },
-      "note": "Repulsion through the released field, as tests/test_released_field.py declares it: an electron that meets a light ray, the field of a charge (Highlights 3.5, 2026-09-17; the family electron_field until that date), leaves on the field ray's heading, away from the line that released it, with its amount and phase, and the field ray returns reversed as the recoil, the opposite momentum walking back to the releaser at finite speed (Highlights 3.5, 3.14). The declared integer table over the arriving field content and the charge product, which sets how much of the electron turns, and the heading rule for opposite charges (a positron meeting the light an electron released, an electron meeting a positron's) are written before A5's run. The opposite_charge entry closes with source_sign, the sign of the releasing charge carried on the field ray as a visible property (Highlights 3.5, 2026-09-17, feature 12): the coupling reads the sign from the field ray, never from its phase. Since feature 8b (ray-momentum-turn-v1, 2026-09-17) the same coupling declared with a momentum_table ({\"light\": 1} for repulsion, -1 for attraction) in place of its outputs turns the electron gradually: its momentum register moves by sign x amount x heading of every light ray it meets, the DDA walks the register one Link per interval, and the field ray returns reversed as before; the whole-Port turn of the outputs form is then the limit of a field amount at least the electron's, and the strength_table's role is the field's amount (A5)."
-    },
-    "recoil_return": {
-      "status": "open",
-      "engine": {
-        "identity": "ray-meeting-conversion-v1, a rule of the releasing family with its own field at the group's Node",
-        "landed": true
-      },
-      "participants": [
-        {
-          "type": [
-            "light",
-            "gluon"
-          ]
-        },
-        {
-          "type": [
-            "electron",
-            "positron",
-            "muon",
-            "up",
-            "down",
-            "proton",
-            "neutron"
-          ]
-        }
-      ],
-      "outputs": "undecided",
-      "invariants": [
-        {
-          "name": "momentum",
-          "expression": {
-            "op": "mul",
+            "op": "add",
             "args": [
               {
-                "field": "amount"
+                "field": "amount",
+                "participant": 0
               },
               {
-                "field": "heading"
+                "field": "amount",
+                "participant": 1
               }
             ]
           }
         }
       ],
+      "strength_table": "undecided",
       "decided_by": {
-        "outputs": "A5"
+        "strength_table": "A5"
       },
-      "note": "What a returning field ray does when it reaches the ray or bound group that released it: the recoil, the field ray's momentum delivered to its releaser exactly (Highlights 3.5, 3.14; the coupling of feature 8 named by released-field-v1). The engine gives a coupling no view of the event record, so a recoil meets its releaser as any field ray of its family does, and a group with no coupling to its field is crossed by its own recoil (ray-binding-v1: the coupling of the recoil to the group is open). A5 measures the first recoil arriving at exactly twice the field ray's transit to the meeting and the two rays' equal and opposite momentum after all returns; the outputs are written before that run."
+      "note": "Repulsion through the field, under the law of the bit (Highlights 5.4 points 3, 15, 16 and 18, the model owner, 2026-09-18): an electron that meets a shadow of another electron takes the push the table declares, sign 1 (repulsion) times the shadow's amount times its heading, read times the owner's charge over its content times the electron's own charge (reads charge, point 16), added to its momentum; the shadow turns back with the opposite sign carrying -push, a field like any other from then on (point 3, return-field-v1), and is absorbed wherever it reaches its owner, whose momentum takes what it carries: the third law holds through the field. The same family on both sides: the shadow is an electron with the bit 0, so one line of this file covers the electron's field and no field family is named; a positron meeting an electron's shadow is the same table with the product of the charges negative, attraction, which is the former opposite_charge entry closed by the reading of point 16 (A5 confronts the whole). The declared integer table over the arriving field content and the charge product (strength_table) is the size of the shadow set, release on the family, and is written before A5's run. The outputs form of 2026-09-17 (the electron leaving whole on the field ray's heading, the field ray returned reversed as a fresh event ray) and the momentum_table over a light family are retired with the field family."
     },
     "electron_proton_binding": {
       "status": "open",
@@ -905,7 +814,7 @@
           }
         }
       ],
-      "note": "A phase offset (Highlights 3.19): the arriving ray continues with its amount and heading and its phase plus the setting, read modulo N, the body's token returned unchanged as the second output. A2 and A3 place one on the long path of each arm; it is the Bell setting in phase form (hypothesis 11)."
+      "note": "A phase offset (Highlights 3.19): the arriving ray continues with its amount and heading and its phase plus the setting, read modulo N, the body's token returned unchanged as the second output. A2 and A3 place one on the long path of each arm; it is the Bell setting in phase form (hypothesis 11). Under lanes-v1 (Highlights 5.4, point 25, 2026-09-18) the token, written on the ray's own heading, shares its lane, and the departure is refused until bodies are things with their own line (the cleanup of 2026-09-18 pins the refusal; the coordinator holds the question of #293)."
     },
     "slit": {
       "status": "open",
@@ -1039,10 +948,10 @@
         "family": "a ray id of this catalog, or the apparatus family below",
         "amount": "a positive integer of any width: the body's content, entering no sum (it releases nothing: its shadows are given with the board, bit-law-v1)",
         "charge": "optional, in thirds of e, read by couplings as the family's charge is",
-        "phase": "optional, the phase its shadows carry, below the world's width; 0 by default",
+        "phase": "optional, the phase its shadows carry, below the world's N; 0 by default",
         "initial_momentum": "optional, a unit-axial heading and a pace [n, d] of Links per interval, n at most d; the momentum is the whole quanta of amount x n / d on that axis; absent for a body at rest",
         "coupling": "optional, \"sink\" (the default, the absorber below), \"polarizer\" (with the polarizer declaration below) or the name of a declared coupling below",
-        "momentum_table": "optional, family id to sign: -1 attraction toward the owner of an arriving shadow of that family, 1 repulsion; the shadow pushes the body and turns back on its steps with the opposite momentum (bit-law-v1, point 3)",
+        "momentum_table": "optional, family id to sign: -1 attraction toward the owner of an arriving shadow of that family (a shadow is a ray of its owner's family with the bit 0), 1 repulsion; the shadow pushes the body and turns back with the opposite sign carrying the opposite momentum, a field from then on (bit-law-v1, point 3 as amended; return-field-v1)",
         "reads": "with momentum_table: \"content\" or \"charge\", what the body multiplies the shadows' message by (bit-law-v1, point 16)",
         "thing": "optional, the body's identity, the owner its shadows carry (bit-law-v1); by default one past the disturbance types and the bodies before it",
         "polarizer": "with coupling polarizer: {family: the ray it polarizes, angle: an integer step of that family's polarization circle, pass: a unit-axial heading (+X by default), table: one entry per step of the circle in steps-ths, unpolarized: the pass share of an unpolarized ray, the table's mean by default} (ray-polarization-v1, feature 11)"
@@ -1054,7 +963,6 @@
         "content": 0,
         "clock": false,
         "charge": 0,
-        "field": [],
         "note": "The family a world gives a piece of apparatus (a mirror, a beam splitter, a phase plate, a slit, a polarizer, a wall, a screen, a beam stop) under a declared table: no clock, because the token must come back with the body's phase (clock-readings-v1: no family declares a rate); no charge and no shadows; named by no coupling but the body's own, so it is its own layer. A star or a fixed proton is a body of the ray of nature it stands for, whose shadows are given with the board."
       },
       "default_coupling": "absorber",
@@ -1135,37 +1043,33 @@
         "light"
       ],
       "couplings": [
-        "electron_field_turn",
-        "recoil_return"
+        "electron_field_turn"
       ],
       "apparatus": [
         "detector"
       ],
-      "note": "The neutral control family of the same rate and content is the run's own declaration; light, the field of both charged families (Highlights 3.5, 2026-09-17), is declared once per releaser today, one family per field_of."
+      "note": "The neutral control family of the same content and clock is the run's own declaration; the field of each charged family is its own shadow set (Highlights 5.4 point 12, 2026-09-18), given with the board, and the recoil is the return of the law (point 3), no coupling."
     },
     "A6": {
       "rays": [
         "light"
       ],
       "couplings": [
-        "recoil_return",
         "absorber"
       ],
       "apparatus": [
         "external_body",
         "detector"
       ],
-      "note": "The star is an external body of declared family and amount M at rest, its shadows the one shadow set read times the content of what is pushed (Highlights 5.4 point 18: the mass field is retired); the slow massive ray and the bound-group control series (feature 8) declare their families in the run; repeated under the law after feature 16."
+      "note": "The star is an external body of declared family and amount M at rest, its shadows the one shadow set read times the content of what is pushed (Highlights 5.4 point 18: the mass field is retired); the slow massive ray and the bound-group control series (feature 8) declare their families in the run; repeated under the law after feature 16. Under the law of the bit (2026-09-18) the star's field is its own shadow set and the recoil is the return of the law (point 3), no coupling; the delay form is deleted."
     },
     "A7": {
       "rays": [],
-      "couplings": [
-        "recoil_return"
-      ],
+      "couplings": [],
       "apparatus": [
         "external_body"
       ],
-      "note": "Two bound groups of retained content M1 and M2, their families the run's declaration, and the same as two external bodies each with a coupling table reading the other's shadows times its content (point 18)."
+      "note": "Two bound groups of retained content M1 and M2, their families the run's declaration, and the same as two external bodies each with a coupling table reading the other's shadows times its content (point 18). Under the law of the bit (2026-09-18) the recoil is the return of the law (point 3), no coupling."
     },
     "A8": {
       "rays": [
@@ -1222,8 +1126,7 @@
         "born_steering",
         "slit",
         "absorber",
-        "electron_field_turn",
-        "recoil_return"
+        "electron_field_turn"
       ],
       "apparatus": [
         "detector",

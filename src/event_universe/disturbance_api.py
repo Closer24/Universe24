@@ -37,8 +37,6 @@ class Simulation(DisturbanceEngine):
             allocation_phase=initial.allocation_phase,
             computation_field=initial.computation_field,
             least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
-            sampling_profile=initial.sampling_profile,
-            return_mode=initial.return_mode,
             # bit-law-v1: the identity of the things of each type, stamped on
             # what a record emits and read by the shadows that come home.
             things=tuple(kind.thing for kind in initial.disturbances),

@@ -892,6 +892,69 @@ run byte-identically, and the runner records
    {"field": "a", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}}],
  "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
 ```
+### The engine clean under the law of the bit (`cleanup-law-v1`)
+
+The cleanup of 2026-09-18, on the model owner's instruction ("the engine
+clean, everything in order"), after features 15 to 18 and 16d. What the law
+retired and the engine still carried is deleted, not kept behind an option:
+
+- the return modes `straight` and `annul` and the `annulled` sink
+  (Highlights 5.4, point 7: things conserve exactly among themselves, nothing
+  leaves for a sink): the world key `return_mode`, `RETURN_MODES`,
+  `annulled_totals`, the `annulled` ledger line, the `mode` and `annulled`
+  fields of the `inverse_split` record; the one behaviour at an event Node is
+  the inverse split to the sibling lines, and `line_balanced` reads an
+  `annulled` line of an older record as a loss;
+- the sampling profile (point 14: nothing draws): `sampling_profile`,
+  `core/sampling_contract.py`, `validate_spatial_sampling`; the draw's names
+  with it: a mark's count of arrivals is `SpatialNodeState.arrivals`, its
+  table `table_catch` / `mark_catch`, the count wrapping at `ARRIVAL_MODULUS`;
+- the lag of `ray-binding-v1` (points 16, 21 and 22: gravity is the push of
+  the shadows read times the content of what is pushed, every ray moves one
+  Link per interval, the word register leaves the model): `LagTable`,
+  `InteractionDefinition.lags`, `Ray.lag`, the output form `delay: {of,
+  table, per}`, `_spend_lag`, `RAY_BINDING` and the `ray_binding` record key;
+  the twenty-three `delay_*` worlds of `examples/nature/a6_bending/` and the
+  `delay` form of their generator (their records stay as dated evidence);
+- the hold of resident rays under a computation load (point 21): the world
+  keys `ray_delay` and `ray_phase_per_tick`, `SpatialNodeState.ray_wait`,
+  the planner's `ray_hold` and `hold_rays`;
+- the field family (point 12; Highlights 3.26 as amended): the catalog's
+  `light` and `gluon` are families of things, every ray record declares its
+  own shadow set (`release`), `recoil_return` is no coupling (the recoil is
+  the return of the law, point 3), and the migration drops the orphan field
+  families the fold left in the example worlds ([catalog](CATALOG.md));
+- the phase width per family: **one N for the world** (the definitions of
+  the law, the model owner, 2026-09-18). `N`, the number of steps of the
+  phase circle, is a world key like `K`, declared once, 64 by default, a
+  power of two from 2 through 4096 (the coherence table's bound); every ray
+  family's phase is a step of that circle, `phase_bits` on a family is
+  refused with a message naming the definitions of the law, a coherence
+  table (`kerengonen.phase_steps`) is written over N (a world that declares
+  no `N` but one table of one size has declared its width once through it;
+  tables of two sizes are refused), the steering table of two things that
+  meet is computed once per width (`steering_table`, cached) and the mixing
+  reads N. `run.json` records `N` beside `K`; `InitialState.phase_steps`
+  holds it. `examples/nature/bit_law_migration.py` (`migrate_n`) sets `N`
+  from the widths a world declared and drops `phase_bits`; every example
+  world follows. What follows for a world that declared no width: it ran
+  on one phase value, where a returning share carried no sign; on a circle
+  of N steps the returning share is the minus (point 24), so the returning
+  and the outgoing shares of one owner sum apart, and the worlds of
+  `tests/test_return_field.py` (a) and `tests/test_perf_arrays.py` are
+  re-pinned from the run of 2026-09-18 with that reason, the latter at N 2
+  and 32 ray slots, its line no longer repeating within 200 intervals (the
+  standing-set search reports its residual), and the A6 `n14` and `n16`
+  worlds deleted with the bound.
+
+Not done in this cleanup and listed on its pull request: the record-as-owner
+field program (the settled rule (v): the outward octant field, the
+couplings of records, the mirror, slit, dissolve, capture and self-exclusion
+of that form, `computation_field` and its delay keys, `node_execution`), the
+generic "home" (point 3: the push and its return of zero steps summed at one
+Node), the body's recoil on its own line, and the stale paragraphs of the
+older documents.
+
 ### Wave-ray families (`wave-ray-family-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.3 and 5.1; [ray-event
@@ -1447,7 +1510,11 @@ whose spatial fields are all ray fields, without the local conservation audit
 without a ray interaction two of whose participants can be spreading families
 (a coupling on field rays inside the region), one Node worker; the runner's
 `--dense-field` flag is the same switch, and the run record carries
-`dense_field: "dense-field-v1"` only when the mode is on.
+`dense_field: "dense-field-v1"` only when the mode is on. Since
+`return-field-v1` (feature 16d, part 2, 2026-09-18) the arrays carry the flow
+and the momentum of every share, so a returning share is the region's like
+any other, mixed in its own group with its momentum apportioned as
+`spread_content` does ([the return is a field](#the-return-is-a-field-return-field-v1)).
 `test_dense_field.py` ([expectations](TEST_EXPECTATIONS.md#the-dense-mode))
 is the test. Since the performance lane of 2026-09-18 (`perf-arrays-v1`,
 [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18))
@@ -2561,12 +2628,12 @@ behaviour, with no declarable alternative:
   register leaves the engine with the stores it named. The runner's per-tick
   `registers` line is `momentum` (the momentum of every thing per tick, keyed
   by thing id, from its rays and its body).
-- **Performance.** The dense region's arrays hold amounts as int32, phases
-  as int16 and flags as int8; the engine's totals are computed once per tick
+- **Performance.** The dense region's arrays hold amounts and momenta as
+  int32 and phases as int16; the engine's totals are computed once per tick
   per bit and memoized until content moves. Its `ret_*`, `wait_*` and `trace`
-  arrays are dormant since `return-field-v1` (a returning share is the
-  engine's until the dense sign axis lands) and the per-Node snapshot still
-  reads the region's Nodes as Node state.
+  arrays went with the walk back under `return-field-v1` (part 2: the region
+  carries the flow and the momentum of every share in its arrays) and the
+  per-Node snapshot still reads the region's Nodes as Node state.
 
 Identity `node-is-ports-v1`, recorded in `run.json` as `node_is_ports`;
 isolated test `tests/test_node_is_ports.py`
@@ -2729,16 +2796,148 @@ behaviour, with no declarable alternative:
   default, 0 for a fresh one) and the chase of `return-chase-v1` (never
   merged): a Node remembers no departure, no shadow waits, every share on its
   way moves one Link per interval.
-- **The dense region.** Until the dense sign axis lands (part 2 of feature
-  16d), a share that carries momentum or that returns (`outbound` 0), parked
-  or on its way, is the engine's: the region refuses it (`plain_ray`) and the
-  Node holding or receiving it is cycled by the engine; the region's parked
-  block stays the outgoing eighteen per owner (`engine_block`,
-  `region_block`).
+- **The dense region** (part 2 of feature 16d, 2026-09-18). The arrays of
+  the shadow layer (`event_universe/dense_field.py`) carry the flow of every
+  share beside its sign (the axes owner, flow, sign, Port, layer) and the
+  momentum it carries (`arr_mom`, `fly_mom`, `reg_mom`, three integers per
+  cell): a returning share lives in the arrays like any share, mixes in its
+  own group (owner, flow, sign) at every dense Node, and the momentum a group
+  carries goes with its shares over the twelve outputs of the mixing, the
+  whole quanta per heading then the ninths, in proportion to their ninths,
+  exact per axis by the largest remainder with the ties to the lower slot
+  (`DenseField._apportion`, the vectorized `apportion_momentum`); the parked
+  ninths hold their part and a release takes the register's momentum in
+  proportion to what it releases, toward zero, the whole when the register
+  empties (`_release`, the vectorized `momentum_part`); a share that walks
+  off an open board takes its momentum with it, booked on the momentum
+  field's escaped lines. The parked block of a dense Node is the engine's,
+  thirty-six slots per owner cell for cell (`DenseFamily.block`,
+  `set_block`), so the two exchange it as it is when a Node changes hands,
+  and `plain_ray` admits a returning or a momentum-carrying share, parked or
+  on its way. The `ret_*`, `wait_*` and `trace` arrays of node-is-ports-v1
+  are deleted with the rule they served. The identity of the two modes,
+  board, parked shares, ledgers and momenta over four ticks of the worlds
+  (a) and (b), is `tests/test_return_field.py` (e); one dense cycle of a
+  returning share against `spread_content` is the `returning` sub-case of
+  `tests/test_dense_field.py`.
 
 Identity `return-field-v1`, recorded in `run.json` as `return_field`;
 isolated test `tests/test_return_field.py`
 ([expectations](TEST_EXPECTATIONS.md#the-return-is-a-field)).
+
+### The shadow's wait (a declared option, `shadow-wait-v1`)
+
+The option ([Highlights](HIGHLIGHTS.md) 5.4, "The shadow's wait, a declared
+option to confront", the model owner, 2026-09-18; feature 16e): whether the
+shadow is affected by the wait of point 23 is open, the law saying it pays
+nothing (points 9 and 23) and the bending's missing time half
+(DERIVATIONS.md round 3) saying the field near a mass may have to slow. Until
+the runs decide, a world MAY declare
+
+    "shadow_wait": {"per_quantum": n | [n, d], "reads": "thing" | "field"}
+
+an experiment's knob, not a rule of the law. Absent, the law as it stands: a
+shadow owes nothing, and every record is byte for byte the record of a world
+that never had the key (`run.json` names the option, `shadow_wait`
+"shadow-wait-v1" and `shadow_wait_option`, only when declared). Declared, it
+holds on every ray family of the world (`SpatialFieldDefinition`'s
+`shadow_wait_numerator`, `shadow_wait_denominator` and `shadow_wait_reads`):
+
+- **The count.** A share owes intervals in units of 1 / d on its own `owed`
+  counter (the counter of point 23, on a shadow now); at its departure a share
+  that owes anything stays this interval and d is spent (`forward_rays`), and
+  it leaves when nothing is owed. A debt below one interval is paid by the
+  interval: a share, unlike a thing, keeps no remainder, since it has no
+  identity past its next mixing (n / d = 11 / 9: a quantum owes 11 ninths and
+  waits two intervals, nine quanta owe 99 and wait eleven, exactly). A waiting
+  share is on the board, on the current line, nothing sourced; it is at its
+  Node fresh (steps 0), so it mixes nowhere, is met by nothing and is home to
+  nothing until it leaves.
+- **`thing`.** A share read by a thing, one that pushes and turns back (at a
+  thing's Node, `_turn`; at a body, `_body_meet`), owes n / d intervals per
+  whole quantum of the push it gave (the push's components in quanta, as
+  `pushed_ray` counts a thing's; read twice under point 18, the sum) before it
+  leaves that Node. A share a mark, or a thing or a body without a table,
+  returns as it is gave no push and owes nothing.
+- **`field`.** A share owes n / d intervals for every whole quantum of another
+  owner's shadows at the Node it crosses this interval: the shadows that
+  arrived there, of every family, whole quanta as they arrived, the parked
+  ninths never (`presence` in the plan); every departure of an owner from that
+  Node, the mixing's and the parked shares' releases alike, carries the debt
+  (`_spread`). A share turned back by a thing, a body or a mark, and a share
+  re-released at its owner, leave under the `thing` reading alone. So a mass's
+  field is an index for the other fields: the denser another owner's field at
+  a Node, the longer a share crossing it stays.
+- **The dense layer.** Under `thing` the pushes happen at things' Nodes, the
+  engine's. Under `field` a dense Node that receives shadows of one owner
+  while it holds or receives another's (arriving from the arrays or by a
+  packet, or parked in its registers) is the engine's this interval, which
+  charges the wait on what leaves it (`DenseField._field_wait_nodes`), and a
+  waiting share keeps its Node the engine's (`plain_ray` refuses a share that
+  owes); a Node of one owner's shadows owes nothing and the region cycles it.
+  The prefill (`initial_field.fill`, the standing set given with the board) is
+  computed without the wait. The identity of the modes is
+  `tests/test_shadow_wait.py` (e).
+
+Identity `shadow-wait-v1`, recorded in `run.json` as `shadow_wait` when
+declared; isolated test `tests/test_shadow_wait.py`
+([expectations](TEST_EXPECTATIONS.md#the-shadows-wait)).
+
+### The wait reads the amplitude (a declared option, `wait-reads-v1`)
+
+The option ([Highlights](HIGHLIGHTS.md) 5.4, "The wait reads the amplitude,
+a coupling to derive", the model owner, 2026-09-18; derivations round 5,
+sections 34 to 38; feature 16f): under the mixed field a thing reads the
+field's flux, 1 / r^2, while the field's amplitude, the size of the coherent
+sum the Node already forms for the mixing, 1 / r, is read by nothing; the
+model owner's direction is that what a thing reads is a coupling (point 16)
+and the coupling names which face of the field each reading takes: the push
+reads the amount (the count of quanta, the intensity), the wait reads the
+size of the coherent sum at the thing's Node (the amplitude, the potential),
+each multiplied by the content as point 16 says. Derived first (round 6) and
+implemented as a declared option so that every record without it stays byte
+for byte: a world MAY declare
+
+    "wait_reads": "amount" | "amplitude"
+
+`amount` by default, point 23 as written (the whole quanta of push read; a
+world that writes the default is the world that never had the key, and its
+record the same). `amplitude`, on every ray family of the world
+(`SpatialFieldDefinition.wait_reads`; `run.json` names `wait_reads`
+"wait-reads-v1" and `wait_reads_option` only then):
+
+- **The amplitude.** At a thing's Node, once per group of the shadows that
+  arrived this interval (the mixing's group: owner, sign, polarization,
+  flow), the size of their coherent sum as the mixing forms it
+  (`arrival_amplitude`): per travel heading the amount that arrived at the
+  phase of its sum, its amplitude the integer square root of the amount in
+  units of 1 / 32 (`MIXING_AMPLITUDE_SCALE`: 32 is the amplitude of one
+  quantum, 288 of 81 quanta, 96 of 9), the six summed on the family's phase
+  circle, and the size of the sum in the same units (the integer square root
+  of x^2 + y^2 over the tables' scale, the floor at each step); its whole
+  units of amplitude are the sum over 32, the floor. Two owners' shares are
+  two sums, never one; one owner's shares from two Ports half a turn apart
+  give the size of their difference (81 and 9 in antiphase: 288 - 96 = 192,
+  six units, where their amounts are 90).
+- **The wait.** The units are read as the push reads the amount, by the
+  rule's reading (point 16: times the thing's content, or the owner's charge
+  over its content times the thing's charge, `push_of` on the units in place
+  of the amount, whole quanta), and the whole quanta so read are what the
+  thing owes at w per quantum (`pushed_ray` with the group's quanta on the
+  first shadow of the group, nothing on the rest); the push itself reads the
+  amount as before, so the momentum a thing takes is unchanged by the option
+  and only its wait differs (81 quanta of one owner in phase at a thing of
+  content 1, w 1: 81 intervals under `amount`, 9 under `amplitude`; 9 quanta,
+  3). Per rule, as point 18 reads the same shadows twice.
+- **The dense layer.** The thing's Node is the engine's, and the shares the
+  region hands it carry their amount and phase per Port as the engine's rays
+  do, so the amplitude the engine forms there is the region's; nothing of the
+  region changes and the identity of the modes is `tests/test_wait_reads.py`
+  (d). The catalog's coupling rows carry no `reads` column of their own (the
+  point-16 reading is a rule's `reads` key), so the option is the world's.
+
+Identity `wait-reads-v1`; isolated test `tests/test_wait_reads.py`
+([expectations](TEST_EXPECTATIONS.md#the-wait-reads-the-amplitude)).
 
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
