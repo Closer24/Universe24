@@ -624,8 +624,7 @@ def tables(record):
             w = probe["window_means"]
             amp = record["amplitude_at_probes"].get(label, {})
             free = record["replays"].get("standing_closed", {}).get("settled_read_nodes", {}).get(label, {})
-            name = f"probe_{label}_closed"
-            sf = (record["worlds"][name].get("standing_field") or {})
+            sf = (record["worlds"][f"probe_{label}"].get("standing_field") or {})
             search = f"{sf.get('standing_field')}, iterations {sf.get('standing_field_iterations')}, residual {(sf.get('standing_field_residual') or {}).get('amount', '-')}"
             lines.append(
                 f"| `{label}` | {probe['radius']:.2f} | " + " | ".join(f"{w[k]:.1f}" for k in ("1-20", "21-40", "41-60", "61-80", "81-100", "101-120")) +
