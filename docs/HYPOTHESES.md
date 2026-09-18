@@ -666,3 +666,27 @@ catalog's undecided release ratios (`rays.mass_field.release`,
 `rays.gluon.release`) name this hypothesis beside their runs, and until it
 is answered the model predicts the form 1/r² and not the values of the
 couplings.
+
+## 18. K as a uniform background: the rest clock and the gravitational slowing as one reading
+
+- **Statement (the model owner's question of 2026-09-18, recorded as a
+  hypothesis, not acted on).** The clock of a thing is content / K (Highlights
+  5.4, point 19) with one K for the world, and the wait near a mass reads the
+  amplitude of the mass's field at the thing's Node (the direction of the same
+  day, derived in DERIVATIONS.md round 6). If K were itself the amplitude of a
+  uniform background of shadows on the whole board, the two would be one
+  reading: the rest rate would be the content times the background's
+  amplitude, and the slowing near a mass the content times the local excess of
+  amplitude the mass adds. In the language of physics the uniform background
+  plays the part the Higgs field plays for rest mass (a uniform field every
+  massive thing is coupled to), while its local variation is the gravitational
+  potential; physics keeps these two apart.
+- **What it would need.** A background that is sourced: DERIVATIONS.md round 5
+  shows an unsourced standing profile decays under the mixing (two thirds of a
+  lone re-release radiate in twenty intervals), so a uniform background must be
+  fed by something, or be the standing part of every thing's field summed over
+  the board (a closed board), which is a claim to derive before anything else.
+- **Status.** Open. Not needed for the four gravitational tests (A6 repeated),
+  which read the local amplitude with K as a constant. Taken up only if the
+  runs under the current reading fail in a way this would cure, or the model
+  owner asks.
