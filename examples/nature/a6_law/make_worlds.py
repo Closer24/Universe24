@@ -18,9 +18,9 @@ take 5 GB each and 10 s per tick, two at a time on the machine of the day
 (16 GB), and the series did not fit. The field is settled before it is read: `standing_field` is
 declared, so the dense region looks for a repeat of its state (a fixed point or
 a cycle) within the run and replays the cycle from then on; the run's record
-carries the iterations to the cycle and the residual (standing-field-v1). One
-open-board control of the clock kind and one of the bending kind stand beside
-the closed board.
+carries the iterations to the cycle and the residual (standing-field-v1). No
+world of the series is open: "only closed worlds are tested" (the model owner,
+2026-09-18, Highlights 5.4 "The board of a run is closed", PR #314).
 
 The mass is an external body (external-body-v1) of the family `star`, amount
 2^20 with `release` [1, 2^20 / X] so that X quanta leave on every heading per
@@ -74,8 +74,7 @@ would shield it completely (a body returns every shadow), so the cavity is
 open on its four sides. Batch `a` holds r = 3, 5, 8 (and 5 again on -Z, the
 symmetry check), batch `b` r = 4, 6, 10 (and 6 again). 300 ticks. `m256`
 under both readings at w = 1 and at the GR w, `m64` under both at w = 1;
-`clock_control_{batch}` is the same without the star; `clock_open_a` the
-batch `a` world of `m256` on an open board.
+`clock_control_{batch}` is the same without the star.
 
 Bending worlds (`bend_{mass}_{w}_{reading}_b{b1}_{b2}`): twelve lines parallel
 to X, six per impact parameter (b = 3 and 6 in one world, 4 and 8 in the
@@ -86,8 +85,7 @@ light thing per line launched at x = 0 on +X at tick 0, and a mark (setting
 recording the arrival tick: a straight pass arrives at tick 32, and x_A = x_B
 = 16 for the Shapiro delay. 100 ticks. `m256` under both readings at w = 1
 and at the GR w, `m64` and `m16` under `amount` at w = 1; `bend_control_*`
-is the same without the star, `bend_open_b3_6` the m256 w = 1 amount world
-on an open board.
+is the same without the star.
 
 The separating run (`sep_{option}`, DERIVATIONS.md section 37 (ix) and 43 (x)):
 a source body A of the family `source` (X = 1024, fill 14: the whole quanta
@@ -427,7 +425,7 @@ def cases():
     """The worlds of the series in the order they are run (four at a time, the
     machine's cores): the clocks of m256 at w = 1 (the two slopes), the bending
     of m256 at w = 1, the controls, the separating run, the GR w, the scaling
-    masses, the open-board controls."""
+    masses."""
     for wait_name in ("w1",):
         for batch in ("a", "b"):
             for reading in ("amount", "amplitude"):
@@ -468,8 +466,6 @@ def cases():
             yield name, bending_world(name, mass="m256", wait_name="wgr", reading=reading, impacts=impacts)
     for option in ("law", "thing", "field"):
         yield f"sep_{option}_m256", separating_world(f"sep_{option}_m256", option=option, mass="m256")
-    yield "clock_open_a", clock_world("clock_open_a", mass="m256", wait_name="w1", reading="amount", batch="a", boundary="open")
-    yield "bend_open_b3_6", bending_world("bend_open_b3_6", mass="m256", wait_name="w1", reading="amount", impacts=(3, 6), boundary="open")
 
 
 def main():

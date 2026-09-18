@@ -105,6 +105,47 @@ def clock_fit_rows(results):
     return rows
 
 
+def fit_origin(points, power):
+    """Least squares y = A / r^power through the origin (as analyze.py)."""
+    xs = [(1.0 / r**power, y) for r, y in points]
+    sxx = sum(x * x for x, _ in xs)
+    if sxx == 0:
+        return None, None
+    a = sum(x * y for x, y in xs) / sxx
+    return a, sum((y - a * x) ** 2 for x, y in xs)
+
+
+def pooled_fit_rows(results):
+    """The eight cavities of the two batches pooled per mass, reading and w."""
+    groups = {}
+    for result in results:
+        if result["kind"] != "clock" or not result["star_on"] or result["boundary"] != "periodic":
+            continue
+        key = (result["mass"]["X"], result["wait_reads"], result["w"])
+        groups.setdefault(key, []).extend((c["r_euclid"], 1.0 - c["rate"]) for c in result["clocks"] if c["rate"] is not None)
+    rows = []
+    for (x, reading, w), points in sorted(groups.items()):
+        gm = 6 * x / (2 * math.pi)
+        a, rss_a = fit_origin(points, 1)
+        b, rss_b = fit_origin(points, 2)
+        rows.append(
+            [
+                f"X = {x} (GM = {gm:.1f})",
+                reading,
+                "1" if w == 1 else f"{w:.2f} (GR)",
+                len(points),
+                fmt(a, 3),
+                fmt(rss_a, 3),
+                fmt(b, 2),
+                fmt(rss_b, 3),
+                fmt(a / gm, 4) if a is not None else "-",
+                fmt((w / 3) * 0.5373 * math.sqrt(gm) / 2, 3),
+                fmt((math.sqrt(3) * w / 2) * gm / 2, 1),
+            ]
+        )
+    return rows
+
+
 def redshift_rows(results):
     rows = []
     for result in results:
@@ -112,9 +153,9 @@ def redshift_rows(results):
             continue
         gm = result["mass"]["GM"] if result["mass"] else None
         w = result["w"]
-        clocks = sorted(result["clocks"], key=lambda c: (c["r"], c["thing"]))
+        clocks = sorted(result["clocks"], key=lambda c: (c["r"], c["axis"]))
         for near, far in zip(clocks, clocks[1:]):
-            if near["rate"] is None or far["rate"] is None or near["rate"] == 0:
+            if near["rate"] is None or far["rate"] is None or near["rate"] == 0 or near["r"] == far["r"]:
                 continue
             z = far["rate"] / near["rate"] - 1
             r1, r2 = near["r_euclid"], far["r_euclid"]
@@ -288,6 +329,7 @@ figcaption { color: var(--muted); font-size: 12px; }
     body.append(f"<p>{notes['clock']}</p>")
     body.append(table(["world", "board", "r (Euclidean)", "half-axis", "rate", "waits", "quanta read (net, per push tick)", "ticks stayed", "left at tick"], clock_rows(results), "Per cavity: the rate (moving intervals over intervals) while the thing stayed between its mirrors."))
     body.append(table(["world", "A (1/r fit)", "rss", "B (1/r^2 fit)", "rss", "A / GM (GR: 1 at the GR w)", "GR", "derivation, amplitude: (w/3) 0.537 sqrt(GM) / 2", "derivation, count: (sqrt3 w/2) GM / 2"], clock_fit_rows(results), "The deficit 1 - rate fitted through the origin; the derivation's coefficients halved for a cavity that reads every other interval."))
+    body.append(table(["mass", "reading", "w", "cavities", "A (1/r)", "rss", "B (1/r^2)", "rss", "A / GM (GR: 1 at the GR w)", "derivation, amplitude (halved)", "derivation, count (halved)"], pooled_fit_rows(results), "The two slopes: the cavities of both batches pooled per mass, reading and w."))
     body.append("<h2>2. The redshift between two radii</h2>")
     body.append(table(["world", "r_near -> r_far", "z = rate(far)/rate(near) - 1", "GR: GM (1/r1 - 1/r2)", "derivation, amplitude", "derivation, count"], redshift_rows(results)))
     body.append("<h2>3. The bending of a light thing</h2>")

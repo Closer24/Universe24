@@ -1,0 +1,6016 @@
+[
+ {
+  "kind": "bend",
+  "star_on": false,
+  "b_nominal": [
+   3,
+   6
+  ],
+  "per_b": {
+   "3": {
+    "lines": 6,
+    "arrived": 6,
+    "turned": 0,
+    "frozen": 0,
+    "stop_x": [],
+    "stop_r": [],
+    "stop_ticks": [],
+    "fraction_turned": 0.0,
+    "mean_net_transverse_toward": 0.0,
+    "mean_quanta_read": 0.0,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": []
+   },
+   "6": {
+    "lines": 6,
+    "arrived": 6,
+    "turned": 0,
+    "frozen": 0,
+    "stop_x": [],
+    "stop_r": [],
+    "stop_ticks": [],
+    "fraction_turned": 0.0,
+    "mean_net_transverse_toward": 0.0,
+    "mean_quanta_read": 0.0,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": []
+   }
+  },
+  "arrived": 12,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_control_b3_6/run",
+  "model": "a6-law-bend-control-b3-6",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 48.08942452300107,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "f1671abe7264afce92ec439c065dcfc08ab5910bcb466713a9dbb0b89549b87d",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {},
+  "mass": null,
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": true,
+   "standing_field_iterations": 34,
+   "standing_field_period": 1,
+   "standing_field_residual": {
+    "cells": 0,
+    "amount": 0
+   },
+   "standing_field_ticks": 66,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   0,
+   0
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     19,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     19,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 15.297058540778355,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     19,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     19,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 15.329709716755891,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     19,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     19,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 15.329709716755891,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     13,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     13,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 15.297058540778355,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     13,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     13,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 15.329709716755891,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     13,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     13,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 15.329709716755891,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     22,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     22,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 16.15549442140351,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     22,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     22,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     22,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     22,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     10,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     10,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 16.15549442140351,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     10,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     10,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     10,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     10,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   }
+  ]
+ },
+ {
+  "kind": "bend",
+  "star_on": false,
+  "b_nominal": [
+   4,
+   8
+  ],
+  "per_b": {
+   "4": {
+    "lines": 6,
+    "arrived": 6,
+    "turned": 0,
+    "frozen": 0,
+    "stop_x": [],
+    "stop_r": [],
+    "stop_ticks": [],
+    "fraction_turned": 0.0,
+    "mean_net_transverse_toward": 0.0,
+    "mean_quanta_read": 0.0,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": []
+   },
+   "8": {
+    "lines": 6,
+    "arrived": 6,
+    "turned": 0,
+    "frozen": 0,
+    "stop_x": [],
+    "stop_r": [],
+    "stop_ticks": [],
+    "fraction_turned": 0.0,
+    "mean_net_transverse_toward": 0.0,
+    "mean_quanta_read": 0.0,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": []
+   }
+  },
+  "arrived": 12,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_control_b4_8/run",
+  "model": "a6-law-bend-control-b4-8",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 47.81145565099905,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "44fab242b3d706c342de05628c93473ff21830fb1aee144577cc4f0fc03feead",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {},
+  "mass": null,
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": true,
+   "standing_field_iterations": 34,
+   "standing_field_period": 1,
+   "standing_field_residual": {
+    "cells": 0,
+    "amount": 0
+   },
+   "standing_field_ticks": 66,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   0,
+   0
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     20,
+     16
+    ],
+    "b": 4.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     20,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 15.524174696260024,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     20,
+     17
+    ],
+    "b": 4.123105625617661,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     20,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 15.556349186104045,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     20,
+     15
+    ],
+    "b": 4.123105625617661,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     20,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 15.556349186104045,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     12,
+     16
+    ],
+    "b": 4.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     12,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 15.524174696260024,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     12,
+     17
+    ],
+    "b": 4.123105625617661,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     12,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 15.556349186104045,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     12,
+     15
+    ],
+    "b": 4.123105625617661,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     12,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 15.556349186104045,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     16
+    ],
+    "b": 8.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 17.0,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     17
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     15
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     16
+    ],
+    "b": 8.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 17.0,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     17
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     15
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   }
+  ]
+ },
+ {
+  "kind": "bend",
+  "star_on": true,
+  "b_nominal": [
+   3,
+   6
+  ],
+  "per_b": {
+   "3": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     11,
+     10,
+     10,
+     10,
+     10,
+     10
+    ],
+    "stop_r": [
+     5.83,
+     6.78,
+     6.78,
+     6.32,
+     6.78,
+     6.78
+    ],
+    "stop_ticks": [
+     11,
+     10,
+     10,
+     12,
+     10,
+     10
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": 2.1666666666666665,
+    "mean_quanta_read": 70.83333333333333,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     12,
+     11,
+     12,
+     10,
+     11,
+     12
+    ]
+   },
+   "6": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     12,
+     12,
+     12,
+     13,
+     12,
+     11
+    ],
+    "stop_r": [
+     7.21,
+     7.28,
+     7.28,
+     6.78,
+     7.28,
+     7.87
+    ],
+    "stop_ticks": [
+     12,
+     12,
+     12,
+     14,
+     12,
+     11
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": -1.6666666666666667,
+    "mean_quanta_read": 61.666666666666664,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     12,
+     12,
+     14,
+     12,
+     12,
+     14
+    ]
+   }
+  },
+  "arrived": 0,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_m256_w1_amount_b3_6/run",
+  "model": "a6-law-bend-m256-w1-amount-b3-6",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 675.2004544109996,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "2be4288b31560cb0359e37c1eb709c8f9b07947248214872bd7894821dac3957",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 27166,
+    "amount": 46901
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21504,
+   21504
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     19,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 81,
+    "turn_tick": 12,
+    "transverse_toward": 37,
+    "transverse_away": 28,
+    "along_back": 16,
+    "along_forward": 36,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     19,
+     16
+    ],
+    "last_tick": 11,
+    "stop_r": 5.830951894845301,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     19,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 68,
+    "turn_tick": 11,
+    "transverse_toward": 25,
+    "transverse_away": 21,
+    "along_back": 13,
+    "along_forward": 32,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     19,
+     17
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     19,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 66,
+    "turn_tick": 12,
+    "transverse_toward": 28,
+    "transverse_away": 29,
+    "along_back": 12,
+    "along_forward": 25,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     19,
+     15
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     13,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 76,
+    "turn_tick": 10,
+    "transverse_toward": 16,
+    "transverse_away": 6,
+    "along_back": 10,
+    "along_forward": 16,
+    "exit_heading": [
+     0,
+     1,
+     0
+    ],
+    "exit_offset": [
+     1,
+     0
+    ],
+    "last_node": [
+     10,
+     14,
+     16
+    ],
+    "last_tick": 12,
+    "stop_r": 6.324555320336759,
+    "waits_after_stop": 88,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     13,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 63,
+    "turn_tick": 11,
+    "transverse_toward": 20,
+    "transverse_away": 26,
+    "along_back": 15,
+    "along_forward": 34,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     13,
+     17
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     13,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 71,
+    "turn_tick": 12,
+    "transverse_toward": 28,
+    "transverse_away": 31,
+    "along_back": 13,
+    "along_forward": 29,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     13,
+     15
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     22,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 45,
+    "turn_tick": 12,
+    "transverse_toward": 27,
+    "transverse_away": 14,
+    "along_back": 8,
+    "along_forward": 14,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     22,
+     16
+    ],
+    "last_tick": 12,
+    "stop_r": 7.211102550927978,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     22,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 67,
+    "turn_tick": 12,
+    "transverse_toward": 16,
+    "transverse_away": 39,
+    "along_back": 7,
+    "along_forward": 26,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     22,
+     17
+    ],
+    "last_tick": 12,
+    "stop_r": 7.280109889280518,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     22,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 73,
+    "turn_tick": 14,
+    "transverse_toward": 20,
+    "transverse_away": 52,
+    "along_back": 10,
+    "along_forward": 21,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     22,
+     15
+    ],
+    "last_tick": 12,
+    "stop_r": 7.280109889280518,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     10,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 67,
+    "turn_tick": 12,
+    "transverse_toward": 18,
+    "transverse_away": 8,
+    "along_back": 26,
+    "along_forward": 33,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     -1
+    ],
+    "last_node": [
+     13,
+     10,
+     15
+    ],
+    "last_tick": 14,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 86,
+    "waits": 86
+   },
+   {
+    "line": [
+     0,
+     10,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 57,
+    "turn_tick": 12,
+    "transverse_toward": 45,
+    "transverse_away": 35,
+    "along_back": 7,
+    "along_forward": 17,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     10,
+     17
+    ],
+    "last_tick": 12,
+    "stop_r": 7.280109889280518,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     10,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 61,
+    "turn_tick": 14,
+    "transverse_toward": 33,
+    "transverse_away": 21,
+    "along_back": 7,
+    "along_forward": 17,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     10,
+     15
+    ],
+    "last_tick": 11,
+    "stop_r": 7.874007874011811,
+    "waits_after_stop": 89,
+    "waits": 89
+   }
+  ]
+ },
+ {
+  "kind": "bend",
+  "star_on": true,
+  "b_nominal": [
+   4,
+   8
+  ],
+  "per_b": {
+   "4": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     11,
+     11,
+     10,
+     10,
+     11,
+     11
+    ],
+    "stop_r": [
+     6.4,
+     6.48,
+     6.78,
+     7.21,
+     6.48,
+     6.48
+    ],
+    "stop_ticks": [
+     11,
+     11,
+     13,
+     10,
+     11,
+     11
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": -23.333333333333332,
+    "mean_quanta_read": 73.33333333333333,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     12,
+     11,
+     11,
+     12,
+     11,
+     12
+    ]
+   },
+   "8": {
+    "lines": 6,
+    "arrived": 5,
+    "turned": 1,
+    "frozen": 1,
+    "stop_x": [
+     18
+    ],
+    "stop_r": [
+     5.39
+    ],
+    "stop_ticks": [
+     43
+    ],
+    "fraction_turned": 0.16666666666666666,
+    "mean_net_transverse_toward": 2.1666666666666665,
+    "mean_quanta_read": 11.333333333333334,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": [
+     20
+    ]
+   }
+  },
+  "arrived": 5,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_m256_w1_amount_b4_8/run",
+  "model": "a6-law-bend-m256-w1-amount-b4-8",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 675.0829104160002,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "284851fb73814131277ea6f0a13d7145625e02ad2231e8bd8aa01fbe626ed4a0",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 25760,
+    "amount": 44852
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21504,
+   21504
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     20,
+     16
+    ],
+    "b": 4.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 82,
+    "turn_tick": 12,
+    "transverse_toward": 29,
+    "transverse_away": 19,
+    "along_back": 13,
+    "along_forward": 35,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     20,
+     16
+    ],
+    "last_tick": 11,
+    "stop_r": 6.4031242374328485,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     20,
+     17
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 84,
+    "turn_tick": 11,
+    "transverse_toward": 25,
+    "transverse_away": 202,
+    "along_back": 34,
+    "along_forward": 68,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     20,
+     17
+    ],
+    "last_tick": 11,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     20,
+     15
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 67,
+    "turn_tick": 11,
+    "transverse_toward": 35,
+    "transverse_away": 25,
+    "along_back": 15,
+    "along_forward": 23,
+    "exit_heading": [
+     0,
+     -1,
+     0
+    ],
+    "exit_offset": [
+     -1,
+     0
+    ],
+    "last_node": [
+     10,
+     19,
+     15
+    ],
+    "last_tick": 13,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 87,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     12,
+     16
+    ],
+    "b": 4.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 57,
+    "turn_tick": 12,
+    "transverse_toward": 13,
+    "transverse_away": 9,
+    "along_back": 14,
+    "along_forward": 20,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     12,
+     16
+    ],
+    "last_tick": 10,
+    "stop_r": 7.211102550927978,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     12,
+     17
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 76,
+    "turn_tick": 11,
+    "transverse_toward": 46,
+    "transverse_away": 44,
+    "along_back": 19,
+    "along_forward": 43,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     12,
+     17
+    ],
+    "last_tick": 11,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     12,
+     15
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 74,
+    "turn_tick": 12,
+    "transverse_toward": 53,
+    "transverse_away": 42,
+    "along_back": 17,
+    "along_forward": 39,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     12,
+     15
+    ],
+    "last_tick": 11,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     24,
+     16
+    ],
+    "b": 8.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 17.0,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     17
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     15
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     16
+    ],
+    "b": 8.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 68,
+    "turn_tick": 20,
+    "transverse_toward": 21,
+    "transverse_away": 8,
+    "along_back": 21,
+    "along_forward": 15,
+    "exit_heading": [
+     0,
+     1,
+     0
+    ],
+    "exit_offset": [
+     3,
+     0
+    ],
+    "last_node": [
+     18,
+     11,
+     16
+    ],
+    "last_tick": 43,
+    "stop_r": 5.385164807134504,
+    "waits_after_stop": 57,
+    "waits": 75
+   },
+   {
+    "line": [
+     0,
+     8,
+     17
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     15
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   }
+  ]
+ },
+ {
+  "kind": "bend",
+  "star_on": true,
+  "b_nominal": [
+   3,
+   6
+  ],
+  "per_b": {
+   "3": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     11,
+     10,
+     10,
+     10,
+     10,
+     11
+    ],
+    "stop_r": [
+     5.92,
+     6.78,
+     6.78,
+     6.32,
+     6.78,
+     6.16
+    ],
+    "stop_ticks": [
+     12,
+     10,
+     10,
+     12,
+     10,
+     13
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": 3.1666666666666665,
+    "mean_quanta_read": 76.33333333333333,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     11,
+     11,
+     12,
+     10,
+     11,
+     14
+    ]
+   },
+   "6": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     12,
+     12,
+     12,
+     13,
+     12,
+     11
+    ],
+    "stop_r": [
+     6.4,
+     6.48,
+     6.48,
+     5.92,
+     7.28,
+     7.87
+    ],
+    "stop_ticks": [
+     22,
+     16,
+     13,
+     15,
+     12,
+     11
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": 25.166666666666668,
+    "mean_quanta_read": 74.0,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     12,
+     12,
+     12,
+     12,
+     12,
+     14
+    ]
+   }
+  },
+  "arrived": 0,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_m256_w1_amplitude_b3_6/run",
+  "model": "a6-law-bend-m256-w1-amplitude-b3-6",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 681.4527227280005,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "af3dec92d1c11398fc1b7b936d441f82be9c273aed844e447b74fe0c289a8f15",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 26174,
+    "amount": 44813
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21504,
+   21504
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     19,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 84,
+    "turn_tick": 11,
+    "transverse_toward": 24,
+    "transverse_away": 23,
+    "along_back": 9,
+    "along_forward": 131,
+    "exit_heading": [
+     0,
+     0,
+     1
+    ],
+    "exit_offset": [
+     0,
+     1
+    ],
+    "last_node": [
+     11,
+     19,
+     17
+    ],
+    "last_tick": 12,
+    "stop_r": 5.916079783099616,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     19,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 85,
+    "turn_tick": 11,
+    "transverse_toward": 29,
+    "transverse_away": 23,
+    "along_back": 0,
+    "along_forward": 107,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     19,
+     17
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     19,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 66,
+    "turn_tick": 12,
+    "transverse_toward": 28,
+    "transverse_away": 29,
+    "along_back": 16,
+    "along_forward": 36,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     19,
+     15
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     13,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 66,
+    "turn_tick": 10,
+    "transverse_toward": 22,
+    "transverse_away": 9,
+    "along_back": 18,
+    "along_forward": 31,
+    "exit_heading": [
+     0,
+     1,
+     0
+    ],
+    "exit_offset": [
+     1,
+     0
+    ],
+    "last_node": [
+     10,
+     14,
+     16
+    ],
+    "last_tick": 12,
+    "stop_r": 6.324555320336759,
+    "waits_after_stop": 88,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     13,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 80,
+    "turn_tick": 11,
+    "transverse_toward": 37,
+    "transverse_away": 37,
+    "along_back": 33,
+    "along_forward": 62,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     10,
+     13,
+     17
+    ],
+    "last_tick": 10,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 90,
+    "waits": 90
+   },
+   {
+    "line": [
+     0,
+     13,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 77,
+    "turn_tick": 14,
+    "transverse_toward": 36,
+    "transverse_away": 36,
+    "along_back": 17,
+    "along_forward": 41,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     -1
+    ],
+    "last_node": [
+     11,
+     13,
+     14
+    ],
+    "last_tick": 13,
+    "stop_r": 6.164414002968976,
+    "waits_after_stop": 87,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     22,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 77,
+    "turn_tick": 12,
+    "transverse_toward": 32,
+    "transverse_away": 19,
+    "along_back": 17,
+    "along_forward": 25,
+    "exit_heading": [
+     0,
+     -1,
+     0
+    ],
+    "exit_offset": [
+     -1,
+     0
+    ],
+    "last_node": [
+     12,
+     21,
+     16
+    ],
+    "last_tick": 22,
+    "stop_r": 6.4031242374328485,
+    "waits_after_stop": 78,
+    "waits": 87
+   },
+   {
+    "line": [
+     0,
+     22,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 70,
+    "turn_tick": 12,
+    "transverse_toward": 53,
+    "transverse_away": 22,
+    "along_back": 16,
+    "along_forward": 20,
+    "exit_heading": [
+     0,
+     -1,
+     0
+    ],
+    "exit_offset": [
+     -1,
+     0
+    ],
+    "last_node": [
+     12,
+     21,
+     17
+    ],
+    "last_tick": 16,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 84,
+    "waits": 87
+   },
+   {
+    "line": [
+     0,
+     22,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 78,
+    "turn_tick": 12,
+    "transverse_toward": 77,
+    "transverse_away": 17,
+    "along_back": 24,
+    "along_forward": 37,
+    "exit_heading": [
+     0,
+     -1,
+     0
+    ],
+    "exit_offset": [
+     -1,
+     0
+    ],
+    "last_node": [
+     12,
+     21,
+     15
+    ],
+    "last_tick": 13,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 87,
+    "waits": 87
+   },
+   {
+    "line": [
+     0,
+     10,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 83,
+    "turn_tick": 12,
+    "transverse_toward": 24,
+    "transverse_away": 11,
+    "along_back": 46,
+    "along_forward": 52,
+    "exit_heading": [
+     0,
+     1,
+     0
+    ],
+    "exit_offset": [
+     1,
+     -1
+    ],
+    "last_node": [
+     13,
+     11,
+     15
+    ],
+    "last_tick": 15,
+    "stop_r": 5.916079783099616,
+    "waits_after_stop": 85,
+    "waits": 85
+   },
+   {
+    "line": [
+     0,
+     10,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 54,
+    "turn_tick": 12,
+    "transverse_toward": 46,
+    "transverse_away": 34,
+    "along_back": 5,
+    "along_forward": 14,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     10,
+     17
+    ],
+    "last_tick": 12,
+    "stop_r": 7.280109889280518,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     10,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 82,
+    "turn_tick": 14,
+    "transverse_toward": 76,
+    "transverse_away": 54,
+    "along_back": 24,
+    "along_forward": 31,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     10,
+     15
+    ],
+    "last_tick": 11,
+    "stop_r": 7.874007874011811,
+    "waits_after_stop": 89,
+    "waits": 89
+   }
+  ]
+ },
+ {
+  "kind": "bend",
+  "star_on": true,
+  "b_nominal": [
+   4,
+   8
+  ],
+  "per_b": {
+   "4": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     11,
+     11,
+     10,
+     12,
+     11,
+     11
+    ],
+    "stop_r": [
+     6.4,
+     6.48,
+     6.78,
+     4.12,
+     6.48,
+     6.48
+    ],
+    "stop_ticks": [
+     11,
+     11,
+     13,
+     70,
+     11,
+     11
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": -21.0,
+    "mean_quanta_read": 74.16666666666667,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     12,
+     11,
+     11,
+     12,
+     11,
+     12
+    ]
+   },
+   "8": {
+    "lines": 6,
+    "arrived": 5,
+    "turned": 1,
+    "frozen": 1,
+    "stop_x": [
+     20
+    ],
+    "stop_r": [
+     6.4
+    ],
+    "stop_ticks": [
+     31
+    ],
+    "fraction_turned": 0.16666666666666666,
+    "mean_net_transverse_toward": 2.1666666666666665,
+    "mean_quanta_read": 10.666666666666666,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": [
+     20
+    ]
+   }
+  },
+  "arrived": 5,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_m256_w1_amplitude_b4_8/run",
+  "model": "a6-law-bend-m256-w1-amplitude-b4-8",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 695.1567264280002,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "304f0e7b5a5e1f065cb61a18d09017f86800d915aab92169467c92ff47a2d759",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 27507,
+    "amount": 47613
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21504,
+   21504
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     20,
+     16
+    ],
+    "b": 4.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 79,
+    "turn_tick": 12,
+    "transverse_toward": 29,
+    "transverse_away": 18,
+    "along_back": 11,
+    "along_forward": 30,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     20,
+     16
+    ],
+    "last_tick": 11,
+    "stop_r": 6.4031242374328485,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     20,
+     17
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 83,
+    "turn_tick": 11,
+    "transverse_toward": 24,
+    "transverse_away": 197,
+    "along_back": 29,
+    "along_forward": 58,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     20,
+     17
+    ],
+    "last_tick": 11,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     20,
+     15
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 68,
+    "turn_tick": 11,
+    "transverse_toward": 36,
+    "transverse_away": 27,
+    "along_back": 14,
+    "along_forward": 26,
+    "exit_heading": [
+     0,
+     -1,
+     0
+    ],
+    "exit_offset": [
+     -1,
+     0
+    ],
+    "last_node": [
+     10,
+     19,
+     15
+    ],
+    "last_tick": 13,
+    "stop_r": 6.782329983125268,
+    "waits_after_stop": 87,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     12,
+     16
+    ],
+    "b": 4.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 69,
+    "turn_tick": 12,
+    "transverse_toward": 23,
+    "transverse_away": 8,
+    "along_back": 21,
+    "along_forward": 26,
+    "exit_heading": [
+     0,
+     1,
+     0
+    ],
+    "exit_offset": [
+     3,
+     0
+    ],
+    "last_node": [
+     12,
+     15,
+     16
+    ],
+    "last_tick": 70,
+    "stop_r": 4.123105625617661,
+    "waits_after_stop": 30,
+    "waits": 85
+   },
+   {
+    "line": [
+     0,
+     12,
+     17
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 75,
+    "turn_tick": 11,
+    "transverse_toward": 45,
+    "transverse_away": 46,
+    "along_back": 20,
+    "along_forward": 48,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     12,
+     17
+    ],
+    "last_tick": 11,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     12,
+     15
+    ],
+    "b": 4.123105625617661,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 71,
+    "turn_tick": 12,
+    "transverse_toward": 52,
+    "transverse_away": 39,
+    "along_back": 17,
+    "along_forward": 38,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     12,
+     15
+    ],
+    "last_tick": 11,
+    "stop_r": 6.48074069840786,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     24,
+     16
+    ],
+    "b": 8.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 17.0,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     17
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     24,
+     15
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     24,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     16
+    ],
+    "b": 8.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 64,
+    "turn_tick": 20,
+    "transverse_toward": 20,
+    "transverse_away": 7,
+    "along_back": 20,
+    "along_forward": 16,
+    "exit_heading": [
+     0,
+     1,
+     0
+    ],
+    "exit_offset": [
+     3,
+     0
+    ],
+    "last_node": [
+     20,
+     11,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 6.4031242374328485,
+    "waits_after_stop": 69,
+    "waits": 75
+   },
+   {
+    "line": [
+     0,
+     8,
+     17
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     8,
+     15
+    ],
+    "b": 8.06225774829855,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     8,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 17.029386365926403,
+    "waits_after_stop": 69,
+    "waits": 0
+   }
+  ]
+ },
+ {
+  "kind": "bend",
+  "star_on": true,
+  "b_nominal": [
+   3,
+   6
+  ],
+  "per_b": {
+   "3": {
+    "lines": 6,
+    "arrived": 0,
+    "turned": 6,
+    "frozen": 6,
+    "stop_x": [
+     12,
+     13,
+     12,
+     14,
+     11,
+     13
+    ],
+    "stop_r": [
+     5.0,
+     3.74,
+     5.1,
+     3.74,
+     5.92,
+     4.24
+    ],
+    "stop_ticks": [
+     12,
+     62,
+     12,
+     15,
+     11,
+     18
+    ],
+    "fraction_turned": 1.0,
+    "mean_net_transverse_toward": 24.666666666666668,
+    "mean_quanta_read": 68.0,
+    "delays_of_arrived": [],
+    "mean_delay_of_arrived": null,
+    "turn_ticks": [
+     13,
+     13,
+     13,
+     13,
+     15,
+     14
+    ]
+   },
+   "6": {
+    "lines": 6,
+    "arrived": 6,
+    "turned": 0,
+    "frozen": 0,
+    "stop_x": [],
+    "stop_r": [],
+    "stop_ticks": [],
+    "fraction_turned": 0.0,
+    "mean_net_transverse_toward": 0.0,
+    "mean_quanta_read": 0.0,
+    "delays_of_arrived": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mean_delay_of_arrived": 0.0,
+    "turn_ticks": []
+   }
+  },
+  "arrived": 6,
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/bend_m64_w1_amount_b3_6/run",
+  "model": "a6-law-bend-m64-w1-amount-b3-6",
+  "status": "completed",
+  "error": null,
+  "ticks": 100,
+  "elapsed_seconds": 642.6182767620012,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "4671dae59d0fa931fb4dace433d9a3f85d298dc27681346178f378a4385c85f8",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 64,
+   "S": 384,
+   "GM": 61.11549814728781
+  },
+  "standing": {
+   "standing_field_max_iterations": 100,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 5547,
+    "amount": 8938
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   5376,
+   5376
+  ],
+  "passes": [
+   {
+    "line": [
+     0,
+     19,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 59,
+    "turn_tick": 13,
+    "transverse_toward": 7,
+    "transverse_away": 5,
+    "along_back": 8,
+    "along_forward": 17,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     19,
+     16
+    ],
+    "last_tick": 12,
+    "stop_r": 5.0,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     19,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 63,
+    "turn_tick": 13,
+    "transverse_toward": 23,
+    "transverse_away": 21,
+    "along_back": 11,
+    "along_forward": 25,
+    "exit_heading": [
+     0,
+     -1,
+     0
+    ],
+    "exit_offset": [
+     -1,
+     0
+    ],
+    "last_node": [
+     13,
+     18,
+     17
+    ],
+    "last_tick": 62,
+    "stop_r": 3.7416573867739413,
+    "waits_after_stop": 38,
+    "waits": 86
+   },
+   {
+    "line": [
+     0,
+     19,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 70,
+    "turn_tick": 13,
+    "transverse_toward": 98,
+    "transverse_away": 14,
+    "along_back": 6,
+    "along_forward": 12,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     12,
+     19,
+     15
+    ],
+    "last_tick": 12,
+    "stop_r": 5.0990195135927845,
+    "waits_after_stop": 88,
+    "waits": 88
+   },
+   {
+    "line": [
+     0,
+     13,
+     16
+    ],
+    "b": 3.0,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 79,
+    "turn_tick": 13,
+    "transverse_toward": 17,
+    "transverse_away": 11,
+    "along_back": 47,
+    "along_forward": 58,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     1
+    ],
+    "last_node": [
+     14,
+     13,
+     17
+    ],
+    "last_tick": 15,
+    "stop_r": 3.7416573867739413,
+    "waits_after_stop": 85,
+    "waits": 85
+   },
+   {
+    "line": [
+     0,
+     13,
+     17
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 77,
+    "turn_tick": 15,
+    "transverse_toward": 63,
+    "transverse_away": 54,
+    "along_back": 9,
+    "along_forward": 20,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     11,
+     13,
+     17
+    ],
+    "last_tick": 11,
+    "stop_r": 5.916079783099616,
+    "waits_after_stop": 89,
+    "waits": 89
+   },
+   {
+    "line": [
+     0,
+     13,
+     15
+    ],
+    "b": 3.1622776601683795,
+    "click_tick": null,
+    "delay": null,
+    "quanta_read": 60,
+    "turn_tick": 14,
+    "transverse_toward": 55,
+    "transverse_away": 10,
+    "along_back": 4,
+    "along_forward": 10,
+    "exit_heading": [
+     0,
+     0,
+     1
+    ],
+    "exit_offset": [
+     0,
+     1
+    ],
+    "last_node": [
+     13,
+     13,
+     16
+    ],
+    "last_tick": 18,
+    "stop_r": 4.242640687119285,
+    "waits_after_stop": 82,
+    "waits": 86
+   },
+   {
+    "line": [
+     0,
+     22,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     22,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 16.15549442140351,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     22,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     22,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     22,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     22,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     10,
+     16
+    ],
+    "b": 6.0,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     10,
+     16
+    ],
+    "last_tick": 31,
+    "stop_r": 16.15549442140351,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     10,
+     17
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     10,
+     17
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   },
+   {
+    "line": [
+     0,
+     10,
+     15
+    ],
+    "b": 6.082762530298219,
+    "click_tick": 32,
+    "delay": 0,
+    "quanta_read": 0,
+    "turn_tick": null,
+    "transverse_toward": 0,
+    "transverse_away": 0,
+    "along_back": 0,
+    "along_forward": 0,
+    "exit_heading": [
+     1,
+     0,
+     0
+    ],
+    "exit_offset": [
+     0,
+     0
+    ],
+    "last_node": [
+     31,
+     10,
+     15
+    ],
+    "last_tick": 31,
+    "stop_r": 16.186414056238647,
+    "waits_after_stop": 69,
+    "waits": 0
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": false,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.0
+   ],
+   [
+    5.0990195135927845,
+    0.0
+   ],
+   [
+    8.06225774829855,
+    0.0
+   ],
+   [
+    5.0990195135927845,
+    0.0
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 0.0,
+    "rss": 0.0,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 0.0,
+    "rss": 0.0,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_control_a/run",
+  "model": "a6-law-clock-control-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 135.33050939299937,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "7bc0979e09c080d6abb082e5576cc052706eb86881eedb143747ef1029a01138",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {},
+  "mass": null,
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": true,
+   "standing_field_iterations": 66,
+   "standing_field_period": 64,
+   "standing_field_residual": {
+    "cells": 1,
+    "amount": 0
+   },
+   "standing_field_ticks": 234,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   0,
+   0
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": false,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.0
+   ],
+   [
+    6.082762530298219,
+    0.0
+   ],
+   [
+    10.04987562112089,
+    0.0
+   ],
+   [
+    6.082762530298219,
+    0.0
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 0.0,
+    "rss": 0.0,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 0.0,
+    "rss": 0.0,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_control_b/run",
+  "model": "a6-law-clock-control-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 133.14259439600028,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "a2609da6b9efa73d13d6ba4328b6d8121b69d4b8997955074efdafba5b74f714",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {},
+  "mass": null,
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": true,
+   "standing_field_iterations": 66,
+   "standing_field_period": 64,
+   "standing_field_residual": {
+    "cells": 1,
+    "amount": 0
+   },
+   "standing_field_ticks": 234,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   0,
+   0
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.9933333333333333
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ],
+   [
+    8.06225774829855,
+    0.018181818181818188
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 3.6575617757914207,
+    "rss": 0.3614181149744816,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 13.301019160211988,
+    "rss": 0.5995955280485242,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_w1_amount_a/run",
+  "model": "a6-law-clock-m256-w1-amount-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 2253.920944439,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "ef58357ffc562e3b45a7024d6ed96bd04c2d8a163603c1ee651596eb0fbc00d0",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 16837,
+    "amount": 26894
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   20837,
+   20837
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 1339,
+    "push_ticks_in_cavity": 271
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 391,
+    "push_ticks_in_cavity": 205
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.9818181818181818,
+    "stayed_ticks": 55,
+    "left_tick": 56,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 356,
+    "push_ticks_in_cavity": 206
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.9933333333333333
+   ],
+   [
+    6.082762530298219,
+    0.07692307692307687
+   ],
+   [
+    10.04987562112089,
+    0.00421940928270037
+   ],
+   [
+    6.082762530298219,
+    0.958041958041958
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 3.351446099123803,
+    "rss": 0.531418084154536,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 17.223044938491476,
+    "rss": 0.4216413020446184,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_w1_amount_b/run",
+  "model": "a6-law-clock-m256-w1-amount-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 2159.102260009001,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "ce70ab3356e7b7d995aa4fc0d1d3bf5ca0a02e34502607efca42890c00850910",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 15947,
+    "amount": 25741
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21341,
+   21341
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 629,
+    "push_ticks_in_cavity": 248
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.9230769230769231,
+    "stayed_ticks": 13,
+    "left_tick": 14,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 3,
+    "push_ticks_in_cavity": 3
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.9957805907172996,
+    "stayed_ticks": 237,
+    "left_tick": 238,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.04195804195804196,
+    "stayed_ticks": 286,
+    "left_tick": 287,
+    "waits_in_cavity": 274,
+    "quanta_read_in_cavity": 216,
+    "push_ticks_in_cavity": 167
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.9933333333333333
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ],
+   [
+    8.06225774829855,
+    0.018181818181818188
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 3.6575617757914207,
+    "rss": 0.3614181149744816,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 13.301019160211988,
+    "rss": 0.5995955280485242,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_w1_amplitude_a/run",
+  "model": "a6-law-clock-m256-w1-amplitude-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 2257.392902007,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "c949950b638195b8fc05c953cfb48d959c585277467806b4da0acc60b6538986",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 17224,
+    "amount": 27910
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   20837,
+   20837
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 1334,
+    "push_ticks_in_cavity": 271
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 386,
+    "push_ticks_in_cavity": 208
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.9818181818181818,
+    "stayed_ticks": 55,
+    "left_tick": 56,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 352,
+    "push_ticks_in_cavity": 210
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.9933333333333333
+   ],
+   [
+    6.082762530298219,
+    0.07692307692307687
+   ],
+   [
+    10.04987562112089,
+    0.00421940928270037
+   ],
+   [
+    6.082762530298219,
+    0.9516129032258065
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 3.3428376744580137,
+    "rss": 0.5262161983971589,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 17.1884259342247,
+    "rss": 0.4153433028168705,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_w1_amplitude_b/run",
+  "model": "a6-law-clock-m256-w1-amplitude-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 2174.4371502079994,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "d10b9611acb55991b5d2cf4056219363575b9f4e19424fd3686ddf9adc0e2f41",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 16468,
+    "amount": 26195
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21341,
+   21341
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 623,
+    "push_ticks_in_cavity": 244
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.9230769230769231,
+    "stayed_ticks": 13,
+    "left_tick": 14,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 3,
+    "push_ticks_in_cavity": 3
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.9957805907172996,
+    "stayed_ticks": 237,
+    "left_tick": 238,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.04838709677419355,
+    "stayed_ticks": 248,
+    "left_tick": 249,
+    "waits_in_cavity": 236,
+    "quanta_read_in_cavity": 198,
+    "push_ticks_in_cavity": 151
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.9933333333333333
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ],
+   [
+    8.06225774829855,
+    0.8200000000000001
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 4.174718963718644,
+    "rss": 0.25454132832716614,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 14.235874439461886,
+    "rss": 0.931979073243647,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_wgr_amount_a/run",
+  "model": "a6-law-clock-m256-wgr-amount-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1790.6950820389993,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "1f2c33f75a147e30479c8e430672b63b489fac1201c947ce5bcaf10843e6d08d",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   8729,
+   100
+  ],
+  "w": 87.29,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 17519,
+    "amount": 28775
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   20837,
+   20837
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 1365,
+    "push_ticks_in_cavity": 267
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 353,
+    "push_ticks_in_cavity": 198
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.18,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 246,
+    "quanta_read_in_cavity": 78,
+    "push_ticks_in_cavity": 66
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 339,
+    "push_ticks_in_cavity": 197
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.9933333333333333
+   ],
+   [
+    6.082762530298219,
+    0.96
+   ],
+   [
+    10.04987562112089,
+    0.1333333333333333
+   ],
+   [
+    6.082762530298219,
+    0.96
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 4.641135032660766,
+    "rss": 0.20302191391918764,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 22.243453067817054,
+    "rss": 0.3643542395301369,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_wgr_amount_b/run",
+  "model": "a6-law-clock-m256-wgr-amount-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1854.9367776990002,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "72cb4f7760487564c0fae26bab1fa4c5d8b1546a8ceeb78ed09763af6509525e",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   8729,
+   100
+  ],
+  "w": 87.29,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 16629,
+    "amount": 27152
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21341,
+   21341
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 618,
+    "push_ticks_in_cavity": 254
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.04,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 288,
+    "quanta_read_in_cavity": 237,
+    "push_ticks_in_cavity": 158
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.8666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 40,
+    "quanta_read_in_cavity": 3,
+    "push_ticks_in_cavity": 3
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.04,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 288,
+    "quanta_read_in_cavity": 285,
+    "push_ticks_in_cavity": 179
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.9933333333333333
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ],
+   [
+    8.06225774829855,
+    0.8200000000000001
+   ],
+   [
+    5.0990195135927845,
+    0.9866666666666667
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 4.174718963718644,
+    "rss": 0.25454132832716614,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 14.235874439461886,
+    "rss": 0.931979073243647,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_wgr_amplitude_a/run",
+  "model": "a6-law-clock-m256-wgr-amplitude-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1844.5189372540008,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "023c473b698678fee5a0f21b8a7f0b3f0d758cb54b6c3fc3c7d8a92ff0c344ef",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   8729,
+   100
+  ],
+  "w": 87.29,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 17519,
+    "amount": 28775
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   20837,
+   20837
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 1365,
+    "push_ticks_in_cavity": 267
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 353,
+    "push_ticks_in_cavity": 198
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.18,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 246,
+    "quanta_read_in_cavity": 78,
+    "push_ticks_in_cavity": 66
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.013333333333333334,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 296,
+    "quanta_read_in_cavity": 339,
+    "push_ticks_in_cavity": 197
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.9933333333333333
+   ],
+   [
+    6.082762530298219,
+    0.96
+   ],
+   [
+    10.04987562112089,
+    0.1333333333333333
+   ],
+   [
+    6.082762530298219,
+    0.96
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 4.641135032660766,
+    "rss": 0.20302191391918764,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 22.243453067817054,
+    "rss": 0.3643542395301369,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m256_wgr_amplitude_b/run",
+  "model": "a6-law-clock-m256-wgr-amplitude-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1851.8274082290009,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "fcc5a5b6a0021da807d2cdd2ab5a9c69cf3074dd684932bedb3c26d5ee351381",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   8729,
+   100
+  ],
+  "w": 87.29,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 256,
+   "S": 1536,
+   "GM": 244.46199258915124
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 16629,
+    "amount": 27152
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   21341,
+   21341
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.006666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 298,
+    "quanta_read_in_cavity": 618,
+    "push_ticks_in_cavity": 254
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.04,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 288,
+    "quanta_read_in_cavity": 237,
+    "push_ticks_in_cavity": 158
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 0.8666666666666667,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 40,
+    "quanta_read_in_cavity": 3,
+    "push_ticks_in_cavity": 3
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.04,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 288,
+    "quanta_read_in_cavity": 285,
+    "push_ticks_in_cavity": 179
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.9916666666666667
+   ],
+   [
+    5.0990195135927845,
+    0.04347826086956519
+   ],
+   [
+    8.06225774829855,
+    0.0
+   ],
+   [
+    5.0990195135927845,
+    0.030303030303030276
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 1.7059236287789212,
+    "rss": 0.42656228997113477,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 7.730378950353606,
+    "rss": 0.19767867723750526,
+    "points": 4
+   }
+  },
+  "captures": 1,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m64_w1_amount_a/run",
+  "model": "a6-law-clock-m64-w1-amount-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1957.521351808,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "8f2fd63ab8587de2815d1f3d4d4c2ebe3a3d0a446b0b599c95874128270bb8a1",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 64,
+   "S": 384,
+   "GM": 61.11549814728781
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 41,
+    "amount": 48
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   5235,
+   5235
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.008333333333333333,
+    "stayed_ticks": 240,
+    "left_tick": 241,
+    "waits_in_cavity": 238,
+    "quanta_read_in_cavity": 176,
+    "push_ticks_in_cavity": 108
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.9565217391304348,
+    "stayed_ticks": 23,
+    "left_tick": 24,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.9696969696969697,
+    "stayed_ticks": 33,
+    "left_tick": 34,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.11111111111111116
+   ],
+   [
+    6.082762530298219,
+    0.009345794392523366
+   ],
+   [
+    10.04987562112089,
+    0.0
+   ],
+   [
+    6.082762530298219,
+    0.007751937984496138
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 0.242381482418034,
+    "rss": 0.005280023649925934,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 1.3942675542456784,
+    "rss": 0.0027359633391402403,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m64_w1_amount_b/run",
+  "model": "a6-law-clock-m64-w1-amount-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1930.7392733979996,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "70b3160beb3bf2869a020d311fdb9f0cbfe4f0cceab202df5693bff1539f48c5",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 64,
+   "S": 384,
+   "GM": 61.11549814728781
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 95,
+    "amount": 244
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   5353,
+   5353
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.8888888888888888,
+    "stayed_ticks": 9,
+    "left_tick": 10,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 3,
+    "push_ticks_in_cavity": 3
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.9906542056074766,
+    "stayed_ticks": 107,
+    "left_tick": 108,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.9922480620155039,
+    "stayed_ticks": 129,
+    "left_tick": 130,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    3.1622776601683795,
+    0.9880239520958084
+   ],
+   [
+    5.0990195135927845,
+    0.04347826086956519
+   ],
+   [
+    8.06225774829855,
+    0.0
+   ],
+   [
+    5.0990195135927845,
+    0.030303030303030276
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 1.699933605825828,
+    "rss": 0.42327414268726987,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 7.702772727821092,
+    "rss": 0.19608908602398303,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m64_w1_amplitude_a/run",
+  "model": "a6-law-clock-m64-w1-amplitude-a",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1893.8531634310002,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "09eeda73d6905438f1bacc6d8d5df7193603b187acef0f38dff8453e4ae08ee3",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 64,
+   "S": 384,
+   "GM": 61.11549814728781
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 1,
+    "amount": 0
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   5235,
+   5235
+  ],
+  "clocks": [
+   {
+    "r": 3,
+    "r_euclid": 3.1622776601683795,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.011976047904191617,
+    "stayed_ticks": 167,
+    "left_tick": 168,
+    "waits_in_cavity": 165,
+    "quanta_read_in_cavity": 161,
+    "push_ticks_in_cavity": 102
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 0.9565217391304348,
+    "stayed_ticks": 23,
+    "left_tick": 24,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   },
+   {
+    "r": 8,
+    "r_euclid": 8.06225774829855,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 5,
+    "r_euclid": 5.0990195135927845,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.9696969696969697,
+    "stayed_ticks": 33,
+    "left_tick": 34,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   }
+  ]
+ },
+ {
+  "kind": "clock",
+  "star_on": true,
+  "deficit": [
+   [
+    4.123105625617661,
+    0.11111111111111116
+   ],
+   [
+    6.082762530298219,
+    0.0
+   ],
+   [
+    10.04987562112089,
+    0.0
+   ],
+   [
+    6.082762530298219,
+    0.008264462809917328
+   ]
+  ],
+  "fits": {
+   "1/r": {
+    "coefficient": 0.23055384401775514,
+    "rss": 0.005887676072711105,
+    "points": 4
+   },
+   "1/r^2": {
+    "coefficient": 1.3467023980014274,
+    "rss": 0.0033111992548346507,
+    "points": 4
+   }
+  },
+  "captures": 0,
+  "escapes": 0,
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/clock_m64_w1_amplitude_b/run",
+  "model": "a6-law-clock-m64-w1-amplitude-b",
+  "status": "completed",
+  "error": null,
+  "ticks": 300,
+  "elapsed_seconds": 1898.4830718209996,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "890619f8dd732f1198398808b4354ecfdb0abc31b030321d5fcaaa8bc195cb1b",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amplitude",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 64,
+   "S": 384,
+   "GM": 61.11549814728781
+  },
+  "standing": {
+   "standing_field_max_iterations": 300,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 152,
+    "amount": 272
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   5353,
+   5353
+  ],
+  "clocks": [
+   {
+    "r": 4,
+    "r_euclid": 4.123105625617661,
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rate": 0.8888888888888888,
+    "stayed_ticks": 9,
+    "left_tick": 10,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 3,
+    "push_ticks_in_cavity": 3
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     -1,
+     0
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 10,
+    "r_euclid": 10.04987562112089,
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "rate": 1.0,
+    "stayed_ticks": 300,
+    "left_tick": null,
+    "waits_in_cavity": 0,
+    "quanta_read_in_cavity": 0,
+    "push_ticks_in_cavity": 0
+   },
+   {
+    "r": 6,
+    "r_euclid": 6.082762530298219,
+    "axis": [
+     0,
+     0,
+     -1
+    ],
+    "rate": 0.9917355371900827,
+    "stayed_ticks": 121,
+    "left_tick": 122,
+    "waits_in_cavity": 1,
+    "quanta_read_in_cavity": 2,
+    "push_ticks_in_cavity": 2
+   }
+  ]
+ },
+ {
+  "kind": "sep",
+  "mass_on": true,
+  "receiver_first_move_tick": null,
+  "receiver_changes": [],
+  "receiver_first_waits": [],
+  "receiver_moved": 150,
+  "receiver_last_node": [
+   30,
+   18,
+   24
+  ],
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/sep_field/run",
+  "model": "a6-law-sep-field",
+  "status": "completed",
+  "error": null,
+  "ticks": 150,
+  "elapsed_seconds": 1649.319349203999,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "09d48288e6ca7e5d285d3cc887d03611c6e8a45812191c297ffd0cd93ce4f468",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": {
+   "per_quantum": [
+    1,
+    1
+   ],
+   "reads": "field"
+  },
+  "initial_field": {
+   "star": {
+    "fill": 14
+   },
+   "source": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 7,
+   "S": 42,
+   "GM": 6.684507609859605
+  },
+  "standing": {
+   "standing_field_max_iterations": 150,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 121646,
+    "amount": 212581
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   86604,
+   86604
+  ]
+ },
+ {
+  "kind": "sep",
+  "mass_on": true,
+  "receiver_first_move_tick": null,
+  "receiver_changes": [],
+  "receiver_first_waits": [],
+  "receiver_moved": 150,
+  "receiver_last_node": [
+   30,
+   18,
+   24
+  ],
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/sep_law/run",
+  "model": "a6-law-sep-law",
+  "status": "completed",
+  "error": null,
+  "ticks": 150,
+  "elapsed_seconds": 1698.2320545519997,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "1fa141709a62e86f4fbb2467d91d16c9a246a981da1c0d056a16e67a40dae6a1",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "star": {
+    "fill": 14
+   },
+   "source": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 7,
+   "S": 42,
+   "GM": 6.684507609859605
+  },
+  "standing": {
+   "standing_field_max_iterations": 150,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 121646,
+    "amount": 212581
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   86604,
+   86604
+  ]
+ },
+ {
+  "kind": "sep",
+  "mass_on": false,
+  "receiver_first_move_tick": null,
+  "receiver_changes": [],
+  "receiver_first_waits": [],
+  "receiver_moved": 150,
+  "receiver_last_node": [
+   30,
+   18,
+   24
+  ],
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/sep_nomass/run",
+  "model": "a6-law-sep-nomass",
+  "status": "completed",
+  "error": null,
+  "ticks": 150,
+  "elapsed_seconds": 827.469086336001,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "1c996ac985d3a7340a3417d378015a1e409fcb6c325e3c507575cb9eeff47269",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": null,
+  "initial_field": {
+   "source": {
+    "fill": 14
+   }
+  },
+  "mass": null,
+  "standing": {
+   "standing_field_max_iterations": 150,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 121620,
+    "amount": 212519
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   86016,
+   86016
+  ]
+ },
+ {
+  "kind": "sep",
+  "mass_on": true,
+  "receiver_first_move_tick": null,
+  "receiver_changes": [],
+  "receiver_first_waits": [],
+  "receiver_moved": 150,
+  "receiver_last_node": [
+   30,
+   18,
+   24
+  ],
+  "run": "/tmp/claude-0/-home-user-Universe24/9c3d9a73-8139-5284-b085-1a3b7c4c07d7/scratchpad/runs/sep_thing/run",
+  "model": "a6-law-sep-thing",
+  "status": "completed",
+  "error": null,
+  "ticks": 150,
+  "elapsed_seconds": 1700.4058901600001,
+  "source_sha256": "3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349",
+  "initialization_sha256": "e8e45aeba11f12e8724a2bf6df7220ca5109f9da0dc92a21487c9bc98d3cf200",
+  "all_balanced": true,
+  "conserved_at_every_completed_tick": true,
+  "boundary": "periodic",
+  "side": 33,
+  "K": 1,
+  "N": 64,
+  "wait_per_quantum": [
+   1,
+   1
+  ],
+  "w": 1.0,
+  "wait_reads": "amount",
+  "shadow_wait": {
+   "per_quantum": [
+    1,
+    1
+   ],
+   "reads": "thing"
+  },
+  "initial_field": {
+   "star": {
+    "fill": 14
+   },
+   "source": {
+    "fill": 14
+   }
+  },
+  "mass": {
+   "X": 7,
+   "S": 42,
+   "GM": 6.684507609859605
+  },
+  "standing": {
+   "standing_field_max_iterations": 150,
+   "standing_field": false,
+   "standing_field_iterations": null,
+   "standing_field_period": null,
+   "standing_field_residual": {
+    "cells": 121646,
+    "amount": 212581
+   },
+   "standing_field_ticks": 0,
+   "standing_field_fallback": null
+  },
+  "shadow_content_first_last": [
+   86604,
+   86604
+  ]
+ }
+]

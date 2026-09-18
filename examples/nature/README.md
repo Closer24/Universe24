@@ -2639,10 +2639,12 @@ and the field settled by `standing_field`; two-mirror cavity clocks on the Y
 and Z half-axes at r = 3, 5, 8 and 4, 6, 10; twelve bending lines per world
 with a mark at x = 32 for the Shapiro delay; the separating run of
 DERIVATIONS.md section 37 with a source body and a receiver in a cavity; the
-masses X = 256, 64 and 16 quanta per heading per interval of the fill; the
-open-board controls), `analyze.py` reads the records (the cavities' rates
+masses X = 256, 64 and 16 quanta per heading per interval of the fill; every
+world closed, the model owner's decision of 2026-09-18), `analyze.py` reads the records (the cavities' rates
 until the thing leaves, the lines' turns, clicks and delays, the receiver's
 first move) into `record.json`, `probe_field.py` reads the prefilled field's
 profile through the API (an exploration tool, not a Renderer of records) and
 `make_page.py` writes `a6_law.html`, the self-contained page of the series
-(the tables, the bending against 1/b, one GIF of the ray viewer).
+(the tables, the bending against 1/b, one GIF of the ray viewer). The series
+of 2026-09-18 was read on a field that does not settle on the closed board
+and is repeated after round 7 and feature 19.

@@ -1192,15 +1192,13 @@ states "exactly" and means integer equality at every tick.
   the prefill is refused (the Euclidean r is √(r² + 1)); batch `a` r = 3,
   5, 8 and 5 again on −Z, batch `b` r = 4, 6, 10 and 6 again; 300 ticks;
   `m256` under both readings at w = 1 and at the GR w, `m64` under both at
-  w = 1, one control per batch without the star, batch `a` of `m256` on an
-  open board. (3), (4): twelve lines parallel to X per world, six per b
+  w = 1, one control per batch without the star. (3), (4): twelve lines parallel to X per world, six per b
   (y = 16 ± b, z = 16 and 16 ± 1), b = 3 and 6 in one world and 4 and 8 in
   the other (sixteen thing types at most), one light thing per line
   launched at x = 0 on +X at tick 0, a mark (setting [1, 1]) at x = 40 on
   each line recording the arrival tick, 32 for a straight pass, x_A = x_B =
   16; 100 ticks; `m256` under both readings at w = 1 and the GR w, `m64` and
-  `m16` under `amount` at w = 1, the two controls without the star, one open
-  board. (5): a source body A of the family `source` (X = 1024, fill 14) at
+  `m16` under `amount` at w = 1, the two controls without the star. (5): a source body A of the family `source` (X = 1024, fill 14) at
   (14, 2, 8) and a receiver B, a light thing in a Y cavity at (30, 18, 24)
   whose coupling names `source` only, on the body diagonal through both,
   the mass M at the centre at impact parameter √72 = 8.5 from the line,
@@ -1211,7 +1209,10 @@ states "exactly" and means integer equality at every tick.
   (`run.json`: the momentum line per thing per tick, the ledger, the
   standing set's record, the fingerprint), the events (every arrival of a
   light thing), the world; the records stay outside the tree, the
-  analyzer's `record.json` beside the worlds.
+  analyzer's `record.json` beside the worlds. No world of the series is
+  open: "only closed worlds are tested" (the model owner, 2026-09-18,
+  Highlights 5.4 "The board of a run is closed", PR #314); the two open
+  controls first written were withdrawn before they ran.
 - **The field the runs read** (the probe, before the series, on the 41³
   board): the whole quanta of the prefilled field are a transient that parks as
   ninths within about 100 intervals (X = 16: 855 quanta arriving per
@@ -1348,6 +1349,90 @@ states "exactly" and means integer equality at every tick.
   ends where its quanta park (about r = 8 at X = 256, and short of 17 at
   X = 1024), and a receiver near enough to A to read its quanta would not
   have M's field between them.
+- **Result (1) at the GR w, `m256`** (w = 87.29 as [8729, 100], the
+  engine's 3 × 1.861 √(GM); eight cavities per reading, 300 ticks; every
+  ledger line balanced; the standing set not reached, the residual 16 629
+  to 17 519 cells). Under `amount`: r = 3, 4, 5 and one of the 6 frozen as
+  at w = 1 (rates 0.0067 to 0.040, 288 to 298 waits, 237 to 1365 quanta);
+  r = 8: 0.180, 246 waits for 78 quanta (the two quanta read by tick 54
+  cost 87 intervals each, and the thing, waiting, reads on); r = 10: 0.867,
+  40 waits for 3 quanta; the other clock at 6: 0.040. Under `amplitude`:
+  the same numbers at every cavity. Pooled fits: A = 4.356 (rss 0.474),
+  B = 16.44 (rss 1.529) under both readings, A/GM = 0.018 against GR's 1
+  at this w; the step of w = 1 with its outer edge moved from r = 6 to
+  r = 10, since a single whole quantum now costs 87 intervals, more than
+  the run's tail.
+- **Result (3) and (4) at `m64`, w = 1, b = 3 and 6** (`amount`; the
+  standing set not reached, the residual 5547 cells; the ledger balanced).
+  b = 3: every line stops at x = 11 to 14, r = 3.7 to 5.9 from the star,
+  at ticks 11 to 18 (one at 62), frozen for the rest of the run, reading
+  59 to 79 quanta, the net transverse push toward the star 24.7 quanta per
+  line; none arrives. b = 6: every line reads nothing and arrives at tick
+  32, delay 0. So at S = 384 the frozen region ends between r = 4 and 6
+  (between 5 and 7 at S = 1536) and outside it a line of content 1 reads
+  no whole quantum at all: the image is a capture radius, GM/b reads no
+  angle at either mass, and the Shapiro delay is 0 on every line that
+  arrives, against GR's 2GM ln(4x_Ax_B/b²) = 322 ticks at b = 6 (GM = 61.1),
+  round 6's (w/3) 0.537 √(GM) ln(1024/36) = 4.7 under `amplitude` and round
+  5's 2.72 w GM/b = 28 under `amount` at w = 1.
+- **Whether the field settles.** In every world with the star the dense
+  region found no fixed point and no cycle within the run (the window 1024
+  deliveries): the residual between consecutive states at the last tick
+  was 15 947 to 17 519 array cells and 25 741 to 28 775 quanta for `m256`
+  (300 ticks, 20 837 to 21 341 quanta of shadow on the board throughout),
+  25 760 to 27 507 cells for the bending worlds (100 ticks), 121 620 to
+  121 646 cells for the separating worlds (86 016 to 86 604 quanta), and 1
+  to 152 cells and 0 to 272 quanta for `m64` (5235 to 5376 quanta): the
+  weak field parks almost entirely within 300 intervals, the strong one
+  keeps circulating. The content per shell over time is the probe's (the
+  41³ board, X = 256, the +Y axis, the mean over ticks 1 to 10, 11 to 20,
+  21 to 30, 31 to 40): r = 1: 41.4, 5.3, 6.8, 6.1; r = 2: 24.4, 21.9, 16.6,
+  18.1; r = 3: 16.9, 15.8, 12.7, 8.2; r = 4: 10.1, 15.4, 14.9, 14.2; r = 5:
+  7.0, 8.6, 9.3, 9.0; r = 6: 0.9, 2.7, 2.5, 2.4; r = 7: 0.1, 0.6, 0.7, 1.2;
+  r = 8: 0, 0, 0.2, 0.3; nothing beyond; the arrivals over the board
+  17 619, 14 860, 12 562, 11 335 per interval while the parked ninths grow
+  3791, 6635, 8934, 10 163. The sign of the radial push per shell over
+  time was not read (the region publishes no per-Node events, and the
+  probe read counts, not headings); the frozen things at r < 7 were pushed
+  in every direction and in both senses (the bending lines above: toward
+  the star 16 to 98 quanta, away 5 to 54, per line), which is the same
+  fact at the things. Without the star the empty board's standing set is
+  found after 34 (bending) and 66 (clocks) intervals. So the closed board
+  with one body holds no static field under point 7 as it stood, which
+  the E11 lane found on its board the same afternoon, and every reading
+  above is a reading on a field that does not settle.
+- **Reading.** Registered as what came out, on the engine of `main` at
+  `3b4a31c` (features 15 to 18, 16e, 16f with PR #312), and not as a law:
+  (1) the clock is a step at the edge of the whole-quanta field (frozen
+  inside, untouched outside, two or three quanta in between), the same
+  under `amount` and `amplitude` at w = 1 and at the GR w, its fits A/r
+  and B/r² fits of a step (A/GM 0.015 to 0.019 against GR's 1); (2) the
+  redshift between two running clocks is two whole quanta against three;
+  (3) the image is a capture, GM/b reads no angle; (4) the Shapiro delay is
+  0 on every line that arrives; (5) the front of a field in whole quanta
+  never reaches the receiver. Two readings of the wait differ by a third of
+  the waits at the one clock that read tens of quanta over hundreds of
+  intervals (m64, r = 3: 238 against 165). The field these numbers were
+  read on does not settle on the closed board (above); the model owner
+  reversed point 7 the same evening (a thing emits; nothing is given with
+  the board; Highlights, PR #319), and the series is repeated after
+  DERIVATIONS.md round 7 and feature 19 (emission and the sink).
+- **Not read.** The bending and the Shapiro delay of `m64` at b = 4 and 8
+  and of `m16` at every b, the bending at the GR w, and the separating run
+  with M = `m256`: their worlds are written and were stopped before or
+  during their runs at the orchestrator's instruction of 13:40Z (the lane
+  stopped so that the law is closed first).
+- **Fingerprint.** Every run of the series: `source_sha256`
+  `3f490e4265d59e0d4a55cccaf32e999cc8ebb692a972f701f08c8ba5394e4349`, the
+  engine of `main` at `3b4a31c` merged into the branch at `16dbd39`; each
+  world's `initialization_sha256` in `record.json`; Python 3.14.0rc2,
+  numpy 2.5.3, four cores, 16 GB, four runs at a time, 6.3 s per tick on
+  33³ (2160 to 2260 s per clock world, 640 to 700 s per bending world, 830
+  to 1700 s per separating world). The GIF of the page is `tools/ray_viewer`
+  on `bend_m256_w1_amount_b3_6` (Three.js r128 from the npm package
+  three@0.128.0, the pinned digest).
+- **Status.** measured on 2026-09-18, on a field that does not settle; to
+  be repeated after round 7 and feature 19.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11
