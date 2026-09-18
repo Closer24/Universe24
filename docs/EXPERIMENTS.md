@@ -207,7 +207,8 @@ states "exactly" and means integer equality at every tick.
     over every y at z = 4, and a second wall of marks at x = 44 closing the
     wrap in x, without which the shell leaving the lamp toward -X would
     reach the screen from behind; the wrap in z makes the slit columns
-    infinite and the wrap in y puts images of the lamp 49 Links apart); the
+    infinite and the wrap in y puts images of the lamp 49 Links apart; 282 s
+    each, peak 0.71 GB); the
     screen's marks replayed by `record_screen.py` (a Recorder: a mark that only
     returns shadows publishes no record, so the shadows returned and the
     push J = the sum of amount x arrival heading at each mark's Node are
@@ -277,24 +278,80 @@ states "exactly" and means integer equality at every tick.
     profile is flat, but at a spacing of 5 to 11 Links of a phase-0 shell
     (a broadband pulse, phases 0 and 32 only), not the optical 13.9 of a
     wave of lambda_w 9.24; the run holds no wave of that wavelength.
-  - **Result, the third pair (planned).** `two_slits_periodic` and
-    `one_slit_periodic` are written and admitted (a two-tick probe: nothing
-    escapes, 675 MB) and not yet run.
-  - **Reading.** What the engine gave, so far: the counts of things show
-    no fringes and no pattern at all: no thing reached the screen in any
-    world, every photon walking its one path to the wall's mark on the
+  - **Result, the third pair, the closed board (2026-09-18).**
+    `two_slits_periodic` (282 s) and `one_slit_periodic` (282 s), peak
+    0.71 GB, on the periodic board 45 x 49 x 9: 3,221,225,472 quanta of
+    shadows at the start beside the lamp's 67,108,864 of things, nothing
+    escaped (0 on every line at every tick), the shadow line 3,221,225,472
+    at tick 200 in both worlds; 189 clicks at the wall's mark on the axis
+    (16, 24, 4) from tick 12, 0 at the screen, 11 photons in flight at the
+    end, in both; every ledger line balanced, conserved at every completed
+    tick, `real_conserved` true. The screen (`record_screen.py`,
+    `record.json`), 49 marks at x = 40, z = 4, first reached at tick 59
+    (y = 11 to 21 and 27 to 37 with two slits, 27 to 37 with one): the
+    marks returned 9,462,464 quanta of shadows over the run with two slits
+    and 4,329,862 with one, at phases 0 and 32 of 64 only (6,455,849 and
+    3,006,615 with two slits), owner 1; the two walls (the slit wall and
+    the back wall at x = 44) returned 10,520,459,195 quanta over the run
+    (10,000,662,586 in the control), peaking at 142,847,145 per tick;
+    behind the slits the peak per tick 257,258 at (17, 16, 4) and 259,887
+    at (17, 32, 4) at tick 169, 104,251 and 103,567 at x = 18 (tick 158),
+    22,847 at (28, 24, 4), 35,155 at (39, 24, 4) at tick 158 and 13,748 at
+    (43, 24, 4) before the back wall (in the control 307,156 at (17, 32, 4)
+    at tick 128 behind the open slit, 31,809 behind the closed one and
+    7,287 at (39, 24, 4)); in the region beyond the wall 38,897,522 quanta
+    at tick 195 and 38,472,586 at the end (20,574,235 and 20,405,905 in the
+    control): on the closed board the field behind the wall grows through
+    the run and does not pass, the shell coming around and back off the
+    walls. The returned amount summed over the run along the screen, two
+    slits: maxima at y = 8, 12, 24, 36, 40 (319,615 at the axis, 254,709
+    and 253,338 at y = 12 and 36), minima at y = 2, 9, 18, 30, 39, 46
+    (73,939 at y = 18, 75,208 at y = 30), the depth between the axis and
+    its nearest minimum 0.62, the three maxima about the axis 12 Links
+    apart against the optical 13.9 (the analyzer's mean over all five
+    maxima, 8.0); the push J_x summed over the run: maxima at y = 5, 8, 13,
+    16, 20, 24, 27, 32, 35, 40, 43 (48,273 at the axis, 64,063 at y = 40),
+    minima at 2, 6, 11, 15, 18, 22, 25, 30, 33, 38, 42, 46 (19,742 at
+    y = 18), the depth 0.19 at the axis, the mean spacing of the maxima 3.8
+    Links. The control with one slit (the column y = 16 closed): the
+    returned amount 77,497 at the axis against 64,510 at y = 23, the depth
+    0.09; its largest values on the far side of the axis, 133,557 at y = 7
+    with maxima at y = 2, 7, 12 five Links apart (reached from the open
+    slit at y = 32 through the wrap in y); the push at depth 0.25 at the
+    axis (13,665 against 8,186 at y = 23), its maxima 4.7 Links apart on
+    the mean. Against the incoherent sum of the one-slit profile and its
+    mirror image, the two-slit profile's cross term runs from -76,263 to
+    164,621 with 8 sign changes along y (the push's from -26,144 to 25,896,
+    12 sign changes); the totals 9,462,464 against 8,659,724.
+  - **Reading.** What the engine gave. The counts of things: no fringes
+    and no pattern at all in any of the six worlds: no thing reached the
+    screen, every photon walking its one path to the wall's mark on the
     axis, since a thing is steered only by the pushes of shadows of another
     owner and the lamp's shadows are home to its own photons (points 3 and
     10 as the engine reads them: the emitted thing carries the lamp's
-    `thing` id, `spatial_plan.py`); the fringes of the push are not read
-    yet: with the shell of 2^22 per heading not one whole quantum of shadow
-    reached the screen at L = 24 (the open faces took 97 % of the shell),
-    the pair of 2^26 awaits its replay, and the closed board its run. The
-    clock declared on the lamp's family enters none of its shadows (the
-    prefill at phase 0, the re-release with the shadow's own phase), so the
-    wave of DERIVATIONS.md 27 (v) cannot be built on this engine by a fill,
-    and the prefill admits at most eight intervals of it. Nothing is
-    registered as a law.
+    `thing` id, `spatial_plan.py`). The push, on the closed board (the run
+    the model owner's decision asks for, nothing escaping): the amount the
+    screen returns and the push at its Nodes are modulated about the axis
+    where the one-slit control is nearly flat (depth 0.62 against 0.09 in
+    the returned amount), the maxima nearest the axis 12 Links apart, near
+    the optical 13.9 of a wave of lambda_w = 9.24, but the push's own
+    maxima 3.8 Links apart and everything that arrived at phases 0 and 32
+    only: the run holds a phase-0 shell circulating on the closed board and
+    reflected by its walls, not the monochromatic wave of DERIVATIONS.md
+    section 29, and a spacing near the optical one out of a broadband
+    shell is a reading to be repeated with a wave in the shadows before it
+    is called a fringe. On the open board: with the shell of 2^22 per
+    heading not one whole quantum reached the screen at L = 24 (the open
+    faces took 97 % of the shell); with 2^26, modulation at depth 0.73 at
+    a mean spacing of 5.1 Links, the control flat. The integer rule of
+    section 30 (256 quanta per Node) is not what limits the reading on the
+    closed board: behind the slits the amount per Node reaches 2.6 x 10^5
+    and the screen's marks return up to 22,107 quanta in a tick. The clock
+    declared on the lamp's family enters none of its shadows (the prefill
+    at phase 0, the re-release with the shadow's own phase), so the wave of
+    DERIVATIONS.md 27 (v) cannot be built on this engine by a fill, and the
+    prefill admits at most eight intervals of it. Nothing is registered as
+    a law.
   - **Fingerprint.** Source
     `6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc`, the
     engine of `origin/main` at `ffa4a56` (the runs were made on it after
@@ -306,14 +363,23 @@ states "exactly" and means integer equality at every tick.
     `two_slits_big`
     `4a25c852030bb89780e1f31be4be2ed7e65e339e98f2ef4f93f6c2c96e01defb`,
     `one_slit_big`
-    `7af8061a22f1c298a99d0f3e19ba993e10cf85497532fb33e1a74da4c9b9197e`;
-    `record.json` beside the worlds holds the first pair's readings; the
-    records of the runs are kept under `examples/nature/a1_law/records/`
-    for the handoff (a WIP; they leave the tree with the pull request).
-  - **Status.** WIP, 2026-09-18: the first pair measured (no thing and no
-    whole shadow at the screen), the second pair run and awaiting its
-    replay, the third pair written and not run; the entry is completed on
-    the dedicated machine.
+    `7af8061a22f1c298a99d0f3e19ba993e10cf85497532fb33e1a74da4c9b9197e`,
+    `two_slits_periodic`
+    `935aee67a98baa8516969a26048e51c034dd3a9ac1feda00eea6a5dfb150616c`,
+    `one_slit_periodic`
+    `fbda80979d1ef91e691f14e785b09f79ec30a000471798f1a6f3b95310458206`
+    (the digests of the runs' `initialization.json`, written with the
+    family's `phase_bits` 6; the shipped world files carry the world's `N`
+    since the cleanup of 2026-09-18 merged after the runs, the same worlds
+    in the law's one form); `record.json` beside the worlds holds the
+    readings of all six; the records stay outside the tree.
+  - **Status.** measured, 2026-09-18; outcome: no fringes in counts (no
+    thing reached the screen in any world); the push read on the closed
+    board, modulated at depth 0.62 in the returned amount with the maxima
+    about the axis 12 Links apart against the optical 13.9 and the control
+    at 0.09, out of a phase-0 shell (no wave of lambda_w in the run); on
+    the open board depth 0.73 at 5.1 Links (2^26) and nothing at the
+    screen (2^22).
 
 ### A2. Bell test in phase form, symmetric geometry
 

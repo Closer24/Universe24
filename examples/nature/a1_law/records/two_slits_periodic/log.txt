@@ -1,0 +1,2 @@
+/tmp/claude-0/-home-user-Universe24/085cafd2-bebb-5105-99f4-b9c476e1c305/scratchpad/venv/bin/python -m event_universe --init examples/nature/a1_law/two_slits_periodic.json --output /tmp/claude-0/-home-user-Universe24/085cafd2-bebb-5105-99f4-b9c476e1c305/scratchpad/runs-law/a1periodic/two_slits_periodic/run
+/tmp/claude-0/-home-user-Universe24/085cafd2-bebb-5105-99f4-b9c476e1c305/scratchpad/runs-law/a1periodic/two_slits_periodic/run/run.json

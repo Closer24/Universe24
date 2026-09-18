@@ -116,7 +116,11 @@ def e9_page():
 
 def a1_world_section(two, one, ctl, counts_key, title):
     ys = two["screen_y"]
-    counts = [two["screen_clicks"].get(str([40, y, 8]), 0) for y in ys]
+    clicks_by_y = {}
+    for key, value in two["screen_clicks"].items():
+        clicks_by_y[json.loads(key)[1]] = clicks_by_y.get(json.loads(key)[1], 0) + value
+    counts = [clicks_by_y.get(y, 0) for y in ys]
+    marks = f"The {len(ys)} marks of the screen at x = 40, y = {min(ys)} to {max(ys)}"
     def fmt_depth(d):
         return "none (nothing arrived)" if d["depth"] is None else f"{d['depth']:.3f} (central {d['central']:,}, nearest minimum {d['nearest_minimum']})"
     out = [f"<h2>{html.escape(title)}</h2>",
@@ -128,7 +132,7 @@ def a1_world_section(two, one, ctl, counts_key, title):
            f"<li>The push J_x summed over the run, two slits: maxima at y = {[m[0] for m in two['extrema_push']['maxima']]}, minima at y = {[m[0] for m in two['extrema_push']['minima']]}, mean spacing of the maxima {two['extrema_push']['mean_spacing']} against the optical {two['optical_spacing_links']:.1f} Links; depth about the axis {fmt_depth(two['depth_push'])}.</li>"
            f"<li>The returned amount summed over the run, two slits: maxima at y = {[m[0] for m in two['extrema_returned']['maxima']]}, minima at y = {[m[0] for m in two['extrema_returned']['minima']]}, mean spacing {two['extrema_returned']['mean_spacing']}; depth {fmt_depth(two['depth_returned'])}.</li>"
            f"<li>Control: the two-slit profile against the incoherent sum of the one-slit profile and its mirror image: the cross term of the returned amount from {ctl.get('cross_min')} to {ctl.get('cross_max')} ({ctl.get('cross_sign_changes')} sign changes along y), of the push from {ctl.get('cross_push_min')} to {ctl.get('cross_push_max')} ({ctl.get('cross_push_sign_changes')} sign changes); totals {ctl.get('two_total'):,} against {ctl.get('incoherent_total'):,}.</li></ul>",
-           f"<figure>{bars(ys, counts, 'Counts per mark', 'things')}<figcaption>The 63 marks of the screen at x = 40, y = 1 to 63: things absorbed over the run, two slits.</figcaption></figure>",
+           f"<figure>{bars(ys, counts, 'Counts per mark', 'things')}<figcaption>{marks}: things absorbed over the run, two slits.</figcaption></figure>",
            f"<figure>{bars(ys, two['returned'], 'Two slits against one slit', 'quanta', one['returned'], 'one slit')}<figcaption>The amount of shadows each mark turned back over the run: two slits (blue) and the control with one slit (orange).</figcaption></figure>",
            f"<figure>{bars(ys, two['push_x'], 'Two slits against one slit', 'quanta x Link', one['push_x'], 'one slit')}<figcaption>J_x, the sum of amount x arrival heading (x component) over the shadows each mark turned back, summed over the run; positive toward +X.</figcaption></figure>",
            table(["y", "clicks (2)", "returned (2)", "peak (tick)", "first", "push_x (2)", "peak push_x (2)", "returned (1)", "push_x (1)", "cross term", "cross push"],
@@ -140,11 +144,17 @@ def a1_page():
     worlds = A1["worlds"]
     two, one = worlds["two_slits"], worlds["one_slit"]
     big = "two_slits_big" in worlds and "one_slit_big" in worlds
+    periodic = "two_slits_periodic" in worlds and "one_slit_periodic" in worlds
+    pw = worlds.get("two_slits_periodic")
+    po = worlds.get("one_slit_periodic")
     body = ["<h1>A1 repeated under the law of the bit (2026-09-18)</h1>",
-            f"<p class='muted'>One lamp of light (amount 4 per interval, a clock of 4 steps of 64 per interval, lambda_w = {two['lambda_w_links']:.2f} Links) at (4, 32, 8) behind a wall of marks at x = 16 with two slit columns at y = {two['slits']} (d = {two['d']}), a screen of 63 marks at x = 40 (L = {two['L']}); the lamp's shadow set a shell of eight intervals of release, the longest fill the engine's prefill admits, at phase 0 (a record has no phase; the clock enters no shadow). Optical spacing lambda_w L / d = {two['optical_spacing_links']:.1f} Links. Engine of origin/main at ffa4a56. Nothing here is a law; the tables are what the engine gave.</p>",
+            f"<p class='muted'>One lamp of light (amount 4 per interval, a clock of 4 steps of 64 per interval, lambda_w = {two['lambda_w_links']:.2f} Links) behind a wall of marks at x = 16 with two slit columns d = {two['d']} apart, a screen of marks at x = 40 (L = {two['L']}); the lamp's shadow set a shell of eight intervals of release, the longest fill the engine's prefill admits, at phase 0 (a record has no phase; the clock enters no shadow). Optical spacing lambda_w L / d = {two['optical_spacing_links']:.1f} Links. Three pairs: the open board 45 x 65 x 17 with the lamp's stock 2^22 and 2^26 (the lamp at (4, 32, 8), the slits at y = 24 and 40, the screen y = 1 to 63 at z = 8), and the closed board, periodic 45 x 49 x 9 with the stock 2^26 (the lamp at (4, 24, 4), the slits at y = 16 and 32, the screen over every y at z = 4, a second wall of marks at x = 44 closing the wrap in x: the model owner's decision of 2026-09-18, the confrontation runs are made on a closed board). Engine of origin/main at ffa4a56. Nothing here is a law; the tables are what the engine gave.</p>",
             "<h2>Headline</h2>",
-            "<ul><li>Fringes in the counts of things: <b>none</b>. No thing reached the screen in any world: every photon goes straight along its line to the wall's mark on the axis (a thing has one path; the lamp's shadows are home to its own photons and push nothing).</li>",
-            "<li>Fringes in the push: <b>none read</b>. With the shell of 2^22 per heading nothing whole reached the screen; with the shell of 2^26 per heading the reading is below.</li></ul>"]
+            "<ul><li>Fringes in the counts of things: <b>none</b>. No thing reached the screen in any of the six worlds: every photon goes straight along its line to the wall's mark on the axis (a thing has one path; the lamp's shadows are home to its own photons and push nothing).</li>",
+            (f"<li>Fringes in the push, the closed board (the run the decision asks for): the returned amount along the screen is modulated at <b>depth {pw['depth_returned']['depth']:.2f}</b> about the axis, its maxima at y = {[m[0] for m in pw['extrema_returned']['maxima']]} (the three about the axis <b>{pw['extrema_returned']['maxima'][2][0] - pw['extrema_returned']['maxima'][1][0]} Links apart</b> against the optical {pw['optical_spacing_links']:.1f}) and its minima at y = {[m[0] for m in pw['extrema_returned']['minima']]}; the push J_x at depth {pw['depth_push']['depth']:.2f} with maxima {pw['extrema_push']['mean_spacing']:.1f} Links apart on the mean; the one-slit control at depth {po['depth_returned']['depth']:.2f} (returned) and {po['depth_push']['depth']:.2f} (push). The cross term against the incoherent sum changes sign {A1['control_periodic']['cross_sign_changes']} times along the screen. What arrived is at phases {list(pw['phases'])} of 64 only: a phase-0 shell, not a wave of lambda_w. Nothing escaped ({pw['escaped_totals']['light'][0]} quanta).</li>" if periodic else "<li>Fringes in the push, the closed board: not run.</li>"),
+            "<li>Fringes in the push, the open board: with the shell of 2^22 per heading nothing whole reached the screen; with 2^26 the returned amount was modulated at depth 0.73 at a mean spacing of 5.1 Links (97 % of the shell escaped through the open faces).</li></ul>"]
+    if periodic:
+        body.append(a1_world_section(worlds["two_slits_periodic"], worlds["one_slit_periodic"], A1.get("control_periodic", {}), "periodic", "The third pair: the closed board (periodic 45 x 49 x 9, the lamp's stock 2^26, nothing escapes)"))
     if big:
         body.append(a1_world_section(worlds["two_slits_big"], worlds["one_slit_big"], A1.get("control_big", {}), "big", "The second pair: the lamp's stock 2^26, a shell sixteen times larger"))
     body.append(a1_world_section(two, one, A1.get("control", {}), "", "The first pair: the lamp's stock 2^22"))
