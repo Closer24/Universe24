@@ -103,9 +103,9 @@ the way; A's front stands at Manhattan radius 14 at tick 0 and B is at
 Manhattan distance 48 from A (Euclidean 27.7). The options: `law` (no `shadow_wait`), `thing`
 and `field` (`shadow_wait` {"per_quantum": 1, "reads": ...}, feature 16e);
 `sep_nomass` is `law` without M; `sep_{option}_m256` the same with M = `m256`.
-150 ticks. `sep_near_{option}` and `sep_near_nomass`: B at (24, 12, 18) on the
-same line, Manhattan 30 from A (Euclidean 17.3) and 9.2 from M, 100 ticks,
-since no whole quantum of A reaches the far B within 150 intervals.
+150 ticks. (No whole quantum of A reaches B, nor M's Node 17.3 Links from
+A, within 150 intervals: the geometry of section 37 is not reachable in
+whole quanta at this flux, and a nearer receiver would not cross M's field.)
 
 Run:  python examples/nature/a6_law/make_worlds.py [--out DIR]
 """
@@ -152,7 +152,6 @@ BATCHES = {
 # The separating run: A, B and the mass, DERIVATIONS.md section 37 (ix).
 SEP_SOURCE = (14, 2, 8)
 SEP_RECEIVER = (30, 18, 24)
-SEP_RECEIVER_NEAR = (24, 12, 18)  # the same line, Manhattan 30 from A (Euclidean 17.3), 9.2 from M
 SEP_SOURCE_X, SEP_SOURCE_FILL = 1024, 14
 
 
@@ -396,10 +395,10 @@ def bending_world(name, *, mass, wait_name, reading, impacts, star_on=True, boun
     return document
 
 
-def separating_world(name, *, option, mass="m7", mass_on=True, ticks=SEP_TICKS, receiver=SEP_RECEIVER):
+def separating_world(name, *, option, mass="m7", mass_on=True, ticks=SEP_TICKS):
     """The separating run: the source body A, the receiver B in a Y cavity, and
     the mass M at the centre under the `shadow_wait` option."""
-    kind, emission, seed, mirrors = cavity(0, receiver, (0, 1, 0))
+    kind, emission, seed, mirrors = cavity(0, SEP_RECEIVER, (0, 1, 0))
     source, source_release = body(SEP_SOURCE, "source", SEP_SOURCE_X)
     star, mass_release = body(STAR, "star", MASSES[mass][0])
     document = base(f"a6-law-{name.replace('_', '-')}", ticks, 1, "amount", option) | {
@@ -449,9 +448,6 @@ def cases():
     for option in ("law", "thing", "field"):
         yield f"sep_{option}", separating_world(f"sep_{option}", option=option)
     yield "sep_nomass", separating_world("sep_nomass", option="law", mass_on=False)
-    for option in ("law", "thing", "field"):
-        yield f"sep_near_{option}", separating_world(f"sep_near_{option}", option=option, ticks=100, receiver=SEP_RECEIVER_NEAR)
-    yield "sep_near_nomass", separating_world("sep_near_nomass", option="law", mass_on=False, ticks=100, receiver=SEP_RECEIVER_NEAR)
     for batch in ("a", "b"):
         for reading in ("amount", "amplitude"):
             name = f"clock_m256_wgr_{reading}_{batch}"

@@ -1333,6 +1333,21 @@ states "exactly" and means integer equality at every tick.
   intervals with the period 64 (the clocks' bounce on the phase circle of
   64) and replayed for 234; every bending line arrives at tick 32 with no
   push, the standing set reached after 34 intervals with the period 1.
+- **Result (5), the separating run, M with S = 42** (150 ticks; the source
+  A at X = 1024, 86 604 quanta of shadow on the board; every ledger line
+  balanced; the standing set not reached, the residual 121 620 to 121 646
+  cells). The receiver's momentum never moves, under `shadow_wait` absent,
+  `thing` and `field` alike and without M: no whole quantum of A's field
+  reaches B, 27.7 Links from A (Manhattan 48), within 150 intervals, while
+  A's own Node receives about 400 quanta per Port per interval at tick 1
+  (the mixing's returns) and 10 to 20 from tick 2 on; the mass's Node, 17.3
+  Links from A (Manhattan 30), receives no whole quantum of A's field
+  either, so the front never crosses M's field in whole quanta. The
+  observable of section 37 (ix), the tick B's register first moves, is not
+  reached on this board at this flux: the front of a field in whole quanta
+  ends where its quanta park (about r = 8 at X = 256, and short of 17 at
+  X = 1024), and a receiver near enough to A to read its quanta would not
+  have M's field between them.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11
