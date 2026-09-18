@@ -17,8 +17,8 @@ Re-pinned on 2026-09-18 under clock-readings-v1 (feature 16b, Highlights 5.4
 points 16, 18, 19 and 21): a family declares no rest rate, `m` declares
 `clock` and the world `K` (world (a): K 2, so a thing of 2 advances one step
 per interval as before); the electricity reading multiplies by the owner's
-whole charge over its content, the charge per quantum, so a body of 100 quanta
-of `m` at -1 pushes as it did; a thing's `momentum` is the
+whole charge over its content, so a body of 100 quanta of `m` declares the
+whole charge -100 and pushes as it did at -1 per quantum; a thing's `momentum` is the
 pushes it carries, its register line amount x heading plus that; the momentum
 line carries `spent`.
 """
@@ -131,10 +131,11 @@ def shadow(position, heading, amount=1, owner=1, sign=-1):
 
 
 def body(position, thing=None, table=None, amount=100):
-    """A body of `amount` quanta of `m` at the family's charge -1 per quantum
-    (clock-readings-v1: its shadows carry its whole charge and its content, and
-    the electricity reading divides the one by the other)."""
-    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -1}
+    """A body of `amount` quanta of `m` with the whole charge -amount, the
+    family's -1 per quantum (clock-readings-v1: its shadows carry its whole
+    charge and its content, and the electricity reading divides the one by the
+    other)."""
+    entry = {"position": list(position), "family": "m", "amount": amount, "charge": -amount}
     if table is not None:
         entry["momentum_table"] = table
         entry["reads"] = "charge"
@@ -173,6 +174,9 @@ def document(
         "disturbance_types": list(types) or [RING],
         "spatial_fields": [family(spread, phase_bits, bool(clock))],
         **({"K": clock} if clock else {}),
+        # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
+        # tests/test_wait_rule.py; these worlds pin the pushes without it.
+        "wait_per_quantum": 0,
         "emissions": list(emissions),
         "seeds": list(seeds),
         "ray_interactions": list(rules),
@@ -746,7 +750,7 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
         2: [4 + pushes[1][0], 0, 0],
         3: [0, 0, 0],
     }
-    for y, push, amount in ((1, pushes[0], 2), (3, pushes[1], 4)):
+    for y, push in ((1, pushes[0]), (3, pushes[1])):
         rays = rays_at(result["inventories"][2], (4, y, 2))
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
             (BIT_SHADOW, 3, (-push[0], 0, 0), 0, 2),

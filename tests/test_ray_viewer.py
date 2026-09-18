@@ -85,7 +85,10 @@ def ray_field(name, advance, slots=8, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "kerengonen": {"phase_steps": 8, "phase_advance": advance},
+        "kerengonen": {"phase_steps": 8},
+        # The clock is the content (clock-readings-v1, 2026-09-18): a lamp's ray
+        # of 3 advances one step per interval at K 3.
+        **({"clock": True} if advance else {}),
         **extra,
     }
 
@@ -136,6 +139,7 @@ def document():
         # bit-law-v1 (2026-09-18): the field family G (`field_of` quanta) went with
         # the law; the record carries the law's identities.
         "spatial_fields": [ray_field("quanta", 1)],
+        "K": 3,
         "emissions": [emission("lamp_a", 3, PLUS_X, 0), emission("lamp_b", 3, MINUS_X, 4)],
         "seeds": [
             {"position": [1, 1, 1], "type": "lamp_a"},

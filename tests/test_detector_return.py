@@ -39,19 +39,21 @@ HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 TICKET_AFTER_DRAW = 1
 # After tick t: Links from the lamp, heading index offset (0 the emitted heading, 1 its
 # negation), amount, steps, outbound, phase, Detector bit, the share of the ray's event.
+# The phase column is 0 throughout since clock-readings-v1 (2026-09-18): the
+# family declares no rest rate and no clock, so the phase stays what the lamp gave.
 TICK_TABLE = {
-    1: (1, 0, 8, 1, 1, 1, BIT_THING, 8),
-    2: (2, 0, 8, 2, 1, 2, BIT_THING, 8),
-    3: (3, 1, 4, 3, 0, 3, BIT_THING, 8),
-    4: (2, 1, 4, 2, 0, 2, BIT_THING, 8),
-    5: (1, 1, 4, 1, 0, 1, BIT_THING, 8),
+    1: (1, 0, 8, 1, 1, 0, BIT_THING, 8),
+    2: (2, 0, 8, 2, 1, 0, BIT_THING, 8),
+    3: (3, 1, 4, 3, 0, 0, BIT_THING, 8),
+    4: (2, 1, 4, 2, 0, 0, BIT_THING, 8),
+    5: (1, 1, 4, 1, 0, 0, BIT_THING, 8),
     6: (0, 1, 4, 0, 0, 0, BIT_THING, 8),
     # The inverse split of a one-line event: no sibling line, the share restored to
     # the lamp in the cycle after its arrival (inverse-split-v1); the lamp, a source
     # that emits what it holds, then emits the 4 again as a new one-line event on
     # the cycle after the restored record reaches the field plan.
     7: None,
-    8: (1, 0, 4, 1, 1, 1, BIT_THING, 4),
+    8: (1, 0, 4, 1, 1, 0, BIT_THING, 4),
 }
 
 
@@ -135,7 +137,7 @@ def document(port, marked=True, boundary="periodic", ticks=8):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
             }
         ],
         "emissions": [

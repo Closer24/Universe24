@@ -191,7 +191,7 @@ def test_emission_shares_amount_over_the_next_headings_and_cycles_the_cursor():
     rays, cursor = emit_rays(1, 1, definition, meter())
     assert rays == (Ray(1, (0, 0, 0), 1, event_ports=0b000100, event_shares=(0, 0, 1, 0, 0, 0)),)
     assert cursor == 2
-    ports, kept = forward_rays(rays, definition, meter())
+    ports, kept, _ = forward_rays(rays, definition, meter())
     assert [len(p) for p in ports] == [0, 0, 1, 0, 0, 0] and kept == ()
     assert merge_rays((Ray(1, (0, 0, 0), 1), Ray(1, (0, 0, 0), 2), Ray(1, (1, 0, 0), 1))) == (
         Ray(1, (0, 0, 0), 3),

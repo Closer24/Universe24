@@ -298,6 +298,7 @@ def _execute_run(
         # the things' steps (the settled rule (i)).
         "clock_readings": CLOCK_READINGS,
         "K": initial.clock,
+        "wait_per_quantum": list(initial.wait_per_quantum),
         "computation_per_tick": computation,
         "spent_totals": world.spent_totals(),
         "shadows": [

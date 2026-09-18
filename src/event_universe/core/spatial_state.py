@@ -589,6 +589,12 @@ class Ray:
     remainder: int = 0
     push_remainder: tuple[int, int, int] = (0, 0, 0)
     periods: int = 0
+    # The intervals a thing owes for the whole quanta it read (Highlights 5.4
+    # point 23, clock-readings-v1): w per whole quantum of push taken, w = n / d
+    # the world's `wait_per_quantum`, kept in units of 1 / d and spent one
+    # interval at a time, an interval in which the thing neither moves nor steps
+    # nor advances its phase; 0 on a shadow, which pays nothing.
+    owed: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -1684,6 +1690,11 @@ class SpatialFieldDefinition:
     owner_contents: tuple[int, ...] = ()
     owner_charges: tuple[int, ...] = ()
     push_denominator: int = 1
+    # The wait per whole quantum read (Highlights 5.4 point 23, clock-readings-v1):
+    # w = wait_numerator / wait_denominator intervals, the world's one constant
+    # (`wait_per_quantum`, 1 by default), on every ray family.
+    wait_numerator: int = 1
+    wait_denominator: int = 1
     # Field spreading (field-spreading-v1): the split table, six weights in Port
     # order relative to the arriving heading; empty for a family that does not
     # spread, the behaviour of every existing world.
@@ -1759,6 +1770,13 @@ class SpatialFieldDefinition:
             raise ValueError("a family's owner charges are one integer per owner")
         if type(self.push_denominator) is not int or self.push_denominator < 1:
             raise ValueError("a family's push denominator is a positive integer")
+        if (
+            type(self.wait_numerator) is not int
+            or type(self.wait_denominator) is not int
+            or self.wait_numerator < 0
+            or self.wait_denominator < 1
+        ):
+            raise ValueError("the wait per quantum is a rational n / d, n at least 0 and d at least 1")
         if type(self.clock) is not int or self.clock < 0:
             raise ValueError("a family's clock is K, a nonnegative integer (clock-readings-v1)")
         if self.clock and not self.phase_bits:
@@ -2192,11 +2210,17 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         if type(ray.push_remainder) is not tuple or len(ray.push_remainder) != 3:
             raise ValueError("a ray push remainder requires three integers")
         for value in ray.push_remainder:
-            if type(value) is not int or not -definition.push_denominator < value < definition.push_denominator:
+            if (
+                type(value) is not int
+                or not -definition.push_denominator < value < definition.push_denominator
+            ):
                 raise ValueError("a ray push remainder stays below one quantum in units of 1 / D")
         if type(ray.remainder) is not int or type(ray.periods) is not int or ray.periods < 0:
             raise ValueError("a ray clock remainder and its passages are nonnegative integers")
         bounded(ray.periods)
+        if type(ray.owed) is not int or ray.owed < 0 or (ray.detector == BIT_SHADOW and ray.owed):
+            raise ValueError("the intervals a thing owes are a nonnegative integer; a shadow owes none")
+        bounded(ray.owed)
         if ray.detector == BIT_THING and definition.clock:
             # The clock (clock-readings-v1, point 19): the remainder below K, and
             # the content bounded by K and N, content / K below half the circle.
@@ -2208,7 +2232,9 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
                     "K and N bound the content one Node may hold (clock-readings-v1, point 19)"
                 )
         elif ray.remainder or (ray.detector == BIT_SHADOW and (ray.periods or any(ray.push_remainder))):
-            raise ValueError("a shadow and a family without a clock carry no remainder (clock-readings-v1)")
+            raise ValueError(
+                "a shadow and a family without a clock carry no remainder (clock-readings-v1)"
+            )
         length = vector_length(ray_vector(ray, definition))
         if type(ray.accumulators) is not tuple or len(ray.accumulators) != 3:
             raise ValueError("a ray requires three integer accumulators")
@@ -2341,9 +2367,11 @@ def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition)
 
 
 def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDefinition) -> Ray:
-    """The thing after a push (clock-readings-v1, Highlights 5.4 point 15): the
-    push added to the momentum it carries; amount, phase, bit, heading, walk and
-    event record untouched. A momentum back at zero is cleared, so a thing whose
+    """The thing after a push (clock-readings-v1, Highlights 5.4 points 15 and
+    23): the push added to the momentum it carries, and the whole quanta it read,
+    the push's components in quanta, owed as intervals of wait, w each
+    (`owed`, in units of 1 / d); amount, phase, bit, heading, walk and event
+    record untouched. A momentum back at zero is cleared, so a thing whose
     pushes cancelled is the thing it was; a push never stops a thing, whose line
     is its heading."""
     carried = ray.momentum if ray.momentum is not None else (0, 0, 0)
@@ -2352,7 +2380,9 @@ def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDef
         bounded(checked_work(carried[1] + push[1])),
         bounded(checked_work(carried[2] + push[2])),
     )
-    return replace(ray, momentum=after if any(after) else None)
+    quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+    owed = bounded(checked_work(ray.owed + checked_work(quanta * definition.wait_numerator)))
+    return replace(ray, momentum=after if any(after) else None, owed=owed)
 
 
 def step_thing(ray: Ray, definition: SpatialFieldDefinition) -> tuple[Ray, tuple[int, int, int]]:
@@ -2739,6 +2769,7 @@ RayMergeKey = tuple[
     int,
     tuple[int, int, int],
     int,
+    int,
 ]
 
 
@@ -2766,6 +2797,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.remainder,
         ray.push_remainder,
         ray.periods,
+        ray.owed,
     )
 
 
@@ -2807,6 +2839,7 @@ def merge_rays(rays: Rays) -> Rays:
             remainder=key[16],
             push_remainder=key[17],
             periods=key[18],
+            owed=key[19],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount
@@ -3279,7 +3312,8 @@ def push_of(
         raise ValueError("the family's push denominator is a multiple of every owner's content")
     scale = checked_work(
         checked_work(
-            checked_work(sign * shadow.amount) * checked_work(definition.owner_charge(shadow.owner) * charge)
+            checked_work(sign * shadow.amount)
+            * checked_work(definition.owner_charge(shadow.owner) * charge)
         )
         * (denominator // owner_content)
     )

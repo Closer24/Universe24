@@ -95,9 +95,9 @@
       "rays_per_tick": 1,
       "ray_slots": 8,
       "kerengonen": {
-        "phase_steps": 8,
-        "phase_advance": 1
-      }
+        "phase_steps": 8
+      },
+      "clock": true
     }
   ],
   "emissions": [
@@ -368,5 +368,6 @@
         ]
       }
     }
-  }
+  },
+  "K": 5
 }

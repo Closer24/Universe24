@@ -932,10 +932,16 @@ class SpatialLaw:
                     cursor_before = unpack(allocation[index])[0]
                     phase, advance, absorbed_heading = rule.phase, -1, -1
                     if rule.phase_carried or rule.mirror is not None:
-                        # Huygens: continue the wave absorbed last cycle, one advance on.
+                        # Huygens: continue the wave absorbed last cycle, one interval
+                        # on: the re-emitted content's clock step, amount // K
+                        # (clock-readings-v1; a record keeps no remainder).
                         phase, advance, absorbed_heading = self._carried_phase(record, definition)
                         if not rule.phase_carried:
                             phase, advance = rule.phase, -1
+                        elif definition.clock:
+                            phase = (
+                                phase + unpack(amount)[0] // definition.clock
+                            ) & definition.phase_mask
                     if rule.advance is not None:
                         # De Broglie: the rays' own advance per link from the emitter's state.
                         raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
@@ -1109,7 +1115,7 @@ class SpatialLaw:
                     if spread is not None:
                         spreads.append(spread)
                 if ray_hold:
-                    ports, fresh_kept, departures = forward_rays(
+                    ports, fresh_kept, account = forward_rays(
                         tuple(emitted_rays[index]), definition, meter
                     )
                     kept = merge_rays(
@@ -1119,11 +1125,11 @@ class SpatialLaw:
                         + fresh_kept
                     )
                 else:
-                    ports, kept, departures = forward_rays(
+                    ports, kept, account = forward_rays(
                         tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
                     )
-                phase_steps = checked_work(phase_steps + departures.phase_steps)
-                if any(departures.spent):
+                phase_steps = checked_work(phase_steps + account.phase_steps)
+                if any(account.spent):
                     # The steps of the things (clock-readings-v1, the settled rule
                     # (i)): the momentum each step dropped is spent, on the
                     # momentum field's line when the family is bound to one.
@@ -1132,7 +1138,7 @@ class SpatialLaw:
                             "a thing that steps by its momentum requires its family bound to a "
                             "momentum field (clock-readings-v1)"
                         )
-                    for axis, value in enumerate(departures.spent):
+                    for axis, value in enumerate(account.spent):
                         spent[definition.momentum_field][axis] = checked_work(
                             spent[definition.momentum_field][axis] + value
                         )

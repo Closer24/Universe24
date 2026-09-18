@@ -231,10 +231,8 @@
         1
       ],
       "phase_bits": 3,
-      "kerengonen": {
-        "phase_advance": 2
-      },
-      "charge": -3
+      "charge": -3,
+      "clock": true
     }
   ],
   "emissions": [
@@ -462,5 +460,6 @@
         }
       ]
     }
-  ]
+  ],
+  "K": 1
 }

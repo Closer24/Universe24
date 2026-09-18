@@ -367,8 +367,10 @@ class InitialState:
     ray_delay: bool = False
     # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
     # per interval, one integer for the world, required when a family declares
-    # `clock`; 0 when no thing has a clock.
+    # `clock`; 0 when no thing has a clock. The wait per whole quantum read
+    # (point 23): w = n / d intervals, 1 by default.
     clock: int = 0
+    wait_per_quantum: tuple[int, int] = (1, 1)
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True

@@ -22,7 +22,6 @@ from event_universe.core.spatial_state import (
     RAY_PROPERTIES,
     RAY_VIEW_COMPONENTS,
     RAY_VIEW_COMPONENTS_UNPOLARIZED,
-    Heading,
     Layers,
     Ray,
     RayPush,
@@ -261,7 +260,13 @@ def _turn(
         meter.charge("evaluate")
         heading = definitions[kind].headings[shadow.heading]
         push, remainder = push_of(
-            sign, shadow, definitions[kind], rule.reads, ray.amount, definition.charge, ray.push_remainder
+            sign,
+            shadow,
+            definitions[kind],
+            rule.reads,
+            ray.amount,
+            definition.charge,
+            ray.push_remainder,
         )
         before = ray_momentum_vector(ray, definition)
         ray = replace(pushed_ray(ray, push, definition), push_remainder=remainder)

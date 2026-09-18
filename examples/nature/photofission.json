@@ -211,10 +211,8 @@
         1
       ],
       "phase_bits": 3,
-      "kerengonen": {
-        "phase_advance": 1
-      },
-      "charge": 3
+      "charge": 3,
+      "clock": true
     },
     {
       "field": "neutron",
@@ -260,10 +258,8 @@
         1
       ],
       "phase_bits": 3,
-      "kerengonen": {
-        "phase_advance": 1
-      },
-      "charge": 0
+      "charge": 0,
+      "clock": true
     },
     {
       "field": "light",
@@ -309,9 +305,6 @@
         1
       ],
       "phase_bits": 3,
-      "kerengonen": {
-        "phase_advance": 0
-      },
       "charge": 0
     }
   ],
@@ -576,5 +569,6 @@
         }
       ]
     }
-  ]
+  ],
+  "K": 6
 }

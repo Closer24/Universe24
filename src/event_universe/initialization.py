@@ -1176,12 +1176,20 @@ def _external_bodies(
     return tuple(result)
 
 
+def _constant_amount(expression: Expression) -> int | None:
+    """The integer of a constant emission amount, None for an expression."""
+    if expression.op == "literal" and len(expression.literal) == 1:
+        return int(expression.literal[0])
+    return None
+
+
 def _with_owner_contents(initial: InitialState) -> InitialState:
     """The owners' contents of every ray family with owners (clock-readings-v1,
     Highlights 5.4 point 18): what a shadow carries as its owner's content, read
     by the owner's id; a type's default stock of the family's field, a body's
     amount, 1 for an owner known from a profile alone, with the owner's whole
-    charge (the charge per quantum times that stock); and D, the least common
+    charge (the family's charge per quantum times that stock for a type, the
+    declared charge of a body); and D, the least common
     multiple of every owner's content over the world, the unit of the
     electricity reading's remainder, the same on every family."""
     contents: list[tuple[int, ...]] = []
@@ -1200,11 +1208,12 @@ def _with_owner_contents(initial: InitialState) -> InitialState:
                     by_owner[kind.thing] = stock
                     charge_of[kind.thing] = checked_work(definition.charge * stock)
         for body in initial.external_bodies:
-            # A body's declared charge is per quantum of its family, as a
-            # family's is; its whole charge is that times its amount.
+            # A body's declared charge is its whole charge (a star, a proton of
+            # +3 in thirds), over its amount the charge per quantum its shadows
+            # carry.
             if body.family == index and body.amount >= by_owner.get(body.thing, 0):
                 by_owner[body.thing] = body.amount
-                charge_of[body.thing] = checked_work(body.charge * body.amount)
+                charge_of[body.thing] = body.charge
         contents.append(tuple(max(by_owner.get(owner, 0), 1) for owner in definition.owners))
         charges.append(tuple(charge_of.get(owner, 0) for owner in definition.owners))
     denominator = 1
@@ -1212,12 +1221,38 @@ def _with_owner_contents(initial: InitialState) -> InitialState:
         for content in block:
             denominator = lcm(denominator, content)
     bounded(denominator)
+    # K and N bound the content one Node may hold (clock-readings-v1, point 19):
+    # every thing declared born of a clock family, a constant emission amount,
+    # keeps content / K below half the phase circle (a record's stock is no
+    # ray; the rays born at a meeting are checked as they are made).
+    for definition in initial.spatial_fields:
+        if not definition.rays or not definition.clock:
+            continue
+        declared: list[int] = []
+        for emission in initial.emissions:
+            if emission.spatial_field == initial.spatial_fields.index(definition):
+                constant = _constant_amount(emission.amount)
+                if constant is not None:
+                    # A directed emission is one ray; an undirected one is shared
+                    # over the family's rays per tick, the largest share counting.
+                    per_tick = max(definition.rays_per_tick, 1)
+                    share = (
+                        abs(constant) if emission.heading is not None else -(-abs(constant) // per_tick)
+                    )
+                    declared.append(share)
+        for content in declared:
+            if 2 * content >= definition.clock * definition.phase_modulus:
+                raise ValueError(
+                    f"a thing of {initial.fields[definition.field].name} with content {content} "
+                    f"at K {definition.clock} would advance {content} / {definition.clock} "
+                    f"phase steps per interval, not below half the phase circle "
+                    f"{definition.phase_modulus} / 2: K and N bound the content one Node may "
+                    "hold (clock-readings-v1, point 19)"
+                )
     return replace(
         initial,
         spatial_fields=tuple(
-            replace(
-                definition, owner_contents=block, owner_charges=charge, push_denominator=denominator
-            )
+            replace(definition, owner_contents=block, owner_charges=charge, push_denominator=denominator)
             if definition.rays
             else definition
             for definition, block, charge in zip(initial.spatial_fields, contents, charges, strict=True)
@@ -1255,6 +1290,7 @@ def _spatial_fields(
     fields: tuple[FieldDefinition, ...],
     schema_version: int = 1,
     clock: int = 0,
+    wait: tuple[int, int] = (1, 1),
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
     names = _names(fields)
@@ -1371,20 +1407,6 @@ def _spatial_fields(
                 pace_numerator, pace_denominator = pace
                 if pace_numerator > pace_denominator:
                     raise ValueError("pace must not exceed one link per tick")
-            if "clock" in obj:
-                # The clock (clock-readings-v1, Highlights 5.4 point 19): a family
-                # whose things have a clock, content / K steps of phase per
-                # interval; K is the world's, declared once.
-                if not _boolean(obj["clock"], "clock"):
-                    raise ValueError("clock is declared true or left out (clock-readings-v1)")
-                if clock < 1:
-                    raise ValueError(
-                        "a family with a clock requires K, the world's content per phase step "
-                        "per interval, declared once (clock-readings-v1, point 19)"
-                    )
-                if "phase_bits" not in obj or phase_bits < 1:
-                    raise ValueError("a clock requires phase_bits at least 1 (clock-readings-v1)")
-                family_clock = clock
             if "kerengonen" in obj:
                 # Kerengonen: phased rays. phase_steps declares the coherence table,
                 # one entry per phase step of one turn, and fixes the width
@@ -1421,6 +1443,23 @@ def _spatial_fields(
                         "kerengonen.capture must be share or threshold: the lottery capture was "
                         "deleted on 2026-09-17, only a Node whose Detector bit is set may draw"
                     )
+            if "clock" in obj:
+                # The clock (clock-readings-v1, Highlights 5.4 point 19): a family
+                # whose things have a clock, content / K steps of phase per
+                # interval; K is the world's, declared once; the width is the
+                # family's, declared or the coherence table's.
+                if not _boolean(obj["clock"], "clock"):
+                    raise ValueError("clock is declared true or left out (clock-readings-v1)")
+                if clock < 1:
+                    raise ValueError(
+                        "a family with a clock requires K, the world's content per phase step "
+                        "per interval, declared once (clock-readings-v1, point 19)"
+                    )
+                if phase_bits < 1:
+                    raise ValueError(
+                        "a clock requires a phase width of at least 1 bit (clock-readings-v1)"
+                    )
+                family_clock = clock
             missing = ray_keys - obj.keys()
             if missing:
                 raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
@@ -1491,6 +1530,8 @@ def _spatial_fields(
                 charge=charge,
                 spread=spread,
                 polarization_bits=polarization_bits,
+                wait_numerator=wait[0],
+                wait_denominator=wait[1],
             )
         )
     resolved = tuple(result)
@@ -2206,7 +2247,7 @@ def _ray_interactions(
                     "decay declares one condition: after_periods (the group breaks at its n-th "
                     "meeting under the rule) or content_at_most (clock-readings-v1, point 20)"
                 )
-            (kind, value), = condition.items()
+            ((kind, value),) = condition.items()
             bound = 1 if kind == "after_periods" else 0
             rule = replace(rule, decay=(kind, _integer(value, f"decay.{kind}", bound)))
         if any(existing.name == rule.name for existing in rules):
@@ -2592,6 +2633,7 @@ def parse_initial_state(document: object) -> InitialState:
             "dense_field",
             "ray_phase_per_tick",
             "K",
+            "wait_per_quantum",
             "sampling_profile",
             "detectors",
             "return_mode",
@@ -2621,13 +2663,28 @@ def parse_initial_state(document: object) -> InitialState:
     # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
     # per interval, one integer for the world.
     clock = _integer(obj["K"], "K", 1) if "K" in obj else 0
+    # The wait per whole quantum read (Highlights 5.4 point 23): w = n / d
+    # intervals, an integer or [n, d], 1 by default.
+    wait: tuple[int, int] = (1, 1)
+    if "wait_per_quantum" in obj:
+        raw_wait = obj["wait_per_quantum"]
+        if isinstance(raw_wait, list):
+            numerator, denominator = (
+                _integer(v, "wait_per_quantum term", 0)
+                for v in _array(raw_wait, "wait_per_quantum", 2, 2)
+            )
+            if denominator < 1:
+                raise ValueError("wait_per_quantum is n / d with d at least 1")
+            wait = (numerator, denominator)
+        else:
+            wait = (_integer(raw_wait, "wait_per_quantum", 0), 1)
     if {"ray_delay", "ray_phase_per_tick"} & obj.keys():
         raise ValueError(
             "ray_delay and ray_phase_per_tick were retired by clock-readings-v1 (Highlights 5.4 "
             "point 21, 2026-09-18): every ray moves one Link per interval, always; a thing's "
             "departure is delayed by nothing"
         )
-    spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version, clock)
+    spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version, clock, wait)
     if "computation_field" in obj and any(definition.rays for definition in spatial):
         raise ValueError(
             "computation_field on a board of ray fields was retired by clock-readings-v1 "
@@ -2691,6 +2748,7 @@ def parse_initial_state(document: object) -> InitialState:
         least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
         ray_delay=False,
         clock=clock,
+        wait_per_quantum=wait,
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
         ray_phase_per_tick=False,

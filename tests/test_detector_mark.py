@@ -110,7 +110,7 @@ def document(marked=True, ticks=3):
                 "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
+                "kerengonen": {"phase_steps": 8},
             }
         ],
         "emissions": [
@@ -173,13 +173,15 @@ def ray_inventory(world):
 
 
 def continuing(port, tick, bit):
-    """The ray of Port p that continues: t - 1 Links beyond C after tick t."""
+    """The ray of Port p that continues: t - 1 Links beyond C after tick t. Its
+    phase stays 0: the family declares no clock (clock-readings-v1, 2026-09-18;
+    the rate 1 of the family was retired with the per-family rest rate)."""
     return (
         tuple(c - (tick - 1) * u for c, u in zip(CENTER, unit(port), strict=True)),
         port ^ 1,
         port + 1,
         tick,
-        tick,
+        0,
         1,
         bit,
     )
@@ -189,7 +191,7 @@ def returned(port, tick):
     """The ray of Port p that drew 0: reversed at C at tick 1, at its lamp at tick 2 and
     restored to it by the inverse split of its one-line event from tick 3."""
     if tick == 1:
-        return (CENTER, port, port + 1, 1, 1, 0, BIT_THING)
+        return (CENTER, port, port + 1, 1, 0, 0, BIT_THING)
     if tick == 2:
         return (lamp_position(port), port, port + 1, 0, 0, 0, BIT_THING)
     return None

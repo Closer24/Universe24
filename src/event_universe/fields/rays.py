@@ -135,7 +135,9 @@ def forward_rays(
     drops by the content, which is spent; every ray then walks one Link on its
     heading. The clock (point 19): a thing of a clock family advances its phase
     by content / K steps per interval with the remainder kept on it, and the
-    steps are counted, the world's computation (point 11).
+    steps are counted, the world's computation (point 11). A thing that owes an
+    interval for a whole quantum it read (point 23) stays this interval, its
+    clock still.
     """
     outgoing: list[list[Ray]] = [[] for _ in range(6)]
     kept: list[Ray] = []
@@ -148,6 +150,13 @@ def forward_rays(
         if not ray.outbound and ray.steps == 0 and ray.detector == BIT_THING:
             # At its event Node (a thing).
             kept.append(ray)
+            continue
+        if ray.owed >= definition.wait_denominator:
+            # A thing pays a tick for every whole quantum it read (Highlights 5.4
+            # point 23): this interval it neither moves, nor steps, nor advances
+            # its phase; one interval of its debt is spent.
+            kept.append(replace(ray, owed=ray.owed - definition.wait_denominator))
+            meter.charge("update")
             continue
         if ray.interaction_delay:
             if bounded(ray.interaction_delay) < 0:
@@ -227,6 +236,4 @@ def hold_rays(
     if not advance_phase or not definition.kerengonen:
         return rays
     meter.charge("update", len(rays))
-    return merge_rays(
-        tuple(tick_clock(ray, definition.phase_modulus, definition.clock) for ray in rays)
-    )
+    return merge_rays(tuple(tick_clock(ray, definition.phase_modulus, definition.clock) for ray in rays))

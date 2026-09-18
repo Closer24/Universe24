@@ -46,7 +46,7 @@ def test_runner_counts_funded_ray_momentum_through_absorption_and_escape(tmp_pat
         absorber_position=[3, 0, 0],
         ticks=12,
     )
-    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 4, "phase_advance": 1}
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 4}
     source = tmp_path / "funded.json"
     source.write_text(json.dumps(raw), encoding="utf-8")
     run_initialization(source, tmp_path / "run", ticks=12)
@@ -161,50 +161,6 @@ def test_self_exclusion_distinguishes_a_foreign_wave_phase_on_the_same_line():
     assert unpack(records[0].values[1]) == (1, 0, 0)
 
 
-def test_self_exclusion_keeps_the_departed_advance_and_distinguishes_a_foreign_one():
-    raw = two_lamps(16, 1)
-    raw["spatial_fields"][0]["self_exclusion"] = True
-    raw["spatial_couplings"][0]["type"] = "lamp_a"
-    raw["emissions"][0]["kerengonen_advance"] = {
-        "amount": {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]},
-        "denominator": 1,
-    }
-    initial = parse_initial_state(raw)
-    record = replace(
-        _record(Simulation(initial), 0),
-        values=(pack((400,)), pack((7, 0, 0))),
-        channel_code=2,
-        emission_departed=(pack((4, 0, 0, 3)), pack((0, 0, 0, 0))),
-    )
-    own = Ray(0, (0, 0, 0), 2, 3, 3, steps=1, event_ports=0b000011, event_shares=(2, 2, 0, 0, 0, 0))
-    foreign = replace(own, advance=5)
-    residents, records = [own, foreign], [record]
-    taken = _law(initial)._absorb(0, residents, records, CostMeter(initial.operation_costs))
-    # Both rays have the same phase here, so coherence is one. The emitter's
-    # current momentum would select advance 7; its actual departed ray carried 3.
-    # The foreign ray with advance 5 is distinguishable and must be absorbed.
-    assert taken == 2 and residents == [own]
-    assert unpack(records[0].values[0]) == (402,)
-    assert unpack(records[0].values[1]) == (9, 0, 0)
-    assert unpack(records[0].absorbed_phases[0]) == (3, 5, 0)
-
-
-@pytest.mark.parametrize("advance,next_phase", [(-1, 6), (0, 5), (7, 12)])
-def test_carried_phase_uses_the_largest_absorbed_share_advance(advance, next_phase):
-    initial = parse_initial_state(two_lamps(16, 1, absorber=0))
-    records = [_record(Simulation(initial), 2)]
-    residents = [Ray(0, (0, 0, 0), 1, 5, 2), Ray(1, (0, 0, 0), 3, 5, advance)]
-    law = _law(initial)
-    assert law._absorb(0, residents, records, CostMeter(initial.operation_costs)) == 4
-    assert not residents
-    assert unpack(records[0].values[0]) == (4,)
-    assert unpack(records[0].values[1]) == (-2, 0, 0)
-    # Largest-share inheritance is the configured candidate's policy. Explicit
-    # zero must remain zero; only -1 selects the field's one-step advance.
-    assert unpack(records[0].absorbed_phases[0]) == (5, advance, 1)
-    assert law._carried_phase(records[0], initial.spatial_fields[0]) == (next_phase, advance, 1)
-
-
 def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():
     raw = document(headings=[[1, 0, 0]], rays_per_tick=1, amount=1, source=True, recoil=False)
     del raw["conservation"]
@@ -212,7 +168,7 @@ def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():
     raw["spatial_fields"][0].update(
         {
             "self_exclusion": True,
-            "kerengonen": {"phase_steps": 4, "phase_advance": 1},
+            "kerengonen": {"phase_steps": 4},
             "decay": {"retain_numerator": 0, "retain_denominator": 1, "residue": "dissipate"},
         }
     )
@@ -265,7 +221,7 @@ def test_each_absorption_field_takes_its_own_whole_rays_without_a_draw():
     absorber["defaults"]["other_quanta"] = 0
     raw["spatial_fields"].append({**raw["spatial_fields"][0], "field": "other_quanta"})
     for field in raw["spatial_fields"]:
-        field["kerengonen"] = {"phase_steps": 4, "phase_advance": 1, "capture": "threshold"}
+        field["kerengonen"] = {"phase_steps": 4, "capture": "threshold"}
     raw["spatial_couplings"].append(
         {**raw["spatial_couplings"][0], "name": "other_absorption", "field": "other_quanta"}
     )
@@ -295,11 +251,7 @@ def test_negative_threshold_capture_takes_a_whole_funded_ray_or_nothing(stock, r
         signed=True,
         ticks=4,
     )
-    raw["spatial_fields"][0]["kerengonen"] = {
-        "phase_steps": 4,
-        "phase_advance": 1,
-        "capture": "threshold",
-    }
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 4, "capture": "threshold"}
     world = Simulation(parse_initial_state(raw))
     for _ in range(4):
         world.step()
@@ -367,7 +319,7 @@ def test_phased_self_exclusion_cannot_use_a_scalar_response_subtraction():
 
 
 def test_attenuated_self_exclusion_cannot_subtract_the_original_emission():
-    raw = two_lamps(4, 1)
+    raw = two_lamps(4, 0)
     del raw["conservation"]
     raw["schema_version"] = 2
     del raw["spatial_fields"][0]["kerengonen"]

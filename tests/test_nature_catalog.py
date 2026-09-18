@@ -14,6 +14,14 @@ by any source, its spread table declared and its source sign the releaser's (fea
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Catalog of nature")
 before the first run.
+
+Re-pinned on 2026-09-18 under clock-readings-v1 (feature 16b): a ray declares
+its content on the ladder and whether its things have a clock, no rest rate
+(Highlights 5.4 point 19); the mass field and its delay coupling are retired
+(point 18: the one shadow set read twice); weak_conversion declares a decay
+table, not a draw (point 20). The catalog's worlds case stays skipped: the
+textual migration of the field families (kind field, field_of) is in the
+feature's remaining list.
 """
 
 import re
@@ -52,7 +60,7 @@ SECTIONS = {
     "apparatus",
     "experiments",
 }
-RAY_KEYS = {"kind", "rest_rate", "charge", "phase_bits", "field", "note"}
+RAY_KEYS = {"kind", "content", "clock", "charge", "phase_bits", "field", "note"}
 COUPLING_KEYS = {"status", "engine", "participants", "invariants", "note"}
 # A coupling has outputs (a binding coupling among them, an outputs rule whose
 # loop closes, loop-binding-v1) or is the sink of an external body.
@@ -324,8 +332,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         # an external-body coupling is one the
         # external body lists, and the Detector's declaration is the mark's three keys.
         assert set(data) == SECTIONS
-        assert (data["schema"], data["date"]) == ("nature-catalog-v1", "2026-09-17")
-        assert data["units"]["rest_rate"]["value"] == 1 and data["units"]["charge"]["per_e"] == 3
+        assert (data["schema"], data["date"]) == ("nature-catalog-v1", "2026-09-18")
+        assert data["units"]["content"]["value"] == 1 and data["units"]["charge"]["per_e"] == 3
+        assert "rest_rate" not in data["units"]
         assert data["phase_bits"]["default"] == 8
         assert data["phase_bits"]["reference_table"] == REFERENCE_BITS
         assert "real" not in data["phase_bits"]
@@ -335,13 +344,20 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for name, ray in rays.items():
             assert RAY_KEYS <= ray.keys(), name
             assert ray["kind"] in ("ray", "field", "bound_group"), name
-            rate = ray["rest_rate"]
-            assert rate == UNDECIDED or (type(rate) is int and rate >= 0), name
+            content = ray["content"]
+            assert content == UNDECIDED or (type(content) is int and content >= 0), name
+            # A clock is a family's declaration, not a rate (clock-readings-v1).
+            assert type(ray["clock"]) is bool and ray["clock"] == (content != 0), name
             assert type(ray["charge"]) is int and ray["phase_bits"] == "default", name
             for field in ray["field"]:
                 assert rays[field]["kind"] == "field" and name in rays[field]["field_of"], name
             if ray["kind"] == "field":
-                assert (ray["rest_rate"], ray["charge"], ray["field"]) == (0, 0, []), name
+                assert (ray["content"], ray["clock"], ray["charge"], ray["field"]) == (
+                    0,
+                    False,
+                    0,
+                    [],
+                ), name
                 assert all(name in rays[source]["field"] for source in ray["field_of"]), name
                 release = ray["release"]
                 assert release == UNDECIDED or (
@@ -412,7 +428,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "polarizer",
         }
         piece = apparatus["external_body"]["apparatus_family"]
-        assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
+        assert (piece["content"], piece["clock"], piece["charge"], piece["field"]) == (0, False, 0, [])
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
         # The Detector reads the bit (Highlights 5.4, 2026-09-17): two couplings on
@@ -453,7 +469,13 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert click["default"] == "absorb for a field family, pass for matter"
         assert "detector-absorb-v1" in apparatus["detector"]["engine"]["identity"]
         assert apparatus["external_body"]["engine"]["landed"]
-        assert len(rays) == 12 and len(couplings) == 16
+        assert len(rays) == 11 and len(couplings) == 15
+        # The mass field and gravity by delay are retired (point 18).
+        assert "mass_field" not in rays and "mass_field_delay" not in couplings
+        assert not any("mass_field" in ray["field"] for ray in rays.values())
+        # A decay is a table (point 20): weak_conversion declares its condition.
+        assert set(couplings["weak_conversion"]["decay"]) == {"after_periods", "decided_by"}
+        assert "draw" not in couplings["weak_conversion"] and "setting" not in rays["neutron"]["decay"]
         # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
         # electromagnetic family, released by the electron, the positron and the
         # proton (a body of that family radiates it), its spread table declared, and
@@ -489,14 +511,15 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert documented_undecided() == found
         # 26 since 2026-09-17: feature 12 decided light's spread and source_sign,
         # feature 2b the two couplings of the Detector, feature 11 light's
-        # polarization and the polarizer's table (A12 measured).
-        assert len(found) == 26
+        # polarization and the polarizer's table (A12 measured); 25 since
+        # 2026-09-18: the mass field's release and the delay table left with the
+        # mass field (point 18), the weak conversion's decay condition joined.
+        assert len(found) == 25
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
             "A3",
             "A5",
-            "A6",
             "A8",
             "A9",
             "A10",

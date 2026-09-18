@@ -2300,7 +2300,110 @@ decides. Identity `phase-spread-v1`; isolated test
 `tests/test_phase_spread.py`
 ([expectations](TEST_EXPECTATIONS.md#the-phase-steered-spread)).
 
+### The clock and the readings (`clock-readings-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4 points 11, 16, 18, 19, 20, 21 and
+23 and the settled rule (i), the model owner's decisions of 2026-09-18; issue
+#169, feature 16b), the engine's only behaviour:
+
+- **The clock is the content (point 19).** No family declares a rest rate:
+  `kerengonen.phase_advance`, `rest_rate` on a family and `kerengonen_advance`
+  on an emission are refused. A family whose things have a clock declares
+  `clock: true` beside its charge (light and the plain family do not), and the
+  world declares `K` once, the content per phase step per interval, required
+  when any family declares a clock. A thing of a clock family advances its
+  phase by `(remainder + content) // K` steps per interval and keeps the rest
+  on itself (`Ray.remainder`, below K, a property of the thing and no ledger
+  quantity); on its walk back it undoes exactly that interval. A shadow has no
+  clock and neither has a family without one: their phase stays what it was
+  given. K and N = 2^`phase_bits` bound the content one Node may hold: a
+  thing's content / K stays below N / 2 (2 x content < K x N), refused at
+  parsing for every emitted content (the largest share of an undirected
+  emission) and at a meeting whose output would hold more, which fails closed
+  before any owner changes.
+- **The computation (point 11).** The world's computation per interval is the
+  sum over its things of the phase steps they made that interval, content / K
+  each with the remainders carried, constant between absorptions and escapes;
+  the engine keeps the running total (`Simulation.phase_steps()`) and the
+  runner records `computation_per_tick`, `clock_readings`, `K` and
+  `wait_per_quantum` in `run.json`.
+- **One shadow set, read twice (points 16 and 18).** A shadow carries its
+  owner's id; its owner's charge and content are read by that id from the
+  family's owner table (`SpatialFieldDefinition.owner_contents`,
+  `owner_charges`: a type's default stock of the family's field with the
+  family's charge per quantum times that stock, a body's amount with its
+  declared whole charge, 1 and 0 for an owner known from a profile alone). The
+  gravity reading, `reads: "content"`: dp = sign x amount x heading x the
+  content of what is pushed, exact. The electricity reading, `reads:
+  "charge"`: dp = sign x amount x heading x (the owner's charge / the owner's
+  content) x the charge per quantum of what is pushed (the family's for a
+  thing, the declared charge over the amount for a body, which must divide
+  it), accumulated per axis in units of 1 / D on the pushed thing's
+  `push_remainder` (D the least common multiple of every owner's content over
+  the world, `push_denominator` on every family), the whole units into the
+  momentum, rounded toward zero so that a push below one quantum of either
+  sign accumulates exactly and the remainder keeps its sign. The same shadows
+  are read once per momentum rule of the thing they meet: a shadow an earlier
+  rule turned back for that thing pushes it again under the next rule's
+  reading and carries the sum of the pushes home; a shadow another thing took
+  is left to it. The catalog's `mass_field` and `mass_field_delay` are retired;
+  `reads` admits nothing beyond the two words.
+- **The decay table (point 20).** `draw` and `seed` on a rule are refused. A
+  rule with outputs may declare `decay: {"after_periods": n}` (the group
+  breaks at its n-th meeting under the rule; its passages are counted on its
+  rays, `Ray.periods`, carried by the outputs of the corner table declared
+  after it, and reset to 0 on the outputs of the decay, which are fresh
+  things) or `{"content_at_most": c}` (it breaks when the content of the rays
+  met is at most c); the condition is read at every meeting the rule's guard
+  admits, nothing is drawn, no counter and no ticket, and two runs are
+  byte-identical.
+- **One Link per interval and the step (point 21, the settled rule (i)).**
+  Every ray moves one Link per interval on its heading; `ray_delay`,
+  `ray_phase_per_tick` and, on a board of ray fields, `computation_field` are
+  refused, and the DDA staircase of `ray-momentum-turn-v2` is retired
+  (`ray-momentum-turn-v3`). The momentum a thing carries (`Ray.momentum`) is
+  the pushes it has taken and not yet spent; the ledger reads a thing's
+  momentum as amount x heading plus that (`thing_registers`, the `registers`
+  line of the record). At a departure the first axis (x before y before z)
+  whose component has reached the thing's content turns the thing to that
+  axis, the sign choosing the sense, and the component drops by the content;
+  at most one step per departure; a component on the thing's own direction
+  turns it nowhere and drops nothing. What a step takes off the thing's
+  momentum as the ledger reads it, content x the heading before the step, is
+  booked on the momentum field's line as `spent`: `initial + sourced = current
+  + escaped + annulled + absorbed + absorbed_by_marks + returned + spent`
+  there, the other lines carrying no `spent` key (an optional line of
+  `ray-event-audit-v1`).
+- **A thing pays a tick for every whole quantum it reads (point 23).** A push
+  of whole quanta on a thing's momentum owes it w intervals per quantum,
+  w = n / d the world's `wait_per_quantum` (1 by default; an integer or
+  `[n, d]`), kept exactly on the thing (`Ray.owed`, in units of 1 / d) and
+  spent one interval at a time: an interval in which the thing neither moves,
+  nor steps, nor advances its phase, the only exception to one Link per
+  interval; a shadow pays nothing. The queued reading of DERIVATIONS.md
+  section 24 (w per quantum, always).
+
+Choices where the text was open, flagged for the owner: the clock is declared
+per family as `clock: true` (the text says a family declares only its charge
+and its tables; something must tell light from an electron); a body's declared
+`charge` is its whole charge; a type owner's charge is the family's charge per
+quantum times its stock; the electricity remainder rounds toward zero; a
+component reaching the content on the thing's own direction drops nothing;
+`after_periods` counts the group's meetings under the rule, so a world that
+means full circuits of a ring of L corners declares n x L or guards the rule
+to one corner. Identity `clock-readings-v1`; isolated tests
+`tests/test_clock_readings.py` ([expectations](TEST_EXPECTATIONS.md#the-clock-and-the-readings)),
+`tests/test_wait_rule.py` ([expectations](TEST_EXPECTATIONS.md#the-wait-per-quantum-read))
+and the step in `tests/test_ray_momentum_turn.py`; old worlds are migrated
+textually by `migrate_clock` in `examples/nature/bit_law_migration.py`.
+
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
+
+Restated on 2026-09-18 under `clock-readings-v1` (above): the momentum a
+thing carries is the pushes it has taken, the step of the settled rule (i)
+replaces the DDA walk of v2, and the momentum spent on a step is booked. The
+text below describes v2 and stands as its history.
+
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.16 and 3.28;
 [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature

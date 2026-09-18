@@ -85,6 +85,9 @@ def vector(name):
 
 
 def ray_field(name, advance, slots=16, **extra):
+    """A family without a clock (clock-readings-v1, 2026-09-18: no rest rate is
+    declared; `advance` is kept at 0 by every caller)."""
+    assert advance == 0
     return {
         "field": name,
         "baseline": 0,
@@ -94,7 +97,7 @@ def ray_field(name, advance, slots=16, **extra):
         "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
-        "kerengonen": {"phase_steps": 8, "phase_advance": advance},
+        "kerengonen": {"phase_steps": 8},
     } | extra
 
 

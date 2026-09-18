@@ -30,15 +30,21 @@ def phased(steps=4, advance=1):
         rays_per_tick=1,
         ray_slots=8,
         phase_steps=steps,
-        phase_advance=advance,
+        clock=advance,
     )
 
 
 def test_phase_advances_on_every_link_and_wraps():
+    # The clock is the content (clock-readings-v1, 2026-09-18): a ray of 3 at
+    # K 3 advances one step per Link; at K 2 it advances 3 // 2 = 1 and keeps
+    # the remainder 1, which the next Link spends: (1 + 3) // 2 = 2.
     ray = Ray(0, (0, 0, 0), 3, 2)
-    port, moved = advance_ray(ray, (1, 0, 0), 4, 1)
+    port, moved = advance_ray(ray, (1, 0, 0), 4, 3)
     assert port == 0 and moved.phase == 3
-    assert advance_ray(moved, (1, 0, 0), 4, 1)[1].phase == 0
+    assert advance_ray(moved, (1, 0, 0), 4, 3)[1].phase == 0
+    halved = advance_ray(ray, (1, 0, 0), 4, 2)[1]
+    assert (halved.phase, halved.remainder) == (3, 1)
+    assert advance_ray(halved, (1, 0, 0), 4, 2)[1].phase == 1
     # A plain ray field never touches the phase.
     assert advance_ray(ray, (1, 0, 0))[1].phase == 2
     assert merge_rays((Ray(0, (0, 0, 0), 1, 1), Ray(0, (0, 0, 0), 2, 1), Ray(0, (0, 0, 0), 4, 2))) == (
@@ -72,6 +78,10 @@ def two_lamps(steps, advance, separation=6, ticks=8, absorber=None, phase_b=0):
     raw = {
         "schema_version": 1,
         "model_id": "kerengonen-two-lamp-test-v1",
+        # The clock is the content (clock-readings-v1, 2026-09-18): a ray of 2
+        # (4 quanta over two headings) advances `advance` steps per interval at
+        # K 2 / advance.
+        **({"K": 2 // advance} if advance else {}),
         "shape": [15, 15, 15],
         "boundary": "open",
         "slots_per_node": 2,
@@ -138,7 +148,8 @@ def two_lamps(steps, advance, separation=6, ticks=8, absorber=None, phase_b=0):
                 "headings": [[1, 0, 0], [-1, 0, 0]],
                 "rays_per_tick": 2,
                 "ray_slots": 8,
-                "kerengonen": {"phase_steps": steps, "phase_advance": advance},
+                "kerengonen": {"phase_steps": steps},
+                **({"clock": True} if advance else {}),
             }
         ],
         "emissions": [
@@ -263,21 +274,26 @@ def test_kerengonen_is_validated_and_identified(tmp_path):
     assert metadata["spatial_policy"] == "kerengonen-ray-field-v1"
     assert metadata["spatial_transport"] == "straight-rays"
     for patch, message in (
-        ({"phase_steps": 1, "phase_advance": 0}, "phase_steps"),
-        ({"phase_steps": 4, "phase_advance": 4}, "phase_advance"),
-        ({"phase_steps": 4}, "kerengonen"),
+        ({"phase_steps": 1}, "phase_steps"),
+        ({"phase_steps": 4, "phase_advance": 4}, "clock-readings-v1"),
+        ({"phase_steps": 4, "capture": "lottery"}, "kerengonen"),
     ):
         raw = two_lamps(4, 1)
         raw["spatial_fields"][0]["kerengonen"] = patch
         with pytest.raises(ValueError, match=message):
             parse_initial_state(raw)
+    # A clock needs the world's K (clock-readings-v1).
+    raw = two_lamps(4, 1)
+    del raw["K"]
+    with pytest.raises(ValueError, match="requires K"):
+        parse_initial_state(raw)
     raw = two_lamps(4, 1)
     raw["emissions"][1]["kerengonen_phase"] = 4
     with pytest.raises(ValueError, match="kerengonen_phase"):
         parse_initial_state(raw)
     # Every ray is a wave ray (wave-ray-family-v1): a plain field admits an emission
     # phase below its declared width, and without a declared width only phase 0.
-    raw = two_lamps(4, 1)
+    raw = two_lamps(4, 0)
     del raw["spatial_fields"][0]["kerengonen"]
     raw["emissions"][1]["kerengonen_phase"] = 2
     with pytest.raises(ValueError, match="kerengonen_phase requires"):
@@ -407,14 +423,17 @@ def huygens_document(lamp_b_phase=0, carried=True, ticks=12):
 
 
 def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it():
-    # Lamp A's +x rays (4 quanta) reach the slit after four links, phase 4. The slit
-    # absorbs them, stores that phase, and next cycle re-emits its stock over both
-    # headings (2 quanta each way) at phase 5: the slit's own tick counts as one
-    # advance. Three more links to (3, 0) make phase 0. Lamp B's -y rays (2 quanta)
-    # reach (3, 0) after four links at phase 4: opposite, and the Node reads zero
-    # although 4 quanta are resident. Offsetting lamp B by four steps makes them
-    # equal: the Node reads 4. A slit that re-emits at a fixed phase 0 instead
-    # arrives at phase 3, a partial 4 x |2 e^0 + 2 e^(i pi/4)|^2 / 16 = 3.
+    # Re-pinned on 2026-09-18 under clock-readings-v1 (the clock is the content,
+    # K 2 here): lamp A's +x rays of 4 advance 2 steps per Link and reach the slit
+    # after four links at phase 8 = 0; the slit absorbs them, stores that phase
+    # and next cycle re-emits its stock of 4 over both headings (2 each way) at
+    # the carried phase plus its own interval, 4 // K = 2 steps; three more links
+    # of a ray of 2 (one step each) make phase 5 at (3, 0). Lamp B's -y rays of
+    # 2 reach (3, 0) after four links at phase 4: one step apart, and the Node
+    # reads 4 x cos^2(pi / 8) = 3. Offsetting lamp B by four steps puts them five
+    # apart: the Node reads 0. A slit that re-emits at a fixed phase 0 instead
+    # arrives at phase 3: one step apart again, 3. (Before the law every ray
+    # advanced one step per Link and the readings were 0, 4 and 3.)
     readings = {}
     for name, raw in (
         ("carried", huygens_document()),
@@ -434,7 +453,7 @@ def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it(
             if r is not None and r.type_index == 3
         )
         assert slit["quanta"] == (4,)  # this cycle's absorption, re-emitted next cycle
-    assert readings == {"carried": 0, "offset": 4, "fixed": 3}
+    assert readings == {"carried": 3, "offset": 0, "fixed": 3}
     # A carried phase needs an absorb rule for the emitter on that field.
     raw = huygens_document()
     raw["spatial_couplings"] = raw["spatial_couplings"][:1]
@@ -442,87 +461,16 @@ def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it(
         parse_initial_state(raw)
 
 
-def test_a_ray_carries_its_own_advance_and_an_emitter_sets_it_from_its_momentum():
-    # A ray with its own advance ignores the field's; -1 means the field's.
-    own = Ray(0, (0, 0, 0), 3, 0, 4)
-    assert advance_ray(own, (1, 0, 0), 64, 1)[1].phase == 4
-    assert advance_ray(Ray(0, (0, 0, 0), 3, 0), (1, 0, 0), 64, 1)[1].phase == 1
-    assert merge_rays((Ray(0, (0, 0, 0), 1, 0, 4), Ray(0, (0, 0, 0), 1, 0, 8))) == (
-        Ray(0, (0, 0, 0), 1, 0, 4),
-        Ray(0, (0, 0, 0), 1, 0, 8),
-    )
-    # Two beams of momentum 16 and 32 on one 64-step field, advance = |p| / 4:
-    # after three links their rays sit at phases 12 and 24.
-    raw = two_lamps(64, 1, ticks=6)
-    del raw["conservation"]
-    raw["spatial_fields"][0]["headings"] = [[1, 0, 0]]
-    raw["spatial_fields"][0]["rays_per_tick"] = 1
-    momentum = {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]}
-    for rule in raw["emissions"]:
-        del rule["recoil_field"]
-        rule["amount"] = 2
-        rule["kerengonen_advance"] = {"amount": momentum, "denominator": 4}
-    raw["disturbance_types"][0]["defaults"]["momentum"] = [16, 0, 0]
-    raw["disturbance_types"][1]["defaults"]["momentum"] = [32, 0, 0]
-    raw["seeds"] = [
-        {"position": [CENTER - 6, CENTER, CENTER], "type": "lamp_a"},
-        {"position": [CENTER - 6, CENTER + 2, CENTER], "type": "lamp_b"},
-    ]
-    world = Simulation(parse_initial_state(raw))
-    for _ in range(4):
-        world.step()
-    rays = {
-        node.position[1] - CENTER: node.rays[0]
-        for node in world.inventory_view().nodes
-        if node.rays and node.rays[0]
-    }
-    assert {r.advance for r in rays[0]} == {4} and {r.advance for r in rays[2]} == {8}
-    # Same links traveled, twice the phase: the fast beam's wavelength is half.
-    slow = sorted(r.phase for r in rays[0])
-    fast = sorted(r.phase for r in rays[2])
-    assert slow and fast == [2 * phase for phase in slow] and all(phase % 4 == 0 for phase in slow)
-    # A negative or non-kerengonen advance is rejected.
-    raw["emissions"][0]["kerengonen_advance"] = {"amount": -4}
-    with pytest.raises(ValueError, match="must not be negative"):
-        Simulation(parse_initial_state(raw)).step()
-    del raw["spatial_fields"][0]["kerengonen"]
-    with pytest.raises(ValueError, match="kerengonen_advance requires"):
-        parse_initial_state(raw)
-
-
-def test_a_slit_carries_the_absorbed_advance_with_the_phase():
-    # The Huygens test again, on a 64-step field whose lamps advance 4 per link
-    # from momentum 16 while the field's own advance is 1: the slit must re-emit
-    # at the lamps' advance, or the wave changes wavelength at the slit.
-    raw = huygens_document(ticks=12)
-    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 64, "phase_advance": 1}
-    momentum = {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]}
-    for rule in raw["emissions"][:2]:
-        rule["kerengonen_advance"] = {"amount": momentum, "denominator": 4}
-    for kind in raw["disturbance_types"][:2]:
-        kind["defaults"]["momentum"] = [16, 0, 0]
-    # Lamp A -> slit: 4 links at 4 = 16; the slit's tick adds 4 and three links add
-    # 12: phase 32. Lamp B -> (3, 0): 4 links at 4 = 16. A quarter turn apart,
-    # reading 2; with lamp B offset 16 steps equal, reading 4; offset 48, opposite,
-    # reading 0. Had the slit used the field's advance 1 the readings would differ.
-    readings = []
-    for offset in (0, 16, 48):
-        doc = json.loads(json.dumps(raw))
-        if offset:
-            doc["emissions"][1]["kerengonen_phase"] = offset
-        world = Simulation(parse_initial_state(doc))
-        for _ in range(12):
-            world.step()
-        readings.append(value_at(world, 3))
-    assert readings == [2, 4, 0]
-
-
 def mirror_document(advance=4, mirror_x=6, ticks=24, phase_b=0):
     """Lamp A at x = -6 fires +x; a mirror at x = mirror_x sends the wave back along -x."""
     raw = two_lamps(64, 1, ticks=ticks)
     del raw["conservation"]
     raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [-1, 0, 0]]
-    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 64, "phase_advance": advance}
+    # The clock is the content (clock-readings-v1): a ray of 4 (8 quanta over two
+    # headings) advances `advance` steps per interval at K 4 / advance.
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 64}
+    raw["spatial_fields"][0]["clock"] = True
+    raw["K"] = 4 // advance
     raw["disturbance_types"].append(
         {
             "name": "mirror",
@@ -597,12 +545,9 @@ def test_a_mirror_sends_the_wave_back_along_the_reflected_heading_as_a_standing_
     readings = [value_at(world, x) for x in range(-5, 6)]
     assert readings == [0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5]
     assert readings[:3] == readings[8:11]
-    faster = Simulation(parse_initial_state(mirror_document(advance=8)))
-    for _ in range(24):
-        faster.step()
-    readings = [value_at(faster, x) for x in range(-5, 6)]
-    assert readings[:3] == readings[4:7] == readings[8:11]
-    assert readings == [6, 1, 1, 6, 6, 1, 1, 6, 6, 1, 1]  # period 4, no exact node on this grid
+    # The advance-8 variant (period 4) is retired with the per-family rate
+    # (clock-readings-v1, 2026-09-18): a ray of 4 at the world's one K advances
+    # 4 // K steps per interval, and 8 needs a content of 8 per ray.
 
 
 def test_the_mirror_emission_is_validated():

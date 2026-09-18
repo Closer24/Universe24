@@ -629,13 +629,20 @@ class SpatialNode(SpatialNodeState):
                         home_momentum[axis] = checked_work(home_momentum[axis] + momentum[axis])
                     continue
                 if ray.outbound and sign:
+                    # The body is read with its charge per quantum, its whole
+                    # charge over its amount (clock-readings-v1).
+                    if body.charge % body.amount:
+                        raise ValueError(
+                            "a body read by its charge carries a whole charge that is a multiple "
+                            "of its amount (clock-readings-v1, point 16)"
+                        )
                     push, remainder = push_of(
                         sign,
                         ray,
                         definition,
                         PUSH_READS[body.reads],
                         body.amount,
-                        body.charge,
+                        body.charge // body.amount,
                         current.push_remainder,
                     )
                     current = replace(body_pushed(current, push), push_remainder=remainder)
