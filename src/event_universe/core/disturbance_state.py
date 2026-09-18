@@ -5,8 +5,6 @@ from dataclasses import dataclass, replace
 from types import MappingProxyType
 from typing import TYPE_CHECKING, NamedTuple
 
-from .sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
-
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
     from .node_conservation import NodeConservationDefinition
@@ -383,13 +381,9 @@ class InitialState:
     # the things read it; the value is the most intervals the layer is stepped
     # before the run gives up on the fixed point, 0 for a world without the mode.
     standing_field: int = 0
-    sampling_profile: str = DETECTOR_ONLY
-    # The Nodes whose Detector bit is set, each with its setting and ticket seed
-    # (detector-mark-v1): the only place a draw exists.
+    # The Nodes whose Detector bit is set, each with its table (detector-mark-v1
+    # under bit-law-v1: no seed, no draw).
     detectors: tuple[DetectorMark, ...] = ()
-    # What a returned ray does at its event Node (inverse-split-v1): siblings,
-    # straight or annul; a world without a mark never reads it.
-    return_mode: str = "siblings"
     # The external bodies of the world (external-body-v1): declared marks, one per
     # Node, in declaration order; a world without one is unchanged.
     external_bodies: tuple[ExternalBody, ...] = ()
@@ -400,7 +394,6 @@ class InitialState:
 
     def __post_init__(self) -> None:
         from .spatial_state import (
-            RETURN_MODES,
             family_owners,
             validate_dense_field_admission,
             validate_detector_marks,
@@ -413,8 +406,6 @@ class InitialState:
             validate_thing_ids,
         )
 
-        if self.return_mode not in RETURN_MODES:
-            raise ValueError("return_mode must be siblings, straight or annul")
         # Every ray family with a shadow set (a release, or a field given with the
         # board) spreads its shadows by the Node's mixing (node-mixing-v1, never
         # declared), and its owners (bit-law-v1) are filled in from the things of
@@ -443,7 +434,6 @@ class InitialState:
                     for index, definition in enumerate(self.spatial_fields)
                 ),
             )
-        validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
         validate_ray_coupling(self)
         validate_released_field_admission(self)
         validate_spread_admission(self)

@@ -1639,7 +1639,6 @@ def extract_record(
             "ray_state": metadata.get("ray_state"),
             "detector_mark": metadata.get("detector_mark"),
             "released_field": metadata.get("released_field"),
-            "sampling_profile": metadata.get("sampling_profile"),
             "event_count": len(record.events),
             "unknown_event_kinds": builder.unknown_kinds,
             "frames": record.frames is not None,

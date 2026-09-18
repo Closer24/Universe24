@@ -294,12 +294,10 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
             "tick": 6,
             "position": along(port, 0),
             "family": "quanta",
-            "mode": "siblings",
             "ports": (),
             "amounts": (),
             "amount": 4,
             "restored": True,
-            "annulled": {},
         },
     ]
     assert world._spatial.nodes[MARK].detector_ticket == TICKET_AFTER_DRAW
@@ -323,7 +321,6 @@ def test_a_draw_of_zero_returns_the_ray_to_its_event_node(port, tmp_path):
     assert first_run["detector_return"] == DETECTOR_RETURN == "detector-return-v1"
     assert first_run["inverse_split"] == "inverse-split-v1"
     assert first_run["detector_mark"] == "detector-mark-v1"
-    assert first_run["sampling_profile"] == "detector-only-v1"
     assert first_run["ray_state"] == "ray-event-state-v1"
     assert first_run["conserved_at_every_completed_tick"]
     assert first_run["final_totals"] == {"quanta": [AMOUNT], "momentum": [0, 0, 0]}

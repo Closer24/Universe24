@@ -43,7 +43,6 @@ from .spatial_state import (
     CLICK_ABSORB,
     POLARIZATION_NONE,
     PUSH_READS,
-    RETURN_MODES,
     FieldInteractionGuard,
     Ray,
     Rays,
@@ -211,7 +210,6 @@ class SpatialAccounting:
         reactions: list[list[int]],
         transformations: list[list[int]],
         localized: list[list[int]] | None = None,
-        annulled: list[list[int]] | None = None,
         absorbed: list[list[int]] | None = None,
         absorbed_by_marks: list[list[int]] | None = None,
         returned: list[list[int]] | None = None,
@@ -225,7 +223,6 @@ class SpatialAccounting:
         self.__computation = [0] if computation is None else computation
         self.__reactions, self.__transformations = reactions, transformations
         self.__localized = [] if localized is None else localized
-        self.__annulled = [] if annulled is None else annulled
         self.__absorbed = [] if absorbed is None else absorbed
         self.__absorbed_by_marks = [] if absorbed_by_marks is None else absorbed_by_marks
         self.__returned = [] if returned is None else returned
@@ -249,10 +246,6 @@ class SpatialAccounting:
 
     def record_transformations(self, values: Values) -> None:
         add_audit_delta(self.__transformations, values)
-
-    def record_annulled(self, values: Values) -> None:
-        """Content that left the world at an inverse split in annul mode (inverse-split-v1)."""
-        add_audit_delta(self.__annulled, values)
 
     def record_absorbed(self, values: Values) -> None:
         """Content that ended in an external body's sink (external-body-v1)."""
@@ -885,8 +878,6 @@ class SpatialNode(SpatialNodeState):
         services.accounting.record_transformations(plan.rule_delta)
         if plan.transfer_delta:
             services.accounting.record_reactions(plan.transfer_delta)
-        if plan.annulled:
-            services.accounting.record_annulled(plan.annulled)
         if plan.returned_delta:
             # The momentum shadows carried home this cycle to a record without a
             # momentum field (bit-law-v1): booked returned; a shadow's amount is
@@ -933,7 +924,7 @@ class SpatialNode(SpatialNodeState):
                 accumulators=plan.body.accumulators,
             )
         # The inverse splits of this cycle precede the cycle record, so that an
-        # audit reading the annulled content has it before it measures the Node.
+        # audit reading them has them before it measures the Node.
         for split in plan.inverse_splits:
             definition = services.initial.spatial_fields[split.field]
             self._event(
@@ -942,16 +933,10 @@ class SpatialNode(SpatialNodeState):
                 services,
                 notifications=notifications,
                 family=services.initial.fields[definition.field].name,
-                mode=RETURN_MODES[split.mode],
                 ports=split.ports,
                 amounts=split.amounts,
                 amount=split.amount,
                 restored=bool(split.restored),
-                annulled={
-                    field.name: split.annulled[i]
-                    for i, field in enumerate(services.initial.fields)
-                    if split.annulled and any(split.annulled[i])
-                },
             )
         # The spreads of this cycle precede the cycle record as well (field-spreading-v1):
         # the local audit reads what each spread took off the Node before it measures it.

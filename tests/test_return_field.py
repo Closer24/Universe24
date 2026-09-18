@@ -282,7 +282,6 @@ def test_a_head_on_push_is_taken_exactly_once():
         "sourced": (0, 0, 0),
         "current": (0, 0, 0),
         "escaped": (0, 0, 0),
-        "annulled": (0, 0, 0),
         "absorbed": (0, 0, 0),
         "absorbed_by_marks": (0, 0, 0),
         "returned": (0, 0, 0),

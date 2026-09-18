@@ -260,12 +260,11 @@ MAX_DETECTORS = 4096
 # same wave ray reversed, unchanged, walking its steps back to its event Node.
 DETECTOR_RETURN = "detector-return-v1"
 # At its event Node a returned ray performs the inverse split of its own share
-# (inverse-split-v1, Highlights 3.20 "Return modes"): by the world's return_mode
-# it transmits its amount, phase and bit to the sibling lines of its event
-# (siblings), continues straight on the one line opposite its own (straight) or
-# ends there into an explicitly accounted sink (annul).
+# (inverse-split-v1, Highlights 3.20): it transmits its amount, phase and bit to
+# the sibling lines of its event. The return modes straight and annul and the
+# annulled sink of the first form were deleted in the cleanup of 2026-09-18
+# (Highlights 5.4, point 7: things conserve exactly, nothing leaves for a sink).
 INVERSE_SPLIT = "inverse-split-v1"
-RETURN_MODES = ("siblings", "straight", "annul")
 # The external body (Highlights 3.19, external-body-v1): the second declared
 # element of a world beside the Detector mark, a Node declared to hold a family
 # with an amount of any width, a charge and a momentum. It radiates the field of
@@ -2361,10 +2360,9 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
-    # The inverse splits of this cycle, one per returned ray at its event Node,
-    # and the content they annulled per field (inverse-split-v1).
+    # The inverse splits of this cycle, one per returned ray at its event Node
+    # (inverse-split-v1).
     inverse_splits: tuple[InverseSplit, ...] = ()
-    annulled: Values = ()
     # The external body after this cycle and the Port it steps through, or -1
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
@@ -2414,19 +2412,16 @@ class InverseSplit:
     """The record of one inverse split for the Node to publish (inverse-split-v1).
 
     Plain bounded integers, as the Node state contract requires: the spatial
-    field, the mode as its index in RETURN_MODES, the Ports transmitted to with
-    the amount per Port, the returned share, 1 when the share was first restored
-    to the event's input at the Node, and, in annul mode, the per-field content
-    that left the world. A returned ray is a thing (bit-law-v1).
+    field, the Ports transmitted to with the amount per Port, the returned share
+    and 1 when the share was first restored to the event's input at the Node. A
+    returned ray is a thing (bit-law-v1).
     """
 
     field: int
-    mode: int
     ports: tuple[int, ...]
     amounts: tuple[int, ...]
     amount: int
     restored: int
-    annulled: Values = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -3177,19 +3172,10 @@ def port_heading(port: int, definition: SpatialFieldDefinition) -> int:
     return definition.headings.index(unit)
 
 
-def split_ports(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[int, ...]:
-    """The Ports a returned ray transmits to at its event Node, in Port order.
-
-    siblings: every Port of its event's mask except its own; straight: the one Port
-    opposite its own; annul: none.
-    """
-    if mode not in RETURN_MODES:
-        raise ValueError("return_mode must be siblings, straight or annul")
+def split_ports(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, ...]:
+    """The Ports a returned ray transmits to at its event Node, in Port order: every
+    Port of its event's mask except its own."""
     own = event_port(ray, definition)
-    if mode == "annul":
-        return ()
-    if mode == "straight":
-        return (own ^ 1,)
     return tuple(port for port in range(6) if ray.event_ports >> port & 1 and port != own)
 
 
@@ -3203,18 +3189,18 @@ def split_amounts(amount: int, count: int) -> tuple[int, ...]:
     return tuple(sign * (base + int(offset < extra)) for offset in range(count))
 
 
-def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[Rays, tuple[int, ...]]:
+def transmit(ray: Ray, definition: SpatialFieldDefinition) -> tuple[Rays, tuple[int, ...]]:
     """The inverse split of a returned ray at its event Node (inverse-split-v1).
 
     The ray must be resident at its event Node (`outbound` 0, `steps` 0). The
     transmission is a set of new event rays at this Node: outbound, no steps
     walked, the returned ray's phase, advance and Detector bit, the mask of the
     lines transmitted to and the amount per line as their event record. Returns the
-    rays and the Ports, in Port order; annul transmits nothing.
+    rays and the Ports, in Port order.
     """
     if ray.outbound or ray.steps:
         raise ValueError("the inverse split requires a returned ray at its event Node")
-    ports = split_ports(ray, definition, mode)
+    ports = split_ports(ray, definition)
     amounts = split_amounts(ray.amount, len(ports))
     rays = tuple(
         Ray(

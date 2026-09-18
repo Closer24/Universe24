@@ -179,35 +179,6 @@ def test_unchanged_vector_preserves_duplicate_heading_index_and_dda():
     )
 
 
-def test_new_ray_candidate_rejects_a_sampling_profile_other_than_detector_only():
-    doc = document()
-    doc["sampling_profile"] = "historical-autonomous-v1"
-    with pytest.raises(ValueError, match="detector-only-v1"):
-        parse_initial_state(doc)
-    initial = parse_initial_state(document())
-    with pytest.raises(ValueError, match="detector-only-v1"):
-        SpatialLaw(
-            initial.fields,
-            initial.spatial_fields,
-            initial.emissions,
-            initial.operation_costs,
-            ray_interactions=initial.ray_interactions,
-            sampling_profile="historical-autonomous-v1",
-        )
-
-
-def test_unselected_lottery_field_is_rejected_by_the_sampling_contract():
-    initial = parse_initial_state(document())
-    with pytest.raises(ValueError, match="lottery capture was deleted"):
-        replace(
-            initial,
-            spatial_fields=(
-                *initial.spatial_fields,
-                replace(initial.spatial_fields[0], capture="lottery"),
-            ),
-        )
-
-
 @pytest.mark.parametrize("unsupported", ["second_clock", "absorb", "routing"])
 def test_direct_spatial_law_keeps_native_coupling_admission(unsupported):
     initial = parse_initial_state(document())

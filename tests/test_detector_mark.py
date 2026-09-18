@@ -408,7 +408,6 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     ]
     assert first_run["detector_mark"] == DETECTOR_MARK == "detector-mark-v1"
     assert first_run["detector_return"] == "detector-return-v1"
-    assert first_run["sampling_profile"] == "detector-only-v1"
     assert first_run["ray_state"] == "ray-event-state-v1"
     assert first_run["conserved_at_every_completed_tick"] and first_run["final_totals"]["quanta"] == [21]
     # (e) A mark without a setting, a setting outside 0 through 1, a negative seed

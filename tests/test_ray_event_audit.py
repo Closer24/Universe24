@@ -7,8 +7,10 @@ tick and line.
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Ray-event audit")
 before the first run: a charged pair lamp (+1 and -1 quanta), a marked Node
 that returns the plus arm (0), an electron lamp whose field family releases as
-a source, and an open boundary, one world per return mode (annul, siblings) and
-one with an external body (a sink) on the minus arm.
+a source, and an open boundary, one world without and one with an external body
+(a sink) on the minus arm. The return modes and the annulled sink were deleted in
+the cleanup of 2026-09-18 (Highlights 5.4, point 7): the plus arm is restored to
+its lamp at its one-line event and nothing leaves for a sink.
 """
 
 import json
@@ -84,7 +86,7 @@ def emission(kind, name, amount, heading):
     }
 
 
-def document(mode, source=True, conservation=False, rules=(), body=False):
+def document(source=True, conservation=False, rules=(), body=False):
     """The board: the pair lamp at X, the mark three Links out on the plus arm,
     (with `source`) the electron lamp at the corner E whose field G releases, and
     (with `body`) an external body at B on the minus arm, a sink of family star."""
@@ -97,7 +99,6 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": TICKS,
-        "return_mode": mode,
         "operation_costs": {
             name: 1
             for name in (
@@ -181,7 +182,7 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
     return raw
 
 
-def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=None):
+def line(initial, current, escaped=None, sourced=None, absorbed=None):
     """A ledger line; a line not given is zero of the readout's width. Since
     detector-absorb-v1 (2026-09-18) every line also reads `absorbed_by_marks`, what
     the Detector marks absorbed on their clicks: zero here, since the mark of this
@@ -192,7 +193,6 @@ def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=N
         "sourced": zero if sourced is None else sourced,
         "current": current,
         "escaped": zero if escaped is None else escaped,
-        "annulled": zero if annulled is None else annulled,
         "absorbed": zero if absorbed is None else absorbed,
         "absorbed_by_marks": zero,
         # bit-law-v1 (2026-09-18): the momentum shadows carry home; zero here.
@@ -211,17 +211,16 @@ def world_lines(ledger):
     return {k: v for k, v in ledger.items() if k not in ("real", "shadow", "real_conserved")}
 
 
-def expected_ledger(mode, tick, source=True, body=False):
+def expected_ledger(tick, source=True, body=False):
     """The pinned ledger after tick t: the plus arm returned at tick 3, at X after
-    tick 6, annulled or restored in the cycle labelled 6; the minus arm escapes at
+    tick 6, restored to its lamp in the cycle labelled 6; the minus arm escapes at
     tick 5, or ends in the body's sink at tick 3; the electron escapes at tick 5;
     the electron's field released and escaping."""
-    gone = mode == "annul" and tick >= 7
     out = tick >= 5
     sunk = body and tick >= 3
     minus_gone = sunk or (out and not body)
     fields = {
-        "plus": line((1,), (0,) if gone else (1,), annulled=(1,) if gone else (0,)),
+        "plus": line((1,), (1,)),
         "minus": line(
             (1,),
             (0,) if minus_gone else (1,),
@@ -230,22 +229,13 @@ def expected_ledger(mode, tick, source=True, body=False):
         ),
         "momentum": line(
             (0, 0, 0),
-            (
-                (0, 0, -4 if source else 0)
-                if gone
-                else (1, 0, -4 if source else 0)
-                if out
-                else (1, 0, 0)
-                if sunk
-                else (0, 0, 0)
-            ),
+            ((1, 0, -4 if source else 0) if out else (1, 0, 0) if sunk else (0, 0, 0)),
             escaped=(-1 if not body else 0, 0, 4 if source else 0) if out else (0, 0, 0),
-            annulled=(1, 0, 0) if gone else (0, 0, 0),
             absorbed=(-1, 0, 0) if sunk else (0, 0, 0),
         ),
     }
     charge = {
-        "plus": line(1, 0 if gone else 1, annulled=1 if gone else 0),
+        "plus": line(1, 1),
         "minus": line(
             -1,
             0 if minus_gone else -1,
@@ -288,13 +278,9 @@ def as_json(value):
     return json.loads(json.dumps(value))
 
 
-@pytest.mark.parametrize(
-    "mode,body",
-    [("annul", False), ("siblings", False), ("annul", True)],
-    ids=["annul", "siblings", "body"],
-)
-def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tmp_path):
-    initial = parse_initial_state(document(mode, body=body))
+@pytest.mark.parametrize("body", [False, True], ids=["pair", "body"])
+def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(body, tmp_path):
+    initial = parse_initial_state(document(body=body))
     definitions = {initial.fields[d.field].name: d for d in initial.spatial_fields}
     assert (definitions["plus"].charge, definitions["minus"].charge) == (1, -1)
     assert definitions["electron"].charge == 0
@@ -312,17 +298,17 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     star = {"star": 0} if body else {}
     assert world.charge_totals() == {"plus": 1, "minus": -1, "electron": 0} | star
     assert world.escaped_charge_totals() == {"plus": 0, "minus": 0, "electron": 0} | star
-    assert world_lines(world.audit()) == expected_ledger(mode, 0, body=body)
+    assert world_lines(world.audit()) == expected_ledger(0, body=body)
     ledgers = []
     for tick in range(1, TICKS + 1):
         world.step()
         ledger = world.audit()
         ledgers.append(ledger)
         # (b) The ledger after every tick, every line balanced: initial + sourced =
-        # current + escaped + annulled + absorbed for amount, momentum and charge,
+        # current + escaped + absorbed for amount, momentum and charge,
         # through the return (tick 3), the inverse split (cycle 6), the release
         # (from tick 2) and the escapes (from tick 2, the minus arm at tick 5).
-        assert world_lines(ledger) == expected_ledger(mode, tick, body=body)
+        assert world_lines(ledger) == expected_ledger(tick, body=body)
         assert all(line_balanced(item) for item in ledger["fields"].values())
         assert all(line_balanced(item) for item in ledger["charge"].values())
         assert (
@@ -347,17 +333,17 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
                     "sink": {"minus": 1} if tick >= 3 else {},
                 }
             ]
-    # (c) One return, no click, one inverse split by the mode: the plus arm annulled
-    # into the sink, or restored to the lamp (a one-line event has no sibling line).
+    # (c) One return, no click, one inverse split: the plus arm restored to the
+    # lamp (a one-line event has no sibling line).
     assert [event["event"] for event in events] == ["detector_return", "inverse_split"]
     assert (events[0]["tick"], events[0]["position"], events[0]["family"]) == (3, MARK, "plus")
-    assert (events[1]["tick"], events[1]["position"], events[1]["mode"]) == (6, X, mode)
-    assert events[1]["annulled"] == ({"plus": (1,), "momentum": (1, 0, 0)} if mode == "annul" else {})
+    assert (events[1]["tick"], events[1]["position"], events[1]["restored"]) == (6, X, True)
+    assert not {"mode", "annulled"} & events[1].keys()
     # (d) The runner records the ledger per completed tick under `audit`, the
-    # identity, and the conservation flag true (escaped and annulled are ledger
-    # lines, not losses); a second run replays byte for byte.
+    # identity, and the conservation flag true (escaped is a ledger line, not a
+    # loss); a second run replays byte for byte.
     path = tmp_path / "audit.json"
-    path.write_text(json.dumps(document(mode, body=body)), encoding="utf-8")
+    path.write_text(json.dumps(document(body=body)), encoding="utf-8")
     records = []
     for name in ("first", "second"):
         run_initialization(path, tmp_path / name, ticks=TICKS)
@@ -385,18 +371,18 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     assert audit_failure(corrupted) == {"tick": 9, "readout": "fields", "line": "electron"}
     # (f) A rule whose outputs change the total charge is rejected at validation.
     with pytest.raises(ValueError, match="would change the total charge"):
-        parse_initial_state(document(mode, rules=[CHARGE_BREAKING]))
+        parse_initial_state(document(rules=[CHARGE_BREAKING]))
     # (g) The local conservation audit reads the same charge: on the pair alone
     # (the local audit has no source term for a release) its report agrees with
     # the world ledger summed over the two families at the last tick.
-    pair = Simulation(parse_initial_state(document(mode, source=False, conservation=True)))
+    pair = Simulation(parse_initial_state(document(source=False, conservation=True)))
     for _ in range(TICKS):
         pair.step()
     report = pair.conservation_report()
     ledger = pair.audit()
-    assert world_lines(ledger) == expected_ledger(mode, TICKS, source=False)
+    assert world_lines(ledger) == expected_ledger(TICKS, source=False)
     assert report["status"] == "passed"
-    for key in ("initial", "sourced", "current", "escaped", "annulled"):
+    for key in ("initial", "sourced", "current", "escaped"):
         assert report[key]["charge"] == sum(item[key] for item in ledger["charge"].values())
         assert report[key]["energy"] == sum(ledger["fields"][n][key][0] for n in ("plus", "minus"))
         assert report[key]["momentum"] == ledger["fields"]["momentum"][key]
@@ -405,14 +391,14 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     # counts every ray and the lamps' recoils (bit-law-v1, 2026-09-18: nothing is
     # released per tick, so nothing is sourced; the electron's 4 escape along +Z
     # and its lamp keeps the recoil).
-    if mode == "annul" and not body:
-        whole = Simulation(parse_initial_state(document(mode, conservation=True)))
+    if not body:
+        whole = Simulation(parse_initial_state(document(conservation=True)))
         for _ in range(TICKS):
             whole.step()
         report = whole.conservation_report()
         assert report["status"] == "passed"
         assert report["initial"] == {"energy": 6, "momentum": (0, 0, 0), "charge": 0}
         assert report["sourced"] == {"energy": 0, "momentum": (0, 0, 0), "charge": 0}
-        assert report["current"] == {"energy": 0, "momentum": (0, 0, -4), "charge": 0}
+        assert report["current"] == {"energy": 1, "momentum": (1, 0, -4), "charge": 1}
         assert report["escaped"] == {"energy": 5, "momentum": (-1, 0, 4), "charge": -1}
-        assert report["annulled"] == {"energy": 1, "momentum": (1, 0, 0), "charge": 1}
+        assert "annulled" not in report

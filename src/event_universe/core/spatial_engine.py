@@ -162,8 +162,6 @@ class SpatialEngine:
         self.reactions = [[0] * field.components for field in initial.fields]
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
-        # Content that left the world at an inverse split in annul mode.
-        self.annulled = [[0] * field.components for field in initial.fields]
         # The charge that left the world through an open boundary, per spatial
         # field: charge x amount of every escaped ray (ray-event-audit-v1).
         self.escaped_charge = [0] * len(initial.spatial_fields)
@@ -204,7 +202,6 @@ class SpatialEngine:
                 self.reactions,
                 self.transformations,
                 self.localized,
-                self.annulled,
                 self.absorbed,
                 self.absorbed_by_marks,
                 self.returned,
@@ -768,19 +765,17 @@ class SpatialEngine:
                 + transformed
                 - loss
                 - escaped
-                - annulled
                 - absorbed
                 - taken
                 - returned
                 - spent
-                for start, source, reaction, transformed, loss, escaped, annulled, absorbed, taken, returned, spent in zip(
+                for start, source, reaction, transformed, loss, escaped, absorbed, taken, returned, spent in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
                     self.transformations[index],
                     self.dissipation[index],
                     self.escaped[index],
-                    self.annulled[index],
                     self.absorbed[index],
                     self.absorbed_by_marks[index],
                     self.returned[index],
@@ -796,7 +791,6 @@ class SpatialEngine:
                 "dissipated": tuple(self.dissipation[index]),
                 "localized": tuple(self.localized[index]),
                 "escaped": tuple(self.escaped[index]),
-                "annulled": tuple(self.annulled[index]),
                 "absorbed_by_bodies": tuple(self.absorbed[index]),
                 "absorbed_by_marks": tuple(self.absorbed_by_marks[index]),
                 "returned": tuple(self.returned[index]),

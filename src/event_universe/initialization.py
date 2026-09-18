@@ -2696,9 +2696,7 @@ def parse_initial_state(document: object) -> InitialState:
             "ray_phase_per_tick",
             "K",
             "wait_per_quantum",
-            "sampling_profile",
             "detectors",
-            "return_mode",
             "external_bodies",
             "initial_field",
         },
@@ -2756,7 +2754,6 @@ def parse_initial_state(document: object) -> InitialState:
     ray_rules = _ray_interactions(obj.get("ray_interactions", []), fields, spatial)
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
-        sampling_profile=_text(obj.get("sampling_profile", "detector-only-v1"), "sampling_profile"),
         shape=shape,
         slots_per_node=capacity,
         link_ticks=_integer(obj["link_ticks"], "link_ticks", 1),
@@ -2818,7 +2815,6 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         ray_phase_per_tick=False,
         detectors=_detectors(obj.get("detectors", []), fields, spatial),
-        return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
         external_bodies=_external_bodies(
             obj.get("external_bodies", []), fields, spatial, ray_rules, len(disturbances)
         ),
