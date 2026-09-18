@@ -301,9 +301,22 @@ def ratios(observed: dict[str, float], predicted: dict[str, float]) -> dict:
     }
 
 
+LAST_WINDOW = 96
+
+
+def quanta_in_window(summary: dict, first: int, last: int) -> dict[str, int]:
+    """Quanta clicked per mark at ticks first < t <= last."""
+    result = {mark: 0 for mark in summary["marks"]}
+    for tick, position, amount, *_ in summary["clicks"]:
+        if first < tick <= last:
+            result[str(position)] += amount
+    return result
+
+
 def part1(summaries: dict, prediction: dict) -> dict:
     out = {}
     absorbing = {m: r["integrated"] for m, r in prediction["part1"]["absorbing"]["marks"].items()}
+    steady = {m: r["steady_per_interval"] for m, r in prediction["part1"]["absorbing"]["marks"].items()}
     transparent = {m: r["integrated"] for m, r in prediction["part1"]["transparent"]["marks"].items()}
     counter = summaries.get("screen_d1")
     for case, d in (("screen_d1", 1), ("screen_d2", 2), ("screen_d4", 4)):
@@ -311,12 +324,19 @@ def part1(summaries: dict, prediction: dict) -> dict:
         if s is None:
             continue
         quanta = quanta_by_mark(s)
+        ticks = s["completed_ticks"]
+        late = quanta_in_window(s, ticks - LAST_WINDOW, ticks)
         block = {
             "setting": [1, d],
             "quanta": quanta,
             "clicks": counts_by_mark(s),
+            "quanta_by_window": [quanta_in_window(s, w, w + 24) for w in range(0, ticks, 24)],
             "against_mean_field_absorbing_over_d": ratios(
                 quanta, {m: v / d for m, v in absorbing.items()}
+            ),
+            "last_96_ticks": late,
+            "last_96_against_steady_over_d": ratios(
+                late, {m: v * LAST_WINDOW / d for m, v in steady.items()}
             ),
             "against_mean_field_transparent_over_d": ratios(
                 quanta, {m: v / d for m, v in transparent.items()}
@@ -484,6 +504,12 @@ def print_part1(block: dict) -> None:
             f"      against the mean field (marks absorbing) / d: mean ratio"
             f" {r['mean_ratio']:.3f}, min {r['min_ratio']:.3f}, max {r['max_ratio']:.3f},"
             f" total {r['total_observed']} / {r['total_predicted']:.1f}"
+        )
+        w = b["last_96_against_steady_over_d"]
+        print(
+            f"      the last 96 ticks {b['last_96_ticks']} against 96 x the steady mean field / d:"
+            f" mean ratio {w['mean_ratio']:.3f}, min {w['min_ratio']:.3f}, max {w['max_ratio']:.3f},"
+            f" total {w['total_observed']} / {w['total_predicted']:.1f}"
         )
         t = b["against_mean_field_transparent_over_d"]
         print(
