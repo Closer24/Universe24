@@ -2436,9 +2436,18 @@ peaks at 39 and 35 (21, 31), widths 20 and 14, peak amounts 3.2·10⁻⁴ and
 (14 to 20 ticks) on the axes, and a short pulse favours the diagonals by a
 factor 30 in amount at r = 12**; a long wave (a clocked thing's field, (v))
 is nearly isotropic, with the first-order anisotropy of (v). The
-retardation of a switched-on source is t₉₀ = √3 r + w, w the front width
-above (6 to 20 ticks at r = 12 to 18): ∝ r, against 1.925 r² of section 6
-and r on the tubes only of sections 17 and 22.
+retardation of a switched-on clocked source (period 16; the period-mean
+of J_r at the Node and its six neighbours, 61³, 120 ticks) reaches 90 % of
+its steady value at t₉₀ = 22, 27, 31 for r = 12.1 on (111), 12.7 on (110)
+and 12 on an axis (√3 r = 21.0, 22.0, 20.8), and at 32 and 45 for r = 17.3
+on (111) and 16 on an axis (30.0, 27.7):
+
+```text
+t₉₀ = √3 r + 1 to 2 on the body diagonals,  + 5 on (110),  + 10 to 17 on the axes   (r = 12 to 17),
+```
+
+∝ r, against 1.925 r² of section 6 and r on the tubes only of sections 17
+and 22.
 
 **(iv) The standing part: the flat bands.** The one-step map on the six
 amplitudes at wavevector k, U(k) = D(k)·Π·S, has the eigenvalues e^{±iω(k)}
@@ -2543,7 +2552,7 @@ continuum limit. The front fills every direction: **reached** (the tube
 theorem of sections 17 and 22 does not hold under R10; 89 % off the planes
 at t = 30). A sharp isotropic front: **different law** (sharp on (111),
 Airy-smeared on the axes, a short pulse thirty times weaker on an axis).
-t₉₀ ∝ r: **reached** (√3 r + 6 to 20). The far field 1/r² at every angle:
+t₉₀ ∝ r: **reached** (√3 r + 1 to 17 by direction). The far field 1/r² at every angle:
 **reached** for a clocked thing, with a fixed first-order anisotropy
 (15/8)ω₀²K₄; **not reached** for a clockless thing (no far field at all).
 The standing part: **new** (2/3 of a lone re-release; 0 of a symmetric
@@ -2589,8 +2598,8 @@ is, a different declaration, not a parameter of this one.
 causal speed: the recoil of a source pushed by a thing that moves (E11 (a)
 repeated with a moving pusher) arrives r√3 intervals after the move, the
 light of the move r to √3 r; a two-thing run with A displaced by one Link
-at tick t₀ reads B's register change at t₀ + √3 r + 6 (on (111)) to
-t₀ + √3 r + 20 (on an axis), never at t₀ + r; and a thing moving on a line
+at tick t₀ reads B's register change at t₀ + √3 r + 2 (on (111)) to
+t₀ + √3 r + 17 (on an axis), never at t₀ + r; and a thing moving on a line
 leaves its field in a cone of 35° behind it. **Different law** (c_w = c/√3;
 the retardation of the force √3 r against r; the Mach cone).
 
@@ -2632,31 +2641,58 @@ angles d/L ≪ 1 it is 1.)
 that arrives turns back with its amount and its phase, point 6) is the Port
 rule B_p = A_p at the wall Node in place of u − A_p: reflection coefficient
 +1 on the amplitude. In front of it the incident and the returned waves
-form a standing wave, u = 2ū cos(k₀ x) e^{−iω₀t} for normal incidence, and
+form a standing wave of the common part, u = 2ū cos(k₀x + θ) e^{−iω₀t} for
+normal incidence, of period λ_w/2 = π/k₀ in the amounts. Two things
+distinguish the lattice from a scalar field. First, the net flow is zero
+but the push is not: the Link current Φ (what continuity conserves)
+vanishes in the time mean at every Link, while J at a Node, which is what
+a thing reads, differs from Φ by the forward difference of the outward
+amount (section 26 (ii)) and oscillates with x:
 
 ```text
-J = 0 at every Node in front of the wall (exact: two equal opposite waves, section 26 (iii)),
-n(x) = 2n₀ [1 + C cos(2k₀ x)],   period λ_w/2,   C = the Port overlap of the two waves at angle π,
+Φ = 0,    J_x(x) = ±(k₀/3) n · sin(2k₀x + θ′) + O(k₀³),    n(x) = 2n₀ [1 + (k₀²/6) cos(2k₀x + θ″) + O(k₀⁴)],
 ```
 
-the amounts passing through with zero flux: a thing placed in front of the
-mirror is not pushed at any distance, and reads a standing modulation of
-amount of period λ_w/2 = K/(2√3 M) with no direction. At long wavelength
-C = (1 + cos π)/2 = 0 at the leading order of the overlap and the amount
-modulation is of order ω₀ (from the Port amplitudes' k-dependence): the
-mirror stands the wave with J = 0 exactly and an amount pattern of small
-depth, not the full-depth n ∝ cos² of a scalar field. **Reached** (the
-standing wave, J = 0, period λ_w/2); the fringe depth in amount is the
-lattice's Port overlap, **new**.
+n₀ the amount of one wave (derived from the Port amplitudes A_p of section
+26 (iii) for the two waves ±k₀; the coefficients are exact expansions of
+the six-Port sums). So a thing at rest in front of a mirror is pushed
+toward or away from the wall by up to (k₀/3) of the amount at its Node,
+with the sign changing every λ_w/4, a standing ladder of force of period
+λ_w/2 whose mean over a period is zero; and the amount itself is nearly
+flat, modulated at depth k₀²/6 only (0.08 at λ_w = 9.2, 0.007 at
+λ_w = 31), not the full cos² of a scalar standing wave: the amounts of the
+two waves pass through each other almost uniformly while the push
+alternates. **Reached** (a standing wave of period λ_w/2, zero net flow);
+**new** (the push oscillates at (k₀/3) n and the amount at k₀²/6: the
+lattice's Port structure, which no scalar field has).
 
-**Check.** Superposition and the plane-wave identities of section 26 are
-exact and checked there; the cross term and the overlap follow from the
-Port amplitudes A_p of section 26 (iii) by algebra (for two waves of
-wavevectors k₁, k₂ on the dispersion surface, Σ_p A_{1p}A*_{2p} =
-|ū|²Σ_p(e^{iω} − e^{ik₁·e_p})(e^{−iω} − e^{−ik₂·e_p})/(4 sin²ω), which at
-k → 0 is 3|ū|²(1 + k̂₁·k̂₂)/2). A two-slit and a mirror iteration of R10 on a
-box, reading J and n behind the slits and in front of the wall, is the run
-that reads the depth; not made in this round.
+**Check.** *Two slits* (R10 iterated on 97 × 97 × 17 with a plane source
+at x = 6 of period 16, a returning wall at x = 30 with two slit lines
+d = 16 apart, the screen at L = 48 behind it, a sponge on the x and y
+edges, 420 ticks, the mean over the last period): the push J_x along the
+screen has its maximum at y = 0 (109·10⁻⁴), minima at y = ±15
+(0.7·10⁻⁴) and the next maxima at ±31 (91·10⁻⁴), against the first
+minimum at y = 14.7 from the exact path difference √(L² + (y + d/2)²) −
+√(L² + (y − d/2)²) = λ_w/2 (λ_w = 9.24; the small-angle spacing λ_w L/d =
+27.7): the optical fringes, with the depth (109 − 0.7)/(109 + 0.7) = 0.99
+in the push and 0.96 in the amount (193 against 4.0). *The mirror* (R10
+iterated on 129 × 5 × 5 with a plane source of period 16 at x = 10, the
+returning wall at x = 110, 900 ticks): the field in front of the wall is
+two waves of equal weight at ±k₀ (the spectrum of the +x-moving Port
+amplitude: 26.0 at +k₀ and 7.5 at −k₀, mirrored for the −x-moving one,
+nothing else); the amount n(x) runs between 2.27 and 2.67, depth 0.081
+against k₀²/6 = 0.079 at k₀ = 0.689; J_x(x) runs between −0.53 and +0.54,
+amplitude 0.22 of the mean amount 2.46 against the exact two-wave value
+0.220 (k₀/3 = 0.230), with its mean +0.005; the period of both 4.5 Links
+against π/k₀ = 4.56. The exact two-wave state built from the Port
+amplitudes gives the depth 0.0790 and the J amplitude 0.2204 for every
+relative phase θ.
+
+**Verdict.** Two-slit fringes of shadows in the push: **reached**, the
+optical law λ_w L/d at full depth (0.99); in counts: none (point 6), and
+no self-interference of a thing (E5). A mirror: **reached** as a standing
+wave of period λ_w/2 with zero net flow; the push in front of it
+oscillating at (k₀/3) n with zero mean and the amount nearly flat: **new**.
 
 ## 30. Round 4: the integer rule
 
@@ -2844,20 +2880,19 @@ returned amount's re-release: two thirds standing per lone re-release,
 | Wave speed | — | **1/√3 Link per interval** in the bulk; no signal faster in any direction | A5s Run 2 tick by tick |
 | The push in a wave | J = 11/8 Φ (diffusive) | **new**: J = n·v_g = Φ exactly (ζ = 1); two opposite waves J = 0 with the amounts passing | — |
 | The front of a release | 4/5 on tubes, 0 off the planes | **tube theorem overturned**: 89 % off the planes at t = 30; front at √3 r everywhere, sharp on (111) (6 ticks), smeared on the axes (14 to 20), a short pulse 30× weaker on an axis | E11's release read at (12,0,0), (7,7,7) |
-| Retardation t₉₀ | r on tubes, ∞ off | **√3 r + 6 to 20** in every direction | A5s Run 2 |
+| Retardation t₉₀ | r on tubes, ∞ off | **√3 r + 1 to 17** by direction (1 to 2 on (111), 10 to 17 on an axis) | A5s Run 2 |
 | Far field of a thing at rest | six tubes | **1/r² at every angle** for a clocked thing, with a fixed anisotropy (15/8)ω²K₄ (1.25 ω² axis vs (111)); **no far field** for a clockless one (the constant source cancels itself) | E11 with a clocked source, at (24,0,0) and (14,14,14) |
 | The standing set | — | **new**: four flat bands of six; 2/3 of a lone re-release stands, 0 of a symmetric release | a lone shadow re-released at a thing |
 | Field speed against light | — | **different law**: the force lags light by (√3 − 1) r; every thing outruns its field; Mach cone 35.3°; no identification (unit, N, wait) closes the gap | E11 (a) with a moved pusher |
-| Two-slit fringes of shadows | lost (R8v) | **reached** in the push: spacing λ_w L/d, λ_w = K/(√3 M), full depth for equal slits; none in counts (point 6); no self-interference of a thing | A1 |
-| A mirror | ties, Port order (R8v) | **reached**: standing wave, J = 0 exactly, amount period λ_w/2, depth the Port overlap | E11 with a wall |
+| Two-slit fringes of shadows | lost (R8v) | **reached** in the push: the optical spacing λ_w L/d, λ_w = K/(√3 M), depth 0.99 measured; none in counts (point 6); no self-interference of a thing | A1 |
+| A mirror | ties, Port order (R8v) | **reached**: standing wave of period λ_w/2, zero net flow; **new**: the push oscillates at (k₀/3) n with zero mean, the amount at depth k₀²/6 (0.081 measured, 0.079 derived) | E11 with a wall |
 | The integer rule | — | **reached** above ≈ 256 quanta per Node (N ≥ 64), dead below 64; no diffusive part (standing content and noise instead); N = 8 costs 7 % | A5s dense mode at two X |
 | Coulomb's product law, Newton's, k_C = G | reached (R4′) | **reached** with ζ = 1, modified: anisotropy (15/8)(2πM/K)²K₄, retardation √3 r, a clock required on the source, 256 quanta per Node at the receiver | A5s, A7 |
 | A length scale in the force | reached under R4″ | **not reached** (J is phase-blind and time-constant in a wave) | — |
 | Newton's third law | lost (R8v) | **reached exactly**, delayed by \|x\|₁ ≤ √3 r (the return is exempt from mixing) | E11 (a) |
 | Port-order independence | lost (R8v) | **reached** (S is a fixed linear map; the register order is the only tie, bounded) | — |
 
-Open after this round, one line each: the two-slit and mirror iteration
-that reads the fringe depth on the lattice (the Port overlap); the
+Open after this round, one line each: the
 second-order (ω⁴) anisotropy and the first-order coefficient's excess
 (measured ≈ 1.5 to 2 × 3/2 at ω₀ = 0.2); the re-release rule at the owner
 (lone versus six-fold in phase decides whether the returns stand or
