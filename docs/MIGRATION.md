@@ -6,6 +6,49 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The engine clean under the law of the bit, on 2026-09-18 (`cleanup-law-v1`)
+
+The cleanup lane of 2026-09-18 ([the engine clean](SPATIAL_FIELDS.md#the-engine-clean-under-the-law-of-the-bit-cleanup-law-v1)),
+on the model owner's instruction. Keys and code deleted, not kept behind an
+option; a world that writes a deleted key is refused:
+
+- world keys: `return_mode` (unknown key), `sampling_profile` (unknown key),
+  `ray_delay` and `ray_phase_per_tick` (unknown keys); `phase_bits` on a
+  spatial field (refused naming the definitions of the law); the output
+  form `delay: {of, table, per}` of a meeting (an integer delay only);
+- world key added: `N`, the number of steps of the world's one phase circle,
+  64 by default, a power of two from 2 through 4096; a coherence table's
+  `kerengonen.phase_steps` must equal it;
+- `run.json`: `N` beside `K`; no `return_mode`, `sampling_profile`,
+  `annulled_totals`, `ray_binding`, `ray_delay`; no `annulled` line on the
+  ledgers; the `inverse_split` record without `mode` and `annulled`;
+  `line_balanced` reads an `annulled` line of an older record as a loss;
+- `InitialState`: `phase_steps` added; `return_mode`, `sampling_profile`,
+  `ray_delay`, `ray_phase_per_tick` removed; `InteractionDefinition.lags`,
+  `LagTable`, `Ray.lag`, `SpatialNodeState.ray_wait` removed;
+  `SpatialNodeState.detector_ticket` is `arrivals`, `ticket_bit` /
+  `detector_draw` / `TICKET_MODULUS` are `table_catch` / `mark_catch` /
+  `ARRIVAL_MODULUS`; the planner's `ray_hold` argument and `hold_rays` are
+  gone; `SpatialPlan.annulled`, `InverseSplit.mode` and `.annulled`,
+  `annulled_totals()`, `record_annulled` are gone; `core/sampling_contract.py`
+  is deleted; `split_ports` and `transmit` take no mode;
+- the catalog: no `phase_bits`, `lag_bits`, `field`, `field_of`, `kind:
+  field`, `source_sign`; `release` on every ray record; `recoil_return`
+  deleted; `electron_field_turn` a momentum table ([catalog](CATALOG.md));
+- examples: `examples/nature/bit_law_migration.py` gains `migrate_n` (one N)
+  and the drop of orphan field families; 96 worlds gain `N`, 32 lose an
+  orphan family, the 23 `delay_*` worlds and the `turn_n14` / `turn_n16`
+  worlds of A6 are deleted;
+- tests deleted: the `straight` / `annul` cases of `test_inverse_split`, the
+  `annul` worlds of `test_ray_event_audit`, the two sampling tests of
+  `test_native_ray_coupling` and its `second_clock` and `ray_delay` cases,
+  the ticket assertions of `test_kerengonen`, the 128-bit wide phase of
+  `test_wave_ray_families`; re-pinned with dated reasons: `test_detector_mark`,
+  `test_detector_return`, `test_nature_catalog` (the worlds case runs),
+  `test_return_field` (a), `test_perf_arrays`, `test_wave_ray_families`,
+  `test_kerengonen`, `test_loop_binding`, and every module that declared a
+  width now declares `N`.
+
 ## A click is an absorption, landed on 2026-09-18 (`detector-absorb-v1`)
 
 Issue #169, feature 2c ([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1);

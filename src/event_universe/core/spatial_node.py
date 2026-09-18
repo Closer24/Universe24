@@ -34,7 +34,7 @@ from .node_execution import (
     finish_local_cycle,
 )
 from .node_ports import PortBank
-from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
+from .node_services import NodeEvents, add_audit_delta, port_count
 from .spatial_state import (
     BIT_SHADOW,
     BIT_THING,
@@ -43,7 +43,6 @@ from .spatial_state import (
     CLICK_ABSORB,
     POLARIZATION_NONE,
     PUSH_READS,
-    RETURN_MODES,
     FieldInteractionGuard,
     Ray,
     Rays,
@@ -63,7 +62,7 @@ from .spatial_state import (
     click_coupling,
     coherent_stock,
     detector_absorb,
-    detector_draw,
+    mark_catch,
     merge_rays,
     polarize_content,
     push_of,
@@ -88,7 +87,6 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
-        int,
         int,
     ],
     SpatialPlan,
@@ -211,7 +209,6 @@ class SpatialAccounting:
         reactions: list[list[int]],
         transformations: list[list[int]],
         localized: list[list[int]] | None = None,
-        annulled: list[list[int]] | None = None,
         absorbed: list[list[int]] | None = None,
         absorbed_by_marks: list[list[int]] | None = None,
         returned: list[list[int]] | None = None,
@@ -225,7 +222,6 @@ class SpatialAccounting:
         self.__computation = [0] if computation is None else computation
         self.__reactions, self.__transformations = reactions, transformations
         self.__localized = [] if localized is None else localized
-        self.__annulled = [] if annulled is None else annulled
         self.__absorbed = [] if absorbed is None else absorbed
         self.__absorbed_by_marks = [] if absorbed_by_marks is None else absorbed_by_marks
         self.__returned = [] if returned is None else returned
@@ -249,10 +245,6 @@ class SpatialAccounting:
 
     def record_transformations(self, values: Values) -> None:
         add_audit_delta(self.__transformations, values)
-
-    def record_annulled(self, values: Values) -> None:
-        """Content that left the world at an inverse split in annul mode (inverse-split-v1)."""
-        add_audit_delta(self.__annulled, values)
 
     def record_absorbed(self, values: Values) -> None:
         """Content that ended in an external body's sink (external-body-v1)."""
@@ -456,31 +448,13 @@ class SpatialNode(SpatialNodeState):
                 tuple(bundles[self.body.family]) + (body_token(self.body),)
             )
             resident_rays = tuple(bundles)
-        ray_hold, next_ray_wait = 0, self.ray_wait
-        if services.initial.ray_delay and any(self.rays):
-            # Rays wait the intervals the Node's computation load alone would add to
-            # a cycle; a waiting Kerengonen ray may advance its phase per interval.
-            if self.ray_wait == 0:
-                extra, _ = cycle_timing(
-                    self.load_value(services),
-                    services.initial.normal_budget,
-                    services.initial.link_ticks,
-                )
-                next_ray_wait = extra // services.initial.link_ticks
-                waiting = next_ray_wait > 0
-            else:
-                next_ray_wait = self.ray_wait - 1
-                waiting = next_ray_wait > 0
-            if waiting:
-                ray_hold = 2 if services.initial.ray_phase_per_tick else 1
         plan = yield SpatialPlanningInput(
             states,
             records,
             self.received_count,
             node_cost,
             resident_rays,
-            ray_hold,
-            self.detector_ticket,
+            self.arrivals,
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
@@ -528,7 +502,7 @@ class SpatialNode(SpatialNodeState):
             sample_ports,
         )
         self.sample_received_masks = sample_received_masks
-        self._commit_plan(tick, carrier, services, plan, cost, next_ray_wait=next_ray_wait)
+        self._commit_plan(tick, carrier, services, plan, cost)
 
     def _body_cycle(self, plan: SpatialPlan, services: SpatialServices) -> SpatialPlan:
         """The external body's part of one cycle (external-body-v1 under bit-law-v1),
@@ -638,7 +612,15 @@ class SpatialNode(SpatialNodeState):
                         current.push_remainder,
                     )
                     current = replace(body_pushed(current, push), push_remainder=remainder)
-                    kept.append(return_shadow(ray, definition, (-push[0], -push[1], -push[2])))
+                    turned = return_shadow(ray, definition, (-push[0], -push[1], -push[2]))
+                    if definition.shadow_wait_reads == "thing":
+                        # The shadow's wait, the thing reading (shadow-wait-v1): owed
+                        # per whole quantum of the push, before it leaves.
+                        quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+                        turned = replace(
+                            turned, owed=checked_work(quanta * definition.shadow_wait_numerator)
+                        )
+                    kept.append(turned)
                     push_amount = checked_work(push_amount + ray.amount)
                     for axis in range(3):
                         pushed[axis] = checked_work(pushed[axis] + push[axis])
@@ -808,8 +790,6 @@ class SpatialNode(SpatialNodeState):
         services: SpatialServices,
         plan: SpatialPlan,
         cost: int,
-        *,
-        next_ray_wait: int | None = None,
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
@@ -864,9 +844,6 @@ class SpatialNode(SpatialNodeState):
             # Every resident ray that was due left along its own line; on a
             # Euclidean pace the rays not yet due stay.
             self.rays = plan.kept_rays if plan.kept_rays else tuple(() for _ in self.rays)
-        if next_ray_wait is not None:
-            # A later unrelated arrival starts its own load-priced wait.
-            self.ray_wait = next_ray_wait if any(self.rays) else 0
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -885,8 +862,6 @@ class SpatialNode(SpatialNodeState):
         services.accounting.record_transformations(plan.rule_delta)
         if plan.transfer_delta:
             services.accounting.record_reactions(plan.transfer_delta)
-        if plan.annulled:
-            services.accounting.record_annulled(plan.annulled)
         if plan.returned_delta:
             # The momentum shadows carried home this cycle to a record without a
             # momentum field (bit-law-v1): booked returned; a shadow's amount is
@@ -933,7 +908,7 @@ class SpatialNode(SpatialNodeState):
                 accumulators=plan.body.accumulators,
             )
         # The inverse splits of this cycle precede the cycle record, so that an
-        # audit reading the annulled content has it before it measures the Node.
+        # audit reading them has them before it measures the Node.
         for split in plan.inverse_splits:
             definition = services.initial.spatial_fields[split.field]
             self._event(
@@ -942,16 +917,10 @@ class SpatialNode(SpatialNodeState):
                 services,
                 notifications=notifications,
                 family=services.initial.fields[definition.field].name,
-                mode=RETURN_MODES[split.mode],
                 ports=split.ports,
                 amounts=split.amounts,
                 amount=split.amount,
                 restored=bool(split.restored),
-                annulled={
-                    field.name: split.annulled[i]
-                    for i, field in enumerate(services.initial.fields)
-                    if split.annulled and any(split.annulled[i])
-                },
             )
         # The spreads of this cycle precede the cycle record as well (field-spreading-v1):
         # the local audit reads what each spread took off the Node before it measures it.
@@ -1476,7 +1445,7 @@ class SpatialNode(SpatialNodeState):
                     )
                 )
                 continue
-            self.detector_ticket, bit = detector_draw(self.detector_ticket, self.detector)
+            self.arrivals, bit = mark_catch(self.arrivals, self.detector)
             if bit:
                 taken = click_coupling(self.detector, index, definition) == CLICK_ABSORB
                 if taken:

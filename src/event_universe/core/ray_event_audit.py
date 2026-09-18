@@ -3,17 +3,20 @@
 One exact ledger per completed tick for each conserved readout: the amount of
 every conserved field (momentum being the three-component field among them)
 and the charge of every ray family. Each line reads initial, sourced, current,
-escaped, annulled, absorbed (the external bodies' sinks), absorbed_by_marks
+escaped, absorbed (the external bodies' sinks), absorbed_by_marks
 (what the Detector marks absorbed on their clicks, detector-absorb-v1) and,
 since bit-law-v1 (2026-09-18), returned (what came home: the shadows absorbed
 back into their things, whose re-release is on the sourced line, and the
 momentum delivered outside the identity, to a body or a record without a
 recoil field), and balances when
 
-    initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks + returned
+    initial + sourced = current + escaped + absorbed + absorbed_by_marks + returned
 
 exactly, component by component; a line recorded before those dates carries no
-absorbed_by_marks or returned and reads them as zero. Beside it, since
+absorbed_by_marks or returned and reads them as zero, and a line recorded before
+the cleanup of 2026-09-18 carries an `annulled` sink, read as a loss when present
+and never written again (the return modes straight and annul are deleted).
+Beside it, since
 bit-law-v1, the ledgers per bit per ray family, named by the bit's values,
 `real` (1) and `shadow` (0) (the model owner, 2026-09-18), in the form of
 node-is-ports-v1 (Highlights 5.4 point 22, no sourced line anywhere): the
@@ -21,8 +24,8 @@ real line (`real`) reads initial + converted = current + escaped +
 absorbed over the things alone, `converted` being what a meeting turned into
 or out of the family (a source is a thing that spends its content, and the
 pieces it makes are things of the family it emits) and `absorbed` what ended
-in a body, in the thing resident at a mark or at an inverse split in annul
-mode; the shadow line (`shadow`) reads initial = current + escaped +
+in a body or in the thing resident at a mark; the shadow line (`shadow`)
+reads initial = current + escaped +
 absorbed_at_home, the shadows given with the board and never sourced, lost
 only at the board's edge and absorbed only into the resident thing of the
 mark that is their home. The ledger is a read-only host diagnostic over the
@@ -41,16 +44,17 @@ LINE_KEYS = (
     "sourced",
     "current",
     "escaped",
-    "annulled",
     "absorbed",
     "absorbed_by_marks",
     "returned",
     "spent",
+    "annulled",
 )
 # The lines a record may leave out, read as zero: absorbed_by_marks before
 # detector-absorb-v1, returned before bit-law-v1, spent before clock-readings-v1
-# and on every line but the momentum field's.
-OPTIONAL_LINES = ("absorbed_by_marks", "returned", "spent")
+# and on every line but the momentum field's, annulled (a sink of the deleted
+# return mode annul) on every record since the cleanup of 2026-09-18.
+OPTIONAL_LINES = ("absorbed_by_marks", "returned", "spent", "annulled")
 
 Line = dict[str, object]
 
@@ -79,10 +83,12 @@ def _bit_line_balanced(line: Mapping[str, object], keys: tuple[str, ...]) -> boo
 
 
 def line_balanced(line: Mapping[str, object]) -> bool:
-    """initial + sourced == current + escaped + annulled + absorbed + absorbed_by_marks
+    """initial + sourced == current + escaped + absorbed + absorbed_by_marks
     + returned + spent, exactly; a line without absorbed_by_marks (recorded before
     detector-absorb-v1), without returned (before bit-law-v1) or without spent (the
-    momentum field's line alone carries it, clock-readings-v1) reads it as zero.
+    momentum field's line alone carries it, clock-readings-v1) reads it as zero,
+    and a line with an annulled sink (recorded before the cleanup of 2026-09-18)
+    reads it as a loss.
     A things' line (node-is-ports-v1) reads initial + converted == current +
     escaped + absorbed, a shadows' line initial == current + escaped +
     absorbed_at_home."""
@@ -100,11 +106,12 @@ def line_balanced(line: Mapping[str, object]) -> bool:
     taken = values.get("absorbed_by_marks", zero)
     returned = values.get("returned", zero)
     spent = values.get("spent", zero)
+    annulled = values.get("annulled", zero)
     return all(
         values["initial"][c] + values["sourced"][c]
         == values["current"][c]
         + values["escaped"][c]
-        + values["annulled"][c]
+        + annulled[c]
         + values["absorbed"][c]
         + taken[c]
         + returned[c]
@@ -118,7 +125,6 @@ def ledger_line(
     sourced: object,
     current: object,
     escaped: object,
-    annulled: object,
     absorbed: object,
     absorbed_by_marks: object,
     returned: object = 0,
@@ -131,7 +137,6 @@ def ledger_line(
         "sourced": sourced,
         "current": current,
         "escaped": escaped,
-        "annulled": annulled,
         "absorbed": absorbed,
         "absorbed_by_marks": absorbed_by_marks,
         "returned": returned,

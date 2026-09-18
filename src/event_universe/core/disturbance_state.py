@@ -5,8 +5,6 @@ from dataclasses import dataclass, replace
 from types import MappingProxyType
 from typing import TYPE_CHECKING, NamedTuple
 
-from .sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
-
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
     from .node_conservation import NodeConservationDefinition
@@ -84,6 +82,15 @@ def pack(values: tuple[int, ...]) -> Payload:
 
 def unpack(values: Payload) -> tuple[int, ...]:
     return tuple(decode(v) for v in values)
+
+
+# The readings of the shadow's wait (shadow-wait-v1): a share read by a thing, or a
+# share crossing another owner's field.
+SHADOW_WAIT_READS = ("thing", "field")
+# What the wait of point 23 reads (wait-reads-v1): the amount of push, the whole
+# quanta read (today's rule), or the amplitude, the size of the coherent sum of
+# the pushing owner's shadows at the thing's Node.
+WAIT_READINGS = ("amount", "amplitude")
 
 
 @dataclass(frozen=True, slots=True)
@@ -196,20 +203,6 @@ class TableSplit:
 
 
 @dataclass(frozen=True, slots=True)
-class LagTable:
-    """A delay assigned to one output of a meeting of rays by a declared integer table,
-    per the Port the source input came through (ray-binding-v1, Highlights 3.28): the
-    whole quanta of `amount x table[port] / per` phase steps of the output's face
-    clock on the side of that Port. The engine applies the table; the physics is the
-    table."""
-
-    output: int
-    source: int
-    table: tuple[int, int, int, int, int, int]
-    per: int = 1
-
-
-@dataclass(frozen=True, slots=True)
 class InteractionDefinition:
     name: str
     left_type: int
@@ -228,9 +221,6 @@ class InteractionDefinition:
     outputs: tuple[int, ...] = ()
     # Splits by a declared table among the outputs, applied after the assignments.
     splits: tuple[TableSplit, ...] = ()
-    # Delays by a declared table per Port, on the outputs of a meeting of rays
-    # (ray-binding-v1, gravity by delay).
-    lags: tuple[LagTable, ...] = ()
     # The momentum table of a coupling of free rays (ray-momentum-turn-v1): one
     # sign per spatial field, -1 attraction toward the source of an arriving field
     # ray of that family, 1 repulsion, 0 for a family the table does not name.
@@ -361,17 +351,30 @@ class InitialState:
     computation_field: int | None = None
     delay_direction: str | None = None
     least_delay_routing: bool = False
-    # Rays resident at a Node wait the extra intervals its computation load alone
-    # would add to a cycle (default clock); with ray_phase_per_tick a Kerengonen
-    # ray's phase advances on every waiting interval as well as on every link.
-    ray_delay: bool = False
     # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
     # per interval, one integer for the world, required when a family declares
     # `clock`; 0 when no thing has a clock. The wait per whole quantum read
     # (point 23): w = n / d intervals, 1 by default.
     clock: int = 0
+    # N (the definitions of the law of the bit, the model owner, 2026-09-18): the
+    # number of steps of the phase circle, one for the world like K, declared
+    # once, 64 by default; every ray family's phase modulus is this.
+    phase_steps: int = 64
     wait_per_quantum: tuple[int, int] = (1, 1)
-    ray_phase_per_tick: bool = False
+    # The shadow's wait, a declared option (shadow-wait-v1; Highlights 5.4, the
+    # model owner's paragraph of 2026-09-18, "a declared option to confront"):
+    # None, the law as it stands (a shadow owes nothing), or (n, d) intervals
+    # per whole quantum with its reading, "thing" (a share read by a thing owes
+    # before it leaves that Node) or "field" (a share owes per whole quantum of
+    # another owner's shadows at the Node it crosses); "" without the option.
+    shadow_wait: tuple[int, int] | None = None
+    shadow_wait_reads: str = ""
+    # The wait reads the amount or the amplitude (wait-reads-v1; Highlights 5.4,
+    # the model owner's paragraph of 2026-09-18, a coupling to derive): "amount",
+    # the whole quanta of push read (the default, point 23 as written), or
+    # "amplitude", the size of the coherent sum of the pushing owner's shadows
+    # arriving at the thing's Node, in whole units, read as the push reads.
+    wait_reads: str = "amount"
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
     # Host scheduling only (dense-field-v1): the pure-field Nodes of a board are
@@ -383,13 +386,9 @@ class InitialState:
     # the things read it; the value is the most intervals the layer is stepped
     # before the run gives up on the fixed point, 0 for a world without the mode.
     standing_field: int = 0
-    sampling_profile: str = DETECTOR_ONLY
-    # The Nodes whose Detector bit is set, each with its setting and ticket seed
-    # (detector-mark-v1): the only place a draw exists.
+    # The Nodes whose Detector bit is set, each with its table (detector-mark-v1
+    # under bit-law-v1: no seed, no draw).
     detectors: tuple[DetectorMark, ...] = ()
-    # What a returned ray does at its event Node (inverse-split-v1): siblings,
-    # straight or annul; a world without a mark never reads it.
-    return_mode: str = "siblings"
     # The external bodies of the world (external-body-v1): declared marks, one per
     # Node, in declaration order; a world without one is unchanged.
     external_bodies: tuple[ExternalBody, ...] = ()
@@ -400,7 +399,6 @@ class InitialState:
 
     def __post_init__(self) -> None:
         from .spatial_state import (
-            RETURN_MODES,
             family_owners,
             validate_dense_field_admission,
             validate_detector_marks,
@@ -413,8 +411,6 @@ class InitialState:
             validate_thing_ids,
         )
 
-        if self.return_mode not in RETURN_MODES:
-            raise ValueError("return_mode must be siblings, straight or annul")
         # Every ray family with a shadow set (a release, or a field given with the
         # board) spreads its shadows by the Node's mixing (node-mixing-v1, never
         # declared), and its owners (bit-law-v1) are filled in from the things of
@@ -443,7 +439,6 @@ class InitialState:
                     for index, definition in enumerate(self.spatial_fields)
                 ),
             )
-        validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
         validate_ray_coupling(self)
         validate_released_field_admission(self)
         validate_spread_admission(self)
@@ -456,8 +451,7 @@ class InitialState:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):
             if spatial_definition.self_exclusion and (
-                self.ray_delay
-                or spatial_definition.euclidean
+                spatial_definition.euclidean
                 or spatial_definition.pace_numerator != spatial_definition.pace_denominator
                 or any(
                     rule.spatial_field == index and rule.mirror is not None for rule in self.emissions
@@ -466,24 +460,41 @@ class InitialState:
                 raise ValueError(
                     "one-Link self-exclusion does not support paced, delayed or mirrored rays"
                 )
-        for name in ("ray_delay", "ray_phase_per_tick", "focus", "dense_field"):
+        for name in ("focus", "dense_field"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")
         validate_dense_field_admission(self)
+        if (
+            type(self.phase_steps) is not int
+            or not 2 <= self.phase_steps <= 4096
+            or self.phase_steps & (self.phase_steps - 1)
+        ):
+            raise ValueError("N is a power of two from 2 through 4096, one for the world")
+        for family_definition in self.spatial_fields:
+            if family_definition.rays and family_definition.phase_modulus != self.phase_steps:
+                raise ValueError(
+                    "every ray family's phase circle is the world's one N (the cleanup of "
+                    "2026-09-18, Highlights 5.4, the definitions of the law)"
+                )
         if type(self.standing_field) is not int or self.standing_field < 0:
             raise ValueError("standing_field is a nonnegative number of intervals")
-        if self.ray_delay:
-            if self.computation_field is None:
-                raise ValueError("ray_delay requires computation_field")
-            if self.spatial_computation_delay or self.node_execution:
-                raise ValueError("ray_delay requires the default clock")
-            if not any(definition.rays for definition in self.spatial_fields):
-                raise ValueError("ray_delay requires a ray spatial field")
-        if self.ray_phase_per_tick:
-            if not self.ray_delay:
-                raise ValueError("ray_phase_per_tick requires ray_delay")
-            if not any(definition.kerengonen for definition in self.spatial_fields):
-                raise ValueError("ray_phase_per_tick requires a Kerengonen ray field")
+        if self.shadow_wait is not None:
+            if (
+                type(self.shadow_wait) is not tuple
+                or len(self.shadow_wait) != 2
+                or any(type(v) is not int for v in self.shadow_wait)
+                or self.shadow_wait[0] < 0
+                or self.shadow_wait[1] < 1
+            ):
+                raise ValueError(
+                    "shadow_wait per_quantum is a rational n / d, n at least 0, d at least 1"
+                )
+            if self.shadow_wait_reads not in SHADOW_WAIT_READS:
+                raise ValueError("shadow_wait reads thing or field (shadow-wait-v1)")
+        elif self.shadow_wait_reads:
+            raise ValueError("shadow_wait reads nothing without the option (shadow-wait-v1)")
+        if self.wait_reads not in WAIT_READINGS:
+            raise ValueError("wait_reads is amount or amplitude (wait-reads-v1)")
         if type(self.least_delay_routing) is not bool:
             raise ValueError("least_delay_routing must be boolean")
         if self.least_delay_routing and self.delay_direction is None:

@@ -23,6 +23,8 @@ from .core.disturbance_state import (
     MAX_TYPES,
     MAX_VALUE,
     OPERATIONS,
+    SHADOW_WAIT_READS,
+    WAIT_READINGS,
     Address3,
     Assignment,
     CouplingDefinition,
@@ -33,7 +35,6 @@ from .core.disturbance_state import (
     InitialState,
     InteractionDefinition,
     Invariant,
-    LagTable,
     OperationCosts,
     Payload,
     Seed,
@@ -1307,15 +1308,31 @@ def _allowance(value: object, field: FieldDefinition, label: str) -> Payload:
     return pack(amounts)
 
 
+ONE_N = (
+    "phase_bits on a family was retired in the cleanup of 2026-09-18 (Highlights 5.4, the "
+    "definitions of the law of the bit, the model owner): N, the number of steps of the phase "
+    "circle, is one for the world like K, declared once as the world key N (64 by default); a "
+    "phase difference between any two rays is read on the one circle, so a width per family "
+    "means nothing"
+)
+DEFAULT_PHASE_STEPS = 64
+
+
 def _spatial_fields(
     value: object,
     fields: tuple[FieldDefinition, ...],
     schema_version: int = 1,
     clock: int = 0,
     wait: tuple[int, int] = (1, 1),
+    phase_steps_of_world: int = DEFAULT_PHASE_STEPS,
+    shadow_wait: tuple[int, int] | None = None,
+    shadow_reads: str = "",
+    wait_reads: str = "amount",
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
     names = _names(fields)
+    # One N for the world: every ray family's phase circle is the world's.
+    world_bits = phase_steps_of_world.bit_length() - 1
     for raw in _array(value, "spatial_fields", MAX_FIELDS):
         if isinstance(raw, dict) and ("rest_rate" in raw or "phase_advance" in raw):
             raise ValueError(
@@ -1391,10 +1408,12 @@ def _spatial_fields(
             if "spread" in obj or "steering" in obj:
                 raise ValueError(NOT_DECLARED_MIXING)
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
-            # Every ray is a wave ray (wave-ray-family-v1): the family declares the
-            # width of its phase, 2^phase_bits values, and its charge per quantum.
+            # Every ray is a wave ray (wave-ray-family-v1) on the world's one phase
+            # circle of N steps (the cleanup of 2026-09-18): a family declares its
+            # charge per quantum and no width.
             if "phase_bits" in obj:
-                phase_bits = _integer(obj["phase_bits"], "phase_bits", 0)
+                raise ValueError(ONE_N)
+            phase_bits = world_bits
             charge = _integer(obj.get("charge", 0), "spatial field charge")
             if "polarization_bits" in obj:
                 # Polarization (ray-polarization-v1): the width of the family's
@@ -1445,10 +1464,11 @@ def _spatial_fields(
                         raise ValueError(
                             "kerengonen phase_steps must be a power of two between 2 and 4096"
                         )
-                    table_bits = phase_steps.bit_length() - 1
-                    if "phase_bits" in obj and phase_bits != table_bits:
-                        raise ValueError("kerengonen phase_steps must equal 2 to the power phase_bits")
-                    phase_bits = table_bits
+                    if phase_steps != phase_steps_of_world:
+                        raise ValueError(
+                            "kerengonen phase_steps is the coherence table over the world's one "
+                            f"phase circle and must equal N ({phase_steps_of_world}); {ONE_N}"
+                        )
                 elif "capture" in phased:
                     raise ValueError("kerengonen.capture requires phase_steps, the coherence table")
                 capture = _text(phased.get("capture", "share"), "kerengonen.capture")
@@ -1497,13 +1517,15 @@ def _spatial_fields(
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
-            | {"phase_bits", "charge", "release", "spread", "steering", "polarization_bits", "clock"}
+            | {"charge", "release", "spread", "steering", "polarization_bits", "clock"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "flux_projection, phase_bits, charge, release, spread, steering, polarization_bits "
+                "flux_projection, charge, release, spread, steering, polarization_bits "
                 "and clock require ray transport"
             )
+        elif "phase_bits" in obj:
+            raise ValueError(ONE_N)
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
         axis = tuple(
@@ -1545,6 +1567,10 @@ def _spatial_fields(
                 polarization_bits=polarization_bits,
                 wait_numerator=wait[0],
                 wait_denominator=wait[1],
+                shadow_wait_numerator=0 if shadow_wait is None else shadow_wait[0],
+                shadow_wait_denominator=1 if shadow_wait is None else shadow_wait[1],
+                shadow_wait_reads=shadow_reads,
+                wait_reads=wait_reads,
             )
         )
     resolved = tuple(result)
@@ -2187,7 +2213,7 @@ def _ray_interactions(
     event rays that replace its participants; every output is a thing
     (bit-law-v1), and the `bit` key of detector-bit-property-v1 is rejected.
     `draw: [n, d]` with `seed` (decay-draw-v1) makes a rule with outputs a
-    decaying conversion: its meeting draws once from the Node's ticket stream at
+    decaying conversion: its meeting drew once from the Node's counter at
     that setting and fires on 1 only.
     """
     definitions = ray_participant_definitions(fields, spatial)
@@ -2350,7 +2376,6 @@ def _ray_meeting(
     # of a family whose charge differs from its source's changes the total charge.
     amount_sources: dict[int, tuple[int, ...]] = {}
     every_input = tuple(range(len(selections)))
-    lags: list[LagTable] = []
     # ray-polarization-v1: whether an output declares its polarization, and what
     # each output carries.
     names_polarization = False
@@ -2470,28 +2495,10 @@ def _ray_meeting(
             phase_expression = {"op": "add", "args": [phase_expression, offset]}
         assignments.append(Assignment(position, 2, parser.parse(phase_expression, 1)))
         assignments.append(Assignment(position, 3, parser.parse(ref("advance", source), 1)))
-        raw_delay = item.get("delay", 0)
-        delay = 0
-        if isinstance(raw_delay, dict):
-            spec = _object(raw_delay, "output.delay", {"of", "table", "per"}, {"of", "table"})
-            of_input = _integer(spec["of"], "output.delay.of", 0)
-            if of_input >= len(selections):
-                raise ValueError("output.delay.of exceeds the declared roles")
-            entries = tuple(
-                _integer(entry, "output.delay.table", 0)
-                for entry in _array(spec["table"], "output.delay.table", 6, 6)
-            )
-            per = _integer(spec.get("per", 1), "output.delay.per", 1)
-            lags.append(
-                LagTable(
-                    position,
-                    of_input,
-                    (entries[0], entries[1], entries[2], entries[3], entries[4], entries[5]),
-                    per,
-                )
-            )
-        else:
-            delay = _integer(raw_delay, "output.delay", 0)
+        # The delay table of ray-binding-v1 (a lag per Port) was deleted in the
+        # cleanup of 2026-09-18 (Highlights 5.4, points 21 and 22): a delay is an
+        # integer, and a shadow delays nothing.
+        delay = _integer(item.get("delay", 0), "output.delay", 0)
         assignments.append(Assignment(position, 4, parser.parse(delay, 1)))
         # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
         assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
@@ -2579,7 +2586,6 @@ def _ray_meeting(
         participants=tuple(selections),
         outputs=tuple(outputs),
         splits=tuple(splits),
-        lags=tuple(lags),
         polarization_declared=names_polarization,
         output_polarization=tuple(output_polarization),
         output_sources=tuple(output_sources),
@@ -2689,16 +2695,15 @@ def parse_initial_state(document: object) -> InitialState:
             "computation_field",
             "delay_direction",
             "least_delay_routing",
-            "ray_delay",
             "focus",
             "dense_field",
             "standing_field",
-            "ray_phase_per_tick",
             "K",
+            "N",
             "wait_per_quantum",
-            "sampling_profile",
+            "shadow_wait",
+            "wait_reads",
             "detectors",
-            "return_mode",
             "external_bodies",
             "initial_field",
         },
@@ -2725,6 +2730,35 @@ def parse_initial_state(document: object) -> InitialState:
     # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
     # per interval, one integer for the world.
     clock = _integer(obj["K"], "K", 1) if "K" in obj else 0
+    # N (the definitions of the law of the bit, the model owner, 2026-09-18): the
+    # number of steps of the phase circle, one for the world like K, declared
+    # once, 64 by default, a power of two (the phase is a mask) up to the
+    # coherence table's bound.
+    # A world that declares no N but whose families declare one coherence table
+    # (`kerengonen.phase_steps`, a table with one entry per step of the circle)
+    # has declared its width once through that table; tables of two sizes are
+    # refused.
+    raw_spatial = obj.get("spatial_fields", [])
+    declared_tables = {
+        int(entry["kerengonen"]["phase_steps"])
+        for entry in (raw_spatial if isinstance(raw_spatial, list) else [])
+        if isinstance(entry, dict)
+        and isinstance(entry.get("kerengonen"), dict)
+        and type(entry["kerengonen"].get("phase_steps")) is int
+        and entry["kerengonen"]["phase_steps"] > 1
+    }
+    if "N" not in obj and len(declared_tables) > 1:
+        raise ValueError(
+            "the coherence tables of a world are written over its one phase circle: declare N "
+            f"once (the tables declare {sorted(declared_tables)} steps; {ONE_N})"
+        )
+    default_steps = next(iter(declared_tables)) if declared_tables else DEFAULT_PHASE_STEPS
+    phase_steps = _integer(obj.get("N", default_steps), "N", 0)
+    if phase_steps < 2 or phase_steps > MAX_PHASE_STEPS or phase_steps & (phase_steps - 1):
+        raise ValueError(
+            "N, the number of steps of the world's phase circle, is a power of two from 2 "
+            f"through {MAX_PHASE_STEPS} (64 by default; Highlights 5.4, the definitions of the law)"
+        )
     # The wait per whole quantum read (Highlights 5.4 point 23): w = n / d
     # intervals, an integer or [n, d], 1 by default.
     wait: tuple[int, int] = (1, 1)
@@ -2740,13 +2774,45 @@ def parse_initial_state(document: object) -> InitialState:
             wait = (numerator, denominator)
         else:
             wait = (_integer(raw_wait, "wait_per_quantum", 0), 1)
-    if {"ray_delay", "ray_phase_per_tick"} & obj.keys():
-        raise ValueError(
-            "ray_delay and ray_phase_per_tick were retired by clock-readings-v1 (Highlights 5.4 "
-            "point 21, 2026-09-18): every ray moves one Link per interval, always; a thing's "
-            "departure is delayed by nothing"
+    # The shadow's wait, a declared option (shadow-wait-v1; Highlights 5.4, the
+    # model owner's paragraph of 2026-09-18): absent by default, the law as it
+    # stands; declared, n / d intervals per whole quantum and the reading.
+    shadow_wait: tuple[int, int] | None = None
+    shadow_reads = ""
+    if "shadow_wait" in obj:
+        option = _object(
+            obj["shadow_wait"], "shadow_wait", {"per_quantum", "reads"}, {"per_quantum", "reads"}
         )
-    spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version, clock, wait)
+        raw_count = option["per_quantum"]
+        if isinstance(raw_count, list):
+            numerator, denominator = (
+                _integer(v, "shadow_wait per_quantum term", 0)
+                for v in _array(raw_count, "shadow_wait per_quantum", 2, 2)
+            )
+            if denominator < 1:
+                raise ValueError("shadow_wait per_quantum is n / d with d at least 1")
+            shadow_wait = (numerator, denominator)
+        else:
+            shadow_wait = (_integer(raw_count, "shadow_wait per_quantum", 0), 1)
+        shadow_reads = _text(option["reads"], "shadow_wait reads")
+        if shadow_reads not in SHADOW_WAIT_READS:
+            raise ValueError("shadow_wait reads thing or field (shadow-wait-v1)")
+    # The wait reads the amount or the amplitude (wait-reads-v1; Highlights 5.4,
+    # the model owner's paragraph of 2026-09-18): "amount" by default.
+    wait_reads = _text(obj.get("wait_reads", "amount"), "wait_reads")
+    if wait_reads not in WAIT_READINGS:
+        raise ValueError("wait_reads is amount or amplitude (wait-reads-v1)")
+    spatial = _spatial_fields(
+        obj.get("spatial_fields", []),
+        fields,
+        schema_version,
+        clock,
+        wait,
+        phase_steps,
+        shadow_wait,
+        shadow_reads,
+        wait_reads,
+    )
     if "computation_field" in obj and any(definition.rays for definition in spatial):
         raise ValueError(
             "computation_field on a board of ray fields was retired by clock-readings-v1 "
@@ -2756,7 +2822,6 @@ def parse_initial_state(document: object) -> InitialState:
     ray_rules = _ray_interactions(obj.get("ray_interactions", []), fields, spatial)
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
-        sampling_profile=_text(obj.get("sampling_profile", "detector-only-v1"), "sampling_profile"),
         shape=shape,
         slots_per_node=capacity,
         link_ticks=_integer(obj["link_ticks"], "link_ticks", 1),
@@ -2808,17 +2873,18 @@ def parse_initial_state(document: object) -> InitialState:
             None if "delay_direction" not in obj else _text(obj["delay_direction"], "delay_direction")
         ),
         least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
-        ray_delay=False,
         clock=clock,
+        phase_steps=phase_steps,
         wait_per_quantum=wait,
+        shadow_wait=shadow_wait,
+        shadow_wait_reads=shadow_reads,
+        wait_reads=wait_reads,
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
         standing_field=_standing_field(
             obj.get("standing_field", False), _integer(obj["ticks"], "ticks", 0)
         ),
-        ray_phase_per_tick=False,
         detectors=_detectors(obj.get("detectors", []), fields, spatial),
-        return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
         external_bodies=_external_bodies(
             obj.get("external_bodies", []), fields, spatial, ray_rules, len(disturbances)
         ),

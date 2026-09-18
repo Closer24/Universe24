@@ -69,12 +69,12 @@ def document(shadows, *, ticks=1, phase_bits=3, holders=1, dense=None):
         "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": phase_bits,
         "charge": -1,
         "release": [1, 1],
     }
     doc = {
         "schema_version": 1,
+        "N": 1 << phase_bits,
         "model_id": "node-mixing-test-v1",
         "shape": [11, 5, 5],
         "boundary": "open",
