@@ -161,7 +161,6 @@ NODE_IS_PORTS = "node-is-ports-v1"
 # The trace a thing leaves at the Node it departs (bit-law-v1, point 3; a
 # zero-amount parked shadow since node-is-ports-v1): at most this many owners'
 # traces per family at one Node, the lowest owner ids dropped beyond it.
-MAX_TRACES = 16
 # The 0-meets-1 table (bit-law-v1, point 16, the model owner, 2026-09-18): per
 # pair of families one rule for what the thing multiplies the shadows' message
 # by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
@@ -295,6 +294,15 @@ BODY_SINK = -1
 # 4a/9 through each transverse Port; two in antiphase are each sent back
 # whole.
 NODE_MIXING = "node-mixing-v1"
+# The return is a field (Highlights 5.4, point 3 as amended by the model owner
+# on 2026-09-18; feature 16d): a shadow that pushes a thing turns back with the
+# opposite sign, the same shadow reversed with its momentum inverted, and from
+# then on it is a field like any other: it mixes at every Node in its own group
+# (its owner, its flipped sign, its polarization; the two groups of one owner
+# never mix), carries its momentum through the mixing in proportion to the
+# shares, pushes whatever other thing it meets with the opposite sign and is
+# absorbed wherever it reaches its owner. No step counter, no trace, no chase.
+RETURN_FIELD = "return-field-v1"
 MIXING_DENOMINATOR = 9
 MIXING_AMPLITUDE_SCALE = 32
 MIXING_WEIGHT_BITS = 28
@@ -313,6 +321,10 @@ MIXING_WEIGHT_BITS = 28
 FIELD_REMAINDER = "field-remainder-v1"
 REMAINDER_SIGNS = (-1, 0, 1)
 REMAINDER_SLOTS = 18
+# The parked block per owner (return-field-v1): the eighteen slots of the
+# owner's outgoing shares and the eighteen of its returning shares (outbound 0),
+# the two groups of one owner never mixing.
+PARKED_SLOTS = 2 * REMAINDER_SLOTS
 # The dense mode for boards that a field fills (dense-field-v1; performance,
 # 2026-09-17): the shadow-only Nodes of a board, those holding nothing but
 # shadows of spreading families (arriving, parked, returning or waiting) and
@@ -1149,6 +1161,8 @@ class FieldSpread:
     coherence: tuple[int, int]
     # The distinct source signs of the content taken, in order (field-spreading-v1).
     signs: tuple[int, ...] = ()
+    # The registers' momenta after the step, three per slot (return-field-v1).
+    register_momenta: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -1156,8 +1170,9 @@ class ShadowHome:
     """The record of one shadow that came home (bit-law-v1, point 3 of the law and
     the amendment's re-release): plain bounded integers. The spatial field, the
     amount, the owner, the Port index of the heading the shadow walked in on, the
-    momentum it delivered (-dp of the push it gave, zero for a shadow returned by
-    a mark or one that met its own thing), whom it was absorbed back into (`to`:
+    momentum it delivered (what it carried in flight, return-field-v1: the -dp of
+    the pushes it gave shared through the mixing, zero for a share that gave
+    none), whom it was absorbed back into (`to`:
     0 a thing ray, 1 a record, 2 an external body) and the Port index it left
     again through (the heading it arrived from, reversed)."""
 
@@ -1302,21 +1317,23 @@ def dense_field_admissible(initial: InitialState) -> bool:
     )
 
 
-def remainder_slot(sign: int, port: int, rank: int = 0) -> int:
-    """The slot of one owner (its rank among the family's owners), source sign and
-    Port in a family's parked block: eighteen per owner, owner-major (bit-law-v1)."""
+def remainder_slot(sign: int, port: int, rank: int = 0, flow: int = 0) -> int:
+    """The slot of one owner (its rank among the family's owners), flow (0 the
+    outgoing shares, 1 the returning, return-field-v1), source sign and Port in
+    a family's parked block: thirty-six per owner, owner-major (bit-law-v1)."""
     if sign not in REMAINDER_SIGNS or type(port) is not int or not 0 <= port < 6:
         raise ValueError("a parked share is named by a source sign and a Port")
-    if type(rank) is not int or rank < 0:
-        raise ValueError("a parked share is named by an owner's rank")
-    return rank * REMAINDER_SLOTS + (sign + 1) * 6 + port
+    if type(rank) is not int or rank < 0 or flow not in (0, 1):
+        raise ValueError("a parked share is named by an owner's rank and its flow")
+    return rank * PARKED_SLOTS + flow * REMAINDER_SLOTS + (sign + 1) * 6 + port
 
 
 def remainder_block_size(definition: SpatialFieldDefinition) -> int:
     """The parked shares of one spreading family at a Node, as the spread step reads
-    them: eighteen per owner of the family, eighteen for a family with no declared
-    owner (bit-law-v1)."""
-    return REMAINDER_SLOTS * max(1, len(definition.owners)) if definition.spread else 0
+    them: thirty-six per owner of the family (eighteen outgoing, eighteen
+    returning, return-field-v1), thirty-six for a family with no declared owner
+    (bit-law-v1)."""
+    return PARKED_SLOTS * max(1, len(definition.owners)) if definition.spread else 0
 
 
 def remainder_stock(block: tuple[int, ...], total: int) -> int:
@@ -1347,62 +1364,88 @@ def parked_shadow(
     owner: int,
     port: int,
     definition: SpatialFieldDefinition,
-    amount: int = 0,
+    amount: int,
     phase: int = 0,
     sign: int = 0,
+    momentum: tuple[int, int, int] | None = None,
+    outbound: int = 1,
 ) -> Ray:
-    """A shadow parked at a Node on the heading of `port`: the trace of `owner` when
-    the amount is zero, its share below one quantum otherwise (in units of the
-    family's split denominator), with the share's phase and sign."""
-    if not 0 <= amount < parked_unit(definition):
+    """A shadow parked at a Node on the heading of `port`: the share of `owner`
+    below one quantum (in units of the family's split denominator), with the
+    share's phase, sign, flow (outbound 1 outgoing, 0 returning, return-field-v1)
+    and the momentum it holds in flight."""
+    if not 1 <= amount < parked_unit(definition):
         raise ValueError("a parked shadow's amount stays below one quantum in its unit")
+    if momentum is not None and not any(momentum):
+        momentum = None
     return Ray(
         definition.headings.index(PORT_HEADINGS[port]),
         (0, 0, 0),
         amount,
         phase=phase,
+        outbound=outbound,
         detector=BIT_SHADOW,
         source_sign=sign,
+        momentum=momentum,
         owner=owner,
         parked=1,
     )
 
 
-def parked_shares(rays: Rays, definition: SpatialFieldDefinition) -> tuple[ParkedBlock, ParkedBlock]:
+def parked_shares(
+    rays: Rays, definition: SpatialFieldDefinition
+) -> tuple[ParkedBlock, ParkedBlock, ParkedBlock]:
     """The parked shares of one family at a Node as the spread step reads them: the
-    block of eighteen amounts per owner (owner-major by the family's owner order,
-    sign-major then Port) and their phases, from the Node's parked shadows with
-    an amount; the traces (amount zero) are not shares."""
+    block of thirty-six amounts per owner (owner-major by the family's owner
+    order, flow-major then sign-major then Port), their phases and their
+    momenta (three per slot), from the Node's parked shadows."""
     size = remainder_block_size(definition)
-    held, phases = [0] * size, [0] * size
+    held, phases, momenta = [0] * size, [0] * size, [0] * (3 * size)
     if not size:
-        return (), ()
+        return (), (), ()
     owners = definition.owners or (0,)
     for ray in rays:
-        if not ray.parked or not ray.amount:
+        if not ray.parked:
             continue
         if ray.owner not in owners:
             raise ValueError("a parked shadow's owner is one of its family's declared owners")
         port = PORT_HEADINGS.index(definition.headings[ray.heading])
-        slot = remainder_slot(ray.source_sign, port, owners.index(ray.owner))
+        slot = remainder_slot(ray.source_sign, port, owners.index(ray.owner), 0 if ray.outbound else 1)
         if held[slot]:
-            raise ValueError("a Node parks one shadow per owner, sign and Port of a family")
+            raise ValueError("a Node parks one shadow per owner, flow, sign and Port of a family")
         held[slot], phases[slot] = ray.amount, ray.phase
-    return tuple(held), tuple(phases)
+        if ray.momentum is not None:
+            momenta[3 * slot : 3 * slot + 3] = ray.momentum
+    return tuple(held), tuple(phases), tuple(momenta)
 
 
-def park_shares(block: ParkedBlock, phases: ParkedBlock, definition: SpatialFieldDefinition) -> Rays:
+def park_shares(
+    block: ParkedBlock, phases: ParkedBlock, momenta: ParkedBlock, definition: SpatialFieldDefinition
+) -> Rays:
     """The parked shadows of one family at a Node from the block the spread step
     wrote: one per nonzero slot, on the slot's Port heading with the slot's phase,
-    sign and owner, in slot order."""
+    sign, flow, momentum and owner, in slot order."""
     owners = definition.owners or (0,)
     result = []
     for slot, amount in enumerate(block):
         if not amount:
             continue
-        rank, rest = divmod(slot, REMAINDER_SLOTS)
+        rank, rest = divmod(slot, PARKED_SLOTS)
+        flow, rest = divmod(rest, REMAINDER_SLOTS)
         sign, port = divmod(rest, 6)
-        result.append(parked_shadow(owners[rank], port, definition, amount, phases[slot], sign - 1))
+        momentum = tuple(momenta[3 * slot : 3 * slot + 3]) if momenta else (0, 0, 0)
+        result.append(
+            parked_shadow(
+                owners[rank],
+                port,
+                definition,
+                amount,
+                phases[slot],
+                sign - 1,
+                (momentum[0], momentum[1], momentum[2]),
+                0 if flow else 1,
+            )
+        )
     return tuple(result)
 
 
@@ -1412,29 +1455,56 @@ def parked_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
     return remainder_stock(tuple(ray.amount for ray in rays if ray.parked), parked_unit(definition))
 
 
-def leave_trace(rays: Rays, owner: int, port: int, definition: SpatialFieldDefinition) -> Rays:
-    """The Node's rays of one family after a thing of `owner` left through `port`
-    (bit-law-v1, point 3; node-is-ports-v1): the owner's trace replaced by a
-    zero-amount parked shadow on that Port's heading, the traces bounded to
-    MAX_TRACES owners per family (the lowest ids dropped beyond it)."""
-    if type(port) is not int or not 0 <= port < 6:
-        raise ValueError("a trace is a Port")
-    kept = [ray for ray in rays if not (ray.parked and not ray.amount and ray.owner == owner)]
-    kept.append(parked_shadow(owner, port, definition))
-    traces = sorted((ray.owner for ray in kept if ray.parked and not ray.amount), reverse=True)
-    dropped = set(traces[MAX_TRACES:])
-    return merge_rays(
-        tuple(ray for ray in kept if not (ray.parked and not ray.amount and ray.owner in dropped))
-    )
-
-
-def trace_of(rays: Rays, owner: int, definition: SpatialFieldDefinition) -> int:
-    """The Port the last thing of `owner` left this Node by, read from its trace
-    among the family's rays, or -1 for none."""
+def parked_momentum(rays: Rays) -> tuple[int, int, int]:
+    """The momentum the parked shadows of a Node hold in flight (return-field-v1)."""
+    result = [0, 0, 0]
     for ray in rays:
-        if ray.parked and not ray.amount and ray.owner == owner:
-            return PORT_HEADINGS.index(definition.headings[ray.heading])
-    return -1
+        if ray.parked and ray.momentum is not None:
+            for axis in range(3):
+                result[axis] = checked_work(result[axis] + ray.momentum[axis])
+    return result[0], result[1], result[2]
+
+
+def apportion_momentum(
+    momentum: tuple[int, int, int], weights: tuple[int, ...], total: int
+) -> list[tuple[int, int, int]]:
+    """A momentum shared over slots in proportion to their weights (ninths of the
+    shares, summing to `total`), exact per axis: the floors, then the units left
+    to the largest remainders (ties to the lower slot); a negative component is
+    shared as its magnitude and negated (return-field-v1)."""
+    shares = [[0, 0, 0] for _ in weights]
+    if total <= 0 or not any(momentum):
+        return [(0, 0, 0) for _ in weights]
+    for axis in range(3):
+        value = momentum[axis]
+        if not value:
+            continue
+        magnitude = abs(value)
+        quotients, remainders, given = [], [], 0
+        for weight in weights:
+            quotient, remainder = divmod(checked_work(magnitude * weight), total)
+            quotients.append(quotient)
+            remainders.append(remainder)
+            given = checked_work(given + quotient)
+        left = magnitude - given
+        for slot in sorted(range(len(weights)), key=lambda s: (-remainders[s], s))[:left]:
+            quotients[slot] += 1
+        for slot, quotient in enumerate(quotients):
+            shares[slot][axis] = quotient if value > 0 else -quotient
+    return [(share[0], share[1], share[2]) for share in shares]
+
+
+def momentum_part(momentum: tuple[int, int, int], part: int, whole: int) -> tuple[int, int, int]:
+    """The momentum a part of a parked share takes with it: the share's momentum x
+    part / whole per axis, rounded toward zero, the rest staying on the share;
+    the whole momentum when the part is the whole share."""
+    if part >= whole:
+        return momentum
+    result = [0, 0, 0]
+    for axis in range(3):
+        scaled = abs(momentum[axis]) * part // whole
+        result[axis] = scaled if momentum[axis] >= 0 else -scaled
+    return result[0], result[1], result[2]
 
 
 def spread_tables(
@@ -1614,41 +1684,50 @@ def spread_content(
     definition: SpatialFieldDefinition,
     registers: tuple[int, ...] = (),
     register_phases: tuple[int, ...] = (),
-) -> tuple[Rays, FieldSpread, tuple[int, ...], tuple[int, ...]]:
+    register_momenta: tuple[int, ...] = (),
+) -> tuple[Rays, FieldSpread, tuple[int, ...], tuple[int, ...], tuple[int, ...]]:
     """The spread of one family's shadows at a Node (node-mixing-v1,
-    field-remainder-v1, bit-law-v1): the departures, one fresh shadow per
-    owner, Port, source sign, phase and polarization with content, the record,
-    and the Node's registers and their phases after the step. The rays are the
-    outbound shadows that arrived (at least one Link walked); a thing moves
-    whole and is never here. The shares of one group (one owner, source sign
-    and polarization; shadows of different owners or of differing polarization
-    do not mix) are the Node's mixing (`node_mixing`, Highlights 5.4, point
-    24): per travel heading the shadows of the group that arrived on it are one
-    amplitude, their amount at the step nearest their coherent sum; the six
-    amplitudes mix, the whole quanta leave through each heading at the phase
-    of its leaving amplitude and the ninths below one quantum go to the
-    group's register of that sign and Port (eighteen registers per owner,
-    owner-major by the owner's rank among the family's declared owners), the
-    register's phase combined with the share's by the coherence rule; a
-    register that reaches nine releases the whole quanta it holds through its
-    Port, with its phase, and keeps the rest. Each departure carries the Port's
-    heading, accumulators (0, 0, 0), its phase, no rate, wait, delay or lag,
-    steps 0, outbound 1, no event, its sign, its owner and its group's
-    polarization (a register's release the Node's combined polarization). The
-    total is exact: what arrived equals what leaves plus the whole quanta the
-    registers gained."""
+    field-remainder-v1, bit-law-v1, return-field-v1): the departures, one fresh
+    shadow per owner, Port, source sign, flow, phase and polarization with
+    content, the record, and the Node's registers, their phases and their
+    momenta after the step. The rays are the shadows that arrived (at least one
+    Link walked), outgoing or returning; a thing moves whole and is never here.
+    The shares of one group (one owner, source sign, flow and polarization;
+    shadows of different owners, of differing polarization, or an owner's
+    outgoing and returning shares do not mix) are the Node's mixing
+    (`node_mixing`, Highlights 5.4, point 24): per travel heading the shadows of
+    the group that arrived on it are one amplitude, their amount at the step
+    nearest their coherent sum; the six amplitudes mix, the whole quanta leave
+    through each heading at the phase of its leaving amplitude and the ninths
+    below one quantum go to the group's register of that flow, sign and Port
+    (thirty-six registers per owner, owner-major by the owner's rank among the
+    family's declared owners), the register's phase combined with the share's by
+    the coherence rule; a register that reaches nine releases the whole quanta
+    it holds through its Port, with its phase, and keeps the rest. The momentum
+    the group's shadows carry in flight (a returning share's -dp, point 3)
+    goes with the shares, over the twelve outputs of the mixing in proportion
+    to their ninths (`apportion_momentum`, exact), and a release takes the
+    register's momentum in proportion to what it releases (`momentum_part`).
+    Each departure carries the Port's heading, accumulators (0, 0, 0), its
+    phase, no rate, wait, delay or lag, steps 0, its flow, no event, its sign,
+    its owner, its momentum and its group's polarization (a register's release
+    the Node's combined polarization). The total is exact: what arrived equals
+    what leaves plus the whole quanta the registers gained, and the momentum
+    that arrived equals what leaves plus what the registers gained."""
     total = MIXING_DENOMINATOR
     size = remainder_block_size(definition)
     held = list(registers) if registers else [0] * size
     held_phases = list(register_phases) if register_phases else [0] * size
-    if len(held) != size or len(held_phases) != size:
-        raise ValueError("a remainder block holds eighteen registers and eighteen phases per owner")
+    held_momenta = list(register_momenta) if register_momenta else [0] * (3 * size)
+    if len(held) != size or len(held_phases) != size or len(held_momenta) != 3 * size:
+        raise ValueError("a remainder block holds thirty-six registers, phases and momenta per owner")
     before = sum(held)
     arrived = [0] * 6
-    groups: dict[tuple[int, int, int], dict[int, list[tuple[int, int]]]] = {}
+    groups: dict[tuple[int, int, int, int], dict[int, list[tuple[int, int]]]] = {}
+    carried: dict[tuple[int, int, int, int], list[int]] = {}
     for ray in rays:
-        if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
-            raise ValueError("a spread takes the outbound content that arrived at the Node")
+        if ray.steps < 1 or ray.amount <= 0 or ray.parked:
+            raise ValueError("a spread takes the content that arrived at the Node")
         if ray.detector != BIT_SHADOW:
             raise ValueError("a spread takes shadows: a thing moves whole on its line (bit-law-v1)")
         heading = definition.headings[ray.heading]
@@ -1656,17 +1735,20 @@ def spread_content(
             raise ValueError("a spread requires content on a Port heading")
         port = PORT_HEADINGS.index(heading)
         arrived[port] = checked_work(arrived[port] + ray.amount)
-        groups.setdefault((ray.owner, ray.source_sign, ray.polarization), {}).setdefault(
-            port, []
-        ).append((ray.amount, ray.phase))
+        key = (ray.owner, ray.source_sign, ray.polarization, 0 if ray.outbound else 1)
+        groups.setdefault(key, {}).setdefault(port, []).append((ray.amount, ray.phase))
+        if ray.momentum is not None:
+            momentum = carried.setdefault(key, [0, 0, 0])
+            for axis in range(3):
+                momentum[axis] = checked_work(momentum[axis] + ray.momentum[axis])
     phase = spread_phase(rays, definition)
     tables = spread_tables(definition)
     cosines, sines = mixing_tables(definition)
     modulus = definition.phase_modulus
     amounts, released = [0] * 6, [0] * 6
-    departing: dict[tuple[int, int, int, int, int], int] = {}
+    departing: dict[tuple[int, int, int, int, int, int], list[int]] = {}
     ranks: dict[int, int] = {}
-    for (owner, sign, polarization), by_port in sorted(groups.items()):
+    for (owner, sign, polarization, flow), by_port in sorted(groups.items()):
         if owner not in ranks:
             if definition.owners:
                 if owner not in definition.owners:
@@ -1680,6 +1762,7 @@ def spread_content(
                 raise ValueError("a shadow's owner is one of its family's declared owners (bit-law-v1)")
         rank = ranks[owner]
         arrivals = []
+        group_amount = 0
         for port in range(6):
             terms = tuple(by_port.get(port, ()))
             if not terms:
@@ -1688,17 +1771,29 @@ def spread_content(
             amount = 0
             for term_amount, _ in terms:
                 amount = checked_work(amount + term_amount)
+            group_amount = checked_work(group_amount + amount)
             port_phase = 0 if tables is None else _phase_of_sum(terms, tables[0], tables[1], modulus)
             arrivals.append((amount, port_phase))
-        for target, (whole, fraction, leaving_phase) in enumerate(
-            node_mixing(tuple(arrivals), cosines, sines)
-        ):
+        mixed = node_mixing(tuple(arrivals), cosines, sines)
+        group_momentum = carried.get((owner, sign, polarization, flow), [0, 0, 0])
+        weights = tuple(checked_work(whole * total) for whole, _, _ in mixed) + tuple(
+            fraction for _, fraction, _ in mixed
+        )
+        shares = apportion_momentum(
+            (group_momentum[0], group_momentum[1], group_momentum[2]),
+            weights,
+            checked_work(group_amount * total),
+        )
+        for target, (whole, fraction, leaving_phase) in enumerate(mixed):
             if whole:
                 amounts[target] = checked_work(amounts[target] + whole)
-                sent = (owner, target, sign, leaving_phase, polarization)
-                departing[sent] = checked_work(departing.get(sent, 0) + whole)
+                sent = (owner, target, sign, leaving_phase, polarization, flow)
+                entry = departing.setdefault(sent, [0, 0, 0, 0])
+                entry[0] = checked_work(entry[0] + whole)
+                for axis in range(3):
+                    entry[1 + axis] = checked_work(entry[1 + axis] + shares[target][axis])
             if fraction:
-                slot = remainder_slot(sign, target, rank)
+                slot = remainder_slot(sign, target, rank, flow)
                 if tables is None:
                     held_phases[slot] = 0
                 elif held[slot]:
@@ -1711,37 +1806,62 @@ def spread_content(
                 else:
                     held_phases[slot] = leaving_phase
                 held[slot] = checked_work(held[slot] + fraction)
+                for axis in range(3):
+                    held_momenta[3 * slot + axis] = checked_work(
+                        held_momenta[3 * slot + axis] + shares[6 + target][axis]
+                    )
     owner_of_rank = definition.owners or (0,)
     release_polarization = spread_polarization(rays, definition)
-    for rank in range(size // REMAINDER_SLOTS):
-        for sign in REMAINDER_SIGNS:
-            for target in range(6):
-                slot = remainder_slot(sign, target, rank)
-                whole, rest = divmod(held[slot], total)
-                if not whole:
-                    continue
-                held[slot] = rest
-                amounts[target] = checked_work(amounts[target] + whole)
-                released[target] = checked_work(released[target] + whole)
-                sent = (owner_of_rank[rank], target, sign, held_phases[slot], release_polarization)
-                departing[sent] = checked_work(departing.get(sent, 0) + whole)
-                if not rest:
-                    held_phases[slot] = 0
+    for rank in range(size // PARKED_SLOTS):
+        for flow in (0, 1):
+            for sign in REMAINDER_SIGNS:
+                for target in range(6):
+                    slot = remainder_slot(sign, target, rank, flow)
+                    whole, rest = divmod(held[slot], total)
+                    if not whole:
+                        continue
+                    slot_momentum = (
+                        held_momenta[3 * slot],
+                        held_momenta[3 * slot + 1],
+                        held_momenta[3 * slot + 2],
+                    )
+                    taken = momentum_part(slot_momentum, checked_work(whole * total), held[slot])
+                    held[slot] = rest
+                    for axis in range(3):
+                        held_momenta[3 * slot + axis] = slot_momentum[axis] - taken[axis]
+                    amounts[target] = checked_work(amounts[target] + whole)
+                    released[target] = checked_work(released[target] + whole)
+                    sent = (
+                        owner_of_rank[rank],
+                        target,
+                        sign,
+                        held_phases[slot],
+                        release_polarization,
+                        flow,
+                    )
+                    entry = departing.setdefault(sent, [0, 0, 0, 0])
+                    entry[0] = checked_work(entry[0] + whole)
+                    for axis in range(3):
+                        entry[1 + axis] = checked_work(entry[1 + axis] + taken[axis])
+                    if not rest:
+                        held_phases[slot] = 0
     departures = tuple(
         Ray(
             definition.headings.index(PORT_HEADINGS[port]),
             (0, 0, 0),
-            bounded(amount),
+            bounded(entry[0]),
             phase=departure_phase,
+            outbound=0 if flow else 1,
             detector=BIT_SHADOW,
             source_sign=sign,
+            momentum=(entry[1], entry[2], entry[3]) if any(entry[1:]) else None,
             polarization=departure_polarization,
             owner=owner,
         )
-        for (owner, port, sign, departure_phase, departure_polarization), amount in sorted(
+        for (owner, port, sign, departure_phase, departure_polarization, flow), entry in sorted(
             departing.items()
         )
-        if amount
+        if entry[0]
     )
     stored, fraction = divmod(sum(held) - before, total)
     if fraction:
@@ -1758,8 +1878,9 @@ def spread_content(
         phase,
         spread_coherence(rays, definition),
         tuple(sorted({ray.source_sign for ray in rays})),
+        tuple(held_momenta),
     )
-    return departures, record, tuple(held), tuple(held_phases)
+    return departures, record, tuple(held), tuple(held_phases), tuple(held_momenta)
 
 
 def mixing_field_names(
@@ -2386,20 +2507,19 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("a ray is parked (1) or on its way (0)")
         if ray.parked:
             # node-is-ports-v1: a parked shadow is at rest, below one quantum in
-            # its family's unit (zero for a trace), on a Port heading, without a
-            # momentum, a wait or an event, and outside the slot budget.
+            # its family's unit, on a Port heading, without a wait or an event,
+            # outgoing or returning with the momentum it holds (return-field-v1),
+            # and outside the slot budget.
             parked += 1
             if (
                 ray.detector != BIT_SHADOW
-                or not ray.outbound
                 or ray.steps
-                or ray.momentum is not None
                 or ray.wait
                 or ray.accumulators != (0, 0, 0)
                 or definition.headings[ray.heading] not in PORT_HEADINGS
             ):
                 raise ValueError("a parked shadow is a shadow at rest on a Port heading")
-            if not 0 <= bounded(ray.amount) < parked_unit(definition):
+            if not 1 <= bounded(ray.amount) < parked_unit(definition):
                 raise ValueError("a parked shadow's amount stays below one quantum in its unit")
         elif bounded(ray.amount) == 0:
             raise ValueError("a resident ray must carry a nonzero amount")
@@ -2428,8 +2548,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
                 "ray polarization must be none (-1) or a step below the family's polarization circle"
             )
         validate_ray_event_state(ray)
-    if parked > (REMAINDER_SLOTS + 1) * max(1, len(definition.owners)) + MAX_TRACES:
-        raise ValueError("a Node parks at most eighteen shares and one trace per owner of a family")
+    if parked > PARKED_SLOTS * max(1, len(definition.owners)):
+        raise ValueError("a Node parks at most thirty-six shares per owner of a family")
 
 
 def validate_ray_event_state(ray: Ray) -> None:
@@ -2490,10 +2610,10 @@ def ray_momentum_vector(ray: Ray, definition: SpatialFieldDefinition) -> tuple[i
     """One thing's momentum as the ledger reads it (clock-readings-v1): amount x
     heading, its motion, plus the momentum it carries, the pushes not yet spent
     on a step. The sign of a returning thing is the caller's. A shadow's momentum
-    is `ledger_momentum` (bit-law-v1): zero outbound, the momentum it carries home
-    on the walk back."""
+    is what it carries in flight (return-field-v1): the -dp of the pushes it
+    gave, shared through the mixing, zero for a share that gave none."""
     if ray.detector != BIT_THING:
-        return ray.momentum if ray.momentum is not None and not ray.outbound else (0, 0, 0)
+        return ray.momentum if ray.momentum is not None else (0, 0, 0)
     heading = definition.headings[ray.heading]
     carried = ray.momentum if ray.momentum is not None else (0, 0, 0)
     return (
@@ -2507,8 +2627,8 @@ def ledger_momentum(ray: Ray, definition: SpatialFieldDefinition) -> tuple[int, 
     """One ray's momentum on the ledger's lines, signed (bit-law-v1, Highlights 3.15
     and 5.4 point 7): a thing reads its momentum or amount x heading, negated on
     its walk back (its share on the event's heading, detector-return-v1); a
-    shadow is free, it reads zero while outbound and, on its walk home, the
-    momentum the push gave it, -dp, what it carries back to its owner."""
+    shadow is free and reads the momentum it carries in flight, the -dp of the
+    pushes it gave (return-field-v1), zero for a share that gave none."""
     vector = ray_momentum_vector(ray, definition)
     if ray.detector == BIT_THING and not ray.outbound:
         return (-vector[0], -vector[1], -vector[2])
@@ -2681,7 +2801,9 @@ def advance_ray(ray: Ray, heading: Heading, phase_modulus: int = 0, clock: int =
     there is not defined in this slice, so walking it further is refused.
     """
     port, accumulators = dda_step(ray.accumulators, heading)
-    if ray.outbound:
+    if ray.outbound or ray.detector == BIT_SHADOW:
+        # A shadow counts a Link walked whatever its flow (return-field-v1): its
+        # steps say only that it arrived.
         steps = bounded(checked_work(ray.steps + 1))
     elif ray.steps > 0:
         steps = ray.steps - 1
@@ -2770,36 +2892,49 @@ def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
 
 
 def return_shadow(
-    ray: Ray, definition: SpatialFieldDefinition, momentum: tuple[int, int, int] = (0, 0, 0)
+    ray: Ray,
+    definition: SpatialFieldDefinition,
+    momentum: tuple[int, int, int] = (0, 0, 0),
+    flip: bool = True,
 ) -> Ray:
-    """A shadow turned back on its own steps (bit-law-v1, points 3 and 6): the
-    same shadow reversed on the line it arrived by, its steps kept to walk back,
-    its amount, phase, sign and owner what arrived, carrying home as its momentum
-    the opposite of the momentum it gave (-dp; none when it gave none, as at a
-    mark). A shadow walks its heading, never its momentum."""
-    if ray.detector != BIT_SHADOW or not ray.outbound:
-        raise ValueError("return_shadow turns back an outbound shadow")
+    """A shadow turned back (bit-law-v1, points 3 and 6; return-field-v1): the
+    same shadow reversed on the line it arrived by, fresh from this Node (steps
+    0, so it leaves reversed and mixes from the next Node), its amount, phase and
+    owner what arrived. With `flip`, the turn of a push: its flow inverted
+    (outbound 1 to 0, a returning share back to outgoing) and its sign with it,
+    and the opposite of the momentum it gave (-dp) added to what it carries.
+    Without (a mark, a thing without a table): reversed as it is, nothing
+    carried. A shadow walks its heading, never its momentum."""
+    if ray.detector != BIT_SHADOW:
+        raise ValueError("return_shadow turns back a shadow")
     heading = definition.headings[ray.heading]
     negated = (-heading[0], -heading[1], -heading[2])
     if negated not in definition.headings:
         raise ValueError("a return requires the negated heading in the field's sequence")
-    for value in momentum:
-        checked_work(value)
+    held = ray.momentum if ray.momentum is not None else (0, 0, 0)
+    carried = (
+        checked_work(held[0] + momentum[0]),
+        checked_work(held[1] + momentum[1]),
+        checked_work(held[2] + momentum[2]),
+    )
     return replace(
         ray,
         heading=definition.headings.index(negated),
         accumulators=(0, 0, 0),
         wait=0,
-        outbound=0,
-        momentum=(momentum[0], momentum[1], momentum[2]) if any(momentum) else None,
+        steps=0,
+        outbound=(ray.outbound ^ 1) if flip else ray.outbound,
+        source_sign=-ray.source_sign if flip else ray.source_sign,
+        momentum=carried if any(carried) else None,
     )
 
 
 def rerelease_shadow(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
     """A shadow that came home leaves again from where its thing is (bit-law-v1,
-    the amendment's point c): a fresh outbound shadow on the heading it arrived
-    from reversed, back out along its line, with its amount, phase, sign and
-    owner, no steps, no momentum."""
+    the amendment's point c): a fresh outgoing shadow on the heading it arrived
+    from reversed, back out along its line, with its amount, phase and owner,
+    the owner's sign (a returning share's restored), no steps, no momentum (what
+    it carried is the owner's now)."""
     heading = definition.headings[ray.heading]
     negated = (-heading[0], -heading[1], -heading[2])
     if negated not in definition.headings:
@@ -2810,7 +2945,7 @@ def rerelease_shadow(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
         ray.amount,
         phase=ray.phase,
         detector=BIT_SHADOW,
-        source_sign=ray.source_sign,
+        source_sign=ray.source_sign if ray.outbound else -ray.source_sign,
         polarization=ray.polarization,
         owner=ray.owner,
     )
@@ -3442,6 +3577,10 @@ def push_of(
     and the remainder keeps its sign. The table's -1 is attraction toward the
     source, which lies opposite the arriving heading, for a positive product."""
     heading = definition.headings[shadow.heading]
+    # A returning share pushes with the opposite sign (return-field-v1): the
+    # thing reads the signed sum of its owner's outgoing and returning shares.
+    if not shadow.outbound:
+        sign = -sign
     if reads == "content":
         scale = checked_work(checked_work(sign * shadow.amount) * content)
         return (
@@ -3832,8 +3971,8 @@ def validate_initial_field(initial: InitialState) -> None:
                 raise ValueError("an initial_field ray owner is one of its family's owners")
             if ray.steps not in (-1, 0, 1):
                 raise ValueError(
-                    "an initial_field ray has walked one Link (1), none (0) or, by default, its "
-                    "Link distance from its owner's Node (node-is-ports-v1, settled rule (ii))"
+                    "an initial_field ray has walked one Link (1, the default) or none (0); a "
+                    "shadow counts no distance from its owner (return-field-v1)"
                 )
             if ray.polarization != POLARIZATION_NONE and not (
                 definition.polarization_bits >= 0

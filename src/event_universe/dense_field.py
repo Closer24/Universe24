@@ -76,6 +76,7 @@ from event_universe.core.spatial_state import (
     MIXING_DENOMINATOR,
     MIXING_OPPOSITE,
     MIXING_WEIGHT_BITS,
+    PARKED_SLOTS,
     POLARIZATION_NONE,
     PORT_HEADINGS,
     REMAINDER_SLOTS,
@@ -86,7 +87,6 @@ from event_universe.core.spatial_state import (
     merge_rays,
     mixing_tables,
     park_shares,
-    parked_shadow,
     parked_shares,
     parked_unit,
     phase_mask,
@@ -238,11 +238,13 @@ def plain_ray(ray: Ray, definition: SpatialFieldDefinition, family: DenseFamily 
         or definition.headings[ray.heading] not in PORT_HEADINGS
     ):
         return False
+    if ray.momentum is not None or not ray.outbound:
+        # A share carrying momentum, or a returning share (return-field-v1), is
+        # the engine's until the region carries the flow and the momentum too.
+        return False
     if ray.parked:
         return True
-    if ray.outbound:
-        return ray.steps == 1 and ray.amount > 0 and ray.momentum is None
-    return ray.amount > 0
+    return ray.steps == 1 and ray.amount > 0
 
 
 def plain_node(node: SpatialNode, families: Mapping[int, DenseFamily] | None = None) -> bool:
@@ -266,6 +268,29 @@ def plain_node(node: SpatialNode, families: Mapping[int, DenseFamily] | None = N
         if family is None or any(not plain_ray(ray, family.definition, family) for ray in rays):
             return False
     return True
+
+
+def engine_block(block: tuple[int, ...], owners: int) -> tuple[int, ...]:
+    """The region's parked block (eighteen slots per owner, the outgoing shares)
+    as the engine's (thirty-six per owner, the returning half empty; the region
+    carries no returning share, return-field-v1)."""
+    result: list[int] = []
+    for rank in range(max(1, owners)):
+        result.extend(block[rank * REMAINDER_SLOTS : (rank + 1) * REMAINDER_SLOTS])
+        result.extend([0] * REMAINDER_SLOTS)
+    return tuple(result)
+
+
+def region_block(block: tuple[int, ...], owners: int) -> tuple[int, ...]:
+    """The engine's parked block as the region's: the outgoing half per owner; a
+    returning share in it is refused, the engine keeps such a Node."""
+    result: list[int] = []
+    for rank in range(max(1, owners)):
+        start = rank * PARKED_SLOTS
+        if any(block[start + REMAINDER_SLOTS : start + PARKED_SLOTS]):
+            raise ValueError("the region's parked shares are outgoing shares")
+        result.extend(block[start : start + REMAINDER_SLOTS])
+    return tuple(result)
 
 
 class DenseField:
@@ -405,13 +430,19 @@ class DenseField:
                         owner=family.owners[int(rank)],
                     )
                 )
-            held = tuple(int(v) for v in family.reg[position].reshape(-1))
-            held_phases = tuple(int(v) for v in family.regph[position].reshape(-1))
-            departed, _, after, after_phases = spread_content(
+            held = engine_block(tuple(int(v) for v in family.reg[position].reshape(-1)), owners)
+            held_phases = engine_block(tuple(int(v) for v in family.regph[position].reshape(-1)), owners)
+            departed, _, after, after_phases, after_momenta = spread_content(
                 family.index, tuple(rays), family.definition, held, held_phases
             )
-            family.reg[position] = np.array(after, dtype=np.int64).reshape(owners, SIGNS, 6)
-            family.regph[position] = np.array(after_phases, dtype=np.int64).reshape(owners, SIGNS, 6)
+            if any(after_momenta) or any(ray.momentum is not None for ray in departed):
+                raise ValueError("the region's shares carry no momentum")
+            family.reg[position] = np.array(region_block(after, owners), dtype=np.int64).reshape(
+                owners, SIGNS, 6
+            )
+            family.regph[position] = np.array(
+                region_block(after_phases, owners), dtype=np.int64
+            ).reshape(owners, SIGNS, 6)
             ports = np.zeros(6, dtype=bool)
             for ray in rays:
                 ports[family.port_of[ray.heading]] = True
@@ -890,19 +921,15 @@ class DenseField:
         for index, family in self.families.items():
             definition = family.definition
             found: list[Ray] = list(bundles[index])
+            owners = len(family.owners)
             found.extend(
                 park_shares(
-                    tuple(int(v) for v in family.reg[target].reshape(-1)),
-                    tuple(int(v) for v in family.regph[target].reshape(-1)),
+                    engine_block(tuple(int(v) for v in family.reg[target].reshape(-1)), owners),
+                    engine_block(tuple(int(v) for v in family.regph[target].reshape(-1)), owners),
+                    (),
                     definition,
                 )
             )
-            # The trace per owner holds the Port plus one (a fix on the merge of
-            # feature 16c: the array is one-dimensional per Node).
-            for rank in np.nonzero(family.trace[target])[0]:
-                port = int(family.trace[target][rank]) - 1
-                found.append(parked_shadow(family.owners[int(rank)], port, definition))
-            found.extend(self._waiting_rays(family, target))
             family.reg[target] = 0
             family.regph[target] = 0
             family.trace[target] = 0
@@ -924,14 +951,15 @@ class DenseField:
         for index, family in self.families.items():
             definition = family.definition
             rays = bundles[index]
-            block, block_phases = parked_shares(rays, definition)
-            size = REMAINDER_SLOTS * len(family.owners)
-            family.reg[target] = np.array(block or (0,) * size, dtype=np.int64).reshape(
-                len(family.owners), SIGNS, 6
-            )
-            family.regph[target] = np.array(block_phases or (0,) * size, dtype=np.int64).reshape(
-                len(family.owners), SIGNS, 6
-            )
+            block, block_phases, _ = parked_shares(rays, definition)
+            owners = len(family.owners)
+            size = REMAINDER_SLOTS * owners
+            family.reg[target] = np.array(
+                region_block(block, owners) if block else (0,) * size, dtype=np.int64
+            ).reshape(owners, SIGNS, 6)
+            family.regph[target] = np.array(
+                region_block(block_phases, owners) if block_phases else (0,) * size, dtype=np.int64
+            ).reshape(owners, SIGNS, 6)
             family.trace[target] = 0
             for ray in rays:
                 if ray.parked and not ray.amount:
@@ -1213,17 +1241,15 @@ class DenseField:
                 for port, back in self._returning_rays(family, position).items():
                     found.extend(back)
                     mask[port ^ 1] = 1
-                found.extend(self._waiting_rays(family, position))
+                owners = len(family.owners)
                 found.extend(
                     park_shares(
-                        tuple(int(v) for v in family.reg[position].reshape(-1)),
-                        tuple(int(v) for v in family.regph[position].reshape(-1)),
+                        engine_block(tuple(int(v) for v in family.reg[position].reshape(-1)), owners),
+                        engine_block(tuple(int(v) for v in family.regph[position].reshape(-1)), owners),
+                        (),
                         definition,
                     )
                 )
-                for rank in np.nonzero(family.trace[position])[0]:
-                    port = int(family.trace[position][rank]) - 1
-                    found.append(parked_shadow(family.owners[int(rank)], port, definition))
                 rays[index] = merge_rays(tuple(found))
                 states[index] = replace(
                     states[index], delivered=tuple(pack((amount,)) for amount in delivered)

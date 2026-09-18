@@ -41,6 +41,7 @@ from .spatial_state import (
     SpatialState,
     coherent_stock,
     held_stock,
+    parked_momentum,
     parked_stock,
     parked_unit,
     ray_charge,
@@ -533,6 +534,10 @@ class SpatialEngine:
                 node = self.nodes[position]
                 if node.rays and any(ray.parked for ray in node.rays[index]):
                     result[definition.field][0] += parked_stock(node.rays[index], definition)
+                    if definition.momentum_field is not None:
+                        # The momentum the parked shares hold in flight (return-field-v1).
+                        for axis, value in enumerate(parked_momentum(node.rays[index])):
+                            result[definition.momentum_field][axis] += value
 
         for index, definition in enumerate(self.initial.spatial_fields):
             if not things:
@@ -951,6 +956,8 @@ class SpatialEngine:
                                 "unit": parked_unit(definition),
                                 "phase": ray.phase,
                                 "bit": BIT_SHADOW,
+                                "outbound": ray.outbound,
+                                "momentum": list(ray.momentum or (0, 0, 0)),
                             }
                         )
         result["parked"] = parked

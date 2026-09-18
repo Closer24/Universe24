@@ -34,6 +34,7 @@ from event_universe.core.spatial_state import (
     RAY_MOMENTUM_TURN,
     RAY_POLARIZATION_PROPERTY,
     RELEASED_FIELD,
+    RETURN_FIELD,
     WAVE_RAY_FAMILY,
     external_body_names,
     mixing_field_names,
@@ -382,6 +383,8 @@ def _execute_run(
         # a world has such a family, so the record of every other world is byte
         # for byte the same.
         metadata["node_mixing"] = NODE_MIXING
+        # The return is a field (return-field-v1, feature 16d).
+        metadata["return_field"] = RETURN_FIELD
         metadata["field_remainder"] = FIELD_REMAINDER
         metadata["mixing_fields"] = mixing
     if initial.spatial_fields:

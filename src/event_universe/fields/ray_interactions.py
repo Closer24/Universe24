@@ -235,7 +235,8 @@ def _turn(
     push the rule's reading of the shadow's message (`push_of`: the table's sign
     x amount x heading x the thing's content, or x the owner's charge over its
     content x the thing's charge, the latter accumulated exactly on the thing's
-    push remainder), and each shadow turned back on its steps carrying -push.
+    push remainder; a returning share pushes with the opposite sign), and each
+    shadow turned back with the opposite sign carrying -push (return-field-v1).
     The same shadows are read once per momentum rule of the thing (point 18,
     gravity and electricity the same shadows read twice): a shadow an earlier
     rule turned back for this thing pushes it again under this rule's reading
@@ -273,15 +274,18 @@ def _turn(
         meter.charge("update", 4)
         carried = (-push[0], -push[1], -push[2])
         earlier = candidate[kind][ray_slot] if shadow_slot in taken else None
-        if earlier is not None and earlier.outbound == 0:
-            # Read twice: the shadow already turned back carries the sum home.
+        if earlier is not None and earlier.outbound != shadow.outbound:
+            # Read twice: the shadow already turned back this cycle carries the
+            # sum of its pushes (return-field-v1).
             home = earlier.momentum if earlier.momentum is not None else (0, 0, 0)
-            carried = (
+            summed = (
                 checked_work(home[0] + carried[0]),
                 checked_work(home[1] + carried[1]),
                 checked_work(home[2] + carried[2]),
             )
-        returned = return_shadow(shadow, definitions[kind], carried)
+            returned = replace(earlier, momentum=summed if any(summed) else None)
+        else:
+            returned = return_shadow(shadow, definitions[kind], carried)
         validate_rays((returned,), definitions[kind], fields[definitions[kind].field])
         candidate[kind][ray_slot] = returned
         taken[shadow_slot] = receiver_slot
@@ -372,7 +376,7 @@ def _meet(
     views: tuple[DisturbanceRecord | None, ...] = tuple(
         None
         if rays[index][slot].interaction_delay
-        or not rays[index][slot].outbound
+        or (not rays[index][slot].outbound and rays[index][slot].detector == BIT_THING)
         or (rays[index][slot].steps == 0 and rays[index][slot].event_ports)
         or (rays[index][slot].steps == 0 and rays[index][slot].detector == BIT_SHADOW)
         else DisturbanceRecord(index, _view(rays[index][slot], definitions[index], index), ())
