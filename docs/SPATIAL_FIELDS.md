@@ -1449,6 +1449,59 @@ without a ray interaction two of whose participants can be spreading families
 `--dense-field` flag is the same switch, and the run record carries
 `dense_field: "dense-field-v1"` only when the mode is on.
 `test_dense_field.py` ([expectations](TEST_EXPECTATIONS.md#the-dense-mode))
+is the test. Since the performance lane of 2026-09-18 (`perf-arrays-v1`,
+[performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18))
+the runner writes `state.json` Node by Node (`event_universe/snapshot_writer.py`
+over `DisturbanceEngine.snapshot_stream`), the region's Nodes read one at a
+time from its arrays one x-slab at a time, the same text byte for byte as
+`json.dumps(snapshot, indent=2)` without every Node held as an object at
+once; a series of worlds runs one process per core with
+`tools/run_series.py`, each run the runner's and byte-identical to the same
+world run alone.
+
+### The standing set (`standing-field-v1`)
+
+A host scheduling choice, not a rule ([Highlights](HIGHLIGHTS.md) 5.4,
+points 11 and 13: the field of things at rest is a standing set a formula
+can give, and the shadow layer is computed as one step or by a formula at a
+standing field; the performance lane of 2026-09-18). With `standing_field`
+in a world that runs dense (`true`: within the world's ticks; a positive
+integer: within that many intervals; the runner's `--standing-field [N]` is
+the same switch), the region compares its state after every delivery with
+the one before it, treating the layer's step as an opaque operator, whatever
+spread rule it applies: the arrays and the whole rays beside them per family,
+the owners, the engine's Nodes' resident rays and the packets the engine
+delivers that interval. When two consecutive states are equal the layer has
+reached the operator's fixed point, the state the stepping engine would keep
+reaching, and from the next interval on the region is kept fixed: its cycle
+is skipped and its delivery replays the fixed point's flows, the same packets
+handed to the engine's Nodes, the same escapes booked per family, the
+engine's packets taken into the fixed arrays; so the things read the standing
+set exactly as the stepping engine would give it, and the ledger, `state.json`
+and the momentum of every thing are the stepping run's byte for byte. Every
+interval the engine's part of the state is checked against the fixed point's:
+a thing that steps, a body's packet into the layer, a thing ray a lamp pays
+out, a mark absorbing a thing changes it, and the region falls back to
+stepping from the fixed arrays at that delivery (the cycle it skipped is run
+late, on arrays the engine's cycle never touches), exactly, and says so.
+Without a repeat within the declared intervals the layer keeps stepping.
+Under the current split rule (`field-spreading-v1` with the Node-owned
+remainder) the fixed point of an open board is the parked residue, reached
+when every shadow has escaped or parked (the pushes on the things at rest
+end before it; the line world of the test reaches it after 119 intervals);
+the mode is written against the operator and stands whatever rule feature
+16c gives the layer. Looking for the fixed point costs one copy of the
+region's arrays (the previous delivery's state) until it is found or given
+up. The run record carries, only when the world declares the mode,
+`standing_field` (true when the layer was fixed to the end),
+`standing_field_max_iterations`, `standing_field_iterations` (the tick after
+which the layer repeated, null without a repeat), `standing_field_residual`
+(the array cells that differed and the sum of the amounts' differences at
+the last comparison), `standing_field_ticks` (the intervals kept fixed) and
+`standing_field_fallback` (null, or the tick and the reason). Refused:
+`standing_field` on a world that does not run dense, a negative or
+non-integer value. `test_perf_arrays.py`
+([expectations](TEST_EXPECTATIONS.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set))
 is the test.
 
 ### Polarization (`ray-polarization-v1`)
