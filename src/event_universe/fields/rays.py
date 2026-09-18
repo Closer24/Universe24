@@ -9,13 +9,16 @@ from event_universe.core.spatial_state import (
     MAX_HEADINGS,
     MAX_RAY_SLOTS,
     POLARIZATION_NONE,
+    PORT_HEADINGS,
     Ray,
+    RayMergeKey,
     Rays,
     SpatialFieldDefinition,
     advance_ray,
     clock_step,
     heading_pace,
     merge_rays,
+    ray_merge_key,
     ray_vector,
     stamp_event,
     step_thing,
@@ -115,12 +118,58 @@ def emit_rays(
     return stamped, (cursor + (count if base else extra)) % headings
 
 
+class LaneClaims:
+    """The real slots of a Node's six out-lanes in one interval (lanes-v1,
+    Highlights 5.4 point 25), shared by every family of the Node's cycle: the
+    family and the merge key of the one real ray leaving through each Port, or
+    None while the lane is free. Rays of one key merge into one ray, so they
+    hold one slot; a second real of another key on a taken lane is refused, as
+    no Port ever sends two."""
+
+    __slots__ = ("taken",)
+
+    def __init__(self) -> None:
+        self.taken: list[tuple[int, RayMergeKey] | None] = [None] * 6
+
+    def free(self, port: int) -> bool:
+        return self.taken[port] is None
+
+    def claim(self, port: int, family: int, ray: Ray) -> None:
+        held = (family, ray_merge_key(ray))
+        if self.taken[port] is not None and self.taken[port] != held:
+            raise ValueError("two real rays on one lane (Highlights 5.4, point 25)")
+        self.taken[port] = held
+
+    def release(self, port: int, family: int, ray: Ray) -> None:
+        if self.taken[port] == (family, ray_merge_key(ray)):
+            self.taken[port] = None
+
+
+def _on_lane(ray: Ray, definition: SpatialFieldDefinition) -> bool:
+    """Whether a departing ray takes a real slot (lanes-v1): a thing on one of the
+    six Port lines. The lane is one direction of a Port, so a ray of the old ray
+    worlds on a line that is not a Port heading holds none."""
+    return ray.detector == BIT_THING and definition.headings[ray.heading] in PORT_HEADINGS
+
+
 def forward_rays(
-    rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter
+    rays: Rays,
+    definition: SpatialFieldDefinition,
+    meter: CostMeter,
+    lanes: LaneClaims | None = None,
 ) -> tuple[tuple[Rays, ...], Rays, Departures]:
     """Move every ray that is due one link along its own line; return the ports, the
     kept, and the departures' account: the phase steps the things made and the
     momentum they spent on their steps.
+
+    A Port is two lanes (lanes-v1, Highlights 5.4 point 25): an out-lane carries
+    at most one real ray per interval, `lanes` holding the claims of every family
+    of the Node's cycle (a fresh set when none is given). The lane is a condition
+    on the step: every ray that leaves on its own heading takes its lane first,
+    a thing that would step to a new heading holds its own lane until it is
+    resolved, in the Node's ray order, and steps only if the new lane is free;
+    otherwise it keeps its heading, its momentum stays accumulated, and it steps
+    at the next Node. Two reals of different keys on one lane are refused.
 
     On the links metric every ray is due every tick and the Node keeps none. On
     the Euclidean metric a ray hops when its wait passes its heading's pace; a
@@ -144,6 +193,12 @@ def forward_rays(
     steps = 0
     spent = [0, 0, 0]
     modulus, clock = definition.phase_modulus, definition.clock
+    claims = LaneClaims() if lanes is None else lanes
+    family = definition.field
+    # The things that would step to a new heading this interval, resolved after
+    # every other departure has taken its lane (lanes-v1): the departure on the
+    # thing's own heading and the departure on the new one.
+    deferred: list[tuple[tuple[int, Ray], tuple[int, Ray], tuple[int, int, int]]] = []
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
@@ -180,22 +235,46 @@ def forward_rays(
             if port < 0:
                 kept.append(moved)
             else:
+                if _on_lane(moved, definition):
+                    claims.claim(port, family, moved)
                 outgoing[port].append(moved)
             continue
         stepped, dropped = step_thing(ray, definition)
-        if any(dropped):
+        # Every ray walks one Link on its heading (clock-readings-v1, point 21).
+        steps += abs(clock_step(stepped, clock)[0])
+        own = advance_ray(
+            replace(ray, wait=wait - denominator), ray_vector(ray, definition), modulus, clock
+        )
+        if stepped.heading != ray.heading:
+            # The lane is a condition on the step (lanes-v1, point 25): the thing
+            # holds its own heading's lane until it is resolved below.
+            turned = advance_ray(
+                replace(stepped, wait=wait - denominator),
+                ray_vector(stepped, definition),
+                modulus,
+                clock,
+            )
+            if _on_lane(own[1], definition):
+                claims.claim(own[0], family, own[1])
+            deferred.append((own, turned, dropped))
+            continue
+        port, moved = own
+        if _on_lane(moved, definition):
+            claims.claim(port, family, moved)
+        outgoing[port].append(moved)
+    for own, turned, dropped in deferred:
+        if claims.free(turned[0]):
+            # The step: the lane is free, the thing turns and its momentum drops.
+            claims.release(own[0], family, own[1])
+            claims.claim(turned[0], family, turned[1])
             meter.charge("update", 2)
             for axis in range(3):
                 spent[axis] = checked_work(spent[axis] + dropped[axis])
-        # Every ray walks one Link on its heading (clock-readings-v1, point 21).
-        steps += abs(clock_step(stepped, clock)[0])
-        port, moved = advance_ray(
-            replace(stepped, wait=wait - denominator),
-            ray_vector(stepped, definition),
-            modulus,
-            clock,
-        )
-        outgoing[port].append(moved)
+            outgoing[turned[0]].append(turned[1])
+        else:
+            # The lane is taken: the thing keeps its heading, its momentum stays
+            # accumulated, and it steps at the next Node (Highlights 5.4, point 25).
+            outgoing[own[0]].append(own[1])
     result = tuple(merge_rays(tuple(port_rays)) for port_rays in outgoing)
     meter.charge("send", sum(1 for port_rays in result if port_rays))
     return result, merge_rays(tuple(kept)), Departures(steps, (spent[0], spent[1], spent[2]))

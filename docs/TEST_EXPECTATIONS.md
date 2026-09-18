@@ -37,6 +37,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
 | `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
+| `test_lanes.py` | 6 | 1.5 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; the record of a world with no contested lane byte-identical, pinned below |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
@@ -3322,3 +3323,110 @@ of one whole quantum, (0, -1, 0), in the cycle of tick 6.
   in units of 1 / 2) and never spent: the thing steps at tick 7 as if it owed
   nothing and carries the debt; `wait_per_quantum` [11, 9] parses as (11, 9),
   the default is (1, 1), and [1, 0], -1 and [1] are refused.
+
+## A Port is two lanes
+
+`tests/test_lanes.py` is the isolated test of `lanes-v1`
+([a Port is two lanes](SPATIAL_FIELDS.md#a-port-is-two-lanes-lanes-v1);
+Highlights 5.4 point 25, the model owner's decision of 2026-09-18, feature 18),
+pinned here on 2026-09-18 before its first run, as Highlights 5.5 requires.
+The boards are those of `tests/test_node_is_ports.py` (open, `link_ticks` 1,
+costs 1, the six Port headings, family `m` with charge -1 and `release`
+[1, 1], a lamp a thing that spends its content) and, for the contested lane,
+that of `tests/test_ray_momentum_turn.py` (21^3, K 8, `wait_per_quantum` 0,
+the family `m` of charge 1 with a clock and the shadow family `f`, the
+coupling `turn` reading the content with sign -1). Written before the first
+run, all of it computed from the rules:
+
+- (a) the slots: the family `m` of a world with a lamp `e` (thing 1) and a
+  profile shadow of owner 2 has owners (1, 2). The rays of one Node, a thing
+  of 4 on +X with steps 1, a shadow of owner 1, amount 3, on +X (steps 1), a
+  shadow of owner 2, amount 5, on -Y (steps 1), a trace of owner 1 on +X and a
+  returned thing of 4 at its event Node (-X, outbound 0, steps 0), read as:
+  twelve real slots and twelve shadow slots of two owners each; the thing in
+  the real slot of lane 2 (Port 1, in: it entered through -X), every other
+  real slot empty; the owner-1 shadow in slot (2, 0) and the owner-2 shadow in
+  slot (4, 1) (Port 2, in: it entered through +Y), every other shadow slot
+  empty; the trace among `parked`, the returned thing among `resident`;
+  `lane_index` reads (0, in) 0, (0, out) 1, (5, out) 11; a second thing of
+  another key on +X is refused with a message naming point 25.
+- (b) two reals declared on one lane: two lamps `e` and `e2` of content 4
+  seeded at (1,1,1), both emitting `m` on +X, are refused at parsing with a
+  message naming point 25 and both lamps; seeded at (1,1,1) and (1,2,2) they
+  parse; a family whose sequence is [+X, +X, -X, +Y, -Y, +Z, -Z] with
+  `rays_per_tick` 2 is refused (its sweep repeats a heading); with
+  `rays_per_tick` 1 it parses.
+- (c) a table with two outputs on one heading: a rule of `m` meeting `m` whose
+  two outputs both leave `"reversed"` of input 1 is refused at parsing with a
+  message naming point 25 and outputs 0 and 1; two outputs on Port 0 likewise;
+  outputs `"same"` of input 0 and `"reversed"` of input 1 parse (their
+  coincidence is a meeting's, decided there).
+- (d) the contested lane: the world of test_ray_momentum_turn (a) with a
+  second thing: lamp A of 8 at (4,10,10) heading +X (thing 1), lamp B of 8 at
+  (10,16,10) heading -Y (thing 2), the shadow of 1 from -Y at (10,4,10) with
+  sign 1 under `turn({"f": -1})`. After ticks 1 to 6: A at (4 + t, 10, 10), B
+  at (10, 16 - t, 10), the shadow at (10, 4 + t, 10), all with steps t, A and
+  B with phase t & 7 (after tick 6 all three are at C together, the pin
+  corrected before the first passing run on 2026-09-18: the first draft listed
+  A and B at C as if each were alone); `thing_momentum` {1: (8,0,0), 2:
+  (0,-8,0)}, the momentum line current (0,0,0). In the cycle of tick 7 at C = (10,10,10) the
+  shadow pushes A, the first thing in slot order, by (0,-8,0) and turns back
+  on -Y carrying (0,8,0); B, already on -Y, keeps its lane, and A, whose
+  momentum has reached its content on Y, finds the -Y lane taken: it keeps +X
+  with its momentum (0,-8,0) accumulated. After tick 7: A at (11,10,10)
+  (heading +X, phase 7, steps 7, momentum (0,-8,0)), B at (10,9,10) (heading
+  -Y, phase 7, steps 7), the shadow at (10,9,10) (steps 5, -Y, momentum
+  (0,8,0)); `thing_momentum` {1: (8,-8,0), 2: (0,-8,0)}; the momentum line
+  current (0,0,0), spent (0,0,0), escaped (0,0,0). At its departure of tick 8
+  A steps to -Y, the lane free: after tick t >= 8, A at (11, 17 - t, 10)
+  (heading -Y, phase t & 7, steps t, no momentum), B at (10, 16 - t, 10), one
+  Link each per interval; the shadow walks back to (10,4,10) after tick 12
+  and waits; `thing_momentum` {1: (0,-8,0), 2: (0,-8,0)} through tick 16; the
+  momentum line current (-8,0,0) and spent (8,0,0) from tick 8. B leaves the
+  board after tick 17 (escaped (0,-8,0), current (-8,8,0), `m` 8) and A after
+  tick 18 (escaped (0,-16,0), current (-8,16,0), `m` 0); `f` 1 and nothing of
+  it escaped at every tick; the books balanced at every tick; no `ray_push`.
+  The control without B: A at (10,9,10) after tick 7 with spent (8,0,0), as
+  test_ray_momentum_turn pins.
+- (e) two owners' shadows on one lane: two lamps of content 0 (things 1 and
+  2, nothing emitted) at (1,2,2) and (1,3,3) on 8x5x5, and at (3,2,2) on +X
+  three shadows: owner 1 amount 3 with steps 1, owner 1 amount 2 with steps
+  0, owner 2 amount 6 with steps 1. After tick 1 all three are at (4,2,2)
+  (steps 2, 1 and 2), and the Node's lanes read: lane 2 (Port 1, in) shadow
+  slot 0 amount 5 (3 + 2, steps 1, one sum) and slot 1 amount 6 (steps 2),
+  every other shadow slot and every real slot empty; `shadow_content` 11,
+  `real_content` 0, the shadow line initial 11 and current 11.
+- (f) the record unchanged: `examples/nature/ring.json` for 8 ticks:
+  `events.jsonl` sha256
+  091f6666d75ec307bf5d13f3f82123fab34c1d68524bade9b59d9fdbdcf20420 and
+  `state.json` sha256
+  3de44da77e91431f4208f648d747b6a84665e7aad74e03a18f9cf406bf201afa, computed
+  on origin/main at 3cfb5e4 before the change; `run.json` reads `lanes`
+  "lanes-v1" beside `node_is_ports`.
+
+Re-pinned with feature 18 (`lanes-v1`, 2026-09-18): in
+`tests/test_configuration_validation.py` the shipped worlds
+`examples/nature/absorption.json`, `absorption_emission.json` and
+`helium_ion.json`, whose tables `absorb` and `nucleus_turn` send two outputs
+on one heading, are refused at parsing with a message naming point 25 until
+the model owner declares their tables anew; in
+`tests/test_ray_meeting_conversion.py` the table with two outputs on Port 2
+is refused at parsing naming point 25 (its momentum invariant is no longer
+reached); in `tests/test_ray_polarization.py` two lamps at one Node emitting
+on one heading are refused at parsing naming point 25 (the merge identity
+stays pinned on the pure function). The lane is one direction of a Port, so
+the departure claims and the plan check take the rays on the six Port lines:
+the worlds of `test_ray_field`, `test_energy_audit`,
+`test_ray_merge_contracts` and `test_local_focus`, whose headings are not
+Port headings, run as before.
+
+Refused by point 25 and not re-pinned here (2026-09-18, for the model owner):
+worlds in which a ray is born onto a lane another thing continues on in the
+same interval, a return at a mark over a thing that passes
+(`test_detector_mark`, six lamps facing one mark), an emission over a thing
+that passes the lamp's Node (`test_ray_hidden_state`, four cases of
+`test_kerengonen`, `test_energy_audit`'s self-exclusion world) and a
+meeting's output over a thing that crosses (`test_ray_layers`, `a_and_b`);
+the law says no Port sends two and names no other rule, so the engine
+refuses the departure with a message naming point 25, and those eight tests
+fail until their worlds are re-pinned or their behaviour is retired.

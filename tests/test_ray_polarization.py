@@ -267,21 +267,13 @@ def test_polarization_is_a_ray_property_read_by_the_polarizer(tmp_path, case):
             step(world, 1)
             assert rays_at(world, (4 + n, 7, 7)) == [emitted(0, n, 8, 2)]
             assert world.totals() == {"light": (8,)}
-        world = Simulation(
-            parse_initial_state(document([lamp((4, 7, 7), 4, 0, 2), lamp((4, 7, 7), 4, 0, 2)]))
-        )
-        step(world, 1)
-        # Two identical events of two things stay two rays (bit-law-v1, 2026-09-18:
-        # the identity is part of a ray's record and rays of two things never merge).
-        assert rays_at(world, (5, 7, 7)) == [emitted(0, 1, 4, 2), emitted(0, 1, 4, 2)]
-        world = Simulation(
-            parse_initial_state(document([lamp((4, 7, 7), 4, 0, 2), lamp((4, 7, 7), 4, 0, 6)]))
-        )
-        step(world, 1)
-        assert rays_at(world, (5, 7, 7)) == [emitted(0, 1, 4, 2), emitted(0, 1, 4, 6)]
-        world = Simulation(parse_initial_state(document([lamp((4, 7, 7), 4, 0), lamp((4, 7, 7), 4, 0)])))
-        step(world, 1)
-        assert rays_at(world, (5, 7, 7)) == [emitted(0, 1, 4, NONE), emitted(0, 1, 4, NONE)]
+        # Re-pinned on 2026-09-18 with feature 18 (lanes-v1, Highlights 5.4 point
+        # 25): two lamps at one Node emitting on one heading are two real rays on
+        # one lane, refused at parsing; two things never merge (bit-law-v1), and
+        # the pure function below still pins the merge identity.
+        for second in (2, 6, NONE):
+            with pytest.raises(ValueError, match="point 25"):
+                parse_initial_state(document([lamp((4, 7, 7), 4, 0, 2), lamp((4, 7, 7), 4, 0, second)]))
         # The pure function: rays of one event and line merge at equal polarization
         # only, the unpolarized one ordered first.
         three, five = replace(merged_pair(2), amount=3), replace(merged_pair(2), amount=5)

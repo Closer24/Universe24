@@ -297,10 +297,12 @@ def test_a_meeting_replaces_its_rays_by_declared_outputs_split_by_the_table_or_i
         # (c) Outputs that break an invariant are rejected before any owner changes,
         # by the meeting itself and in the run; malformed tables at initialization.
         residents = (emitted(0, 2, 0), emitted(1, 2, 0))
-        for outputs, message in (
-            (four(amounts=(2, 2, 3, 4)), "violates conservation of amount"),
-            (four(ports=(2, 2, 4, 5)), "violates invariant momentum"),
-        ):
+        # Re-pinned on 2026-09-18 with feature 18 (lanes-v1, Highlights 5.4 point
+        # 25): a table gives its outputs distinct lanes, so two outputs on Port 2
+        # are refused at parsing, before any invariant is read.
+        with pytest.raises(ValueError, match="point 25"):
+            parse_initial_state(document(four(ports=(2, 2, 4, 5)), [ENERGY, MOMENTUM], 0))
+        for outputs, message in ((four(amounts=(2, 2, 3, 4)), "violates conservation of amount"),):
             initial = parse_initial_state(document(outputs, [ENERGY, MOMENTUM], 0))
             with pytest.raises(ValueError, match=message):
                 meet(initial, residents)

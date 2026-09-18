@@ -162,6 +162,20 @@ NODE_IS_PORTS = "node-is-ports-v1"
 # zero-amount parked shadow since node-is-ports-v1): at most this many owners'
 # traces per family at one Node, the lowest owner ids dropped beyond it.
 MAX_TRACES = 16
+# A Port is two lanes (Highlights 5.4 point 25, the model owner's decision of
+# 2026-09-18; lanes-v1, feature 18): a Link carries rays both ways, so every Port
+# has an in-lane and an out-lane and a Node has twelve lanes. In one interval a
+# lane carries at most one real ray and at most one shadow of each owner, so a
+# Node's state is bounded and fixed before the run: six Ports x two lanes x (one
+# real slot + one shadow slot per owner), plus the parked shadows and the
+# traces of point 22 and the things at rest at the Node. The lane is a
+# condition on the step, not a queue: a thing steps into an out-lane only if the
+# lane is free in that interval; otherwise it keeps its heading, its momentum
+# stays accumulated, and it steps at the next Node.
+LANES = "lanes-v1"
+LANE_IN, LANE_OUT = 0, 1
+LANES_PER_PORT = 2
+NODE_LANES = 6 * LANES_PER_PORT
 # The 0-meets-1 table (bit-law-v1, point 16, the model owner, 2026-09-18): per
 # pair of families one rule for what the thing multiplies the shadows' message
 # by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
@@ -2410,6 +2424,167 @@ def validate_ray_event_state(ray: Ray) -> None:
         ray.event_ports or ray.interaction_delay or any(ray.lag) or ray.advance != -1
     ):
         raise ValueError("a shadow carries no event, no delay, no lag and no clock (bit-law-v1)")
+
+
+@dataclass(frozen=True, slots=True)
+class LaneSlots:
+    """One family's state at a Node as Highlights 5.4 point 25 bounds it
+    (lanes-v1): addressable as [Port][lane][real | shadow(owner)]. `real` holds
+    the one real ray of each of the twelve lanes (`lane_index`); `shadow` one
+    slot per lane and per owner in the family's owner order (`owner_index`,
+    fixed at parsing), the owner's shadows on that lane as one sum, their
+    amount and the momentum they carry added, the least steps, the phase of
+    their coherent sum (one ray each once the Node's mixing of point 24 lands);
+    `parked` the parked shadows and the traces of point 22, outside the lanes;
+    `resident` the rays at rest at the Node this interval (a returned thing at
+    its event Node, a shadow whose steps are spent, a held ray). The engine
+    stores these slots as the Node's ray tuple in merge order and holds their
+    bounds as its invariant: one real per lane at every departure
+    (`forward_rays`, `validate_plan_rays`) and at every declared board."""
+
+    real: tuple[Ray | None, ...]
+    shadow: tuple[tuple[Ray | None, ...], ...]
+    parked: Rays = ()
+    resident: Rays = ()
+
+
+def lane_index(port: int, lane: int) -> int:
+    """The index of one lane among a Node's twelve: the Port's in-lane (0) or out-lane (1)."""
+    if type(port) is not int or not 0 <= port < 6 or lane not in (LANE_IN, LANE_OUT):
+        raise ValueError("a lane is one of the six Ports, in (0) or out (1)")
+    return LANES_PER_PORT * port + lane
+
+
+def owner_index(definition: SpatialFieldDefinition, owner: int) -> int:
+    """The owner's slot on the shadow axis of a lane (lanes-v1): its rank among the
+    family's owners, assigned at parsing to every thing and to every owner of a
+    declared profile (`family_owners`); 0 for the one anonymous owner of a family
+    that declares none."""
+    if definition.owners:
+        if owner not in definition.owners:
+            raise ValueError("a shadow's owner is one of its family's declared owners (bit-law-v1)")
+        return definition.owners.index(owner)
+    if owner:
+        raise ValueError("a shadow's owner is one of its family's declared owners (bit-law-v1)")
+    return 0
+
+
+def lane_of(ray: Ray, definition: SpatialFieldDefinition) -> int | None:
+    """The in-lane a ray on its way occupies at its Node (lanes-v1): the Port it
+    entered through, opposite to its heading; None for a parked shadow and for a
+    ray at rest (a returned thing at its event Node, a shadow whose steps are
+    spent, a ray held by a delay), which is in no lane."""
+    if ray.parked or ray.interaction_delay or (not ray.outbound and ray.steps == 0):
+        return None
+    heading = definition.headings[ray.heading]
+    if heading not in PORT_HEADINGS:
+        raise ValueError("lanes-v1 addresses the rays of a family on the six Port headings")
+    return lane_index(PORT_HEADINGS.index(heading) ^ 1, LANE_IN)
+
+
+def node_lanes(rays: Rays, definition: SpatialFieldDefinition) -> LaneSlots:
+    """The slots of one family at a Node (lanes-v1, Highlights 5.4 point 25):
+    twelve lanes, one real slot and one shadow slot per owner on each, the
+    parked shadows and the rays at rest beside them. Two real rays on one lane
+    are refused: no Port sends two, so none receives two."""
+    owners = max(1, len(definition.owners))
+    real: list[Ray | None] = [None] * NODE_LANES
+    shadow: list[list[list[Ray]]] = [[[] for _ in range(owners)] for _ in range(NODE_LANES)]
+    parked: list[Ray] = []
+    resident: list[Ray] = []
+    for ray in rays:
+        if ray.parked:
+            parked.append(ray)
+            continue
+        lane = lane_of(ray, definition)
+        if lane is None:
+            resident.append(ray)
+        elif ray.detector == BIT_THING:
+            if real[lane] is not None:
+                raise ValueError("two real rays on one lane (Highlights 5.4, point 25)")
+            real[lane] = ray
+        else:
+            shadow[lane][owner_index(definition, ray.owner)].append(ray)
+    return LaneSlots(
+        tuple(real),
+        tuple(tuple(_shadow_sum(group, definition) for group in lane) for lane in shadow),
+        tuple(parked),
+        tuple(resident),
+    )
+
+
+def _shadow_sum(group: list[Ray], definition: SpatialFieldDefinition) -> Ray | None:
+    """One owner's shadows on one lane as one sum (point 24): the first of them
+    with the amounts added, the momenta they carry added, the least steps and the
+    phase of their coherent sum; None for an empty slot."""
+    if not group:
+        return None
+    first = group[0]
+    if len(group) == 1:
+        return first
+    amount = 0
+    momentum = [0, 0, 0]
+    carried = False
+    for ray in group:
+        amount = checked_work(amount + ray.amount)
+        if ray.momentum is not None:
+            carried = True
+            for axis in range(3):
+                momentum[axis] = checked_work(momentum[axis] + ray.momentum[axis])
+    phase = first.phase
+    if definition.coherent and definition.cosine_table:
+        phase = phase_of_sum(tuple((ray.amount, ray.phase) for ray in group), definition)
+    return replace(
+        first,
+        amount=bounded(amount),
+        momentum=(momentum[0], momentum[1], momentum[2]) if carried else None,
+        steps=min(ray.steps for ray in group),
+        phase=phase,
+    )
+
+
+def validate_lanes(initial: InitialState) -> None:
+    """The lanes of a declared board (lanes-v1, Highlights 5.4 point 25). An
+    emission's outputs occupy distinct lanes: a family's sweep of
+    `rays_per_tick` consecutive headings of its sequence never repeats a
+    heading. No Port sends two reals on one lane, so a declared board with two
+    things leaving one Node on one heading is refused: two seeds at one Node
+    whose types emit on one ray family with the same declared heading, or both
+    sweeping the sequence from its start. A table of section 5.2 is validated
+    where it is compiled (`initialization._ray_meeting`)."""
+    for definition in initial.spatial_fields:
+        if not definition.rays or definition.rays_per_tick <= 1:
+            continue
+        headings = definition.headings
+        count = definition.rays_per_tick
+        for start in range(len(headings)):
+            window = [headings[(start + offset) % len(headings)] for offset in range(count)]
+            if len(set(window)) != len(window):
+                raise ValueError(
+                    f"an emission's outputs occupy distinct lanes: rays_per_tick {count} of the "
+                    f"family {initial.fields[definition.field].name!r} sweeps one heading twice "
+                    "(Highlights 5.4, point 25)"
+                )
+    lamps: dict[int, list[tuple[int, int | None]]] = {}
+    for emission in initial.emissions:
+        if not initial.spatial_fields[emission.spatial_field].rays:
+            continue
+        for kind in emission.types or (emission.type_index,):
+            lamps.setdefault(kind, []).append((emission.spatial_field, emission.heading))
+    taken: dict[tuple[Address3, int, int | None], int] = {}
+    for seed in initial.seeds:
+        for family, heading in lamps.get(seed.record.type_index, ()):
+            key = (seed.position, family, heading)
+            if key in taken:
+                raise ValueError(
+                    f"a declared board with two real rays on one lane is refused: the seeds of "
+                    f"{initial.disturbances[taken[key]].name!r} and "
+                    f"{initial.disturbances[seed.record.type_index].name!r} at "
+                    f"{list(seed.position)} both emit "
+                    f"{initial.fields[initial.spatial_fields[family].field].name!r} on one heading "
+                    "(Highlights 5.4, point 25)"
+                )
+            taken[key] = seed.record.type_index
 
 
 def vector_length(vector: Heading) -> int:
