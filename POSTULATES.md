@@ -1326,10 +1326,13 @@ Detector, the ray records that it was a Detector event and the bit drawn,
 there is no such thing. It happened at its node, and a returning ray walks
 back exactly the number of steps it has made to reach it (for a shadow,
 superseded on 2026-09-18: its return is a field and walks nothing back,
-section 25, point 3). Since 2026-09-18 (section 25, point 25) a Port is two
+section 25, point 3). Since 2026-09-18 (section 25, point 25, the model owner) a Port is two
 lanes and a lane carries per interval one real ray and one shadow per
-owner; nothing queues and nothing waits for room, the lane being a
-condition on a thing's step and not a tie-break.
+owner, which supersedes, for real rays on a lane, the sentence above that
+no capacity rule holds a ray back: a thing steps into a lane only if the
+lane is free and otherwise keeps its heading, two real rays of one family
+given one lane are one, nothing queues and nothing waits for room, the lane
+being a condition on a thing's step and not a tie-break.
 
 A Detector that returns a ray is not sending a message to anyone. The
 returning ray carries what happened at the event, its own share only, with
@@ -1468,7 +1471,10 @@ one step.
 
 **The mark (points 6, 8, 14, 20).** A thing that arrives at a marked node
 is absorbed into the mark's resident thing and counted, with its momentum,
-or passes if the mark's declared coupling for its family says pass; a
+or passes if the mark's declared coupling for its family says pass, and a
+thing the mark misses is sent back on its steps to its birth event by the
+mark's declared table (a thing has steps: it has one path and counts it,
+the real counts and the shadow does not; the model owner, 2026-09-18); a
 shadow is returned as at any thing and counted by nothing. There is no
 lottery: what a mark "draws" is whether a 0 or a 1 arrived, decided at the
 ray's birth and along its one path; an imperfect mark is a declared table,

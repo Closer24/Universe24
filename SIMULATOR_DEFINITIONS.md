@@ -91,9 +91,10 @@ captured it by a claim flooding Node to Node at link speed, and the global
 `bonded-ray-field-v1` reference supplied nonlocal outcomes through a bond
 registry. Both went with the shared quantum resource (Q-ORACLE-1): there is no
 register at any Node, no owner answers at a distance, and no occupied channel
-or capacity rule holds a ray back (Highlights 5.1 and 5.4; since 2026-09-18 a
-Port is two lanes, one real ray and one shadow per owner per lane, with no
-queue and no wait, Highlights 5.4, point 25).
+or capacity rule holds a ray back (Highlights 5.1 and 5.4; superseded for
+real rays on a lane on 2026-09-18 by Highlights 5.4, point 25: a Port is two
+lanes, one real ray and one shadow per owner per lane, a thing stepping into
+a lane only if it is free, with no queue and no wait).
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio
