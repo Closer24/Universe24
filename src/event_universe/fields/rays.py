@@ -244,9 +244,8 @@ def forward_rays(
     ray that waits stays resident, and its clock still runs with the tick,
     forward while outbound and backward on the walk back. A returning thing with
     no steps left is at its event Node and stays resident, inert, with its phase
-    unchanged, until the inverse split (detector-return-v1). A shadow walking
-    home whose steps are spent walks on (bit-law-v1): the trace of its owner, if
-    the Node holds one, was read by the planner before this. A thing steps
+    unchanged, until the inverse split (detector-return-v1). A shadow, outgoing
+    or returning, walks one Link like any share (return-field-v1). A thing steps
     before it leaves (clock-readings-v1, `step_thing`): the first axis on which
     the momentum it carries has reached its content turns it to that axis and
     drops by the content, which is spent; every ray then walks one Link on its

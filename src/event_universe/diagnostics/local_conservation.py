@@ -26,6 +26,7 @@ from event_universe.core.spatial_state import (
     BIT_THING,
     Rays,
     ledger_momentum,
+    parked_momentum,
     parked_stock,
 )
 from event_universe.core.topology import neighbor_address
@@ -178,8 +179,11 @@ class LocalConservationAudit:
                         charge = checked_work(charge + checked_work(ray.amount * definition.charge))
             if definition.spread and parked and index < len(parked) and parked[index]:
                 # The Node's parked shadows hold whole quanta in total, shadow
-                # content without momentum or charge (node-is-ports-v1).
+                # content without charge (node-is-ports-v1), with the momentum
+                # they hold in flight (return-field-v1).
                 components[0] = checked_work(components[0] + parked_stock(parked[index], definition))
+                for axis, value in enumerate(parked_momentum(parked[index])):
+                    intrinsic[axis] = checked_work(intrinsic[axis] + value)
             values[definition.field] = pack(tuple(components))
         energy, px, py, pz, _ = self._evaluate(self.definition.spatial, tuple(values))
         return (

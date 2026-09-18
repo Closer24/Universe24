@@ -24,10 +24,8 @@ engine's resident and parked shadows otherwise, so that the two modes start
 from the same state.
 
 `rays`: a declared profile, each shadow placed at its Node as content that
-arrived on its heading, its steps by default its Link distance from its
-owner's Node (settled rule (ii) of Highlights 5.4, node-is-ports-v1: its return
-arrives where the owner was; for a loop, from the owner's Node its line
-crosses; 1 for an owner with no Node on the board), or as declared.
+arrived on its heading (steps 1 by default, 0 for a fresh shadow leaving at
+the first tick); a shadow counts no distance from its owner (return-field-v1).
 """
 
 from __future__ import annotations
@@ -40,7 +38,6 @@ from event_universe.core.disturbance_state import Address3, InitialState, pack, 
 from event_universe.core.spatial_state import (
     BIT_SHADOW,
     PORT_HEADINGS,
-    Heading,
     Ray,
     Rays,
     body_release,
@@ -196,33 +193,17 @@ def owner_nodes(
     return {owner: sorted(nodes) for owner, nodes in found.items()}
 
 
-def home_distance(position: Address3, heading: Heading, nodes: list[Address3]) -> int:
-    """The steps a prefilled shadow starts with (settled rule (ii)): its Link
-    distance from its owner's Node, the one its line crosses (the same place on
-    the two axes across its heading) when there is one, the nearest otherwise;
-    1 when the owner has no Node on the board."""
-    if not nodes:
-        return 1
-    axis = next(i for i in range(3) if heading[i])
-    on_line = [node for node in nodes if all(node[i] == position[i] for i in range(3) if i != axis)]
-    candidates = on_line or nodes
-    return min(sum(abs(a - b) for a, b in zip(node, position, strict=True)) for node in candidates)
-
-
 def _profile(
     initial: InitialState, index: int, carriers: Mapping[Address3, DisturbanceNode]
 ) -> dict[Address3, list[Ray]]:
     """The declared shadows of one family, per Node, as content that arrived, each
-    with its declared steps or, by default, its Link distance from its owner's
-    Node (node-is-ports-v1, settled rule (ii))."""
+    with its declared steps (1, a Link walked, by default; a shadow counts no
+    distance from its owner, return-field-v1)."""
     definition = initial.spatial_fields[index]
     entry = initial.initial_field[index]
-    homes = owner_nodes(initial, carriers)
     placed: dict[Address3, list[Ray]] = {}
     for shadow in entry.rays:
-        steps = shadow.steps
-        if steps < 0:
-            steps = home_distance(shadow.position, shadow.heading, homes.get(shadow.owner, []))
+        steps = shadow.steps if shadow.steps >= 0 else 1
         placed.setdefault(shadow.position, []).append(
             Ray(
                 definition.headings.index(shadow.heading),

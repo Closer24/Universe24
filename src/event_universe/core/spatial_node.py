@@ -611,9 +611,8 @@ class SpatialNode(SpatialNodeState):
         for ray in rays:
             if ray.detector == BIT_SHADOW:
                 if ray.owner == body.thing:
-                    momentum = (
-                        ray.momentum if ray.momentum is not None and not ray.outbound else (0, 0, 0)
-                    )
+                    # Home (return-field-v1): the share hands over what it carries.
+                    momentum = ray.momentum if ray.momentum is not None else (0, 0, 0)
                     if any(momentum):
                         current = body_pushed(current, momentum)
                     kept.append(rerelease_shadow(ray, definition))
@@ -621,7 +620,7 @@ class SpatialNode(SpatialNodeState):
                     for axis in range(3):
                         home_momentum[axis] = checked_work(home_momentum[axis] + momentum[axis])
                     continue
-                if ray.outbound and sign:
+                if sign:
                     # The body is read with its charge per quantum, its whole
                     # charge over its amount (clock-readings-v1).
                     if body.charge % body.amount:
@@ -644,10 +643,8 @@ class SpatialNode(SpatialNodeState):
                     for axis in range(3):
                         pushed[axis] = checked_work(pushed[axis] + push[axis])
                     continue
-                if ray.outbound:
-                    kept.append(return_shadow(ray, definition))
-                    continue
-                kept.append(ray)
+                # No table for its family: reversed as it is, nothing exchanged.
+                kept.append(return_shadow(ray, definition, flip=False))
                 continue
             if ray.outbound and index in coupled:
                 kept.append(ray)
@@ -973,6 +970,7 @@ class SpatialNode(SpatialNodeState):
                 stored=spread.stored,
                 parked=spread.registers,
                 parked_phases=spread.register_phases,
+                parked_momenta=spread.register_momenta,
                 phase=spread.phase,
                 coherence=spread.coherence,
                 signs=spread.signs,
@@ -1464,7 +1462,8 @@ class SpatialNode(SpatialNodeState):
         drawn = []
         for ray in sorted(rays, key=ray_merge_key):
             if ray.detector == BIT_SHADOW:
-                drawn.append(return_shadow(ray, definition))
+                # A mark counts nothing of a field: reversed as it is (point 6).
+                drawn.append(return_shadow(ray, definition, flip=False))
                 returns.append(
                     services.events.message(
                         "shadow_return",

@@ -38,6 +38,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
 | `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
+| `test_return_field.py` | 5 | 1.0 | Feature 16d, the return is a field (`return-field-v1`, Highlights 5.4 point 3 as amended): the inverted share leaving the pushed body reversed and mixing, the owner's momentum line receiving what reaches it with the books exact per interval and the momentum in flight on the shadows (a); a returning share pushing a third thing with the opposite sign (b); a returning share absorbed at its owner with no push (c); no trace, no wait, every share moving, the identity recorded (d); a head-on push taken exactly once, the share riding the Link with the thing on the same lane and pushing nothing at the next Node (f) |
 | `test_lanes.py` | 9 | 2.0 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; two reals of one family given one lane one real ray (amounts, momentum and charge exact, the phase the coherent sum's, the owners a set) that is home to a shadow of each owner, things of two families on one lane refused; the record of a world with no contested lane byte-identical, pinned below |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
@@ -1039,6 +1040,8 @@ Re-pinned with feature 18 (`lanes-v1`, 2026-09-18): the case `a_and_b` was delet
 
 ## The law of the bit
 
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d, Highlights 5.4 point 3 as amended; `tests/test_bit_law.py`): a shadow that pushes turns back with the opposite sign and is a field from then on, a mark returns a shadow as it is, and no trace is left anywhere. (a) no trace beside the body's ninths at (2,2,2) or at (1,2,2); (d) the returned shadow, an outgoing share, mixes at (5,2,2) in the cycle of tick 3 and parks 4 on -X and 1 on each other heading; (h) the re-released shadow reaches the mark in the thing's delivery, is returned before the thing is resident and parks at (3,2,2) (4 on +X, 1 each other way), nothing absorbed at home in five ticks, the resident's shadow line 0; (j) the inverted shadow rides the Link to (3,y,2) with the thing it pushed, on the same lane, and pushes nothing there (one meeting, one push: it arrived through the Port the thing arrived by; the double push of the first pin was an artefact, removed 2026-09-18), so the things carry the one push, (2, 0, 0) and (4, 0, 0) by content or (1, 0, 0) each by charge, after tick 2 and unchanged after tick 3, and each share, a returning one carrying -dp, mixes at (3,y,2) in the cycle of tick 3 and parks its ninths there with -dp shared over them by the largest remainder, the ties to the lower Port: by charge (-1, 0, 0) on the 4 back toward (2,y,2); by content (-1, 0, 0) on the 4 back and (-1, 0, 0) on the +X ninth for the thing of 2, and (-2, 0, 0) on the 4 back, (-1, 0, 0) on the +X ninth and (-1, 0, 0) on the +Y ninth for the thing of 4.
+
 Re-pinned on 2026-09-18 under `clock-readings-v1` (feature 16b): `m` declares `clock` where a rate was declared and the world K (world (a): K 2, a thing of 2 one step per interval); a body of 100 quanta declares its whole charge -100, so the electricity reading (the owner's charge over its content times the thing's charge per quantum) gives the pushes of the first pin; a thing's `momentum` on the ray is the pushes it carries ((-1, 0, 0) after the push of (a), (push, 0, 0) in (j)) while the register line stays amount x heading plus that; the momentum line carries `spent` (0 here); `wait_per_quantum` is 0 in these worlds.
 
 Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_bit_law.py`): these worlds declared no split table, so their shadows walked straight to what they were to meet; under point 24 every shadow of a family with a shadow set mixes at every Node with nothing else there, and a lone quantum parks its ninths and goes nowhere. Every shadow that is to meet a thing, a body or a mark now leaves fresh (`steps` 0) from the Node beside it and arrives there in the first delivery, and a return whose one step is spent waits where it is (node-is-ports-v1, rule (ii)), so the meetings are at tick 1 or 2 and the geometry adjacent: (a) the body at (3,2,2), the push at (2,2,2) in the cycle of tick 2, the thing absorbed and the shadow home at tick 2 (`returned_to_body` (2, (3,2,2), amount 1, momentum (1,0,0))), the re-released quantum parked at (2,2,2) from tick 4 in ninths (4 on its back heading, 1 on each other) beside the thing's trace, contents [2, 0, 0, 0, 0], shadows [1] x 5; (b) the bodies at (2,2,2) and (3,2,2), a push at the delivery of every odd tick and a receipt at every even one, so the momenta are (-t, 0, 0) and (t, 0, 0) after tick t, six ticks; (c) the homecoming at (2,2,2) at tick 1, the shadow riding with the thing at (3,2,2) after tick 2 (steps 1 beside steps 2) and mixing there; (d) the returned shadow waiting at (5,2,2) from tick 2 with steps 0, everything else as pinned; (e) with the 11s: after tick 1 (5,2,2) holds 1 on +X, (6,2,2) 4 on +X and (3,2,2) 4 on -X, twelve Nodes, after tick 2 (6,2,2) 1 on +X and (3,2,2) 1 on -X, after tick 4 no ray, the registers (8, 8, 5, 5, 5, 5) at (4,2,2) and (5, 2, 5, 5, 5, 5) at (6,2,2), 22 at every tick in both modes; (f) the fill's 132 with 120 in rays and 12 quanta parked in ninths, (6,2,2) 1, (4,2,2) [4] x 6, (5,3,2) [1, 1]; (h) the shadow fresh from (3,2,2) into the mark at (4,2,2), returned at tick 1, waiting at (3,2,2) for its thing, home with it in the cycle of tick 2 and released again with it into the mark, which absorbs the thing at tick 3 and the shadow a round later, shadows [1, 1, 1, 1, 0] and the mark's resident shadow line 1; (i) the shadows fresh from (9,1,2) (off the edge at tick 1), (5,2,2) (into the body) and (3,3,2) (into the mark, which returns it to its thing at (3,3,2), where it is home and released again every other tick), the real lines the same, the shadow line initial 3, current 2, escaped 1, absorbed at home 0, shadows [2] x 6; (j) the shadows fresh from (3,y,2), the push at (2,y,2) in the cycle of tick 2, the momenta pushed from tick 2, each return waiting at (3,y,2) with steps 0; (k) the 11 sends 1 on to (5,2,2) and 4 back to (3,2,2), then (4,2,2) holds 1 on +X after tick 2 and (6,2,2) nothing.
@@ -1253,6 +1256,8 @@ computed from the rules:
 
 ## The Node mixes the six
 
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d; `tests/test_node_mixing.py` (g), `tests/test_dense_field.py` (a)): `spread_content` takes and returns the parked block of thirty-six slots per owner (the outgoing eighteen, then the returning eighteen) with its momenta, five results; the region's block stays the outgoing eighteen (`engine_block`, `region_block`).
+
 `tests/test_node_mixing.py` is the isolated test of `node-mixing-v1`
 ([the Node mixes the six](SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1);
 Highlights 5.4 point 24, the model owner's decision of 2026-09-18; feature
@@ -1390,6 +1395,8 @@ table stays the Born split of two things that meet (section 5.2), pinned in
 
 ## A Node is its six Ports
 
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d; `tests/test_node_is_ports.py`): the trace is retired, so (b) M8 is deleted, (d) M13 lists no parked shadow after one tick, (c) M9's shadow is returned by the mark as it is (outbound 1, fresh) and home at P0 every second tick as before, and (g)'s shadow, returned by the mirror without a push, mixes at (5,2,2) in the cycle of tick 3 and parks 4 on +X and 1 on each other heading.
+
 Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_node_is_ports.py`): no split table is declared, the parked unit is ninths, and a lone shadow mixes at every Node it reaches with nothing else there, so (a) reads the mixing (5 on +X at (4,2,2): 2 leave back on -X, 5 ninths park on +X and on each transverse heading and 2 on -X, 27 in all; the 2 park whole at (3,2,2), 8 on +X and 2 on each other heading), the shadows of (b), (c), (d) and (g) leave fresh from the Node beside the mark or the body they are to reach (M2 at (1,1,1) and the shadow from the seed Node (2,1,1), its step spent there where the trace is, home at M after tick 5; the ring's mark at (4,5,5) and the shadow from P0, home every second tick; the mirror's shadow from (5,2,2), waiting there from tick 2), and the M8 record's trace carries `unit` 9.
 
 `tests/test_node_is_ports.py` is the isolated test of `node-is-ports-v1`
@@ -1508,6 +1515,87 @@ shadow waits at (10,4,10) once its steps are spent and nothing of f escapes;
 in `tests/test_plan_reuse.py` a Node holding a trace reuses its plan (13
 evaluations, 20 hits); in `tests/test_kerengonen.py` the dissolving moving
 particle recoils from its own emissions and walks back to -2.
+
+## The return is a field
+
+`tests/test_return_field.py` is the isolated test of `return-field-v1`
+([the return is a field](SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1);
+Highlights 5.4 point 3 as amended by the model owner on 2026-09-18, feature
+16d), pinned here on 2026-09-18 before its first run, as Highlights 5.5
+requires. The boards are those of the law of the bit (open, 10 x 5 x 5, costs
+1, the six Port headings, family `m` with charge -1 and `release` [1, 1], no
+`K`, `wait_per_quantum` 0); a body of `amount` quanta declares the whole charge
+-amount, so a body with the table {"m": 1} reading charge is pushed by one
+quantum of another body's shadow by one unit along the shadow's heading; the
+mixing is node-mixing-v1 (a lone quantum leaves 4 back and 1 each other way
+from 9; a lone 1 parks its ninths). Computed from the rules before the run:
+
+- (a) A of 81 at (0,2,2) with its standing shell, 81 of its shadows at
+  (1,2,2) heading +X with a Link walked; B of 1000 with the table at (2,2,2);
+  `ray_slots` 32. Tick 1: the shell mixes, 36 back home to A (returned amount
+  36, momentum (0, 0, 0)), 9 on to B, 9 each transverse way; B is pushed
+  (9, 0, 0) and the 9 turns back with the opposite sign: fresh at B on -X,
+  outbound 0, sign 1, carrying (-9, 0, 0). Tick 2: A re-releases the 36 on +X;
+  the four transverse 9s mix and send 4 back each. Tick 3, at (1,2,2): the
+  returning 9 is its own group, 4 back to B with (-4, 0, 0), 1 to A with
+  (-1, 0, 0), 1 each transverse way with (-1, 0, 0); the outgoing group, 36
+  from -X and 4 from each transverse Port (amplitudes 6, 2, 2, 2, 2, the mean
+  4 2/3), sends 1 back to A and 21 on to B, the rest transverse. A receives 2
+  with (-1, 0, 0); B is pushed (21, 0, 0) by the outgoing 21 and (-4, 0, 0) by
+  the returning 4 (its heading and its sign both inverted: the opposite sign
+  on the same heading), the 21 turning back with (-21, 0, 0), the 4 turning
+  back once more as an outgoing share carrying nothing. The bodies' momenta
+  per tick: B (9, 9, 26, 26, 19), A (0, 0, -1, -1, -3); A's third receipt at
+  tick 5 is 6 with (-2, 0, 0). At every tick the bodies' momenta plus the
+  momentum on the shadows, on their way and parked, sum to zero, the ledger is
+  balanced and the things conserved; after tick 5 the returning ninths park
+  with their momentum: (-1, 0, 0) at (1,1,2), (1,3,2), (1,2,1) and (1,2,3) on
+  the share back toward (1,2,2) (the largest remainder), and (-1, 0, 0) on
+  each of the returning +X and -X ninths at (1,2,2); the shadows total 81
+  throughout.
+- (b) A of 81 at (0,2,2); C of 1000 with the table at (1,2,2), B of 1000 with
+  the table at (2,2,2); A's shadow of 81 fresh at (1,2,2) on +X. Tick 1: B is
+  pushed (81, 0, 0), the share turns back (-X, outbound 0, sign 1,
+  (-81, 0, 0)). Tick 2: at C the returning share pushes with the opposite
+  sign, (81, 0, 0) where an outgoing share on -X would push (-81, 0, 0), and
+  turns back once more: +X, outbound 1, sign -1, carrying (-162, 0, 0). Tick
+  3: B pushed (81, 0, 0) again, the share back to -X with (-243, 0, 0). Tick
+  4: C again. The momenta per tick: C (0, 81, 81, 162), B (81, 81, 162, 162);
+  balanced every tick; the shadows total 81.
+- (c) A of 729 at (1,2,2) with the table {"m": 1} itself, B of 1000 with the
+  table at (2,2,2), A's shadow of 9 fresh at (1,2,2) on +X. Tick 1: B pushed
+  (9, 0, 0), the share back with (-9, 0, 0). Tick 2: home at A, absorbed with
+  no push (a push would read (9, 0, 0) here), A's momentum (-9, 0, 0), the
+  receipt amount 9 momentum (-9, 0, 0); re-released on +X as an outgoing
+  share of sign -1 carrying nothing. Ticks 3 and 4 repeat: A (0, -9, -9, -18),
+  B (9, 9, 18, 18); balanced.
+- (d) The world of (a): no parked shadow of amount zero, every share on its
+  way has steps 0 or 1, `leave_trace`, `trace_of` and `MAX_TRACES` are gone
+  from the state module, `run.json` records `return_field`
+  "return-field-v1" and every `parked` entry of `state.json` carries a
+  positive amount and its `momentum`.
+- (f) One meeting, one push (the orchestrator's reading of the definition of
+  a meeting, two rays at one Node in one interval, to be confirmed by the
+  model owner; pinned 2026-09-18): the lamp of 2 at (1,2,2) heading +X (thing
+  1), the body of 100 at (9,2,2) (owner 2) with its shadow of 1 fresh at
+  (3,2,2) on -X, the table {"m": -1} reading content, four ticks. Tick 1: the
+  thing at (2,2,2) (steps 1) and the shadow there (steps 1, -X, outgoing, sign
+  -1), the thing's line (2, 0, 0). Tick 2: the head-on push at (2,2,2), -1 x
+  1 x (-1, 0, 0) x 2 = (2, 0, 0), on the thing's own axis, so it turns
+  nowhere and keeps the register; the share turns back on +X (outbound 0,
+  sign 1) carrying (-2, 0, 0) and rides the Link with the thing on the same
+  lane: both at (3,2,2) after tick 2, the share with steps 1, the thing's line
+  (4, 0, 0). Tick 3: the share arrived through the Port the thing arrived by
+  (-X) and pushes nothing; it mixes at (3,2,2) and parks its ninths there
+  with -dp shared over them by the largest remainder (the ties to the lower
+  Port): 4 on -X with (-1, 0, 0), 1 on +X with (-1, 0, 0) and 1 on each
+  other heading with nothing; the thing
+  at (4,2,2) with (2, 0, 0) in its register, its line (4, 0, 0), the same
+  after tick 4 at (5,2,2). The momentum in flight on the shadows is
+  (-2, 0, 0) from tick 2; the ledger's momentum line reads current (0, 0, 0)
+  at every tick (the lamp's recoil (-2, 0, 0), the thing's (4, 0, 0), the
+  share's (-2, 0, 0)), nothing spent, nothing returned, balanced; the things
+  total 2 and the shadows 1 throughout.
 
 ## A click is an absorption
 
@@ -2588,6 +2676,8 @@ run:
 
 ## A free ray turns by momentum
 
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d; `tests/test_ray_momentum_turn.py`, `tests/test_wait_rule.py`, `tests/test_clock_readings.py` (d), `tests/test_lanes.py` (d), (f) and (h)): a shadow that pushes turns back with the opposite sign (outbound 0, sign -1) carrying -push, mixes at the next Node it reaches with nothing to meet and parks its ninths there with the momentum shared over them by the largest remainder. One meeting, one push (the orchestrator's reading of the definition of a meeting, to be confirmed by the model owner; the double push of the first pin, the same push taken again at the next Node, was an artefact, removed 2026-09-18): a thing turned onto the shadow's line, or pushed head on, rides the Link with the share on the same lane, and the share, arriving at the next Node through the Port the thing arrived by, pushes nothing there and mixes on. `turn`: the thing turns to -Y at its departure of tick 2 with nothing in its register, its line (0, -8, 0) from tick 2, the share (0, 8, 0) beside it at (10, 9, 10) after tick 2 and its ninths parked there from tick 3, the momentum line current (-8, 0, 0) through tick 11, escaped (0, -8, 0) and current (-8, 8, 0) from tick 12, the final momentum (-8, 8, 0); `cancel`: each share beside C after tick 2, parked from tick 3; `reverse`: the share parks at (11, 10, 10) with (8, 0, 0); `along`: the thing carries (8, 0, 0) in its register on its own direction from tick 2, its line (16, 0, 0), the share (-8, 0, 0) beside it at (11, 10, 10) after tick 2 and parked there from tick 3; the wait rule's `shadow` parks at (10, 9, 10) with (0, 1, 0) and `half` keeps its half owed (`owed` 1) and steps every interval; the neutral and the charged thing carry nothing after tick 3 (the one push spent on the step of tick 2), the charged one's remainder is (0, -1, 0) and nothing of `e` is on its way after tick 3; the lanes' B is pushed nothing, the share's ninths park at (10, 9, 10) with (0, 8, 0) from tick 3 and B leaves with (0, -8, 0) (escaped (0, -8, 0) after tick 12, (0, -16, 0) with A after tick 13, current (-8, 8, 0) then (-8, 16, 0)), the ring record's `state.json` digest reads the parked entries' `outbound` and `momentum`, and the merged thing passes the parked ninths of both owners, nothing home.
+
 Re-pinned on 2026-09-18 under `clock-readings-v1` (`ray-momentum-turn-v3`): the module is rewritten to the step of the settled rule (i), the cases `turn`, `cancel`, `reverse`, `along`, `identical` and `rejected` of `tests/test_ray_momentum_turn.py`, the world of 21^3, K 8, `wait_per_quantum` 0, the coupling reading the thing's content (the shadows of `f` have no charge): a thing of 8 heading +X at (4,10,10) meets a shadow of 1 from -Y at C after tick 6; the push (0, -8, 0) is its momentum, the shadow turns back carrying (0, 8, 0), at its departure of tick 7 the thing turns to -Y with nothing carried and (8, 0, 0) spent, both walk -Y together, the momentum line reading current (-8, 0, 0) and spent (8, 0, 0) from tick 7 and the momentum line of the record (0, -8, 0); re-pinned the same day under `node-is-ports-v1` (settled rule (ii)): the shadow's steps are spent at (10,4,10) after tick 12 and it waits there at rest, nothing of `f` leaving the board, while the thing leaves after tick 16 with (0, -8, 0) escaped, the momentum line reading current (-8, 8, 0) from tick 17 and the record's final totals `f` 1 and momentum (-8, 8, 0); in `cancel` each shadow waits at its Node of the board from tick 13; a second shadow from +Y in the same cycle cancels the push, nothing spent, the thing walks on +X; a shadow head on with sign 1 reverses the thing to -X (spent (8, 0, 0)), with sign -1 pushes along its own direction, which turns it nowhere and leaves (8, 0, 0) carried (the momentum line (16, 0, 0)); a world without a table records no identity and runs byte-identically twice; the malformed tables of the first pin are rejected and a table without `reads` names point 16. The tables of the DDA walk below stand as history.
 
 Re-pinned on 2026-09-18 under `node-mixing-v1` (Highlights 5.4 point 24, feature 16c; `tests/test_ray_momentum_turn.py`, on the `ray-momentum-turn-v3` module): a lone shadow no longer walks straight to the thing it pushes, so the thing's lamp is one Link before C, at (9,10,10), and every shadow leaves fresh from the Node beside C ((10,9,10), (10,11,10), (11,10,10)); both reach C after tick 1, the push is in the cycle of tick 2 and every tick is five earlier than the pins above (`turn` 14 ticks, the thing off the board after tick 11; `cancel`, `reverse` and `along` 8 ticks); the return walks its one step back, waits beside C with steps 0 (a waiting shadow reads heading 0 from the tick after it arrives) and nothing of `f` leaves the board.
@@ -3282,6 +3372,8 @@ equal to the totals, positive) and `detector_mark_totals`; the first run
 agreed.
 
 ## Snapshots from the arrays, parallel series runs and the standing set
+
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d; `tests/test_perf_arrays.py`): the return is a field, so the line's bodies push each other through shares that turn back with the opposite sign and carry their momentum through the mixing; the layer repeats from tick 25 (the lamp's world from 32, the fallback still at tick 131), the residual after 10 intervals is 144 cells and 370 quanta, the momenta after 200 ticks (-97, -1, 0) and (98, 0, 0); the box's `state.json` digest is `ed563a8e5759f76615b8c30fd716e9597fbd0b697fc2bdb3253cff2e8214848f` (the parked entries carry `outbound` and `momentum`).
 
 `tests/test_perf_arrays.py` is the isolated test of the performance lane of
 2026-09-18 (`perf-arrays-v1`; [performance](PERFORMANCE.md#snapshots-from-the-arrays-parallel-series-runs-and-the-standing-set-2026-09-18)),

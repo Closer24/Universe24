@@ -211,9 +211,18 @@ def test_a_thing_steps_into_a_lane_only_if_the_lane_is_free():
             assert world.thing_momentum() == {1: [8, 0, 0], 2: [0, -8, 0]}
             assert current["current"] == ZERO and current["spent"] == ZERO
             continue
-        # The shadow, turned back at C, walks its one step to (10, 9, 10) and waits.
-        assert positions_of(world, "f") == {(10, 9, 10)}
-        assert turn_rays(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 0, (0, 8, 0))]
+        # Re-pinned 2026-09-18 (return-field-v1): the shadow, turned back at C
+        # with the opposite sign carrying (0, 8, 0), walks -Y to (10, 9, 10)
+        # beside B on B's lane and pushes nothing there (one meeting, one push:
+        # it arrived through the Port B arrived by; the double push of the
+        # first pin was an artefact, removed 2026-09-18), mixes there in the
+        # cycle of tick 3 and parks its ninths with that momentum; B walks on
+        # as it was and leaves the board with (0, -8, 0).
+        if t == 2:
+            assert positions_of(world, "f") == {(10, 9, 10)}
+            assert turn_rays(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 1, (0, 8, 0))]
+        else:
+            assert positions_of(world, "f") == set()
         if t == 2:
             assert turn_rays(world, (11, 10, 10), "m") == [ray(0, 8, 2, 2, 0, momentum=(0, -8, 0))]
             assert turn_rays(world, (10, 9, 10), "m") == [ray(3, 8, 2, 2, 3)]
@@ -302,9 +311,11 @@ def test_the_record_of_a_world_with_no_contested_lane_is_unchanged(tmp_path):
         name: hashlib.sha256((out / name).read_bytes()).hexdigest()
         for name in ("events.jsonl", "state.json")
     }
+    # state.json re-pinned on 2026-09-18 under return-field-v1: a parked shadow's
+    # entry carries its `outbound` flow and its `momentum`; the events are the same.
     assert digests == {
         "events.jsonl": "091f6666d75ec307bf5d13f3f82123fab34c1d68524bade9b59d9fdbdcf20420",
-        "state.json": "3de44da77e91431f4208f648d747b6a84665e7aad74e03a18f9cf406bf201afa",
+        "state.json": "830345cd108b11d540bdac3639126aae482c330330cb31eeb2f035e56f20fd40",
     }
     metadata = json.loads((out / "run.json").read_text(encoding="utf-8"))
     assert metadata["lanes"] == LANES == "lanes-v1"
@@ -385,14 +396,16 @@ def _thing(heading, amount, steps, port, owner, outbound=1, owners=(), momentum=
     )
 
 
-def _waiting(owner, steps=0):
-    """A shadow returned by the mark up +Y, walking -Y (steps 1) or at rest (0)."""
-    return Ray(3, ZERO, 1, steps=steps, outbound=0, detector=BIT_SHADOW, source_sign=-1, owner=owner)
+def _returned(owner, steps=0):
+    """A shadow returned by the mark up +Y as it is (return-field-v1): an outgoing
+    share walking -Y, fresh (steps 0) or one Link on (1)."""
+    return Ray(3, ZERO, 1, steps=steps, outbound=1, detector=BIT_SHADOW, source_sign=-1, owner=owner)
 
 
 def test_a_merged_thing_is_home_to_the_shadows_of_every_owner_it_carries():
-    # (g) in the world and (h): the merged thing's books, charge and traces, and
-    # a shadow of each owner coming home to it.
+    # (g) in the world and (h): the merged thing's books and charge, and a shadow
+    # of each owner coming home to it (re-pinned 2026-09-18, return-field-v1:
+    # no trace, and a shadow a mark returns is an outgoing share as it was).
     doc = _merged_world()
     definition = parse_initial_state(deepcopy(doc)).spatial_fields[0]
     result = run(doc, 8)
@@ -402,29 +415,31 @@ def test_a_merged_thing_is_home_to_the_shadows_of_every_owner_it_carries():
     for t in (1, 2):
         assert node_rays_at(rays[t - 1], (7 - t, 2, 2)) == (p_ray(t),)
         assert node_rays_at(rays[t - 1], (1 + t, 2, 2)) == (r_ray(t),)
-    assert node_rays_at(rays[0], (1, 3, 2)) == (_waiting(1, 1),)
-    assert node_rays_at(rays[0], (0, 3, 2)) == (_waiting(2, 1),)
-    for t in range(2, 7):
-        assert node_rays_at(rays[t - 1], (1, 2, 2))[-1:] == (_waiting(1),)
-    for t in range(2, 8):
-        assert node_rays_at(rays[t - 1], (0, 2, 2))[-1:] == (_waiting(2),)
+    # Each shadow is returned by its mark as it is, arrives back after tick 2,
+    # mixes in the cycle of tick 3 and parks its ninths (return-field-v1).
+    assert node_rays_at(rays[0], (1, 3, 2)) == (_returned(1),)
+    assert node_rays_at(rays[0], (0, 3, 2)) == (_returned(2),)
+    assert node_rays_at(rays[1], (1, 2, 2)) == (_returned(1, 1),)
+    assert node_rays_at(rays[1], (0, 2, 2)) == (_returned(2, 1),)
+    ninths = sorted([(Y, 4), (MINUS_Y, 1), (X, 1), (MINUS_X, 1), ([0, 0, 1], 1), ([0, 0, -1], 1)])
+    for t in range(3, 9):
+        assert node_rays_at(rays[t - 1], (1, 2, 2)) == () or t == 6
+        assert node_rays_at(rays[t - 1], (0, 2, 2)) == () or t == 7
+        assert parked_at(parked[t - 1], (1, 2, 2)) == ninths
+        assert parked_at(parked[t - 1], (0, 2, 2)) == ninths
     # After tick 3 both things are at M: P passed, R returned onto P's lane.
     assert set(node_rays_at(rays[2], (4, 2, 2))) == {p_ray(3), _thing(1, 1, 3, 0, 2, outbound=0)}
     # The passing thing's record (its event's shares of 4) with the amounts added.
     merged = replace(p_ray(4), amount=5, owners=(2,), momentum=(2, 0, 0))
     assert node_rays_at(rays[3], (3, 2, 2)) == (merged,)
     assert ray_charge((merged,), definition) == -5
-    assert parked_at(parked[3], (4, 2, 2)) == [(MINUS_X, 0), (MINUS_X, 0)]
-    assert sorted(r.owner for r in parked[3][(4, 2, 2)][0]) == [1, 2]
+    # A Node remembers no departure (return-field-v1, 2026-09-18): no trace at M.
+    assert (4, 2, 2) not in parked[3]
     for t in (5, 6, 7):
         assert node_rays_at(rays[t - 1], (7 - t, 2, 2))[0] == replace(merged, steps=t)
-    # Home: owner 1's shadow at (1, 2, 2) in the cycle of tick 7, owner 2's at
-    # (0, 2, 2) in the cycle of tick 8, each re-released +Y and returned again.
-    assert node_rays_at(rays[6], (1, 3, 2)) == (_waiting(1, 1),)
-    assert node_rays_at(rays[6], (1, 2, 2)) == ()
-    assert node_rays_at(rays[7], (0, 3, 2)) == (_waiting(2, 1),)
-    assert node_rays_at(rays[7], (0, 2, 2)) == ()
-    assert node_rays_at(rays[7], (1, 2, 2)) == (_waiting(1),)
+    # The merged thing passes the parked ninths of both owners: a share at rest
+    # is not met, so nothing comes home and nothing is re-released.
+    assert node_rays_at(rays[6], (1, 3, 2)) == () and node_rays_at(rays[7], (0, 3, 2)) == ()
     assert result["contents"] == [5] * 7 + [0] and result["shadows"] == [2] * 8
     # A returned thing's momentum is read on its heading (-X after tick 3).
     assert result["momentum"] == [{1: [-4, 0, 0], 2: [1, 0, 0]}] * 2 + [

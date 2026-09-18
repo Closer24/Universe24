@@ -72,18 +72,19 @@ def test_a_thing_pays_a_tick_for_every_whole_quantum_it_reads(case):
         return
     if case == "shadow":
         # (b) A shadow's motion is unchanged by any reading: the shadow that gave
-        # the push turns back in the cycle of tick 2 and walks its one step -Y,
-        # waiting beside C from tick 2 while the thing waits; a shadow owes
-        # nothing (a waiting shadow reads heading 0 from the tick after it arrives).
+        # the push turns back with the opposite sign in the cycle of tick 2 and
+        # walks one Link -Y while the thing waits (return-field-v1, re-pinned
+        # 2026-09-18), mixes at (10, 9, 10) in the cycle of tick 3 and parks its
+        # ninths there with (0, 1, 0) on the share back to C; a shadow owes nothing.
         sim = Simulation(parse_initial_state(world(1)))
         for t in range(1, 9):
             sim.step()
             if t == 1:
                 assert rays_at(sim, (10, 10, 10), "f") == [shadow_ray(2, 1, 1)]
+            elif t == 2:
+                assert rays_at(sim, (10, 9, 10), "f") == [shadow_ray(3, 1, 1, (0, 1, 0))]
             else:
-                assert rays_at(sim, (10, 9, 10), "f") == [
-                    shadow_ray(3 if t == 2 else 0, 1, 0, (0, 1, 0))
-                ]
+                assert positions(sim, "f") == []
             assert all(
                 r.owed == 0
                 for n in sim.inventory_view().nodes
@@ -120,7 +121,9 @@ def test_a_thing_pays_a_tick_for_every_whole_quantum_it_reads(case):
     if case == "half":
         # (e) w = 1 / 2: one quantum read owes half an interval, kept exactly
         # (`owed` 1 in units of 1 / 2) and spent by nothing: the thing steps at
-        # tick 2 as if it owed nothing; the debt stays on it.
+        # tick 2 as if it owed nothing; the debt stays on it (return-field-v1:
+        # the shadow turned back rides with it on the same lane and reads
+        # nothing more, one meeting, one push).
         sim = Simulation(parse_initial_state(world([1, 2])))
         for t in range(1, 9):
             sim.step()

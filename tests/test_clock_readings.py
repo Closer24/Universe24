@@ -331,15 +331,14 @@ def test_a_neutral_thing_has_gravity_and_no_electric_push_and_a_charge_accumulat
         None,
         (0, -1, 0),
     )
-    # Each return walks its one step back and waits (settled rule (ii)).
+    # Re-pinned 2026-09-18 (return-field-v1): each shadow turned back with the
+    # opposite sign carrying (0, 4, 0) rides the Link -Y with the thing it
+    # turned on the same lane, reads nothing more there (one meeting, one
+    # push), mixes at (3,1,1) and (3,2,1) in the cycle of tick 3 and parks its
+    # ninths there with that momentum: nothing of `e` is on its way after tick 3.
     for position in ((3, 1, 1), (3, 2, 1)):
-        (home,) = [r for r in shadows_at(after_3, position, 2) if not r.parked]
-        assert (HEADINGS[home.heading], home.momentum, home.outbound, home.steps) == (
-            [0, -1, 0],
-            (0, 4, 0),
-            0,
-            0,
-        )
+        assert [r for r in after_3.get(position, ((), (), ()))[2] if not r.parked] == []
+    assert result["momentum"][2] == result["momentum"][1]
     assert not {"ray_push", "decay_draw"} & set(kinds(result["events"]))
     with Simulation(initial) as world:
         for _ in range(3):

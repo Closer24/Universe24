@@ -10,6 +10,14 @@ Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Snapshots from the
 arrays, parallel series runs and the standing set") before the first run:
 snapshot, series, standing, residual, fallback, rejected. The standing set's
 integers are the current split rule's; the identities are not.
+
+Re-pinned on 2026-09-18 under `return-field-v1` (feature 16d): a shadow that
+pushes turns back with the opposite sign and is a field from then on, carrying
+its momentum through the mixing, so the line's bodies push each other less
+and its layer repeats earlier (25, the lamp's 32, the residual of 10
+intervals 144 cells and 370 quanta, the momenta after 200 ticks (-97, -1, 0)
+and (98, 0, 0)); a parked entry of the snapshot carries `outbound` and
+`momentum`, so the box's digest is the streamed writer's of this rule.
 """
 
 import hashlib
@@ -33,17 +41,17 @@ AMOUNT = 1 << 24
 # The stepping engine's layer on the line repeats exactly after this tick, with
 # this period (node-mixing-v1: the mixing is the layer's step); with the lamp
 # of the fallback case beside the line, after LAMP_FIXED_POINT.
-FIXED_POINT = 30
+FIXED_POINT = 25
 PERIOD = 1
-LAMP_FIXED_POINT = 27
+LAMP_FIXED_POINT = 32
 # The residual of the last comparison when the search stops after 10 intervals.
 SHORT_LIMIT = 10
-SHORT_RESIDUAL = {"cells": 1316, "amount": 3573}
+SHORT_RESIDUAL = {"cells": 144, "amount": 370}
 # The momentum of the two bodies after 200 ticks of the line.
-FINAL_MOMENTA = [(-186, 0, -1), (191, 2, 0)]
+FINAL_MOMENTA = [(-97, -1, 0), (98, 0, 0)]
 # The state.json digest of the box for 24 ticks, written by the runner of main at
 # 9c689f1 before the streamed writer existed (the pin of the migration).
-BOX_STATE_SHA256 = "d59b8025ce40ab49bf91367c24ae496e465cfaaa24e6abbea4c4f4fcae146761"
+BOX_STATE_SHA256 = "ed563a8e5759f76615b8c30fd716e9597fbd0b697fc2bdb3253cff2e8214848f"
 
 
 def field(name, components=1):
