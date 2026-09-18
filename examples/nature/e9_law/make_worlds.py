@@ -60,7 +60,6 @@ N = 64
 RING_AMOUNT = 32768
 K = 4096
 FILL = 5
-RAY_SLOTS = 32
 TICKS = 240
 RELEASE = [1, 1]
 
@@ -79,7 +78,6 @@ def ring_world(*, clock: bool, fill: int = FILL) -> dict:
     (electron,) = document["spatial_fields"]
     document["N"] = N
     electron["release"] = list(RELEASE)
-    electron["ray_slots"] = RAY_SLOTS
     electron.pop("clock", None)
     if clock:
         electron["clock"] = True

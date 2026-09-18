@@ -172,7 +172,6 @@ def world(open_slits, name, stock=LAMP_STOCK, periodic=False):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 1,
-                "ray_slots": 24,
                 "metric": "links",
                 "pace": [1, 1],
                 "charge": 0,
