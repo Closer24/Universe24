@@ -1452,8 +1452,8 @@ for w in screen_d1 screen_d2 screen_d4 screen_d1_seed7; do
 done
 PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/e12_no_draw/screen_d1.json'), Path('$R/screen_d1_rerun'))"
 for w in two_inphase two_antiphase; do
-  PYTHONPATH=src python -m event_universe.runner examples/nature/e12_no_draw/${w}.json --output $R/${w} --dense-field
-  PYTHONPATH=src python -m event_universe.runner examples/nature/e12_no_draw/${w}.json --output $R/${w}_e96 --ticks 96
+  PYTHONPATH=src python -m event_universe --init examples/nature/e12_no_draw/${w}.json --output $R/${w} --dense-field
+  PYTHONPATH=src python -m event_universe --init examples/nature/e12_no_draw/${w}.json --output $R/${w}_e96 --ticks 96
 done
 for w in two_inphase_steer two_antiphase_steer; do
   PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/e12_no_draw/${w}.json'), Path('$R/${w}'))"
