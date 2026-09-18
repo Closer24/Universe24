@@ -2318,9 +2318,16 @@ heading as before. Retired for shadows: the split table of section 3.5
 (`field-spreading-v1`, the `spread` key) and the pairwise steering of point 17
 (`phase-spread-v1`, `SpatialFieldDefinition.steering`); the example worlds
 lost their `spread` keys (`examples/nature/bit_law_migration.py` drops them).
-The dense mode (part 1 of the feature) cycles every Node that holds arrivals
-through `spread_content` itself, ray by ray, so the two modes are one
-arithmetic by construction; the vectorized twin is part 2. The runner records
+The dense mode implements the same rule vectorized (part 2 of the feature,
+`DenseField._mix`): per owner and sign the arrival arrays give one amplitude
+per heading, the six mix as one array step with the same integers (the
+integer square root, the shift to 28 bits, the largest-remainder rule with
+ties to the lower Port, the phase of the leaving amplitude), the ninths join
+the parked shares and a parked share at nine leaves whole; a Node holding
+more shadows than the arrays' layers is cycled by `spread_content` itself. The
+identity of the two modes is pinned over six worlds and four ticks
+(`tests/test_node_mixing.py`, (i)) and against `spread_content` at one Node
+(`tests/test_dense_field.py`). The runner records
 `node_mixing` "node-mixing-v1", `field_remainder` and `mixing_fields` (each
 family with its `phase_width`), and `shadow_families` carries `phase_width`
 in place of a table. Identity `node-mixing-v1`; isolated test
