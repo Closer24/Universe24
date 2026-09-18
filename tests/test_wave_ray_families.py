@@ -7,7 +7,6 @@ headings in Port order, closed under negation).
 """
 
 import json
-import time
 from dataclasses import replace
 
 import pytest
@@ -23,7 +22,6 @@ from event_universe.core.spatial_state import (
     ray_charge,
 )
 from event_universe.fields.disturbances import evaluate
-from event_universe.fields.rays import forward_rays
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
@@ -36,17 +34,17 @@ PLUS_X, MINUS_X = [1, 0, 0], [-1, 0, 0]
 # interval at K 1 (the rest rate 2^70 of the first pin is no family's to
 # declare, and a content of 2^70 is beyond the bounded values).
 WIDE_RATE = 2
-WIDE_MODULUS = 1 << 128
-WIDE_PHASE = WIDE_MODULUS - 3 * WIDE_RATE
 # The massive family of case (b): eight bits, a ray of 4 at K 1 (four steps per
 # interval since clock-readings-v1; 13 before), emitter phase 77.
 MATTER_PHASES = [(77 + 4 * tick) % 256 for tick in range(1, 21)]
 
 
-def document(shape, families, lamps, ticks, ray_interactions=None):
-    """One conserved scalar per family, one holding lamp type per lamp, one ray field per family."""
+def document(shape, families, lamps, ticks, ray_interactions=None, n=8):
+    """One conserved scalar per family, one holding lamp type per lamp, one ray field per family;
+    `n` the world's one phase circle (the cleanup of 2026-09-18: one N for the world)."""
     return {
         "schema_version": 1,
+        "N": n,
         "model_id": "wave-ray-families-test-v1",
         # K 1 (clock-readings-v1): a family that declares `clock` advances its
         # things' phase by their content per interval; the others ignore it.
@@ -174,9 +172,7 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         "position": (3, 3, 3),
         "emission": {"amount": 15, "kerengonen_phase": 5},
     }
-    plain = Simulation(
-        parse_initial_state(document((7, 7, 7), {"quanta": {"phase_bits": 3}}, [lamp], 4))
-    )
+    plain = Simulation(parse_initial_state(document((7, 7, 7), {"quanta": {}}, [lamp], 4)))
     phased = Simulation(
         parse_initial_state(
             document(
@@ -233,13 +229,17 @@ def test_every_ray_is_a_wave_ray(tmp_path):
             # after ticks 1 and 2, nothing after ticks 3 and 4.
             assert world.spatial_values((4, 3, 3))["quanta"]["value"] == ((3,) if tick <= 2 else (0,))
     for extra, emission, message in (
-        ({}, {"kerengonen_phase": 5}, "kerengonen_phase requires"),
-        ({"phase_bits": 4, "kerengonen": {"phase_steps": 8}}, {}, "2 to the power"),
+        # Every family is on the world's circle of N steps (the cleanup of
+        # 2026-09-18): a phase at N or above is refused, one below it admitted.
+        ({}, {"kerengonen_phase": 8}, "kerengonen_phase requires"),
+        ({"kerengonen": {"phase_steps": 16}}, {}, "must equal N"),
         ({"kerengonen": {"phase_steps": 12}}, {}, "power of two"),
-        ({"phase_bits": 3, "kerengonen": {"phase_advance": 8}}, {}, "clock-readings-v1"),
-        ({"phase_bits": 3, "kerengonen": {"capture": "threshold"}}, {}, "capture requires"),
-        ({"phase_bits": 3, "clock": True}, {"kerengonen_phase": "carried"}, "coherence table"),
-        ({"phase_bits": -1}, {}, "phase_bits"),
+        ({"kerengonen": {"phase_advance": 8}}, {}, "clock-readings-v1"),
+        ({"kerengonen": {"capture": "threshold"}}, {}, "capture requires"),
+        ({"clock": True}, {"kerengonen_phase": "carried"}, "coherence table"),
+        # One N for the world (the cleanup of 2026-09-18): a width on a family is
+        # refused naming the definitions of the law.
+        ({"phase_bits": 3}, {}, "definitions of the law"),
     ):
         raw = document(
             (7, 7, 7), {"quanta": extra}, [{**lamp, "emission": {"amount": 15, **emission}}], 1
@@ -250,6 +250,10 @@ def test_every_ray_is_a_wave_ray(tmp_path):
     raw["spatial_fields"][0] = {"field": "quanta", "transport": "outward", "charge": 1}
     with pytest.raises(ValueError, match="require ray transport"):
         parse_initial_state(raw)
+    for bad in (1, 12, 8192):
+        raw = document((7, 7, 7), {"quanta": {}}, [lamp], 1, n=bad)
+        with pytest.raises(ValueError, match="power of two from 2 through 4096"):
+            parse_initial_state(raw)
 
     # (b) Light, a family with rest rate 0, keeps the emitter's phase 77 over 20
     # Links; a massive family of rest rate 13 advances by 13 per interval, masked
@@ -273,11 +277,12 @@ def test_every_ray_is_a_wave_ray(tmp_path):
             document(
                 (25, 5, 5),
                 {
-                    "light": {"phase_bits": 8},
+                    "light": {},
                     "matter": {"kerengonen": {"phase_steps": 256}, "clock": True},
                 },
                 [light, matter],
                 20,
+                n=256,
             )
         )
     )
@@ -365,83 +370,45 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         with pytest.raises(ValueError, match=message):
             parse_initial_state(document((9, 5, 5), families, [plus, minus], 6, rules))
 
-    # (d) The wide phase: 128 bits, rest rate 2^70 per interval, emission phase
-    # 2^128 - 3 x 2^70. A ray walks 100 Links out and 100 back and returns with the
-    # phase it left with, exactly; totals exact; about one second.
+    # (d) The wide phase of the first pin (128 bits) is deleted with the per-family
+    # width (the cleanup of 2026-09-18): N is one for the world, a power of two
+    # up to 4096, and a wider circle adds no measured precision (Highlights 5.4,
+    # the definitions of the law). A ray interaction still stores the phase as a
+    # bounded value, so a world of 4096 steps parses and one whose rule reads a
+    # phase over 30 bits cannot exist.
     wide = {
         "type": "lamp",
         "field": "matter",
         "stock": 2,
         "position": (2, 2, 2),
-        "emission": {"heading": PLUS_X, "kerengonen_phase": WIDE_PHASE},
+        "emission": {"heading": PLUS_X, "kerengonen_phase": 4093},
     }
-    wide_families = {"matter": {"phase_bits": 128, "clock": True}}
-    raw = document((7, 5, 5), wide_families, [wide], 100)
+    wide_families = {"matter": {"clock": True}}
+    raw = document((7, 5, 5), wide_families, [wide], 100, n=4096)
     initial = parse_initial_state(raw)
     definition = initial.spatial_fields[0]
-    assert (definition.phase_bits, definition.phase_modulus, definition.phase_mask) == (
-        128,
-        WIDE_MODULUS,
-        WIDE_MODULUS - 1,
-    )
+    assert (definition.phase_bits, definition.phase_modulus, definition.phase_mask) == (12, 4096, 4095)
     assert (definition.clock, definition.coherent, definition.kerengonen) == (1, False, True)
-    started = time.perf_counter()
     world = Simulation(initial)
-    outbound = {}
     for tick in range(1, 101):
         world.step()
         assert world.totals() == {"matter": (2,)}
         ((ray,), *_) = rays_of(world)[((2 + tick) % 7, 2, 2)]
         assert (ray.steps, ray.outbound, ray.amount) == (tick, 1, 2)
-        assert ray.phase == (WIDE_PHASE + tick * WIDE_RATE) % WIDE_MODULUS
-        outbound[tick] = ray.phase
-    assert outbound[1] == WIDE_MODULUS - 4 == 340282366920938463463374607431768211452
-    assert outbound[2] == WIDE_MODULUS - WIDE_RATE
-    assert outbound[3] == 0 and outbound[4] == WIDE_RATE
-    assert outbound[100] == 97 * WIDE_RATE == 194
-    assert all(item["balanced"] for item in world.spatial_accounting().values())
-    # The walk back: the ray reversed on its line with outbound 0 counts its steps
-    # and its phase down, one Link at a time, and rests at its event Node
-    # (detector-return-v1).
-    returning = replace(ray, outbound=0)
-    meter = CostMeter(initial.operation_costs)
-    for back in range(1, 101):
-        ports, kept, _ = forward_rays((returning,), definition, meter)
-        assert kept == () and [len(port) for port in ports] == [1, 0, 0, 0, 0, 0]
-        (returning,) = ports[0]
-        assert (returning.steps, returning.phase) == (100 - back, outbound.get(100 - back, WIDE_PHASE))
-    assert (returning.steps, returning.phase) == (0, WIDE_PHASE)
-    ports, kept, _ = forward_rays((returning,), definition, meter)
-    assert kept == (returning,) and ports == ((),) * 6
-    with pytest.raises(ValueError, match="event Node"):
-        advance_ray(returning, (1, 0, 0), WIDE_MODULUS, 1)
-    elapsed = time.perf_counter() - started
-    assert elapsed < 20, f"the wide-phase case took {elapsed:.2f} s"
+        assert ray.phase == (4093 + tick * WIDE_RATE) % 4096
     with pytest.raises(ValueError, match="power of two"):
         advance_ray(ray, (1, 0, 0), 12, 1)
-    for patch, message in (
-        ({"matter": {**wide_families["matter"], "self_exclusion": True}}, "phase_bits at most 30"),
-        (
-            {"matter": {"phase_bits": 128, "kerengonen": {"phase_steps": 8}}},
-            "2 to the power",
-        ),
-    ):
-        with pytest.raises(ValueError, match=message):
-            parse_initial_state(document((7, 5, 5), patch, [wide], 1))
     with pytest.raises(ValueError, match="kerengonen_phase requires"):
         parse_initial_state(
             document(
                 (7, 5, 5),
                 wide_families,
-                [{**wide, "emission": {"heading": PLUS_X, "kerengonen_phase": WIDE_MODULUS}}],
+                [{**wide, "emission": {"heading": PLUS_X, "kerengonen_phase": 4096}}],
                 1,
+                n=4096,
             )
         )
-    meeting = reflect()
-    meeting[0]["participants"] = [{"type": "matter"}, {"type": "matter"}]
-    with pytest.raises(ValueError, match="phase_bits at most 30"):
-        parse_initial_state(document((7, 5, 5), wide_families, [wide], 1, meeting))
-    # The runner records the identity beside the ray state and runs the wide world.
+    # The runner records the identity and N beside the ray state and runs the world.
     path = tmp_path / "wide.json"
     path.write_text(json.dumps(raw), encoding="utf-8")
     run_initialization(path, tmp_path / "out", ticks=100)

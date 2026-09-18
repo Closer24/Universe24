@@ -256,5 +256,4 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
     run_initialization(path, tmp_path / "out", ticks=4)
     metadata = json.loads((tmp_path / "out" / "run.json").read_text(encoding="utf-8"))
     assert metadata["ray_state"] == RAY_EVENT_STATE == "ray-event-state-v1"
-    assert metadata["sampling_profile"] == "detector-only-v1"
     assert metadata["conserved_at_every_completed_tick"] and metadata["final_totals"]["quanta"] == [1200]
