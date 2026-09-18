@@ -10,7 +10,8 @@ numbers follow DERIVATIONS.md round 7 (sections 46 to 50): a held content of
 2^24 quanta releasing 1/128 of its content per Port heading per interval
 (q = 786 432 quanta per interval, the wave regime q >= 1740 r^2 out to r = 20),
 its clock four phase steps per interval (K = 2^22 at N = 64, the period 16),
-on an open board. Each runs in under a minute on one core:
+on an open board; the Node rule is round 8's (sections 51 to 56). Each runs
+in under a minute on one core:
 
 ```bash
 PYTHONPATH=src python -m event_universe --init examples/shadow/one_content.json --output artifacts/shadow/one_content
@@ -26,15 +27,15 @@ PYTHONPATH=src python tools/run_series.py --out artifacts/shadow/series examples
   `ShadowSimulation.shell_readings` and `cube_flux` in a script (the count
   0.147 q/r^2 rising with the standing residue, the push q/(4 pi r^2), the
   size 3 x 0.2143 sqrt(q)/r in the shell means).
-- `two_contents.json`: two held contents at rest, 8 Links apart, symmetric
-  about the centre, each held in place (`fixed`), no wait, 200 intervals.
-  Each absorbs the other's quanta and is pushed toward it by amount x
-  content per quantum (the gravity reading), re-releasing them as its own
-  field with the push inverted; `run.json` lists each content's `pushed`
-  (the cumulative push) and the momentum books (`held` + `in_flight` +
-  `escaped` = 0 at every tick): the two pushes are equal and opposite by
-  symmetry, and each is M_B rho M_A/(4 pi d^2) per interval within the
-  per-Node ripple (round 7 section 48 (iii)).
+- `two_contents.json`: two held contents at rest on an open 21^3 board, 8
+  Links apart, symmetric about the centre, each held in place (`fixed`), no
+  wait, 200 intervals. Each reads the other's quanta as they pass through
+  its Node and is pushed toward it by amount x content per unit (the gravity
+  reading; the units mix on as at an empty Node, round 8 section 54 (ii));
+  `run.json` lists each content's `pushed` (the cumulative push) and the
+  held momentum per tick: the two pushes are equal and opposite by symmetry,
+  and each is M_B rho M_A/(4 pi d^2) per interval within the per-Node
+  ripple (round 8 section 55 (i): 1.08 of it on the axis at d = 8).
 - `two_slits.json`: a lamp of light (a paid family, 2^36 quanta, spending
   2^22 per interval on every heading, its clock four steps per interval, the
   period 16 and the wavelength 16 / sqrt 3 = 9.2 Links) at x = 2, an

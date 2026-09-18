@@ -37,7 +37,11 @@ the old engine is deleted or changed in behaviour:
 - `run.json` of a world of the law has its own keys (`law`, `numbers`,
   `audit` of the new books, `held_content`, `shadow_content`, `momentum`,
   `contents`, `escaped`) and none of the old engine's markers; `state.json`
-  its own layout (`law`, `contents`, `nodes`); `events.jsonl` its own kinds.
+  its own layout (`law`, `contents`, `nodes`); `events.jsonl` its own kinds
+  (`home`, `read`, `click`, `rerelease`, `step`, `merged`, `escaped`);
+- a content's `table` maps a family to `read`, `keep`, `rerelease` or
+  `pass` (round 8's fates): a free family is read and passes on, a paid one
+  is kept (the click) or re-released pooled with the holder's release.
 
 ## Charge per thing, on 2026-09-18 (`charge-per-thing-v1`)
 

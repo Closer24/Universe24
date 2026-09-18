@@ -14,13 +14,16 @@ books close every tick, the content stays constant, and the field reaches its
 fixed point within the transit (Gauss's flux through every cube the emission);
 (b) the shell means fall as 1/r^2 in the count and the push and as 1/r in the
 size, with the derivation's coefficients; (c) two held contents at rest push
-each other equally and oppositely, the product law holds for a pair scaled
-together, and the momentum books close; (d) a lamp, two slits and a screen of
-marks: the marks' counts have a minimum and a maximum away from the axis
-where the one-slit control falls away from the axis without them (a reading);
-(e) a held content near a mass waits, the fraction of intervals waited falling
-as 1/r (the slope nearer -1 than -2); (f) the mode's refusals; (g) the nearest
-phase step of the layer equals the engine's argmax rule.
+each other equally and oppositely (the free field read at each and passed
+on, round 8 section 54 (ii)) and the product law holds for a pair scaled
+together; (d) a lamp, two slits and a screen of marks: the marks' counts have
+a minimum and a maximum away from the axis where the one-slit control falls
+away from the axis without them (a reading); (e) a held content near a mass
+waits, the fraction of intervals waited falling as 1/r (the slope nearer -1
+than -2); (f) the mode's refusals; (g) the nearest phase step of the layer
+equals the engine's argmax rule; (h) a held content given a momentum steps
+by its accumulators, at most once in two intervals, its momentum untouched
+and its own field pushing nothing (round 8 sections 53 and 54).
 """
 
 from __future__ import annotations
@@ -223,8 +226,7 @@ def test_one_content_releases_reaches_its_fixed_point_and_the_shell_laws_hold():
         held = books["families"]["m"]["held"]
         assert held["current"] == held["initial"] == CONTENT
         assert held["absorbed"] == held["spent"] == held["escaped"] == 0
-        momentum = books["momentum"]
-        assert momentum["held"] == momentum["in_flight"] == momentum["escaped"] == [0, 0, 0]
+        assert books["momentum"]["held"] == [0, 0, 0]
         shadows = books["families"]["m"]["shadows"]
         assert shadows["initial"] == 0
         assert shadows["released"] == shadows["current"] + shadows["escaped"] + shadows["absorbed"]
@@ -266,17 +268,17 @@ def test_one_content_releases_reaches_its_fixed_point_and_the_shell_laws_hold():
 
 
 def pushes(world: dict[str, object], ticks: int, window: int) -> tuple[list[int], list[int]]:
-    """The push each content took over the last `window` ticks, the momentum
-    books asserted at every tick."""
+    """The push each content took over the last `window` ticks, the books
+    asserted at every tick; the held momentum is the sum of the pushes."""
     simulation = ShadowSimulation(parse_shadow_world(world))
     before: dict[int, list[int]] = {}
     for tick in range(1, ticks + 1):
         simulation.step()
         books = simulation.books()
         assert books["balanced"], (tick, books)
-        momentum = books["momentum"]
-        assert momentum["initial"] == [0, 0, 0]
-        assert momentum["balanced"]
+        assert books["momentum"]["held"] == [
+            sum(holder.pushed[axis] for holder in simulation.holders.values()) for axis in range(3)
+        ]
         if tick == ticks - window:
             before = {number: list(holder.pushed) for number, holder in simulation.holders.items()}
     first, second = simulation.holders[1], simulation.holders[2]
@@ -291,17 +293,22 @@ def test_two_contents_push_each_other_equally_and_the_product_law_holds():
     shape, distance, ticks, window = 21, 8, 200, 100
     first, second = pushes(pair(shape, distance, CONTENT, 1 << 22, ticks), ticks, window)
     # The third law by symmetry: equal and opposite along the line, toward each
-    # other (the first content, at the lower x, pushed toward +x), the
-    # transverse parts below 2 % of the axial.
+    # other (the first content, at the lower x, pushed toward +x) within 5 %
+    # (the mean field's 0.3 to 1.9 %, round 8 section 55 (ii), and the
+    # rounding of whole units per window at N = 64, round 7 section 47 (ii)),
+    # the transverse parts below 3 % of the axial.
     assert first[0] > 0 > second[0]
     assert abs(first[0] + second[0]) < 0.05 * first[0], (first, second)
     for push in (first, second):
-        assert abs(push[1]) < 0.02 * abs(push[0]) and abs(push[2]) < 0.02 * abs(push[0]), push
-    # The magnitude against M_B rho M_A/(4 pi d^2): a pair on one line reads
-    # the per-Node modulation of the edge and the anisotropy (round 7, section
-    # 46 (iii)), between 0.4 and 1.3 of the law; the law is read in (b).
+        assert abs(push[1]) < 0.03 * abs(push[0]) and abs(push[2]) < 0.03 * abs(push[0]), push
+    # The magnitude against M_B rho M_A/(4 pi d^2): the free field read at a
+    # holder on the axis at d = 8 is 1.08 of the law in the mean field with a
+    # sponge edge (round 8 section 55 (i)); on this open board the edge's
+    # mirror ripples the per-Node push by +-2 R r / (2 H - r), +-36 % at r = 8
+    # on 21^3, with the anisotropy on top (round 7 section 46 (iii)): between
+    # 0.4 and 1.6 of the law; the law is read in the shell mean of (b).
     law = CONTENT * CONTENT * (6 / 128) / (4 * math.pi * distance * distance) * window
-    assert 0.4 < first[0] / law < 1.3, first[0] / law
+    assert 0.4 < first[0] / law < 1.6, first[0] / law
     # The product law: both contents doubled with the clock doubled (the same
     # period), the push four times within 5 %.
     doubled, _ = pushes(pair(shape, distance, 2 * CONTENT, 1 << 23, ticks), ticks, window)
@@ -317,7 +324,7 @@ def screen_profile(world: dict[str, object], ticks: int) -> list[float]:
     counts = [0] * extent_y
     for holder in simulation.holders.values():
         if holder.position[0] == 17:
-            counts[holder.position[1]] += holder.absorbed[0]["hold"]
+            counts[holder.position[1]] += holder.absorbed[0]["keep"]
     assert sum(counts) > 0
     return [
         (counts[max(y - 1, 0)] + counts[y] + counts[min(y + 1, extent_y - 1)]) / 3
@@ -383,6 +390,44 @@ def test_a_content_near_a_mass_waits_and_the_slowdown_falls_as_one_over_r():
     assert all(0.03 < value < 0.5 for value in fractions), fractions
     fitted = slope(radii, fractions)
     assert -1.5 < fitted < -0.5, (fitted, fractions)
+
+
+def bar(momentum: int, ticks: int) -> dict[str, object]:
+    """A content of 2^24 at x = 4 on a 41 x 9 x 9 bar, given a momentum along
+    +x, free to step, no wait."""
+    world = one_content(41, ticks, wait=0)
+    world["model_id"] = "field-only-test-step"
+    world["shape"] = [41, 9, 9]
+    world["contents"] = [
+        {"position": [4, 4, 4], "family": "m", "amount": CONTENT, "momentum": [momentum, 0, 0]}
+    ]
+    return world
+
+
+def test_a_content_with_momentum_steps_by_its_accumulators_and_its_own_field_pushes_nothing():
+    """(h): 60 intervals on the bar, p = M/16 and p = M."""
+    ticks = 60
+    for momentum, expected_steps, expected_ticks in (
+        (CONTENT // 16, 3, [16, 33, 50]),
+        (CONTENT, 30, [1, 3, 5, 7, 9, 11]),
+    ):
+        simulation = ShadowSimulation(parse_shadow_world(bar(momentum, ticks)))
+        stepped = []
+        for tick in range(1, ticks + 1):
+            simulation.step()
+            assert simulation.books()["balanced"], tick
+            if simulation.holders[1].position[0] != 4 + len(stepped):
+                stepped.append(tick)
+        holder = simulation.holders[1]
+        # The accumulator gives back the content at every step and the momentum
+        # stays what it was given: the own field pushes nothing (section 54 (i)).
+        assert holder.steps == expected_steps and holder.position == (4 + expected_steps, 4, 4)
+        assert holder.momentum == [momentum, 0, 0] and holder.pushed == [0, 0, 0]
+        # T2: a step every 17 intervals at p = M/16 (the sixteenth interval
+        # fills the accumulator, the interval after a step is the event's), and
+        # every second interval at p = M, the cap of a half Link per interval.
+        assert stepped[: len(expected_ticks)] == expected_ticks, stepped
+        assert holder.held == [CONTENT] and holder.absorbed[0]["read"] == 0
 
 
 def test_the_mode_refuses_the_old_keys_and_the_old_engine_refuses_the_law(tmp_path):

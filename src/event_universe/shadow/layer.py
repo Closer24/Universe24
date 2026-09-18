@@ -12,9 +12,10 @@ shares per Node, number and Port in ninths (the remainder registers of point
 The interval's steps on the layer (the engine, `engine.py`, orders them with
 the held contents' events):
 
-- the walk: every departure moves one Link, its phase rotating by its amount
-  over K (light's frequency is its amount; a cell below K does not turn), what
-  leaves the open board booked as escaped with the momentum it carried;
+- the walk: every departure moves one Link, a paid family's phase rotating by
+  its amount over K (light's frequency is its amount; a cell below K does not
+  turn; a matter shadow does not turn, round 8 section 52 (iv)), what leaves
+  the open board booked as escaped;
 - the sizes: per Node and number the size of the coherent sum of the arrivals,
   the amplitude the mixing forms, in 32nds of one quantum's (`sizes`), read by
   the held contents and by the quanta in flight for their wait;
@@ -118,8 +119,12 @@ class ShadowLayer:
         owners: tuple[int, ...],
         phase_steps: int,
         clock: int,
+        rotates: bool = True,
     ) -> None:
         self.family = family
+        # Whether the quanta turn their phase in flight by their amount over K
+        # (light does; a matter shadow does not, round 8 section 52 (iv)).
+        self.rotates = rotates
         self.shape = shape
         self.owners = owners
         self.rank = {number: rank for rank, number in enumerate(owners)}
@@ -230,7 +235,9 @@ class ShadowLayer:
             if not source.any():
                 continue
             axis, forward = port >> 1, (port & 1) == 0
-            phase = (self.fly_ph[..., port, :] + source // self.clock) & self.mask
+            phase = self.fly_ph[..., port, :]
+            if self.rotates:
+                phase = (phase + source // self.clock) & self.mask
             momentum = self.fly_mom[..., port, :, :]
             ahead: list[slice | int] = [slice(None)] * 3
             behind: list[slice | int] = [slice(None)] * 3

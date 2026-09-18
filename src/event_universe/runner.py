@@ -49,7 +49,6 @@ from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
-from event_universe.shadow.run import execute_shadow_run
 from event_universe.shadow.world import SHADOW_LAW, is_shadow_world, parse_shadow_world
 from event_universe.snapshot_writer import write_snapshot
 
@@ -104,6 +103,10 @@ def run_initialization(
                 f"{SHADOW_LAW}: a world of the law of the shadow runs headless and alone: no "
                 "observer, no visualization, no dense-field or standing-field switch, one worker"
             )
+        # The engine (numpy) loads only for a world of the law: the runner's
+        # own import stays generic physics.
+        from event_universe.shadow.run import execute_shadow_run
+
         world = parse_shadow_world(document)
         count = world.ticks if ticks is None else ticks
         if type(count) is not int or count < 0:

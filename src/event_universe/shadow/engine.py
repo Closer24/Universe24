@@ -4,55 +4,63 @@ shadow layers and the interval.
 Only shadows and events (the model owner, 2026-09-18, the evening): every ray
 on the board is a shadow, a whole quantum of a family in flight, moving one
 Link per interval and spreading by the Node's mixing; an event is a whole
-quantum at a Node that holds content, where it is absorbed, held or released
+quantum at a Node that holds content, where it is read, kept or released
 again by the holder's table; from the event the shadows spread. Matter is
-content held at Nodes (`Holder`): an amount per family, a momentum, a phase,
-a number, a whole charge, a table. The interval, in the engine's order:
+content held at Nodes (`Holder`): an amount per family, a momentum with its
+three accumulators, a phase, a number, a whole charge, a table. The interval
+follows the Node rule of DERIVATIONS.md round 8, section 56 (S2 of section
+51), in this order:
 
-1. every shadow in flight moves one Link, its phase turning by its amount
-   over K (`ShadowLayer.walk`), the escapes booked;
-2. at every Node the sizes of the coherent sums per number are formed; a held
-   content reads the sizes of the other numbers at its Node and owes one
-   interval per whole unit at the world's rate (its clock; `Holder.owed`),
-   and the quanta in flight owe the same at every Node they cross
-   (`ShadowLayer.charge_wait`);
-3. a held content absorbs the whole quanta that arrive at its Node: its own
-   number's are home, absorbed with no push and pooled to leave again with
-   its release (R13); another number's are met by its table: `rerelease`, the
-   mirror, the push read and the quantum sent back on the reversed heading
-   with the holder's number and phase carrying the push inverted; `hold`, the
-   click, the amount joining the holder's content; `transmit`, the quantum
-   passing on its heading re-stamped with the holder's number and phase;
-   `pass`, left to mix as at any Node. Every absorption deposits the momentum
-   the quantum carried into the holder;
+1. every shadow in flight moves one Link (`ShadowLayer.walk`; a paid
+   family's phase turns by its amount over K, a matter shadow's does not),
+   the escapes booked;
+2. at every Node the size of the coherent sum of each number's arrivals is
+   formed; a held content reads the sizes of the other numbers at its Node
+   and owes one interval per whole unit at the world's `wait_per_quantum`
+   (its clock, `Holder.owed`, a remainder carried); the quanta of a paid
+   family in flight read the free families' sizes at the Node they cross
+   and owe the same (`ShadowLayer.charge_wait`, a hold per Node);
+3. a held content meets the whole quanta that arrive at its Node: its own
+   number's are home, sunk for their amount alone and pooled to leave again
+   with its release, pushing nothing (R13; round 8 sections 52 and 54);
+   another number's are met by its table: `read` (the default for a free
+   family: the push taken, the units left to mix on as at an empty Node),
+   `keep` (the default for a paid family: the click, the push taken and the
+   amount joining the holder's content), `rerelease` (the push taken, the
+   amount pooled to leave again with the holder's release and number) or
+   `pass` (no push, the units mix on);
 4. at every Node the shadows of one number mix (node-mixing-v1), the
    remainders park and release, the departures go into flight;
 5. a held content releases: per free family it holds, content x the world's
-   rate per Port with a remainder per Port; a lamp its declared rate on its
-   headings, spending its content and recoiling; the pooled home amount six-
-   fold (on the lamp's headings for a lamp); every release stamped with the
-   holder's number and current phase, into the departures of its Node;
-   nothing while the holder owes an interval;
-6. the holder's phase turns by its content over K with a remainder, unless it
-   owes; a content whose momentum has reached its content on an axis steps
-   one Link that way, the momentum dropped by the content (`fixed` never
-   steps); a step onto a held content merges the two, one off the board
-   escapes.
+   `release` per Port with a remainder per Port; the pooled amount six-fold
+   with a remainder; a lamp its paid family at its rate on its headings,
+   spending its content; every release stamped with the holder's number and
+   current phase; nothing in an interval it owes or in the interval after a
+   step;
+6. the holder's phase turns by its content over K with a remainder; each
+   accumulator adds its component of the momentum (held at the content
+   while a step is not allowed), and the first axis (x before y before z)
+   whose accumulator has reached the content steps the content one Link
+   that way, the accumulator giving back the content and the momentum
+   untouched (section 53: Newton's first law by bookkeeping), at most once
+   per interval and never in the interval after a step (T2: an event takes
+   the interval); a step onto a held content merges the two into the
+   resident (amounts, momentum and charge added, the resident's number,
+   phase and table kept), a step off the board escapes; `fixed` never steps.
 
-The push (Highlights 5.4 point 16 as amended, the readings): a quantum of a
-free family pushes by sign x amount x heading x the holder's cross-section,
-the gravity reading with sign -1 (toward the source) times the holder's
-content, and the electric reading with sign +1 times the owner's charge over
-its declared content times the holder's whole charge, kept exactly in units
-of 1 / D on the holder (D the least common multiple of the charged contents),
-the whole units into the momentum; a quantum of a paid family carries its own
-momentum, amount x heading, from its lamp (which recoils), and its push is
-that momentum read once more (a mirror takes twice it and sends the quantum
-back with it inverted). The books, per family: the held line, initial +
-absorbed (held) = current + spent (lamps) + escaped (contents off the board);
-the shadows' line, initial + released = current + escaped + absorbed; the
-momentum, initial = held + in flight + escaped + spent (steps), exact at
-every interval.
+The readings (Highlights 5.4 point 16 as amended; round 8 S3): a unit of a
+free family with heading h pushes by -M a h (gravity, toward the emitter,
+the holder's content the cross-section) and by +(q_A / M_A) q a h
+(electricity, the owner's whole charge over its declared content times the
+holder's whole charge, kept exactly in units of 1 / D on the holder, D the
+least common multiple of the charged contents' declared amounts); a unit of
+a paid family pushes by +a h, its own momentum. A shadow carries no
+momentum and no ledger of the field's momentum exists (S8): the momentum
+lives on held content and changes only by the pushes, and the third law is
+the symmetry of the two fields. The books, per family and interval: the
+held line, initial + kept = current + spent (lamps) + escaped (contents off
+the board); the shadows' line, initial + released = current + escaped +
+absorbed (home, kept, re-released), exact at every interval.
 """
 
 from __future__ import annotations
@@ -70,10 +78,7 @@ from event_universe.shadow.world import SHADOW_LAW, ContentDefinition, ShadowWor
 
 Record = Callable[[dict[str, object]], None]
 ZERO3 = (0, 0, 0)
-
-
-def _vector(values: np.ndarray | tuple[int, int, int]) -> list[int]:
-    return [int(values[0]), int(values[1]), int(values[2])]
+NO_MOMENTUM = np.zeros(3, dtype=np.int64)
 
 
 @dataclass
@@ -92,10 +97,12 @@ class Holder:
     lamp_rate: tuple[int, int] | None
     lamp_headings: tuple[int, ...]
     declared_content: int
-    # The remainders: the phase below one step, the release per family and
-    # Port (in d-ths), the lamp's release (in d-ths), the pooled home amount
-    # per family with its six-fold remainder, the electric push per axis (in
-    # 1 / D), the wait's debt (in 1 / (32 d)) and the intervals owed.
+    # The accumulators of the step (one per axis), the remainders (the phase
+    # below one step, the release per family and Port in d-ths, the lamp's
+    # in d-ths, the pool's six-fold share per family, the electric push per
+    # axis in 1 / D, the wait's debt in 1 / (32 d)), the intervals owed and
+    # whether the content arrived by a step this interval (T2).
+    accumulators: list[int] = field(default_factory=lambda: [0, 0, 0])
     phase_remainder: int = 0
     release_remainder: list[list[int]] = field(default_factory=list)
     lamp_remainder: int = 0
@@ -104,8 +111,9 @@ class Holder:
     push_remainder: list[int] = field(default_factory=lambda: [0, 0, 0])
     wait_debt: int = 0
     owed: int = 0
-    # The counters: intervals waited, phase steps made, steps walked, and per
-    # family what was absorbed by each rule and the push taken.
+    arrived: bool = False
+    # The counters: intervals waited, phase steps made, steps walked, per
+    # family what was met by each rule, and the push taken.
     waited: int = 0
     phase_steps: int = 0
     steps: int = 0
@@ -126,6 +134,7 @@ class Holder:
             "phase": self.phase,
             "charge": self.charge,
             "momentum": list(self.momentum),
+            "accumulators": list(self.accumulators),
             "fixed": self.fixed,
             "owed": self.owed,
             "waited": self.waited,
@@ -148,8 +157,15 @@ class ShadowSimulation:
         self.families = world.families
         count = len(world.families)
         self.layers = [
-            ShadowLayer(index, world.shape, world.owners(index), world.phase_steps, world.clock)
-            for index in range(count)
+            ShadowLayer(
+                index,
+                world.shape,
+                world.owners(index),
+                world.phase_steps,
+                world.clock,
+                rotates=not family.free,
+            )
+            for index, family in enumerate(world.families)
         ]
         self.denominator = world.content_lcm()
         self.holders: dict[int, Holder] = {}
@@ -168,11 +184,6 @@ class ShadowSimulation:
         self.shadow_initial = [0] * count
         self.shadow_released = [0] * count
         self.shadow_absorbed = [0] * count
-        self.momentum_initial = np.zeros(3, dtype=np.int64)
-        for holder in self.holders.values():
-            self.momentum_initial += np.array(holder.momentum, dtype=np.int64)
-        self.momentum_escaped = np.zeros(3, dtype=np.int64)
-        self.momentum_spent = np.zeros(3, dtype=np.int64)
         for shadow in world.initial_shadows:
             self._seed(
                 shadow.position, shadow.family, shadow.number, shadow.port, shadow.amount, shadow.phase
@@ -209,7 +220,7 @@ class ShadowSimulation:
             release_remainder=[[0] * 6 for _ in range(count)],
             pool=[0] * count,
             pool_remainder=[0] * count,
-            absorbed=[{"home": 0, "rerelease": 0, "hold": 0, "transmit": 0} for _ in range(count)],
+            absorbed=[{"home": 0, "read": 0, "keep": 0, "rerelease": 0} for _ in range(count)],
         )
 
     def _seed(
@@ -235,9 +246,11 @@ class ShadowSimulation:
         for layer in self.layers:
             layer.walk()
         # The readings: the sizes per Node and number, per family; the total
-        # over families per number, and over numbers per Node.
+        # over families per number, over numbers per Node, and the free
+        # families' total per Node (what light in flight reads).
         numbers = len(world.contents)
         size_by_number = np.zeros((*self.shape, numbers + 1), dtype=np.int64)
+        free_size = np.zeros(self.shape, dtype=np.int64)
         for index, layer in enumerate(self.layers):
             self.count[index] = layer.count()
             self.per_port[index] = layer.arr_amt.sum(axis=(3, 5))
@@ -246,29 +259,24 @@ class ShadowSimulation:
             self.size[index] = sizes
             for rank, number in enumerate(layer.owners):
                 size_by_number[..., number] += sizes[..., rank]
+            if self.families[index].free:
+                free_size += sizes.sum(axis=-1)
         size_total = size_by_number.sum(axis=-1)
-        # The wait of the quanta in flight: what they read is the other numbers'.
+        # The wait of light in flight: a paid family's quanta read the free
+        # families' sizes at the Node they cross.
         if world.wait[0]:
-            for layer in self.layers:
-                if not layer.owners:
+            for index, layer in enumerate(self.layers):
+                if self.families[index].free or not layer.owners:
                     continue
-                read = np.stack(
-                    [size_total - size_by_number[..., number] for number in layer.owners], axis=-1
-                )
+                read = np.repeat(free_size[..., None], len(layer.owners), axis=-1)
                 layer.charge_wait(read, world.wait[0], world.wait[1])
-        # The events at the held contents, their wait, then the mixing.
-        self._pending: list[tuple[ShadowLayer, Address3, int, int, int, int, np.ndarray]] = []
+        # The events at the held contents and their wait, then the mixing.
         for number in sorted(self.holders):
             holder = self.holders[number]
             self._read_wait(holder, size_total, size_by_number)
-            self._absorb(holder)
+            self._meet(holder)
         for layer in self.layers:
             layer.cycle()
-        # The re-releases of the events (the mirror's, the transmitted), into
-        # the departures the mixing has just placed.
-        for layer, position, own, port, amount, phase, momentum in self._pending:
-            layer.place(position, own, port, amount, phase, momentum)
-        self._pending = []
         # The releases and the clocks; the steps last, in number order.
         for number in sorted(self.holders):
             self._release(self.holders[number])
@@ -286,9 +294,9 @@ class ShadowSimulation:
         holder.owed += debt // unit
         holder.wait_debt = debt % unit
 
-    def _absorb(self, holder: Holder) -> None:
-        """The events at a held content's Node: every arrival of a family its
-        table names, and every arrival of its own number, absorbed."""
+    def _meet(self, holder: Holder) -> None:
+        """The events at a held content's Node: every arrival of its own
+        number sunk for its amount, every other number's met by the table."""
         position = holder.position
         for index, layer in enumerate(self.layers):
             if not layer.owners:
@@ -296,81 +304,45 @@ class ShadowSimulation:
             rule = holder.table[index]
             free = self.families[index].free
             for rank, number in enumerate(layer.owners):
-                if not layer.arr_amt[(*position, rank)].any():
+                cell = (*position, rank)
+                if not layer.arr_amt[cell].any():
                     continue
-                if number != holder.number and rule == "pass":
-                    continue
-                amounts, phases, momenta = layer.take(position, rank)
-                carried = momenta.reshape(-1, 3).sum(axis=0)
-                total = int(amounts.sum())
-                if rule != "transmit" or number == holder.number:
-                    # Every absorption deposits the momentum the quanta carried.
-                    holder.momentum = [
-                        int(a) + int(b) for a, b in zip(holder.momentum, carried, strict=True)
-                    ]
                 if number == holder.number:
-                    # Home: no push; pooled to leave again with the holder.
+                    amounts, _, _ = layer.take(position, rank)
+                    total = int(amounts.sum())
                     holder.pool[index] += total
                     holder.absorbed[index]["home"] += total
                     self.shadow_absorbed[index] += total
-                    self._event("home", holder, index, number, total, carried, ZERO3)
-                elif rule == "hold":
+                    self._event("home", holder, index, number, total, ZERO3)
+                    continue
+                if rule == "pass":
+                    continue
+                per_port = layer.arr_amt[cell].sum(axis=-1)
+                total = int(per_port.sum())
+                push = self._push(holder, free, number, per_port)
+                holder.momentum = [int(a) + int(b) for a, b in zip(holder.momentum, push, strict=True)]
+                holder.pushed = [int(a) + int(b) for a, b in zip(holder.pushed, push, strict=True)]
+                holder.absorbed[index][rule] += total
+                if rule == "read":
+                    self._event("read", holder, index, number, total, push)
+                    continue
+                layer.take(position, rank)
+                self.shadow_absorbed[index] += total
+                if rule == "keep":
                     holder.held[index] += total
-                    holder.absorbed[index]["hold"] += total
-                    self.shadow_absorbed[index] += total
                     self.held_absorbed[index] += total
-                    self._event("click", holder, index, number, total, carried, ZERO3)
-                elif rule == "transmit":
-                    own = layer.rank[holder.number]
-                    for port in range(6):
-                        for entry in range(amounts.shape[-1]):
-                            self._pending.append(
-                                (
-                                    layer,
-                                    position,
-                                    own,
-                                    port,
-                                    int(amounts[port, entry]),
-                                    holder.phase,
-                                    momenta[port, entry].copy(),
-                                )
-                            )
-                    holder.absorbed[index]["transmit"] += total
-                    self._event("transmit", holder, index, number, total, carried, ZERO3)
+                    self._event("click", holder, index, number, total, push)
                 else:
-                    push = self._push(holder, index, free, number, amounts)
-                    holder.momentum = [
-                        int(a) + int(b) for a, b in zip(holder.momentum, push, strict=True)
-                    ]
-                    holder.pushed = [int(a) + int(b) for a, b in zip(holder.pushed, push, strict=True)]
-                    own = layer.rank[holder.number]
-                    per_port = amounts.sum(axis=-1)
-                    recoil = self._share(push, per_port)
-                    for port in range(6):
-                        self._pending.append(
-                            (
-                                layer,
-                                position,
-                                own,
-                                port ^ 1,
-                                int(per_port[port]),
-                                holder.phase,
-                                recoil[port],
-                            )
-                        )
-                    holder.absorbed[index]["rerelease"] += total
-                    self.shadow_absorbed[index] += total
-                    self.shadow_released[index] += total
-                    self._event("mirror", holder, index, number, total, carried, push)
+                    holder.pool[index] += total
+                    self._event("rerelease", holder, index, number, total, push)
 
     def _push(
-        self, holder: Holder, family: int, free: bool, number: int, amounts: np.ndarray
+        self, holder: Holder, free: bool, number: int, per_port: np.ndarray
     ) -> tuple[int, int, int]:
-        """The push of the quanta of one number arriving at a holder, per Port
-        summed: the gravity and the electric readings for a free family, the
-        quantum's own momentum for a paid one."""
-        per_port = amounts.sum(axis=-1)
-        flux = [int(v) for v in per_port @ np.array(PORT_HEADINGS, dtype=np.int64)]
+        """The push of the units of one number arriving at a holder, summed
+        over the Ports: the gravity and the electric readings for a free
+        family, the unit's own momentum for a paid one."""
+        flux = [int(v) for v in per_port @ HEADINGS]
         if not free:
             return flux[0], flux[1], flux[2]
         content = holder.content
@@ -385,34 +357,14 @@ class ShadowSimulation:
                 push[axis] += whole
         return push[0], push[1], push[2]
 
-    @staticmethod
-    def _share(push: tuple[int, int, int], per_port: np.ndarray) -> np.ndarray:
-        """The push inverted, shared over the re-released quanta per Port in
-        proportion to their amounts, exact per axis by the largest remainder
-        (ties to the lower Port)."""
-        total = int(per_port.sum())
-        result = np.zeros((6, 3), dtype=np.int64)
-        if total == 0:
-            return result
-        for axis in range(3):
-            magnitude = abs(push[axis])
-            if not magnitude:
-                continue
-            quotas = [magnitude * int(per_port[port]) // total for port in range(6)]
-            remainders = [magnitude * int(per_port[port]) - quotas[port] * total for port in range(6)]
-            short = magnitude - sum(quotas)
-            for port in sorted(range(6), key=lambda p: (-remainders[p], p))[:short]:
-                quotas[port] += 1
-            sign = -1 if push[axis] > 0 else 1
-            for port in range(6):
-                result[port, axis] = sign * quotas[port]
-        return result
-
     def _release(self, holder: Holder) -> None:
-        """The holder's releases of the interval and its clock, unless it owes."""
+        """The holder's releases of the interval and its clock, unless it owes
+        or arrived by a step this interval."""
         if holder.owed > 0:
             holder.owed -= 1
             holder.waited += 1
+            return
+        if holder.arrived:
             return
         position = holder.position
         numerator, denominator = self.world.release
@@ -421,42 +373,32 @@ class ShadowSimulation:
                 continue
             own = layer.rank[holder.number]
             family = self.families[index]
-            headings: tuple[int, ...] = tuple(range(6))
             if family.free and holder.held[index] > 0:
                 for port in range(6):
                     total = holder.release_remainder[index][port] + holder.held[index] * numerator
                     amount, holder.release_remainder[index][port] = divmod(total, denominator)
                     if amount:
-                        layer.place(
-                            position, own, port, amount, holder.phase, np.zeros(3, dtype=np.int64)
-                        )
+                        layer.place(position, own, port, amount, holder.phase, NO_MOMENTUM)
                         self.shadow_released[index] += amount
             if holder.lamp_rate is not None and index == holder.family:
-                headings = holder.lamp_headings
                 rate_n, rate_d = holder.lamp_rate
-                for port in headings:
+                for port in holder.lamp_headings:
                     total = holder.lamp_remainder + rate_n
                     amount, holder.lamp_remainder = divmod(total, rate_d)
                     amount = min(amount, holder.held[index])
                     if amount:
-                        carried = amount * np.array(PORT_HEADINGS[port], dtype=np.int64)
-                        layer.place(position, own, port, amount, holder.phase, carried)
+                        layer.place(position, own, port, amount, holder.phase, NO_MOMENTUM)
                         holder.held[index] -= amount
-                        holder.momentum = [
-                            int(a) - int(b) for a, b in zip(holder.momentum, carried, strict=True)
-                        ]
                         self.shadow_released[index] += amount
                         self.held_spent[index] += amount
             if holder.pool[index]:
                 total = holder.pool[index] + holder.pool_remainder[index]
-                share, holder.pool_remainder[index] = divmod(total, len(headings))
+                share, holder.pool_remainder[index] = divmod(total, 6)
                 holder.pool[index] = 0
                 if share:
-                    for port in headings:
-                        layer.place(
-                            position, own, port, share, holder.phase, np.zeros(3, dtype=np.int64)
-                        )
-                    self.shadow_released[index] += share * len(headings)
+                    for port in range(6):
+                        layer.place(position, own, port, share, holder.phase, NO_MOMENTUM)
+                    self.shadow_released[index] += 6 * share
         total = holder.phase_remainder + holder.content
         steps, holder.phase_remainder = divmod(total, self.world.clock)
         if 2 * steps >= self.world.phase_steps:
@@ -468,30 +410,36 @@ class ShadowSimulation:
         holder.phase_steps += steps
 
     def _move(self, holder: Holder) -> None:
-        """The step: the first axis whose momentum has reached the content."""
+        """The step by the accumulators (section 53, T2)."""
+        if holder.arrived:
+            holder.arrived = False
+            return
         if holder.fixed or holder.owed > 0:
             return
         content = holder.content
         if content <= 0:
             return
         for axis in range(3):
-            component = holder.momentum[axis]
-            if abs(component) < content:
+            value = holder.accumulators[axis] + holder.momentum[axis]
+            holder.accumulators[axis] = max(-content, min(content, value))
+        for axis in range(3):
+            if abs(holder.accumulators[axis]) < content:
                 continue
-            sign = 1 if component > 0 else -1
-            holder.momentum[axis] -= sign * content
-            self.momentum_spent[axis] += sign * content
+            sign = 1 if holder.accumulators[axis] > 0 else -1
+            holder.accumulators[axis] -= sign * content
             holder.steps += 1
+            holder.arrived = True
             target = list(holder.position)
             target[axis] += sign
             origin = holder.position
             del self.at[origin]
             if not 0 <= target[axis] < self.shape[axis]:
+                # Off the board with its content; what it pooled stays on the
+                # absorbed line, absorbed for good.
                 for index in range(len(self.families)):
                     self.held_escaped[index] += holder.held[index]
-                self.momentum_escaped += np.array(holder.momentum, dtype=np.int64)
                 del self.holders[holder.number]
-                self._event("escaped", holder, holder.family, holder.number, content, ZERO3, ZERO3)
+                self._event("escaped", holder, holder.family, holder.number, content, ZERO3)
                 return
             destination: Address3 = (target[0], target[1], target[2])
             if destination in self.at:
@@ -499,12 +447,13 @@ class ShadowSimulation:
                 for index in range(len(self.families)):
                     other.held[index] += holder.held[index]
                     other.pool[index] += holder.pool[index]
+                    other.pool_remainder[index] += holder.pool_remainder[index]
                 other.momentum = [
                     int(a) + int(b) for a, b in zip(other.momentum, holder.momentum, strict=True)
                 ]
                 other.charge += holder.charge
                 del self.holders[holder.number]
-                self._event("merged", holder, holder.family, other.number, content, ZERO3, ZERO3)
+                self._event("merged", holder, holder.family, other.number, content, ZERO3)
                 return
             holder.position = destination
             self.at[destination] = holder.number
@@ -528,7 +477,6 @@ class ShadowSimulation:
         family: int,
         number: int,
         amount: int,
-        carried: np.ndarray | tuple[int, int, int],
         push: tuple[int, int, int],
     ) -> None:
         if self.record is None:
@@ -542,7 +490,6 @@ class ShadowSimulation:
                 "family": self.families[family].name,
                 "number": number,
                 "amount": amount,
-                "carried": _vector(carried),
                 "push": list(push),
             }
         )
@@ -555,8 +502,8 @@ class ShadowSimulation:
         balanced = True
         for index, family in enumerate(self.families):
             held_current = sum(holder.held[index] for holder in self.holders.values())
-            # What came home is on the absorbed line until its release (the pool
-            # is the holder's, not the layer's).
+            # What came home or was re-released is on the absorbed line until
+            # its release (the pool is the holder's, not the layer's).
             layer = self.layers[index]
             held = {
                 "initial": self.held_initial[index],
@@ -580,33 +527,16 @@ class ShadowSimulation:
             )
             balanced = balanced and bool(held["balanced"]) and bool(shadows["balanced"])
             families[family.name] = {"held": held, "shadows": shadows}
-        held_momentum = np.zeros(3, dtype=np.int64)
+        held_momentum = [0, 0, 0]
         for holder in self.holders.values():
-            held_momentum += np.array(holder.momentum, dtype=np.int64)
-        in_flight = np.zeros(3, dtype=np.int64)
-        escaped = self.momentum_escaped.copy()
-        for layer in self.layers:
-            in_flight += layer.carried()
-            escaped += layer.escaped_momentum
-        momentum: dict[str, object] = {
-            "initial": _vector(self.momentum_initial),
-            "held": _vector(held_momentum),
-            "in_flight": _vector(in_flight),
-            "escaped": _vector(escaped),
-            "spent": _vector(self.momentum_spent),
-        }
-        momentum["balanced"] = bool(
-            np.array_equal(
-                self.momentum_initial, held_momentum + in_flight + escaped + self.momentum_spent
-            )
-        )
-        balanced = balanced and bool(momentum["balanced"])
-        charge = sum(holder.charge for holder in self.holders.values())
+            held_momentum = [a + b for a, b in zip(held_momentum, holder.momentum, strict=True)]
         return {
             "tick": self.tick,
             "families": families,
-            "momentum": momentum,
-            "charge": charge,
+            # The momentum lives on held content alone and changes only by the
+            # pushes (round 8, S8): no ledger of the field's momentum.
+            "momentum": {"held": held_momentum},
+            "charge": sum(holder.charge for holder in self.holders.values()),
             "balanced": balanced,
         }
 
@@ -675,11 +605,7 @@ class ShadowSimulation:
         yield (
             "escaped",
             [
-                {
-                    "family": family.name,
-                    "amount": layer.escaped,
-                    "momentum": _vector(layer.escaped_momentum),
-                }
+                {"family": family.name, "amount": layer.escaped}
                 for family, layer in zip(self.families, self.layers, strict=True)
             ],
         )
@@ -722,7 +648,6 @@ class ShadowSimulation:
                                         "heading": list(PORT_HEADINGS[port]),
                                         "amount": int(layer.arr_amt[cell]),
                                         "phase": int(layer.arr_ph[cell]),
-                                        "momentum": _vector(layer.arr_mom[cell]),
                                         "waiting": int(layer.wait_owed[(*position, rank)]),
                                     }
                                 )
@@ -733,7 +658,6 @@ class ShadowSimulation:
                                         "heading": list(PORT_HEADINGS[port]),
                                         "amount": int(layer.fly_amt[cell]),
                                         "phase": int(layer.fly_ph[cell]),
-                                        "momentum": _vector(layer.fly_mom[cell]),
                                     }
                                 )
                         slot = (*position, rank, port)
@@ -744,7 +668,6 @@ class ShadowSimulation:
                                     "heading": list(PORT_HEADINGS[port]),
                                     "ninths": int(layer.reg[slot]),
                                     "phase": int(layer.regph[slot]),
-                                    "momentum": _vector(layer.reg_mom[slot]),
                                 }
                             )
                 if arrivals or departures or parked:

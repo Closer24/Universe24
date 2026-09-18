@@ -13,11 +13,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   shadow, a whole quantum in flight that moves one Link per interval and
   spreads by the Node's mixing, the dense layer's kernels by import; an event
   is a whole quantum at a Node with content, absorbed, held or released again
-  by the holder's table (home, the mirror with the push read by the holder's
-  content and charge, the click, transmit, pass); a held content releases
-  its field at the world's rate, a lamp spends its light; the wait reads the
-  size; the step drops the momentum by the content; the books per family
-  and the momentum close at every tick. The old engine, its worlds and its
+  by the holder's table (the free families read at a holder and passed on,
+  the push by the holder's content and charge; light kept, the click, or
+  re-released; the own number sunk for its amount and pushing nothing); a
+  held content releases its field at the world's rate, a lamp spends its
+  light; the wait reads the size; the step is the accumulator's, at most
+  once in two intervals (round 8's Node rule, DERIVATIONS.md sections 51 to
+  56); the books per family close at every tick. The old engine, its worlds and its
   tests are untouched ([migration](docs/MIGRATION.md#the-law-of-the-shadow-a-new-engine-mode-on-2026-09-18-field-only-v1)).
 - The worlds `examples/shadow/` (one content, two contents, two slits and
   the one-slit control) and the isolated test `tests/test_field_only.py`

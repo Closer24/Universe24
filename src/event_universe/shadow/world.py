@@ -24,8 +24,9 @@ refuse each other's worlds by name. What a world declares:
   and optionally its `phase`, its whole `charge` (the family's by default), its
   `momentum` (three integers), `fixed` (true: an apparatus held in place, it
   takes pushes into its momentum and never steps), its `table` (family name to
-  `rerelease`, `hold`, `pass` or `transmit`; a free family is re-released by
-  default, the mirror, and a paid family held, the click) and, for a content of
+  `read`, `keep`, `rerelease` or `pass`; a free family is read by default,
+  the push taken and the units mixed on, and a paid family kept, the click)
+  and, for a content of
   a paid family, its `lamp` (`rate` `[n, d]` quanta per interval per heading,
   `headings` the Port headings it releases on, all six by default); every
   content is given its number at parsing, 1, 2, ... in declaration order;
@@ -46,7 +47,7 @@ from event_universe.core.spatial_state import PORT_HEADINGS
 SHADOW_LAW = "field-only-v1"
 LAW_VALUE = "shadow"
 KINDS = ("free", "paid")
-TABLES = ("rerelease", "hold", "pass", "transmit")
+TABLES = ("read", "keep", "rerelease", "pass")
 MAX_PHASE_STEPS = 4096
 # The bound of an amount, a clock and a momentum component of this law: the
 # layers hold 64-bit integers and the mixing's own guards bound a cell (an
@@ -174,15 +175,15 @@ class ShadowWorld:
     def owners(self, family: int) -> tuple[int, ...]:
         """The numbers whose quanta of a family can exist: the contents that
         hold the family and are free (they release it), the lamps of it, and
-        the contents whose table re-releases or transmits it (their number is
-        stamped on what leaves them)."""
+        the contents whose table re-releases it (their number is stamped on
+        what leaves them)."""
         found = []
         for index, content in enumerate(self.contents):
             number = index + 1
             definition = self.families[family]
             if (
                 (content.family == family and (definition.free or content.lamp is not None))
-                or content.table[family] in ("rerelease", "transmit")
+                or content.table[family] == "rerelease"
                 or any(
                     shadow.number == number and shadow.family == family
                     for shadow in self.initial_shadows
@@ -327,7 +328,7 @@ def _contents(
         fixed = obj.get("fixed", False)
         if type(fixed) is not bool:
             raise ValueError(f"{SHADOW_LAW}: {label}.fixed must be true or false")
-        table = ["rerelease" if item.free else "hold" for item in families]
+        table = ["read" if item.free else "keep" for item in families]
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
             raise ValueError(f"{SHADOW_LAW}: {label}.table must map family names to rules")

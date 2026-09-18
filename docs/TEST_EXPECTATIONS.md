@@ -4067,21 +4067,25 @@ interval, the period 16), an open cube, the content held in place (`fixed`).
   -2.00 +- 0.15, the size -1.00 +- 0.10 (the derivation's -2.00 +- 0.03 and
   -1.00 +- 0.03 in the mean field; the integers' -2.00, -1.89, -1.05).
 - (c) two contents (21^3, d = 8 on the x axis symmetric about the centre,
-  no wait, 200 intervals, the pushes taken over ticks 101 to 200): the first
-  content (at the lower x) is pushed toward +x and the second toward -x, the
-  two axial pushes equal within 5 % (the third law by symmetry; 1 to 2 %
-  measured), the transverse parts below 2 % of the axial; the momentum books
-  read held + in flight + escaped + spent = 0 at every tick (what a push
-  gives a content its mirror's re-release carries inverted); the axial push
-  against M_B rho M_A / (4 pi d^2) with rho = 6/128 between 0.4 and 1.3 (a
-  pair on one line reads the per-Node modulation of the edge's standing wave
-  and the anisotropy, section 46 (iii): 0.52 measured on 21^3, 0.77 on 25^3;
-  the law is read in the shell mean of (b)); the product law: the pair with
-  both contents doubled and K doubled (the same period) is pushed four times
-  as much within 5 % (the emission and the cross-section each double; 3.96
-  measured). An unequal pair is not pinned: the clock is the content, so its
-  two fields have two periods with two anisotropies and two transients
-  (the half content's field at period 32 settles after the window).
+  no wait, 200 intervals, the pushes taken over ticks 101 to 200; each
+  content reads the other's field and passes it on, round 8 section 54
+  (ii): a sink would read the gradient, 1/r^3): the first content (at the
+  lower x) is pushed toward +x and the second toward -x, the two axial
+  pushes equal within 5 % (the third law by symmetry, round 8 section 55
+  (ii): 0.3 to 1.9 % in the mean field, and the rounding of whole units per
+  window at N = 64, round 7 section 47 (ii)'s 4 %), the transverse parts
+  below 3 % of the axial; the held momentum is the sum of the pushes at
+  every tick (no ledger of the field's momentum, S8); the axial push against
+  M_B rho M_A / (4 pi d^2) with rho = 6/128 between 0.4 and 1.6 (the free
+  flux read on the axis at d = 8 is 1.08 of the law in the mean field with a
+  sponge edge, section 55 (i); on this open board the edge's mirror ripples
+  the per-Node push by +-2 R r / (2 H - r), +-36 % at r = 8 on 21^3, with the
+  anisotropy on top, round 7 section 46 (iii); the law is read in the shell
+  mean of (b)); the product law: the
+  pair with both contents doubled and K doubled (the same period) is pushed
+  four times as much within 5 % (the emission and the cross-section each
+  double). An unequal pair is not pinned: the clock is the content, so its
+  two fields have two periods with two anisotropies and two transients.
 - (d) the two-slit reading (23 x 41 x 9, 200 intervals): a lamp of light (a
   paid family, 2^36 quanta, 2^22 per interval on every heading, its clock
   four steps per interval) at x = 2; a wall at x = 8 of held contents of the
@@ -4129,6 +4133,15 @@ interval, the period 16), an open cube, the content held in place (`fixed`).
   `run.json` (`law` "field-only-v1", completed, four ticks, four books,
   conserved), `state.json` (the law, tick 4, Nodes with content) and
   `events.jsonl`, and refuses `--dense-field` on it.
+- (h) the step (a bar of 41 x 9 x 9, a content of 2^24 at x = 4 free to
+  step, no wait, 60 intervals): given p = (M/16, 0, 0) it steps at ticks 16,
+  33 and 50 (the sixteenth interval fills the accumulator; the interval
+  after a step is the event's, T2, round 8 section 53), three steps to x = 7;
+  given p = (M, 0, 0) it steps at ticks 1, 3, 5, ..., thirty steps to x = 34,
+  the cap of a half Link per interval; in both its momentum stays what it was
+  given and its push is zero (the accumulator gives back the content; its
+  own number pushes nothing, section 54 (i)), its content 2^24 and nothing
+  read.
 - (g) the layer's nearest phase step (`layer.nearest_step`, over the window
   `step_window` bounds: 1 up to N = 64, 4 at 256, 69 at 4096) equals the
   engine's argmax over the whole circle, the first on a tie, at N = 2, 8,
