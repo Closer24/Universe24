@@ -849,7 +849,34 @@ states "exactly" and means integer equality at every tick.
   minutes, peak memory 7.9 GB at r = 16 (the runner's final snapshot);
   `pp_r20d` launched at 23:51 with 14 GB projected against 15 available,
   `pp_r24d` skipped for memory; the series was relaunched twice after the
-  machine restarted; the records stay outside the tree.
+  machine restarted; `pp_r20d` completed its 622 ticks (14313 s; the last
+  tick's records written at 03:49 UTC on 2026-09-18) and the runner was
+  killed by the memory cgroup while writing the final snapshot (exit 137,
+  11.4 GB resident against the 15 GB limit), so it has `events.jsonl`
+  (SHA-256 `b08ee36382f89aaf3cff4b1c0edd252a86872c53da05dd7f87c50cfa5a80399a`)
+  and `initialization.json`
+  (`0a249b0f7134f16695f7d4df3feb76186ffbae9d771e35feb49b99d9a45b7e1b`) but no
+  `run.json` and no `state.json`, and `record_dense.json` reports it missing.
+  Read from the events alone by the same rule as `analyze.py` (the register
+  of each body after each tick from the `external_body_absorbed` records,
+  13888 of them, the last at tick 622; the steady push the mean over the
+  last 32 ticks): (2) the registers equal and opposite at every one of the
+  622 ticks, final (-2433, 0, 0) and (2433, 0, 0); (3) F = 5.594 at r = 20
+  against the predicted 5.604 (0.18 % away; the window before 5.563 against
+  5.548), the third point of the part-in-a-thousand agreement; (4) pass,
+  the log-log exponent over r = 12, 16, 20 is -2.793 ± 0.161 against the
+  mean field's -2.788 ± 0.165 over the same points (the local slopes -3.03
+  and -2.46 against -3.01 and -2.44), 0.005 apart, within the clause's 0.1;
+  the asymptote stated beside it as the plan requires: the mean field's
+  local exponent in these boxes -2.20 at 20 to 24 and -2.09 at 24 to 32, the
+  boxes' outward dilution, the free-space law approaching -2 from below
+  (the mean-field research entry); (1) not evaluable at r = 20 without the
+  ledger (the audit lives in `run.json`; at r = 12 and 16 every line
+  balanced); (5) unchanged. `pp_r24d` was skipped by the memory rule
+  (projected 25 GB against 12 available) and the series ended there
+  (`SERIES_DONE` at 03:49 UTC); r = 24 waits for a runner that writes the
+  snapshot Node by Node.
+  The records stay outside the tree.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
