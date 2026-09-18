@@ -10,6 +10,7 @@ from .disturbance_state import (
     MAX_SLOTS,
     MAX_VALUE,
     SHADOW_WAIT_READS,
+    WAIT_READINGS,
     Address3,
     Assignment,
     CostMeter,
@@ -320,6 +321,8 @@ NODE_MIXING = "node-mixing-v1"
 RETURN_FIELD = "return-field-v1"
 # The shadow's wait as a declared world option (shadow-wait-v1, feature 16e).
 SHADOW_WAIT = "shadow-wait-v1"
+# The wait reads the amplitude, a declared coupling option (wait-reads-v1, feature 16f).
+WAIT_READS = "wait-reads-v1"
 MIXING_DENOMINATOR = 9
 MIXING_AMPLITUDE_SCALE = 32
 MIXING_WEIGHT_BITS = 28
@@ -1620,6 +1623,38 @@ def mixing_amplitude(amount: int) -> int:
     return integer_sqrt(checked_work(amount * MIXING_AMPLITUDE_SCALE * MIXING_AMPLITUDE_SCALE))
 
 
+def arrival_amplitude(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The size of the coherent sum of one group's shadows arriving at a Node
+    (wait-reads-v1), the sum the mixing forms (node-mixing-v1): per travel
+    heading the amount that arrived at the phase of its sum, its amplitude the
+    integer square root of the amount in units of 1 / MIXING_AMPLITUDE_SCALE
+    (32 the amplitude of one quantum), the six summed on the family's phase
+    circle; the size of that sum in the same units, the integer square root of
+    x^2 + y^2 over the tables' scale, the floor at each step. 0 for nothing."""
+    tables = spread_tables(definition)
+    cosines, sines = mixing_tables(definition)
+    mask = phase_mask(len(cosines)) if len(cosines) > 1 else 0
+    by_port: dict[int, list[tuple[int, int]]] = {}
+    for ray in rays:
+        heading = definition.headings[ray.heading]
+        if heading not in PORT_HEADINGS:
+            raise ValueError("an amplitude is formed of content on the Port headings")
+        by_port.setdefault(PORT_HEADINGS.index(heading), []).append((ray.amount, ray.phase))
+    x = y = 0
+    for port in sorted(by_port):
+        terms = tuple(by_port[port])
+        amount = 0
+        for term_amount, _ in terms:
+            amount = checked_work(amount + term_amount)
+        phase = (
+            0 if tables is None else _phase_of_sum(terms, tables[0], tables[1], definition.phase_modulus)
+        )
+        amplitude = mixing_amplitude(amount)
+        x = checked_work(x + amplitude * cosines[phase & mask])
+        y = checked_work(y + amplitude * sines[phase & mask])
+    return integer_sqrt(checked_work(x * x + y * y)) // PHASE_COSINE_SCALE
+
+
 def mixing_tables(definition: SpatialFieldDefinition) -> tuple[tuple[int, ...], tuple[int, ...]]:
     """The cosine and sine tables the mixing sums amplitudes over: the family's
     (`spread_tables`), or the one-step circle (cos 1, sin 0 at the table's
@@ -2001,6 +2036,9 @@ class SpatialFieldDefinition:
     shadow_wait_numerator: int = 0
     shadow_wait_denominator: int = 1
     shadow_wait_reads: str = ""
+    # What the wait reads (wait-reads-v1), the world's declared option on every
+    # family: "amount" (the default) or "amplitude".
+    wait_reads: str = "amount"
     # The family's shadows spread by the Node's mixing (node-mixing-v1): true for
     # every family with a shadow set (a release, or a field given with the
     # board), set by the world's initial state, never declared; a family without
@@ -2085,6 +2123,8 @@ class SpatialFieldDefinition:
             raise ValueError(
                 "the shadow's wait is a rational n / d read by thing or field (shadow-wait-v1)"
             )
+        if self.wait_reads not in WAIT_READINGS:
+            raise ValueError("the wait reads amount or amplitude (wait-reads-v1)")
         if type(self.clock) is not int or self.clock < 0:
             raise ValueError("a family's clock is K, a nonnegative integer (clock-readings-v1)")
         if self.clock and not self.phase_bits:
@@ -2882,21 +2922,28 @@ def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition)
     return ray.momentum
 
 
-def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDefinition) -> Ray:
+def pushed_ray(
+    ray: Ray,
+    push: tuple[int, int, int],
+    definition: SpatialFieldDefinition,
+    quanta: int | None = None,
+) -> Ray:
     """The thing after a push (clock-readings-v1, Highlights 5.4 points 15 and
     23): the push added to the momentum it carries, and the whole quanta it read,
     the push's components in quanta, owed as intervals of wait, w each
     (`owed`, in units of 1 / d); amount, phase, bit, heading, walk and event
     record untouched. A momentum back at zero is cleared, so a thing whose
     pushes cancelled is the thing it was; a push never stops a thing, whose line
-    is its heading."""
+    is its heading. With `quanta`, the wait counts that instead of the push's
+    quanta (wait-reads-v1: the amplitude read once per group)."""
     carried = ray.momentum if ray.momentum is not None else (0, 0, 0)
     after = (
         bounded(checked_work(carried[0] + push[0])),
         bounded(checked_work(carried[1] + push[1])),
         bounded(checked_work(carried[2] + push[2])),
     )
-    quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+    if quanta is None:
+        quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
     owed = bounded(checked_work(ray.owed + checked_work(quanta * definition.wait_numerator)))
     return replace(ray, momentum=after if any(after) else None, owed=owed)
 

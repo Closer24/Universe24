@@ -37,6 +37,7 @@ from event_universe.core.spatial_state import (
     RELEASED_FIELD,
     RETURN_FIELD,
     SHADOW_WAIT,
+    WAIT_READS,
     WAVE_RAY_FAMILY,
     external_body_names,
     mixing_field_names,
@@ -421,6 +422,12 @@ def _execute_run(
             "per_quantum": list(initial.shadow_wait),
             "reads": initial.shadow_wait_reads,
         }
+    if initial.wait_reads == "amplitude":
+        # The wait reads the amplitude (wait-reads-v1), a declared coupling
+        # option: recorded only when declared, so every other record, the
+        # default "amount" declared or not, is byte for byte the same.
+        metadata["wait_reads"] = WAIT_READS
+        metadata["wait_reads_option"] = initial.wait_reads
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],

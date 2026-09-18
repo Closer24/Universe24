@@ -89,6 +89,10 @@ def unpack(values: Payload) -> tuple[int, ...]:
 # The readings of the shadow's wait (shadow-wait-v1): a share read by a thing, or a
 # share crossing another owner's field.
 SHADOW_WAIT_READS = ("thing", "field")
+# What the wait of point 23 reads (wait-reads-v1): the amount of push, the whole
+# quanta read (today's rule), or the amplitude, the size of the coherent sum of
+# the pushing owner's shadows at the thing's Node.
+WAIT_READINGS = ("amount", "amplitude")
 
 
 @dataclass(frozen=True, slots=True)
@@ -384,6 +388,12 @@ class InitialState:
     # another owner's shadows at the Node it crosses); "" without the option.
     shadow_wait: tuple[int, int] | None = None
     shadow_wait_reads: str = ""
+    # The wait reads the amount or the amplitude (wait-reads-v1; Highlights 5.4,
+    # the model owner's paragraph of 2026-09-18, a coupling to derive): "amount",
+    # the whole quanta of push read (the default, point 23 as written), or
+    # "amplitude", the size of the coherent sum of the pushing owner's shadows
+    # arriving at the thing's Node, in whole units, read as the push reads.
+    wait_reads: str = "amount"
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
@@ -500,6 +510,8 @@ class InitialState:
                 raise ValueError("shadow_wait reads thing or field (shadow-wait-v1)")
         elif self.shadow_wait_reads:
             raise ValueError("shadow_wait reads nothing without the option (shadow-wait-v1)")
+        if self.wait_reads not in WAIT_READINGS:
+            raise ValueError("wait_reads is amount or amplitude (wait-reads-v1)")
         if self.ray_delay:
             if self.computation_field is None:
                 raise ValueError("ray_delay requires computation_field")
