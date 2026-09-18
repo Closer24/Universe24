@@ -5365,3 +5365,281 @@ absorption of the holder's own number for amount only (section 52 and
 54), the step's timing (section 53), one ρ (section 52 (iv)), the wait of
 light in flight as a hold per Node (section 55 (v)), and q_γ as the
 message of light (S5, section 55 (vi) and (vii)).
+
+## 52. Round 8: a held content is stable; the balance in integers, one ρ, the rotation in flight, and the sparse source
+
+**Rules used.** R12, R13, R14 (section 45), R10 (section 26), S2 to S5 of
+section 51; the fixed point of section 46 ((iv), (v), (vii)), the integer
+form of section 47 ((i), (iii)); point 16 as amended, point 25 (the lanes).
+
+**(i) The balance, and why home must be a no-op for the amount.** At the
+fixed point of the open board a held content of content M releases q + h
+units per interval, absorbs h at its own Node and the edge takes q, with
+q = ρM the emission and h = q (1 − ε)/ε the home amount, ε(ω′) the
+fraction of what the Node sends that never comes back (section 46 (iv):
+ε = 0.312, 0.094, 0.027 at the periods 16, 32, 64 of the holder's clock,
+0.004 for a clockless holder; h = 2.20, 9.60, 36.0, 250 q). The first
+reflection alone returns four ninths of every share after two intervals
+(section 26 (i)); the rest of h is the later returns of the near field.
+Three things a Node could do with a unit that arrives with its own number,
+and what each does to M:
+
+```text
+re-released (R13, S2.3 and S2.4):   M(t + 1) = M(t) exactly;  the flux through every shell q;  nothing lost.       kept.
+kept (added to M):                  M(t + 1) = M(t) + h(t) = M(t)(1 + 2.20 ρ)  at period 16:  +0.32 % per interval at ρ = 3/2048
+                                    (doubling in 215 intervals); +5.3 % at period 64; +37 % for a clockless holder.        out.
+destroyed:                          M constant, but the flux is ε q (section 46 (iv), absorb-only: G ∝ ε(ω′)) and a shadow
+                                    disappears, which the owner forbids.                                                   out.
+```
+
+So a held content at rest on the open board neither evaporates (no unit
+of a free family ever leaves M: R12 costs nothing) nor grows (no unit of
+a free family ever enters M: every one is re-released), **exactly, in
+integers, at every interval**, and the only reading of home that gives
+this together with a flux equal to the emission is the re-release. What
+arrives with another number is re-released the same way (S2.3), so the
+holder's flux out is q + c, c the cross amount it absorbs: the field of A
+is partly re-sourced as B's, by c/q_B = 0.138 q_A/(d² q_B), below 1 % at
+d ≥ 4 for equal contents. In whole units the release is ⌊(q + h + c)/6 +
+ρ_p⌋ per Port with six registers on the holder (section 47 (i)), the
+arrivals are whole units with the ninths parked at the holder's Node and
+absorbed when they reach a unit, and M is untouched by any of it. In an
+interval the holder owes (S2.6) it releases nothing, so its flux in the
+mean is q (1 − w|u|), and the balance closes in the mean as before
+(released − home = escaped). Only the paid lines of light change M, by a
+table: a lamp burns and a screen fills by design, and a matter content
+with no light table is constant for ever. **Reached exactly.**
+
+**(ii) The near field must stay below the family's quantum: a bound on ρ.**
+Under S2.7 a share of amount at least q_F arriving on one lane is held as
+content (that is how a stepping content is held at its neighbour with no
+bit to say so). The largest share on any lane of the board is the
+holder's own release through one Port, (q + h)/6 = ρM/(6ε); for it to
+stay below q_F = M (the holder's own quantum, the smallest it can be),
+
+```text
+ρ < 6 ε(ω′) = 1.87, 0.56, 0.16 at periods 16, 32, 64,  and 0.024 for a clockless holder;     ρ = 3/2048 is below all four.
+```
+
+Above the bound the holder's own field would condense into a second held
+content at its neighbour every interval, carrying the family's charge
+from nothing; a world above it is refused. **New**: the rate has an upper
+bound set by the family's quantum and the holder's clock, and a clockless
+holder's is forty times the smallest.
+
+**(iii) Neither per family nor per thing: one ρ.** A's field pushes B by
+ε_g M_B ρ_A M_A/(4πd²) and B's pushes A by ε_g M_A ρ_B M_B/(4πd²) (section
+48 (iii), with the gravity reading's multiplier ε_g of section 55 (x)
+carried along); they are equal and opposite only if ρ_A = ρ_B, and the
+charge reading gives the same condition. A rate per family would break
+the third law between families by ρ_A/ρ_B and make Newton's constant a
+property of the pair. **ρ is one rate for the world, as K and N are**;
+what a lamp releases is not ρ but its emission table, paid (S5).
+
+**(iv) The rotation in flight is a gauge, and the wave's number is a
+difference of two rates.** Let every share advance its phase by δ per
+Link (S5: a quantum rotates by its message over K). Then A_p(x, t + 1) =
+e^{iδ} B_{opp}(x + e_p, t), and Ã = e^{−iδt} A obeys the plain map of
+section 26: the whole field of one rate class turns uniformly, no amount,
+no push and no fringe within the class changes. A holder stamping its
+phase at ω = 2πM/(KN) per interval drives, in the tilde frame, the source
+of section 27 (v) at
+
+```text
+ω′ = ω − δ:      the flux q at every ω′ (R13);   the potential |u| = 0.2143 √q / r only for ω′ ≢ 0;   λ_w = 2π / k(ω′);   h = q (1 − ε(ω′)) / ε(ω′).
+```
+
+If a matter shadow rotated at its holder's own rate (the message's
+content over K), ω′ = 0 for every held content: a flux with no
+potential, u constant, a 2700-interval transient and 800 q on the board
+(section 46 (v)), and nothing for the wait to read near any mass: out.
+If it rotates by one unit's amount over K (light's rule read for a unit)
+or not at all (round 7, the engine's shadows), ω′ = (M − 1)/K or M/K and
+the field is section 27 (v)'s. For light, the lamp's stamping rate M_L/K
+and the quantum's rotation q_γ/K give ω′ = (M_L − q_γ)/K on the board, while
+the frequency read at any Node in the lattice frame is the lamp's M_L/K
+(the field is linear and time-invariant); Planck's relation is section
+18's beat, unchanged. **Flagged for the owner**: a matter shadow's
+rotation in flight must not be its holder's clock; the derivation below
+takes the engine's reading (no rotation, ω′ = M/K).
+
+**(v) A held content at rest: the field of a big one and of a small one.**
+Section 47 (iii) is the fact that matters most under the law of the
+shadow, since matter is now held content and nothing else: the field of
+a holder is a wave, with the 1/r² push and the 1/r potential, only where
+the count is at least about 256 units per Node per interval, q ≥ 1740 r²;
+below that it is a parked haze that primes outward at about r³/q
+intervals, with the sign of the per-Node push wrong at one Node in three
+and no 1/r² at any r ≥ 4 for a source of 256 or 64 units per interval at
+any ρ ≤ 1. What this means:
+
+- *An electron of tens of units has no field beyond its own Node.* At
+  ρ = 3/2048 a content of 32 emits 0.047 units per interval, one unit
+  every 21 intervals, which parks at the first Node it reaches; at ρ = 1
+  it emits 32 per interval, a wave to r = 0.14 Links. Its push on a
+  partner at r ≥ 4 is not 1/r² in any window; in the long-time mean the
+  flux through a closed shell around it equals q by continuity once the
+  haze inside is primed (about r³/q intervals: 10⁴ intervals at r = 4 and
+  q = 1), so the shell-and-time mean of the push is q/(4πr²), and per Node
+  it is noise. The E8 and A8 worlds of an electron of 32 and a proton of
+  64 cannot confront Coulomb under this law.
+- *Nature's electron is not a sparse source in these units.* The
+  electric-to-gravitational ratio in lattice units is Q_AQ_B/(ε_g M_AM_B)
+  (section 55 (x)); at ε_g = 1 nature's 4.2·10⁴² for two electrons puts the
+  electron's charge at 2·10²¹ times its content in units, and at any ε_g
+  the unit of amount is set by G through ρ. The content of a thing in
+  units is a number of the world the owner has not fixed (section 10);
+  what this round fixes is the condition for its field to be a wave at
+  the radii of interest: M ≥ 1740 r²/ρ.
+- *For a run the content must be raised, not ρ*: a wave at r = 8 needs
+  q ≥ 1.1·10⁵, that is M ≥ 7.6·10⁷ at ρ = 3/2048 or M ≥ 1.1·10⁵ at ρ = 1
+  (the bound of (ii) allows ρ = 1 at period 16), and the board holds 42.8 q
+  = 4.7·10⁶ units at the fixed point in either case. The proton of 2²⁸ of
+  E11 and A5s is a wave source to r = 21 at ρ = 3/2048; the electron of
+  a run must be of the same order to have a field at all.
+- *The two-slit lamp and the Bell source* must release light quanta whose
+  amount is a wave at the screen: q_γ ≥ 1740 r² with r the lamp-to-screen
+  distance (r ≈ 34 for A1's L = 24 and half-width 24: q_γ ≥ 2·10⁶ units
+  per quantum, a lamp of 2²² holding two of them, one of 2³¹ a thousand);
+  a quantum of 4 units, A1's photon, is a haze at the wall and never a
+  fringe. What a screen then counts is section 55 (vi).
+
+**Check.** (i) and (ii) are arithmetic on section 46 (iv)'s ε and h; (iii)
+is section 48 (iii)'s algebra; (iv) is the substitution Ã = e^{−iδt}A in
+the map of section 26 (ii), an identity; (v) quotes section 47 (iii).
+
+**Verdict.** The stability of a held content: **reached exactly** (M
+constant at every interval under the re-release; the kept reading grows
+by 2.2 ρ per interval, the destroying one is forbidden). Home as a no-op
+for the amount: **forced**. The bound ρ < 6 ε(ω′): **new**. One ρ for the
+world: **forced** by the third law. The rotation in flight: **a gauge**;
+the holder's shadows must not rotate at the holder's clock (**flagged**).
+The field of a small content: **a haze, no 1/r² in any window** (section
+47 (iii)); the electron of a run must carry M ≥ 1740 r²/ρ, and the lamps
+of A1 and A2 must release quanta of q_γ ≥ 1740 r².
+
+## 53. Round 8: the step and the speed of a held content
+
+**Rules used.** S2.7 of section 51 (the step as a release and an
+absorption), point 21 and the five settled rules' (i), section 3 (the
+accumulator of the external body), point 25 (one ray per lane), section
+26 (iii) (the field's group speed ≤ 1/√3 in every direction), section 27
+(iii) (the front by direction), S2.6 (a waiting interval has no step).
+
+**(i) Two readings of point 21 for a held content, and the trap.** Point
+21 was written for a ray that moves one Link every interval and turns
+when a component of its momentum reaches its content; for held content
+the same words admit two readings. *The accumulator* (external-body-v1,
+section 3): every interval each axis accumulator adds p_i; when one
+reaches M the content steps through that Port and the accumulator gives
+back M; p is untouched. Then x_i(t) = p_i t/M to within one Link, v =
+p/M exactly, uniform hopping at constant p: **Newton's first law by
+bookkeeping**, and dp/dt = F with the pushes of S3, Newton's second. *The
+literal drop* ("the momentum drops by that content"): a content with
+|p_i| < M never moves, one with p_i ≥ M steps once and keeps p_i − M;
+motion needs a force in every interval and stops with it, v = F/M per
+interval, Aristotle's law. The first reading is the one below, the
+owner's "drops by that content" being the accumulator's giving back M as
+the engine does today; the second is stated so that it is not written by
+accident.
+
+**(ii) The step, and the ray that carries it.** When an accumulator
+reaches M the whole content leaves through that Port as one share of
+amount M on the lane, at the holder's phase, with its numbers, its
+message, its momentum, its remaining wait and its two other accumulators
+riding with it; it arrives at the neighbour at the end of the interval
+and is held there: by S2.7 a share of amount at least q_F arriving on one
+lane is content and is never mixed (section 52 (ii) keeps every field
+share below q_F for ρ < 6ε). It is the one ray with a momentum on it, and
+it needs no bit: its amount says what it is. A neighbour that already
+holds content of the family merges it (point 25: the amounts add, the
+phase is the coherent sum's, the momenta and charges add, the numbers are
+kept as a set); one of another family meets it by the pair's table
+(section 5.2). **Forced by S1 and S2**, up to the record riding on the
+share, which is the orchestrator's elaboration.
+
+**(iii) The timing, and the bound on the speed.** Under S2's order the
+neighbour absorbs the arriving content in step 3 of the next interval and
+may step it again in step 7 of the same interval, so a content whose
+accumulator is full moves one Link every interval: the timing T1,
+|v|₁ ≤ 1. Under the reading that an event occupies its interval (the
+absorption in step 3 ends the content's interval as a wait does, S2.6,
+and the mixing at an empty Node occupies nothing, point 15: computation
+is the events), the content released in interval t is held at the
+neighbour from the end of t, absorbed as the event of t + 1, and steps
+first in t + 2: the timing T2, |v|₁ ≤ 1/2. The two against the field's
+front, which moves at 1/√3 = 0.577 Links per interval in every
+direction (section 26 (iii)), in Euclidean Links per interval:
+
+```text
+direction          matter, T1        matter, T2        the field's front     T1 / field     T2 / field
+axis (100)         1.000             0.500             0.577                 1.73           0.87
+diagonal (110)     0.707             0.354             0.577                 1.22           0.61
+body (111)         0.577             0.289             0.577                 1.00           0.50
+```
+
+Under T1 a full content outruns its field on an axis and on (110) and
+keeps pace with it on (111) (the Mach cone of section 28 for held
+content, 35° behind it); under T2 it is slower than its field in every
+direction, by 0.87 on an axis and 0.50 on (111), and the field's front,
+sharp on (111) and smeared on the axes (section 27 (iii)), always
+precedes it. The lattice gives no timing under which the two speeds
+coincide: matter's bound is an L1 bound (one lane, one Link, one
+interval) and the field's is Euclidean and isotropic at long wavelength;
+"light and matter share one c" is not available on this lattice exactly,
+and T2 is the reading under which nothing outruns the field. **T2 is the
+reading taken below and flagged for the owner**: an event takes the
+interval; the mixing takes none.
+
+**(iv) Beyond the cap.** Under T2 the accumulator can be served at most
+once in two intervals, so a content with p_i > M/2 (T1: p_i > M) moves at
+the cap and its accumulator is held at M until the next step is allowed;
+p itself keeps every push it takes. So
+
+```text
+v_i = min(p_i / M, 1/2)   (T2;  1 under T1),      p unbounded, v bounded:
+```
+
+a kinematics in which the momentum grows without bound while the speed
+saturates at the lattice's c_m = 1/2, against nature's v = p/√(p² + M²)
+with c: **different law** in the form of the saturation, the same in its
+existence. A content falling from rest at infinity has v² = 2GM_A/r
+(dp/dt = F and v = p/M, section 11 (b)), so it reaches the cap at
+r = 8 G M_A and inside that radius its momentum keeps growing at the
+capped speed: section 11 (b)'s dark body, its radius now 8GM.
+
+**(v) The speed in a potential.** In an interval the holder owes (S2.6)
+nothing of it advances: no phase step, no accumulator, no release. So a
+held content of momentum p at a Node where it reads |u| moves at
+
+```text
+v = (p / M) (1 − w |u|)   Links per interval,      0 at r_h = w · 0.760 √(G M) (section 48),
+```
+
+round 3 (iv)'s slowing of a free thing, now for held content and in the
+potential's form; its momentum still integrates the push at the full
+rate, so it gains p while it moves slower, as there. **Reached** in form
+(the frozen-star coordinate speed 1 − 2GM/r of the Schwarzschild metric
+has the same shape with a coefficient 2 against 1 at the GR w, as the
+clock's second order has, section 40).
+
+**(vi) Light.** A quantum of light in flight is a wave of the mixing: its
+front moves at 1/√3, never at 1 (section 26 (iii): no signal of the
+mixed field outruns 1/√3 at any wavelength, exact), sharp on the body
+diagonals and smeared on the axes (section 27 (iii)), and in a potential
+at 1/(√3 (1 + w|u|)) (section 55 (v)). What the runs of the law of the
+bit measured as light at speed 1 (the light thing on its one path) has no
+counterpart here.
+
+**Check.** The table is arithmetic on the L1 step and section 26 (iii)'s
+bound; (i) is section 3's derivation; (iv) and (v) follow from S2.6 and
+S2.7 as stated.
+
+**Verdict.** The step: **forced** as a release and an absorption, the
+record riding on one share of amount M (flagged). The speed: v = p/M by
+the accumulator, **Newton's first law by bookkeeping** (the literal drop
+would be Aristotle's, stated and not adopted); the bound **1/2 on an
+axis and 0.29 on (111) under T2**, below the field's 1/√3 in every
+direction; **1 under T1**, above it on the axes (T2 taken, flagged).
+Beyond the cap: **different law** (p unbounded, v saturated). In a
+potential: v = (p/M)(1 − w|u|), **reached** in form.
