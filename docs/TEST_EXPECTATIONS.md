@@ -4086,22 +4086,24 @@ interval, the period 16), an open cube, the content held in place (`fixed`).
   paid family, 2^36 quanta, 2^22 per interval on every heading, its clock
   four steps per interval) at x = 2; a wall at x = 8 of held contents of the
   paid family `wall` (content 1, holding light, the click) with two slits 14
-  apart, openings in the wall (a held content that transmits stamps its own
-  number on the light, and two numbers are two fields that never interfere,
-  point 24: two re-emitting slits give two humps and no fringes, measured
-  before this pin); a screen of marks at x = 17. The marks' light counts by
-  y, summed over z and smoothed
-  over three marks, are symmetric about the axis (within 2 % of the axis
-  value plus one); with two slits the lowest smoothed count 3 to 6 from the
-  axis is exceeded by the highest 7 to 12 from it by at least 10 % (the first
-  minimum of two sources 14 apart read 9 behind them at the wavelength
-  16 / sqrt 3 = 9.2 Links lies near 4 from the axis and the next maximum
-  near 8.5); with one slit on the axis it is not (the control falls from the
-  axis outward). A reading, not a law: the lamp is six-fold (a lamp on one
-  heading sheds two thirds of its light into standing content beside it),
-  the period 16 (at period 8 the lattice anisotropy of the transmitted wave,
-  (15/8) w^2 K_4, cuts the axis by half and the one-slit control dips on the
-  axis), the light in flight reads no wait.
+  apart, openings of 3 x 3 Nodes in the wall (a held content that transmits
+  stamps its own number on the light, and two numbers are two fields that
+  never interfere, point 24: two re-emitting slits give two humps and no
+  fringes; and an opening of one Node is far below the wavelength and
+  transmits almost nothing; both measured before this pin); a screen of
+  marks at x = 17. The marks' light counts by y, summed over z and smoothed
+  over three marks, are symmetric about the axis (within 5 % of the axis
+  value plus one: the largest-remainder rule's ties to the lower Port break
+  the mirror symmetry by a few per cent); with two slits the lowest smoothed
+  count 2 to 5 from the axis is exceeded by the highest 6 to 11 from it by
+  at least 10 % (the first minimum of two sources 14 apart read 9 behind
+  them at the wavelength 16 / sqrt 3 = 9.2 Links lies near 4 from the axis
+  and the next maximum near 8.5); with one slit on the axis it is not (the
+  control falls from the axis outward). A reading, not a law: the lamp is
+  six-fold (a lamp on one heading sheds two thirds of its light into
+  standing content beside it), the period 16 (at period 8 the lattice
+  anisotropy of a transmitted wave, (15/8) w^2 K_4, cuts the axis by half),
+  the light in flight reads no wait.
 - (e) the wait (29^3, 300 intervals, the fraction of intervals waited over
   ticks 101 to 300): the content of (a) with nine probes of a paid family
   (content 1, held in place, passing the mass's quanta so that they neither

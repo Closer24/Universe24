@@ -1157,36 +1157,6 @@
    "position": [
     8,
     12,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    12,
-    4
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    12,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    12,
     6
    ],
    "family": "wall",
@@ -1247,26 +1217,6 @@
    "position": [
     8,
     13,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    13,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    13,
     6
    ],
    "family": "wall",
@@ -1327,36 +1277,6 @@
    "position": [
     8,
     14,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    14,
-    4
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    14,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    14,
     6
    ],
    "family": "wall",
@@ -2407,36 +2327,6 @@
    "position": [
     8,
     26,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    26,
-    4
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    26,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    26,
     6
    ],
    "family": "wall",
@@ -2497,26 +2387,6 @@
    "position": [
     8,
     27,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    27,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    27,
     6
    ],
    "family": "wall",
@@ -2568,36 +2438,6 @@
     8,
     28,
     2
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    28,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    28,
-    4
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    28,
-    5
    ],
    "family": "wall",
    "amount": 1,

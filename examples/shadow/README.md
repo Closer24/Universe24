@@ -40,9 +40,11 @@ PYTHONPATH=src python tools/run_series.py --out artifacts/shadow/series examples
   period 16 and the wavelength 16 / sqrt 3 = 9.2 Links) at x = 2, an
   absorbing wall at x = 8 of held contents of the paid family `wall`
   (content 1, `hold` for light: they count what they absorb) with two slits
-  14 apart, openings in the wall, and a screen of marks at x = 17, nine
-  Links behind the wall, on a 23 x 41 x 9 board, 200 intervals;
-  `one_slit.json` the control with one opening on the axis. What to read:
+  14 apart, openings of 3 x 3 Nodes in the wall (an opening of one Node is
+  far below the wavelength and transmits almost nothing), and a screen of
+  marks at x = 17, nine Links behind the wall, on a 23 x 41 x 9 board, 200
+  intervals; `one_slit.json` the control with one opening on the axis. What
+  to read:
   each mark's `absorbed` `hold` count in `run.json`'s `contents`, by the
   mark's y: with two slits the counts have a minimum near 4 from the axis
   and a maximum near 8.5 beyond it, where the one-slit control falls away

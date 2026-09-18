@@ -1787,36 +1787,6 @@
    "position": [
     8,
     19,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    19,
-    4
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    19,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    19,
     6
    ],
    "family": "wall",
@@ -1877,26 +1847,6 @@
    "position": [
     8,
     20,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    20,
-    5
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    20,
     6
    ],
    "family": "wall",
@@ -1948,36 +1898,6 @@
     8,
     21,
     2
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    21,
-    3
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    21,
-    4
-   ],
-   "family": "wall",
-   "amount": 1,
-   "fixed": true
-  },
-  {
-   "position": [
-    8,
-    21,
-    5
    ],
    "family": "wall",
    "amount": 1,
