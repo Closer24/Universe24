@@ -963,19 +963,38 @@
     function fitBox(r) {
       var shape = r.shape;
       var whole = { lo: [0, 0, 0], hi: [shape[0] - 1, shape[1] - 1, shape[2] - 1] };
-      if (S().motion.camera_fit !== "rays") return whole;
+      var margin = S().motion.camera_fit_margin_links == null ? 3 : S().motion.camera_fit_margin_links;
+      function pad(lo, hi) {
+        return {
+          lo: lo.map(function (v, i) { return Math.max(0, v - margin); }),
+          hi: hi.map(function (v, i) { return Math.min(shape[i] - 1, v + margin); })
+        };
+      }
+      // A run document may carry its own box (run.fit = {lo, hi}), which wins.
+      if (r.fit && r.fit.lo && r.fit.hi) return pad(r.fit.lo, r.fit.hi);
+      var mode = S().motion.camera_fit;
+      if (mode !== "rays" && mode !== "events") return whole;
       var lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
       function take(p) { for (var i = 0; i < 3; i++) { if (p[i] < lo[i]) lo[i] = p[i]; if (p[i] > hi[i]) hi[i] = p[i]; } }
-      (r.rays || []).forEach(function (ray) { if (ray.field) return; ray.segments.forEach(function (sg) { take(sg.from); if (sg.to) take(sg.to); }); });
-      (r.sources || []).forEach(function (x) { take(x.pos); });
+      if (mode === "events") {
+        // The Nodes where matter's events happen (meetings, splits, clicks, pushes),
+        // not the paths in and out: a loop one Link wide fills the frame while the
+        // photon that reaches it enters from off frame. Emissions, releases and
+        // escapes are left out; a run with no such event falls back to the rays.
+        (r.events || []).forEach(function (e) {
+          if (e.field || !e.node) return;
+          if (e.kind === "emission" || e.kind === "release" || e.kind === "escape") return;
+          take(e.node);
+        });
+      }
+      if (!isFinite(lo[0])) {
+        (r.rays || []).forEach(function (ray) { if (ray.field) return; ray.segments.forEach(function (sg) { take(sg.from); if (sg.to) take(sg.to); }); });
+        (r.sources || []).forEach(function (x) { take(x.pos); });
+      }
       (r.detectors || []).forEach(function (x) { take(x.pos); });
       (r.external_bodies || []).forEach(function (x) { take(x.pos); (x.positions || []).forEach(function (row) { take(row.slice(1)); }); });
       if (!isFinite(lo[0])) return whole;
-      var margin = S().motion.camera_fit_margin_links == null ? 3 : S().motion.camera_fit_margin_links;
-      return {
-        lo: lo.map(function (v, i) { return Math.max(0, v - margin); }),
-        hi: hi.map(function (v, i) { return Math.min(shape[i] - 1, v + margin); })
-      };
+      return pad(lo, hi);
     }
     // Lattice, Node dots and the boxes: rebuilt when the run or the fit changes.
     var lattice = null, lineMat, ptMat, boxMat, outerMat;
