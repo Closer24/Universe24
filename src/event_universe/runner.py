@@ -24,6 +24,7 @@ from event_universe.core.spatial_state import (
     EXTERNAL_BODY,
     FIELD_REMAINDER,
     INVERSE_SPLIT,
+    LANES,
     LOOP_BINDING,
     NODE_IS_PORTS,
     NODE_MIXING,
@@ -310,6 +311,9 @@ def _execute_run(
         # parked shadows, the traces, the resident thing of a mark and the source
         # that spends its content are the engine's only behaviour.
         "node_is_ports": NODE_IS_PORTS,
+        # A Port is two lanes (lanes-v1, Highlights 5.4 point 25): one real ray
+        # and one shadow per owner on every lane, the lane a condition on the step.
+        "lanes": LANES,
         # The clock is the content (clock-readings-v1, feature 16b): K, the
         # computation per completed tick (point 11) and the momentum spent on
         # the things' steps (the settled rule (i)).

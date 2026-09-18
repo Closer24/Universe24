@@ -67,7 +67,7 @@ from event_universe.core.spatial_state import (
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
 from .ray_interactions import Turns, apply_ray_interactions
-from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
+from .rays import LaneClaims, emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
     bounded_emission_amount,
@@ -572,6 +572,10 @@ class SpatialLaw:
             for slot, ray in enumerate(bundle):
                 if ray.detector == BIT_THING and ray.outbound and ray.steps >= 1:
                     owners_here.setdefault(ray.owner, ("ray", kind, slot))
+                    # A merged thing is home to the shadows of every owner it
+                    # carries (lanes-v1, Highlights 5.4 point 25).
+                    for other in ray.owners:
+                        owners_here.setdefault(other, ("ray", kind, slot))
         for slot, record in enumerate(records):
             if record is None or record.type_index >= len(self.things):
                 continue
@@ -811,6 +815,10 @@ class SpatialLaw:
             registers_held.append(block)
             register_phases_held.append(block_phases)
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
+        # The real slots of the six out-lanes this interval (lanes-v1, Highlights
+        # 5.4 point 25), one set for every family of the Node: a lane carries one
+        # real ray, whatever its family.
+        lanes = LaneClaims()
         meter = CostMeter(self.costs)
         # The momentum a meeting moves between lines (ray-meeting-conversion-v1): a
         # split by a table steers content between two Ports, and the recoil owner,
@@ -1130,7 +1138,7 @@ class SpatialLaw:
                         spreads.append(spread)
                 if ray_hold:
                     ports, fresh_kept, account = forward_rays(
-                        tuple(emitted_rays[index]), definition, meter
+                        tuple(emitted_rays[index]), definition, meter, lanes
                     )
                     kept = merge_rays(
                         hold_rays(
@@ -1140,7 +1148,10 @@ class SpatialLaw:
                     )
                 else:
                     ports, kept, account = forward_rays(
-                        tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
+                        tuple(resident_rays[index]) + tuple(emitted_rays[index]),
+                        definition,
+                        meter,
+                        lanes,
                     )
                 phase_steps = checked_work(phase_steps + account.phase_steps)
                 if any(account.spent):
@@ -1169,9 +1180,12 @@ class SpatialLaw:
                 for port, port_rays in enumerate(ports):
                     for ray in port_rays:
                         if ray.detector == BIT_THING and ray.outbound:
-                            best = departures.get(ray.owner)
-                            if best is None or ray.amount > best[0]:
-                                departures[ray.owner] = (ray.amount, port)
+                            # A merged thing leaves the trace of every owner it
+                            # carries (lanes-v1, Highlights 5.4 point 25).
+                            for owner in (ray.owner, *ray.owners):
+                                best = departures.get(owner)
+                                if best is None or ray.amount > best[0]:
+                                    departures[owner] = (ray.amount, port)
                 if all(heading in definition.headings for heading in PORT_HEADINGS):
                     # A family whose lines are not the six Port headings has no
                     # heading to park a trace on, and no shadow of its own to read it.

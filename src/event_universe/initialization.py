@@ -2357,6 +2357,10 @@ def _ray_meeting(
     output_polarization: list[tuple[int, int]] = []
     # bit-law-v1: the source input of each output, whose identity it carries.
     output_sources: list[int] = []
+    # lanes-v1 (Highlights 5.4 point 25): a table gives its outputs distinct
+    # lanes, so no two outputs leave on one heading: the same Port, or the same
+    # or the reversed heading of the same input.
+    output_lanes: dict[tuple[str, int], int] = {}
     for position, raw in enumerate(raw_outputs):
         item = _object(
             raw,
@@ -2429,8 +2433,10 @@ def _ray_meeting(
         heading = item["heading"]
         if heading == "same":
             heading_expression: object = ref("heading", source)
+            output_lane = ("same", source)
         elif heading == "reversed":
             heading_expression = {"op": "neg", "args": [ref("heading", source)]}
+            output_lane = ("reversed", source)
         else:
             port = _integer(heading, "output.heading", 0)
             if port >= 6:
@@ -2438,6 +2444,14 @@ def _ray_meeting(
             if PORT_HEADINGS[port] not in definition.headings:
                 raise ValueError("ray meeting output Port is absent from its field's heading table")
             heading_expression = list(PORT_HEADINGS[port])
+            output_lane = ("port", port)
+        if output_lane in output_lanes:
+            raise ValueError(
+                f"a table gives its outputs distinct lanes: outputs {output_lanes[output_lane]} and "
+                f"{position} of {_text(obj['name'], 'interaction.name')!r} leave on one heading "
+                "(Highlights 5.4, point 25)"
+            )
+        output_lanes[output_lane] = position
         assignments.append(Assignment(position, 1, parser.parse(heading_expression, 3)))
         phase = item.get("phase", "same")
         modulus = definition.phase_modulus

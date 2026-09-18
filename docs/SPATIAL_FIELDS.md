@@ -2578,6 +2578,91 @@ Identity `node-is-ports-v1`, recorded in `run.json` as `node_is_ports`;
 isolated test `tests/test_node_is_ports.py`
 ([expectations](TEST_EXPECTATIONS.md#a-node-is-its-six-ports)).
 
+### A Port is two lanes (`lanes-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4, point 25, the model owner's
+decision of 2026-09-18; issue #169, feature 18), the engine's only behaviour:
+a Link carries rays both ways, so every Port has two lanes, in and out, and a
+Node has twelve; in one interval a lane carries at most one real ray and at
+most one shadow of each owner.
+
+- **The slots.** The state of one family at a Node is addressable as
+  [Port][lane][real | shadow(owner)] (`node_lanes`, a `LaneSlots`): twelve
+  lanes (`lane_index`, the Port's in-lane 0 or out-lane 1), on each one real
+  slot and one shadow slot per owner in the family's owner order
+  (`owner_index`; the owners are assigned at parsing to every thing and to
+  every owner of a declared profile, `family_owners`, so the shadow axis is
+  fixed before the run), and beside them the parked shadows and the traces of
+  point 22 (`parked`) and the rays at rest at the Node this interval
+  (`resident`: a returned thing at its event Node, a shadow whose steps are
+  spent, a held ray). A ray on its way occupies the in-lane of the Port it
+  entered through, opposite to its heading; the shadow slot of an owner holds
+  the owner's shadows on that lane as one sum (their amount and the momentum
+  they carry added, the least steps, the phase of their coherent sum), one
+  ray each once the Node's mixing of point 24 (feature 16c) lands. The engine
+  stores the slots as the Node's ray tuple in merge order, so the reading
+  functions, the inventory, the records and the snapshot are unchanged in
+  content and in order, and holds the slots' bounds as its invariant: one
+  real per out-lane at every departure, whatever the families (`LaneClaims`
+  in `forward_rays`, checked again by `validate_plan_rays`), and one real per
+  lane on a declared board.
+- **The step condition.** The lane is a condition on the step, not a queue:
+  at a Node's departure every ray that leaves on its own heading takes its
+  lane first (an emission, a returned ray, a re-release, a thing continuing);
+  a thing whose momentum has reached its content on another axis
+  (`step_thing`) steps into that out-lane only if the lane is free, otherwise
+  it keeps its heading, its momentum stays accumulated, and it steps at the
+  next Node; every thing moves one Link every interval, the wait of point 23
+  the only exception. The things that would step are resolved after the
+  others, in the Node's ray order, each holding its own heading's lane until
+  it is resolved. Two real rays of one family given one lane in one interval
+  are one real ray (the model owner, 2026-09-18, on the case this feature
+  left open; `merge_lane`): a thing born at the Node by an emission, a mark's
+  return or a table's output while another passes joins it; the amounts add
+  (whole quanta of the family), the phase is the coherent sum's (rule 3.20,
+  the amount never cancels), the momentum adds exactly as the ledger reads it
+  (a returned ray reads its event's momentum, so the merged thing may carry a
+  momentum that turns it at its next departure, spent on the momentum field's
+  line, which the cycle record publishes as `spent` and the local audit
+  reads), the charge adds with the amount, and the owners are kept as a set
+  (`Ray.owners`, sorted, without `owner`, part of the merge identity), so
+  that a returning shadow of either owner is home at the merged ray, a mark
+  that absorbs it becomes the home of both, and it leaves the traces of both;
+  every other property is the passing thing's (the one already on its way on
+  the heading, else the first to take the lane). A content above the family's
+  K and N bound is the decay table's business (point 20): `validate_rays`
+  leaves a merged thing to it. Two real rays of different families on one
+  lane are a meeting the table of section 5.2 of the pair decides, which no
+  departure holds: a declared board with things of two families on one lane
+  (two seeds at one Node emitting on one heading) is refused at parsing
+  naming point 25 and both families (`validate_lanes`), and a departure that
+  would put two on one lane is refused (`LaneClaims`). The reading under
+  which every pair of families whose things a board can bear must declare a
+  table would refuse most shipped worlds, whose things never share a lane,
+  and is not taken. The lane is one direction of a Port, so the claims and the
+  check take the rays on the six Port lines; a ray of the old ray worlds on a
+  line that is not a Port heading holds no lane.
+- **The validations at parsing.** A declared board with two real rays on one
+  lane is refused: two seeds at one Node whose types emit one ray family on
+  the same declared heading (or both sweeping the sequence). A table of
+  section 5.2 gives its outputs distinct lanes: two outputs of one rule on
+  one heading (the same Port, or the same or the reversed heading of one
+  input) are refused. An emission table's outputs occupy distinct lanes: a
+  sweep of `rays_per_tick` consecutive headings that repeats a heading is
+  refused. Every refusal names point 25. A source emits and its thing leaves,
+  always: no condition of a free lane stands on an emission.
+- **The dense layer.** Its per-owner arrays are the shadow slots of this rule
+  already (one entry per Node, owner, sign and Port, the returns beside
+  them); a Node holding a thing is the engine's (`_engine_bound`), so the
+  real slot lives in the ray path and not in the arrays.
+
+Identity `lanes-v1`, recorded in `run.json` as `lanes`; isolated test
+`tests/test_lanes.py` ([expectations](TEST_EXPECTATIONS.md#a-port-is-two-lanes)).
+The shipped worlds `examples/nature/absorption.json`, `absorption_emission.json`
+and `helium_ion.json` declare tables (`absorb`, `nucleus_turn`) whose outputs
+share a heading; they are refused by this rule until the model owner declares
+their tables anew.
+
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 Restated on 2026-09-18 under `clock-readings-v1` (above): the momentum a

@@ -63,10 +63,26 @@ def _cli(*arguments):
     )
 
 
+# Re-pinned on 2026-09-18 with feature 18 (lanes-v1, Highlights 5.4 point 25): a
+# table gives its outputs distinct lanes, so these shipped worlds, whose tables
+# `absorb` and `nucleus_turn` send two outputs on one heading, are refused at
+# parsing with a message naming point 25 until the model owner declares their
+# tables anew (examples/nature/README.md).
+REFUSED_BY_LANES = {
+    ROOT / "examples/nature/absorption.json",
+    ROOT / "examples/nature/absorption_emission.json",
+    ROOT / "examples/nature/helium_ion.json",
+}
+
+
 @pytest.mark.parametrize("path", _initializations(), ids=lambda path: path.relative_to(ROOT).as_posix())
 def test_every_shipped_initialization_routes_to_its_existing_owner(path):
     report = validate_configuration(path.read_bytes())
     assert is_dataclass(report)
+    if path in REFUSED_BY_LANES:
+        _assert_invalid(report, "point 25")
+        assert report.kind == "initialization"
+        return
     assert report.valid, report.to_dict()
     assert report.kind == "initialization"
     assert report.issues == ()

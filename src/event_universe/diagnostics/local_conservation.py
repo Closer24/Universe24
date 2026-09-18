@@ -98,6 +98,9 @@ class LocalConservationAudit:
         # recoil field, read from the Node's records before it is checked.
         self.returned: Quantity = ZERO
         self._pending_returned: dict[Address3, Quantity] = {}
+        # The momentum the things spent on their steps (clock-readings-v1): it
+        # left the rays at the Node for the momentum field's line.
+        self._pending_spent: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
         # The charged ray families (ray-event-audit-v1): the audit measures their
         # charge, charge x amount over rays and over held stock, beside energy and
@@ -305,6 +308,16 @@ class LocalConservationAudit:
                         self._pending_returned.get(position, ZERO), amount
                     )
                     self.returned = _add(self.returned, amount)
+        if event.get("event") == "spatial_cycle" and event.get("spent"):
+            # The momentum the things spent on their steps this cycle
+            # (clock-readings-v1, the settled rule (i)) left the rays for the
+            # momentum field's line, outside the measurement.
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            for vector in cast(dict[str, Sequence[int]], event["spent"]).values():
+                if len(vector) == 3:
+                    self._pending_spent[position] = _add(
+                        self._pending_spent.get(position, ZERO), self._outside(vector)
+                    )
         if event.get("event") == "spatial_received" and event.get("absorbed_by_mark"):
             # What the Node's mark absorbed on its clicks left it for the marks'
             # sink, not for a Link (detector-absorb-v1), read before the check.
@@ -365,6 +378,7 @@ class LocalConservationAudit:
             | incoming.keys()
             | outgoing.keys()
             | self._pending_returned.keys()
+            | self._pending_spent.keys()
             | self._pending_absorbed.keys()
         )
         for position in sorted(positions):
@@ -378,6 +392,7 @@ class LocalConservationAudit:
             # The momentum the Node's shadows delivered outside the measurement
             # (bit-law-v1): to its body or to a record without a recoil field.
             residual = _add(residual, self._pending_returned.pop(position, ZERO))
+            residual = _add(residual, self._pending_spent.pop(position, ZERO))
             self.checks += 1
             if residual != ZERO:
                 self.failure = {

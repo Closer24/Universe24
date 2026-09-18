@@ -168,17 +168,24 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
         for port, (amount, unit) in enumerate(zip(A_SHARES, HEADINGS, strict=True)):
             position = tuple(a + tick * u for a, u in zip(LAMP_A, unit, strict=True))
             first = [ray for ray in rays_at(world, position) if ray.event_ports == 0b111111]
+            # Re-pinned on 2026-09-18 with feature 18 (lanes-v1, Highlights 5.4
+            # point 25): from tick 3 A's +X ray passes B's Node as B emits, and
+            # the two reals given one lane are one real ray of 7 whose phase is
+            # the coherent sum's (3 at 0 and 4 at 2: step 1) and whose owners are
+            # a set, the passing ray's record kept.
+            merged = port == 0 and tick >= 3
             assert first == [
                 Ray(
                     port,
                     (0, 0, 0),
-                    amount,
-                    phase=0,  # no clock (clock-readings-v1, 2026-09-18): the phase stays
+                    7 if merged else amount,
+                    phase=1 if merged else 0,  # no clock: the phase stays
                     steps=tick,
                     outbound=1,
                     event_ports=0b111111,
                     event_shares=A_SHARES,
                     detector=1,  # a thing (bit-law-v1, 2026-09-18)
+                    owners=(2,) if merged else (),
                 )
             ]
         # (d) Totals and the audit stay exact at every tick.
@@ -187,7 +194,10 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
         assert report["status"] == "passed"
         assert report["current"]["energy"] == 1200 and tuple(report["current"]["momentum"]) == (0, 0, 0)
         assert all(item["balanced"] for item in world.spatial_accounting().values())
-        assert sum(len(rays_at(world, n.position)) for n in world.inventory_view().nodes) == 7 * tick
+        # One merge per tick from tick 3 (lanes-v1, 2026-09-18).
+        assert sum(
+            len(rays_at(world, n.position)) for n in world.inventory_view().nodes
+        ) == 7 * tick - max(tick - 2, 0)
     # (b) A's tick-1 ray and B's tick-3 ray share the Node, heading and phase after
     # tick 4 minus one: two events, two rays, where one merged ray of 7 used to be.
     a_ray = Ray(0, (0, 0, 0), 3, phase=3, steps=3, event_ports=0b111111, event_shares=A_SHARES)
@@ -195,9 +205,12 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
     merged = merge_rays((a_ray, b_ray))
     assert len(merged) == 2 and set(merged) == {a_ray, b_ray}
     assert merge_rays((a_ray, a_ray)) == (replace(a_ray, amount=6),)
-    assert sorted((ray.amount, ray.steps) for ray in rays_at(world, (9, 7, 7))) == [(3, 4), (4, 2)]
-    assert sorted((ray.amount, ray.steps) for ray in rays_at(world, (8, 7, 7))) == [(3, 3), (4, 1)]
-    assert world.spatial_values((8, 7, 7))["quanta"]["ray_count"] == 2
+    # In the world the two are one real ray of 7 on one lane (lanes-v1, 2026-09-18,
+    # Highlights 5.4 point 25): the pure function keeps the two events apart, the
+    # lane joins them at B's Node with the passing ray's steps.
+    assert sorted((ray.amount, ray.steps) for ray in rays_at(world, (9, 7, 7))) == [(7, 4)]
+    assert sorted((ray.amount, ray.steps) for ray in rays_at(world, (8, 7, 7))) == [(7, 3)]
+    assert world.spatial_values((8, 7, 7))["quanta"]["ray_count"] == 1
     # (d) After tick 4: the lamps paid 60 and 16, recoiled by amount x heading, and
     # the rays hold the rest with the opposite momentum.
     assert lamp(world, 0) == {"quanta": (540,), "momentum": (0, -4, 0)}
