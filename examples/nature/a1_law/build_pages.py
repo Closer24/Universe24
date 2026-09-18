@@ -107,15 +107,16 @@ def e9_page():
     worlds = E9["worlds"]
     scan = E9["scan"]["rows"]
     fill1 = worlds["ring_screen_clock_fill1"]
-    marks = [m["position"][1] for m in fill1["marks"]]
+    marks = [m["position"][1] for m in fill1["marks"] if m["position"][0] == 7]
     counts = [0 for _ in marks]
+    shadow = fill1["ledger_last"]["shadow"]["electron"]
     body = [
         "<h1>E9 repeated under the law of the bit (2026-09-18)</h1>",
-        "<p class='muted'>The ring of E5 with its prefilled shadow set on E6's screen of seven marks, on the engine of origin/main at ffa4a56. The engine refused the worlds: a corner Node's ray slot budget is exceeded by the shadows of the ring's eight owners in the two phases the mixing makes of a phase-0 set. Nothing here is a law; the tables are what the engine gave.</p>",
+        "<p class='muted'>The ring of E5 with its prefilled shadow set on E6's screen of seven marks, on a closed board (periodic 12 x 11 x 11 with a wall of marks over the plane x = 11 closing the wrap in x; the model owner's decisions of 2026-09-18, Highlights 5.4: the board of a run is closed, and only closed worlds are tested), on the engine of origin/main at 1a88785. The engine refused the worlds: a corner Node's ray slot budget is exceeded by the shadows of the ring's eight owners in the two phases the mixing makes of a phase-0 set. The open board was measured first the same day, failing alike, and is recorded in the register entry. Nothing here is a law; the tables are what the engine gave.</p>",
         "<h2>What was asked, what the engine gave</h2>",
         "<ul><li>Counts of things per mark: <b>0 at every mark</b> in every world (no thing leaves the ring; no run completed more than four ticks).</li>"
-        "<li>Shadows returned per mark: read for the fill-1 world only, 8 quanta at (7, 5, 5) at tick 4 (phase 0), none elsewhere before the failure at tick 5.</li>"
-        "<li>The pushed amount at each mark's Node: (8, 0, 0) at (7, 5, 5) at tick 4; nothing else read.</li>"
+        f"<li>Shadows returned per mark and the pushed amount at each mark's Node: none whole before the failure (the fill-1 world's four ticks; the mark on the axis is 5 Links from the ring, the shell of one interval is not back at the corners before tick 5).</li>"
+        f"<li>Nothing escaped: the fill-1 world's shadow line {shadow['initial'][0]:,} at the start and {shadow['current'][0]:,} at tick 4, {shadow['escaped'][0]:,} escaped (on the open board, measured first, 137,564 of 1,572,864 had escaped by tick 4).</li>"
         "<li>The clocked ring: declared (K = 4096, 8 steps of 64 per interval), but the prefill releases at phase 0 and a re-release keeps a shadow's phase, so the clock enters no shadow; the runs with and without the clock fail alike.</li>"
         "<li>Fringes in counts or in the push: <b>not read</b>, no run went past tick 4.</li></ul>",
         "<h2>The runs</h2>",
@@ -163,13 +164,13 @@ def e9_page():
         "<h2>Counts per mark (things absorbed)</h2>",
         f"<figure>{bars(marks, counts, 'Counts per mark', 'things')}<figcaption>The seven marks at x = 7, y = 2 to 8: zero things absorbed in every world.</figcaption></figure>",
         "<h2>The fill-1 record, four ticks</h2>",
-        f"<p>Real electron line {fill1['ledger_last']['real']['electron']['current'][0]:,} at every tick (no source, escape, absorption or conversion); shadows {fill1['ledger_last']['shadow']['electron']['initial'][0]:,} at the start, {fill1['ledger_last']['shadow']['electron']['current'][0]:,} at tick 4, {fill1['ledger_last']['shadow']['electron']['escaped'][0]:,} escaped; every ledger line balanced, conserved at every completed tick: {fill1['conserved_at_every_completed_tick']}. Events: {html.escape(json.dumps(fill1['events']))}.</p>",
+        f"<p>Real electron line {fill1['ledger_last']['real']['electron']['current'][0]:,} at every tick (no source, escape, absorption or conversion); shadows {shadow['initial'][0]:,} at the start, {shadow['current'][0]:,} at tick 4, {shadow['escaped'][0]:,} escaped; every ledger line balanced, conserved at every completed tick: {fill1['conserved_at_every_completed_tick']}. Events: {html.escape(json.dumps(fill1['events']))}.</p>",
         gif_tag(
             GIFS["e9"],
-            "E9 under the law: the ring with its one-interval shell, the four ticks the engine completed",
+            "E9 under the law, the closed board: the ring with its one-interval shell, the four ticks the engine completed",
         ),
         "<h2>Fingerprint</h2>",
-        f"<p><code>source_sha256 {fill1['source_sha256']}</code>, engine commit ffa4a56; initialization digests in docs/EXPERIMENTS.md; worlds and readers under examples/nature/e9_law/.</p>",
+        f"<p><code>source_sha256 {fill1['source_sha256']}</code>, the engine of origin/main at 1a88785; initialization digests in docs/EXPERIMENTS.md; worlds and readers under examples/nature/e9_law/.</p>",
     ]
     return page("E9 under the law", "".join(body))
 
@@ -239,47 +240,16 @@ def a1_world_section(two, one, ctl, counts_key, title):
 
 def a1_page():
     worlds = A1["worlds"]
-    two, one = worlds["two_slits"], worlds["one_slit"]
-    big = "two_slits_big" in worlds and "one_slit_big" in worlds
-    periodic = "two_slits_periodic" in worlds and "one_slit_periodic" in worlds
-    pw = worlds.get("two_slits_periodic")
-    po = worlds.get("one_slit_periodic")
+    two, one = worlds["two_slits_periodic"], worlds["one_slit_periodic"]
+    ctl = A1.get("control_periodic", {})
     body = [
         "<h1>A1 repeated under the law of the bit (2026-09-18)</h1>",
-        f"<p class='muted'>One lamp of light (amount 4 per interval, a clock of 4 steps of 64 per interval, lambda_w = {two['lambda_w_links']:.2f} Links) behind a wall of marks at x = 16 with two slit columns d = {two['d']} apart, a screen of marks at x = 40 (L = {two['L']}); the lamp's shadow set a shell of eight intervals of release, the longest fill the engine's prefill admits, at phase 0 (a record has no phase; the clock enters no shadow). Optical spacing lambda_w L / d = {two['optical_spacing_links']:.1f} Links. Three pairs: the open board 45 x 65 x 17 with the lamp's stock 2^22 and 2^26 (the lamp at (4, 32, 8), the slits at y = 24 and 40, the screen y = 1 to 63 at z = 8), and the closed board, periodic 45 x 49 x 9 with the stock 2^26 (the lamp at (4, 24, 4), the slits at y = 16 and 32, the screen over every y at z = 4, a second wall of marks at x = 44 closing the wrap in x: the model owner's decision of 2026-09-18, the confrontation runs are made on a closed board). Engine of origin/main at ffa4a56. Nothing here is a law; the tables are what the engine gave.</p>",
+        f"<p class='muted'>One lamp of light (amount 4 per interval, a clock of 4 steps of 64 per interval, lambda_w = {two['lambda_w_links']:.2f} Links, the lamp's stock 2^26) at (4, 24, 4) behind a wall of marks at x = 16 with two slit columns at y = {two['slits']} (d = {two['d']}), a screen of marks at x = 40 over every y at z = 4 (L = {two['L']}), on a closed board: periodic 45 x 49 x 9 with a second wall of marks at x = 44 closing the wrap in x (the model owner's decisions of 2026-09-18, Highlights 5.4: the board of a run is closed, and only closed worlds are tested). The lamp's shadow set a shell of eight intervals of release, the longest fill the engine's prefill admits, at phase 0 (a record has no phase; the clock enters no shadow). Optical spacing lambda_w L / d = {two['optical_spacing_links']:.1f} Links. Engine of origin/main at ffa4a56. Nothing here is a law; the tables are what the engine gave.</p>",
         "<h2>Headline</h2>",
-        "<ul><li>Fringes in the counts of things: <b>none</b>. No thing reached the screen in any of the six worlds: every photon goes straight along its line to the wall's mark on the axis (a thing has one path; the lamp's shadows are home to its own photons and push nothing).</li>",
-        (
-            f"<li>Fringes in the push, the closed board (the run the decision asks for): the returned amount along the screen is modulated at <b>depth {pw['depth_returned']['depth']:.2f}</b> about the axis, its maxima at y = {[m[0] for m in pw['extrema_returned']['maxima']]} (the three about the axis <b>{pw['extrema_returned']['maxima'][2][0] - pw['extrema_returned']['maxima'][1][0]} Links apart</b> against the optical {pw['optical_spacing_links']:.1f}) and its minima at y = {[m[0] for m in pw['extrema_returned']['minima']]}; the push J_x at depth {pw['depth_push']['depth']:.2f} with maxima {pw['extrema_push']['mean_spacing']:.1f} Links apart on the mean; the one-slit control at depth {po['depth_returned']['depth']:.2f} (returned) and {po['depth_push']['depth']:.2f} (push). The cross term against the incoherent sum changes sign {A1['control_periodic']['cross_sign_changes']} times along the screen. What arrived is at phases {list(pw['phases'])} of 64 only: a phase-0 shell, not a wave of lambda_w. Nothing escaped ({pw['escaped_totals']['light'][0]} quanta).</li>"
-            if periodic
-            else "<li>Fringes in the push, the closed board: not run.</li>"
-        ),
-        "<li>Fringes in the push, the open board: with the shell of 2^22 per heading nothing whole reached the screen; with 2^26 the returned amount was modulated at depth 0.73 at a mean spacing of 5.1 Links (97 % of the shell escaped through the open faces).</li></ul>",
-    ]
-    if periodic:
-        body.append(
-            a1_world_section(
-                worlds["two_slits_periodic"],
-                worlds["one_slit_periodic"],
-                A1.get("control_periodic", {}),
-                "periodic",
-                "The third pair: the closed board (periodic 45 x 49 x 9, the lamp's stock 2^26, nothing escapes)",
-            )
-        )
-    if big:
-        body.append(
-            a1_world_section(
-                worlds["two_slits_big"],
-                worlds["one_slit_big"],
-                A1.get("control_big", {}),
-                "big",
-                "The second pair: the lamp's stock 2^26, a shell sixteen times larger",
-            )
-        )
-    body.append(
-        a1_world_section(two, one, A1.get("control", {}), "", "The first pair: the lamp's stock 2^22")
-    )
-    body += [
+        "<ul><li>Fringes in the counts of things: <b>none</b>. No thing reached the screen in either world: every photon goes straight along its line to the wall's mark on the axis (a thing has one path; the lamp's shadows are home to its own photons and push nothing).</li>",
+        f"<li>Fringes in the push: the returned amount along the screen is modulated at <b>depth {two['depth_returned']['depth']:.2f}</b> about the axis, its maxima at y = {[m[0] for m in two['extrema_returned']['maxima']]} (the three about the axis <b>{two['extrema_returned']['maxima'][2][0] - two['extrema_returned']['maxima'][1][0]} Links apart</b> against the optical {two['optical_spacing_links']:.1f}) and its minima at y = {[m[0] for m in two['extrema_returned']['minima']]}; the push J_x at depth {two['depth_push']['depth']:.2f} with maxima {two['extrema_push']['mean_spacing']:.1f} Links apart on the mean; the one-slit control at depth {one['depth_returned']['depth']:.2f} (returned) and {one['depth_push']['depth']:.2f} (push). The cross term against the incoherent sum changes sign {ctl.get('cross_sign_changes')} times along the screen. What arrived is at phases {list(two['phases'])} of 64 only: a phase-0 shell, not a wave of lambda_w. Nothing escaped ({two['escaped_totals']['light'][0]} quanta).</li>",
+        "<li>The open board (45 x 65 x 17, the lamp's stock 2^22 and 2^26) was measured first the same day, before the decision, and is recorded in the register entry (docs/EXPERIMENTS.md): nothing reached the screen with 2^22; with 2^26 a modulation at depth 0.73 at a mean spacing of 5.1 Links, 97 % of the shell escaping through the open faces.</li></ul>",
+        a1_world_section(two, one, ctl, "periodic", "The closed board: two slits against one slit"),
         "<h2>The ledger at the end</h2>",
         table(
             [
@@ -308,7 +278,7 @@ def a1_page():
         ),
         gif_tag(
             GIFS["a1"],
-            "A1 under the law: the lamp, the wall of marks with two slits, the screen; the photons on their one path to the wall (two_slits)",
+            "A1 under the law, the closed board: the lamp, the wall of marks with two slits, the screen, the back wall; the photons on their one path to the wall (two_slits_periodic)",
         ),
         "<h2>Fingerprint</h2>",
         f"<p><code>source_sha256 {two['source_sha256']}</code>, engine commit ffa4a56; initialization "

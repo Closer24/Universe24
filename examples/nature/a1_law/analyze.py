@@ -1,6 +1,7 @@
 """Read the records of A1 repeated under the law of the bit (docs/EXPERIMENTS.md,
-2026-09-18): the two worlds of `make_worlds.py` (`two_slits`, `one_slit`) run
-through the runner and replayed by `record_screen.py`. A Renderer of records
+2026-09-18): the two worlds of `make_worlds.py` (`two_slits_periodic`,
+`one_slit_periodic`, the closed board: only closed worlds are tested, the model
+owner, 2026-09-18) run through the runner and replayed by `record_screen.py`. A Renderer of records
 (Highlights 3.29): it reads `run.json`, `events.jsonl`, `initialization.json`
 and `screen.json` and never the engine. Prints the readings and writes
 `record.json`.
@@ -16,8 +17,8 @@ and minima of the returned amount and of the push along the screen, their
 spacing against the optical spacing lambda_w L / d, and the depth
 (max - min) / (max + min) between the central maximum and the nearest
 minimum; and the control: the two-slit profile against the one-slit profile
-and its mirror image (the world is symmetric under y -> 64 - y, so the closed
-slit's own pattern is the open slit's mirrored), whose sum is the incoherent
+and its mirror image (the world is symmetric under y -> Y - y about the lamp's
+row, so the closed slit's own pattern is the open slit's mirrored), whose sum is the incoherent
 sum of the two slits, the difference being the cross term.
 
 Run:  python examples/nature/a1_law/analyze.py RUNS_DIR [--record record.json]
@@ -32,14 +33,7 @@ from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-WORLDS = (
-    "two_slits",
-    "one_slit",
-    "two_slits_big",
-    "one_slit_big",
-    "two_slits_periodic",
-    "one_slit_periodic",
-)
+WORLDS = ("two_slits_periodic", "one_slit_periodic")
 SQRT3 = math.sqrt(3.0)
 
 
@@ -286,10 +280,8 @@ def main() -> None:
         directory = args.runs / name / "run"
         if (directory / "screen.json").exists():
             record["worlds"][name] = analyze(directory)
-    for suffix in ("", "_big", "_periodic"):
-        two, one = "two_slits" + suffix, "one_slit" + suffix
-        if two in record["worlds"] and one in record["worlds"]:
-            record["control" + suffix] = control(record["worlds"][two], record["worlds"][one])
+    if all(name in record["worlds"] for name in WORLDS):
+        record["control_periodic"] = control(*(record["worlds"][name] for name in WORLDS))
     for name, row in record["worlds"].items():
         print(f"## {name}: {row['status']}, {row['completed_ticks']} ticks, {row['elapsed_seconds']} s")
         print(
@@ -314,7 +306,7 @@ def main() -> None:
                 f"{row['first_arrival'][k]} | {row['push_x'][k]} | {row['peak_push_x'][k]} |"
             )
         print()
-    for key in ("control", "control_big", "control_periodic"):
+    for key in ("control_periodic",):
         if key not in record:
             continue
         c = record[key]

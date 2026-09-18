@@ -1,5 +1,5 @@
 {
- "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+ "source_sha256": "051d716825c4785baffba01e46ea7348698fdfe82ca9ddc70eafab9871a49be5",
  "ticks": 40,
  "rows": [
   {
@@ -16,7 +16,7 @@
    "admitted": true,
    "failed_tick": 1,
    "error": "ray slot budget exceeded",
-   "initial_shadows": 3393312
+   "initial_shadows": 3407872
   },
   {
    "ray_slots": 24,
@@ -46,7 +46,7 @@
    "admitted": true,
    "failed_tick": 2,
    "error": "ray slot budget exceeded",
-   "initial_shadows": 3393312
+   "initial_shadows": 3407872
   },
   {
    "ray_slots": 32,
@@ -54,7 +54,7 @@
    "admitted": true,
    "failed_tick": 1,
    "error": "ray slot budget exceeded",
-   "initial_shadows": 4930592
+   "initial_shadows": 4980736
   },
   {
    "ray_slots": 32,
@@ -62,7 +62,7 @@
    "admitted": true,
    "failed_tick": 1,
    "error": "ray slot budget exceeded",
-   "initial_shadows": 6452084
+   "initial_shadows": 6553600
   },
   {
    "ray_slots": 32,
@@ -70,7 +70,7 @@
    "admitted": true,
    "failed_tick": 1,
    "error": "ray slot budget exceeded",
-   "initial_shadows": 7963692
+   "initial_shadows": 8126464
   },
   {
    "ray_slots": 32,

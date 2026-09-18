@@ -1904,11 +1904,16 @@ fingerprints and `record.json` the readings. No GIF was rendered.
 (2026-09-18), written by `make_worlds.py` from `screen_loop.json` through
 `bit_law_migration.migrate`: the ring of E5 on E6's screen of seven marks,
 N = 64, one K, the electron's shadows given with the board (`initial_field`
-`fill`), no field family, the dense mode. The engine refuses the ring with
-its shadow set (a corner's ray slot budget, the prefill's two phases per
-Port at a source); `scan_fill.py` reproduces the refusals through the
-Simulation API and `analyze.py` reads the failed records; the register
-entry holds the tables and the fingerprints.
+`fill`), no field family, the dense mode, on a closed board (periodic, with
+a wall of marks closing the wrap in x; the model owner's decisions of
+2026-09-18, Highlights 5.4: "The board of a run is closed", and only closed
+worlds are tested; the open board was measured first the same day and is
+recorded in the register entry). The engine refuses the ring with its
+shadow set (a corner's ray slot budget, the prefill's two phases per Port
+at a source), on the closed board as on the open one; `scan_fill.py`
+reproduces the refusals through the Simulation API and `analyze.py` reads
+the failed records; the register entry holds the tables and the
+fingerprints.
 
 ### Dictionary: each physical word next to the engine word
 
@@ -1919,12 +1924,13 @@ entry holds the tables and the fingerprints.
 | The clock | `clock` true on the electron with K = 4096: 8 steps of 64 per interval per ray (`ring_screen_clock`); no `clock` in `ring_screen`; the prefill releases at phase 0 and a re-release keeps the shadow's phase, so the clock enters no shadow | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1) |
 | The screen | Seven marks at (7, 2, 5) to (7, 8, 5), setting [1, 1]: a thing that arrives is absorbed into the mark's resident thing and counted; a shadow is returned as it is, uncounted and unrecorded | Highlights 5.4 point 6; [a Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) |
 | The wait | `wait_per_quantum` 1 | Highlights 5.4 point 23 |
+| The closed board | `boundary` periodic on 12 x 11 x 11, with a wall of 121 marks over the plane x = 11 closing the wrap in x, so that the ring's shadows leaving toward -X do not reach the screen from behind; nothing escapes | Highlights 5.4, "The board of a run is closed" and "only closed worlds are tested" (model owner, 2026-09-18) |
 
 ### Run and render
 
 ```bash
 PYTHONPATH=src python examples/nature/e9_law/make_worlds.py
-PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-e9-law examples/nature/e9_law/ring_screen.json examples/nature/e9_law/ring_screen_clock.json examples/nature/e9_law/ring_screen_clock_fill1.json
+PYTHONPATH=src python tools/run_series.py --jobs 3 --out runs-e9-law examples/nature/e9_law/ring_screen.json examples/nature/e9_law/ring_screen_clock.json examples/nature/e9_law/ring_screen_clock_fill1.json
 PYTHONPATH=src python examples/nature/e9_law/scan_fill.py
 python examples/nature/e9_law/analyze.py runs-e9-law --record examples/nature/e9_law/record.json
 python tools/ray_viewer/extract.py runs-e9-law/ring_screen_clock_fill1/run --label "E9 under the law" --out runs-e9-law/runs.json
@@ -1940,14 +1946,14 @@ and the events of their completed ticks).
 [A1 repeated under the law of the bit](../../docs/EXPERIMENTS.md#a1-two-slit-intensities-against-the-born-rule)
 (2026-09-18), written by `make_worlds.py`: one lamp of light with a clock
 behind a wall with two slits, a screen of marks 24 Links behind the wall,
-the lamp's shadow set given with the board, N = 64, one K, the dense mode;
-three pairs of a world and its control with one slit closed: `two_slits`
-and `one_slit` on the open board with the lamp's stock 2^22,
-`two_slits_big` and `one_slit_big` with the stock 2^26, and
-`two_slits_periodic` and `one_slit_periodic`, the stock 2^26 on a closed
-board (periodic, a second wall of marks closing the wrap in x), the run the
-model owner's decision of 2026-09-18 asks for (Highlights 5.4, "The board
-of a run is closed"). `record_screen.py` replays a run and records what the
+the lamp's shadow set given with the board, N = 64, one K, the dense mode,
+on a closed board: `two_slits_periodic` and its control `one_slit_periodic`
+with one slit closed, the lamp's stock 2^26 on a periodic board with a
+second wall of marks closing the wrap in x (the model owner's decisions of
+2026-09-18, Highlights 5.4: "The board of a run is closed", and only closed
+worlds are tested, so the series carries no open-board control; the open
+board was measured first the same day and is recorded in the register
+entry). `record_screen.py` replays a run and records what the
 screen's marks turn back tick by tick (a mark that only returns publishes
 nothing); `analyze.py` reads the records and writes `record.json`;
 `build_pages.py` writes `a1_law.html` (and `e9_law.html`) from the records;
@@ -1957,12 +1963,12 @@ the register entry holds the tables and the fingerprints.
 
 | Physics | Engine (the key in the world file) | Where the rule is stated |
 | --- | --- | --- |
-| The lamp, a source of photons | A type `lamp` holding `light` 2^22 (`two_slits`, `one_slit`) or 2^26 (the `_big` and `_periodic` pairs) and the world's momentum at (4, 32, 8) on the open board 45 x 65 x 17, at (4, 24, 4) on the closed board 45 x 49 x 9, emitting a light thing of amount 4 along +X every interval at `kerengonen_phase` 0, paid from its stock; the emitted thing carries the lamp's `thing` id | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) ("The source") |
+| The lamp, a source of photons | A type `lamp` holding `light` 2^26 and the world's momentum at (4, 24, 4) on the board 45 x 49 x 9, emitting a light thing of amount 4 along +X every interval at `kerengonen_phase` 0, paid from its stock; the emitted thing carries the lamp's `thing` id | [A Node is its six Ports](../../docs/SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1) ("The source") |
 | The lamp's clock | `clock` true on `light`, K = 1: a thing of amount 4 advances 4 steps of 64 per interval, the period 16 of the derivation; lambda_w = N K / (sqrt(3) x 4) = 9.24 Links; the lamp itself, a record, has no phase, so every photon leaves at phase 0 and every shadow of the prefill is at phase 0 | [The clock and the readings](../../docs/SPATIAL_FIELDS.md#the-clock-and-the-readings-clock-readings-v1); DERIVATIONS.md 27 (v), 29 |
 | The lamp's field | The light shadows of owner 1: `release` [1, 1], `initial_field` `{"light": {"fill": 8}}` (the longest fill the prefill admits for a lamp), a shell of eight intervals of release, mixed at every Node | Highlights 5.4 points 22, 24; [prefill](../../src/event_universe/prefill.py) |
-| The wall with two slits | The plane x = 16 of marks at [1, 1] but the two slit columns, y = 24 and 40 on the open board, y = 16 and 32 on the closed one (d = 16 either way): a mark absorbs a thing and returns a shadow, as a wall does; the control closes the lower column | Highlights 5.4 point 6 |
-| The screen | The row x = 40 of marks at [1, 1] (L = 24): y = 1 to 63 at z = 8 on the open board, every y at z = 4 on the closed one | Highlights 5.4 point 6 |
-| The closed board | `boundary` periodic on 45 x 49 x 9, with a second wall of marks over the plane x = 44 so that the shell leaving the lamp toward -X does not reach the screen from behind through the wrap; nothing escapes, every shadow comes around | Highlights 5.4, "The board of a run is closed" (model owner, 2026-09-18) |
+| The wall with two slits | The plane x = 16 of marks at [1, 1] but the two slit columns y = 16 and y = 32 (d = 16): a mark absorbs a thing and returns a shadow, as a wall does; the control closes y = 16 | Highlights 5.4 point 6 |
+| The screen | The row x = 40 of marks at [1, 1] over every y at z = 4 (L = 24) | Highlights 5.4 point 6 |
+| The closed board | `boundary` periodic on 45 x 49 x 9, with a second wall of marks over the plane x = 44 so that the shell leaving the lamp toward -X does not reach the screen from behind through the wrap; nothing escapes, every shadow comes around; no open-board control in the series | Highlights 5.4, "The board of a run is closed" and "only closed worlds are tested" (model owner, 2026-09-18) |
 | The push at a mark's Node | J = the sum of amount x arrival heading over the shadows the mark turned back in the interval, read by `record_screen.py` from the mark's resident rays; a returning share counts with the opposite sign | DERIVATIONS.md section 0 (J); [the return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1) |
 | A photon meeting the lamp's shadows | Home: the shadow is absorbed and re-released, no push; the lamp's things are its own | Highlights 5.4 point 3; [the return is a field](../../docs/SPATIAL_FIELDS.md#the-return-is-a-field-return-field-v1) ("Home") |
 
@@ -1970,25 +1976,18 @@ the register entry holds the tables and the fingerprints.
 
 ```bash
 PYTHONPATH=src python examples/nature/a1_law/make_worlds.py
-PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-a1-law examples/nature/a1_law/two_slits.json examples/nature/a1_law/one_slit.json
-PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-a1-law-big examples/nature/a1_law/two_slits_big.json examples/nature/a1_law/one_slit_big.json
-PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-a1-law-periodic examples/nature/a1_law/two_slits_periodic.json examples/nature/a1_law/one_slit_periodic.json
-for w in two_slits one_slit two_slits_big one_slit_big; do   # the open board
-  PYTHONPATH=src python examples/nature/a1_law/record_screen.py runs-a1-law*/$w/run --screen-x 40 --wall-x 16 --probe 17,24,8 --probe 17,40,8 --probe 18,24,8 --probe 18,40,8 --probe 28,32,8 --probe 39,32,8
+PYTHONPATH=src python tools/run_series.py --jobs 2 --out runs-a1-law examples/nature/a1_law/two_slits_periodic.json examples/nature/a1_law/one_slit_periodic.json
+for w in two_slits_periodic one_slit_periodic; do
+  PYTHONPATH=src python examples/nature/a1_law/record_screen.py runs-a1-law/$w/run --screen-x 40 --wall-x 16 --probe 17,16,4 --probe 17,32,4 --probe 18,16,4 --probe 18,32,4 --probe 28,24,4 --probe 39,24,4 --probe 43,24,4
 done
-for w in two_slits_periodic one_slit_periodic; do   # the closed board
-  PYTHONPATH=src python examples/nature/a1_law/record_screen.py runs-a1-law-periodic/$w/run --screen-x 40 --wall-x 16 --probe 17,16,4 --probe 17,32,4 --probe 18,16,4 --probe 18,32,4 --probe 28,24,4 --probe 39,24,4 --probe 43,24,4
-done
-python examples/nature/a1_law/analyze.py runs-a1-law --record examples/nature/a1_law/record.json   # one directory holding <world>/run for all six
-python tools/ray_viewer/extract.py runs-a1-law/two_slits/run --label "A1 under the law: two_slits" --out runs-a1-law/two_slits/runs.json
-python tools/ray_viewer/render_gif.py runs-a1-law/two_slits/runs.json --output runs-a1-law/a1_law.gif --preset phone --side-by-side
+python examples/nature/a1_law/analyze.py runs-a1-law --record examples/nature/a1_law/record.json
+python tools/ray_viewer/extract.py runs-a1-law/two_slits_periodic/run --label "A1 under the law: two_slits_periodic" --out runs-a1-law/two_slits_periodic/runs.json
+python tools/ray_viewer/render_gif.py runs-a1-law/two_slits_periodic/runs.json --output examples/nature/a1_law/a1_law.gif --preset phone --side-by-side
 python examples/nature/a1_law/build_pages.py . examples/nature/e9_law/e9_law.gif examples/nature/a1_law/a1_law.gif
 ```
 
-The records stay outside the tree (`state.json`, 59 to 150 MB per world,
-deleted after the reading; `analyze.py` reads one directory that holds
-`<world>/run` for every world it finds, so the three series are gathered
-under one root, by links or copies, before it runs).
+The records stay outside the tree (`state.json`, 59 MB per world, deleted
+after the reading).
 
 ## A5: Coulomb's law through the spreading field
 

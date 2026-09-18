@@ -46,6 +46,7 @@ Run:  python examples/nature/e9_law/make_worlds.py [--out DIR]
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 from pathlib import Path
@@ -87,6 +88,18 @@ def ring_world(*, clock: bool, fill: int = FILL) -> dict:
     for emission in document["emissions"]:
         emission["amount"] = RING_AMOUNT
     document["initial_field"] = {"electron": {"fill": fill}}
+    # The closed board (the model owner, 2026-09-18: the board of a run is closed,
+    # and only closed worlds are tested): periodic, with a wall of marks over the
+    # plane x = X - 1 closing the wrap in x, as A1's closed board has, so that
+    # the shadows leaving the ring toward -X do not reach the screen from behind.
+    document["boundary"] = "periodic"
+    shape = document["shape"]
+    mark = {k: v for k, v in document["detectors"][0].items() if k != "position"}
+    document["detectors"] += [
+        {"position": [shape[0] - 1, y, z], **copy.deepcopy(mark)}
+        for y in range(shape[1])
+        for z in range(shape[2])
+    ]
     text = json.dumps(document)
     for key in ("spread", "steering", "mass_field", "seed", "field_of"):
         assert f'"{key}":' not in text, key

@@ -1,51 +1,55 @@
 """Write the worlds of A1 repeated under the law of the bit (docs/EXPERIMENTS.md,
 2026-09-18): one lamp of the light family behind a wall with two slits, a
-screen of marks behind the wall, the lamp's shadow set given with the board.
+screen of marks behind the wall, the lamp's shadow set given with the board,
+on a closed board.
 
 The law's form throughout: N = 64 (the world's one phase circle, declared once
-like K; the cleanup of 2026-09-18), one K for the world,
-`wait_per_quantum` 1, no field family (the lamp's field is light shadows, bit
-0, of the lamp's owner), no spread, steering, mass field or seed, the dense
-mode where the world admits it.
+like K; the cleanup of 2026-09-18), one K for the world, `wait_per_quantum` 1,
+no field family (the lamp's field is light shadows, bit 0, of the lamp's
+owner), no spread, steering, mass field or seed, the dense mode where the world
+admits it.
 
-The board: X x Y x Z = 45 x 65 x 17, open. The lamp, a type holding light
-(stock 2^22) and the world's momentum, at (4, 32, 8), emitting one light thing
-of amount 4 along +X every interval (`kerengonen_phase` 0); light declares
-`clock` true and the world K = 1, so a thing of amount 4 advances 4 steps of 64
-per interval, a sixteenth of a turn: the derivation's period 16, lambda_w =
+The board: X x Y x Z = 45 x 49 x 9, periodic (the model owner's decisions of
+2026-09-18, Highlights 5.4: the board of a run is closed, so that the source's
+shadow set does not escape, and only closed worlds are tested, so the series
+carries no open-board control). The lamp, a type holding light (stock 2^26)
+and the world's momentum, at (4, 24, 4), emitting one light thing of amount 4
+along +X every interval (`kerengonen_phase` 0); light declares `clock` true
+and the world K = 1, so a thing of amount 4 advances 4 steps of 64 per
+interval, a sixteenth of a turn: the derivation's period 16, lambda_w =
 K N / (sqrt(3) M) = 64 / (sqrt(3) x 4) = 9.24 Links (DERIVATIONS.md sections 27
 (v) and 29, where K is the content per turn, N times the engine's K per step).
 The wall: the plane x = 16, every Node of it a Detector mark at setting [1, 1]
-except the two slit columns at y = 24 and y = 40 (d = 16), all z; a mark
+except the two slit columns at y = 16 and y = 32 (d = 16), all z; a mark
 absorbs a thing into its counter and returns a shadow, which is what a wall
 does under the law, and it is silent in the record and reflects in the prefill
 as it does in the run, where an external body's Node publishes a record every
-interval a shadow reaches it and is dropped by the prefill. The screen: the
-row x = 40 (L = 24 behind the wall), y = 1 to 63, z = 8, marks at [1, 1]. The
-optical spacing lambda_w L / d = 13.9 Links.
+interval a shadow reaches it and is dropped by the prefill. A second wall of
+marks over the plane x = 44 closes the wrap in x: without it the shell leaving
+the lamp toward -X would reach the screen from behind; the wrap in z makes the
+slit columns infinite, the wrap in y puts images of the lamp 49 Links apart.
+The screen: the row x = 40 (L = 24 behind the wall), every y, z = 4, marks at
+[1, 1]. The optical spacing lambda_w L / d = 13.9 Links.
 
 The lamp's shadow set: `initial_field` `{"light": {"fill": 8}}` with
-`release` [1, 1], 2^22 quanta per heading per interval of the fill; 8 is the
+`release` [1, 1], 2^26 quanta per heading per interval of the fill; 8 is the
 longest fill the engine admits for one lamp, read before the runs (commit
 ffa4a56: from 16 the prefill refuses "a third phase on one Port of a source",
 `prefill.py`, `_depart`), so the set is a shell of eight intervals of release
-that leaves the lamp at the first tick, holding about 2 x 10^8 quanta, and not
-a standing set. The prefill releases at phase 0 (`release_stock`: a record has
-no phase of its own) and a shadow that comes home is re-released with its own
-phase (`rerelease_shadow`), so the lamp's clock enters none of its shadows.
+that leaves the lamp at the first tick, holding about 3.2 x 10^9 quanta, and
+not a standing set. The prefill releases at phase 0 (`release_stock`: a record
+has no phase of its own) and a shadow that comes home is re-released with its
+own phase (`rerelease_shadow`), so the lamp's clock enters none of its shadows.
 
-Two worlds: `two_slits` and, the control, `one_slit` (the column y = 24
-closed with marks); and a second pair, `two_slits_big` and `one_slit_big`, the
-same with the lamp's stock 2^26 (a shell sixteen times larger), declared after
-the first pair's records showed the shell below one whole quantum per Node
-before the screen (both records kept, the register says so); and a third pair,
-`two_slits_periodic` and `one_slit_periodic`, the same lamp of stock 2^26 on a
-periodic board 45 x 49 x 9 with a second wall of marks at x = 44 closing the
-wrap in x (the model owner's decision of 2026-09-18, landing while the open
-pairs ran: the confrontation runs are made on a closed board, so that the
-source's shadow set does not escape). 200 ticks: the shell's front reaches the screen after about
-sqrt(3) x 31 = 54 intervals and its reflection off the screen is back at the
-wall and at the screen again within the run.
+Two worlds: `two_slits_periodic` and, the control, `one_slit_periodic` (the
+column y = 16 closed with marks). 200 ticks: the shell's front reaches the
+screen after about sqrt(3) x 31 = 54 intervals and its reflection off the
+screen is back at the wall and at the screen again within the run. The open
+board (45 x 65 x 17, the lamp at (4, 32, 8), the slits at y = 24 and 40, the
+lamp's stock 2^22 and 2^26) was measured earlier the same day and is recorded
+in the register entry; under the decision it is not in the series, and
+`world(..., periodic=False)` keeps its form only so that the record's reader
+can name it.
 
 Run:  python examples/nature/a1_law/make_worlds.py [--out DIR]
 """
@@ -193,15 +197,8 @@ def world(open_slits, name, stock=LAMP_STOCK, periodic=False):
 
 
 def cases():
-    yield "two_slits", world(set(SLITS), "two_slits")
-    yield "one_slit", world({SLITS[1]}, "one_slit")
-    # The second pair, declared after the first look at the first pair's records
-    # (both records kept): the same worlds with the lamp's stock 2^26, a shadow
-    # set sixteen times larger, since the shell of the first pair had fallen
-    # below one whole quantum per Node before it reached the screen.
-    yield "two_slits_big", world(set(SLITS), "two_slits_big", BIG_STOCK)
-    yield "one_slit_big", world({SLITS[1]}, "one_slit_big", BIG_STOCK)
-    # The third pair, the closed board (the model owner's decision of 2026-09-18).
+    # The closed board only (the model owner, 2026-09-18: only closed worlds are
+    # tested); the open-board pairs measured earlier are in the register.
     yield "two_slits_periodic", world(set(PERIODIC_SLITS), "two_slits_periodic", BIG_STOCK, True)
     yield "one_slit_periodic", world({PERIODIC_SLITS[1]}, "one_slit_periodic", BIG_STOCK, True)
 
