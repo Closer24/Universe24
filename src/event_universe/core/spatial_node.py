@@ -44,11 +44,9 @@ from .spatial_state import (
     POLARIZATION_NONE,
     PUSH_READS,
     RETURN_MODES,
-    TRACE_END,
     FieldInteractionGuard,
     Ray,
     Rays,
-    Remainders,
     SpatialBundle,
     SpatialCouplingResult,
     SpatialFieldDefinition,
@@ -56,7 +54,6 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
-    Traces,
     attenuate_rays,
     body_absorb,
     body_coupled_families,
@@ -67,7 +64,6 @@ from .spatial_state import (
     coherent_stock,
     detector_absorb,
     detector_draw,
-    leave_trace,
     merge_rays,
     polarize_content,
     push_of,
@@ -78,7 +74,6 @@ from .spatial_state import (
     return_ray,
     return_shadow,
     validate_rays,
-    validate_remainders,
     zero_spatial_state,
 )
 from .topology import neighbor_address
@@ -94,10 +89,7 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        Remainders,
-        Remainders,
         int,
-        Traces,
     ],
     SpatialPlan,
 ]
@@ -411,10 +403,9 @@ class SpatialNode(SpatialNodeState):
         )
         active_field = (
             any(any(unpack(payload)) for state in states for payload in state.populations)
+            # A parked shadow among the rays is content the Node owns (node-is-ports-v1).
             or any(self.rays)
             or self.body is not None
-            # Remainder registers are content the Node owns (field-remainder-v1).
-            or any(any(block) for block in self.remainders)
         )
         # An exhausted source still clears its last emission before a later move.
         active_source = active_source or any(
@@ -438,7 +429,7 @@ class SpatialNode(SpatialNodeState):
             services.activity.mark(self.position, False)
             return
         # This is the previous completed colocated carrier cycle, never pending
-        # work or a register carried here from another Node.
+        # work or a value carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
         resident_rays: tuple[Rays, ...] = self.rays
         if self.body is not None and self.body.coupling not in (BODY_SINK, BODY_POLARIZER):
@@ -473,15 +464,12 @@ class SpatialNode(SpatialNodeState):
             node_cost,
             resident_rays,
             ray_hold,
-            self.remainders,
-            self.remainder_phases,
             self.detector_ticket,
-            self.traces,
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
         if self.body is not None:
-            # The body's part reads its registers, which are outside the plan's
+            # The body's part reads its momentum and held shares, outside the plan's
             # key, so what it changed is validated whether the plan was
             # evaluated or reused.
             plan = self._body_cycle(plan, services)
@@ -543,14 +531,19 @@ class SpatialNode(SpatialNodeState):
         )
         if body.coupling not in (BODY_SINK, BODY_POLARIZER):
             tokens = [ray for port in range(6) for ray in rays[port][body.family]]
-            tokens.extend(plan.kept_rays[body.family] if plan.kept_rays else ())
+            tokens.extend(
+                ray for ray in (plan.kept_rays[body.family] if plan.kept_rays else ()) if not ray.parked
+            )
             if len(tokens) != 1 or tokens[0].amount != 1 or tokens[0].phase != body.phase:
                 raise ValueError("an external body coupling must return the body unchanged")
             for port in range(6):
                 rays[port][body.family] = ()
             if plan.kept_rays:
+                # The token never leaves: the Node keeps no trace of it.
                 kept = list(plan.kept_rays)
-                kept[body.family] = ()
+                kept[body.family] = tuple(
+                    ray for ray in kept[body.family] if ray.parked and ray.owner != body.thing
+                )
                 plan = replace(plan, kept_rays=tuple(kept))
         port, stepped = body_step(body)
         return replace(
@@ -657,7 +650,7 @@ class SpatialNode(SpatialNodeState):
             # The polarizer (ray-polarization-v1): the outbound things of the
             # polarized family are split by the body's table, the pass share leaving
             # on the pass Port as fresh event rays, the rest into the sink and the
-            # shares below one quantum into the body's registers.
+            # shares below one quantum into the body's held shares.
             assert polarizer is not None
             current, passing, records = polarize_content(current, index, tuple(polarized), definition)
             kept.extend(passing)
@@ -698,12 +691,12 @@ class SpatialNode(SpatialNodeState):
                         sunk=record.sunk,
                         held=list(record.held),
                         released=list(record.released),
-                        registers=list(record.registers),
+                        held_after=list(record.held_after),
                     )
                 )
             # The sink line: what sank in whole quanta, and the momentum the body
             # took, what arrived less what left on the pass Port; the held quanta
-            # have none, as a spread's registers have none (field-remainder-v1).
+            # have none, as a parked shadow has none (field-remainder-v1).
             absorbed[definition.field][0] = checked_work(absorbed[definition.field][0] + polarized_sunk)
             if definition.momentum_field is not None:
                 for axis in range(3):
@@ -848,12 +841,6 @@ class SpatialNode(SpatialNodeState):
         if next_ray_wait is not None:
             # A later unrelated arrival starts its own load-priced wait.
             self.ray_wait = next_ray_wait if any(self.rays) else 0
-        if plan.remainders:
-            # The remainder registers after this cycle (field-remainder-v1).
-            validate_remainders(plan.remainders, plan.remainder_phases, services.initial.spatial_fields)
-            self.remainders, self.remainder_phases = plan.remainders, plan.remainder_phases
-        # The trace register after this cycle (bit-law-v1).
-        self.traces = plan.traces
         if plan.decay_draws:
             # The Node's ticket stream after the draws of its decaying rules
             # (decay-draw-v1): one unsalted step per draw, as at a mark.
@@ -880,8 +867,8 @@ class SpatialNode(SpatialNodeState):
             services.accounting.record_annulled(plan.annulled)
         if plan.returned_delta:
             # The momentum shadows carried home this cycle to a record without a
-            # register (bit-law-v1): booked returned; a shadow's amount is never
-            # sourced nor returned (point 7).
+            # momentum field (bit-law-v1): booked returned; a shadow's amount is
+            # never sourced nor returned (point 7).
             services.accounting.record_returned(plan.returned_delta)
         # Events happen at Nodes that hold a thing (bit-law-v1, point 13): a Node
         # holding shadows alone publishes no record of its cycle.
@@ -953,8 +940,8 @@ class SpatialNode(SpatialNodeState):
                 amounts=spread.amounts,
                 released=spread.released,
                 stored=spread.stored,
-                registers=spread.registers,
-                register_phases=spread.register_phases,
+                parked=spread.registers,
+                parked_phases=spread.register_phases,
                 phase=spread.phase,
                 coherence=spread.coherence,
                 signs=spread.signs,
@@ -976,9 +963,9 @@ class SpatialNode(SpatialNodeState):
                 bit=draw.bit,
             )
         # A push is not an event (bit-law-v1, point 15): the field's arithmetic
-        # on a thing's register writes no record, nor does a shadow that came
+        # on a thing's momentum writes no record, nor does a shadow that came
         # home; what came home this cycle, per family, and the momentum it
-        # delivered outside the identity (to a record without a recoil field)
+        # delivered outside the identity (to a record without a momentum field)
         # are on the cycle's record for the local audit.
         returned_amount: dict[str, int] = {}
         returned_outside: dict[str, list[int]] = {}
@@ -1435,9 +1422,10 @@ class SpatialNode(SpatialNodeState):
         setting being the mark's efficiency. On 1 a click is recorded, the
         measurement, and the thing meets the mark's coupling for its family
         (detector-absorb-v1): under `absorb`, the default, it is absorbed into the
-        mark's counter with its momentum, booked on the marks' line of the audit,
-        and nothing of it is delivered to the Node; under `pass` it continues
-        unchanged, still a thing. On 0 the thing is returned in this interval
+        thing resident at the mark with its momentum (node-is-ports-v1), booked on
+        the marks' line of the audit, and nothing of it is delivered to the Node;
+        under `pass` it continues unchanged, still a thing. On 0 the thing is
+        returned in this interval
         (detector-return-v1): reversed on its line, unchanged, walking back to
         its birth event; a detector_return event records the reversal and no
         click. The draw reads nothing from the ray and the bit never changes.
@@ -1470,9 +1458,6 @@ class SpatialNode(SpatialNodeState):
                     self.detector = detector_absorb(
                         self.detector, index, (ray,), definition, len(services.initial.spatial_fields)
                     )
-                    # The thing's trace ends here: the mark is now the home of its
-                    # shadows (the model owner, 2026-09-18).
-                    self.traces = leave_trace(self.traces, ray.owner, TRACE_END)
                     absorbed[definition.field][0] = checked_work(
                         absorbed[definition.field][0] + ray.amount
                     )
@@ -1516,37 +1501,36 @@ class SpatialNode(SpatialNodeState):
     def _home_at_mark(
         self,
         rays: Rays,
-        port: int,
         definition: SpatialFieldDefinition,
-        tick: int,
         services: SpatialServices,
-        homed: list[dict[str, object]],
         absorbed: list[list[int]],
         absorbed_momentum: dict[int, list[int]],
         shadows_taken: list[list[int]],
         index: int,
-    ) -> Rays:
-        """The mark as the home of the shadows of the things it absorbed (bit-law-v1,
-        the model owner, 2026-09-18): a returning shadow of such a thing ends in
-        the mark's counter with the momentum it carries, on the marks' line, a
-        `shadow_absorbed` record; every other returning ray crosses undrawn."""
+    ) -> tuple[Rays, int]:
+        """The thing resident at the mark as the home of the shadows of the things
+        it absorbed (bit-law-v1, the model owner, 2026-09-18; settled rule (iv) of
+        node-is-ports-v1): a returning shadow of such a thing is absorbed into
+        the resident, on its shadows line with the momentum it carries, booked on
+        the marks' line, and makes no event, never a click; every other returning
+        ray crosses undrawn. Returns the rays kept and the amount that came home."""
         assert self.detector is not None
-        family = services.initial.fields[definition.field].name
         kept = []
+        homed = 0
         for ray in rays:
-            if ray.detector != BIT_SHADOW or ray.owner not in self.detector.things:
+            if ray.detector != BIT_SHADOW or ray.owner not in self.detector.resident.owners:
                 kept.append(ray)
                 continue
             self.detector = detector_absorb(
                 self.detector, index, (ray,), definition, len(services.initial.spatial_fields)
             )
+            homed = checked_work(homed + ray.amount)
             absorbed[definition.field][0] = checked_work(absorbed[definition.field][0] + ray.amount)
             shadows_taken[definition.field][0] = checked_work(
                 shadows_taken[definition.field][0] + ray.amount
             )
             momentum = absorbed_momentum.setdefault(definition.field, [0, 0, 0])
-            carried = ray_momentum((ray,), definition)
-            for axis, value in enumerate(carried):
+            for axis, value in enumerate(ray_momentum((ray,), definition)):
                 momentum[axis] = checked_work(momentum[axis] + value)
                 if definition.momentum_field is not None:
                     absorbed[definition.momentum_field][axis] = checked_work(
@@ -1555,19 +1539,7 @@ class SpatialNode(SpatialNodeState):
                     shadows_taken[definition.momentum_field][axis] = checked_work(
                         shadows_taken[definition.momentum_field][axis] + value
                     )
-            homed.append(
-                services.events.message(
-                    "shadow_absorbed",
-                    tick,
-                    self.position,
-                    port=port,
-                    family=family,
-                    amount=ray.amount,
-                    owner=ray.owner,
-                    momentum=carried,
-                )
-            )
-        return tuple(kept)
+        return tuple(kept), homed
 
     def receive(
         self,
@@ -1654,9 +1626,10 @@ class SpatialNode(SpatialNodeState):
         taken_by_mark = [[0] * field.components for field in services.initial.fields]
         taken_momentum: dict[int, list[int]] = {}
         # The shadows home at the mark (bit-law-v1): those of a thing it absorbed
-        # that return to it end in its counter, on the marks' line and this one.
+        # that return to it end in its resident thing, on the marks' line and
+        # this one, without an event (node-is-ports-v1, settled rule (iv)).
         shadows_taken = [[0] * field.components for field in services.initial.fields]
-        homed: list[dict[str, object]] = []
+        homed = 0
         for packet in arrivals:
             if packet.body is None:
                 continue
@@ -1687,18 +1660,16 @@ class SpatialNode(SpatialNodeState):
                 arriving = tuple(ray for ray in incoming_rays if ray.outbound)
                 returning = tuple(ray for ray in incoming_rays if not ray.outbound)
                 if self.detector is not None and returning:
-                    returning = self._home_at_mark(
+                    returning, came_home = self._home_at_mark(
                         returning,
-                        packet.port ^ 1,
                         definition,
-                        tick,
                         services,
-                        homed,
                         taken_by_mark,
                         taken_momentum,
                         shadows_taken,
                         index,
                     )
+                    homed = checked_work(homed + came_home)
                 if self.detector is not None and arriving:
                     arriving = self._draw_arrivals(
                         arriving,
@@ -1902,10 +1873,9 @@ class SpatialNode(SpatialNodeState):
             **({"returned_to_body": returned_to_body} if returned_to_body else {}),
         )
         # The clicks of this arrival interval, one per thing caught, then the
-        # shadows home at the mark, then the returns, one per shadow and one per
-        # thing the counter let by, each in arrival order.
+        # returns, one per shadow and one per thing the mark let by, each in
+        # arrival order; a shadow home at the mark makes none (rule (iv)).
         notifications.extend(clicks)
-        notifications.extend(homed)
         notifications.extend(returns)
         if services.decayer is not None:
             self._event(

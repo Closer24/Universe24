@@ -15,16 +15,19 @@ arrived by the family's table, a shadow that arrives at a source is reversed
 (it leaves again the way it came, as a shadow that comes home does), as is one
 that arrives at a Detector mark (a mark returns it during a run): nothing is
 dropped, the field is rounded to whole quanta per Node and heading and the
-fractional parts are in the Node's remainder registers (the model owner,
-2026-09-18); what walks off an open board is lost before the first tick and
-not counted.
+fractional parts are parked shadows at the Node (the model owner, 2026-09-18;
+node-is-ports-v1); what walks off an open board is lost before the first tick
+and not counted.
 After T intervals the content that arrived at every Node is the field the
 board starts with: the dense region's, when the world runs dense, or the
-engine's resident shadows and remainder registers otherwise, so that the two
-modes start from the same state.
+engine's resident and parked shadows otherwise, so that the two modes start
+from the same state.
 
 `rays`: a declared profile, each shadow placed at its Node as content that
-arrived on its heading.
+arrived on its heading, its steps by default its Link distance from its
+owner's Node (settled rule (ii) of Highlights 5.4, node-is-ports-v1: its return
+arrives where the owner was; for a loop, from the owner's Node its line
+crosses; 1 for an owner with no Node on the board), or as declared.
 """
 
 from __future__ import annotations
@@ -37,6 +40,7 @@ from event_universe.core.disturbance_state import Address3, InitialState, pack, 
 from event_universe.core.spatial_state import (
     BIT_SHADOW,
     PORT_HEADINGS,
+    Heading,
     Ray,
     Rays,
     body_release,
@@ -177,19 +181,55 @@ def _depart(
     raise ValueError("the prefill cannot hold a third phase on one Port of a source")
 
 
-def _profile(initial: InitialState, index: int) -> dict[Address3, list[Ray]]:
-    """The declared shadows of one family, per Node, as content that arrived."""
+def owner_nodes(
+    initial: InitialState, carriers: Mapping[Address3, DisturbanceNode]
+) -> dict[int, list[Address3]]:
+    """The Nodes of every thing on the board at the start: its body's, and the
+    seeded records' of its type, sorted."""
+    found: dict[int, set[Address3]] = {}
+    for body in initial.external_bodies:
+        found.setdefault(body.thing, set()).add(body.position)
+    for position, carrier in carriers.items():
+        for record in carrier.records:
+            if record is not None:
+                found.setdefault(initial.disturbances[record.type_index].thing, set()).add(position)
+    return {owner: sorted(nodes) for owner, nodes in found.items()}
+
+
+def home_distance(position: Address3, heading: Heading, nodes: list[Address3]) -> int:
+    """The steps a prefilled shadow starts with (settled rule (ii)): its Link
+    distance from its owner's Node, the one its line crosses (the same place on
+    the two axes across its heading) when there is one, the nearest otherwise;
+    1 when the owner has no Node on the board."""
+    if not nodes:
+        return 1
+    axis = next(i for i in range(3) if heading[i])
+    on_line = [node for node in nodes if all(node[i] == position[i] for i in range(3) if i != axis)]
+    candidates = on_line or nodes
+    return min(sum(abs(a - b) for a, b in zip(node, position, strict=True)) for node in candidates)
+
+
+def _profile(
+    initial: InitialState, index: int, carriers: Mapping[Address3, DisturbanceNode]
+) -> dict[Address3, list[Ray]]:
+    """The declared shadows of one family, per Node, as content that arrived, each
+    with its declared steps or, by default, its Link distance from its owner's
+    Node (node-is-ports-v1, settled rule (ii))."""
     definition = initial.spatial_fields[index]
     entry = initial.initial_field[index]
+    homes = owner_nodes(initial, carriers)
     placed: dict[Address3, list[Ray]] = {}
     for shadow in entry.rays:
+        steps = shadow.steps
+        if steps < 0:
+            steps = home_distance(shadow.position, shadow.heading, homes.get(shadow.owner, []))
         placed.setdefault(shadow.position, []).append(
             Ray(
                 definition.headings.index(shadow.heading),
                 (0, 0, 0),
                 shadow.amount,
                 phase=shadow.phase,
-                steps=shadow.steps,
+                steps=steps,
                 detector=BIT_SHADOW,
                 source_sign=shadow.sign,
                 polarization=shadow.polarization,
@@ -202,7 +242,7 @@ def _profile(initial: InitialState, index: int) -> dict[Address3, list[Ray]]:
 def _install_node(engine: SpatialEngine, position: Address3, index: int, rays: Rays) -> None:
     """Resident shadows at an engine Node: those with a Link walked as arrivals of
     the previous interval, fresh ones (steps 0) as content leaving at the first
-    tick."""
+    tick, parked ones as they are (node-is-ports-v1)."""
     initial = engine.initial
     definition = initial.spatial_fields[index]
     node = engine._at(position)
@@ -212,7 +252,7 @@ def _install_node(engine: SpatialEngine, position: Address3, index: int, rays: R
     node.rays = tuple(bundles)
     delivered = [0] * 6
     for ray in bundles[index]:
-        if ray.steps:
+        if ray.steps and not ray.parked:
             delivered[PORT_HEADINGS.index(definition.headings[ray.heading])] += ray.amount
     states = list(node.states)
     states[index] = replace(states[index], delivered=tuple(pack((amount,)) for amount in delivered))
@@ -251,18 +291,17 @@ def install_initial_field(
                 for component in range(len(line)):
                     line[component] = 0
         if engine.dense is None:
-            # A sparse run: the region's content becomes the engine's Nodes.
+            # A sparse run: the region's content, the parked shadows included,
+            # becomes the engine's Nodes.
             for position, node in sorted(region.materialized_nodes({}).items()):
                 for index in region.families:
                     if node.rays[index]:
                         _install_node(engine, position, index, node.rays[index])
-                installed = engine._at(position)
-                installed.remainders = node.remainders
-                installed.remainder_phases = node.remainder_phases
         for index, position, rays in fresh:
             _install_node(engine, position, index, tuple(rays))
     for index, entry in sorted(initial.initial_field.items()):
         if not entry.rays:
             continue
-        for position, rays in sorted(_profile(initial, index).items()):
+        for position, rays in sorted(_profile(initial, index, carriers).items()):
             _install_node(engine, position, index, tuple(rays))
+    engine.invalidate_totals()

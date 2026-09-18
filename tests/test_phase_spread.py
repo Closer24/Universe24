@@ -135,12 +135,18 @@ def run(doc, ticks):
                 }
             )
             ledgers.append(world.audit())
-            contents.append(world.shadows_content())
-        registers = {
-            (tuple(entry["position"]), entry["owner"]): (entry["registers"], entry["phases"])
-            for entry in world.snapshot()["field_remainders"]
-            if entry["sign"] == 0
-        }
+            contents.append(world.shadow_content())
+        # The shares below one quantum are parked shadows (node-is-ports-v1): one
+        # entry per Node, owner, sign and heading; read back per (Node, owner) as
+        # six amounts and six phases in Port order for sign 0.
+        registers: dict = {}
+        for entry in world.snapshot()["parked"]:
+            if entry["sign"] != 0 or not entry["amount"]:
+                continue
+            block = registers.setdefault((tuple(entry["position"]), entry["owner"]), ([0] * 6, [0] * 6))
+            port = HEADINGS.index(list(entry["heading"]))
+            block[0][port] = entry["amount"]
+            block[1][port] = entry["phase"]
     return {
         "boards": boards,
         "ledgers": ledgers,
@@ -191,7 +197,7 @@ def test_a_pair_in_phase_continues_forward():
     only(after_3, (7, 3, 2), Y, 1)
     only(after_3, (6, 4, 2), Y, 1)
     assert result["contents"] == [46, 46, 46]
-    assert all(entry["balanced"] and entry["things_conserved"] for entry in result["ledgers"])
+    assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     assert no_node_events(result["events"])
     registers = result["registers"]
     assert len(registers) == 12
@@ -343,7 +349,7 @@ def test_the_steering_table_is_written_from_the_phase_width(tmp_path):
     metadata = json.loads((tmp_path / "out" / "run.json").read_text())
     assert metadata["phase_spread"] == PHASE_SPREAD == "phase-spread-v1"
     assert metadata["shadow_families"][0]["steering"] == list(REFERENCE)
-    assert metadata["shadows_content"] == [46, 46]
+    assert metadata["shadow_content"] == [46, 46]
     recorded = [
         json.loads(line) for line in (tmp_path / "out" / "events.jsonl").read_text().splitlines()
     ]

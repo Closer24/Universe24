@@ -119,8 +119,6 @@ def document(marked=True, ticks=3):
                 "field": "quanta",
                 "amount": port + 1,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "heading": HEADINGS[port ^ 1],
                 "kerengonen_phase": 0,
             }

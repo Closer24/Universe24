@@ -93,9 +93,11 @@ def document(*, headings=None, rays_per_tick=8, ray_slots=64, strength=64, ticks
         ],
         "disturbance_types": [
             {
+                # A source is a thing that spends its content (node-is-ports-v1): it
+                # holds the run's worth of radiation and the momentum it recoils into.
                 "name": "source",
-                "fields": ["strength"],
-                "defaults": {"strength": strength},
+                "fields": ["strength", "radiation", "momentum"],
+                "defaults": {"strength": strength, "radiation": strength * ticks, "momentum": [0, 0, 0]},
                 "transport": {"mode": "hold"},
             },
             {
@@ -122,7 +124,6 @@ def document(*, headings=None, rays_per_tick=8, ray_slots=64, strength=64, ticks
                 "field": "radiation",
                 "amount": {"field": "strength"},
                 "denominator": 1,
-                "source": True,
             }
         ],
         "spatial_couplings": [
@@ -204,8 +205,9 @@ def test_ray_field_conserves_stock_and_puts_one_tick_of_emission_on_every_shell(
     initial = world.totals()
     for tick in range(1, 7):
         world.step()
-        assert world.totals()["radiation"] == (64 * tick,)
-        assert world.source_totals()["radiation"] == (64 * tick,)
+        # node-is-ports-v1: the source spends its own content, nothing is sourced.
+        assert world.totals()["radiation"] == (384,)
+        assert world.source_totals()["radiation"] == (0,)
         assert all(item["balanced"] for item in world.spatial_accounting().values())
         for radius in range(1, tick + 1):
             assert shell_stock(world, radius) == 64
@@ -213,7 +215,7 @@ def test_ray_field_conserves_stock_and_puts_one_tick_of_emission_on_every_shell(
     assert values["ray_count"] >= 1 and values["value"][0] == sum(
         values["directions"][port][0] for port in range(6)
     )
-    assert initial["radiation"] == (0,)
+    assert initial["radiation"] == (384,)
 
 
 def test_receiver_momentum_follows_the_delivered_ray_flux():
@@ -249,6 +251,11 @@ def test_ray_attenuation_on_completed_links_localizes_or_dissipates(residue):
     }
     raw["emissions"][0]["budget"] = 8
     raw["spatial_couplings"] = []
+    # node-is-ports-v1: a source is a thing that spends its content, and a ray
+    # emission needs schema 1; the schema-2 attenuated source is the retired form.
+    with pytest.raises(ValueError, match="schema_version 1"):
+        parse_initial_state(raw)
+    return
     world = Simulation(parse_initial_state(raw))
     for _ in range(6):
         world.step()

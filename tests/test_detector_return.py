@@ -144,8 +144,6 @@ def document(port, marked=True, boundary="periodic", ticks=8):
                 "field": "quanta",
                 "amount": AMOUNT,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "heading": HEADINGS[port],
                 "kerengonen_phase": 0,
             }

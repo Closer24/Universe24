@@ -312,8 +312,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     1,
     0,
@@ -326,8 +324,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     0,
     0,
@@ -340,8 +336,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     0,
     0,
@@ -354,8 +348,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     -1,
     0,
@@ -368,8 +360,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     -1,
     0,
@@ -382,8 +372,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     0,
     0,
@@ -396,8 +384,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     0,
     0,
@@ -410,8 +396,6 @@
    "field": "electron",
    "amount": 4,
    "denominator": 1,
-   "source": false,
-   "recoil_field": "momentum",
    "heading": [
     1,
     0,
@@ -496,8 +480,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   },
   {
    "position": [
@@ -508,8 +491,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   },
   {
    "position": [
@@ -520,8 +502,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   },
   {
    "position": [
@@ -532,8 +513,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   },
   {
    "position": [
@@ -544,8 +524,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   },
   {
    "position": [
@@ -556,8 +535,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   },
   {
    "position": [
@@ -568,8 +546,7 @@
    "setting": [
     1,
     1
-   ],
-   "seed": 7
+   ]
   }
  ],
  "ray_interactions": [

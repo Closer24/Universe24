@@ -170,9 +170,7 @@ def document(lamps, rules, ticks):
                 "field": family,
                 "amount": amount,
                 "denominator": 1,
-                "source": False,
                 "heading": HEADINGS[heading],
-                "recoil_field": "momentum",
                 "kerengonen_phase": 0,
             }
             for index, (_, family, amount, heading) in enumerate(things)
@@ -294,11 +292,13 @@ STEEP_PORTS = [2, 0, 2, 0, 2, 2, 0, 2, 0, 2]
 # `bound_groups` key. Both re-pinned on 2026-09-18 under bit-law-v1: the record
 # carries the law's identities (`owner` on every ray, the `bit_law` and the
 # contents per tick in run.json) and the two lamps' rays are two things meeting
-# by the declared table.
+# by the declared table. state.json re-pinned on 2026-09-18 under node-is-ports-v1:
+# the snapshot lists the parked shadows (the traces the two things leave) and no
+# remainder or trace store.
 IDENTICAL = {
     "meeting": (
         "fc8e94668cf9519941581377834eeeb2773f136e7734a68a9d198915216f896c",
-        "30449bd97ce8884cf3e3e30deb7f1afa3eb770306b743efc514b12ad4b34614d",
+        "d452fee8032192f0a7ff57995a1202b50920f2566d683031cde71bcde519234d",
     ),
 }
 
@@ -327,12 +327,12 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         for t in range(1, 19):
             world.step()
             assert world.totals()["m"] == (8,)
-            assert world.totals()["f"] == ((2,) if t <= 16 else (0,))
-            assert world.escaped_totals()["f"] == ((0,) if t <= 16 else (2,))
+            # The recoil waits where its steps are spent (node-is-ports-v1, settled
+            # rule (ii)): nothing of f leaves the board.
+            assert world.totals()["f"] == (2,) and world.escaped_totals()["f"] == (0,)
             line = momentum_line(world)
             assert line["initial"] == ZERO and line["sourced"] == ZERO
-            assert line["escaped"] == (ZERO if t <= 16 else (0, 2, 0))
-            assert line["current"] == (ZERO if t <= 16 else (0, -2, 0))
+            assert line["escaped"] == ZERO and line["current"] == ZERO
             assert balanced(world)
             if t <= 6:
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
@@ -341,12 +341,10 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             at, accumulators = TURN_PATH[t - 7]
             assert positions_of(world, "m") == {at}
             assert rays_at(world, at, "m") == [ray(0, 8, t & 7, t, 0, accumulators, (8, -2, 0))]
-            if t <= 16:
-                assert rays_at(world, (10, 16 - t, 10), "f") == [
-                    shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
-                ]
-            else:
-                assert positions_of(world, "f") == set()
+            # The recoil walks back its steps to (10,4,10) and waits there at rest.
+            assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
+                shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
+            ]
         assert pushes_of(events) == []
         metadata, records, _ = run(tmp_path, raw, 18)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v2"
@@ -354,7 +352,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["accounting_balanced_at_every_completed_tick"]
         assert pushes_of(records) == []
-        assert metadata["final_totals"] == {"m": [8], "f": [0], "momentum": [0, -2, 0]}
+        assert metadata["final_totals"] == {"m": [8], "f": [2], "momentum": [0, 0, 0]}
         return
     if case == "cancel":
         # (b) The same push, then a field ray of 2 from +Y two Links on: the
@@ -381,7 +379,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
                 assert positions_of(world, "m") == {(4 + t, 10, 10)}
                 assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
                 assert rays_at(world, (12, t + 2, 10), "f") == [shadow_ray(2, 2, 16 - t, 2, (0, -2, 0))]
-            assert rays_at(world, (10, 16 - t, 10), "f") == [
+            assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
                 shadow_ray(3, 2, max(12 - t, 0), 3, (0, 2, 0))
             ]
         assert pushes_of(events) == []
@@ -416,7 +414,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
             (turned,) = rays_at(world, at, "m")
             assert turned == ray(0, 2, t & 7, t, 0, accumulators, (2, 3, 0))
             assert ray_line(turned, initial.spatial_fields[0]) == (0, 1, 0)
-            assert rays_at(world, (10, 16 - t, 10), "f") == [
+            assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
                 shadow_ray(3, 3, max(12 - t, 0), 3, (0, -3, 0))
             ]
         assert pushes_of(events) == []

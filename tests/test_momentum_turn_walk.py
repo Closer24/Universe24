@@ -228,9 +228,7 @@ def document(shape, lamps, ticks):
                 "field": family,
                 "amount": amount,
                 "denominator": 1,
-                "source": False,
                 "heading": HEADINGS[heading],
-                "recoil_field": "momentum",
                 "kerengonen_phase": 0,
             }
             for family, (amount, heading) in types.items()

@@ -171,8 +171,6 @@ def document(rule, rate=2, corners=(0, 1, 2, 3), l_phase=0, ticks=16):
                 "field": "electron",
                 "amount": 1,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "heading": HEADINGS[port],
                 "kerengonen_phase": phase,
             }

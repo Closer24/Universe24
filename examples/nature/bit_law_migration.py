@@ -1,11 +1,23 @@
 """The mechanical migration of a world to the law of the bit (bit-law-v1, the
 model owner's decision of 2026-09-18): a shadow is a ray of the same family as
 its thing with the bit 0, so a family declared `field_of` another is folded into
-its owner. Every world generator of examples/nature applies `migrate` to what it
-writes; the physics of each experiment is to be declared again on the final law
-(a prefilled field, `initial_field`), which is not this migration's business.
+its owner; and to a Node that is its six Ports (node-is-ports-v1, feature 17,
+Highlights 5.4 point 22): a source is a thing that spends its content and a
+mark has no seed. Every world generator of examples/nature applies `migrate` to
+what it writes; the physics of each experiment is to be declared again on the
+final law (a prefilled field, `initial_field`), which is not this migration's
+business.
 
 The rules, applied to a world document in place:
+
+- (node-is-ports-v1) an emission on a ray family loses `source`, `recoil_field`
+  and `funded`: it is paid from the emitting type's content and recoils into the
+  type's momentum, so an unfunded source (`source` true) gets the content of its
+  run, its whole amount per interval times the world's `ticks`, as the type's
+  default of the emitted field (an expression amount cannot be migrated and is
+  left for the world's author), and a type that emits holds the world's one
+  momentum field (a signed three-component conserved field), zero by default;
+- (node-is-ports-v1) a mark loses `seed` (there is no lottery and no counter);
 
 - a spatial field with `field_of` X loses the key; its `release` and `spread`
   move to X (X's own declaration wins when it has one), and X's `ray_slots`
@@ -25,6 +37,7 @@ from typing import Any
 
 
 def migrate(document: dict[str, Any]) -> dict[str, Any]:
+    _node_is_ports(document)
     fields = document.get("spatial_fields", [])
     by_name = {entry["field"]: entry for entry in fields}
     renames: dict[str, str] = {}
@@ -81,6 +94,50 @@ def migrate(document: dict[str, Any]) -> dict[str, Any]:
             mark["on_click"] = rekey(mark["on_click"])
     _cap_layers(document)
     return document
+
+
+def _node_is_ports(document: dict[str, Any]) -> None:
+    """A source is a thing that spends its content and a mark has no seed
+    (node-is-ports-v1): the emissions on ray families lose their `source`,
+    `recoil_field` and `funded` keys, an unfunded source gets the content of its
+    run, an emitting type holds the world's momentum field, and the marks lose
+    `seed`."""
+    ray_families = {
+        entry["field"] for entry in document.get("spatial_fields", []) if entry.get("transport") == "ray"
+    }
+    octants = {entry["field"] for entry in document.get("spatial_fields", [])}
+    vectors = [
+        item["name"]
+        for item in document.get("fields", [])
+        if item.get("components") == 3
+        and item.get("signed")
+        and item.get("conserved")
+        and item["name"] not in octants
+    ]
+    momentum = vectors[0] if len(vectors) == 1 else None
+    kinds = {kind["name"]: kind for kind in document.get("disturbance_types", [])}
+    ticks = int(document.get("ticks", 0))
+    for emission in document.get("emissions", []):
+        if emission.get("field") not in ray_families:
+            continue
+        unfunded = emission.pop("source", False) is True
+        emission.pop("recoil_field", None)
+        emission.pop("funded", None)
+        kind = kinds.get(emission.get("type"))
+        if kind is None:
+            continue
+        kind.setdefault("defaults", {})
+        if unfunded and isinstance(emission.get("amount"), int):
+            # A lamp burns content: the run's worth of its emission.
+            if emission["field"] not in kind["fields"]:
+                kind["fields"].append(emission["field"])
+            stock = int(kind["defaults"].get(emission["field"], 0))
+            kind["defaults"][emission["field"]] = stock + emission["amount"] * ticks
+        if momentum is not None and momentum not in kind["fields"]:
+            kind["fields"].append(momentum)
+            kind["defaults"].setdefault(momentum, [0, 0, 0])
+    for mark in document.get("detectors", []):
+        mark.pop("seed", None)
 
 
 def _cap_layers(document: dict[str, Any]) -> None:

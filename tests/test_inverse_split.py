@@ -108,8 +108,6 @@ def document(mode, ticks=10):
                 "field": "quanta",
                 "amount": AMOUNT,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
                 "kerengonen_phase": 0,
             }
         ],

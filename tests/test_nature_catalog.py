@@ -233,7 +233,6 @@ def board(
                 "field": name,
                 "amount": amount,
                 "denominator": 1,
-                "source": False,
                 "heading": HEADINGS[heading],
                 "kerengonen_phase": phase,
             }
@@ -390,14 +389,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert isinstance(item["declaration"], dict) and item["declaration"], name
             assert type(item["engine"]["landed"]) is bool, name
         assert set(apparatus) == {"detector", "external_body"}
-        assert set(apparatus["detector"]["declaration"]) == {
-            "position",
-            "setting",
-            "seed",
-            "on_bit_1",
-            "on_bit_0",
-            "on_click",
-        }
+        # node-is-ports-v1: no seed, no counter, no coupling on the bit; the mark's
+        # table and the resident thing's on_click.
+        assert set(apparatus["detector"]["declaration"]) == {"position", "setting", "on_click"}
         assert set(apparatus["external_body"]["couplings"]) == external
         assert apparatus["external_body"]["default_coupling"] in external
         assert set(apparatus["external_body"]["declaration"]) == {
@@ -409,36 +403,21 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "initial_momentum",
             "coupling",
             "momentum_table",
+            "reads",
+            "thing",
             "polarizer",
         }
         piece = apparatus["external_body"]["apparatus_family"]
         assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
-        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two couplings on
-        # the bit a ray carries, decided and landed by feature 2b on 2026-09-17
-        # (detector-bit-property-v1), each with its world key on the mark and the
-        # values pass (the default) and draw.
+        # The thing resident at the mark and its one table (node-is-ports-v1): the
+        # couplings on the bit a ray carries went with bit-law-v1 (the bit never
+        # changes at a meeting and a mark reads it, never a coupling on it).
         mark_couplings = apparatus["detector"]["couplings"]
-        assert set(mark_couplings) == {"on_bit_1", "on_bit_0", "on_click"}
-        bits = {name: entry for name, entry in mark_couplings.items() if name != "on_click"}
-        for name, entry in bits.items():
-            assert (entry["status"], entry["world_key"], entry["engine"]) == (
-                "decided",
-                name,
-                {"identity": "detector-bit-property-v1", "landed": True},
-            ), name
-            assert set(entry["values"]) == {"pass", "draw"} and "decided_by" not in entry, name
-            assert not undecided(entry), name
-            assert entry["alternative"] == "draw", name
-        assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
-            {"bit": 1},
-            "pass without a draw",
-        )
-        assert (bits["on_bit_0"]["reads"], bits["on_bit_0"]["default"]) == (
-            {"bit": 0},
-            "transmission, no draw",
-        )
+        assert set(mark_couplings) == {"on_click"}
+        assert "node-is-ports-v1" in apparatus["detector"]["engine"]["identity"]
+        assert "node-is-ports-v1" in apparatus["external_body"]["engine"]["identity"]
         # A click is an absorption (Highlights 5.4, 2026-09-18; detector-absorb-v1,
         # feature 2c): the coupling on a draw of 1, per family, absorb the default
         # for a field family and pass for matter.
@@ -450,7 +429,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         )
         assert set(click["values"]) == {"absorb", "pass"} and "decided_by" not in click
         assert not undecided(click)
-        assert click["default"] == "absorb for a field family, pass for matter"
+        assert click["default"] == "absorb for every family"
         assert "detector-absorb-v1" in apparatus["detector"]["engine"]["identity"]
         assert apparatus["external_body"]["engine"]["landed"]
         assert len(rays) == 12 and len(couplings) == 16
@@ -641,9 +620,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         records = rays | {piece["name"]: piece}
         lamps = [((7, 7, 7), "light", 5, 0, 1)]
         document = board(records, ["light"], lamps, [])
-        document[apparatus["detector"]["world_key"]] = [
-            {"position": [9, 7, 7], "setting": [1, 1], "seed": 0}
-        ]
+        document[apparatus["detector"]["world_key"]] = [{"position": [9, 7, 7], "setting": [1, 1]}]
         assert len(parse_initial_state(document).detectors) == 1
         at_rest = {
             "index": 0,

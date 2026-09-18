@@ -1,45 +1,55 @@
 """The dense mode for boards that a field fills (dense-field-v1).
 
-A host scheduling component, not a physical rule: the pure-field Nodes of a
-board, those holding nothing but outbound content of spreading families and
-their remainder registers, are cycled as one vectorized step over integer
-arrays that applies the spatial law's spread and remainder rule
-(`core/spatial_state.py`, `spread_content`; [field spreading]
-(../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)) to every
-such Node at once, with the same integers: the content arriving on each
-heading is split by the six-weight table relative to that heading into whole
-quanta that leave and sub-quantum shares that go to the Node's registers per
-source sign and Port, each register's phase combined with the share's by the
-coherence rule (`phase_of_sum` over the family's integer cosine and sine
-tables, in the order the engine combines them), a register at one quantum
-releasing the whole quanta it holds with its phase, the departures walking one
-Link with the family's phase advance, the open boundary absorbing what walks
-out, per family, owner and sign. Since bit-law-v1 (2026-09-18) the region is
-the board's shadow layer (point 13 of the law): it holds shadows alone, the
-bit-0 rays of the spreading families, per owner (the thing whose shadow each
-is; the arrays and the registers carry an owner axis, the family's declared
-owners in order), and no event happens in it: a shadow meets a shadow by the
-phase sum, a shadow meets a thing at the thing's Node, the engine's.
+A host scheduling component, not a physical rule: the shadow-only Nodes of a
+board, those holding nothing but shadows of spreading families, are cycled as
+one vectorized step over integer arrays that applies the spatial law's spread
+and remainder rule (`core/spatial_state.py`, `spread_content`; [field
+spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1))
+to every such Node at once, with the same integers: the content arriving on
+each heading is split by the six-weight table relative to that heading into
+whole quanta that leave and sub-quantum shares that stay parked at the Node
+per owner, source sign and Port (`reg`, the parked shadows of node-is-ports-v1
+in units of the table's total), each parked share's phase combined with the
+share's by the coherence rule (`phase_of_sum` over the family's integer cosine
+and sine tables, in the order the engine combines them), a parked share at one
+quantum leaving whole with its phase, the departures walking one Link with the
+family's phase advance, the open boundary absorbing what walks out, per
+family, owner and sign. Since bit-law-v1 (2026-09-18) the region is the
+board's shadow layer (point 13 of the law): it holds shadows alone, the bit-0
+rays of the spreading families, per owner (the thing whose shadow each is; the
+arrays carry an owner axis, the family's declared owners in order), and no
+event happens in it: a shadow meets a shadow by the phase sum, a shadow meets
+a thing at the thing's Node, the engine's. Since node-is-ports-v1 the region
+also carries the shadows walking home, aggregated per Node, owner and heading
+(`ret_*`: the amount, the phase of the sum, the momentum they carry, -dp, and
+the least steps left), walked one Link back per interval; a return whose steps
+are spent follows the owner's trace (`trace`, the Port a thing of that owner
+last left the Node by, a zero-amount parked shadow in the engine's terms) or
+waits at the Node for a thing of its owner (`wait_*`, per Node and owner), as
+the engine's planner does. The loss is the per-ray identity of a return inside
+the region (its own phase and steps): the record of a dense Node is its totals.
 
 The region and the engine share the board. A Node is the engine's (sparse)
-while it holds a Detector mark, an external body, a record, a thing, a
-returning shadow or any other content the vectorized step does not describe;
-every other Node is the region's (dense).
-Ownership is decided at every delivery for the Nodes that receive something:
-a ray leaving a dense Node toward a sparse Node is handed over as an ordinary
-`SpatialPacket` of merged rays, and a packet leaving a sparse Node into the
-dense region is absorbed into the arrays, both exact, the registers moving
-with the Node when its ownership changes. The region publishes no per-Node
-events: the record of a dense region is its arrays' totals per tick (the
-world ledger), and the mode is not for records that need per-Node field
-events. Its Nodes read back as Node state for the totals, the snapshot and
-the inventory view (`materialized_nodes`), so `state.json` and the ledger are
-the acceptance test of the mode (docs/PERFORMANCE.md).
+while it holds a Detector mark, an external body, a record, a thing or any
+other content the vectorized step does not describe; every other Node is the
+region's (dense). Ownership is decided at every delivery for the Nodes that
+receive something: a ray leaving a dense Node toward a sparse Node is handed
+over as an ordinary `SpatialPacket` of merged rays, and a packet leaving a
+sparse Node into the dense region is absorbed into the arrays, both exact, the
+parked shadows, traces and waiting shadows moving with the Node when its
+ownership changes. The region publishes no per-Node events: the record of a
+dense region is its arrays' totals per tick (the world ledger), and the mode
+is not for records that need per-Node field events. Its Nodes read back as
+Node state for the totals, the snapshot and the inventory view
+(`materialized_nodes`), so `state.json` and the ledger are the acceptance test
+of the mode (docs/PERFORMANCE.md).
 
 Bounded integers throughout: amounts are below MAX_VALUE, phases below the
-family's modulus, products and sums in signed 64-bit registers as the engine's
-`checked_work` requires; the arrays are numpy int64 and the bounds are
-checked where a value could grow.
+family's modulus, products and sums in signed 64-bit intermediates as the
+engine's `checked_work` requires; the arrays hold amounts as int32 (MAX_VALUE
+is 2^30 - 1), phases as int16 (the modulus is at most 4096) and the owner
+flags as int8, the sums and products promoted to int64 where a value could
+grow, and the bounds are checked there.
 """
 
 from __future__ import annotations
@@ -64,8 +74,10 @@ from event_universe.core.spatial_state import (
     Rays,
     SpatialFieldDefinition,
     SpatialPacket,
-    blank_remainders,
     merge_rays,
+    park_shares,
+    parked_shadow,
+    parked_shares,
     phase_mask,
     relative_ports,
     spread_content,
@@ -77,11 +89,16 @@ if TYPE_CHECKING:
     from event_universe.core.disturbance_node import DisturbanceNode
 
 # The layers of one Port's content from a dense Node: the spread's whole quanta at
-# the Node's combined phase and the register's release at the register's phase;
-# a sparse Node's packet may carry more phases on one Port and sign, and those
+# the Node's combined phase and the parked share's release at its own phase; a
+# sparse Node's packet may carry more phases on one Port and sign, and those
 # rays are kept whole beside the arrays (`overflow`).
 LAYERS = 2
 SIGNS = 3
+# The array dtypes (node-is-ports-v1, the performance review): amounts below
+# MAX_VALUE = 2^30 - 1, phases below 4096, a Port or a flag in a byte.
+AMOUNT = np.int32
+PHASE = np.int16
+PORT = np.int8
 # The register phase combination is tabulated over (held, held phase, share,
 # share phase) when the table fits; a wider phase or table computes it directly.
 COMBINE_TABLE_LIMIT = 1 << 24
@@ -96,9 +113,14 @@ class DenseFamily:
     to spread: per owner (the family's declared owners in order), source sign
     (-1, 0, 1 as 0, 1, 2), travel Port (the heading the content arrived on, the
     engine's `arrived` index) and layer, the amount and the phase. `reg` and
-    `regph` are the eighteen registers and their phases per Node and owner,
+    `regph` are the eighteen parked shares and their phases per Node and owner,
     sign-major then Port, in units of 1/S. `fly_*` hold the departures of the
-    last cycle until the delivery walks them one Link."""
+    last cycle until the delivery walks them one Link. `ret_*` hold the shadows
+    walking home resident at each Node per owner and the Port they walk through
+    (the amount, the phase of the sum, the momentum carried, -dp, and the least
+    steps left), `wait_*` those waiting at a Node for a thing of their owner, and
+    `trace` the Port a thing of each owner last left the Node by plus one, 0 for
+    none (node-is-ports-v1)."""
 
     def __init__(
         self, index: int, definition: SpatialFieldDefinition, shape: Address3, prices: dict[str, int]
@@ -132,14 +154,38 @@ class DenseFamily:
         # The travel Port of a ray by its heading index.
         self.port_of = {int(index): port for port, index in enumerate(self.heading_index)}
         self.combine_table = self._combine_table()
-        self.arr_amt = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
-        self.arr_ph = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
+        self.arr_amt = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=AMOUNT)
+        self.arr_ph = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=PHASE)
         self.overflow: dict[Address3, list[Ray]] = {}
-        self.reg = np.zeros((*shape, count, SIGNS, 6), dtype=np.int64)
-        self.regph = np.zeros((*shape, count, SIGNS, 6), dtype=np.int64)
-        self.fly_amt = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
-        self.fly_ph = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=np.int64)
+        self.reg = np.zeros((*shape, count, SIGNS, 6), dtype=AMOUNT)
+        self.regph = np.zeros((*shape, count, SIGNS, 6), dtype=PHASE)
+        self.fly_amt = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=AMOUNT)
+        self.fly_ph = np.zeros((*shape, count, SIGNS, 6, LAYERS), dtype=PHASE)
+        # The shadows walking home (per owner, sign and the Port they walk
+        # through), those waiting for a thing of their owner (per owner and
+        # sign) and the traces (per owner), node-is-ports-v1.
+        self.ret_amt = np.zeros((*shape, count, SIGNS, 6), dtype=AMOUNT)
+        self.ret_ph = np.zeros((*shape, count, SIGNS, 6), dtype=PHASE)
+        self.ret_mom = np.zeros((*shape, count, SIGNS, 6, 3), dtype=AMOUNT)
+        self.ret_steps = np.zeros((*shape, count, SIGNS, 6), dtype=AMOUNT)
+        self.wait_amt = np.zeros((*shape, count, SIGNS), dtype=AMOUNT)
+        self.wait_ph = np.zeros((*shape, count, SIGNS), dtype=PHASE)
+        self.wait_mom = np.zeros((*shape, count, SIGNS, 3), dtype=AMOUNT)
+        self.trace = np.zeros((*shape, count), dtype=PORT)
         self.prices = prices
+
+    def phase_of_pair(
+        self, amount: np.ndarray, phase: np.ndarray, other_amount: np.ndarray, other_phase: np.ndarray
+    ) -> np.ndarray:
+        """The phase of the coherent sum of two contents, elementwise, as the
+        engine's `phase_of_sum` gives it (the phase of a shadow-shadow sum, point
+        5 of the law); 0 for a family without a phase width."""
+        if self.cosines is None or self.sines is None:
+            return np.zeros(np.broadcast(amount, other_amount).shape, dtype=np.int64)
+        a, b = amount.astype(np.int64), other_amount.astype(np.int64)
+        x = a * self.cosines[phase.astype(np.int64)] + b * self.cosines[other_phase.astype(np.int64)]
+        y = a * self.sines[phase.astype(np.int64)] + b * self.sines[other_phase.astype(np.int64)]
+        return self._nearest_step(x, y)
 
     def _combine_table(self) -> np.ndarray | None:
         """The register's phase after a share joins it, for every (held, held phase,
@@ -183,42 +229,54 @@ class DenseFamily:
 
 
 def plain_ray(ray: Ray, definition: SpatialFieldDefinition, family: DenseFamily | None = None) -> bool:
-    """Whether a ray is content the dense region describes: an outbound shadow of
-    one of the family's owners one Link from its departure on a Port heading,
-    without an event, a delay, a wait, a lag, a momentum register, an own
-    advance or a polarization (bit-law-v1: a thing is never the region's)."""
-    return (
-        ray.detector == BIT_SHADOW
-        and (family is None or ray.owner in family.rank)
-        and ray.outbound == 1
-        and ray.steps == 1
-        and ray.amount > 0
-        and ray.event_ports == 0
-        and not any(ray.event_shares)
-        and ray.advance == -1
-        and ray.wait == 0
-        and ray.interaction_delay == 0
-        and ray.lag == (0, 0, 0)
-        and ray.momentum is None
-        and ray.polarization == POLARIZATION_NONE
-        and ray.accumulators == (0, 0, 0)
-        and definition.headings[ray.heading] in PORT_HEADINGS
-    )
+    """Whether a ray is content the dense region describes: a shadow of one of the
+    family's owners on a Port heading without an event, a delay, a wait, a lag,
+    an own advance or a polarization (bit-law-v1: a thing is never the
+    region's), either outbound one Link from its departure, or walking home
+    with the momentum it carries (aggregated per Node, owner, sign and heading),
+    or waiting at rest with its steps spent, or parked (node-is-ports-v1)."""
+    if (
+        ray.detector != BIT_SHADOW
+        or (family is not None and ray.owner not in family.rank)
+        or ray.event_ports
+        or any(ray.event_shares)
+        or ray.advance != -1
+        or ray.wait
+        or ray.interaction_delay
+        or ray.lag != (0, 0, 0)
+        or ray.polarization != POLARIZATION_NONE
+        or ray.accumulators != (0, 0, 0)
+        or definition.headings[ray.heading] not in PORT_HEADINGS
+    ):
+        return False
+    if ray.parked:
+        return True
+    if ray.outbound:
+        return ray.steps == 1 and ray.amount > 0 and ray.momentum is None
+    return ray.amount > 0
 
 
-def plain_node(node: SpatialNode) -> bool:
+def plain_node(node: SpatialNode, families: Mapping[int, DenseFamily] | None = None) -> bool:
     """Whether an engine Node holds nothing the region cannot own: no mark, no
-    body, no pending cycle, no resident ray, no octant stock, no deposit."""
-    return (
-        node.detector is None
-        and node.body is None
-        and node.pending is None
-        and not node.shared_pending
-        and not node.incoming
-        and not any(node.rays)
-        and not any(any(unpack(payload)) for state in node.states for payload in state.populations)
-        and not any(any(unpack(payload)) for payload in node.localized)
-    )
+    body, no pending cycle, no octant stock, no deposit, and no resident ray
+    but the shadows the region describes (parked, waiting or walking home)."""
+    if (
+        node.detector is not None
+        or node.body is not None
+        or node.pending is not None
+        or node.shared_pending
+        or node.incoming
+        or any(any(unpack(payload)) for state in node.states for payload in state.populations)
+        or any(any(unpack(payload)) for payload in node.localized)
+    ):
+        return False
+    for index, rays in enumerate(node.rays):
+        if not rays:
+            continue
+        family = None if families is None else families.get(index)
+        if family is None or any(not plain_ray(ray, family.definition, family) for ray in rays):
+            return False
+    return True
 
 
 class DenseField:
@@ -288,8 +346,13 @@ class DenseField:
                 count[position] += len(rays)
                 family_ports[position] |= ports
             ports_any |= family_ports
-            registers = (family.reg > 0).any(axis=(3, 4, 5))
-            has_registers |= registers
+            # A Node holding a parked share, a waiting shadow or a return stays
+            # active, as the engine's does (node-is-ports-v1).
+            registers = (family.reg > 0).any(axis=(3, 4, 5)) | (family.wait_amt > 0).any(axis=(3, 4))
+            returns, returns_cost, return_ports = self._cycle_returns(family)
+            ports_any |= return_ports
+            has_registers |= registers | returns
+            family_cost += returns_cost
             present = count > 0
             has_arrivals |= present
             if not present.any():
@@ -484,7 +547,7 @@ class DenseField:
                 new_phase = np.where(has_share, np.where(held > 0, combined, phase_b), held_phase)
             reg[..., targets] = held + share
             regph[..., targets] = new_phase
-        whole = reg // S
+        whole = reg.astype(np.int64) // S
         releasing = whole > 0
         rest = reg - whole * S
         released_phase = regph.copy()
@@ -525,6 +588,168 @@ class DenseField:
         family.fly_amt[..., 1] = layer_1
         family.fly_ph[..., 1] = np.where(layer_1 > 0, phase_1, 0)
 
+    # -- the shadows walking home (node-is-ports-v1) ---------------------------
+
+    @staticmethod
+    def _merge_cells(
+        family: DenseFamily,
+        target: tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray | None],
+        source: tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray | None],
+        mask: np.ndarray,
+    ) -> None:
+        """Merge the source cells into the target cells where `mask`, in place: the
+        amounts and the momenta add, the phase is the phase of the sum, the steps
+        the least (the bound of the merged returns); a target cell without content
+        takes the source as it is."""
+        t_amt, t_ph, t_mom, t_steps = target
+        s_amt, s_ph, s_mom, s_steps = source
+        had = mask & (t_amt > 0)
+        fresh = mask & (t_amt == 0)
+        if had.any():
+            phase = family.phase_of_pair(t_amt, t_ph, s_amt, s_ph)
+            t_ph[...] = np.where(had, phase, t_ph)
+        t_ph[...] = np.where(fresh, s_ph, t_ph)
+        total = t_amt.astype(np.int64) + s_amt
+        if int(np.where(mask, total, 0).max(initial=0)) > MAX_VALUE:
+            raise ValueError("value exceeds the disturbance integer bound")
+        t_amt[...] = np.where(mask, total, t_amt)
+        momentum = t_mom.astype(np.int64) + s_mom
+        if int(np.abs(np.where(mask[..., None], momentum, 0)).max(initial=0)) > MAX_VALUE:
+            raise ValueError("value exceeds the disturbance integer bound")
+        t_mom[...] = np.where(mask[..., None], momentum, t_mom)
+        if t_steps is not None and s_steps is not None:
+            t_steps[...] = np.where(had, np.minimum(t_steps, s_steps), np.where(fresh, s_steps, t_steps))
+
+    def _cycle_returns(self, family: DenseFamily) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """The returns resident at every dense Node this interval, as the engine's
+        planner treats them: one whose steps are spent follows the owner's trace
+        (its Port becomes the trace's) or, without one, waits at the Node for a
+        thing of its owner; every other walks on. Returns the Nodes holding a
+        return, the cost the planner would meter (read and route per return, an
+        update per heading changed) and the Ports they leave by."""
+        prices = self.prices
+        amt = family.ret_amt
+        present = amt > 0
+        holding = present.any(axis=(3, 4, 5))
+        cost = np.zeros(self.shape, dtype=np.int64)
+        ports = np.zeros((*self.shape, 6), dtype=bool)
+        if not holding.any():
+            return holding, cost, ports
+        spent = present & (family.ret_steps == 0)
+        if spent.any():
+            trace = family.trace[..., None, None]
+            followed = spent & (trace > 0)
+            waiting = spent & (trace == 0)
+            if waiting.any():
+                for port in range(6):
+                    mask = waiting[..., port]
+                    if not mask.any():
+                        continue
+                    self._merge_cells(
+                        family,
+                        (family.wait_amt, family.wait_ph, family.wait_mom, None),
+                        (amt[..., port], family.ret_ph[..., port], family.ret_mom[..., port, :], None),
+                        mask,
+                    )
+                    amt[..., port] = np.where(mask, 0, amt[..., port])
+                    family.ret_ph[..., port] = np.where(mask, 0, family.ret_ph[..., port])
+                    family.ret_mom[..., port, :] = np.where(
+                        mask[..., None], 0, family.ret_mom[..., port, :]
+                    )
+                    family.ret_steps[..., port] = np.where(mask, 0, family.ret_steps[..., port])
+            if followed.any():
+                turned = np.zeros(self.shape, dtype=np.int64)
+                for target in range(6):
+                    for port in range(6):
+                        if port == target:
+                            continue
+                        mask = followed[..., port] & (trace[..., 0] == target + 1)
+                        if not mask.any():
+                            continue
+                        self._merge_cells(
+                            family,
+                            (
+                                amt[..., target],
+                                family.ret_ph[..., target],
+                                family.ret_mom[..., target, :],
+                                family.ret_steps[..., target],
+                            ),
+                            (
+                                amt[..., port].copy(),
+                                family.ret_ph[..., port].copy(),
+                                family.ret_mom[..., port, :].copy(),
+                                family.ret_steps[..., port].copy(),
+                            ),
+                            mask,
+                        )
+                        amt[..., port] = np.where(mask, 0, amt[..., port])
+                        family.ret_ph[..., port] = np.where(mask, 0, family.ret_ph[..., port])
+                        family.ret_mom[..., port, :] = np.where(
+                            mask[..., None], 0, family.ret_mom[..., port, :]
+                        )
+                        family.ret_steps[..., port] = np.where(mask, 0, family.ret_steps[..., port])
+                        turned += mask.sum(axis=(3, 4))
+                cost += prices["update"] * turned
+        present = amt > 0
+        count = present.sum(axis=(3, 4, 5)).astype(np.int64)
+        ports = present.any(axis=(3, 4))
+        cost += (prices["read"] + prices["route"]) * count
+        return holding, cost, ports
+
+    def _walk_returns(self, family: DenseFamily) -> tuple[np.ndarray, ...]:
+        """The returns one Link on, each through the Port it walks, its steps one
+        fewer while any are left (a return whose steps are spent walks on the
+        trace's line with its count at 0); what leaves an open board is counted as
+        escaped with the momentum it carried, per family, on the escaped line and
+        the shadows' own. Returns what arrives at each Node: the amount, phase,
+        momentum and steps per owner, sign and Port; the arrays are emptied."""
+        definition = family.definition
+        amounts = np.zeros_like(family.ret_amt)
+        phases = np.zeros_like(family.ret_ph)
+        momenta = np.zeros_like(family.ret_mom)
+        steps = np.zeros_like(family.ret_steps)
+        for port in range(6):
+            source = family.ret_amt[..., port]
+            if not source.any():
+                continue
+            axis, forward = port >> 1, (port & 1) == 0
+            source_phase = family.ret_ph[..., port]
+            source_momentum = family.ret_mom[..., port, :]
+            source_steps = np.maximum(family.ret_steps[..., port] - 1, 0)
+            if self.open:
+                ahead: list[slice | int] = [slice(None)] * 3
+                behind: list[slice | int] = [slice(None)] * 3
+                edge: list[slice | int] = [slice(None)] * 3
+                if forward:
+                    ahead[axis], behind[axis], edge[axis] = slice(1, None), slice(None, -1), -1
+                else:
+                    ahead[axis], behind[axis], edge[axis] = slice(None, -1), slice(1, None), 0
+                amounts[(*ahead, Ellipsis, port)] = source[tuple(behind)]
+                phases[(*ahead, Ellipsis, port)] = source_phase[tuple(behind)]
+                momenta[(*ahead, Ellipsis, port, slice(None))] = source_momentum[tuple(behind)]
+                steps[(*ahead, Ellipsis, port)] = source_steps[tuple(behind)]
+                escaped = int(source[tuple(edge)].sum())
+                if escaped:
+                    self.engine.escaped[definition.field][0] += escaped
+                    self.engine.shadow_escaped[definition.field][0] += escaped
+                    if definition.momentum_field is not None:
+                        gone = source_momentum[tuple(edge)].astype(np.int64).sum(axis=(0, 1, 2, 3))
+                        for axis_index in range(3):
+                            value = int(gone[axis_index])
+                            self.engine.escaped[definition.momentum_field][axis_index] += value
+                            self.engine.shadow_escaped[definition.momentum_field][axis_index] += value
+            else:
+                shift = 1 if forward else -1
+                amounts[..., port] = np.roll(source, shift, axis=axis)
+                phases[..., port] = np.roll(source_phase, shift, axis=axis)
+                momenta[..., port, :] = np.roll(source_momentum, shift, axis=axis)
+                steps[..., port] = np.roll(source_steps, shift, axis=axis)
+        family.ret_amt[...] = 0
+        family.ret_ph[...] = 0
+        family.ret_mom[...] = 0
+        family.ret_steps[...] = 0
+        return amounts, phases, momenta, steps
+
     # -- the delivery ----------------------------------------------------------
 
     def deliver(
@@ -538,12 +763,15 @@ class DenseField:
         Nodes and hand the engine the packets of dense Nodes to its own. Returns the
         packets left for the engine to deliver and the packets absorbed."""
         incoming = {index: self._walk(family) for index, family in self.families.items()}
-        engine_incoming = self._engine_receivers(incoming)
+        returning = {index: self._walk_returns(family) for index, family in self.families.items()}
+        engine_incoming = self._engine_receivers(incoming) | self._engine_receivers(returning)
         candidates = set(ready) | engine_incoming
         if residents is not None:
             for position, carrier in residents.items():
                 if any(record is not None for record in carrier.records) and (
-                    position in ready or self._receives(incoming, position)
+                    position in ready
+                    or self._receives(incoming, position)
+                    or self._receives(returning, position)
                 ):
                     candidates.add(position)
         for target in sorted(candidates):
@@ -552,7 +780,7 @@ class DenseField:
                 self._to_engine(target)
             elif not bound and self.owner[target]:
                 self._to_dense(target)
-        handed = self._hand_over(tick, incoming)
+        handed = self._hand_over(tick, incoming, returning)
         absorbed: list[SpatialPacket] = []
         for target in list(ready):
             if not self.owner[target]:
@@ -563,9 +791,20 @@ class DenseField:
             amounts, phases = incoming[index]
             family.arr_amt += amounts
             family.arr_ph += phases
-            present = (family.arr_amt > 0).any(axis=(3, 4, 5, 6))
+            back_amount, back_phase, back_momentum, back_steps = returning[index]
+            arrived_back = back_amount > 0
+            if arrived_back.any():
+                self._merge_cells(
+                    family,
+                    (family.ret_amt, family.ret_ph, family.ret_mom, family.ret_steps),
+                    (back_amount, back_phase, back_momentum, back_steps),
+                    arrived_back,
+                )
+            present = (family.arr_amt > 0).any(axis=(3, 4, 5, 6)) | arrived_back.any(axis=(3, 4, 5))
             self.visited |= present
-            count = (family.arr_amt > 0).sum(axis=(3, 4, 5, 6))
+            count = (family.arr_amt > 0).sum(axis=(3, 4, 5, 6)) + (family.ret_amt > 0).sum(
+                axis=(3, 4, 5)
+            )
             for position, rays in family.overflow.items():
                 count[position] += len(rays)
             if count.max(initial=0) > family.definition.ray_slots:
@@ -615,12 +854,12 @@ class DenseField:
         family.fly_ph[...] = 0
         return amounts, phases
 
-    def _engine_receivers(self, incoming: dict[int, tuple[np.ndarray, np.ndarray]]) -> set[Address3]:
+    def _engine_receivers(self, incoming: Mapping[int, tuple[np.ndarray, ...]]) -> set[Address3]:
         return {position for position in self.engine_positions if self._receives(incoming, position)}
 
     @staticmethod
-    def _receives(incoming: dict[int, tuple[np.ndarray, np.ndarray]], position: Address3) -> bool:
-        return any(bool(amounts[position].any()) for amounts, _ in incoming.values())
+    def _receives(incoming: Mapping[int, tuple[np.ndarray, ...]], position: Address3) -> bool:
+        return any(bool(arrays[0][position].any()) for arrays in incoming.values())
 
     def _engine_bound(
         self,
@@ -636,7 +875,7 @@ class DenseField:
         if carrier is not None and any(record is not None for record in carrier.records):
             return True
         node = self.engine.nodes.get(target)
-        if node is not None and not plain_node(node):
+        if node is not None and not plain_node(node, self.families):
             return True
         for packet in packets:
             if packet.body is not None:
@@ -656,77 +895,191 @@ class DenseField:
     def claim(self, position: Address3) -> None:
         """A Node the engine holds from the start (the shadows given with the board
         are installed there): the engine's until the region takes it back at a
-        delivery; its registers are the Node's, not the arrays'."""
+        delivery; what it parks is the Node's, not the arrays'."""
         self.owner[position] = 1
         self.visited[position] = True
         self.engine_positions.add(position)
 
     def _to_engine(self, target: Address3) -> None:
-        """The Node becomes the engine's: its registers move to the Node state."""
+        """The Node becomes the engine's: its parked shares, traces and waiting
+        shadows move from the arrays to the Node's rays (node-is-ports-v1)."""
         node = self.engine._at(target)
-        remainders, phases = list(node.remainders), list(node.remainder_phases)
+        bundles = list(node.rays) or [() for _ in self.initial.spatial_fields]
         for index, family in self.families.items():
-            remainders[index] = tuple(int(v) for v in family.reg[target].reshape(-1))
-            phases[index] = tuple(int(v) for v in family.regph[target].reshape(-1))
+            definition = family.definition
+            found: list[Ray] = list(bundles[index])
+            found.extend(
+                park_shares(
+                    tuple(int(v) for v in family.reg[target].reshape(-1)),
+                    tuple(int(v) for v in family.regph[target].reshape(-1)),
+                    definition,
+                )
+            )
+            for rank, port in zip(*np.nonzero(family.trace[target]), strict=True):
+                found.append(parked_shadow(family.owners[int(rank)], int(port) - 1, definition))
+            found.extend(self._waiting_rays(family, target))
             family.reg[target] = 0
             family.regph[target] = 0
-        node.remainders, node.remainder_phases = tuple(remainders), tuple(phases)
+            family.trace[target] = 0
+            family.wait_amt[target] = 0
+            family.wait_ph[target] = 0
+            family.wait_mom[target] = 0
+            bundles[index] = merge_rays(tuple(found))
+        node.rays = tuple(bundles)
         node.last_cost = int(self.cost[target])
         self.owner[target] = 1
         self.visited[target] = True
         self.engine_positions.add(target)
 
     def _to_dense(self, target: Address3) -> None:
-        """The Node becomes the region's: its registers move into the arrays."""
+        """The Node becomes the region's: its parked shares, traces and waiting
+        shadows move from its rays into the arrays (node-is-ports-v1)."""
         node = self.engine.nodes[target]
+        bundles = list(node.rays) or [() for _ in self.initial.spatial_fields]
         for index, family in self.families.items():
+            definition = family.definition
+            rays = bundles[index]
+            block, block_phases = parked_shares(rays, definition)
             size = REMAINDER_SLOTS * len(family.owners)
-            block = node.remainders[index] if index < len(node.remainders) else ()
-            block_phases = node.remainder_phases[index] if index < len(node.remainder_phases) else ()
             family.reg[target] = np.array(block or (0,) * size, dtype=np.int64).reshape(
                 len(family.owners), SIGNS, 6
             )
             family.regph[target] = np.array(block_phases or (0,) * size, dtype=np.int64).reshape(
                 len(family.owners), SIGNS, 6
             )
-        node.remainders = blank_remainders(self.initial.spatial_fields)
-        node.remainder_phases = blank_remainders(self.initial.spatial_fields)
+            family.trace[target] = 0
+            for ray in rays:
+                if ray.parked and not ray.amount:
+                    family.trace[target][family.rank[ray.owner]] = family.port_of[ray.heading] + 1
+            family.wait_amt[target] = 0
+            family.wait_ph[target] = 0
+            family.wait_mom[target] = 0
+            for ray in rays:
+                if ray.parked or ray.outbound:
+                    continue
+                # A shadow waiting at rest for a thing of its owner (settled rule (ii)).
+                cell = (family.rank[ray.owner], ray.source_sign + 1)
+                momentum = ray.momentum or (0, 0, 0)
+                held = int(family.wait_amt[target][cell])
+                if held:
+                    phase = int(
+                        family.phase_of_pair(
+                            np.array(held),
+                            family.wait_ph[target][cell],
+                            np.array(ray.amount),
+                            np.array(ray.phase),
+                        )
+                    )
+                else:
+                    phase = ray.phase
+                family.wait_amt[target][cell] = held + ray.amount
+                family.wait_ph[target][cell] = phase
+                family.wait_mom[target][cell] += np.array(momentum, dtype=np.int64)
+            bundles[index] = ()
+        node.rays = tuple(bundles) if any(bundles) else tuple(() for _ in self.initial.spatial_fields)
         self.cost[target] = node.last_cost
         self.owner[target] = 0
         self.visited[target] = True
         self.engine_positions.discard(target)
 
+    def _waiting_rays(self, family: DenseFamily, position: Address3) -> list[Ray]:
+        """The shadows waiting at a Node as rays: at rest, their steps spent, with
+        the momentum they carry (node-is-ports-v1)."""
+        found: list[Ray] = []
+        for rank, sign in zip(*np.nonzero(family.wait_amt[position]), strict=True):
+            carried = family.wait_mom[position][rank, sign]
+            momentum = (int(carried[0]), int(carried[1]), int(carried[2]))
+            found.append(
+                Ray(
+                    int(family.heading_index[0]),
+                    (0, 0, 0),
+                    int(family.wait_amt[position][rank, sign]),
+                    phase=int(family.wait_ph[position][rank, sign]),
+                    outbound=0,
+                    detector=BIT_SHADOW,
+                    source_sign=int(sign) - 1,
+                    momentum=momentum if any(momentum) else None,
+                    owner=family.owners[int(rank)],
+                )
+            )
+        return found
+
+    def _returning_rays(
+        self, family: DenseFamily, position: Address3, arrays: tuple[np.ndarray, ...] | None = None
+    ) -> dict[int, list[Ray]]:
+        """The returns at a Node as rays per Port (node-is-ports-v1): each walking
+        home on its Port's heading with its amount, the phase of its sum, its
+        momentum and its steps; from the resident arrays or from `arrays`."""
+        amounts, phases, momenta, steps = (
+            (family.ret_amt, family.ret_ph, family.ret_mom, family.ret_steps)
+            if arrays is None
+            else arrays
+        )
+        found: dict[int, list[Ray]] = {}
+        for rank, sign, port in zip(*np.nonzero(amounts[position]), strict=True):
+            carried = momenta[position][rank, sign, port]
+            momentum = (int(carried[0]), int(carried[1]), int(carried[2]))
+            found.setdefault(int(port), []).append(
+                Ray(
+                    int(family.heading_index[port]),
+                    (0, 0, 0),
+                    int(amounts[position][rank, sign, port]),
+                    phase=int(phases[position][rank, sign, port]),
+                    steps=int(steps[position][rank, sign, port]),
+                    outbound=0,
+                    detector=BIT_SHADOW,
+                    source_sign=int(sign) - 1,
+                    momentum=momentum if any(momentum) else None,
+                    owner=family.owners[int(rank)],
+                )
+            )
+        return found
+
     def _hand_over(
-        self, tick: int, incoming: dict[int, tuple[np.ndarray, np.ndarray]]
+        self,
+        tick: int,
+        incoming: dict[int, tuple[np.ndarray, np.ndarray]],
+        returning: dict[int, tuple[np.ndarray, ...]] | None = None,
     ) -> dict[Address3, list[SpatialPacket]]:
         """The region's departures that reach the engine's Nodes, as packets: one per
         origin and Port, its shadows merged and ordered as `forward_rays` orders
-        them, and taken out of the arrays."""
+        them, the returns among them (node-is-ports-v1), and taken out of the
+        arrays."""
         bundles: dict[tuple[Address3, int], list[Rays]] = {}
         engine_mask = self.owner == 1
         for index, family in self.families.items():
             amounts, phases = incoming[index]
             hits = np.nonzero(engine_mask[..., None, None, None, None] & (amounts > 0))
-            if not hits[0].size:
-                continue
             rays_at: dict[tuple[Address3, int], list[Ray]] = {}
-            for x, y, z, rank, sign, port, layer in zip(*hits, strict=True):
-                target = (int(x), int(y), int(z))
-                key = (target, int(port))
-                rays_at.setdefault(key, []).append(
-                    Ray(
-                        int(family.heading_index[port]),
-                        (0, 0, 0),
-                        int(amounts[x, y, z, rank, sign, port, layer]),
-                        phase=int(phases[x, y, z, rank, sign, port, layer]),
-                        steps=1,
-                        detector=BIT_SHADOW,
-                        source_sign=int(sign) - 1,
-                        owner=family.owners[int(rank)],
+            if hits[0].size:
+                for x, y, z, rank, sign, port, layer in zip(*hits, strict=True):
+                    target = (int(x), int(y), int(z))
+                    key = (target, int(port))
+                    rays_at.setdefault(key, []).append(
+                        Ray(
+                            int(family.heading_index[port]),
+                            (0, 0, 0),
+                            int(amounts[x, y, z, rank, sign, port, layer]),
+                            phase=int(phases[x, y, z, rank, sign, port, layer]),
+                            steps=1,
+                            detector=BIT_SHADOW,
+                            source_sign=int(sign) - 1,
+                            owner=family.owners[int(rank)],
+                        )
                     )
-                )
-            amounts[hits] = 0
-            phases[hits] = 0
+                amounts[hits] = 0
+                phases[hits] = 0
+            if returning is not None:
+                back = returning[index]
+                back_hits = np.nonzero(engine_mask[..., None, None, None] & (back[0] > 0))
+                if back_hits[0].size:
+                    for x, y, z in sorted(
+                        {(int(x), int(y), int(z)) for x, y, z, *_ in zip(*back_hits, strict=True)}
+                    ):
+                        for port, rays in self._returning_rays(family, (x, y, z), back).items():
+                            rays_at.setdefault(((x, y, z), port), []).extend(rays)
+                    for array in back:
+                        array[back_hits] = 0
             for key, rays in rays_at.items():
                 bundle = bundles.setdefault(key, [() for _ in range(self.field_count)])
                 bundle[index] = merge_rays(tuple(rays))
@@ -740,8 +1093,10 @@ class DenseField:
         return handed
 
     def _absorb(self, target: Address3, packet: SpatialPacket) -> None:
-        """An engine packet arriving at a dense Node: its shadows into the arrays,
-        layer by layer per owner, sign and Port, the rest kept whole beside them."""
+        """An engine packet arriving at a dense Node: its outbound shadows into the
+        arrays, layer by layer per owner, sign and Port, the rest kept whole beside
+        them; its returns into the returning layer per owner, sign and Port, merged
+        (node-is-ports-v1)."""
         for index, rays in enumerate(packet.rays):
             if not rays:
                 continue
@@ -750,6 +1105,28 @@ class DenseField:
                 rank = family.rank[ray.owner]
                 sign = ray.source_sign + 1
                 port = packet.port
+                if not ray.outbound:
+                    cell = (rank, sign, port)
+                    held = int(family.ret_amt[target][cell])
+                    if held:
+                        phase = int(
+                            family.phase_of_pair(
+                                np.array(held),
+                                family.ret_ph[target][cell],
+                                np.array(ray.amount),
+                                np.array(ray.phase),
+                            )
+                        )
+                        family.ret_steps[target][cell] = min(
+                            int(family.ret_steps[target][cell]), ray.steps
+                        )
+                    else:
+                        phase = ray.phase
+                        family.ret_steps[target][cell] = ray.steps
+                    family.ret_amt[target][cell] = held + ray.amount
+                    family.ret_ph[target][cell] = phase
+                    family.ret_mom[target][cell] += np.array(ray.momentum or (0, 0, 0), dtype=np.int64)
+                    continue
                 layers = family.arr_amt[target][rank, sign, port]
                 free = [layer for layer in range(LAYERS) if layers[layer] == 0]
                 if free:
@@ -764,27 +1141,43 @@ class DenseField:
 
     def add_totals(self, result: list[list[int]]) -> None:
         """The region's content on the ledger's current line: resident shadows, the
-        registers' whole quanta and the departures in flight, per field; a shadow
-        carries no momentum on the ledger (bit-law-v1)."""
+        parked shares' whole quanta, the departures in flight, the returns and the
+        shadows waiting, per field, and on the momentum field what the returns and
+        the waiting shadows carry (bit-law-v1: a shadow's momentum on the ledger
+        is what it carries home)."""
         for family in self.families.values():
             definition = family.definition
             resident = int(family.arr_amt.sum()) + int(family.fly_amt.sum())
             for rays in family.overflow.values():
                 resident += sum(ray.amount for ray in rays)
+            resident += int(family.ret_amt.sum()) + int(family.wait_amt.sum())
             held = int(family.reg.sum())
             if held % family.total:
-                raise ValueError("a Node's remainder registers hold whole quanta in total")
+                raise ValueError("a Node's parked shadows hold whole quanta in total")
             result[definition.field][0] += resident + held // family.total
+            if definition.momentum_field is not None:
+                carried = family.ret_mom.astype(np.int64).sum(
+                    axis=(0, 1, 2, 3, 4, 5)
+                ) + family.wait_mom.astype(np.int64).sum(axis=(0, 1, 2, 3, 4))
+                for axis in range(3):
+                    result[definition.momentum_field][axis] += int(carried[axis])
 
     def shadow_counts(self, result: dict[int, list[int]]) -> None:
-        """The region's shadows per owner: the rays (array entries with content and
-        the whole rays beside them) and their amount."""
+        """The region's shadows per owner: the rays (array entries with content, the
+        whole rays beside them, the returns and the shadows waiting) and their
+        amount; a parked share is not a ray of its own."""
         for family in self.families.values():
             for rank, owner in enumerate(family.owners):
                 entry = result.setdefault(owner, [0, 0])
                 arrived, flying = family.arr_amt[:, :, :, rank], family.fly_amt[:, :, :, rank]
-                entry[0] += int((arrived > 0).sum()) + int((flying > 0).sum())
-                entry[1] += int(arrived.sum()) + int(flying.sum())
+                back, waiting = family.ret_amt[:, :, :, rank], family.wait_amt[:, :, :, rank]
+                entry[0] += (
+                    int((arrived > 0).sum())
+                    + int((flying > 0).sum())
+                    + int((back > 0).sum())
+                    + int((waiting > 0).sum())
+                )
+                entry[1] += int(arrived.sum()) + int(flying.sum()) + int(back.sum()) + int(waiting.sum())
             for rays in family.overflow.values():
                 for ray in rays:
                     entry = result.setdefault(ray.owner, [0, 0])
@@ -793,19 +1186,20 @@ class DenseField:
 
     def materialized_nodes(self, nodes: dict[Address3, SpatialNode]) -> dict[Address3, SpatialNode]:
         """Every Node the region owns and has visited, read as Node state beside the
-        engine's own: its resident rays merged in the engine's order, its registers,
-        the amounts delivered per Port, the Ports it received through and the cost
-        of its last cycle; the engine's Nodes as they are."""
+        engine's own: its resident rays merged in the engine's order (the arrivals,
+        the returns, the shadows waiting, the parked shares and the traces), the
+        amounts delivered per Port, the Ports it received through and the cost of
+        its last cycle; the engine's Nodes as they are."""
         result = dict(nodes)
         for x, y, z in zip(*np.nonzero(self.visited & (self.owner == 0)), strict=True):
             position = (int(x), int(y), int(z))
             base = nodes.get(position)
             node = replace(base) if base is not None else self._fresh(position)
             rays = list(node.rays) or [() for _ in self.initial.spatial_fields]
-            remainders, phases = list(node.remainders), list(node.remainder_phases)
             states = list(node.states)
             mask = [0] * 6
             for index, family in self.families.items():
+                definition = family.definition
                 found: list[Ray] = []
                 delivered = [0] * 6
                 amounts = family.arr_amt[position]
@@ -830,14 +1224,25 @@ class DenseField:
                     port = family.port_of[ray.heading]
                     delivered[port] += ray.amount
                     mask[port ^ 1] = 1
+                # A return is delivered as no flux, as the engine delivers it.
+                for port, back in self._returning_rays(family, position).items():
+                    found.extend(back)
+                    mask[port ^ 1] = 1
+                found.extend(self._waiting_rays(family, position))
+                found.extend(
+                    park_shares(
+                        tuple(int(v) for v in family.reg[position].reshape(-1)),
+                        tuple(int(v) for v in family.regph[position].reshape(-1)),
+                        definition,
+                    )
+                )
+                for rank, port in zip(*np.nonzero(family.trace[position]), strict=True):
+                    found.append(parked_shadow(family.owners[int(rank)], int(port) - 1, definition))
                 rays[index] = merge_rays(tuple(found))
-                remainders[index] = tuple(int(v) for v in family.reg[position].reshape(-1))
-                phases[index] = tuple(int(v) for v in family.regph[position].reshape(-1))
                 states[index] = replace(
                     states[index], delivered=tuple(pack((amount,)) for amount in delivered)
                 )
             node.rays = tuple(rays)
-            node.remainders, node.remainder_phases = tuple(remainders), tuple(phases)
             node.states = tuple(states)
             node.arrival_mask = tuple(mask)
             node.last_cost = int(self.cost[position])
@@ -860,6 +1265,4 @@ class DenseField:
             detector=None,
             detector_ticket=0,
             body=None,
-            remainders=blank_remainders(self.initial.spatial_fields),
-            remainder_phases=blank_remainders(self.initial.spatial_fields),
         )

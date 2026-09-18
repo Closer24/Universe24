@@ -94,8 +94,6 @@ def document(
         "field": "quanta",
         "amount": per_ray * count,
         "denominator": 1,
-        "source": False,
-        "recoil_field": "momentum",
     }
     if phase_b:
         emission_b["kerengonen_phase"] = phase_b
@@ -152,8 +150,6 @@ def document(
                 "field": "quanta",
                 "amount": per_ray * count,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
             },
             emission_b,
         ],
@@ -242,8 +238,6 @@ def wall_document(
         "field": "quanta",
         "amount": {"field": "quanta"},
         "denominator": 1,
-        "source": False,
-        "recoil_field": "momentum",
     }
     if phase_steps:
         slit_emission["kerengonen_phase"] = "carried"
@@ -253,8 +247,6 @@ def wall_document(
             "field": "quanta",
             "amount": SOURCE_PER_RAY * len(headings),
             "denominator": 1,
-            "source": False,
-            "recoil_field": "momentum",
         },
         slit_emission,
     ]

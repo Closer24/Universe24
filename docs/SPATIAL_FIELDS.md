@@ -2224,8 +2224,8 @@ steps carrying -dp and walks home, following the Node trace its owner left
 (`traces`, the Port the largest thing of each owner left a Node by, at most
 sixteen owners per Node), is absorbed back and released again reversed; a
 shadow meeting its own thing is home, never a push; a push is not an event
-(point 15: no `ray_push`, the runner records the per-thing `registers` line per
-tick). Shadows are given with the board: `initial_field` per family, `{"fill":
+(point 15: no `ray_push`, the runner records the per-thing `momentum` line per
+tick, `registers` until node-is-ports-v1). Shadows are given with the board: `initial_field` per family, `{"fill":
 T}` (T intervals of the fill, each thing releasing its shadow set of
 `release` x stock per heading, rounded to whole quanta per Node and heading
 with the fractions in the Node's remainder registers, reflected at sources and
@@ -2248,8 +2248,9 @@ momentum shadows bring home; every ray family of a world with one momentum
 field is bound to it. Events happen only at Nodes that hold a thing (point
 13): a Node holding shadows alone publishes no record, and the dense mode is
 the shadow layer, the default wherever a world admits it. The runner records
-`bit_law`, `shadow_families`, `initial_field`, `things_content` and
-`shadows_content` per tick, `registers`, `shadows` and `things_conserved`.
+`bit_law`, `shadow_families`, `initial_field`, `real_content` and
+`shadow_content` per tick, `momentum`, `shadows` and `real_conserved` (the
+names of node-is-ports-v1; the bit's values are `real` and `shadow`).
 Identity `bit-law-v1`; isolated test `tests/test_bit_law.py`
 ([expectations](TEST_EXPECTATIONS.md#the-law-of-the-bit)); old worlds are
 migrated textually by `examples/nature/bit_law_migration.py`. The catalog's
@@ -2299,6 +2300,100 @@ source (the tube theorem of DERIVATIONS.md section 17); the model owner
 decides. Identity `phase-spread-v1`; isolated test
 `tests/test_phase_spread.py`
 ([expectations](TEST_EXPECTATIONS.md#the-phase-steered-spread)).
+
+### A Node is its six Ports (`node-is-ports-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4, point 22 and the five settled
+rules, the model owner's decision of 2026-09-18; issue #169, feature 17):
+every store the model kept on a Node or beside the rays is a ray with a
+property, and what remains of a Node is its Ports. The engine's only
+behaviour, with no declarable alternative:
+
+- **The parked shadow.** What a Node holds below one quantum is a shadow at
+  rest among its rays, `Ray.parked` 1, a bit-0 ray of its owner on the Port
+  heading it will leave through, its amount in units of the family's split
+  denominator (the table's total S, declared once per family: `parked_unit`;
+  a family without a split parks nothing but traces). The spread step reads
+  the parked shares as the block it always read (`parked_shares`), combines
+  each with the shares it adds by the coherence rule, releases a share that
+  reaches S whole through its heading, and parks the rest again
+  (`park_shares`); the books count the parked shadows as shadow content, whole
+  quanta per Node in total (`parked_stock`); a parked shadow is outside the
+  slot budget and never forwarded. The separate remainder registers of
+  `field-remainder-v1` and their `field_remainders` snapshot are gone: the
+  snapshot lists `parked` (position, family, owner, sign, heading, amount,
+  unit, phase, bit), the `field_spread` record carries `parked` and
+  `parked_phases`, and the dense region keeps the same shares in its `reg`
+  arrays, read back as parked rays.
+- **The trace.** What a Node remembers of a departure is a parked shadow of
+  amount zero, left at the Node a thing departs on the heading the largest
+  thing of each owner left by (`leave_trace`, at most sixteen owners per
+  family and Node, the lowest ids dropped beyond it), read by the shadows
+  coming home (`trace_of`); a family whose lines are not the six Port headings
+  leaves none. Settled rule (ii): a prefilled shadow's steps are its Link
+  distance from its owner's Node (for several Nodes, the one its line crosses,
+  else the nearest; 1 for an owner with no Node on the board; `steps` 0 or 1
+  may still be declared), so its return arrives where the owner was; home with
+  the owner present it is absorbed and re-released; with a trace it follows;
+  with none it waits at the Node, a zero-step shadow at rest (outbound 0,
+  steps 0), until a thing of its owner passes and takes it home. The record
+  of a trace at a mark where a thing ended is no longer needed: the resident
+  thing is the home.
+- **The resident thing.** A mark's counter is a thing resident at the mark
+  (`DetectorMark.resident`, a `Resident`): a click is an absorption into it,
+  its content per family growing by the absorbed amount (`real`) and its
+  momentum by the absorbed momentum, its `owners` the identities absorbed; the
+  mark's `on_click` table is the resident's declared table. Settled rule
+  (iv): a shadow of an absorbed thing that returns to the mark is absorbed into
+  the resident on its `shadow` line with the momentum it carries, makes no
+  event and is never a click (the `shadow_absorbed` record is gone; the
+  reception record still carries `absorbed_by_mark` for the local audit).
+  `detector_marks()` and `run.json` list each mark's `resident` (`real`,
+  `shadow`, `momentum`, `owners`); the ledger's `marks` lines read `real` and
+  `shadow`. Settled rule (iii): a seeded thing missed at a mark walks back to
+  its seed Node and, the inverse split of a lone ray being the ray itself, is
+  restored to its lamp and leaves again on its original heading in the next
+  cycle. A mark declares no `seed` (rejected).
+- **The source.** A source is a thing that spends its content: an emission on
+  a ray family is paid from the emitting type's content of that family and
+  recoils into the type's momentum, the world's one signed three-component
+  conserved field that is not a spatial field, which the type must hold; the
+  `source`, `recoil_field` and `funded` keys of the lamp are rejected on a ray
+  family, nothing is sourced, and a lamp burns content. The ledgers per bit
+  read `initial + converted = current + escaped + absorbed` (the real line,
+  `converted` what a meeting turned into or out of the family, `absorbed` what
+  ended in a body, in a resident thing or at an annulling inverse split) and
+  `initial = current + escaped + absorbed_at_home` (the shadow line).
+- **The apparatus** (a mirror, a splitter, a phase plate, a polarizer, a
+  wall, a screen, a beam stop) are things with declared tables: an external
+  body with its identity, its content and its coupling rule; the catalog's
+  apparatus entries and the example worlds are migrated textually
+  (`examples/nature/bit_law_migration.py`).
+- **The names of the bit.** The two values of the bit are `real` (1) and
+  `shadow` (0) (the model owner, 2026-09-18), and the records and the books use
+  them: the ledgers per bit are `real` and `shadow`, the flag
+  `real_conserved`, the runner's per-tick lines `real_content` and
+  `shadow_content`, the resident's lines `real` and `shadow`; the ray's bit
+  stays the field `detector` with the values 1 real and 0 shadow. "Thing"
+  stays the noun for a real ray.
+- **The momentum.** A thing's momentum is a property of the thing; the word
+  register leaves the engine with the stores it named. The runner's per-tick
+  `registers` line is `momentum` (the momentum of every thing per tick, keyed
+  by thing id, from its rays and its body).
+- **Performance.** The dense region carries the returns per Node, owner, sign
+  and heading (`ret_*`: the amount, the phase of the sum, the momentum carried
+  and the least steps), walked one Link back per interval, following the
+  owner's trace (`trace`) or waiting (`wait_*`) as the planner does, handed to
+  the engine only at its Nodes; the arrays hold amounts as int32, phases as
+  int16 and flags as int8; the engine's totals are computed once per tick per
+  bit and memoized until content moves. The loss is the per-ray identity of a
+  return inside the region (its own phase and steps); the record of a dense
+  Node is its totals. The per-Node snapshot still reads the region's Nodes as
+  Node state.
+
+Identity `node-is-ports-v1`, recorded in `run.json` as `node_is_ports`;
+isolated test `tests/test_node_is_ports.py`
+([expectations](TEST_EXPECTATIONS.md#a-node-is-its-six-ports)).
 
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 

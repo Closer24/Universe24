@@ -98,8 +98,6 @@ def document(*, ray_delay=False, phase_per_tick=False, emission=200000, budget=2
                 "field": "quanta",
                 "amount": 16,
                 "denominator": 1,
-                "source": False,
-                "recoil_field": "momentum",
             },
             {
                 "type": "mass body",
