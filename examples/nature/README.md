@@ -2630,12 +2630,19 @@ committed record is `record.json`):
 The value of G stays undecided (Highlights 5.5): the run reads the forms and
 leaves the release ratio and the table as inputs.
 
-## A6 under the law: the four gravitational tests (in progress)
+## A6 under the law: the four gravitational tests
 
 `a6_law/` holds the worlds of A6 repeated under the law of the bit
 ([EXPERIMENTS.md](../../docs/EXPERIMENTS.md#a6-repeated-under-the-law-of-the-bit-2026-09-18)):
-`make_worlds.py` writes them (a closed 25³ board, the star a prefilled body,
-light things of content 1 on six lines per impact parameter, the clock read
-from their waits by radius), `analyze.py` reads the records and
-`probe_field.py` reads the prefilled field's profile through the API (an
-exploration tool, not a Renderer of records). The series has not run yet.
+`make_worlds.py` writes them (a closed 41³ board with the mass at its centre
+and the field settled by `standing_field`; two-mirror cavity clocks on the Y
+and Z half-axes at r = 3, 5, 8 and 4, 6, 10; twelve bending lines per world
+with a mark at x = 40 for the Shapiro delay; the separating run of
+DERIVATIONS.md section 37 with a source body and a receiver in a cavity; the
+masses X = 256, 64 and 16 quanta per heading per interval of the fill; the
+open-board controls), `analyze.py` reads the records (the cavities' rates
+until the thing leaves, the lines' turns, clicks and delays, the receiver's
+first move) into `record.json`, `probe_field.py` reads the prefilled field's
+profile through the API (an exploration tool, not a Renderer of records) and
+`make_page.py` writes `a6_law.html`, the self-contained page of the series
+(the tables, the bending against 1/b, one GIF of the ray viewer).

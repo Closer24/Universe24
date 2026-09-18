@@ -1122,57 +1122,106 @@ states "exactly" and means integer equality at every tick.
 
 - **Claim.** The four gravitational tests against Einstein under the law of
   the bit with the wait of point 23 (features 15 to 18, 16e, 16f;
-  DERIVATIONS.md rounds 3 to 6): (1) a clock at r against 1 − GM/r (fitted
-  to A/r and B/r²), (2) the redshift between two radii, (3) the bending of a
-  light thing's path at b = 3, 4, 6, 8 against 4GM/b (GR), 2GM/b (Newton)
-  and GM/b (round 5), (4) the Shapiro delay against 2GM ln(4x_Ax_B/b²) and
-  round 5's 2.72 w GM/b; each under the option absent, `shadow_wait` `thing`
-  and `field`, and `wait_reads` `amount` and `amplitude`, at w = 1 and 11/9.
+  DERIVATIONS.md rounds 5 and 6), each registered as what came out and not
+  as a law: (1) the clock of a thing at rest at r = 3, 5, 8 and 4, 6, 10,
+  the deficit 1 − rate fitted to A/r and B/r² (GR: 1 − GM/r, the
+  coefficient 1 at the GR w; round 6 under `amplitude`: 1 − (w/3) 0.537
+  √(GM)/r for the star as one owner; round 5 under `amount`: 1 − (√3 w/2)
+  GM/r²); (2) the redshift between two radii, z = rate(r_far)/rate(r_near)
+  − 1 against GM(1/r_near − 1/r_far); (3) the bending of a light thing at
+  b = 3, 4, 6, 8, its deflection from the momentum line and its exit
+  heading, against 4GM/b (GR), 2GM/b (Newton) and GM/b (the derivation's
+  image); (4) the Shapiro delay, the arrival tick at a mark behind the mass
+  against the same path without the mass, against 2GM ln(4x_Ax_B/b²) (GR),
+  the derivation's (w/3) 0.537 √(GM) ln(4x_Ax_B/b²) under `amplitude` and
+  2.72 w GM/b under `amount`; (5) the options of feature 16e, `shadow_wait`
+  `thing` and `field`, on the body-diagonal geometry of DERIVATIONS.md
+  section 37 (ix) (the mass at impact parameter 8 from the line, S = 40):
+  the receiver's momentum first-move tick per option. Under `wait_reads`
+  `amount` and `amplitude`, at w = 1 first and then at the GR w of round 6,
+  w = 1.861 √(GM) in the derivation's unit for the star as one owner,
+  declared to the engine as 3 × 1.861 √(GM) (the engine counts 3|u|).
 - **Features.** 15 (bit-law-v1), 16b (clock-readings-v1), 16c
   (node-mixing-v1), 16d (return-field-v1), 17 (node-is-ports-v1), 18
-  (lanes-v1), 16e (shadow-wait-v1), 16f (wait-reads-v1); N = 64, K = 1.
-- **Run.** `examples/nature/a6_law/` (`make_worlds.py`, `analyze.py`,
-  `probe_field.py`): a 25 × 25 × 25 board (r ≤ 12, the machine's budget of
-  the day), closed (`periodic`, the model owner's decision of 2026-09-18;
-  one open-board control of each kind), the star an external body of amount
-  2^20 at the centre (a thing at rest cannot be held: every ray moves, a held
-  record has no clock) with its field given by `initial_field` `fill`: X
-  quanta per heading per fill interval, `m16` (X = 16, 15 intervals, 1440
-  quanta, S = 96) and `m256` (X = 256, 12 intervals on the closed board, 14
-  on the open one, S = 1536); light things of content 1 (clock declared, K 1)
-  on six lines per b (y = 12 ± b, z = 12 and 12 ± 1), circulating on the
-  closed board so that every lap is a pass; the gravity coupling the
-  momentum table `{"star": -1}` read by content.
-- **Status.** in progress (WIP commit of 2026-09-18, the lane moving to a
-  dedicated machine); no world of the series has completed yet. Measured so
-  far, on `main` at `6a682e0` (source fingerprint recorded per run), by the
-  probe `probe_field.py` and the smoke runs: (a) the prefill refuses a fill
-  longer than about 30 intervals at X = 1 and 14 at X ≥ 64 (open board; 12
-  at X = 256 on the closed one), "the prefill cannot hold a third phase on
-  one Port of a source"; (b) the whole-quanta field of the body under the
-  mixing is a parked residue: at X = 1 every quantum is parked within 3
-  Links by tick 30; at X = 16 (fill 15) the arrival rate at r = 1 to 5 on the
-  axis is 8.3, 7.0, 1.07, 0.22, 0.02 quanta per Node per interval (first 30
-  ticks), zero beyond, decaying 40 % over 60 ticks, the line at b = 4
-  reading 0.55 quanta per pass and b ≥ 6 nothing; at X = 256 (fill 14) 23,
-  23, 16, 13, 7.8, 1.8, 0.35 at r = 1 to 7, the line at b = 8 reading 0 to 1
-  per pass and b = 6 fifteen to twenty-five (inside the horizon w n ≥ 1);
-  (c) in the smoke run at X = 16 (open board, b = ±4, 40 ticks) the three
-  light things on the +4 lines arrived straight at tick 24 with no quantum
-  read, and the one on the −4 line read one quantum at tick 14, turned a
-  whole Port toward the star, and froze in the core (the horizon), with
-  every ledger line balanced; (d) a cavity of six reflecting Nodes around a
-  clock shields it completely (no quantum reaches its centre), and a mirror
-  body on the X axis refuses a light thing arriving on +X (lanes-v1: the
-  body's token heads +X), so the clock at r is to be read from the passing
-  light things instead: the intervals they moved over the intervals they
-  spent at Nodes at Euclidean distance r, binned over lines and laps (one
-  quantum read is one whole step under the content reading, so no thing of
-  content 1 rests in a field). The six ring numbers of round 6 (r = 8, 16,
-  32) are not reachable on this board and this field. Next: the bending
-  series on the closed board (200 ticks, eight laps), the analyzer's radius
-  bins, the options, the record, the page.
-
+  (lanes-v1), 16e (shadow-wait-v1), 16f (wait-reads-v1, with the amplitude
+  remainder of PR #312), the dense mode and the standing set
+  (standing-field-v1); N = 64, K = 1.
+- **Run.** `examples/nature/a6_law/` (`make_worlds.py` writes the thirty-seven
+  worlds, `analyze.py` reads the records, `probe_field.py` reads the
+  prefilled field through the API, `make_page.py` writes the page
+  `a6_law.html`; the README row in
+  [examples/nature](../examples/nature/README.md#a6-under-the-law-the-four-gravitational-tests)).
+  A closed board (`boundary` `periodic`, the model owner's decision of
+  2026-09-18) of 41 × 41 × 41 Nodes with the mass at its centre (20, 20,
+  20), so that the field wraps around 20 Links from the mass on every axis,
+  beyond the farthest clock (r = 10, its outer mirror at 11) and the
+  farthest bending line (b = 8); the prefill of F intervals reaches the
+  Manhattan radius F before tick 0, so the wrap-around meets itself at the
+  boundary planes at tick 20 − F = 6 of the run for the fill of 14. The
+  field settled before it is read: `standing_field` declared, the dense
+  region looking for a repeat of its state within the run and replaying the
+  cycle from then on, the record carrying the iterations to the cycle and
+  the residual. The mass an external body of the family `star` (amount
+  2^20) with `release` [1, 2^20/X], X quanta per heading per interval of the
+  prefill `initial_field` `{"fill": 14}` (the longest fill the prefill
+  admits on this board: 20 is refused, "the prefill cannot hold a third
+  phase on one Port of a source"), absorbing things, returning shadows and
+  radiating nothing during the run; the flux S = 6X, the derivation's
+  GM = S/(2π): `m256` (X = 256, S = 1536, GM = 244.5, w_GR = 87.29 as
+  [8729, 100]), `m64` (X = 64, S = 384, GM = 61.1) and `m16` (X = 16,
+  S = 96, GM = 15.3). The light a thing of the `light` family of content 1
+  (K 1, clock declared), one per lamp, pushed by the momentum table
+  `{"star": −1}` read by content (one shadow quantum read is one whole step
+  toward the source of that shadow at the next departure when the push is
+  transverse to the heading, and w intervals of wait). (1), (2): four
+  cavities per world, one on each half-axis +Y, −Y, +Z, −Z (a mirror body's
+  token heads +X and lanes-v1 refuses a light thing leaving a mirror on +X),
+  each a light thing between two mirror bodies (`mirror`, the coupling
+  `reflect`) at r − 1 and r + 1 along the half-axis, launched outward from
+  the centre at tick 0, so that it alternates between the centre and a
+  mirror and reads the field at the centre on every other interval; a
+  closed cavity of six walls shields the clock completely (a body returns
+  every shadow, the WIP smoke run of the morning), so the cavity is open on
+  its four sides and a transverse push turns the thing out of it, its rate
+  read until then; every cavity one Link aside of the axis on X, since a
+  mirror on the axis returns the star's shadows straight to the source and
+  the prefill is refused (the Euclidean r is √(r² + 1)); batch `a` r = 3,
+  5, 8 and 5 again on −Z, batch `b` r = 4, 6, 10 and 6 again; 300 ticks;
+  `m256` under both readings at w = 1 and at the GR w, `m64` under both at
+  w = 1, one control per batch without the star, batch `a` of `m256` on an
+  open board. (3), (4): twelve lines parallel to X per world, six per b
+  (y = 20 ± b, z = 20 and 20 ± 1), b = 3 and 6 in one world and 4 and 8 in
+  the other (sixteen thing types at most), one light thing per line
+  launched at x = 0 on +X at tick 0, a mark (setting [1, 1]) at x = 40 on
+  each line recording the arrival tick, 40 for a straight pass, x_A = x_B =
+  20; 100 ticks; `m256` under both readings at w = 1 and the GR w, `m64` and
+  `m16` under `amount` at w = 1, the two controls without the star, one open
+  board. (5): a source body A of the family `source` (X = 1024, fill 14) at
+  (16, 4, 10) and a receiver B, a light thing in a Y cavity at (36, 24, 30)
+  whose coupling names `source` only, on the body diagonal through both,
+  the mass M at the centre at impact parameter √72 = 8.5 from the line,
+  M with X = 7 (S = 42, the S = 40 of section 37) and once more `m256`;
+  A's front at Manhattan radius 14 at tick 0, B at Manhattan distance 60
+  from A; `shadow_wait` absent, `thing` and `field` at w = 1, and the
+  control without M; 150 ticks. Recorded per run: the runner's record
+  (`run.json`: the momentum line per thing per tick, the ledger, the
+  standing set's record, the fingerprint), the events (every arrival of a
+  light thing), the world; the records stay outside the tree, the
+  analyzer's `record.json` beside the worlds.
+- **The field the runs read** (the probe, before the series): on this board
+  the whole quanta of the prefilled field are a transient that parks as
+  ninths within about 100 intervals (X = 16: 855 quanta arriving per
+  interval at tick 1, 182 at tick 40, 1159 of 1440 parked; X = 256: 18 631
+  at tick 1, 10 936 at tick 40, 10 566 of 21 504 parked), reaching r = 4 at
+  X = 16 (n = 2.4, 2.2, 1.0, 0.1 quanta per Node per interval at r = 1 to 4
+  on the axis over ticks 20 to 40, zero beyond) and r = 8 at X = 256 (6.5,
+  17.4, 10.5, 14.6, 9.2, 2.5, 0.95, 0.25 at r = 1 to 8, zero beyond; r² n
+  = 232 at r = 4 and 16 at r = 8, no power law), the standing set not
+  reached within 40 intervals (the residual 1265 cells and 2073 quanta at
+  X = 16, 30 426 and 54 987 at X = 256); 10.75 s per tick on 41³, the build
+  of the fill 136 s at a peak of 4.6 GB. So `m256` is the mass whose field
+  the clocks at r = 3 to 8 read at all, and the clocks at r = 10 and the
+  lines at b = 8 read the tail of the transient or nothing.
 ### A7. Newtonian attraction between two bound groups
 
 - **Confronts.** Newton's law, force G M₁ M₂/r², G = 6.674 30 × 10^-11
