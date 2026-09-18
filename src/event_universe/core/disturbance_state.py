@@ -255,12 +255,11 @@ class InteractionDefinition:
     # input whose identity (`owner`) the output carries, its `input` key, input
     # 0 by default. Empty for a rule without outputs.
     output_sources: tuple[int, ...] = ()
-    # The decay setting of a conversion (decay-draw-v1): the pass share [n, d] of
-    # the one draw its meeting takes from the Node's ticket stream, None for a
-    # rule that fires without a draw; `seed` starts the stream of a Node the
-    # declaration marks (salted by the Node's position, `decay_ticket_seed`).
-    draw: tuple[int, int] | None = None
-    seed: int = 0
+    # The decay table of a conversion (clock-readings-v1, Highlights 5.4 point
+    # 20): the declared condition on the group's state, ("after_periods", n) or
+    # ("content_at_most", c), None for a rule that fires at every meeting; the
+    # setting of decay-draw-v1 and its draw are retired: nothing is drawn.
+    decay: tuple[str, int] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -366,6 +365,10 @@ class InitialState:
     # would add to a cycle (default clock); with ray_phase_per_tick a Kerengonen
     # ray's phase advances on every waiting interval as well as on every link.
     ray_delay: bool = False
+    # K (clock-readings-v1, Highlights 5.4 point 19): the content per phase step
+    # per interval, one integer for the world, required when a family declares
+    # `clock`; 0 when no thing has a clock.
+    clock: int = 0
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True

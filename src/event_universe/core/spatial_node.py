@@ -225,8 +225,12 @@ class SpatialAccounting:
         returned: list[list[int]] | None = None,
         shadow_sources: list[list[int]] | None = None,
         shadow_absorbed_by_marks: list[list[int]] | None = None,
+        spent: list[list[int]] | None = None,
+        computation: list[int] | None = None,
     ) -> None:
         self.__sources, self.__dissipation = sources, dissipation
+        self.__spent = [] if spent is None else spent
+        self.__computation = [0] if computation is None else computation
         self.__reactions, self.__transformations = reactions, transformations
         self.__localized = [] if localized is None else localized
         self.__annulled = [] if annulled is None else annulled
@@ -281,6 +285,18 @@ class SpatialAccounting:
         source line and on this line, so that the things' own identity reads the
         sources less them."""
         add_audit_delta(self.__shadow_sources, values)
+
+    def record_spent(self, values: Values) -> None:
+        """The momentum the things spent on their steps (clock-readings-v1, the
+        settled rule (i)): on the momentum field's spent line."""
+        add_audit_delta(self.__spent, values)
+
+    def record_computation(self, steps: int) -> None:
+        """The phase steps the things made this cycle (clock-readings-v1, point 11):
+        the world's computation, a running total the runner reads per tick."""
+        if type(steps) is not int or steps < 0:
+            raise ValueError("phase steps are a nonnegative integer")
+        self.__computation[0] = checked_work(self.__computation[0] + steps)
 
 
 @dataclass(slots=True)
@@ -613,10 +629,16 @@ class SpatialNode(SpatialNodeState):
                         home_momentum[axis] = checked_work(home_momentum[axis] + momentum[axis])
                     continue
                 if ray.outbound and sign:
-                    push = push_of(
-                        sign, ray, definition, PUSH_READS[body.reads], body.amount, body.charge
+                    push, remainder = push_of(
+                        sign,
+                        ray,
+                        definition,
+                        PUSH_READS[body.reads],
+                        body.amount,
+                        body.charge,
+                        current.push_remainder,
                     )
-                    current = body_pushed(current, push)
+                    current = replace(body_pushed(current, push), push_remainder=remainder)
                     kept.append(return_shadow(ray, definition, (-push[0], -push[1], -push[2])))
                     push_amount = checked_work(push_amount + ray.amount)
                     for axis in range(3):
@@ -854,10 +876,6 @@ class SpatialNode(SpatialNodeState):
             self.remainders, self.remainder_phases = plan.remainders, plan.remainder_phases
         # The trace register after this cycle (bit-law-v1).
         self.traces = plan.traces
-        if plan.decay_draws:
-            # The Node's ticket stream after the draws of its decaying rules
-            # (decay-draw-v1): one unsalted step per draw, as at a mark.
-            self.detector_ticket = plan.decay_draws[-1].ticket
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -883,6 +901,12 @@ class SpatialNode(SpatialNodeState):
             # register (bit-law-v1): booked returned; a shadow's amount is never
             # sourced nor returned (point 7).
             services.accounting.record_returned(plan.returned_delta)
+        if plan.spent_delta:
+            # The momentum the things spent on their steps (clock-readings-v1).
+            services.accounting.record_spent(plan.spent_delta)
+        if plan.phase_steps:
+            # The things' phase steps, the computation (clock-readings-v1, point 11).
+            services.accounting.record_computation(plan.phase_steps)
         # Events happen at Nodes that hold a thing (bit-law-v1, point 13): a Node
         # holding shadows alone publishes no record of its cycle.
         witnessed = (
@@ -958,22 +982,6 @@ class SpatialNode(SpatialNodeState):
                 phase=spread.phase,
                 coherence=spread.coherence,
                 signs=spread.signs,
-            )
-        for draw in plan.decay_draws:
-            # The draw of a decaying rule at its meeting (decay-draw-v1, Highlights
-            # 3.26): the rule, its setting, the ticket state the draw left the
-            # Node's stream in and the bit; one line per ticket consumed, so the
-            # tickets a Node consumed in one tick are its clicks, returns and
-            # these, counted from the record.
-            self._event(
-                "decay_draw",
-                tick,
-                services,
-                notifications=notifications,
-                rule=services.initial.ray_interactions[draw.rule].name,
-                setting=(draw.numerator, draw.denominator),
-                ticket=draw.ticket,
-                bit=draw.bit,
             )
         # A push is not an event (bit-law-v1, point 15): the field's arithmetic
         # on a thing's register writes no record, nor does a shadow that came

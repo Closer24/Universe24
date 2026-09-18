@@ -12,6 +12,15 @@ equals the engine (e); the field given with the board is exact (f); the retired
 declarations are rejected (g); the mark is the home of what it absorbed (h);
 the ledger per bit with the border lines (i); a thing reads the shadows'
 message by its content or by its charge, as declared (j).
+
+Re-pinned on 2026-09-18 under clock-readings-v1 (feature 16b, Highlights 5.4
+points 16, 18, 19 and 21): a family declares no rest rate, `m` declares
+`clock` and the world `K` (world (a): K 2, so a thing of 2 advances one step
+per interval as before); the electricity reading multiplies by the owner's
+whole charge over its content, the charge per quantum, so a body of 100 quanta
+of `m` at -1 pushes as it did; a thing's `momentum` is the
+pushes it carries, its register line amount x heading plus that; the momentum
+line carries `spent`.
 """
 
 import json
@@ -41,7 +50,7 @@ def field(name, components=1):
     }
 
 
-def family(spread=None, phase_bits=0, rate=0):
+def family(spread=None, phase_bits=0, clock=False):
     entry = {
         "field": "m",
         "baseline": 0,
@@ -53,9 +62,10 @@ def family(spread=None, phase_bits=0, rate=0):
         "pace": [1, 1],
         "phase_bits": phase_bits,
         "charge": -1,
-        "kerengonen": {"phase_advance": rate},
         "release": [1, 1],
     }
+    if clock:
+        entry["clock"] = True
     if spread is not None:
         entry["spread"] = spread
     return entry
@@ -121,6 +131,9 @@ def shadow(position, heading, amount=1, owner=1, sign=-1):
 
 
 def body(position, thing=None, table=None, amount=100):
+    """A body of `amount` quanta of `m` at the family's charge -1 per quantum
+    (clock-readings-v1: its shadows carry its whole charge and its content, and
+    the electricity reading divides the one by the other)."""
     entry = {"position": list(position), "family": "m", "amount": amount, "charge": -1}
     if table is not None:
         entry["momentum_table"] = table
@@ -142,7 +155,7 @@ def document(
     spread=None,
     fill=None,
     phase_bits=0,
-    rate=0,
+    clock=0,
     dense=None,
     rules=(TURN,),
 ):
@@ -158,7 +171,8 @@ def document(
         "operation_costs": dict.fromkeys(COSTS, 1),
         "fields": [field("m"), field("momentum", 3)],
         "disturbance_types": list(types) or [RING],
-        "spatial_fields": [family(spread, phase_bits, rate)],
+        "spatial_fields": [family(spread, phase_bits, bool(clock))],
+        **({"K": clock} if clock else {}),
         "emissions": list(emissions),
         "seeds": list(seeds),
         "ray_interactions": list(rules),
@@ -239,7 +253,7 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         bodies=[body((7, 2, 2))],
         shadows=[shadow((5, 2, 2), MINUS_X, owner=3)],
         phase_bits=2,
-        rate=1,
+        clock=2,
     )
     assert parse_initial_state(doc).spatial_fields[0].owners == (1, 2, 3)
     result = run(doc, 7)
@@ -254,10 +268,11 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
     assert result["registers"][1] == {1: [2, 0, 0], 3: [0, 0, 0]}
     assert result["registers"][2] == {1: [1, 0, 0], 3: [0, 0, 0]}
     pushed = next(r for r in rays_at(result["inventories"][3], (5, 2, 2)) if r.detector == BIT_THING)
+    # The momentum a thing carries is the pushes it took (clock-readings-v1).
     assert (pushed.detector, pushed.owner, pushed.momentum, pushed.amount) == (
         BIT_THING,
         1,
-        (1, 0, 0),
+        (-1, 0, 0),
         2,
     )
     for tick, steps in ((3, 2), (4, 1), (5, 0)):
@@ -320,6 +335,7 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
         "absorbed": (1, 0, 0),
         "absorbed_by_marks": (0, 0, 0),
         "returned": (1, 0, 0),
+        "spent": (0, 0, 0),
     }
     assert line(ledger, "charge", "m") == {
         "initial": -2,
@@ -734,7 +750,7 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
         rays = rays_at(result["inventories"][2], (4, y, 2))
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
             (BIT_SHADOW, 3, (-push[0], 0, 0), 0, 2),
-            (BIT_THING, y // 2 + 1, (amount + push[0], 0, 0), 1, 3),
+            (BIT_THING, y // 2 + 1, (push[0], 0, 0), 1, 3),
         ]
     assert all(entry["balanced"] and entry["things_conserved"] for entry in result["ledgers"])
     assert result["contents"] == [6] * 3 and result["shadows"] == [2] * 3

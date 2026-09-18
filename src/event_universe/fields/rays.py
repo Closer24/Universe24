@@ -1,6 +1,6 @@
 """Pure emission and forwarding for straight-moving ray fields."""
 
-from dataclasses import replace
+from dataclasses import dataclass, replace
 
 from event_universe.core.disturbance_state import CostMeter, FieldDefinition, bounded
 from event_universe.core.integer import checked_work
@@ -13,13 +13,26 @@ from event_universe.core.spatial_state import (
     Rays,
     SpatialFieldDefinition,
     advance_ray,
+    clock_step,
     heading_pace,
     merge_rays,
-    ray_phase_step,
     ray_vector,
     stamp_event,
+    step_thing,
+    tick_clock,
     validate_heading,
 )
+
+
+@dataclass(frozen=True, slots=True)
+class Departures:
+    """The account of one Node's departures (clock-readings-v1): the phase steps
+    the things made this interval (point 11, the computation) and the momentum
+    they spent on their steps (the settled rule (i)), content x the new heading
+    per step."""
+
+    phase_steps: int = 0
+    spent: tuple[int, int, int] = (0, 0, 0)
 
 
 def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefinition) -> None:
@@ -37,8 +50,6 @@ def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefi
         raise ValueError("rays_per_tick must be between 1 and ray_slots")
     if definition.coherent and len(definition.cosine_table) != definition.phase_steps:
         raise ValueError("ray phase law must be prepared before transport")
-    if not 0 <= definition.phase_advance < definition.phase_modulus:
-        raise ValueError("kerengonen phase_advance must be below the field's phase width")
 
 
 def emit_rays(
@@ -106,20 +117,31 @@ def emit_rays(
 
 def forward_rays(
     rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter
-) -> tuple[tuple[Rays, ...], Rays]:
-    """Move every ray that is due one link along its own line; return the ports and the kept.
+) -> tuple[tuple[Rays, ...], Rays, Departures]:
+    """Move every ray that is due one link along its own line; return the ports, the
+    kept, and the departures' account: the phase steps the things made and the
+    momentum they spent on their steps.
 
     On the links metric every ray is due every tick and the Node keeps none. On
     the Euclidean metric a ray hops when its wait passes its heading's pace; a
-    ray that waits stays resident, and its phase still advances with the tick,
+    ray that waits stays resident, and its clock still runs with the tick,
     forward while outbound and backward on the walk back. A returning thing with
     no steps left is at its event Node and stays resident, inert, with its phase
     unchanged, until the inverse split (detector-return-v1). A shadow walking
     home whose steps are spent walks on (bit-law-v1): the trace of its owner, if
-    the Node holds one, was read by the planner before this.
+    the Node holds one, was read by the planner before this. A thing steps
+    before it leaves (clock-readings-v1, `step_thing`): the first axis on which
+    the momentum it carries has reached its content turns it to that axis and
+    drops by the content, which is spent; every ray then walks one Link on its
+    heading. The clock (point 19): a thing of a clock family advances its phase
+    by content / K steps per interval with the remainder kept on it, and the
+    steps are counted, the world's computation (point 11).
     """
     outgoing: list[list[Ray]] = [[] for _ in range(6)]
     kept: list[Ray] = []
+    steps = 0
+    spent = [0, 0, 0]
+    modulus, clock = definition.phase_modulus, definition.clock
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
@@ -130,38 +152,44 @@ def forward_rays(
         if ray.interaction_delay:
             if bounded(ray.interaction_delay) < 0:
                 raise ValueError("ray interaction delay must be nonnegative")
+            steps += abs(clock_step(ray, clock)[0])
             kept.append(
-                replace(
-                    ray, interaction_delay=ray.interaction_delay - 1, phase=_held_phase(ray, definition)
-                )
+                tick_clock(replace(ray, interaction_delay=ray.interaction_delay - 1), modulus, clock)
             )
             meter.charge("update", 2)
             continue
         numerator, denominator = heading_pace(definition, ray.heading)
         wait = checked_work(ray.wait + numerator)
         if wait < denominator:
-            kept.append(replace(ray, wait=bounded(wait), phase=_held_phase(ray, definition)))
+            steps += abs(clock_step(ray, clock)[0])
+            kept.append(tick_clock(replace(ray, wait=bounded(wait)), modulus, clock))
             continue
         lagged = _spend_lag(ray, definition, meter)
         if lagged is not None:
             port, moved = lagged
+            steps += abs(clock_step(ray, clock)[0])
             if port < 0:
                 kept.append(moved)
             else:
                 outgoing[port].append(moved)
             continue
-        # The DDA walks the ray's momentum register when a push set one, else the
-        # heading of its line (ray-momentum-turn-v1): one Link per interval either way.
+        stepped, dropped = step_thing(ray, definition)
+        if any(dropped):
+            meter.charge("update", 2)
+            for axis in range(3):
+                spent[axis] = checked_work(spent[axis] + dropped[axis])
+        # Every ray walks one Link on its heading (clock-readings-v1, point 21).
+        steps += abs(clock_step(stepped, clock)[0])
         port, moved = advance_ray(
-            replace(ray, wait=wait - denominator),
-            ray_vector(ray, definition),
-            definition.phase_modulus,
-            definition.phase_advance,
+            replace(stepped, wait=wait - denominator),
+            ray_vector(stepped, definition),
+            modulus,
+            clock,
         )
         outgoing[port].append(moved)
     result = tuple(merge_rays(tuple(port_rays)) for port_rays in outgoing)
     meter.charge("send", sum(1 for port_rays in result if port_rays))
-    return result, merge_rays(tuple(kept))
+    return result, merge_rays(tuple(kept)), Departures(steps, (spent[0], spent[1], spent[2]))
 
 
 def _spend_lag(ray: Ray, definition: SpatialFieldDefinition, meter: CostMeter) -> tuple[int, Ray] | None:
@@ -183,7 +211,9 @@ def _spend_lag(ray: Ray, definition: SpatialFieldDefinition, meter: CostMeter) -
     lag = list(ray.lag)
     lag[axis] = bounded(checked_work(lag[axis] - sign * modulus))
     meter.charge("update", 2)
-    spent = replace(ray, lag=(lag[0], lag[1], lag[2]), phase=_held_phase(ray, definition))
+    spent = tick_clock(
+        replace(ray, lag=(lag[0], lag[1], lag[2])), definition.phase_modulus, definition.clock
+    )
     if ray_vector(ray, definition)[axis] != 0:
         return -1, spent
     return 2 * axis + (0 if sign > 0 else 1), replace(spent, steps=bounded(checked_work(ray.steps + 1)))
@@ -197,10 +227,6 @@ def hold_rays(
     if not advance_phase or not definition.kerengonen:
         return rays
     meter.charge("update", len(rays))
-    return merge_rays(tuple(replace(ray, phase=_held_phase(ray, definition)) for ray in rays))
-
-
-def _held_phase(ray: Ray, definition: SpatialFieldDefinition) -> int:
-    """The phase of a ray that spends this tick at its Node: one signed step of its rate,
-    masked by the family's width; unchanged on a plain field, whose rate is 0."""
-    return (ray.phase + ray_phase_step(ray, definition.phase_advance)) & definition.phase_mask
+    return merge_rays(
+        tuple(tick_clock(ray, definition.phase_modulus, definition.clock) for ray in rays)
+    )
