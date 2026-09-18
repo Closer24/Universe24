@@ -192,6 +192,24 @@ states "exactly" and means integer equality at every tick.
   with the other side's setting by less than 3 standard errors
   (no-signalling; a larger shift is a fail whatever S is), and every pair
   with a return must be counted unpaired, not dropped.
+- **Restated under the law of the bit (model owner, 2026-09-18; Highlights
+  5.4, points 6, 10, 14 and "The price").** The pair is two things of one
+  birth event, each carrying the source clock's phase; things move whole on
+  their lines, so the arms need no spreading family and the wait on feature
+  12 above is void. There is no draw: a mark meets a 0 or a 1, and what it
+  meets was decided at birth and along the one path; a mark that misses a
+  thing (its declared table, one arrival in d) returns it on its own steps to
+  the birth event, where the inverse split sends its value along the
+  partner's line at one Link per interval. Each outcome therefore depends
+  only on the local setting and the arriving thing, and the pairs counted are
+  a fair sample because the table reads nothing of the ray. The prediction
+  is S ≤ 2 for spacelike settings, without qualification: the model's
+  declared limit. The criterion above stands with "draw" read as "table";
+  a value above 2 + 3σ_S in this geometry contradicts the law and stops the
+  register's Bell entries until understood. `return_mode` is retired: the
+  return is the missed thing walking back its steps. The splitters, phase
+  plates and recombiners are things with declared tables (point 22). Waits
+  for features 15 to 17.
 - **Status.** planned; waits for feature 12, field spreading (Highlights
   3.5, 2026-09-17): the pair's light rays are field content, spreading by
   the split table of their family and combining by phase where they meet,
@@ -237,6 +255,19 @@ states "exactly" and means integer equality at every tick.
   another run), or a marginal that moves with the other side's setting
   (signalling: the table as declared is not admissible against physics), or
   an inexact meeting.
+- **Restated under the law of the bit (model owner, 2026-09-18).** The
+  model's own prediction in this geometry is the same as A2's: S ≤ 2, the
+  declared limit. What line 2 of hypothesis 11 described is not a claim of
+  the model but of a table: when Bob's path is longer than the round trip
+  through Alice's mark (128 intervals), the value Alice's missed thing
+  carries back through the birth event reaches Bob's line while Bob's thing
+  is still on it, and the two meet as things meet, by a declared table (point
+  4); only such a declared joint table could give more than 2, and the model
+  does not supply one. The output-clock delay on Bob's line is retired (point
+  21: every ray moves one Link per interval); the delay is a longer path, at
+  least 129 Links more on Bob's arm. A3 therefore tests a declared table, not
+  the law, and runs only if the owner declares one; the criterion stands
+  with "draw" read as "table". Waits for features 15 to 17.
 - **Status.** planned.
 
 ### A4. Single-Detector PASS statistics against the declared setting
