@@ -152,11 +152,12 @@ def pushes_of(momentum_line, thing, paths=None, bodies=()):
         size = sum(abs(d) for d in delta)
         node = where.get(tick)
         previous = series[tick - 1]
-        if size == 1:
+        if size == 1 or node is None:
+            # One quantum, or several read in a tick the thing did not move.
             pushes.append((tick, delta))
             continue
         reversal = all(delta[i] == -2 * previous[i] for i in range(3))
-        if reversal and node is not None and tuple(node) in bodies:
+        if reversal and tuple(node) in bodies:
             continue
         after = series[tick]
         direction = tuple((1 if after[i] > 0 else -1 if after[i] < 0 else 0) if abs(after[i]) == max(abs(a) for a in after) else 0 for i in range(3))
@@ -201,8 +202,12 @@ def analyze_clock(directory, metadata, world):
     star_on = any(body["family"] == "star" for body in world["external_bodies"])
     rows = []
     for thing, (name, seed, heading) in sorted(things.items()):
-        r = sum(abs(seed[i] - STAR[i]) for i in range(3))
-        axis = tuple((seed[i] - STAR[i]) // max(1, r) for i in range(3))
+        # The cavity's axis is the launch heading; its r the offset along it
+        # (the nominal r of the batch), its Euclidean r with the one-Link
+        # offset aside of the axis.
+        axis = heading
+        r = sum((seed[i] - STAR[i]) * axis[i] for i in range(3))
+        r_euclid = math.sqrt(sum((seed[i] - STAR[i]) ** 2 for i in range(3)))
         mirrors = {tuple(seed[i] + heading[i] for i in range(3)), tuple(seed[i] - heading[i] for i in range(3))}
         cavity = {seed, *mirrors}
         series, changes = pushes_of(metadata["momentum"], thing, paths[thing], mirrors)
@@ -218,6 +223,7 @@ def analyze_clock(directory, metadata, world):
             {
                 "thing": thing,
                 "r": r,
+                "r_euclid": r_euclid,
                 "axis": list(axis),
                 "ticks": ticks,
                 "stayed_ticks": stayed,
@@ -225,7 +231,8 @@ def analyze_clock(directory, metadata, world):
                 "moved_in_cavity": moved_in,
                 "rate": moved_in / stayed if stayed else None,
                 "waits_in_cavity": stayed - moved_in,
-                "quanta_read_in_cavity": len(reads),
+                "push_ticks_in_cavity": len(reads),
+                "quanta_read_in_cavity": sum(sum(abs(c) for c in d) for _, d in reads),
                 "reads": [[t, list(d)] for t, d in reads],
                 "pushes_total": len(changes),
                 "first_push_tick": changes[0][0] if changes else None,
@@ -233,7 +240,7 @@ def analyze_clock(directory, metadata, world):
                 "last_node": list(paths[thing][-1][1]),
             }
         )
-    deficit = [(row["r"], 1.0 - row["rate"]) for row in rows if row["rate"] is not None]
+    deficit = [(row["r_euclid"], 1.0 - row["rate"]) for row in rows if row["rate"] is not None]
     fits = {"1/r": fit_origin(deficit, 1), "1/r^2": fit_origin(deficit, 2)}
     return {
         "kind": "clock",
@@ -413,7 +420,7 @@ def main():
         )
         if result["kind"] == "clock":
             rates = " ".join(
-                f"r={c['r']}:{c['rate']:.3f}(w{c['waits_in_cavity']},q{c['quanta_read_in_cavity']},left {c['left_tick']})"
+                f"r={c['r']}:{c['rate']:.3f}(w{c['waits_in_cavity']},q{c['quanta_read_in_cavity']},p{c['push_ticks_in_cavity']},left {c['left_tick']})"
                 for c in result["clocks"]
             )
             fits = result["fits"]
@@ -436,7 +443,7 @@ def main():
             small = {k: v for k, v in result.items() if k not in ("passes", "clocks")}
             if result["kind"] == "clock":
                 small["clocks"] = [
-                    {k: c[k] for k in ("r", "axis", "rate", "stayed_ticks", "left_tick", "waits_in_cavity", "quanta_read_in_cavity")}
+                    {k: c[k] for k in ("r", "r_euclid", "axis", "rate", "stayed_ticks", "left_tick", "waits_in_cavity", "quanta_read_in_cavity", "push_ticks_in_cavity")}
                     for c in result["clocks"]
                 ]
             elif result["kind"] == "bend":

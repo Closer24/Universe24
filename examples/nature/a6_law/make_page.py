@@ -61,11 +61,11 @@ def clock_rows(results):
                 [
                     world_label(result),
                     "closed" if result["boundary"] == "periodic" else "open",
-                    clock["r"],
+                    f"{clock['r']} ({clock['r_euclid']:.2f})",
                     "".join("+-"[c < 0] + "xyz"[i] for i, c in enumerate(clock["axis"]) if c),
                     fmt(clock["rate"], 4),
                     clock["waits_in_cavity"],
-                    clock["quanta_read_in_cavity"],
+                    f"{clock['quanta_read_in_cavity']} in {clock['push_ticks_in_cavity']} ticks",
                     clock["stayed_ticks"],
                     clock["left_tick"] if clock["left_tick"] is not None else "stayed",
                 ]
@@ -112,16 +112,16 @@ def redshift_rows(results):
             continue
         gm = result["mass"]["GM"] if result["mass"] else None
         w = result["w"]
-        clocks = sorted(result["clocks"], key=lambda c: c["r"])
+        clocks = sorted(result["clocks"], key=lambda c: (c["r"], c["thing"]))
         for near, far in zip(clocks, clocks[1:]):
             if near["rate"] is None or far["rate"] is None or near["rate"] == 0:
                 continue
             z = far["rate"] / near["rate"] - 1
-            r1, r2 = near["r"], far["r"]
+            r1, r2 = near["r_euclid"], far["r_euclid"]
             rows.append(
                 [
                     world_label(result),
-                    f"{r1} -> {r2}",
+                    f"{near['r']} -> {far['r']} ({r1:.2f} -> {r2:.2f})",
                     fmt(z, 4),
                     fmt(gm * (1 / r1 - 1 / r2), 3) if gm else "-",
                     fmt((w / 3) * 0.5373 * math.sqrt(gm) * (1 / r1 - 1 / r2) / 2, 4) if gm else "-",
@@ -285,7 +285,7 @@ figcaption { color: var(--muted); font-size: 12px; }
     body.append(f"<p class='note'>Source fingerprint (SHA-256 of the package files, recorded by every run): <code>{esc(fingerprint)}</code>. The records stay outside the tree; <code>record.json</code> beside this page is the analyzer's summary.</p>")
     body.append("<h2>1. The clock of a thing at rest</h2>")
     body.append(f"<p>{notes['clock']}</p>")
-    body.append(table(["world", "board", "r", "half-axis", "rate", "waits", "quanta read", "ticks stayed", "left at tick"], clock_rows(results), "Per cavity: the rate (moving intervals over intervals) while the thing stayed between its mirrors."))
+    body.append(table(["world", "board", "r (Euclidean)", "half-axis", "rate", "waits", "quanta read (net, per push tick)", "ticks stayed", "left at tick"], clock_rows(results), "Per cavity: the rate (moving intervals over intervals) while the thing stayed between its mirrors."))
     body.append(table(["world", "A (1/r fit)", "rss", "B (1/r^2 fit)", "rss", "A / GM (GR: 1 at the GR w)", "GR", "derivation, amplitude: (w/3) 0.537 sqrt(GM) / 2", "derivation, count: (sqrt3 w/2) GM / 2"], clock_fit_rows(results), "The deficit 1 - rate fitted through the origin; the derivation's coefficients halved for a cavity that reads every other interval."))
     body.append("<h2>2. The redshift between two radii</h2>")
     body.append(table(["world", "r_near -> r_far", "z = rate(far)/rate(near) - 1", "GR: GM (1/r1 - 1/r2)", "derivation, amplitude", "derivation, count"], redshift_rows(results)))
