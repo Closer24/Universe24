@@ -60,7 +60,7 @@ from .core.spatial_state import (
     MAX_EXTERNAL_BODIES,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
-    MAX_RAY_SLOTS,
+    MAX_RAYS_PER_TICK,
     MAX_STORED_PHASE_BITS,
     MAX_THING_ID,
     POLARIZATION_NONE,
@@ -69,6 +69,7 @@ from .core.spatial_state import (
     PUSH_READS,
     RAY_POLARIZATION,
     RAY_PROPERTIES,
+    RAY_SLOTS_RETIRED,
     RAY_WRITABLE,
     DecayDefinition,
     DetectorMark,
@@ -1347,6 +1348,8 @@ def _spatial_fields(
                 "size of its things' shadow sets), whose shadows the Node mixes "
                 "(node-mixing-v1); see docs/SPATIAL_FIELDS.md, 'The law of the bit'"
             )
+        if isinstance(raw, dict) and "ray_slots" in raw:
+            raise ValueError(RAY_SLOTS_RETIRED)
         obj = _object(
             raw,
             "spatial field",
@@ -1354,7 +1357,6 @@ def _spatial_fields(
             | {
                 "headings",
                 "rays_per_tick",
-                "ray_slots",
                 "self_exclusion",
                 "kerengonen",
                 "metric",
@@ -1384,7 +1386,7 @@ def _spatial_fields(
             raise ValueError("spatial transport must be outward, local or ray")
         if transport == "local" and schema_version != 1:
             raise ValueError("local spatial transport requires schema_version 1")
-        ray_keys = {"headings", "rays_per_tick", "ray_slots"}
+        ray_keys = {"headings", "rays_per_tick"}
         self_exclusion = False
         phase_steps, family_clock = 0, 0
         phase_bits, charge = 0, 0
@@ -1510,24 +1512,23 @@ def _spatial_fields(
             )
             for heading in headings:
                 validate_heading(heading)
-            ray_slots = _integer(obj["ray_slots"], "ray_slots", 1)
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
-            if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
-                raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
+            if rays_per_tick > MAX_RAYS_PER_TICK:
+                raise ValueError("rays_per_tick is at most 4096")
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
             | {"charge", "release", "spread", "steering", "polarization_bits", "clock"}
         ) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
+                "headings, rays_per_tick, self_exclusion, kerengonen, metric, pace, "
                 "flux_projection, charge, release, spread, steering, polarization_bits "
                 "and clock require ray transport"
             )
         elif "phase_bits" in obj:
             raise ValueError(ONE_N)
         else:
-            headings, rays_per_tick, ray_slots = (), 0, 0
+            headings, rays_per_tick = (), 0
         axis = tuple(
             _integer(v, "axis weight", 0)
             for v in _array(obj.get("axis_weights", [1, 1, 1]), "axis_weights", 3, 3)
@@ -1551,7 +1552,6 @@ def _spatial_fields(
                 transport,
                 headings,
                 rays_per_tick,
-                ray_slots,
                 self_exclusion,
                 phase_steps,
                 family_clock,
@@ -2630,7 +2630,7 @@ def _initial_field(
             if fill > MAX_VALUE:
                 raise ValueError("an initial_field fill is a bounded number of intervals")
         else:
-            for item in _array(entry["rays"], f"initial_field.{name}.rays", MAX_RAY_SLOTS * 4096):
+            for item in _array(entry["rays"], f"initial_field.{name}.rays", MAX_RAYS_PER_TICK * 4096):
                 ray = _object(
                     item,
                     "initial_field ray",

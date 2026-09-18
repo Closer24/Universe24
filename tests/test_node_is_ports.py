@@ -64,7 +64,6 @@ def family(name="m", spread=None, charge=-1):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
         "charge": charge,

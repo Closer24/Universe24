@@ -8,7 +8,7 @@ from event_universe.core.spatial_state import (
     BIT_SHADOW,
     BIT_THING,
     MAX_HEADINGS,
-    MAX_RAY_SLOTS,
+    MAX_RAYS_PER_TICK,
     POLARIZATION_NONE,
     PORT_HEADINGS,
     Ray,
@@ -50,10 +50,8 @@ def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefi
         raise ValueError("ray transport requires one to 65536 headings")
     for heading in definition.headings:
         validate_heading(heading)
-    if not 1 <= definition.ray_slots <= MAX_RAY_SLOTS:
-        raise ValueError("ray_slots must be between 1 and 4096")
-    if not 1 <= definition.rays_per_tick <= definition.ray_slots:
-        raise ValueError("rays_per_tick must be between 1 and ray_slots")
+    if not 1 <= definition.rays_per_tick <= MAX_RAYS_PER_TICK:
+        raise ValueError("rays_per_tick must be between 1 and 4096")
     if definition.coherent and len(definition.cosine_table) != definition.phase_steps:
         raise ValueError("ray phase law must be prepared before transport")
 

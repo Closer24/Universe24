@@ -96,7 +96,6 @@ def document(shape, families, lamps, ticks, ray_interactions=None, n=8):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 6,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 **extra,

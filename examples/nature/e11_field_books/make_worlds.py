@@ -75,14 +75,13 @@ BOOKS_TICKS = 2 * BOOKS_CENTRE[0] + 16
 ELECTRON_SIGN = -1
 
 
-def family(name, charge, slots, advance=0, **extra):
+def family(name, charge, advance=0, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": PHASE_BITS,
@@ -196,8 +195,8 @@ def _profile_world():
         "fields": [scalar("proton"), scalar("light"), MOMENTUM],
         "disturbance_types": [kind],
         "spatial_fields": [
-            family("proton", PROTON_CHARGE, 2),
-            family("light", 0, 24, field_of="proton", release=PROFILE_RELEASE, spread=SPREAD),
+            family("proton", PROTON_CHARGE),
+            family("light", 0, field_of="proton", release=PROFILE_RELEASE, spread=SPREAD),
         ],
         "emissions": [emission],
         "seeds": [],
@@ -236,9 +235,9 @@ def _books_world(*, spread=True):
             kind,
         ],
         "spatial_fields": [
-            family("electron", ELECTRON_CHARGE, 2, advance=1),
-            family("proton", PROTON_CHARGE, 2),
-            family("light", 0, 24, **light_extra),
+            family("electron", ELECTRON_CHARGE, advance=1),
+            family("proton", PROTON_CHARGE),
+            family("light", 0, **light_extra),
         ],
         "emissions": [
             {

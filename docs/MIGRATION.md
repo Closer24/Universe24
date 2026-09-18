@@ -746,7 +746,7 @@ answered at a distance, kept a register at a Node or made a ray wait for room
   received count, node cost, rays, tick and ray hold;
 - the pre-planning refusal "outgoing spatial links are occupied": there is no
   occupied channel and no capacity rule, rays leaving on one Link in one
-  interval travel in one packet bounded by `ray_slots`, and
+  interval travel in one packet, and
   `SpatialNode.require_free_links` rejects at commit a departure that would
   overwrite a packet still in transit, a host scheduling error rather than a
   physical rule;
@@ -942,7 +942,8 @@ only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
   interval.
 - The 32-slot participant capacity of `validate_ray_participants` is now a
   bound per layer with a rule (the `ray_slots` of that layer's fields sum to
-  at most 32) instead of over every selected field.
+  at most 32) instead of over every selected field (retired with `ray_slots`
+  on 2026-09-18, `lanes-v1`: the lanes bound the Node).
 - The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
   (the derived layers as sorted lists of field names) in `run.json` beside
   `ray_state`.

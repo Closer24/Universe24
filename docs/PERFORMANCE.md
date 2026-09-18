@@ -528,8 +528,9 @@ second arrival while a lamp whose stock counts down never hits.
 
 Reproduction, without a committed script: write the five inputs (the two
 electron worlds from the builder of `tests/test_released_field.py` with
-`shape` `[21, 11, 7]`, `boundary` `open` and, for the one-lamp world, `G`'s
-`ray_slots` 4096); in one process per source call
+`shape` `[21, 11, 7]` and `boundary` `open`; the one-lamp world declared `G`'s
+`ray_slots` 4096 until the key was retired with the lanes on 2026-09-18); in
+one process per source call
 `run_initialization(path, output, ticks=N)` once per world and hash the three
 records as described, reading the counters from `run.json`; then build
 `prepare_initialization(document).initial` and time

@@ -7,7 +7,6 @@ from functools import lru_cache
 from .disturbance_state import (
     MAX_COMPONENTS,
     MAX_RULES,
-    MAX_SLOTS,
     MAX_VALUE,
     SHADOW_WAIT_READS,
     WAIT_READINGS,
@@ -65,7 +64,7 @@ class DecayDefinition:
 Heading = tuple[int, int, int]
 MAX_HEADINGS = 65536
 MAX_HEADING_COMPONENT = 4096
-MAX_RAY_SLOTS = 4096
+MAX_RAYS_PER_TICK = 4096
 
 # Ray-event state (Highlights 3.3, 3.19, 3.20 and 5.1): every ray carries the
 # number of Links it has walked since its event and the information of that
@@ -177,6 +176,15 @@ LANES = "lanes-v1"
 LANE_IN, LANE_OUT = 0, 1
 LANES_PER_PORT = 2
 NODE_LANES = 6 * LANES_PER_PORT
+# The ray slot budget per family is retired with the lanes (lanes-v1): a Node's
+# state is bounded by its twelve lanes, one real ray and one shadow per owner on
+# each, beside the parked shadows and the rays at rest, and no lawful world is
+# refused for slots.
+RAY_SLOTS_RETIRED = (
+    "ray_slots was retired by lanes-v1 (Highlights 5.4 point 25): a Node's state is "
+    "bounded by its twelve lanes, one real ray and one shadow per owner on each, and "
+    "no budget per family; delete the key"
+)
 # The 0-meets-1 table (bit-law-v1, point 16, the model owner, 2026-09-18): per
 # pair of families one rule for what the thing multiplies the shadows' message
 # by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
@@ -675,7 +683,7 @@ class Ray:
     # nor advances its phase; 0 on a shadow, which pays nothing.
     owed: int = 0
     # A parked shadow (node-is-ports-v1, Highlights 5.4 point 22): 1 on a shadow
-    # at rest at its Node, never forwarded and outside the slot budget. With an
+    # at rest at its Node, never forwarded and outside the lanes. With an
     # amount it is what the Node holds below one quantum of its owner on the
     # heading it will leave through, the amount in units of the family's split
     # denominator (`parked_unit`), combined with the shares the spread adds and
@@ -862,13 +870,6 @@ def validate_ray_participants(
             selected.update(kind for kind, sign in enumerate(rule.momentum_table) if sign)
         elif rule.reads:
             raise ValueError("reads is declared beside a momentum table")
-    for layer in ray_layers(definitions, rules):
-        # The indexed selector's capacity bounds one meeting, and a meeting exists
-        # only inside a layer: fields of different layers never share it.
-        if selected.intersection(layer) and (
-            sum(definitions[index].ray_slots for index in layer) > MAX_SLOTS
-        ):
-            raise ValueError("ray interactions require at most 32 selected ray slots in one layer")
     for index in selected:
         definition = definitions[index]
         field = fields[definition.field]
@@ -1933,11 +1934,10 @@ class SpatialFieldDefinition:
     octant_weights: tuple[int, ...] = (1, 1, 1, 1, 1, 1, 1, 1)
     decay: DecayDefinition | None = None
     transport: str = "outward"
-    # Ray transport only: the fixed heading sequence, rays emitted per source per
-    # tick, and the resident ray capacity of one Node.
+    # Ray transport only: the fixed heading sequence and the rays emitted per
+    # source per tick; the Node's state is bounded by its lanes (lanes-v1).
     headings: tuple[Heading, ...] = ()
     rays_per_tick: int = 0
-    ray_slots: int = 0
     # Ray transport only: an emitting record that departs subtracts its own rays
     # from the flux it samples at the next Node, using only its own bookkeeping.
     self_exclusion: bool = False
@@ -2500,8 +2500,6 @@ def validate_heading(heading: Heading) -> int:
 def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDefinition) -> None:
     if type(rays) is not tuple:
         raise ValueError("ray transport requires a tuple of rays")
-    if sum(1 for ray in rays if type(ray) is Ray and not ray.parked) > definition.ray_slots:
-        raise ValueError("ray slot budget exceeded")
     parked = 0
     for ray in rays:
         if type(ray) is not Ray:
@@ -2566,7 +2564,7 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             # node-is-ports-v1: a parked shadow is at rest, below one quantum in
             # its family's unit, on a Port heading, without a wait or an event,
             # outgoing or returning with the momentum it holds (return-field-v1),
-            # and outside the slot budget.
+            # and outside the lanes.
             parked += 1
             if (
                 ray.detector != BIT_SHADOW

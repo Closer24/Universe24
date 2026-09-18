@@ -175,7 +175,6 @@ def spatial_field(records: JsonObject, name: str, released: bool = False) -> Jso
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
         "charge": ray["charge"],

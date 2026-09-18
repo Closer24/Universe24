@@ -124,7 +124,6 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 30,
       "metric": "links",
       "pace": [
         1,
@@ -174,7 +173,6 @@
         ]
       ],
       "rays_per_tick": 1,
-      "ray_slots": 30,
       "metric": "links",
       "pace": [
         1,

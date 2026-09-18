@@ -55,7 +55,6 @@ def world(shadows, option=None, ticks=12, phase_bits=0):
     )
     doc["wait_per_quantum"] = 1
     # The field of 81 spreads over twelve ticks: the slots of test_return_field (a).
-    doc["spatial_fields"][0]["ray_slots"] = 32
     # The share turned back is held at the thing's Node by the shadow's wait
     # (shadow-wait-v1, read by the thing: 81 intervals for 81 quanta, met by
     # nothing while it waits), so that nothing of the field returns to the

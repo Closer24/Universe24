@@ -88,8 +88,8 @@ def sample_fluxes(
             validate_rays(rays[index], definition, field)
             result[definition.field] = pack(ray_momentum(rays[index], definition))
             if meter is not None:
-                meter.charge("read", 6 + 4 * definition.ray_slots)
-                meter.charge("update", 3 + 6 * definition.ray_slots)
+                meter.charge("read", 6 + 4 * len(rays[index]))
+                meter.charge("update", 3 + 6 * len(rays[index]))
             continue
         for payload in state.delivered:
             field.validate(payload)
@@ -437,8 +437,8 @@ class SpatialCouplingLaw:
             meter.charge("read", 9 + (6 if components == 1 else 0))
             meter.charge("update", 8 * components + (3 if components == 1 else 0))
             if spatial_definition.flux_projection == "carried_heading":
-                meter.charge("read", 4 * spatial_definition.ray_slots)
-                meter.charge("update", 6 * spatial_definition.ray_slots)
+                meter.charge("read", 4 * len(spatial_definition.headings))
+                meter.charge("update", 6 * len(spatial_definition.headings))
         updated = list(records)
         reaction = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):

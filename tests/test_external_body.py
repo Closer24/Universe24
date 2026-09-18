@@ -64,7 +64,6 @@ def ray_field(name, advance, **extra):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
         "kerengonen": {"phase_steps": 8},

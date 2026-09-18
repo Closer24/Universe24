@@ -86,14 +86,13 @@ SLOW_RATE = 1
 SLOW_CHARGE = -3
 
 
-def family(name, rate, bits, slots, charge=0, **extra):
+def family(name, rate, bits, charge=0, **extra):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": bits,
@@ -186,16 +185,14 @@ def _world(
     lamp = [0, y - 1, z]
     fields = [scalar("neutron"), scalar("mass_field"), scalar("light"), scalar("launcher")]
     spatial = [
-        family("neutron", 1, FIELD_BITS, 2),
-        family(
-            "mass_field", 0, FIELD_BITS, 16, field_of="neutron", release=list(RELEASE), spread=SPREAD
-        ),
-        family("light", 0, bits, 8),
-        family("launcher", 0, FIELD_BITS, 2),
+        family("neutron", 1, FIELD_BITS),
+        family("mass_field", 0, FIELD_BITS, field_of="neutron", release=list(RELEASE), spread=SPREAD),
+        family("light", 0, bits),
+        family("launcher", 0, FIELD_BITS),
     ]
     if ray == "electron":
         fields.append(scalar("electron"))
-        spatial.append(family("electron", SLOW_RATE, bits, 8, charge=SLOW_CHARGE))
+        spatial.append(family("electron", SLOW_RATE, bits, charge=SLOW_CHARGE))
     fields.append(
         {
             "name": "momentum",

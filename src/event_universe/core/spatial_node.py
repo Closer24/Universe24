@@ -1121,7 +1121,7 @@ class SpatialNode(SpatialNodeState):
         host scheduling error, rejected before anything commits. This is not an
         occupied-channel rule: rays are never pushed back or made to wait for
         room (Highlights 5.1). Rays leaving on one Link in one interval travel
-        together in one packet, bounded only by the field's ray_slots.
+        together in one packet, what the lanes hold (lanes-v1).
         """
         if any(packet is not None for packet in self.output.packets):
             raise ValueError("a spatial departure cannot replace a packet still in transit")

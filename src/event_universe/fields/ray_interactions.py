@@ -4,7 +4,6 @@ from dataclasses import replace
 
 from event_universe.core.coupling_selectors import participant_groups
 from event_universe.core.disturbance_state import (
-    MAX_SLOTS,
     CostMeter,
     DisturbanceRecord,
     FieldDefinition,
@@ -429,9 +428,8 @@ def _meet(
     rays (`periods`, read by `after_periods`) and continues to the next rule in
     declared order, whose outputs carry the count on. A false guard is no
     meeting under the rule and counts nothing. Nothing is drawn."""
+    # The participants are what the lanes hold (lanes-v1): no capacity of its own.
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
-    if len(owners) > MAX_SLOTS:
-        raise ValueError("ray coupling exceeds the bounded participant capacity")
     # ray-polarization-v1: the polarization component is read when a rule of the
     # layer names it; a layer whose rules do not reads the view it read before.
     components = (
@@ -540,7 +538,7 @@ def _meet(
             else view
             for slot, ((index, ray_slot), view) in enumerate(zip(owners, views, strict=True))
         )
-        for group in participant_groups(rule, available):
+        for group in participant_groups(rule, available, capacity=len(available)):
             group_views = tuple(views[slot] for slot in group)
             assert all(view is not None for view in group_views)
             if rule.outputs:
@@ -648,8 +646,4 @@ def apply_ray_interactions(
             costs,
             turns,
         )
-    result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
-    for index, bundle in enumerate(result):
-        if len(bundle) > definitions[index].ray_slots:
-            raise ValueError("ray meeting outputs exceed the field's ray slots")
-    return result
+    return tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)

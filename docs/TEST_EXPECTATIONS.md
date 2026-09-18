@@ -41,7 +41,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_wait_reads.py` | 4 | 0.5 | Feature 16f, the wait reads the amplitude as a declared coupling option (`wait-reads-v1`): absent or `amount`, a record byte-identical to main (a); `amplitude`, the size of the coherent sum of the pushing owner's shadows at the thing's Node in whole units, 81 quanta nine, 9 quanta three, two owners never one sum (b); shares in antiphase from two Ports the size of their difference, 192 of 32nds (c); the dense layer and the engine alone agree (d) |
 | `test_shadow_wait.py` | 8 | 1.0 | Feature 16e, the shadow's wait as a declared world option (`shadow-wait-v1`): absent, a record byte-identical to main (a); read by a thing, the share turned back owes the count per whole quantum of its push before it leaves (b); read by the field, every departure owes the count per whole quantum of another owner's arrivals at the Node, parked ninths never (c); the count exact, d spent per interval (d); the dense layer and the engine alone agree (e) |
 | `test_return_field.py` | 6 | 1.5 | Feature 16d, the return is a field (`return-field-v1`, Highlights 5.4 point 3 as amended): the inverted share leaving the pushed body reversed and mixing, the owner's momentum line receiving what reaches it with the books exact per interval and the momentum in flight on the shadows (a); a returning share pushing a third thing with the opposite sign (b); a returning share absorbed at its owner with no push (c); no trace, no wait, every share moving, the identity recorded (d); a head-on push taken exactly once, the share riding the Link with the thing on the same lane and pushing nothing at the next Node (f); the dense layer and the engine alone agreeing on the worlds of (a) and (b) over four ticks, the returning shares in the arrays with their momentum (e) |
-| `test_lanes.py` | 9 | 2.0 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; two reals of one family given one lane one real ray (amounts, momentum and charge exact, the phase the coherent sum's, the owners a set) that is home to a shadow of each owner, things of two families on one lane refused; the record of a world with no contested lane byte-identical, pinned below |
+| `test_lanes.py` | 10 | 2.2 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; two reals of one family given one lane one real ray (amounts, momentum and charge exact, the phase the coherent sum's, the owners a set) that is home to a shadow of each owner, things of two families on one lane refused; the record of a world with no contested lane byte-identical, pinned below; no lawful world refused for slots (`ray_slots` retired on 2026-09-18, refused naming lanes-v1; `examples/nature/screen_loop.json` parses and runs eight ticks balanced) |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
@@ -73,7 +73,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
 | `test_ray_delay.py` | 6 | 12.78 | Deleted on 2026-09-18 under `clock-readings-v1` (the DDA walk and the output-clock delay of a departure are retired: every ray moves one Link per interval); Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
 | `test_ray_event_audit.py` | 3 | 0.90 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release, an escape and an external body's sink (`ray-event-audit-v1`) |
-| `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
+| `test_ray_field.py` | 21 | 0.30 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, escape (the slot budget's case deleted with `ray_slots` on 2026-09-18, lanes-v1) |
 | `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
 | `test_ray_layers.py` | 1 | 0.14 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_integration_guards.py` | 22 | 0.36 | Ray integration boundaries (running branch, untouched) |
@@ -1580,8 +1580,8 @@ mixing is node-mixing-v1 (a lone quantum leaves 4 back and 1 each other way
 from 9; a lone 1 parks its ninths). Computed from the rules before the run:
 
 - (a) A of 81 at (0,2,2) with its standing shell, 81 of its shadows at
-  (1,2,2) heading +X with a Link walked; B of 1000 with the table at (2,2,2);
-  `ray_slots` 32. Tick 1: the shell mixes, 36 back home to A (returned amount
+  (1,2,2) heading +X with a Link walked; B of 1000 with the table at (2,2,2).
+  Tick 1: the shell mixes, 36 back home to A (returned amount
   36, momentum (0, 0, 0)), 9 on to B, 9 each transverse way; B is pushed
   (9, 0, 0) and the 9 turns back with the opposite sign: fresh at B on -X,
   outbound 0, sign 1, carrying (-9, 0, 0). Tick 2: A re-releases the 36 on +X;
@@ -1731,7 +1731,7 @@ the mixing node-mixing-v1). `THING` is {"per_quantum": 1, "reads": "thing"},
 Highlights 5.4, the model owner's paragraph of 2026-09-18; feature 16f),
 pinned here on 2026-09-18 before its first run, as Highlights 5.5 requires.
 The board is that of the law of the bit (open, 10 x 5 x 5, the family `m`
-with charge -1, `wait_per_quantum` 1 and `ray_slots` 32 here): a lamp at
+with charge -1 and `wait_per_quantum` 1 here): a lamp at
 (1,2,2) paying out a
 thing of 1 on +X (thing 1), at (2,2,2) after tick 1; the bodies of 81 at
 (9,2,2) (owner 3) and (9,1,2) (owner 4), without a table, the owners of the
@@ -3872,6 +3872,13 @@ run, all of it computed from the rules:
   both lamps and both families; with the lamp of `g` at (1,2,2) the world
   parses; at a departure a real of another family on a taken lane is refused
   as a meeting the table of the pair decides, not a departure's to hold.
+- (g) no lawful world refused for slots (the cleanup of 2026-09-18, on the
+  interference lane's finding: `examples/nature/screen_loop.json`, E9's ring
+  radiating on marks, was refused at a corner for `ray_slots`): under
+  lanes-v1 a Node's state is bounded by its twelve lanes, one real ray and
+  one shadow per owner on each, so the budget per family is retired; the key
+  is refused at parsing with a message naming lanes-v1, and screen_loop.json
+  parses and runs eight ticks with the books balanced.
 
 Re-pinned with feature 18 (`lanes-v1`, 2026-09-18): in
 `tests/test_configuration_validation.py` the shipped worlds

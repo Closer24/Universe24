@@ -260,14 +260,13 @@ between arrival and the next cycle; there is no octant stock.
 
 ```json
 {"field": "radiation", "baseline": 0, "transport": "ray",
- "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64, "ray_slots": 512}
+ "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64}
 ```
 
 | Key | Contract |
 | --- | --- |
 | `headings` | One to 65536 nonzero integer vectors, components at most 4096 in magnitude; the emission sequence |
 | `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
-| `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
 | `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
 | `phase_bits`, `charge`, `kerengonen` | The family's phase width, charge per quantum and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
 | `field_of` | Optional, with `release`: the name of the ray family this field is the field of ([released field](#field-as-the-rays-information-released-field-v1)) |
@@ -303,7 +302,7 @@ emitter's own wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
-the shared field clock. Host work per Node is bounded by `ray_slots`. An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
+the shared field clock. The Node's state is bounded by its lanes (`lanes-v1`; the `ray_slots` budget was retired on 2026-09-18). An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
 
 The inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
@@ -773,9 +772,9 @@ states for one layer; a ray of a layer that has no rule, or whose rules do
 not fire, crosses unchanged with its event record intact. Rules of
 different layers therefore fire independently in the same cycle, and a ray
 of one layer is never a participant, a blocker or a merge partner of a ray
-of another: the indexed selector's 32-slot participant capacity is a bound
-per layer (the declared `ray_slots` of the fields of one layer with a rule
-sum to at most 32), rays of different fields never merge, and there is no
+of another: the participants of a meeting are what the lanes hold (`lanes-v1`;
+the 32-slot capacity per layer went with `ray_slots` on 2026-09-18), rays of
+different fields never merge, and there is no
 occupied channel and no capacity rule between layers. The Node's proposal
 stays one atomic commit: a failed guard or invariant in any layer rejects
 the interval's proposal before any owner changes, as before. A world with a
@@ -872,8 +871,8 @@ invariant does.
 Bounds and admission: two to six participants, one to six outputs, one table
 split per pair of outputs, the admission of every ray interaction (schema 1,
 `link_ticks` 1, positive unit-axial unpaced fields, no decay, no absorption
-on the selected fields), and at most `ray_slots` rays per field after the
-meeting; more is an explicit failure. The outputs are new rays with
+on the selected fields); the participants and the outputs are what the lanes
+hold (`lanes-v1`). The outputs are new rays with
 accumulators (0, 0, 0) and pace wait 0. No draw anywhere unless the rule
 declares `draw`, the decay setting of a conversion, and then the meeting
 draws once from the Node's ticket stream and fires on 1 only, and its
@@ -983,6 +982,20 @@ retired and the engine still carried is deleted, not kept behind an option:
   phase the phase of the sum over the family's mixing tables
   (`_phase_of_sum`), never refusing (`tests/test_bit_law.py` (f')).
 
+- **The ray slot budget retired** (the interference lane's finding,
+  2026-09-18: `examples/nature/screen_loop.json`, E9's ring radiating on
+  marks, was refused at a corner for `ray_slots`). Under `lanes-v1` a Node's
+  state is bounded by its twelve lanes, one real ray and one shadow per owner
+  on each, beside the parked shadows and the rays at rest, so a budget per
+  family is a retired concept: the key is refused naming point 25
+  (`RAY_SLOTS_RETIRED`), the definition has no `ray_slots`, and the checks
+  that read it (`validate_rays`, the meeting's outputs, the dense field's
+  count per Node, the 32 slots per layer of `validate_ray_participants`) are
+  deleted; `rays_per_tick` is at most 4096 on its own. No lawful world is
+  refused for slots (`tests/test_lanes.py` (g)), every world of the
+  repository lost the key, and `examples/nature/bit_law_migration.py` drops
+  it.
+
 Not done in the first part and listed on its pull request: the record-as-owner
 field program (the settled rule (v): the outward octant field, the
 couplings of records, the mirror, slit, dissolve, capture and self-exclusion
@@ -1066,7 +1079,7 @@ of the ray family F:
 
 ```json
 {"field": "G", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
- "rays_per_tick": 1, "ray_slots": 16, "field_of": "electron", "release": [1, 4],
+ "rays_per_tick": 1, "field_of": "electron", "release": [1, 4],
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
@@ -1310,7 +1323,7 @@ family and not an engine mechanism. A ray family declares it with `spread`:
 
 ```json
 {"field": "light", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
- "rays_per_tick": 1, "ray_slots": 16, "spread": [6, 1, 1, 1, 1, 1],
+ "rays_per_tick": 1, "spread": [6, 1, 1, 1, 1, 1],
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
@@ -3385,8 +3398,8 @@ evidence about that profile, not about the current model.
 Load-delayed rays remain visible to absorption. Surviving residents, fresh
 emissions, owned carrier stock and retained pace state commit together, before
 observers see the result. Every retained ray and every incoming ray bundle is
-validated before it is merged, and the field's `ray_slots` is the only bound on
-residency. There is no occupied channel and no capacity rule
+validated before it is merged, and the lanes are the only bound on residency
+(`lanes-v1`). There is no occupied channel and no capacity rule
 ([Highlights](HIGHLIGHTS.md) 5.1): rays leaving a Node on one Link in one
 interval travel together in one packet, and nothing is pushed back or made to
 wait for room. The former refusal to begin a field cycle while a Node's
