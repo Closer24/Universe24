@@ -28,15 +28,19 @@ chain, a polarized beam through polarizer bodies, in `a12_malus/`,
 [below](#a12-maluss-law-and-the-three-polarizer-chain),
 and (L) the worlds of E10, the ring of (I) meeting its own field under the
 catalog's turn declared beside the corner table, at contents 32, 64 and
-128, in `e10_self_field/`, [below](#the-ring-meets-its-own-field),
-and (M) the worlds of experiment A6, light bending by a mass, a light ray
+128, in `e10_self_field/`, [below](#the-ring-meets-its-own-field), and (M)
+the worlds of E11, the field's books: a point source read shell by shell
+and one electron ray under a body's field with the books per tick, in
+`e11_field_books/`,
+[below](#the-fields-books-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting),
+and (N) the worlds of experiment A6, light bending by a mass, a light ray
 passing a star through its spreading mass field, in `a6_bending/`,
 [below](#a6-light-bending-by-a-mass).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
 [below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
-(A) to (F), (H), (I) and (L) are demonstrations under
+(A) to (F), (H), (I), (L) and (M) are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
@@ -1142,6 +1146,52 @@ click carried 2 (computed: whole quanta of 1); the passes were not
 computed. The criterion of E9, written before the run, holds in every
 clause; the register carries the verdict.
 
+### Repeated under detector-absorb-v1: the screen counts
+
+The decision the first record led to, Highlights 5.4 "A click is an
+absorption" (model owner, 2026-09-18; feature 2c,
+[a click is an absorption](../../docs/SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)):
+a click on a field family absorbs the quantum into the mark's exact counter
+with its momentum on the marks' line, and nothing of it spreads on, so a
+screen counts instead of remembering. The same world, unchanged, was run once
+more for 240 ticks on 2026-09-18 (the engine of commit `10edd1dd`, source
+`2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`,
+initialization
+`e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`, 94 s),
+the marks on the default of a field family (`light` is `field_of`
+`electron`), and is registered as the second record of
+[E9](../../docs/EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks).
+Every click is of family `light`, amount 1, bit 1 and `absorbed` 1, 265 in
+all, the last at tick 240; no pass; the pairs tick for tick:
+
+| Mark | Clicks (first record) | First light received | Counter after tick 240 |
+| --- | --- | --- | --- |
+| (7, 5, 5) | 109 (17) | 11 | light 109, momentum (92, 0, -9) |
+| (7, 4, 5) and (7, 6, 5) | 38 each (4) | 34 | light 38, momentum (30, 0, -4) |
+| (7, 3, 5) and (7, 7, 5) | 25 each (1) | 50 (a click now, not a pass) | light 25, momentum (20, 0, -3) |
+| (7, 2, 5) and (7, 8, 5) | 15 each (1) | 70 | light 15, momentum (13, 0, -2) |
+
+The first clicks are the first record's (11, 15, 18, 22, 27, 27, 31 on the
+axis, the first pair at 34, the outer pairs at 50 and 70), and then the
+screen keeps counting: 4, 14, 24, 19, 29, 34, 33, 32, 42, 34 clicks in the
+ten 24-tick windows over the whole screen, the on-axis mark 14, 33, 58, 83
+and 109 by ticks 48, 96, 144, 192 and 240, where the first record's last
+click was at tick 72 and its 378 passes followed; the count grows as an
+intensity, the on-axis mark 92 through its -X face (the axis line), 13
+through +Z and 4 through -Z. The eye view at tick 96 (`runs_96.json`,
+`eye.counts`): 33, 8, 8, 4, 4, 2, 2, seven spots that keep brightening. The
+ledger after tick 240: light sourced 9560, current 3489, escaped 5806,
+absorbed by marks 265 (tick 32: 1240, 1009, 224, 7; tick 96: 3800, 2291,
+1448, 61; tick 192: 7640, 3169, 4282, 189), the marks' momentum (218, 0,
+-27); electron 32 at every tick, momentum (0, 0, 0), charge electron -96,
+every line balanced, `conserved_at_every_completed_tick` true. The group
+reading is the first record's: one ring, content 32, period 8, clock 1, from
+tick 1 to tick 239 over 1912 electron chains. The events: 176018
+`spatial_cycle`, 96225 `spatial_sent`, 60685 `spatial_received`, 60065
+`field_spread`, 5369 `spatial_escaped`, 265 `detector_click`, 960
+`cycle_started` and `cycle_committed`, no `detector_pass`. The record stays
+outside the tree beside the first; nothing was tuned after the run.
+
 ### Run and render
 
 ```bash
@@ -1383,6 +1433,288 @@ python examples/nature/e10_self_field/analyze.py runs-e10/c*_* --record examples
 
 The records stay outside the tree; the register entry E10 carries the
 fingerprints and `record.json` the readings. No GIF was rendered.
+
+## The field's books: a point source shell by shell, and the momentum between release and meeting
+
+`e11_field_books/` holds the worlds of
+[E11](../../docs/EXPERIMENTS.md#e11-the-fields-books-the-profile-of-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting),
+the model owner's two questions of 2026-09-18, written by `make_worlds.py`:
+(b) `point_source.json`, one external body at the centre of a 49 x 49 x 49
+open board radiating 4096 quanta of its spreading light on every heading
+every interval under the dense mode, read shell by shell by `profile.py`
+(the content, the content per Node, the radial momentum, the flux, the
+local log-log slopes, the mean field of the split table beside every
+column, no power law assumed); (a) `books.json`, a body A radiating 256
+per heading and one free `electron` ray of amount 64 entering on a line
+four Links from A's, under the catalog's `electron_field_turn` as a
+momentum table (attraction), and `books_axis.json`, the same without
+`spread`, read per tick by `books.py` (the source line, the content in
+flight and in the registers, the momentum of the light in flight, the
+electron's register, A's register and sink, what escaped, and the identity
+with the source line at every tick). `tests/test_field_books.py` pins the
+worlds and the shell reader on a 9^3 point source
+([expectations](../../docs/TEST_EXPECTATIONS.md#the-fields-books)).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| A charge at rest, radiating | An external body of family `proton` (amount 2^20, charge +3) at the centre; its `light` `field_of` `proton` with `release` [1, 256] (4096 quanta per heading per interval) in (b) and [1, 4096] (256) in (a), `spread` [6, 1, 1, 1, 1, 1], the source sign +1 set by the engine from the body's charge; the body's table names its own light in (b) (`{"light": 1}`, the control of A5s: its register must stay zero by symmetry) | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); [released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); [field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1); Highlights 3.5, 3.19 |
+| The field's energy | The light's amount: what the body releases is booked on the ledger's `sourced` line at the release, the body's content never enters a sum | [The world ledger](../../docs/LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1); Highlights 3.15, 3.19 |
+| The field's momentum | Amount x heading of every light ray (the momentum field bound to the light by one unseeded lamp with `recoil_field` momentum, a5_static's device); a release books its amount x heading, a spread books the difference between its departures and its arrivals, a register's share has none | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1) ("The booking") |
+| Where the content is | In flight: at the end of an interval every ray is resident at the Node it reached, per heading (the arrivals); registers: the shares below one quantum, whole quanta per Node in total; the dense region's Nodes read back as Node state through the inventory view | [The dense mode](../../docs/SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1); `field-remainder-v1` |
+| A shell | L1: the Nodes at L1 distance k from the body (the sum of the three coordinate offsets' magnitudes), the lattice's own diamond, 4k^2 + 2 Nodes; Euclidean: the Nodes whose distance rounds to k | Highlights 3.5 ("as a diamond at the scale of Links and as a sphere at large scale") |
+| The flux through a shell | The content that crossed the surface between the shells k and k + 1 in the last interval, read from the arrivals and their headings: what arrived on shell k + 1 from shell k less what arrived on shell k from shell k + 1; about the body, the release less the sink's take | `profile.py` |
+| Gauss | At the steady state the same flux through every closed surface; the mean field's effective source S per interval (the release less what returns to the body's sink) | [A5s, computed after the run](../../docs/EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest) |
+| The free electron | A lamp's funded emission of one `electron` ray of 64 along +X from (0, 14, 10), charge −3, rest rate 1, the lamp keeping the launch's recoil (−64, 0, 0) in its register; nothing declares `field_of` `electron`, so the electron has no field of its own here | [Wave-ray families](../../docs/SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1); [released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1) |
+| The meeting | `electron_field_turn` over `[electron, light]` with `momentum_table` `{"light": -1}`: the electron pushed by −1 x amount x heading of every outbound light ray at its Node (toward the ray's source), the register walked by the DDA, and each light ray returned reversed as a fresh event ray, the recoil; the meeting books the push and the reversal (−2 x amount x heading) as its source | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2); Highlights 3.5, 3.14 |
+| The recoil's fate | Axis world: the recoil walks whole along the field ray's line back to A; spread world: a recoil is field content and is spread at the next Node like any (its event erased), unless it meets the electron again there | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1) ("Consequences") |
+| A's books | The sink: every light ray that reaches A ends in its counter, on the ledger's `absorbed` line (amount, and momentum as the ray carried it); A's register by its table, −1 x amount x heading of the arriving ray, the bodies' momentum line beside the identity | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1) |
+| The identity | initial + sourced = current + escaped + absorbed for amount, momentum and charge at every completed tick (`ray-event-audit-v1`); a cycle's events carry the tick at the start of their interval, an arrival's, an absorption's and an escape's the completed tick | [Audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1) |
+
+### What the E11 runs show
+
+Run once each on 2026-09-18, the engine of `main` at `9cc830f` (no engine
+change on the branch), source
+`25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038`: the point source in
+343 s for 192 ticks (1.8 s per tick, the mean field's box steady state by
+BiCGSTAB in 100 iterations, 7 s), the spread book world in 9.0 s and the
+axis book world in 0.8 s. Every ledger line balanced at every completed
+tick of all three; the numbers below are `record.json`'s.
+
+**(b) The ledger of the point source.** The body's content is 2^20 at
+every tick and enters no sum; its register stays (0, 0, 0) at every tick
+(its own light returns to its sink from all sides, 4288 quanta per
+interval at the end against the mean field's 4291 at the same tick and
+4369 at the steady state). The light's total grows by the release less
+the sink's take less the escape: nothing escapes before tick 88, and at
+tick 192 the escape is 3828 per interval against the release of 24576, so
+the field is still filling the box (at the steady state the escape is the
+effective source, S = 20206.7 per interval). The shells steady to 1 % over the
+last 32 ticks are k = 1 and 2 alone (0.2 and 0.6 %); k = 3 changed by
+1.3 %, k = 8 by 4.4 %, k = 12 by 6.6 %, k = 16 by 10.1 % and k = 22 by
+15.9 %, so the outer profile is a transient reading, compared below with
+the mean field's transient at the same tick in the same box (the
+prediction) and with the box's steady state.
+
+| Tick | Sourced | In flight | Registers | Escaped | Absorbed | Body's register |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 24576 | 24576 | 0 | 0 | 0 | (0, 0, 0) |
+| 2 | 49152 | 46908 | 12 | 0 | 2232 | (0, 0, 0) |
+| 4 | 98304 | 90606 | 186 | 0 | 7512 | (0, 0, 0) |
+| 8 | 196608 | 173982 | 1704 | 0 | 20922 | (0, 0, 0) |
+| 16 | 393216 | 333342 | 9000 | 0 | 50874 | (0, 0, 0) |
+| 32 | 786432 | 641730 | 30444 | 0 | 114258 | (0, 0, 0) |
+| 48 | 1179648 | 945054 | 55104 | 0 | 179490 | (0, 0, 0) |
+| 64 | 1572864 | 1245312 | 81864 | 0 | 245688 | (0, 0, 0) |
+| 80 | 1966080 | 1544484 | 109092 | 0 | 312504 | (0, 0, 0) |
+| 96 | 2359296 | 1837530 | 141510 | 492 | 379764 | (0, 0, 0) |
+| 112 | 2752512 | 2133126 | 168546 | 3474 | 447366 | (0, 0, 0) |
+| 128 | 3145728 | 2418198 | 199962 | 12336 | 515232 | (0, 0, 0) |
+| 144 | 3538944 | 2701122 | 224382 | 30120 | 583320 | (0, 0, 0) |
+| 160 | 3932160 | 2977062 | 244254 | 59256 | 651588 | (0, 0, 0) |
+| 176 | 4325376 | 3239958 | 263784 | 101616 | 720018 | (0, 0, 0) |
+| 192 | 4718592 | 3492438 | 278058 | 159516 | 788580 | (0, 0, 0) |
+
+**(b) The L1 shells at tick 192.** Per Node: the content in flight plus the
+registers over the shell's Nodes, the engine beside the mean field (mf) at
+the same tick and at the box's steady state; the radial momentum per Node,
+Σ amount × (heading · r) / |r| over the shell's rays, then the rays'
+radial momentum at the axis Node (k, 0, 0) and at the diagonal Node named;
+the flux through the surface between shells k and k + 1 in the last
+interval; Δ32 the shell's change over the last 32 ticks.
+
+| k | Nodes | ⟨r⟩ | Per Node | mf tick | mf steady | Radial per Node | mf tick | mf steady | Axis Node | Diagonal Node | Flux | mf tick | mf steady | Δ32 % |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 6 | 1.00 | 5639.0 | 5639.8 | 5713.6 | 3651.0 | 3650.8 | 3636.6 | 3651 | 3651.0 (1, 0, 0) | 20286 | 20285 | 20206.7 | 0.2 |
+| 2 | 18 | 1.61 | 2502.7 | 2504.3 | 2589.6 | 1107.4 | 1108.3 | 1104.3 | 2089 | 616.6 (1, 1, 0) | 20316 | 20267 | 20206.7 | 0.6 |
+| 3 | 38 | 2.25 | 1525.6 | 1523.8 | 1613.0 | 491.0 | 490.5 | 489.1 | 1208 | 403.8 (2, 1, 0) | 20340 | 20267 | 20206.7 | 1.3 |
+| 4 | 66 | 2.92 | 1075.8 | 1074.1 | 1163.9 | 273.4 | 272.8 | 272.4 | 705 | 281.4 (2, 2, 0) | 20166 | 20197 | 20206.7 | 1.9 |
+| 5 | 102 | 3.60 | 816.1 | 814.9 | 905.3 | 173.6 | 174.0 | 174.2 | 419 | 194.7 (3, 2, 0) | 20112 | 20197 | 20206.7 | 2.5 |
+| 6 | 146 | 4.29 | 647.3 | 646.2 | 735.6 | 120.7 | 121.0 | 121.6 | 254 | 140.0 (3, 3, 0) | 19992 | 20045 | 20206.7 | 3.0 |
+| 7 | 198 | 4.98 | 525.5 | 525.7 | 614.9 | 89.3 | 89.2 | 90.0 | 156 | 104.8 (4, 3, 0) | 20136 | 20045 | 20206.7 | 3.5 |
+| 8 | 258 | 5.67 | 438.5 | 436.6 | 524.2 | 68.2 | 68.4 | 69.5 | 99 | 77.8 (4, 4, 0) | 19680 | 19783 | 20206.7 | 4.4 |
+| 9 | 326 | 6.37 | 366.9 | 366.7 | 453.4 | 54.6 | 54.1 | 55.4 | 64 | 59.5 (5, 4, 0) | 19902 | 19783 | 20206.7 | 4.4 |
+| 10 | 402 | 7.06 | 312.9 | 311.9 | 396.6 | 43.6 | 43.7 | 45.2 | 43 | 49.5 (5, 5, 0) | 19350 | 19394 | 20206.7 | 6.1 |
+| 11 | 486 | 7.76 | 267.8 | 266.5 | 349.9 | 35.7 | 35.9 | 37.6 | 30 | 37.5 (6, 5, 0) | 19164 | 19394 | 20206.7 | 6.3 |
+| 12 | 578 | 8.46 | 230.5 | 229.9 | 310.9 | 30.3 | 29.9 | 31.7 | 21 | 31.1 (6, 6, 0) | 19446 | 18867 | 20206.7 | 6.6 |
+| 13 | 678 | 9.16 | 200.0 | 198.5 | 277.7 | 25.3 | 25.2 | 27.1 | 16 | 24.8 (7, 6, 0) | 18162 | 18867 | 20206.7 | 8.6 |
+| 14 | 786 | 9.86 | 173.0 | 172.8 | 249.3 | 21.1 | 21.4 | 23.5 | 14 | 21.2 (7, 7, 0) | 18936 | 18201 | 20206.7 | 7.9 |
+| 15 | 902 | 10.56 | 151.5 | 150.1 | 224.6 | 18.6 | 18.3 | 20.5 | 9 | 17.7 (8, 7, 0) | 17940 | 18201 | 20206.7 | 10.3 |
+| 16 | 1026 | 11.26 | 132.3 | 131.4 | 202.9 | 15.6 | 15.8 | 18.1 | 7 | 15.6 (8, 8, 0) | 17304 | 17405 | 20206.7 | 10.1 |
+| 17 | 1158 | 11.96 | 115.6 | 114.5 | 183.8 | 13.6 | 13.7 | 16.1 | 7 | 11.3 (9, 8, 0) | 16860 | 17405 | 20206.7 | 11.9 |
+| 18 | 1298 | 12.66 | 101.5 | 100.6 | 166.7 | 11.8 | 11.9 | 14.4 | 7 | 11.3 (9, 9, 0) | 16296 | 16493 | 20206.7 | 11.8 |
+| 19 | 1446 | 13.36 | 88.7 | 87.8 | 151.4 | 10.6 | 10.4 | 12.9 | 4 | 9.9 (10, 9, 0) | 17250 | 16493 | 20206.7 | 13.5 |
+| 20 | 1602 | 14.06 | 78.8 | 77.2 | 137.6 | 9.0 | 9.1 | 11.7 | 3 | 8.5 (10, 10, 0) | 14526 | 15488 | 20206.7 | 14.5 |
+| 21 | 1766 | 14.76 | 67.9 | 67.4 | 125.1 | 8.1 | 8.0 | 10.6 | 3 | 7.7 (11, 10, 0) | 16938 | 15488 | 20206.7 | 14.7 |
+| 22 | 1938 | 15.46 | 60.9 | 59.3 | 113.7 | 7.3 | 7.1 | 9.7 | 3 | 5.7 (11, 11, 0) | 13788 | 14418 | 20206.7 | 15.9 |
+
+The flux through the surface about the body in the last interval was
+20286 (the release 24576 less the sink's 4290), and the mean field's
+steady flux is 20206.7 through every one of the 22 shells, L1 and Euclidean
+alike, to one part in 10^8: Gauss on the lattice. The engine's flux at
+tick 192 follows the mean field's transient: within 0.3 % of S through
+k = 7, 96 % of S at k = 12, 86 % at k = 16 and 68 % at k = 22, the
+integer crossings of one interval scattering by a few per cent about the
+mean field's from k ≈ 12 on. The shell's radial momentum summed (the
+`radial` column of `record.json`) is nearly constant, 21906 at k = 1,
+17591 at k = 8, 15999 at k = 16 and 14210 at k = 22, so the radial
+momentum per Node falls as the shell's Node count grows, 4k² + 2.
+
+**(b) The local log-log slopes between consecutive L1 shells** (engine /
+mean field at tick 192 / mean field at the box's steady state):
+
+| k | Content per Node | Radial momentum per Node | Flux |
+| --- | --- | --- | --- |
+| 1-2 | -1.17 / -1.17 / -1.14 | -1.72 / -1.72 / -1.72 | 0.00 / -0.00 / 0.00 |
+| 2-3 | -1.22 / -1.23 / -1.17 | -2.01 / -2.01 / -2.01 | 0.00 / -0.00 / 0.00 |
+| 3-4 | -1.21 / -1.22 / -1.13 | -2.04 / -2.04 / -2.03 | -0.03 / -0.01 / 0.00 |
+| 4-5 | -1.24 / -1.24 / -1.13 | -2.04 / -2.02 / -2.00 | -0.01 / -0.00 / 0.00 |
+| 5-6 | -1.27 / -1.27 / -1.14 | -1.99 / -1.99 / -1.97 | -0.03 / -0.04 / 0.00 |
+| 6-7 | -1.35 / -1.34 / -1.16 | -1.96 / -1.98 / -1.95 | 0.05 / 0.00 / 0.00 |
+| 7-8 | -1.35 / -1.39 / -1.20 | -2.02 / -1.98 / -1.94 | -0.17 / -0.10 / 0.00 |
+| 8-9 | -1.51 / -1.48 / -1.23 | -1.89 / -2.00 / -1.93 | 0.10 / 0.00 / 0.00 |
+| 9-10 | -1.51 / -1.54 / -1.27 | -2.13 / -2.02 / -1.93 | -0.27 / -0.19 / 0.00 |
+| 10-11 | -1.63 / -1.65 / -1.31 | -2.10 / -2.06 / -1.94 | -0.10 / 0.00 / 0.00 |
+| 11-12 | -1.72 / -1.70 / -1.36 | -1.86 / -2.09 / -1.94 | 0.17 / -0.32 / 0.00 |
+| 12-13 | -1.77 / -1.84 / -1.41 | -2.28 / -2.15 / -1.95 | -0.85 / 0.00 / 0.00 |
+| 13-14 | -1.96 / -1.87 / -1.46 | -2.43 / -2.18 / -1.95 | 0.56 / -0.48 / 0.00 |
+| 14-15 | -1.92 / -2.04 / -1.51 | -1.87 / -2.26 / -1.95 | -0.78 / -0.00 / 0.00 |
+| 15-16 | -2.10 / -2.06 / -1.57 | -2.70 / -2.29 / -1.96 | -0.56 / -0.69 / 0.00 |
+| 16-17 | -2.22 / -2.27 / -1.64 | -2.30 / -2.39 / -1.96 | -0.43 / -0.00 / 0.00 |
+| 17-18 | -2.28 / -2.27 / -1.70 | -2.44 / -2.41 / -1.96 | -0.60 / -0.94 / 0.00 |
+| 18-19 | -2.50 / -2.52 / -1.78 | -2.04 / -2.53 / -1.95 | 1.05 / -0.00 / 0.00 |
+| 19-20 | -2.29 / -2.50 / -1.86 | -3.19 / -2.55 / -1.95 | -3.35 / -1.23 / 0.00 |
+| 20-21 | -3.07 / -2.79 / -1.96 | -2.08 / -2.69 / -1.94 | 3.15 / -0.00 / 0.00 |
+| 21-22 | -2.32 / -2.75 / -2.06 | -2.16 / -2.68 / -1.93 | -4.42 / -1.54 / 0.00 |
+
+**(b) The Euclidean shells at tick 192** (the Nodes whose distance rounds
+to k; the flux through the surface between k and k + 1):
+
+| k | Nodes | ⟨r⟩ | Per Node | mf tick | mf steady | Radial per Node | mf steady | Axis Node | Diagonal Node | Flux | mf tick | Slope of the radial per Node (engine / mf steady) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 18 | 1.28 | 3225.0 | 3225.9 | 3308.8 | 1628.1 | 1622.6 | 3651 | 616.6 (1, 1, 0) | 20310 | 20273 | -1.86 / -1.86 |
+| 2 | 62 | 2.23 | 1431.9 | 1430.3 | 1519.6 | 449.4 | 447.5 | 2089 | 214.8 (1, 1, 1) | 20244 | 20242 | -1.50 / -1.49 |
+| 3 | 98 | 3.13 | 975.3 | 974.0 | 1064.2 | 244.9 | 244.7 | 1208 | 281.4 (2, 2, 0) | 20172 | 20195 | -1.93 / -1.92 |
+| 4 | 210 | 4.06 | 694.0 | 693.1 | 783.0 | 140.6 | 141.0 | 705 | 140.0 (3, 3, 0) | 20070 | 20075 | -2.41 / -2.36 |
+| 5 | 350 | 5.10 | 496.3 | 495.5 | 584.4 | 82.0 | 83.2 | 419 | 58.9 (3, 3, 3) | 19920 | 19902 | -1.83 / -1.80 |
+| 6 | 450 | 6.12 | 383.6 | 383.0 | 470.1 | 58.7 | 59.9 | 254 | 77.8 (4, 4, 0) | 19776 | 19667 | -2.05 / -1.98 |
+| 7 | 602 | 7.07 | 304.7 | 303.7 | 388.7 | 42.8 | 44.2 | 156 | 49.5 (5, 5, 0) | 19752 | 19346 | -1.94 / -1.86 |
+| 8 | 762 | 8.03 | 247.1 | 245.7 | 328.4 | 33.0 | 34.5 | 99 | 31.1 (6, 6, 0) | 18792 | 19017 | -2.37 / -2.09 |
+| 9 | 1142 | 9.06 | 197.5 | 197.0 | 276.6 | 25.0 | 27.0 | 64 | 26.0 (5, 5, 5) | 18702 | 18507 | -2.23 / -2.02 |
+| 10 | 1250 | 10.09 | 160.7 | 159.7 | 235.9 | 19.8 | 21.8 | 43 | 21.2 (7, 7, 0) | 17838 | 17984 | -2.42 / -1.93 |
+| 11 | 1458 | 11.06 | 132.5 | 131.5 | 204.3 | 15.7 | 18.1 | 30 | 15.6 (8, 8, 0) | 17100 | 17463 | -2.20 / -1.99 |
+| 12 | 1814 | 12.03 | 109.4 | 108.5 | 177.7 | 13.0 | 15.2 | 21 | 12.1 (7, 7, 7) | 16782 | 16765 | -2.45 / -1.96 |
+| 13 | 2178 | 13.04 | 90.4 | 89.3 | 154.6 | 10.7 | 13.0 | 16 | 11.3 (9, 9, 0) | 16050 | 15986 | -2.94 / -2.03 |
+| 14 | 2498 | 14.05 | 74.3 | 73.4 | 134.6 | 8.6 | 11.2 | 14 | 8.5 (10, 10, 0) | 15264 | 15215 | -2.53 / -1.92 |
+| 15 | 2622 | 15.02 | 62.1 | 60.9 | 118.0 | 7.2 | 9.8 | 9 | 9.0 (15, 0, 0) | 13836 | 14440 | -2.70 / -2.00 |
+| 16 | 3338 | 16.00 | 51.2 | 50.2 | 103.2 | 6.0 | 8.6 | 7 | 5.7 (11, 11, 0) | 13488 | 13575 | -3.41 / -2.02 |
+| 17 | 3722 | 17.03 | 42.4 | 41.1 | 89.6 | 4.9 | 7.6 | 7 | 5.7 (12, 12, 0) | 12276 | 12707 | -3.07 / -2.04 |
+| 18 | 4170 | 18.05 | 34.6 | 33.5 | 77.6 | 4.1 | 6.8 | 7 | 2.8 (13, 13, 0) | 12336 | 11852 | -3.73 / -1.97 |
+| 19 | 4358 | 19.04 | 28.6 | 27.4 | 67.2 | 3.4 | 6.1 | 4 | 1.7 (11, 11, 11) | 11226 | 11012 | -2.67 / -1.97 |
+| 20 | 5034 | 20.02 | 23.7 | 22.3 | 57.9 | 2.9 | 5.5 | 3 | 4.2 (14, 14, 0) | 9582 | 10209 | -4.97 / -2.05 |
+| 21 | 5714 | 21.03 | 19.3 | 17.9 | 49.3 | 2.3 | 5.0 | 3 | 1.4 (15, 15, 0) | 9522 | 9400 | -1.63 / -1.91 |
+| 22 | 5982 | 22.04 | 15.6 | 14.2 | 41.4 | 2.1 | 4.6 | 3 | 3.0 (22, 0, 0) | 8916 | 8648 | - |
+
+**(a) The axis world, tick by tick** (A's field on its six axis lines, the
+electron on y = 14; momentum vectors as (x, y, z); "p(light)" the momentum
+of the light in flight, the recoils among them counted apart; the
+electron's register once escaped is read on the ledger's `escaped` line):
+
+| Tick | Mark | Electron at | Register | Pushes | Δ electron | Light in flight | Registers | p(light) | Recoils (n, amount) | Sourced p | Absorbed p | A's register | Escaped light p | Light sourced / current / escaped / absorbed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 |  | (1, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 1536 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 1536 / 1536 / 0 / 0 |
+| 2 |  | (2, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 3072 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 3072 / 3072 / 0 / 0 |
+| 3 |  | (3, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 4608 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 4608 / 4608 / 0 / 0 |
+| 4 |  | (4, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 6144 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 6144 / 6144 / 0 / 0 |
+| 5 |  | (5, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 7680 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 7680 / 7680 / 0 / 0 |
+| 6 |  | (6, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 9216 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 9216 / 9216 / 0 / 0 |
+| 7 | t0 | (7, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 10752 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 10752 / 10752 / 0 / 0 |
+| 8 |  | (8, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 12288 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 12288 / 12288 / 0 / 0 |
+| 9 |  | (9, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 13824 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 13824 / 13824 / 0 / 0 |
+| 10 |  | (10, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 15360 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 15360 / 15360 / 0 / 0 |
+| 11 | t1 | (10, 13, 10) | (64, -256, 0) | 1 | (0, -256, 0) | 15360 | 0 | (0, -512, 0) | 1, 256 | (0, -768, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 16896 / 15360 / 1536 / 0 |
+| 12 |  | (10, 12, 10) | (64, -256, 0) | 2 | (0, 0, 0) | 15360 | 0 | (0, -512, 0) | 2, 512 | (0, -768, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 18432 / 15360 / 3072 / 0 |
+| 13 |  | (11, 12, 10) | (64, -256, 0) | 2 | (0, 0, 0) | 15360 | 0 | (0, -512, 0) | 3, 768 | (0, -768, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 19968 / 15360 / 4608 / 0 |
+| 14 | t2 | (11, 11, 10) | (64, -256, 0) | 0 | (0, 0, 0) | 15104 | 0 | (0, -256, 0) | 2, 512 | (0, -768, 0) | (0, -256, 0) | (0, 256, 0) | (0, 0, 0) | 21504 / 15104 / 6144 / 256 |
+| 15 |  | (11, 10, 10) | (64, -256, 0) | 0 | (0, 0, 0) | 15104 | 0 | (0, -256, 0) | 2, 512 | (0, -768, 0) | (0, -256, 0) | (0, 256, 0) | (0, 0, 0) | 23040 / 15104 / 7680 / 256 |
+| 16 |  | (11, 9, 10) | (-192, -256, 0) | 1 | (-256, 0, 0) | 14848 | 0 | (-256, -256, 0) | 2, 512 | (-768, -768, 0) | (-256, -256, 0) | (256, 256, 0) | (0, 0, 0) | 24576 / 14848 / 9216 / 512 |
+| 17 |  | (10, 9, 10) | (-192, -256, 0) | 0 | (0, 0, 0) | 15104 | 0 | (-256, 0, 0) | 2, 512 | (-768, -768, 0) | (-256, -256, 0) | (256, 256, 0) | (0, -256, 0) | 26112 / 15104 / 10496 / 512 |
+| 18 |  | (9, 9, 10) | (-192, 0, 0) | 1 | (0, 256, 0) | 14848 | 0 | (-256, 256, 0) | 2, 512 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 27648 / 14848 / 12032 / 768 |
+| 19 |  | (8, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 14848 | 0 | (-256, 256, 0) | 1, 256 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 29184 / 14848 / 13568 / 768 |
+| 20 |  | (7, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 14848 | 0 | (-256, 256, 0) | 1, 256 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 30720 / 14848 / 15104 / 768 |
+| 21 |  | (6, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 14848 | 0 | (-256, 256, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 32256 / 14848 / 16640 / 768 |
+| 22 |  | (5, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 14848 | 0 | (-256, 256, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 33792 / 14848 / 18176 / 768 |
+| 23 |  | (4, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 14848 | 0 | (-256, 256, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 35328 / 14848 / 19712 / 768 |
+| 24 |  | (3, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 14848 | 0 | (-256, 256, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (0, -256, 0) | 36864 / 14848 / 21248 / 768 |
+| 25 |  | (2, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 15104 | 0 | (0, 256, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (-256, -256, 0) | 38400 / 15104 / 22528 / 768 |
+| 26 |  | (1, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 15104 | 0 | (0, 256, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (-256, -256, 0) | 39936 / 15104 / 24064 / 768 |
+| 27 |  | (0, 9, 10) | (-192, 0, 0) | 0 | (0, 0, 0) | 15360 | 0 | (0, 0, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (-256, 0, 0) | 41472 / 15360 / 25344 / 768 |
+| 28 |  | escaped | (-192, 0, 0) (escaped) | 0 | (0, 0, 0) | 15360 | 0 | (0, 0, 0) | 0, 0 | (-768, 0, 0) | (-256, 0, 0) | (256, 0, 0) | (-256, 0, 0) | 43008 / 15360 / 26880 / 768 |
+
+After tick 28 nothing changes but the light's lines: sourced 1536 per
+tick, in flight 15360, escaped growing by 1536 per tick, absorbed 768,
+the momentum lines (−768, 0, 0) sourced, (−256, 0, 0) absorbed, A's
+register (256, 0, 0), escaped (−448, 0, 0) of which (−192, 0, 0) is the
+electron's.
+
+**(a) The spread world, tick by tick** (the catalog's rule; the same
+columns; the electron is still in the world at tick 36, at (3, 17, 10)
+heading out on +Y):
+
+| Tick | Mark | Electron at | Register | Pushes | Δ electron | Light in flight | Registers | p(light) | Recoils (n, amount) | Sourced p | Absorbed p | A's register | Escaped light p | Light sourced / current / escaped / absorbed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | t0 | (1, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 1536 | 0 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 1536 / 1536 / 0 / 0 |
+| 2 |  | (2, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 2922 | 12 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 3072 / 2934 / 0 / 138 |
+| 3 |  | (3, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 4266 | 66 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 4608 / 4332 / 0 / 276 |
+| 4 |  | (4, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 5508 | 174 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 6144 / 5682 / 0 / 462 |
+| 5 |  | (5, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 6612 | 414 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 7680 / 7026 / 0 / 654 |
+| 6 |  | (6, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 7680 | 672 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 9216 / 8352 / 0 / 864 |
+| 7 |  | (7, 14, 10) | (64, 0, 0) | 0 | (0, 0, 0) | 8862 | 816 | (0, 0, 0) | 0, 0 | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 10752 / 9678 / 0 / 1074 |
+| 8 | t1 | (8, 14, 10) | (65, -1, 0) | 2 | (1, -1, 0) | 9824 | 1168 | (1, -1, 0) | 2, 2 | (2, -2, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 12288 / 10992 / 0 / 1296 |
+| 9 |  | (9, 14, 10) | (67, -5, 0) | 3 | (2, -4, 0) | 10828 | 1472 | (4, -6, 0) | 3, 8 | (7, -11, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 13824 / 12300 / 0 / 1524 |
+| 10 |  | (10, 14, 10) | (69, -12, 0) | 4 | (2, -7, 0) | 11815 | 1793 | (4, -13, 0) | 4, 17 | (9, -25, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 15360 / 13608 / 0 / 1752 |
+| 11 |  | (10, 13, 10) | (66, -55, 0) | 6 | (-3, -43, 0) | 12882 | 2034 | (2, -70, 0) | 6, 60 | (4, -125, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 16896 / 14916 / 0 / 1980 |
+| 12 |  | (11, 13, 10) | (66, -91, 0) | 6 | (0, -36, 0) | 13836 | 2388 | (-8, -78, 0) | 6, 144 | (-6, -169, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 18432 / 16224 / 0 / 2208 |
+| 13 |  | (11, 12, 10) | (64, -105, 0) | 6 | (-2, -14, 0) | 14619 | 2895 | (-2, -71, 0) | 6, 24 | (-2, -176, 0) | (0, 0, 0) | (0, 0, 0) | (0, 0, 0) | 19968 / 17514 / 6 / 2448 |
+| 14 | t2 | (11, 11, 10) | (42, -113, 0) | 7 | (-22, -8, 0) | 15414 | 3382 | (-39, -9, 0) | 7, 72 | (-61, -142, 0) | (0, -20, 0) | (0, 20, 0) | (0, 0, 0) | 21504 / 18796 / 6 / 2702 |
+| 15 |  | (12, 11, 10) | (12, -124, 0) | 7 | (-30, -11, 0) | 16505 | 3581 | (-45, -38, 0) | 7, 109 | (-97, -182, 0) | (0, -20, 0) | (0, 20, 0) | (0, 0, 0) | 23040 / 20086 / 12 / 2942 |
+| 16 |  | (12, 10, 10) | (9, -140, 0) | 6 | (-3, -16, 0) | 17270 | 4106 | (-27, -17, 0) | 6, 39 | (-84, -181, 0) | (-2, -24, 0) | (2, 24, 0) | (0, 0, 0) | 24576 / 21376 / 18 / 3182 |
+| 17 |  | (12, 9, 10) | (-126, -128, 0) | 7 | (-135, 12, 0) | 18231 | 4436 | (-228, -1, 0) | 7, 199 | (-420, -152, 0) | (-2, -23, 0) | (2, 23, 0) | (0, 0, 0) | 26112 / 22667 / 18 / 3427 |
+| 18 |  | (11, 9, 10) | (-146, -126, 0) | 7 | (-20, 2, 0) | 19054 | 4840 | (-64, -2, 0) | 7, 48 | (-344, -152, 0) | (-70, -24, 0) | (70, 24, 0) | (0, 0, 0) | 27648 / 23894 / 24 / 3730 |
+| 19 |  | (11, 8, 10) | (-156, -88, 0) | 8 | (-10, 38, 0) | 19917 | 5240 | (-45, 22, 0) | 8, 120 | (-335, -91, 0) | (-70, -23, 0) | (70, 23, 0) | (0, -2, 0) | 29184 / 25157 / 52 / 3975 |
+| 20 |  | (10, 8, 10) | (-172, -86, 0) | 6 | (-16, 2, 0) | 20725 | 5717 | (-7, 48, 0) | 6, 42 | (-315, -62, 0) | (-72, -22, 0) | (72, 22, 0) | (0, -2, 0) | 30720 / 26442 / 58 / 4220 |
+| 21 |  | (9, 8, 10) | (-160, 48, 0) | 7 | (12, 134, 0) | 21820 | 5907 | (3, 235, 0) | 7, 204 | (-292, 259, 0) | (-71, -22, 0) | (71, 22, 0) | (0, -2, 0) | 32256 / 27727 / 64 / 4465 |
+| 22 |  | (8, 8, 10) | (-158, 67, 0) | 7 | (2, 19, 0) | 22076 | 6850 | (2, 114, 0) | 7, 53 | (-290, 221, 0) | (-70, 46, 0) | (70, -46, 0) | (0, -6, 0) | 33792 / 28926 / 90 / 4776 |
+| 23 |  | (8, 9, 10) | (-156, 79, 0) | 7 | (2, 12, 0) | 23354 | 6832 | (-46, -20, 0) | 7, 38 | (-336, 99, 0) | (-70, 47, 0) | (70, -47, 0) | (0, -7, 0) | 35328 / 30186 / 119 / 5023 |
+| 24 |  | (7, 9, 10) | (-128, 83, 0) | 8 | (28, 4, 0) | 24009 | 7459 | (64, 39, 0) | 8, 84 | (-197, 165, 0) | (-69, 45, 0) | (69, -45, 0) | (0, -2, 0) | 36864 / 31468 / 130 / 5266 |
+| 25 |  | (7, 10, 10) | (-126, 92, 0) | 6 | (2, 9, 0) | 24994 | 7760 | (43, -25, 0) | 6, 29 | (-216, 112, 0) | (-69, 46, 0) | (69, -46, 0) | (0, -1, 0) | 38400 / 32754 / 131 / 5515 |
+| 26 |  | (6, 10, 10) | (-48, 86, 0) | 7 | (78, -6, 0) | 25779 | 8215 | (135, 22, 0) | 7, 124 | (-47, 148, 0) | (-67, 46, 0) | (67, -46, 0) | (-3, -6, 0) | 39936 / 33994 / 183 / 5759 |
+| 27 |  | (6, 11, 10) | (-45, 88, 0) | 6 | (3, 2, 0) | 26577 | 8675 | (82, 15, 0) | 6, 25 | (-97, 143, 0) | (-68, 46, 0) | (68, -46, 0) | (-2, -6, 0) | 41472 / 35252 / 210 / 6010 |
+| 28 |  | (5, 11, 10) | (-34, 87, 0) | 7 | (11, -1, 0) | 27268 | 9201 | (19, -27, 0) | 7, 24 | (-129, 95, 0) | (-46, 45, 0) | (46, -45, 0) | (-4, -10, 0) | 43008 / 36469 / 262 / 6277 |
+| 29 |  | (5, 12, 10) | (-33, 87, 0) | 6 | (1, 0, 0) | 28032 | 9712 | (-51, 11, 0) | 6, 11 | (-195, 141, 0) | (-47, 45, 0) | (47, -45, 0) | (0, -2, 0) | 44544 / 37744 / 274 / 6526 |
+| 30 |  | (5, 13, 10) | (-30, 86, 0) | 6 | (3, -1, 0) | 28935 | 10028 | (40, 35, 0) | 6, 12 | (-115, 151, 0) | (-46, 45, 0) | (46, -45, 0) | (-15, -15, 0) | 46080 / 38963 / 342 / 6775 |
+| 31 |  | (4, 13, 10) | (-26, 85, 0) | 5 | (4, -1, 0) | 29818 | 10387 | (-20, -4, 0) | 5, 7 | (-157, 123, 0) | (-46, 44, 0) | (46, -44, 0) | (-1, -2, 0) | 47616 / 40205 / 385 / 7026 |
+| 32 |  | (4, 14, 10) | (-27, 85, 0) | 5 | (-1, 0, 0) | 30467 | 10986 | (-36, -9, 0) | 5, 5 | (-180, 116, 0) | (-48, 45, 0) | (48, -45, 0) | (-5, -5, 0) | 49152 / 41453 / 426 / 7273 |
+| 33 |  | (4, 15, 10) | (-28, 85, 0) | 3 | (-1, 0, 0) | 31484 | 11185 | (23, 21, 0) | 3, 3 | (-120, 140, 0) | (-48, 45, 0) | (48, -45, 0) | (-3, -11, 0) | 50688 / 42669 / 494 / 7525 |
+| 34 |  | (4, 16, 10) | (-27, 84, 0) | 2 | (1, -1, 0) | 32409 | 11468 | (-3, -22, 0) | 2, 2 | (-144, 95, 0) | (-46, 45, 0) | (46, -45, 0) | (-4, -12, 0) | 52224 / 43877 / 572 / 7775 |
+| 35 |  | (3, 16, 10) | (-27, 84, 0) | 0 | (0, 0, 0) | 33062 | 11984 | (42, 24, 0) | 0, 0 | (-101, 140, 0) | (-47, 45, 0) | (47, -45, 0) | (-5, -13, 0) | 53760 / 45046 / 684 / 8030 |
+| 36 |  | (3, 17, 10) | (-27, 84, 0) | 0 | (0, 0, 0) | 33760 | 12510 | (-5, -17, 0) | 0, 0 | (-145, 106, 0) | (-47, 45, 0) | (47, -45, 0) | (-2, -6, 0) | 55296 / 46270 / 750 / 8276 |
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/e11_field_books/make_worlds.py
+PYTHONPATH=src python examples/nature/e11_field_books/profile.py --record examples/nature/e11_field_books/record.json
+PYTHONPATH=src python examples/nature/e11_field_books/books.py --record examples/nature/e11_field_books/record.json
+```
+
+Both scripts run their worlds in-process and read the engine (Recorders in
+the sense of Highlights 3.29): the runner's `state.json` holds per Node a
+family's total and its ray count, not the amount per heading, so the
+per-Node reading is the inventory view, the reading the snapshot itself
+uses. `record.json` holds the readings; no runner record and no GIF were
+made.
 
 ## A5: Coulomb's law through the spreading field
 

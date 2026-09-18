@@ -2437,6 +2437,62 @@ sign rule, and its other couplings are catalog entries.
   light line and the group reading from the first run of its board
   ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
   record stays outside the tree; nothing was tuned after the run.
+- **Repeated under `detector-absorb-v1` (2026-09-18).** Status: repeated on
+  2026-09-18 under the decision of Highlights 5.4, "A click is an
+  absorption" (model owner, 2026-09-18; feature 2c, [a click is an
+  absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)),
+  taken on this experiment's finding, the screen that remembers: a click on
+  a field family now absorbs the quantum into the mark's exact counter, per
+  family, with its momentum on the marks' line, and nothing of it spreads
+  on. The world is unchanged (`screen_loop.json`, initialization
+  `e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`, the
+  marks on the `on_click` default of a field family, `light` being
+  `field_of` `electron`), run once for 240 ticks on the engine of commit
+  `10edd1dd` (the engine commit of feature 2c; source
+  `2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`), 94 s,
+  read with the extractor and the recording (the 96-tick viewer document
+  `runs_96.json`, "E9 under detector-absorb-v1: the screen counts", and a
+  full reading for the group). The clicks: 265, every one of family
+  `light`, amount 1, bit 1 and `absorbed` 1, the last at tick 240; per mark
+  from the axis outward 109, 38, 38, 25, 25, 15, 15 against the first
+  record's 17, 4, 4, 1, 1, 1, 1 (the pairs tick for tick with the same
+  amount; the first click of each mark at 11, 34, 34, 50, 50, 70, 70, the
+  first record's first arrivals, and (7, 3, 5) and (7, 7, 5) now click at 50
+  where the first record's screen passed); the on-axis mark 92 through its
+  -X face, 13 through +Z and 4 through -Z. The passes: none, against the
+  first record's 378: no ray carries a bit any more, since what a mark
+  realizes is no longer there to spread. The count keeps growing to tick
+  240, as an intensity: 4, 14, 24, 19, 29, 34, 33, 32, 42, 34 clicks in the
+  ten 24-tick windows over the whole screen (the on-axis mark 4, 10, 10, 9,
+  13, 12, 13, 12, 14, 12), 14, 33, 58, 83 and 109 at the on-axis mark by
+  ticks 48, 96, 144, 192 and 240, against the first record's last click at
+  tick 72. The marks' counters after tick 240: light 15, 25, 38, 109, 38,
+  25, 15, the marks' momentum (218, 0, -27) in all ((92, 0, -9) on the
+  axis), the two sinks' totals light 265 and 0. The ledger after tick 240:
+  light sourced 9560, current 3489, escaped 5806, absorbed by marks 265
+  (on the way, sourced, current, escaped, absorbed by marks: tick 8: 280,
+  264, 16, 0; 16: 600, 528, 70, 2; 32: 1240, 1009, 224, 7; 48: 1880, 1388,
+  474, 18; 96: 3800, 2291, 1448, 61; 192: 7640, 3169, 4282, 189), against
+  the first record's 9560, 3680, 5880 and no sink; electron 32 at every tick
+  with no source, escape, annulment or absorption; momentum (0, 0, 0);
+  charge electron -96, light 0; every line balanced at every tick,
+  `conserved_at_every_completed_tick` true. The group: exactly one, the
+  ring (1, 5, 5), (2, 5, 5), (2, 5, 6), (1, 5, 6), content 32, `{"electron":
+  32}`, period 8, clock 1 on 8 steps, from tick 1 to tick 239 over 1912
+  electron chains, every tick row bound `{"electron": [32]}`, as in the
+  first record. The events: `spatial_cycle` 176018, `spatial_sent` 96225,
+  `spatial_received` 60685, `field_spread` 60065, `spatial_escaped` 5369,
+  `detector_click` 265, `cycle_started` and `cycle_committed` 960 each, no
+  `detector_pass` and no other kind; `ray_layer_families` `[["electron"],
+  ["light"]]`. Outcome: the criterion holds in every clause, (3) now with
+  every mark counting through the run; the finding of the first record is
+  what the decision removed, and the record shows it removed. The isolated
+  test (`tests/test_screen_loop.py`, 32 ticks) was re-pinned from the new
+  engine on 2026-09-18 with its expectations written first ([the screen
+  with a loop](TEST_EXPECTATIONS.md#the-screen-with-a-loop)): the same
+  seven clicks, each absorbed, the light line current 1009 and absorbed 7.
+  The record stays outside the tree, the first record beside it; nothing
+  was tuned after the run.
 
 ### E10. The ring meets its own field: the loop under its own light, contents 32 to 128
 
@@ -2655,6 +2711,347 @@ sign rule, and its other couplings are catalog entries.
   (`tests/test_ring_self_field.py`, the content-32 worlds, 24 ticks) pins
   the pushes, the identity of the records and the group readings
   ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+
+### E11. The field's books: the profile of a point source shell by shell, and the momentum between release and meeting
+
+- **Claim.** The model owner's two questions of 2026-09-18, registered as
+  asked, with tables and no power law assumed. (a) Highlights 3.15 (every
+  declared invariant exact across every interaction and transfer, over all
+  owners, fields, in-flight values and remainders included; a gain needs a
+  loss, a transfer or an explicitly accounted source), 3.5 (the field
+  spreads before it meets anything; a traveling ray pays nothing for its
+  field until the field meets something; the release is booked as a source;
+  the return is the opposite momentum of the field, carried back along the
+  field ray's line to what released it, which recoils when the return
+  arrives at finite speed), 3.14 (the recoil is a ray) and 3.19 (what a
+  body radiates is booked as a source, what it absorbs as a sink, its
+  momentum on its own line): the question is to show, in the books, where
+  the energy and the momentum are between the release and the meeting, not
+  only that the balance closes afterward. (b) Highlights 3.5 (the field of
+  a static charge fills space; its density falls as 1/r and the net
+  momentum its rays carry through a Node, what a met ray feels, as 1/r²,
+  because the same flux crosses every shell) and [POSTULATES](../POSTULATES.md)
+  (the addition of 2026-09-17: the net momentum through a node falling as
+  1/r², Gauss): the question is a point source measured shell by shell,
+  the total content, the content per Node, the radial momentum and the
+  flux, and what actually comes out.
+- **Features.** 7, 7b, 8b (`ray-momentum-turn-v2`), 10, 12, 12b, the dense
+  mode (`dense-field-v1`).
+- **Run.** `examples/nature/e11_field_books/` (written by `make_worlds.py`;
+  the dictionary and the tables in the
+  [README](../examples/nature/README.md#the-fields-books-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting)).
+  (b) `point_source.json`: one external body of family `proton` (amount
+  2^20, charge +3) at (24, 24, 24) of a 49 × 49 × 49 open board, its
+  `light` `field_of` `proton` with `release` [1, 256], 4096 quanta per
+  heading per interval, `spread` [6, 1, 1, 1, 1, 1], the source sign from
+  the body's charge, `dense_field` true, no mark, no second body, no
+  matter ray; the body's table names its own light with +1 (the control of
+  A5s), so its register must stay (0, 0, 0) by symmetry and the ledger
+  shows it; one unseeded lamp binds the momentum field to the light
+  (a5_static's device). `profile.py` runs it in-process and reads, per
+  completed tick, the ledger (sourced, in flight, registers, escaped,
+  absorbed, the momentum line, the body's register) and every L1 shell's
+  total, and at the end, per L1 shell (|dx| + |dy| + |dz| = k) and per
+  Euclidean shell (round(|r|) = k) for k = 1 to 22: the Nodes, the content
+  in flight and in the registers, the content per Node, the radial
+  momentum (Σ amount × (heading · r) as an integer and Σ amount ×
+  (heading · r) / |r| as a real, per shell and per Node), the outward flux
+  through the shell (the content that crossed the surface between k and
+  k + 1 in the last interval: what arrived on shell k + 1 from shell k less
+  what arrived on shell k from shell k + 1, from the arrivals and their
+  headings; about the body, the release less the sink's take), the net
+  momentum at the axis Node and at a diagonal Node of the shell, then the
+  local log-log slopes between consecutive shells of the content per Node,
+  the radial momentum per Node and the flux; and beside every column the
+  mean field of the split table (`a5_static/mean_field_gauss.py`, the
+  expectation of the engine's integers) in the same box at the same tick
+  and at the box's steady state. Ticks: the plan says 600 or until every
+  shell's total stops changing to 1 % over 32 ticks; the dense engine costs
+  1.45 s per tick on this board (12 µs per Node and tick, the whole arrays
+  every tick, measured before the run), so the budget of five minutes per
+  world on the shared machine allows 192 ticks, six windows of 32, and the
+  run is fixed at 192 with the criterion evaluated per shell and reported
+  (a deviation, stated before the run). The reading: at the end of an
+  interval every ray is resident at the Node it reached, so a Node's
+  content in flight is what arrived there in the last interval, per
+  heading, the mean field's f[j] at the same instant; the registers hold
+  the shares below one quantum; the runner's `state.json` holds per Node a
+  family's total and its ray count and not the amount per heading, so the
+  per-Node reading is the inventory view in-process (the region's Nodes
+  read back as Node state, the snapshot's own reading), the per-tick shell
+  totals from the region's arrays, checked against the inventory at the
+  end (a Recorder, Highlights 3.29). (a) `books.json`: a body A of family
+  `proton` (amount 2^20, charge +3) at (10, 10, 10) of a 21 × 21 × 21 open
+  board, its light with `release` [1, 4096], 256 per heading per interval,
+  `spread` declared, `dense_field` true; one free `electron` ray of amount
+  64 (charge −3, rest rate 1, no field of its own: nothing declares
+  `field_of` `electron`) emitted by a lamp at (0, 14, 10) along +X, the
+  line parallel to x at impact parameter b = 4 from A; the coupling
+  `electron_field_turn` in its momentum-table form, `{"light": -1}`,
+  attraction: the electron is pushed toward the source of every light ray
+  it meets and each light ray is returned reversed; A's `momentum_table`
+  `{"light": -1}` books what its sink takes; 2 × 10 + 16 = 36 ticks (ten
+  Links from the entry to the closest approach). `books_axis.json`: the
+  same without `spread` (the engine alone, which the dense mode does not
+  admit without a spreading family): A's field lives on its six axis
+  lines, the electron's line crosses A's +Y line at (10, 14, 10), and the
+  one field ray met there returns whole along that line to A, four Links.
+  The axis world is the picture Highlights 3.5 draws in words; the spread
+  world is the catalog's rule; both are registered. `books.py` runs each
+  in-process and prints per completed tick the light released and the
+  source line, the light in flight and in the registers, the momentum of
+  the light in flight (Σ amount × heading over the light rays, from the
+  inventory; the recoils among them, event-stamped light rays not yet
+  spread, counted apart), the pushes of the tick with the electron's change
+  and the reversal they book, the electron's register and its change from
+  its launch, A's register and its sink's momentum and amount, what
+  escaped, and the identity at every tick.
+- **Computed (from the code and the tables, checked on probes of the two
+  book worlds before the registered runs).** (i) The labels: the engine
+  labels a cycle's events (`ray_push`, `field_spread`) with the tick at the
+  start of their interval and an arrival's, an absorption's or an escape's
+  with the completed tick; the row T of the tables is the state after
+  interval T with that interval's events. (ii) The axis world: the
+  electron is at (t, 14, 10) after tick t; A's +Y ray released in interval
+  t is at (10, 10 + s, 10) after tick t + s − 1; so the ray released at
+  tick 7 and the electron are both resident at (10, 14, 10) after tick 10,
+  the push is in interval 11, the recoil (a fresh event ray of 256 on −Y)
+  walks back four Links and is absorbed by A at the end of interval 14:
+  t0 = 7, t1 = 11, t2 = 14. The push moves the electron by −1 × 256 ×
+  (0, 1, 0), the register (64, 0, 0) → (64, −256, 0), the DDA then taking
+  four −Y Links per +X Link, and the meeting books the push (0, −256, 0)
+  and the reversal −2 × 256 × (0, 1, 0) as its source; the light's momentum
+  in flight, zero by the symmetry of the six lines, becomes (0, −512, 0):
+  the met ray's +256 gone and the recoil's −256; when the recoil reaches A
+  its −256 moves to the `absorbed` line and A's register gains −1 × 256 ×
+  (0, −1, 0) = (0, 256, 0), toward the electron; the +Y ray taken out of
+  the beam leaves its −Y partner unpaired, which escapes at tick 17 as
+  (0, −256, 0) on the `escaped` line: the meeting's −3 × 256 on y is the
+  electron's −256, A's absorbed −256 and the shadow's −256, every one on a
+  ledger line. The turned electron then crosses A's +X line at (11, 10, 10)
+  (a push of (−256, 0, 0) in interval 16, the recoil one Link from A,
+  absorbed the same tick) and its −Y line at (10, 9, 10) (interval 18),
+  walks −X along y = 9 and escapes at x = 0 after tick 27. (iii) The spread
+  world: the electron meets whole quanta off A's axes from L1 distance 7
+  on, the first push in interval 8 at (7, 14, 10) by two rays of amount 1
+  (on −X and +Y, the front's content, released at tick 1 and spread at
+  every Node since: t0 = 1, t1 = 8); at (10, 14, 10) in interval 11 the +Y
+  beam (46 of the 256 → 139 → 75 → 40 chain plus what the registers and
+  the neighbours added) pushes it toward A and its recoil walks −Y one
+  Link, where the electron, now stepping −Y too, meets it again in
+  interval 12 and reverses it a second time; the recoil of the 82 met at
+  (10, 13, 10) in interval 12 is spread at (10, 12, 10) and again at
+  (10, 11, 10), 44 then about 20 forward, and A's register first moves at
+  tick 14, by (0, 20, 0): t2 = 14, a share and not a whole ray. A push's
+  recoil is a fresh outbound event ray (`_recoil` in
+  `fields/ray_interactions.py`, `source_sign` 0), and field spreading's
+  "Consequences" paragraph applies to it: what walks back to the source is
+  the forward share of each spread, the rest spreads sideways and escapes
+  or meets the electron. The pull of 256-per-heading light at b = 4 on a
+  ray of 64 is not a small deflection: the register turns from (64, 0, 0)
+  through (66, −55, 0) at tick 11 to (−126, −128, 0) at tick 17, and the
+  electron swings round A (below) instead of passing it; 36 ticks were planned
+  for a passing electron and are kept. (iv) The profile: Gauss on the
+  lattice is exact for the flux through every closed surface at the steady
+  state (A5s, computed after the run: the outflow through every cube equals
+  S to 10^−7), so at the box's steady state the flux column must be the same
+  number at every k inside the box and the transient's flux must fall with
+  k, the field still filling; the content per Node falls like the lattice
+  Laplacian's Green's function scaled by 3/8 far from the source and like
+  the beam 4096 (6/11)^(k−1) near it; the radial momentum per Node, the
+  net momentum of the arrivals J, is 11/8 of the Link current, so at the
+  steady state it falls as 1/k² where the current does (from k ≈ 21 in
+  free space, A5s) and steeper inside the beam's range; at tick 192 the
+  shells k ≲ 8 are near their steady state (t90 = 44 at r = 8), k = 12 at
+  about 90 % (t90 = 164), k ≥ 16 well below (t90 = 354 at r = 16), and the
+  box's boundary at 24 drains the outer shells, so the engine's columns are
+  compared with the mean field at the same tick in the same box, the
+  prediction, and the steady state of the box is given beside them.
+- **Criterion (written before the run).** (b) No pass or fail clause: the
+  model owner asked for the numbers; the tables are printed with the mean
+  field beside them and the local slopes, and the ledger per tick shows the
+  source's content unchanged while the field's total grows. (a) One
+  clause, pass, all of: at every completed tick of both worlds every ledger
+  line balanced (`ray-event-audit-v1`, re-checked from the integers), the
+  momentum identity with the source line, sourced = light in flight +
+  (the electron's register − its launch) + absorbed + escaped, the light's
+  amount identity, sourced = in flight + registers + absorbed + escaped,
+  and the electron's amount 64 (in the world or escaped); with t0, t1 and
+  t2 marked in the table; and the plain statement of what the books say.
+  The runs are made once; nothing is tuned after them.
+- **Shows.** Run once each on 2026-09-18 (the point source 343 s for 192
+  ticks, the spread book world 9.0 s, the axis book world 0.8 s); every
+  ledger line balanced at every completed tick of all three; the tables in
+  the [README](../examples/nature/README.md#what-the-e11-runs-show), the
+  integers in `record.json`. (b) The profile. The ledger: the body's content
+  2^20 at every tick and its register (0, 0, 0) at every tick; light sourced
+  24576 per tick; at tick 192 sourced 4718592 = in flight 3492438 + registers
+  278058 + escaped 159516 + absorbed 788580; nothing escapes before tick 88,
+  and at tick 192 the escape is 3828 per interval and the sink's take 4288
+  (the mean field's 4291 at the same tick, 4369 at the steady state) against
+  the release of 24576, so the field is still filling the box (at the
+  steady state the escape is the effective source S = 20206.7); the shells
+  steady to 1 % over the last 32 ticks are k = 1 and 2 (0.2 and 0.6 %), k =
+  8 changed by 4.4 %, k = 12 by 6.6 %, k = 16 by 10.1 %, k = 22 by 15.9 %.
+  The engine's shells against the mean field at the same tick in the same
+  box, per Node (L1 shells, in flight plus registers): 5639.0 / 5639.8 at k
+  = 1, 2502.7 / 2504.3 at 2, 1075.8 / 1074.1 at 4, 438.5 / 436.6 at 8,
+  230.5 / 229.9 at 12, 132.3 / 131.4 at 16, 60.9 / 59.3 at 22: the engine's
+  integers are the mean field's expectation to a part in a thousand through
+  k = 16 and to 3 % at k = 22, where the registers hold 5334 of the shell's
+  118068. The box's steady state per Node: 5713.6, 2589.6, 1163.9, 524.2,
+  310.9, 202.9, 113.7 at k = 1, 2, 4, 8, 12, 16, 22. The radial momentum per
+  Node (Σ amount × (heading · r) / |r| over the shell's rays, over 4k² + 2
+  Nodes), engine / mean field steady: 3651.0 / 3636.6, 1107.4 / 1104.3,
+  273.4 / 272.4, 68.2 / 69.5, 30.3 / 31.7, 15.6 / 18.1, 7.3 / 9.7 at k = 1,
+  2, 4, 8, 12, 16, 22; the shell's radial sum is nearly constant, 21906 at
+  k = 1, 17591 at 8, 15999 at 16, 14210 at 22. The flux through the surface
+  between shells k and k + 1 in the last interval, engine / mean field at the
+  same tick: 20286 / 20285 at k = 1, 20166 / 20197 at 4, 19680 / 19783 at
+  8, 19446 / 18867 at 12, 17304 / 17405 at 16, 13788 / 14418 at 22, the
+  release less the sink's take 20286 about the body; the mean field's steady
+  flux is 20206.7 through every one of the 22 shells, L1 and Euclidean
+  alike, to one part in 10^8 (Gauss on the lattice), and the engine's
+  transient flux is within 0.3 % of S through k = 7, 96 % at k = 12, 86 %
+  at k = 16, 68 % at k = 22, the integer crossings of one interval
+  scattering by a few per cent about the mean field's from k ≈ 12 on. The
+  local log-log slopes between consecutive L1 shells, engine / mean field at
+  the tick / mean field steady: the content per Node −1.17 / −1.17 / −1.14
+  at 1–2, −1.21 to −1.27 through 5–6 (steady −1.13 to −1.14), −1.35 at 6–8,
+  −1.51 at 8–10, −1.63 to −1.77 at 10–13, −1.9 to −2.3 at 13–18 and −2.3
+  to −3.1 beyond, the transient's steepening; the steady state's −1.13
+  through k = 6 steepening to −2.06 at 21–22, the wall at 24 draining. The
+  radial momentum per Node −1.72 / −1.72 / −1.72 at 1–2, then −2.01, −2.04,
+  −2.04, −1.99, −1.96, −2.02, −1.89, −2.13, −2.10, −1.86, −2.28, −2.43,
+  −1.87, −2.70, −2.30, −2.44, −2.04, −3.19, −2.08, −2.16 (engine) against
+  the steady state's −2.01, −2.03, −2.00, −1.97, −1.95, −1.94, −1.93,
+  −1.93, −1.94, −1.94, −1.95, −1.95, −1.95, −1.96, −1.96, −1.96, −1.95,
+  −1.95, −1.94, −1.93: 1/k² from k = 2 on, in the transient and at the
+  steady state, with the integer noise growing outward. The flux 0.00 at
+  every shell at the steady state and between 0 and −0.3 in the transient
+  to k = 12, noisier beyond. At a Node the direction decides: the axis Node
+  (k, 0, 0) reads 3651, 2089, 1208, 705, 419, 254, 156, 99, 64, 43, 30,
+  21, 16, 14, 9, 7, 7, 7, 4, 3, 3, 3 for k = 1 to 22, the beam falling by
+  6/11 per Link to k ≈ 9 and then a few whole quanta, and the diagonal Node
+  (⌈k/2⌉, ⌊k/2⌋, 0) 3651, 617, 404, 281, 195, 140, 105, 78, 60, 50, 38,
+  31, 25, 21, 18, 16, 11, 11, 10, 9, 8, 6, smoother and above the axis
+  Node's from k = 10 on. The Euclidean shells (18, 62, 98, 210, 350, 450,
+  602, 762, 1142, 1250, 1458, 1814, 2178, 2498, 2622, 3338, 3722, 4170,
+  4358, 5034, 5714, 5982 Nodes) give the same picture with the shells'
+  irregular counts in the slopes: the radial momentum per Node's steady
+  slope −1.86, −1.49, −1.92, −2.36, −1.80, −1.98, −1.86, −2.09, −2.02,
+  −1.93, −1.99, −1.96, −2.03, −1.92, −2.00, −2.02, −2.04, −1.97, −1.97,
+  −2.05, −1.91, the flux the same S through every shell at the steady
+  state. In one sentence: the flux through every shell is the same number
+  once the field is steady, the radial momentum per Node on a shell falls
+  as 1/k² from k = 2 on because that constant flux is shared by the shell's
+  ≈ 4k² Nodes, the content per Node falls as k^−1.15 near the source and
+  steepens toward the box's wall, and at one Node the number depends on
+  the direction to the source and, far out, on which whole quanta arrived
+  in that interval. (a) The books. Both worlds: every ledger line balanced
+  at every tick; the momentum identity with the source line, sourced =
+  light in flight + (the electron's register − its launch) + absorbed +
+  escaped light, at every tick; the light's amount identity at every tick;
+  the electron's amount 64 at every tick (in the world through tick 27 of
+  the axis world and escaped from tick 28; in the world throughout the
+  spread world); the lamp's register (−64, 0, 0) constant; the inventory's
+  light equal to the ledger's in flight at every tick. The axis world: t0 =
+  7, t1 = 11, t2 = 14 as computed. Ticks 1 to 10: the electron walks
+  (t, 14, 10) with (64, 0, 0), the light 1536 per tick on the six lines, in
+  flight 1536 t, momentum (0, 0, 0). Tick 11 (the push at (10, 14, 10) by
+  the ray of 256 on +Y released at tick 7): the electron (64, −256, 0), the
+  light's momentum in flight (0, −512, 0) with one recoil of 256 among the
+  rays, sourced (0, −768, 0) = the push (0, −256, 0) + the reversal
+  (0, −512, 0). Ticks 12 and 13: the electron steps −Y with the recoil and
+  meets at (10, 13, 10) and (10, 12, 10) both the next beam ray and the
+  recoil walking beside it, two pushes that cancel, the recoil re-reversed
+  and walking out, the beam ray reversed anew. Tick 14: the recoil of the
+  ray met at (10, 12, 10) reaches A: absorbed (0, −256, 0), A's register
+  (0, 256, 0), the light in flight (0, −256, 0). Tick 16: the electron
+  crosses A's +X line at (11, 10, 10), the push (−256, 0, 0), the recoil at
+  A the same tick, A (256, 256, 0); tick 17: the −Y partner of the ray
+  taken at tick 11 escapes unpaired, escaped light (0, −256, 0); tick 18:
+  the −Y line at (10, 9, 10), the push (0, 256, 0), the recoil at A, A
+  (256, 0, 0); the re-reversed recoils and the unpaired partners escape
+  through tick 27; tick 28: the electron escapes at x = 0 with
+  (−192, 0, 0). Over the encounter the electron's change is (−256, 0, 0)
+  and A's register (256, 0, 0), equal and opposite; the source line holds
+  (−768, 0, 0) = the electron's (−256, 0, 0) + absorbed (−256, 0, 0) +
+  escaped light (−256, 0, 0), that is, per meeting −3 × amount × heading:
+  the push, the recoil the sink takes, and the partner ray left unpaired
+  on the opposite line. The spread world: t1 = 8 (two rays of amount 1 at
+  (7, 14, 10)), t0 = 1 (the front), t2 = 14 (A's register (0, 20, 0), the
+  forward share of the recoil of 82 after two spreads); 157 pushes, 2 to 8
+  per tick from tick 8 to 34 and none at 35 and 36; the electron's
+  register (65, −1, 0) at tick 8, (66, −55, 0) at 11, (42, −113, 0) at 14,
+  (−126, −128, 0) at 17, (−160, 48, 0) at 21, (−27, 84, 0) at 36, its path
+  (10, 14) → (10, 13) → (11, 13) → (11, 12) → (11, 11) → (12, 11) →
+  (12, 10) → (12, 9) → (11, 9) → (11, 8) → (10, 8) → (9, 8) → (8, 8) →
+  (8, 9) → (7, 9) → (7, 10) → (6, 10) → (6, 11) → (5, 11) → (5, 12) →
+  (5, 13) → (4, 13) → (4, 14) → (4, 15) → (4, 16) → (3, 16) → (3, 17) in
+  the plane z = 10: not a passing electron but a swing round A, turned by
+  108° and leaving on the far side; the recoils in flight 2 to 8 rays of up
+  to 204 quanta between spreads; A's register (0, 20, 0) at 14, (2, 24, 0)
+  at 16, (70, 24, 0) at 18, (71, 22, 0) at 21, (70, −46, 0) at 22,
+  (47, −45, 0) at 36; the momentum line at tick 36: sourced (−145, 106, 0)
+  = the pushes (−91, 84, 0) + the reversals (−182, 168, 0) + the spreads'
+  bookings (128, −146, 0), and sourced = light in flight (−5, −17, 0) +
+  the electron's change (−91, 84, 0) + absorbed (−47, 45, 0) + escaped
+  light (−2, −6, 0); light sourced 55296 = in flight 33760 + registers
+  12510 + escaped 750 + absorbed 8276. So in the spread world A receives
+  about half of the electron's change and the field keeps the rest: the
+  recoils are spread on their way and mostly walk off their lines. What the
+  books say, for the model owner: the field's energy is created at the
+  release and booked as a source, the emitter's content unchanged (A holds
+  2^20 at every tick of every world and its register moves only by what its
+  sink absorbs); the field's momentum is zero net at the release (six equal
+  headings) and is carried in flight by the rays, amount × heading each,
+  between t0 and t1, where the books list it ray by ray; at t1 the meeting
+  gives the electron −amount × heading and the field ray −2 × amount ×
+  heading, both booked as the meeting's source; the recoil walks back and
+  is absorbed at t2 (whole in the axis world, as a share in the spread
+  world, the rest spread and escaping); everything not met escapes; and the
+  balance closes at every tick with the source line. What is not conserved
+  without that line: the amount, at every release (the emitter pays
+  nothing, 24576 quanta per interval from nothing in (b)), and the momentum,
+  at every meeting (−3 × amount × heading created by the declared table:
+  attraction toward the source of a ray that arrives from the source cannot
+  be paid by that ray) and at every spread (the shares that enter the
+  registers carry none). Highlights 3.15 says exactly this, a gain by "an
+  explicitly accounted source"; Highlights 3.5 says the emitter pays nothing
+  until the meeting and that the recoil is carried back along the field
+  ray's line to what released it: true whole in the axis world (the
+  electron −256, A +256), true in part in the spread world (the recoil is
+  spread from the next Node, the field spreading rule's own "Consequences"
+  paragraph), and the emitter never pays in energy at all, only the sink's
+  momentum booking moves it. Two sharpenings for the documents, no rule
+  changed: a push's recoil carries `source_sign` 0 (`_recoil` builds a
+  fresh ray), where the spreading rule's text says a meeting's output keeps
+  its field's sign; and the recoil and the pushed electron walk the same
+  Link when the push turns the electron along the ray's line, so the recoil
+  is met again one interval later and re-reversed (both worlds).
+  Deviations from the plan, stated before the runs: 192 ticks instead of
+  600 (the cost); the reading in-process instead of from `state.json`; the
+  axis world added beside the spread world; stated after: the electron of
+  the spread world is captured for a swing round A rather than passing, and
+  the first run of the profile was started on a world file still at 600
+  ticks and stopped at tick 208, the worlds regenerated at 192 and the run
+  made again from the start (its integers to tick 192 were the same).
+- **Status.** measured on 2026-09-18, the engine of `main` at
+  `9cc830f5` (no engine change on the branch; the branch's own commit is
+  the pull request's head), source
+  `25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038`;
+  initialization `point_source`
+  `3fed14baaab130c06ce61d24636a2d9bae3a7ddb42e92d28d7a8fd7bd51fd8c9`,
+  `books` `f17911100c20162400ddefac16f770f142815bffd13f4e9cfd238f86566b44a1`,
+  `books_axis`
+  `40f7047ba94f46cf4b588eca52a26922c3bd838593fb85644ad464f0fd285b0d`;
+  192, 36 and 36 ticks; outcome: (b) reported, the numbers above, no clause;
+  (a) pass, the one clause, the identity with the source line at every
+  tick of both worlds and the plain statement; nothing tuned after the
+  runs; `record.json` beside the worlds holds every row; the isolated test
+  `tests/test_field_books.py` pins the worlds and the shell reader on a 9^3
+  point source ([expectations](TEST_EXPECTATIONS.md#the-fields-books)).
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 

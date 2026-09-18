@@ -163,6 +163,9 @@ class SpatialEngine:
         self.escaped_charge = [0] * len(initial.spatial_fields)
         # Content that ended in an external body's sink (external-body-v1).
         self.absorbed = [[0] * field.components for field in initial.fields]
+        # Content a Detector mark absorbed on a click (detector-absorb-v1), with the
+        # momentum field's components when one is bound.
+        self.absorbed_by_marks = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
         if initial.spatial_computation_delay:
             components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
@@ -184,6 +187,7 @@ class SpatialEngine:
                 self.localized,
                 self.annulled,
                 self.absorbed,
+                self.absorbed_by_marks,
             ),
             balance_guard,
             field_guard,
@@ -606,8 +610,8 @@ class SpatialEngine:
         for definition in self.initial.spatial_fields:
             index = definition.field
             expected = tuple(
-                start + source + reaction + transformed - loss - escaped - annulled - absorbed
-                for start, source, reaction, transformed, loss, escaped, annulled, absorbed in zip(
+                start + source + reaction + transformed - loss - escaped - annulled - absorbed - taken
+                for start, source, reaction, transformed, loss, escaped, annulled, absorbed, taken in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
@@ -616,6 +620,7 @@ class SpatialEngine:
                     self.escaped[index],
                     self.annulled[index],
                     self.absorbed[index],
+                    self.absorbed_by_marks[index],
                     strict=True,
                 )
             )
@@ -629,6 +634,7 @@ class SpatialEngine:
                 "escaped": tuple(self.escaped[index]),
                 "annulled": tuple(self.annulled[index]),
                 "absorbed_by_bodies": tuple(self.absorbed[index]),
+                "absorbed_by_marks": tuple(self.absorbed_by_marks[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(
                     {"transformations": tuple(self.transformations[index])}
@@ -675,6 +681,34 @@ class SpatialEngine:
                 ),
             }
         return [found[index] for index in sorted(found)]
+
+    def detector_marks(self) -> list[dict[str, object]]:
+        """Every Detector mark (detector-absorb-v1), in declaration order: its Node,
+        its counter per family (the nonzero entries) and the momentum of what it
+        absorbed; a mark whose Node was never created has absorbed nothing."""
+        result: list[dict[str, object]] = []
+        for declared in self.initial.detectors:
+            node = self.nodes.get(declared.position)
+            mark = declared if node is None or node.detector is None else node.detector
+            counter = {
+                self.initial.fields[definition.field].name: mark.counter[i]
+                for i, definition in enumerate(self.initial.spatial_fields)
+                if i < len(mark.counter) and mark.counter[i]
+            }
+            result.append(
+                {"position": list(mark.position), "momentum": list(mark.momentum), "counter": counter}
+            )
+        return result
+
+    def detector_mark_momentum(self) -> tuple[int, int, int]:
+        """The marks' momentum line of the audit: the exact sum over every mark."""
+        total = [0, 0, 0]
+        for item in self.detector_marks():
+            momentum = item["momentum"]
+            assert isinstance(momentum, list)
+            for axis in range(3):
+                total[axis] = checked_work(total[axis] + momentum[axis])
+        return (total[0], total[1], total[2])
 
     def external_body_momentum(self) -> tuple[int, int, int]:
         """The bodies' momentum line of the audit: the exact sum over every body."""

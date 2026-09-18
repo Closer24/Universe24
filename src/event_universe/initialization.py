@@ -54,6 +54,8 @@ from .core.spatial_state import (
     BODY_SINK,
     CAPTURE_MODES,
     CHARGE_INVARIANT,
+    CLICK_COUPLINGS,
+    CLICK_DEFAULT,
     DECAY_RESIDUES,
     MAX_DETECTORS,
     MAX_EXTERNAL_BODIES,
@@ -908,18 +910,30 @@ def _seeds(
     return tuple(result)
 
 
-def _detectors(value: object) -> tuple[DetectorMark, ...]:
+def _detectors(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+) -> tuple[DetectorMark, ...]:
     """Detector marks: position, setting and seed, all required; there is no default
     rate. `on_bit_1` and `on_bit_0` (detector-bit-property-v1) say what the mark does
     with a ray that already carries that bit: `"pass"` (the default: no draw) or
     `"draw"` (the draw of detector-mark-v1 on that arrival); any other value is
-    rejected."""
+    rejected. `on_click` (detector-absorb-v1) says what the mark does with a ray that
+    draws 1: `"absorb"` or `"pass"` for every ray family, or a mapping of ray family
+    name to one of them, the families not named keeping the catalog default (absorb
+    for a field family, pass for matter); an unknown value or family is rejected."""
+    families = {
+        fields[definition.field].name: index
+        for index, definition in enumerate(spatial)
+        if definition.rays
+    }
     result: list[DetectorMark] = []
     for raw in _array(value, "detectors", MAX_DETECTORS):
         obj = _object(
             raw,
             "detector",
-            {"position", "setting", "seed", "on_bit_1", "on_bit_0"},
+            {"position", "setting", "seed", "on_bit_1", "on_bit_0", "on_click"},
             {"position", "setting", "seed"},
         )
         setting = _array(obj["setting"], "detector.setting", 2, 2)
@@ -929,6 +943,25 @@ def _detectors(value: object) -> tuple[DetectorMark, ...]:
             if coupling not in BIT_COUPLINGS:
                 raise ValueError(f"detector.{key} must be pass or draw")
             couplings.append(BIT_COUPLINGS.index(coupling))
+        on_click: tuple[int, ...] = ()
+        if "on_click" in obj:
+            declared = obj["on_click"]
+            if type(declared) is str and declared in CLICK_COUPLINGS:
+                entries: dict[object, object] = dict.fromkeys(families, declared)
+            elif type(declared) is dict:
+                entries = declared
+            else:
+                raise ValueError(
+                    "detector.on_click must be absorb, pass or a mapping of ray family to absorb or pass"
+                )
+            table = [CLICK_DEFAULT] * len(spatial)
+            for name, coupling in entries.items():
+                if name not in families:
+                    raise ValueError(f"detector.on_click names an unknown ray family: {name}")
+                if coupling not in CLICK_COUPLINGS:
+                    raise ValueError(f"detector.on_click.{name} must be absorb or pass")
+                table[families[str(name)]] = CLICK_COUPLINGS.index(str(coupling))
+            on_click = tuple(table)
         result.append(
             DetectorMark(
                 _address(obj["position"], "detector.position", 0),
@@ -938,6 +971,8 @@ def _detectors(value: object) -> tuple[DetectorMark, ...]:
                 on_bit_1=couplings[0],
                 on_bit_0=couplings[1],
                 bit_keys=int("on_bit_1" in obj or "on_bit_0" in obj),
+                on_click=on_click,
+                click_keys=int("on_click" in obj),
             )
         )
     return tuple(result)
@@ -2492,7 +2527,7 @@ def parse_initial_state(document: object) -> InitialState:
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
-        detectors=_detectors(obj.get("detectors", [])),
+        detectors=_detectors(obj.get("detectors", []), fields, spatial),
         return_mode=_text(obj.get("return_mode", "siblings"), "return_mode"),
         external_bodies=_external_bodies(obj.get("external_bodies", []), fields, spatial, ray_rules),
     )

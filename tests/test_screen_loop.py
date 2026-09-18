@@ -18,6 +18,14 @@ family light, amount 1, bit 1, through Port 1 (the -X face), at ticks 11, 15,
 18, 22, 27, 27 and 31, no click off the axis and no pass; the light line after
 tick 32 sourced 1240, current 1016, escaped 224; 2759 field_spread records;
 the group read from tick 1 to tick 31 over 248 electron chains.
+
+Re-pinned on 2026-09-18 under detector-absorb-v1 (Highlights 5.4, "A click is
+an absorption": a click on a field ray absorbs it into the mark's counter, so
+nothing of it spreads on): the same seven clicks at the same ticks, each
+absorbed, no pass; the light line after tick 32 sourced 1240, current 1009,
+escaped 224, absorbed by marks 7; the on-axis mark's counter light 7 and its
+momentum (7, 0, 0); 2749 field_spread records, none at a mark; the group
+reading unchanged.
 """
 
 import importlib.util
@@ -62,7 +70,9 @@ EVENT_KINDS = {
 }
 # Pinned from the first run of this board (2026-09-17): every click as
 # (tick, node, amount, the Port it arrived through), the light line after the
-# last tick and the counts.
+# last tick and the counts; re-pinned 2026-09-18 under detector-absorb-v1 (the
+# clicks unchanged, the light current 1009 instead of 1016 and the marks' line
+# 7, the spreads 2749 instead of 2759).
 CLICKS: list[tuple[int, tuple[int, int, int], int, int]] = [
     (11, AXIS, 1, 1),
     (15, AXIS, 1, 1),
@@ -72,8 +82,8 @@ CLICKS: list[tuple[int, tuple[int, int, int], int, int]] = [
     (27, AXIS, 1, 1),
     (31, AXIS, 1, 1),
 ]
-LIGHT_LINE = {"sourced": 1240, "current": 1016, "escaped": 224}
-SPREADS = 2759
+LIGHT_LINE = {"sourced": 1240, "current": 1009, "escaped": 224, "absorbed_by_marks": 7}
+SPREADS = 2749
 TO_TICK = TICKS - 1
 
 
@@ -235,7 +245,15 @@ def line(ledger, family, readout="fields"):
     entry = ledger[readout][family]
     return {
         key: components(entry[key])
-        for key in ("initial", "sourced", "current", "escaped", "annulled", "absorbed")
+        for key in (
+            "initial",
+            "sourced",
+            "current",
+            "escaped",
+            "annulled",
+            "absorbed",
+            "absorbed_by_marks",
+        )
     }
 
 
@@ -263,6 +281,8 @@ def test_the_ring_radiates_on_the_screen_and_stays_bound(tmp_path):
     # while it radiates), light sourced 40 per interval from the cycle of tick 1
     # with current + escaped = sourced, momentum (0, 0, 0).
     assert metadata["conserved_at_every_completed_tick"]
+    assert metadata["detector_absorb"] == "detector-absorb-v1"
+    clicked_by = {}
     for ledger in metadata["audit"]:
         tick = ledger["tick"]
         assert ledger["balanced"]
@@ -277,17 +297,41 @@ def test_the_ring_radiates_on_the_screen_and_stays_bound(tmp_path):
             "escaped": [0],
             "annulled": [0],
             "absorbed": [0],
+            "absorbed_by_marks": [0],
         }
         assert line(ledger, "electron", "charge")["current"] == [-3 * CONTENT]
         light = line(ledger, "light")
         assert light["sourced"] == [RELEASE_PER_INTERVAL * max(tick - 1, 0)]
-        assert light["current"][0] + light["escaped"][0] == light["sourced"][0]
+        # The marks' line (detector-absorb-v1): what the screen absorbed so far, the
+        # clicks through this tick, each of amount 1; the marks' momentum is that
+        # count along +X, the axis line's heading.
+        clicked_by[tick] = sum(1 for click_tick, _, _, _ in CLICKS if click_tick <= tick)
+        assert light["absorbed_by_marks"] == [clicked_by[tick]]
+        assert light["current"][0] + light["escaped"][0] + clicked_by[tick] == light["sourced"][0]
         assert light["annulled"] == [0] and light["absorbed"] == [0]
+        assert ledger["marks"]["count"] == len(MARKS)
+        assert ledger["marks"]["momentum"] == [clicked_by[tick], 0, 0]
         momentum = line(ledger, "momentum")
         assert momentum["sourced"] == ZERO and momentum["current"] == ZERO
     assert metadata["final_totals"]["electron"] == [CONTENT]
     assert metadata["final_totals"]["momentum"] == ZERO
     assert metadata["escaped_totals"]["electron"] == [0]
+    # The screen counts (detector-absorb-v1): the on-axis mark's counter is the
+    # number of quanta it absorbed, the other six marks have absorbed nothing.
+    assert metadata["detector_mark_totals"] == {
+        "electron": [0],
+        "light": [len(CLICKS)],
+        "momentum": ZERO,
+    }
+    assert metadata["detector_mark_momentum"] == [len(CLICKS), 0, 0]
+    assert metadata["detector_marks"] == [
+        {
+            "position": list(mark),
+            "momentum": [len(CLICKS), 0, 0] if mark == AXIS else ZERO,
+            "counter": {"light": len(CLICKS)} if mark == AXIS else {},
+        }
+        for mark in MARKS
+    ]
     # The corners book their two quarter turns and their ten releases in every
     # cycle from tick 1; no event of a kind the world has no rule for exists.
     assert {event["event"] for event in events} <= EVENT_KINDS
@@ -309,11 +353,14 @@ def test_the_ring_radiates_on_the_screen_and_stays_bound(tmp_path):
         for event in events
         if event["event"] == "detector_click"
     ]
+    # Every click absorbs its quantum (a field family's default): the click records
+    # the absorbed amount, and no ray carrying a bit exists to pass a later mark.
     assert all(
-        event["family"] == "light" and event["bit"] == 1
+        event["family"] == "light" and event["bit"] == 1 and event["absorbed"] == event["amount"]
         for event in events
         if event["event"] == "detector_click"
     )
+    assert not any(event["event"] == "detector_pass" for event in events)
     assert all(node in MARKS and amount == 1 for _, node, amount, _ in clicks)
     assert clicks and clicks[0][1] == AXIS and clicks[0][0] < 19
     plain = [(tick, node, amount) for tick, node, amount, _ in clicks]
@@ -321,12 +368,18 @@ def test_the_ring_radiates_on_the_screen_and_stays_bound(tmp_path):
         assert (tick, (x, 10 - y, z), amount) in plain
     assert clicks == CLICKS
     last = line(metadata["audit"][-1], "light")
-    assert (last["sourced"], last["current"], last["escaped"]) == (
+    assert (last["sourced"], last["current"], last["escaped"], last["absorbed_by_marks"]) == (
         [LIGHT_LINE["sourced"]],
         [LIGHT_LINE["current"]],
         [LIGHT_LINE["escaped"]],
+        [LIGHT_LINE["absorbed_by_marks"]],
     )
     assert sum(1 for event in events if event["event"] == "field_spread") == SPREADS
+    # Nothing spreads at a mark: what a mark realizes it absorbs, and no other
+    # content reaches the screen within these ticks.
+    assert not any(
+        event["event"] == "field_spread" and tuple(event["position"]) in MARKS for event in events
+    )
     # The reading of the group from the record with its recording: one group on
     # the square, content 32, period 8, clock 1, the light entering none.
     extract = tool("extract")
@@ -351,6 +404,17 @@ def test_the_ring_radiates_on_the_screen_and_stays_bound(tmp_path):
         [{}] + [{"electron": [CONTENT]}] * (TICKS - 1) + [{}]
     )
     assert run["eye"]["clicks"] == [
-        {"tick": tick, "node": list(node), "family": "light", "amount": amount, "bit": 1, "port": port}
+        {
+            "tick": tick,
+            "node": list(node),
+            "family": "light",
+            "amount": amount,
+            "bit": 1,
+            "port": port,
+            "absorbed": amount,
+        }
         for tick, node, amount, port in CLICKS
     ]
+    assert run["eye"]["hits"] == {"7,5,5": len(CLICKS)} and run["eye"]["counts"] == {
+        "7,5,5": len(CLICKS)
+    }

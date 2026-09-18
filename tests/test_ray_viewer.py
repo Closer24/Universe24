@@ -265,11 +265,14 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert meeting["detail"]["coupling"] == ["swap_headings"]
     assert run["couplings"] == ["swap_headings"]
     clicks = [e for e in events if e["kind"] == "click"]
-    assert all(e["label"] == "Detector PASS" and tuple(e["node"]) == (4, 1, 1) for e in clicks)
+    assert all(tuple(e["node"]) == (4, 1, 1) for e in clicks)
     # One G click at tick 3: of the two rays waiting at (2,1,1) during tick 1 only
     # the one heading -X released on +X (five headings, its own line excluded, since
     # loop-binding-v1 removed the six-heading release of a held ray on 2026-09-17),
-    # and the Detector draws once per ray in the packet.
+    # and the Detector draws once per ray in the packet. Since detector-absorb-v1
+    # (2026-09-18) a click on G, the field of quanta, absorbs the quantum: the marker
+    # says so and records the absorbed amount, the G ray ends at the mark; the
+    # quanta click passes as before, without an `absorbed` entry.
     assert sorted((e["tick"], e["detail"]["family"], e["detail"]["amount"]) for e in clicks) == [
         (3, "G", 1),
         (4, "G", 1),
@@ -277,8 +280,24 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
         (6, "G", 1),
     ]
     assert all(e["detail"]["port"] == 1 and e["detail"]["bit"] == 1 for e in clicks)
+    assert [(e["label"], e["detail"].get("absorbed")) for e in clicks] == [
+        ("Detector PASS, absorbed", 1),
+        ("Detector PASS", None),
+        ("Detector PASS, absorbed", 1),
+        ("Detector PASS, absorbed", 1),
+    ]
     quanta_click = next(e for e in clicks if e["detail"]["family"] == "quanta")
     assert quanta_click["in"] == [plus["id"]]
+    for click in clicks:
+        if click["detail"]["family"] == "G":
+            (absorbed_ray,) = click["in"]
+            assert run["rays"][absorbed_ray]["end"] == {
+                "tick": click["tick"],
+                "node": [4, 1, 1],
+                "kind": "absorbed",
+                "event": click["id"],
+            }
+            assert run["rays"][absorbed_ray]["bit"] == 1
     # Each ray carries its Detector bit (detector-bit-property-v1, 2026-09-17): the
     # +X ray realized by the click at (4,1,1), the others none; no pass without a
     # draw in this world, since no ray carrying a bit reaches a second mark.
@@ -294,6 +313,10 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     )
     assert all(c["node"] == [4, 1, 1] and c["bit"] == 1 and c["port"] == 1 for c in run["eye"]["clicks"])
     assert run["eye"]["hits"] == {"4,1,1": len(clicks)}
+    # The mark's count (detector-absorb-v1): the three G quanta it absorbed; the
+    # quanta click passed and counts nothing.
+    assert [c["absorbed"] for c in run["eye"]["clicks"]] == [1, 0, 1, 1]
+    assert run["eye"]["counts"] == {"4,1,1": 3}
     assert [s["type"] for s in run["sources"]] == ["lamp_a", "lamp_b"]
     assert run["external_bodies"] == []
 
@@ -328,15 +351,31 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert run["rays"][held_plus]["amount"] == [1]
     assert [e["in"] for e in clicks if e["tick"] == 3] == [[held_plus]]
     assert not any(e["kind"] in ("split", "crossing", "deflection") for e in events)
+    # Re-pinned 2026-09-18 under detector-absorb-v1 (a click on a field ray absorbs
+    # it): the three G quanta the mark absorbed at ticks 3, 4 and 6 no longer escape
+    # through +X at ticks 4 and 5 nor stay inside at tick 6, so the field escapes are
+    # 4, 5, 9, 8 carrying G 8, 9, 9, 8 (were 4, 6, 10, 8 and 8, 10, 10, 8), escaped
+    # G 34 (was 36), the world holds G 3 at the end (was 4) and the mark's line
+    # holds G 3; the sources are unchanged.
     field_escapes = [e for e in events if e["kind"] == "escape" and e["field"]]
-    assert [sum(1 for e in field_escapes if e["tick"] == t) for t in (3, 4, 5, 6)] == [4, 6, 10, 8]
+    assert [sum(1 for e in field_escapes if e["tick"] == t) for t in (3, 4, 5, 6)] == [4, 5, 9, 8]
     assert [
         sum(e["detail"]["escaped"]["G"][0] for e in field_escapes if e["tick"] == t)
         for t in (3, 4, 5, 6)
-    ] == [8, 10, 10, 8]
+    ] == [8, 9, 9, 8]
     assert run["conservation"]["source_totals"] == {"quanta": [0], "G": [40], "momentum": [0, 0, 0]}
-    assert run["conservation"]["escaped_totals"]["G"] == [36]
-    assert run["conservation"]["final_totals"]["G"] == [4]
+    assert run["conservation"]["escaped_totals"]["G"] == [34]
+    assert run["conservation"]["final_totals"]["G"] == [3]
+    assert run["conservation"]["detector_mark_totals"] == {
+        "quanta": [0],
+        "G": [3],
+        "momentum": [0, 0, 0],
+    }
+    assert run["conservation"]["external_body_totals"] == {
+        "quanta": [0],
+        "G": [0],
+        "momentum": [0, 0, 0],
+    }
     assert run["record"]["released_field"] == "released-field-v1"
 
     # (c) Captions and totals come from the record, tick by tick.
@@ -347,13 +386,20 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert "t1 meeting (2,1,1) swap_headings" in notes[1]
     assert "in quanta 6, p (0, 0, 0)" in notes[1] and "out t2 quanta 6, p (0, 0, 0)" in notes[1]
     assert notes[2].startswith("t1 meeting") and "release" not in notes[2]
-    assert notes[3].count("Detector PASS") == 1 and notes[3].endswith("field escaped: G 8")
-    assert notes[4].count("Detector PASS") == 2 and notes[4].endswith("field escaped: G 10")
-    assert notes[5] == "escaped: quanta 6 | field escaped: G 10"
-    assert notes[6].count("Detector PASS") == 1 and notes[6].endswith("field escaped: G 8")
+    # Since detector-absorb-v1 (2026-09-18) a G click reads "Detector PASS, absorbed"
+    # with the absorbed amount, and the field escapes of ticks 4 and 5 are G 9.
+    assert notes[3].count("Detector PASS, absorbed") == 1 and notes[3].endswith("field escaped: G 8")
+    assert "G 1 through -x, bit 1, absorbed 1" in notes[3]
+    assert notes[4].count("Detector PASS") == 2 and notes[4].count("Detector PASS, absorbed") == 1
+    assert notes[4].endswith("field escaped: G 9")
+    assert notes[5] == "escaped: quanta 6 | field escaped: G 9"
+    assert notes[6].count("Detector PASS, absorbed") == 1 and notes[6].endswith("field escaped: G 8")
     assert not any("release" in note for note in notes)
     assert [row["in_world"]["quanta"] for row in rows] == [[6]] * 5 + [[0], [0]]
-    assert [row["in_world"]["G"] for row in rows] == [[0], [0], [10], [12], [12], [12], [4]]
+    # The in-world figure takes what the mark absorbed off (detector-absorb-v1,
+    # 2026-09-18): G 0, 0, 10, 11, 11, 12, 3 (was 0, 0, 10, 12, 12, 12, 4).
+    assert [row["in_world"]["G"] for row in rows] == [[0], [0], [10], [11], [11], [12], [3]]
+    assert [row["absorbed"]["G"] for row in rows] == [[0], [0], [0], [1], [2], [2], [3]]
     assert [row["escaped"]["quanta"] for row in rows] == [[0]] * 5 + [[6], [6]]
     assert [row["releases"] for row in rows] == [0, 1, 1, 2, 2, 0, 0]
     assert run["conservation"]["status"] == "passed"
@@ -564,3 +610,88 @@ def test_compressed_inline_page_holds_the_same_runs_document():
     page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
     assert 'getAttribute("data-encoding") === "gzip+base64"' in page
     assert 'new DecompressionStream("gzip")' in page
+
+
+def test_viewer_fits_the_events_and_a_run_document_box():
+    """The page's camera fit has the events mode (the Nodes of matter's events, emissions,
+    releases and escapes left out) and honours a run document's own box."""
+    page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
+    assert 'mode === "events"' in page
+    assert 'e.kind === "emission" || e.kind === "release" || e.kind === "escape"' in page
+    assert "if (r.fit && r.fit.lo && r.fit.hi) return pad(r.fit.lo, r.fit.hi);" in page
+    readme = (ROOT / "tools/ray_viewer/README.md").read_text(encoding="utf-8")
+    assert "`events` fits the Nodes of matter's events" in readme
+
+
+def _dark_frame_with_dots(seed):
+    """A dark blue gradient like the scene with its vignette, and twelve saturated dots."""
+    from PIL import Image
+
+    width, height = 200, 120
+    frame = Image.new("RGB", (width, height))
+    pixels = frame.load()
+    for y in range(height):
+        for x in range(width):
+            # The vignette: darker toward the edges; the lattice: grey lines every ten pixels.
+            edge = (
+                ((x - width // 2) ** 2 + (y - height // 2) ** 2)
+                * 60
+                // (width * width // 4 + height * height // 4)
+            )
+            shade = 70 - edge
+            if x % 10 == 0 or y % 10 == 0:
+                shade += 12 + (x * 7 + y * 3) % 20
+            pixels[x, y] = (shade, shade + 4, shade + 14)
+    dots = []
+    colours = [(255, 196, 0), (34, 211, 255), (255, 59, 59)]
+    for k in range(12):
+        x = (17 * k + 13 * seed) % (width - 4)
+        y = (29 * k + 7 * seed) % (height - 4)
+        colour = colours[k % 3]
+        for dx in range(4):
+            for dy in range(5):
+                pixels[x + dx, y + dy] = colour
+                dots.append((x + dx, y + dy, colour))
+    return frame, dots
+
+
+def _saturated(image):
+    data = image.convert("RGB").tobytes()
+    return sum(1 for p in zip(data[0::3], data[1::3], data[2::3], strict=True) if max(p) - min(p) > 60)
+
+
+def test_gif_palette_keeps_the_families_colours():
+    from PIL import Image
+
+    frames = [_dark_frame_with_dots(seed)[0] for seed in range(3)]
+    dots = [_dark_frame_with_dots(seed)[1] for seed in range(3)]
+    for frame, frame_dots in zip(frames, dots, strict=True):
+        assert 0.005 < len(frame_dots) / (frame.width * frame.height) < 0.015
+    # The old palette, a median cut by population, for the record: a third of the dots go grey.
+    montage = Image.new("RGB", (200, 120 * 3))
+    for k, frame in enumerate(frames):
+        montage.paste(frame, (0, 120 * k))
+    old = montage.quantize(colors=64, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    assert _saturated(frames[0]) == 240
+    assert _saturated(frames[0].quantize(palette=old, dither=Image.Dither.NONE)) == 160
+    quantized = RENDER.quantize(frames, 64)
+    assert len(quantized) == 3 and all(q.mode == "P" for q in quantized)
+    palettes = {bytes(q.getpalette()) for q in quantized}
+    assert len(palettes) == 1
+    for frame, frame_dots, q in zip(frames, dots, quantized, strict=True):
+        back = q.convert("RGB")
+        for x, y, colour in frame_dots:
+            got = back.getpixel((x, y))
+            assert max(abs(a - b) for a, b in zip(got, colour, strict=True)) <= 24, (x, y, got, colour)
+        want = _saturated(frame)
+        assert abs(_saturated(back) - want) <= 0.05 * want
+        dot_at = {(x, y) for x, y, _ in frame_dots}
+        worst = 0
+        source = frame.load()
+        for y in range(0, frame.height, 3):
+            for x in range(0, frame.width, 3):
+                if (x, y) in dot_at:
+                    continue
+                got, orig = back.getpixel((x, y)), source[x, y]
+                worst = max(worst, max(abs(a - b) for a, b in zip(got, orig, strict=True)))
+        assert worst <= 24
