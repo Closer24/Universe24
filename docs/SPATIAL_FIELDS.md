@@ -2920,6 +2920,62 @@ Identity `shadow-wait-v1`, recorded in `run.json` as `shadow_wait` when
 declared; isolated test `tests/test_shadow_wait.py`
 ([expectations](TEST_EXPECTATIONS.md#the-shadows-wait)).
 
+### The wait reads the amplitude (a declared option, `wait-reads-v1`)
+
+The option ([Highlights](HIGHLIGHTS.md) 5.4, "The wait reads the amplitude,
+a coupling to derive", the model owner, 2026-09-18; derivations round 5,
+sections 34 to 38; feature 16f): under the mixed field a thing reads the
+field's flux, 1 / r^2, while the field's amplitude, the size of the coherent
+sum the Node already forms for the mixing, 1 / r, is read by nothing; the
+model owner's direction is that what a thing reads is a coupling (point 16)
+and the coupling names which face of the field each reading takes: the push
+reads the amount (the count of quanta, the intensity), the wait reads the
+size of the coherent sum at the thing's Node (the amplitude, the potential),
+each multiplied by the content as point 16 says. Derived first (round 6) and
+implemented as a declared option so that every record without it stays byte
+for byte: a world MAY declare
+
+    "wait_reads": "amount" | "amplitude"
+
+`amount` by default, point 23 as written (the whole quanta of push read; a
+world that writes the default is the world that never had the key, and its
+record the same). `amplitude`, on every ray family of the world
+(`SpatialFieldDefinition.wait_reads`; `run.json` names `wait_reads`
+"wait-reads-v1" and `wait_reads_option` only then):
+
+- **The amplitude.** At a thing's Node, once per group of the shadows that
+  arrived this interval (the mixing's group: owner, sign, polarization,
+  flow), the size of their coherent sum as the mixing forms it
+  (`arrival_amplitude`): per travel heading the amount that arrived at the
+  phase of its sum, its amplitude the integer square root of the amount in
+  units of 1 / 32 (`MIXING_AMPLITUDE_SCALE`: 32 is the amplitude of one
+  quantum, 288 of 81 quanta, 96 of 9), the six summed on the family's phase
+  circle, and the size of the sum in the same units (the integer square root
+  of x^2 + y^2 over the tables' scale, the floor at each step); its whole
+  units of amplitude are the sum over 32, the floor. Two owners' shares are
+  two sums, never one; one owner's shares from two Ports half a turn apart
+  give the size of their difference (81 and 9 in antiphase: 288 - 96 = 192,
+  six units, where their amounts are 90).
+- **The wait.** The units are read as the push reads the amount, by the
+  rule's reading (point 16: times the thing's content, or the owner's charge
+  over its content times the thing's charge, `push_of` on the units in place
+  of the amount, whole quanta), and the whole quanta so read are what the
+  thing owes at w per quantum (`pushed_ray` with the group's quanta on the
+  first shadow of the group, nothing on the rest); the push itself reads the
+  amount as before, so the momentum a thing takes is unchanged by the option
+  and only its wait differs (81 quanta of one owner in phase at a thing of
+  content 1, w 1: 81 intervals under `amount`, 9 under `amplitude`; 9 quanta,
+  3). Per rule, as point 18 reads the same shadows twice.
+- **The dense layer.** The thing's Node is the engine's, and the shares the
+  region hands it carry their amount and phase per Port as the engine's rays
+  do, so the amplitude the engine forms there is the region's; nothing of the
+  region changes and the identity of the modes is `tests/test_wait_reads.py`
+  (d). The catalog's coupling rows carry no `reads` column of their own (the
+  point-16 reading is a rule's `reads` key), so the option is the world's.
+
+Identity `wait-reads-v1`; isolated test `tests/test_wait_reads.py`
+([expectations](TEST_EXPECTATIONS.md#the-wait-reads-the-amplitude)).
+
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 Restated on 2026-09-18 under `clock-readings-v1` (above): the momentum a

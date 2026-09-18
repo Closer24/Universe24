@@ -24,6 +24,7 @@ from .core.disturbance_state import (
     MAX_VALUE,
     OPERATIONS,
     SHADOW_WAIT_READS,
+    WAIT_READINGS,
     Address3,
     Assignment,
     CouplingDefinition,
@@ -1326,6 +1327,7 @@ def _spatial_fields(
     phase_steps_of_world: int = DEFAULT_PHASE_STEPS,
     shadow_wait: tuple[int, int] | None = None,
     shadow_reads: str = "",
+    wait_reads: str = "amount",
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
     names = _names(fields)
@@ -1568,6 +1570,7 @@ def _spatial_fields(
                 shadow_wait_numerator=0 if shadow_wait is None else shadow_wait[0],
                 shadow_wait_denominator=1 if shadow_wait is None else shadow_wait[1],
                 shadow_wait_reads=shadow_reads,
+                wait_reads=wait_reads,
             )
         )
     resolved = tuple(result)
@@ -2699,6 +2702,7 @@ def parse_initial_state(document: object) -> InitialState:
             "N",
             "wait_per_quantum",
             "shadow_wait",
+            "wait_reads",
             "detectors",
             "external_bodies",
             "initial_field",
@@ -2793,6 +2797,11 @@ def parse_initial_state(document: object) -> InitialState:
         shadow_reads = _text(option["reads"], "shadow_wait reads")
         if shadow_reads not in SHADOW_WAIT_READS:
             raise ValueError("shadow_wait reads thing or field (shadow-wait-v1)")
+    # The wait reads the amount or the amplitude (wait-reads-v1; Highlights 5.4,
+    # the model owner's paragraph of 2026-09-18): "amount" by default.
+    wait_reads = _text(obj.get("wait_reads", "amount"), "wait_reads")
+    if wait_reads not in WAIT_READINGS:
+        raise ValueError("wait_reads is amount or amplitude (wait-reads-v1)")
     spatial = _spatial_fields(
         obj.get("spatial_fields", []),
         fields,
@@ -2802,6 +2811,7 @@ def parse_initial_state(document: object) -> InitialState:
         phase_steps,
         shadow_wait,
         shadow_reads,
+        wait_reads,
     )
     if "computation_field" in obj and any(definition.rays for definition in spatial):
         raise ValueError(
@@ -2868,6 +2878,7 @@ def parse_initial_state(document: object) -> InitialState:
         wait_per_quantum=wait,
         shadow_wait=shadow_wait,
         shadow_wait_reads=shadow_reads,
+        wait_reads=wait_reads,
         focus=_boolean(obj.get("focus", True), "focus"),
         dense_field=_boolean(obj.get("dense_field", False), "dense_field"),
         standing_field=_standing_field(
