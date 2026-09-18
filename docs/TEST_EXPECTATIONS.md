@@ -59,6 +59,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_node_rule_contract.py` | 37 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, aggregation policies |
 | `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
+| `test_phase_spread.py` | 11 | (first run) | Feature 16a, the phase-steered spread (`phase-spread-v1`, Highlights 5.4 point 17, the model owner's decision of 2026-09-18): the shares of one owner that meet at a Node steer each other by the Born table, each continuing on its heading by its phase difference to the others and sending the rest apart; a lone share keeps the split table; different owners and differing polarizations are lone to each other; the table written from the phase width, never declared; the dense layer agrees, pinned below |
 | `test_plan_reuse.py` | 10 | 0.37 | Exact transition plan reuse: every argument of a law is its key, the world tick is not (a Node in a steady field reuses its plan across ticks, a lamp whose stock counts down does not), and a plan is validated once, when it is made, a hit being served without a second check, pinned below |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
@@ -1228,6 +1229,106 @@ computed from the rules:
   the words "bit-law-v1"; two types with one `thing` id are rejected; a
   spatial field lists its owners after parsing, [1, 2, 3] in world (a).
 
+## The phase-steered spread
+
+`tests/test_phase_spread.py` is the isolated test of `phase-spread-v1`
+([the phase-steered spread](SPATIAL_FIELDS.md#the-phase-steered-spread-phase-spread-v1);
+Highlights 5.4 point 17, the model owner's decision of 2026-09-18, with the
+polarization amendment of that day; feature 16a), pinned here on 2026-09-18
+before its first run, as Highlights 5.5 requires.
+
+The board of every world: open 11 x 5 x 5, `link_ticks` 1, costs 1, one ray
+family `m` (the six unit-axial headings, `metric: "links"`, pace 1/1, 8 ray
+slots, charge -1, `release` [1, 1], `spread` [6, 1, 1, 1, 1, 1], `phase_bits`
+3 so the steering table is the catalog's reference [8, 7, 4, 1, 0, 1, 4, 7])
+and one never-seeded holder type (thing 1; a second, thing 2, in world (e));
+the table is the family's, written from its width, never declared;
+the shadows are given with the board (`initial_field.m.rays`) at (5,2,2),
+content that arrived and spreads there in the cycle of tick 0. The rule
+(the four declarations, D1 to D4 of DERIVATIONS.md section 17): the shares of
+one owner, sign and polarization at a Node are one group; a group of one is
+a lone share and keeps the split table; in a group of two or more, each share
+reads its phase difference to the step nearest the coherent sum of the
+others (a cancelled or tied sum reads as step 0), continues on its own
+heading with the whole quanta of amount x table[difference] / 8, and sends
+the rest apart through its four transverse headings, rest // 4 each and the
+remaining rest mod 4 quanta one to each of the first of them in Port order;
+every departure of the group carries the phase of the group's coherent sum;
+nothing of a steered share enters the registers. Written before the first
+run, all of it computed from the rule:
+
+- (a) a pair in phase: 23 on +X and 23 on -X, both phase 0. Each reads the
+  other at difference 0, table 8: both continue whole. After tick 1 (6,2,2)
+  holds 23 on +X and (4,2,2) 23 on -X, nothing else on the board. Each is
+  lone at its Node and splits by the table in the cycle of tick 1: after
+  tick 2 (7,2,2) holds 12 on +X, (3,2,2) 12 on -X, (5,2,2) 2 on -X and 2 on
+  +X (the two backward shares, meeting again), and 2 on each of the four
+  transverse Nodes of (6,2,2) and of (4,2,2), eleven Nodes; the registers at
+  (6,2,2) read (6, 1, 1, 1, 1, 1) and at (4,2,2) (1, 6, 1, 1, 1, 1). In the
+  cycle of tick 2 the pair at (5,2,2), in phase, continues again, and the
+  12s split: after tick 3 (8,2,2) holds 6 on +X, (2,2,2) 6 on -X, (6,2,2)
+  2 on +X and 1 on -X (the 12's backward share), (4,2,2) 1 on +X and 2 on
+  -X, (7,3,2) 1 on +Y and (6,4,2) 1 on +Y (the transverse 2's forward
+  share); the registers at (7,2,2) (6, 1, 1, 1, 1, 1), at (3,2,2)
+  (1, 6, 1, 1, 1, 1), at (6,3,2) (2, 2, 1, 2, 2, 2), at (4,1,2)
+  (2, 2, 2, 1, 2, 2), twelve blocks in all and none at (5,2,2);
+  `shadows_content` 46 after every tick, every line balanced, no event
+  beyond the cycle's own (a Node holding shadows alone publishes nothing).
+- (b) a pair in opposite phase: 23 on +X at phase 0 and 23 on -X at phase
+  4. Each reads difference 4, table 0: nothing continues; each sends 23
+  apart through +Y, -Y, +Z, -Z, 5 each and the remaining 3 one to each of
+  +Y, -Y, +Z: after tick 1 (5,3,2) holds 12 on +Y, (5,1,2) 12 on -Y,
+  (5,2,3) 12 on +Z and (5,2,1) 10 on -Z, at phase 0 (the cancelled sum),
+  nothing on the axis, no register; `shadows_content` 46.
+- (c) unequal shares: 24 on +X at phase 0 and 8 on -X at phase 2. The 24
+  reads the 8 at difference 6, table 4: 12 continue on +X, 12 apart, 3 per
+  transverse heading; the 8 reads the 24 at difference 2, table 4: 4
+  continue on -X, 4 apart, 1 per transverse heading; the group's phase, that
+  of 24 at 0 with 8 at 2, is 0. After tick 1 (6,2,2) holds 12 on +X, (4,2,2)
+  4 on -X and each transverse Node 4; `shadows_content` 32, no register.
+- (d) three shares: 8 on +X at phase 0, 8 on +Y at phase 0, 8 on +Z at phase
+  4. The +X share reads the other two, whose sum cancels, as step 0:
+  difference 0, it continues whole; the +Y share likewise; the +Z share reads
+  the other two, 16 at phase 0, at difference 4, table 0: 8 apart, 2 on each
+  of +X, -X, +Y, -Y. After tick 1 (6,2,2) holds 10 on +X, (5,3,2) 10 on +Y,
+  (4,2,2) 2 on -X, (5,1,2) 2 on -Y, nothing on Z; `shadows_content` 24.
+- (e) two owners: 23 on +X at phase 0 of thing 1 and 23 on -X at phase 4 of
+  thing 2. Each is lone: the split table, 12 forward, 2 back, 2 per
+  transverse heading, each at its own phase (0 and 4) and into its own
+  register block, (6, 1, 1, 1, 1, 1) at phase 0 for thing 1 and
+  (1, 6, 1, 1, 1, 1) at phase 4 for thing 2; after tick 1 (6,2,2) holds 12
+  on +X of thing 1 at phase 0 and 2 on +X of thing 2 at phase 4, (4,2,2)
+  2 and 12 the other way, each transverse Node 2 and 2; `shadows_content`
+  46.
+- (f) polarization (`polarization_bits` 2): the pair of (b) with
+  polarizations 0 and 2, orthogonal: lone to each other, each splits by the
+  table at its own phase and polarization, both into thing 1's one register
+  block, (7, 7, 2, 2, 2, 2) with phases (0, 4, 0, 0, 0, 0) (the shares
+  combine in each register by the coherence rule, the transverse ones
+  cancelling to step 0); after tick 1 (6,2,2) holds 12 on +X at phase 0,
+  polarization 0, and 2 on +X at phase 4, polarization 2, (4,2,2) the
+  reverse, each transverse Node 2 and 2. The same pair with polarization 0
+  on both steers as in (b), 12, 12, 12, 10 apart with polarization 0.
+- (g) the table (the model owner, 2026-09-18: computed once from the family's
+  phase width, never declared): `steering_table` writes [8, 7, 4, 1, 0, 1, 4,
+  7] at eight steps, (1,) at one, (4, 2, 0, 2) at four and (16, 15, 14, 11,
+  8, ...) at sixteen; a spreading family of `phase_bits` 3 carries the
+  eight-step table and one of `phase_bits` 0 the table (1,); a `steering` key
+  on a family, and a `table` on a split by the phase difference, are refused
+  naming the decision, and a split without one carries the family's table.
+  The runner records `phase_spread` "phase-spread-v1" and the table under
+  `shadow_families`, and world (a) for two ticks writes no event beyond the
+  cycle's own.
+- (h) the dense layer: worlds (a) to (d) for four ticks under the engine
+  alone and under the dense mode (the default, admitted) give the same board,
+  ledger, content and registers at every tick.
+
+Known and noted, not fixed here (the model owner decides): with this rule a
+release of one phase keeps four fifths of its content on lines parallel to
+the axes in the coordinate planes through its source (the tube theorem of
+DERIVATIONS.md section 17), as world (a)'s axis shows: the tip on +X holds
+23, 12, 6, 3, 1 after ticks 1 to 5.
+
 ## A click is an absorption
 
 Re-pinned on 2026-09-18 under `bit-law-v1`: the field family `G` and its release per tick went with the law; absorb is the default for every family, the thing of the lamp is caught by C at tick 4 with its momentum (or passed under `on_click: "pass"`), a click names the owner (`tests/test_detector_absorb.py`, three tests).
@@ -1750,6 +1851,8 @@ A world without `external_bodies` is unchanged: no body Node exists, no
 token is added, no source is booked and the sink line is zero.
 
 ## Field spreading
+
+Re-pinned on 2026-09-18 under `phase-spread-v1` (Highlights 5.4 point 17): two shares of one owner meeting at a Node steer each other by the Born table instead of spreading by the split table, so `superposition` (a difference of two steps) reads 11 forward each way and 6 on each transverse heading at phase 7, and `cancelled` reads 12, 12, 12, 10 apart at phase 0, nothing in the registers (`tests/test_field_spreading.py`).
 
 Re-pinned on 2026-09-18 under `bit-law-v1`: what spreads is a shadow given with the board (`initial_field.light.rays`, steps 1), so every board reads one tick sooner than the lamp world's; no momentum field, no `field_spread` records (a Node holding shadows alone publishes nothing); the `stream` is the same arithmetic through `spread_content`; `returned`, `source`, `resident` and `unchanged` went with the law (`tests/test_field_spreading.py`, six cases).
 

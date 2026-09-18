@@ -273,6 +273,9 @@ SPREAD_BACKWARD = 1
 # weights sum to S, a Node's registers of one family hold whole quanta in
 # total, and the ledger counts them as content.
 FIELD_REMAINDER = "field-remainder-v1"
+# The phase-steered spread (Highlights 5.4, point 17; the model owner, 2026-09-18):
+# the shares of one owner that meet at a Node steer each other by the Born table.
+PHASE_SPREAD = "phase-spread-v1"
 REMAINDER_SIGNS = (-1, 0, 1)
 REMAINDER_SLOTS = 18
 # The dense mode for boards that a field fills (dense-field-v1; performance,
@@ -1031,6 +1034,7 @@ def shadow_family_names(initial: InitialState) -> list[dict[str, object]]:
             "field": initial.fields[definition.field].name,
             "release": [definition.release_numerator, definition.release_denominator],
             "spread": list(definition.spread) if definition.spread else None,
+            "steering": list(definition.steering) if definition.spread else None,
             "owners": list(definition.owners),
         }
         for definition in initial.spatial_fields
@@ -1110,6 +1114,46 @@ def validate_spread_table(table: tuple[int, ...]) -> int:
     if len(set(table[2:])) != 1:
         raise ValueError("a spread table gives the four transverse headings one weight")
     return bounded(sum(table))
+
+
+def steering_table(modulus: int) -> tuple[int, ...]:
+    """The steering table of a phase width (phase-spread-v1; Highlights 5.4, point
+    17: computed once from the width, never declared): the share that continues
+    at a difference of d steps is cos^2(pi d / N) in N-ths, rounded to the
+    nearest whole, N the modulus, in the fixed-point integer arithmetic of the
+    phase tables (N (1 + cos) / 2 with cos at nine decimals); the reference
+    table [8, 7, 4, 1, 0, 1, 4, 7] at eight steps, (1,) for a family without a
+    phase width (every share in phase)."""
+    if type(modulus) is not int or not 1 <= modulus <= MAX_PHASE_STEPS:
+        raise ValueError("a steering table is written for a phase width of at most 4096 steps")
+    entries = []
+    for difference in range(modulus):
+        reduced = min(difference, modulus - difference)
+        angle = checked_work(2 * _PI_FIXED * reduced) // modulus
+        flip = 4 * reduced > modulus
+        cosine = _fixed_cosine(_PI_FIXED - angle if flip else angle)
+        if flip:
+            cosine = -cosine
+        entries.append((checked_work(modulus * (_FIXED + cosine)) + _FIXED) // (2 * _FIXED))
+    return tuple(entries)
+
+
+def validate_steering_table(table: tuple[int, ...], modulus: int) -> None:
+    """A steering table (phase-spread-v1): one entry per phase step, each from 0
+    through the modulus (the share that continues, in N-ths), the entry at 0 the
+    whole (shares in phase continue forward)."""
+    if (
+        type(table) is not tuple
+        or len(table) != modulus
+        or any(type(weight) is not int or not 0 <= weight <= modulus for weight in table)
+    ):
+        raise ValueError(
+            "a steering table holds one entry per phase step, each from 0 through the modulus"
+        )
+    if table[0] != modulus:
+        raise ValueError(
+            "a steering table sends shares in phase forward whole: its entry at 0 is the modulus"
+        )
 
 
 def validate_spread_fields(
@@ -1371,25 +1415,35 @@ def spread_content(
     register_phases: tuple[int, ...] = (),
 ) -> tuple[Rays, FieldSpread, tuple[int, ...], tuple[int, ...]]:
     """The spread of one family's shadows at a Node (field-spreading-v1,
-    field-remainder-v1, bit-law-v1): the departures, one fresh shadow per owner,
-    Port, source sign and phase with content, the record, and the Node's
-    registers and their phases after the step. The rays are the outbound shadows
-    that arrived (at least one Link walked); a thing moves whole and is never
-    here. Amounts add per owner, arriving heading and source sign; the phase of
-    the whole is the phase of the coherent sum over every shadow at the Node,
-    whatever its owner (shadow meets shadow: the phase sum, point 5 of the law),
-    and every departure of this spread carries it. Each owner's content on each
-    heading is shared over the six relative headings: the whole quanta of
-    content x weight / total leave, and the share below one quantum, content x
-    weight mod total in units of 1/total, is added to the owner's register of
-    that sign and Port (eighteen registers per owner, owner-major by the owner's
-    rank among the family's declared owners), the register's phase combined with
-    the share's by the coherence rule; a register that reaches the total releases
-    the whole quanta it holds through its Port, with its phase, and keeps the
-    rest. Each departure carries the Port's heading, accumulators (0, 0, 0), its
-    phase, no rate, wait, delay or lag, steps 0, outbound 1, no event, its sign
-    and its owner. The total is exact: what arrived equals what leaves plus the
-    whole quanta the registers gained."""
+    field-remainder-v1, bit-law-v1, phase-spread-v1): the departures, one fresh
+    shadow per owner, Port, source sign, phase and polarization with content,
+    the record, and the Node's registers and their phases after the step. The
+    rays are the outbound shadows that arrived (at least one Link walked); a
+    thing moves whole and is never here. The shares of one owner (one owner,
+    source sign and polarization; shadows of different owners or of differing
+    polarization do not combine) combine by the coherence rule: their amount
+    unchanged, their phase the step nearest their coherent sum, which every
+    departure of theirs carries. A lone share, one that meets no other share of
+    its owner, spreads by the fixed split table (Highlights 3.5): the whole
+    quanta of content x weight / total leave on the six relative headings, and
+    the share below one quantum, content x weight mod total in units of
+    1/total, is added to the owner's register of that sign and Port (eighteen
+    registers per owner, owner-major by the owner's rank among the family's
+    declared owners), the register's phase combined with the share's by the
+    coherence rule; a register that reaches the total releases the whole quanta
+    it holds through its Port, with its phase, and keeps the rest. Shares that
+    meet steer (Highlights 5.4, point 17): each reads its phase difference to
+    the coherent sum of the others of its owner (a cancelled or tied sum reads
+    as step 0, as `phase_of_sum` does), continues on its own heading with the
+    whole quanta of content x steering[difference] / modulus, and sends the
+    rest apart through the four headings transverse to its own, rest // 4 each
+    and the remaining rest mod 4 quanta one to each of the first of them in
+    Port order; nothing of a steered share enters the registers. Each departure
+    carries the Port's heading, accumulators (0, 0, 0), its group's phase, no
+    rate, wait, delay or lag, steps 0, outbound 1, no event, its sign, its
+    owner and its group's polarization (a register's release the Node's
+    combined polarization). The total is exact: what arrived equals what leaves
+    plus the whole quanta the registers gained."""
     table = definition.spread
     total = validate_spread_table(table)
     size = remainder_block_size(definition)
@@ -1399,7 +1453,7 @@ def spread_content(
         raise ValueError("a remainder block holds eighteen registers and eighteen phases per owner")
     before = sum(held)
     arrived = [0] * 6
-    by_sign: dict[tuple[int, int, int], int] = {}
+    groups: dict[tuple[int, int, int], list[tuple[int, int, int]]] = {}
     for ray in rays:
         if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
             raise ValueError("a spread takes the outbound content that arrived at the Node")
@@ -1410,14 +1464,17 @@ def spread_content(
             raise ValueError("a spread requires content on a Port heading")
         port = PORT_HEADINGS.index(heading)
         arrived[port] = checked_work(arrived[port] + ray.amount)
-        key = (ray.owner, port, ray.source_sign)
-        by_sign[key] = checked_work(by_sign.get(key, 0) + ray.amount)
+        groups.setdefault((ray.owner, ray.source_sign, ray.polarization), []).append(
+            (port, ray.amount, ray.phase)
+        )
     phase = spread_phase(rays, definition)
     tables = spread_tables(definition)
+    modulus = definition.phase_modulus
+    mask = phase_mask(modulus)
     amounts, released = [0] * 6, [0] * 6
-    departing: dict[tuple[int, int, int, int], int] = {}
+    departing: dict[tuple[int, int, int, int, int], int] = {}
     ranks: dict[int, int] = {}
-    for (owner, port, sign), content in sorted(by_sign.items()):
+    for (owner, sign, polarization), shares in sorted(groups.items()):
         if owner not in ranks:
             if definition.owners:
                 if owner not in definition.owners:
@@ -1430,27 +1487,52 @@ def spread_content(
             else:
                 raise ValueError("a shadow's owner is one of its family's declared owners (bit-law-v1)")
         rank = ranks[owner]
-        for weight, target in zip(table, relative_ports(port), strict=True):
-            whole, fraction = divmod(checked_work(content * weight), total)
-            if whole:
-                amounts[target] = checked_work(amounts[target] + whole)
-                sent = (owner, target, sign, phase)
-                departing[sent] = checked_work(departing.get(sent, 0) + whole)
-            if fraction:
-                slot = remainder_slot(sign, target, rank)
-                if tables is None:
-                    held_phases[slot] = 0
-                elif held[slot]:
-                    held_phases[slot] = _phase_of_sum(
-                        ((held[slot], held_phases[slot]), (fraction, phase)),
-                        tables[0],
-                        tables[1],
-                        definition.phase_modulus,
-                    )
-                else:
-                    held_phases[slot] = phase
-                held[slot] = checked_work(held[slot] + fraction)
+        terms = tuple((amount, share_phase) for _, amount, share_phase in shares)
+        group_phase = 0 if tables is None else _phase_of_sum(terms, tables[0], tables[1], modulus)
+        if len(shares) == 1:
+            # A lone share: the fixed split, its fractions into the registers.
+            ((port, content, _),) = shares
+            for weight, target in zip(table, relative_ports(port), strict=True):
+                whole, fraction = divmod(checked_work(content * weight), total)
+                if whole:
+                    amounts[target] = checked_work(amounts[target] + whole)
+                    sent = (owner, target, sign, group_phase, polarization)
+                    departing[sent] = checked_work(departing.get(sent, 0) + whole)
+                if fraction:
+                    slot = remainder_slot(sign, target, rank)
+                    if tables is None:
+                        held_phases[slot] = 0
+                    elif held[slot]:
+                        held_phases[slot] = _phase_of_sum(
+                            ((held[slot], held_phases[slot]), (fraction, group_phase)),
+                            tables[0],
+                            tables[1],
+                            modulus,
+                        )
+                    else:
+                        held_phases[slot] = group_phase
+                    held[slot] = checked_work(held[slot] + fraction)
+            continue
+        # Shares that meet (phase-spread-v1): each continues by the steering table
+        # at its phase difference to the others, and sends the rest apart.
+        for position, (port, content, share_phase) in enumerate(shares):
+            others = terms[:position] + terms[position + 1 :]
+            others_phase = 0 if tables is None else _phase_of_sum(others, tables[0], tables[1], modulus)
+            weight = definition.steering[(share_phase - others_phase) & mask]
+            forward = checked_work(content * weight) // modulus
+            if forward:
+                amounts[port] = checked_work(amounts[port] + forward)
+                sent = (owner, port, sign, group_phase, polarization)
+                departing[sent] = checked_work(departing.get(sent, 0) + forward)
+            each, extra = divmod(content - forward, 4)
+            for offset, target in enumerate(relative_ports(port)[2:]):
+                share = each + (1 if offset < extra else 0)
+                if share:
+                    amounts[target] = checked_work(amounts[target] + share)
+                    sent = (owner, target, sign, group_phase, polarization)
+                    departing[sent] = checked_work(departing.get(sent, 0) + share)
     owner_of_rank = definition.owners or (0,)
+    release_polarization = spread_polarization(rays, definition)
     for rank in range(size // REMAINDER_SLOTS):
         for sign in REMAINDER_SIGNS:
             for target in range(6):
@@ -1461,14 +1543,10 @@ def spread_content(
                 held[slot] = rest
                 amounts[target] = checked_work(amounts[target] + whole)
                 released[target] = checked_work(released[target] + whole)
-                sent = (owner_of_rank[rank], target, sign, held_phases[slot])
+                sent = (owner_of_rank[rank], target, sign, held_phases[slot], release_polarization)
                 departing[sent] = checked_work(departing.get(sent, 0) + whole)
                 if not rest:
                     held_phases[slot] = 0
-    # ray-polarization-v1: the polarization of the whole is one polarization, the
-    # axial mean of the taken content, carried by every departure of this spread,
-    # the registers' releases included (a register stores no polarization).
-    polarization = spread_polarization(rays, definition)
     departures = tuple(
         Ray(
             definition.headings.index(PORT_HEADINGS[port]),
@@ -1477,10 +1555,12 @@ def spread_content(
             phase=departure_phase,
             detector=BIT_SHADOW,
             source_sign=sign,
-            polarization=polarization,
+            polarization=departure_polarization,
             owner=owner,
         )
-        for (owner, port, sign, departure_phase), amount in sorted(departing.items())
+        for (owner, port, sign, departure_phase, departure_polarization), amount in sorted(
+            departing.items()
+        )
         if amount
     )
     stored, fraction = divmod(sum(held) - before, total)
@@ -1576,6 +1656,12 @@ class SpatialFieldDefinition:
     # order relative to the arriving heading; empty for a family that does not
     # spread, the behaviour of every existing world.
     spread: tuple[int, ...] = ()
+    # The steering table of the family (phase-spread-v1; Highlights 5.4, point
+    # 17): one entry per phase step, the share that continues at that phase
+    # difference in units of the modulus, computed once from the family's phase
+    # width by `steering_table`, never declared; the one table of every steering,
+    # the shadows' spread and two things of the family that meet by a split.
+    steering: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     # Polarization (ray-polarization-v1): the width of the family's polarization
     # circle, 2^polarization_bits steps per half turn; -1 when the world does not
     # declare it, which reads as the family's phase width (`polarization_modulus`).
@@ -1613,6 +1699,10 @@ class SpatialFieldDefinition:
             if not self.rays:
                 raise ValueError("spread requires ray transport")
             validate_spread_table(self.spread)
+            if self.phase_modulus <= MAX_PHASE_STEPS:
+                # The steering table (phase-spread-v1), from the family's width (a
+                # wider width is refused below).
+                object.__setattr__(self, "steering", steering_table(self.phase_modulus))
         if (
             type(self.owners) is not tuple
             or any(type(v) is not int or not 0 <= v < MAX_THING_ID for v in self.owners)
@@ -3419,6 +3509,13 @@ def validate_initial_field(initial: InitialState) -> None:
                 raise ValueError("an initial_field ray owner is one of its family's owners")
             if ray.steps not in (0, 1):
                 raise ValueError("an initial_field ray has walked one Link (1) or none (0)")
+            if ray.polarization != POLARIZATION_NONE and not (
+                definition.polarization_bits >= 0
+                and 0 <= ray.polarization < definition.polarization_modulus
+            ):
+                raise ValueError(
+                    "an initial_field ray polarization is a step of its family's polarization circle"
+                )
 
 
 @dataclass(frozen=True, slots=True)
@@ -3435,6 +3532,7 @@ class InitialShadow:
     sign: int = 0
     owner: int = 0
     steps: int = 1
+    polarization: int = POLARIZATION_NONE
 
 
 @dataclass(frozen=True, slots=True)

@@ -70,7 +70,6 @@ FRINGE_MARKS = tuple((SCREEN_X, y, PLANE_Z) for y in range(1, 16))
 SOURCE_AMOUNT = 256
 SOURCE_CHARGE = 3
 ANTIPHASE = 4
-BORN_TABLE = [8, 7, 4, 1, 0, 1, 4, 7]
 
 # bit-law-v1 (2026-09-18): the worlds are written in the law's form, migrated
 # textually from the declaration below (see examples/nature/bit_law_migration.py).
@@ -219,7 +218,7 @@ def born_steering():
         "outputs": [
             {
                 "field": "light",
-                "amount": {"table": BORN_TABLE, "of": "sum", "index": "phase_difference"},
+                "amount": {"of": "sum", "index": "phase_difference"},
                 "heading": 2,
             },
             {"field": "light", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}},
