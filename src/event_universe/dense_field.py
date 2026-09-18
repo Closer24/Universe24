@@ -141,7 +141,8 @@ class DenseFamily:
         self.relative = np.array([relative_ports(p) for p in range(6)], dtype=np.int64)
         self.modulus = definition.phase_modulus
         self.mask = phase_mask(self.modulus)
-        self.advance = definition.phase_advance
+        # A shadow has no clock (clock-readings-v1): the region's phases never advance.
+        self.advance = 0
         tables = spread_tables(definition)
         if tables is None:
             self.cosines = self.sines = None

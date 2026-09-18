@@ -77,7 +77,7 @@ def geometry(world):
         "ray": ray,
         "bits": definitions[ray]["phase_bits"],
         "modulus": 1 << definitions[ray]["phase_bits"],
-        "rate": definitions[ray]["kerengonen"]["phase_advance"],
+        "rate": world.get("K", 0) and bool(definitions[ray].get("clock", False)),
         "light": world["emissions"][0]["amount"],
         "launch_delay": launch["outputs"][0]["delay"],
         "release": definitions["mass_field"]["release"],

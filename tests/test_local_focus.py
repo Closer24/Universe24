@@ -9,7 +9,6 @@ from event_universe import Simulation
 from event_universe.initialization import load_initial_state, parse_initial_state
 
 from .support.disturbances import document, kind
-from .test_ray_delay import document as delay_document
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -76,12 +75,6 @@ def test_all_ports_delays_and_periodic_rearrival_match_at_every_tick(port, trave
 )
 def test_field_arrivals_reactions_decay_and_ray_transport_match(example):
     compare(load_initial_state(ROOT / "examples" / example), 8)
-
-
-def test_held_phased_rays_match_without_a_link_shortcut():
-    raw = delay_document(ray_delay=True, phase_per_tick=True, emission=0)
-    raw["spatial_fields"][1]["baseline"] = 6000
-    compare(parse_initial_state(raw), 8)
 
 
 def test_parallel_focus_keeps_the_same_event_order_and_cost():

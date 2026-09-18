@@ -170,6 +170,11 @@ class SpatialEngine:
         # source line and here; and the shadows that escaped, on the escaped line
         # and here, so that the things' own identity reads both lines less these.
         self.returned = [[0] * field.components for field in initial.fields]
+        # The momentum the things spent on their steps (clock-readings-v1, the
+        # settled rule (i)), and their phase steps, the computation (point 11), a
+        # running total.
+        self.spent = [[0] * field.components for field in initial.fields]
+        self.computation = [0]
         self.shadow_sources = [[0] * field.components for field in initial.fields]
         self.shadow_escaped = [[0] * field.components for field in initial.fields]
         self.shadow_absorbed_by_marks = [[0] * field.components for field in initial.fields]
@@ -198,6 +203,8 @@ class SpatialEngine:
                 self.returned,
                 self.shadow_sources,
                 self.shadow_absorbed_by_marks,
+                self.spent,
+                self.computation,
             ),
             balance_guard,
             field_guard,
@@ -750,7 +757,8 @@ class SpatialEngine:
                 - absorbed
                 - taken
                 - returned
-                for start, source, reaction, transformed, loss, escaped, annulled, absorbed, taken, returned in zip(
+                - spent
+                for start, source, reaction, transformed, loss, escaped, annulled, absorbed, taken, returned, spent in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
@@ -761,6 +769,7 @@ class SpatialEngine:
                     self.absorbed[index],
                     self.absorbed_by_marks[index],
                     self.returned[index],
+                    self.spent[index],
                     strict=True,
                 )
             )
@@ -776,6 +785,7 @@ class SpatialEngine:
                 "absorbed_by_bodies": tuple(self.absorbed[index]),
                 "absorbed_by_marks": tuple(self.absorbed_by_marks[index]),
                 "returned": tuple(self.returned[index]),
+                "spent": tuple(self.spent[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(
                     {"transformations": tuple(self.transformations[index])}

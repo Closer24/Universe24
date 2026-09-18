@@ -45,10 +45,12 @@ LINE_KEYS = (
     "absorbed",
     "absorbed_by_marks",
     "returned",
+    "spent",
 )
 # The lines a record may leave out, read as zero: absorbed_by_marks before
-# detector-absorb-v1, returned before bit-law-v1.
-OPTIONAL_LINES = ("absorbed_by_marks", "returned")
+# detector-absorb-v1, returned before bit-law-v1, spent before clock-readings-v1
+# and on every line but the momentum field's.
+OPTIONAL_LINES = ("absorbed_by_marks", "returned", "spent")
 
 Line = dict[str, object]
 
@@ -78,8 +80,9 @@ def _bit_line_balanced(line: Mapping[str, object], keys: tuple[str, ...]) -> boo
 
 def line_balanced(line: Mapping[str, object]) -> bool:
     """initial + sourced == current + escaped + annulled + absorbed + absorbed_by_marks
-    + returned, exactly; a line without absorbed_by_marks (recorded before
-    detector-absorb-v1) or without returned (before bit-law-v1) reads it as zero.
+    + returned + spent, exactly; a line without absorbed_by_marks (recorded before
+    detector-absorb-v1), without returned (before bit-law-v1) or without spent (the
+    momentum field's line alone carries it, clock-readings-v1) reads it as zero.
     A things' line (node-is-ports-v1) reads initial + converted == current +
     escaped + absorbed, a shadows' line initial == current + escaped +
     absorbed_at_home."""
@@ -96,6 +99,7 @@ def line_balanced(line: Mapping[str, object]) -> bool:
     zero = (0,) * next(iter(width))
     taken = values.get("absorbed_by_marks", zero)
     returned = values.get("returned", zero)
+    spent = values.get("spent", zero)
     return all(
         values["initial"][c] + values["sourced"][c]
         == values["current"][c]
@@ -104,6 +108,7 @@ def line_balanced(line: Mapping[str, object]) -> bool:
         + values["absorbed"][c]
         + taken[c]
         + returned[c]
+        + spent[c]
         for c in range(width.pop())
     )
 
@@ -117,7 +122,10 @@ def ledger_line(
     absorbed: object,
     absorbed_by_marks: object,
     returned: object = 0,
+    spent: object | None = None,
 ) -> Line:
+    """One ledger line; `spent` joins it when given (the momentum field's line,
+    clock-readings-v1) and is left out otherwise."""
     line: Line = {
         "initial": initial,
         "sourced": sourced,
@@ -130,6 +138,8 @@ def ledger_line(
     }
     if isinstance(returned, int) and not isinstance(initial, int):
         line["returned"] = (0,) * len(_components(initial))
+    if spent is not None:
+        line["spent"] = spent
     line["balanced"] = line_balanced(line)
     return line
 

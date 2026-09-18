@@ -240,9 +240,6 @@
       ],
       "phase_bits": 3,
       "charge": -3,
-      "kerengonen": {
-        "phase_advance": 1
-      },
       "release": [
         1,
         4
@@ -254,7 +251,8 @@
         1,
         1,
         1
-      ]
+      ],
+      "clock": true
     },
     {
       "field": "light",
@@ -300,10 +298,7 @@
         1
       ],
       "phase_bits": 3,
-      "charge": 0,
-      "kerengonen": {
-        "phase_advance": 0
-      }
+      "charge": 0
     }
   ],
   "emissions": [
@@ -593,5 +588,6 @@
         }
       ]
     }
-  ]
+  ],
+  "K": 4
 }

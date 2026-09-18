@@ -129,10 +129,8 @@
         1
       ],
       "phase_bits": 8,
-      "kerengonen": {
-        "phase_advance": 1
-      },
-      "charge": -3
+      "charge": -3,
+      "clock": true
     },
     {
       "field": "light_of_nucleus",
@@ -178,9 +176,6 @@
         1
       ],
       "phase_bits": 8,
-      "kerengonen": {
-        "phase_advance": 0
-      },
       "charge": 0
     },
     {
@@ -227,9 +222,6 @@
         1
       ],
       "phase_bits": 8,
-      "kerengonen": {
-        "phase_advance": 0
-      },
       "charge": 3,
       "release": [
         1,
@@ -288,9 +280,6 @@
         1
       ],
       "phase_bits": 8,
-      "kerengonen": {
-        "phase_advance": 0
-      },
       "charge": 0
     }
   ],
@@ -477,5 +466,6 @@
       "amount": 1,
       "coupling": "launch"
     }
-  ]
+  ],
+  "K": 256
 }

@@ -88,7 +88,10 @@ def document(
         "ray_slots": 2048,
     }
     if phase_steps:
-        field["kerengonen"] = {"phase_steps": phase_steps, "phase_advance": 1}
+        # The clock is the content (clock-readings-v1): a ray of per_ray quanta
+        # advances one phase step per interval at K = per_ray.
+        field["kerengonen"] = {"phase_steps": phase_steps}
+        field["clock"] = True
     emission_b: dict = {
         "type": "lamp_b",
         "field": "quanta",
@@ -101,6 +104,7 @@ def document(
         "schema_version": 1,
         "model_id": "kerengonen-double-slit-probe-v1",
         "sampling_profile": "detector-only-v1",
+        **({"K": per_ray} if phase_steps else {}),
         "shape": [SIZE, SIZE, 3],
         "boundary": "open",
         "slots_per_node": 2,

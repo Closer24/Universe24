@@ -16,7 +16,7 @@ from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
     BIT_LAW,
-    DECAY_DRAW,
+    CLOCK_READINGS,
     DENSE_FIELD,
     DETECTOR_ABSORB,
     DETECTOR_MARK,
@@ -36,7 +36,6 @@ from event_universe.core.spatial_state import (
     RAY_POLARIZATION_PROPERTY,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
-    decay_draw_declared,
     external_body_names,
     polarization_declared,
     ray_layer_names,
@@ -165,6 +164,11 @@ def _execute_run(
     real_content: list[int] = []
     shadow_content: list[int] = []
     momentum: list[dict[str, list[int]]] = []
+    # The computation per completed tick (clock-readings-v1, point 11): the sum
+    # over the things of the phase steps they made that interval, content / K
+    # each with the remainders carried; constant between absorptions.
+    computation: list[int] = []
+    steps_before = 0
     real_conserved = True
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
@@ -197,6 +201,7 @@ def _execute_run(
                     absorbed = world.external_body_totals()
                     taken = world.detector_mark_totals()
                     returned = world.returned_totals()
+                    spent = world.spent_totals()
                     ledger = world.audit()
                     audit.append(ledger)
                     real_conserved = real_conserved and bool(ledger.get("real_conserved", True))
@@ -205,15 +210,19 @@ def _execute_run(
                     momentum.append(
                         {str(thing): value for thing, value in world.thing_momentum().items()}
                     )
+                    steps_after = world.phase_steps()
+                    computation.append(steps_after - steps_before)
+                    steps_before = steps_after
                     # The conservation line: initial + sources = current + dissipated
                     # + escaped + annulled + absorbed_by_bodies + absorbed_by_marks +
-                    # returned at every completed tick (bit-law-v1), the sources
-                    # holding the re-releases and the marks' line what their clicks
-                    # absorbed.
+                    # returned + spent at every completed tick (bit-law-v1,
+                    # clock-readings-v1), the sources holding the re-releases, the
+                    # marks' line what their clicks absorbed and spent what the
+                    # things' steps took off their momentum.
                     balanced = all(
                         tuple(
-                            value + loss + out + gone + sunk + clicked + home
-                            for value, loss, out, gone, sunk, clicked, home in zip(
+                            value + loss + out + gone + sunk + clicked + home + stepped
+                            for value, loss, out, gone, sunk, clicked, home, stepped in zip(
                                 totals[name],
                                 losses[name],
                                 escaped[name],
@@ -221,6 +230,7 @@ def _execute_run(
                                 absorbed[name],
                                 taken[name],
                                 returned[name],
+                                spent[name],
                                 strict=True,
                             )
                         )
@@ -288,6 +298,14 @@ def _execute_run(
         # parked shadows, the traces, the resident thing of a mark and the source
         # that spends its content are the engine's only behaviour.
         "node_is_ports": NODE_IS_PORTS,
+        # The clock is the content (clock-readings-v1, feature 16b): K, the
+        # computation per completed tick (point 11) and the momentum spent on
+        # the things' steps (the settled rule (i)).
+        "clock_readings": CLOCK_READINGS,
+        "K": initial.clock,
+        "wait_per_quantum": list(initial.wait_per_quantum),
+        "computation_per_tick": computation,
+        "spent_totals": world.spent_totals(),
         "shadows": [
             {"thing": owner, "rays": count[0], "amount": count[1]}
             for owner, count in world.shadow_counts().items()
@@ -304,9 +322,6 @@ def _execute_run(
         "released_field": RELEASED_FIELD,
         "ray_binding": RAY_BINDING,
         "loop_binding": LOOP_BINDING,
-        # A decaying group draws (decay-draw-v1): recorded when a rule declares
-        # `draw`; a world without one runs and records exactly as before.
-        **({"decay_draw": DECAY_DRAW} if decay_draw_declared(initial) else {}),
         "external_body": EXTERNAL_BODY,
         "external_bodies": [
             declared | {"positions": trajectories[index], "final": final_bodies.get(index)}
@@ -349,7 +364,7 @@ def _execute_run(
         "execution": world.execution_report(),
     }
     if turned:
-        # A thing turns by momentum (ray-momentum-turn-v2): recorded when the world
+        # A thing turns by momentum (ray-momentum-turn-v3): recorded when the world
         # declares a push, so the record of every other world is byte for byte the same.
         metadata["ray_momentum_turn"] = RAY_MOMENTUM_TURN
     if polarization_declared(initial):

@@ -29,6 +29,25 @@ The rules, applied to a world document in place:
   names carries a charge, "content" otherwise;
 - the field family's value field and spatial field stay declared (nothing else
   of the world refers to them by anything but the name), unused.
+
+The clock, the decay table and one Link per interval (clock-readings-v1, the
+model owner's decisions of 2026-09-18, Highlights 5.4 points 19, 20, 21 and 23;
+`migrate_clock`, applied by `migrate` as well):
+
+- `kerengonen.phase_advance` leaves every family; a family whose rate was
+  nonzero declares `clock` true, and the world declares `K`, the content per
+  phase step per interval, the smallest K that keeps every declared thing's
+  content / K below half the phase circle, raised to keep the rate of the
+  largest declared content where that is admissible (a thing's clock is its
+  content, so the old per-family rates are not preserved: the physics of each
+  experiment is to be declared again on the law);
+- `kerengonen_advance` leaves every emission;
+- `draw` [n, d] and `seed` leave every rule: the rule declares `decay`
+  {"after_periods": d // n} (a group breaks at that meeting under the rule), or
+  {"content_at_most": 0} for a setting of 0 (never);
+- `ray_delay`, `ray_phase_per_tick`, and on a board of ray fields
+  `computation_field`, `delay_direction` and `least_delay_routing`, leave the
+  world: every ray moves one Link per interval.
 """
 
 from __future__ import annotations
@@ -36,8 +55,70 @@ from __future__ import annotations
 from typing import Any
 
 
+def migrate_clock(document: dict[str, Any]) -> dict[str, Any]:
+    """The clock, the decay table and one Link per interval (clock-readings-v1),
+    applied to a world document in place; see the module's docstring."""
+    fields = document.get("spatial_fields", [])
+    rays = any(entry.get("transport") == "ray" for entry in fields)
+    for key in ("ray_delay", "ray_phase_per_tick"):
+        document.pop(key, None)
+    if rays:
+        for key in ("computation_field", "delay_direction", "least_delay_routing"):
+            document.pop(key, None)
+    rates: dict[str, int] = {}
+    for entry in fields:
+        phased = entry.get("kerengonen")
+        if not isinstance(phased, dict) or "phase_advance" not in phased:
+            continue
+        rate = int(phased.pop("phase_advance"))
+        if rate > 0:
+            entry["clock"] = True
+            rates[entry["field"]] = rate
+        if not phased:
+            del entry["kerengonen"]
+    for emission in document.get("emissions", []):
+        emission.pop("kerengonen_advance", None)
+    for rule in document.get("ray_interactions", []):
+        if "draw" in rule:
+            numerator, denominator = (int(v) for v in rule.pop("draw"))
+            rule.pop("seed", None)
+            rule["decay"] = (
+                {"after_periods": max(1, denominator // numerator)}
+                if numerator > 0
+                else {"content_at_most": 0}
+            )
+    if not rates or "K" in document:
+        return document
+    contents: dict[str, int] = {}
+    types = {kind["name"]: kind for kind in document.get("disturbance_types", [])}
+    for kind in types.values():
+        for name, stock in kind.get("defaults", {}).items():
+            if name in rates and isinstance(stock, int):
+                contents[name] = max(contents.get(name, 0), abs(stock))
+    for emission in document.get("emissions", []):
+        name, amount = emission.get("field"), emission.get("amount")
+        if name in rates and isinstance(amount, int):
+            contents[name] = max(contents.get(name, 0), abs(amount))
+    minimum, preferred = 1, 1
+    for entry in fields:
+        name = entry["field"]
+        if name not in rates:
+            continue
+        bits = int(entry.get("phase_bits", 0))
+        steps = int((entry.get("kerengonen") or {}).get("phase_steps", 0))
+        if steps and not bits:
+            bits = steps.bit_length() - 1
+        modulus = 1 << bits
+        content = contents.get(name, 1)
+        minimum = max(minimum, 2 * content // modulus + 1)
+        preferred = max(preferred, content // rates[name])
+    document["K"] = max(minimum, preferred)
+    return document
+
+
 def migrate(document: dict[str, Any]) -> dict[str, Any]:
     _node_is_ports(document)
+    migrate_clock(document)
     fields = document.get("spatial_fields", [])
     by_name = {entry["field"]: entry for entry in fields}
     renames: dict[str, str] = {}

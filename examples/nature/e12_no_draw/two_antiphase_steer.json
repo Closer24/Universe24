@@ -1,416 +1,410 @@
 {
- "schema_version": 1,
- "model_id": "e12-two-antiphase-steer",
- "shape": [
-  16,
-  17,
-  9
- ],
- "boundary": "open",
- "slots_per_node": 2,
- "link_ticks": 1,
- "normal_budget": 100000,
- "ticks": 96,
- "operation_costs": {
-  "receive": 1,
-  "read": 1,
-  "evaluate": 1,
-  "update": 1,
-  "couple": 1,
-  "route": 1,
-  "split": 1,
-  "send": 1,
-  "commit": 1
- },
- "fields": [
-  {
-   "name": "proton",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
+  "schema_version": 1,
+  "model_id": "e12-two-antiphase-steer",
+  "shape": [
+    16,
+    17,
+    9
+  ],
+  "boundary": "open",
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 96,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
   },
-  {
-   "name": "light",
-   "components": 1,
-   "units": "quantum",
-   "signed": false,
-   "conserved": true,
-   "extensive": true
-  }
- ],
- "disturbance_types": [
-  {
-   "name": "idle_light",
-   "fields": [
-    "light"
-   ],
-   "defaults": {
-    "light": 1
-   },
-   "transport": {
-    "mode": "hold"
-   }
-  }
- ],
- "spatial_fields": [
-  {
-   "field": "proton",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 32,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 3,
-   "charge": 3,
-   "kerengonen": {
-    "phase_advance": 0
-   },
-   "release": [
-    1,
-    4
-   ],
-   "spread": [
-    6,
-    1,
-    1,
-    1,
-    1,
-    1
-   ]
-  },
-  {
-   "field": "light",
-   "baseline": 0,
-   "transport": "ray",
-   "headings": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     -1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "rays_per_tick": 1,
-   "ray_slots": 32,
-   "metric": "links",
-   "pace": [
-    1,
-    1
-   ],
-   "phase_bits": 3,
-   "charge": 0,
-   "kerengonen": {
-    "phase_advance": 0
-   }
-  }
- ],
- "emissions": [
-  {
-   "type": "idle_light",
-   "field": "light",
-   "amount": 1,
-   "denominator": 1,
-   "heading": [
-    1,
-    0,
-    0
-   ],
-   "kerengonen_phase": 0
-  }
- ],
- "seeds": [],
- "detectors": [
-  {
-   "position": [
-    12,
-    1,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    2,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    3,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    4,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    5,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    6,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    7,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    8,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    9,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    10,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    11,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    12,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    13,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    14,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  },
-  {
-   "position": [
-    12,
-    15,
-    4
-   ],
-   "setting": [
-    1,
-    1
-   ]
-  }
- ],
- "ray_interactions": [
-  {
-   "name": "born_steering",
-   "participants": [
+  "fields": [
     {
-     "type": "proton"
+      "name": "proton",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     },
     {
-     "type": "proton"
+      "name": "light",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
     }
-   ],
-   "outputs": [
+  ],
+  "disturbance_types": [
     {
-     "field": "proton",
-     "amount": {
-      "of": "sum",
-      "index": "phase_difference"
-     },
-     "heading": 2
+      "name": "idle_light",
+      "fields": [
+        "light"
+      ],
+      "defaults": {
+        "light": 1
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "proton",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 32,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 3,
+      "charge": 3,
+      "release": [
+        1,
+        4
+      ],
+      "spread": [
+        6,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
     },
     {
-     "field": "proton",
-     "amount": {
-      "rest_of": 0
-     },
-     "heading": 3,
-     "phase": {
-      "of": 1
-     }
+      "field": "light",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 32,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 3,
+      "charge": 0
     }
-   ],
-   "invariants": [
+  ],
+  "emissions": [
     {
-     "name": "energy",
-     "expression": {
-      "field": "amount"
-     }
+      "type": "idle_light",
+      "field": "light",
+      "amount": 1,
+      "denominator": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "kerengonen_phase": 0
     }
-   ]
-  }
- ],
- "external_bodies": [
-  {
-   "position": [
-    1,
-    4,
-    4
-   ],
-   "family": "proton",
-   "amount": 256,
-   "charge": 3,
-   "phase": 0
-  },
-  {
-   "position": [
-    1,
-    12,
-    4
-   ],
-   "family": "proton",
-   "amount": 256,
-   "charge": 3,
-   "phase": 4
-  }
- ]
+  ],
+  "seeds": [],
+  "detectors": [
+    {
+      "position": [
+        12,
+        1,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        2,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        3,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        4,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        5,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        6,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        7,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        8,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        9,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        10,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        11,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        12,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        13,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        14,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    },
+    {
+      "position": [
+        12,
+        15,
+        4
+      ],
+      "setting": [
+        1,
+        1
+      ]
+    }
+  ],
+  "ray_interactions": [
+    {
+      "name": "born_steering",
+      "participants": [
+        {
+          "type": "proton"
+        },
+        {
+          "type": "proton"
+        }
+      ],
+      "outputs": [
+        {
+          "field": "proton",
+          "amount": {
+            "of": "sum",
+            "index": "phase_difference"
+          },
+          "heading": 2
+        },
+        {
+          "field": "proton",
+          "amount": {
+            "rest_of": 0
+          },
+          "heading": 3,
+          "phase": {
+            "of": 1
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "energy",
+          "expression": {
+            "field": "amount"
+          }
+        }
+      ]
+    }
+  ],
+  "external_bodies": [
+    {
+      "position": [
+        1,
+        4,
+        4
+      ],
+      "family": "proton",
+      "amount": 256,
+      "charge": 3,
+      "phase": 0
+    },
+    {
+      "position": [
+        1,
+        12,
+        4
+      ],
+      "family": "proton",
+      "amount": 256,
+      "charge": 3,
+      "phase": 4
+    }
+  ]
 }
