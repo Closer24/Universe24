@@ -20,6 +20,14 @@ of a thing releasing its field every interval (`returned`, `source`,
 `resident`) and the byte-identity of a world declaring `field_of` (`unchanged`)
 went with the law: a thing releases nothing per tick, its shadows are on the
 board from the start.
+
+Re-pinned again on 2026-09-18 under the phase-steered spread (phase-spread-v1,
+Highlights 5.4 point 17): two shares of one owner meeting at a Node steer each
+other by the Born table instead of spreading by the split table, so
+`superposition` (phases 0 and 6, a difference of two steps: half continues,
+11 each way, half apart, 6 on each transverse heading) and `cancelled` (phases
+0 and 4: nothing continues, 12, 12, 12, 10 apart) read the steering; a lone
+share keeps the split table (`single`, `stream`).
 """
 
 import json
@@ -268,8 +276,29 @@ SINGLE_REMAINDERS = {
     },
 }
 SINGLE_REMAINDERS[3] = SINGLE_REMAINDERS[2] | {(8, 7, 7): (7, 3, 3, 3, 3, 3)}
-# (b) Two shadows of 23 meeting head on: the phase of the coherent sum, then the split.
-SUPERPOSITION = {"superposition": (6, 23, 7), "cancelled": (4, 0, 0)}
+# (b) Two shadows of 23 meeting head on: the phase of the coherent sum, then the
+# steering (phase-spread-v1): the board after the step per case.
+SUPERPOSITION = {
+    "superposition": (
+        6,
+        23,
+        7,
+        {
+            (7, 7, 7): [(0, 11)],
+            (5, 7, 7): [(1, 11)],
+            (6, 8, 7): [(2, 6)],
+            (6, 6, 7): [(3, 6)],
+            (6, 7, 8): [(4, 6)],
+            (6, 7, 6): [(5, 6)],
+        },
+    ),
+    "cancelled": (
+        4,
+        0,
+        0,
+        {(6, 8, 7): [(2, 12)], (6, 6, 7): [(3, 12)], (6, 7, 8): [(4, 12)], (6, 7, 6): [(5, 10)]},
+    ),
+}
 # (c) A stream of single quanta through one Node's registers: the forward quantum
 # released after every second arrival, a quantum on every heading at the eleventh.
 STREAM_RELEASES = {2, 4, 6, 8, 10}
@@ -326,10 +355,11 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         }
         return
     if case in SUPERPOSITION:
-        # (b) Two shadows of one family meeting at a Node combine by phase before
-        # they spread: the registers take the shares at the phase of the coherent
-        # sum.
-        phase_b, stock, phase = SUPERPOSITION[case]
+        # (b) Two shadows of one owner meeting at a Node combine by phase and steer
+        # each other (phase-spread-v1): each continues by the table at its phase
+        # difference to the other, the rest apart, nothing into the registers, and
+        # every departure carries the phase of the coherent sum.
+        phase_b, stock, phase, board = SUPERPOSITION[case]
         world, events = simulate(document((((6, 7, 7), 23, 0, 0), ((6, 7, 7), 23, 1, phase_b)), ticks=1))
         assert positions_of(world) == {(6, 7, 7)}
         assert rays_at(world, (6, 7, 7)) == sorted(
@@ -338,22 +368,8 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         assert world.spatial_values((6, 7, 7))["light"]["value"] == (stock,)
         assert world.totals() == {"light": (46,)}
         world.step()
-        assert_board(
-            world,
-            {
-                (7, 7, 7): [(0, 14)],
-                (5, 7, 7): [(1, 14)],
-                (6, 8, 7): [(2, 4)],
-                (6, 6, 7): [(3, 4)],
-                (6, 7, 8): [(4, 4)],
-                (6, 7, 6): [(5, 4)],
-            },
-            phase,
-        )
-        assert registers_at(world, (6, 7, 7)) == (
-            block((7, 7, 2, 2, 2, 2)),
-            phased(block((7, 7, 2, 2, 2, 2)), phase),
-        )
+        assert_board(world, board, phase)
+        assert registers_at(world, (6, 7, 7)) == (block(), (0,) * 18)
         assert world.totals() == {"light": (46,)}
         assert world.source_totals() == {"light": (0,)}
         assert all(item["balanced"] for item in world.spatial_accounting().values())

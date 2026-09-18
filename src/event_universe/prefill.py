@@ -192,6 +192,7 @@ def _profile(initial: InitialState, index: int) -> dict[Address3, list[Ray]]:
                 steps=shadow.steps,
                 detector=BIT_SHADOW,
                 source_sign=shadow.sign,
+                polarization=shadow.polarization,
                 owner=shadow.owner,
             )
         )
