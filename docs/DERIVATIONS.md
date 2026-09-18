@@ -3546,7 +3546,19 @@ quanta^{1/2}, and the content cancels: every thing at a Node waits alike
 (the equivalence of clocks). Were the unit one quantum^{1/2} of M_thing|u|
 itself, a thing of content M would wait M times more than one of content 1:
 a clock's slowing proportional to its own mass, which no clock test allows;
-stated, not adopted below. Rules used besides: R10, R2, R3 (standing
+stated, not adopted below. The engine of the same day (wait-reads-v1,
+feature 16f, PR #308, merged while this round was written; a declared option
+`wait_reads: amplitude`, `amount` the default) reads, once per group at the
+thing's Node, ⌊|Σ_p A_p|/32⌋, the whole units of the size of the sum, 3|u|,
+in quanta^{1/2} (`arrival_amplitude`), multiplies it by the thing's content
+through the push's reading (`push_of`, sign × amount × content) and counts w
+per quantum of that product (`pushed_ray`); so its w is this document's w/3,
+and its unit is the quantum of push, the non-cancelling one, for the
+amplitude and the count alike (clock-readings-v1 counts the push's quanta,
+content × amount, where rounds 3 and 5 wrote 1 − wn per unit content). Which
+unit the wait has is the model owner's; the run that reads it is two rings of
+different content at one r from a body (the same slowing here, 32 : 1 for
+contents 32 and 1 in the engine as it stands). Rules used besides: R10, R2, R3 (standing
 reading), R4′, R6′, R7′, point 3 as amended, sections 26, 27, 34.
 
 **Assumptions and limit.** Mean field first (the integer form is (iv)); far
@@ -3713,7 +3725,11 @@ the same w gives 1 − √(Gm/(GM))·GM/r: a single thing of content M ≠ m slo
 clock by √(m/M) of GR's; the star of A6, one owner of flux S, needs
 w = 0.7425 √S for its own coefficient. A loop's period P/P₀ = 1/(1 − w|u|),
 the same factor; a ring of any content, a free thing of any content, the
-same slowing (the unit of section 39). The anisotropy (3/4)ω₀²K₄, half the
+same slowing (the unit of section 39). At the engine's unit (wait-reads-v1,
+w_e per quantum of content × ⌊3|u|⌋) the rate is 1 − 3 w_e M_thing |u| and
+GR's coefficient sits at w_e = 0.620 √(Gm)/M_thing, one w per content: no
+one w serves two clocks of different content, which is the case for the
+content-cancelling unit adopted here. The anisotropy (3/4)ω₀²K₄, half the
 count's: the clock slower on the body diagonals of the mass than on its
 axes at the same r, by (3/4)ω₀²(2/5 + 4/15) = 0.5 ω₀² relative.
 
@@ -3945,9 +3961,20 @@ inside the 64-bit work (|cx|, |cy| < 2³¹ is checked), and it is needed only
 at a Node that holds a thing, once per owner group present: one root per
 thing per group per interval against the six the mixing takes at every Node
 of every group. The computation of the world stays the things' (point 11),
-and the shadows' cost is unchanged. What the engine does not have is the
-sum over groups at a thing's Node, a loop over the groups present, which the
-push's loop over shadows at the Node already runs.
+and the shadows' cost is unchanged. The engine's wait-reads-v1 (PR #308) is
+this: `arrival_amplitude` forms the group's sum over the shadows at the
+thing's Node (per Port the amount at the phase of its sum, the root of
+amount × 32², the six summed on the tables), takes the root of x² + y² once
+per group per interval inside the push's loop over the shadows, and floors
+it to whole units of 32; it reads 3|u| where this document reads |u|, and
+multiplies by the content (section 39). Its `owed` is in units of 1/d of an
+interval and the whole units of amplitude are floored per interval, not
+accumulated: below one unit of 3|u|, that is |u| < 1/3 (r > 3w · 0.2143 √S,
+every r of A6's board), the engine's amplitude wait is zero, where the
+register rule stated above accumulates the fraction and waits per whole
+unit in the mean; the far-field law of this round is read in the engine
+only with that accumulation (a remainder on the counter, as the push has
+`push_remainder`).
 
 **Check.** Section 31's algebra; the engine's `node_mixing` and `_mix` as
 read on 2026-09-18 (the coherent sum formed before the outputs; the root of
@@ -3959,7 +3986,10 @@ reading; **different law** in local time, by 1 + GM/r at the GR w (the
 potential's form now). The far field of a thing near a mass: **1/r² kept**,
 a slower clock and a longer wavelength, no lens. The books: **exact**, one
 counter on the thing; the third law unaffected. The cost: one integer root
-per thing per owner group per interval, on a sum the Node already forms.
+per thing per owner group per interval, on a sum the Node already forms
+(wait-reads-v1 takes it so); the engine's floor per interval reads nothing
+below |u| = 1/3, an accumulating remainder on the counter being what the
+far field needs.
 
 ## 43. Round 6: the sizes for A6, the separating observable and the verdicts
 
@@ -4034,7 +4064,7 @@ the count; R11 the amplitude):
 | Shapiro delay of the field | 0 | 0 | — |
 | Coulomb near a mass | reached; ×1/(1 − wn) in local time | **reached** in lattice time; ×(1 + GM/r) in local time at the GR w | A5s beside a body |
 | Far field of a thing near a mass | 1/r² kept; λ_w longer by 1 + wn | **1/r² kept**; λ_w longer by 1 + w\|u\|; no lens | E11 beside a body |
-| The books (point 7) | exact; the counter on the thing | **exact**; the counter on the thing reads \|3u\| at scale 8192, one root per thing per group per interval on a sum the Node forms | E11 (a) |
+| The books (point 7) | exact; the counter on the thing | **exact**; the counter on the thing reads \|3u\| at scale 8192, one root per thing per group per interval on a sum the Node forms (wait-reads-v1 does; it floors per interval and carries the content, section 42) | E11 (a) |
 | Newton's third law | exact, through the field | **exact**, unaffected (the wait delays the step, never the reply) | E11 (a) |
 | The standing set under the reading | read in full (n) | **new**: u = 0 on the flat bands, invisible; 3Σ\|u\|² = the wave bands' amount | a lone shadow re-released at a thing |
 | One w for the four tests | not reached (no GM/r term) | clock, redshift and the front's space half at w = 1.861 √(Gm); Shapiro at half; the image at a quarter: **not reached** in full (round 3's table with 11/9 → 1.861 √(Gm)); a per-family w reaches Shapiro or the front, not both | — |
@@ -4051,10 +4081,13 @@ front's tilt read directly by a two-slit behind a mass in the formula layer
 restated with the count at a thing's Node (half to two thirds of the free
 n); the whole-quanta window at w ≤ 1/10 (a dense wave of 256 to 3000 quanta
 per Node with a thing inside it); the ratio 1 against 2 of the clock's and
-light's wait (a per-family w, which point 16 admits); and whether the
+light's wait (a per-family w, which point 16 admits); whether the
 reading is per owner (Σ_j|u_j|, this round) or of the total sum
 (|Σ_j u_j|, which beats between owners of differing clocks and adds as √N
-between owners of random phase).
+between owners of random phase); and the unit of the wait, the content (this
+document, every clock alike) or the quantum of push (the engine's counter
+since clock-readings-v1, a clock slowed in proportion to its own content),
+which two rings of different content at one r decide.
 
 ## 44. Round 6: a local 1/r reading without the root, and the amplitude as the basic integer
 
