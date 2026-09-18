@@ -401,6 +401,7 @@ class InitialState:
             validate_detector_marks,
             validate_external_bodies,
             validate_initial_field,
+            validate_lanes,
             validate_ray_coupling,
             validate_released_field_admission,
             validate_spread_admission,
@@ -445,6 +446,7 @@ class InitialState:
         validate_external_bodies(self)
         validate_thing_ids(self)
         validate_initial_field(self)
+        validate_lanes(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

@@ -1509,9 +1509,9 @@ for the pair. The only wait in the world is the clock's (point 23).
 there is, 0 is what is said; what is said returns, as a field, and what
 there is stays.
 
-**Implementation.** `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1` and
-`node-is-ports-v1` are on `main`
+**Implementation.** `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`,
+`node-is-ports-v1` and `lanes-v1` (feature 18, the lanes of point 25) are
+on `main`
 ([spatial fields](docs/SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1));
 the return as a field (point 3 as amended, in place of the walk on the
-trace those features implement) and the lanes (point 25, feature 18) are
-pending.
+trace those features implement) is pending.

@@ -55,10 +55,9 @@ table (points 6, 14, 20). The books are kept per bit with no source line
 shadow per owner per lane per interval, with no queue and no wait but the
 clock's; the remainder is a parked shadow, a mark's counter a resident thing,
 the apparatus things with declared tables (points 22, 25). Implemented:
-`bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`, `node-is-ports-v1`
-(section 6); pending: the return as a field (point 3 as amended, in place of
-the walk on the trace those features implement) and the lanes (point 25,
-feature 18).
+`bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`, `node-is-ports-v1` and
+`lanes-v1` (section 6); pending: the return as a field (point 3 as amended,
+in place of the walk on the trace those features implement).
 
 ## 1. Definitions
 
@@ -1234,9 +1233,13 @@ six](SPATIAL_FIELDS.md#the-node-mixes-the-six-node-mixing-v1)). Feature 17,
 thing, the source that spends content, the apparatus as things, the names
 `real` and `shadow` ([a Node is its six
 Ports](SPATIAL_FIELDS.md#a-node-is-its-six-ports-node-is-ports-v1)).
-Pending: the return as a field (point 3 as amended, retiring the trace and
-the walk home those features implement) and feature 18, the lanes (point
-25). Retired from the engine by them: `detector-bit-property-v1`,
+Feature 18, `lanes-v1` (done 2026-09-18): a Port is two lanes, one real
+ray and one shadow per owner per lane, slots not lists, the lane a
+condition on the step and not a queue, two real rays of one family on one
+lane one real ray ([a Port is two
+lanes](SPATIAL_FIELDS.md#a-port-is-two-lanes-lanes-v1)). Pending: the
+return as a field (point 3 as amended, retiring the trace and the walk home
+those features implement). Retired from the engine by them: `detector-bit-property-v1`,
 `decay-draw-v1`, `field-spreading-v1` and `phase-spread-v1`.
 
 ## 7. Acceptance criteria for the first implementation slice

@@ -104,6 +104,14 @@ is the world's own rule standing in for the catalog's open sign rule
 | An event | A change of trajectory leaving a meeting; in the viewer a marker at the Node. A crossing is no event | [Ray-event model](../../docs/RAY_EVENT_MODEL.md#1-definitions) |
 | The group in the record | Nothing at a Node names a group: the ray viewer's extractor reads the rays that keep meeting each other at their corners, and when their states recur with a period it reports the group's ring, content, period and clock (`groups` in the run document) | [Ray viewer](../../tools/ray_viewer/README.md); Highlights 3.4 |
 
+**Refused since 2026-09-18 (feature 18, `lanes-v1`).** `absorption.json`,
+`absorption_emission.json` and `helium_ion.json` declare tables (`absorb`,
+`nucleus_turn`) whose outputs leave on one heading, which Highlights 5.4
+point 25 forbids (a table gives its outputs distinct lanes); the engine
+refuses them at parsing with a message naming point 25. Their records below
+are those of the runs made before the rule; the model owner declares their
+tables anew before they run again.
+
 ## absorption.json, tick by tick
 
 Board 12 x 12 x 11, open, `link_ticks` 1, `phase_bits` 3 (N = 8), 24 ticks.

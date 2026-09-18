@@ -31,11 +31,10 @@ absorbs the thing a click realizes into the mark's resident thing.
 Since 2026-09-18 the law of the bit ([Highlights](HIGHLIGHTS.md) 5.4, the
 definitions and points 1 to 25) is the current model, and the terms of
 [the law of the bit](#the-law-of-the-bit-2026-09-18) below are its
-vocabulary; `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1` and
-`node-is-ports-v1` implement it
+vocabulary; `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`,
+`node-is-ports-v1` and `lanes-v1` implement it
 ([spatial fields](SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1)), with
-the return as a field (point 3 as amended) and the lanes (point 25)
-pending. Where an entry below describes the form before that date, it says
+the return as a field (point 3 as amended) pending. Where an entry below describes the form before that date, it says
 so; the identifiers it names stay the code's.
 
 - **Ray** — since 2026-09-18 content in motion on a line with an amount, a phase, a heading and a bit, and, for a thing, a momentum (Highlights 5.4, definitions); a shadow carries no step count (point 3). Before that date: the trajectory of one event between two interactions: one heading, one straight line, one Node per Link interval, carrying its share of the event's information. In the spatial-field implementation a `Ray` record is one straight-moving share of a ray field.
@@ -124,7 +123,7 @@ point that states each and the identity that implements it.
 - **Source** — a thing that spends its own content as things of another family by an emission table (point 22; `node-is-ports-v1`).
 - **Prefill** — the shadows given with the board at the start (`initial_field`, `bit-law-v1`); a thing does not emit them.
 - **Books** — the ledger, kept per bit: things conserve amount, momentum and charge among themselves exactly, shadows are initial content (point 7); see the ledger above.
-- **Lane** — one direction of a Port, in or out; two per Port, twelve per Node; a lane carries per interval at most one real ray and one shadow per owner, two real rays of one family given one lane being one real ray; no queue, no wait but the clock's (point 25; feature 18, pending).
+- **Lane** — one direction of a Port, in or out; two per Port, twelve per Node; a lane carries per interval at most one real ray and one shadow per owner, two real rays of one family given one lane being one real ray; no queue, no wait but the clock's (point 25; `lanes-v1`, feature 18, [a Port is two lanes](SPATIAL_FIELDS.md#a-port-is-two-lanes-lanes-v1)).
 - **K** — the content per phase step per interval, one for the world (the world key `K`). **N** — the number of steps of the phase circle, 2^`phase_bits`, the one input behind interference (points 17, 24).
 - **Trace**, **register**, **counter**, **seed**, **lottery**, **field family**, **rest rate**, **delay** — retired words (points 3, 12, 14, 19, 21, 22): a return follows nothing, a Node remembers no departure, a mark's counter is a resident thing, a thing's momentum is its property, nothing is drawn, and nothing is delayed.
 
