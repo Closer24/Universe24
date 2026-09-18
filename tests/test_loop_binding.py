@@ -71,7 +71,9 @@ BORN_CORNER = {
     "outputs": [
         {
             "field": "electron",
-            "amount": {"table": BORN, "of": "sum", "index": "phase_difference"},
+            # phase-spread-v1 (2026-09-18): the steering table is the family's, written
+            # from its phase width ([8, 7, 4, 1, 0, 1, 4, 7] at eight steps), never declared.
+            "amount": {"of": "sum", "index": "phase_difference"},
             "heading": "reversed",
             "input": 1,
             "phase": {"of": 0},

@@ -27,6 +27,7 @@ from event_universe.core.spatial_state import (
     INVERSE_SPLIT,
     LOOP_BINDING,
     NODE_IS_PORTS,
+    PHASE_SPREAD,
     RAY_BINDING,
     RAY_EVENT_STATE,
     RAY_LAYERS,
@@ -366,6 +367,7 @@ def _execute_run(
         # `spread`, so the record of every existing world is byte for byte the same.
         metadata["field_spreading"] = FIELD_SPREADING
         metadata["field_remainder"] = FIELD_REMAINDER
+        metadata["phase_spread"] = PHASE_SPREAD
         metadata["spreading_fields"] = spreading
     if initial.spatial_fields:
         metadata.update(

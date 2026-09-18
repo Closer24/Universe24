@@ -84,6 +84,7 @@ from .core.spatial_state import (
     charge_invariant,
     dense_field_admissible,
     ray_participant_definitions,
+    steering_table,
     validate_heading,
     validate_released_fields,
     validate_spread_fields,
@@ -134,6 +135,12 @@ def _boolean(value: object, label: str) -> bool:
     if type(value) is not bool:
         raise ValueError(f"{label} must be a boolean")
     return value
+
+
+NOT_DECLARED_STEERING = (
+    "the steering table is written from the family's phase width, cos^2 of half the phase "
+    "difference in N-ths (phase-spread-v1; Highlights 5.4, point 17): it is not declared"
+)
 
 
 def _text(value: object, label: str) -> str:
@@ -1225,6 +1232,7 @@ def _spatial_fields(
                 "flux_projection",
                 "release",
                 "spread",
+                "steering",
                 "phase_bits",
                 "charge",
                 "polarization_bits",
@@ -1274,6 +1282,8 @@ def _spatial_fields(
                 spread = tuple(
                     _integer(v, "spread weight", 0) for v in _array(obj["spread"], "spread", 6, 6)
                 )
+            if "steering" in obj:
+                raise ValueError(NOT_DECLARED_STEERING)
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             # Every ray is a wave ray (wave-ray-family-v1): the family declares the
             # width of its phase, 2^phase_bits values, and its charge per quantum.
@@ -1361,11 +1371,11 @@ def _spatial_fields(
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
-            | {"phase_bits", "charge", "release", "spread", "polarization_bits"}
+            | {"phase_bits", "charge", "release", "spread", "steering", "polarization_bits"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "flux_projection, phase_bits, charge, release, spread and "
+                "flux_projection, phase_bits, charge, release, spread, steering and "
                 "polarization_bits require ray transport"
             )
         else:
@@ -2245,17 +2255,16 @@ def _ray_meeting(
             spec = _object(amount, "output.amount", {"rest_of"}, {"rest_of"})
             rests[position] = _integer(spec["rest_of"], "output.amount.rest_of", 0)
         elif isinstance(amount, dict) and "table" in amount:
-            spec = _object(
-                amount, "output.amount", {"table", "of", "index", "between"}, {"table", "of", "index"}
-            )
+            raise ValueError(NOT_DECLARED_STEERING)
+        elif isinstance(amount, dict) and "index" in amount:
+            # A steering split (phase-spread-v1): the pair steers by the table of
+            # the output's family, written from its phase width.
+            spec = _object(amount, "output.amount", {"of", "index", "between"}, {"of", "index"})
             if spec["index"] != "phase_difference":
                 raise ValueError("a table split is indexed by the phase difference of two inputs")
-            table = tuple(
-                _integer(weight, "output.amount.table", 0)
-                for weight in _array(spec["table"], "output.amount.table", MAX_PHASE_STEPS, 1)
-            )
-            if any(weight > len(table) for weight in table):
-                raise ValueError("a table weight is at most the table length, the phase modulus")
+            if definition.phase_modulus > MAX_PHASE_STEPS:
+                raise ValueError("a steering split requires a phase width of at most twelve bits")
+            table = steering_table(definition.phase_modulus)
             between_raw = _array(spec.get("between", [0, 1]), "output.amount.between", 2, 2)
             between = (
                 _integer(between_raw[0], "output.amount.between", 0),
@@ -2478,7 +2487,7 @@ def _initial_field(
                 ray = _object(
                     item,
                     "initial_field ray",
-                    {"position", "heading", "amount", "phase", "sign", "owner", "steps"},
+                    {"position", "heading", "amount", "phase", "sign", "owner", "steps", "polarization"},
                     {"position", "heading", "amount"},
                 )
                 rays.append(
@@ -2490,6 +2499,7 @@ def _initial_field(
                         _integer(ray.get("sign", 0), "initial_field ray sign", -1),
                         _integer(ray.get("owner", 0), "initial_field ray owner", 0),
                         _integer(ray.get("steps", -1), "initial_field ray steps", -1),
+                        _integer(ray.get("polarization", -1), "initial_field ray polarization", -1),
                     )
                 )
         result[families[str(name)]] = InitialFieldDefinition(fill, tuple(rays))

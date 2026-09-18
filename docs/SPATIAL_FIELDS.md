@@ -837,7 +837,8 @@ conserved sums and the invariant sums, returning the outputs and the
 remainder.
 
 **Split by a table (the Born decision).** An output amount may be
-`{"table": [n0, n1, ...], "of": "sum", "index": "phase_difference"}` (`of`
+`{"of": "sum", "index": "phase_difference"}` (the table is the family's, written
+from its phase width, never declared: phase-spread-v1, 2026-09-18; `of`
 may also name one input, and `"between": [i, j]` the two inputs, default 0
 and 1): the content is shared between this output and the one that declares
 `{"rest_of": <this output>}` in the ratio `table[d] : (m - table[d])`, `m`
@@ -887,7 +888,7 @@ run byte-identically, and the runner records
 ```json
 {"name": "split", "participants": [{"type": "a"}, {"type": "a"}],
  "outputs": [
-   {"field": "a", "amount": {"table": [8, 7, 4, 1, 0, 1, 4, 7], "of": "sum", "index": "phase_difference"}, "heading": 2},
+   {"field": "a", "amount": {"of": "sum", "index": "phase_difference"}, "heading": 2},
    {"field": "a", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}}],
  "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
 ```
@@ -2255,6 +2256,49 @@ migrated textually by `examples/nature/bit_law_migration.py`. The catalog's
 textual migration, the decay table (point 20), the speed rule (point 21), the
 restated readings of point 18 and the rest rate of point 19 follow in feature
 16.
+
+### The phase-steered spread (`phase-spread-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4, point 17, the model owner's
+decision of 2026-09-18, with the polarization amendment of that day; feature
+16a): at a Node, the shares of one owner that meet combine by the coherence
+rule, their amount unchanged and their phase the step nearest their coherent
+sum, and steer each other by the Born table of section 3.3. The table is not
+declared (the model owner, 2026-09-18): the engine writes it once from the
+family's phase width N, the share that continues at a difference of d steps
+being cos^2(pi d / N) in N-ths rounded to the nearest whole,
+[8, 7, 4, 1, 0, 1, 4, 7] at eight steps (`steering_table`, in the fixed-point
+integer arithmetic of the phase tables), the same table for every steering
+of the family, its shadows' spread and two of its things that meet by a
+split indexed by the phase difference (`{"of": ..., "index":
+"phase_difference"}`, the catalog declaring only which pairs steer); a
+`steering` key on a family or a `table` on such a split is refused, and the
+run records the table under `shadow_families`. The four declarations point 17 left open (DERIVATIONS.md
+section 17, D1 to D4), each the simplest exact integer rule: (D1) the
+candidate Port of a share is its own continuation; (D3) a group is the shares
+of one owner, source sign and polarization at the Node, and in a group of two
+or more each share reads its phase difference to the step nearest the coherent
+sum of the others (a cancelled or tied sum reads as step 0, as `phase_of_sum`
+does); (D2) each share continues with the whole quanta of amount x
+table[difference] / modulus, so unequal shares each go by their own amount and
+difference and a pair's sum gets the table's share up to the two floors; (D4)
+the rest is sent apart through the four headings transverse to the share's
+own, rest // 4 each and the remaining rest mod 4 quanta one to each of the
+first of them in Port order, whole quanta only, nothing of a steered share
+entering the registers. A lone share, one that meets no other share of its
+group, keeps the split table of section 3.5 with its remainders; shadows of
+different owners, or of differing polarization (orthogonal polarizations
+neither combine nor steer, the model owner, 2026-09-18), are lone to each
+other. Amounts stay non-negative and conserved exactly: cancellation is never
+in amount, only in heading. The dense mode implements the same rule
+vectorized, per owner and sign, and hands a Node holding more shadows than
+its layers to `spread_content` ray by ray. Known and noted, not fixed here:
+under "in phase continues forward" a release of one phase keeps four fifths
+of its content on axis-parallel lines in the coordinate planes through its
+source (the tube theorem of DERIVATIONS.md section 17); the model owner
+decides. Identity `phase-spread-v1`; isolated test
+`tests/test_phase_spread.py`
+([expectations](TEST_EXPECTATIONS.md#the-phase-steered-spread)).
 
 ### A free ray turns by momentum (`ray-momentum-turn-v2`)
 

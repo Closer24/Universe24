@@ -23,7 +23,8 @@ from event_universe.runner import run_initialization
 CENTER = (7, 7, 7)
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
-# The reference table for 8 phase steps: cos^2(d/2) in eighths, rounded.
+# The steering table of a family of 8 phase steps, written by the engine from the
+# width (phase-spread-v1, 2026-09-18: never declared): cos^2(d/2) in eighths, rounded.
 TABLE = [8, 7, 4, 1, 0, 1, 4, 7]
 COSTS = OperationCosts((1,) * 9)
 
@@ -68,13 +69,12 @@ def four(amounts=(2, 2, 3, 3), ports=(2, 3, 4, 5)):
     ]
 
 
-def table_split(table=TABLE, rest_of=0):
+def table_split(table=None, rest_of=0):
+    amount = {"of": "sum", "index": "phase_difference"}
+    if table is not None:
+        amount["table"] = table
     return [
-        {
-            "field": "a",
-            "amount": {"table": table, "of": "sum", "index": "phase_difference"},
-            "heading": 2,
-        },
+        {"field": "a", "amount": amount, "heading": 2},
         {"field": "a", "amount": {"rest_of": rest_of}, "heading": 3, "phase": {"of": 1}},
     ]
 
@@ -309,7 +309,7 @@ def test_a_meeting_replaces_its_rays_by_declared_outputs_split_by_the_table_or_i
             with pytest.raises(ValueError, match=message):
                 world.step()
         for outputs, message in (
-            (table_split(table=TABLE[1:]), "table length to equal the phase steps"),
+            (table_split(table=TABLE), "it is not declared"),
             (table_split(rest_of=1), "rest_of requires an output split by a table"),
             (four(ports=(2, 3, 4, 6)), "Port index"),
         ):

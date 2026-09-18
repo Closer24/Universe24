@@ -234,6 +234,7 @@ def _profile(
                 steps=steps,
                 detector=BIT_SHADOW,
                 source_sign=shadow.sign,
+                polarization=shadow.polarization,
                 owner=shadow.owner,
             )
         )
