@@ -43,6 +43,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_disturbance_application.py` | 14 | 0.29 | Runner record: headless run files, the saved initialization and source fingerprint that replay a run, explicit CLI opt-ins |
 | `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
 | `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
+| `test_field_books.py` | 2 | 0.35 | Experiment E11 (`examples/nature/e11_field_books/`): the three worlds byte for byte what `make_worlds.py` writes and the pinned geometry, and the shell reader of `profile.py` on a 9^3 point source for two and four ticks: the shell counts, the ledger, one shell's totals, radial momentum and flux by hand from the release and the split table, the mean field at the same tick and Gauss's constant flux at its steady state, pinned below |
 | `test_field_spreading.py` | 10 | 0.90 | Issue #169 feature 12: every Node that field content reaches releases it again by the family's split table, amounts adding per heading, the phase of the coherent sum, whole quanta leaving and the shares below one quantum owned by the Node's remainder registers until they reach one (`field-spreading-v1`, `field-remainder-v1`); the source sign on the field ray; a returned field quantum walking back until something takes it |
 | `test_helium_orbit.py` | 1 | 7.6 | The helium orbit of E8 in isolation on a 7^3 board: a proton-family body releasing its spreading light (`field-spreading-v1`, `field-remainder-v1`), an electron held at a launcher body by an output delay and released into that field, pushed at every Node by the momentum-table coupling (`ray-momentum-turn-v2`), the recoils, the transparent nucleus and its sink, the world ledger exact |
 | `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
@@ -3692,3 +3693,56 @@ engine alone and the dense mode give the same `state.json`, the same ledger
 same `final_totals`, the same `detector_marks` (the one mark's counter light
 equal to the totals, positive) and `detector_mark_totals`; the first run
 agreed.
+
+## The field's books
+
+`tests/test_field_books.py` pins the worlds and the shell reader of experiment
+E11 ([register](EXPERIMENTS.md#e11-the-fields-books-the-profile-of-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting);
+`examples/nature/e11_field_books/`, the tables in its
+[README](../examples/nature/README.md#the-fields-books-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting)),
+written before the first run of the reader from the release and the split
+table by hand. Two tests:
+
+- the three world files `point_source`, `books`, `books_axis` are byte for
+  byte what `make_worlds.cases` writes (`json.dumps(indent=1)` and a newline)
+  and the pinned geometry: the point source on [49, 49, 49], 192 ticks,
+  `dense_field` true, one body of family `proton` at (24, 24, 24), amount 2^20,
+  charge 3, `momentum_table` `{"light": 1}`, its `light` `field_of` `proton`
+  with `release` [1, 256] and `spread` [6, 1, 1, 1, 1, 1]; the books on
+  [21, 21, 21], 36 ticks, `dense_field` true, the electron lamp seeded at
+  (0, 14, 10), `electron_field_turn` with `momentum_table` `{"light": -1}`, A
+  at (10, 10, 10) with `{"light": -1}`, nothing declaring `field_of`
+  `electron`; the axis world the same without the `dense_field` key and
+  without `spread` on the light, equal to the books world in every other key
+  but the model id and the spatial fields;
+- the reader on the point source moved to a 9^3 board about (4, 4, 4): the
+  L1 shells hold 1, 6, 18, 38, 66 Nodes for k = 0 to 4 and the Euclidean
+  shells 1, 18, 62, 98, 210; the diagonal Node of the L1 shell 3 is
+  (2, 1, 0), of the Euclidean shells 2 and 3 (1, 1, 1) and (2, 2, 0). After
+  two ticks: the ledger sourced 49152, in flight 46908, registers 12,
+  escaped 0, absorbed 2232 (six backward shares of 372), balanced, the
+  momentum line and the body's register zero; the arrays' reading equal to
+  the inventory's and the shells' sum equal to the ledger's current; the flux
+  through the surface about the body 24576 − 2232 = 22344. L1 shell 1: in
+  flight 24576 (the second release), registers 12 (two quanta per Node,
+  7 + 5 × 3 elevenths), radial momentum 24576 as the integer dot and as the
+  real, the flux across level 1 22332 (six forward shares 2234 and twelve
+  Nodes with two transverse shares 372 + 372), the axis Node's momentum
+  (4096, 0, 0); L1 shell 2: in flight 22332, no registers, the integer dot
+  6 × 2234 × 2 + 12 × 744 = 35736, the real sum 13404 + 8928 / √2 =
+  19717.05, no flux across level 2, the axis Node (2234, 0, 0), the diagonal
+  Node (1, 1, 0) with (372, 372, 0), content 744 and radial 744 / √2; shells
+  3 and 4 empty; the Euclidean shell 1 (the six axis Nodes and the twelve
+  (1, 1, 0) Nodes) in flight 33504 with registers 12 and the flux across its
+  level 13404, shell 2 (the six (2, 0, 0) Nodes) in flight 13404 with the
+  integer dot 26808 and no flux; the L1 shell totals per tick
+  [0, 24576, 0, 0, 0] and [0, 24588, 22332, 0, 0]. The mean field at tick 2
+  in the same box: shell 1 24576, shell 2 6 × 4096 × 6/11 + 12 × 2 × 4096/11
+  = 22341.8, within the 12 quanta the registers hold back; its steady state
+  in the box: the flux through the L1 shells 1, 2 and 3 equal to the
+  effective source to one part in 10^8 (Gauss on the lattice, the fixed point
+  solved to a relative residual of 10^−10; shell 4 touches the faces); the engine's local slopes of the content per Node defined between
+  shells 1 and 2 alone at tick 2. After four ticks: every ledger line
+  balanced, sourced 98304, nothing escaped, the shells' sum the ledger's
+  current, no inward crossing at the last shell and the flux the outward
+  less the inward crossing.
