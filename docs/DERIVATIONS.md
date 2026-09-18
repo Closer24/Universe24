@@ -2930,7 +2930,10 @@ in one interval, since nothing else is a rule of this model.
 - **I, the law as it stands (R9).** Only a real ray pays: w intervals per
   whole quantum of shadow it reads. A shadow never.
 - **II, the shadow pays too.** Two readings, which differ, and both are
-  derived. **II-a (R9a), at the thing:** the shadow a thing reads waits the
+  derived; they are the two readings of the declared option `shadow_wait`
+  of Highlights 5.4 ("The shadow's wait, a declared option to confront",
+  model owner, 2026-09-18, PR #303, feature 16e): II-a is its `thing`,
+  II-b its `field`. **II-a (R9a), at the thing:** the shadow a thing reads waits the
   same w intervals per quantum at the thing's Node before it turns back;
   the meeting is one computation and both parties pay. Local: the thing is
   at the Node, the shadow is parked there (point 22), the count is the
