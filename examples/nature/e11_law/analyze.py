@@ -649,7 +649,7 @@ def tables(record):
             search = f"{sf.get('standing_field')}, iterations {sf.get('standing_field_iterations')}, residual {(sf.get('standing_field_residual') or {}).get('amount', '-')}"
             lines.append(
                 f"| `{label}` | {probe['radius']:.2f} | " + " | ".join(f"{w[k]:.1f}" for k in ("1-20", "21-40", "41-60", "61-80", "81-100", "101-120")) +
-                f" +- {probe['settled_push_error']:.0f} | {fmt(probe['settling_tick'])} | {probe['sign_changes']} | {fmt(amp.get('amplitude_before'))} | {fmt(amp.get('amplitude'))} | {fmt(amp.get('arrived'), 0)} | {fmt(amp.get('wave_fraction'), 3)} | {fmt(free.get('amplitude'))} | {probe['waited_intervals']} | {probe['cumulative_radial_at_end']:.0f} | {probe['body_momentum_at_end']} | {fmt(100 * probe['recoil_home_fraction'], 1) if probe['recoil_home_fraction'] is not None else '-'} % | {probe['in_flight_at_end']} | {probe['world_momentum_zero_every_tick']} | {search} |"
+                f" +- {probe['settled_push_error']:.0f} | {fmt(probe['settling_tick'])} | {probe['sign_changes']} | {fmt(amp.get('amplitude_before'))} | {fmt(amp.get('amplitude'))} | {fmt(amp.get('arrived'), 0)} | {fmt(amp.get('wave_fraction'), 3)} | {fmt(free.get('amplitude'))} | {probe['waited_intervals']} | {probe['cumulative_radial_at_end']:.0f} | {probe['body_momentum_at_end']} | {fmt(100 * probe['recoil_home_fraction'], 1) if probe['recoil_home_fraction'] is not None else '-'} % | {probe['in_flight_at_end'] if probe['in_flight_at_end'] is not None else 'not read'} | {probe['world_momentum_zero_every_tick'] if probe['world_momentum_zero_every_tick'] is not None else 'not read'} | {search} |"
             )
     fit_tables(lines, record, "closed")
     open_probes_block(lines, record, open_probes)
@@ -745,6 +745,7 @@ def main(argv=None):
     parser.add_argument("--no-replay", action="store_true")
     parser.add_argument("--replay-jobs", type=int, default=1, help="replays at once (processes)")
     parser.add_argument("--identity", type=Path, default=None, help="a second run.json of `standing` (another source) to compare with the record read")
+    parser.add_argument("--prior-record", type=Path, default=None, help="an earlier record.json whose replay rows stand in for a world whose replay cache is absent (no new replay is made for it)")
     args = parser.parse_args(argv)
     labels = read_node_labels()
     record = {
@@ -804,10 +805,15 @@ def main(argv=None):
     if not args.no_replay:
         to_replay = [n for n in ("pulse", "standing", "standing_closed") if n in record["worlds"]]
         to_replay += [n for n in record["worlds"] if n.startswith("probe_") and n.endswith("_closed")]
+        prior = json.loads(args.prior_record.read_text(encoding="utf-8")) if args.prior_record else {}
+        from_prior = set()
         jobs = []
         for name in to_replay:
             cache = found[name] / name / "replay.json"
             if cache.exists():
+                continue
+            if name in prior.get("replays", {}):
+                from_prior.add(name)
                 continue
             shells = not name.startswith("probe_")
             jobs.append((name, str(args.worlds / f"{name}.json"), str(found[name] / name / "run" / "run.json"), str(cache), labels, shells))
@@ -824,6 +830,17 @@ def main(argv=None):
                     name, identical, seconds = replay_world(job)
                     print(f"  {name}: ledger identical to the record {identical}, {seconds} s")
         for name in to_replay:
+            if name in from_prior:
+                # The earlier record's reading of this world (its replay cache
+                # is absent and no new replay is made): the read-Node rows and
+                # the identity as recorded there, no momentum reading.
+                label = name.removeprefix("probe_").removesuffix("_closed")
+                entry = dict(prior["replays"][name])
+                entry["from_prior_record"] = str(args.prior_record)
+                record["replays"][name] = entry
+                record["amplitude_at_probes"][label + "_closed"] = prior["amplitude_at_probes"][label + "_closed"]
+                print(f"  {name}: the earlier record's replay rows (identity there: {entry.get('identity', {}).get('identical')})")
+                continue
             cache = found[name] / name / "replay.json"
             cached = json.loads(cache.read_text(encoding="utf-8"))
             per_tick = cached["per_tick"]

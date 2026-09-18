@@ -76,17 +76,17 @@ The runner's standing-set search: fixed point or cycle found False, iterations t
 
 ### The test things (the nine closed probe worlds): the push per interval per window of twenty, the settled push and the amplitude at the thing's Node
 
-| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Cumulative push at 120 | Body's momentum at 120 | Recoil home | In flight at 120 | Probe + shadows + body = 0 every tick | Standing-set search |
+| Probe | r | Ticks 1-20 | 21-40 | 41-60 | 61-80 | 81-100 | 101-120 (+- its standard error) | Settled from tick | Sign changes | Amplitude at the Node, 81-100 | 101-120 | Arrived per interval, 101-120 | Wave fraction | Free-field amplitude (`standing_closed`), 101-120 | Intervals waited | Cumulative push at 120 | Body's momentum at 120 | Recoil home | In flight on the shadows at 120 (replay) | Probe + shadows + body = 0 every tick (replay) | Standing-set search |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | --- | --- |
-| `axis_r4_closed` | 4.00 | 5863.9 | -98.2 | 28.9 | 44.5 | 1915.6 | 637.2 +- 588 | - | 58 | 259.2 | 264.2 | 14200 | 1.754 | - | 119 | 167837 | [-3284, -22, -58] | 2.0 % | [-164552, 244, 1939] | True | False, iterations None, residual 46861051 |
-| `axis_r8_closed` | 8.00 | 425.9 | 430.9 | 120.2 | 343.1 | 1344.0 | 1155.1 +- 685 | - | 44 | 191.3 | 172.3 | 12360 | 0.915 | - | 119 | 76386 | [-257, -29, 14] | 0.3 % | [-76128, -1144, -1577] | True | False, iterations None, residual 46785415 |
-| `axis_r12_closed` | 12.00 | 59.2 | 273.0 | 192.6 | 343.2 | 1939.3 | 1845.7 +- 621 | - | 36 | 143.1 | 103.4 | 2589 | 1.602 | - | 117 | 93060 | [-58, -17, 2] | 0.1 % | [-93001, -659, 292] | True | False, iterations None, residual 46774502 |
-| `110_m3_closed` | 4.24 | 11608.0 | 175.8 | 44.4 | -71.9 | 1348.4 | 1064.5 +- 542 | - | 66 | 192.0 | 214.1 | 8595 | 1.886 | - | 119 | 283383 | [-8575, -8167, -42] | 4.2 % | [-212165, -171856, 51] | True | False, iterations None, residual 46993502 |
-| `110_m6_closed` | 8.49 | 2473.3 | 1024.0 | 46.1 | 206.2 | 222.9 | 409.0 +- 883 | - | 39 | 90.6 | 191.9 | 8488 | 1.697 | - | 119 | 87629 | [-751, -667, -3] | 1.1 % | [-78759, -43748, 415] | True | False, iterations None, residual 46792815 |
-| `110_m9_closed` | 12.73 | 270.1 | 506.5 | 66.3 | 118.7 | -122.6 | 452.8 +- 252 | - | 48 | 73.3 | 85.0 | 2371 | 1.239 | - | 115 | 25835 | [-34, -73, 4] | 0.3 % | [-39061, 2633, -1468] | True | False, iterations None, residual 46753318 |
-| `111_m2_closed` | 3.46 | 15259.6 | 1092.6 | 5.2 | -949.5 | -340.7 | 443.9 +- 827 | - | 49 | 345.7 | 392.9 | 18704 | 2.763 | - | 119 | 310224 | [-29934, -30205, -32802] | 17.3 % | [-126258, -127030, -191093] | True | False, iterations None, residual 46671324 |
-| `111_m5_closed` | 8.66 | 5440.5 | 297.7 | 6.4 | -13.3 | 266.6 | 562.1 +- 403 | - | 46 | 99.0 | 53.3 | 870 | 1.189 | - | 118 | 131203 | [-3894, -3932, -1740] | 4.2 % | [-72171, -72303, -73209] | True | False, iterations None, residual 46980039 |
-| `111_m7_closed` | 12.12 | 1748.7 | 1044.2 | 33.4 | -280.8 | 317.3 | 318.7 +- 219 | - | 41 | 94.3 | 127.0 | 4319 | 1.724 | - | 115 | 63629 | [-743, -751, -213] | 1.5 % | [-34068, -34528, -39905] | True | False, iterations None, residual 46834595 |
+| `axis_r4_closed` | 4.00 | 5863.9 | -98.2 | 28.9 | 44.5 | 1915.6 | 637.2 +- 588 | - | 58 | 259.2 | 264.2 | 14200 | 1.754 | - | 119 | 167837 | [-3284, -22, -58] | 2.0 % | [-164553, 244, 1939] | True | False, iterations None, residual 46861051 |
+| `axis_r8_closed` | 8.00 | 425.9 | 430.9 | 120.2 | 343.1 | 1344.0 | 1155.1 +- 685 | - | 44 | 191.3 | 172.3 | 12360 | 0.915 | - | 119 | 76386 | [-257, -29, 14] | 0.3 % | [-76129, -1144, -1577] | True | False, iterations None, residual 46785415 |
+| `axis_r12_closed` | 12.00 | 59.2 | 273.0 | 192.6 | 343.2 | 1939.3 | 1845.7 +- 621 | - | 36 | 143.1 | 103.4 | 2589 | 1.602 | - | 117 | 93060 | [-58, -17, 2] | 0.1 % | [-93002, -659, 292] | True | False, iterations None, residual 46774502 |
+| `110_m3_closed` | 4.24 | 11608.0 | 175.8 | 44.4 | -71.9 | 1348.4 | 1064.5 +- 542 | - | 66 | 192.0 | 214.1 | 8595 | 1.886 | - | 119 | 283383 | [-8575, -8167, -42] | 4.2 % | [-212166, -171856, 51] | True | False, iterations None, residual 46993502 |
+| `110_m6_closed` | 8.49 | 2473.3 | 1024.0 | 46.1 | 206.2 | 222.9 | 409.0 +- 883 | - | 39 | 90.6 | 191.9 | 8488 | 1.697 | - | 119 | 87629 | [-751, -667, -3] | 1.1 % | not read | not read | False, iterations None, residual 46792815 |
+| `110_m9_closed` | 12.73 | 270.1 | 506.5 | 66.3 | 118.7 | -122.6 | 452.8 +- 252 | - | 48 | 73.3 | 85.0 | 2371 | 1.239 | - | 115 | 25835 | [-34, -73, 4] | 0.3 % | not read | not read | False, iterations None, residual 46753318 |
+| `111_m2_closed` | 3.46 | 15259.6 | 1092.6 | 5.2 | -949.5 | -340.7 | 443.9 +- 827 | - | 49 | 345.7 | 392.9 | 18704 | 2.763 | - | 119 | 310224 | [-29934, -30205, -32802] | 17.3 % | not read | not read | False, iterations None, residual 46671324 |
+| `111_m5_closed` | 8.66 | 5440.5 | 297.7 | 6.4 | -13.3 | 266.6 | 562.1 +- 403 | - | 46 | 99.0 | 53.3 | 870 | 1.189 | - | 118 | 131203 | [-3894, -3932, -1740] | 4.2 % | not read | not read | False, iterations None, residual 46980039 |
+| `111_m7_closed` | 12.12 | 1748.7 | 1044.2 | 33.4 | -280.8 | 317.3 | 318.7 +- 219 | - | 41 | 94.3 | 127.0 | 4319 | 1.724 | - | 115 | 63629 | [-743, -751, -213] | 1.5 % | not read | not read | False, iterations None, residual 46834595 |
 
 ### The 1/r^2 fit per direction and the anisotropy (closed board)
 
@@ -127,14 +127,14 @@ The eight open-board records below were made before the model owner's decision t
 
 ### The test things on the open board: the pushed amount per interval and the inventory's J at the same Node
 
-| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | Recoil home | In flight at 40 | Probe + shadows + body + escaped = 0 every tick |
+| Probe | r | Cumulative radial push at 40 | At 30 | Mean per interval, ticks 2-21 | 2-11 | 12-21 | 22-31 | 32-40 | Sign changes | Inventory J_r, mean 2-21 (`standing`) | Content per Node at 2 / 21 / 40 | Intervals waited | Body's momentum at 40 | Recoil home | Ledger momentum lines at 40 (current, returned, escaped) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | ---: | --- | --- |
-| `axis_r4` | 4.00 | 115328 | 115787 | 5868.1 | 8538.1 | 3198.1 | -107.9 | -106.1 | 18 | 4274.9 | 22653 / 2634 / 388 | 39 | [-1587, 6, 5] | 1.4 % | [-113567, 328, -100] | True |
-| `axis_r8` | 8.00 | 17204 | 9190 | 392.0 | 153.9 | 630.1 | 399.9 | 596.1 | 12 | 606.4 | 841 / 1674 / 501 | 39 | [0, 0, 0] | -0.0 % | [-17084, -161, 44] | True |
-| `axis_r12` | 12.00 | 6572 | 6295 | 101.0 | 30.1 | 171.8 | 431.9 | 26.0 | 10 | 163.8 | 0 / 1072 / 228 | 37 | [0, 0, 0] | -0.0 % | [-6508, -122, -194] | True |
-| `110_m3` | 4.24 | 235703 | 234571 | 11527.1 | 16474.5 | 6579.8 | 395.0 | 134.5 | 20 | 12227.5 | 85833 / 2410 / 295 | 39 | [-6044, -5618, -2] | 3.5 % | [-172282, -148798, -137] | True |
-| `110_m6` | 8.49 | 69914 | 68845 | 2879.9 | 1350.7 | 4409.2 | 1190.7 | 45.3 | 9 | 3929.1 | 976 / 6515 / 79 | 39 | [-449, -391, -3] | 0.8 % | [-55190, -42476, 170] | True |
-| `110_m9` | 12.73 | 15481 | 11006 | 306.6 | 125.7 | 487.4 | 602.9 | 369.0 | 10 | 1251.5 | 0 / 12242 / 151 | 35 | [0, 0, 0] | -0.0 % | [-7860, -13820, 117] | True |
+| `axis_r4` | 4.00 | 115328 | 115787 | 5868.1 | 8538.1 | 3198.1 | -107.9 | -106.1 | 18 | 4274.9 | 22653 / 2634 / 388 | 39 | [-1587, 6, 5] | 1.4 % | {'current': [1760, -13, 1], 'returned': [-1587, 6, 5], 'escaped': [-173, 7, -6]} |
+| `axis_r8` | 8.00 | 17204 | 9190 | 392.0 | 153.9 | 630.1 | 399.9 | 596.1 | 12 | 606.4 | 841 / 1674 / 501 | 39 | [0, 0, 0] | -0.0 % | {'current': [119, 8, 10], 'returned': [0, 0, 0], 'escaped': [-119, -8, -10]} |
+| `axis_r12` | 12.00 | 6572 | 6295 | 101.0 | 30.1 | 171.8 | 431.9 | 26.0 | 10 | 163.8 | 0 / 1072 / 228 | 37 | [0, 0, 0] | -0.0 % | {'current': [63, 3, -5], 'returned': [0, 0, 0], 'escaped': [-63, -3, 5]} |
+| `110_m3` | 4.24 | 235703 | 234571 | 11527.1 | 16474.5 | 6579.8 | 395.0 | 134.5 | 20 | 12227.5 | 85833 / 2410 / 295 | 39 | [-6044, -5618, -2] | 3.5 % | {'current': [6326, 5927, 2], 'returned': [-6044, -5618, -2], 'escaped': [-282, -309, 0]} |
+| `110_m6` | 8.49 | 69914 | 68845 | 2879.9 | 1350.7 | 4409.2 | 1190.7 | 45.3 | 9 | 3929.1 | 976 / 6515 / 79 | 39 | [-449, -391, -3] | 0.8 % | {'current': [640, 566, 18], 'returned': [-449, -391, -3], 'escaped': [-191, -175, -15]} |
+| `110_m9` | 12.73 | 15481 | 11006 | 306.6 | 125.7 | 487.4 | 602.9 | 369.0 | 10 | 1251.5 | 0 / 12242 / 151 | 35 | [0, 0, 0] | -0.0 % | {'current': [8, 204, 6], 'returned': [0, 0, 0], 'escaped': [-8, -204, -6]} |
 
 ### The pulse (open board, measured earlier): the front per direction and the release off the planes
 

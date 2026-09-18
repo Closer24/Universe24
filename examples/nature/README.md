@@ -2757,12 +2757,17 @@ content 1 at rest at a read Node, three radii per direction), and, on the
 closed board the model owner decided the confrontation runs are made on
 (2026-09-18), `standing_closed.json` and nine `probe_*_closed.json` (the same
 worlds with `boundary` periodic, 120 ticks and `standing_field` on). The
-open-board worlds are the control. `analyze.py` reads the runner's records,
-replays the three probe-free worlds in-process for the shells and the nine
-closed probe worlds for the amplitude at the test thing's Node; `record.json`
-holds every number, `tables.md` the tables of the register's entry,
-`records/` the `run.json` of every recorded world (its fingerprint inside)
-and `e11_law.html` the page for the model owner.
+open-board worlds, measured earlier the same day, stand outside the series'
+reading. `analyze.py` reads the runner's records, replays the three
+probe-free worlds in-process for the shells and the nine closed probe worlds
+for the amplitude at the test thing's Node and the momentum on the shadows
+(`--prior-record` takes an earlier record's rows for a world whose replay
+cache is gone); `record.json` holds every number, `tables.md` the tables of
+the register's entry, `records/` the `run.json` of every recorded world (its
+fingerprint inside) and `e11_law.html` the page for the model owner. The
+same evening the model owner reversed the rule the series was made under (a
+thing emits, nothing is given with the board, the board of a run is open;
+Highlights 5.4, PR #319), so the series is repeated after feature 19.
 
 ### Dictionary: each physical word next to the engine word
 
@@ -2815,11 +2820,16 @@ the closed board the model owner decided the confrontation runs are made on
 open-board worlds are written and not run: the model owner's decision of
 2026-09-18, during these runs, that only closed worlds are run (the open
 board of E11 repeated, recorded before it, is that entry's control).
-`analyze.py` reads the runner's records (and replays one world in-process
-for the momentum in flight);
-`record.json` holds every number, `tables.md` the tables of the register's
-entry, `records/` the `run.json` of every recorded world and `a5s_law.html`
-the page for the model owner.
+`analyze.py` reads the runner's records (and replays worlds in-process for
+the momentum in flight, `--replay NAME` or `--replay-all`); `record.json`
+holds every number, `tables.md` the tables of the register's entry,
+`records/` the `run.json` of every recorded world and `a5s_law.html` the
+page for the model owner. The series is partial: seven of the eight worlds
+are recorded (`pp_d8_111_closed` was killed by the machine's memory limit
+and its rerun stopped on the model owner's word) and one replayed; the same
+evening the model owner decided that a thing emits and the board of a run
+is open (Highlights 5.4, PR #319), so the series is repeated after feature
+19.
 
 ### Dictionary: each physical word next to the engine word
 
