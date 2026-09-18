@@ -18,7 +18,6 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        int,
     ],
     SpatialPlan,
 ]
@@ -52,13 +51,11 @@ class SpatialPlanningInput:
     received: int
     node_cost: int = 0
     rays: tuple[Rays, ...] = ()
-    # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
-    ray_hold: int = 0
-    # The Node's ticket state before the cycle (decay-draw-v1): part of the
-    # request, so that a reused plan never replays a draw at another state.
-    # The parked shadows, the shares below one quantum and the traces read by
-    # the shadows walking home, are among `rays` (node-is-ports-v1).
-    detector_ticket: int = 0
+    # The mark's count of arrivals before the cycle (bit-law-v1): part of the
+    # request, so that a reused plan never replays the table at another count.
+    # The parked shadows, the shares below one quantum, are among `rays`
+    # (node-is-ports-v1).
+    arrivals: int = 0
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -95,8 +92,7 @@ def finish_local_cycle(
                     request.received,
                     request.node_cost,
                     request.rays,
-                    request.ray_hold,
-                    request.detector_ticket,
+                    request.arrivals,
                 )
             else:
                 result = None
@@ -123,8 +119,7 @@ def _plan_spatial_batch(
             item.received,
             item.node_cost,
             item.rays,
-            item.ray_hold,
-            item.detector_ticket,
+            item.arrivals,
         )
         for item in items
     )
@@ -181,18 +176,9 @@ class NodeExecution:
         received: int,
         node_cost: int = 0,
         rays: tuple[Rays, ...] = (),
-        ray_hold: int = 0,
-        detector_ticket: int = 0,
+        arrivals: int = 0,
     ) -> SpatialPlan:
-        request = SpatialPlanningInput(
-            states,
-            records,
-            received,
-            node_cost,
-            rays,
-            ray_hold,
-            detector_ticket,
-        )
+        request = SpatialPlanningInput(states, records, received, node_cost, rays, arrivals)
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 
     def _evaluate_carriers(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:

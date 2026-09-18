@@ -1,9 +1,13 @@
-"""Inverse split (inverse-split-v1): a returned ray at its event Node, by return_mode.
+"""Inverse split (inverse-split-v1): a returned ray at its event Node.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Inverse split")
 before the first run: a pair lamp at X sending 4 quanta each way on one line,
 arm A returned at a marked Node three Links out, arm B free, and the exact tick
-table from the return through the inverse split in each of the three modes.
+table from the return through the inverse split. The return modes straight and
+annul and the annulled sink were deleted in the cleanup of 2026-09-18 (Highlights
+5.4, point 7: things conserve exactly, nothing leaves for a sink); the one
+behaviour is the transmission to the sibling lines, and a world that declares
+`return_mode` is refused.
 
 Re-pinned on 2026-09-18 under the law of the bit (bit-law-v1, point 14: there
 is no lottery): the mark's setting is its counter table, [0, 1] here, a mark
@@ -20,7 +24,6 @@ from event_universe import Simulation
 from event_universe.core.spatial_state import (
     BIT_THING,
     INVERSE_SPLIT,
-    RETURN_MODES,
     Ray,
     ray_momentum,
 )
@@ -36,7 +39,7 @@ HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 PAIR_PORTS, PAIR_SHARES = 3, (SHARE, SHARE, 0, 0, 0, 0)
 
 
-def document(mode, ticks=10):
+def document(ticks=10, **extra):
     return {
         "schema_version": 1,
         "model_id": "inverse-split-test-v1",
@@ -46,7 +49,7 @@ def document(mode, ticks=10):
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": ticks,
-        "return_mode": mode,
+        **extra,
         "operation_costs": {
             name: 1
             for name in (
@@ -178,11 +181,11 @@ def transmission(tick):
     )
 
 
-def expected_rays(mode, tick):
+def expected_rays(tick):
     rays = [arm_b(tick)]
     if tick <= 6:
         rays.append(arm_a(tick))
-    elif mode != "annul":
+    else:
         rays.append(transmission(tick))
     return sorted(rays)
 
@@ -207,10 +210,8 @@ def lamp(world):
     )
 
 
-@pytest.mark.parametrize("mode", RETURN_MODES)
-def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_path):
-    initial = parse_initial_state(document(mode))
-    assert initial.return_mode == mode
+def test_a_returned_ray_performs_the_inverse_split_to_its_sibling_lines(tmp_path):
+    initial = parse_initial_state(document())
     definition = initial.spatial_fields[0]
     events = []
     world = Simulation(
@@ -221,41 +222,36 @@ def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_
             else None
         ),
     )
-    annul = mode == "annul"
     for tick in range(1, 11):
         world.step()
         split = tick >= 7
         # (a), (b) The rays of the world follow the pinned table: arm A out, returned
         # and back at X at tick 6; arm B free; from tick 7 the transmission on arm
-        # B's line in siblings and straight, six Links behind B, nothing in annul.
-        assert rays_in(world) == expected_rays(mode, tick)
+        # B's line, six Links behind B.
+        assert rays_in(world) == expected_rays(tick)
         # (c) The lamp keeps nothing of the returned share: the restore and the
         # funding of the transmission in one interval leave it 0 quanta, with the
-        # recoil of the transmission in siblings and straight and none in annul.
+        # recoil of the transmission.
         assert lamp(world) == {
             "quanta": (0,),
-            "momentum": (8, 0, 0) if split and not annul else (0, 0, 0),
+            "momentum": (8, 0, 0) if split else (0, 0, 0),
         }
-        # (d) Totals, the annulled sink, the spatial accounting and the conservation
-        # report are exact at every tick: initial = current + escaped + annulled.
-        gone = SHARE if split and annul else 0
-        assert world.totals() == {"quanta": (AMOUNT - gone,), "momentum": (-gone, 0, 0)}
-        assert world.annulled_totals() == {"quanta": (gone,), "momentum": (gone, 0, 0)}
+        # (d) Totals, the spatial accounting and the conservation report are exact
+        # at every tick: initial = current + escaped.
+        assert world.totals() == {"quanta": (AMOUNT,), "momentum": (0, 0, 0)}
         assert world.escaped_totals() == {"quanta": (0,), "momentum": (0, 0, 0)}
         report = world.conservation_report()
         assert report["status"] == "passed"
-        assert report["annulled"] == {"energy": gone, "momentum": (gone, 0, 0)}
+        assert "annulled" not in report
         accounting = world.spatial_accounting()
         assert all(item["balanced"] for item in accounting.values())
-        assert accounting["quanta"]["annulled"] == (gone,)
+        assert "annulled" not in accounting["quanta"]
         in_flight = [0, 0, 0]
         for node in world.inventory_view().nodes:
             for rays in node.rays:
                 for axis, value in enumerate(ray_momentum(rays, definition)):
                     in_flight[axis] += value
-        assert tuple(in_flight) == (
-            (-8, 0, 0) if split and not annul else (-4, 0, 0) if split else (0, 0, 0)
-        )
+        assert tuple(in_flight) == ((-8, 0, 0) if split else (0, 0, 0))
     # (e) One return, no click, and exactly one inverse split at X, in the cycle
     # labelled 6 (the cycle whose packets arrive at tick 7, as the lamp's emission
     # cycle is labelled 0).
@@ -274,17 +270,15 @@ def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_
         "tick": 6,
         "position": X,
         "family": "quanta",
-        "mode": mode,
-        "ports": () if annul else (1,),
-        "amounts": () if annul else (SHARE,),
+        "ports": (1,),
+        "amounts": (SHARE,),
         "amount": SHARE,
         "restored": True,
-        "annulled": {"quanta": (SHARE,), "momentum": (SHARE, 0, 0)} if annul else {},
     }
-    # (f) The runner records the identity and the mode, the sink and the conservation
-    # line, and replays byte for byte.
+    # (f) The runner records the identity and the conservation line, and replays
+    # byte for byte.
     path = tmp_path / "split.json"
-    path.write_text(json.dumps(document(mode)), encoding="utf-8")
+    path.write_text(json.dumps(document()), encoding="utf-8")
     records = []
     for name in ("first", "second"):
         run_initialization(path, tmp_path / name, ticks=10)
@@ -299,22 +293,19 @@ def test_a_returned_ray_performs_the_inverse_split_by_the_return_mode(mode, tmp_
         json.loads(json.dumps(events[1]))
     ]
     assert first_run["inverse_split"] == INVERSE_SPLIT == "inverse-split-v1"
-    assert first_run["return_mode"] == mode
     assert first_run["detector_return"] == "detector-return-v1"
-    assert first_run["annulled_totals"] == {
-        "quanta": [SHARE if annul else 0],
-        "momentum": [SHARE if annul else 0, 0, 0],
-    }
+    assert not {"return_mode", "annulled_totals", "sampling_profile"} & first_run.keys()
     assert first_run["accounting_balanced_at_every_completed_tick"]
     # Since ray-event-audit-v1 (2026-09-17) the flag is the world ledger's identity,
-    # initial + sourced = current + escaped + annulled + absorbed, so the annulled
-    # sink keeps it true; it read false in annul before feature 10.
+    # initial + sourced = current + escaped + absorbed.
     assert first_run["conserved_at_every_completed_tick"]
     assert first_run["ray_event_audit"] == "ray-event-audit-v1"
-    assert first_run["final_totals"] == {
-        "quanta": [SHARE if annul else AMOUNT],
-        "momentum": [-SHARE if annul else 0, 0, 0],
-    }
-    # An unknown mode is rejected before a world exists.
-    with pytest.raises(ValueError, match="return_mode"):
-        parse_initial_state(document("none"))
+    assert first_run["final_totals"] == {"quanta": [AMOUNT], "momentum": [0, 0, 0]}
+    assert all(
+        "annulled" not in line for ledger in first_run["audit"] for line in ledger["fields"].values()
+    )
+    # (g) The deleted keys are refused before a world exists: a return mode (the
+    # one behaviour needs no name) and a sampling profile (nothing draws).
+    for key in ("return_mode", "sampling_profile"):
+        with pytest.raises(ValueError, match="unknown keys"):
+            parse_initial_state(document(**{key: "siblings"}))

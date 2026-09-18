@@ -112,7 +112,6 @@ def ray_field(name, clock):
         "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": 3,
     }
     if clock:
         # The clock is the content (clock-readings-v1): the thing of 8 advances
@@ -132,6 +131,7 @@ def document(lamps, rules, ticks):
     shadows = [lamp for lamp in lamps if lamp[1] == "f"]
     return {
         "schema_version": 1,
+        "N": 8,
         "model_id": "ray-momentum-turn-test-v1",
         "shape": [21, 21, 21],
         "boundary": "open",

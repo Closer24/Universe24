@@ -5,23 +5,21 @@ under the strict decoder with no float; every ray, coupling and apparatus record
 carries its required keys and every reference resolves; every "undecided" names
 the experiment or hypothesis that decides it and is listed in docs/CATALOG.md;
 the register's confrontation entries and the catalog's agree; every ray a world
-can select, every release a world can declare and every decided coupling the
+can select, the shadow set a family declares and every decided coupling the
 engine runs today is built from the file into a minimal inline world, parsed and
-run for two ticks against pinned integers, an external body under each of its
-decided couplings among them. Light is the field of a charge (Highlights 3.5,
-2026-09-17): one family, released by the electron and the positron and emitted
-by any source, its spread table declared and its source sign the releaser's (feature 12).
+run against pinned integers, an external body under each of its decided
+couplings among them.
+
+Under the law of the bit (Highlights 5.4, the model owner, 2026-09-18; the
+cleanup of the same day, `cleanup-law-v1`): there is no field family, every ray
+record is a family of things whose shadows are rays of the same family with the
+bit 0, its shadow set the `release` it declares; light and the gluon are real
+families; the phase circle is one for the world, N, and no record declares a
+width; the electron's turn is a momentum table on its own family's shadows and
+the recoil is the return of the law, no coupling.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Catalog of nature")
 before the first run.
-
-Re-pinned on 2026-09-18 under clock-readings-v1 (feature 16b): a ray declares
-its content on the ladder and whether its things have a clock, no rest rate
-(Highlights 5.4 point 19); the mass field and its delay coupling are retired
-(point 18: the one shadow set read twice); weak_conversion declares a decay
-table, not a draw (point 20). The catalog's worlds case stays skipped: the
-textual migration of the field families (kind field, field_of) is in the
-feature's remaining list.
 """
 
 import re
@@ -32,7 +30,7 @@ from typing import Any
 import pytest
 
 from event_universe import Simulation
-from event_universe.core.spatial_state import Ray
+from event_universe.core.spatial_state import BIT_SHADOW, Ray
 from event_universe.initialization import parse_initial_state
 from event_universe.json_documents import parse_json_document
 
@@ -52,26 +50,25 @@ SECTIONS = {
     "owner",
     "statement",
     "units",
-    "phase_bits",
-    "lag_bits",
     "rays",
     "couplings",
     "layers",
     "apparatus",
     "experiments",
 }
-RAY_KEYS = {"kind", "content", "clock", "charge", "phase_bits", "field", "note"}
+RAY_KEYS = {"kind", "content", "clock", "charge", "release", "note"}
 COUPLING_KEYS = {"status", "engine", "participants", "invariants", "note"}
 # A coupling has outputs (a binding coupling among them, an outputs rule whose
-# loop closes, loop-binding-v1) or is the sink of an external body.
-RESULT_KEYS = {"outputs", "sink"}
+# loop closes, loop-binding-v1), a momentum table (a thing pushed by shadows,
+# bit-law-v1 point 16) or is the sink of an external body.
+RESULT_KEYS = {"outputs", "momentum_table", "sink"}
 APPARATUS_KEYS = {"world_key", "engine", "declaration", "does", "note"}
 EXPERIMENT_KEYS = {"rays", "couplings", "apparatus", "note"}
-# The rays a world can select today, in catalog order, the releases a world can
-# declare today as (releaser, field), and the couplings the engine runs today: a
-# newly decided entry must join these lists and get a world below.
-RUNNABLE_RAYS = ["light", "electron", "positron"]
-RUNNABLE_RELEASES = [("electron", "light"), ("positron", "light")]
+# The rays a world can select today (a decided content), in catalog order, the
+# families whose shadow set a world can declare today, and the couplings the
+# engine runs today: a newly decided entry must join these lists and get a world.
+RUNNABLE_RAYS = ["light", "electron", "positron", "gluon"]
+RUNNABLE_RELEASES = ["electron", "positron"]
 RUNNABLE_COUPLINGS = [
     "born_steering",
     "electron_field_turn",
@@ -85,6 +82,9 @@ RUNNABLE_COUPLINGS = [
 BODY_NAMES: dict[str, str | int] = {"any": "light", "same": "light", "body": "apparatus", "setting": 3}
 # The Born split of 16 quanta at phase difference d: the +Y and the -Y amounts.
 STEERED = {0: (16, 0), 1: (14, 2), 2: (8, 8), 4: (0, 16)}
+# The world's K for a family with a clock: the lamp's 5 quanta advance one step per
+# interval (clock-readings-v1: content / K), 20 for the pushed electron below.
+K = 5
 
 
 def catalog() -> JsonObject:
@@ -163,9 +163,11 @@ def scalar(name: str) -> JsonObject:
     }
 
 
-def spatial_field(records: JsonObject, name: str, source: str | None = None) -> JsonObject:
-    """The world's `spatial_fields` entry for one catalog ray, at the reference width;
-    with `source`, the ray is declared as the released field of that family."""
+def spatial_field(records: JsonObject, name: str, released: bool = False) -> JsonObject:
+    """The world's `spatial_fields` entry for one catalog ray (the world runs at the
+    reference width, N 8): its charge, its clock (a family with a clock declares `clock`, the world K) and,
+    with `released`, the shadow set its record declares (`release` on the family
+    itself: a shadow is a ray of the same family, bit-law-v1)."""
     ray = records[name]
     entry = {
         "field": name,
@@ -176,16 +178,16 @@ def spatial_field(records: JsonObject, name: str, source: str | None = None) -> 
         "ray_slots": 16,
         "metric": "links",
         "pace": [1, 1],
-        "phase_bits": REFERENCE_BITS,
-        "kerengonen": {"phase_advance": ray["rest_rate"]},
         "charge": ray["charge"],
     }
-    if source is not None:
-        assert ray["kind"] == "field" and source in ray["field_of"], name
-        entry |= {"field_of": source, "release": ray["release"]}
+    if ray["clock"]:
+        entry["clock"] = True
+    if released:
+        assert ray["release"] != UNDECIDED, name
+        entry["release"] = ray["release"]
     # No table of the spread is read: a shadow spreads by the Node's mixing
-    # (node-mixing-v1, Highlights 5.4 point 24).
-    assert "spread" not in ray
+    # (node-mixing-v1, Highlights 5.4 point 24), and no record declares a width.
+    assert not {"spread", "steering", "phase_bits", "field", "field_of"} & ray.keys()
     return entry
 
 
@@ -195,13 +197,24 @@ def board(
     lamps: list[Lamp],
     rules: list[JsonObject],
     bodies: list[JsonObject] | None = None,
-    released: dict[str, str] | None = None,
+    released: list[str] | None = None,
+    shadows: dict[str, list[JsonObject]] | None = None,
+    clock: int = K,
 ) -> JsonObject:
     """A periodic 15^3 board of the named catalog rays (or the apparatus family);
     `lamps` are (position, ray, amount, heading index, phase), each a holding lamp
-    that emits once, funded; `bodies` are external-body declarations; `released`
-    maps a field ray to the family of the world that releases it."""
-    return {
+    that emits once and holds the world's momentum field; `bodies` are
+    external-body declarations; `released` names the families declared with their
+    shadow set; `shadows` a profile of shadows per family (`initial_field`)."""
+    momentum = {
+        "name": "momentum",
+        "components": 3,
+        "units": "quantum",
+        "signed": True,
+        "conserved": True,
+        "extensive": True,
+    }
+    document = {
         "schema_version": 1,
         "model_id": "nature-catalog-test-v1",
         "shape": [15, 15, 15],
@@ -210,6 +223,11 @@ def board(
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": 2,
+        "K": clock,
+        "N": 1 << REFERENCE_BITS,
+        # The wait per whole quantum read (Highlights 5.4 point 23) is pinned in
+        # tests/test_wait_rule.py; these worlds pin the catalog without it.
+        "wait_per_quantum": 0,
         "operation_costs": {
             name: 1
             for name in (
@@ -224,17 +242,17 @@ def board(
                 "commit",
             )
         },
-        "fields": [scalar(name) for name in names],
+        "fields": [scalar(name) for name in names] + [momentum],
         "disturbance_types": [
             {
                 "name": f"lamp_{index}",
-                "fields": [name],
-                "defaults": {name: amount},
+                "fields": [name, "momentum"],
+                "defaults": {name: amount, "momentum": [0, 0, 0]},
                 "transport": {"mode": "hold"},
             }
             for index, (_, name, amount, _, _) in enumerate(lamps)
         ],
-        "spatial_fields": [spatial_field(records, name, (released or {}).get(name)) for name in names],
+        "spatial_fields": [spatial_field(records, name, name in (released or [])) for name in names],
         "emissions": [
             {
                 "type": f"lamp_{index}",
@@ -253,16 +271,25 @@ def board(
         "ray_interactions": rules,
         **({} if bodies is None else {"external_bodies": bodies}),
     }
+    if shadows:
+        document["initial_field"] = {name: {"rays": rays} for name, rays in shadows.items()}
+    return document
 
 
 def rule(name: str, coupling: JsonObject) -> JsonObject:
-    """A `ray_interactions` rule taken from a decided coupling of the catalog."""
-    return {
+    """A `ray_interactions` rule taken from a decided coupling of the catalog: its
+    outputs, or its momentum table with its reading."""
+    result = {
         "name": name,
         "participants": coupling["participants"],
-        "outputs": coupling["outputs"],
         "invariants": coupling["invariants"],
     }
+    if "outputs" in coupling:
+        result["outputs"] = coupling["outputs"]
+    else:
+        result["momentum_table"] = coupling["momentum_table"]
+        result["reads"] = coupling["reads"]
+    return result
 
 
 def with_names(value: Any) -> Any:
@@ -282,11 +309,12 @@ def with_names(value: Any) -> Any:
     return value
 
 
-def run(document: JsonObject) -> Simulation:
+def run(document: JsonObject, ticks: int = 2) -> Simulation:
     simulation = Simulation(parse_initial_state(document))
-    for _tick in range(2):
+    for _tick in range(ticks):
         simulation.step()
         assert all(item["balanced"] for item in simulation.spatial_accounting().values())
+        assert simulation.audit()["balanced"]
     return simulation
 
 
@@ -302,16 +330,48 @@ def rays_at(simulation: Simulation, position: tuple[int, int, int]) -> list[Ray]
     )
 
 
-def event_ray(heading: int, amount: int, phase: int, mask: int, shares: Shares, steps: int = 1) -> Ray:
+def event_ray(
+    heading: int,
+    amount: int,
+    phase: int,
+    mask: int,
+    shares: Shares,
+    steps: int = 1,
+    momentum: tuple[int, int, int] | None = None,
+) -> Ray:
     return Ray(
-        heading, (0, 0, 0), amount, phase=phase, steps=steps, event_ports=mask, event_shares=shares
+        heading,
+        (0, 0, 0),
+        amount,
+        phase=phase,
+        steps=steps,
+        event_ports=mask,
+        event_shares=shares,
+        momentum=momentum,
     )
 
 
-def released_ray(heading: int, amount: int, phase: int, sign: int = 0) -> Ray:
-    """A field ray: no event, its source's phase at the release and the sign of its
-    source's charge (field-spreading-v1), one Link walked."""
-    return Ray(heading, (0, 0, 0), amount, phase=phase, steps=1, source_sign=sign)
+def shadow_ray(
+    heading: int,
+    amount: int,
+    phase: int,
+    sign: int,
+    outbound: int = 1,
+    momentum: tuple[int, int, int] | None = None,
+) -> Ray:
+    """A shadow: a ray of its owner's family with the bit 0, no event, its owner's
+    charge sign (negated on its way back), one Link walked."""
+    return Ray(
+        heading,
+        (0, 0, 0),
+        amount,
+        phase=phase,
+        steps=1,
+        outbound=outbound,
+        detector=BIT_SHADOW,
+        source_sign=sign,
+        momentum=momentum,
+    )
 
 
 def neighbor(position: tuple[int, int, int], heading: int) -> tuple[int, int, int]:
@@ -325,47 +385,38 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
     rays, couplings, apparatus = data["rays"], data["couplings"], data["apparatus"]
     if case == "records":
         # (a) The sections, the units and every record with its required keys, every
-        # reference resolving: a field lists its sources and each source lists it; a
+        # reference resolving: a ray is a family of things with its shadow set; a
         # bound group's charge is the sum over its members and its binding is a
         # corner table; a decided coupling has nothing undecided in what it does;
-        # an external-body coupling is one the
-        # external body lists, and the Detector's declaration is the mark's three keys.
+        # an external-body coupling is one the external body lists, and the
+        # Detector's declaration is the mark's three keys.
         assert set(data) == SECTIONS
         assert (data["schema"], data["date"]) == ("nature-catalog-v1", "2026-09-18")
         assert data["units"]["content"]["value"] == 1 and data["units"]["charge"]["per_e"] == 3
         assert "rest_rate" not in data["units"]
-        assert data["phase_bits"]["default"] == 8
-        assert data["phase_bits"]["reference_table"] == REFERENCE_BITS
-        assert "real" not in data["phase_bits"]
-        lag = data["lag_bits"]
-        assert (lag["status"], lag["world_key"], lag["engine"]["landed"]) == ("open", UNDECIDED, False)
+        # One N for the world (the definitions of the law, 2026-09-18): the phase
+        # unit names N, and no section and no record declares a width or a lag.
+        assert "N, the number of steps of the phase circle" in data["units"]["phase"]["note"]
+        assert not {"phase_bits", "lag_bits"} & data.keys()
         assert set(data["layers"]) == {"note"}
         for name, ray in rays.items():
             assert RAY_KEYS <= ray.keys(), name
-            assert ray["kind"] in ("ray", "field", "bound_group"), name
+            assert ray["kind"] in ("ray", "bound_group"), name
             content = ray["content"]
             assert content == UNDECIDED or (type(content) is int and content >= 0), name
             # A clock is a family's declaration, not a rate (clock-readings-v1).
             assert type(ray["clock"]) is bool and ray["clock"] == (content != 0), name
-            assert type(ray["charge"]) is int and ray["phase_bits"] == "default", name
-            for field in ray["field"]:
-                assert rays[field]["kind"] == "field" and name in rays[field]["field_of"], name
-            if ray["kind"] == "field":
-                assert (ray["content"], ray["clock"], ray["charge"], ray["field"]) == (
-                    0,
-                    False,
-                    0,
-                    [],
-                ), name
-                assert all(name in rays[source]["field"] for source in ray["field_of"]), name
-                release = ray["release"]
-                assert release == UNDECIDED or (
-                    len(release) == 2
-                    and all(type(part) is int for part in release)
-                    and 1 <= release[0] <= release[1]
-                ), name
-            else:
-                assert not {"field_of", "release"} & ray.keys(), name
+            assert type(ray["charge"]) is int, name
+            # No field family, no field of a family, no width per family (bit-law-v1,
+            # point 12; the cleanup of 2026-09-18): a family's field is its shadow
+            # set, the release it declares, decided or not.
+            assert not {"field", "field_of", "phase_bits", "source_sign", "spread"} & ray.keys(), name
+            release = ray["release"]
+            assert release == UNDECIDED or (
+                len(release) == 2
+                and all(type(part) is int for part in release)
+                and 1 <= release[0] <= release[1]
+            ), name
             if ray["kind"] == "bound_group":
                 members = ray["members"]
                 assert all(
@@ -386,7 +437,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             engine = coupling["engine"]
             assert isinstance(engine["identity"], str) and type(engine["landed"]) is bool, name
             results = RESULT_KEYS & coupling.keys()
-            assert results and 1 <= len(coupling["participants"]) <= 6, name
+            assert len(results) == 1 and 1 <= len(coupling["participants"]) <= 6, name
             for participant in coupling["participants"]:
                 if "apparatus" in participant:
                     assert participant == {"apparatus": "external_body"}, name
@@ -424,8 +475,8 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "polarizer",
         }
         piece = apparatus["external_body"]["apparatus_family"]
-        assert (piece["content"], piece["clock"], piece["charge"], piece["field"]) == (0, False, 0, [])
-        assert piece["name"] not in rays
+        assert (piece["content"], piece["clock"], piece["charge"]) == (0, False, 0)
+        assert piece["name"] not in rays and "field" not in piece
         assert apparatus["detector"]["engine"]["landed"]
         # The thing resident at the mark and its one table (node-is-ports-v1): the
         # couplings on the bit a ray carries went with bit-law-v1 (the bit never
@@ -435,8 +486,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert "node-is-ports-v1" in apparatus["detector"]["engine"]["identity"]
         assert "node-is-ports-v1" in apparatus["external_body"]["engine"]["identity"]
         # A click is an absorption (Highlights 5.4, 2026-09-18; detector-absorb-v1,
-        # feature 2c): the coupling on a draw of 1, per family, absorb the default
-        # for a field family and pass for matter.
+        # feature 2c): the coupling on a catch, per family, absorb the default.
         click = mark_couplings["on_click"]
         assert (click["status"], click["world_key"], click["engine"]) == (
             "decided",
@@ -448,38 +498,44 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert click["default"] == "absorb for every family"
         assert "detector-absorb-v1" in apparatus["detector"]["engine"]["identity"]
         assert apparatus["external_body"]["engine"]["landed"]
-        assert len(rays) == 11 and len(couplings) == 15
-        # The mass field and gravity by delay are retired (point 18).
-        assert "mass_field" not in rays and "mass_field_delay" not in couplings
-        assert not any("mass_field" in ray["field"] for ray in rays.values())
+        assert len(rays) == 11 and len(couplings) == 14
+        # The mass field and gravity by delay are retired (point 18); the recoil is
+        # the return of the law (point 3), no coupling.
+        assert not {"mass_field_delay", "recoil_return"} & couplings.keys()
+        assert "mass_field" not in rays
         # A decay is a table (point 20): weak_conversion declares its condition.
         assert set(couplings["weak_conversion"]["decay"]) == {"after_periods", "decided_by"}
         assert "draw" not in couplings["weak_conversion"] and "setting" not in rays["neutron"]["decay"]
-        # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
-        # electromagnetic family, released by the electron, the positron and the
-        # proton (a body of that family radiates it), its spread table declared, and
-        # no other family the field of a charged ray.
+        # Light and the gluon are real families (Highlights 3.26 as amended on
+        # 2026-09-18): things without content on the ladder and without a clock,
+        # the gluon's colour and both shadow sets undecided; the charged families
+        # declare their shadow set, the same ratio for the three.
+        for name in ("light", "gluon"):
+            assert (rays[name]["kind"], rays[name]["content"], rays[name]["clock"]) == ("ray", 0, False)
+            assert rays[name]["release"] == UNDECIDED, name
+        assert rays["gluon"]["colour"] == UNDECIDED
+        assert all(rays[name]["release"] == [1, 4] for name in ("electron", "positron", "proton"))
+        # Feature 11 (ray-polarization-v1): the polarization decided by A12, a
+        # transverse direction on the circle of the world's width, and spin the
+        # same property at one bit on the electron family.
         light = rays["light"]
-        assert (light["kind"], light["field_of"], light["release"]) == (
-            "field",
-            ["electron", "positron", "proton"],
-            [1, 4],
-        )
-        # Feature 16c (node-mixing-v1): no split table is declared, the shadows'
-        # spread being the Node's mixing; the source sign the releaser's; feature 11
-        # (ray-polarization-v1): the polarization decided by A12, a transverse
-        # direction on the circle of the phase width, and spin the same property
-        # at one bit on the electron family.
-        assert "spread" not in light and light["source_sign"] == "releaser"
         assert (light["polarization"], light["polarization_bits"]) == ("transverse", "default")
-        assert "decided_by" not in light
         assert all(rays[name]["polarization_bits"] == 1 for name in ("electron", "positron"))
         polarizer = couplings["polarizer"]
         assert (polarizer["status"], polarizer["world_name"]) == ("decided", "polarizer")
         assert polarizer["outputs"]["table"] == [8, 7, 4, 1, 0, 1, 4, 7]
         assert polarizer["outputs"]["reference_bits"] == REFERENCE_BITS
         assert not {"electron_field", "positron_field"} & rays.keys()
-        assert all("light" in rays[name]["field"] for name in ("electron", "positron"))
+        # The electron's turn is a momentum table on its own family's shadows
+        # (points 12 and 16): the same family on both sides, read by charge.
+        turn = couplings["electron_field_turn"]
+        assert [types_of(p) for p in turn["participants"]] == [["electron"], ["electron"]]
+        assert (turn["momentum_table"], turn["reads"], turn["status"]) == (
+            {"electron": 1},
+            "charge",
+            "decided",
+        )
+        assert "outputs" not in turn and "opposite_charge" not in turn
     elif case == "undecided":
         # (b) Every "undecided" names, in its own record, an entry of the register or
         # a hypothesis of the hypotheses page that decides it, and the table of
@@ -489,12 +545,13 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        # 26 since 2026-09-17: feature 12 decided light's spread and source_sign,
-        # feature 2b the two couplings of the Detector, feature 11 light's
-        # polarization and the polarizer's table (A12 measured); 25 since
-        # 2026-09-18: the mass field's release and the delay table left with the
-        # mass field (point 18), the weak conversion's decay condition joined.
-        assert len(found) == 25
+        # 25 on 2026-09-18 under clock-readings-v1; 29 since the cleanup of the same
+        # day: the lag's world key and the recoil coupling left (the delay and the
+        # word register retired, the recoil the return of the law), and the shadow
+        # set of every family the model owner has not sized joined (light, the
+        # gluon, the muon, the two neutrinos, the two quarks, the neutron), each
+        # hypothesis 17's, the gluon's also hypothesis 13's.
+        assert len(found) == 29
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
@@ -505,10 +562,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A10",
             "hypothesis 12",
             "hypothesis 13",
-            "hypothesis 16",
             "hypothesis 17",
-            "feature 8b",
         }
+        assert all(found[f"rays.{name}.release"] == ["hypothesis 17"] for name in ("light", "muon"))
     elif case == "experiments":
         # (c) The catalog lists exactly the confrontation entries of the register,
         # and every id an entry uses resolves, once.
@@ -522,63 +578,67 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                 assert len(listed) == len(set(listed)), (name, key)
                 assert all(item in table for item in listed), (name, key)
         assert data["experiments"]["A1"]["couplings"][0] == "born_steering"
-        assert data["experiments"]["A5"]["couplings"][0] == "electron_field_turn"
+        assert data["experiments"]["A5"]["couplings"] == ["electron_field_turn"]
     else:
-        # bit-law-v1 (2026-09-18): the catalog still declares its field families
-        # (`kind: "field"`, `field_of`, a release per tick) and the couplings on
-        # them; their textual migration to the law (a shadow is a ray of the same
-        # family, `mass_field` retired) is feature 16b's, and the catalog's worlds
-        # run on the engine again there (handback).
-        pytest.skip("bit-law-v1 (2026-09-18): the catalog's worlds await its migration (feature 16b)")
         # (d) Every ray a world can select today: one lamp of 5 at (7,7,7) emitting
-        # along +X at phase 3; after two ticks the ray is at (9,7,7) with its phase
-        # advanced twice by its rest rate. Every release a world can declare today,
-        # light by the electron and light by the positron: the same lamp of the
-        # releaser, whose departure from (8,7,7) releases five field rays, one per
-        # Port heading but its own.
-        runnable = [
-            name
-            for name, ray in rays.items()
-            if ray["kind"] != "bound_group"
-            and ray["rest_rate"] != UNDECIDED
-            and (ray["kind"] != "field" or ray["release"] != UNDECIDED)
-        ]
+        # along +X at phase 3; after two ticks the ray is at (9,7,7), its phase
+        # advanced twice by one step per interval when its family has a clock (K 5,
+        # content 5) and unchanged for light and the gluon, real families without
+        # a clock (Highlights 3.26 as amended, 2026-09-18).
+        runnable = [name for name, ray in rays.items() if ray["content"] != UNDECIDED]
         assert runnable == RUNNABLE_RAYS
-        releases = [
-            (source, name)
-            for name, ray in rays.items()
-            if ray["kind"] == "field" and ray["release"] != UNDECIDED
-            for source in ray["field_of"]
-            if rays[source]["rest_rate"] != UNDECIDED
-        ]
-        assert releases == RUNNABLE_RELEASES
-        for source, name in [(name, None) for name in runnable] + releases:
-            names = [source] if name is None else [source, name]
-            released = {} if name is None else {name: source}
-            lamps: list[Lamp] = [((7, 7, 7), source, 5, 0, 3)]
-            simulation = run(board(rays, names, lamps, [], released=released))
-            rate = rays[source]["rest_rate"]
-            charge = rays[source]["charge"]
-            sign = (charge > 0) - (charge < 0)
+        released = [name for name, ray in rays.items() if ray["release"] != UNDECIDED]
+        assert released == [*RUNNABLE_RELEASES, "proton"]
+        for name in runnable:
+            simulation = run(board(rays, [name], [((7, 7, 7), name, 5, 0, 3)], []))
+            rate = 1 if rays[name]["clock"] else 0
             expected = event_ray(0, 5, (3 + 2 * rate) % 8, 1, (5, 0, 0, 0, 0, 0), 2)
-            # bit-law-v1 (2026-09-18): a thing moves whole; only its shadows spread
-            # by the family's table (test_bit_law.py), so a spreading family's
-            # thing is the same event ray as any other's.
             assert rays_at(simulation, (9, 7, 7)) == [expected]
-            totals = {source: (5,)}
-            if name is not None:
-                numerator, denominator = rays[name]["release"]
-                each = 5 * numerator // denominator
-                for heading in range(1, 6):
-                    assert rays_at(simulation, neighbor((8, 7, 7), heading)) == [
-                        released_ray(heading, each, (3 + rate) % 8, sign)
-                    ]
-                totals[name] = (5 * each,)
-                assert simulation.source_totals()[name] == (5 * each,)
-            assert simulation.totals() == totals
-            assert simulation.charge_totals() == {
-                held: 5 * rays[held]["charge"] if held == source else 0 for held in names
-            }
+            assert simulation.totals() == {name: (5,), "momentum": (0, 0, 0)}
+            assert simulation.charge_totals() == {name: 5 * rays[name]["charge"]}
+            assert (simulation.real_content(), simulation.shadow_content()) == (5, 0)
+        # Every shadow set a world can declare today, the electron's and the
+        # positron's (bit-law-v1, point 12: a shadow is a ray of the same family
+        # with the bit 0): the same lamp with its family's `release`, and one
+        # shadow of its thing, amount 9, given with the board at (3,3,3) heading +X
+        # (fresh, steps 0). After tick 1 the shadow is at (4,3,3), one Link walked;
+        # in the cycle of tick 2 the Node mixes it (node-mixing-v1, point 24): a
+        # lone arrival turns back four ninths, at phase 4 (the half turn, the
+        # returning share the minus), and sends one ninth on each of the five other
+        # headings at its own phase, so after tick 2 four quanta are at (3,3,3) on
+        # -X and one at each of (5,3,3) +X, (4,4,3) +Y, (4,2,3) -Y, (4,3,4) +Z,
+        # (4,3,2) -Z. The books: 5 real and 9 shadow at every tick, the family's
+        # total 14, the charge total the thing's alone (a shadow carries no charge).
+        for name in RUNNABLE_RELEASES:
+            sign = (rays[name]["charge"] > 0) - (rays[name]["charge"] < 0)
+            profile = [
+                {
+                    "position": [3, 3, 3],
+                    "heading": [1, 0, 0],
+                    "amount": 9,
+                    "phase": 0,
+                    "sign": sign,
+                    "owner": 1,
+                    "steps": 0,
+                }
+            ]
+            document = board(rays, [name], [((7, 7, 7), name, 5, 0, 3)], [], released=[name])
+            document["initial_field"] = {name: {"rays": profile}}
+            simulation = Simulation(parse_initial_state(document))
+            simulation.step()
+            assert rays_at(simulation, (4, 3, 3)) == [shadow_ray(0, 9, 0, sign)]
+            simulation.step()
+            assert rays_at(simulation, (3, 3, 3)) == [shadow_ray(1, 4, 4, sign)]
+            for heading in (0, 2, 3, 4, 5):
+                assert rays_at(simulation, neighbor((4, 3, 3), heading)) == [
+                    shadow_ray(heading, 1, 0, sign)
+                ]
+            assert rays_at(simulation, (4, 3, 3)) == []
+            assert rays_at(simulation, (9, 7, 7)) == [event_ray(0, 5, 5, 1, (5, 0, 0, 0, 0, 0), 2)]
+            assert simulation.totals() == {name: (14,), "momentum": (0, 0, 0)}
+            assert simulation.charge_totals() == {name: 5 * rays[name]["charge"]}
+            assert (simulation.real_content(), simulation.shadow_content()) == (5, 9)
+            assert simulation.audit()["balanced"]
         # Every decided coupling the engine runs today, with its rule taken from the
         # file. born_steering: two light rays of 8 meet head-on at (7,7,7) after tick
         # 1 and are steered at tick 2 between +Y and -Y by the table at their phase
@@ -590,7 +650,8 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         ]
         assert decided == RUNNABLE_COUPLINGS
         steering = couplings["born_steering"]
-        assert steering["outputs"][0]["amount"]["table"] == [8, 7, 4, 1, 0, 1, 4, 7]
+        # The table is computed from N (point 17): the catalog declares none.
+        assert steering["outputs"][0]["amount"] == {"of": "sum", "index": "phase_difference"}
         assert [types_of(p) for p in steering["participants"]] == [["light"], ["light"]]
         for delta, (plus, minus) in STEERED.items():
             lamps = [((6, 7, 7), "light", 8, 0, 0), ((8, 7, 7), "light", 8, 1, delta)]
@@ -604,33 +665,50 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                 [event_ray(3, minus, delta, mask, shares)] if minus else []
             )
             assert rays_at(simulation, (7, 7, 7)) == []
-            assert simulation.totals() == {"light": (16,)}
-            assert simulation.source_totals() == {"light": (0,)}
-        # electron_field_turn: an electron of 5 and a light ray of 1, the field the
-        # electron family releases, meet at (7,7,7) after tick 1; at tick 2 the
-        # electron leaves on the field ray's heading -Y, the field ray returns
-        # reversed, and the electron's departure releases five light rays of amount
-        # 1 with its phase 1.
+            # The momentum the corner moves between lines is booked as the meeting's
+            # source (ray-meeting-conversion-v1, feature 14's rule): +Y less -Y.
+            assert simulation.totals() == {"light": (16,), "momentum": (0, plus - minus, 0)}
+            assert simulation.source_totals() == {"light": (0,), "momentum": (0, plus - minus, 0)}
+        # electron_field_turn (bit-law-v1, points 3, 15 and 16): an electron of 20
+        # (lamp 0, K 20, one phase step per interval) emitted along +X from (6,7,7)
+        # and a shadow of 1 of a second electron (lamp 1 at (13,13,13), thing 2,
+        # whole charge -60 over content 20) heading -Y from (7,8,7) meet at (7,7,7)
+        # after tick 1. In the cycle of tick 2 the electron takes the push: sign 1
+        # x amount 1 x heading (0,-1,0) x the owner's charge over its content (-3)
+        # x the electron's charge (-3) = (0,-9,0), below its content, so it goes on
+        # along +X to (8,7,7) carrying momentum (0,-9,0) (no event, no step); the
+        # shadow turns back with the opposite sign, fresh at (7,7,7), and after
+        # tick 2 is at (7,8,7) on +Y, returning (outbound 0, sign +1), carrying
+        # (0,9,0). The books: the family's total 41, real 40, shadow 1, the two
+        # things' momentum {1: (20,-9,0), 2: (20,0,0)}, the ledger balanced.
         turn = couplings["electron_field_turn"]
-        assert [types_of(p) for p in turn["participants"]] == [["electron"], ["light"]]
-        lamps = [((6, 7, 7), "electron", 5, 0, 0), ((7, 8, 7), "light", 1, 3, 0)]
-        names = ["electron", "light"]
-        simulation = run(
-            board(
-                rays, names, lamps, [rule("electron_field_turn", turn)], released={"light": "electron"}
-            )
-        )
-        shares = (0, 0, 1, 5, 0, 0)
-        assert rays_at(simulation, (7, 6, 7)) == [event_ray(3, 5, 2, 12, shares)]
+        lamps = [((6, 7, 7), "electron", 20, 0, 0), ((13, 13, 13), "electron", 20, 0, 0)]
+        document = board(rays, ["electron"], lamps, [rule("electron_field_turn", turn)], clock=20)
+        document["initial_field"] = {
+            "electron": {
+                "rays": [
+                    {
+                        "position": [7, 8, 7],
+                        "heading": [0, -1, 0],
+                        "amount": 1,
+                        "phase": 0,
+                        "sign": -1,
+                        "owner": 2,
+                        "steps": 0,
+                    }
+                ]
+            }
+        }
+        simulation = run(document)
+        assert rays_at(simulation, (8, 7, 7)) == [
+            event_ray(0, 20, 2, 1, (20, 0, 0, 0, 0, 0), 2, momentum=(0, -9, 0))
+        ]
+        assert rays_at(simulation, (7, 8, 7)) == [shadow_ray(2, 1, 0, 1, outbound=0, momentum=(0, 9, 0))]
         assert rays_at(simulation, (7, 7, 7)) == []
-        for heading in (0, 1, 2, 4, 5):
-            expected = [released_ray(heading, 1, 1, -1)]
-            if heading == 2:
-                expected.append(event_ray(2, 1, 0, 12, shares))
-            assert rays_at(simulation, neighbor((7, 7, 7), heading)) == expected
-        assert simulation.totals() == {"electron": (5,), "light": (6,)}
-        assert simulation.source_totals() == {"electron": (0,), "light": (5,)}
-        assert simulation.charge_totals() == {"electron": -15, "light": 0}
+        assert simulation.totals() == {"electron": (41,), "momentum": (0, 0, 0)}
+        assert simulation.thing_momentum() == {1: [20, -9, 0], 2: [20, 0, 0]}
+        assert (simulation.real_content(), simulation.shadow_content()) == (40, 1)
+        assert simulation.charge_totals() == {"electron": -120}
         # The apparatus. A Detector mark parses under the admission these worlds
         # share. An external body at (8,7,7) meets a light ray of 5 emitted at
         # (7,7,7) along +X at phase 1: under the absorber (the sink, a body of the
@@ -656,30 +734,55 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         sink = {"position": [8, 7, 7], "family": "electron", "amount": 4096, "charge": -3}
         sink["coupling"] = couplings[body["default_coupling"]]["world_name"]
         simulation = run(board(records, ["light", "electron"], lamps, [], [sink]))
-        assert simulation.totals() == {"light": (0,), "electron": (0,)}
+        # The lamp keeps its recoil (-5 on X) and the sink took the ray's momentum.
+        assert simulation.totals() == {"light": (0,), "electron": (0,), "momentum": (-5, 0, 0)}
         assert not any(any(node.rays) for node in simulation.inventory_view().nodes)
-        assert simulation.external_body_totals() == {"light": (5,), "electron": (0,)}
+        assert simulation.external_body_totals() == {
+            "light": (5,),
+            "electron": (0,),
+            "momentum": (5, 0, 0),
+        }
         assert simulation.external_bodies() == [at_rest | {"sink": {"light": 5}}]
         assert simulation.external_body_momentum() == (0, 0, 0)
-        for name, position, product in (
-            ("mirror", (7, 7, 7), event_ray(1, 5, 1, 3, (1, 5, 0, 0, 0, 0))),
-            ("phase_plate", (9, 7, 7), event_ray(0, 5, 4, 1, (6, 0, 0, 0, 0, 0))),
+        # The momentum a body's table moves is booked as the meeting's source (feature
+        # 14's rule, the meeting's momentum change): the ray's momentum on X after
+        # the meeting, -5 under the mirror, less its 5 before, beside the lamp's
+        # recoil -5 in the totals. The phase plate's token is written on the ray's
+        # own heading and shares its lane, so under lanes-v1 (Highlights 5.4, point
+        # 25) the departure is refused until bodies are things with their own line
+        # (the cleanup of 2026-09-18 pins the refusal; the coordinator holds the
+        # question of #293).
+        for name, position, product, ray_momentum in (
+            ("mirror", (7, 7, 7), event_ray(1, 5, 1, 3, (1, 5, 0, 0, 0, 0)), -5),
+            ("phase_plate", (9, 7, 7), None, 5),
         ):
             assert [types_of(p) for p in couplings[name]["participants"][:1]] == [["any"]]
             declared = {"position": [8, 7, 7], "family": piece["name"], "amount": 4096, "coupling": name}
-            simulation = run(
-                board(
-                    records,
-                    ["light", piece["name"]],
-                    lamps,
-                    [with_names(rule(name, couplings[name]))],
-                    [declared],
-                )
+            document = board(
+                records,
+                ["light", piece["name"]],
+                lamps,
+                [with_names(rule(name, couplings[name]))],
+                [declared],
             )
+            if product is None:
+                with pytest.raises(ValueError, match="point 25"):
+                    run(document)
+                continue
+            simulation = run(document)
             assert rays_at(simulation, position) == [product]
             assert rays_at(simulation, (8, 7, 7)) == []
-            assert simulation.totals() == {"light": (5,), piece["name"]: (0,)}
-            assert simulation.external_body_totals() == {"light": (0,), piece["name"]: (0,)}
+            assert simulation.totals() == {
+                "light": (5,),
+                piece["name"]: (0,),
+                "momentum": (-5 + ray_momentum, 0, 0),
+            }
+            assert simulation.source_totals()["momentum"] == (ray_momentum - 5, 0, 0)
+            assert simulation.external_body_totals() == {
+                "light": (0,),
+                piece["name"]: (0,),
+                "momentum": (0, 0, 0),
+            }
             assert simulation.external_bodies() == [at_rest | {"sink": {}}]
         # The polarizer (ray-polarization-v1): the same lamp polarized along +Y (step
         # 0) at a body of angle 2 (45 degrees on the eight-step circle) with the
@@ -717,8 +820,15 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             )
         ]
         assert rays_at(simulation, (8, 7, 7)) == []
-        assert simulation.totals() == {"light": (3,), piece["name"]: (0,)}
-        assert simulation.external_body_totals() == {"light": (2,), piece["name"]: (0,)}
+        # The lamp's recoil -5 and the passing 2 on +X; the shares held in the body's
+        # registers count outside the totals (a body's content enters no sum).
+        assert simulation.totals() == {"light": (3,), piece["name"]: (0,), "momentum": (-3, 0, 0)}
+        # The body's line: the two quanta sunk and the one held, all on +X.
+        assert simulation.external_body_totals() == {
+            "light": (2,),
+            piece["name"]: (0,),
+            "momentum": (3, 0, 0),
+        }
         assert simulation.external_bodies() == [
             at_rest
             | {"sink": {"light": 2}, "held": [0, 0, 4, 4, 0, 0], "held_phases": [0, 0, 1, 1, 0, 0]}

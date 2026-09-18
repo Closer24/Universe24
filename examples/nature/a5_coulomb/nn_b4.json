@@ -40,22 +40,6 @@
       "extensive": true
     },
     {
-      "name": "light_a",
-      "components": 1,
-      "units": "quantum",
-      "signed": false,
-      "conserved": true,
-      "extensive": true
-    },
-    {
-      "name": "light_b",
-      "components": 1,
-      "units": "quantum",
-      "signed": false,
-      "conserved": true,
-      "extensive": true
-    },
-    {
       "name": "momentum",
       "components": 3,
       "units": "quantum times heading",
@@ -146,7 +130,6 @@
         1,
         1
       ],
-      "phase_bits": 12,
       "charge": 0,
       "release": [
         1,
@@ -197,105 +180,12 @@
         1,
         1
       ],
-      "phase_bits": 12,
       "charge": 0,
       "release": [
         1,
         4
       ],
       "clock": true
-    },
-    {
-      "field": "light_a",
-      "baseline": 0,
-      "transport": "ray",
-      "headings": [
-        [
-          1,
-          0,
-          0
-        ],
-        [
-          -1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
-          -1,
-          0
-        ],
-        [
-          0,
-          0,
-          1
-        ],
-        [
-          0,
-          0,
-          -1
-        ]
-      ],
-      "rays_per_tick": 1,
-      "ray_slots": 30,
-      "metric": "links",
-      "pace": [
-        1,
-        1
-      ],
-      "phase_bits": 12,
-      "charge": 0
-    },
-    {
-      "field": "light_b",
-      "baseline": 0,
-      "transport": "ray",
-      "headings": [
-        [
-          1,
-          0,
-          0
-        ],
-        [
-          -1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
-          -1,
-          0
-        ],
-        [
-          0,
-          0,
-          1
-        ],
-        [
-          0,
-          0,
-          -1
-        ]
-      ],
-      "rays_per_tick": 1,
-      "ray_slots": 30,
-      "metric": "links",
-      "pace": [
-        1,
-        1
-      ],
-      "phase_bits": 12,
-      "charge": 0
     }
   ],
   "emissions": [
@@ -343,5 +233,6 @@
     }
   ],
   "ray_interactions": [],
-  "K": 64
+  "K": 64,
+  "N": 4096
 }

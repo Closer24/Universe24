@@ -38,6 +38,8 @@ Feature tests of issue #169 join this table as they land.
 | `test_clock_readings.py` | 8 | 0.5 | Feature 16b, the clock is the content, the two readings and the decay table (`clock-readings-v1`, Highlights 5.4 points 11, 16, 18, 19, 20): the computation per tick is the things' phase steps and is constant between absorptions; a shadow has no clock and two contents are two clocks; K and N bound the content at parsing and at a meeting; a neutral thing has gravity and no electric push, a charged thing's push below one quantum accumulates exactly on its remainder; a bound group breaks by its declared table, byte-identically, and `draw` is refused, pinned below |
 | `test_wait_rule.py` | 6 | 0.4 | Feature 16b, a thing pays a tick for every whole quantum it reads (`clock-readings-v1`, Highlights 5.4 point 23): one quantum read, one interval without a Link, a step or a phase step; a shadow pays nothing; w = 2 doubles the wait; no reading, no wait; a rational w kept exactly, pinned below |
 | `test_node_is_ports.py` | 7 | 1.5 | Feature 17, a Node is its six Ports (`node-is-ports-v1`, Highlights 5.4 point 22 and the settled rules): the parked shadow below one quantum in units of the split's denominator, the engine and the dense layer agreeing; the trace as a zero-amount shadow and the return that follows it to the mark, home to the resident thing on its shadow line with no click (M8); a prefilled shadow of a loop at its Link distance from its owner, absorbed and re-released with the `returned` momentum exact (M9); the record's fixed terms, no register, counter, seed or trace key (M13); a seeded thing missed at a mark restored to its lamp and re-emitted (M14); a source that spends its content, nothing sourced; a mirror thing returning a thing and a shadow |
+| `test_wait_reads.py` | 4 | 0.5 | Feature 16f, the wait reads the amplitude as a declared coupling option (`wait-reads-v1`): absent or `amount`, a record byte-identical to main (a); `amplitude`, the size of the coherent sum of the pushing owner's shadows at the thing's Node in whole units, 81 quanta nine, 9 quanta three, two owners never one sum (b); shares in antiphase from two Ports the size of their difference, 192 of 32nds (c); the dense layer and the engine alone agree (d) |
+| `test_shadow_wait.py` | 8 | 1.0 | Feature 16e, the shadow's wait as a declared world option (`shadow-wait-v1`): absent, a record byte-identical to main (a); read by a thing, the share turned back owes the count per whole quantum of its push before it leaves (b); read by the field, every departure owes the count per whole quantum of another owner's arrivals at the Node, parked ninths never (c); the count exact, d spent per interval (d); the dense layer and the engine alone agree (e) |
 | `test_return_field.py` | 6 | 1.5 | Feature 16d, the return is a field (`return-field-v1`, Highlights 5.4 point 3 as amended): the inverted share leaving the pushed body reversed and mixing, the owner's momentum line receiving what reaches it with the books exact per interval and the momentum in flight on the shadows (a); a returning share pushing a third thing with the opposite sign (b); a returning share absorbed at its owner with no push (c); no trace, no wait, every share moving, the identity recorded (d); a head-on push taken exactly once, the share riding the Link with the thing on the same lane and pushing nothing at the next Node (f); the dense layer and the engine alone agreeing on the worlds of (a) and (b) over four ticks, the returning shares in the arrays with their momentum (e) |
 | `test_lanes.py` | 9 | 2.0 | Feature 18, a Port is two lanes (`lanes-v1`, Highlights 5.4 point 25, the model owner's decision of 2026-09-18): a Node's state is twelve lanes with one real slot and one shadow slot per owner on each, addressable as [Port][lane][real \| shadow(owner)] beside the parked shadows and the rays at rest; two reals declared on one lane refused, a table with two outputs on one heading refused, a sweep that repeats a heading refused, each naming point 25; the lane a condition on the step, the thing already on the heading keeping it and the other continuing on its own heading with its momentum kept and stepping at the next Node, one Link per interval, the books exact; two owners' shadows sharing a lane in one slot each with the sums exact; two reals of one family given one lane one real ray (amounts, momentum and charge exact, the phase the coherent sum's, the owners a set) that is home to a shadow of each owner, things of two families on one lane refused; the record of a world with no contested lane byte-identical, pinned below |
 | `test_detector_absorb.py` | 3 | 1.1 | Issue #169 feature 2c: a click on a field family absorbs the quantum into the mark's counter with its momentum on the marks' line, booked as `absorbed_by_marks` in the world ledger and the local audit, nothing of it delivered or spread on; matter passes with the bit 1; `on_click` per family, its defaults and its validation (`detector-absorb-v1`), pinned below |
@@ -60,7 +62,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_mean_field_gauss.py` | 3 | 0.01 | The mean-field kernel of `examples/nature/a5_static/mean_field_gauss.py` (the computation after experiment A5s): the split of one heading's content at one Node by the table [6, 1, 1, 1, 1, 1] relative to its heading, the conservation of the transport (the total kept until the front reaches the open boundary, the source's own sink taking the backward shares, the mirrored octant equal to the full box), and the beam 4096 x (6/11)^(r-1) as the push at ticks r and r + 1 on a sink at r = 1 to 4, pinned below |
 | `test_momentum_turn_walk.py` | 4 | 7.8 | Deleted on 2026-09-18 under `clock-readings-v1` (the DDA walk and the output-clock delay of a departure are retired: every ray moves one Link per interval); The fix of `ray-momentum-turn-v2`: a push keeps the DDA's accumulators, so a ray pushed at every interval walks the DDA line of its running register; the staircases of a push of 1 and of 8 per interval on a ray of 64, the flip, the cancel, the shrink and the lift by hand, and two boards where a field ray meets the ray at every Node |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
-| `test_nature_catalog.py` | 4 | 0.12 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
+| `test_nature_catalog.py` | 4 | 0.6 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
 | `test_node_rule_contract.py` | 37 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, aggregation policies |
 | `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
@@ -91,6 +93,8 @@ Feature tests of issue #169 join this table as they land.
 
 ## Native complete-ray coupling
 
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the sampling profile and the lottery capture are gone with `core/sampling_contract.py` (their two tests deleted), the `ray_hold` second clock and the `ray_delay` / `ray_phase_per_tick` world keys are deleted (unknown keys), so the direct-caller case has two entries (`absorb`, `routing`) and the clock case three.
+
 `test_native_ray_coupling.py` uses the canonical
 [finite residence input](../examples/generic-ray-coupling/finite-residence.json).
 Two funded axial rays of amount five arrive with phase zero at tick one; after
@@ -111,6 +115,8 @@ changing values. The separate family-conversion suite retains its one-to-six,
 six-to-one, conservation, capacity, Port and delayed-owner coverage.
 
 ## Kerengonen integration guards
+
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the ticket assertions of `test_kerengonen.py` are deleted with the ticket (the mark's table is pinned in [Node Detector bit](#node-detector-bit)); the share-absorber half of that test stays as `test_a_share_absorber_takes_single_quanta_deterministically`.
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the families of these worlds declare no rate (their phases stay), `two_lamps(steps, advance)` declares `clock` and K 2 / advance (rays of 2), the tests of a ray's own advance (`kerengonen_advance`) and of the carried advance are deleted with the key, and the attenuated self-exclusion world is the plain one.
 
@@ -276,7 +282,7 @@ the key selects the default localizing residue.
 | `test_ray_layers.py` | Rules of different layers fire in one interval and an unruled family crosses ([ray layers](#ray-layers)): five rays of families a, a, b, b, c meet at one Node after tick 2; after tick 3 the a rays have swapped headings (mask 3, shares (5, 5, 0, 0, 0, 0), steps 1), the b rays have turned to +Z and -Z at phase 7 (mask 48, shares (0, 0, 0, 0, 5, 5), steps 1) and the c ray is one Link past the Node unchanged (mask 16, steps 3, phase 3); the derived layers are (a), (b), (c) whether or not the b rule is declared, and without it the b rays cross like c; totals 10, 10, 5 and zero momentum every tick with the audit passed, the runner recording `ray-layers-v1` and the layer families |
 | `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the two rays that drew 1 leave with `detector` 2 and continue unchanged while the four that drew 0 leave with `detector` 1 reversed and rest at their lamps from tick 2 on, the marked and the unmarked control world agree on totals, momentum and lamps at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
 | `test_detector_return.py` | A draw of 0 returns the ray ([Detector return](#detector-return)): for each of the six unit-axial headings a lamp's ray of 8 is halved by an absorber one Link before the marked Node, drawn 0 there at tick 3 (seed 3, setting 1/2), reversed with `outbound` 0 and no click, walks back one Link per tick with steps 3, 2, 1, 0 and phase 3, 2, 1, 0, crosses the absorber untouched, reaches the lamp at tick 6 with the phase it left with and, since `inverse-split-v1`, is restored to the lamp (a one-line event has no sibling line; the lamp holds 4 and momentum -4u after tick 7) and emitted again by it as a new event of 4 after tick 8, 8 quanta and zero momentum every tick, one `detector_return` and one `inverse_split` event, the runner recording `detector-return-v1` and `inverse-split-v1`, and a returning ray at an open boundary refused |
-| `test_inverse_split.py` | A returned ray at its event Node performs the inverse split by the world's `return_mode` ([Inverse split](#inverse-split)): a pair lamp at X sends 4 quanta each way on one line, arm A's ray is returned at a marked Node three Links out and reaches X at tick 6; at tick 7 in `siblings` and `straight` a transmission of 4 with A's phase 0 and bit 0 leaves X on arm B's line and never shares a Node with B (B is 6 Links ahead, the round trip), the lamp holding 0 quanta and momentum 8u; in `annul` the share ends at X, the lamp unchanged and `annulled_totals()` 4 quanta and momentum 4u; totals, momentum, the spatial accounting and the conservation report exact at every tick, one `inverse_split` event, the runner recording `inverse-split-v1` and the mode, and an unknown mode rejected |
+| `test_inverse_split.py` | A returned ray at its event Node performs the inverse split to its sibling lines (the return modes deleted on 2026-09-18) ([Inverse split](#inverse-split)): a pair lamp at X sends 4 quanta each way on one line, arm A's ray is returned at a marked Node three Links out and reaches X at tick 6; at tick 7 in `siblings` and `straight` a transmission of 4 with A's phase 0 and bit 0 leaves X on arm B's line and never shares a Node with B (B is 6 Links ahead, the round trip), the lamp holding 0 quanta and momentum 8u; in `annul` the share ends at X, the lamp unchanged and `annulled_totals()` 4 quanta and momentum 4u; totals, momentum, the spatial accounting and the conservation report exact at every tick, one `inverse_split` event, the runner recording `inverse-split-v1` and the mode, and an unknown mode rejected |
 | `test_ray_meeting_conversion.py` | A meeting replaces its rays by declared outputs ([ray meetings with outputs](#ray-meetings-with-outputs)): two rays of 5 meet at one Node after tick 2; with four declared outputs the meeting returns four new rays on Ports 2 to 5 with amounts 2, 2, 3, 3, steps 0, mask 60 and shares (0, 0, 2, 2, 3, 3), and nothing stays at the Node; with the table [8, 7, 4, 1, 0, 1, 4, 7] the shared 10 goes 10:0, 0:10, 5:5 and 8:2 to the two Ports at phase differences 0, 4, 2 and 1, the rest output owning the remainder and the moved momentum booked as a source; outputs that break the amount or the momentum invariant are rejected before any owner changes, malformed tables at initialization; the runner records `ray-meeting-conversion-v1` |
 
 The runner must distinguish actual physical conservation from balanced loss
@@ -614,6 +620,8 @@ one.
 
 ## Node Detector bit
 
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the ticket names are gone with the draw; the Node's count of arrivals is `SpatialNodeState.arrivals` (`FINAL_ARRIVALS` 9), the mark's table `table_catch` / `mark_catch` with `ARRIVAL_MODULUS`, and the control world's guard patches `table_catch`; `run.json` records no `sampling_profile` (the key is refused).
+
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares no rate, so the continuing and returned rays keep phase 0.
 
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14, no lottery): the mark's setting is its counter table, the k-th arrival catching the bit 1 when k mod 2 < 1, so the bits are (1, 0, 1, 0, 1, 0) in Port order and the counter stands at 6; the seed is retired; the mark declares `on_click: "pass"` so that a thing that draws 1 walks on as before; a click and a return name the thing's owner (`tests/test_detector_mark.py`).
@@ -690,6 +698,8 @@ mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
 
 ## Detector return
 
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the count after the one arrival is `arrivals` 1 (`ARRIVALS_AFTER_RETURN`); no `sampling_profile` in `run.json`.
+
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares no rate and no clock, so the phase column of the tick table is 0 throughout (the shares of one emission are of several amounts, which no one K makes one step per Link).
 
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14): the mark's setting [0, 1] is a counter table that catches nothing and returns every thing (the draw of 0 of the old world); the seed is retired, the counter stands at 1 after the one arrival, a return names the owner (`tests/test_detector_return.py`).
@@ -757,6 +767,8 @@ first draw of [Node Detector bit](#node-detector-bit)):
 Re-pinned on 2026-09-18 under `clock-readings-v1`: no rate, no clock; every phase pinned as the Links walked is 0.
 
 Re-pinned on 2026-09-18 under `bit-law-v1` (point 14): the mark's setting [0, 1] returns every thing; no `bit` on an `inverse_split` record; a return names the owner (`tests/test_inverse_split.py`).
+
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the return modes `straight` and `annul`, the `annulled` sink, its ledger line, `annulled_totals()`, the `annulled` entry of the conservation report and the `mode` and `annulled` fields of the `inverse_split` record are deleted (Highlights 5.4, point 7: things conserve exactly, nothing leaves for a sink); the one case is the former `siblings` table below, and a document with `return_mode` or `sampling_profile` is refused as an unknown key. The paragraphs below describe the three modes as pinned before that date.
 
 `test_inverse_split.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
@@ -1609,6 +1621,122 @@ from 9; a lone 1 parks its ninths). Computed from the rules before the run:
   (-1, 0, 0) on the 4 (the returning ninth of tick 3 mixed there in the cycle
   of tick 4, its momentum on the largest share) and nothing on the others.
 
+## The shadow's wait
+
+`tests/test_shadow_wait.py` is the isolated test of `shadow-wait-v1`
+([the shadow's wait](SPATIAL_FIELDS.md#the-shadows-wait-a-declared-option-shadow-wait-v1);
+Highlights 5.4, the model owner's paragraph of 2026-09-18; feature 16e),
+pinned here on 2026-09-18 before its first run, as Highlights 5.5 requires.
+The boards are those of the law of the bit (open, 10 x 5 x 5, the family `m`
+with charge -1 and `release` [1, 1], `wait_per_quantum` 0, bodies with the
+whole charge -amount, a body with the table {"m": 1} reading charge pushed by
+one quantum of another body's shadow by one unit along the shadow's heading;
+the mixing node-mixing-v1). `THING` is {"per_quantum": 1, "reads": "thing"},
+`FIELD` the same reading `field`. Computed from the rules before the run:
+
+- (a) without the key: the ring of `examples/nature/ring.json` for eight
+  ticks has the digests of test_lanes (f) (main at ffa4a56, 2026-09-18),
+  `events.jsonl` 091f6666... and `state.json` 830345cd...; its `run.json`
+  carries no `shadow_wait`; a world without the key parses with
+  `shadow_wait` None and the family's option 0 / 1 and ""; refused at
+  parsing: the object without `reads` (missing keys), `reads` "mass"
+  (shadow-wait-v1), `per_quantum` [1, 0] (d at least 1), -1 (per_quantum),
+  an extra key (unknown keys); declared, `run.json` records `shadow_wait`
+  "shadow-wait-v1" and `shadow_wait_option` {"per_quantum": [1, 1],
+  "reads": "thing"}.
+- (b) the world of the return as a field (b) with A's shadow of 1: without
+  the key B's momentum per tick is 1, 1, 2, 2, 3, 3 and C's 0, 1, 1, 2, 2, 3
+  (pushed at ticks 1, 3, 5 and 2, 4, 6); under THING the share turned back
+  at B after tick 1 (heading -X, steps 0) owes 1, stays through tick 2 owing
+  0 after it, reaches C at tick 3 and pushes it (C 0, 0, 1, 1, 1, 1), turns
+  back (+X, outbound 1, sign -1, carrying (-2, 0, 0)) owing 1, stays through
+  tick 4, reaches B at tick 5 (B 1, 1, 1, 1, 2, 2) and carries (-3, 0, 0):
+  one tick later at every push; the books balanced at every tick, the things
+  conserved, the shadows 1 throughout.
+- (c) P (owner 2) at (0,2,2) and Q (owner 3) at (9,2,2), bodies without a
+  table; P's share of 9 fresh at (3,2,2) on +X. `arrival`: Q's shadow of 3
+  fresh at (5,2,2) on -X, both at (4,2,2) after tick 1, 12 of shadows. In
+  the cycle of tick 2 P's 9 sends 4 back on -X and 1 on each other heading,
+  Q's 3 sends 1 back on +X and parks 3 ninths per heading (still parked after
+  tick 12); under FIELD every departure of P owes 3 (Q's quanta) and Q's
+  owes 9: after tick t = 2, 3, 4 P's six departures are at (4,2,2) with
+  steps 0 owing 4 - t and Q's owing 10 - t; after tick 5 P's are one Link
+  on (4 at (3,2,2) on -X, 1 at (5,2,2) on +X, 1 at each transverse
+  neighbour, steps 1, owing 0), where without the key they are after tick 2
+  (Q's 1 beside P's at (5,2,2) then); Q's 1 stays owing 5 after tick 5 and 0
+  after tick 10, and is at (5,2,2) after tick 11. `parked`: Q's shadow of 2
+  with a Link walked at (4,2,2), 11 of shadows, mixes in the cycle of tick 1
+  into its ninths, 8 on +X and 2 on each other heading (nothing whole,
+  nothing leaving), still parked after tick 12; P's 9, at (4,2,2) after tick
+  1 with steps 1, finds no arrival of another owner and owes nothing: its 4
+  are at (3,2,2) after tick 2 and the run equals the run without the key. In
+  both, the books balanced at every tick.
+- (d) [11, 9] read by a thing (parsed as (11, 9)), the world of (b) with A's
+  shadow of 9: the push of 9 quanta owes 99 ninths, spent 9 per interval, 90
+  after tick 2 and 0 after tick 12, exactly eleven intervals; the share
+  reaches C at tick 13 (C 0 through tick 12, 9 from tick 13; B 9 throughout)
+  and owes 99 there. With A's shadow of 1: 11 after tick 1, 2 after tick 2, 0
+  after tick 3, two intervals, the 2 / 9 below one interval paid by the
+  interval; at C after tick 4 owing 11; C pushed at ticks 4 and 10 (0, 0, 0,
+  then 1 through tick 9, 2 from tick 10), B at 1, 7 and 13 (1 through tick
+  6, 2 through tick 12, 3 after); balanced.
+- (e) the world of (b) under THING and of (c) under FIELD, both sub-cases,
+  run under the engine alone (`dense_field` false) and under the shadow
+  layer (the default, admitted for these boards): the inventories, the
+  ledgers, the things' and the bodies' momenta, the shadows' content and
+  the final parked entries are equal; in `arrival` the Node (4,2,2) is the
+  engine's after tick 2.
+
+## The wait reads the amplitude
+
+`tests/test_wait_reads.py` is the isolated test of `wait-reads-v1`
+([the wait reads the amplitude](SPATIAL_FIELDS.md#the-wait-reads-the-amplitude-a-declared-option-wait-reads-v1);
+Highlights 5.4, the model owner's paragraph of 2026-09-18; feature 16f),
+pinned here on 2026-09-18 before its first run, as Highlights 5.5 requires.
+The board is that of the law of the bit (open, 10 x 5 x 5, the family `m`
+with charge -1, `wait_per_quantum` 1 and `ray_slots` 32 here): a lamp at
+(1,2,2) paying out a
+thing of 1 on +X (thing 1), at (2,2,2) after tick 1; the bodies of 81 at
+(9,2,2) (owner 3) and (9,1,2) (owner 4), without a table, the owners of the
+shadows given with the board, which arrive at the thing's Node after tick 1
+and push it in the cycle of tick 2 under the rule reading the charge (one
+unit of push per quantum of shadow, along the shadow's heading); the world
+declares `shadow_wait` {"per_quantum": 1, "reads": "thing"} (shadow-wait-v1),
+which holds the share turned back at the thing's Node (81 intervals for 81
+quanta, 9 for 9, met by nothing while it waits), so that nothing of the field
+mixes and returns to the thing within the window and the thing's own wait
+alone decides its departure. Computed from the rules before the run:
+
+- (a) absent or `amount`: the ring of `examples/nature/ring.json` for eight
+  ticks has the digests of test_lanes (f) (main at ffa4a56), its `run.json`
+  no `wait_reads`; the world of (b) with `wait_reads` "amount" runs as the
+  world without the key (the inventories, the ledgers, the momenta, the
+  bodies, the shadows, and the digests of `events.jsonl` and `state.json`
+  through the runner) and its `run.json` carries no `wait_reads`; parsed,
+  `wait_reads` "amount" on the world and the family; "flux" refused
+  (wait-reads-v1); declared "amplitude", `run.json` records `wait_reads`
+  "wait-reads-v1" and `wait_reads_option` "amplitude".
+- (b) owner 3's shadow of 81 fresh at (3,2,2) on -X: the push (-81, 0, 0)
+  under both readings (the thing's line (-80, 0, 0) from tick 2); under
+  `amount` the thing owes 81, 80 after tick 2 and 70 after tick 12, still at
+  (2,2,2) heading +X; under `amplitude` the sum's size is 288 of 32nds, nine
+  units, nine quanta of charge read, the thing owes 9, 10 - t after tick t
+  for t = 2 to 10, and at its departure of tick 11 steps to -X (the
+  component reached its content), at (1,2,2) after tick 11 with steps 2,
+  nothing owed, carrying (-80, 0, 0). A shadow of 9: 96 of 32nds, three
+  units, owed 3, 2 after tick 2, at (1,2,2) after tick 5 carrying (-8, 0, 0).
+  Two owners' shadows of 81 each on one lane: two sums of nine, owed 18, 17
+  after tick 2, the register (-162, 0, 0), not the twelve of one sum of 162.
+- (c) `phase_bits` 2 (four steps, 2 half a turn): owner 3's 81 at phase 0
+  from +X (fresh at (3,2,2) on -X) and 9 at phase 2 from +Y (fresh at
+  (2,3,2) on -Y); the pushes (-81, -9, 0) under both readings; the sum's
+  size 288 - 96 = 192 of 32nds (`arrival_amplitude` 192, 288 alone, 384 in
+  phase), six units, owed 6, 5 after tick 2, where `amount` owes 90, 89
+  after tick 2.
+- (d) the world of (b) with `amplitude` under the engine alone and under the
+  shadow layer, twelve ticks: the inventories, the ledgers, the momenta, the
+  bodies, the shadows and the final parked entries equal.
+
 ## A click is an absorption
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the family declares `clock` at K 4 (one step per interval for the thing of 4); `detector_absorb` reads a thing's momentum as amount x heading plus the pushes it carries, (1, 2, -1) and (5, 2, -1) in the helper case.
@@ -2350,6 +2478,8 @@ nonzero block. `relative_ports` gives (0, 1, 2, 3, 4, 5) for Port 0 and
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: the momentum field's line carries `spent`, zero in these worlds; the families declare no rate.
 
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`): the `annul` worlds are deleted with the return modes; the two cases are the pair (`siblings` below) and `body` (the same board with the sink), no line reads `annulled`, and the whole-world local audit of (i) runs on the pair world: initial energy 6, current 1 (the plus arm restored to its lamp), momentum (1,0,-4), charge 1; escaped energy 5, momentum (-1,0,4), charge -1; nothing sourced. The paragraphs below describe the modes as pinned before that date.
+
 `test_ray_event_audit.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
 the six unit-axial headings in Port order, closed under negation) on an open
@@ -2482,6 +2612,10 @@ feature 10, over rays alone).
 
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_detector_sampling_contract.py` pinned behaviour the law removed and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
+## One N for the world
+
+Pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`, the definitions of the law: N is one for the world, declared once like K, 64 by default). Every test world that declared `phase_bits` on a family declares `N` on the world instead, at the same width, so its integers stand; `tests/test_wave_ray_families.py` pins the refusals (a family's `phase_bits` naming the definitions of the law, `N` 1, 12 and 8192 as "a power of two from 2 through 4096", a coherence table of 16 steps on a world of 8 as "must equal N", an emission phase at N) and runs the 4096-step world in place of the 128-bit one (a ray of 2 at K 1 from phase 4093 over 100 Links, `(4093 + 2 t) mod 4096`); `tests/test_kerengonen.py` admits an emission phase 2 on a plain family (N 64 by default) and refuses 64; `run.json` records `N`. The worlds that declared no width ran on one phase value, where a returning share carried no sign; on the circle the returning share is the minus, so `tests/test_return_field.py` (a) (A receives 3 with (-2,0,0) at tick 5 and B is pushed to (34,0,0), 6 and (19,0,0) before) and `tests/test_perf_arrays.py` (N 2, 32 slots; the line does not repeat within 200 intervals: residual 323 cells / 636 quanta, 563 / 1394 with the lamp, 3727 / 19162 after 10; the final momenta (-5013, 9, -1) and (5158, -38, 33); the box's digest `96c50084…`) are re-pinned from the run of that day.
+
 ## Wave-ray families
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: no family declares a rate; every world declares K 1; the massive family of case (b) declares `clock` and its rays of 4 advance 4 steps per interval (phases (77 + 4 t) mod 256); the wide case's ray of 2 advances 2 per interval on the 128-bit circle (`WIDE_RATE` 2, `WIDE_PHASE` the turn less 6; outbound[1] = 2^128 - 4, outbound[100] = 194; a rest rate of 2^70 is no family's to declare); the rejections name `clock-readings-v1` for `phase_advance` and `coherence table` for a carried phase on a family with a clock and no table; `forward_rays` returns the departures' account as a third value.
@@ -2567,6 +2701,8 @@ admitting only a power of two (the table-construction guard world uses 32
 phase steps instead of 37).
 
 ## Ray binding
+
+Deleted from the engine on 2026-09-18 in the cleanup (`cleanup-law-v1`): `LagTable`, `Ray.lag`, the `delay: {of, table, per}` output form, `RAY_BINDING` and the `ray_binding` record key; the twenty-three `delay_*` worlds of `examples/nature/a6_bending/` and the `delay` form of its generator are deleted (the `turn` series stays), their records dated evidence in `docs/EXPERIMENTS.md`.
 
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_ray_binding.py` pinned behaviour the law removed and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
@@ -3125,6 +3261,8 @@ Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_ring_
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_screen_no_draw.py` pinned behaviour the law removed (a mark's ticket seed, a body radiating per tick, `field_of`) and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
 ## Catalog of nature
+
+Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1`, Highlights 5.4 point 12 and 3.26 as amended): the file has ten sections (`phase_bits` and `lag_bits` gone, the phase unit naming the world's one N); every ray record is a family of things with `kind`, `content`, `clock`, `charge`, `release` (its shadow set, `[n, d]` or undecided) and `note`, no `field`, `field_of`, `phase_bits`, `source_sign` or `spread`; `light` and `gluon` are real families of content 0 without a clock, their shadow sets undecided, the gluon's colour undecided; the electron, the positron and the proton declare `release` `[1, 4]`; 11 rays and 14 couplings (`recoil_return` deleted: the recoil is the return of the law, point 3), `electron_field_turn` a decided `momentum_table` `{electron: 1}` with `reads` `charge` over two electron participants; 29 undecided entries whose deciders are A1, A2, A3, A5, A8, A9, A10 and hypotheses 12, 13, 17 (the eight shadow sets not yet sized are hypothesis 17's); A5 lists `electron_field_turn` alone. The `worlds` case runs (it was skipped from 2026-09-18 until this cleanup), every world with the momentum field, K 5 and `wait_per_quantum` 0: (d) the four runnable rays, one lamp of 5 at (7,7,7) emitting +X at phase 3, after two ticks at (9,7,7) with phase 5 for the electron and the positron (clock, content / K = 1 step per interval) and 3 for light and the gluon; the shadow set of the electron and of the positron: the same lamp with its family's `release` and one shadow of its thing (owner 1), amount 9, phase 0, fresh at (3,3,3) heading +X: after tick 1 at (4,3,3) with steps 1, after tick 2 mixed by the Node (`node-mixing-v1`), four quanta back at (3,3,3) on −X at phase 4 (the half turn) and one at each of (5,3,3), (4,4,3), (4,2,3), (4,3,4), (4,3,2) on its outward heading at phase 0, the family's total 14, real 5 and shadow 9, the charge total the thing's alone; the Born steering as before with the momentum the corner moves booked as the meeting's source (0, +Y − −Y, 0); `electron_field_turn`: an electron of 20 (K 20) from (6,7,7) along +X and a shadow of 1 of a second electron (lamp 1 at (13,13,13), thing 2) from (7,8,7) along −Y meet at (7,7,7) after tick 1, the push (0,−9,0) = 1 × 1 × (0,−1,0) × (−60/20) × (−3) below the content, so after tick 2 the electron is at (8,7,7) carrying momentum (0,−9,0) and the shadow, turned back, at (7,8,7) on +Y returning with sign +1 carrying (0,9,0); the family's total 41, real 40, shadow 1, the things' momentum {1: (20,−9,0), 2: (20,0,0)}, the charge total −120; the apparatus as before with the momentum totals (the lamp's recoil −5 on X beside what the body's table moved, booked as the meeting's source: −10 under the mirror, the phase plate, whose token shares the ray's lane, refused at the departure under lanes-v1 naming point 25 until bodies are things with their own line), the sink's `external_body_totals` momentum (5,0,0) and the polarizer's totals momentum (−3,0,0) and its body's line (3,0,0), the two quanta sunk and the one held (the shares held in the body's registers count on the body's line, outside the totals).
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: a ray declares `content` (its rung, the former rest rate in m_0) and `clock`, the units name `content` and the world's `K`, `mass_field` and `mass_field_delay` are retired (11 rays, 15 couplings, 25 undecided entries, A6 no longer a decider), `weak_conversion` declares `decay.after_periods` (undecided, A9) and no `draw`, the neutron's decay names its coupling alone, and the apparatus family declares content 0 and no clock; the worlds case stays skipped (the field families' textual migration is in the feature's remaining list).
 

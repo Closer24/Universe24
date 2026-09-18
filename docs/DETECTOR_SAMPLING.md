@@ -1,10 +1,11 @@
 # Detector-owned sampling
 
-The canonical contract is `detector-only-v1`, the only sampling profile. Only a
-Node whose Detector bit is set may draw ([Highlights](HIGHLIGHTS.md) 3.19):
-creation, propagation, ordinary contacts, phase changes, field emission,
-strong/weak coupling and absorption do not authorize a draw. An entity name,
-diagnostic observer, seed or supplied ticket does not establish a Detector.
+Only a Node whose Detector bit is set is a Detector ([Highlights](HIGHLIGHTS.md)
+3.19): creation, propagation, ordinary contacts, phase changes, field emission,
+strong/weak coupling and absorption do not make one. An entity name, a
+diagnostic observer or a seed does not establish a Detector. The sampling
+profile `detector-only-v1` that named this contract was deleted in the cleanup
+of 2026-09-18 (`cleanup-law-v1`, below): a mark reads the bit, nothing draws.
 
 Since 2026-09-18 (Highlights 5.4, the law of the bit, points 6 and 14;
 `bit-law-v1`, `node-is-ports-v1`) nothing draws: a mark meets a thing or its
@@ -34,28 +35,23 @@ bucket B.5), after the native-contact laws and the shared quantum resource
 
 ## Configuration and admission
 
-`sampling_profile` is immutable initialization metadata with one accepted
-value, `detector-only-v1` (the default). Any other value, including
-`historical-autonomous-v1`, fails admission before a world is constructed or a
-ticket is consumed. The keys of the deleted samplers (`"capture": "lottery"`,
+Since the cleanup of 2026-09-18 (`cleanup-law-v1`) there is no sampling
+profile: `sampling_profile` and `core/sampling_contract.py` are deleted, a
+document that writes the key is refused as an unknown key, and nothing in the
+engine draws. The keys of the deleted samplers (`"capture": "lottery"`,
 `capture_seed`, `capture_salt`, `bond`, `bond_field`, `bond_setting`) are
-unknown to the parser, and a typed `SpatialFieldDefinition` whose `capture` is
-`"lottery"` is rejected by `validate_spatial_sampling` at `InitialState` and
-`SpatialLaw` construction. The deterministic `share` and `threshold` captures
-remain and draw nothing. Preflight and run metadata record the profile. No
-model ID, entity label or observation callback changes admission.
-
-Validate both the parsed immutable initial state and the responsible local law;
-direct typed construction must not bypass the same boundary. The bounded ticket
-sequence (`TICKET_MODULUS`, `next_ticket`, `ticket_draw` and the phase tables
-in `core/spatial_state.py`) is the local draw the Detector mark owns
-([the mark](#the-detector-mark-detector-mark-v1), `detector-mark-v1`); its
-one other caller is the draw of a decaying rule at its meeting, the same
-draw at a Node the rule's declaration marks
-([the decay draw](#the-decay-draw-decay-draw-v1), `decay-draw-v1`,
-2026-09-17); no ordinary owner calls it. The native program admission, resolver construction
-and resolver ticket gates were deleted on 2026-09-17 with the integration
-layer, and the bond-registry gate with the registry itself.
+unknown to the parser; the deterministic `share` and `threshold` captures
+remain and draw nothing. The one counter of the model is the mark's table:
+`SpatialNodeState.arrivals` counts the things that arrived at a marked Node,
+`table_catch` / `mark_catch` in `core/spatial_state.py` read the count against
+the mark's `setting` `[n, d]` (the k-th arrival is caught when k mod d < n)
+and wrap it at `ARRIVAL_MODULUS`; no ordinary owner calls them, and the count
+is part of the plan-reuse key. The ticket sequence (`TICKET_MODULUS`,
+`next_ticket`, `ticket_draw`, `detector_draw`) and the decay draw's use of it
+are deleted with the draw (Highlights 5.4, point 14). The native program
+admission, resolver construction and resolver ticket gates were deleted on
+2026-09-17 with the integration layer, and the bond-registry gate with the
+registry itself.
 
 No physical probability, transport, conserved quantity, ownership layout, phase
 rule or timing law is changed by this admission boundary. The mark below

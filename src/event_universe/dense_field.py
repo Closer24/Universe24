@@ -385,9 +385,9 @@ def plain_ray(ray: Ray, definition: SpatialFieldDefinition, family: DenseFamily 
         or ray.advance != -1
         or ray.wait
         or ray.interaction_delay
-        or ray.lag != (0, 0, 0)
         or ray.polarization != POLARIZATION_NONE
         or ray.accumulators != (0, 0, 0)
+        or ray.owed
         or definition.headings[ray.heading] not in PORT_HEADINGS
     ):
         return False
@@ -471,6 +471,9 @@ class DenseField:
             self.owner[position] = 1
             self.engine_positions.add(position)
         self._active = 0
+        # The Nodes the shadow's wait binds to the engine this delivery
+        # (shadow-wait-v1, the field reading): see `_field_wait_nodes`.
+        self._wait_bound: set[Address3] = set()
         # The standing set (standing-field-v1): the intervals left to look for
         # the fixed point (0: not looking), the state of the previous delivery
         # to compare with, the fixed point's flows once found, and the record.
@@ -1024,7 +1027,8 @@ class DenseField:
         """The delivery of a stepped interval; returns also the packets handed to
         the engine's Nodes, the standing set's flows when the layer repeats."""
         incoming = {index: self._walk(family) for index, family in self.families.items()}
-        candidates = set(ready) | self._engine_receivers(incoming)
+        self._wait_bound = self._field_wait_nodes(incoming, ready)
+        candidates = set(ready) | self._engine_receivers(incoming) | self._wait_bound
         if residents is not None:
             for position, carrier in residents.items():
                 if any(record is not None for record in carrier.records) and (
@@ -1131,7 +1135,7 @@ class DenseField:
     ) -> bool:
         """Whether the engine must own this Node this interval: a mark, a record, a
         Node holding what the region cannot, or a packet bringing it."""
-        if target in self.marks:
+        if target in self.marks or target in self._wait_bound:
             return True
         carrier = None if residents is None else residents.get(target)
         if carrier is not None and any(record is not None for record in carrier.records):
@@ -1153,6 +1157,36 @@ class DenseField:
                 if any(int(family.heading_index[packet.port]) != ray.heading for ray in rays):
                     return True
         return False
+
+    def _field_wait_nodes(
+        self,
+        incoming: Mapping[int, tuple[np.ndarray, ...]],
+        ready: Mapping[Address3, list[SpatialPacket]],
+    ) -> set[Address3]:
+        """The shadow's wait under the field reading (shadow-wait-v1): a Node that
+        receives shadows of one owner while it holds or receives shadows of
+        another (arriving from the arrays or by a packet, or parked in its
+        registers) is the engine's this interval, which charges the wait on the
+        shares that leave it; a Node of one owner's shadows owes nothing and the
+        region cycles it. Nothing without the option."""
+        found: set[Address3] = set()
+        for index, family in self.families.items():
+            definition = family.definition
+            if definition.shadow_wait_reads != "field" or not definition.shadow_wait_numerator:
+                continue
+            arriving = (incoming[index][0] > 0).any(axis=(4, 5, 6, 7))
+            for target, packets in ready.items():
+                for packet in packets:
+                    if index >= len(packet.rays):
+                        continue
+                    for ray in packet.rays[index]:
+                        if ray.detector == BIT_SHADOW and ray.owner in family.rank:
+                            arriving[target][family.rank[ray.owner]] = True
+            parked = (family.reg > 0).any(axis=(4, 5, 6))
+            mixed = arriving.any(axis=3) & ((arriving | parked).sum(axis=3) > 1)
+            for x, y, z in zip(*np.nonzero(mixed), strict=True):
+                found.add((int(x), int(y), int(z)))
+        return found
 
     def claim(self, position: Address3) -> None:
         """A Node the engine holds from the start (the shadows given with the board
@@ -1387,6 +1421,6 @@ class DenseField:
             localized=engine._blank_localized(),
             rays=tuple(() for _ in self.initial.spatial_fields),
             detector=None,
-            detector_ticket=0,
+            arrivals=0,
             body=None,
         )

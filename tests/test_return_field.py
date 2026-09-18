@@ -94,18 +94,24 @@ def test_the_inverted_share_leaves_reversed_mixes_and_reaches_its_owner():
     # sends 1 back to A and 21 on to B. A receives 2 with (-1, 0, 0); B is
     # pushed (21, 0, 0) by the outgoing 21 and (-4, 0, 0) by the returning 4,
     # which turns back once more carrying nothing; the 21 turns back with
-    # (-21, 0, 0). Tick 5: the same at the next round, A receiving 6 with
-    # (-2, 0, 0), B pushed (-7, 0, 0) net.
+    # (-21, 0, 0). Tick 5: the next round. Re-pinned on 2026-09-18 in the cleanup
+    # (one N for the world, `cleanup-law-v1`): this world declared no width and
+    # ran on one phase value, where the returning share carried no sign; on the
+    # circle of N steps (64, the default) the returning share is the minus, so
+    # at the second round the returning and the outgoing shares of one owner sum
+    # apart at (1,2,2): A receives 3 with (-2, 0, 0) (6 with (-2, 0, 0) on one
+    # phase value) and B is pushed (8, 0, 0) net ((-7, 0, 0) before); the books
+    # close either way.
     assert homes(events, (0, 2, 2)) == [
         (1, {"amount": 36, "momentum": (0, 0, 0)}),
         (3, {"amount": 2, "momentum": (-1, 0, 0)}),
-        (5, {"amount": 6, "momentum": (-2, 0, 0)}),
+        (5, {"amount": 3, "momentum": (-2, 0, 0)}),
     ]
     assert moving_at(result["inventories"][2], (2, 2, 2)) == [
         (MINUS_X, 21, 0, 0, 1, (-21, 0, 0)),
         (MINUS_X, 4, 0, 1, -1, None),
     ]
-    assert [b[1] for b in result["bodies_per_tick"]] == [[9, 0, 0]] * 2 + [[26, 0, 0]] * 2 + [[19, 0, 0]]
+    assert [b[1] for b in result["bodies_per_tick"]] == [[9, 0, 0]] * 2 + [[26, 0, 0]] * 2 + [[34, 0, 0]]
     assert [b[0] for b in result["bodies_per_tick"]] == [[0, 0, 0]] * 2 + [[-1, 0, 0]] * 2 + [[-3, 0, 0]]
     # The books close at every interval with the momentum in flight on the shadows.
     with Simulation(parse_initial_state(doc)) as world:
@@ -287,7 +293,6 @@ def test_a_head_on_push_is_taken_exactly_once():
         "sourced": (0, 0, 0),
         "current": (0, 0, 0),
         "escaped": (0, 0, 0),
-        "annulled": (0, 0, 0),
         "absorbed": (0, 0, 0),
         "absorbed_by_marks": (0, 0, 0),
         "returned": (0, 0, 0),

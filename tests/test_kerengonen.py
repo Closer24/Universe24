@@ -287,11 +287,14 @@ def test_kerengonen_is_validated_and_identified(tmp_path):
     raw["emissions"][1]["kerengonen_phase"] = 4
     with pytest.raises(ValueError, match="kerengonen_phase"):
         parse_initial_state(raw)
-    # Every ray is a wave ray (wave-ray-family-v1): a plain field admits an emission
-    # phase below its declared width, and without a declared width only phase 0.
+    # Every ray is a wave ray (wave-ray-family-v1) on the world's one circle (the
+    # cleanup of 2026-09-18): a plain family admits an emission phase below N, the
+    # world's, 64 by default, and none at or above it.
     raw = two_lamps(4, 0)
     del raw["spatial_fields"][0]["kerengonen"]
     raw["emissions"][1]["kerengonen_phase"] = 2
+    assert parse_initial_state(raw).phase_steps == 64
+    raw["emissions"][1]["kerengonen_phase"] = 64
     with pytest.raises(ValueError, match="kerengonen_phase requires"):
         parse_initial_state(raw)
     raw = two_lamps(4, 1)
@@ -338,16 +341,10 @@ def absorber_of(world):
     )
 
 
-def test_the_ticket_rule_is_bounded_and_no_absorber_draws_from_it():
-    from event_universe.core.spatial_state import TICKET_MODULUS, ticket_bit
-
-    # bit-law-v1, point 14 (2026-09-18): there is no lottery. The Node's counter
-    # stays for the Detector mark, a declared table "pass n arrivals in every d";
-    # an absorber never uses it.
-    assert ticket_bit(0, 1, 2) == (1, 1) and ticket_bit(1, 1, 2) == (2, 0)
-    assert ticket_bit(TICKET_MODULUS - 1, 1, 1) == (0, 1)
-    with pytest.raises(ValueError, match="ticket state"):
-        ticket_bit(TICKET_MODULUS, 1, 1)
+def test_a_share_absorber_takes_single_quanta_deterministically():
+    # bit-law-v1, point 14 (2026-09-18): there is no lottery and no ticket; the
+    # mark's table is pinned in test_detector_mark.py, and an absorber never
+    # counts anything.
     # Single quanta at a quarter turn (x = 1 with eight steps): the share rule
     # truncates one quantum times one half to nothing, so only the two quanta
     # absorbed before the second lamp's rays arrive are taken, deterministically.

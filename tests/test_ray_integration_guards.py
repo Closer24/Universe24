@@ -35,7 +35,6 @@ def _law(initial):
         initial.emissions,
         initial.operation_costs,
         absorptions=tuple(rule for rule in initial.spatial_couplings if rule.mode == "absorb"),
-        sampling_profile=initial.sampling_profile,
     )
 
 

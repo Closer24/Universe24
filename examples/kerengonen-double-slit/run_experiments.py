@@ -103,7 +103,6 @@ def document(
     raw: dict = {
         "schema_version": 1,
         "model_id": "kerengonen-double-slit-probe-v1",
-        "sampling_profile": "detector-only-v1",
         **({"K": per_ray} if phase_steps else {}),
         "shape": [SIZE, SIZE, 3],
         "boundary": "open",
