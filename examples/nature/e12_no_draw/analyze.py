@@ -367,6 +367,9 @@ def alternation(values: list[int]) -> dict:
 
 def part2(summaries: dict, prediction: dict) -> dict:
     predicted = {m: r["integrated"] for m, r in prediction["part2"]["marks"].items()}
+    predicted_96 = {
+        m: r["integrated_by_tick"][str(VIEWER_TICKS)] for m, r in prediction["part2"]["marks"].items()
+    }
     marks = list(predicted)
     width = 16
     out = {"predicted": predicted, "fringe_period_links": prediction["part2"]["fringe_period_links"]}
@@ -383,6 +386,7 @@ def part2(summaries: dict, prediction: dict) -> dict:
             "clicks": counts_by_mark(s),
             "quanta_through_96": quanta_by_mark(s, VIEWER_TICKS),
             "against_mean_field": ratios(quanta, predicted),
+            "against_mean_field_through_96": ratios(quanta_by_mark(s, VIEWER_TICKS), predicted_96),
             "mirror_symmetric": all(quanta[m] == quanta[mirror(m, width)] for m in marks),
             "along_y": alternation([quanta[m] for m in marks]),
             "ledger_last": s["ledger_last"],
@@ -432,6 +436,9 @@ def part2(summaries: dict, prediction: dict) -> dict:
             "without_coupling_through_same_ticks": None
             if base is None
             else quanta_by_mark(base, through),
+            "against_mean_field_through_96": (
+                ratios(quanta, predicted_96) if through == VIEWER_TICKS else None
+            ),
             "ledger_last": s["ledger_last"],
             "external_body_totals": s["external_body_totals"],
             "viewer": s["viewer"],

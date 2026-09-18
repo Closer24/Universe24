@@ -204,6 +204,9 @@ def part2(ticks, amount):
             "first_tick": next((t for t, v in enumerate(series) if v > 0), None),
             "steady_per_interval": steady[mark],
             "integrated": float(sum(series)),
+            "integrated_by_tick": {
+                str(t): float(sum(series[: t + 1])) for t in (48, 96, 240) if t <= ticks
+            },
             "path_difference_links": {"euclidean": euclid, "lattice": manhattan},
             # r x dL mod N for the emitter's rate r = 0 (a body's declared phase, light's rate 0).
             "geometric_phase_difference": 0,
