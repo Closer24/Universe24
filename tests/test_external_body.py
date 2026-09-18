@@ -206,7 +206,9 @@ UNIFORM_BODY = {
     "amount": 6,
     "initial_momentum": {"heading": [0, 1, 0], "pace": [1, 2]},
 }
-MIRROR_BODY = {"position": [7, 7, 7], "family": "star", "amount": 4, "coupling": "mirror"}
+# A body under a table takes the recoil on its own line (the cleanup of 2026-09-18):
+# the mirror is heavy, 4096, so the 10 it takes on Z moves it nowhere in seven ticks.
+MIRROR_BODY = {"position": [7, 7, 7], "family": "star", "amount": 4096, "coupling": "mirror"}
 
 
 @pytest.mark.parametrize("case", ["sink", "uniform", "mirror", "rejected"])

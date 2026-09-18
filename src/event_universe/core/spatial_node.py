@@ -507,10 +507,14 @@ class SpatialNode(SpatialNodeState):
     def _body_cycle(self, plan: SpatialPlan, services: SpatialServices) -> SpatialPlan:
         """The external body's part of one cycle (external-body-v1 under bit-law-v1),
         after the ordinary law has met what arrived: the token of a coupled body is
-        stripped from what leaves, returned unchanged or the cycle fails; the body
-        releases nothing (its shadows were given with the board and circulate);
-        and its accumulators advance by its momentum, stepping it through one Port
-        when a whole amount has accumulated."""
+        stripped from what leaves, returned unchanged or the cycle fails; a body
+        under a table takes the recoil on its own line (node-is-ports-v1, the
+        cleanup of 2026-09-18: the momentum the table moved between the lines of
+        the things it met, the meeting's momentum change, is the body's with the
+        opposite sign, a mirror taking twice what it reverses, and nothing is
+        sourced); the body releases nothing (its shadows were given with the board
+        and circulate); and its accumulators advance by its momentum, stepping it
+        through one Port when a whole amount has accumulated."""
         body = self.body
         assert body is not None
         initial = services.initial
@@ -520,6 +524,42 @@ class SpatialNode(SpatialNodeState):
             else [[() for _ in initial.spatial_fields] for _ in range(6)]
         )
         if body.coupling not in (BODY_SINK, BODY_POLARIZER):
+            # The recoil of the table on the body's own line: what the meeting
+            # booked as the momentum field's source at this Node is the change
+            # of the things' momentum under the body's table, and the body takes
+            # its opposite; the source line reads zero for it.
+            source_delta = [list(values) for values in plan.source_delta]
+            momentum_fields = {
+                definition.momentum_field
+                for definition in initial.spatial_fields
+                if definition.rays and definition.momentum_field is not None
+            }
+            recoil = [0, 0, 0]
+            for field_index in sorted(momentum_fields):
+                if field_index < len(source_delta) and len(source_delta[field_index]) == 3:
+                    for axis in range(3):
+                        recoil[axis] = checked_work(recoil[axis] - source_delta[field_index][axis])
+                        source_delta[field_index][axis] = 0
+            if any(recoil):
+                # The body's line is beside the identity (a body's content enters
+                # no sum), so what it took leaves the identity on the returned
+                # line, as the momentum a shadow hands a body does (bit-law-v1).
+                body = body_pushed(body, (recoil[0], recoil[1], recoil[2]))
+                returned_delta = [list(values) for values in (plan.returned_delta or source_delta)]
+                if not plan.returned_delta:
+                    returned_delta = [[0] * len(values) for values in source_delta]
+                for field_index in sorted(momentum_fields):
+                    if field_index < len(returned_delta) and len(returned_delta[field_index]) == 3:
+                        for axis in range(3):
+                            returned_delta[field_index][axis] = checked_work(
+                                returned_delta[field_index][axis] + recoil[axis]
+                            )
+                        break
+                plan = replace(
+                    plan,
+                    source_delta=tuple(tuple(values) for values in source_delta),
+                    returned_delta=tuple(tuple(values) for values in returned_delta),
+                )
             tokens = [ray for port in range(6) for ray in rays[port][body.family]]
             tokens.extend(
                 ray for ray in (plan.kept_rays[body.family] if plan.kept_rays else ()) if not ray.parked

@@ -960,12 +960,36 @@ retired and the engine still carried is deleted, not kept behind an option:
   `spatial_received` record of a body likewise. "Home" names that result
   and is no rule of its own; the engine computes the zero directly.
 
+- **The body's recoil on its own line** (pull request #285 Remaining; the
+  second part of the cleanup). A body under a table (`node-is-ports-v1`)
+  moved momentum between the lines of the things it met and the difference
+  was booked as the momentum field's source at its Node. Now `_body_cycle`
+  takes that difference off the source line and gives its opposite to the
+  body (`body_pushed`), a mirror taking twice what it reverses; since a
+  body's line is beside the identity (its content enters no sum), what it
+  took is booked on the `returned` line, as the momentum a shadow hands a
+  body is. The source line of a world with a mirror body reads zero
+  (`tests/test_node_is_ports.py` (g), `tests/test_external_body.py` (d),
+  the catalog's mirror world), the mirror bodies of those worlds re-pinned at
+  4096 so the momentum they take fits under their amount. "Bodies as things"
+  (#286) was already the engine's: a body reads what arrives once per table,
+  waits for nothing, and refuses a charge that does not divide its amount.
+
+- **The prefill's coherent merge** (the A6 lane's finding, 2026-09-18). The
+  fill refused a fill longer than about 30 intervals at N 64 because a third
+  phase would land on one Port of the source; under points 24 and 25 the
+  shares of one owner on one lane are one coherent sum, so `prefill._depart`
+  merges the third phase with the layer it meets: the amount summed and the
+  phase the phase of the sum over the family's mixing tables
+  (`_phase_of_sum`), never refusing (`tests/test_bit_law.py` (f')).
+
 Not done in the first part and listed on its pull request: the record-as-owner
 field program (the settled rule (v): the outward octant field, the
 couplings of records, the mirror, slit, dissolve, capture and self-exclusion
 of that form, `computation_field` and its delay keys, `node_execution`), the
 body's recoil on its own line, and the stale paragraphs of the older
-documents; the second part takes them up.
+documents; the second part takes them up (the two bullets above, and the
+rest below in this section as it lands).
 
 ### Wave-ray families (`wave-ray-family-v1`)
 
@@ -2369,7 +2393,8 @@ tick, `registers` until node-is-ports-v1). Shadows are given with the board: `in
 T}` (T intervals of the fill, each thing releasing its shadow set of
 `release` x stock per heading, rounded to whole quanta per Node and heading
 with the fractions in the Node's remainder registers, reflected at sources and
-marks, nothing dropped, booked as initial content) or `{"rays": [...]}` (a
+marks, nothing dropped, a third phase of one owner on one lane merged by the
+coherence rule, booked as initial content) or `{"rays": [...]}` (a
 profile of shadows with `position`, `heading`, `amount`, `phase`, `sign`,
 `owner`, `steps` 0 or 1); nothing is released during a run. A mark returns a
 shadow without counting it, and catches things by its setting `[n, d]` read as

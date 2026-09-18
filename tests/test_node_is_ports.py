@@ -544,7 +544,9 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
         seeds=[seed],
         families=[family(), family("wall", charge=0)],
         bodies=[
-            {"position": [6, 2, 2], "family": "wall", "amount": 1, "coupling": "mirror", "thing": 3}
+            # A body under a table takes the recoil on its own line (the cleanup of
+            # 2026-09-18): the wall is heavy, 4096, so the 4 it takes moves it nowhere.
+            {"position": [6, 2, 2], "family": "wall", "amount": 4096, "coupling": "mirror", "thing": 3}
         ],
         shadows=[shadow((5, 2, 2), X, owner=2, steps=0)],
         rules=(MIRROR,),
@@ -602,10 +604,18 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
         event_kinds(result["events"])
     )
     assert result["bodies"][0]["sink"] == {} and result["bodies"][0]["position"] == [6, 2, 2]
+    # A body under a table takes the recoil on its own line (the cleanup of
+    # 2026-09-18): the thing of 2 reversed from +X to -X lost 4 on X, the wall
+    # took 4 in the cycle of tick 5, on its momentum line, beside the identity
+    # (the momentum field's `returned` line, nothing sourced); heavy, it stays.
+    assert result["bodies"][0]["momentum"] == [4, 0, 0]
+    assert [m.get(3) for m in result["momentum"]] == [[0, 0, 0]] * 5 + [[4, 0, 0]] * 3
     assert result["contents"] == [2] * 8 and result["shadows"] == [1] * 8
-    for ledger in result["ledgers"]:
+    for tick, ledger in enumerate(result["ledgers"], start=1):
         assert ledger["balanced"] and ledger["real_conserved"]
         assert ledger["fields"]["m"]["absorbed"] == (0,)
+        assert ledger["fields"]["momentum"]["sourced"] == (0, 0, 0)
+        assert ledger["fields"]["momentum"]["returned"] == ((4, 0, 0) if tick >= 6 else (0, 0, 0))
         assert line(ledger, "shadow", "m") == {
             "initial": (1,),
             "current": (1,),

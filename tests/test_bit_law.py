@@ -737,6 +737,45 @@ def test_the_fill_gives_the_board_the_bodys_shadows_exactly():
     assert sum(sum(a) for a in amounts.values()) == 120 and parked == 12 * 9
 
 
+def test_the_fill_merges_a_third_phase_on_one_lane_by_the_coherence_rule():
+    """(f'): a fill longer than about 30 intervals at N 64 laid a third phase on
+    one Port of the source and was refused (the A6 lane's finding, 2026-09-18);
+    under Highlights 5.4 points 24 and 25 the shares of one owner on one lane are
+    one coherent sum, so the fill merges them: the amount summed, the phase the
+    sum's. A fill of 200 intervals at N 64 from the body of 11 parses, the field
+    given with the board is exact (the initial line equals the shadow content,
+    the books open balanced) and the body's shell is the coherent sum: the six
+    fresh shares at (4,2,2) read from the run of 2026-09-18, on -X 1 at phase 0
+    beside 19 at the half turn (32), on -Y 6 and on -Z 5 at phase 0, on +Z and
+    on +X 20 at the half turn, nothing fresh on +Y; 3196 quanta on 202 Nodes
+    and 6003 ninths parked. A fill of 2 is what (f) pins."""
+    doc = document(ticks=1, bodies=[body((4, 2, 2), amount=11)], fill=200, dense=False, rules=())
+    doc["N"] = 64
+    initial = parse_initial_state(doc)
+    with Simulation(initial) as world:
+        ledger = world.audit()
+        assert ledger["balanced"] and ledger["fields"]["m"]["initial"] == (world.shadow_content(),)
+        assert world.shadow_content() == 3196 and world.real_content() == 0
+        held = {
+            node.position: [r for r in node.rays[0] if not r.parked]
+            for node in world.inventory_view().nodes
+            if any(node.rays)
+        }
+        parked = sum(entry["amount"] for entry in world.snapshot()["parked"])
+    assert sorted((HEADINGS[r.heading], r.amount, r.phase) for r in held[(4, 2, 2)]) == sorted(
+        [
+            (MINUS_X, 1, 0),
+            (MINUS_X, 19, 32),
+            ([0, -1, 0], 6, 0),
+            ([0, 0, -1], 5, 0),
+            ([0, 0, 1], 20, 32),
+            (X, 20, 32),
+        ]
+    )
+    assert all(r.steps == 0 and r.outbound for r in held[(4, 2, 2)])
+    assert len(held) == 202 and parked == 6003
+
+
 def test_a_mark_is_the_home_of_the_shadows_of_what_it_absorbed():
     """(h): the mark that absorbed a thing is the home of its shadows (settled rule
     (iv)). Re-pinned 2026-09-18 (node-mixing-v1, then return-field-v1): the

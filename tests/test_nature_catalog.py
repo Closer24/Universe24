@@ -744,14 +744,15 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         }
         assert simulation.external_bodies() == [at_rest | {"sink": {"light": 5}}]
         assert simulation.external_body_momentum() == (0, 0, 0)
-        # The momentum a body's table moves is booked as the meeting's source (feature
-        # 14's rule, the meeting's momentum change): the ray's momentum on X after
-        # the meeting, -5 under the mirror, less its 5 before, beside the lamp's
-        # recoil -5 in the totals. The phase plate's token is written on the ray's
-        # own heading and shares its lane, so under lanes-v1 (Highlights 5.4, point
-        # 25) the departure is refused until bodies are things with their own line
-        # (the cleanup of 2026-09-18 pins the refusal; the coordinator holds the
-        # question of #293).
+        # A body under a table takes the recoil on its own line (node-is-ports-v1,
+        # the cleanup of 2026-09-18): the ray's momentum on X after the meeting,
+        # -5 under the mirror, less its 5 before, is what the body takes with the
+        # opposite sign, 10, on its momentum, beside the identity (the momentum
+        # field's returned line), nothing sourced; the lamp's recoil -5 stays in
+        # the totals. The phase plate's token is written on the ray's own heading
+        # and shares its lane, so under lanes-v1 (Highlights 5.4, point 25) the
+        # departure is refused until bodies are things with their own line (the
+        # cleanup pins the refusal; the coordinator holds the question of #293).
         for name, position, product, ray_momentum in (
             ("mirror", (7, 7, 7), event_ray(1, 5, 1, 3, (1, 5, 0, 0, 0, 0)), -5),
             ("phase_plate", (9, 7, 7), None, 5),
@@ -777,13 +778,22 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
                 piece["name"]: (0,),
                 "momentum": (-5 + ray_momentum, 0, 0),
             }
-            assert simulation.source_totals()["momentum"] == (ray_momentum - 5, 0, 0)
+            assert simulation.source_totals()["momentum"] == (0, 0, 0)
+            assert simulation.audit()["fields"]["momentum"]["returned"] == (5 - ray_momentum, 0, 0)
             assert simulation.external_body_totals() == {
                 "light": (0,),
                 piece["name"]: (0,),
                 "momentum": (0, 0, 0),
             }
-            assert simulation.external_bodies() == [at_rest | {"sink": {}}]
+            assert simulation.external_bodies() == [
+                at_rest
+                | {
+                    "sink": {},
+                    "momentum": [5 - ray_momentum, 0, 0],
+                    "accumulators": [5 - ray_momentum, 0, 0],
+                }
+            ]
+            assert simulation.external_body_momentum() == (5 - ray_momentum, 0, 0)
         # The polarizer (ray-polarization-v1): the same lamp polarized along +Y (step
         # 0) at a body of angle 2 (45 degrees on the eight-step circle) with the
         # catalog's table: 5 x 4 / 8 passes 2 with polarization 2, sinks 2, and the
