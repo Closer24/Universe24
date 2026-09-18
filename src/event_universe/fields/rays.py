@@ -5,6 +5,7 @@ from dataclasses import dataclass, replace
 from event_universe.core.disturbance_state import CostMeter, FieldDefinition, bounded
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
+    BIT_SHADOW,
     BIT_THING,
     MAX_HEADINGS,
     MAX_RAY_SLOTS,
@@ -273,7 +274,15 @@ def forward_rays(
             # At its event Node (a thing).
             kept.append(ray)
             continue
-        if ray.owed >= definition.wait_denominator:
+        if ray.detector == BIT_SHADOW and ray.owed:
+            # The shadow's wait, a declared option (shadow-wait-v1): a share that
+            # owes stays this interval, d spent; it leaves owing nothing, a debt
+            # below one interval paid by the interval (a share keeps no remainder
+            # past its next mixing, unlike a thing).
+            kept.append(replace(ray, owed=max(ray.owed - definition.shadow_wait_denominator, 0)))
+            meter.charge("update")
+            continue
+        if ray.detector == BIT_THING and ray.owed >= definition.wait_denominator:
             # A thing pays a tick for every whole quantum it read (Highlights 5.4
             # point 23): this interval it neither moves, nor steps, nor advances
             # its phase; one interval of its debt is spent.

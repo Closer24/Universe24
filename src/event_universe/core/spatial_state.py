@@ -9,6 +9,7 @@ from .disturbance_state import (
     MAX_RULES,
     MAX_SLOTS,
     MAX_VALUE,
+    SHADOW_WAIT_READS,
     Address3,
     Assignment,
     CostMeter,
@@ -317,6 +318,8 @@ NODE_MIXING = "node-mixing-v1"
 # shares, pushes whatever other thing it meets with the opposite sign and is
 # absorbed wherever it reaches its owner. No step counter, no trace, no chase.
 RETURN_FIELD = "return-field-v1"
+# The shadow's wait as a declared world option (shadow-wait-v1, feature 16e).
+SHADOW_WAIT = "shadow-wait-v1"
 MIXING_DENOMINATOR = 9
 MIXING_AMPLITUDE_SCALE = 32
 MIXING_WEIGHT_BITS = 28
@@ -1992,6 +1995,12 @@ class SpatialFieldDefinition:
     # (`wait_per_quantum`, 1 by default), on every ray family.
     wait_numerator: int = 1
     wait_denominator: int = 1
+    # The shadow's wait (shadow-wait-v1), the world's declared option on every
+    # family or none: n / d intervals per whole quantum and the reading, "thing"
+    # or "field"; "" and 0 / 1 without the option (a shadow owes nothing).
+    shadow_wait_numerator: int = 0
+    shadow_wait_denominator: int = 1
+    shadow_wait_reads: str = ""
     # The family's shadows spread by the Node's mixing (node-mixing-v1): true for
     # every family with a shadow set (a release, or a field given with the
     # board), set by the world's initial state, never declared; a family without
@@ -2066,6 +2075,16 @@ class SpatialFieldDefinition:
             or self.wait_denominator < 1
         ):
             raise ValueError("the wait per quantum is a rational n / d, n at least 0 and d at least 1")
+        if (
+            type(self.shadow_wait_numerator) is not int
+            or type(self.shadow_wait_denominator) is not int
+            or self.shadow_wait_numerator < 0
+            or self.shadow_wait_denominator < 1
+            or self.shadow_wait_reads not in ("", *SHADOW_WAIT_READS)
+        ):
+            raise ValueError(
+                "the shadow's wait is a rational n / d read by thing or field (shadow-wait-v1)"
+            )
         if type(self.clock) is not int or self.clock < 0:
             raise ValueError("a family's clock is K, a nonnegative integer (clock-readings-v1)")
         if self.clock and not self.phase_bits:
@@ -2501,8 +2520,15 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         if type(ray.remainder) is not int or type(ray.periods) is not int or ray.periods < 0:
             raise ValueError("a ray clock remainder and its passages are nonnegative integers")
         bounded(ray.periods)
-        if type(ray.owed) is not int or ray.owed < 0 or (ray.detector == BIT_SHADOW and ray.owed):
-            raise ValueError("the intervals a thing owes are a nonnegative integer; a shadow owes none")
+        if (
+            type(ray.owed) is not int
+            or ray.owed < 0
+            or (ray.detector == BIT_SHADOW and ray.owed and not definition.shadow_wait_reads)
+        ):
+            raise ValueError(
+                "the intervals a thing owes are a nonnegative integer; a shadow owes none unless "
+                "the world declares shadow_wait (shadow-wait-v1)"
+            )
         bounded(ray.owed)
         if ray.detector == BIT_THING and definition.clock:
             # The clock (clock-readings-v1, point 19): the remainder below K, and

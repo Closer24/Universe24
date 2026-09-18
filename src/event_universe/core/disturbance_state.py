@@ -86,6 +86,11 @@ def unpack(values: Payload) -> tuple[int, ...]:
     return tuple(decode(v) for v in values)
 
 
+# The readings of the shadow's wait (shadow-wait-v1): a share read by a thing, or a
+# share crossing another owner's field.
+SHADOW_WAIT_READS = ("thing", "field")
+
+
 @dataclass(frozen=True, slots=True)
 class FieldDefinition:
     name: str
@@ -371,6 +376,14 @@ class InitialState:
     # (point 23): w = n / d intervals, 1 by default.
     clock: int = 0
     wait_per_quantum: tuple[int, int] = (1, 1)
+    # The shadow's wait, a declared option (shadow-wait-v1; Highlights 5.4, the
+    # model owner's paragraph of 2026-09-18, "a declared option to confront"):
+    # None, the law as it stands (a shadow owes nothing), or (n, d) intervals
+    # per whole quantum with its reading, "thing" (a share read by a thing owes
+    # before it leaves that Node) or "field" (a share owes per whole quantum of
+    # another owner's shadows at the Node it crosses); "" without the option.
+    shadow_wait: tuple[int, int] | None = None
+    shadow_wait_reads: str = ""
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
@@ -472,6 +485,21 @@ class InitialState:
         validate_dense_field_admission(self)
         if type(self.standing_field) is not int or self.standing_field < 0:
             raise ValueError("standing_field is a nonnegative number of intervals")
+        if self.shadow_wait is not None:
+            if (
+                type(self.shadow_wait) is not tuple
+                or len(self.shadow_wait) != 2
+                or any(type(v) is not int for v in self.shadow_wait)
+                or self.shadow_wait[0] < 0
+                or self.shadow_wait[1] < 1
+            ):
+                raise ValueError(
+                    "shadow_wait per_quantum is a rational n / d, n at least 0, d at least 1"
+                )
+            if self.shadow_wait_reads not in SHADOW_WAIT_READS:
+                raise ValueError("shadow_wait reads thing or field (shadow-wait-v1)")
+        elif self.shadow_wait_reads:
+            raise ValueError("shadow_wait reads nothing without the option (shadow-wait-v1)")
         if self.ray_delay:
             if self.computation_field is None:
                 raise ValueError("ray_delay requires computation_field")

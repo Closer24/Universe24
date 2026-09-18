@@ -638,7 +638,15 @@ class SpatialNode(SpatialNodeState):
                         current.push_remainder,
                     )
                     current = replace(body_pushed(current, push), push_remainder=remainder)
-                    kept.append(return_shadow(ray, definition, (-push[0], -push[1], -push[2])))
+                    turned = return_shadow(ray, definition, (-push[0], -push[1], -push[2]))
+                    if definition.shadow_wait_reads == "thing":
+                        # The shadow's wait, the thing reading (shadow-wait-v1): owed
+                        # per whole quantum of the push, before it leaves.
+                        quanta = abs(push[0]) + abs(push[1]) + abs(push[2])
+                        turned = replace(
+                            turned, owed=checked_work(quanta * definition.shadow_wait_numerator)
+                        )
+                    kept.append(turned)
                     push_amount = checked_work(push_amount + ray.amount)
                     for axis in range(3):
                         pushed[axis] = checked_work(pushed[axis] + push[axis])
