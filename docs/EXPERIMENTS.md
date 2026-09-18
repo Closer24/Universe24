@@ -2588,3 +2588,109 @@ sign rule, and its other couplings are catalog entries.
   and the strong catalog entries; its outcomes are those of hypothesis 13:
   the content grows and no lone quark appears, or it falls off as for a
   charge, or the pattern does not close.
+
+## F. The board, settled by computation
+
+Questions about the board's geometry answered by a computation rather than a
+run, recorded so that they are not reopened. A computation here is the
+expectation of the engine's integers under a stated model, as
+`mean_field_gauss.py` of A5s is; it is evidence about the model's own mean
+field, not a measurement of nature.
+
+### F1. The board's link set: the faces, edges and corners of the cube compared (2026-09-18)
+
+- **Question.** Whether a board other than the cubic six-Port lattice of
+  Highlights 3.1 would make the released field more isotropic at the
+  distances the runs use (r = 4 to 16 Links): eight Ports to the corners of
+  the cube (the body-centered lattice), twelve to the edges (the
+  face-centered lattice), or the faces together with the corners (14), the
+  edges (18) or both (26); and, on the way, four Ports per face, layers of
+  equilateral triangles, a Node inside a Node, and a corner Port shared by
+  eight cubes.
+- **Settled without a run.** A Port on a face leads to the same neighbour
+  however many Ports the face has, so four Ports per face change nothing.
+  Layers of triangles (six neighbours in the plane, one above, one below)
+  have a preferred axis: no link joins the plane to the vertical, the mixed
+  fourth-order term cannot be cancelled, and the smallest loop lies in a
+  plane only. A Node inside a Node is a 2 x 2 x 2 block of today's Nodes,
+  the same lattice at twice the resolution. A corner shared by eight cubes
+  is a Node by Highlights 3.3 (information splits there), so a Node at the
+  centre of a cube with a Port to each corner is the body-centered lattice
+  with eight links. In the long-wavelength expansion of any of these walks
+  the first anisotropic term is of fourth order, with the coefficient
+  -4a + 8b + 32c for the weights a, b, c of a face, an edge and a corner
+  link: one shell never cancels it, two shells do (corners at 1/8 of the
+  faces, edges at 1/2, or the three at 16 : 4 : 1, the weights of the
+  D3Q15, D3Q19 and D3Q27 lattices of the lattice Boltzmann literature).
+- **Computation.** `examples/nature/board_geometry/lattice_anisotropy.py`,
+  the kernel of `mean_field_gauss.py` generalized to any link set on Z^3:
+  the source alone at the corner of an octant of the cube of half-width 48
+  (64 for the cubic lattice and the 14 set, the box check), the low faces
+  mirrors, the high faces open, the source's Node a sink, one hop per
+  interval on every link (the pace a longer link would carry is not
+  applied; the steady flows do not depend on it), the steady state by
+  BiCGSTAB to 10^-10. Two walks per set: the simple walk with the set's
+  isotropic weights (the lattice alone), and the persistent walk keeping
+  today's forward share 6/11 on the continuation of the arriving heading
+  and sharing the other 5/11 over the other headings by the same weights
+  (on the cubic lattice exactly [6, 1, 1, 1, 1, 1] over 11). The source
+  releases 24576 per interval over its headings by the same weights. Read
+  along six lines through the source, the axis, (1, 1, 0), (1, 1, 1),
+  (2, 1, 0), (2, 1, 1) and (3, 2, 1), interpolated to common r: the density
+  n and the net momentum |J| of the arrivals (amount times unit heading),
+  and their spread over the lines, max / min - 1. Validation: on the cubic
+  lattice with today's table the kernel gives J = 701.75, 252.54, 100.16,
+  24.20 and 10.285 at r = 4, 6, 8, 12, 16 against the 701.30, 252.37,
+  100.09, 24.18 and 10.276 of the A5s record (half-width 96); the
+  fixed-point residual is 10^-12; the effective source at half-width 48 is
+  within 0.1 % of the one at 64 and the spreads within one percentage point.
+- **Results.** The lattice alone (the simple walk), the spread of the
+  density between the six lines:
+
+| link set | r = 4 | r = 8 | r = 16 |
+| --- | --- | --- | --- |
+| 6, the faces (today) | 3.4 % | 0.8 % | 0.1 % |
+| 8, the corners | 6.6 % | 1.6 % | 0.6 % |
+| 12, the edges | 1.5 % | 0.4 % | 0.2 % |
+| 14, faces and corners | 0.5 % | 0.0 % | 0.1 % |
+| 18, faces and edges | 0.3 % | 0.0 % | 0.1 % |
+| 26, all | 0.1 % | 0.0 % | 0.1 % |
+
+  Today's table as it is (the beam included), the ratio of |J| r^2 on the
+  (1, 1, 0) diagonal to the axis, the quantity A5s measured (0.16, 0.26,
+  0.41, 0.48 at r = 4.2, 5.7, 8.5, 11.3, with a sink):
+
+| link set | r = 4 | r = 6 | r = 8 | r = 12 | r = 16 |
+| --- | --- | --- | --- | --- | --- |
+| 6 (today) | 0.22 | 0.28 | 0.37 | 0.63 | 0.83 |
+| 14 | 0.20 | 0.26 | 0.37 | 0.69 | 0.90 |
+| 26 | 0.62 | 0.81 | 1.00 | 1.20 | 1.13 |
+
+  On 26 the (1, 1, 0) direction has a link and so a beam of its own; the
+  directions without a link, (2, 1, 1) and (3, 2, 1), stand at 0.19 and
+  0.17 at r = 4 there. Today's table with the beam removed on the link lines
+  (the diffusive remainder), the spread of the density at r = 4, 8, 16:
+  6: 25 %, 17 %, 5 %; 8: 22 %, 13 %, 10 %; 12: 20 %, 7 %, 4 %; 14: 16 %,
+  7 %, 2 %; 18: 11 %, 5 %, 1.6 %; 26: 14 %, 4.5 %, 0.7 %. On 14 and 26 a
+  diagonal beam reaches farther than an axial one (fewer hops per
+  distance): on 14 the (1, 1, 1) beam is still 31 % above the axis at
+  r = 16.
+- **Verdict.** The anisotropy at r = 4 to 16 is the beam of the table, not
+  the lattice: the ratio A5s measured is the same on the 14 set as on
+  today's board, and on every set it is about 5 : 1 at r = 4 between a
+  direction with a link and one without. The lattice's own residue is
+  3.4 % at r = 4 and under 1 % from r = 8 on today's board; the two-shell
+  sets remove it, as the fourth-order argument predicts, and cut the
+  diffusive remainder under today's table by two to three; the corners
+  alone are worse than today in every column. None of this reaches what
+  the runs measure, and a change of board would cost every fixed-six
+  structure of the contracts, the loop ladder of hypothesis 12 (the
+  smallest loop changes) and every measured run. **The board stays the
+  cubic six-Port lattice of Highlights 3.1.** The lever on the short-range
+  anisotropy, if one is wanted, is the forward share of the split table, a
+  catalog choice of the model owner (Highlights 3.5), not the board.
+- **Status.** computed on 2026-09-18, closed. The tables are
+  `examples/nature/board_geometry/summary_tables.txt`, the script and its
+  summarizer beside them (`python lattice_anisotropy.py --half-width 48
+  --out results.json`, about six minutes on one core, then
+  `python summarize.py results.json`).

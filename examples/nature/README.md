@@ -1899,3 +1899,23 @@ python examples/nature/a12_malus/analyze.py runs/a12/single_* runs/a12/chain_* -
 The sidecar (`ray-recording.json`) gives the viewer each ray's polarization;
 the records stay outside the tree, the fingerprints in the register's entry
 are their register line, and `record.json` holds the integers.
+
+## The board's link set compared
+
+`board_geometry/` holds the computation of experiment F1
+([register](../../docs/EXPERIMENTS.md#f1-the-boards-link-set-the-faces-edges-and-corners-of-the-cube-compared-2026-09-18)),
+made on 2026-09-18 to settle whether a board other than the cubic six-Port
+lattice would make the released field more isotropic at the distances the
+runs use. `lattice_anisotropy.py` is the kernel of `a5_static/mean_field_gauss.py`
+generalized to six link sets of Z^3 (the faces, the corners, the edges, and
+the faces with the corners, the edges or both), with the simple walk and with
+today's persistent table; `summarize.py` prints the tables from its JSON;
+`summary_tables.txt` is the record of the run (half-width 48 for every set,
+64 for the cubic lattice and the 14 set). The verdict, with its numbers, is in
+the register: the anisotropy at r = 4 to 16 is the beam of the split table and
+not the lattice, and the board stays the cubic lattice of Highlights 3.1.
+
+```bash
+python examples/nature/board_geometry/lattice_anisotropy.py --half-width 48 --out results.json
+python examples/nature/board_geometry/summarize.py results.json
+```
