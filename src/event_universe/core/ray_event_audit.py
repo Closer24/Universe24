@@ -134,7 +134,9 @@ def ledger_line(
     return line
 
 
-def thing_line(initial: object, converted: object, current: object, escaped: object, absorbed: object) -> Line:
+def thing_line(
+    initial: object, converted: object, current: object, escaped: object, absorbed: object
+) -> Line:
     """The things' line of one ray family (node-is-ports-v1): initial + converted =
     current + escaped + absorbed, exact."""
     line: Line = {

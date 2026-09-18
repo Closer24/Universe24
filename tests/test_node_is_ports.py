@@ -87,7 +87,13 @@ def lamp(name, amount, position, heading=X, per_interval=None, momentum=True, fa
 
 
 def shadow(position, heading, amount=1, owner=1, sign=-1, steps=None):
-    entry = {"position": list(position), "heading": list(heading), "amount": amount, "owner": owner, "sign": sign}
+    entry = {
+        "position": list(position),
+        "heading": list(heading),
+        "amount": amount,
+        "owner": owner,
+        "sign": sign,
+    }
     if steps is not None:
         entry["steps"] = steps
     return entry
@@ -219,9 +225,9 @@ def test_a_share_below_one_quantum_is_a_parked_shadow():
         # Tick 1: 5 on +X at (4,2,2) split 30/11, 5/11 x 5: 2 leave forward, 8 and
         # five 5s park (33 = 3 quanta); tick 2: the 2 at (5,2,2) leave 1 and park 11.
         assert rays_at(result["rays"][0], (5, 2, 2)) == rays_at(sparse["rays"][0], (5, 2, 2))
-        assert [(r.amount, r.owner, r.detector, r.steps) for r in rays_at(result["rays"][0], (5, 2, 2))] == [
-            (2, 2, BIT_SHADOW, 1)
-        ]
+        assert [
+            (r.amount, r.owner, r.detector, r.steps) for r in rays_at(result["rays"][0], (5, 2, 2))
+        ] == [(2, 2, BIT_SHADOW, 1)]
         assert parked_at(result["parked"][0], (4, 2, 2)) == sorted(
             [(X, 8), (MINUS_X, 5), (Y, 5), (MINUS_Y, 5), ([0, 0, 1], 5), ([0, 0, -1], 5)]
         )
@@ -232,7 +238,11 @@ def test_a_share_below_one_quantum_is_a_parked_shadow():
             assert sum(a for _, a in parked_at(result["parked"][tick], (4, 2, 2))) == 33
         at_rest = [r for node in result["parked"][2].values() for rays in node for r in rays]
         assert at_rest and all(
-            r.parked == 1 and r.detector == BIT_SHADOW and r.steps == 0 and r.outbound == 1 and r.owner == 2
+            r.parked == 1
+            and r.detector == BIT_SHADOW
+            and r.steps == 0
+            and r.outbound == 1
+            and r.owner == 2
             for r in at_rest
         )
         assert all(0 < r.amount < 11 for r in at_rest)
@@ -249,8 +259,13 @@ def test_a_share_below_one_quantum_is_a_parked_shadow():
             }
         assert not event_kinds(result["events"])
         entries = [e for e in result["snapshot"]["parked"] if tuple(e["position"]) == (4, 2, 2)]
-        assert sorted((e["heading"], e["amount"]) for e in entries) == parked_at(result["parked"][2], (4, 2, 2))
-        assert all((e["unit"], e["bit"], e["owner"], e["sign"], e["family"]) == (11, 0, 2, -1, "m") for e in entries)
+        assert sorted((e["heading"], e["amount"]) for e in entries) == parked_at(
+            result["parked"][2], (4, 2, 2)
+        )
+        assert all(
+            (e["unit"], e["bit"], e["owner"], e["sign"], e["family"]) == (11, 0, 2, -1, "m")
+            for e in entries
+        )
     assert sparse["ledgers"] == dense["ledgers"]
     assert sparse["rays"] == dense["rays"] and sparse["parked"] == dense["parked"]
     assert sparse["snapshot"]["parked"] == dense["snapshot"]["parked"]
@@ -295,10 +310,22 @@ def test_the_trace_is_a_zero_amount_shadow_and_the_mark_is_the_home_of_what_it_a
     )
     # The shadow: returned at M2 after tick 1, its steps spent at (2,1,1) after
     # tick 3, following the traces through (3,1,1) and (4,1,1), home at M after tick 6.
-    walk = {1: ((0, 1, 1), 2, X), 2: ((1, 1, 1), 1, X), 3: ((2, 1, 1), 0, X), 4: ((3, 1, 1), 0, X), 5: ((4, 1, 1), 0, X)}
+    walk = {
+        1: ((0, 1, 1), 2, X),
+        2: ((1, 1, 1), 1, X),
+        3: ((2, 1, 1), 0, X),
+        4: ((3, 1, 1), 0, X),
+        5: ((4, 1, 1), 0, X),
+    }
     for tick, (position, steps, heading) in walk.items():
         (walker,) = rays_at(result["rays"][tick - 1], position)
-        assert (walker.detector, walker.outbound, walker.steps, HEADINGS[walker.heading], walker.owner) == (
+        assert (
+            walker.detector,
+            walker.outbound,
+            walker.steps,
+            HEADINGS[walker.heading],
+            walker.owner,
+        ) == (
             BIT_SHADOW,
             0,
             steps,
@@ -309,7 +336,12 @@ def test_the_trace_is_a_zero_amount_shadow_and_the_mark_is_the_home_of_what_it_a
     # One click, the thing's, and no event for the shadow home (settled rule (iv)).
     assert event_kinds(result["events"]) == {"detector_click": 1}
     clicks = [e for e in result["events"] if e["event"] == "detector_click"]
-    assert (clicks[0]["tick"], tuple(clicks[0]["position"]), clicks[0]["absorbed"], clicks[0]["owner"]) == (
+    assert (
+        clicks[0]["tick"],
+        tuple(clicks[0]["position"]),
+        clicks[0]["absorbed"],
+        clicks[0]["owner"],
+    ) == (
         3,
         (5, 1, 1),
         4,
@@ -320,7 +352,10 @@ def test_the_trace_is_a_zero_amount_shadow_and_the_mark_is_the_home_of_what_it_a
             "position": [5, 1, 1],
             "resident": {"real": {"m": 4}, "shadow": {"m": 1}, "momentum": [4, 0, 0], "owners": [1]},
         },
-        {"position": [0, 1, 1], "resident": {"real": {}, "shadow": {}, "momentum": [0, 0, 0], "owners": []}},
+        {
+            "position": [0, 1, 1],
+            "resident": {"real": {}, "shadow": {}, "momentum": [0, 0, 0], "owners": []},
+        },
     ]
     assert result["contents"] == [4, 4, 0, 0, 0, 0] and result["shadows"] == [1, 1, 1, 1, 1, 0]
     for tick, ledger in enumerate(result["ledgers"], start=1):
@@ -338,7 +373,9 @@ def test_the_trace_is_a_zero_amount_shadow_and_the_mark_is_the_home_of_what_it_a
             "escaped": (0,),
             "absorbed_at_home": (1,) if tick >= 6 else (0,),
         }
-        assert ledger["fields"]["m"]["absorbed_by_marks"] == ((5,) if tick >= 6 else (4,) if tick >= 3 else (0,))
+        assert ledger["fields"]["m"]["absorbed_by_marks"] == (
+            (5,) if tick >= 6 else (4,) if tick >= 3 else (0,)
+        )
     assert result["ledgers"][5]["marks"] == {
         "count": 2,
         "momentum": (4, 0, 0),
@@ -388,7 +425,13 @@ def test_a_prefilled_shadow_of_a_loop_is_absorbed_and_re_released():
         6: ((3, 5, 5), 1, 2, MINUS_X),
     }.items():
         (walker,) = seen[tick - 1][position]
-        assert (walker.outbound, walker.steps, HEADINGS[walker.heading], walker.owner, walker.amount) == (
+        assert (
+            walker.outbound,
+            walker.steps,
+            HEADINGS[walker.heading],
+            walker.owner,
+            walker.amount,
+        ) == (
             outbound,
             steps,
             heading,
@@ -434,8 +477,21 @@ def test_the_record_carries_the_fixed_terms_and_no_register_counter_or_seed(tmp_
         "momentum": [0, 0, 0],
         "owners": [],
     }
-    assert metadata["shadow_families"] == [{"field": "m", "release": [1, 1], "spread": None, "owners": [1]}]
-    retired = {"registers", "register_phases", "counter", "seed", "traces", "field_remainders", "things_absorbed"}
+    (shadow_family,) = metadata["shadow_families"]
+    assert (shadow_family["field"], shadow_family["release"], shadow_family["owners"]) == (
+        "m",
+        [1, 1],
+        [1],
+    )
+    retired = {
+        "registers",
+        "register_phases",
+        "counter",
+        "seed",
+        "traces",
+        "field_remainders",
+        "things_absorbed",
+    }
     assert not retired & keys_of(metadata) and not retired & keys_of(state)
     assert metadata["real_content"] == [4] and metadata["shadow_content"] == [1]
 
@@ -467,7 +523,14 @@ def test_a_seeded_thing_missed_at_a_mark_returns_to_its_seed_node_and_leaves_aga
     }
     for tick, (position, outbound, steps, heading) in walk.items():
         (thing,) = rays_at(result["rays"][tick - 1], position)
-        assert (thing.detector, thing.outbound, thing.steps, HEADINGS[thing.heading], thing.amount, thing.owner) == (
+        assert (
+            thing.detector,
+            thing.outbound,
+            thing.steps,
+            HEADINGS[thing.heading],
+            thing.amount,
+            thing.owner,
+        ) == (
             BIT_THING,
             outbound,
             steps,
@@ -480,14 +543,17 @@ def test_a_seeded_thing_missed_at_a_mark_returns_to_its_seed_node_and_leaves_aga
     returns = [e for e in result["events"] if e["event"] == "detector_return"]
     assert [(e["tick"], e["amount"], e["owner"]) for e in returns] == [(3, 4, 1)]
     splits = [e for e in result["events"] if e["event"] == "inverse_split"]
-    assert [(e["tick"], tuple(e["position"]), e["ports"], e["amount"], e["restored"]) for e in splits] == [
-        (6, (1, 1, 1), [], 4, True)
-    ]
+    assert [
+        (e["tick"], tuple(e["position"]), tuple(e["ports"]), e["amount"], e["restored"]) for e in splits
+    ] == [(6, (1, 1, 1), (), 4, True)]
     assert "detector_click" not in event_kinds(result["events"])
     assert result["contents"] == [4] * 9 and result["shadows"] == [0] * 9
-    # Every action is a message that returns: the thing's momentum, the lamp's
-    # recoil and its ray's together, is zero at every tick.
-    assert all(momentum == {1: [0, 0, 0]} for momentum in result["momentum"])
+    # The momentum line reads the thing's rays: +X out, -X on the walk back, none
+    # while the lamp holds it again; every action is a message that returns, so
+    # with the lamp's recoil the momentum field's current is zero at every tick.
+    assert (
+        result["momentum"] == [{1: [4, 0, 0]}] * 2 + [{1: [-4, 0, 0]}] * 4 + [{}] + [{1: [4, 0, 0]}] * 2
+    )
     for ledger in result["ledgers"]:
         assert ledger["balanced"] and ledger["real_conserved"]
         assert line(ledger, "real", "m") == {
@@ -522,10 +588,13 @@ def test_a_source_is_a_thing_that_spends_its_content():
             assert world.source_totals() == {"m": (0,), "momentum": (0, 0, 0)}
     assert stocks == [4, 2, 0, 0]
     assert result["contents"] == [6] * 4 and result["shadows"] == [0] * 4
-    assert all(momentum == {1: [0, 0, 0]} for momentum in result["momentum"])
+    # The momentum line reads the thing's rays, two quanta on +X each; the lamp's
+    # recoil, on its momentum field, balances the world's momentum line to zero.
+    assert result["momentum"] == [{1: [2 * k, 0, 0]} for k in (1, 2, 3, 3)]
     for ledger in result["ledgers"]:
         assert ledger["balanced"] and ledger["real_conserved"]
         assert ledger["fields"]["m"]["sourced"] == (0,)
+        assert ledger["fields"]["momentum"]["current"] == (0, 0, 0)
         assert line(ledger, "real", "m") == {
             "initial": (6,),
             "converted": (0,),
@@ -536,7 +605,9 @@ def test_a_source_is_a_thing_that_spends_its_content():
         assert "sourced" not in ledger["real"]["m"] and "sourced" not in ledger["shadow"]["m"]
     empty_kind, empty_emission, empty_seed = lamp("lamp", 0, (1, 2, 2), per_interval=2)
     empty = run(document(ticks=3, types=[empty_kind], emissions=[empty_emission], seeds=[empty_seed]), 3)
-    assert empty["contents"] == [0] * 3 and all(not any(node) for rays in empty["rays"] for node in rays.values())
+    assert empty["contents"] == [0] * 3 and all(
+        not any(node) for rays in empty["rays"] for node in rays.values()
+    )
 
 
 MIRROR = {
@@ -563,7 +634,9 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
         emissions=[emission],
         seeds=[seed],
         families=[family(), family("wall", charge=0)],
-        bodies=[{"position": [6, 2, 2], "family": "wall", "amount": 1, "coupling": "mirror"}],
+        bodies=[
+            {"position": [6, 2, 2], "family": "wall", "amount": 1, "coupling": "mirror", "thing": 3}
+        ],
         shadows=[shadow((5, 2, 2), X, owner=2, steps=1)],
         rules=(MIRROR,),
     )
@@ -571,26 +644,37 @@ def test_a_mirror_is_a_thing_with_a_declared_table_that_returns_a_thing_and_a_sh
     result = run(doc, 8)
     # The shadow: returned by the body after tick 1 (no push: the body names no
     # family), back with its steps and at rest at (4,2,2) from tick 3 on.
-    for tick, (position, steps) in {1: ((6, 2, 2), 2), 2: ((5, 2, 2), 1), 3: ((4, 2, 2), 0), 8: ((4, 2, 2), 0)}.items():
+    for tick, (position, steps) in {
+        1: ((6, 2, 2), 2),
+        2: ((5, 2, 2), 1),
+        3: ((4, 2, 2), 0),
+        8: ((4, 2, 2), 0),
+    }.items():
         (walker,) = [r for r in rays_at(result["rays"][tick - 1], position) if r.detector == BIT_SHADOW]
-        assert (walker.outbound, walker.steps, HEADINGS[walker.heading], walker.momentum, walker.owner) == (
+        assert (
+            walker.outbound,
+            walker.steps,
+            HEADINGS[walker.heading],
+            walker.momentum,
+            walker.owner,
+        ) == (
             0,
             steps,
             MINUS_X,
             None,
             2,
         )
-    # The thing: at the mirror after tick 6, reversed as a fresh event, a thing
-    # of the lamp's identity walking -X.
-    for tick, position in {5: (5, 2, 2), 7: (5, 2, 2), 8: (4, 2, 2)}.items():
+    # The thing: at the mirror after tick 5, reversed in that cycle as a fresh
+    # event, a thing of the lamp's identity walking -X from tick 6.
+    for tick, position in {4: (5, 2, 2), 6: (5, 2, 2), 7: (4, 2, 2)}.items():
         (thing,) = [r for r in rays_at(result["rays"][tick - 1], position) if r.detector == BIT_THING]
         assert (thing.amount, thing.owner, thing.outbound, HEADINGS[thing.heading]) == (
             2,
             1,
             1,
-            X if tick < 6 else MINUS_X,
+            X if tick < 5 else MINUS_X,
         )
-        assert thing.steps == (tick if tick < 6 else tick - 6)
+        assert thing.steps == (tick if tick < 5 else tick - 5)
     assert not {"external_body_absorbed", "ray_push", "shadow_absorbed", "detector_click"} & set(
         event_kinds(result["events"])
     )

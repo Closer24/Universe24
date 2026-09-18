@@ -204,9 +204,7 @@ def home_distance(position: Address3, heading: Heading, nodes: list[Address3]) -
     if not nodes:
         return 1
     axis = next(i for i in range(3) if heading[i])
-    on_line = [
-        node for node in nodes if all(node[i] == position[i] for i in range(3) if i != axis)
-    ]
+    on_line = [node for node in nodes if all(node[i] == position[i] for i in range(3) if i != axis)]
     candidates = on_line or nodes
     return min(sum(abs(a - b) for a, b in zip(node, position, strict=True)) for node in candidates)
 

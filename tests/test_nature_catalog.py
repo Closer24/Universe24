@@ -620,9 +620,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         records = rays | {piece["name"]: piece}
         lamps = [((7, 7, 7), "light", 5, 0, 1)]
         document = board(records, ["light"], lamps, [])
-        document[apparatus["detector"]["world_key"]] = [
-            {"position": [9, 7, 7], "setting": [1, 1]}
-        ]
+        document[apparatus["detector"]["world_key"]] = [{"position": [9, 7, 7], "setting": [1, 1]}]
         assert len(parse_initial_state(document).detectors) == 1
         at_rest = {
             "index": 0,

@@ -41,11 +41,11 @@ from event_universe.core.spatial_state import (
     FIELD_SPREADING,
     Ray,
     merge_rays,
+    parked_shares,
     ray_merge_key,
     relative_ports,
     spread_content,
     transmit,
-    parked_shares,
 )
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization

@@ -350,7 +350,9 @@ def test_shadow_pushes_thing_and_comes_home_to_body():
     # The trace is a zero-amount parked shadow on the heading the thing left by
     # (node-is-ports-v1): thing 1 left (3,2,2) through +X.
     assert parked_at(result["snapshot"], (3, 2, 2)) == [(1, [1, 0, 0], 0)]
-    assert all(entry["bit"] == BIT_SHADOW and entry["unit"] == 1 for entry in result["snapshot"]["parked"])
+    assert all(
+        entry["bit"] == BIT_SHADOW and entry["unit"] == 1 for entry in result["snapshot"]["parked"]
+    )
 
 
 def test_two_bodies_push_each_other_and_take_back_the_recoil():
@@ -541,7 +543,9 @@ def test_a_shadow_only_board_makes_no_event_and_the_dense_layer_agrees():
     assert sparse["inventories"] == dense["inventories"]
     assert sparse["snapshot"]["parked"] == dense["snapshot"]["parked"]
     # The shares below one quantum are parked shadows in units of the table's total.
-    assert all(entry["unit"] == 11 and 0 < entry["amount"] < 11 for entry in sparse["snapshot"]["parked"])
+    assert all(
+        entry["unit"] == 11 and 0 < entry["amount"] < 11 for entry in sparse["snapshot"]["parked"]
+    )
     assert {tuple(e["position"]) for e in sparse["snapshot"]["parked"]} >= {(6, 2, 2), (3, 2, 2)}
 
 
@@ -775,7 +779,9 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
             "point 16",
         ),
         (
-            lambda d: d["detectors"].append({"position": [4, 2, 2], "setting": [1, 1], "on_bit_1": "draw"}),
+            lambda d: d["detectors"].append(
+                {"position": [4, 2, 2], "setting": [1, 1], "on_bit_1": "draw"}
+            ),
             "bit-law-v1",
         ),
         (

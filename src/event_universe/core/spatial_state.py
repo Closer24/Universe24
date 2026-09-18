@@ -1341,7 +1341,12 @@ def parked_unit(definition: SpatialFieldDefinition) -> int:
 
 
 def parked_shadow(
-    owner: int, port: int, definition: SpatialFieldDefinition, amount: int = 0, phase: int = 0, sign: int = 0
+    owner: int,
+    port: int,
+    definition: SpatialFieldDefinition,
+    amount: int = 0,
+    phase: int = 0,
+    sign: int = 0,
 ) -> Ray:
     """A shadow parked at a Node on the heading of `port`: the trace of `owner` when
     the amount is zero, its share below one quantum otherwise (in units of the

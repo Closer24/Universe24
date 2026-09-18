@@ -870,7 +870,9 @@ class DisturbanceEngine:
                 else values
                 for name, values in taken.items()
             },
-            "shadow": {name: shadow_taken.get(name, tuple(0 for _ in values)) for name, values in taken.items()},
+            "shadow": {
+                name: shadow_taken.get(name, tuple(0 for _ in values)) for name, values in taken.items()
+            },
         }
         return world_ledger(self.tick, fields, charge, bodies, marks, things, shadows)
 

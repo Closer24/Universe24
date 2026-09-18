@@ -352,5 +352,9 @@ def test_the_click_keys_are_validated_and_the_helpers_are_exact():
     home = detector_absorb(
         again, 0, (Ray(1, ZERO, 2, detector=BIT_SHADOW, outbound=0, momentum=(-1, 0, 0)),), quanta, 1
     )
-    assert (home.resident.things, home.resident.shadows, home.resident.momentum) == ((8,), (2,), (4, 2, 0))
+    assert (home.resident.things, home.resident.shadows, home.resident.momentum) == (
+        (8,),
+        (2,),
+        (4, 2, 0),
+    )
     assert again.position == A and again.on_click == () and again.resident.owners == (0,)

@@ -653,7 +653,9 @@ class DenseField:
                     )
                     amt[..., port] = np.where(mask, 0, amt[..., port])
                     family.ret_ph[..., port] = np.where(mask, 0, family.ret_ph[..., port])
-                    family.ret_mom[..., port, :] = np.where(mask[..., None], 0, family.ret_mom[..., port, :])
+                    family.ret_mom[..., port, :] = np.where(
+                        mask[..., None], 0, family.ret_mom[..., port, :]
+                    )
                     family.ret_steps[..., port] = np.where(mask, 0, family.ret_steps[..., port])
             if followed.any():
                 turned = np.zeros(self.shape, dtype=np.int64)
@@ -682,7 +684,9 @@ class DenseField:
                         )
                         amt[..., port] = np.where(mask, 0, amt[..., port])
                         family.ret_ph[..., port] = np.where(mask, 0, family.ret_ph[..., port])
-                        family.ret_mom[..., port, :] = np.where(mask[..., None], 0, family.ret_mom[..., port, :])
+                        family.ret_mom[..., port, :] = np.where(
+                            mask[..., None], 0, family.ret_mom[..., port, :]
+                        )
                         family.ret_steps[..., port] = np.where(mask, 0, family.ret_steps[..., port])
                         turned += mask.sum(axis=(3, 4))
                 cost += prices["update"] * turned
@@ -798,7 +802,9 @@ class DenseField:
                 )
             present = (family.arr_amt > 0).any(axis=(3, 4, 5, 6)) | arrived_back.any(axis=(3, 4, 5))
             self.visited |= present
-            count = (family.arr_amt > 0).sum(axis=(3, 4, 5, 6)) + (family.ret_amt > 0).sum(axis=(3, 4, 5))
+            count = (family.arr_amt > 0).sum(axis=(3, 4, 5, 6)) + (family.ret_amt > 0).sum(
+                axis=(3, 4, 5)
+            )
             for position, rays in family.overflow.items():
                 count[position] += len(rays)
             if count.max(initial=0) > family.definition.ray_slots:
@@ -958,7 +964,10 @@ class DenseField:
                 if held:
                     phase = int(
                         family.phase_of_pair(
-                            np.array(held), family.wait_ph[target][cell], np.array(ray.amount), np.array(ray.phase)
+                            np.array(held),
+                            family.wait_ph[target][cell],
+                            np.array(ray.amount),
+                            np.array(ray.phase),
                         )
                     )
                 else:
@@ -976,7 +985,6 @@ class DenseField:
     def _waiting_rays(self, family: DenseFamily, position: Address3) -> list[Ray]:
         """The shadows waiting at a Node as rays: at rest, their steps spent, with
         the momentum they carry (node-is-ports-v1)."""
-        definition = family.definition
         found: list[Ray] = []
         for rank, sign in zip(*np.nonzero(family.wait_amt[position]), strict=True):
             momentum = tuple(int(v) for v in family.wait_mom[position][rank, sign])
@@ -1001,9 +1009,10 @@ class DenseField:
         """The returns at a Node as rays per Port (node-is-ports-v1): each walking
         home on its Port's heading with its amount, the phase of its sum, its
         momentum and its steps; from the resident arrays or from `arrays`."""
-        definition = family.definition
         amounts, phases, momenta, steps = (
-            (family.ret_amt, family.ret_ph, family.ret_mom, family.ret_steps) if arrays is None else arrays
+            (family.ret_amt, family.ret_ph, family.ret_mom, family.ret_steps)
+            if arrays is None
+            else arrays
         )
         found: dict[int, list[Ray]] = {}
         for rank, sign, port in zip(*np.nonzero(amounts[position]), strict=True):
@@ -1022,7 +1031,6 @@ class DenseField:
                     owner=family.owners[int(rank)],
                 )
             )
-        assert definition is not None
         return found
 
     def _hand_over(
@@ -1063,7 +1071,9 @@ class DenseField:
                 back = returning[index]
                 back_hits = np.nonzero(engine_mask[..., None, None, None] & (back[0] > 0))
                 if back_hits[0].size:
-                    for x, y, z in sorted({(int(x), int(y), int(z)) for x, y, z, *_ in zip(*back_hits, strict=True)}):
+                    for x, y, z in sorted(
+                        {(int(x), int(y), int(z)) for x, y, z, *_ in zip(*back_hits, strict=True)}
+                    ):
                         for port, rays in self._returning_rays(family, (x, y, z), back).items():
                             rays_at.setdefault(((x, y, z), port), []).extend(rays)
                     for array in back:
@@ -1105,7 +1115,9 @@ class DenseField:
                                 np.array(ray.phase),
                             )
                         )
-                        family.ret_steps[target][cell] = min(int(family.ret_steps[target][cell]), ray.steps)
+                        family.ret_steps[target][cell] = min(
+                            int(family.ret_steps[target][cell]), ray.steps
+                        )
                     else:
                         phase = ray.phase
                         family.ret_steps[target][cell] = ray.steps
@@ -1142,9 +1154,9 @@ class DenseField:
                 raise ValueError("a Node's parked shadows hold whole quanta in total")
             result[definition.field][0] += resident + held // family.total
             if definition.momentum_field is not None:
-                carried = family.ret_mom.astype(np.int64).sum(axis=(0, 1, 2, 3, 4, 5)) + family.wait_mom.astype(
-                    np.int64
-                ).sum(axis=(0, 1, 2, 3, 4))
+                carried = family.ret_mom.astype(np.int64).sum(
+                    axis=(0, 1, 2, 3, 4, 5)
+                ) + family.wait_mom.astype(np.int64).sum(axis=(0, 1, 2, 3, 4))
                 for axis in range(3):
                     result[definition.momentum_field][axis] += int(carried[axis])
 
