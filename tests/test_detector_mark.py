@@ -36,7 +36,25 @@ HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 # The counter at setting 1/2 (bit-law-v1, point 14), in the order of the marked
 # Node's Ports the six rays come in through: the k-th arrival draws 1 when k mod 2 < 1.
 PINNED_BITS = (1, 0, 1, 0, 1, 0)
-FINAL_TICKET = 6
+# Nine arrivals by tick 3: the six of tick 1 and the three merged pairs that turn
+# back to the mark (lanes-v1, 2026-09-18).
+FINAL_TICKET = 9
+# Re-pinned on 2026-09-18 with feature 18 (lanes-v1, Highlights 5.4 point 25, the
+# model owner's decision on its open case): a returned ray and the passing ray of
+# the opposite lamp are given one lane at the mark, so they are one real ray with
+# the passing ray's record, the amounts added and the momentum added exactly as the
+# ledger reads it (a returned ray reads its event's momentum), which reaches the
+# content: after tick 2 the pairs of 3 (-X), 7 (-Y) and 11 (-Z) sit one Link from
+# C carrying (4, 0, 0), (0, 8, 0) and (0, 0, 12), and at their departure of tick 3
+# each turns back to C, spending 3, 7 and 11 on the momentum field's line: after
+# tick 3 the pair of 3 passed C on +X (the seventh arrival), the pair of 7 was
+# returned on -Y (the eighth) and the pair of 11 passed on +Z (the ninth).
+MERGED_AFTER_2 = sorted(
+    [((6, 7, 7), 1, 3, 2, 0, 1, 1), ((7, 6, 7), 3, 7, 2, 0, 1, 1), ((7, 7, 6), 5, 11, 2, 0, 1, 1)]
+)
+MERGED_AFTER_3 = sorted(
+    [((7, 7, 7), 0, 3, 3, 0, 1, 1), ((7, 7, 7), 3, 7, 3, 0, 0, 1), ((7, 7, 7), 4, 11, 3, 0, 1, 1)]
+)
 
 
 def unit(port):
@@ -272,29 +290,29 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
         # its share on the event's heading, and from tick 3 the lamps of the rays
         # that drew 0 hold their share again with its recoil undone (inverse-split-v1).
         totals, energy, momentum, lamps = observed(world)
-        assert (totals, energy, momentum) == control_trace[tick - 1][:3]
-        assert world.totals() == {"quanta": (21,), "momentum": (0, 0, 0)}
-        for port, bit in enumerate(PINNED_BITS):
-            restored = tick >= 3 and not bit
+        # lanes-v1 (2026-09-18): the merged pairs turn back at tick 3, spending
+        # (3, 7, 11) on the momentum field's line, so the rays' momentum differs
+        # from the control's by that; nothing is ever restored to a lamp.
+        assert (tick < 3) == ((totals, energy, momentum) == control_trace[tick - 1][:3])
+        assert world.totals() == {"quanta": (21,), "momentum": (0, 0, 0) if tick < 3 else (3, 7, 11)}
+        for port in range(6):
             assert lamp(world, port) == {
-                "quanta": (port + 1 if restored else 0,),
-                "momentum": (0, 0, 0) if restored else tuple(u * (port + 1) for u in unit(port)),
+                "quanta": (0,),
+                "momentum": tuple(u * (port + 1) for u in unit(port)),
             }
-        assert lamps == ([lamp(world, port) for port in range(6)])
-        assert (tick < 3) == (lamps == control_trace[tick - 1][3])
+        assert lamps == ([lamp(world, port) for port in range(6)]) == control_trace[tick - 1][3]
         # (a), (b) The ray that came in through Port p and drew 1 leaves through the
         # opposite side with its bit and is t - 1 Links beyond the marked Node after
         # tick t; the ray that drew 0 is reversed at the marked Node in its arrival
         # interval, is at its lamp's Node at tick 2 (detector-return-v1) and is
         # restored to the lamp from tick 3 (inverse-split-v1).
-        assert ray_inventory(world) == sorted(
-            entry
-            for entry in (
+        if tick == 1:
+            assert ray_inventory(world) == sorted(
                 continuing(port, tick, BIT_THING) if bit else returned(port, tick)
                 for port, bit in enumerate(PINNED_BITS)
             )
-            if entry is not None
-        )
+        else:
+            assert ray_inventory(world) == (MERGED_AFTER_2 if tick == 2 else MERGED_AFTER_3)
         if tick == 1:
             assert world.spatial_values(CENTER)["quanta"]["ray_count"] == 6
             for ray in rays_at(world, CENTER):
@@ -302,11 +320,14 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
                 assert ray.event_ports == 1 << origin and ray.accumulators == (0, 0, 0)
                 assert ray.event_shares == tuple(ray.amount if p == origin else 0 for p in range(6))
         if tick == 2:
-            # A passing ray and a resident returned ray share a Node and never merge
-            # (the lamps of Ports 3 and 5, whose rays drew 0, on the lines of Ports
-            # 2 and 4, whose rays drew 1).
-            assert world.spatial_values((7, 6, 7))["quanta"]["ray_count"] == 2
-            assert world.spatial_values((7, 7, 6))["quanta"]["ray_count"] == 2
+            # A passing ray and the returned ray given its lane are one real ray
+            # (lanes-v1, 2026-09-18), with both owners.
+            assert world.spatial_values((7, 6, 7))["quanta"]["ray_count"] == 1
+            assert world.spatial_values((7, 7, 6))["quanta"]["ray_count"] == 1
+            merged = [ray for ray in rays_at(world, (7, 6, 7)) if ray.owners]
+            assert [(ray.amount, ray.owner, ray.owners, ray.momentum) for ray in merged] == [
+                (7, 3, (4,), (0, 8, 0))
+            ]
     # (a) Exactly the arrivals that drew 1 clicked, at tick 1, in Port order, the
     # arrivals that drew 0 were returned, in Port order, and the mark's counter
     # stands at six after six arrivals; lamp p is thing p + 1.
@@ -323,6 +344,19 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
         }
         for port, bit in enumerate(PINNED_BITS)
         if bit
+    ] + [
+        # The merged pairs of 3 and 11 back at C after tick 3 (lanes-v1).
+        {
+            "event": "detector_click",
+            "tick": 3,
+            "position": CENTER,
+            "port": port,
+            "family": "quanta",
+            "amount": amount,
+            "bit": 1,
+            "owner": owner,
+        }
+        for port, amount, owner in ((1, 3, 1), (5, 11, 5))
     ]
     assert returns == [
         {
@@ -336,25 +370,21 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
         }
         for port, bit in enumerate(PINNED_BITS)
         if not bit
-    ]
-    # Each returned ray split at its lamp in the cycle labelled 2, a one-line event
-    # with no sibling line: restored, nothing transmitted.
-    assert sorted(splits, key=lambda event: event["amount"]) == [
+    ] + [
+        # The merged pair of 7 back at C after tick 3, the eighth arrival (lanes-v1).
         {
-            "event": "inverse_split",
-            "tick": 2,
-            "position": lamp_position(port),
+            "event": "detector_return",
+            "tick": 3,
+            "position": CENTER,
+            "port": 3,
             "family": "quanta",
-            "mode": "siblings",
-            "ports": (),
-            "amounts": (),
-            "amount": port + 1,
-            "restored": True,
-            "annulled": {},
+            "amount": 7,
+            "owner": 3,
         }
-        for port, bit in enumerate(PINNED_BITS)
-        if not bit
     ]
+    # No returned ray reaches its lamp: each joined the passing ray of the opposite
+    # lamp on its lane (lanes-v1, 2026-09-18), so no inverse split happens.
+    assert splits == []
     node = world._spatial.nodes[CENTER]
     assert node.detector == initial.detectors[0] and node.detector_ticket == FINAL_TICKET
     # (d) A replay writes the same events and the same run record, and redraws nothing.

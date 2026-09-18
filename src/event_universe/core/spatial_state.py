@@ -639,6 +639,12 @@ class Ray:
     # of the merge identity; a shadow at a Node holding a thing of its owner is
     # home, and a momentum table never pushes a thing with its own shadow.
     owner: int = 0
+    # The further owners of a merged thing (lanes-v1, Highlights 5.4 point 25,
+    # the model owner's decision of 2026-09-18): two real rays of one family
+    # given one lane in one interval are one real ray, whose owners are kept as
+    # a set, sorted, without `owner`, so that a returning shadow of either is
+    # home at the merged ray. Empty on every other ray. Part of the merge identity.
+    owners: tuple[int, ...] = ()
     # The clock's remainder (clock-readings-v1, point 19): a thing of a clock
     # family advances its phase by (remainder + amount) // K steps per interval
     # and keeps the rest here, below K; 0 on a shadow and on a family without a
@@ -2382,7 +2388,9 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             # the content bounded by K and N, content / K below half the circle.
             if not 0 <= ray.remainder < definition.clock:
                 raise ValueError("a thing's clock remainder stays below K (clock-readings-v1)")
-            if 2 * abs(ray.amount) >= definition.clock * definition.phase_modulus:
+            if not ray.owners and 2 * abs(ray.amount) >= definition.clock * definition.phase_modulus:
+                # A merged thing above the bound (lanes-v1, Highlights 5.4 point
+                # 25) is the family's decay table's business (point 20).
                 raise ValueError(
                     "a thing's content / K must stay below half the phase circle N / 2: "
                     "K and N bound the content one Node may hold (clock-readings-v1, point 19)"
@@ -2463,6 +2471,17 @@ def validate_ray_event_state(ray: Ray) -> None:
         raise ValueError("ray detector must be 0 (a shadow) or 1 (a thing), the bit of the law")
     if type(ray.owner) is not int or not 0 <= ray.owner < MAX_THING_ID:
         raise ValueError("ray owner must be a thing id below the id bound")
+    if (
+        type(ray.owners) is not tuple
+        or any(type(o) is not int or not 0 <= o < MAX_THING_ID for o in ray.owners)
+        or tuple(sorted(set(ray.owners))) != ray.owners
+        or ray.owner in ray.owners
+        or (ray.owners and ray.detector != BIT_THING)
+    ):
+        raise ValueError(
+            "a merged thing's further owners are a sorted set of thing ids without its own; "
+            "a shadow has none (lanes-v1)"
+        )
     if ray.detector == BIT_SHADOW and (
         ray.event_ports or ray.interaction_delay or any(ray.lag) or ray.advance != -1
     ):
@@ -2628,6 +2647,40 @@ def validate_lanes(initial: InitialState) -> None:
                     "(Highlights 5.4, point 25)"
                 )
             taken[key] = seed.record.type_index
+    # Two real rays of different families on one lane are a meeting the table of
+    # section 5.2 of the pair decides (the model owner, 2026-09-18): every pair of
+    # families whose things the board can bear (an emission's, a body's, a table
+    # output's) declares a table naming both, else the world is refused.
+    real: set[int] = {
+        emission.spatial_field
+        for emission in initial.emissions
+        if initial.spatial_fields[emission.spatial_field].rays
+    }
+    real |= {body.family for body in initial.external_bodies}
+    real |= {kind for rule in initial.ray_interactions for kind in rule.outputs}
+    for first in sorted(real):
+        for second in sorted(real):
+            if second <= first:
+                continue
+            if any(
+                (rule.outputs or rule.assignments)
+                and any(first in role for role in rule.participants)
+                and any(second in role for role in rule.participants)
+                and any(
+                    first in role and second in other
+                    for role in rule.participants
+                    for other in rule.participants
+                    if other is not role
+                )
+                for rule in initial.ray_interactions
+            ):
+                continue
+            raise ValueError(
+                "two real rays of different families on one lane are a meeting the table of the "
+                f"pair decides: the families {initial.fields[initial.spatial_fields[first].field].name!r}"
+                f" and {initial.fields[initial.spatial_fields[second].field].name!r} declare no table "
+                "naming both (Highlights 5.4, point 25)"
+            )
 
 
 def vector_length(vector: Heading) -> int:
@@ -3090,6 +3143,7 @@ RayMergeKey = tuple[
     int,
     int,
     int,
+    tuple[int, ...],
 ]
 
 
@@ -3119,6 +3173,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.periods,
         ray.owed,
         ray.parked,
+        ray.owners,
     )
 
 
@@ -3163,6 +3218,7 @@ def merge_rays(rays: Rays) -> Rays:
             periods=key[18],
             owed=key[19],
             parked=key[20],
+            owners=key[21],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount or key[20]
@@ -3427,6 +3483,7 @@ def detector_absorb(
         if ray.detector == BIT_THING:
             things[index] = checked_work(things[index] + ray.amount)
             owners.add(ray.owner)
+            owners.update(ray.owners)
         else:
             shadows[index] = checked_work(shadows[index] + ray.amount)
         for axis, value in enumerate(ledger_momentum(ray, definition)):

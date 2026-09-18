@@ -2562,15 +2562,30 @@ most one shadow of each owner.
   next Node; every thing moves one Link every interval, the wait of point 23
   the only exception. The things that would step are resolved after the
   others, in the Node's ray order, each holding its own heading's lane until
-  it is resolved. Two reals of different merge keys leaving on one lane are
-  refused (a `ValueError` naming point 25): no Port sends two, so none
-  receives two; rays of one merge key are one ray. The lane is one direction
-  of a Port, so the claims and the check take the rays on the six Port lines;
-  a ray of the old ray worlds on a line that is not a Port heading holds no
-  lane. A ray born onto a lane another thing continues on in the same
-  interval (a return at a mark, an emission, a meeting's output) is the case
-  the law declares impossible without naming another rule; the engine
-  refuses that departure rather than queue, wait or carry two.
+  it is resolved. Two real rays of one family given one lane in one interval
+  are one real ray (the model owner, 2026-09-18, on the case this feature
+  left open; `merge_lane`): a thing born at the Node by an emission, a mark's
+  return or a table's output while another passes joins it; the amounts add
+  (whole quanta of the family), the phase is the coherent sum's (rule 3.20,
+  the amount never cancels), the momentum adds exactly as the ledger reads it
+  (a returned ray reads its event's momentum, so the merged thing may carry a
+  momentum that turns it at its next departure, spent on the momentum field's
+  line, which the cycle record publishes as `spent` and the local audit
+  reads), the charge adds with the amount, and the owners are kept as a set
+  (`Ray.owners`, sorted, without `owner`, part of the merge identity), so
+  that a returning shadow of either owner is home at the merged ray, a mark
+  that absorbs it becomes the home of both, and it leaves the traces of both;
+  every other property is the passing thing's (the one already on its way on
+  the heading, else the first to take the lane). A content above the family's
+  K and N bound is the decay table's business (point 20): `validate_rays`
+  leaves a merged thing to it. Two real rays of different families on one
+  lane are a meeting the table of section 5.2 of the pair decides: a world
+  whose board can bear things of two families (an emission's, a body's, a
+  table output's) with no table naming both is refused at parsing naming
+  point 25 (`validate_lanes`), and a departure that would put two on one lane
+  is refused. The lane is one direction of a Port, so the claims and the
+  check take the rays on the six Port lines; a ray of the old ray worlds on a
+  line that is not a Port heading holds no lane.
 - **The validations at parsing.** A declared board with two real rays on one
   lane is refused: two seeds at one Node whose types emit one ray family on
   the same declared heading (or both sweeping the sequence). A table of

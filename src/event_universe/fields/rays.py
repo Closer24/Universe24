@@ -17,7 +17,9 @@ from event_universe.core.spatial_state import (
     advance_ray,
     clock_step,
     heading_pace,
+    ledger_momentum,
     merge_rays,
+    phase_of_sum,
     ray_merge_key,
     ray_vector,
     stamp_event,
@@ -135,10 +137,20 @@ class LaneClaims:
         return self.taken[port] is None
 
     def claim(self, port: int, family: int, ray: Ray) -> None:
+        """Take the lane for a real ray. A second real of the same family given
+        the lane in this interval joins the first: the two are one real ray
+        (`merge_lane`; the model owner, 2026-09-18), and the first keeps the
+        slot. A real of another family is a meeting the table of the pair
+        decides, which a departure cannot hold: refused."""
         held = (family, ray_merge_key(ray))
-        if self.taken[port] is not None and self.taken[port] != held:
-            raise ValueError("two real rays on one lane (Highlights 5.4, point 25)")
-        self.taken[port] = held
+        taken = self.taken[port]
+        if taken is None:
+            self.taken[port] = held
+        elif taken[0] != family:
+            raise ValueError(
+                "two real rays of different families on one lane are a meeting the table of "
+                "the pair decides, not a departure (Highlights 5.4, point 25)"
+            )
 
     def release(self, port: int, family: int, ray: Ray) -> None:
         if self.taken[port] == (family, ray_merge_key(ray)):
@@ -150,6 +162,62 @@ def _on_lane(ray: Ray, definition: SpatialFieldDefinition) -> bool:
     six Port lines. The lane is one direction of a Port, so a ray of the old ray
     worlds on a line that is not a Port heading holds none."""
     return ray.detector == BIT_THING and definition.headings[ray.heading] in PORT_HEADINGS
+
+
+def merge_lane(rays: Rays, port: int, claims: LaneClaims, definition: SpatialFieldDefinition) -> Rays:
+    """The real rays of one family given one out-lane in one interval are one
+    real ray (lanes-v1, Highlights 5.4 point 25, the model owner's decision of
+    2026-09-18): a thing born at the Node by an emission, a mark's return or a
+    table's output while another passes joins it. The amounts add (whole
+    quanta of the family), the phase is the coherent sum's (rule 3.20, the
+    amount never cancels), the momentum they carry adds exactly (the charge,
+    per quantum, adds with the amount), and the owners are kept as a set so
+    that a returning shadow of either is home at the merged ray; every other
+    property is that of the ray that took the lane first, the one already on
+    the heading. A content above the family's bound is the decay table's
+    business (point 20). Rays of one merge key merged already."""
+    reals = [ray for ray in rays if _on_lane(ray, definition)]
+    if len(reals) <= 1:
+        return rays
+    held = claims.taken[port]
+    # The ray already on its way on the heading keeps its record: the thing that
+    # passes (outbound) before one born here or turned back, the first to take
+    # the lane before the rest.
+    base = next(
+        (ray for ray in reals if held is not None and (definition.field, ray_merge_key(ray)) == held),
+        reals[0],
+    )
+    if not base.outbound:
+        base = next((ray for ray in reals if ray.outbound), base)
+    amount = 0
+    total = [0, 0, 0]
+    owners: set[int] = set()
+    for ray in reals:
+        amount = checked_work(amount + ray.amount)
+        owners.add(ray.owner)
+        owners.update(ray.owners)
+        for axis, value in enumerate(ledger_momentum(ray, definition)):
+            total[axis] = checked_work(total[axis] + value)
+    # The momentum adds exactly as the ledger reads it: the merged thing's own
+    # motion is its amount on the lane, and what the sum holds beyond that is
+    # the momentum it carries (a returned ray reads its event's momentum).
+    heading = definition.headings[base.heading]
+    momentum = tuple(
+        bounded(checked_work(total[axis] - checked_work(amount * heading[axis]))) for axis in range(3)
+    )
+    phase = base.phase
+    if definition.coherent and definition.cosine_table:
+        phase = phase_of_sum(tuple((ray.amount, ray.phase) for ray in reals), definition)
+    owners.discard(base.owner)
+    merged = replace(
+        base,
+        amount=bounded(amount),
+        phase=phase,
+        momentum=(momentum[0], momentum[1], momentum[2]) if any(momentum) else None,
+        outbound=1,
+        owners=tuple(sorted(owners)),
+    )
+    return merge_rays(tuple(ray for ray in rays if ray not in reals) + (merged,))
 
 
 def forward_rays(
@@ -275,7 +343,10 @@ def forward_rays(
             # The lane is taken: the thing keeps its heading, its momentum stays
             # accumulated, and it steps at the next Node (Highlights 5.4, point 25).
             outgoing[own[0]].append(own[1])
-    result = tuple(merge_rays(tuple(port_rays)) for port_rays in outgoing)
+    result = tuple(
+        merge_lane(merge_rays(tuple(port_rays)), port, claims, definition)
+        for port, port_rays in enumerate(outgoing)
+    )
     meter.charge("send", sum(1 for port_rays in result if port_rays))
     return result, merge_rays(tuple(kept)), Departures(steps, (spent[0], spent[1], spent[2]))
 

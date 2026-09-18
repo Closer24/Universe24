@@ -572,6 +572,10 @@ class SpatialLaw:
             for slot, ray in enumerate(bundle):
                 if ray.detector == BIT_THING and ray.outbound and ray.steps >= 1:
                     owners_here.setdefault(ray.owner, ("ray", kind, slot))
+                    # A merged thing is home to the shadows of every owner it
+                    # carries (lanes-v1, Highlights 5.4 point 25).
+                    for other in ray.owners:
+                        owners_here.setdefault(other, ("ray", kind, slot))
         for slot, record in enumerate(records):
             if record is None or record.type_index >= len(self.things):
                 continue
@@ -1176,9 +1180,12 @@ class SpatialLaw:
                 for port, port_rays in enumerate(ports):
                     for ray in port_rays:
                         if ray.detector == BIT_THING and ray.outbound:
-                            best = departures.get(ray.owner)
-                            if best is None or ray.amount > best[0]:
-                                departures[ray.owner] = (ray.amount, port)
+                            # A merged thing leaves the trace of every owner it
+                            # carries (lanes-v1, Highlights 5.4 point 25).
+                            for owner in (ray.owner, *ray.owners):
+                                best = departures.get(owner)
+                                if best is None or ray.amount > best[0]:
+                                    departures[owner] = (ray.amount, port)
                 if all(heading in definition.headings for heading in PORT_HEADINGS):
                     # A family whose lines are not the six Port headings has no
                     # heading to park a trace on, and no shadow of its own to read it.

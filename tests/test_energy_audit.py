@@ -247,9 +247,12 @@ def test_absorber_with_self_exclusion_does_not_eat_its_own_wake():
     # exclusion of the cycle it departed on: that quantum is never absorbed back.
     # The +x quantum of the cycle before travels with it too, but as the ray of
     # an earlier event (two Links walked) it no longer merges with the excluded
-    # one (ray-event-state-v1), so from the third tick on the absorber takes that
-    # one quantum back each tick while paying two.
-    assert energies == [38, 36, 35, 34, 33]
+    # one (ray-event-state-v1). Re-pinned on 2026-09-18 with feature 18 (lanes-v1,
+    # Highlights 5.4 point 25): the quantum of the cycle before and the one
+    # emitted with it leave the Node on one lane as one real ray of two quanta
+    # with the older event's record, which the one-Link exclusion does not name,
+    # so from the third tick on the absorber takes the two back every other tick.
+    assert energies == [38, 36, 36, 34, 34]
     assert world.conservation_report()["status"] == "passed"
 
 
