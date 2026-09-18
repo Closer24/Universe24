@@ -120,20 +120,16 @@ def test_a_thing_pays_a_tick_for_every_whole_quantum_it_reads(case):
         return
     if case == "half":
         # (e) w = 1 / 2: one quantum read owes half an interval, kept exactly
-        # (`owed` 1 in units of 1 / 2): the thing steps at tick 2 as if it owed
-        # nothing. Re-pinned 2026-09-18 (return-field-v1): the shadow turned back
-        # rides with it to (10, 9, 10) and pushes it again in the cycle of tick
-        # 3, the second half read makes a whole interval owed, paid at tick 3
-        # (the thing stays, its steps 2), and it walks on from tick 4 owing nothing.
+        # (`owed` 1 in units of 1 / 2) and spent by nothing: the thing steps at
+        # tick 2 as if it owed nothing; the debt stays on it (return-field-v1:
+        # the shadow turned back rides with it on the same lane and reads
+        # nothing more, one meeting, one push).
         sim = Simulation(parse_initial_state(world([1, 2])))
         for t in range(1, 9):
             sim.step()
-            if t == 2:
-                (thing,) = rays_at(sim, (10, 9, 10), "m")
-                assert (thing.heading, thing.steps, thing.owed) == (3, 2, 1)
-            elif t >= 3:
-                (thing,) = rays_at(sim, (10, 12 - t, 10), "m")
-                assert (thing.heading, thing.steps, thing.owed) == (3, t - 1, 0)
+            if t >= 2:
+                (thing,) = rays_at(sim, (10, 11 - t, 10), "m")
+                assert (thing.heading, thing.steps, thing.owed) == (3, t, 1)
         return
     raw = world(1)
     initial = parse_initial_state(raw)

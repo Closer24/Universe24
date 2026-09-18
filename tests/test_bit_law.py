@@ -59,9 +59,10 @@ trace is left at any Node and no shadow waits. (a) the body's shadow home at
 the first delivery as before, no trace beside its ninths; (d) the returned
 shadow parks at (5,2,2) from tick 3; (h) the re-released shadow reaches the
 mark with the thing and is returned before the thing is resident, then parks
-at (3,2,2); (j) the head-on push: the inverted shadow rides one Link with the
-thing it pushed and pushes it again at (3,y,2), then flips back to an outgoing
-share carrying twice -dp, parked from tick 4.
+at (3,2,2); (j) the head-on push is taken once: the inverted shadow rides one
+Link with the thing it pushed on the same lane (one meeting, one push: it
+arrives through the Port the thing arrived by and pushes nothing there),
+mixes at (3,y,2) and parks its ninths with -dp.
 """
 
 import json
@@ -872,10 +873,11 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
     # Re-pinned 2026-09-18 (node-mixing-v1): the shadows leave fresh one Link
     # ahead of the things and push them head on at (2,y,2) in the cycle of tick
     # 2. Re-pinned the same day (return-field-v1): each shadow turns back with
-    # the opposite sign, rides the Link to (3,y,2) with the thing it pushed and
-    # pushes it again there in the cycle of tick 3, the same push (its heading
-    # and its sign both inverted), then flips back to an outgoing share heading
-    # -X carrying twice -dp, at (2,y,2) after tick 3.
+    # the opposite sign carrying -dp, rides the Link to (3,y,2) with the thing
+    # it pushed on the same lane and pushes nothing there (one meeting, one
+    # push; the double push of the first pin was an artefact, removed
+    # 2026-09-18), mixes at (3,y,2) in the cycle of tick 3 and parks its ninths
+    # there with -dp shared over them by the largest remainder.
     result = run(doc, 3)
     pushes = {"content": ((2, 0, 0), (4, 0, 0)), "charge": ((1, 0, 0), (1, 0, 0))}[reads]
     assert result["momentum"][0] == {1: [2, 0, 0], 2: [4, 0, 0], 3: [0, 0, 0]}
@@ -884,21 +886,35 @@ def test_a_thing_reads_the_shadows_message_by_its_content_or_its_charge(reads):
         2: [4 + pushes[1][0], 0, 0],
         3: [0, 0, 0],
     }
-    assert result["momentum"][2] == {
-        1: [2 + 2 * pushes[0][0], 0, 0],
-        2: [4 + 2 * pushes[1][0], 0, 0],
-        3: [0, 0, 0],
-    }
+    assert result["momentum"][2] == result["momentum"][1]
     for y, push in ((1, pushes[0]), (3, pushes[1])):
         rays = [r for r in rays_at(result["inventories"][2], (4, y, 2)) if not r.parked]
         # The momentum a thing carries is the pushes it took (clock-readings-v1).
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
-            (BIT_THING, y // 2 + 1, (2 * push[0], 0, 0), 1, 3),
+            (BIT_THING, y // 2 + 1, (push[0], 0, 0), 1, 3),
         ]
-        rays = [r for r in rays_at(result["inventories"][2], (2, y, 2)) if not r.parked]
+        # After tick 2 the share rides beside the thing at (3,y,2), on its lane.
+        rays = [r for r in rays_at(result["inventories"][1], (3, y, 2)) if not r.parked]
         assert sorted((r.detector, r.owner, r.momentum, r.outbound, r.steps) for r in rays) == [
-            (BIT_SHADOW, 3, (-2 * push[0], 0, 0), 1, 1),
+            (BIT_SHADOW, 3, (-push[0], 0, 0), 0, 1),
+            (BIT_THING, y // 2 + 1, (push[0], 0, 0), 1, 2),
         ]
+        assert not [r for r in rays_at(result["inventories"][2], (3, y, 2)) if not r.parked]
+        # -dp over the ninths by the largest remainder, the 4 back first, then
+        # the lower Ports.
+        carried = {
+            1: {(-1, 0, 0): -1},
+            2: {(-1, 0, 0): -1, (1, 0, 0): -1},
+            4: {(-1, 0, 0): -2, (1, 0, 0): -1, (0, 1, 0): -1},
+        }[push[0]]
+        ninths = [
+            (tuple(e["heading"]), e["amount"], tuple(e["momentum"]), e["outbound"])
+            for e in result["snapshot"]["parked"]
+            if tuple(e["position"]) == (3, y, 2)
+        ]
+        assert sorted(ninths) == sorted(
+            (tuple(h), 4 if h == MINUS_X else 1, (carried.get(tuple(h), 0), 0, 0), 0) for h in HEADINGS
+        )
     assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
     assert result["contents"] == [6] * 3 and result["shadows"] == [2] * 3
 

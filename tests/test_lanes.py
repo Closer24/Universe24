@@ -212,17 +212,15 @@ def test_a_thing_steps_into_a_lane_only_if_the_lane_is_free():
             assert current["current"] == ZERO and current["spent"] == ZERO
             continue
         # Re-pinned 2026-09-18 (return-field-v1): the shadow, turned back at C
-        # with the opposite sign, walks -Y to (10, 9, 10) beside B, pushes B
-        # there in the cycle of tick 3 with the same push (its heading and sign
-        # both inverted; B carries it on its own line), flips back to an
-        # outgoing share carrying (0, 16, 0) and parks its ninths at C from
-        # tick 4; B leaves the board after tick 11 with (0, -16, 0).
+        # with the opposite sign carrying (0, 8, 0), walks -Y to (10, 9, 10)
+        # beside B on B's lane and pushes nothing there (one meeting, one push:
+        # it arrived through the Port B arrived by; the double push of the
+        # first pin was an artefact, removed 2026-09-18), mixes there in the
+        # cycle of tick 3 and parks its ninths with that momentum; B walks on
+        # as it was and leaves the board with (0, -8, 0).
         if t == 2:
             assert positions_of(world, "f") == {(10, 9, 10)}
             assert turn_rays(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 1, (0, 8, 0))]
-        elif t == 3:
-            assert positions_of(world, "f") == {CENTER}
-            assert turn_rays(world, CENTER, "f") == [shadow_ray(2, 1, 1, (0, 16, 0), outbound=1, sign=1)]
         else:
             assert positions_of(world, "f") == set()
         if t == 2:
@@ -238,13 +236,13 @@ def test_a_thing_steps_into_a_lane_only_if_the_lane_is_free():
         if t <= 12:
             assert turn_rays(world, a_at, "m") == [ray(3, 8, t & 7, t, 0)]
         if t <= 11:
-            assert turn_rays(world, b_at, "m") == [ray(3, 8, t & 7, t, 3, momentum=(0, -8, 0))]
+            assert turn_rays(world, b_at, "m") == [ray(3, 8, t & 7, t, 3)]
         assert world.thing_momentum() == (
-            {1: [0, -8, 0], 2: [0, -16, 0]} if t <= 11 else {1: [0, -8, 0]} if t == 12 else {}
+            {1: [0, -8, 0], 2: [0, -8, 0]} if t <= 11 else {1: [0, -8, 0]} if t == 12 else {}
         )
         assert current["spent"] == (8, 0, 0)
-        assert current["escaped"] == (ZERO if t <= 11 else (0, -16, 0) if t == 12 else (0, -24, 0))
-        assert current["current"] == ((-8, 0, 0) if t <= 11 else (-8, 16, 0) if t == 12 else (-8, 24, 0))
+        assert current["escaped"] == (ZERO if t <= 11 else (0, -8, 0) if t == 12 else (0, -16, 0))
+        assert current["current"] == ((-8, 0, 0) if t <= 11 else (-8, 8, 0) if t == 12 else (-8, 16, 0))
     assert pushes_of(events) == []
     # The control: alone, the thing steps at C in the cycle of tick 2.
     control = Simulation(parse_initial_state(turn_document((THING_A, FROM_BELOW), [turn({"f": -1})], 2)))

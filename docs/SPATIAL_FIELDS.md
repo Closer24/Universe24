@@ -2692,11 +2692,25 @@ behaviour, with no declarable alternative:
   returning share pushes whatever other thing it meets with the opposite sign
   (`push_of` negates the table's sign for a share with `outbound` 0, under
   either reading), and turns back again, sign flipped again, carrying the sum
-  of its pushes. A shadow turned back at a Node rides the Link it came by in
-  reverse; a thing that moves along that Link with it (a head-on push, or a
-  thing turned onto the shadow's line) meets it again at the next Node and is
-  pushed once more, the same push (its heading and its sign both inverted),
-  after which the share is an outgoing share again.
+  of its pushes.
+- **One meeting, one push** (the orchestrator's reading of the definition of
+  a meeting, two rays at one Node in one interval, to be confirmed by the
+  model owner; 2026-09-18). A shadow turned back at a Node rides the Link it
+  came by in reverse, and a thing that moves along that Link with it (a
+  head-on push, or a thing turned onto the shadow's line) is at the next Node
+  with it again, on the same lane: that is the meeting that already happened
+  continuing, not a new one, so the share pushes nothing there and mixes on
+  as any share (`rides_with`, applied alike where the receiver's shadows are
+  gathered and where each push is taken: the share arrived through the Port
+  the thing arrived by, its in-lane as `lane_of` reads it, which under
+  lanes-v1 is the lane they left the previous Node on together; a share fresh
+  at the Node, steps 0, a body at rest, a thing at its event Node and a ray
+  off the Port headings never ride). The double push of the feature's first
+  form, the same push taken again at the next Node after which the share was
+  an outgoing share carrying twice -dp, was an artefact and is removed
+  (2026-09-18); the pins of `test_ray_momentum_turn`, `test_wait_rule`,
+  `test_clock_readings` (d), `test_lanes` (d) and `test_bit_law` (j) read
+  the one push.
 - **Home.** Wherever a share of its owner reaches the owner's Node, outgoing
   or returning, it is absorbed with no push: a body, a thing ray (or a merged
   ray whose owner set carries the owner, lanes-v1), a record or the mark that

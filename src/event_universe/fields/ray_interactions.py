@@ -214,6 +214,34 @@ def _convert(
     return tuple((kind, ray) for (kind, _), ray in zip(products, stamped, strict=True))
 
 
+def rides_with(
+    shadow: Ray,
+    thing: Ray,
+    shadow_definition: SpatialFieldDefinition,
+    thing_definition: SpatialFieldDefinition,
+) -> bool:
+    """One meeting, one push (return-field-v1; the orchestrator's reading of the
+    definition of a meeting, two rays at one Node in one interval, to be
+    confirmed by the model owner): a shadow that arrived at the Node through
+    the Port the thing itself arrived by, this interval, left the previous
+    Node together with the thing on the same lane (lanes-v1: one shadow per
+    owner per lane), and is the meeting that already happened continuing, not
+    a new one; it pushes nothing here and mixes on as any share. The Port a ray
+    came in by is its in-lane, the one behind its heading (`lane_of`), read by
+    the heading vector so that two families' heading tables compare; a ray off
+    the Port headings never rides. Both must have walked a Link (steps at
+    least 1): a share fresh at this Node (turned back or re-released here, steps
+    0), a body's token and a thing at its event Node never ride, so a returning
+    share meets a body at rest as a new meeting every time."""
+    if not shadow.steps or not thing.steps:
+        return False
+    shadow_heading = shadow_definition.headings[shadow.heading]
+    thing_heading = thing_definition.headings[thing.heading]
+    if shadow_heading not in PORT_HEADINGS or thing_heading not in PORT_HEADINGS:
+        return False
+    return shadow_heading == thing_heading
+
+
 def _turn(
     rule: InteractionDefinition,
     receiver_slot: int,
@@ -257,6 +285,8 @@ def _turn(
         if shadow.detector != BIT_SHADOW or shadow.owner in (ray.owner, *ray.owners):
             continue
         if taken.get(shadow_slot, receiver_slot) != receiver_slot:
+            continue
+        if rides_with(shadow, ray, definitions[kind], definition):
             continue
         meter.charge("evaluate")
         heading = definitions[kind].headings[shadow.heading]
@@ -423,6 +453,9 @@ def _meet(
                     and rays[kind][kind_slot].detector == BIT_SHADOW
                     and rays[kind][kind_slot].owner not in (thing.owner, *thing.owners)
                     and taken.get(other, slot) == slot
+                    and not rides_with(
+                        rays[kind][kind_slot], thing, definitions[kind], definitions[index]
+                    )
                 ]
                 if not shadows:
                     continue

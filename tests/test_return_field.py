@@ -15,15 +15,21 @@ the momentum in flight on the shadows, parked ones included; (b) a returning
 share that meets a third thing pushes it with the opposite sign; (c) a
 returning share reaching its owner is absorbed with no push; (d) no trace is
 left at any Node, no share waits, every share on its way moves every interval,
-the runner records the identity. The worlds are those of the law of the bit.
+the runner records the identity; (f) one meeting, one push (the orchestrator's
+reading of the definition of a meeting, to be confirmed by the model owner): a
+head-on push is taken exactly once, the share turned back rides the Link with
+the thing it pushed on the same lane, arrives at the next Node through the Port
+the thing arrived by and pushes nothing there; the thing's momentum line shows
+one push and the share carries -dp once. The worlds are those of the law of
+the bit.
 """
 
 from event_universe import Simulation
 from event_universe.core import spatial_state
-from event_universe.core.spatial_state import BIT_SHADOW, RETURN_FIELD
+from event_universe.core.spatial_state import BIT_SHADOW, BIT_THING, RETURN_FIELD
 from event_universe.initialization import parse_initial_state
 
-from .test_bit_law import HEADINGS, MINUS_X, X, body, document, run, shadow
+from .test_bit_law import HEADINGS, MINUS_X, TURN, X, body, document, lamp, line, run, shadow
 
 
 def moving_at(inventory, position):
@@ -220,3 +226,71 @@ def test_no_trace_no_wait_and_every_share_moves(tmp_path):
     assert metadata["return_field"] == RETURN_FIELD == "return-field-v1"
     state = json.loads((tmp_path / "out" / "state.json").read_text(encoding="utf-8"))
     assert all(entry["amount"] >= 1 and "momentum" in entry for entry in state["parked"])
+
+
+def test_a_head_on_push_is_taken_exactly_once():
+    """(f): the lamp of 2 at (1,2,2) heading +X (thing 1); the body of 100 at
+    (9,2,2) (owner 2) with its shadow of 1 fresh at (3,2,2) on -X; the table
+    {"m": -1} reading content. The push at (2,2,2) in the cycle of tick 2 is
+    on the thing's own axis, so it turns nowhere; the share turned back rides
+    the Link to (3,2,2) with it on the same lane and pushes nothing there (one
+    meeting, one push; the double push was an artefact, removed 2026-09-18)."""
+    kind, emission, seed = lamp("lamp", 2, (1, 2, 2))
+    doc = document(
+        ticks=4,
+        types=[kind],
+        emissions=[emission],
+        seeds=[seed],
+        bodies=[body((9, 2, 2))],
+        shadows=[shadow((3, 2, 2), MINUS_X, owner=2, steps=0)],
+        rules=(TURN | {"momentum_table": {"m": -1}, "reads": "content"},),
+    )
+    assert parse_initial_state(doc).spatial_fields[0].owners == (1, 2)
+    result = run(doc, 4)
+    # The thing's momentum line: one push, (2, 0, 0), in the cycle of tick 2,
+    # nothing after.
+    assert result["momentum"] == [{1: [2, 0, 0], 2: [0, 0, 0]}] + [{1: [4, 0, 0], 2: [0, 0, 0]}] * 3
+    for t in range(1, 5):
+        (thing,) = [
+            r
+            for r in result["inventories"][t - 1].get((1 + t, 2, 2), ((),))[0]
+            if r.detector == BIT_THING
+        ]
+        assert (thing.owner, thing.steps, thing.momentum) == (1, t, None if t == 1 else (2, 0, 0))
+    # Tick 1: the shadow beside the thing at (2,2,2), an outgoing share of the
+    # body's sign. Tick 2: turned back on +X carrying -dp once, riding with the
+    # thing to (3,2,2). Tick 3: it arrived through the Port the thing arrived
+    # by, pushes nothing, mixes and parks its ninths with -dp shared over them
+    # by the largest remainder: -1 on the 4 back (-X), -1 on the +X ninth (the
+    # lower Port among the ties), nothing on the other four.
+    assert moving_at(result["inventories"][0], (2, 2, 2)) == [(MINUS_X, 1, 1, 1, -1, None)]
+    assert moving_at(result["inventories"][1], (3, 2, 2)) == [(X, 1, 1, 0, 1, (-2, 0, 0))]
+    assert moving_at(result["inventories"][2], (3, 2, 2)) == []
+    ninths = sorted(
+        (tuple(e["heading"]), e["amount"], tuple(e["momentum"]), e["outbound"])
+        for e in result["snapshot"]["parked"]
+    )
+    assert ninths == sorted(
+        [(tuple(MINUS_X), 4, (-1, 0, 0), 0), (tuple(X), 1, (-1, 0, 0), 0)]
+        + [(tuple(h), 1, (0, 0, 0), 0) for h in HEADINGS if h not in (X, MINUS_X)]
+    )
+    assert all(tuple(e["position"]) == (3, 2, 2) for e in result["snapshot"]["parked"])
+    # The books: the lamp's recoil (-2, 0, 0), the thing (4, 0, 0) and the
+    # share (-2, 0, 0) sum to nothing at every tick, nothing spent, nothing home.
+    assert line(result["ledgers"][3], "fields", "momentum") == {
+        "initial": (0, 0, 0),
+        "sourced": (0, 0, 0),
+        "current": (0, 0, 0),
+        "escaped": (0, 0, 0),
+        "annulled": (0, 0, 0),
+        "absorbed": (0, 0, 0),
+        "absorbed_by_marks": (0, 0, 0),
+        "returned": (0, 0, 0),
+        "spent": (0, 0, 0),
+    }
+    assert all(entry["balanced"] and entry["real_conserved"] for entry in result["ledgers"])
+    assert result["contents"] == [2] * 4 and result["shadows"] == [1] * 4
+    with Simulation(parse_initial_state(doc)) as world:
+        for t in range(1, 5):
+            world.step()
+            assert momentum_in_flight(world) == ([0, 0, 0] if t == 1 else [-2, 0, 0])
