@@ -1,0 +1,2298 @@
+{
+ "worlds": {
+  "two_slits_periodic": {
+   "model": "a1-law-two-slits-periodic",
+   "status": "completed",
+   "error": null,
+   "completed_ticks": 200,
+   "elapsed_seconds": 281.9,
+   "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+   "initialization_sha256": "935aee67a98baa8516969a26048e51c034dd3a9ac1feda00eea6a5dfb150616c",
+   "dense_field": "dense-field-v1",
+   "K": 1,
+   "phase_width": 64,
+   "clock": true,
+   "photon_amount": 4,
+   "lamp_stock": 67108864,
+   "fill": 8,
+   "slits": [
+    16,
+    32
+   ],
+   "d": 16,
+   "L": 24,
+   "lambda_w_links": 9.237604307034013,
+   "optical_spacing_links": 13.856406460551021,
+   "emissions": 200,
+   "photons_in_flight_at_end": 11,
+   "events": {
+    "cycle_committed": 200,
+    "cycle_started": 200,
+    "detector_click": 189,
+    "field_spread": 470,
+    "shadow_return": 558,
+    "spatial_cycle": 2334,
+    "spatial_received": 2534,
+    "spatial_sent": 12309
+   },
+   "screen_clicks": {},
+   "wall_clicks": {
+    "[16, 24, 4]": 189
+   },
+   "wall_click_quanta": 756,
+   "wall_first_click": 12,
+   "things_resident_on_screen": 0,
+   "screen_y": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48
+   ],
+   "returned": [
+    244041,
+    193775,
+    176850,
+    180301,
+    184724,
+    195997,
+    207201,
+    241625,
+    246936,
+    211533,
+    220533,
+    244085,
+    254709,
+    232992,
+    180853,
+    125213,
+    124331,
+    91266,
+    73939,
+    108962,
+    158329,
+    195729,
+    221963,
+    257300,
+    319615,
+    259252,
+    221969,
+    196885,
+    159352,
+    110054,
+    75208,
+    90439,
+    123928,
+    124233,
+    177160,
+    233667,
+    253338,
+    245111,
+    215710,
+    211120,
+    246811,
+    238520,
+    209652,
+    198096,
+    183256,
+    181334,
+    174365,
+    195456,
+    244746
+   ],
+   "peak": [
+    7509,
+    10064,
+    8505,
+    9223,
+    6555,
+    7291,
+    8065,
+    8528,
+    15126,
+    11842,
+    12071,
+    10743,
+    8921,
+    10367,
+    6402,
+    6019,
+    8922,
+    8056,
+    3617,
+    3826,
+    6753,
+    11047,
+    14395,
+    12260,
+    22107,
+    11338,
+    14129,
+    11809,
+    6839,
+    3700,
+    3216,
+    6783,
+    8991,
+    5411,
+    6087,
+    10682,
+    9599,
+    11236,
+    11048,
+    11326,
+    15290,
+    9106,
+    8098,
+    6883,
+    6230,
+    9901,
+    8196,
+    9859,
+    7275
+   ],
+   "peak_tick": [
+    124,
+    176,
+    197,
+    128,
+    196,
+    171,
+    197,
+    157,
+    157,
+    194,
+    200,
+    178,
+    188,
+    197,
+    193,
+    197,
+    196,
+    195,
+    172,
+    130,
+    190,
+    191,
+    200,
+    157,
+    157,
+    194,
+    200,
+    191,
+    190,
+    130,
+    172,
+    195,
+    196,
+    197,
+    198,
+    197,
+    189,
+    178,
+    200,
+    194,
+    157,
+    157,
+    197,
+    171,
+    128,
+    128,
+    197,
+    176,
+    190
+   ],
+   "first_arrival": [
+    67,
+    66,
+    65,
+    65,
+    64,
+    63,
+    62,
+    62,
+    61,
+    60,
+    60,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    60,
+    60,
+    60,
+    60,
+    60,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    60,
+    60,
+    61,
+    62,
+    62,
+    63,
+    64,
+    65,
+    65,
+    66,
+    67
+   ],
+   "push_x": [
+    41738,
+    30049,
+    26469,
+    35680,
+    42442,
+    54452,
+    46988,
+    56403,
+    62394,
+    37242,
+    30815,
+    26822,
+    38597,
+    44814,
+    35472,
+    25932,
+    36939,
+    26135,
+    19742,
+    35090,
+    53229,
+    52773,
+    33764,
+    35766,
+    48273,
+    32848,
+    33303,
+    53618,
+    52791,
+    36167,
+    20338,
+    25778,
+    35741,
+    25944,
+    32627,
+    44301,
+    37926,
+    28410,
+    26079,
+    38472,
+    64063,
+    55372,
+    48630,
+    56101,
+    42998,
+    38403,
+    25752,
+    29624,
+    39997
+   ],
+   "push_y": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "peak_push_x": [
+    4456,
+    -5453,
+    6902,
+    6197,
+    3892,
+    4822,
+    5654,
+    5163,
+    9732,
+    6448,
+    4017,
+    -4235,
+    5048,
+    10233,
+    3625,
+    3059,
+    4891,
+    4776,
+    2458,
+    2760,
+    2756,
+    6032,
+    -5268,
+    8079,
+    16313,
+    7107,
+    -5029,
+    6371,
+    2781,
+    2825,
+    2612,
+    4008,
+    5056,
+    3280,
+    3815,
+    10465,
+    4871,
+    -4150,
+    3852,
+    6535,
+    9909,
+    5108,
+    6085,
+    4793,
+    3807,
+    7123,
+    6447,
+    -5188,
+    3916
+   ],
+   "phases": {
+    "0": 6455849,
+    "32": 3006615
+   },
+   "owners": {
+    "1": 9462464
+   },
+   "wall_returned_peak": 142847145,
+   "wall_returned_total": 10520459195,
+   "probes": {
+    "17,16,4": {
+     "peak": 257258,
+     "peak_tick": 169,
+     "last": 30037
+    },
+    "17,32,4": {
+     "peak": 259887,
+     "peak_tick": 169,
+     "last": 29946
+    },
+    "18,16,4": {
+     "peak": 104251,
+     "peak_tick": 158,
+     "last": 12177
+    },
+    "18,32,4": {
+     "peak": 103567,
+     "peak_tick": 158,
+     "last": 12785
+    },
+    "28,24,4": {
+     "peak": 22847,
+     "peak_tick": 167,
+     "last": 3624
+    },
+    "39,24,4": {
+     "peak": 35155,
+     "peak_tick": 158,
+     "last": 1221
+    },
+    "43,24,4": {
+     "peak": 13748,
+     "peak_tick": 186,
+     "last": 1459
+    }
+   },
+   "beyond_wall_peak": 38897522,
+   "beyond_wall_peak_tick": 195,
+   "beyond_wall_last": 38472586,
+   "ledger_last": {
+    "tick": 200,
+    "light": {
+     "initial": [
+      3288334336
+     ],
+     "sourced": [
+      0
+     ],
+     "current": [
+      3288333580
+     ],
+     "escaped": [
+      0
+     ],
+     "annulled": [
+      0
+     ],
+     "absorbed": [
+      0
+     ],
+     "absorbed_by_marks": [
+      756
+     ],
+     "returned": [
+      0
+     ],
+     "balanced": true
+    },
+    "momentum": {
+     "initial": [
+      0,
+      0,
+      0
+     ],
+     "sourced": [
+      0,
+      0,
+      0
+     ],
+     "current": [
+      -756,
+      0,
+      0
+     ],
+     "escaped": [
+      0,
+      0,
+      0
+     ],
+     "annulled": [
+      0,
+      0,
+      0
+     ],
+     "absorbed": [
+      0,
+      0,
+      0
+     ],
+     "absorbed_by_marks": [
+      756,
+      0,
+      0
+     ],
+     "returned": [
+      0,
+      0,
+      0
+     ],
+     "spent": [
+      0,
+      0,
+      0
+     ],
+     "balanced": true
+    },
+    "real": {
+     "light": {
+      "initial": [
+       67108864
+      ],
+      "converted": [
+       0
+      ],
+      "current": [
+       67108108
+      ],
+      "escaped": [
+       0
+      ],
+      "absorbed": [
+       756
+      ],
+      "balanced": true
+     }
+    },
+    "shadow": {
+     "light": {
+      "initial": [
+       3221225472
+      ],
+      "current": [
+       3221225472
+      ],
+      "escaped": [
+       0
+      ],
+      "absorbed_at_home": [
+       0
+      ],
+      "balanced": true
+     }
+    }
+   },
+   "initial_totals": {
+    "light": [
+     3288334336
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     3288333580
+    ],
+    "momentum": [
+     -756,
+     0,
+     0
+    ]
+   },
+   "escaped_totals": {
+    "light": [
+     0
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "conserved_at_every_completed_tick": true,
+   "real_conserved": true,
+   "lamp_momentum_last": {
+    "1": [
+     44,
+     0,
+     0
+    ]
+   },
+   "extrema_returned": {
+    "maxima": [
+     [
+      8,
+      246936
+     ],
+     [
+      12,
+      254709
+     ],
+     [
+      24,
+      319615
+     ],
+     [
+      36,
+      253338
+     ],
+     [
+      40,
+      246811
+     ]
+    ],
+    "minima": [
+     [
+      2,
+      176850
+     ],
+     [
+      9,
+      211533
+     ],
+     [
+      18,
+      73939
+     ],
+     [
+      30,
+      75208
+     ],
+     [
+      39,
+      211120
+     ],
+     [
+      46,
+      174365
+     ]
+    ],
+    "spacings": [
+     4,
+     12,
+     12,
+     4
+    ],
+    "mean_spacing": 8.0
+   },
+   "extrema_push": {
+    "maxima": [
+     [
+      5,
+      54452
+     ],
+     [
+      8,
+      62394
+     ],
+     [
+      13,
+      44814
+     ],
+     [
+      16,
+      36939
+     ],
+     [
+      20,
+      53229
+     ],
+     [
+      24,
+      48273
+     ],
+     [
+      27,
+      53618
+     ],
+     [
+      32,
+      35741
+     ],
+     [
+      35,
+      44301
+     ],
+     [
+      40,
+      64063
+     ],
+     [
+      43,
+      56101
+     ]
+    ],
+    "minima": [
+     [
+      2,
+      26469
+     ],
+     [
+      6,
+      46988
+     ],
+     [
+      11,
+      26822
+     ],
+     [
+      15,
+      25932
+     ],
+     [
+      18,
+      19742
+     ],
+     [
+      22,
+      33764
+     ],
+     [
+      25,
+      32848
+     ],
+     [
+      30,
+      20338
+     ],
+     [
+      33,
+      25944
+     ],
+     [
+      38,
+      26079
+     ],
+     [
+      42,
+      48630
+     ],
+     [
+      46,
+      25752
+     ]
+    ],
+    "spacings": [
+     3,
+     5,
+     3,
+     4,
+     4,
+     3,
+     5,
+     3,
+     5,
+     3
+    ],
+    "mean_spacing": 3.8
+   },
+   "depth_returned": {
+    "central": 319615,
+    "nearest_minimum": [
+     18,
+     73939
+    ],
+    "depth": 0.6242497852899475
+   },
+   "depth_push": {
+    "central": 48273,
+    "nearest_minimum": [
+     25,
+     32848
+    ],
+    "depth": 0.19014805044316516
+   }
+  },
+  "one_slit_periodic": {
+   "model": "a1-law-one-slit-periodic",
+   "status": "completed",
+   "error": null,
+   "completed_ticks": 200,
+   "elapsed_seconds": 281.5,
+   "source_sha256": "6fef7cc04a71706cfd5dfdb496e20f6318a6bdfd6bf0c36e1379dbdd7934addc",
+   "initialization_sha256": "fbda80979d1ef91e691f14e785b09f79ec30a000471798f1a6f3b95310458206",
+   "dense_field": "dense-field-v1",
+   "K": 1,
+   "phase_width": 64,
+   "clock": true,
+   "photon_amount": 4,
+   "lamp_stock": 67108864,
+   "fill": 8,
+   "slits": [
+    32
+   ],
+   "d": null,
+   "L": 24,
+   "lambda_w_links": 9.237604307034013,
+   "optical_spacing_links": null,
+   "emissions": 200,
+   "photons_in_flight_at_end": 11,
+   "events": {
+    "cycle_committed": 200,
+    "cycle_started": 200,
+    "detector_click": 189,
+    "field_spread": 470,
+    "shadow_return": 556,
+    "spatial_cycle": 2334,
+    "spatial_received": 2534,
+    "spatial_sent": 12306
+   },
+   "screen_clicks": {},
+   "wall_clicks": {
+    "[16, 24, 4]": 189
+   },
+   "wall_click_quanta": 756,
+   "wall_first_click": 12,
+   "things_resident_on_screen": 0,
+   "screen_y": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48
+   ],
+   "returned": [
+    83454,
+    103451,
+    128849,
+    127819,
+    112326,
+    105905,
+    99005,
+    133557,
+    133345,
+    102517,
+    105564,
+    115727,
+    130384,
+    127312,
+    102644,
+    84231,
+    88128,
+    92845,
+    88449,
+    88619,
+    91425,
+    82134,
+    69643,
+    64510,
+    77497,
+    82992,
+    75703,
+    72890,
+    67168,
+    64250,
+    61753,
+    64017,
+    75066,
+    63871,
+    61478,
+    64450,
+    66061,
+    71230,
+    74241,
+    83811,
+    77295,
+    64684,
+    69595,
+    81178,
+    91071,
+    89690,
+    89436,
+    91344,
+    87248
+   ],
+   "peak": [
+    2944,
+    4912,
+    5486,
+    4766,
+    5122,
+    2775,
+    4331,
+    3798,
+    3857,
+    4573,
+    3195,
+    4961,
+    5403,
+    5197,
+    5307,
+    3591,
+    3074,
+    4353,
+    3495,
+    3281,
+    3229,
+    4187,
+    2710,
+    2206,
+    4135,
+    4353,
+    5148,
+    3561,
+    3333,
+    2731,
+    2272,
+    2815,
+    3568,
+    3033,
+    2634,
+    2912,
+    3289,
+    3301,
+    5756,
+    4018,
+    4394,
+    2191,
+    2575,
+    3826,
+    2830,
+    2977,
+    3461,
+    3694,
+    2862
+   ],
+   "peak_tick": [
+    197,
+    166,
+    197,
+    128,
+    167,
+    187,
+    128,
+    124,
+    198,
+    193,
+    189,
+    167,
+    128,
+    197,
+    166,
+    197,
+    200,
+    184,
+    194,
+    173,
+    192,
+    191,
+    144,
+    156,
+    157,
+    157,
+    200,
+    200,
+    200,
+    156,
+    170,
+    169,
+    168,
+    169,
+    200,
+    156,
+    200,
+    200,
+    200,
+    157,
+    157,
+    156,
+    144,
+    191,
+    192,
+    172,
+    120,
+    184,
+    185
+   ],
+   "first_arrival": [
+    68,
+    70,
+    71,
+    72,
+    73,
+    75,
+    76,
+    77,
+    77,
+    76,
+    75,
+    73,
+    72,
+    71,
+    70,
+    68,
+    67,
+    66,
+    65,
+    65,
+    64,
+    63,
+    62,
+    62,
+    61,
+    60,
+    60,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    59,
+    60,
+    60,
+    61,
+    62,
+    62,
+    63,
+    64,
+    65,
+    65,
+    66,
+    67
+   ],
+   "push_x": [
+    8386,
+    19710,
+    31448,
+    30985,
+    18963,
+    26949,
+    29371,
+    38321,
+    36565,
+    30289,
+    25645,
+    19190,
+    31877,
+    31284,
+    20264,
+    7664,
+    17011,
+    23930,
+    19350,
+    20907,
+    22541,
+    17299,
+    9190,
+    8186,
+    13665,
+    15848,
+    10689,
+    10423,
+    10334,
+    8460,
+    7836,
+    9398,
+    9039,
+    8284,
+    7139,
+    9165,
+    9841,
+    10393,
+    9995,
+    15822,
+    14618,
+    9111,
+    10333,
+    17165,
+    22566,
+    21012,
+    20448,
+    22073,
+    16226
+   ],
+   "push_y": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "peak_push_x": [
+    1534,
+    2600,
+    4278,
+    3066,
+    2293,
+    2001,
+    3695,
+    3352,
+    3416,
+    3807,
+    2282,
+    2430,
+    3210,
+    4190,
+    2595,
+    1477,
+    1801,
+    2621,
+    1964,
+    2075,
+    1608,
+    1921,
+    2608,
+    1286,
+    2638,
+    2683,
+    1422,
+    -1806,
+    1664,
+    1611,
+    -998,
+    1061,
+    1529,
+    1088,
+    -1158,
+    1586,
+    1419,
+    -1527,
+    1561,
+    2367,
+    2702,
+    1427,
+    2543,
+    1710,
+    1847,
+    2076,
+    2064,
+    2030,
+    1767
+   ],
+   "phases": {
+    "0": 3091612,
+    "32": 1238250
+   },
+   "owners": {
+    "1": 4329862
+   },
+   "wall_returned_peak": 142847145,
+   "wall_returned_total": 10000662586,
+   "probes": {
+    "17,16,4": {
+     "peak": 31809,
+     "peak_tick": 161,
+     "last": 13518
+    },
+    "17,32,4": {
+     "peak": 307156,
+     "peak_tick": 128,
+     "last": 13920
+    },
+    "18,16,4": {
+     "peak": 12994,
+     "peak_tick": 162,
+     "last": 9054
+    },
+    "18,32,4": {
+     "peak": 90283,
+     "peak_tick": 172,
+     "last": 7061
+    },
+    "28,24,4": {
+     "peak": 6137,
+     "peak_tick": 174,
+     "last": 935
+    },
+    "39,24,4": {
+     "peak": 7287,
+     "peak_tick": 156,
+     "last": 857
+    },
+    "43,24,4": {
+     "peak": 3939,
+     "peak_tick": 186,
+     "last": 794
+    }
+   },
+   "beyond_wall_peak": 20574235,
+   "beyond_wall_peak_tick": 199,
+   "beyond_wall_last": 20405905,
+   "ledger_last": {
+    "tick": 200,
+    "light": {
+     "initial": [
+      3288334336
+     ],
+     "sourced": [
+      0
+     ],
+     "current": [
+      3288333580
+     ],
+     "escaped": [
+      0
+     ],
+     "annulled": [
+      0
+     ],
+     "absorbed": [
+      0
+     ],
+     "absorbed_by_marks": [
+      756
+     ],
+     "returned": [
+      0
+     ],
+     "balanced": true
+    },
+    "momentum": {
+     "initial": [
+      0,
+      0,
+      0
+     ],
+     "sourced": [
+      0,
+      0,
+      0
+     ],
+     "current": [
+      -756,
+      0,
+      0
+     ],
+     "escaped": [
+      0,
+      0,
+      0
+     ],
+     "annulled": [
+      0,
+      0,
+      0
+     ],
+     "absorbed": [
+      0,
+      0,
+      0
+     ],
+     "absorbed_by_marks": [
+      756,
+      0,
+      0
+     ],
+     "returned": [
+      0,
+      0,
+      0
+     ],
+     "spent": [
+      0,
+      0,
+      0
+     ],
+     "balanced": true
+    },
+    "real": {
+     "light": {
+      "initial": [
+       67108864
+      ],
+      "converted": [
+       0
+      ],
+      "current": [
+       67108108
+      ],
+      "escaped": [
+       0
+      ],
+      "absorbed": [
+       756
+      ],
+      "balanced": true
+     }
+    },
+    "shadow": {
+     "light": {
+      "initial": [
+       3221225472
+      ],
+      "current": [
+       3221225472
+      ],
+      "escaped": [
+       0
+      ],
+      "absorbed_at_home": [
+       0
+      ],
+      "balanced": true
+     }
+    }
+   },
+   "initial_totals": {
+    "light": [
+     3288334336
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "final_totals": {
+    "light": [
+     3288333580
+    ],
+    "momentum": [
+     -756,
+     0,
+     0
+    ]
+   },
+   "escaped_totals": {
+    "light": [
+     0
+    ],
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "conserved_at_every_completed_tick": true,
+   "real_conserved": true,
+   "lamp_momentum_last": {
+    "1": [
+     44,
+     0,
+     0
+    ]
+   },
+   "extrema_returned": {
+    "maxima": [
+     [
+      2,
+      128849
+     ],
+     [
+      7,
+      133557
+     ],
+     [
+      12,
+      130384
+     ],
+     [
+      17,
+      92845
+     ],
+     [
+      20,
+      91425
+     ],
+     [
+      25,
+      82992
+     ],
+     [
+      32,
+      75066
+     ],
+     [
+      39,
+      83811
+     ],
+     [
+      44,
+      91071
+     ]
+    ],
+    "minima": [
+     [
+      6,
+      99005
+     ],
+     [
+      9,
+      102517
+     ],
+     [
+      15,
+      84231
+     ],
+     [
+      18,
+      88449
+     ],
+     [
+      23,
+      64510
+     ],
+     [
+      30,
+      61753
+     ],
+     [
+      34,
+      61478
+     ],
+     [
+      41,
+      64684
+     ],
+     [
+      46,
+      89436
+     ]
+    ],
+    "spacings": [
+     5,
+     5,
+     5,
+     3,
+     5,
+     7,
+     7,
+     5
+    ],
+    "mean_spacing": 5.25
+   },
+   "extrema_push": {
+    "maxima": [
+     [
+      2,
+      31448
+     ],
+     [
+      7,
+      38321
+     ],
+     [
+      12,
+      31877
+     ],
+     [
+      17,
+      23930
+     ],
+     [
+      20,
+      22541
+     ],
+     [
+      25,
+      15848
+     ],
+     [
+      31,
+      9398
+     ],
+     [
+      37,
+      10393
+     ],
+     [
+      39,
+      15822
+     ],
+     [
+      44,
+      22566
+     ]
+    ],
+    "minima": [
+     [
+      4,
+      18963
+     ],
+     [
+      11,
+      19190
+     ],
+     [
+      15,
+      7664
+     ],
+     [
+      18,
+      19350
+     ],
+     [
+      23,
+      8186
+     ],
+     [
+      30,
+      7836
+     ],
+     [
+      34,
+      7139
+     ],
+     [
+      38,
+      9995
+     ],
+     [
+      41,
+      9111
+     ],
+     [
+      46,
+      20448
+     ]
+    ],
+    "spacings": [
+     5,
+     5,
+     5,
+     3,
+     5,
+     6,
+     6,
+     2,
+     5
+    ],
+    "mean_spacing": 4.666666666666667
+   },
+   "depth_returned": {
+    "central": 77497,
+    "nearest_minimum": [
+     23,
+     64510
+    ],
+    "depth": 0.0914532382206511
+   },
+   "depth_push": {
+    "central": 13665,
+    "nearest_minimum": [
+     23,
+     8186
+    ],
+    "depth": 0.25074367305844125
+   }
+  }
+ },
+ "control_periodic": {
+  "rows": [
+   {
+    "y": 0,
+    "two": 244041,
+    "one": 83454,
+    "one_mirror": 87248,
+    "incoherent": 170702,
+    "cross": 73339,
+    "two_push": 41738,
+    "one_push": 8386,
+    "incoherent_push": 24612,
+    "cross_push": 17126
+   },
+   {
+    "y": 1,
+    "two": 193775,
+    "one": 103451,
+    "one_mirror": 91344,
+    "incoherent": 194795,
+    "cross": -1020,
+    "two_push": 30049,
+    "one_push": 19710,
+    "incoherent_push": 41783,
+    "cross_push": -11734
+   },
+   {
+    "y": 2,
+    "two": 176850,
+    "one": 128849,
+    "one_mirror": 89436,
+    "incoherent": 218285,
+    "cross": -41435,
+    "two_push": 26469,
+    "one_push": 31448,
+    "incoherent_push": 51896,
+    "cross_push": -25427
+   },
+   {
+    "y": 3,
+    "two": 180301,
+    "one": 127819,
+    "one_mirror": 89690,
+    "incoherent": 217509,
+    "cross": -37208,
+    "two_push": 35680,
+    "one_push": 30985,
+    "incoherent_push": 51997,
+    "cross_push": -16317
+   },
+   {
+    "y": 4,
+    "two": 184724,
+    "one": 112326,
+    "one_mirror": 91071,
+    "incoherent": 203397,
+    "cross": -18673,
+    "two_push": 42442,
+    "one_push": 18963,
+    "incoherent_push": 41529,
+    "cross_push": 913
+   },
+   {
+    "y": 5,
+    "two": 195997,
+    "one": 105905,
+    "one_mirror": 81178,
+    "incoherent": 187083,
+    "cross": 8914,
+    "two_push": 54452,
+    "one_push": 26949,
+    "incoherent_push": 44114,
+    "cross_push": 10338
+   },
+   {
+    "y": 6,
+    "two": 207201,
+    "one": 99005,
+    "one_mirror": 69595,
+    "incoherent": 168600,
+    "cross": 38601,
+    "two_push": 46988,
+    "one_push": 29371,
+    "incoherent_push": 39704,
+    "cross_push": 7284
+   },
+   {
+    "y": 7,
+    "two": 241625,
+    "one": 133557,
+    "one_mirror": 64684,
+    "incoherent": 198241,
+    "cross": 43384,
+    "two_push": 56403,
+    "one_push": 38321,
+    "incoherent_push": 47432,
+    "cross_push": 8971
+   },
+   {
+    "y": 8,
+    "two": 246936,
+    "one": 133345,
+    "one_mirror": 77295,
+    "incoherent": 210640,
+    "cross": 36296,
+    "two_push": 62394,
+    "one_push": 36565,
+    "incoherent_push": 51183,
+    "cross_push": 11211
+   },
+   {
+    "y": 9,
+    "two": 211533,
+    "one": 102517,
+    "one_mirror": 83811,
+    "incoherent": 186328,
+    "cross": 25205,
+    "two_push": 37242,
+    "one_push": 30289,
+    "incoherent_push": 46111,
+    "cross_push": -8869
+   },
+   {
+    "y": 10,
+    "two": 220533,
+    "one": 105564,
+    "one_mirror": 74241,
+    "incoherent": 179805,
+    "cross": 40728,
+    "two_push": 30815,
+    "one_push": 25645,
+    "incoherent_push": 35640,
+    "cross_push": -4825
+   },
+   {
+    "y": 11,
+    "two": 244085,
+    "one": 115727,
+    "one_mirror": 71230,
+    "incoherent": 186957,
+    "cross": 57128,
+    "two_push": 26822,
+    "one_push": 19190,
+    "incoherent_push": 29583,
+    "cross_push": -2761
+   },
+   {
+    "y": 12,
+    "two": 254709,
+    "one": 130384,
+    "one_mirror": 66061,
+    "incoherent": 196445,
+    "cross": 58264,
+    "two_push": 38597,
+    "one_push": 31877,
+    "incoherent_push": 41718,
+    "cross_push": -3121
+   },
+   {
+    "y": 13,
+    "two": 232992,
+    "one": 127312,
+    "one_mirror": 64450,
+    "incoherent": 191762,
+    "cross": 41230,
+    "two_push": 44814,
+    "one_push": 31284,
+    "incoherent_push": 40449,
+    "cross_push": 4365
+   },
+   {
+    "y": 14,
+    "two": 180853,
+    "one": 102644,
+    "one_mirror": 61478,
+    "incoherent": 164122,
+    "cross": 16731,
+    "two_push": 35472,
+    "one_push": 20264,
+    "incoherent_push": 27403,
+    "cross_push": 8069
+   },
+   {
+    "y": 15,
+    "two": 125213,
+    "one": 84231,
+    "one_mirror": 63871,
+    "incoherent": 148102,
+    "cross": -22889,
+    "two_push": 25932,
+    "one_push": 7664,
+    "incoherent_push": 15948,
+    "cross_push": 9984
+   },
+   {
+    "y": 16,
+    "two": 124331,
+    "one": 88128,
+    "one_mirror": 75066,
+    "incoherent": 163194,
+    "cross": -38863,
+    "two_push": 36939,
+    "one_push": 17011,
+    "incoherent_push": 26050,
+    "cross_push": 10889
+   },
+   {
+    "y": 17,
+    "two": 91266,
+    "one": 92845,
+    "one_mirror": 64017,
+    "incoherent": 156862,
+    "cross": -65596,
+    "two_push": 26135,
+    "one_push": 23930,
+    "incoherent_push": 33328,
+    "cross_push": -7193
+   },
+   {
+    "y": 18,
+    "two": 73939,
+    "one": 88449,
+    "one_mirror": 61753,
+    "incoherent": 150202,
+    "cross": -76263,
+    "two_push": 19742,
+    "one_push": 19350,
+    "incoherent_push": 27186,
+    "cross_push": -7444
+   },
+   {
+    "y": 19,
+    "two": 108962,
+    "one": 88619,
+    "one_mirror": 64250,
+    "incoherent": 152869,
+    "cross": -43907,
+    "two_push": 35090,
+    "one_push": 20907,
+    "incoherent_push": 29367,
+    "cross_push": 5723
+   },
+   {
+    "y": 20,
+    "two": 158329,
+    "one": 91425,
+    "one_mirror": 67168,
+    "incoherent": 158593,
+    "cross": -264,
+    "two_push": 53229,
+    "one_push": 22541,
+    "incoherent_push": 32875,
+    "cross_push": 20354
+   },
+   {
+    "y": 21,
+    "two": 195729,
+    "one": 82134,
+    "one_mirror": 72890,
+    "incoherent": 155024,
+    "cross": 40705,
+    "two_push": 52773,
+    "one_push": 17299,
+    "incoherent_push": 27722,
+    "cross_push": 25051
+   },
+   {
+    "y": 22,
+    "two": 221963,
+    "one": 69643,
+    "one_mirror": 75703,
+    "incoherent": 145346,
+    "cross": 76617,
+    "two_push": 33764,
+    "one_push": 9190,
+    "incoherent_push": 19879,
+    "cross_push": 13885
+   },
+   {
+    "y": 23,
+    "two": 257300,
+    "one": 64510,
+    "one_mirror": 82992,
+    "incoherent": 147502,
+    "cross": 109798,
+    "two_push": 35766,
+    "one_push": 8186,
+    "incoherent_push": 24034,
+    "cross_push": 11732
+   },
+   {
+    "y": 24,
+    "two": 319615,
+    "one": 77497,
+    "one_mirror": 77497,
+    "incoherent": 154994,
+    "cross": 164621,
+    "two_push": 48273,
+    "one_push": 13665,
+    "incoherent_push": 27330,
+    "cross_push": 20943
+   },
+   {
+    "y": 25,
+    "two": 259252,
+    "one": 82992,
+    "one_mirror": 64510,
+    "incoherent": 147502,
+    "cross": 111750,
+    "two_push": 32848,
+    "one_push": 15848,
+    "incoherent_push": 24034,
+    "cross_push": 8814
+   },
+   {
+    "y": 26,
+    "two": 221969,
+    "one": 75703,
+    "one_mirror": 69643,
+    "incoherent": 145346,
+    "cross": 76623,
+    "two_push": 33303,
+    "one_push": 10689,
+    "incoherent_push": 19879,
+    "cross_push": 13424
+   },
+   {
+    "y": 27,
+    "two": 196885,
+    "one": 72890,
+    "one_mirror": 82134,
+    "incoherent": 155024,
+    "cross": 41861,
+    "two_push": 53618,
+    "one_push": 10423,
+    "incoherent_push": 27722,
+    "cross_push": 25896
+   },
+   {
+    "y": 28,
+    "two": 159352,
+    "one": 67168,
+    "one_mirror": 91425,
+    "incoherent": 158593,
+    "cross": 759,
+    "two_push": 52791,
+    "one_push": 10334,
+    "incoherent_push": 32875,
+    "cross_push": 19916
+   },
+   {
+    "y": 29,
+    "two": 110054,
+    "one": 64250,
+    "one_mirror": 88619,
+    "incoherent": 152869,
+    "cross": -42815,
+    "two_push": 36167,
+    "one_push": 8460,
+    "incoherent_push": 29367,
+    "cross_push": 6800
+   },
+   {
+    "y": 30,
+    "two": 75208,
+    "one": 61753,
+    "one_mirror": 88449,
+    "incoherent": 150202,
+    "cross": -74994,
+    "two_push": 20338,
+    "one_push": 7836,
+    "incoherent_push": 27186,
+    "cross_push": -6848
+   },
+   {
+    "y": 31,
+    "two": 90439,
+    "one": 64017,
+    "one_mirror": 92845,
+    "incoherent": 156862,
+    "cross": -66423,
+    "two_push": 25778,
+    "one_push": 9398,
+    "incoherent_push": 33328,
+    "cross_push": -7550
+   },
+   {
+    "y": 32,
+    "two": 123928,
+    "one": 75066,
+    "one_mirror": 88128,
+    "incoherent": 163194,
+    "cross": -39266,
+    "two_push": 35741,
+    "one_push": 9039,
+    "incoherent_push": 26050,
+    "cross_push": 9691
+   },
+   {
+    "y": 33,
+    "two": 124233,
+    "one": 63871,
+    "one_mirror": 84231,
+    "incoherent": 148102,
+    "cross": -23869,
+    "two_push": 25944,
+    "one_push": 8284,
+    "incoherent_push": 15948,
+    "cross_push": 9996
+   },
+   {
+    "y": 34,
+    "two": 177160,
+    "one": 61478,
+    "one_mirror": 102644,
+    "incoherent": 164122,
+    "cross": 13038,
+    "two_push": 32627,
+    "one_push": 7139,
+    "incoherent_push": 27403,
+    "cross_push": 5224
+   },
+   {
+    "y": 35,
+    "two": 233667,
+    "one": 64450,
+    "one_mirror": 127312,
+    "incoherent": 191762,
+    "cross": 41905,
+    "two_push": 44301,
+    "one_push": 9165,
+    "incoherent_push": 40449,
+    "cross_push": 3852
+   },
+   {
+    "y": 36,
+    "two": 253338,
+    "one": 66061,
+    "one_mirror": 130384,
+    "incoherent": 196445,
+    "cross": 56893,
+    "two_push": 37926,
+    "one_push": 9841,
+    "incoherent_push": 41718,
+    "cross_push": -3792
+   },
+   {
+    "y": 37,
+    "two": 245111,
+    "one": 71230,
+    "one_mirror": 115727,
+    "incoherent": 186957,
+    "cross": 58154,
+    "two_push": 28410,
+    "one_push": 10393,
+    "incoherent_push": 29583,
+    "cross_push": -1173
+   },
+   {
+    "y": 38,
+    "two": 215710,
+    "one": 74241,
+    "one_mirror": 105564,
+    "incoherent": 179805,
+    "cross": 35905,
+    "two_push": 26079,
+    "one_push": 9995,
+    "incoherent_push": 35640,
+    "cross_push": -9561
+   },
+   {
+    "y": 39,
+    "two": 211120,
+    "one": 83811,
+    "one_mirror": 102517,
+    "incoherent": 186328,
+    "cross": 24792,
+    "two_push": 38472,
+    "one_push": 15822,
+    "incoherent_push": 46111,
+    "cross_push": -7639
+   },
+   {
+    "y": 40,
+    "two": 246811,
+    "one": 77295,
+    "one_mirror": 133345,
+    "incoherent": 210640,
+    "cross": 36171,
+    "two_push": 64063,
+    "one_push": 14618,
+    "incoherent_push": 51183,
+    "cross_push": 12880
+   },
+   {
+    "y": 41,
+    "two": 238520,
+    "one": 64684,
+    "one_mirror": 133557,
+    "incoherent": 198241,
+    "cross": 40279,
+    "two_push": 55372,
+    "one_push": 9111,
+    "incoherent_push": 47432,
+    "cross_push": 7940
+   },
+   {
+    "y": 42,
+    "two": 209652,
+    "one": 69595,
+    "one_mirror": 99005,
+    "incoherent": 168600,
+    "cross": 41052,
+    "two_push": 48630,
+    "one_push": 10333,
+    "incoherent_push": 39704,
+    "cross_push": 8926
+   },
+   {
+    "y": 43,
+    "two": 198096,
+    "one": 81178,
+    "one_mirror": 105905,
+    "incoherent": 187083,
+    "cross": 11013,
+    "two_push": 56101,
+    "one_push": 17165,
+    "incoherent_push": 44114,
+    "cross_push": 11987
+   },
+   {
+    "y": 44,
+    "two": 183256,
+    "one": 91071,
+    "one_mirror": 112326,
+    "incoherent": 203397,
+    "cross": -20141,
+    "two_push": 42998,
+    "one_push": 22566,
+    "incoherent_push": 41529,
+    "cross_push": 1469
+   },
+   {
+    "y": 45,
+    "two": 181334,
+    "one": 89690,
+    "one_mirror": 127819,
+    "incoherent": 217509,
+    "cross": -36175,
+    "two_push": 38403,
+    "one_push": 21012,
+    "incoherent_push": 51997,
+    "cross_push": -13594
+   },
+   {
+    "y": 46,
+    "two": 174365,
+    "one": 89436,
+    "one_mirror": 128849,
+    "incoherent": 218285,
+    "cross": -43920,
+    "two_push": 25752,
+    "one_push": 20448,
+    "incoherent_push": 51896,
+    "cross_push": -26144
+   },
+   {
+    "y": 47,
+    "two": 195456,
+    "one": 91344,
+    "one_mirror": 103451,
+    "incoherent": 194795,
+    "cross": 661,
+    "two_push": 29624,
+    "one_push": 22073,
+    "incoherent_push": 41783,
+    "cross_push": -12159
+   },
+   {
+    "y": 48,
+    "two": 244746,
+    "one": 87248,
+    "one_mirror": 83454,
+    "incoherent": 170702,
+    "cross": 74044,
+    "two_push": 39997,
+    "one_push": 16226,
+    "incoherent_push": 24612,
+    "cross_push": 15385
+   }
+  ],
+  "cross_max": 164621,
+  "cross_min": -76263,
+  "cross_sign_changes": 8,
+  "cross_push_max": 25896,
+  "cross_push_min": -26144,
+  "cross_push_sign_changes": 12,
+  "two_total": 9462464,
+  "incoherent_total": 8659724
+ }
+}
