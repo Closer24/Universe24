@@ -409,22 +409,30 @@ class InitialState:
 
         if self.return_mode not in RETURN_MODES:
             raise ValueError("return_mode must be siblings, straight or annul")
-        # The owners of every family with a shadow set (bit-law-v1): filled in
-        # from the things of the world when the declaration leaves them empty.
+        # Every ray family with a shadow set (a release, or a field given with the
+        # board) spreads its shadows by the Node's mixing (node-mixing-v1, never
+        # declared), and its owners (bit-law-v1) are filled in from the things of
+        # the world when the declaration leaves them empty.
+        shadowed = {
+            index
+            for index, definition in enumerate(self.spatial_fields)
+            if definition.rays and (definition.release_numerator or index in self.initial_field)
+        }
         if any(
-            definition.rays
-            and not definition.owners
-            and (definition.spread or definition.release_numerator)
-            for definition in self.spatial_fields
+            not definition.spread or not definition.owners
+            for index, definition in enumerate(self.spatial_fields)
+            if index in shadowed
         ):
             object.__setattr__(
                 self,
                 "spatial_fields",
                 tuple(
-                    replace(definition, owners=family_owners(self, index))
-                    if definition.rays
-                    and not definition.owners
-                    and (definition.spread or definition.release_numerator)
+                    replace(
+                        definition,
+                        owners=definition.owners or family_owners(self, index),
+                        spread=True,
+                    )
+                    if index in shadowed
                     else definition
                     for index, definition in enumerate(self.spatial_fields)
                 ),

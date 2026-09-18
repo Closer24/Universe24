@@ -25,6 +25,13 @@ quantum read pinned in test_wait_rule.py and 0 here), and under node-is-ports-v1
 (a lamp is a thing that spends its content; a shadow whose steps are spent on
 its walk back waits at that Node at rest, settled rule (ii), so nothing of `f`
 ever leaves the board).
+
+Re-pinned on 2026-09-18 under the Node's mixing (node-mixing-v1, Highlights
+5.4 point 24, feature 16c): a lone shadow no longer walks straight to the thing
+it pushes, it mixes at every Node with nothing else there, so the thing's lamp
+is one Link before C and every shadow leaves fresh from the Node beside C, both
+reach C after tick 1, the push is in the cycle of tick 2 and the return, its one
+step spent, waits beside C; every tick here is five earlier than before.
 """
 
 import hashlib
@@ -267,10 +274,10 @@ def run(tmp_path, raw, ticks):
     return metadata, [json.loads(line) for line in lines], digests
 
 
-THING = ((4, 10, 10), "m", 8, 0)
-FROM_BELOW = ((10, 4, 10), "f", 1, 2)
-FROM_ABOVE = ((10, 16, 10), "f", 1, 3)
-HEAD_ON = ((16, 10, 10), "f", 1, 1)
+THING = ((9, 10, 10), "m", 8, 0)
+FROM_BELOW = ((10, 9, 10), "f", 1, 2)
+FROM_ABOVE = ((10, 11, 10), "f", 1, 3)
+HEAD_ON = ((11, 10, 10), "f", 1, 1)
 
 
 @pytest.mark.parametrize("case", ["turn", "cancel", "reverse", "along", "identical", "rejected"])
@@ -289,30 +296,28 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # the shadow, its steps spent, waits at (10, 4, 10) at rest (settled rule
         # (ii) of node-is-ports-v1), so the momentum line reads current (-8, 8, 0)
         # and escaped (0, -8, 0) from tick 17.
-        raw = document((THING, FROM_BELOW), [turn({"f": -1})], 20)
+        raw = document((THING, FROM_BELOW), [turn({"f": -1})], 14)
         world = Simulation(parse_initial_state(raw), observer=events.append)
-        for t in range(1, 21):
+        for t in range(1, 15):
             world.step()
-            assert world.totals()["m"] == ((8,) if t <= 16 else (0,))
+            assert world.totals()["m"] == ((8,) if t <= 11 else (0,))
             assert world.totals()["f"] == (1,) and world.escaped_totals()["f"] == (0,)
             line = momentum_line(world)
             assert line["initial"] == ZERO and line["sourced"] == ZERO and line["returned"] == ZERO
-            assert line["escaped"] == (ZERO if t <= 16 else (0, -8, 0))
-            assert line["current"] == (ZERO if t <= 6 else (-8, 0, 0) if t <= 16 else (-8, 8, 0))
-            assert line["spent"] == (ZERO if t <= 6 else (8, 0, 0))
+            assert line["escaped"] == (ZERO if t <= 11 else (0, -8, 0))
+            assert line["current"] == (ZERO if t <= 1 else (-8, 0, 0) if t <= 11 else (-8, 8, 0))
+            assert line["spent"] == (ZERO if t <= 1 else (8, 0, 0))
             assert balanced(world)
-            if t <= 6:
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-                assert rays_at(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 1, t)]
+            if t == 1:
+                assert rays_at(world, CENTER, "m") == [ray(0, 8, 1, 1, 0)]
+                assert rays_at(world, CENTER, "f") == [shadow_ray(2, 1, 1)]
                 assert world.thing_momentum() == {1: [8, 0, 0]}
                 continue
-            # The shadow walks back its steps to (10, 4, 10) and waits there.
-            assert positions_of(world, "f") == {(10, max(16 - t, 4), 10)}
-            assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
-                shadow_ray(3, 1, max(12 - t, 0), (0, 8, 0))
-            ]
-            if t <= 16:
-                at = (10, 16 - t, 10)
+            # The shadow walks its one step back to (10, 9, 10) and waits there.
+            assert positions_of(world, "f") == {(10, 9, 10)}
+            assert rays_at(world, (10, 9, 10), "f") == [shadow_ray(3, 1, 0, (0, 8, 0))]
+            if t <= 11:
+                at = (10, 11 - t, 10)
                 assert positions_of(world, "m") == {at}
                 assert rays_at(world, at, "m") == [ray(3, 8, t & 7, t, 0)]
                 assert world.thing_momentum() == {1: [0, -8, 0]}
@@ -320,7 +325,7 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
                 assert positions_of(world, "m") == set()
                 assert world.thing_momentum() == {}
         assert pushes_of(events) == []
-        metadata, records, _ = run(tmp_path, raw, 20)
+        metadata, records, _ = run(tmp_path, raw, 14)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN == "ray-momentum-turn-v3"
         assert metadata["clock_readings"] == "clock-readings-v1" and metadata["K"] == 8
         assert "bound_group_motion" not in metadata and "decay_draw" not in metadata
@@ -338,32 +343,31 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # home with the opposite of its own push, waits at its Node of the board
         # once its steps are spent, and the momentum line is exact at zero with
         # nothing spent.
-        raw = document((THING, FROM_BELOW, FROM_ABOVE), [turn({"f": -1})], 14)
+        raw = document((THING, FROM_BELOW, FROM_ABOVE), [turn({"f": -1})], 8)
         world = Simulation(parse_initial_state(raw), observer=events.append)
-        for t in range(1, 15):
+        for t in range(1, 9):
             world.step()
             assert world.totals()["m"] == (8,) and world.totals()["f"] == (2,)
             line = momentum_line(world)
             assert line["sourced"] == ZERO and line["spent"] == ZERO
             assert line["current"] == ZERO and line["escaped"] == ZERO
             assert balanced(world)
-            assert positions_of(world, "m") == {(4 + t, 10, 10)}
-            assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
+            assert positions_of(world, "m") == {(9 + t, 10, 10)}
+            assert rays_at(world, (9 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
             assert world.thing_momentum() == {1: [8, 0, 0]}
-            if t == 6:
-                assert rays_at(world, CENTER, "f") == [shadow_ray(2, 1, 6), shadow_ray(3, 1, 6)]
-            elif t < 6:
-                assert rays_at(world, (10, 4 + t, 10), "f") == [shadow_ray(2, 1, t)]
-                assert rays_at(world, (10, 16 - t, 10), "f") == [shadow_ray(3, 1, t)]
+            if t == 1:
+                assert rays_at(world, CENTER, "f") == [shadow_ray(2, 1, 1), shadow_ray(3, 1, 1)]
             else:
-                assert rays_at(world, (10, max(16 - t, 4), 10), "f") == [
-                    shadow_ray(3, 1, max(12 - t, 0), (0, 8, 0))
+                # Each waits beside C with its step spent (a waiting shadow reads
+                # heading 0 from the tick after it arrives).
+                assert rays_at(world, (10, 9, 10), "f") == [
+                    shadow_ray(3 if t == 2 else 0, 1, 0, (0, 8, 0))
                 ]
-                assert rays_at(world, (10, min(4 + t, 16), 10), "f") == [
-                    shadow_ray(2, 1, max(12 - t, 0), (0, -8, 0))
+                assert rays_at(world, (10, 11, 10), "f") == [
+                    shadow_ray(2 if t == 2 else 0, 1, 0, (0, -8, 0))
                 ]
         assert pushes_of(events) == []
-        metadata, records, _ = run(tmp_path, raw, 14)
+        metadata, records, _ = run(tmp_path, raw, 8)
         assert metadata["ray_momentum_turn"] == RAY_MOMENTUM_TURN
         assert metadata["conserved_at_every_completed_tick"]
         assert pushes_of(records) == []
@@ -376,21 +380,21 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # sense, so at its departure of tick 7 the thing reverses to -X, its
         # momentum drops to nothing and (8, 0, 0) is spent; the shadow walks back
         # +X carrying (8, 0, 0). The thing is back at its lamp after tick 12.
-        raw = document((THING, HEAD_ON), [turn({"f": 1})], 12)
+        raw = document((THING, HEAD_ON), [turn({"f": 1})], 8)
         world = Simulation(parse_initial_state(raw), observer=events.append)
-        for t in range(1, 13):
+        for t in range(1, 9):
             world.step()
             assert world.totals()["m"] == (8,) and world.totals()["f"] == (1,)
             line = momentum_line(world)
-            assert line["current"] == (ZERO if t <= 6 else (-8, 0, 0))
-            assert line["spent"] == (ZERO if t <= 6 else (8, 0, 0))
+            assert line["current"] == (ZERO if t <= 1 else (-8, 0, 0))
+            assert line["spent"] == (ZERO if t <= 1 else (8, 0, 0))
             assert balanced(world)
-            if t <= 6:
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
-                assert rays_at(world, (16 - t, 10, 10), "f") == [shadow_ray(1, 1, t)]
+            if t == 1:
+                assert rays_at(world, CENTER, "m") == [ray(0, 8, 1, 1, 0)]
+                assert rays_at(world, CENTER, "f") == [shadow_ray(1, 1, 1)]
                 continue
-            assert rays_at(world, (16 - t, 10, 10), "m") == [ray(1, 8, t & 7, t, 0)]
-            assert rays_at(world, (4 + t, 10, 10), "f") == [shadow_ray(0, 1, max(12 - t, 0), (8, 0, 0))]
+            assert rays_at(world, (11 - t, 10, 10), "m") == [ray(1, 8, t & 7, t, 0)]
+            assert rays_at(world, (11, 10, 10), "f") == [shadow_ray(0, 1, 0, (8, 0, 0))]
             assert world.thing_momentum() == {1: [-8, 0, 0]}
         assert pushes_of(events) == []
         return
@@ -400,17 +404,17 @@ def test_a_free_ray_turns_by_the_momentum_a_field_ray_gives_it(tmp_path, case):
         # the thing walks on +X carrying (8, 0, 0), its register line reading
         # amount x heading plus that, (16, 0, 0); the shadow carries (-8, 0, 0)
         # back; nothing is spent and the momentum line is exact at zero.
-        raw = document((THING, HEAD_ON), [turn({"f": -1})], 12)
+        raw = document((THING, HEAD_ON), [turn({"f": -1})], 8)
         world = Simulation(parse_initial_state(raw), observer=events.append)
-        for t in range(1, 13):
+        for t in range(1, 9):
             world.step()
             line = momentum_line(world)
             assert line["current"] == ZERO and line["spent"] == ZERO and balanced(world)
-            if t <= 6:
-                assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0)]
+            if t == 1:
+                assert rays_at(world, CENTER, "m") == [ray(0, 8, 1, 1, 0)]
                 continue
-            assert rays_at(world, (4 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0, (8, 0, 0))]
-            assert rays_at(world, (4 + t, 10, 10), "f") == [shadow_ray(0, 1, max(12 - t, 0), (-8, 0, 0))]
+            assert rays_at(world, (9 + t, 10, 10), "m") == [ray(0, 8, t & 7, t, 0, (8, 0, 0))]
+            assert rays_at(world, (11, 10, 10), "f") == [shadow_ray(0, 1, 0, (-8, 0, 0))]
             assert world.thing_momentum() == {1: [16, 0, 0]}
         assert pushes_of(events) == []
         return

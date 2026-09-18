@@ -183,9 +183,9 @@ def spatial_field(records: JsonObject, name: str, source: str | None = None) -> 
     if source is not None:
         assert ray["kind"] == "field" and source in ray["field_of"], name
         entry |= {"field_of": source, "release": ray["release"]}
-    if isinstance(ray.get("spread"), list):
-        # The declared split table (field-spreading-v1): the world reads it as data.
-        entry["spread"] = list(ray["spread"])
+    # No table of the spread is read: a shadow spreads by the Node's mixing
+    # (node-mixing-v1, Highlights 5.4 point 24).
+    assert "spread" not in ray
     return entry
 
 
@@ -465,11 +465,12 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             ["electron", "positron", "proton"],
             [1, 4],
         )
-        # Feature 12 (field-spreading-v1): the split table declared, the source sign
-        # the releaser's; feature 11 (ray-polarization-v1): the polarization decided
-        # by A12, a transverse direction on the circle of the phase width, and spin
-        # the same property at one bit on the electron family.
-        assert light["spread"] == [6, 1, 1, 1, 1, 1] and light["source_sign"] == "releaser"
+        # Feature 16c (node-mixing-v1): no split table is declared, the shadows'
+        # spread being the Node's mixing; the source sign the releaser's; feature 11
+        # (ray-polarization-v1): the polarization decided by A12, a transverse
+        # direction on the circle of the phase width, and spin the same property
+        # at one bit on the electron family.
+        assert "spread" not in light and light["source_sign"] == "releaser"
         assert (light["polarization"], light["polarization_bits"]) == ("transverse", "default")
         assert "decided_by" not in light
         assert all(rays[name]["polarization_bits"] == 1 for name in ("electron", "positron"))
