@@ -186,7 +186,20 @@ every line reads seven values and its identity:
 initial + sourced = current + escaped + annulled + absorbed + absorbed_by_marks
 ```
 
-exactly, component by component; `balanced` on the line and on the ledger
+Since 2026-09-18 (`bit-law-v1`, `node-is-ports-v1`; Highlights 5.4, points
+7, 20 and 22) the ledger is kept per bit and no line is sourced: the real
+line reads initial + converted = current + escaped + absorbed (`converted`
+what a meeting turned into or out of the family, `absorbed` what ended in a
+body, in a mark's resident thing or at an annulling inverse split) and the
+shadow line initial = current + escaped + absorbed_at_home; a shadow is
+initial content, a thing's momentum is its property and not a register, the
+remainder is a shadow parked at the Node and counted as shadow content, a
+decay is a table, and a `spent` key on the momentum line books what a
+thing's step took off its momentum (`clock-readings-v1`). The rows above
+that name sources, registers and the decay draw describe the form before
+that date.
+
+The identity holds exactly, component by component; `balanced` on the line and on the ledger
 says whether it holds. The ledger also carries the external bodies' own
 lines (`bodies`: count, the exact sum of their momentum, the sum of their
 declared charge, their sinks per field) and the Detector marks' own lines
@@ -272,7 +285,11 @@ field quantum that a Node ends without an owner to give it to (the
 `field_returned` record with `restored` false, its release unbooked as a
 negative source) is given back the same way, measured as the returning ray
 it was; one restored to its emitter needs no term, the record's stock and
-recoil taking exactly what the ray carried.
+recoil taking exactly what the ray carried. Since 2026-09-18 nothing is
+released during a run, no line is sourced and no field quantum is returned
+by a walk (`bit-law-v1`, Highlights 5.4, points 3 and 7); the releases,
+spreads, registers and returned quanta of this paragraph are the form
+before that date.
 
 ## Independence, bounds and acceptance
 

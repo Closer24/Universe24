@@ -2317,7 +2317,11 @@ Identity `bit-law-v1`; isolated test `tests/test_bit_law.py`
 migrated textually by `examples/nature/bit_law_migration.py`. The catalog's
 textual migration, the decay table (point 20), the speed rule (point 21), the
 restated readings of point 18 and the rest rate of point 19 follow in feature
-16.
+16. Point 3 as amended later on 2026-09-18 (Highlights 5.4): the return is a
+field, the shadow turned back with its heading reversed and its momentum
+inverted and mixed at every Node, with no step counter, no trace and no
+chase; the walk home on the trace described here is the interim form until
+the feature that implements the amended point lands.
 
 ### The Node mixes the six (`node-mixing-v1`)
 
@@ -2364,7 +2368,9 @@ Ports and that is the rule), so a set in one phase moves as a wave because the
 turned-back parts of neighbours cancel, and the field is a collective, not a
 stream. What stays: the Born split of two things that meet (section 5.2,
 `steering_table`, a split indexed by the phase difference); the return of a
-shadow after a push, a walk back on the trace, never mixed; a shadow arriving
+shadow after a push, a walk back on the trace, never mixed (point 3 as amended
+later the same day makes the return a field that is mixed like any shadow;
+the walk is the interim form); a shadow arriving
 at its own thing is home; marks and bodies return shadows as before; the
 remainders parked at a Node join the next interval's departures on their
 heading as before. Retired for shadows: the split table of section 3.5
