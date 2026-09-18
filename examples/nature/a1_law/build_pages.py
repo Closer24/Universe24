@@ -167,7 +167,8 @@ def a1_page():
     return page("A1 under the law", "".join(body))
 
 
-(HERE / "e9_law.html").write_text(e9_page(), encoding="utf-8")
-(HERE / "a1_law.html").write_text(a1_page(), encoding="utf-8")
-for name in ("e9_law.html", "a1_law.html"):
-    print(name, (HERE / name).stat().st_size)
+PAGES = {"e9_law.html": REPO / "examples/nature/e9_law", "a1_law.html": HERE}
+(PAGES["e9_law.html"] / "e9_law.html").write_text(e9_page(), encoding="utf-8")
+(PAGES["a1_law.html"] / "a1_law.html").write_text(a1_page(), encoding="utf-8")
+for name, folder in PAGES.items():
+    print(folder / name, (folder / name).stat().st_size)
