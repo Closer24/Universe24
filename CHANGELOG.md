@@ -5,6 +5,25 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
+
+- A new engine mode beside the old one, `event_universe/shadow/`, selected by
+  a world's `"law": "shadow"` key ([the law of the shadow](docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)):
+  only shadows and events. Matter is content held at Nodes; every ray is a
+  shadow, a whole quantum in flight that moves one Link per interval and
+  spreads by the Node's mixing, the dense layer's kernels by import; an event
+  is a whole quantum at a Node with content, absorbed, held or released again
+  by the holder's table (home, the mirror with the push read by the holder's
+  content and charge, the click, transmit, pass); a held content releases
+  its field at the world's rate, a lamp spends its light; the wait reads the
+  size; the step drops the momentum by the content; the books per family
+  and the momentum close at every tick. The old engine, its worlds and its
+  tests are untouched ([migration](docs/MIGRATION.md#the-law-of-the-shadow-a-new-engine-mode-on-2026-09-18-field-only-v1)).
+- The worlds `examples/shadow/` (one content, two contents, two slits and
+  the one-slit control) and the isolated test `tests/test_field_only.py`
+  ([expectations](docs/TEST_EXPECTATIONS.md#the-law-of-the-shadow)), the
+  numbers from DERIVATIONS.md round 7.
+
 ### Charge per thing (`charge-per-thing-v1`, feature 16g, 2026-09-18)
 
 - The charge of a thing is one declared number of its family, whatever its

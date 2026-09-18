@@ -3287,6 +3287,175 @@ part of the lag, the turn, is what this register carries with no modulus
 but the ray's amount, of any width because it enters no phase sum
 (Highlights 3.28).
 
+### The law of the shadow (`field-only-v1`)
+
+Feature 20, the model owner's decision of 2026-09-18, the evening
+([Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "The law of the shadow:
+only shadows and events"): "No real and shadow. There is only shadow. There
+are events, which are a whole quantum. That is all. The shadow spreads like a
+ray from the event." A new engine mode beside the old one
+(`event_universe/shadow/`), selected by a world's `"law": "shadow"` key; the
+old engine and its worlds are untouched, each refuses the other's worlds by
+name (`parse_shadow_world` refuses every key of the old schema, the old
+parser refuses `law`), and the runner (`run_initialization`,
+`python -m event_universe`) dispatches on the key, refusing its old switches
+(`--observer`, `--visualize`, `--dense-field`, `--standing-field`,
+`--node-workers` above 1) for a world of this law. Derived first in
+DERIVATIONS.md round 7 (sections 45 to 50), whose numbers the worlds and the
+test take.
+
+**The board.** Open (a closed board is refused: the edge is infinity, what
+leaves is booked as escaped). Per Node and family: the twelve lanes' shadow
+slots, one per number (the content whose field a shadow is), an amount, a
+phase, a heading, a momentum carried; the remainder registers of point 22
+(per number and Port, in ninths); and, at a Node with content, the held
+content (`Holder`: an amount per family, a momentum, a phase, a number, a
+whole charge, a table). The layer of one family is the dense layer's arrays
+(`ShadowLayer`, the axes x, y, z, number, Port, layer; perf-arrays-v1), and
+the mixing, the apportionment of the carried momentum, the parked releases
+and the departure layers are the dense layer's kernels by import
+(`dense_field.mix_arrivals`, `apportion_carried`, `release_parked`,
+`merge_departures`, `place_departures`, moved to module level over a
+`MixingArrays` protocol on 2026-09-18; the old engine's results are byte for
+byte the same). The nearest phase step of a sum is computed exactly over a
+bounded window of candidates (`layer.nearest_step`, `step_window`: the tables'
+rounding to 1/256 bounds how far from the nearest step the greatest rounded
+projection can lie).
+
+**The interval** (`ShadowSimulation.step`, in this order): (1) every shadow
+in flight moves one Link, its phase turning by its amount over K (a cell
+below K does not turn), the escapes booked with the momentum carried; (2) at
+every Node the size of the coherent sum of each number's arrivals is formed
+(`ShadowLayer.sizes`, the amplitude the mixing forms, in 32nds of one
+quantum's, `arrival_amplitude`'s integers); a held content reads the sizes of
+the other numbers at its Node, and the quanta of a number in flight read the
+other numbers' sizes at the Node they cross, each owing one interval per
+whole unit at the world's `wait_per_quantum` n / d, a remainder carried (on
+the holder, or per Node and number, in 1 / (32 d)); a holder that owes
+neither releases, turns its phase nor steps that interval; arrivals that owe
+neither mix nor move (a frozen cell, later arrivals of the number joining
+them as one amplitude per Port, the countdown theirs); (3) a held content
+absorbs the whole quanta that arrive at its Node: its own number's are home,
+absorbed with no push and pooled to leave again with its release (R13 of
+round 7, the only reading of home with a fixed point); another number's are
+met by its table, `rerelease` (the mirror: the push read, the quantum sent
+back on the reversed heading with the holder's number and phase carrying the
+push inverted), `hold` (the click: the amount joins the holder's content and
+is counted), `transmit` (the quantum passes on its heading re-stamped with
+the holder's number and phase, a phase plate or a slit) or `pass` (left to
+mix as at any Node); every absorption deposits the momentum the quantum
+carried into the holder; (4) at every Node the shadows of one number mix
+(node-mixing-v1), the remainders park and release, the departures go into
+flight, and the events' re-releases join them; (5) a held content releases:
+per free family it holds, content x the world's `release` n / d per Port with
+a remainder per Port; a lamp its declared rate on its headings, spending its
+content and recoiling by amount x heading; the pooled home amount six-fold
+(on the lamp's headings for a lamp) with a remainder; every release stamped
+with the holder's number and current phase; (6) the holder's phase turns by
+its content over K with a remainder (refused when a step would reach half
+the circle); a content whose momentum has reached its content on an axis
+(x before y before z) steps one Link that way, the momentum dropped by the
+content and booked as spent, at most one Link per interval (`fixed`: never);
+a step onto a held content merges the two into the resident (amounts,
+momentum and charge added, the resident's number, phase and table kept), a
+step off the board escapes with its content and momentum.
+
+**The push** (point 16 as amended, [charge per thing](#charge-per-thing-charge-per-thing-v1)):
+a quantum of a free family pushes by sign x amount x heading x the holder's
+cross-section, the gravity reading with sign -1 (toward the source) times
+the holder's content, and the electric reading with sign +1 times the
+owner's whole charge over its declared content times the holder's whole
+charge, kept exactly in units of 1 / D on the holder (`push_remainder`, D
+the least common multiple of the charged contents' declared amounts), the
+whole units into the momentum; a quantum of a paid family carries its own
+momentum, amount x heading, from its lamp, and its push is that momentum
+read once more, so a mirror takes twice it and sends the quantum back
+carrying it inverted (a held quantum's momentum is deposited and nothing
+carries anything away). The holder's own number pushes nothing (home is a
+zero, point 3). The third law is the symmetry of the two direct pushes; the
+push inverted travels as the pushed holder's field and is deposited wherever
+it is absorbed or escapes with its momentum (round 7 section 48 (iii)).
+
+**The books** (`ShadowSimulation.books`, the runner's `audit` per tick),
+exact at every interval: per family the held line, initial + absorbed (the
+clicks) = current + spent (the lamps) + escaped (contents off the board);
+the shadows' line, initial (the declared `initial_shadows`) + released (the
+fresh emission, the lamps, the pooled home releases, the mirrors) = current
+(the arrivals, the departures in flight, the parked ninths' whole quanta) +
+escaped + absorbed (home, the clicks, the mirrors; what came home is on the
+absorbed line until its release); the momentum, initial = held + in flight
+(the momentum the shadows carry, arrived, departing or parked) + escaped +
+spent (the steps); the charge, the sum over the holders. At the fixed point
+of a content at rest, released - absorbed = escaped = the emission (round 7
+section 49 (i)).
+
+**The world.** `law` "shadow"; `model_id`; `shape`; `boundary` "open";
+`ticks`; `K`; `N` (64 by default, a power of two from 2 through 4096);
+`release` `[n, d]` per Port heading per interval per quantum of held content
+of a free family; `wait_per_quantum` (1 by default; an integer or `[n, d]`;
+0 for no wait); `families` (`name`, `kind` `free` or `paid`, `charge` of a
+held content of a free family); `contents` (`position`, `family`, `amount`
+with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`, `table`
+family name to `rerelease` | `hold` | `pass` | `transmit` with `rerelease`
+the default for a free family and `hold` for a paid one, `lamp` `{rate: [n,
+d], headings}` on a content of a paid family); `initial_shadows` (optional,
+a declared profile booked as initial content; the default is an empty board
+that the emission fills). Every content is numbered at parsing in declaration
+order; the numbers whose quanta a family can carry are the contents that
+hold it free, the lamps of it and the contents whose table re-releases or
+transmits it. Refused, naming the law: any old key, a closed board, a lamp
+on a free family, a charge on a paid family, two contents at one Node, a
+table naming an unknown family or rule, a content at or past K x N / 2, N
+not a power of two, a repeated lamp heading. `event_universe.configuration_validation`
+reports a world of the law as kind `shadow`.
+
+**The record.** `run.json` carries `law` "field-only-v1", the world's keys,
+`numbers` (the contents' numbers, positions and families), the books per
+completed tick (`audit`) with `conserved_at_every_completed_tick`, the
+per-tick `held_content`, `shadow_content` and `momentum` lines, the
+contents' final states (`contents`: position, held per family, content,
+phase, charge, momentum, intervals waited, phase steps, steps, what each
+absorbed per family by rule, the push taken) and the escapes; `events.jsonl`
+one record per event (`home`, `mirror`, `click`, `transmit`, `step`,
+`merged`, `escaped`) with the tick, the Node, the holder, the family, the
+number, the amount, the momentum carried and the push; `state.json`, through
+`snapshot_writer.write_snapshot` (its source a `SnapshotSource` since this
+feature), the contents and every Node with content (arrivals, departures and
+parked shares per number and heading, with their phases and momenta and the
+intervals a cell waits). `tools/run_series.py` runs these worlds as any. The
+readings the tests make are the engine's (`shell_readings`: the shell mean
+of the count, the radial flow and the size; `cube_flux`: Gauss's flux through
+a closed surface), read-only.
+
+**What does not exist here**: no thing ray, no bit, no return walk, no home
+other than the re-release, no chase, no trace, no per-quantum charge, no
+closed board, no prefilled field by a fill (a profile only), no
+`wait_reads` or `shadow_wait` option (the size is the reading), no draw. The
+example worlds are `examples/shadow/` ([README](../examples/shadow/README.md));
+the isolated test is `tests/test_field_only.py`
+([expectations](TEST_EXPECTATIONS.md#the-law-of-the-shadow)).
+
+**Choices where the text was open, flagged for the model owner** (the PR's
+"Needs a decision"): a held content's own returning quanta are home and push
+nothing (point 3's zero), pooled with its emission (R13); a holder in motion
+keeps its content on the held line (the step is booked as spent momentum, not
+as a shadow in flight); the step drops the momentum by the content as point
+21 says, so a content pushed once steps once (an accumulator that keeps the
+velocity, the external body's rule, would give inertia; not taken); `fixed`
+declares an apparatus held in place; a paid family's cross-section is 1 (its
+quantum's own momentum), a free family's the content and the charge; the
+electric quotient reads the owner's declared content; a `transmit` table
+re-stamps the light with the holder's number and phase, so two transmitting
+slits are two emitters whose fields never interfere (point 24: two numbers
+are counted, not summed), and the two-slit worlds use openings in the wall
+(measured both ways on 2026-09-18: re-emitting slits give two humps and no
+fringes); the wait of the quanta in flight is charged once, at
+their arrival, from the other numbers' arrivals at the Node, and quanta that
+join a waiting cell wait its countdown; the phase circle N is the world's
+(round 7 section 47 (ii): the field of one content is stationary in the
+window means at N = 256 and sheds about 1.5 % of its emission per interval
+into standing content at N = 64).
+
 ### Funded emission and absorption
 
 A field whose emitting type also carries a scalar field of the same name may

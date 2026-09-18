@@ -4022,3 +4022,113 @@ unit per quantum these worlds pinned), `tests/test_return_field.py` and
 bodies declare -4096 on 2^24 quanta: every pin holds), and
 `tests/test_loop_binding.py` reads lines without identities (a Born product
 that took the whole content carries the other thing's identity).
+
+## The law of the shadow
+
+`tests/test_field_only.py` is the isolated test of `field-only-v1`
+([the law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1);
+Highlights 5.4, "The law of the shadow: only shadows and events", the model
+owner's decision of 2026-09-18, the evening; feature 20), pinned here on
+2026-09-18 before its first run, as Highlights 5.5 requires, from
+DERIVATIONS.md round 7 (sections 46 to 50: the fixed point of an emitting
+thing on the open board, the fixed point in whole quanta, the tests under it,
+the run plan) and the readings of the engine's exploratory runs of the same
+day (the standing content of the integer rule, the per-Node ripple, the
+regime the two-slit needs). The worlds are built as data: one family `m`
+(free, charge 0) whose content of 2^24 at rest releases 1/128 of its content
+per Port heading per interval (q = 786 432 quanta per interval, the wave
+regime q >= 1740 r^2 out to r = 21), N = 64, K = 2^22 (four phase steps per
+interval, the period 16), an open cube, the content held in place (`fixed`).
+
+- (a) one content (29^3, 300 intervals): at every tick the books close, the
+  held line reads current = initial = 2^24 with nothing absorbed, spent or
+  escaped, the shadows' line reads released = current + escaped + absorbed
+  with initial 0, and every momentum line is zero (a content at rest carries
+  none, its field none). The fixed point within the transit: Gauss's flux
+  through the closed surface about the cube of half-width 4 (`cube_flux`)
+  is the emission within 2 % over ticks 101 to 200 (2 sqrt 3 H = 48; the
+  derivation's "within 2 % by about 2 sqrt 3 H"), and over ticks 201 to 300
+  through the cubes of half-width 4, 8 and 12 (the derivation's 1.000 q;
+  the integer rule's 0.985 to 0.999); the escape per interval is the
+  emission within 3 % (0.983: the remainder rule sheds about 1.5 % of the
+  emission per interval into standing content, section 47 (ii)'s residue,
+  measured the same at N = 256 in this engine, where the parked release's
+  phase and not the circle's width is the source).
+- (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10 and 12 (the
+  Nodes within a half Link of r, `shell_readings`): the count (the amount
+  that arrived per Node per interval) times r^2 / q between 0.14 and 0.20
+  (the derivation's 0.147 with the standing excess of the integer rule, 0.16
+  to 0.17 after 200 intervals); the push (the radial flow, amount x heading
+  on the radial unit vector) times 4 pi r^2 / q within 20 % of 1 (the edge's
+  ripple per shell, 1.00 to 1.15 measured); the size (the coherent sum in
+  32nds over 32) times r / sqrt(q) within 5 % of 3 x 0.2143 = 0.643 (the
+  engine reads 3|u|, wait-reads-v1's note; 0.62 to 0.66 measured); the
+  log-log slopes over the five radii: the count -2.00 +- 0.10, the push
+  -2.00 +- 0.15, the size -1.00 +- 0.10 (the derivation's -2.00 +- 0.03 and
+  -1.00 +- 0.03 in the mean field; the integers' -2.00, -1.89, -1.05).
+- (c) two contents (21^3, d = 8 on the x axis symmetric about the centre,
+  no wait, 200 intervals, the pushes taken over ticks 101 to 200): the first
+  content (at the lower x) is pushed toward +x and the second toward -x, the
+  two axial pushes equal within 5 % (the third law by symmetry; 1 to 2 %
+  measured), the transverse parts below 2 % of the axial; the momentum books
+  read held + in flight + escaped + spent = 0 at every tick (what a push
+  gives a content its mirror's re-release carries inverted); the axial push
+  against M_B rho M_A / (4 pi d^2) with rho = 6/128 between 0.4 and 1.3 (a
+  pair on one line reads the per-Node modulation of the edge's standing wave
+  and the anisotropy, section 46 (iii): 0.52 measured on 21^3, 0.77 on 25^3;
+  the law is read in the shell mean of (b)); the product law: the pair with
+  both contents doubled and K doubled (the same period) is pushed four times
+  as much within 5 % (the emission and the cross-section each double; 3.96
+  measured). An unequal pair is not pinned: the clock is the content, so its
+  two fields have two periods with two anisotropies and two transients
+  (the half content's field at period 32 settles after the window).
+- (d) the two-slit reading (23 x 41 x 9, 200 intervals): a lamp of light (a
+  paid family, 2^36 quanta, 2^22 per interval on every heading, its clock
+  four steps per interval) at x = 2; a wall at x = 8 of held contents of the
+  paid family `wall` (content 1, holding light, the click) with two slits 14
+  apart, openings in the wall (a held content that transmits stamps its own
+  number on the light, and two numbers are two fields that never interfere,
+  point 24: two re-emitting slits give two humps and no fringes, measured
+  before this pin); a screen of marks at x = 17. The marks' light counts by
+  y, summed over z and smoothed
+  over three marks, are symmetric about the axis (within 2 % of the axis
+  value plus one); with two slits the lowest smoothed count 3 to 6 from the
+  axis is exceeded by the highest 7 to 12 from it by at least 10 % (the first
+  minimum of two sources 14 apart read 9 behind them at the wavelength
+  16 / sqrt 3 = 9.2 Links lies near 4 from the axis and the next maximum
+  near 8.5); with one slit on the axis it is not (the control falls from the
+  axis outward). A reading, not a law: the lamp is six-fold (a lamp on one
+  heading sheds two thirds of its light into standing content beside it),
+  the period 16 (at period 8 the lattice anisotropy of the transmitted wave,
+  (15/8) w^2 K_4, cuts the axis by half and the one-slit control dips on the
+  axis), the light in flight reads no wait.
+- (e) the wait (29^3, 300 intervals, the fraction of intervals waited over
+  ticks 101 to 300): the content of (a) with nine probes of a paid family
+  (content 1, held in place, passing the mass's quanta so that they neither
+  push nor mirror) at E11's Nodes about it, (4, 0, 0), (8, 0, 0), (12, 0,
+  0), (3, 3, 0), (6, 6, 0), (9, 9, 0), (2, 2, 2), (5, 5, 5), (7, 7, 7), the
+  wait one interval per 512 whole units of size read. The mass waits never
+  (it reads only its own field, which it does not read) and its phase makes
+  four steps per interval; a probe's phase never turns (1 / K) and it
+  re-releases nothing; each probe's fraction is between 0.03 and 0.5 (the
+  size 3 x 0.2143 sqrt(q) / r in 32nds at 1 / 512 per unit: 0.28 at r = 4,
+  0.14 at 8, 0.09 at 12, rippled per Node), and the log-log slope of the
+  fraction against r over the nine probes lies between -1.5 and -0.5,
+  nearer -1 than -2 (the amplitude, not the flux; -0.85 to -0.94 measured).
+- (f) the refusals: the old parser refuses a world of the law for its
+  unknown key `law`; the new parser refuses `examples/nature/ring.json` and
+  every old key (`schema_version`, `dense_field`, `initial_field`,
+  `wait_reads`, `shadow_wait`) naming the law and the key, a closed board, a
+  world without `"law": "shadow"`, an unknown key, a content at or past
+  K x N / 2, a lamp on a free family, two contents at one Node, a table rule
+  outside `rerelease` | `hold` | `pass` | `transmit`, an N that is not a
+  power of two; the parsed world of (a) has one owner of `m`, the wait 1 and
+  the release 1/128. The runner runs a 4-interval world of (a) into
+  `run.json` (`law` "field-only-v1", completed, four ticks, four books,
+  conserved), `state.json` (the law, tick 4, Nodes with content) and
+  `events.jsonl`, and refuses `--dense-field` on it.
+- (g) the layer's nearest phase step (`layer.nearest_step`, over the window
+  `step_window` bounds: 1 up to N = 64, 4 at 256, 69 at 4096) equals the
+  engine's argmax over the whole circle, the first on a tie, at N = 2, 8,
+  64, 256 and 4096 on 4000 random sums per scale (1, 100, 10^9) and on
+  directions exactly on and between the steps, and the zero sum.

@@ -18,11 +18,17 @@ from __future__ import annotations
 
 import json
 from collections.abc import Iterator
-from typing import IO
-
-from event_universe.core.disturbance_engine import DisturbanceEngine
+from typing import IO, Protocol
 
 INDENT = 2
+
+
+class SnapshotSource(Protocol):
+    """A world whose snapshot streams as (key, value) pairs: the engine
+    (`DisturbanceEngine.snapshot_stream`) and, since feature 20, the
+    simulation of the law of the shadow (`ShadowSimulation.snapshot_stream`)."""
+
+    def snapshot_stream(self) -> Iterator[tuple[str, object]]: ...
 
 
 def _nested(text: str, depth: int) -> str:
@@ -43,7 +49,7 @@ def _write_list(stream: IO[str], items: Iterator[object], depth: int) -> None:
     stream.write("]" if empty else "\n" + " " * (INDENT * depth) + "]")
 
 
-def write_snapshot(world: DisturbanceEngine, stream: IO[str]) -> None:
+def write_snapshot(world: SnapshotSource, stream: IO[str]) -> None:
     """Write the world's snapshot to `stream` as `json.dumps(world.snapshot(),
     indent=2)` would, one Node at a time (no trailing line break)."""
     stream.write("{")

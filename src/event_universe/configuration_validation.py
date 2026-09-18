@@ -13,10 +13,12 @@ from event_universe.entity_catalog import validate_catalog
 from event_universe.initialization import parse_initial_state
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
+from event_universe.shadow.world import SHADOW_LAW, parse_shadow_world
 
-KINDS = ("initialization", "catalog", "profiles", "observer")
+KINDS = ("initialization", "catalog", "profiles", "observer", "shadow")
 _DISCRIMINATORS = {
     "schema_version": "initialization",
+    "law": "shadow",
     "catalog_version": "catalog",
     "profile_version": "profiles",
 }
@@ -114,7 +116,7 @@ def _kind(document: object, requested: str) -> str:
             "unsupported_kind",
             "input",
             "unsupported or ambiguous configuration: expected exactly one of "
-            "schema_version, catalog_version or profile_version; "
+            "schema_version, catalog_version, profile_version or law; "
             "observer files require --kind observer",
         )
     return matches[0]
@@ -159,6 +161,17 @@ def validate_configuration(
             )
         if resolved == "initialization":
             summary = _initial_summary(prepare_initialization(document))
+        elif resolved == "shadow":
+            # A world of the law of the shadow (field-only-v1, feature 20).
+            world = parse_shadow_world(document)
+            summary = {
+                "model": world.model_id,
+                "law": SHADOW_LAW,
+                "shape": world.shape,
+                "ticks": world.ticks,
+                "families": len(world.families),
+                "contents": len(world.contents),
+            }
         elif resolved == "catalog":
             validate_catalog(document)
             catalog = cast(dict[str, Sized], document)

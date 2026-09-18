@@ -1,0 +1,17 @@
+{
+  "law": "shadow",
+  "model_id": "shadow-one-content-v1",
+  "shape": [25, 25, 25],
+  "boundary": "open",
+  "ticks": 200,
+  "K": 4194304,
+  "N": 64,
+  "release": [1, 128],
+  "wait_per_quantum": 1,
+  "families": [
+    {"name": "m", "kind": "free", "charge": 0}
+  ],
+  "contents": [
+    {"position": [12, 12, 12], "family": "m", "amount": 16777216, "phase": 0, "fixed": true}
+  ]
+}

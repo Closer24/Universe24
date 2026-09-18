@@ -49,6 +49,8 @@ from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
+from event_universe.shadow.run import execute_shadow_run
+from event_universe.shadow.world import SHADOW_LAW, is_shadow_world, parse_shadow_world
 from event_universe.snapshot_writer import write_snapshot
 
 if TYPE_CHECKING:
@@ -87,6 +89,28 @@ def run_initialization(
     """
     source = initialization.read_bytes()
     document = parse_json_document(source)
+    if is_shadow_world(document):
+        # The law of the shadow (field-only-v1, feature 20): a world with
+        # `"law": "shadow"` runs on the field-only engine, headless, with none
+        # of the old engine's switches.
+        if (
+            observer is not None
+            or visualize
+            or dense_field is not None
+            or standing_field is not None
+            or node_workers != 1
+        ):
+            raise ValueError(
+                f"{SHADOW_LAW}: a world of the law of the shadow runs headless and alone: no "
+                "observer, no visualization, no dense-field or standing-field switch, one worker"
+            )
+        world = parse_shadow_world(document)
+        count = world.ticks if ticks is None else ticks
+        if type(count) is not int or count < 0:
+            raise ValueError("ticks must be nonnegative")
+        _prepare_output(initialization, output, None)
+        with ArtifactLease(output.parent, [output.resolve()]):
+            return execute_shadow_run(world, source, output, source_fingerprint(), count)
     if dense_field is not None and isinstance(document, dict):
         document = {**document, "dense_field": dense_field}
     if standing_field is not None and isinstance(document, dict):
@@ -104,15 +128,7 @@ def run_initialization(
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
         raise ValueError("ticks must be nonnegative and frame_stride positive")
-    validate_output_path(output)
-    if initialization.resolve().is_relative_to(output.resolve()):
-        raise ValueError("the original initialization must be outside the output directory")
-    if observer is not None and observer.resolve().is_relative_to(output.resolve()):
-        raise ValueError("the original observer configuration must be outside the output directory")
-    cleanup_expired(output.parent)
-    if output.exists() and any(output.iterdir()):
-        raise ValueError("use an empty output directory to preserve earlier run artifacts")
-    output.mkdir(parents=True, exist_ok=True)
+    _prepare_output(initialization, output, observer)
     with ArtifactLease(output.parent, [output.resolve()]):
         return _execute_run(
             initial,
@@ -125,6 +141,19 @@ def run_initialization(
             observer_definition,
             node_workers,
         )
+
+
+def _prepare_output(initialization: Path, output: Path, observer: Path | None) -> None:
+    """The output directory of a run: valid, outside the inputs, empty."""
+    validate_output_path(output)
+    if initialization.resolve().is_relative_to(output.resolve()):
+        raise ValueError("the original initialization must be outside the output directory")
+    if observer is not None and observer.resolve().is_relative_to(output.resolve()):
+        raise ValueError("the original observer configuration must be outside the output directory")
+    cleanup_expired(output.parent)
+    if output.exists() and any(output.iterdir()):
+        raise ValueError("use an empty output directory to preserve earlier run artifacts")
+    output.mkdir(parents=True, exist_ok=True)
 
 
 def _execute_run(
