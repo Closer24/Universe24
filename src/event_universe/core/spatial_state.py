@@ -2633,54 +2633,32 @@ def validate_lanes(initial: InitialState) -> None:
             continue
         for kind in emission.types or (emission.type_index,):
             lamps.setdefault(kind, []).append((emission.spatial_field, emission.heading))
-    taken: dict[tuple[Address3, int, int | None], int] = {}
+    # No Port sends two reals on one lane: two seeds at one Node whose types emit
+    # on one heading are refused, of one family (the model owner's merge of
+    # 2026-09-18 is for a thing born while another passes, not for a declared
+    # board) and of two (a meeting the table of the pair decides, which no
+    # departure holds).
+    taken: dict[tuple[Address3, int | None], tuple[int, int]] = {}
     for seed in initial.seeds:
         for family, heading in lamps.get(seed.record.type_index, ()):
-            key = (seed.position, family, heading)
+            key = (seed.position, heading)
             if key in taken:
+                other_type, other_family = taken[key]
+                names = sorted(
+                    {
+                        initial.fields[initial.spatial_fields[other_family].field].name,
+                        initial.fields[initial.spatial_fields[family].field].name,
+                    }
+                )
                 raise ValueError(
                     f"a declared board with two real rays on one lane is refused: the seeds of "
-                    f"{initial.disturbances[taken[key]].name!r} and "
+                    f"{initial.disturbances[other_type].name!r} and "
                     f"{initial.disturbances[seed.record.type_index].name!r} at "
-                    f"{list(seed.position)} both emit "
-                    f"{initial.fields[initial.spatial_fields[family].field].name!r} on one heading "
-                    "(Highlights 5.4, point 25)"
+                    f"{list(seed.position)} both emit on one heading "
+                    f"({' and '.join(repr(name) for name in names)}; two families on one lane "
+                    "are a meeting the table of the pair decides) (Highlights 5.4, point 25)"
                 )
-            taken[key] = seed.record.type_index
-    # Two real rays of different families on one lane are a meeting the table of
-    # section 5.2 of the pair decides (the model owner, 2026-09-18): every pair of
-    # families whose things the board can bear (an emission's, a body's, a table
-    # output's) declares a table naming both, else the world is refused.
-    real: set[int] = {
-        emission.spatial_field
-        for emission in initial.emissions
-        if initial.spatial_fields[emission.spatial_field].rays
-    }
-    real |= {body.family for body in initial.external_bodies}
-    real |= {kind for rule in initial.ray_interactions for kind in rule.outputs}
-    for first in sorted(real):
-        for second in sorted(real):
-            if second <= first:
-                continue
-            if any(
-                (rule.outputs or rule.assignments)
-                and any(first in role for role in rule.participants)
-                and any(second in role for role in rule.participants)
-                and any(
-                    first in role and second in other
-                    for role in rule.participants
-                    for other in rule.participants
-                    if other is not role
-                )
-                for rule in initial.ray_interactions
-            ):
-                continue
-            raise ValueError(
-                "two real rays of different families on one lane are a meeting the table of the "
-                f"pair decides: the families {initial.fields[initial.spatial_fields[first].field].name!r}"
-                f" and {initial.fields[initial.spatial_fields[second].field].name!r} declare no table "
-                "naming both (Highlights 5.4, point 25)"
-            )
+            taken[key] = (seed.record.type_index, family)
 
 
 def vector_length(vector: Heading) -> int:

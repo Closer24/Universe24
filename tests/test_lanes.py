@@ -56,8 +56,6 @@ from .test_node_is_ports import (
     shadow,
 )
 from .test_node_is_ports import rays_at as node_rays_at
-from .test_ray_polarization import document as pol_document
-from .test_ray_polarization import lamp as pol_lamp
 from .test_ray_momentum_turn import (
     balanced,
     momentum_line,
@@ -69,6 +67,8 @@ from .test_ray_momentum_turn import (
 )
 from .test_ray_momentum_turn import document as turn_document
 from .test_ray_momentum_turn import rays_at as turn_rays
+from .test_ray_polarization import document as pol_document
+from .test_ray_polarization import lamp as pol_lamp
 
 ROOT = Path(__file__).resolve().parents[1]
 ZERO = (0, 0, 0)
@@ -448,12 +448,13 @@ def test_a_merged_thing_is_home_to_the_shadows_of_every_owner_it_carries():
     assert "ray_push" not in kinds and result["marks"][0]["resident"]["real"] == {}
 
 
-def test_two_real_families_without_a_table_are_refused():
-    # (i)
+def test_two_real_families_on_one_lane_are_refused():
+    # (i) A declared board with things of two families on one lane: a meeting
+    # the table of the pair decides, which no departure holds.
     kind_m, emission_m, seed_m = lamp("e", 4, (1, 1, 1))
-    kind_g, emission_g, seed_g = lamp("w", 4, (1, 2, 2), family_name="g")
+    kind_g, emission_g, seed_g = lamp("w", 4, (1, 1, 1), family_name="g")
 
-    def build(rules=()):
+    def build(seed_g):
         doc = document(
             ticks=1,
             shape=(7, 3, 3),
@@ -461,21 +462,18 @@ def test_two_real_families_without_a_table_are_refused():
             emissions=[emission_m, emission_g],
             seeds=[seed_m, seed_g],
             families=[family(), family("g", charge=0)],
-            rules=rules,
         )
         doc["fields"] = [field("m"), field("g"), field("momentum", 3)]
         return doc
 
     with pytest.raises(ValueError, match="point 25") as caught:
-        parse_initial_state(build())
+        parse_initial_state(build(seed_g))
     assert "'m'" in str(caught.value) and "'g'" in str(caught.value)
-    meet = {
-        "name": "meet",
-        "participants": [{"type": "m"}, {"type": "g"}],
-        "outputs": [
-            {"field": "m", "amount": {"of": 0}, "heading": "same", "input": 0, "phase": {"of": 0}},
-            {"field": "g", "amount": {"of": 1}, "heading": "reversed", "input": 1},
-        ],
-        "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
-    }
-    parse_initial_state(build([meet]))
+    assert "'e'" in str(caught.value) and "'w'" in str(caught.value)
+    parse_initial_state(build({"position": [1, 2, 2], "type": "w"}))
+    # At a departure, a real of another family on a taken lane is refused.
+    definition, _ = _merged_definition()
+    claims = LaneClaims()
+    claims.claim(0, definition.field, Ray(0, ZERO, 3, steps=2, owner=1))
+    with pytest.raises(ValueError, match="different families"):
+        claims.claim(0, definition.field + 1, Ray(0, ZERO, 3, steps=2, owner=2))

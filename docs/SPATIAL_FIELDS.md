@@ -2579,11 +2579,14 @@ most one shadow of each owner.
   the heading, else the first to take the lane). A content above the family's
   K and N bound is the decay table's business (point 20): `validate_rays`
   leaves a merged thing to it. Two real rays of different families on one
-  lane are a meeting the table of section 5.2 of the pair decides: a world
-  whose board can bear things of two families (an emission's, a body's, a
-  table output's) with no table naming both is refused at parsing naming
-  point 25 (`validate_lanes`), and a departure that would put two on one lane
-  is refused. The lane is one direction of a Port, so the claims and the
+  lane are a meeting the table of section 5.2 of the pair decides, which no
+  departure holds: a declared board with things of two families on one lane
+  (two seeds at one Node emitting on one heading) is refused at parsing
+  naming point 25 and both families (`validate_lanes`), and a departure that
+  would put two on one lane is refused (`LaneClaims`). The reading under
+  which every pair of families whose things a board can bear must declare a
+  table would refuse most shipped worlds, whose things never share a lane,
+  and is not taken. The lane is one direction of a Port, so the claims and the
   check take the rays on the six Port lines; a ray of the old ray worlds on a
   line that is not a Port heading holds no lane.
 - **The validations at parsing.** A declared board with two real rays on one
