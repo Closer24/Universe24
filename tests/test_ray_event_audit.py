@@ -183,7 +183,10 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
 
 
 def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=None):
-    """A ledger line; a line not given is zero of the readout's width."""
+    """A ledger line; a line not given is zero of the readout's width. Since
+    detector-absorb-v1 (2026-09-18) every line also reads `absorbed_by_marks`, what
+    the Detector marks absorbed on their clicks: zero here, since the mark of this
+    board returns the one ray that reaches it and no field ray clicks."""
     zero = 0 if isinstance(initial, int) else (0,) * len(initial)
     return {
         "initial": initial,
@@ -192,6 +195,7 @@ def line(initial, current, escaped=None, annulled=None, sourced=None, absorbed=N
         "escaped": zero if escaped is None else escaped,
         "annulled": zero if annulled is None else annulled,
         "absorbed": zero if absorbed is None else absorbed,
+        "absorbed_by_marks": zero,
         "balanced": True,
     }
 
@@ -257,7 +261,21 @@ def expected_ledger(mode, tick, source=True, body=False):
         "charge": 3 if body else 0,
         "sink": {name: item["absorbed"] for name, item in fields.items()},
     }
-    return {"tick": tick, "balanced": True, "fields": fields, "charge": charge, "bodies": bodies}
+    # The marks' own lines (detector-absorb-v1, 2026-09-18): the one mark at MARK,
+    # which absorbed nothing (it returns the plus arm, and nothing else reaches it).
+    marks = {
+        "count": 1,
+        "momentum": (0, 0, 0),
+        "counter": {name: item["absorbed_by_marks"] for name, item in fields.items()},
+    }
+    return {
+        "tick": tick,
+        "balanced": True,
+        "fields": fields,
+        "charge": charge,
+        "bodies": bodies,
+        "marks": marks,
+    }
 
 
 def as_json(value):
@@ -350,6 +368,8 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     assert first_run["accounting_balanced_at_every_completed_tick"]
     assert first_run["completed_ticks"] == TICKS and audit_failure(first_run["audit"]) is None
     assert first_run["external_body_totals"] == as_json(ledgers[-1]["bodies"]["sink"])
+    assert first_run["detector_mark_totals"] == as_json(ledgers[-1]["marks"]["counter"])
+    assert first_run["detector_absorb"] == "detector-absorb-v1"
     # (e) A record altered by hand after the run, one ray's charge at the tick of
     # the return, is reported by tick and line from the integers alone.
     corrupted = deepcopy(first_run["audit"])

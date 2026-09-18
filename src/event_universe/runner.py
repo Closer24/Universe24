@@ -17,6 +17,7 @@ from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
     DECAY_DRAW,
     DENSE_FIELD,
+    DETECTOR_ABSORB,
     DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
@@ -186,19 +187,22 @@ def _execute_run(
                     escaped = world.escaped_totals()
                     annulled = world.annulled_totals()
                     absorbed = world.external_body_totals()
+                    taken = world.detector_mark_totals()
                     audit.append(world.audit())
                     # The conservation line: initial + sources = current + dissipated
-                    # + escaped + annulled + absorbed_by_bodies at every completed
-                    # tick, the sources holding what the bodies released.
+                    # + escaped + annulled + absorbed_by_bodies + absorbed_by_marks at
+                    # every completed tick, the sources holding what the bodies
+                    # released and the marks' line what their clicks absorbed.
                     balanced = all(
                         tuple(
-                            value + loss + out + gone + sunk
-                            for value, loss, out, gone, sunk in zip(
+                            value + loss + out + gone + sunk + clicked
+                            for value, loss, out, gone, sunk, clicked in zip(
                                 totals[name],
                                 losses[name],
                                 escaped[name],
                                 annulled[name],
                                 absorbed[name],
+                                taken[name],
                                 strict=True,
                             )
                         )
@@ -239,6 +243,7 @@ def _execute_run(
         "ray_state": RAY_EVENT_STATE,
         "detector_mark": DETECTOR_MARK,
         "detector_return": DETECTOR_RETURN,
+        "detector_absorb": DETECTOR_ABSORB,
         "inverse_split": INVERSE_SPLIT,
         "return_mode": initial.return_mode,
         # The Detector's bit as a property (detector-bit-property-v1): recorded when
@@ -272,6 +277,11 @@ def _execute_run(
         ],
         "external_body_totals": world.external_body_totals(),
         "external_body_momentum": world.external_body_momentum(),
+        # The Detector marks after the run (detector-absorb-v1): each with its counter
+        # per family and the momentum of what it absorbed, and the marks' lines.
+        "detector_marks": world.detector_marks(),
+        "detector_mark_totals": world.detector_mark_totals(),
+        "detector_mark_momentum": world.detector_mark_momentum(),
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

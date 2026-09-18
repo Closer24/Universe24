@@ -1139,6 +1139,52 @@ click carried 2 (computed: whole quanta of 1); the passes were not
 computed. The criterion of E9, written before the run, holds in every
 clause; the register carries the verdict.
 
+### Repeated under detector-absorb-v1: the screen counts
+
+The decision the first record led to, Highlights 5.4 "A click is an
+absorption" (model owner, 2026-09-18; feature 2c,
+[a click is an absorption](../../docs/SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1)):
+a click on a field family absorbs the quantum into the mark's exact counter
+with its momentum on the marks' line, and nothing of it spreads on, so a
+screen counts instead of remembering. The same world, unchanged, was run once
+more for 240 ticks on 2026-09-18 (the engine of commit `10edd1dd`, source
+`2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`,
+initialization
+`e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`, 94 s),
+the marks on the default of a field family (`light` is `field_of`
+`electron`), and is registered as the second record of
+[E9](../../docs/EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks).
+Every click is of family `light`, amount 1, bit 1 and `absorbed` 1, 265 in
+all, the last at tick 240; no pass; the pairs tick for tick:
+
+| Mark | Clicks (first record) | First light received | Counter after tick 240 |
+| --- | --- | --- | --- |
+| (7, 5, 5) | 109 (17) | 11 | light 109, momentum (92, 0, -9) |
+| (7, 4, 5) and (7, 6, 5) | 38 each (4) | 34 | light 38, momentum (30, 0, -4) |
+| (7, 3, 5) and (7, 7, 5) | 25 each (1) | 50 (a click now, not a pass) | light 25, momentum (20, 0, -3) |
+| (7, 2, 5) and (7, 8, 5) | 15 each (1) | 70 | light 15, momentum (13, 0, -2) |
+
+The first clicks are the first record's (11, 15, 18, 22, 27, 27, 31 on the
+axis, the first pair at 34, the outer pairs at 50 and 70), and then the
+screen keeps counting: 4, 14, 24, 19, 29, 34, 33, 32, 42, 34 clicks in the
+ten 24-tick windows over the whole screen, the on-axis mark 14, 33, 58, 83
+and 109 by ticks 48, 96, 144, 192 and 240, where the first record's last
+click was at tick 72 and its 378 passes followed; the count grows as an
+intensity, the on-axis mark 92 through its -X face (the axis line), 13
+through +Z and 4 through -Z. The eye view at tick 96 (`runs_96.json`,
+`eye.counts`): 33, 8, 8, 4, 4, 2, 2, seven spots that keep brightening. The
+ledger after tick 240: light sourced 9560, current 3489, escaped 5806,
+absorbed by marks 265 (tick 32: 1240, 1009, 224, 7; tick 96: 3800, 2291,
+1448, 61; tick 192: 7640, 3169, 4282, 189), the marks' momentum (218, 0,
+-27); electron 32 at every tick, momentum (0, 0, 0), charge electron -96,
+every line balanced, `conserved_at_every_completed_tick` true. The group
+reading is the first record's: one ring, content 32, period 8, clock 1, from
+tick 1 to tick 239 over 1912 electron chains. The events: 176018
+`spatial_cycle`, 96225 `spatial_sent`, 60685 `spatial_received`, 60065
+`field_spread`, 5369 `spatial_escaped`, 265 `detector_click`, 960
+`cycle_started` and `cycle_committed`, no `detector_pass`. The record stays
+outside the tree beside the first; nothing was tuned after the run.
+
 ### Run and render
 
 ```bash

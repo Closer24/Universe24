@@ -401,13 +401,18 @@ feature 2). The schema key:
 | `seed` | `0 <= seed < TICKET_MODULUS` | The start of the mark's own ticket stream. Required |
 | `on_bit_1` | `"pass"` (default) or `"draw"` | What the mark does with a ray carrying bit 1 ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)): passes it without a draw, or draws as for a ray carrying no bit. Optional |
 | `on_bit_0` | `"pass"` (default) or `"draw"` | The same for a ray carrying bit 0, a transmission. Optional |
+| `on_click` | `"absorb"` or `"pass"` for every ray family, or a mapping of ray family name to one of them | What the mark does with a ray that draws 1 ([a click is an absorption](#a-click-is-an-absorption-detector-absorb-v1)): absorbs it into the mark's counter, or passes it with the bit 1. A family not named keeps the default, absorb for a field family (one declared `field_of`) and pass for matter. Optional |
 
-The first three keys are required, the two couplings are optional, and no
+The first three keys are required, the three couplings are optional, and no
 other key is accepted. The parsed
 `DetectorMark(position, pass_numerator, pass_denominator, seed, on_bit_1,
-on_bit_0, bit_keys)` records are `InitialState.detectors` (the couplings as
-`BIT_PASS` 0 or `BIT_DRAW` 1, `bit_keys` 1 when the file wrote either); the
-engine installs each on its Node as
+on_bit_0, bit_keys, on_click, click_keys, counter, momentum)` records are
+`InitialState.detectors` (the bit couplings as `BIT_PASS` 0 or `BIT_DRAW` 1,
+`bit_keys` 1 when the file wrote either; `on_click` as `CLICK_PASS` 0,
+`CLICK_ABSORB` 1 or `CLICK_DEFAULT` -1 per spatial field, empty for all
+defaults, `click_keys` 1 when the file wrote it; `counter` and `momentum`, the
+mark's exact count per spatial field and the momentum of what it absorbed,
+empty and zero at the start); the engine installs each on its Node as
 `SpatialNodeState.detector` with `detector_ticket` seeded from `seed`. A
 document with marks is admitted only under the shared Detector admission:
 `schema_version` 1, `link_ticks` 1, at least one ray field, every ray field on
@@ -418,7 +423,11 @@ On arrival each ray carrying no bit (and each ray carrying a bit whose
 coupling is `draw`) draws one bit from the mark's stream, in Port then
 merge-key order, and leaves with its `detector` field set: `2` on 1, with a
 `detector_click` event (position, tick, Port, family, amount, bit 1), the ray
-continuing unchanged; `1` on 0, the ray returned on its line
+continuing unchanged when the mark's `on_click` for its family is `pass`, the
+default for matter, or absorbed into the mark's counter when it is `absorb`,
+the default for a field family, the click then carrying `absorbed`
+([a click is an absorption](#a-click-is-an-absorption-detector-absorb-v1));
+`1` on 0, the ray returned on its line
 ([Detector return](#detector-return-detector-return-v1)) with a
 `detector_return` event and no click. A ray carrying a bit whose coupling is
 `pass`, the default, is read and not drawn: it continues unchanged with a
@@ -628,6 +637,109 @@ like a click, and carries each ray's `bit` (`null`, 0 or 1) in `runs.json`.
 `test_detector_bit_property.py`
 ([expectations](TEST_EXPECTATIONS.md#detector-bit-as-a-property)) is the
 test.
+
+### A click is an absorption (`detector-absorb-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 5.4 "A click is an absorption", model
+owner, 2026-09-18; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+feature 2c under step 3; issue #169): the field quantum a marked Node
+realizes ends there. On a draw of 1 the arriving content of a field family is
+absorbed into the mark's exact counter, per family, booked on the audit as
+absorbed by marks with its momentum on the marks' line, and nothing of it
+spreads on: a photon is detected by being absorbed, and every measurement is
+paid (3.14). A draw of 0 stays the return (`detector-return-v1`), a ray
+carrying 1 still passes without a draw (`detector-bit-property-v1`), and
+matter that draws 1 passes with the bit 1 as before, so the electron seen
+carries its mark. The statement of the rule at the mark is in [Detector-owned
+sampling](DETECTOR_SAMPLING.md#the-click-absorbs-detector-absorb-v1); this
+section is the engine's notion of a field family, the schema and what the
+code does.
+
+**A field family, in the engine's terms.** A field family is a family declared
+`field_of` another ([released field](#field-as-the-rays-information-released-field-v1),
+`SpatialFieldDefinition.field_of`; `field_family`): its rays are the eventless
+field rays a release and a spread make, and light and the field of a charge
+are one such family (3.5). Every other family is matter to a click. That is
+the whole of the default, and it is a declaration of the family, not a reading
+of the ray: `light` declared `field_of` `electron` absorbs on a click and
+`electron` passes; a lone family with rest rate 0 and no charge that no family
+declares as its field is matter to a click until its world writes `on_click`.
+
+**The coupling.** How a mark meets each family on a click is its declared
+coupling in the catalog (`apparatus.detector.couplings.on_click` of
+`catalog/nature.json`), a table entry and not an engine mechanism (3.26): the
+mark's `detectors[]` entry writes `on_click` as `"absorb"` or `"pass"` for
+every ray family, or as a mapping of ray family name to one of them, and a
+family not named keeps the default, absorb for a field family and pass for
+matter (`click_coupling`, reading the mark's `on_click` per spatial field
+index, `CLICK_ABSORB`, `CLICK_PASS` or `CLICK_DEFAULT`). So a screen that
+stops electrons (`{"electron": "absorb"}`) and a counter that lets light
+through (`{"light": "pass"}`) are catalog entries. Any other value, an unknown
+family or a family that is no ray field is rejected before a world exists.
+
+**The absorption.** In `SpatialNode._draw_arrivals`, a ray that draws 1 under
+`absorb` is not among the arrivals the Node keeps: `detector_absorb` adds its
+amount to the mark's counter for its spatial field (`DetectorMark.counter`,
+one exact entry per spatial field, sized on the first absorption) and its
+momentum, amount x heading or the register where a push set one
+(`ray_momentum_vector`, taken whole), to the mark's momentum
+(`DetectorMark.momentum`), bounded Node metadata like a body's sink, no rays
+and no history; the `detector_click` event (position, tick, Port, family,
+amount, bit 1) carries `absorbed`, the amount, and only then. Nothing of the
+quantum is delivered: it enters no Port reading, no resident ray, no meeting
+and no spread register, so the field a marked Node re-releases never carries
+the bit of what was realized, since what was realized is no longer there to
+spread. Under `pass` the ray leaves with its bit 1 exactly as before
+(`detector-mark-v1`) and the click is what it was. The reception record
+(`spatial_received`) carries `absorbed_by_mark`, per family the amount and
+the momentum absorbed in that interval, only when something was, and the
+local audit reads it before it checks the Node, since the clicks follow the
+record.
+
+**The ledger.** The Node books what its mark absorbed through
+`SpatialAccounting.record_absorbed_by_marks` into
+`SpatialEngine.absorbed_by_marks`, per field with the momentum field's
+components when one is bound, read by `detector_mark_totals()`, by the
+spatial accounting (`absorbed_by_marks`, subtracted like `absorbed_by_bodies`)
+and by the world ledger, whose every line gains `absorbed_by_marks`: initial +
+sourced = current + escaped + annulled + absorbed + absorbed_by_marks at every
+completed tick for amount, momentum and charge (charge x the absorbed amount),
+and the runner's conservation line reads initial + sources = current +
+dissipated + escaped + annulled + absorbed_by_bodies + absorbed_by_marks
+([the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)).
+`detector_marks()` lists every mark in declaration order with its Node, its
+counter per family and its momentum, `detector_mark_momentum()` is the marks'
+momentum line, the exact sum, and every ledger carries the marks' own lines
+(`marks`: count, momentum, counters) beside the bodies'. Since the momentum a
+mark takes is on its own line, the momentum ledger stays exact whether or not
+the family binds a momentum field: `light` of E9 binds none, and its 265
+absorbed quanta read (218, 0, -27) on the marks' line.
+
+**Identity and the record.** The runner records `detector_absorb:
+"detector-absorb-v1"`, `detector_marks`, `detector_mark_totals` and
+`detector_mark_momentum` in `run.json`, and the marks' lines in every ledger
+under `audit`. A world without marks, or with marks that only ever draw 0 or
+meet rays carrying a bit, runs byte-identically in its events and states (its
+`run.json` gains the identity and the zero lines); where a field ray clicks
+the record changes, and the pins of `test_ray_viewer.py` and
+`test_screen_loop.py` were rewritten on 2026-09-18
+([expectations](TEST_EXPECTATIONS.md#ray-viewer-extraction), [the screen with
+a loop](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). In [the dense
+mode](#the-dense-mode-dense-field-v1) a mark is the engine's Node, so the
+absorption happens in the engine's delivery, and a dense world with a counting
+mark gives the same `state.json`, ledger and marks as the engine alone
+(`test_dense_field.py`, the `counter` case). The viewer
+([`tools/ray_viewer/extract.py`](../tools/ray_viewer/README.md)) ends the ray
+at the mark on a click that absorbed ("Detector PASS, absorbed", the
+`absorbed` amount on the marker and on each `eye.clicks` entry), gives the
+transit into the mark the amount the receiver's reading leaves out, takes what
+the sinks took off `in_world`, and counts `eye.counts`, the absorbed amount
+per marked Node, a screen's intensity. `test_detector_absorb.py`
+([expectations](TEST_EXPECTATIONS.md#a-click-is-an-absorption)) is the test;
+E9 was repeated under the rule on 2026-09-18
+([E9](EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks)):
+a screen that absorbs counts, 265 clicks in 240 ticks and no pass, its count
+growing to the last tick.
 
 ### Layers (`ray-layers-v1`)
 
@@ -1025,8 +1137,8 @@ booked on the audit's `absorbed_by_bodies` line per field
 bound), an `external_body_absorbed` record naming the body, the Port, the
 family, the amount and the body's momentum after it. The conservation line
 becomes initial + sources = current + dissipated + escaped + annulled +
-absorbed_by_bodies at every completed tick, the sources holding what the
-bodies released; since `ray-event-audit-v1` (2026-09-17)
+absorbed_by_bodies at every completed tick (plus absorbed_by_marks since
+`detector-absorb-v1`, 2026-09-18), the sources holding what the bodies released; since `ray-event-audit-v1` (2026-09-17)
 `conserved_at_every_completed_tick` is the world ledger's identity, in which
 the sink is the `absorbed` line, so it stays true, as under `annul`
 ([audits](#audits-ray-event-audit-v1)). A wall, a screen and a beam stop are
@@ -1115,8 +1227,8 @@ with at least one Link walked and no delay or wait pending. A fresh ray at
 its event Node (an emission, a meeting's output, the recoil, a transmission)
 and a fresh release depart on their line and spread from the next Node; a
 returning ray walks back and is not spread; a held ray is not due. What a
-Detector returned or a body took follows those rules first, and only the
-rest spreads. Nothing of the taken content is forwarded as it came, and
+Detector returned, a mark absorbed on a click (`detector-absorb-v1`) or a body
+took follows those rules first, and only the rest spreads. Nothing of the taken content is forwarded as it came, and
 nothing stays at the Node.
 
 **The combination.** Field rays carry no event, so the content combines
@@ -1515,15 +1627,20 @@ readouts of this document:
 
 - `totals()` and `source_totals()` are the `current` and `sourced` lines of
   every conserved field, `escaped_totals()` and `annulled_totals()` the
-  `escaped` and `annulled` lines, and `external_body_totals()` the
+  `escaped` and `annulled` lines, `external_body_totals()` the
   `absorbed` line, what the external bodies' sinks took (`absorbed_by_bodies`,
-  [external body](#the-external-body-external-body-v1)), with the momentum
-  field's components when one is bound; every ledger also carries the
-  bodies' own lines (`bodies`: their count, the exact sum of their momentum
-  from `external_body_momentum()`, the sum of their declared charge and
-  their sinks per field), beside the identity, since a body's content never
-  enters a sum and its momentum is its declared response to the fields it
-  absorbs, not a ray's;
+  [external body](#the-external-body-external-body-v1)), and, since
+  `detector-absorb-v1` (2026-09-18), `detector_mark_totals()` the
+  `absorbed_by_marks` line, what the Detector marks absorbed on their clicks
+  ([a click is an absorption](#a-click-is-an-absorption-detector-absorb-v1)),
+  each with the momentum field's components when one is bound; every ledger
+  also carries the bodies' own lines (`bodies`: their count, the exact sum of
+  their momentum from `external_body_momentum()`, the sum of their declared
+  charge and their sinks per field) and the marks' (`marks`: their count, the
+  exact sum of their momentum from `detector_mark_momentum()`, their counters
+  per field), beside the identity, since a body's content never enters a sum
+  and its momentum is its declared response to the fields it absorbs, not a
+  ray's, and a mark's counter is what its clicks took;
 - `charge_totals()` reads charge x amount per ray family over the owners
   `totals()` reads: the rays resident at active Nodes and in flight on Links
   and, since this feature, the stock a record holds of the family, resident
@@ -1538,9 +1655,10 @@ readouts of this document:
 The runner records `ray_event_audit: "ray-event-audit-v1"`, the ledger of
 every completed tick under `audit` (so a Renderer's caption can show the
 lines tick by tick), and `conserved_at_every_completed_tick` as the ledger's
-identity, initial + sourced = current + escaped + annulled + absorbed for
-amount, momentum and charge at every completed tick, re-checked from the
-recorded integers (`audit_failure`). A `ray_interactions` rule with outputs
+identity, initial + sourced = current + escaped + annulled + absorbed +
+absorbed_by_marks for amount, momentum and charge at every completed tick,
+re-checked from the recorded integers (`audit_failure`; a line recorded before
+`detector-absorb-v1` has no `absorbed_by_marks` and reads it as zero). A `ray_interactions` rule with outputs
 whose family's charge differs from the charge of the inputs its amount comes
 from would change the total charge, and is rejected at validation. Nothing
 else changes: events, states and totals are byte for byte what they were,

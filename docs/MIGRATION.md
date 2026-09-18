@@ -6,6 +6,55 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A click is an absorption, landed on 2026-09-18 (`detector-absorb-v1`)
+
+Issue #169, feature 2c ([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1);
+Highlights 5.4 "A click is an absorption", model owner, 2026-09-18). One new
+key, one new default, no existing key changes:
+
+- `detectors[].on_click`: `"absorb"` or `"pass"` for every ray family, or a
+  mapping of ray family name to one of them; a family not named keeps the
+  default, absorb for a field family (one declared `field_of` another) and
+  pass for matter. The default changes what a mark does with a field quantum
+  that draws 1: it is absorbed into the mark's counter with its momentum, and
+  nothing of it is delivered or spread on; a world that wants the former
+  behaviour writes `on_click: "pass"` on its marks. Matter that draws 1, a
+  draw of 0 and a ray carrying a bit are unchanged.
+- `DetectorMark` gains `on_click` (per spatial field: `CLICK_PASS` 0,
+  `CLICK_ABSORB` 1, `CLICK_DEFAULT` -1; empty for all defaults), `click_keys`,
+  `counter` (one exact entry per spatial field, empty until the first
+  absorption) and `momentum`; `click_coupling`, `detector_absorb` and
+  `field_family` in `core/spatial_state.py`; `SpatialAccounting` and
+  `SpatialEngine` an `absorbed_by_marks` line; `Simulation` gains
+  `detector_marks()`, `detector_mark_totals()` and `detector_mark_momentum()`;
+  `ledger_line` takes the seventh value and `world_ledger` the marks' lines.
+- Records: a `detector_click` that absorbed carries `absorbed`, the amount; a
+  `spatial_received` record of a Node whose mark absorbed carries
+  `absorbed_by_mark` (per family the amount and its momentum); `run.json`
+  carries `detector_absorb: "detector-absorb-v1"`, `detector_marks`,
+  `detector_mark_totals` and `detector_mark_momentum`; every ledger line under
+  `audit` reads `absorbed_by_marks` and every ledger carries `marks` (count,
+  momentum, counter); `line_balanced` reads a recorded line without the entry
+  as zero, so the records of earlier runs re-check as before; the spatial
+  accounting reads `absorbed_by_marks`; the local audit's report reads
+  `absorbed_by_marks`. A world without marks, or with marks that only draw 0
+  or meet rays carrying a bit, writes the same events and states.
+- The viewer: a click that absorbed reads "Detector PASS, absorbed" with the
+  amount, ends the ray at the mark (`end.kind` `absorbed`) and is counted in
+  `eye.counts`; each `eye.clicks` entry carries `absorbed`; `ticks_data` rows
+  carry `absorbed` and `in_world` takes both sinks off; `conservation` carries
+  `external_body_totals` and `detector_mark_totals`.
+- Pins rewritten on 2026-09-18 ([expectations](TEST_EXPECTATIONS.md)):
+  `test_ray_viewer.py` (the G clicks absorb) and `test_screen_loop.py` (the
+  light line's current and the spreads); `test_ray_event_audit.py` reads the
+  new line and block; `test_dense_field.py` gains the `counter` identity
+  case; `test_nature_catalog.py` reads the third coupling; the rule's test is
+  `test_detector_absorb.py`.
+- The catalog decides `apparatus.detector.couplings.on_click`. E9 is
+  repeated under the rule (`examples/nature/screen_loop.json`, unchanged):
+  265 clicks in 240 ticks, all absorbed, no pass, the count growing to the
+  last tick ([E9](EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks)).
+
 ## Polarization landed on 2026-09-17 (`ray-polarization-v1`)
 
 Issue #169, feature 11 ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1);
