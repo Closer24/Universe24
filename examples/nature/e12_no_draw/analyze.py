@@ -354,6 +354,22 @@ def part1(summaries: dict, prediction: dict) -> dict:
             block["against_counter_over_d"] = ratios(
                 quanta, {m: v / d for m, v in quanta_by_mark(counter).items()}
             )
+            # The drawn arrivals (clicks + returns) against the counter's clicks: the
+            # same arrivals at every mark and tick when the draw only partitions them.
+            block["drawn_arrivals_identical_to_counter"] = all(
+                s["marks"][m]["tickets_per_tick"] == counter["marks"][m]["tickets_per_tick"]
+                for m in s["marks"]
+            )
+            field = s["field"]
+            block["unbooked_quanta"] = (
+                counter["ledger_last"][field]["sourced"][0] - s["ledger_last"][field]["sourced"][0]
+            )
+            block["escaped_beyond_counter"] = (
+                s["ledger_last"][field]["escaped"][0] - counter["ledger_last"][field]["escaped"][0]
+            )
+            block["current_beyond_counter"] = (
+                s["ledger_last"][field]["current"][0] - counter["ledger_last"][field]["current"][0]
+            )
         out[case] = block
     # Determinism: the rerun and the other seed against the counter.
     if counter is not None:
@@ -521,6 +537,13 @@ def print_part1(block: dict) -> None:
                 f"      against the counter / d: mean ratio {c['mean_ratio']:.3f}, min {c['min_ratio']:.3f}, max {c['max_ratio']:.3f}"
             )
         print(f"      returns {b['returns']}; passes {b['passes']}; tickets {b['tickets_consumed']}")
+        if "drawn_arrivals_identical_to_counter" in b:
+            print(
+                f"      drawn arrivals identical to the counter's, mark and tick:"
+                f" {b['drawn_arrivals_identical_to_counter']}; unbooked {b['unbooked_quanta']},"
+                f" escaped beyond the counter {b['escaped_beyond_counter']}, current beyond"
+                f" {b['current_beyond_counter']}"
+            )
         print(
             f"      returned quanta {b['returned']}; unbooked at ticks {b['unbooked_at_ticks'][:12]}{'...' if len(b['unbooked_at_ticks']) > 12 else ''}"
         )

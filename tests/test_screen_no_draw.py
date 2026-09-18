@@ -44,13 +44,40 @@ EVENT_KINDS = {
     "detector_click",
     "detector_pass",
 }
-# Pinned from the first run of this board (2026-09-18): every click as (tick,
-# mark, amount, the Port it arrived through), the light line after the last
-# tick and the count of field_spread records. Empty until that run; see the
-# expectations.
-CLICKS: list[tuple[int, tuple[int, int, int], int, int]] = []
-LIGHT_LINE: dict[str, int] = {}
-SPREADS: int | None = None
+# Pinned from the first run of this board (2026-09-18, engine commit 10edd1dd,
+# source 2578f911...): every click as (tick, mark, amount, the Port it arrived
+# through), the light line after the last tick and the count of field_spread
+# records; see the expectations.
+AXIS = (7, 4, 4)
+CLICKS: list[tuple[int, tuple[int, int, int], int, int]] = [
+    (7, AXIS, 1, 1),
+    (9, AXIS, 1, 1),
+    (10, AXIS, 1, 1),
+    (11, AXIS, 1, 1),
+    (13, AXIS, 1, 1),
+    (14, AXIS, 1, 1),
+    (15, AXIS, 1, 1),
+    (16, AXIS, 1, 1),
+    (17, AXIS, 1, 1),
+    (18, (7, 3, 4), 1, 1),
+    (18, AXIS, 1, 1),
+    (18, (7, 5, 4), 1, 1),
+    (20, AXIS, 1, 1),
+    (21, AXIS, 1, 1),
+    (22, AXIS, 1, 1),
+    (23, (7, 3, 4), 1, 1),
+    (23, AXIS, 1, 1),
+    (23, (7, 5, 4), 1, 1),
+    (24, AXIS, 1, 1),
+]
+LIGHT_LINE: dict[str, int] = {
+    "sourced": 2304,
+    "current": 1344,
+    "escaped": 660,
+    "absorbed": 281,
+    "absorbed_by_marks": 19,
+}
+SPREADS: int | None = 2492
 
 
 def load_make_worlds():
@@ -104,6 +131,7 @@ def test_a_counter_counts_without_a_draw_and_its_record_ignores_the_seed(tmp_pat
         assert (WORLDS / f"{name}.json").read_text(encoding="utf-8") == expected, name
     marks = tuple(tuple(m) for m in make.TEST_MARKS)
     axis = marks[len(marks) // 2]
+    assert axis == AXIS
     source = tuple(make.TEST_SOURCE)
     assert axis[1] == source[1] and axis[0] - source[0] == SOURCE_DISTANCE
     metadata, events = run(tmp_path, make.counter_world(0, ticks=TICKS), "counter")

@@ -3208,9 +3208,17 @@ tickets consumed equal its clicks (one per drawn arrival). The seed-5
 record equals the seed-0 record event for event (`events.jsonl` identical
 once the host's `cost` is dropped, and identical with it), the ledger the
 same at every tick, and the two `initialization_sha256` differ. Pinned
-from the first run of this board and written here then: the clicks as
-(tick, mark, amount, Port) in order, the light line after tick 24 and the
-count of `field_spread` records.
+from the first run of this board (2026-09-18, engine commit `10edd1dd`,
+source `2578f911f59a3883031b3ccf1d83f871569df8b217662c20f652d8fcb6823f52`,
+2.7 s) and written here then: nineteen clicks, each of amount 1 through
+the -X face (Port 1), fifteen at the on-axis mark (7, 4, 4) at ticks 7, 9,
+10, 11, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23 and 24 and two each at
+(7, 3, 4) and (7, 5, 4) at ticks 18 and 23, the outermost pair not yet;
+the light line after tick 24 sourced 2304, current 1344, escaped 660,
+absorbed 281 (the body's sink), absorbed by marks 19; the marks' counters
+light 0, 2, 15, 2, 0 and momentum (15, 0, 0) on the axis; 2492
+`field_spread` records. The test passed at its first run with these pins
+on the same engine.
 
 ## Catalog of nature
 
