@@ -2708,6 +2708,10 @@ Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_scree
 
 Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_ring_self_field.py` pinned behaviour the law removed and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
 
+## The screen without a draw
+
+Retired on 2026-09-18 under the law of the bit (`bit-law-v1`): `tests/test_screen_no_draw.py` pinned behaviour the law removed (a mark's ticket seed, a body radiating per tick, `field_of`) and is deleted; the run is repeated under the law in a follow-up (the worlds stay in `examples/`).
+
 ## Catalog of nature
 
 `test_nature_catalog.py` reads [`catalog/nature.json`](../catalog/nature.json)
