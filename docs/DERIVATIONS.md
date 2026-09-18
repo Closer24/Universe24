@@ -26,7 +26,7 @@ is named. **Different law**: the rules give a definite law of another form,
 stated, with the run that would show the difference. **Not reached**: the
 rules as declared do not determine the quantity, and what would is stated
 plainly. **New** marks a formula the lattice gives that has no counterpart in
-known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts).
+known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts); round 6 (sections 39 to 44: the model owner's direction of 2026-09-18, the wait reads the amplitude, the coupling derived against the four gravitational tests, and whether any local reading falls as 1/r without the root, verified) is summarized in [section 43](#43-round-6-the-sizes-for-a6-the-separating-observable-and-the-verdicts).
 
 ## 0. Units, notation and the operator
 
@@ -3516,3 +3516,716 @@ slabs); the fraction of a smooth-envelope flat-band profile that stands
 light delivered at the mark, and what E9's screen reads of it; a rule
 that would read the amplitude u ∝ 1/r rather than the amount, which
 nothing in the law of the bit provides.
+
+## 39. Round 6: the wait reads the amplitude; what a thing at rest reads at distance r
+
+Round 6 (2026-09-18, after PR #304) derives the model owner's direction of
+the same day (Highlights 5.4, "The wait reads the amplitude, a coupling to
+derive"): the coupling names which face of the field each reading takes, the
+push the amount (the count of quanta, 1/r²), the wait the size of the
+coherent sum the Node already forms for the mixing (the amplitude, 1/r), each
+multiplied by the content as point 16 says. As before: bottom-up from the
+stated operator, no physics assumed, no engine run, no edit to the engine;
+every number checked by an iteration of the operator on a box of 41³ to 81³
+Nodes (seconds each), cited after the derivation and never used as its
+source; the scripts are the scratch files of this round, not committed.
+
+**The rule, R11 (the amplitude reading).** At the Node of a thing, for each
+owner j whose shadows arrive in an interval, the Node's common part is
+u_j = (1/3) Σ_p A_{j,p}, A_{j,p} = √(amount_{j,p}) e^{iφ_{j,p}} (section 26;
+in the engine the integer square root of amount × 32² in 32nds,
+`node-mixing-v1`, and the sum (Σx, Σy) at the phase tables' scale, formed
+before the six B_h). The thing reads Σ_j |u_j|, multiplied by its content,
+and owes w intervals per whole unit of what it reads; the push stays R4′
+(the amount times heading, times the content). The unit: the reading
+M_thing · Σ|u_j| is compared with the thing's content, as the step of point
+21 compares the push M_thing × (amount) with the content, so that a thing of
+any content steps per whole quantum of net flux read; hence the wait's whole
+unit is M_thing × 1 quantum^{1/2}, the count per interval is Σ|u_j| in
+quanta^{1/2}, and the content cancels: every thing at a Node waits alike
+(the equivalence of clocks). Were the unit one quantum^{1/2} of M_thing|u|
+itself, a thing of content M would wait M times more than one of content 1:
+a clock's slowing proportional to its own mass, which no clock test allows;
+stated, not adopted below. The engine of the same day (wait-reads-v1,
+feature 16f, PR #308, merged while this round was written; a declared option
+`wait_reads: amplitude`, `amount` the default) reads, once per group at the
+thing's Node, ⌊|Σ_p A_p|/32⌋, the whole units of the size of the sum, 3|u|,
+in quanta^{1/2} (`arrival_amplitude`), multiplies it by the thing's content
+through the push's reading (`push_of`, sign × amount × content) and counts w
+per quantum of that product (`pushed_ray`); so its w is this document's w/3,
+and its unit is the quantum of push, the non-cancelling one, for the
+amplitude and the count alike (clock-readings-v1 counts the push's quanta,
+content × amount, where rounds 3 and 5 wrote 1 − wn per unit content). Which
+unit the wait has is the model owner's; the run that reads it is two rings of
+different content at one r from a body (the same slowing here, 32 : 1 for
+contents 32 and 1 in the engine as it stands). Rules used besides: R10, R2, R3 (standing
+reading), R4′, R6′, R7′, point 3 as amended, sections 26, 27, 34.
+
+**Assumptions and limit.** Mean field first (the integer form is (iv)); far
+field k₀r ≫ 1; w|u| ≪ 1; the self-reading excluded as in section 34 (a
+round trip of length zero is computed as zero), and, new here, standing
+content reads zero anyway ((ii) below).
+
+**(i) The amplitude of a clocked source's far field.** By section 26 (iii),
+n = 3|u|² for a wave, and by section 27 (v) the far field of a clocked
+thing of flux S has n = √3 S/(4πr²)[1 − (3/2)ω₀²K₄(r̂)]. So
+
+```text
+|u|(r, r̂) = √(S / (4√3 π)) / r · [1 − (3/4) ω₀² K₄(r̂) + O(ω₀⁴)] = 0.2143 √S / r,
+|u|(r)    = √(G M / (2√3)) / r = 0.5373 √(G M) / r       (S = 2π G M, section 34),
+```
+
+constant in time for a monochromatic source (|u|² = n/3 while the six
+amplitudes oscillate), with half the count's anisotropy, weaker on the axes.
+Two facts of the round. **The amplitude is 1/r, the potential's form.** And
+**the amplitude is the square root of the flux**: √S, √(GM), not GM. For
+one owner of content M the reading grows as √M. For a body of N owners of
+content m each, the mixing and the common part are per owner (shadows of
+different owners cross, section 26), the thing reads each owner's message
+(point 16), and the sizes add:
+
+```text
+Σ_j |u_j| = N · 0.5373 √(G m) / r = (0.5373 / √(G m)) · G M / r,      M = N m,
+```
+
+linear in the total content when every owner has the same content m, and
+otherwise √(κξ) Σ_j √(m_j), which is not a function of Σ_j m_j: 96 quanta
+read 9.8 √(G/(2√3))/r as one owner, 13.7 as a 64 and a 32, 17.0 as three of
+32, 96 as ninety-six of 1 (the same push in every case). The gravitational
+mass a clock reads is Σ_j √m_j, the mass a push reads Σ_j m_j.
+
+**(ii) The prefilled standing set.** Two parts. A clocked thing's finite set
+of total X and extent R is the same wave cut at R: |u| as in (i) with
+S = X/(√3R) for √3R intervals, then gone unless returned (section 27 (v)).
+The flat-band content (the 2/3 of a lone re-release, the −1 and +1 bands of
+section 27 (iv)) has u ≡ 0 at every Node, exactly: the −1 band is the scalar
+Link fields with zero Node sum, the +1 band the divergence-free directed
+currents with zero Node sum (section 37), so Σ_p A_p = 0 on both. **The
+standing set is invisible to the amplitude reading, while the count reads
+it in full**, and 3 Σ_x |u|² is exactly the amount in the two wave bands, a
+conserved quantity (a lone share: 1/3 at every tick). A thing's own standing
+content at its Node therefore costs it nothing under R11 without the
+exclusion section 34 needed, and a clockless thing's constant release,
+which cancels itself (section 27 (v)), has no far amplitude as it has no
+far amount: light's content has no potential in this reading, as it has no
+far push.
+
+**(iii) A thing's Node.** By point 3 the thing's Node returns every share of
+another owner through the Port it came in (B_p = A_p). The Port sum is
+conserved by that rule as by the mixing, so u at the thing's Node obeys the
+same equation u(t+1) + u(t−1) = (1/3)Σ_nb u as every other Node: the
+amplitude a thing reads is the free field's (measured to four digits). The
+count at the thing's Node is not: in a monochromatic field the arrivals at
+a returning Node are, exactly, A_p(x) = u(x + e_p)/(2 cos ω) (from
+A_p(x, t+1) = u(x+e_p, t) − A_{−p}(x+e_p, t) with A_{−p}(x+e_p, t) =
+B_p(x, t−1) = A_p(x, t−1)), so n_thing = Σ_p |u(x+e_p)|²/(4cos²ω) → (3/2)|u|²
+= n_free/2 at long wavelength (0.65 to 0.67 of the free n measured at
+period 16, the neighbours' |u| raised by 2 to 16 %). A correction to round
+5: the count a thing at rest reads is half to two thirds of section 34's n,
+which scales round 5's coefficients by that factor and changes none of its
+laws.
+
+**(iv) The integer rule.** The engine's amplitude per Port is
+isqrt(amount × 32²)/32, exact at perfect squares and below √(amount) by less
+than 1/32 otherwise (1.406 for 2, 1.719 for 3, 3.156 for 10), so u is formed
+to within 1/16 quantum^{1/2} at worst; the coherent sum 3u = (Σx, Σy) sits
+at the scale 32 × 256 of the phase tables, and its size is one integer root
+more, |3u| in units of 1/8192: the whole unit of the reading is 3 × 8192 =
+24 576 in that scale. The smallest amplitude a Node forms is one quantum on
+one Port, |u| = 1/3 quantum^{1/2} exactly (32/96). Three exact bounds on
+what the Node forms in one interval from whole quanta a_p:
+
+```text
+|u| ≤ (1/3) Σ_p √a_p ≤ √(2n/3)     always (Cauchy–Schwarz);      |u| = √(n/3)  for the plane wave;
+|u| ≤ n/3                          where every Port carries 0 or 1 quantum (√a = a).
+```
+
+Hence in the sparse field, n < 1 quantum per interval at the Node, the
+interval-by-interval amplitude is at most a third of the count and its time
+mean at most n/3 ∝ 1/r² (with the registers' regular arrivals, one quantum
+every 1/n intervals on the forward Port, exactly n/3): **the potential's
+1/r is formed by the Node only where the six Ports carry many whole quanta
+at once**, the wave's regime of section 30 (n ≥ 64 to 256 per Node,
+r ≤ 0.023 √S to 0.046 √S), where |u| = √(n/3) ≥ 4.6 to 9.2 and w|u| ≥ 1 for
+every w ≥ 0.22. A thing moves under R11 where w √(n/3) < 1, n < 3/w²; the
+window in which the whole-quanta field is a wave and the thing moves,
+r_h < r < r_wave, exists only for w < 0.11 (256 quanta) or w < 0.22 (64
+quanta): at w = 1 none, as in section 37; at the engine's rational
+w = 1/32 a wave of 256 to 3000 quanta per Node slows a thing by 29 to 100 %
+and reads 1/r. Elsewhere the 1/r law is read in the formula layer (point
+13's second layer as a formula, section 37), where the thing accumulates
+w|u| with the mean-field amplitude and waits per whole unit.
+
+**Dictionary.** |u| ↔ the potential, in quanta^{1/2}; √S ↔ the charge of the
+potential is the root of the flux; Σ_j √m_j ↔ the mass a clock reads; the
+flat bands ↔ bound (standing) field, potential-free; 1/(2cos ω) ↔ a point
+mirror's arrivals.
+
+**Check.** *The far field* (81³ with a sponge, a clocked source at period 16
+and 32, the period mean after 150 and 200 ticks, S the flux of J through the
+cube of half-width 16): 3|u|²/n = 0.96 to 1.03 at r = 8 to 24 on (110) and
+(111), 0.92 to 1.05 on the axis; |u| r/(0.2143 √S) = 0.96 to 1.02 on the
+diagonals and 0.90 to 0.95 on the axis at period 16 (the first order gives
+0.954, 1.012, 1.031 on axis, (110), (111)), 0.96 to 1.03 everywhere at
+period 32; |u| over a period varies by 5 to 12 % of its mean at r ≤ 12 (the
+box's reflections), more near the sponge. *The flat bands* (the one-step map
+U(k) at three random k): the eigenvectors of eigenvalue +1 and −1 have
+|Σ_p v_p|/|v| < 10⁻¹⁵, those of e^{±iω} have √3 = 1.732 (the identity
+|Σ_p A_p|² = 3n of a wave); a lone share of amount 1 on 61³: the amount
+within r ≤ 3 is 0.966, 0.748, 0.669, 0.664 at t = 4, 8, 16, 60 (→ 2/3)
+while max|u| there falls 9.9·10⁻², 4.0·10⁻², 1.0·10⁻², 1.2·10⁻³ and
+3Σ_x|u|² over the board is 0.3333 at every tick. *The thing's Node* (81³,
+period 16, a returning Node at (12, 0, 0), (7, 7, 7), (16, 0, 0)): |u| at
+the Node 1.000 of the free run's, n 0.652, 0.654, 0.667; the six neighbours'
+|u| 1.02 to 1.16, n 0.81 to 1.14; on the axis between source and mirror n
+within 1 % of the free run. *The integers*: the isqrt table above; the
+bounds are algebra.
+
+**Verdict.** The amplitude a thing reads: **reached exactly** in the mean
+field, |u| = √(S/(4√3π))/r = 0.5373 √(GM)/r, the potential's 1/r with the
+count's anisotropy halved. Its scaling with the source: **different law**,
+√M for one owner, Σ_j √m_j for a body (linear in M only for owners of one
+content): a clock and a push read two different masses of the same body.
+The standing set: **new**, u = 0 on the flat bands, invisible to the wait.
+A thing's Node: the amplitude the free field's (**exact** in the equation
+for u), the count half to two thirds of it. The integer rule: the amplitude
+is a many-quanta reading, **not reached** in whole quanta where things move
+at w ≥ 0.22 (the mean at most n/3, the count over three); **reached** in the
+formula layer, and in whole quanta at w ≤ 1/10 inside r_h < r < r_wave.
+
+## 40. Round 6: the clock of a thing at rest, and the redshift
+
+**Rules used.** R11 and section 39; R7′ (the clock M/K); R9's two readings
+of the second order (section 24); section 31 (G = κξ/(2π), S = κξM per
+owner, κ = 1/(√3R) the flux per unit set, ξ the set per content).
+
+**(i) The clock.** A thing at rest at r reads |u|(r) per interval, in
+quanta^{1/2}, its content cancelling (section 39), and owes w|u| intervals
+per interval; its phase advances ρ = M/K in the intervals it does not wait,
+so
+
+```text
+ρ_eff / ρ = 1 − w |u|(r) = 1 − w · 0.5373 √(G M) / r                       (one owner of content M),
+          = 1 − w c₁ · G M / r,     c₁ = 1/√(2√3 G m) = 0.5373/√(G m)      (a body of owners of content m),
+```
+
+against general relativity's 1 − GM/(rc²): the potential's form, local and
+in integers, GR's coefficient exactly at
+
+```text
+w = 1/c₁ = √(2√3 G m) = 1.861 √(G m) = 0.7425 √(S_m) = √(ξ m / (π R))     intervals per unit of amplitude,
+```
+
+S_m = 2πGm the flux of one elementary owner, ξm its set and R its extent.
+Round 3's w = 11/9 was a pure number because the diffusive field's amount
+carried the coupling; here the amplitude carries its root, and w is set by
+the elementary set: w_GR² = 2√3 G m, the model's wait constant reads the
+strength of gravity times the content of the smallest owner. For one owner
+the same w gives 1 − √(Gm/(GM))·GM/r: a single thing of content M ≠ m slows a
+clock by √(m/M) of GR's; the star of A6, one owner of flux S, needs
+w = 0.7425 √S for its own coefficient. A loop's period P/P₀ = 1/(1 − w|u|),
+the same factor; a ring of any content, a free thing of any content, the
+same slowing (the unit of section 39). At the engine's unit (wait-reads-v1,
+w_e per quantum of content × ⌊3|u|⌋) the rate is 1 − 3 w_e M_thing |u| and
+GR's coefficient sits at w_e = 0.620 √(Gm)/M_thing, one w per content: no
+one w serves two clocks of different content, which is the case for the
+content-cancelling unit adopted here. The anisotropy (3/4)ω₀²K₄, half the
+count's: the clock slower on the body diagonals of the mass than on its
+axes at the same r, by (3/4)ω₀²(2/5 + 4/15) = 0.5 ω₀² relative.
+
+**The second order.** Two readings, as in section 24. Queued (the thing
+reads in every lattice interval, waiting or not): it owes w|u| per interval
+and ticks (1 − w|u|)T times in T intervals, exactly 1 − x, x = w|u|, frozen
+at x = 1. Strict (a waiting thing reads nothing): it owes w|u| per tick, so
+T = T_tick(1 + x) and the rate is 1/(1 + x) = 1 − x + x², never frozen. GR
+needs, at second order, a coefficient that depends on the radial coordinate:
+√(1 − 2x) = 1 − x − x²/2 in the Schwarzschild r, (1 − x/2)/(1 + x/2) =
+1 − x + x²/2 in the isotropic r, the flat coordinate grid the lattice has
+(up to the conformal factor). The two readings straddle the isotropic value
+(0 and +1 against +½) and neither is either: **different law at second
+order**, of size x² = (GM/r)² at the GR w, 1 to 3 % of the period for a ring
+at r = 8 from S = 40 (x = 0.17). What a thing reads while it waits, open
+since round 3, is now this: it decides between 0 and +x².
+
+**(ii) The redshift.** A clock at r₁ runs at ρ(1 − w|u|₁), one at r₂ at
+ρ(1 − w|u|₂); the light things between carry no clock (R7′), every one of
+them is late by the same Shapiro delay of section 41 in a static field, so
+the received rate against the receiver's clock is
+
+```text
+ν₂/ν₁ = (1 − w|u|₁)/(1 − w|u|₂),    z = ν₁/ν₂ − 1 ≈ w c₁ G M (1/r₁ − 1/r₂)  →  G M (1/r₁ − 1/r₂) at w = 1.861 √(G m),
+```
+
+GR's GM(1/r₁ − 1/r₂)/c² in form and, for a body of equal owners, in
+coefficient at the w of (i); 0.5373 w √(GM)(1/r₁ − 1/r₂) for one owner.
+
+**Dictionary.** w c₁ ↔ the ratio of the wait's coupling to the push's, 1 at
+GR; x = w|u| ↔ GM/(rc²); the queued and strict readings ↔ the second-order
+coefficient 0 or +1 against GR's ∓½.
+
+**Check.** Section 39's |u|(r) (0.96 to 1.02 of the coefficient on the
+diagonals at r = 8 to 24); the rest is algebra on it, and the second order
+is the two series.
+
+**Verdict.** Gravitational time dilation: **reached** in form, 1 − wc₁GM/r,
+with GR's coefficient at w = 1.861 √(Gm) for a body of owners of one content
+m; **different law** for a single owner (√M) and across compositions
+(Σ√m_j); the second order **different law** (0 or +x² against −x²/2 or
++x²/2). The redshift: **reached** in the potential's form, with the same w.
+
+## 41. Round 6: the bending of light, the Shapiro delay, and one w
+
+**Rules used.** R11, section 39's |u|; points 10, 21, 25 (a thing's one
+path, its step by the momentum, a thing that owes a tick does not cross its
+Link); section 35 (iii) and (iv) (the push over a pass, GM/b); the integrals
+∫ dx/√(b² + x²) = asinh(x_A/b) + asinh(x_B/b) ≈ ln(4x_Ax_B/b²) and
+∂_b of it → −2/b; ∫ b dx/(b² + x²)² = π/(2b²).
+
+**(iii) The bending.** Three things are bent.
+
+*The image of light*, a real light thing's one path. The exact local
+mechanism: a thing at a Node with heading h and momentum p that owes k
+intervals stays at the Node k intervals (point 25) and then leaves through
+the Port its momentum decides (point 21: the first axis whose component has
+reached its content, else its heading). The wait is a scalar count on the
+thing, without an axis: it enters no component of the momentum and chooses
+no Port. The gradient of the wait across the beam is a relation between
+neighbouring paths, and a thing has one (point 10): nothing at its Node
+tells it that the Node one Link nearer M would have held it longer. **The
+wait turns no path**: α_image = GM/b at every w, the push alone (section 35
+(iii)). Its only trace on the path is second order and only under the
+queued reading: a thing that reads the push in every interval it stays takes
+Δp_⊥ = p ∫ J_⊥ (1 + w|u|) dx, and the correction is
+
+```text
+Δα/α_image = w ∫ J_⊥|u| dx / ∫ J_⊥ dx = (π/4) w |u|(b) = 0.785 w c₁ G M / b     (0 under the strict reading),
+```
+
+α_image(1 + 0.79 GM/b) at the GR w. A quarter of Einstein's 4GM/(c²b) in
+every reading. If a lawful reading were to bring the time half to the path,
+it would have to enter the momentum, the only thing that turns a path: per
+interval, M_thing times the lattice gradient of the wait's potential across
+the thing's Node, w(|u|(x + e_i) − |u|(x − e_i))/2 on each axis toward the
+larger amplitude, a second push of size w M_thing · 0.5373 √(GM)/r² toward
+M, an inverse square of strength w c₁ G M M_thing/r², Newton's own at the GR
+w; over a pass it would add 2GM/b to the image (3GM/b, front 5GM/b), not
+Einstein's 4 either, the return half of the push still never reaching a
+thing at speed 1 (section 34). The Node does not hold that gradient: its six
+amplitudes carry the wave's direction in their sizes (0.62, 0.045, 0.083)
+and the wavefront's curvature in their phases (section 44), and the
+envelope's change over one Link, |u|/r, is below the engine's 1/32 wherever
+r > 32 |u|. Stated, not written.
+
+*The front of light*, the surfaces of equal phase of successive light things
+from one emitter, read by an interferometer or a two-slit behind the mass.
+Each thing is late by Δt(b) = w ∫|u| dx = w · 0.2143 √S [asinh(x_A/b) +
+asinh(x_B/b)]. The front's local normal at the ray b after the pass:
+two neighbouring rays at b and b + δb differ in direction by θ′(b)δb and in
+delay by Δt′(b)δb, so the front through the two things is tilted from the
+rays' perpendicular by −Δt′(b), and its normal is turned by θ(b) − Δt′(b):
+
+```text
+α_front(light) = α_image + w · 0.2143 √S · 2X/(b√(b² + X²))  →  G M/b + 2 w c₁ G M/b  =  G M/b + 1.075 w √(G M)/b   (one owner),
+                                                                 →  3 G M/b   at w = 1.861 √(G m)   (a body of equal owners),
+```
+
+toward the mass, the wait's term 1/b (against round 5's 1/b²): **Einstein's
+space half, 2GM/b, exactly in the front at the w of the clock**, and the
+front and the image disagree by it. Against 4GM/b: the front three quarters,
+the image a quarter. An astronomical plate reads the image; a phase
+interferometer (VLBI) reads the front; physics has both at 4GM/b.
+
+*The front of the field*: unchanged from round 5, a shadow reads nothing and
+waits nothing under R11, so 0.
+
+**(iv) The Shapiro delay.** For light, the wait along the pass:
+
+```text
+Δt(light) = w ∫ |u| dx = w · 0.2143 √S · [asinh(x_A/b) + asinh(x_B/b)] ≈ w c₁ G M · ln(4 x_A x_B / b²)
+          →  G M · ln(4 x_A x_B / b²)   at w = 1.861 √(G m)     (one owner: 0.5373 w √(G M) · ln(4 x_A x_B / b²)),
+```
+
+against GR's 2GM ln(4x_Ax_B/b²): **the logarithm reached, the coefficient
+half**, the ratio 1 against 2 of section 24 (the same wait serves a clock,
+one part of the metric, and light's index, two parts). The delay grows with
+the path as the logarithm while the deflection saturates: no fixed ticks per
+radian (round 5's 2.72 w). The field's delay: 0 (a shadow waits nothing);
+the recoil of a push is not delayed. Point 16 admits one rule per pair of
+families, so a w of light's family different from matter's is lawful:
+w_γ = 2 w_m gives Shapiro exact and the front 4GM/b + GM/b = 5GM/b;
+w_γ = (3/2) w_m gives the front 4GM/b exactly and Shapiro at three quarters;
+no pair gives both, the push's GM/b lying outside the index. Stated, not
+adopted.
+
+**(viii) One w.** For a body of owners of one content m, w = 1.861 √(Gm)
+gives GR's clock 1 − GM/r, GR's redshift, Einstein's space half in the front
+(front 3GM/b), and Shapiro's logarithm at half; the image stays GM/b. This
+is section 24's table with 11/9 replaced by 1.861 √(Gm) and the lingering
+diffusive amount replaced by the amplitude of a wave field that passes; the
+single thing of content M, and A6's star, obey it with the law in √M. **Not
+reached** in full: reached for the clock, the redshift and the front's space
+half; Shapiro at half; the image at a quarter.
+
+**Dictionary.** Δt′(b) ↔ the tilt of the front by the delay gradient; the
+index of the vacuum for light ↔ 1 + w|u| = 1 + GM/r at GR's w, half of GR's
+1 + 2GM/r; w_γ/w_m ↔ γ of the parametrized post-Newtonian metric.
+
+**Check.** *The path sums* (section 39's runs, lines parallel to x at impact
+parameter b, x ∈ [−28, 28]): Σ_x|u| = 0.970, 0.977, 0.982 of
+0.2143√S · 2asinh(28/b) at b = 8, 12, 16 at period 16 and 0.974, 0.982, 0.991
+at period 32; the growth with the half-length X at b = 8: 0.315, 0.516,
+0.651, 0.751 at X = 7, 14, 21, 28 against 0.311, 0.522, 0.666, 0.774 (the
+asinh's growth, ratios 1.01 to 0.97) while Σ_x n saturates, 0.0204, 0.0293,
+0.0332, 0.0354 (the atan of section 35); d(Σ_x|u|)/db = 0.94, 0.99, 0.97 of
+−0.2143√S · 2X/(b√(b² + X²)) at period 16 and 0.96, 0.90, 1.12 at period 32;
+Σ|u|/ΣJ_⊥ = 47.6, 62.1, 74.3 against 48.0, 60.7, 71.7 (the wait's integral
+against the push's, in intervals per radian, no longer a constant).
+*The mechanism*: points 10, 21 and 25 as quoted; the second-order integral
+π/(2b²) is elementary.
+
+**Verdict.** The image: **different law**, GM/b at every w (the wait turns no
+path; a quarter of Einstein). The front of light: **reached** in its space
+half, 2GM/b at the w of the clock, the front 3GM/b (**different law**, three
+quarters). Shapiro: **reached** in the logarithm, **different law** in the
+coefficient (half of GR's), a per-family w reaching either Shapiro or the
+front but not both. One w: **not reached** in full; the clock, the redshift
+and the front's space half at w = 1.861 √(Gm), as in round 3.
+
+## 42. Round 6: Coulomb near a mass, the far field of a thing near a mass, and the books
+
+**Rules used.** R11 and section 39; section 31 (Coulomb and Newton under
+R10, ζ = 1); section 36 (the same questions under the count); point 7 (the
+books per bit), point 3 as amended (the return is a field), point 11 (the
+computation is the things' content); `node_mixing` and the dense layer's
+`_mix` as they stand (node-mixing-v1), `pushed_ray` (clock-readings-v1).
+
+**(v) Coulomb's law between two things at rest near a mass.** A and B at
+separation s, both at r from a mass M. In lattice time nothing changes: the
+push B takes from A reads A's amount, whose flux S_A is declared and
+conserved through every shell (section 26 (ii)), and R11 touches no shadow;
+the force is k_C q_A q_B/s² at every r from M, **reached** as in section 36.
+In local time each thing's clock runs at 1 − w|u_M|(r), so the same
+momentum per lattice interval is, per tick of the local clock,
+
+```text
+F_local = F / (1 − w|u_M|) = F [1 + w c₁ G M / r] = F [1 + G M / r]   at w = 1.861 √(G m),
+```
+
+the potential's form, where section 36 had the acceleration's. Physics has
+the locally measured force unchanged (the freely falling frame is flat) and
+the coordinate force carrying √g₀₀ ≈ 1 − GM/r; here the lattice force is
+the flat one and the local force is larger by 1/√g₀₀ at first order:
+**different law** in the local measure, by GR's factor in the inverse
+place. A second-order companion: A's wave has the frequency of A's slowed
+clock, so its wavelength is longer by 1 + w|u_M| and its fixed anisotropy
+(15/8)ω_A²K₄ smaller by (1 − w|u_M|)². No path term: A's shadows crossing
+M's field wait nothing (a shadow reads nothing), so the retardation stays
+section 28's √3 s and there is no screening.
+
+**(vi) The far field of a thing near a mass.** B's flux is conserved, so
+J = S_B/(4πr²) holds: **1/r² kept**; the wavelength longer by 1/(1 − w|u_M|),
+the anisotropy smaller; no lens and no pile-up (nothing holds a shadow); the
+amplitude of B's field at a third thing's Node is |u_B| of section 39 with
+B's slowed clock, so B's own potential is unchanged in size and longer in
+wavelength. Under R11 the far field of a thing near a mass is the far field
+of that thing with a slower clock, nothing else, as under option I of round
+5.
+
+**(vii) The books.** The wait is a counter on the thing and on nothing
+else. In the engine's terms: `pushed_ray` adds to the thing's `owed` the
+push's components in quanta times the wait's numerator and the thing spends
+one interval per denominator; under R11 it adds instead n_w × |3u|, |3u| the
+integer root of Σx² + Σy² of the owner's coherent sum at the scale
+32 × 256 = 8192 (section 39 (iv)), summed over the owner groups present at
+its Node (owner, flow and sign; the thing's own groups excluded, point 3),
+and spends one interval per 24 576 d accumulated: exact integers, the
+register rule on the thing's side, the mean rate 1 − w Σ|u_j| to within one
+interval per 1/(wΣ|u_j|) intervals. Nothing is sourced, parked or held: the
+shadows are returned as before with their amounts, phases and momenta, the
+push is what R4′ gives, so the ledgers of amount, momentum and charge (point
+7) are untouched, and the third law is unaffected: the return carries the
+same −Δp on the same field at the same speed, the wait delaying the thing's
+next step and never its reply. Standing content at the thing's Node reads
+zero (section 39 (ii)), so the self-reading exclusion of section 34 is
+needed only for the thing's own outgoing wave, which point 3 already
+computes as zero. **Exact**, one counter on the thing, as option I of
+section 36.
+
+**The cost of |u|.** The Node forms u already: `node_mixing` computes
+(sum_x, sum_y) = Σ_j A_j at the phase tables' scale before the six leaving
+amplitudes (cx = sum_x − 3x_entry, cy likewise), and the dense layer's
+`_mix` forms the same sums (ax.sum, ay.sum) before subtracting 3 ax[OPPOSITE];
+the six roots per group per Node per interval are taken for the A_j. The
+size |3u| = √(sum_x² + sum_y²) is one integer root more, on products already
+inside the 64-bit work (|cx|, |cy| < 2³¹ is checked), and it is needed only
+at a Node that holds a thing, once per owner group present: one root per
+thing per group per interval against the six the mixing takes at every Node
+of every group. The computation of the world stays the things' (point 11),
+and the shadows' cost is unchanged. The engine's wait-reads-v1 (PR #308) is
+this: `arrival_amplitude` forms the group's sum over the shadows at the
+thing's Node (per Port the amount at the phase of its sum, the root of
+amount × 32², the six summed on the tables), takes the root of x² + y² once
+per group per interval inside the push's loop over the shadows, and floors
+it to whole units of 32; it reads 3|u| where this document reads |u|, and
+multiplies by the content (section 39). Its `owed` is in units of 1/d of an
+interval and the whole units of amplitude are floored per interval, not
+accumulated: below one unit of 3|u|, that is |u| < 1/3 (r > 3w · 0.2143 √S,
+every r of A6's board), the engine's amplitude wait is zero, where the
+register rule stated above accumulates the fraction and waits per whole
+unit in the mean; the far-field law of this round is read in the engine
+only with that accumulation (a remainder on the counter, as the push has
+`push_remainder`).
+
+**Check.** Section 31's algebra; the engine's `node_mixing` and `_mix` as
+read on 2026-09-18 (the coherent sum formed before the outputs; the root of
+amount × 32²; the `owed` counter in units of 1/d); the exactness is by
+construction (the counter changes no ray).
+
+**Verdict.** Coulomb near a mass: **reached** in lattice time in every
+reading; **different law** in local time, by 1 + GM/r at the GR w (the
+potential's form now). The far field of a thing near a mass: **1/r² kept**,
+a slower clock and a longer wavelength, no lens. The books: **exact**, one
+counter on the thing; the third law unaffected. The cost: one integer root
+per thing per owner group per interval, on a sum the Node already forms
+(wait-reads-v1 takes it so); the engine's floor per interval reads nothing
+below |u| = 1/3, an accumulating remainder on the counter being what the
+far field needs.
+
+## 43. Round 6: the sizes for A6, the separating observable and the verdicts
+
+**Rules used.** Sections 39 to 42; section 30 (the integer wave, 64 to 256
+quanta per Node); section 19 (the capture radius b_c = GM); section 37 (the
+sizes under the count); the A6 entry of
+[EXPERIMENTS.md](EXPERIMENTS.md#a6-light-bending-by-a-bound-group-and-g_eff-n²-over-n--28-to-216).
+
+**(ix) The sizes.** The star of A6 a clocked thing of flux S, one owner,
+GM = S/(2π), b_c = GM. A thing at rest waiting always, w|u| ≥ 1, is frozen
+inside
+
+```text
+r_h = w · 0.2143 √S = w · 0.5373 √(G M)         (mean field);
+r_h = G M   exactly at the star's own GR w = 0.7425 √S  (GR: 2GM in the Schwarzschild r, GM/2 in the isotropic r),
+```
+
+against section 37's 0.93 √(wGM) under the count: linear in w, not in √w,
+and r_h < b_c whenever S > 1.81 w²: at w = 1 every star of flux above 2
+hides its horizon inside its capture radius, and at the GR w the two
+coincide. In whole quanta (section 39 (iv)): r_wave = 0.023 √S (256 quanta
+per Node) or 0.046 √S (64), so the window r_h < r < r_wave in which a thing
+moves inside a whole-quanta wave exists only for w < 0.11 (or 0.22); on
+A6's board (S = 10 to 100, r_wave = 0.07 to 0.23 Links) there is no wave in
+whole quanta at any Node, and the amplitude the integer Node forms is at
+most a third of the count everywhere. A whole-quanta wave at r = 8 needs
+n(8) ≥ 256, S ≥ 1.2·10⁵. The sizes at S = 10, 25, 40, 100 (GM = 1.6, 4.0,
+6.4, 15.9), w = 1, the mean field:
+
+```text
+                          S = 10          S = 25          S = 40          S = 100
+r_h (amplitude / count)   0.68 / 1.17     1.07 / 1.86     1.36 / 2.35     2.14 / 3.71
+ring at r = 8  slowed by  8.5 % / 2.2 %   13.4 % / 5.4 %  17.0 % / 8.6 %  26.8 % / 21.5 %
+ring at r = 16            4.2 % / 0.5 %   6.7 % / 1.3 %   8.5 % / 2.2 %   13.4 % / 5.4 %
+ring at r = 32            2.1 % / 0.13 %  3.4 % / 0.34 %  4.2 % / 0.5 %   6.7 % / 1.3 %
+light at b = 8, X = 28: late by   2.7 / 0.45 ticks   4.2 / 1.1     5.3 / 1.8     8.4 / 4.5
+light at b = 8, X = 96            4.3 / 0.51          6.8 / 1.3     8.6 / 2.1    13.6 / 5.1
+image G M / b at b = 8            0.20 rad            0.50          0.80          1.99
+front's wait tilt at b = 8        0.17 w rad          0.27          0.34          0.54
+```
+
+(the count's figures from section 37, with the free-field n; at the thing's
+Node they are half to two thirds of that, section 39 (iii)).
+
+**(x) The single observable that separates the two readings in one run.**
+The clock's slope against r: three rings at r = 8, 16, 32 from the mass, in
+the formula layer, in one run. Under the amplitude the period's excess
+halves per doubling of r; under the count it quarters: at S = 40, w = 1,
+17.0, 8.5, 4.2 % against 8.6, 2.2, 0.5 %, the ratio of the excess at r = 8
+to that at r = 32 being 4 against 16; over 100 periods of 16 the excess is
+270, 136, 68 ticks against 138, 34, 9. The same run reads a second
+discriminant: a light thing along the line at b = 8 is late by 5.3 w ticks
+under the amplitude (growing with the path as the asinh, 8.6 w at X = 96)
+against 1.8 w (saturating), whole ticks in one pass; and two runs at S and
+4S read √S against S in the ring's slowing (doubling against quadrupling).
+A6's own geometry (the register after a pass) separates nothing: the image
+is GM/b under both.
+
+**The verdicts**, extending section 38 (option I, the law as it stands, is
+the count; R11 the amplitude):
+
+| Law | Round 5, I (the wait reads the count, section 38) | Round 6, R11 (the wait reads the amplitude) | Run |
+| --- | --- | --- | --- |
+| What a thing at rest reads | n = (√3/2)GM/r² (free field; at the thing's Node half to two thirds of it) | **\|u\| = √(S/(4√3π))/r = 0.537 √(GM)/r**, the potential's 1/r, the root of the flux (measured 0.96 to 1.02 of it) | a thing's wait count beside a body |
+| The mass a clock reads | Σ_j m_j | **different law**: Σ_j √m_j (√M for one owner; linear in M for owners of one content) | a ring beside one owner of 64 and beside two of 32 |
+| Gravitational time dilation | 1 − (√3w/2)GM/r² | **reached** in form: 1 − wc₁GM/r, GR at w = 1.861 √(Gm) = √(ξm/(πR)); second order 0 (queued) or +x² (strict) against GR's −x²/2 or +x²/2 | three rings at r = 8, 16, 32, formula layer |
+| Gravitational redshift | (√3w/2)GM(1/r₁² − 1/r₂²) | **reached**: wc₁GM(1/r₁ − 1/r₂) | two rings |
+| Light bending, the image | GM/b | **GM/b**, every w (the wait turns no path; second order (π/4)w\|u\|(b) under the queued reading) | A6 with the wait |
+| Light bending, the front | GM/b + 2.72w GM/b² | **reached** in the space half: GM/b + 2wc₁GM/b = 3GM/b at the GR w (three quarters of Einstein) | a two-slit behind the mass |
+| The field's front through a mass's field | 0 | 0 | — |
+| Shapiro delay of light | 2.72w GM/b, no logarithm | **reached** in the logarithm: wc₁GM ln(4x_Ax_B/b²), **half** of GR's coefficient at the GR w; the delay grows with the path | A6 arrival tick, X = 28 and 96 |
+| Shapiro delay of the field | 0 | 0 | — |
+| Coulomb near a mass | reached; ×1/(1 − wn) in local time | **reached** in lattice time; ×(1 + GM/r) in local time at the GR w | A5s beside a body |
+| Far field of a thing near a mass | 1/r² kept; λ_w longer by 1 + wn | **1/r² kept**; λ_w longer by 1 + w\|u\|; no lens | E11 beside a body |
+| The books (point 7) | exact; the counter on the thing | **exact**; the counter on the thing reads \|3u\| at scale 8192, one root per thing per group per interval on a sum the Node forms (wait-reads-v1 does; it floors per interval and carries the content, section 42) | E11 (a) |
+| Newton's third law | exact, through the field | **exact**, unaffected (the wait delays the step, never the reply) | E11 (a) |
+| The standing set under the reading | read in full (n) | **new**: u = 0 on the flat bands, invisible; 3Σ\|u\|² = the wave bands' amount | a lone shadow re-released at a thing |
+| One w for the four tests | not reached (no GM/r term) | clock, redshift and the front's space half at w = 1.861 √(Gm); Shapiro at half; the image at a quarter: **not reached** in full (round 3's table with 11/9 → 1.861 √(Gm)); a per-family w reaches Shapiro or the front, not both | — |
+| The horizon | 0.93 √(wGM), inside b_c for GM > 0.87w | **r_h = w · 0.537 √(GM)**, = GM at the star's GR w; inside b_c for S > 1.81w² | — |
+| The integer wave and the wait | incompatible at w ≥ 1/256 | the amplitude formed only inside a whole-quanta wave, ≤ n/3 outside: **not reached** in whole quanta at w ≥ 0.22; a window r_h < r < r_wave at w < 0.11; the formula layer otherwise | A6 in the formula layer; a dense wave at w = 1/32 |
+
+Open after this round, one line each: the composition law Σ_j √m_j (whether
+the family's quantum, of which every thing is a whole multiple, makes the
+owners of nature one content, which would restore the linear law); the
+second order of the clock (0 or +x²), and the near-field correction at the
+thing's Node (the neighbours' u raised by 2 to 16 % by the mirror); the
+front's tilt read directly by a two-slit behind a mass in the formula layer
+(the derivation's −Δt′(b) against the pattern); round 5's coefficients
+restated with the count at a thing's Node (half to two thirds of the free
+n); the whole-quanta window at w ≤ 1/10 (a dense wave of 256 to 3000 quanta
+per Node with a thing inside it); the ratio 1 against 2 of the clock's and
+light's wait (a per-family w, which point 16 admits); whether the
+reading is per owner (Σ_j|u_j|, this round) or of the total sum
+(|Σ_j u_j|, which beats between owners of differing clocks and adds as √N
+between owners of random phase); and the unit of the wait, the content (this
+document, every clock alike) or the quantum of push (the engine's counter
+since clock-readings-v1, a clock slowed in proportion to its own content),
+which two rings of different content at one r decide.
+
+## 44. Round 6: a local 1/r reading without the root, and the amplitude as the basic integer
+
+The model owner's question of the same day, on the direction of round 6: is
+there a local reading at a thing's Node that falls as 1/r without the
+integer square root, from the phase's rotation or from anything the Node
+already holds (amounts per Port, phases per Port, their differences, the
+number of Ports carrying the owner's shares, the pattern of whole-quantum
+arrivals over intervals); and what the alternative of carrying the amplitude
+as the shadow's basic integer, with the intensity as its square read where
+counting happens, does to exact conservation, the push and the books.
+
+**Rules used.** R10, R2, section 26 (the exact relations between u and the
+Port amplitudes), section 27 (v) (the far field), section 30 (the integer
+rule), points 5, 7, 22, 25 (the amount never cancels, the books exact, the
+parked shadows, the amounts add on a lane).
+
+**(i) What the Node holds, and its degree in r.** For a monochromatic field
+the Port amplitudes are exactly (from B_p = u − A_p, R2 and e^{−iωt}):
+
+```text
+A_p(x) = [e^{iω} u(x) − u(x + e_p)] / (2i sin ω),
+```
+
+so everything the Node holds per owner is a function of u at the Node and
+its six neighbours. In the far field of a clocked thing, u = U e^{ik r}/r
+(section 27 (v)), and for a Node at distance r on an axis, with c_p = e_p·r̂:
+
+- *The amounts.* a_p = |A_p|² = (|U|²/r²) f_p(r̂, ω, k) [1 + O(1/(kr)²)],
+  degree −2 in r, with fixed ratios f_p (0.62, 0.045, 0.083 at ω → 0 for
+  the forward, backward and transverse arrivals). The near-field term of
+  A_p is in quadrature with its main part, A_p ∝ (1 − (k/ω)c_p) −
+  i c_p/(ωr) + O(1/r²) at small ω, so the modulus squared has no 1/r term:
+  every amount, every sum, difference, product or ratio of amounts, the
+  parked ninths and their mean (4/9), the count of Ports carrying shares (6
+  in the mean field) are of even degree in 1/r, and the ratios of degree 0.
+- *The phases.* φ_p = arg u + const_p + γ_p/r + O(1/r²). The common part,
+  arg u = kr − ωt, is r modulo the wavelength: periodic, and no monotone
+  function of r can be built from it or from its rotation, which is ω per
+  interval at every r. The constants are the plane wave's Port offsets,
+  ω/2 for the transverse arrivals, (ω − k)/2 for the forward one,
+  (ω + k)/2 + π for the backward one. The 1/r terms are exact from the
+  formula above: γ = cot((ω + k)/2)/2 for the forward arrival, cot((k −
+  ω)/2)/2 for the backward one, k/4 for the transverse ones (0.83, 3.35,
+  0.17 at period 16; at ω → 0, 1/((1 + √3)ω) and 1/((√3 − 1)ω)). **The
+  Node's phases hold a 1/r quantity**: the curvature of the wavefront,
+  the wavelength over r. It carries no S and no G; it is ∝ K/(M r), the
+  Compton length of the source over r, falling with the source's content
+  where the potential rises with it; it needs the wave in whole quanta
+  (the same condition as the amplitude, section 39 (iv)) and a phase
+  resolution finer than it, 2π/N < γ/r, r < 8.5 Links at N = 64 and period
+  16, and for a mass of nature at 10⁶ m it is 10⁻²¹ rad. Not the
+  potential.
+- *The counts over intervals.* The rate of whole-quantum arrivals is n,
+  degree −2; the interval between arrivals 1/n, degree +2 (a counter on the
+  thing can hold it).
+
+Every quantity formed from these by sums, differences, products, ratios,
+comparisons and counts is therefore of even degree in 1/r when it carries
+the coupling S, with two exceptions, both nonlinear: the root of an amount
+(degree −1 with √S: the amplitude), and an amount divided by a curvature
+phase, (S f_p/r²)/(γ/r) = S f_p ω r/(γ r²)·(ω/ω) ∝ S ω/r ∝ GM²/(K r) (degree
+−1 with S, but the content squared, the potential times the source's
+clock; a division by an angle resolved only within a few wavelengths of
+the source, and needing the wave). There is no third: the phase alone
+carries no r, the amounts fall as 1/r², and their ratios and counts do not
+fall at all. **The amplitude via the root is the minimum**: the field is
+linear in the amplitude and the count is its square (section 26: n = 3|u|²),
+so the potential's 1/r is the square root of the count's 1/r² and nothing
+the Node holds recovers an odd power of r from even ones without a root.
+
+**(ii) The amplitude as the basic integer.** The alternative: a shadow's
+basic integer is its amplitude (a Gaussian integer x + iy at a scale s per
+quantum^{1/2}, or a size and a phase step), the amount being (x² + y²)/s²,
+read as a square where counting happens (the push, a mark). Assessed
+against the law:
+
+- *Exact conservation of the amount.* The mixing on amplitudes is the
+  division by 3: S₃ = J − 3I has S₃² = 9I, so exactness at a Node needs
+  Σ_q A_q ≡ 0 (mod 3) in both components, which no field satisfies at
+  every Node and interval; the outputs must be rounded, and the amount
+  Σ|B_p + δ_p|² − Σ|B_p|² = 2Re Σ B_p* δ_p + Σ|δ_p|² is first order in the
+  rounding δ and of either sign: not a bounded remainder but a drift and a
+  random walk, which no register on the amplitude can hold (the residual
+  is quadratic). Measured (a plane wave on a periodic 16³ box, 256 ticks,
+  rounding to the nearest Gaussian integer at every Node): the total amount
+  ×2.8, ×1.5, ×1.1 at s = 1 for 64, 256, 1024 quanta per Node; +11, +16,
+  −8 % at s = 4; +3.0, −1.7, +0.1 % at s = 32, with a one-tick rounding
+  error of the amount per Node of rms 0.16 to 13 quanta and a bias of −1.5
+  to +4 quanta at s = 1. The amount-basic rule of node-mixing-v1 (the whole
+  quanta and the ninths apportioned by |B_p|², section 30) is exact by
+  construction. Point 7 (the books close at every Node and interval) holds
+  in the mean only under the alternative.
+- *The push.* It reads the amount per Port, (x² + y²)/s², a rational, with
+  the whole quantum of point 23's count a threshold on it: unchanged in
+  form and no cheaper (a square per Port in place of a root per Port). But
+  two shadows of one owner on one lane (point 25: the amounts add) or at a
+  Node sum coherently in amplitude, |A₁ + A₂|² ≠ |A₁|² + |A₂|²: an amount
+  would be created or destroyed at every merge, against point 5 (a phase
+  decides the heading, never an amount) unless the size is reset to
+  √(a₁ + a₂), which is the root again.
+- *The books.* Point 7, point 25 and the remainders of section 3.17 are
+  written on amounts; under the alternative they hold in the mean; the
+  momentum the shadows carry is apportioned by shares of the amount, which
+  needs the amount at every Node anyway. And the wait's reading of the
+  size, |Σ_p A_p|/3 = √(Σx² + Σy²)/3, is a root in either representation
+  (or the count again if it read the square): the root moves from the
+  mixing to the reading and to every lane merge; it does not disappear.
+
+**Dictionary.** The parity of degrees ↔ intensity is quadratic in the
+field; γ/r ↔ the wavefront's curvature, λ_w/(2πr)-sized; Gaussian integers
+↔ the amplitude as two integers.
+
+**Check.** *The phases* (section 39's runs on the axis at r = 8 to 24, the
+time-harmonic component of each Port amplitude over the last period): the
+measured Port phases against the exact formula from u at the neighbours
+agree to 0.01 rad (forward −0.039, −0.075, −0.091, −0.111, −0.109 against
+−0.038, −0.076, −0.090, −0.112, −0.113 at period 16; backward −2.228 to
+−2.455 against −2.228 to −2.438); against the plane-wave offsets plus the
+1/r terms, (ω − k)/2 + 0.832/r = −0.044, −0.079, −0.096, −0.106, −0.113 for
+the forward arrival at r = 8 to 24 and ω/2 + k/(4r) = 0.218 to 0.203 for
+the transverse (measured 0.206 to 0.215; the plane-wave offset alone is
+0.196), and at period 32 (ω − k)/2 + 3.63/(2r) = +0.154, +0.079, +0.041
+against +0.159, +0.083, +0.026 at r = 8, 12, 16. *The amounts*: the Port
+ratios 0.68, 0.05, 0.067 at r = 8 and 0.63, 0.06, 0.078 at r = 24
+(period 16), |A_fwd|² r² = 0.071 to 0.061, the residual variation the
+anisotropy and the O(1/(kr)²) term. *The integers*: the drift table above
+(16³, 256 ticks, seconds).
+
+**Verdict.** A local 1/r reading without the root: **none for the
+potential**. The amounts and everything linear in them fall as 1/r²
+(**exact** in the mean field), the phase's rotation carries no r, and the
+one 1/r quantity the Node holds, the wavefront's curvature in the Port
+phases (γ/r, **new**, measured to 0.01 rad), carries no coupling and falls
+with the source's content; the amplitude via the root is the minimum. The
+amplitude as the basic integer: **not lawful** under points 5, 7 and 25
+(the amount conserved in the mean only, a drift of 0.1 to 180 % in 256
+ticks measured; an amount created or destroyed at every coherent merge)
+and not cheaper (the root returns at the wait's reading and at every
+merge); the amount-basic rule with the root toward the mixing is the
+minimum that keeps the books exact.
