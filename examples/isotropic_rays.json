@@ -62,7 +62,6 @@
       "baseline": 0,
       "transport": "ray",
       "rays_per_tick": 16,
-      "ray_slots": 128,
       "headings": [
         [
           1,

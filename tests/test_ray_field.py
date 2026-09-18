@@ -33,7 +33,7 @@ def golden_headings(count: int, scale: int) -> list[list[int]]:
     return result
 
 
-def document(*, headings=None, rays_per_tick=8, ray_slots=64, strength=64, ticks=6, **extra):
+def document(*, headings=None, rays_per_tick=8, strength=64, ticks=6, **extra):
     raw = {
         "schema_version": 1,
         "model_id": "ray-field-test-v1",
@@ -114,7 +114,6 @@ def document(*, headings=None, rays_per_tick=8, ray_slots=64, strength=64, ticks
                 "transport": "ray",
                 "headings": headings if headings is not None else golden_headings(64, 6),
                 "rays_per_tick": rays_per_tick,
-                "ray_slots": ray_slots,
             },
             {"field": "momentum", "baseline": [0, 0, 0], "transport": "local"},
         ],
@@ -180,7 +179,6 @@ def test_emission_shares_amount_over_the_next_headings_and_cycles_the_cursor():
         transport="ray",
         headings=((1, 0, 0), (0, 1, 0), (0, 0, 1)),
         rays_per_tick=2,
-        ray_slots=4,
     )
     rays, cursor = emit_rays(5, 2, definition, meter())
     # One emission is one event: its rays carry the Ports it sent to (+Z and +X)
@@ -269,24 +267,6 @@ def test_ray_attenuation_on_completed_links_localizes_or_dissipates(residue):
     assert all(item["balanced"] for item in world.spatial_accounting().values())
 
 
-def test_ray_slot_budget_is_an_explicit_failure():
-    # Two headings with period three. Sources A and B hit the center every tick at
-    # one phase each; source C's ray reaches it at tick 3 with a third phase.
-    raw = document(headings=[[2, 1, 0], [1, 2, 0]], rays_per_tick=2, ray_slots=2, strength=2)
-    raw["seeds"] = [
-        {"position": [CENTER - 1, CENTER, CENTER], "type": "source"},
-        {"position": [CENTER, CENTER - 1, CENTER], "type": "source"},
-        {"position": [CENTER - 2, CENTER - 1, CENTER], "type": "source"},
-    ]
-    raw["spatial_couplings"] = []
-    world = Simulation(parse_initial_state(raw))
-    world.step()
-    world.step()
-    assert world.spatial_values((CENTER, CENTER, CENTER))["radiation"]["ray_count"] == 2
-    with pytest.raises(ValueError, match="ray slot budget exceeded"):
-        world.step()
-
-
 def test_rays_escape_an_open_boundary_and_are_counted():
     raw = document(headings=[[1, 0, 0]], rays_per_tick=1, strength=3, boundary="open", ticks=12)
     raw["spatial_couplings"] = []
@@ -368,7 +348,6 @@ def test_a_stock_below_the_sweep_count_takes_the_next_headings_in_turn():
         transport="ray",
         headings=((1, 0, 0), (0, 1, 0), (-1, 0, 0), (0, -1, 0)),
         rays_per_tick=4,
-        ray_slots=8,
     )
     cursor, taken = 0, []
     for _ in range(3):

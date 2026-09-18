@@ -180,7 +180,6 @@ def lamp_line(stock, ticks):
                 "transport": "ray",
                 "headings": [[1, 0, 0]],
                 "rays_per_tick": 1,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 "kerengonen": {"phase_steps": 8},

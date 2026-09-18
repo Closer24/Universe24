@@ -7,7 +7,6 @@ from functools import lru_cache
 from .disturbance_state import (
     MAX_COMPONENTS,
     MAX_RULES,
-    MAX_SLOTS,
     MAX_VALUE,
     SHADOW_WAIT_READS,
     WAIT_READINGS,
@@ -65,7 +64,7 @@ class DecayDefinition:
 Heading = tuple[int, int, int]
 MAX_HEADINGS = 65536
 MAX_HEADING_COMPONENT = 4096
-MAX_RAY_SLOTS = 4096
+MAX_RAYS_PER_TICK = 4096
 
 # Ray-event state (Highlights 3.3, 3.19, 3.20 and 5.1): every ray carries the
 # number of Links it has walked since its event and the information of that
@@ -88,10 +87,10 @@ NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # rate) and no delay, and moves at the causal speed. A shadow meeting a thing
 # under a momentum table gives the thing the push the table declares and turns
 # back on its own steps carrying its amount and the opposite momentum, -dp, in
-# its momentum, walks home to the thing that released it (its owner, by the
-# trace the owner leaves at every Node it departs), and is absorbed back and
-# re-released; a shadow meeting the thing that released it is home, never a
-# push; a thing meeting a thing is the declared tables; a shadow meeting a
+# its momentum, a field absorbed wherever it reaches its owner (return-field-v1;
+# no trace, a Node remembers no departure) and re-released; a shadow meeting
+# the thing that released it is home, the push and its zero-step return summing
+# to zero; a thing meeting a thing is the declared tables; a shadow meeting a
 # shadow is the coherent sum of the spread; a marked Node returns a shadow
 # without a draw and counts nothing of it, and draws for a thing, absorbing it
 # on 1 (or passing it where the mark says pass) and returning it on 0. The
@@ -152,24 +151,20 @@ INITIAL_FIELD_MODES = ("fill", "rays")
 # the model owner, 2026-09-18; node-is-ports-v1, feature 17 of issue #169).
 # Every store the model kept on a Node or beside the rays is a ray with a
 # property: what a Node holds below one quantum is a parked shadow (`Ray.parked`,
-# its amount in units of the family's split denominator), what a Node remembers
-# of a departure is a parked shadow of amount zero on the heading the thing
-# left by (the trace, read by the shadows coming home), what a mark has
+# its amount in units of the family's split denominator), a Node remembers no
+# departure (point 3 as amended: the return is a field without a trace), what a mark has
 # absorbed is a thing resident at it (`DetectorMark.resident`), a source is a
 # thing that spends its content by its emission rule (no sourced line), and the
 # apparatus are things with declared tables. A thing's momentum stays what it
 # is, a property of the thing; there is no register and no counter.
 NODE_IS_PORTS = "node-is-ports-v1"
-# The trace a thing leaves at the Node it departs (bit-law-v1, point 3; a
-# zero-amount parked shadow since node-is-ports-v1): at most this many owners'
-# traces per family at one Node, the lowest owner ids dropped beyond it.
 # A Port is two lanes (Highlights 5.4 point 25, the model owner's decision of
 # 2026-09-18; lanes-v1, feature 18): a Link carries rays both ways, so every Port
 # has an in-lane and an out-lane and a Node has twelve lanes. In one interval a
 # lane carries at most one real ray and at most one shadow of each owner, so a
 # Node's state is bounded and fixed before the run: six Ports x two lanes x (one
-# real slot + one shadow slot per owner), plus the parked shadows and the
-# traces of point 22 and the things at rest at the Node. The lane is a
+# real slot + one shadow slot per owner), plus the parked shadows and
+# the things at rest at the Node. The lane is a
 # condition on the step, not a queue: a thing steps into an out-lane only if the
 # lane is free in that interval; otherwise it keeps its heading, its momentum
 # stays accumulated, and it steps at the next Node.
@@ -177,6 +172,23 @@ LANES = "lanes-v1"
 LANE_IN, LANE_OUT = 0, 1
 LANES_PER_PORT = 2
 NODE_LANES = 6 * LANES_PER_PORT
+# The ray slot budget per family is retired with the lanes (lanes-v1): a Node's
+# state is bounded by its twelve lanes, one real ray and one shadow per owner on
+# each, beside the parked shadows and the rays at rest, and no lawful world is
+# refused for slots.
+# The record-as-owner field program (Highlights 5.4 point 22 and the settled rule
+# (v); the cleanup of 2026-09-18): apparatus are things with declared tables, and
+# the keys of the older form are refused, not kept behind an option.
+RECORD_PROGRAM_RETIRED = (
+    "{key} was retired with the record-as-owner field program (Highlights 5.4 point 22 "
+    "and the settled rule (v), the cleanup of 2026-09-18): apparatus are things with "
+    "declared tables; delete the key"
+)
+RAY_SLOTS_RETIRED = (
+    "ray_slots was retired by lanes-v1 (Highlights 5.4 point 25): a Node's state is "
+    "bounded by its twelve lanes, one real ray and one shadow per owner on each, and "
+    "no budget per family; delete the key"
+)
 # The 0-meets-1 table (bit-law-v1, point 16, the model owner, 2026-09-18): per
 # pair of families one rule for what the thing multiplies the shadows' message
 # by, declared as `reads`: "content" (a mass family's shadow, dp = sign x amount
@@ -295,7 +307,7 @@ BODY_SINK = -1
 # supersedes the split table of section 3.5 (field-spreading-v1) and the
 # pairwise steering of point 17 (phase-spread-v1) for shadows; the Born split
 # of two things that meet (section 5.2, `steering_table`) stands, and the
-# return of a shadow after a push stays a walk back on the trace, never mixed.
+# return of a shadow after a push is a field of its own sign (return-field-v1), never mixed.
 # The arithmetic is the integers of the phase tables: the amplitude is the
 # integer square root of amount x MIXING_AMPLITUDE_SCALE^2, the phase factors
 # are the cosine and sine tables at PHASE_COSINE_SCALE, the weights |B_h|^2 are
@@ -674,14 +686,19 @@ class Ray:
     # interval at a time, an interval in which the thing neither moves nor steps
     # nor advances its phase; 0 on a shadow, which pays nothing.
     owed: int = 0
+    # The amplitude reading's remainder (wait-reads-v1, feature 16f part 2): the
+    # units of amplitude below a whole one that a thing has read, in units of
+    # 1 / MIXING_AMPLITUDE_SCALE of one quantum's amplitude (32 a whole unit),
+    # accumulated across the groups it reads as the electricity reading keeps
+    # `push_remainder`, a whole unit charged to the wait as soon as it reaches
+    # 32, nothing lost; 0 on a shadow and under the amount reading.
+    wait_remainder: int = 0
     # A parked shadow (node-is-ports-v1, Highlights 5.4 point 22): 1 on a shadow
-    # at rest at its Node, never forwarded and outside the slot budget. With an
+    # at rest at its Node, never forwarded and outside the lanes. With an
     # amount it is what the Node holds below one quantum of its owner on the
     # heading it will leave through, the amount in units of the family's split
     # denominator (`parked_unit`), combined with the shares the spread adds and
-    # released whole when it reaches one quantum; with amount zero it is the
-    # trace, the mark a thing left at the Node it departed, its heading the way
-    # the owner went, read by the shadows coming home. Part of the merge identity.
+    # released whole when it reaches one quantum. Part of the merge identity.
     parked: int = 0
 
 
@@ -862,13 +879,6 @@ def validate_ray_participants(
             selected.update(kind for kind, sign in enumerate(rule.momentum_table) if sign)
         elif rule.reads:
             raise ValueError("reads is declared beside a momentum table")
-    for layer in ray_layers(definitions, rules):
-        # The indexed selector's capacity bounds one meeting, and a meeting exists
-        # only inside a layer: fields of different layers never share it.
-        if selected.intersection(layer) and (
-            sum(definitions[index].ray_slots for index in layer) > MAX_SLOTS
-        ):
-            raise ValueError("ray interactions require at most 32 selected ray slots in one layer")
     for index in selected:
         definition = definitions[index]
         field = fields[definition.field]
@@ -879,7 +889,6 @@ def validate_ray_participants(
             or any(unpack(definition.baseline))
             or definition.euclidean
             or definition.pace_numerator != definition.pace_denominator
-            or definition.self_exclusion
             or definition.decay is not None
             or any(sum(abs(component) for component in heading) != 1 for heading in definition.headings)
         ):
@@ -995,7 +1004,6 @@ def validate_released_fields(
             or any(unpack(definition.baseline))
             or definition.euclidean
             or definition.pace_numerator != definition.pace_denominator
-            or definition.self_exclusion
             or definition.decay is not None
             or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
         ):
@@ -1233,7 +1241,6 @@ def validate_spread_fields(
             or any(unpack(definition.baseline))
             or definition.euclidean
             or definition.pace_numerator != definition.pace_denominator
-            or definition.self_exclusion
             or definition.decay is not None
             or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
         ):
@@ -1346,15 +1353,14 @@ def remainder_stock(block: tuple[int, ...], total: int) -> int:
     return held // total
 
 
-# The parked shadow (node-is-ports-v1): the store below one quantum and the trace
-# as rays at rest among the Node's rays. Nothing here reads another Node.
+# The parked shadow (node-is-ports-v1): the store below one quantum as a ray at
+# rest among the Node's rays. Nothing here reads another Node.
 
 
 def parked_unit(definition: SpatialFieldDefinition) -> int:
     """The unit of a parked shadow's amount, one for every family whose shadows
     spread: ninths, MIXING_DENOMINATOR (node-mixing-v1; a parked amount is in
-    ninths of a quantum, below nine), 1 for a family without a shadow set (whose
-    parked shadows are traces of amount zero)."""
+    ninths of a quantum, below nine), 1 for a family without a shadow set."""
     return MIXING_DENOMINATOR if definition.spread else 1
 
 
@@ -1933,14 +1939,10 @@ class SpatialFieldDefinition:
     octant_weights: tuple[int, ...] = (1, 1, 1, 1, 1, 1, 1, 1)
     decay: DecayDefinition | None = None
     transport: str = "outward"
-    # Ray transport only: the fixed heading sequence, rays emitted per source per
-    # tick, and the resident ray capacity of one Node.
+    # Ray transport only: the fixed heading sequence and the rays emitted per
+    # source per tick; the Node's state is bounded by its lanes (lanes-v1).
     headings: tuple[Heading, ...] = ()
     rays_per_tick: int = 0
-    ray_slots: int = 0
-    # Ray transport only: an emitting record that departs subtracts its own rays
-    # from the flux it samples at the next Node, using only its own bookkeeping.
-    self_exclusion: bool = False
     # Kerengonen (phased rays): the coherence table, one entry per phase step of
     # one turn (2^phase_bits entries, a power of two up to 4096; 0 is no table),
     # and the clock (clock-readings-v1, Highlights 5.4 point 19): K, the world's
@@ -1950,11 +1952,6 @@ class SpatialFieldDefinition:
     # rays carry the phase of what emitted them. No family declares a rate.
     phase_steps: int = 0
     clock: int = 0
-    # Kerengonen only: how an absorber takes a ray. "share" takes the coherent
-    # share of its amount; "threshold" takes the whole ray when that share reaches
-    # one half and leaves it otherwise. Neither draws: the only draw in the model
-    # is at a Node whose Detector bit is set.
-    capture: str = "share"
     # Declared carrier-vector association for read-only ray inventory accounting.
     momentum_field: int | None = None
     # Ray transport only: "links" moves every ray one link per tick; "euclidean"
@@ -2239,10 +2236,6 @@ class EmissionDefinition:
     # expression over advance_denominator, taken modulo the phase steps.
     advance: Expression | None = None
     advance_denominator: int = 1
-    # Kerengonen fields only: re-emit the whole amount along the mirror image of the
-    # heading last absorbed: for each output component, the source component and
-    # its sign (a mirror across an axis plane or a diagonal plane).
-    mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]] | None = None
     # Dissolution (funded ray fields only): emit nothing for dissolve_after cycles,
     # then the record's initial stock over dissolve_over cycles, never more than
     # is left. Zero dissolve_over means no dissolution.
@@ -2404,8 +2397,8 @@ class SpatialPlan:
     # to an owner the identity does not measure (a record without a recoil
     # field); the re-release is booked on `source_delta`.
     returned_delta: Values = ()
-    # The parked shadows after this cycle, the shares below one quantum and the
-    # traces (node-is-ports-v1), are among `kept_rays`.
+    # The parked shadows after this cycle, the shares below one quantum
+    # (node-is-ports-v1), are among `kept_rays`.
     # The pushes of free rays this cycle, one per field ray met by a coupling's
     # momentum table (ray-momentum-turn-v1).
     ray_pushes: tuple[RayPush, ...] = ()
@@ -2424,6 +2417,10 @@ class RayPush:
     (ray-momentum-turn-v1): plain bounded integers, as the Node state contract
     requires. The pushed ray's spatial field and amount, its momentum before and
     after, and the field ray that pushed it: its spatial field, amount and heading.
+    `home` 1 marks the two halves of a thing meeting its own shadow (the law of
+    the bit, point 3 as amended, the model owner, 2026-09-18; the cleanup of
+    that day): the push, then the return of zero steps, the same shadow with its
+    sign flipped at the same Node, whose hand-over undoes it in the same cycle.
     """
 
     field: int
@@ -2433,6 +2430,7 @@ class RayPush:
     pusher: int
     pusher_amount: int
     pusher_heading: Heading
+    home: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -2495,8 +2493,6 @@ def validate_heading(heading: Heading) -> int:
 def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDefinition) -> None:
     if type(rays) is not tuple:
         raise ValueError("ray transport requires a tuple of rays")
-    if sum(1 for ray in rays if type(ray) is Ray and not ray.parked) > definition.ray_slots:
-        raise ValueError("ray slot budget exceeded")
     parked = 0
     for ray in rays:
         if type(ray) is not Ray:
@@ -2523,6 +2519,15 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
                 raise ValueError("a ray push remainder stays below one quantum in units of 1 / D")
         if type(ray.remainder) is not int or type(ray.periods) is not int or ray.periods < 0:
             raise ValueError("a ray clock remainder and its passages are nonnegative integers")
+        if (
+            type(ray.wait_remainder) is not int
+            or not 0 <= ray.wait_remainder < MIXING_AMPLITUDE_SCALE
+            or (ray.detector == BIT_SHADOW and ray.wait_remainder)
+        ):
+            raise ValueError(
+                "a thing's amplitude remainder stays below one unit of 32 (wait-reads-v1); a "
+                "shadow keeps none"
+            )
         bounded(ray.periods)
         if (
             type(ray.owed) is not int
@@ -2561,7 +2566,7 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             # node-is-ports-v1: a parked shadow is at rest, below one quantum in
             # its family's unit, on a Port heading, without a wait or an event,
             # outgoing or returning with the momentum it holds (return-field-v1),
-            # and outside the slot budget.
+            # and outside the lanes.
             parked += 1
             if (
                 ray.detector != BIT_SHADOW
@@ -2641,7 +2646,7 @@ class LaneSlots:
     fixed at parsing), the owner's shadows on that lane as one sum, their
     amount and the momentum they carry added, the least steps, the phase of
     their coherent sum (one ray each once the Node's mixing of point 24 lands);
-    `parked` the parked shadows and the traces of point 22, outside the lanes;
+    `parked` the parked shadows of point 22, outside the lanes;
     `resident` the rays at rest at the Node this interval (a returned thing at
     its event Node, a shadow whose steps are spent, a held ray). The engine
     stores these slots as the Node's ray tuple in merge order and holds their
@@ -3276,6 +3281,7 @@ RayMergeKey = tuple[
     int,
     int,
     tuple[int, ...],
+    int,
 ]
 
 
@@ -3305,6 +3311,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.owed,
         ray.parked,
         ray.owners,
+        ray.wait_remainder,
     )
 
 
@@ -3315,7 +3322,7 @@ def merge_rays(rays: Rays) -> Rays:
     event state is part of the identity, so each ray keeps the information of
     its own event. Field content of opposite source signs never merges either:
     it stays two rays of the same family (field-spreading-v1). A parked shadow
-    of amount zero, a trace, is kept (node-is-ports-v1).
+    of amount zero is kept (node-is-ports-v1).
     """
     combined: dict[RayMergeKey, int] = {}
     # ray-momentum-turn-v1: momentum is extensive, so rays of one momentum that
@@ -3349,6 +3356,7 @@ def merge_rays(rays: Rays) -> Rays:
             owed=key[18],
             parked=key[19],
             owners=key[20],
+            wait_remainder=key[21],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount or key[19]
@@ -3555,7 +3563,6 @@ def _coherence(rays: Rays, cosines: tuple[int, ...], mask: int) -> tuple[int, in
 # The two captures are deterministic; nothing draws (bit-law-v1, point 14). The
 # mark's table below is the one counter of the model: the Detector mark counts
 # the things that arrive and catches them by its setting.
-CAPTURE_MODES = ("share", "threshold")
 ARRIVAL_MODULUS = 1073741789  # the largest prime below the field value bound
 
 

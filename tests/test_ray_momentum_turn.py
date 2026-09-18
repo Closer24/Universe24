@@ -109,7 +109,6 @@ def ray_field(name, clock):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
     }

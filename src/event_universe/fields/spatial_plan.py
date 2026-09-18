@@ -35,7 +35,6 @@ from event_universe.core.spatial_state import (
     SpatialPlan,
     SpatialPopulations,
     SpatialState,
-    advance_ray,
     coherence,
     merge_rays,
     park_shares,
@@ -51,7 +50,6 @@ from event_universe.core.spatial_state import (
     remainder_stock,
     rerelease_shadow,
     spread_content,
-    stamp_event,
     transmit,
     validate_ray_participants,
     validate_rays,
@@ -98,6 +96,9 @@ class SpatialLaw:
     # The thing id per disturbance type (bit-law-v1): the owner of what a record
     # of that type emits and of the shadows its field is made of.
     things: tuple[int, ...] = ()
+    # The identities of the external bodies (node-is-ports-v1): things at rest,
+    # whose tokens claim no lane.
+    body_things: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
         validate_released_fields(self.definitions, self.fields)
@@ -125,37 +126,6 @@ class SpatialLaw:
             ):
                 raise ValueError("ray interactions do not support another coupled field program")
 
-    def _own_departed_keys(self, record: DisturbanceRecord, index: int, meter: CostMeter) -> set[Ray]:
-        """Complete keys of the record's own rays that arrived here with it."""
-        definition = self.definitions[index]
-        if not definition.self_exclusion or not record.emission_departed or record.channel_code < 2:
-            return set()
-        port = record.channel_code - 2
-        keys: set[Ray] = set()
-        # The record's rays carry its identity (bit-law-v1), part of the key.
-        owner = self.things[record.type_index] if record.type_index < len(self.things) else 0
-        for rule_index, rule in enumerate(self.emissions):
-            if rule.spatial_field != index or not matches_type(rule, record.type_index):
-                continue
-            if rule_index >= len(record.emission_departed):
-                continue
-            amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
-            if not amount:
-                continue
-            for ray in emit_rays(
-                amount, cursor, definition, meter, phase, advance, rule.heading, rule.polarization
-            )[0]:
-                first_port, moved = advance_ray(
-                    ray,
-                    definition.headings[ray.heading],
-                    definition.phase_modulus,
-                    definition.clock,
-                )
-                meter.charge("evaluate")
-                if first_port == port:
-                    keys.add(replace(moved, amount=1, owner=owner))
-        return keys
-
     def _carried_phase(
         self, record: DisturbanceRecord, definition: SpatialFieldDefinition
     ) -> tuple[int, int, int]:
@@ -169,21 +139,6 @@ class SpatialLaw:
                     return stored & definition.phase_mask, advance, heading
                 return 0, -1, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
-
-    def _mirrored_heading(
-        self,
-        heading: int,
-        mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]],
-        definition: SpatialFieldDefinition,
-    ) -> int:
-        """The index of the absorbed heading's mirror image; the parser proved it exists."""
-        source = definition.headings[heading]
-        image = (
-            source[mirror[0][0]] * mirror[0][1],
-            source[mirror[1][0]] * mirror[1][1],
-            source[mirror[2][0]] * mirror[2][1],
-        )
-        return definition.headings.index(image)
 
     def _absorb(
         self,
@@ -218,9 +173,6 @@ class SpatialLaw:
             for slot, record in enumerate(records):
                 if record is None or not matches_type(rule, record.type_index) or not resident:
                     continue
-                own = self._own_departed_keys(record, index, meter)
-                if all(replace(ray, amount=1) in own for ray in resident):
-                    continue
                 absorbed_terms: list[tuple[int, int]] = []
                 carried_share, carried_advance, carried_heading = 0, -1, -1
                 values = list(record.values)
@@ -237,9 +189,6 @@ class SpatialLaw:
                         raise ValueError("absorb fraction must not be negative")
                 remaining: list[Ray] = []
                 for ray in resident:
-                    if replace(ray, amount=1) in own:
-                        remaining.append(ray)
-                        continue
                     meter.charge("read")
                     meter.charge("couple")
                     share = ray.amount
@@ -255,23 +204,13 @@ class SpatialLaw:
                         right, left_denominator = reduced_ratio(numerator, share_denominator)
                         share_numerator = checked_work(left * right)
                         share_denominator = checked_work(left_denominator * right_denominator)
-                    if definition.capture == "threshold":
-                        # Whole ray or nothing, decided by the hidden phases alone: taken
-                        # when the coherent share reaches one half, left otherwise.
-                        meter.charge("evaluate")
-                        if checked_work(2 * share_numerator) < share_denominator:
-                            share = 0
-                    elif share_numerator < share_denominator:
+                    if share_numerator < share_denominator:
                         magnitude = checked_work(abs(ray.amount) * share_numerator) // share_denominator
                         share = -magnitude if ray.amount < 0 else magnitude
                     if share < 0:
                         # A pull is paid from the record's own stock, never borrowed.
                         available = max(stock, 0)
-                        share = (
-                            (0 if -share > available else share)
-                            if definition.capture != "share"
-                            else max(share, -available)
-                        )
+                        share = max(share, -available)
                     stock = checked_work(stock + share)
                     absorbed_total = checked_work(absorbed_total + share)
                     if share and definition.coherent:
@@ -656,8 +595,6 @@ class SpatialLaw:
             for rule, blank in zip(self.emissions, zero, strict=True)
         )
         finite = any(rule.budget is not None for rule in self.emissions)
-        excluding = any(self.definitions[rule.spatial_field].self_exclusion for rule in self.emissions)
-        blank_last = tuple(pack((0, 0, 0, 0)) for _ in self.emissions)
         if not remainders and not phases:
             if record.emission_remaining:
                 raise ValueError("partial carried emission metadata cannot reset an allowance")
@@ -666,8 +603,8 @@ class SpatialLaw:
                 emission_remainders=zero,
                 emission_phases=zero,
                 emission_remaining=budgets if finite else (),
-                emission_last=blank_last if excluding else (),
-                emission_departed=blank_last if excluding else (),
+                emission_last=(),
+                emission_departed=(),
             )
         if len(remainders) != len(zero) or len(phases) != len(zero):
             raise ValueError("carried emission state must match the fixed emission rules")
@@ -694,26 +631,9 @@ class SpatialLaw:
                     raise ValueError("carried emission allowance exceeds its initial budget")
         elif record.emission_remaining:
             raise ValueError("unlimited emission cannot carry a finite allowance")
-        if excluding:
-            for rows in (record.emission_last, record.emission_departed):
-                if len(rows) != len(blank_last):
-                    raise ValueError("carried self-exclusion state must match the fixed emission rules")
-                for index, row in enumerate(rows):
-                    if len(row) != 4:
-                        raise ValueError(
-                            "carried self-exclusion rows hold amount, cursor, wave phase and advance"
-                        )
-                    _amount, cursor, wave_phase, wave_advance = unpack(row)
-                    definition = self.definitions[self.emissions[index].spatial_field]
-                    if not 0 <= cursor < max(len(definition.headings), 1):
-                        raise ValueError("carried self-exclusion cursor is outside its heading sequence")
-                    if not 0 <= wave_phase < definition.phase_modulus:
-                        raise ValueError("carried self-exclusion phase is outside its phase width")
-                    if not -1 <= wave_advance < definition.phase_modulus:
-                        raise ValueError("carried self-exclusion advance is outside its phase width")
-        elif record.emission_last or record.emission_departed:
+        if record.emission_last or record.emission_departed:
             raise ValueError("self-exclusion state requires a self-excluding ray field")
-        return replace(record, emission_last=blank_last) if excluding else record
+        return record
 
     def _port_loads(self, states: tuple[SpatialState, ...]) -> tuple[int, ...] | None:
         """Computation load pricing a departure through each port, read from local channels only."""
@@ -778,7 +698,7 @@ class SpatialLaw:
         # The real slots of the six out-lanes this interval (lanes-v1, Highlights
         # 5.4 point 25), one set for every family of the Node: a lane carries one
         # real ray, whatever its family.
-        lanes = LaneClaims()
+        lanes = LaneClaims(self.body_things)
         meter = CostMeter(self.costs)
         # The momentum a meeting moves between lines (ray-meeting-conversion-v1): a
         # split by a table steers content between two Ports, and the recoil owner,
@@ -911,15 +831,13 @@ class SpatialLaw:
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
                     cursor_before = unpack(allocation[index])[0]
-                    phase, advance, absorbed_heading = rule.phase, -1, -1
-                    if rule.phase_carried or rule.mirror is not None:
+                    phase, advance = rule.phase, -1
+                    if rule.phase_carried:
                         # Huygens: continue the wave absorbed last cycle, one interval
                         # on: the re-emitted content's clock step, amount // K
                         # (clock-readings-v1; a record keeps no remainder).
-                        phase, advance, absorbed_heading = self._carried_phase(record, definition)
-                        if not rule.phase_carried:
-                            phase, advance = rule.phase, -1
-                        elif definition.clock:
+                        phase, advance, _ = self._carried_phase(record, definition)
+                        if definition.clock:
                             phase = (
                                 phase + unpack(amount)[0] // definition.clock
                             ) & definition.phase_mask
@@ -929,42 +847,17 @@ class SpatialLaw:
                         if raw_advance < 0:
                             raise ValueError("kerengonen_advance must not be negative")
                         advance = (raw_advance // rule.advance_denominator) & definition.phase_mask
-                    if rule.mirror is not None:
-                        # A mirror: the whole amount back along the image of the absorbed
-                        # heading, or nothing until something has been absorbed.
-                        cursor = cursor_before
-                        new_rays: Rays = ()
-                        if absorbed_heading >= 0 and unpack(amount)[0]:
-                            meter.charge("route")
-                            image = self._mirrored_heading(absorbed_heading, rule.mirror, definition)
-                            # The reflection is one event on the image's first Port.
-                            new_rays = stamp_event(
-                                (
-                                    Ray(
-                                        image,
-                                        (0, 0, 0),
-                                        unpack(amount)[0],
-                                        phase,
-                                        advance,
-                                        polarization=rule.polarization,
-                                    ),
-                                ),
-                                (definition.headings[image],),
-                            )
-                    else:
-                        new_rays, cursor = emit_rays(
-                            unpack(amount)[0],
-                            cursor_before,
-                            definition,
-                            meter,
-                            phase,
-                            advance,
-                            rule.heading,
-                            rule.polarization,
-                        )
+                    new_rays, cursor = emit_rays(
+                        unpack(amount)[0],
+                        cursor_before,
+                        definition,
+                        meter,
+                        phase,
+                        advance,
+                        rule.heading,
+                        rule.polarization,
+                    )
                     allocation[index] = pack((cursor,))
-                    if last and definition.self_exclusion:
-                        last[index] = pack((unpack(amount)[0], cursor_before, phase, advance))
                     # bit-law-v1: what a record emits is a thing of the record's identity.
                     if record.type_index < len(self.things):
                         new_rays = tuple(

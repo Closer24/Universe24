@@ -207,7 +207,8 @@ the same Link is drawn with it.
 The runner does not write `ray-recording.json`. `record_sidecar.py` writes
 it beside a record by replaying the preserved `initialization.json` through
 the Simulation API for the recorded ticks, capturing every tick with
-`examples/generic-ray-coupling/evidence.capture`, and checking first that the
+its own `capture` (the evidence tool's copy of the resident and Link rays,
+kept in the sidecar since that tool's deletion on 2026-09-18), and checking first that the
 source fingerprint equals the run's `source_sha256` and then that the
 replay's event stream equals `events.jsonl` line for line; it refuses
 otherwise, so a sidecar always belongs to its record. It must run on the

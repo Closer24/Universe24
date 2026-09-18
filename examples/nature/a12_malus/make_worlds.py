@@ -71,14 +71,13 @@ def scalar(name):
     }
 
 
-def family(name, slots):
+def family(name):
     return {
         "field": name,
         "baseline": 0,
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": slots,
         "metric": "links",
         "pace": [1, 1],
         "phase_bits": PHASE_BITS,
@@ -133,7 +132,7 @@ def world(tag, angles):
                 "transport": {"mode": "hold"},
             }
         ],
-        "spatial_fields": [family("light", 16), family("apparatus", 4)],
+        "spatial_fields": [family("light"), family("apparatus")],
         "emissions": [
             {
                 "type": "source",

@@ -99,7 +99,6 @@ def document(ticks=10, **extra):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 2,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 "kerengonen": {"phase_steps": 8},

@@ -66,7 +66,6 @@ def document(shadows, *, ticks=1, phase_bits=3, holders=1, dense=None):
         "transport": "ray",
         "headings": HEADINGS,
         "rays_per_tick": 1,
-        "ray_slots": 8,
         "metric": "links",
         "pace": [1, 1],
         "charge": -1,

@@ -179,7 +179,6 @@ class SpatialEngine:
         # running total.
         self.spent = [[0] * field.components for field in initial.fields]
         self.computation = [0]
-        self.shadow_sources = [[0] * field.components for field in initial.fields]
         self.shadow_escaped = [[0] * field.components for field in initial.fields]
         self.shadow_absorbed_by_marks = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
@@ -204,7 +203,6 @@ class SpatialEngine:
                 self.absorbed,
                 self.absorbed_by_marks,
                 self.returned,
-                self.shadow_sources,
                 self.shadow_absorbed_by_marks,
                 self.spent,
                 self.computation,
@@ -386,8 +384,8 @@ class SpatialEngine:
         A returning thing never reaches the boundary before its event Node, which
         its steps bound; one that would escape has no event Node in the world, and
         the engine fails closed instead of recording an escape (detector-return-v1).
-        A shadow walking home has no event Node: it follows the traces until
-        something takes it, and escapes like any ray otherwise (bit-law-v1, the
+        A shadow has no event Node: it is a field absorbed wherever it reaches its
+        owner (return-field-v1), and escapes like any ray otherwise (bit-law-v1, the
         amendment's point d: escapes are the only loss). A packet of shadows alone
         leaves no record: events happen at Nodes that hold a thing (point 13).
         """
@@ -648,7 +646,7 @@ class SpatialEngine:
         """The shadows per thing (bit-law-v1, the amendment's point d): for each
         owner the number of shadow rays and their amount, over the resident and
         travelling shadows, the dense region's included; a parked shadow is below
-        one quantum, or a trace, and is not counted."""
+        one quantum and is not counted."""
         result: dict[int, list[int]] = {}
         bundles: list[Rays] = []
         for position in self._active:
@@ -913,7 +911,7 @@ class SpatialEngine:
         }
         # The parked shadows (node-is-ports-v1): what every Node holds below one
         # quantum per owner, sign and heading, in units of the family's split
-        # denominator, and the traces (amount 0); the dense region's Nodes are
+        # denominator; the dense region's Nodes are
         # read as Node state here (`materialized`).
         result["parked"] = [
             entry

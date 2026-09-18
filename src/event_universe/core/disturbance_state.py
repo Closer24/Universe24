@@ -449,17 +449,6 @@ class InitialState:
         validate_lanes(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
-        for index, spatial_definition in enumerate(self.spatial_fields):
-            if spatial_definition.self_exclusion and (
-                spatial_definition.euclidean
-                or spatial_definition.pace_numerator != spatial_definition.pace_denominator
-                or any(
-                    rule.spatial_field == index and rule.mirror is not None for rule in self.emissions
-                )
-            ):
-                raise ValueError(
-                    "one-Link self-exclusion does not support paced, delayed or mirrored rays"
-                )
         for name in ("focus", "dense_field"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")

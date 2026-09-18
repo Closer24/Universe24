@@ -157,7 +157,6 @@ def document(outputs, invariants, delta, audit=True, ticks=4):
                 "transport": "ray",
                 "headings": HEADINGS,
                 "rays_per_tick": 1,
-                "ray_slots": 8,
                 "metric": "links",
                 "pace": [1, 1],
                 "kerengonen": {"phase_steps": 8},
