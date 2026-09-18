@@ -3,7 +3,10 @@
 Universe24 implements **Reality Theory (Universe24)**: one discrete world of
 Nodes and Links, bounded integer arithmetic and local rules; the Detector is a
 marked Node and a pair's outcome travels on the returning ray
-([Highlights](docs/HIGHLIGHTS.md) sections 3.19 and 3.20). The name of the
+([Highlights](docs/HIGHLIGHTS.md) sections 3.19 and 3.20); since 2026-09-18
+the law of the bit (section 5.4) is the model: every ray is a thing or its
+shadow, a mark absorbs things and returns shadows, and nothing draws. The
+name of the
 framework is Reality Theory; the simulator that realizes it is Universe24.
 
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),

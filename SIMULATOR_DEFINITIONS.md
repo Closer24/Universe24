@@ -9,7 +9,9 @@ absorber never draws. The ray lottery, the bond registry and the
 #164, bucket B.5), after the native instrument/contact bindings (buckets B.1
 and B.2). Deterministic ordinary and coherent evolution remain available. This
 admission boundary does not implement PASS/RETURN or remove the output-clock
-composition restrictions.
+composition restrictions. Since 2026-09-18 nothing draws (Highlights 5.4,
+point 14): a mark absorbs a thing and returns a shadow, and it declares no
+seed (`bit-law-v1`).
 
 The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the
 active engine with indexed bounded interactions, 1..32-component properties,
@@ -89,7 +91,9 @@ captured it by a claim flooding Node to Node at link speed, and the global
 `bonded-ray-field-v1` reference supplied nonlocal outcomes through a bond
 registry. Both went with the shared quantum resource (Q-ORACLE-1): there is no
 register at any Node, no owner answers at a distance, and no occupied channel
-or capacity rule holds a ray back (Highlights 5.1 and 5.4).
+or capacity rule holds a ray back (Highlights 5.1 and 5.4; since 2026-09-18 a
+Port is two lanes, one real ray and one shadow per owner per lane, with no
+queue and no wait, Highlights 5.4, point 25).
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio

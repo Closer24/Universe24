@@ -58,6 +58,16 @@ feature 8 (a rule without outputs holding its rays at one Node with a
 `ray_delay` wait) and rewritten the same day as loops on the unit square of
 (F); their first records stay in the register as the records of that form.
 
+Since 2026-09-18 the law of the bit ([Highlights](../../docs/HIGHLIGHTS.md)
+5.4) is the model: every ray is a thing or its shadow, there is no field
+family and a charge's field is its own shadows, given with the board
+(`initial_field`) and mixed at every Node; a mark absorbs things and returns
+shadows and draws nothing; no family declares a rest rate, a thing's clock
+being its content / K. The worlds here were written under the rules of
+their date and are migrated textually by `bit_law_migration.py` where they
+still run; each section describes its run as it was made, with its
+fingerprint, and the register says which runs are repeated under the law.
+
 The rays are selected from the [catalog of nature](../../docs/CATALOG.md)
 (`light`, `electron`, `proton`, `neutron`, with the catalog's charge unit e/3
 and the electron's rest rate 1); the couplings that make the events of (A),

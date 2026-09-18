@@ -6,6 +6,24 @@ creation, propagation, ordinary contacts, phase changes, field emission,
 strong/weak coupling and absorption do not authorize a draw. An entity name,
 diagnostic observer, seed or supplied ticket does not establish a Detector.
 
+Since 2026-09-18 (Highlights 5.4, the law of the bit, points 6 and 14;
+`bit-law-v1`, `node-is-ports-v1`) nothing draws: a mark meets a thing or its
+shadow, decided at the ray's birth; it absorbs a thing into its resident
+thing by its declared table (`setting` `[n, d]` read as a counter, the k-th
+thing caught when k mod d < n, else returned; `on_click` absorb or pass per
+family) and returns a shadow without counting it; the mark declares no seed.
+The mark's draw of `detector-mark-v1`, the bit read of
+`detector-bit-property-v1` and the decay draw of `decay-draw-v1` below
+describe the form before that date, and the last two are retired from the
+engine (a decay is a table, point 20); the return and the inverse split
+below are what a mark does with a seeded thing it misses (the settled rule
+(iii)); a shadow's return is a field with no step count and no inverse
+split (point 3 as amended; `bit-law-v1` walks it home on the owner's trace
+as the interim form until that lands). The tests of the current rule are
+`tests/test_bit_law.py` and `tests/test_node_is_ports.py`
+([the law of the bit](TEST_EXPECTATIONS.md#the-law-of-the-bit),
+[a Node is its six Ports](TEST_EXPECTATIONS.md#a-node-is-its-six-ports)).
+
 This supersedes autonomous sampling as a universal interpretation of
 [postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates).
 The earlier local-lottery and bond laws and the `historical-autonomous-v1`
@@ -469,7 +487,8 @@ The adopted exchange is the Detector of [Highlights](HIGHLIGHTS.md) sections
 `1 = PASS` (ordinary behavior for that arrival) and `0 = RETURN` (the same
 wave ray reversed on its line, unchanged, walking back the number of steps it
 has made since its event and performing the inverse split at its birth event,
-`inverse-split-v1`).
+`inverse-split-v1`); the form before 2026-09-18, since when no mark draws
+(Highlights 5.4, point 14).
 A repeated committed decision reuses its immutable result without another
 draw, output or inventory charge. The historical quantum instrument that
 earlier revisions of this section compared against was deleted on 2026-09-17
@@ -503,6 +522,10 @@ coupling.
 
 
 ## Required evidence
+
+Items 5 to 9 state the evidence of the form before 2026-09-18; under the law
+of the bit the mark's evidence is `tests/test_bit_law.py` and
+`tests/test_node_is_ports.py`.
 
 1. The lottery capture, the bond-registry and claim-gather keys and any
    sampling profile other than `detector-only-v1` are rejected before any
