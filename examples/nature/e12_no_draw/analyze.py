@@ -133,6 +133,7 @@ def analyze(directory: Path) -> dict:
             row["quanta"] += event["amount"]
             row["click_ticks"].append(event["tick"])
             row["tickets_per_tick"][event["tick"]] += 1
+            row["absorbed"] = row.get("absorbed", 0) + int(event.get("absorbed") or 0)
             clicks.append(
                 (
                     event["tick"],
@@ -141,6 +142,7 @@ def analyze(directory: Path) -> dict:
                     event["port"],
                     event.get("bit"),
                     event.get("family"),
+                    event.get("absorbed"),
                 )
             )
         elif kind == "detector_pass":
@@ -153,7 +155,12 @@ def analyze(directory: Path) -> dict:
             row["tickets_per_tick"][event["tick"]] += 1
         else:
             other_detector_events[kind] += 1
-    for row in per_mark.values():
+    counters = {tuple(m["position"]): m for m in metadata.get("detector_marks", [])}
+    for position, row in per_mark.items():
+        row.setdefault("absorbed", 0)
+        mark = counters.get(position)
+        row["counter"] = None if mark is None else mark.get("counter")
+        row["momentum"] = None if mark is None else mark.get("momentum")
         row["tickets_consumed"] = row["clicks"] + row["returns"]
         row["tickets_per_tick"] = dict(sorted(row["tickets_per_tick"].items()))
         row["first_click"] = row["click_ticks"][0] if row["click_ticks"] else None
@@ -227,6 +234,10 @@ def analyze(directory: Path) -> dict:
         "clicks": clicks,
         "click_count": len(clicks),
         "click_quanta": sum(c[2] for c in clicks),
+        "click_absorbed": sum(int(c[6] or 0) for c in clicks),
+        "every_click_absorbed": all(c[6] == c[2] for c in clicks),
+        "detector_mark_totals": metadata.get("detector_mark_totals"),
+        "detector_mark_momentum": metadata.get("detector_mark_momentum"),
         "returned": {
             "quanta": returned_total,
             "ended_by": dict(ended),
@@ -310,6 +321,8 @@ def part1(summaries: dict, prediction: dict) -> dict:
             "against_mean_field_transparent_over_d": ratios(
                 quanta, {m: v / d for m, v in transparent.items()}
             ),
+            "counters": {m: r["counter"] for m, r in s["marks"].items()},
+            "every_click_absorbed": s["every_click_absorbed"],
             "returns": {m: r["return_quanta"] for m, r in s["marks"].items()},
             "passes": {m: r["pass_quanta"] for m, r in s["marks"].items()},
             "tickets_consumed": {m: r["tickets_consumed"] for m, r in s["marks"].items()},

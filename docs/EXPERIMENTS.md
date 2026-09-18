@@ -2781,7 +2781,8 @@ sign rule, and its other couplings are catalog entries.
   (7, 4, 5) and (7, 6, 5), (7, 3, 5) and (7, 7, 5), (7, 2, 5) and (7, 8, 5)
   with equal counts tick for tick and the on-axis mark with the most, and
   under 2c every click is an absorption (no `detector_pass`, the light
-  line's `absorbed` equal to the quanta clicked); (3) the counter's record
+  line's `absorbed_by_marks` equal to the quanta clicked and the marks'
+  counters the quanta per mark); (3) the counter's record
   is reproduced event for event by the rerun and by the seed-7 world, and
   every mark's tickets consumed equal its clicks plus its returns at every
   tick; (4) proportionality: the counter's quanta per mark against the

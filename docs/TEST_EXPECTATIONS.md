@@ -3191,9 +3191,11 @@ their own; `conserved_at_every_completed_tick` is true and every audit
 line is balanced at every completed tick; the proton line reads 0 at every
 tick (a body holds no rays of its family); the light line reads sourced
 96 t after tick t (six headings of 16 from the cycle of tick 0), with
-current + escaped + absorbed = sourced, the `absorbed` line the body's
-sink plus, under feature 2c (`detector-absorb-v1`, when the record carries
-its identity), the quanta the counters clicked, and annulled 0. Every
+current + escaped + absorbed + absorbed_by_marks = sourced, the `absorbed`
+line the body's sink and, under feature 2c (`detector-absorb-v1`, when the
+record carries its identity), the `absorbed_by_marks` line the quanta the
+counters clicked, each mark's counter the quanta it clicked, every click
+carrying `absorbed` equal to its amount, and annulled 0. Every
 `detector_click` is of family `light`, bit 1, at one of the five marks,
 through the -X face (Port 1) or a transverse face; the first click is at
 the on-axis mark (7, 4, 4), at or after tick 6 (the mean field's first

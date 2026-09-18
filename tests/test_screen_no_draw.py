@@ -69,8 +69,16 @@ def components(value):
 def line(ledger, family):
     entry = ledger["fields"][family]
     return {
-        key: components(entry[key])
-        for key in ("initial", "sourced", "current", "escaped", "annulled", "absorbed")
+        key: components(entry.get(key, 0))
+        for key in (
+            "initial",
+            "sourced",
+            "current",
+            "escaped",
+            "annulled",
+            "absorbed",
+            "absorbed_by_marks",
+        )
     }
 
 
@@ -128,18 +136,25 @@ def test_a_counter_counts_without_a_draw_and_its_record_ignores_the_seed(tmp_pat
         assert proton["current"] == [0] and proton["sourced"] == [0]
         light = line(ledger, "light")
         assert light["sourced"] == [RELEASE_PER_INTERVAL * tick]
-        assert light["current"][0] + light["escaped"][0] + light["absorbed"][0] == light["sourced"][0]
+        assert (
+            light["current"][0]
+            + light["escaped"][0]
+            + light["absorbed"][0]
+            + light["absorbed_by_marks"][0]
+            == light["sourced"][0]
+        )
         assert light["annulled"] == [0]
+        sunk = sum(
+            event["amount"]
+            for event in events
+            if event["event"] == "external_body_absorbed" and event["tick"] <= tick
+        )
+        assert light["absorbed"] == [sunk]
         if absorbing:
-            # A click is an absorption: the absorbed line is the body's sink plus
-            # the quanta the counters clicked so far.
-            sunk = sum(
-                event["amount"]
-                for event in events
-                if event["event"] == "external_body_absorbed" and event["tick"] <= tick
-            )
+            # A click is an absorption: the marks' line is the quanta the counters
+            # clicked so far.
             clicked = sum(amount for t, _, amount, _ in clicks if t <= tick)
-            assert light["absorbed"] == [sunk + clicked]
+            assert light["absorbed_by_marks"] == [clicked]
     assert {event["event"] for event in events} <= EVENT_KINDS
     # The clicks: every one of family light, bit 1, at a counter; the first at
     # the on-axis mark at or after the mean field's first arrival; every click
@@ -157,7 +172,22 @@ def test_a_counter_counts_without_a_draw_and_its_record_ignores_the_seed(tmp_pat
         assert (tick, (x, 2 * axis[1] - y, z), amount) in plain
     assert not any(event["event"] == "detector_return" for event in events)
     if absorbing:
+        assert metadata["detector_absorb"] == "detector-absorb-v1"
         assert not any(event["event"] == "detector_pass" for event in events)
+        assert all(
+            event["absorbed"] == event["amount"]
+            for event in events
+            if event["event"] == "detector_click"
+        )
+        # The counters: each mark's counter is the quanta it clicked.
+        counted = {mark: 0 for mark in marks}
+        for _, mark, amount, _ in clicks:
+            counted[mark] += amount
+        assert [tuple(m["position"]) for m in metadata["detector_marks"]] == list(marks)
+        assert [m["counter"].get("light", 0) for m in metadata["detector_marks"]] == [
+            counted[mark] for mark in marks
+        ]
+        assert metadata["detector_mark_totals"]["light"] == [sum(counted.values())]
     # The ticket line: one ticket per drawn arrival, and a draw at [1, 1] is a
     # click, so the tickets a mark consumed are its clicks; the other seed gives
     # the same record event for event, its initialization differing by the seed.
