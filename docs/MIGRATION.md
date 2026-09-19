@@ -6,6 +6,60 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The coherent sum at a Node over all numbers present, on 2026-09-19 (node-mixing-v3)
+
+The model owner's decision of 2026-09-19, for genericity: "the Node reads
+what is present"; the number is a label for the detector, not a kind. Until
+now `mix_arrivals` computed the Node's sides per number, one number one
+group: the coherent sum, the leaving amplitudes and the sides' shares were
+formed from one number's arrivals alone, and two emitters' crowds passed
+through each other without interfering (two lamps twenty Links apart read a
+screen profile equal to the sum of the two single lamps' within 1 %). Now
+the coherent sum at a Node runs over all the arrivals present, whatever
+their number: the amplitude vectors are summed over the number axis per
+Port before the coherent sum, the leaving amplitude of each side is the
+common sum less three times what came in through that Port over all
+numbers, the weights per side (the squared leaving amplitudes) are common to
+every number at the Node, and each number then places its own units by the
+common weights (whole units by the largest remainder, ties in the tick's
+Port order, per number), a number with no whole for any side going whole to
+its own momentum's heading; the momenta are apportioned per number as
+before; the leaving phase of a side is the common leaving amplitude's phase
+for every number; every unit keeps its number. Nothing else changes: a
+family's units never mix with another family's (each family is its own
+transit), and `Transit.sizes` and `Transit.phase_at` read per number as
+before (what a measured event reads for its suspension and its window is a
+bundle of one number). A world whose family has one number at every Node,
+every example world and every existing test, runs as before; with one
+number the sum over the numbers is that number's own, so the integers of
+`test_node_mixing` are unchanged. New: `tests/test_node_mixing_numbers.py`
+(two numbers at one Node in phase, 1, 0, 2, 2, 2, 2 each at tick 0; in
+antiphase 5, 4, 0, 0, 0, 0 each, nothing sideways; a number with no whole
+whole by its own momentum at the common phase; a number alone as before).
+No key of the world file or of the record changes; `MixingArrays` keeps its
+fields, with the number axis next to the Port axis
+([the engine](ENGINE.md#the-law-of-events-events-v1),
+[expectations](TEST_EXPECTATIONS.md#the-coherent-sum-over-the-numbers)).
+
+One world of the tests changes its reading: the pair of `test_event_worlds`
+(c), two contents of one free family 8 Links apart, is two numbers of one
+family whose crowds meet at every Node between them. At the Nodes next to a
+content the other number's units now follow the common weights of that
+content's own outgoing crowd, four ninths back into the content, where they
+are read (pushed) and mix on alone, four ninths back out, to be turned in
+again: the axial push over ticks 101 to 200 is 29 times node-mixing-v2's
+(29.5 x 10^12 against 1.01 x 10^12 on x; 25.9 and 27.8 x 10^12 on y and z)
+and falls to 17 times over ticks 201 to 300 where v2 was steady; the
+asymmetry of the two pushes 8.6 % (2 to 13 over the axes and windows; 2.5
+to 5 under v2), the transverse parts up to 4.8 % of the axial (below 2
+under v2), the product law 3.8 (4.1 to 4.2 under v2). The test is re-pinned
+to these readings as a check of the engine, not a result
+([expectations](TEST_EXPECTATIONS.md#the-worlds-of-the-law-of-events)):
+whether the focusing of one number's units by another number's crowd, and
+the repeated reads it brings, is the law is for the physics-rule review.
+The one-content world, the two-slit worlds (one lamp, the wall's number
+releasing nothing) and every other test read as before.
+
 ## A periodic axis as a declared run parameter of the world, on 2026-09-19 (`boundary` per axis)
 
 The declared exception to the open board, approved by the model owner on

@@ -1,8 +1,11 @@
-"""The Node's computation of the sides (node-mixing-v2; Highlights 5.4, point
-24 read under the law of events, the model owner, 2026-09-19), isolated on
-one Node of the engine's transit: the kernels of `event_universe.events.mixing`
-over a `Transit` of shape (1, 1, 1) with one number and the phase circle
-N = 8.
+"""The Node's computation of the sides with one number present (node-mixing-v3,
+the control of one number; Highlights 5.4, point 24 read under the law of
+events, the model owner, 2026-09-19), isolated on one Node of the engine's
+transit: the kernels of `event_universe.events.mixing` over a `Transit` of
+shape (1, 1, 1) with one number and the phase circle N = 8. With one number
+the coherent sum over the numbers is that number's own, so these integers are
+those of node-mixing-v2 unchanged; two numbers at one Node are
+`test_node_mixing_numbers.py`.
 
 The rule: the events that arrived on each heading are one amplitude,
 sqrt(amount) in 32nds at their phase; the leaving amplitude of a heading is

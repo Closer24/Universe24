@@ -37,7 +37,7 @@ prints the counts, E, S and every criterion; the register entry is
 S = 2 exactly, the model's limit, as the reviewers predicted.
 
 The isolated tests of the engine are `tests/test_node_mixing.py`,
-`tests/test_event_transit.py`, `tests/test_event_suspension.py`,
+`tests/test_node_mixing_numbers.py`, `tests/test_event_transit.py`, `tests/test_event_suspension.py`,
 `tests/test_event_clock.py`, `tests/test_periodic_axis.py` and
 `tests/test_event_worlds.py`
 ([expectations](../../docs/TEST_EXPECTATIONS.md)); the last runs these

@@ -18,7 +18,8 @@ refusals, `transit.py` the arrays of one family's events in transit and the
 walk, `mixing.py` the Node's computation of the sides, `engine.py` the
 interval, the measured events and the books, `run.py` the artifacts of a run)
 on `src/event_universe/core/` (`integer.py`, `lattice.py`, `phase.py`). The
-tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
+tests: `tests/test_node_mixing.py`, `tests/test_node_mixing_numbers.py`,
+`tests/test_event_transit.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
 `tests/test_detector_sensitivity.py`, `tests/test_phase_window.py`,
 `tests/test_periodic_axis.py`, `tests/test_event_worlds.py`
@@ -131,22 +132,31 @@ candidates (`transit.nearest_step`, `step_window`).
    run's record is the detector's measurement, not a history outside the
    model, and the board after a click does not tell the phase measured
    (Highlights 5.4, 2026-09-19, issue #338).
-4. At every Node the arrivals of one number that are not suspended mix
-   (`Transit.cycle`, node-mixing-v2, `mixing.mix_arrivals`): the events that
-   arrived on each heading are one amplitude, sqrt(amount) in 32nds at their
-   phase; the leaving amplitude of each heading is the coherent sum less three
-   times the arrival that came in through its Port (point 24's third and
-   minus, what six equal Ports and exact conservation allow); the total is
-   shared by the squared leaving amplitudes in whole units, the floors and the
-   units left to the largest remainders, the ties broken in Port order counted
-   from the interval's tick so that no heading is favoured over time; a group
-   with no whole for any side, fewer units than a side's whole share, goes
-   whole to one side, the heading nearest the momentum it carries (on a tie
-   the largest share, then the tick's order): a single unit leaves whole by
-   its momentum. Each leaving share carries the phase of its leaving
-   amplitude, and the momentum the group carries goes with the units placed,
-   exact per axis (`apportion_carried`). A suspended slot stays as arrivals,
-   its count paid by one.
+4. At every Node the arrivals of a family that are not suspended mix
+   (`Transit.cycle`, node-mixing-v3, `mixing.mix_arrivals`): the Node reads
+   what is present. The events of each number that arrived on each heading
+   are one amplitude, sqrt(amount) in 32nds at their phase; the coherent sum
+   at the Node runs over all the arrivals present, whatever their number
+   (the number is a label for the detector, not a kind; the model owner,
+   2026-09-19), and the leaving amplitude of each heading is that common sum
+   less three times what came in through its Port over all numbers (point
+   24's third and minus, what six equal Ports and exact conservation allow).
+   The weights of the sides, the squared leaving amplitudes, are common to
+   every number at the Node; each number then places its own units by them
+   in whole units, the floors and the units left to the largest remainders,
+   the ties broken in Port order counted from the interval's tick so that no
+   heading is favoured over time; a number with no whole for any side, fewer
+   units than a side's whole share, goes whole to one side, the heading
+   nearest the momentum it carries (on a tie the largest share, then the
+   tick's order): a single unit leaves whole by its momentum. Every unit
+   keeps its number; each leaving share carries the phase of the common
+   leaving amplitude of its side, and the momentum each number carries goes
+   with its units placed, exact per axis (`apportion_carried`). Two numbers'
+   arrivals at one Node so interfere (in antiphase nothing leaves sideways)
+   while a family's units never mix with another family's (each family is
+   its own transit); the sizes and the phase a measured event reads
+   (`Transit.sizes`, `Transit.phase_at`) stay per number. A suspended slot
+   stays as arrivals, its count paid by one.
 5. A measured event that owes a count pays it by one (`_release`): it is
    created here without a self-creation, no release and no turn, and `waited`
    counts the interval (age + waited is the intervals completed, for every

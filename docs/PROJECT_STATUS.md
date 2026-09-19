@@ -24,7 +24,8 @@ or a machine.
    sensitivity, "and that is exactly the uncertainty principle". Its engine is
    the one engine, `src/event_universe/events/` (`events-v1`) on the substrate
    of `core/`, a world selected by `"law": "events"`, with the tests
-   `test_node_mixing`, `test_event_transit`, `test_event_suspension`,
+   `test_node_mixing`, `test_node_mixing_numbers`, `test_event_transit`,
+   `test_event_suspension`,
    `test_event_clock` and `test_event_worlds` and the worlds under
    `examples/events/` ([the engine](ENGINE.md), [coverage](HIGHLIGHTS_IMPLEMENTATION.md)).
 2. **The engines before it are deleted, on 2026-09-19:** the old engine of the

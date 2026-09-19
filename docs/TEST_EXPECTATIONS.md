@@ -22,7 +22,8 @@ modules are named in the [migration notes](MIGRATION.md).
 
 | Module | Rule isolated |
 | --- | --- |
-| `test_node_mixing.py` | The Node's computation of the sides on one Node of the engine's transit: the 3B_h rule, the coherent sum, the largest remainder with the tick's ties, a group with no whole going by its momentum, the momentum carried, nothing kept ([below](#the-nodes-computation-of-the-sides)) |
+| `test_node_mixing.py` | The Node's computation of the sides on one Node of the engine's transit, one number: the 3B_h rule, the coherent sum, the largest remainder with the tick's ties, a group with no whole going by its momentum, the momentum carried, nothing kept ([below](#the-nodes-computation-of-the-sides)) |
+| `test_node_mixing_numbers.py` | The coherent sum over the numbers: two numbers at one Node share one common sum and common weights, each placing its own units by them; a number with no whole by its own momentum at the common phase; a number alone as before ([below](#the-coherent-sum-over-the-numbers)) |
 | `test_event_transit.py` | An event in transit: a single quantum whole by its momentum, no turn in transit, a part turned back apportioned again, a lone free unit straight from its release ([below](#an-event-in-transit)) |
 | `test_periodic_axis.py` | A periodic axis as a declared run parameter of the world: the departures through one face created at the first Node of the opposite face, nothing escaping on that axis, the momentum kept on the board; with an extent of 1 the one-interval stub; the other faces open; the refusals and the record ([below](#a-periodic-axis)) |
 | `test_event_suspension.py` | The suspension the event carries: the count derived on arrival, the next event delayed, a measured event's clock slowed by the count it reads after its self-creation, never frozen ([below](#the-suspension)) |
@@ -40,7 +41,8 @@ modules are named in the [migration notes](MIGRATION.md).
 
 ## The Node's computation of the sides
 
-`tests/test_node_mixing.py` isolates node-mixing-v2 (Highlights 5.4, point 24
+`tests/test_node_mixing.py` isolates the Node's computation with one number
+present (node-mixing-v3, the control of one number; Highlights 5.4, point 24
 read under the law of events, the model owner, 2026-09-19) on one Node of the
 engine's transit (`Transit` of shape (1, 1, 1), one number, N = 8) through the
 kernels of `event_universe/events/mixing.py`: the events that arrived on each
@@ -50,7 +52,9 @@ came in through its Port; the total is shared by the squared leaving
 amplitudes in whole units, the floors and the units left to the largest
 remainders (ties in the tick's Port order); a group with no whole for any side
 goes whole to the heading nearest the momentum it carries; nothing parks, the
-Node keeps nothing. Written down before the first run:
+Node keeps nothing. With one number the sum over the numbers is that number's
+own, so these integers are those of node-mixing-v2 unchanged. Written down
+before the first run:
 
 | Case | Arrivals (Port, amount, phase, momentum) | Departures per Port [+X, -X, +Y, -Y, +Z, -Z] | Phases and momenta |
 | --- | --- | --- | --- |
@@ -64,6 +68,33 @@ Node keeps nothing. Written down before the first run:
 
 (h) After every cycle the arrivals are empty, the counts zero and the
 departures sum to what arrived.
+
+## The coherent sum over the numbers
+
+`tests/test_node_mixing_numbers.py` isolates the rule of node-mixing-v3 (the
+model owner, 2026-09-19: the Node reads what is present; the number is a
+label for the detector, not a kind) on one Node of the engine's transit
+(`Transit` of shape (1, 1, 1), the numbers 1 and 2, N = 8, the tick 0 unless
+stated): the amplitude vectors of every number are summed per Port before
+the coherent sum; the leaving amplitude of each side is the common sum less
+three times what came in through its Port over all numbers; the weights per
+side are common to every number at the Node; each number places its own
+units by the common weights (the largest remainder, ties in the tick's Port
+order, per number), a number with no whole for any side going whole to its
+own momentum's heading; the leaving phase of a side is the common leaving
+amplitude's phase for every number; every unit keeps its number. With
+a = 32 sqrt 9 = 96, the amplitude of 9 units in 32nds, written down before
+the first run:
+
+| Case | Arrivals (number: Port, amount, phase, momentum) | Common sum and leaving amplitudes | Departures per number [+X, -X, +Y, -Y, +Z, -Z] | Phases |
+| --- | --- | --- | --- | --- |
+| (a) two numbers in phase | 1: +X 9 at 0; 2: -X 9 at 0 | 2a; -a on each x side, 2a on each transverse side; the weights 1 : 1 : 4 : 4 : 4 : 4 of 18, each number's 9 units 1/2, 1/2, 2, 2, 2, 2 | 1, 0, 2, 2, 2, 2 for each number (the unit left to the tie of +X and -X goes to +X at tick 0); at tick 1, 0, 1, 2, 2, 2, 2 for each | 4 on +X, 0 across (at tick 1, 4 on -X) |
+| (b) two numbers in antiphase | 1: +X 9 at 0; 2: -X 9 at 4 | 0; 3a on +X, -3a on -X, 0 on the transverse sides; the weights 1 : 1, each number's 9 units 4.5 each way | 5, 4, 0, 0, 0, 0 for each number (the tie to +X at tick 0); at tick 1, 4, 5, 0, 0, 0, 0 for each; nothing sideways | 0 on +X, 4 on -X |
+| (c) a number with no whole | 1: +X 9 at 0 carrying (9, 0, 0); 2: -X 1 at 0 carrying (-1, 0, 0) | 128 in 32nds; 32 on +X, -160 on -X, 128 across; the weights 1024 : 25600 : 16384 (four times) of 92160, number 1's 9 units 0.1, 2.5, 1.6, 1.6, 1.6, 1.6 | number 1: 0, 2, 2, 2, 2, 1 (the three left to the transverse tie at 0.6, +Y, -Y, +Z at tick 0), its momentum 0, 2, 2, 2, 2, 1 on x; number 2: 0, 1, 0, 0, 0, 0, whole on -X by its momentum, carrying (-1, 0, 0) | 4 on -X for both, 0 elsewhere |
+| (d) a number alone | +X 9 at 0 for either number | as `test_node_mixing` (a) | 1, 4, 1, 1, 1, 1; the other number nothing | 0, 4, 0, 0, 0, 0 |
+
+(e) After every cycle the arrivals are empty, the counts zero and every
+number's departures sum to what arrived of it.
 
 ## An event in transit
 
@@ -294,15 +325,28 @@ held in place (`fixed`).
 - (c) two measured events (21^3, d = 8 on the x axis, no suspension, 200
   intervals, the pushes over ticks 101 to 200): the first (at the lower x)
   pushed toward +x and the second toward -x, the axial pushes equal within
-  8 % (2.5 to 5 measured over three windows: whole units without parked
-  shares ripple more than the shadow engine's ninths), the transverse parts
-  below 3 % of the axial; the measured events' momentum is the sum of the
-  pushes at every tick; the axial push against M_B rho M_A / (4 pi d^2) with
-  rho = 6/128 between 0.4 and 1.6 (0.62); the product law: both contents
-  doubled with K doubled pushed four times as much within 10 % (4.1 to 4.2:
-  the far field of the smaller pair is more of beams, single units going by
-  their momentum, so the doubled pair reads a few per cent more of what
-  comes back).
+  12 % (8.6 measured under node-mixing-v3; 2 to 13 over the three axes and
+  the windows 101 to 200 and 201 to 300; 2.5 to 5 under node-mixing-v2:
+  whole units without parked shares ripple more than the shadow engine's
+  ninths), the transverse parts below 6 % of the axial (4.8 measured; below
+  2 under v2); the measured events' momentum is the sum of the pushes at
+  every tick; the axial push against M_B rho M_A / (4 pi d^2) with
+  rho = 6/128 between 10 and 25 (18.0 measured; 0.61 under v2); the product
+  law: both contents doubled with K doubled pushed four times as much within
+  10 % (3.8; 4.1 to 4.2 under v2: the far field of the smaller pair is more
+  of beams, single units going by their momentum). Re-pinned on 2026-09-19
+  under node-mixing-v3 (the coherent sum over all numbers present): the two
+  contents are two numbers of one family, and at the Nodes next to a
+  content the other number's units follow the common weights of that
+  content's own outgoing crowd, four ninths back into the content, where
+  they are read (pushed) and mix on alone, four ninths back out, to be
+  turned in again: the push on each content is 29 times v2's over ticks
+  101 to 200 (29.5 x 10^12 against 1.01 x 10^12 on x) and 17 times over
+  201 to 300 (17.4 x 10^12 against 1.04 x 10^12, v2 steady, v3 falling),
+  the same on the y and z axes (25.9 and 27.8 x 10^12). A check of the
+  engine, not a result: whether the focusing of one number's units by
+  another number's crowd, and the repeated reads it brings, is the law is
+  for the physics-rule review.
 - (d) the two-slit detector (23 x 41 x 9, 200 intervals): a lamp of light
   (paid, 2^36 units, 2^22 per self-creation on every heading, K 2^34) at
   x = 2; a wall at x = 8 of measured events of the paid family `wall`

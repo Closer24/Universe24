@@ -27,10 +27,13 @@ a Node: no parked share, no remainder. The interval's steps on the transit
   while the count runs they are created here, interval after interval, and
   what arrives behind them joins them and waits with them (the next event is
   delayed); a count is written once, on arrival, never accumulated;
-- the mixing (node-mixing-v2, `mix_arrivals` by import): the sides' shares
-  from the vectors, whole units placed by the largest remainder with the
-  ties in the tick's Port order, a group with no whole for any side going
-  whole by its momentum; the departures into flight.
+- the mixing (node-mixing-v3, `mix_arrivals` by import): the sides' shares
+  from the vectors of all the arrivals at the Node, whatever their number,
+  the weights common to every number there; per number whole units placed
+  by the largest remainder with the ties in the tick's Port order, a number
+  with no whole for any side going whole by its own momentum, every unit
+  keeping its number; the departures into flight. The sizes and `phase_at`
+  read per number: what a measured event reads is a bundle of one number.
 """
 
 from __future__ import annotations
