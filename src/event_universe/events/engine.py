@@ -28,14 +28,16 @@ order:
    number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
    content constant, Highlights 5.4, the law of the shadow, reading (i));
-   another number's are met by its table: `read` (the default for a free
-   family: the push taken, the units left to mix on as at an empty Node),
-   `measure` (the default for a paid family, the click: the push taken and
-   the amount joining the content, one click per unit; a detector measures
-   only a bundle of one number at or above its threshold, a smaller one
-   passes), `rerelease` (the push taken, the amount taken to be created
-   again like what came home, with the measured event's number and phase)
-   or `pass` (no push, the units mix on);
+   another number's are met by its table, at a detector's Node only a
+   bundle of one number at or above its threshold in one interval (a
+   smaller one passes whatever the table says: no push, the units mix on;
+   a release reads no threshold): `read` (the default for a free family:
+   the push taken, the units left to mix on as at an empty Node), `measure`
+   (the default for a paid family, the click: the push taken and the amount
+   joining the content, one click per unit), `rerelease` (the push taken,
+   the amount taken to be created again like what came home, with the
+   measured event's number and phase) or `pass` (no push, the units mix
+   on);
 4. at every Node the arrivals of one number that are not suspended mix
    (node-mixing-v2): the sides' shares from the vectors, whole units placed
    by the largest remainder with the ties in the tick's Port order, a group
@@ -307,7 +309,10 @@ class EventSimulation:
 
     def _meet(self, entry: Measured) -> None:
         """The events at a measured event's Node: every arrival of its own
-        number measured home, every other number's met by the table."""
+        number measured home, every other number's met by the table when the
+        bundle reaches the detector's threshold (1 outside a detector: every
+        response, read, measure or rerelease, is gated; a smaller bundle
+        passes with no push and mixes on)."""
         position = entry.position
         for index, transit in enumerate(self.transits):
             if not transit.owners:
@@ -326,7 +331,7 @@ class EventSimulation:
                     self.transit_absorbed[index] += total
                     self._event("home", entry, index, number, total, ZERO3)
                     continue
-                if rule == "pass" or (rule == "measure" and total < entry.threshold):
+                if rule == "pass" or total < entry.threshold:
                     continue
                 carried = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
                 push = self._push(entry, free, number, carried)

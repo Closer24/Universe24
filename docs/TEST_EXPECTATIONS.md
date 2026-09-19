@@ -27,6 +27,7 @@ modules are named in the [migration notes](MIGRATION.md).
 | `test_event_suspension.py` | The suspension the event carries: the count derived on arrival, the next event delayed, a measured event's clock waiting ([below](#the-suspension)) |
 | `test_event_clock.py` | The clock of a measured event: every rate off its age by whole division, the release, the phase, the lamp's recoil, the step ([below](#the-clock-of-a-measured-event)) |
 | `test_event_worlds.py` | The worlds of the law of events on minimal boards: the books, the constant content, the flux, the shell means, the pair's pushes and the product law, the two-slit detector, the refusals and the runner ([below](#the-worlds-of-the-law-of-events)) |
+| `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
@@ -103,6 +104,26 @@ anywhere. Written down first:
 | (b) the release and the phase | a measured event of content 3 at `release` [1, 10], K 2^20; then at K 2 | 6 units released after intervals 4, 7 and 10 (18 in all), none after 3; at K 2 the phase steps after intervals 1 to 4 are 1, 3, 4, 6 |
 | (c) a lamp | content 100 at rate [1, 3] on six headings, no release | 18 units after 9 intervals (at 3, 6 and 9), the content 82, the recoil zero over six headings |
 | (d) the step | content 16 with momentum 16 on +x, 6 intervals; momentum 1, 16 then 17 intervals | three steps (one per two self-creations, 16 / 32); no step after 16, one after 17 (1 / 17); the momentum untouched |
+
+## A detector's sensitivity
+
+`tests/test_detector_sensitivity.py` isolates a detector's sensitivity
+(Highlights 5.4, the model owner, 2026-09-19: "There are detectors by
+sensitivity"; "every detector must state what its sensitivity is"): a
+detector's threshold, the smallest bundle of one number it measures in one
+interval, gates every response of its Nodes (`read`, `measure`,
+`rerelease`), a receiver's and a re-emitter's alike, and a smaller bundle
+passes with no push and mixes on; a release reads no threshold. A bar of
+9 x 3 x 3, K 2^20 so that no phase moves, `suspension` 0, `release` [0, 1],
+the families `m` (free) and `light` (paid), the detector `d` on the Node
+x = 4, every arrival a bundle of one number seeded at that Node on +X and
+met in interval 1. Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) a receiver | a measured event of `m` (content 4) measuring `light`, threshold 3; 2 units of light of another number; then 3 | 2 units pass: no click, no push, the content 4, the 2 leaving whole on +X (the departures at x = 4 after interval 1, at x = 5 after interval 2); 3 units are measured: 3 clicks, `held` [4, 3], the momentum (3, 0, 0), nothing left in transit, the detector's report 3 measured and 3 clicks |
+| (b) a re-emitter | the same Node re-releasing `light` at phase 9, threshold 3; 2 units at phase 20; then 3 | 2 units pass as in (a), no re-release recorded; 3 units are taken: re-released 3, no click, the push (3, 0, 0) taken, `home` [0, 3] when the record is written, then created again at the same interval's self-creation on +X as number 1 (the detector's), 3 units at phase 9 with momentum (3, 0, 0), the recoil leaving the momentum (0, 0, 0), released 3 and absorbed 3; after interval 2 the 3 leave x = 5 as number 1 and nothing of number 2 is in transit |
+| (c) an emitter inside a detector; a reading | a lamp of `light` (content 24, rate [1, 1]) in a detector with threshold 5; a measured event of `m` (content 4) reading `m` with threshold 4, 3 units of another number, then 4 | the lamp releases one unit per heading per interval as before: after intervals 1 and 2 its departures [1, 1, 1, 1, 1, 1], its content 18 then 12, spent 6 then 12, the momentum zero, nothing measured; 3 units pass with no push and mix on (3 departures at x = 4, none of the detector's number); 4 units push by -M c = (-16, 0, 0), read 4, and mix on |
 
 ## Generated-output lifetime
 

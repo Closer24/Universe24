@@ -20,8 +20,9 @@ interval, the measured events and the books, `run.py` the artifacts of a run)
 on `src/event_universe/core/` (`integer.py`, `lattice.py`, `phase.py`). The
 tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
-`tests/test_event_worlds.py` ([expectations](TEST_EXPECTATIONS.md)). The
-worlds: [examples/events/](../examples/events/README.md).
+`tests/test_detector_sensitivity.py`, `tests/test_event_worlds.py`
+([expectations](TEST_EXPECTATIONS.md)). The worlds:
+[examples/events/](../examples/events/README.md).
 
 ## The law of events (`events-v1`)
 
@@ -70,14 +71,18 @@ candidates (`transit.nearest_step`, `step_window`).
 3. A measured event meets the events that arrive at its Node (`_meet`): its
    own number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
-   content constant); another number's are met by its table: `read` (the
-   default for a free family: the push taken and the units left to mix on as
-   at an empty Node), `measure` (the default for a paid family, the click: the
-   push taken and the amount joining the content, one click per unit; a
-   detector measures only a bundle of one number at or above its `threshold`
-   in one interval, a smaller one passes), `rerelease` (the push taken, the
-   amount taken to be created again like what came home, with the measured
-   event's number and phase) or `pass` (no push, the units mix on).
+   content constant); another number's are met by its table, at a detector's
+   Node only a bundle of one number at or above the detector's `threshold` in
+   one interval: a smaller bundle passes whatever the table says (no push,
+   the units mix on as at an empty Node), and the threshold gates every
+   response, `read`, `measure` and `rerelease` alike, a receiver's and a
+   re-emitter's; a release (step 5) reads no threshold. The rules: `read`
+   (the default for a free family: the push taken and the units left to mix
+   on as at an empty Node), `measure` (the default for a paid family, the
+   click: the push taken and the amount joining the content, one click per
+   unit), `rerelease` (the push taken, the amount taken to be created again
+   like what came home, with the measured event's number and phase) or
+   `pass` (no push, the units mix on).
 4. At every Node the arrivals of one number that are not suspended mix
    (`Transit.cycle`, node-mixing-v2, `mixing.mix_arrivals`): the events that
    arrived on each heading are one amplitude, sqrt(amount) in 32nds at their
@@ -180,12 +185,21 @@ flow and the size; `cube_flux`: Gauss's flux through a closed surface),
 read-only.
 
 **A detector's sensitivity** (Highlights 5.4, "a kind of detector
-sensitivity"): a detector is a named set of measured events with one table;
-its Nodes and its threshold are its sensitivity. One Node measures one
-quantum at one place; a detector over a region measures many, and its
-statement, "an event in this region", is read off the record (the run's
-measurements per detector and per Node with their intervals, numbers,
-amounts, pushes and phases). What reached no Node of it is unknowable.
+sensitivity"; "every detector must state what its sensitivity is"): a
+detector is a named set of measured events with one table; its Nodes and its
+threshold are its sensitivity. The threshold, the smallest bundle of one
+number the detector measures in one interval, gates every response of a
+detector's Node, `read`, `measure` and `rerelease` alike, so that every kind
+of external apparatus, a receiver or a re-emitter, works by its sensitivity:
+a smaller bundle passes, no push taken and the units mixing on. It gates
+responses only: a release, a lamp's or a free family's, and what a measured
+event creates again after a re-release, read no threshold, and the own
+number's arrivals are home and not a response
+(`tests/test_detector_sensitivity.py`). One Node measures one quantum at one
+place; a detector over a region measures many, and its statement, "an event
+in this region", is read off the record (the run's measurements per detector
+and per Node with their intervals, numbers, amounts, pushes and phases). What
+reached no Node of it is unknowable.
 
 **What does not exist here**: no shadow and no real, no bit, no register, no
 remainder, no parked share, no pool that counts as content, no return to the

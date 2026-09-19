@@ -20,6 +20,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `detectors`; `phase_turn` gone). Tests: `test_node_mixing` (node-mixing-v2),
   `test_event_transit`, `test_event_suspension`, `test_event_clock`,
   `test_event_worlds` ([expectations](docs/TEST_EXPECTATIONS.md)).
+- A detector's threshold gates every response of a detector's Node (`read`,
+  `measure`, `rerelease`), receivers and re-emitters alike, by the model
+  owner's instruction of 2026-09-19 that every kind of external apparatus
+  works with the sensitivity: a bundle of one number below the threshold
+  passes with no push and mixes on; a release reads no threshold
+  (`EventSimulation._meet`, [the engine](docs/ENGINE.md)). Test:
+  `test_detector_sensitivity` ([expectations](docs/TEST_EXPECTATIONS.md#a-detectors-sensitivity)).
 
 ### The law of events recorded (2026-09-19)
 
