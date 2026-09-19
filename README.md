@@ -87,7 +87,9 @@ python -m event_universe.configuration_validation examples/events/one_content.js
 The world file is required. It supplies `ticks`; `--ticks` can override the
 duration. Missing input is an error, not a request to load a built-in universe.
 The board is open (`"boundary": "open"`): what leaves is booked as escaped, with
-the momentum it carried; a closed board is refused. Run several worlds one
+the momentum it carried; a closed board is refused. An axis may be declared
+periodic (`"boundary": {"z": "periodic"}`): its departures wrap to the opposite
+face and nothing escapes on that axis. Run several worlds one
 process per core with `tools/run_series.py`.
 
 | Output | When written |

@@ -7,6 +7,20 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- A periodic axis as a declared run parameter of the world, the model
+  owner's approved exception to the open board (2026-09-19): `boundary`
+  accepts, beside `"open"`, an object with any of `x`, `y`, `z` set to
+  `"open"` or `"periodic"`, the missing axes open. On a periodic axis the
+  departures that would leave through one face are created at the first Node
+  of the opposite face (`Transit.walk`), nothing escapes on that axis and the
+  momentum they carry stays on the board; with an extent of 1 the two
+  departures on that axis return to the same Node in the next interval as
+  its arrivals through those Ports (a four-Port node with a one-interval
+  stub). Open stays the default; `"closed"` and every other word stay
+  refused. `run.json` and `state.json` carry `boundary` as declared; the
+  preflight's summary shows the boundary per axis ([the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#a-periodic-axis-as-a-declared-run-parameter-of-the-world-on-2026-09-19-boundary-per-axis)).
+  Test: `test_periodic_axis` ([expectations](docs/TEST_EXPECTATIONS.md#a-periodic-axis)).
 - A measured event is created again first and then reads its suspension:
   the count it owes, `suspension` intervals per whole unit of the other
   numbers' sizes at its Node, is read after its self-creation from this

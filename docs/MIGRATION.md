@@ -6,6 +6,32 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A periodic axis as a declared run parameter of the world, on 2026-09-19 (`boundary` per axis)
+
+The declared exception to the open board, approved by the model owner on
+2026-09-19: the board of `events-v1` is open on every face ("the edge is
+infinity, what leaves is booked as escaped with the momentum it carried; a
+closed board is refused"), and a world file may now declare an axis
+periodic, each experiment deciding what to run. Additive: `boundary` accepts,
+beside the string `"open"`, an object with any of the keys `x`, `y`, `z`,
+each `"open"` or `"periodic"`, the missing axes open (`{"z": "periodic"}`);
+`"closed"`, the bare word `"periodic"` and every other value are refused as
+before, naming the closed board. On a periodic axis the departures that would
+leave the board through one face are created at the first Node of the
+opposite face (`Transit.walk`), nothing escapes on that axis and the momentum
+they carry stays on the board; `escaped` counts only what leaves through the
+open faces; with an extent of 1 the two departures on that axis return to
+the same Node in the next interval as its arrivals through those Ports (a
+four-Port node with a one-interval stub). A measured event's step off the
+board (step 6) is unchanged. New: `EventWorld.boundary` (the declared value)
+and `EventWorld.periodic` (per axis), `EventWorld.boundary_per_axis`,
+`Transit(..., periodic=...)`; `run.json` and `state.json` carry `boundary` as
+declared (the string or the object) in place of the constant `"open"`; the
+preflight's summary gains `boundary` per axis. A world with `"open"` or
+without the key runs as before ([the engine](ENGINE.md#the-law-of-events-events-v1),
+[expectations](TEST_EXPECTATIONS.md#a-periodic-axis),
+`tests/test_periodic_axis.py`).
+
 ## The suspension of a measured event, read after its self-creation, on 2026-09-19
 
 A bug of the first `events-v1`, found by the physics-rule review of
