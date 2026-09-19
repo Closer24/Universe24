@@ -11,6 +11,29 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The detector's record exact, never refused: the runs unchanged and `two_contents` completed - 2026-09-19 (after the batching)
+
+The worktree of `claude/universe24-new-3ytqde` on the tip `3fb70572` (the
+batching merged), one commit: the record's bound and refusal replaced by
+the exact record ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+note 19; [changelog](../CHANGELOG.md)). Python 3.14.0rc2, numpy 2.5.3,
+headless, four cores. The same byte-identity check as the batching's: the
+45 example worlds run through `tools/run_series.py --jobs 4` on the tip's
+source (extracted with `git archive`) and on the changed source;
+`events.jsonl` and `state.json` compared byte for byte, `run.json` as a
+document without `elapsed_seconds` and `source_sha256`.
+
+| Check | Result |
+| --- | --- |
+| The 45 worlds, tip against the change | 44 of 45 identical (`events.jsonl`, `state.json`, `run.json` with the per-tick `audit`); `two_contents` differs only by completing: on the tip it fails at tick 19 (`the amount 262144 clicked at face:+y in one interval exceeds the affordable amount ... 261123`), after the change it completes 200 intervals, and the tip's 19-interval `events.jsonl` (5158 bytes) is the byte prefix of the new one (498555 bytes) |
+| `two_contents`, 200 intervals | completed, the books balanced at every tick (`conserved_at_every_completed_tick` true), 0.2 s; the two pushes equal and opposite along x, toward each other, +/-411217348788224 = 2^24 x 187 x 2^17 (each content times the flow of the other's beam over the 187 intervals it arrived); `face:+y` clicks 47448064 units and holds the record 181 x 2^62 = 834715169335357210624 (70 bits; two beams of 2^17 in phase per interval since the 20th, 2^62 each interval, one past the law's bound 2^62 - 1), `face:+x` 713 x 2^60 = 822033032784681893888; the escaped momentum (0, 0, 0); `run.json` and `state.json` carry the records as exact integers beyond 2^63 |
+| `tests/test_ray_detector.py` (e), `tests/test_ray_worlds.py` (e) | passed: the pointer's register bound 560759486676481; 261123, 261124, 2^18, two rows a quarter turn apart and 2^52 recorded exactly against the Python-int computation through the tables (2^52 records 2^130 with the pointer (2^65, 0)); two intervals of 2^18 accumulate 2^63 and round-trip through JSON; the face click of 2^18 records 2^62; `two_contents` for 20 intervals not refused, every face's record equal to the Python-int square at every tick |
+| `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green |
+
+The runs establish that the exact record changed no integer of a world
+that ran before and that the refusal alone kept `two_contents` from
+completing; they establish no physical law.
+
 ## The host's batching: the runs unchanged byte for byte - 2026-09-19
 
 The worktree of `claude/universe24-new-3ytqde` on the base `b2830bf9` (the

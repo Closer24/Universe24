@@ -31,7 +31,19 @@ docs/TEST_EXPECTATIONS.md ("The worlds of the ray law"), written down first:
     Nodes (one ray of 2^17 arrives at each axial Node every interval), the
     presence at r = 3 twice the count (the ages 5 and 6 sit at 3 Links: the
     flight table's first arrivals at 3 and 4 Links are the intervals 5 and
-    7) and at r = 4 equal to it (the age 7 alone).
+    7) and at r = 4 equal to it (the age 7 alone);
+(d) every example world parses as a ray world;
+(e) `two_contents` (the two contents 8 Links apart on the open 21^3 board)
+    for 20 intervals: not refused (the night's bound refused it at the 20th
+    interval, when the two +y beams of 2^17 click face:+y together, 2^18 in
+    one interval); the books close at every tick; every face's record grows
+    at every tick by the Python-int square of the pointer of the rows that
+    clicked there (X = sum 32 x amount x C[phase], Y the same with S,
+    through the tables from the click lines); at the 20th interval face:+y
+    records 2^62 exactly, one past the law's bound 2^62 - 1, and face:+x,
+    clicked 2^17 per interval since the 13th, holds 2^63, beyond int64 and
+    round-tripped through JSON; the two pushes are equal and opposite along
+    x, toward each other (the third law on lone beams).
 """
 
 from __future__ import annotations
@@ -45,8 +57,10 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import RaySimulation, parse_ray_world
 from event_universe.events.run import execute_ray_run
+from event_universe.events.world import MOMENTUM_BOUND
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -229,3 +243,40 @@ def test_the_example_worlds_parse_as_ray_worlds(name):
     document = json.loads((ROOT / "examples" / "events" / name).read_text(encoding="utf-8"))
     world = parse_ray_world(document)
     assert document["law"] == "rays" and world.model_id.startswith("rays-")
+
+
+def test_two_contents_is_not_refused_and_its_face_records_are_exact():
+    """(e)."""
+    document = json.loads(
+        (ROOT / "examples" / "events" / "two_contents.json").read_text(encoding="utf-8")
+    )
+    records: list[dict[str, object]] = []
+    simulation = RaySimulation(parse_ray_world(document), records.append)
+    cosines, sines = phase_cosines(document["N"]), phase_sines(document["N"])
+    before: dict[str, int] = {}
+    faces: dict[str, int] = {}
+    clicked: dict[str, list[tuple[int, int]]] = {}
+    for tick in range(1, 21):
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        faces = {str(d["name"]): int(d["families"]["m"]["record"]) for d in simulation.face_detectors()}
+        clicked = {}
+        for line in records:
+            if line["event"] == "click" and line["tick"] == tick:
+                clicked.setdefault(str(line["detector"]), []).append(
+                    (int(line["amount"]), int(line["phase"]))
+                )
+        for name, record in faces.items():
+            rows = clicked.get(name, [])
+            x = sum(32 * amount * cosines[phase] for amount, phase in rows)
+            y = sum(32 * amount * sines[phase] for amount, phase in rows)
+            assert record - before.get(name, 0) == x * x + y * y, (tick, name)
+        before = faces
+    assert clicked["face:+y"] == [(1 << 17, 0), (1 << 17, 0)]
+    assert faces["face:+y"] == (1 << 62) == MOMENTUM_BOUND + 1
+    assert faces["face:+x"] == faces["face:-x"] == (1 << 63)
+    report = {d["name"]: d for d in json.loads(json.dumps(simulation.detectors()))}
+    assert report["face:+x"]["families"]["m"]["record"] == (1 << 63)
+    first, second = simulation.measured[1], simulation.measured[2]
+    assert first.pushed[0] > 0 and first.pushed == [-second.pushed[0], 0, 0]
+    assert second.pushed[1:] == [0, 0] and first.momentum == first.pushed

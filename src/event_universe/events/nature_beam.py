@@ -37,8 +37,8 @@ order, each a bijection on the board's state except the border:
    phase (the window), then the rule: `read` (the push, the rays go on),
    `measure` (the click: the content joins, the border; the detector's
    record is the squared scalar of the same moments taken over the clicked
-   rays with their amplitudes as weights, the clicked amount bounded before
-   any product), `rerelease` (re-emitted at the next self-creation on the
+   rays with their amplitudes as weights, an exact integer: a report of
+   the host, never refused), `rerelease` (re-emitted at the next self-creation on the
    declared directions), `pass`; own-number rays are home. The push is ONE
    bilinear form over the arriving rays, `push_A = sum kappa(A, B) . V_B`
    with `V_B` the label moment of the rays (the vector moment of
@@ -109,14 +109,18 @@ AMPLITUDE_SCALE = 32
 # (`test_ray_detector` (e) checks it), so one unit's amplitude at a phase
 # is a vector shorter than 32 x 257.
 LONGEST_PHASE_ENTRY = 257
-# The affordable amount per detector Node per interval per family: the
-# pointer (X, Y) is a sum of vectors of length at most 32 x 257 per unit
-# (the triangle inequality), so its length is at most 32 x 257 x the
-# clicked amount, and the record X^2 + Y^2 must fit 2^62 - 1: the clicked
-# amount of one interval is bounded by isqrt(2^62 - 1) // (32 x 257) =
-# 261124 (2^17 inside, 2^18 refused) and a larger set is refused before any
-# product is formed (RAY_LAW, section 5).
-RECORD_AMOUNT_BOUND = integer_root(MOMENTUM_BOUND) // (AMPLITUDE_SCALE * LONGEST_PHASE_ENTRY)
+# The pointer's register bound: a detector's coherent pointer (X, Y) is a
+# sum of vectors of length at most 32 x 257 per unit (the triangle
+# inequality), so each component is within 32 x 257 x the clicked amount
+# and fits the register of the law (2^62 - 1) while the amount a detector
+# Node (or a face) clicks of one family in one interval is within
+# (2^62 - 1) // (32 x 257) = 560759486676481 (2^48 inside, 2^49 beyond).
+# Beyond it the pointer is summed in Python integers; the square X^2 + Y^2
+# and the record that accumulates it are Python integers always. The
+# record is a report of the host, not the law's local work: it is exact
+# and never refused (RAY_LAW, section 5 and note 19; the former affordable
+# amount 261123 refused a lawful world).
+POINTER_AMOUNT_BOUND = MOMENTUM_BOUND // (AMPLITUDE_SCALE * LONGEST_PHASE_ENTRY)
 ZERO3 = (0, 0, 0)
 
 
@@ -505,23 +509,31 @@ def momentum_labels(
     return result
 
 
-def check_record_amount(total: int, where: str) -> int:
-    """The amount a detector clicks in one interval, summed exactly by the
-    caller, checked against the affordable amount before the record's
-    products are formed; beyond it the run is refused naming the detector
-    and the sum."""
-    if total > RECORD_AMOUNT_BOUND:
-        raise OverflowError(
-            f"{RAYS_LAW}: the amount {total} clicked at {where} in one interval exceeds the "
-            f"affordable amount per detector Node per interval, {RECORD_AMOUNT_BOUND} "
-            "(the record's pointer would pass the integer bound); lower the rate or the amount"
-        )
-    return total
-
-
-def record_amount(amounts: np.ndarray, where: str) -> int:
-    """`check_record_amount` of the exact sum of `amounts`."""
-    return check_record_amount(int(exact_sum(amounts)), where)
+def coherent_pointer(
+    amount: np.ndarray,
+    phase: np.ndarray,
+    starts: np.ndarray,
+    totals: list[int],
+    cosines: np.ndarray,
+    sines: np.ndarray,
+) -> tuple[list[int], list[int]]:
+    """The coherent pointer (X, Y) of the clicked rows per contiguous group
+    (a detector Node's clicks of one family this interval; a face's):
+    X = sum 32 x amount x C[phase], Y = sum 32 x amount x S[phase], the
+    amplitudes at their phases summed by the 1/256 tables. Summed in the
+    int64 register when every group's clicked amount (`totals`, exact per
+    group) is within `POINTER_AMOUNT_BOUND` (each component is then within
+    32 x 257 x the amount, inside 2^62 - 1), in Python integers otherwise:
+    exact either way, a report never refused. Python integers out."""
+    if max(totals) <= POINTER_AMOUNT_BOUND:
+        amplitude = amount * AMPLITUDE_SCALE
+        x: list[int] = np.add.reduceat(amplitude * cosines[phase], starts).tolist()
+        y: list[int] = np.add.reduceat(amplitude * sines[phase], starts).tolist()
+        return x, y
+    wide = amount.astype(object) * AMPLITUDE_SCALE
+    x = np.add.reduceat(wide * cosines[phase].astype(object), starts).tolist()
+    y = np.add.reduceat(wide * sines[phase].astype(object), starts).tolist()
+    return x, y
 
 
 class RayStore:
@@ -909,8 +921,8 @@ class FamilyPlan:
     t_phase: list[int] = field(default_factory=list)
     t_carried: list[int] = field(default_factory=list)
     t_label: list[list[int]] = field(default_factory=list)
-    # The detector's pointer per measured event: (clicked amount, X, Y).
-    pointer: dict[int, tuple[int, int, int]] = field(default_factory=dict)
+    # The detector's coherent pointer per measured event: (X, Y), exact.
+    pointer: dict[int, tuple[int, int]] = field(default_factory=dict)
     # The label sum of the rows that leave the store this interval (the
     # home rows and the rows a table absorbs): off the running transit line.
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -1065,20 +1077,17 @@ def nature_beam(
                 if through.shape[0] == 0:
                     continue
                 amounts = store.amount[through]
-                # The face's record: the clicked amount bounded before any
-                # product, then the same reading over what clicked with the
-                # amplitudes as weights, its scalar squared.
-                ledger.face_units[face][family] += record_amount(amounts, FACE_NAMES[face])
+                # The face's record: the clicked amount summed exactly, the
+                # coherent pointer of what clicked (the amplitudes at their
+                # phases) and its square, exact Python integers (a report,
+                # never refused; the face's record is one sum per face).
+                total = int(exact_sum(amounts))
+                ledger.face_units[face][family] += total
                 ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
-                amplitude = amounts * AMPLITUDE_SCALE
-                directions = vectors[store.direction[through]]
-                pointer_x = int(
-                    read_arrivals(directions, amplitude * tables.cosines[store.phase[through]]).scalar
+                face_x, face_y = coherent_pointer(
+                    amounts, store.phase[through], FIRST, [total], tables.cosines, tables.sines
                 )
-                pointer_y = int(
-                    read_arrivals(directions, amplitude * tables.sines[store.phase[through]]).scalar
-                )
-                ledger.face_record[face][family] += pointer_x * pointer_x + pointer_y * pointer_y
+                ledger.face_record[face][family] += face_x[0] * face_x[0] + face_y[0] * face_y[0]
                 escaped_momentum = exact_column_sums(labels[on_face])
                 ledger.face_momentum[face] = [
                     a + b for a, b in zip(ledger.face_momentum[face], escaped_momentum, strict=True)
@@ -1339,9 +1348,9 @@ def nature_beam(
                 plan.groups[event] = (e_lo[k], e_hi[k])
             plan.events.update(g_events)
             # The rows a table absorbs leave the store. The detector's
-            # record: the clicked amount summed exactly (bounded below
-            # before any product), then the same reading over the clicked
-            # rows with their amplitudes as weights, its scalar.
+            # pointer: the clicked amount summed exactly per measured event,
+            # then the coherent pointer of the clicked rows (the amplitudes
+            # at their phases), exact and never refused.
             rule_t = ev_rule[ev_t, family]
             absorbed = rule_t != READ_RULE
             keep[family][at[taken[absorbed]]] = False
@@ -1355,19 +1364,11 @@ def nature_beam(
                 c_starts = group_starts(ev_c)
                 c_sizes = group_sizes(c_starts, clicked.shape[0])
                 totals_c = grouped_sums(a_t[clicked], c_starts, int(c_sizes.max())).tolist()
-                amplitude = a_t[clicked] * AMPLITUDE_SCALE
-                weights_x = amplitude * tables.cosines[ph_t[clicked]]
-                weights_y = amplitude * tables.sines[ph_t[clicked]]
-                v_c = v_direction[clicked]
-                of_click = np.repeat(np.arange(c_starts.shape[0]), c_sizes)
-                for stage, weights_c in ((1, weights_x), (2, weights_y)):
-                    overflow = first_reading_overflow(of_click, c_starts.shape[0], weights_c, v_c)
-                    if overflow is not None:
-                        failures[(int(ev_c[c_starts[overflow[0]]]), family, 2, 0, stage)] = overflow[1]
-                pointer_x = np.add.reduceat(weights_x, c_starts).tolist()
-                pointer_y = np.add.reduceat(weights_y, c_starts).tolist()
+                pointer_x, pointer_y = coherent_pointer(
+                    a_t[clicked], ph_t[clicked], c_starts, totals_c, tables.cosines, tables.sines
+                )
                 for k, event in enumerate(ev_c[c_starts].tolist()):
-                    plan.pointer[event] = (totals_c[k], pointer_x[k], pointer_y[k])
+                    plan.pointer[event] = (pointer_x[k], pointer_y[k])
             return plan
 
         plans = [family_plan(family, store) for family, store in enumerate(stores)]
@@ -1559,13 +1560,13 @@ def nature_beam(
                                 }
                             )
                 if rule == "measure":
-                    total, pointer_x, pointer_y = plan.pointer[i]
-                    check_record_amount(total, f"measured event {entry.number} at {node}")
-                    if failures:
-                        refuse((i, family, 2, 0, 1))
-                        refuse((i, family, 2, 0, 2))
-                    square = bounded(pointer_x * pointer_x + pointer_y * pointer_y, entry, "record")
-                    entry.record[family] = bounded(entry.record[family] + square, entry, "record")
+                    # The record: the pointer's square and its accumulation,
+                    # exact Python integers (a report of the host, never
+                    # refused; a record may pass 2^63 and its readers parse
+                    # it as an arbitrary-precision integer).
+                    pointer_x, pointer_y = plan.pointer[i]
+                    square = pointer_x * pointer_x + pointer_y * pointer_y
+                    entry.record[family] += square
                     if record is not None:
                         record(
                             {

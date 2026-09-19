@@ -32,13 +32,13 @@ kept, their pins the law of events').
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
-| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the affordable amount bounded before the record's products ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
+| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
-| `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
+| `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
 | `test_ray_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
@@ -282,19 +282,28 @@ on -z). An empty world counts zero both ways.
   unit per heading per interval, its content 18 then 12; a reader of `m`
   (content 4) at threshold 4 passes 3 rays and reads 4, pushed by -M c =
   (-16, 0, 0).
-- (e) the affordable amount (the physics-rule reviewer's F2; RAY_LAW
-  section 5 and note 19): every entry (C, S) of the 1/256 tables is
-  shorter than 257 for every N from 2 through 4096 (the largest C^2 + S^2
-  is 65897), so the pointer is at most 32 x 257 x the clicked amount long
-  and the record fits 2^62 - 1 up to isqrt(2^62 - 1) // (32 x 257) =
-  261123 units per detector Node per family per interval
-  (`RECORD_AMOUNT_BOUND`; 2^17 inside, 2^18 refused): a row of 261123 at
-  phase 0 records 2139119616^2 with the pointer (2139119616, 0); a row of
-  261124 is refused with `OverflowError` naming the Node [4, 1, 1] and the
-  sum 261124; two rows of 130561 and 130563 (two numbers, +X and -X) are
-  refused naming the sum 261124; a row of 2^52 (the reviewer's silent int64
-  wrap, admitted by the label bound) is refused naming the sum; a ray of
-  261124 stepping off an open face is refused naming `face:+x`.
+- (e) the record is exact and never refused (RAY_LAW section 5 and note
+  19; the night's bound refused `two_contents`): every entry (C, S) of the
+  1/256 tables is shorter than 257 for every N from 2 through 4096 (the
+  largest C^2 + S^2 is 65897), so each component of the pointer is within
+  32 x 257 x the clicked amount and the int64 register holds it up to the
+  amount (2^62 - 1) // (32 x 257) = 560759486676481
+  (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond); beyond it the
+  pointer is summed in Python integers, and the square and the record are
+  Python integers always. Every case is compared with the Python-int
+  computation X = sum 32 x amount x C[phase], Y = sum 32 x amount x
+  S[phase] over the clicked rows of the record through the tables: a row
+  of 261123 (the old bound) records 2139119616^2 with the pointer
+  (2139119616, 0); a row of 261124 (one past the old bound) records
+  2139127808^2; a row of 2^18 (what `two_contents` sends to a face)
+  records 2^62 exactly, one past the law's bound 2^62 - 1; two rows of
+  130561 and 130563 (two numbers, +X and -X, a quarter turn apart) record
+  (2^13 x 130561)^2 + (2^13 x 130563)^2; a row of 2^52 (the reviewer's
+  silent int64 wrap, once refused) records 2^130 with the pointer
+  (2^65, 0); two rows of 2^18 clicking in the intervals 1 and 3 accumulate
+  2^63, beyond int64, in the measured event's record, its state and the
+  report, round-tripped through JSON; a ray of 2^18 stepping off the open
+  face +x records 2^62 on `face:+x`.
 
 ## The push as one form
 
@@ -578,6 +587,18 @@ does what the law says and not as a result.
   and pinned by no test (the model owner's rule of 2026-09-17; the pin of
   the first registration, `test_orbit_world.py`, went with its numbers
   when the engine changed).
+- (e) `two_contents` (the example world: two contents of 2^24 eight Links
+  apart on the open 21^3 board, `release` [1, 128], no suspension) for 20
+  intervals: not refused (the night's bound refused it at the 20th
+  interval, when the two +y beams of 2^17 click `face:+y` together, 2^18
+  in one interval); the books close at every tick; every face's record
+  grows at every tick by the Python-int square of the pointer of the rows
+  that clicked there (X = sum 32 x amount x C[phase], Y the same with S,
+  from the click lines through the tables); at the 20th interval `face:+y`
+  records 2^62 exactly, one past the law's bound 2^62 - 1, and `face:+x`,
+  clicked 2^17 per interval since the 13th, holds 2^63, beyond int64 and
+  round-tripped through JSON; the two pushes are equal and opposite along
+  x, toward each other (the third law on lone beams).
 
 ## Generated-output lifetime
 

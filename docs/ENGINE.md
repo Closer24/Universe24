@@ -183,11 +183,15 @@ content after a click and what waits to be created again are checked
 against 2^62 - 1 (`world.MOMENTUM_BOUND`), and a value beyond it refuses
 the run with `OverflowError` naming the measured event, its Node and the
 quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law));
-the amount a detector Node or a face clicks of one family in one interval
-is checked against the affordable amount `nature_beam.RECORD_AMOUNT_BOUND`
-(261123; [RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors))
-before the record's products are formed, refused naming the Node or the
-face and the sum.
+the detector's record is not a quantity of the law but a report of the
+host and is never refused: the coherent pointer (X, Y) is summed in the
+int64 register while the amount a detector Node or a face clicks of one
+family in one interval is within `nature_beam.POINTER_AMOUNT_BOUND`
+((2^62 - 1) // (32 x 257) = 560759486676481) and in Python integers
+beyond it (`nature_beam.coherent_pointer`); the square and the cumulative
+record (`Measured.record`, `Ledger.face_record`) are exact Python
+integers that can exceed 2^63 in `run.json` and `state.json`, parsed as
+arbitrary-precision integers ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 
 **The world** (`events/world.py`; the keys of [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
 `law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K`; `N` (64 by
