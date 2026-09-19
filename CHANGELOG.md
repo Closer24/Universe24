@@ -7,6 +7,30 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- One rule of the Node: the phase-less scatter is the diagonal of the
+  coherent sum inside `mix_arrivals` (the model owner, 2026-09-19:
+  "everything generic must be replaced by generic"; the physics-rule
+  reviewer's identity: with c_h = S - 3 a_opp(h), dropping every cross term
+  of |c_h|^2 between mutually incoherent arrivals leaves
+  weight_h = 32^2 x (the number's amount over the six Ports + 3 x its
+  amount through the side's own Port), 4 : 1 : 1 : 1 : 1 : 1 for a lone
+  arrival, exact integers, no root). `mixing.scatter_arrivals` and
+  `SCATTER_BACK`, `SCATTER_TOTAL` are removed; `mix_arrivals` reads the
+  family's `phased` and takes its weights from `coherent_weights` or
+  `diagonal_weights`, the placement, the group with no whole by its
+  momentum, `apportion_carried` and the leaving phase (0 without a phase
+  circle) the same code for every family; `Transit.cycle` calls it for
+  every family. The shares agree with the scatter in the mean exactly; the
+  rounding and the momentum labels fall once per group where they fell once
+  per Port, and a number's weights are its own (no cross term between
+  numbers: another number's field does not steer its labels). About four
+  times faster than the scatter on 29^3 ([the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#one-rule-of-the-node-the-phase-less-scatter-folded-into-mix_arrivals-on-2026-09-19)).
+  Tests: `test_phaseless_family` (b) re-pinned (the labels of two opposite
+  9s 0 each, old -3 and 3; the edge [4, 2, 2, 1, 1, 1], old
+  [6, 1, 1, 1, 1, 1]), (d) the identity of the weights added;
+  `test_event_worlds` (a) to (c) unchanged within their bands
+  ([expectations](docs/TEST_EXPECTATIONS.md#a-family-without-a-phase-circle)).
 - The coherent sum at a Node runs over all the arrivals present, whatever
   their number (node-mixing-v3, the model owner's decision of 2026-09-19:
   "the Node reads what is present"; the number is a label for the detector,
