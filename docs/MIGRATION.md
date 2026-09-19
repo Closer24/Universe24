@@ -6,6 +6,32 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The suspension of a measured event, read after its self-creation, on 2026-09-19
+
+A bug of the first `events-v1`, found by the physics-rule review of
+2026-09-19 and verified in a probe run: the engine read a measured event's
+suspension before its self-creation, so in a steady field (the sizes at its
+Node at or above one whole unit at every interval) the count was owed again
+every time it was spent, and the clock of a measured event with
+`suspension` 1 stood still: no self-creation, no release, no phase turn, no
+step (probes of content 1 at r = 4 to 14 from a content of 2^24 aged 4 to
+17 in 60 intervals while the source aged 60). The law says slower, not
+still (Highlights 5.4: "a measured event that reads a large size releases
+and turns slower"; the transit's rule, a count k written on arrival, held k
+intervals, then one Link). Now a measured event that owes nothing is
+created again first, and then reads this interval's sizes of the other
+numbers at its Node and owes `suspension` intervals per whole unit read,
+paid one per interval before its next self-creation: in a steady size of k
+whole units it is created again once every k + 1 intervals, its clock
+slowed by 1 / (k + 1) and never frozen. Its step by its momentum is made
+when it owes nothing, in the self-creation's interval when that read no
+count, else in the interval the last unit is paid. `age + waited` is the
+intervals completed, as before. Worlds with `suspension` 0 are unchanged;
+`test_event_suspension` (b) is re-pinned (ages 1, 1, 1, 1, 1, 2 after
+intervals 1 to 6) and (c), a measured event in a steady field, is added
+([the engine](ENGINE.md), [expectations](TEST_EXPECTATIONS.md#the-suspension)).
+No key of the world file or of the record changes.
+
 ## The phase window, on 2026-09-19 (`phase_window`)
 
 The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

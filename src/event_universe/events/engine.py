@@ -12,18 +12,16 @@ is kept at a Node: no register, no remainder, no parked share, no draw.
 
 A measured event (`Measured`): an amount per family, a momentum, a phase, a
 number, a whole charge, a table, and its counts (its age, the self-creations
-made; the intervals its exit is still suspended). The interval, in this
-order:
+made; the count it still owes before its next self-creation). The interval,
+in this order:
 
 1. every departure is created one Link on (`Transit.walk`), its record
    unchanged (an event in transit does not turn), the escapes booked;
 2. at every Node the size of the coherent sum of each number's arrivals is
-   formed; a measured event whose count is spent reads the sizes of the other
-   numbers at its Node and is suspended for `suspension` intervals per whole
-   unit read (`Measured.owed`, written when the count is spent, never
-   accumulated); the events of a paid family that arrived this interval read
-   the free families' sizes at their Node and carry the same count
-   (`Transit.suspend`);
+   formed, this interval's sizes, what the measured events read at their
+   self-creations (step 5); the events of a paid family that arrived this
+   interval read the free families' sizes at their Node and carry the same
+   count (`Transit.suspend`);
 3. a measured event meets the events that arrive at its Node: its own
    number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
@@ -47,7 +45,10 @@ order:
    by the largest remainder with the ties in the tick's Port order, a group
    with no whole for any side going whole by its momentum, the departures
    into flight; a suspended slot stays, its count paid by one;
-5. a measured event whose count is spent is created here again: its age
+5. a measured event that owes a count pays it by one and is created here
+   without a self-creation: no release, no turn (`waited` counts these
+   intervals; age + waited is the intervals completed). One that owes
+   nothing is created here again, the self-creation: its age
    advances by one, and off its clock it releases, per free family it holds,
    content x the world's `release` per Port (`by_clock`: what the whole part
    of age x rate gained this self-creation, no remainder anywhere), a lamp
@@ -59,9 +60,22 @@ order:
    amount, along the heading); a lamp with a `phase_window` releases only at
    the self-creations whose clock phase, the one its release is stamped
    with, falls in its window; its phase turns by its content over K off its
-   clock at every self-creation, released or not; one whose count runs pays
-   it by one and neither releases nor turns;
-6. a measured event steps by its momentum off its clock: on an axis with
+   clock at every self-creation, released or not. After its self-creation
+   it reads the sizes of the other numbers at its Node, this interval's
+   (step 2), and owes `suspension` intervals per whole unit read
+   (`Measured.owed`, written once per self-creation, never accumulated),
+   paid before its next self-creation: in a steady size of k whole units it
+   is created again once every k + 1 intervals, its clock slowed by
+   1 / (k + 1) and never stopped (the redshift). The read follows the
+   self-creation and never precedes it: a read before it, of the same steady
+   size, would owe the count again every time it was spent and the clock
+   would never tick (the order of the first `events-v1`, corrected on
+   2026-09-19, docs/MIGRATION.md);
+6. a measured event steps by its momentum off its clock when it owes
+   nothing: in the interval of its self-creation when that read no count,
+   else in the interval the last unit of its count is paid, so a suspended
+   event is created here for its count and each self-creation's step is
+   read once; on an axis with
    momentum p and content M, one Link per (M + p) / p self-creations
    (`by_clock` with p over M + p), at most one step per interval, x before y
    before z, the momentum untouched; a step onto a measured event merges the
@@ -138,7 +152,8 @@ class Measured:
     declared_content: int
     detector: int | None
     threshold: int
-    # The clock (the self-creations made) and the suspension count.
+    # The clock (the self-creations made) and the count owed: read after a
+    # self-creation, paid one per interval before the next.
     age: int = 0
     owed: int = 0
     # What came home or is re-released, per family: created again at the
@@ -308,24 +323,30 @@ class EventSimulation:
                     continue
                 read = np.repeat(free_size[..., None], len(transit.owners), axis=-1)
                 transit.suspend(read, world.suspension, arrived[index])
-        # The events at the measured events and their suspension, then the mixing.
+        # The events at the measured events, then the mixing.
         for number in sorted(self.measured):
-            entry = self.measured[number]
-            self._suspend(entry, size_total, size_by_number)
-            self._meet(entry)
+            self._meet(self.measured[number])
         for transit in self.transits:
             transit.cycle()
-        # The self-creations: the releases and the clocks; the steps last, in
-        # number order.
+        # The self-creations: the releases and the clocks, each followed by
+        # the read of the count it owes; the steps last, in number order.
         for number in sorted(self.measured):
-            self._release(self.measured[number])
+            entry = self.measured[number]
+            if self._release(entry):
+                self._suspend(entry, size_total, size_by_number)
         for number in sorted(self.measured):
             if number in self.measured:
                 self._move(self.measured[number])
 
     def _suspend(self, entry: Measured, size_total: np.ndarray, size_by_number: np.ndarray) -> None:
+        """The count a measured event owes after its self-creation: the sizes
+        of the other numbers at its Node this interval, `suspension` intervals
+        per whole unit read, written once per self-creation and paid one per
+        interval before the next (never accumulated; nothing without a
+        width). A steady size of k whole units slows the clock to one
+        self-creation per k + 1 intervals and never stops it."""
         width = self.world.suspension
-        if not width or entry.owed > 0:
+        if not width:
             return
         read = int(size_total[entry.position]) - int(size_by_number[(*entry.position, entry.number)])
         entry.owed = read * width // MIXING_AMPLITUDE_SCALE
@@ -434,13 +455,15 @@ class EventSimulation:
                 push[axis] += -whole if total < 0 else whole
         return push[0], push[1], push[2]
 
-    def _release(self, entry: Measured) -> None:
-        """The self-creation of a measured event whose count is spent: its
-        clock advances, its releases and its phase turn read off it."""
+    def _release(self, entry: Measured) -> bool:
+        """The self-creation of a measured event that owes nothing: its clock
+        advances, its releases and its phase turn read off it (True). One
+        that owes a count pays it by one instead, no release and no turn,
+        and `waited` counts the interval (False)."""
         if entry.owed > 0:
             entry.owed -= 1
             entry.waited += 1
-            return
+            return False
         age = entry.age
         entry.age += 1
         position = entry.position
@@ -505,9 +528,13 @@ class EventSimulation:
             )
         entry.phase = (entry.phase + steps) & self.world.phase_mask
         entry.phase_steps += steps
+        return True
 
     def _move(self, entry: Measured) -> None:
-        """The step by the momentum off the clock, at most one per interval."""
+        """The step by the momentum off the clock, at most one per interval,
+        when nothing is owed: in the self-creation's interval when it read no
+        count, else in the interval the last unit of its count is paid (the
+        self-creation is then the last, `age - 1` its age before it)."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content

@@ -24,7 +24,7 @@ modules are named in the [migration notes](MIGRATION.md).
 | --- | --- |
 | `test_node_mixing.py` | The Node's computation of the sides on one Node of the engine's transit: the 3B_h rule, the coherent sum, the largest remainder with the tick's ties, a group with no whole going by its momentum, the momentum carried, nothing kept ([below](#the-nodes-computation-of-the-sides)) |
 | `test_event_transit.py` | An event in transit: a single quantum whole by its momentum, no turn in transit, a part turned back apportioned again, a lone free unit straight from its release ([below](#an-event-in-transit)) |
-| `test_event_suspension.py` | The suspension the event carries: the count derived on arrival, the next event delayed, a measured event's clock waiting ([below](#the-suspension)) |
+| `test_event_suspension.py` | The suspension the event carries: the count derived on arrival, the next event delayed, a measured event's clock slowed by the count it reads after its self-creation, never frozen ([below](#the-suspension)) |
 | `test_event_clock.py` | The clock of a measured event: every rate off its age by whole division, the release, the phase, the lamp's recoil, the step ([below](#the-clock-of-a-measured-event)) |
 | `test_event_worlds.py` | The worlds of the law of events on minimal boards: the books, the constant content, the flux, the shell means, the pair's pushes and the product law, the two-slit detector, the refusals and the runner ([below](#the-worlds-of-the-law-of-events)) |
 | `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
@@ -82,13 +82,19 @@ direction, by its momentum, and does not turn. Written down first:
 2026-09-19: "The event carries it; note that the next event is delayed"): an
 exit derives its suspension from the sizes read at the Node, the event
 carries the count and counts down on itself, what arrives behind it waits
-with it, and a measured event whose count is spent reads again. K 2^20 so
-that no phase moves. Written down first:
+with it, and a measured event reads the sizes after its self-creation and
+pays the count before its next one, so a steady size of k whole units slows
+its clock to one self-creation per k + 1 intervals and never stops it ("a
+measured event that reads a large size releases and turns slower"). K 2^20
+so that no phase moves. Written down first ((b) re-pinned and (c) added on
+2026-09-19, when the first `events-v1` was found to read before the
+self-creation and to freeze the clock in a steady field):
 
 | Case | Input | Expected |
 | --- | --- | --- |
 | (a) an event in transit | a bar of 9 x 3 x 3, `suspension` 1; at x = 4 a unit of light and 16 units of a free family (the size 32 sqrt 16 = 128 in 32nds, 4 whole units) both in transit on +X; a second unit of light at x = 3 on +X | the light at x = 4 is held for intervals 1 to 4, its count after each interval 3, 2, 1, 0; the second unit arrives in interval 2 and waits with it; in interval 5 the two leave together on +X, amount 2, nothing left in the arrivals |
-| (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | its age after intervals 1 to 6: 0, 0, 0, 0, 1, 2; intervals waited 4, count spent, phase 0 |
+| (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | interval 1: nothing owed, a self-creation (age 1), then the read of 128, 4 owed; intervals 2 to 5 pay them (3, 2, 1, 0 left), no self-creation; interval 6 a self-creation (age 2) reading an empty Node; its age after intervals 1 to 6: 1, 1, 1, 1, 1, 2; intervals waited 4, nothing owed, phase 0; age + waited = 6 |
+| (c) a steady field | a bar of 2 x 1 x 1, `suspension` 1, `release` [1, 128]; a content of 2048 of the free family at the corner x = 0 (five of its six exits off the open board), a measured event of light (content 1, measuring the free family) at x = 1; 30 intervals | the source is created again every interval (age 30; nothing of another number reaches it) and 16 units reach the probe every interval from the second on (464 held after 30), the size 128, k = 4; the probe's age after intervals 1 to 7: 1, 2, 2, 2, 2, 2, 3 (a self-creation in interval 2 owing 4, paid in 3 to 6, the next in 7), then once every 5 intervals (12, 17, 22, 27): after 10, 20 and 30 the ages 3, 5, 7, waited 23, 1 owed; age + waited = the interval at every interval; the age after 30 exceeds the age after 10 (slowed by 1 / 5, not frozen) |
 
 ## The clock of a measured event
 
