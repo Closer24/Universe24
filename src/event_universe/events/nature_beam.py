@@ -573,19 +573,49 @@ class RayStore:
     def sort(self) -> None:
         self.take(np.argsort(self.node, kind="stable"))
 
+    def merge_key(self) -> np.ndarray | None:
+        """The identity fields packed into one integer key per row, in the
+        order of `IDENTITY_FIELDS` (the Node first) with every field offset
+        to its least value, so that the keys order the rows exactly as the
+        lexsort of the fields does and equal keys are identical rows; None
+        when the fields' ranges do not fit the register (62 bits), the
+        lexsort then taking the same total order."""
+        columns = [getattr(self, name) for name in IDENTITY_FIELDS]
+        lows = [int(column.min()) for column in columns]
+        widths = [
+            (int(column.max()) - low).bit_length() for column, low in zip(columns, lows, strict=True)
+        ]
+        if sum(widths) > 62:
+            return None
+        key = np.zeros(self.size, dtype=np.int64)
+        for column, low, width in zip(columns, lows, widths, strict=True):
+            key = (key << width) + (column - low)
+        return key
+
     def merge(self) -> None:
         """Identical rows (equal in every field but the amount) merged, the
-        amounts added; then sorted by Node. A bijection: a permutation of
-        rows and a sum of interchangeable units."""
+        amounts added, the rows in the total order of the identity fields,
+        the Node first (so no second sort by Node is needed). A bijection: a
+        permutation of rows and a sum of interchangeable units. The order
+        is taken by the one packed key (`merge_key`) where the fields fit
+        the register, by the lexsort of the fields otherwise: the same
+        total order either way."""
         if self.size == 0:
             return
-        order = np.lexsort(tuple(getattr(self, name) for name in reversed(IDENTITY_FIELDS)))
-        self.take(order)
+        key = self.merge_key()
         same = np.zeros(self.size, dtype=bool)
-        same[1:] = True
-        for name in IDENTITY_FIELDS:
-            column = getattr(self, name)
-            same[1:] &= column[1:] == column[:-1]
+        if key is None:
+            order = np.lexsort(tuple(getattr(self, name) for name in reversed(IDENTITY_FIELDS)))
+            self.take(order)
+            same[1:] = True
+            for name in IDENTITY_FIELDS:
+                column = getattr(self, name)
+                same[1:] &= column[1:] == column[:-1]
+        else:
+            order = np.argsort(key, kind="stable")
+            self.take(order)
+            key = key[order]
+            same[1:] = key[1:] == key[:-1]
         starts = np.flatnonzero(~same)
         # The merged amounts are exact: in the register when no group's sum
         # can leave it, in Python integers otherwise, and bounded.
@@ -601,7 +631,6 @@ class RayStore:
         self.keep(~same)
         self.amount = amount
         self.arrival[:] = HERE
-        self.sort()
 
     def slice(self, flat: int) -> tuple[int, int]:
         """The contiguous rows of one Node in the sorted store."""

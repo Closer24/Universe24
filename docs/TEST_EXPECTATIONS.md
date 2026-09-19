@@ -31,7 +31,7 @@ kept, their pins the law of events').
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
-| `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact ([below](#the-bijection)) | new |
+| `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
 | `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the affordable amount bounded before the record's products ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
@@ -215,6 +215,16 @@ rest slots and two fan directions, head-on pairs among them, amounts 1 and
 measured event: the sorted store equal to the start in every field; the
 state at the turning point differs from the start; the collision moved at
 least one ray on the way.
+
+The merge (step 6; added 2026-09-19 with the optimizations of RAY_LAW
+section 10, note 22): 82 fixed rows (60 distinct over 200 Nodes, 10
+directions, 23 ages, the circle, 3 numbers, 3 contents, charges 0 and -1,
+5 masses; 20 of them repeated; two extremes) merged by the packed key of
+the identity fields equal the Python sort of the identity tuples with the
+amounts of equal tuples added, 62 rows, every arrival reset to here; the
+same rows with every other mass raised by 2^61 (the key does not fit the
+register, `merge_key` is None) merged by the lexsort fallback equal their
+Python sort likewise; the empty store merges to the empty store.
 
 ## The detector's record
 
