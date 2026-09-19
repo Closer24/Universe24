@@ -52,7 +52,9 @@ def execute_ray_run(
     failure: Exception | None = None
     completed = 0
     started = time.perf_counter()
-    with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
+    # The record's stream buffered by the megabyte: a run writes a record
+    # line per event, tens of thousands of short writes.
+    with (output / "events.jsonl").open("w", encoding="utf-8", buffering=1 << 20) as stream:
 
         def record(event: dict[str, object]) -> None:
             stream.write(json.dumps(event) + "\n")

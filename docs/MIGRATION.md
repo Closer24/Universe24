@@ -6,6 +6,32 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The detector's record exact, never refused, on 2026-09-19 (after the batching)
+
+The night's affordable amount refused `examples/events/two_contents.json`
+at its 20th interval (262144 units on `face:+y` in one interval, above
+261123), a world that had run 200 intervals before the bound; a report
+of the host is exact and is neither refused nor wrapped
+([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+note 19; [validation](VALIDATION.md)).
+
+- **Deleted**: `nature_beam.RECORD_AMOUNT_BOUND`, `check_record_amount`,
+  `record_amount` and the refusal "the amount ... clicked at ... exceeds
+  the affordable amount"; the `record` line of `events.jsonl` and the
+  detectors' reports are unchanged in form.
+- **Added**: `nature_beam.POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x 257)
+  = 560759486676481, the clicked amount up to which the coherent pointer
+  is summed in the int64 register, and `nature_beam.coherent_pointer`,
+  the pointer per group of clicked rows, in the register within the bound
+  and in Python integers beyond it; `FamilyPlan.pointer` holds (X, Y).
+- **The record's value**: `Measured.record` and `Ledger.face_record` are
+  exact Python integers with no bound; the `record` of `run.json` (the
+  detectors' reports) and of `state.json` (the measured events) can
+  exceed 2^63. A reader must parse it as an arbitrary-precision integer
+  (Python's `json` does; a reader that loads it into int64 must not).
+- **Worlds**: every world that ran before runs byte for byte the same;
+  a world the bound refused now completes.
+
 ## The push as one form, the one label and the affordable amount, on 2026-09-19 (the night)
 
 The physics-rule review of the law of the ray (its findings F1, F2, F3, F7)

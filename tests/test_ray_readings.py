@@ -45,7 +45,17 @@ docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
     of number 2 and 1 of number 3 clicks all three (`events` 3), the 2 alone
     pass with a `pass` record each (`threshold` 3); at threshold 1 with the
     window 32, the two rays at phase 0 pass (`window` 32) and the ray at
-    phase 32 clicks: the window reads the record, ray by ray.
+    phase 32 clicks: the window reads the record, ray by ray;
+(e) the dense readings of the board, decomposed on request from the rows
+    of the walk for the active Nodes only (added 2026-09-19): on the open
+    9 x 3 x 3 board with no measured event, 9 units arriving at (4, 1, 1)
+    on +X and 9 on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at
+    (6, 1, 1), after one interval the count is 18, 3 and 0 at those Nodes
+    (21 over the board), the flow (0, 0, 0), (0, 3, 0) and (0, 0, 0), the
+    presence 18, 3 and 2 (23 over the board), the Links crossed per Port
+    (9, 9, 0, 0, 0, 0) at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1)
+    (21 over the board); before the first interval, and on an empty
+    board, every array is zero with its shape.
 """
 
 from __future__ import annotations
@@ -302,3 +312,30 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_each_rays_own_phase(
     assert entry.events == [0, 1] and entry.held == [4, 1]
     kinds = [(r["event"], r["number"], r.get("phase"), r.get("window")) for r in records]
     assert kinds == [("pass", 2, 0, 32), ("click", 3, 32, None), ("record", 0, None, None)]
+
+
+def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
+    """(e)."""
+    rays = [
+        ray(NODE, "m", 1, PLUS_X, 9),
+        ray(NODE, "m", 1, MINUS_X, 9),
+        ray([2, 1, 1], "m", 1, [0, 1, 0], 3),
+        {"position": [6, 1, 1], "family": "m", "number": 1, "direction": 0, "amount": 2, "phase": 0},
+    ]
+    simulation = RaySimulation(parse_ray_world(world([FAMILIES[0]], [], rays)))
+    zero = simulation.count[0], simulation.flow[0], simulation.presence[0], simulation.per_port[0]
+    assert [a.shape for a in zero] == [(9, 3, 3), (9, 3, 3, 3), (9, 3, 3), (9, 3, 3, 6)]
+    assert all(int(np.abs(a).sum()) == 0 for a in zero)
+    simulation.step()
+    count, flow = simulation.count[0], simulation.flow[0]
+    presence, per_port = simulation.presence[0], simulation.per_port[0]
+    assert count[4, 1, 1] == 18 and flow[4, 1, 1].tolist() == [0, 0, 0] and presence[4, 1, 1] == 18
+    assert count[2, 1, 1] == 3 and flow[2, 1, 1].tolist() == [0, 3, 0] and presence[2, 1, 1] == 3
+    assert count[6, 1, 1] == 0 and presence[6, 1, 1] == 2
+    assert int(count.sum()) == 21 and int(presence.sum()) == 23
+    assert flow.sum(axis=(0, 1, 2)).tolist() == [0, 3, 0]
+    assert per_port[4, 1, 1].tolist() == [9, 9, 0, 0, 0, 0]
+    assert per_port[2, 1, 1].tolist() == [0, 0, 3, 0, 0, 0] and int(per_port.sum()) == 21
+    empty = RaySimulation(parse_ray_world(world([FAMILIES[0]], [], [])))
+    empty.step()
+    assert int(empty.count[0].sum()) == 0 and int(empty.per_port[0].sum()) == 0

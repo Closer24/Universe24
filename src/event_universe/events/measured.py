@@ -22,7 +22,10 @@ class Measured:
     counters. `pending` holds, per family, what came home or is re-released
     and waits for the next self-creation: (amount, content per unit, phase)
     per arriving record. `record` is the detector's squared coherent reading
-    per family, cumulative. The engine sets `creating`, `clock_age` and
+    per family, cumulative: an exact Python integer, a report of the host
+    that is never refused and may pass 2^63 (its readers in `run.json` and
+    `state.json` parse it as an arbitrary-precision integer). The engine
+    sets `creating`, `clock_age` and
     `turn` before every interval (the clock's frame) and reads `presence`
     after it (the clock's count)."""
 
@@ -104,11 +107,16 @@ class Ledger:
     """The cumulative books of a run, per family: the measured line (in
     content), the transit line (in units), the content line (the content
     carried) and the momentum escaped; the face detectors' tallies per open
-    face and family (the escaped lines are their sums). The engine owns the
-    identities; `nature_beam` adds what the interval moved."""
+    face and family (the escaped lines are their sums); and the running
+    transit line of the momentum, `transit_momentum`, the one label of
+    every row in the stores, kept as the rows come and go (born, escaped,
+    home, absorbed; the collision and the merge conserve it) so that the
+    books need no pass over the store. The engine owns the identities;
+    `nature_beam` adds what the interval moved."""
 
     families: int
     open_faces: tuple[int, ...]
+    transit_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     held_measured: list[int] = field(default_factory=list)
     held_spent: list[int] = field(default_factory=list)
     held_escaped: list[int] = field(default_factory=list)

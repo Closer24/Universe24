@@ -396,23 +396,30 @@ S[phase_u])` and the record `X^2 + Y^2`, an integer added to the detector's
 and the clicks; the phase of every click is written on its record as today.
 Two rays of equal amount in phase record 4 A^2 x 256^2, in antiphase 0, each
 alone A^2 x 256^2: the wave is this reading and nothing else (the plain count
-never fringes; rays, section 3). **Bound: the affordable amount** (the
-physics-rule reviewer's F2; section 10, note 19). The amplitude of a row is
-`32 x amount` (note 3) and every entry (C, S) of the 1/256 tables is shorter
-than 257 for every N (the largest C^2 + S^2 is 65897), so the pointer is a
-sum of vectors of length at most `32 x 257` per unit and its length is at
-most `32 x 257 x (the amount clicked)`; for the record to fit 2^62 - 1 the
-amount a detector Node clicks of one family in one interval is bounded by
-`isqrt(2^62 - 1) // (32 x 257)` = **261123** units (`RECORD_AMOUNT_BOUND`;
-2^17 inside, 2^18 refused). The clicked amount is summed exactly and
-checked against this bound before any product of the record is formed; a
-larger set refuses the run with `OverflowError` naming the detector's Node
-and the sum (the face detectors the same, naming the face). Every other
-sum the law forms (the amounts and the contents of a set, the labels of
-the transit line, the merged amounts) is exact (`exact_sum`), never a
-wrapped register. A lamp whose crowd at one Node passes the bound must
-lower its rate or its amount; the registered worlds are inside (the
-coupling series' faces click 174762 per interval). The threshold reads the
+never fringes; rays, section 3). **The record is exact and never refused**
+(section 10, note 19; the physics-rule reviewer's F2, corrected twice).
+The record is a reading the host reports, not the law's local work: the
+law's bound 2^62 - 1 governs what a Node holds and moves (the amounts,
+the contents, the labels, the pushes), and a report of the host has no
+bound. The amplitude of a row is `32 x amount` (note 3) and every entry
+(C, S) of the 1/256 tables is shorter than 257 for every N (the largest
+C^2 + S^2 is 65897), so each component of the pointer is within
+`32 x 257 x (the amount clicked)`: the pointer is summed in the int64
+register while the amount a detector Node (or a face) clicks of one
+family in one interval is within `(2^62 - 1) // (32 x 257)` =
+**560759486676481** (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond)
+and in Python integers beyond it (`coherent_pointer`: one comparison of
+the exact clicked amount per group, a few groups per interval); the
+square `X^2 + Y^2` and the record that accumulates it are Python
+integers always, per detector Node per family (`Measured.record`) and
+per face per family (`Ledger.face_record`), held beside the arrays and
+updated only for the Nodes clicked. The record of `events.jsonl`,
+`run.json` and `state.json` is this exact integer: it can exceed 2^63
+(`two_contents` holds 181 x 2^62 on `face:+y` after 200 intervals) and a
+reader parses it as an arbitrary-precision integer (JSON has no bound;
+Python's `json` reads it exactly). Every sum the law forms (the amounts
+and the contents of a set, the labels of the transit line, the merged
+amounts) is exact (`exact_sum`), never a wrapped register. The threshold reads the
 **arrivals** of every number but the Node's own (the rays that stepped
 into the Node this interval; the reviewer's F3, settled by the decision of
 note 18: a ray that dwells at the Node on its digital line, or rests
@@ -561,6 +568,8 @@ loop in rays2), so a board with one ray per Node breaks even and a dense
 gas of the six headings with `sum L_d x N` rows per Node is slower; the
 collision must be vectorized (segment ids, a `bincount` per Node, one table
 read on the 3^8 code, `np.put` of the new directions) to reach the budget.
+Resolved by the implementation and its optimizations (section 10, notes 8
+and 22: 0.11 us per Node on the plane, 0.69 us per row on the two slits).
 (d) The tie by Port order in the collision is the one undeclared breaking;
 a test asserts the six-orientation average of a head-on pair's exits is
 isotropic. (e) The re-registered readings are expectations, not results:
@@ -728,17 +737,35 @@ implementation's part of the contract. The design above is unchanged.
     Nodes; `tests/test_ray_bijection.py` passes as before) and the
     registered runs are unchanged record by record (no collision acts in
     them and their arrivals are their directions; VALIDATION.md).
-19. **The affordable amount** (the reviewer's F2, blocking;
-    `tests/test_ray_detector.py` (e)). The record's amplitude products were
-    unchecked int64 (an amount of 2^52 recorded 0 silently) and the
-    design's bound `256 x 32 x isqrt(sum amount)` was stale (the amplitude
-    is linear, note 3). The clicked amount of one detector Node per family
-    per interval is now summed exactly and checked against
-    `RECORD_AMOUNT_BOUND` = isqrt(2^62 - 1) // (32 x 257) = 261123 before
-    any product is formed, at a detector and at a face alike (section 5),
-    and every reduction of the law is exact (`exact_sum`,
-    `exact_column_sums`, the merge's sums, the label weights checked
-    before their product).
+19. **The record exact, never refused** (the reviewer's F2, corrected
+    twice; `tests/test_ray_detector.py` (e), `tests/test_ray_worlds.py`
+    (e)). The finding: the record's amplitude products were unchecked
+    int64 (an amount of 2^52 recorded 0 silently) and the design's bound
+    `256 x 32 x isqrt(sum amount)` was stale (the amplitude is linear,
+    note 3). The night's correction refused the run when a detector Node
+    or a face clicked more than the affordable amount
+    `RECORD_AMOUNT_BOUND` = isqrt(2^62 - 1) // (32 x 257) = 261123 of one
+    family in one interval; the same night `examples/events/two_contents.json`
+    (two fixed contents of 2^24 at `release` [1, 128] on an open 21^3
+    board), which had run 200 intervals before the bound, was refused at
+    its 20th interval when the two +y beams of 2^17 left through
+    `face:+y` together (262144). A refusal was the wrong correction for a
+    report: the record is a host reading, not the law's local work, so
+    it must be exact and can be neither refused nor wrapped. The
+    correction now (2026-09-19, after the batching): the pointer (X, Y)
+    is summed in the int64 register while the clicked amount is within
+    `POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x 257) = 560759486676481
+    (each component within 32 x 257 x the amount, inside 2^62 - 1) and
+    in Python integers beyond it (`coherent_pointer`); the square and the
+    cumulative record are Python integers always (`Measured.record`,
+    `Ledger.face_record`); `RECORD_AMOUNT_BOUND`, `check_record_amount`,
+    `record_amount` and the refusal are deleted. The record written to
+    `events.jsonl`, `run.json` and `state.json` can exceed 2^63 and is
+    parsed as an arbitrary-precision integer. Every reduction of the law
+    stays exact (`exact_sum`, `exact_column_sums`, the merge's sums, the
+    label weights checked before their product). The 44 other example
+    worlds are byte-identical before and after; `two_contents` completes
+    its 200 intervals with the books closed (VALIDATION.md).
 20. **The push as one bilinear form; the emitter's factor on the record**
     (the model owner's proposal 2, "2 with the physicist"; the reviewer's
     verdict "admissible with two corrections"; `tests/test_ray_push.py` (a)
@@ -785,3 +812,55 @@ implementation's part of the contract. The design above is unchanged.
     every direction. Registered in PROJECT_STATUS ("What is open") and in
     the orbit register (EXPERIMENTS.md, D); nothing was changed in the
     law.
+22. **The host's batching** (the optimizations of 2026-09-19; the model
+    owner: "make sure there is optimization in everything"). Five changes
+    to how the host runs the law and none to the law: the same integers
+    in the same order of reduction, every example world's `events.jsonl`
+    and `state.json` byte-identical before and after (VALIDATION.md), the
+    bijection and every pinned test unchanged. (i) Step 4 is taken in
+    bulk across the measured events: the rows at measured events found by
+    one gather per family, grouped by (measured event, number) with one
+    segmented sum per moment, the threshold and the window as masks,
+    every bound of the per-set rule checked per group (the same
+    condition, the same refusal at the same point of the interval), the
+    records and the side effects then applied per group in the order of
+    the records (`FamilyPlan`); the walk already batched the rays and the
+    collision the Nodes the same way. (ii) The dense readings of the board
+    (`count`, `flow`, `presence`, `per_port`) are diagnostics, decomposed
+    on request from the rows the walk left (`Readings`, `ArrivalRows`)
+    over the active Nodes only; the law reads its own local sets at the
+    measured events; the keyed reading's bound is checked when the
+    diagnostics are read. (iii) The merge orders the rows by one packed
+    key of the identity fields when their ranges fit 62 bits (checked at
+    every merge from the columns' extremes, `merge_key`) and by the
+    lexsort of the fields otherwise, the same total order; the second
+    sort by Node is gone, the Node being the first field. (iv) The books
+    are running ledger lines: the transit momentum is kept by the law as
+    rows are born and leave (`Ledger.transit_momentum`; the collision
+    conserves it, its class fixing the vector sum of the singles, and the
+    merge conserves it), the transit and content `current` are what was
+    released less what left; `RaySimulation.recount()` counts the three
+    lines from the rows on request and `tests/test_ray_books.py` asserts
+    the running lines equal the recount at every interval; the per-tick
+    `balanced` of `run.json` now checks the ledger's own consistency, the
+    recount the store. The collision table is generated once per process
+    and shared read-only. (v) The clocks' frame is taken for every
+    measured event at once (`_frame_all`), the self-creations visit only
+    the measured events that can release, `np.r_` and the per-family
+    property reads are gone from the interval, `events.jsonl` is written
+    through a megabyte buffer. Not done: a process pool (the audit's
+    condition: it pays only above about 10^6 rows per interval; the
+    per-world parallelism of `tools/run_series.py` uses the cores) and
+    narrower dtypes (the store's columns stay int64 for the bound checks,
+    the step table int8; no measurable cost at these sizes). Measured
+    (headless, the record and the books every tick, the best of three
+    runs): the plane source of series C 2.97 -> 1.61 ms per interval
+    (0.20 -> 0.11 us per Node, 0.75 -> 0.40 us per row), two slits 12.4
+    -> 3.5 ms (1.71 -> 0.48 us per Node, 2.43 -> 0.69 us per row), Bell
+    0.53 -> 0.47 ms, one content 0.77 -> 0.58 ms, the orbit s32_r12 1.47
+    -> 0.77 ms; the suite 16.8 -> 5.5 s. Risk (c) of section 9 is
+    resolved: the collision is vectorized (segment ids, one table read
+    per Node) and the interval's cost is a function of the rows in flight
+    and the measured events met, not of the Nodes, the store's promise of
+    section 3 (the plane's 14641 Nodes cost 0.11 us each, the two slits'
+    5100 rows 0.69 us each).

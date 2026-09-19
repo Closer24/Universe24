@@ -70,7 +70,12 @@ event `fixed`; a 12 x 1 x 1 bar with y and z periodic (the stub: a ray on
     (6, 3, 0), the label out the same), the transit line (6, 3, 0) before
     and after; a paid ray coming home: the `home` record's `push` is its
     label (1, 0, 0) and the emitter's momentum is (0, 0, 0) after the
-    re-creation (in at the home, out at the release).
+    re-creation (in at the home, out at the release);
+(i) the factor is read off the rows met: the world of (a) with two
+    bystander rays of the probe's number (charge 1, mass 5 on their record)
+    parked on the stub of the y axis at x = 2 and 3, rows before the probe's
+    in the store: every push (-17, 0, 0) and `pushed` (-340, 0, 0) as in
+    (a), the bystanders untouched.
 """
 
 from __future__ import annotations
@@ -319,3 +324,27 @@ def test_the_click_the_re_emission_and_the_home_move_the_one_label():
         assert simulation.measured[1].momentum == [0, 0, 0]
     homes = [r for r in records if r["event"] == "home"]
     assert len(homes) >= 2 and all(r["push"] == [1, 0, 0] and r["amount"] == 1 for r in homes)
+
+
+def test_the_factor_is_read_off_the_rows_met_among_other_rows():
+    """(i)."""
+    bystanders = [
+        {
+            "position": [x, 0, 0],
+            "family": "m",
+            "number": 2,
+            "direction": [0, 1, 0],
+            "amount": 1,
+            "phase": 0,
+        }
+        for x in (2, 3)
+    ]
+    simulation, records = run(bar([source(3), probe(1)], in_transit=bystanders))
+    reads = reads_of(records, 2)
+    assert [tick for tick, _, _ in reads] == list(range(11, 31))
+    assert all(push == [-17, 0, 0] for _, _, push in reads)
+    assert simulation.measured[2].pushed == [-340, 0, 0]
+    store = simulation.stores[M]
+    vectors = simulation.tables.flight.vectors
+    parked = (vectors[store.direction] == [0, 1, 0]).all(axis=1) & (store.node < 6)
+    assert sorted(store.node[parked].tolist()) == [2, 3] and (store.amount[parked] == 1).all()
