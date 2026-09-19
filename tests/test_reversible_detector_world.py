@@ -255,6 +255,7 @@ def test_legacy_defaults_and_summary_are_unchanged_and_candidate_preflight_is_id
         "model": "detector-schema-test",
         "law": EVENTS_LAW,
         "shape": (3, 1, 1),
+        "boundary": {"x": "open", "y": "open", "z": "open"},
         "ticks": 1,
         "families": 1,
         "measured": 1,
