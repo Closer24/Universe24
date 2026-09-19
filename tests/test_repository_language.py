@@ -25,6 +25,7 @@ GENERATED_DIRECTORIES = {
     "build",
     "dist",
     "node_modules",
+    "worktrees",  # agents' git worktrees under .claude/, checkouts and not repository content
 }
 TEXT_SUFFIXES = {
     ".py",
