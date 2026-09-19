@@ -22,6 +22,7 @@ from uuid import uuid4
 from event_universe.configuration_validation import validate_configuration
 from event_universe.json_documents import parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
+from event_universe.world_loading import load_world
 
 if sys.platform == "win32":
     _creation_flags = subprocess.CREATE_NO_WINDOW
@@ -29,9 +30,16 @@ else:
     _creation_flags = 0
 
 MAX_REQUEST = 1_048_576
-ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl"}
+ARTIFACTS = {
+    "initialization.json",
+    "initialization_bundle.json",
+    "resolved_initialization.json",
+    "run.json",
+    "state.json",
+    "events.jsonl",
+}
 RUN_ROUTE = re.compile(r"/api/runs/([a-f0-9]{32})(?:/(stop))?")
-FILE_ROUTE = re.compile(r"/runs/([a-f0-9]{32})/([a-z.]+)")
+FILE_ROUTE = re.compile(r"/runs/([a-f0-9]{32})/([a-z_.]+)")
 EXPORT_ROUTE = re.compile(r"/exports/([a-f0-9]{32})\.json")
 CLEANUP_INTERVAL_SECONDS = 30
 
@@ -155,17 +163,18 @@ class Workspace:
 
     def templates(self) -> list[dict[str, object]]:
         result: list[dict[str, object]] = []
-        for path in sorted(self.configs.glob("*.json")):
-            if path.stat().st_size > MAX_REQUEST:
-                continue
+        for path in sorted(self.configs.rglob("*.json")):
             try:
-                source = path.read_text(encoding="utf-8")
+                if path.stat().st_size > MAX_REQUEST:
+                    continue
+                loaded = load_world(path.read_bytes(), base_dir=path.parent)
+                source = loaded.portable_source.decode("utf-8")
                 summary = validate_source(source)
             except ValueError, OSError, RecursionError:
                 continue
             result.append(
                 {
-                    "id": path.stem,
+                    "id": path.relative_to(self.configs).with_suffix("").as_posix(),
                     "name": re.sub(r"^\d+-", "", path.stem).replace("-", " ").title(),
                     "source": source,
                     "summary": summary,

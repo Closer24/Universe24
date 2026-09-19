@@ -274,3 +274,13 @@ def test_catalog_resources_select_the_preflight_and_no_deleted_consumer(name):
     assert "tests/test_configuration_validation.py" in tests
     assert all(test.startswith("tests/test_") for test in tests)
     assert not any("entity" in test or "profile" in test for test in tests)
+
+
+def test_detector_definitions_select_their_explicit_loading_consumers():
+    tests, _ = CHECK.select(["examples/events/detector/entities/detectors.json"], {})
+    assert {
+        "tests/test_entity_definitions.py",
+        "tests/test_configuration_validation.py",
+        "tests/test_entity_loading_consumers.py",
+    } <= set(tests)
+    assert "tests/test_event_transit.py" not in tests

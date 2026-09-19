@@ -22,6 +22,19 @@ candidate. Implementation, checks and merge state are tracked in
 [issue 342](https://github.com/Closer24/Universe24/issues/342), not inferred from
 this design description.
 
+**Later main and integration scope (2026-09-19).** Main `e7717d7` corrected
+measured self-creation/suspension ordering; main `ddb4470` added per-axis periodic
+transit, including an extent-one return on the next interval. The detector
+integration follows the [native topology contract](ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment)
+for candidate and material movement. [Separate entity definitions](ENTITY_DEFINITIONS.md)
+own reusable apparatus data, deterministic placement, portable dependency bundles
+and input provenance. Their workflow is linked from field development and
+architecture review. Track the actual implementation and merge in
+[PR 344](https://github.com/Closer24/Universe24/pull/344); this entry does not
+claim unmerged integration is already on main. Periodic thin boards do not
+establish full-3D equivalence, and unsupported flux caches cannot stand in for a
+physical detector or executed-transfer measurement.
+
 1. **The law of events** (Highlights 5.4, the paragraphs "The law of events"
    and "The principles of the law of events", the model owner's words of
    2026-09-19; the whole document annotated to it the same day, a reading note
@@ -82,7 +95,8 @@ one-opening control monotone.
 **How the work is done** ([AGENTS.md](../AGENTS.md)): every model decision is
 recorded in Highlights the same day in the owner's words, elaborations flagged;
 one feature per branch and PR with one isolated test module; `PYTHONPATH=src
-python tools/check.py --base origin/main` locally (the whole suite in CI); merge
+python tools/check.py --base origin/main` locally and the affected-check selector
+in CI under current CONTRIBUTING.md; merge
 commits, never a rebase; experiments registered in EXPERIMENTS.md with their
 digests; hypotheses numbered in HYPOTHESES.md; the engine documented in
 ENGINE.md and its coverage in HIGHLIGHTS_IMPLEMENTATION.md; every deletion in

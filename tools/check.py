@@ -13,6 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     "examples/events/README.md": ("tests/test_event_worlds.py",),
+    "examples/events/detector/entities/detectors.json": (
+        "tests/test_entity_definitions.py",
+        "tests/test_configuration_validation.py",
+        "tests/test_entity_loading_consumers.py",
+    ),
 }
 
 

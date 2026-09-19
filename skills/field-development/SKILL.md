@@ -76,3 +76,19 @@ schema edits with architecture. Hand the changed law and its dependency path to
 [physics-rule-validation](../physics-rule-validation/SKILL.md), then tests and
 simulation. Do not claim completion while a retained acceptance assertion fails;
 return the precise remaining law/contract problem to Boss.
+
+## Reusable entity data
+
+For apparatus configuration, follow [the entity definitions contract](../../docs/ENTITY_DEFINITIONS.md).
+Keep detector geometry, supported rule selections and sensitivity in the separate
+entity definitions file; the world supplies explicit references and placements.
+Use the canonical host loader for validation and portable inputs. Changing these
+data does not require an engine branch, formula copy or per-edit rebuild. A new
+unsupported physical interaction is a separate published-law task.
+
+For a loading/interface change, include the runner, preflight, workspace templates,
+import/export/Start, dependency fingerprints and installed data paths in the
+handoff. Verify an exported portable input after relocation and keep the source
+closure fixed for an in-flight run. Do not treat a file reference as permission
+for implicit path searches or restore a deleted entity evaluator. Report actual
+configured Events, physical output and unresolved law limits separately.

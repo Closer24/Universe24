@@ -9,22 +9,27 @@ import pytest
 from event_universe.configuration_validation import main, validate_configuration
 
 ROOT = Path(__file__).resolve().parents[1]
-WORLDS = sorted((ROOT / "examples" / "events").rglob("*.json"))
+WORLDS = sorted(
+    path
+    for path in (ROOT / "examples" / "events").rglob("*.json")
+    if json.loads(path.read_text(encoding="utf-8")).get("format") != "event-entities-v1"
+)
 
 
 @pytest.mark.parametrize("path", WORLDS, ids=[path.stem for path in WORLDS])
 def test_every_shipped_world_is_valid_and_summarized(path):
-    report = validate_configuration(path.read_bytes())
+    report = validate_configuration(path.read_bytes(), base_dir=path.parent)
     assert report.valid and report.kind == "events" and not report.issues, report
     document = json.loads(path.read_text(encoding="utf-8"))
     assert report.summary["model"] == document["model_id"]
     assert report.summary["shape"] == tuple(document["shape"])
     assert report.summary["ticks"] == document["ticks"]
-    assert report.summary["measured"] == len(document["measured"])
+    if "measured" in document:
+        assert report.summary["measured"] == len(document["measured"])
 
 
 def test_the_refusal_names_the_key_and_creates_nothing(tmp_path):
-    world = json.loads((WORLDS[0]).read_text(encoding="utf-8"))
+    world = json.loads((ROOT / "examples" / "events" / "one_content.json").read_text(encoding="utf-8"))
     for key in ("schema_version", "fields", "dense_field"):
         report = validate_configuration(json.dumps({**world, key: 1}))
         assert not report.valid and key in report.issues[0].message

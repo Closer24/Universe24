@@ -21,71 +21,6 @@
       "quantum": 1
     }
   ],
-  "measured": [
-    {
-      "position": [
-        3,
-        4,
-        0
-      ],
-      "family": "carrier",
-      "amount": 1,
-      "fixed": true,
-      "table": {
-        "carrier": "transduce"
-      },
-      "port_map": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ]
-    },
-    {
-      "position": [
-        4,
-        4,
-        0
-      ],
-      "family": "carrier",
-      "amount": 1,
-      "fixed": true,
-      "table": {
-        "carrier": "transduce"
-      },
-      "port_map": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ]
-    },
-    {
-      "position": [
-        5,
-        4,
-        0
-      ],
-      "family": "carrier",
-      "amount": 1,
-      "fixed": true,
-      "table": {
-        "carrier": "transduce"
-      },
-      "port_map": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ]
-    }
-  ],
   "in_transit": [
     {
       "position": [
@@ -104,55 +39,15 @@
       "phase": 16
     }
   ],
-  "detectors": [
+  "entity_definitions": "entities/detectors.json",
+  "entities": [
     {
       "name": "apparatus",
-      "positions": [
-        [
-          3,
-          4,
-          0
-        ],
-        [
-          4,
-          4,
-          0
-        ],
-        [
-          5,
-          4,
-          0
-        ]
-      ],
-      "groups": [
-        {
-          "name": "shared",
-          "positions": [
-            [
-              3,
-              4,
-              0
-            ],
-            [
-              4,
-              4,
-              0
-            ],
-            [
-              5,
-              4,
-              0
-            ]
-          ],
-          "output": [
-            5,
-            4,
-            0
-          ],
-          "threshold": 1,
-          "capacity": 31,
-          "reference_phase": 0
-        }
+      "definition": "three_node_detector",
+      "position": [
+        3,
+        4,
+        0
       ]
     }
   ]
