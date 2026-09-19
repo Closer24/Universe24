@@ -303,6 +303,11 @@ with y and z periodic unless said otherwise.
   coming home on a periodic 4 x 1 x 1 bar: the `home` record's `push` is
   its label (1, 0, 0) and the emitter's momentum (0, 0, 0) after the
   re-creation.
+- (i) the factor is read off the rows met (added 2026-09-19 with the bulk
+  step 4): the world of (a) with two bystander rays of the probe's number
+  (charge 1, mass 5 on their record) parked on the stub of the y axis at
+  x = 2 and 3, rows before the probe's in the store: every push (-17, 0, 0)
+  and `pushed` (-340, 0, 0) as in (a), the bystanders untouched.
 
 ## The re-emission
 
