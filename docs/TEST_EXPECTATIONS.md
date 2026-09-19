@@ -31,6 +31,10 @@ self-movement expectations. `tests/test_event_boundaries.py` isolates those
 rules and serialization; schema checks cover the strict per-axis form and old
 all-open compatibility. A periodic example is a dated research run, not a pinned
 example-output test. No closed-3D equivalence or timing speedup is inferred.
+Since 2026-09-19 its wrapped-movement case onto a different resident expects
+the refusal (both Events remain, the mover at (2, 1, 0) with momentum
+(1, 0, 0) and one counted step) where it expected the merge (one Event of
+content 2 at (0, 1, 0)); [the corrections](#the-border-and-the-clocks-count).
 
 
 ## Suite inventory of 2026-09-19: one engine
@@ -56,6 +60,7 @@ modules are named in the [migration notes](MIGRATION.md).
 | `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
 | `test_phase_window.py` | The phase window: a table entry's window gates the response after the threshold, a bundle outside it passing with a `pass` record; a window and its complement cover the circle exactly; a lamp's window selects its releases while its clock turns regardless; the refusals ([below](#the-phase-window)) |
 | `test_integer_bounds_of_measured_and_emission.py` | The integer bounds of the measured line and of the emission: a measured event's momentum, push, content and what waits checked against 2^62 - 1 before assignment, refused naming the Node and the quantity; a free measured event's release per Port times 3 at most the mixing's cell bound 2^30 - 1, refused at parsing; the mixing's refusals naming the quantity ([below](#the-integer-bounds-of-the-measured-line-and-of-the-emission)) |
+| `test_border_and_clock_corrections.py` | The three reversible corrections of 2026-09-19: a step onto a measured event refused (no merge, both remain, the step counted); an open face a detector (an escape a click on the face, the books' escaped lines the faces' sums, a periodic axis without faces); the clock's count read off the clock (`by_clock(age, k x n, d)`: a presence of 1 at [1, 4] slows the clock by 1 / 4, a presence of 8 owes 2 as before) ([below](#the-border-and-the-clocks-count)) |
 | `test_one_reading_set.py` | One reading set for every coupling: the presence counts the waiting units and the measured content, here, a transit unit reading the content it passes; the push the flow of every number but the reader's own; a detector's threshold and window the set's amount and phase, the record per number; the own number excluded everywhere ([below](#one-reading-set)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
@@ -148,8 +153,10 @@ its arrivals through those Ports (a four-Port node with a one-interval stub).
 One rule for the board (the model owner, 2026-09-19): a measured event's step
 by its momentum (`_move`, step 6) wraps on a periodic axis as the departures
 do, escapes through an open face as before, and with an extent of 1 lands on
-its own Node, no move and no merge; `steps` counts every step made off the
-clock, wherever it lands. Bars of K 16, N 64, `release` [0, 1], `suspension`
+its own Node, no move; `steps` counts every step made off the clock,
+wherever it lands (a step onto a measured event is refused since
+2026-09-19, [the corrections](#the-border-and-the-clocks-count)). Bars of
+K 16, N 64, `release` [0, 1], `suspension`
 0; in (a) to (c) one paid family `light` (quantum 1), one measured event of
 it held in place off the units' path, every unit number 1; in (d) one free
 family `m` and one measured event of it that steps. Written down first:
@@ -159,7 +166,7 @@ family `m` and one measured event of it that steps. Written down first:
 | (a) the stub of extent 1 | a bar of 5 x 1 x 1 with `{"z": "periodic"}`; one unit in transit at (2, 0, 0) on +Z at phase 5, momentum (0, 0, 1); six intervals | after interval 1 the unit is a departure at (2, 0, 0) on +Z, and the next walk creates it at the same Node as its arrival in the +Z slot, phase 5 and momentum (0, 0, 1) unchanged, nothing else in the slots, nothing in flight, escaped 0; after each of intervals 1 to 6 the only departure is at (2, 0, 0) on +Z, amount 1, phase 5, momentum (0, 0, 1), escaped 0 with momentum (0, 0, 0), the books balanced, the momentum in flight (0, 0, 1); the edge case, the same world with `"boundary": "open"`: after interval 1 the same departure, after interval 2 nothing in flight, escaped 1 with momentum (0, 0, 1), the books balanced |
 | (b) the wrap and the open faces | a bar of 1 x 1 x 4 with `{"z": "periodic"}`; units at z = 3 on +Z (phase 5), at z = 0 on -Z (phase 6) and at z = 2 on +X (phase 7) | after interval 1 the departures (0, 0, 0) -Z, (0, 0, 2) +X, (0, 0, 3) +Z, escaped 0; after interval 2 the departures (0, 0, 0) +Z with (0, 0, 1) at phase 5 and (0, 0, 3) -Z with (0, 0, -1) at phase 6, escaped 1 with momentum (1, 0, 0), 2 in flight of the initial 3, the momentum in flight (0, 0, 0), the books balanced |
 | (c) the refusals and the record | `"closed"`, `{"z": "closed"}`, `{"w": "periodic"}`, `{"z": 1}`, `"periodic"`; `{"z": "periodic"}`; no key; the bar of (a) run 3 intervals through `execute_event_run` | each of the five refused by `parse_event_world` naming the closed board and by `validate_configuration` (valid false, code `validation`); `periodic` (False, False, True), `boundary` `{"z": "periodic"}`, the preflight's summary `{"x": "open", "y": "open", "z": "periodic"}`; without the key `"open"` and (False, False, False); `run.json` with `boundary` `{"z": "periodic"}`, 3 completed ticks, conserved, escaped `[{"family": "light", "amount": 0, "momentum": [0, 0, 0]}]`, `state.json` with the same boundary at tick 3 |
-| (d) a measured event's step wraps | a bar of 1 x 1 x 4 with `{"z": "periodic"}`; a measured event of `m`, content 16, momentum (0, 0, 16), at z = 3 (one step per (M + p) / p = 2 self-creations, as `test_event_clock` (d) derives); six intervals; the same bar with `"boundary": "open"`; a bar of 3 x 1 x 1 with `{"z": "periodic"}` (extent 1) and the same measured event at (1, 0, 0) | after intervals 1 to 6 at z = 3, 0, 0, 1, 1, 2, `steps` 1, 2, 3 after intervals 2, 4, 6, the momentum (0, 0, 16) untouched and (0, 0, 16) on the measured events, escaped 0 with momentum (0, 0, 0), the books balanced at every interval; the open bar: at z = 3 after interval 1, escaped after interval 2 (the measured line's escaped 16, the momentum escaped (0, 0, 16), no measured event left, the books balanced); the extent of 1: at (1, 0, 0) through six intervals, the one measured event still (not merged, not escaped), content 16, momentum (0, 0, 16), `steps` 3 (the steps made off the clock, each landing on its own Node), the books balanced |
+| (d) a measured event's step wraps | a bar of 1 x 1 x 4 with `{"z": "periodic"}`; a measured event of `m`, content 16, momentum (0, 0, 16), at z = 3 (one step per (M + p) / p = 2 self-creations, as `test_event_clock` (d) derives); six intervals; the same bar with `"boundary": "open"`; a bar of 3 x 1 x 1 with `{"z": "periodic"}` (extent 1) and the same measured event at (1, 0, 0) | after intervals 1 to 6 at z = 3, 0, 0, 1, 1, 2, `steps` 1, 2, 3 after intervals 2, 4, 6, the momentum (0, 0, 16) untouched and (0, 0, 16) on the measured events, escaped 0 with momentum (0, 0, 0), the books balanced at every interval; the open bar: at z = 3 after interval 1, escaped after interval 2 (the measured line's escaped 16, the momentum escaped (0, 0, 16), no measured event left, the books balanced); the extent of 1: at (1, 0, 0) through six intervals, the one measured event still (not escaped), content 16, momentum (0, 0, 16), `steps` 3 (the steps made off the clock, each landing on its own Node), the books balanced |
 
 ## The suspension
 
@@ -172,10 +179,16 @@ its own (the arrivals and, since the one reading set of 2026-09-19, the
 content of a measured event there), times the world's `suspension` `[n, d]`, the whole part
 (`presence x n // d`; no amplitude, no square root); the event carries the
 count and counts down on itself, what arrives behind it waits with it, and
-a measured event reads the presence after its self-creation and pays the
-count before its next one, so a steady presence whose count reads k slows
-its clock to one self-creation per k + 1 intervals and never stops it ("a
-measured event that reads a large size releases and turns slower"). K 2^20
+a measured event reads the presence k after its self-creation and owes the
+count read off its clock, `by_clock(age, k x n, d)` (since 2026-09-19, the
+clock's count read off the clock; until then `k x n // d` whole), paid
+before its next one, so a steady presence k slows its clock to one
+self-creation per 1 + k n / d intervals on average and never stops it ("a
+measured event that reads a large size releases and turns slower"); the
+pins below read on age 0 or exact multiples (16 x 1 // 4, 17 x 1 // 4,
+17 x 1 // 16), where the two rules agree, and are unchanged by it
+([the corrections](#the-border-and-the-clocks-count) pin the fractional
+case). K 2^20
 so that no phase moves; `suspension` [1, 4], so that 16 units read as
 16 x 1 // 4 = 4 and the integers of (a) to (c) are those pinned when the
 read was 4 whole units of amplitude (32 sqrt 16 = 128 in 32nds). Written
@@ -350,6 +363,38 @@ exceeded, not the retired engine. Bars of 2 x 1 x 1 and a 3^3 board,
 | (a) the push itself | `m` without a phase circle, `release` [0, 1]: a reader of content 2^56 - 1 at x = 1, 64 units of number 1 arriving on +X at its Node; then content 2^56 | the push -64 x (2^56 - 1) = -(2^62 - 64) fits: the momentum (-(2^62 - 64), 0, 0), 64 read; at 2^56 the push -2^62 is refused at interval 1, "the push of measured event 2 at [1, 0, 0]" |
 | (b) the emission bound at parsing | one free measured event at the centre of 3^3, K 2^40, N 64: 2^36 at `release` [1, 128]; 2^33; the edge 357913941 x 128 + 127; one more; 2^29 at [1, 1]; 2^36 at [0, 1]; a lamp of a paid family of 2^36 at [1, 128] (K 2^34) | 2^36 refused by the parser and the preflight: "measured[0].amount 68719476736 at [1, 1, 1] releases 536870912 units per Port per self-creation at release [1, 128]; 3 x that, 1610612736, exceeds the mixing's cell bound 1073741823"; 2^33 accepted (3 x 2^26 = 201326592); the edge releases 357913941 per Port, 3 x that = 1073741823 = the bound, accepted; one more releases 357913942, refused; 2^29 at [1, 1] refused (536870912 per Port); nothing released ([0, 1]) accepted at any content; the lamp accepted (not a free release) |
 | (c) the mixing's refusals | a cell of 2^30 in the arrivals; 9 on +X carrying (100, 0, 0) with a momentum bound of 10; a departure of 2^30 placed; a departure carrying 11 with a bound of 10; six arrivals of 2^34 at phase 0 in the coherent sum | "the amount in a cell exceeds the integer bound of the mixing (1073741823)"; "the momentum carried by a departure exceeds the integer bound of the mixing (10)" (the largest apportioned label, 44, above 10); "the amount placed on a departure exceeds the integer bound of the mixing (1073741823)"; the same momentum refusal; "the coherent sum's component at a Node exceeds the integer bound of the mixing (2147483647 ...)" (an amplitude of 2^22 x 256 = 2^30 per Port, the leaving component 3 x 2^30); none says "disturbance" |
+
+## The border and the clock's count
+
+`tests/test_border_and_clock_corrections.py` isolates the three reversible
+corrections of the model owner of 2026-09-19 (Highlights 5.4, "three
+reversible corrections that every path shares"; the architect's D2 and D3
+of the same day): a measured event's step onto a Node that holds a measured
+event is refused, the stepping event staying where it is with its momentum
+and the step counted (no merge; until then the two merged into the
+resident); an open face is a detector, every escape through it a click on
+the face detector named by it, recorded like a detector's click, and the
+books' escaped lines the sums of the face clicks (nothing physical changes
+at the face); and the count a measured event owes is read off its clock,
+`by_clock(age, k x n, d)`, like every other rate (until then `k x n // d`
+whole, the smallest slowing 1 / 2 and none below d / n). Bars, N 64, the
+families `m` (free) and `light` (paid). Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) no merge | a bar of 3 x 1 x 1, K 16, `release` [0, 1], `suspension` 0; a measured event of `m`, content 16, momentum (16, 0, 0), at x = 0 (one step per two self-creations) and one of content 16 at rest at x = 1; six intervals | the steps of intervals 2, 4 and 6 onto x = 1 refused: after every interval both remain, the first at x = 0 with momentum (16, 0, 0) and `steps` = interval // 2 (3 after six), the second at x = 1 with momentum (0, 0, 0) and `steps` 0, each of content 16, the measured line's current 32 and the momentum on the measured events (16, 0, 0), no record written (no `step`, no `merged`), the books balanced at every interval; until 2026-09-19 one measured event of content 32 at x = 1 after interval 2 |
+| (b) an open face is a detector | the bar of `light`, a measured event of it at x = 1; one unit of number 1 in transit at x = 2 on +X at phase 5 (content 1, momentum (1, 0, 0)); two intervals; the same bar with `{"x": "periodic"}`; the bar with a measured event of `m`, content 16, momentum (16, 0, 0), at x = 2 | interval 1 no record, the unit a departure on +X; interval 2 one `click` record on `face:+x` (tick 2, Node (2, 0, 0), `measured` None, `light`, number 1, amount 1, phase 5, momentum (1, 0, 0), content 1), escaped 1 with content 1; the six face detectors in Port order, `face:+x` with 1 Node, threshold 1, `light` measured 1, clicks 1, content 1, measured_content 0, momentum (1, 0, 0), every other entry 0; `detectors()` lists them; the books' escaped lines equal the faces' sums (transit, content, measured, momentum); the periodic bar: no record, escaped 0, the unit a departure at x = 0 on +X after interval 2, four face detectors (no `face:+x`, `face:-x`); the measured event: no record after interval 1, after interval 2 no measured event left and one `click` on `face:+x` (tick 2, Node (2, 0, 0), `measured` 1, `m`, number 1, amount 16, phase 2 (K 16, two turns of one step), momentum (16, 0, 0), content 16, `held` [16, 0], `home` [0, 0], `home_content` [0, 0]), the measured line's escaped 16, the momentum escaped (16, 0, 0), `face:+x` reading measured_content 16 and momentum (16, 0, 0) for `m`, the faces' sums the books' |
+| (c) the count read off the clock | a bar of 2 x 1 x 1, K 2^20, `release` [1, 1], `suspension` [1, 4]; a source of `m` of content k at x = 0 (fixed) and a probe of `light` (content 1, fixed, measuring `m`) at x = 1; k = 1 over 20 intervals, then k = 8 over 10 | the source created again every interval (age = interval) and k units reaching the probe every interval from the second on; k = 1: `by_clock(age, 1, 4)` is 1 at the self-creations from the ages 3, 7, 11, 15 and 0 otherwise, the probe's age after intervals 1 to 20 is 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 16 (16 self-creations in 20 intervals, 4 in 5; until 2026-09-19 1 x 1 // 4 = 0 and the age was 20), waited 4, nothing owed, age + waited = the interval throughout; k = 8: `by_clock(age, 8, 4)` = 2 at every self-creation as 8 x 1 // 4 was, the age after intervals 1 to 10 is 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, waited 6, nothing owed |
+
+Re-pinned the same day for these corrections: `test_event_boundaries`'s
+wrapped movement onto a different resident (the refusal in place of the
+merge, above) and `test_phase_window` (a), whose two passers escape through
++x in the walks of intervals 4 and 5 and now leave two `click` records on
+`face:+x` (phases 36 and 3, momentum (1, 0, 0), content 1) among the four
+measurement records, six records in all where there were four.
+`test_event_suspension` (b), (c) and (e) read the count on age 0 or on an
+exact multiple and are unchanged; the Bell worlds (`suspension` 0, nothing
+escaped) are unchanged (326 criteria of `tools/bell_chsh.py`).
 
 ## Generated-output lifetime
 
@@ -542,7 +587,9 @@ designs, are given in brackets as (old ...).
   (0, 1)) and the release 1/128, and a declared detector with threshold 3.
   The runner runs a 4-interval world of (a) into `run.json` (`law`
   "events-v1", completed, four ticks, four books, conserved, the measured
-  events and the detectors, `suspension` [1, 1], the family's `phase`
+  events and the detectors (none declared: the six face detectors of the
+  open board, `face:+x` ... `face:-z`, since 2026-09-19), `suspension`
+  [1, 1], the family's `phase`
   false), `state.json` (the law,
   tick 4, the measured events, Nodes with events) and `events.jsonl`, keeps
   the input as read, and refuses a negative tick count and a used output

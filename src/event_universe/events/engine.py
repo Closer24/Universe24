@@ -26,9 +26,12 @@ nothing (no quanta of zero content). The interval, in this order:
 
 1. every departure is created one Link on (`Transit.walk`), its record
    unchanged (an event in transit does not turn), the escapes through the
-   open faces booked; on an axis the world declares periodic the departures
-   through one face are created at the first Node of the opposite face and
-   nothing escapes on that axis;
+   open faces booked and each recorded as a click on that face (an open
+   face is a detector, the model owner, 2026-09-19: the escape is a
+   measurement at the border, not a loss; the face detectors `face:+x` ...
+   `face:-z` in the run's detector record, `_face_click`); on an axis the
+   world declares periodic the departures through one face are created at
+   the first Node of the opposite face and nothing escapes on that axis;
 2. at every Node the presence of each number is formed, everything present
    there this interval over every family: the amount that arrived (the
    units waiting there among them, held as arrivals) and, here, the content
@@ -95,15 +98,20 @@ nothing (no quanta of zero content). The interval, in this order:
    window; its phase turns by s at every self-creation, released or not (a
    measured event of a family without a phase circle never turns). After its
    self-creation it
-   reads the presence at its Node of every number but its own, this
+   reads the presence k at its Node of every number but its own, this
    interval's (step 2; its own content, here, is its own number and is not
-   read, the units waiting at its Node are), and owes `presence x n // d`
-   intervals at the
-   world's `suspension` `[n, d]` (`Measured.owed`, written once per
-   self-creation, never accumulated), paid before its next self-creation:
-   in a steady presence that reads k it is created again once every k + 1
-   intervals, its clock slowed by 1 / (k + 1) and never stopped (the
-   redshift). The read follows the
+   read, the units waiting at its Node are), and owes the count read off
+   its clock like every
+   other rate, `by_clock(age, k x n, d)` at the world's `suspension`
+   `[n, d]` (what the whole part of age x k n / d gained by this
+   self-creation; `Measured.owed`, written once per self-creation, never
+   accumulated, no remainder kept: the age is the remainder's owner, as for
+   the release, the turn and the step; the model owner, 2026-09-19, the
+   clock's count read off the clock; until then `k x n // d` whole, so the
+   smallest slowing was 1 / 2 and a presence below d / n gave none), paid
+   before its next self-creation: in a steady presence k it is created
+   again on average once every 1 + k n / d intervals, its clock slowed by
+   the mean k n / d and never stopped (the redshift). The read follows the
    self-creation and never precedes it: a read before it, of the same steady
    size, would owe the count again every time it was spent and the clock
    would never tick (the order of the first `events-v1`, corrected on
@@ -115,13 +123,16 @@ nothing (no quanta of zero content). The interval, in this order:
    read once; on an axis with
    momentum p and content M, one Link per (M + p) / p self-creations
    (`by_clock` with p over M + p), at most one step per interval, x before y
-   before z, the momentum untouched; a step onto a measured event merges the
-   two into the resident, a step off the board through an open face escapes,
-   and on a periodic axis the step wraps as the departures do (from the last
-   Node along +axis to the first, from the first along -axis to the last;
-   with an extent of 1 it lands on its own Node, no move and no merge, the
-   step counted in `steps` as every step off the clock is); `fixed` never
-   steps.
+   before z, the momentum untouched; a step onto a Node that holds a
+   measured event is refused (the model owner, 2026-09-19, no merge: the
+   stepping event stays where it is with its momentum untouched, the
+   resident untouched, the step counted; until then the two merged into the
+   resident), a step off the board through an open face escapes with the
+   content and the momentum, recorded as a click on that face, and on a
+   periodic axis the step wraps as the departures do (from the last Node
+   along +axis to the first, from the first along -axis to the last; with
+   an extent of 1 it lands on its own Node, no move, the step counted in
+   `steps` as every step off the clock is); `fixed` never steps.
 
 The push (Highlights 5.4, the law of events, the third law corrected; the
 model owner, 2026-09-19, the push as the net flow): the net flow c of the
@@ -146,12 +157,14 @@ content line, the content carried in transit, initial (the declared events
 in transit, one phase step per unit) + released (the lamps' cost and what
 came home or was re-released leaving again) = current + escaped + absorbed
 (home, the clicks, the re-releases), all exact at every interval; the
-momentum reported on the measured events, in transit and escaped.
+momentum reported on the measured events, in transit and escaped. Every
+escaped line is the sum over the open faces of the face detectors' clicks
+(`face_detectors`): the escape is a measurement at the border.
 
 The bound (`bounded`): every quantity assigned to a measured event, its
-momentum after a push, a recoil or a merge, the push taken and its terms,
-its content after a click or a merge, and what waits to be created again
-with its content, is checked against `transit.MOMENTUM_BOUND` (2^62 - 1,
+momentum after a push or a recoil, the push taken and its terms, its
+content after a click, and what waits to be created again with its
+content, is checked against `transit.MOMENTUM_BOUND` (2^62 - 1,
 the bound of a declared and of a carried momentum) before the assignment,
 and beyond it the run is refused with `OverflowError` naming the measured
 event, its Node and the quantity; Python's integers would not overflow, the
@@ -191,6 +204,9 @@ from event_universe.events.world import (
 Record = Callable[[dict[str, object]], None]
 ZERO3 = (0, 0, 0)
 RULES = ("home", "read", "measure", "rerelease")
+# The face detectors, one per open face of the board, named by the face in
+# Port order (an open face is a detector, the model owner, 2026-09-19).
+FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
 
 
 def by_clock(age: int, numerator: int, denominator: int) -> int:
@@ -304,9 +320,9 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
     the bound of the law, `MOMENTUM_BOUND` (2^62 - 1: the 64-bit work
     register with a bit to spare for one more sum, what the parser allows a
     declared momentum and the transit a carried one): its momentum after a
-    push, a recoil or a merge, the push taken and its terms, its content
-    after a click or a merge, and what waits to be created again with its
-    content. Python's integers do not overflow; the model's register does
+    push or a recoil, the push taken and its terms, its content after a
+    click, and what waits to be created again with its content. Python's
+    integers do not overflow; the model's register does
     (ARCHITECTURE.md, the local integer operation contract: check
     intermediates before assignment). Beyond the bound the run is refused
     naming the measured event, its Node and the quantity."""
@@ -338,9 +354,20 @@ class EventSimulation:
                 exact_transport=world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS,
                 periodic=world.periodic,
                 phased=family.phase,
+                face_observer=self._face_click,
             )
             for index, family in enumerate(world.families)
         ]
+        # The face detectors (one per open face, in Port order): per face
+        # and family the units and the content that clicked there in
+        # transit and the content of the measured events that stepped off
+        # through it, and per face the momentum that left; the books'
+        # escaped lines are their sums.
+        self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
+        self.face_units = {port: [0] * count for port in self.open_faces}
+        self.face_content = {port: [0] * count for port in self.open_faces}
+        self.face_measured_content = {port: [0] * count for port in self.open_faces}
+        self.face_momentum = {port: [0, 0, 0] for port in self.open_faces}
         self.denominator = world.content_lcm()
         self.measured: dict[int, Measured] = {}
         self.at: dict[Address3, int] = {}
@@ -519,21 +546,26 @@ class EventSimulation:
         self, entry: Measured, presence_total: np.ndarray, presence_by_number: np.ndarray
     ) -> None:
         """The count a measured event owes after its self-creation: the
-        presence at its Node this interval of every number but its own (the
+        presence k at its Node this interval of every number but its own (the
         amount that arrived, over every family, the units waiting there
         among it; its own content is its own number and is not read) times
-        the width's numerator
-        over its denominator, the whole part, written once per self-creation
-        and paid one per interval before the next (never accumulated; nothing
-        without a width). A steady presence that reads k slows the clock to
-        one self-creation per k + 1 intervals and never stops it."""
+        the width n / d, read
+        off its clock like every other rate, `by_clock(age, k x n, d)` with
+        the age before this self-creation (the model owner, 2026-09-19: what
+        the whole part of age x k n / d gained by this self-creation; no
+        remainder kept anywhere, the age owns it), written once per
+        self-creation and paid one per interval before the next (never
+        accumulated; nothing without a width). A steady presence k slows the
+        clock to one self-creation per 1 + k n / d intervals on average and
+        never stops it. Until 2026-09-19 the count was `k x n // d` whole, so
+        the smallest slowing was 1 / 2 and a presence below d / n gave none."""
         numerator, denominator = self.world.suspension
         if not numerator:
             return
         read = int(presence_total[entry.position]) - int(
             presence_by_number[(*entry.position, entry.number)]
         )
-        entry.owed = read * numerator // denominator
+        entry.owed = by_clock(entry.age - 1, read * numerator, denominator)
 
     # -- the explicitly selected reversible candidate -------------------------
 
@@ -1066,10 +1098,14 @@ class EventSimulation:
         count, else in the interval the last unit of its count is paid (the
         self-creation is then the last, `age - 1` its age before it). One rule
         for the board (the model owner, 2026-09-19): through an open face the
-        step escapes with the content; on a periodic axis it wraps as the
-        departures do, and with an extent of 1 it lands on its own Node, no
-        move and no merge (`steps` counts every step made off the clock,
-        wherever it lands: a move, a merge, an escape or its own Node)."""
+        step escapes with the content and the momentum, a click on that
+        face; on a periodic axis it wraps as the departures do, and with an
+        extent of 1 it lands on its own Node, no move; a step onto a Node
+        that holds a measured event is refused, the stepping event staying
+        where it is with its momentum untouched and the resident untouched
+        (no merge, the model owner, 2026-09-19). `steps` counts every step
+        made off the clock, wherever it lands: a move, a refused step, an
+        escape or its own Node."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
@@ -1088,41 +1124,51 @@ class EventSimulation:
             port = 2 * axis + (0 if sign > 0 else 1)
             destination = adjacent_node(origin, port, self.shape, self.world.periodic)
             if destination == origin:
-                # A self-Link counts the step without a coordinate move,
-                # a movement record or a merge with the Event itself.
+                # A self-Link counts the step without a coordinate move or
+                # a movement record.
                 return
-            del self.at[origin]
             if destination is None:
+                # Off the board through an open face: a click on that face
+                # with the content, what waits with it and the momentum.
                 for index in range(len(self.families)):
                     self.held_escaped[index] += entry.held[index]
                     self.transit_absorbed[index] -= entry.home[index]
                     self.transits[index].escaped += entry.home[index]
                     self.content_absorbed[index] -= entry.home_content[index]
                     self.transits[index].escaped_content += entry.home_content[index]
+                    self.face_measured_content[port][index] += entry.held[index]
+                    self.face_units[port][index] += entry.home[index]
+                    self.face_content[port][index] += entry.home_content[index]
                 self.momentum_escaped = [
                     int(a) + int(b) for a, b in zip(self.momentum_escaped, entry.momentum, strict=True)
                 ]
+                self.face_momentum[port] = [
+                    int(a) + int(b)
+                    for a, b in zip(self.face_momentum[port], entry.momentum, strict=True)
+                ]
+                del self.at[origin]
                 del self.measured[entry.number]
-                self._event("escaped", entry, entry.family, entry.number, content, ZERO3)
+                self._record_face_click(
+                    port,
+                    origin,
+                    entry.family,
+                    entry.number,
+                    content,
+                    entry.phase,
+                    list(entry.momentum),
+                    content,
+                    measured=entry.number,
+                    held=list(entry.held),
+                    home=list(entry.home),
+                    home_content=list(entry.home_content),
+                )
                 return
             if destination in self.at:
-                other = self.measured[self.at[destination]]
-                for index in range(len(self.families)):
-                    other.held[index] = bounded(other.held[index] + entry.held[index], other, "content")
-                    other.home[index] = bounded(
-                        other.home[index] + entry.home[index], other, "amount waiting"
-                    )
-                    other.home_content[index] = bounded(
-                        other.home_content[index] + entry.home_content[index], other, "content waiting"
-                    )
-                other.momentum = [
-                    bounded(int(a) + int(b), other, "momentum")
-                    for a, b in zip(other.momentum, entry.momentum, strict=True)
-                ]
-                other.charge += entry.charge
-                del self.measured[entry.number]
-                self._event("merged", entry, entry.family, other.number, content, ZERO3)
+                # Refused: the Node holds a measured event. The stepping
+                # event stays here with its momentum, the resident is
+                # untouched, and the step is counted (no merge).
                 return
+            del self.at[origin]
             entry.position = destination
             self.at[destination] = entry.number
             if self.record is not None:
@@ -1151,8 +1197,8 @@ class EventSimulation:
     ) -> None:
         """A record through the observer; a measurement (`home`, `read`,
         `click`, `rerelease`) carries the phase read at the Node and the
-        content the bundle carries (a click's energy, E = h f), a `merged`
-        or `escaped` measured event neither."""
+        content the bundle carries (a click's energy, E = h f). A click on a
+        face detector is written by `_record_face_click`."""
         if self.record is None:
             return
         record: dict[str, object] = {
@@ -1170,6 +1216,69 @@ class EventSimulation:
             record["phase"] = phase
         if content is not None:
             record["content"] = content
+        self.record(record)
+
+    def _face_click(
+        self,
+        family: int,
+        port: int,
+        node: Address3,
+        number: int,
+        amount: int,
+        phase: int,
+        momentum: list[int],
+        content: int,
+    ) -> None:
+        """A click on an open face by events in transit (the walk's report,
+        `Transit.face_observer`): the units of one number that left the
+        board through the face from one edge Node this interval, with the
+        phase, the momentum and the content they carried. Counted on the face
+        detector per family (the books' escaped lines are the faces' sums)
+        and recorded like a detector's click."""
+        self.face_units[port][family] += amount
+        self.face_content[port][family] += content
+        self.face_momentum[port] = [
+            int(a) + int(b) for a, b in zip(self.face_momentum[port], momentum, strict=True)
+        ]
+        self._record_face_click(port, node, family, number, amount, phase, momentum, content)
+
+    def _record_face_click(
+        self,
+        port: int,
+        node: Address3,
+        family: int,
+        number: int,
+        amount: int,
+        phase: int,
+        momentum: list[int],
+        content: int,
+        **measured_event: object,
+    ) -> None:
+        """The record of a click on a face detector: `event` "click",
+        `detector` the face's name, the tick, the edge Node the event left
+        from, the family, the number, the amount, the phase, the momentum
+        and the content that left the board (a measurement at the border,
+        not a loss); `measured` None for events in transit and, for a
+        measured event that stepped off, its number with its `held`, `home`
+        and `home_content`."""
+        if self.record is None:
+            return
+        record: dict[str, object] = {
+            "event": "click",
+            "tick": self.tick,
+            "node": list(node),
+            "measured": measured_event.get("measured"),
+            "detector": FACE_NAMES[port],
+            "family": self.families[family].name,
+            "number": number,
+            "amount": amount,
+            "phase": phase,
+            "momentum": list(momentum),
+            "content": content,
+        }
+        for key in ("held", "home", "home_content"):
+            if key in measured_event:
+                record[key] = measured_event[key]
         self.record(record)
 
     # -- the books -------------------------------------------------------------
@@ -1309,7 +1418,8 @@ class EventSimulation:
 
     def detectors(self) -> list[dict[str, object]]:
         """The measurements per detector: its Nodes, its threshold and per
-        family the amount measured and the clicks."""
+        family the amount measured and the clicks; then the face detectors,
+        one per open face of the board (`face_detectors`)."""
         found = []
         for index, detector in enumerate(self.world.detectors):
             members = [entry for entry in self.measured.values() if entry.detector == index]
@@ -1326,6 +1436,45 @@ class EventSimulation:
                     "nodes": len(detector.positions),
                     "threshold": detector.threshold,
                     "families": families,
+                }
+            )
+        if self.world.dynamics != REVERSIBLE_DETECTOR_DYNAMICS:
+            found.extend(self.face_detectors())
+        return found
+
+    def face_detectors(self) -> list[dict[str, object]]:
+        """The measurements of the face detectors, one per open face of the
+        board in Port order (an open face is a detector, the model owner,
+        2026-09-19): its name (`face:+x` ... `face:-z`), its Nodes (the
+        Nodes of the face), its threshold (1: every unit clicks), per family
+        the units that clicked there in transit (`measured` and `clicks`,
+        one click per unit), the `content` they carried and the
+        `measured_content` of the measured events that stepped off through
+        it, and the `momentum` that left through it. Summed over the faces
+        they are the books' escaped lines: the transit line's `escaped`, the
+        content line's, the measured line's and the momentum escaped."""
+        found = []
+        for port in self.open_faces:
+            axis = port >> 1
+            nodes = 1
+            for other in range(3):
+                if other != axis:
+                    nodes *= self.shape[other]
+            found.append(
+                {
+                    "name": FACE_NAMES[port],
+                    "nodes": nodes,
+                    "threshold": 1,
+                    "families": {
+                        family.name: {
+                            "measured": self.face_units[port][f],
+                            "clicks": self.face_units[port][f],
+                            "content": self.face_content[port][f],
+                            "measured_content": self.face_measured_content[port][f],
+                        }
+                        for f, family in enumerate(self.families)
+                    },
+                    "momentum": list(self.face_momentum[port]),
                 }
             )
         return found

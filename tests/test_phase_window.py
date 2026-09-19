@@ -21,9 +21,13 @@ measured event `fixed`. The expected integers of docs/TEST_EXPECTATIONS.md
     d = 15 and d = 48 click (a `click` record each, with `"phase"` 35 and 4
     and the push (1, 0, 0)); the units at d = 16 and d = 47 pass (a `pass`
     record each, with the phase and `"window"` 20, no push), go on to the
-    edge and escape in the walk of the next interval. After 5 intervals:
-    `events` [2, 0], `held` [2, 1], the momentum (2, 0, 0), 2 escaped,
-    nothing in transit, exactly those four records, the books balanced at
+    edge and escape in the walk of the next interval (intervals 4 and 5),
+    each escape a `click` on the face detector `face:+x` with its phase,
+    momentum (1, 0, 0) and content 1 (an open face is a detector, the model
+    owner, 2026-09-19; until then an escape left no record). After 5
+    intervals: `events` [2, 0], `held` [2, 1], the momentum (2, 0, 0), 2
+    escaped and 2 clicks on `face:+x`, nothing in transit, exactly those six
+    records, the books balanced at
     every interval. Since 2026-09-19 a measurement record carries the
     content the bundle carried (a release costs the emitter by its phase
     rate, and a click measures that content): a seeded unit carries one
@@ -153,12 +157,29 @@ def test_the_window_is_the_centred_half_circle_and_a_bundle_outside_it_passes():
     assert simulation.transit_absorbed[LIGHT] == 2 and simulation.held_measured[LIGHT] == 2
     common = {"node": [6, 0, 0], "measured": 2, "detector": None, "family": "light", "number": 1}
     click = {"amount": 1, "push": [1, 0, 0], "content": 1}
+    # A passer goes on to the edge and escapes in the walk of the next
+    # interval: a click on the face detector `face:+x` (an open face is a
+    # detector, 2026-09-19), written before that interval's measurements.
+    face = {
+        "event": "click",
+        "node": [6, 0, 0],
+        "measured": None,
+        "detector": "face:+x",
+        "family": "light",
+        "number": 1,
+        "amount": 1,
+        "momentum": [1, 0, 0],
+        "content": 1,
+    }
     assert records == [
         {"event": "click", "tick": 2, **common, **click, "phase": 35},
         {"event": "pass", "tick": 3, **common, "amount": 1, "phase": 36, "window": 20},
+        {**face, "tick": 4, "phase": 36},
         {"event": "pass", "tick": 4, **common, "amount": 1, "phase": 3, "window": 20},
+        {**face, "tick": 5, "phase": 3},
         {"event": "click", "tick": 5, **common, **click, "phase": 4},
     ]
+    assert simulation.face_detectors()[0]["families"]["light"]["clicks"] == 2
 
 
 def test_a_window_and_its_complement_cover_the_circle_exactly():

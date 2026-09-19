@@ -234,15 +234,20 @@ def test_default_material_wrap_and_self_loop_keep_one_inventory(momentum, start,
     assert simulation.books()["balanced"] and simulation.held_escaped == [0]
 
 
-def test_default_wrapped_movement_still_merges_with_a_different_resident():
+def test_default_wrapped_movement_onto_a_different_resident_is_refused():
+    """A wrapped step onto a Node that holds a measured event is refused (the
+    model owner, 2026-09-19, no merge): both remain, the stepping event where
+    it was with its momentum, the step counted; until then the two merged."""
     document = moving_world([1, 0, 0], [2, 1, 0])
     document["measured"].append({"position": [0, 1, 0], "family": "body", "amount": 1, "fixed": True})
     simulation = EventSimulation(parse_event_world(document))
     simulation.step()
     simulation.step()
-    assert list(simulation.measured) == [2]
-    assert simulation.measured[2].held == [2] and simulation.measured[2].momentum == [1, 0, 0]
-    assert simulation.at == {(0, 1, 0): 2} and simulation.books()["balanced"]
+    assert list(simulation.measured) == [1, 2]
+    mover, resident = simulation.measured[1], simulation.measured[2]
+    assert mover.position == (2, 1, 0) and mover.momentum == [1, 0, 0] and mover.steps == 1
+    assert mover.held == [1] and resident.held == [1] and resident.momentum == [0, 0, 0]
+    assert simulation.at == {(2, 1, 0): 1, (0, 1, 0): 2} and simulation.books()["balanced"]
 
 
 def test_default_material_on_an_open_axis_still_escapes():
