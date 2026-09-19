@@ -59,11 +59,14 @@ that axis return to the same Node in the next interval as its arrivals
 through those Ports (a unit leaving +z at the last Node arrives at the first
 Node in the +z slot; with an extent of 1, at the same Node in the +z slot):
 the Node behaves as a four-Port node with a one-interval stub, as a
-two-dimensional transmission-line-matrix (TLM) node with a stub does. The
-periodic axis is a rule of the walk (step 1); a measured event's step (step
-6) off the board escapes with its content as before, on every face. Open
-stays the default and the meaning of "the edge is infinity"; `"closed"` and
-every other word are refused. Per family the
+two-dimensional transmission-line-matrix (TLM) node with a stub does. One
+rule for the board (the model owner, 2026-09-19): a measured event's step by
+its momentum (step 6, `_move`) wraps on a periodic axis as the departures do,
+from the last Node along +axis to the first and from the first along -axis
+to the last, and with an extent of 1 it lands on its own Node, no move and
+no merge with itself; through an open face it escapes with its content and
+its momentum as before. Open stays the default and the meaning of "the edge
+is infinity"; `"closed"` and every other word are refused. Per family the
 arrays of `Transit` with the axes (x, y, z, number, Port): the arrivals of the
 interval (`arr_*`: amount, phase, momentum), the departures (`fly_*`), and per
 Node and number the count the arrivals there carry (`suspended`). Per Node with
@@ -189,8 +192,14 @@ candidates (`transit.nearest_step`, `step_window`).
    most one step per interval, x before y before z, the momentum untouched;
    a step onto a measured event merges the two into the resident (amounts,
    what came home, momentum and charge added, the resident's number, phase and
-   table kept), a step off the board escapes with its content; `fixed` never
-   steps.
+   table kept), a step off the board through an open face escapes with its
+   content and its momentum, and on a periodic axis the step wraps as the
+   departures do (the last Node's step along +axis lands on the first, the
+   first's along -axis on the last; with an extent of 1 on that axis it
+   lands on its own Node, no move and no merge with itself, the event staying
+   with its momentum untouched); `steps` counts every step made off the
+   clock, wherever it lands (a move, a merge, an escape or its own Node);
+   `fixed` never steps.
 
 **The push** (Highlights 5.4, the law of events, the third law corrected the
 same day): the momentum an arriving group of a free family carries, from birth

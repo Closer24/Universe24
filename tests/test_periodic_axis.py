@@ -4,10 +4,14 @@ declares periodic the departures that would leave through one face are
 created at the first Node of the opposite face, nothing escapes on that axis
 and the momentum they carry stays on the board; the other faces stay open,
 "closed" and every other word are refused, and the record carries the
-boundary as declared. The expected integers of docs/TEST_EXPECTATIONS.md
-("A periodic axis"), written down first. Bars of K 16, N 64, `release`
-[0, 1], `suspension` 0, one paid family `light` (quantum 1), one measured
-event of it held in place off the units' path, every unit number 1:
+boundary as declared. One rule for the board (the model owner, 2026-09-19):
+a measured event's step by its momentum wraps on a periodic axis as the
+departures do, and escapes through an open face as before. The expected
+integers of docs/TEST_EXPECTATIONS.md ("A periodic axis"), written down
+first. Bars of K 16, N 64, `release` [0, 1], `suspension` 0; in (a) to (c)
+one paid family `light` (quantum 1), one measured event of it held in place
+off the units' path, every unit number 1; in (d) one free family `m` and one
+measured event of it that steps:
 
 (a) a bar of 5 x 1 x 1 with {"z": "periodic"}: a unit in transit at
     (2, 0, 0) on +Z at phase 5 (its momentum (0, 0, 1)) leaves its Node on
@@ -36,7 +40,25 @@ event of it held in place off the units' path, every unit number 1:
     without the key is "open", (False, False, False); a 3-interval run of
     the bar of (a) through execute_event_run writes run.json with boundary
     {"z": "periodic"}, 3 completed ticks, conserved, nothing escaped, and
-    state.json with the same boundary.
+    state.json with the same boundary;
+(d) the step of a measured event wraps: a bar of 1 x 1 x 4 with
+    {"z": "periodic"} and a measured event of `m`, content 16, momentum
+    (0, 0, 16), at z = 3, stepping once per two self-creations (one Link per
+    (M + p) / p = 32 / 16 = 2, as test_event_clock (d) derives): after
+    intervals 1 to 6 it is at z = 3, 0, 0, 1, 1, 2, never escaped (escaped 0
+    with momentum (0, 0, 0)), the books balanced, its momentum (0, 0, 16)
+    untouched and the momentum on the measured events (0, 0, 16), `steps`
+    1, 2 and 3 after intervals 2, 4 and 6; the edge case, the same bar with
+    "boundary": "open": after interval 1 at z = 3, after interval 2 escaped,
+    the measured line's escaped 16 with the momentum escaped (0, 0, 16), no
+    measured event left, the books balanced; and a bar of 3 x 1 x 1 with
+    {"z": "periodic"}, extent 1 on the periodic axis: a measured event of
+    `m`, content 16, momentum (0, 0, 16), at (1, 0, 0) stays at (1, 0, 0)
+    through six intervals, neither merged nor escaped (it is still the one
+    measured event, escaped 0), its momentum (0, 0, 16) untouched and its
+    `steps` 3: `steps` counts every step made off the clock, wherever it
+    lands (a move, a merge, an escape or, with an extent of 1, its own Node,
+    which is no move and no merge).
 """
 
 from __future__ import annotations
@@ -188,3 +210,63 @@ def test_the_refusals_and_the_record_carry_the_boundary_as_declared(tmp_path):
     assert record["escaped"] == [{"family": "light", "amount": 0, "momentum": [0, 0, 0]}]
     state = json.loads((output / "state.json").read_text(encoding="utf-8"))
     assert state["boundary"] == {"z": "periodic"} and state["tick"] == 3
+
+
+def moving_bar(shape: list[int], boundary: object, position: list[int]) -> dict[str, object]:
+    """A bar with one measured event of a free family that steps by its
+    momentum (0, 0, 16) with content 16: once per two self-creations."""
+    return {
+        "law": "events",
+        "model_id": "periodic-axis-test",
+        "shape": shape,
+        "boundary": boundary,
+        "ticks": 6,
+        "K": 16,
+        "N": 64,
+        "release": [0, 1],
+        "suspension": 0,
+        "families": [{"name": "m", "kind": "free"}],
+        "measured": [{"position": position, "family": "m", "amount": 16, "momentum": [0, 0, 16]}],
+    }
+
+
+def test_a_measured_events_step_wraps_on_a_periodic_axis_and_escapes_through_an_open_face():
+    """(d)."""
+    simulation = EventSimulation(parse_event_world(moving_bar([1, 1, 4], {"z": "periodic"}, [0, 0, 3])))
+    positions = []
+    for tick in range(1, 7):
+        simulation.step()
+        books = simulation.books()
+        entry = simulation.measured[1]
+        positions.append(entry.position[2])
+        assert books["balanced"], tick
+        assert entry.momentum == [0, 0, 16] and entry.steps == tick // 2, tick
+        assert books["momentum"] == {"measured": [0, 0, 16], "transit": [0, 0, 0], "escaped": [0, 0, 0]}
+        assert books["families"]["m"]["measured"]["escaped"] == 0
+    assert positions == [3, 0, 0, 1, 1, 2]
+    assert simulation.measured[1].position == (0, 0, 2)
+    # The edge case: the open board escapes it at its first step.
+    simulation = EventSimulation(parse_event_world(moving_bar([1, 1, 4], "open", [0, 0, 3])))
+    simulation.step()
+    assert simulation.measured[1].position == (0, 0, 3)
+    simulation.step()
+    assert simulation.measured == {} and simulation.at == {}
+    books = simulation.books()
+    assert books["balanced"]
+    line = books["families"]["m"]["measured"]
+    assert line["escaped"] == 16 and line["current"] == 0
+    assert books["momentum"] == {"measured": [0, 0, 0], "transit": [0, 0, 0], "escaped": [0, 0, 16]}
+    # An extent of 1 on the periodic axis: the step lands on its own Node,
+    # no move and no merge with itself; `steps` counts it as a step made.
+    simulation = EventSimulation(parse_event_world(moving_bar([3, 1, 1], {"z": "periodic"}, [1, 0, 0])))
+    for tick in range(1, 7):
+        simulation.step()
+        books = simulation.books()
+        assert books["balanced"], tick
+        assert list(simulation.measured) == [1] and simulation.at == {(1, 0, 0): 1}
+        entry = simulation.measured[1]
+        assert entry.position == (1, 0, 0) and entry.momentum == [0, 0, 16] and entry.content == 16
+        assert entry.steps == tick // 2, tick
+        assert books["families"]["m"]["measured"]["escaped"] == 0
+        assert books["momentum"] == {"measured": [0, 0, 16], "transit": [0, 0, 0], "escaped": [0, 0, 0]}
+    assert simulation.measured[1].steps == 3
