@@ -71,11 +71,10 @@ candidates (`transit.nearest_step`, `step_window`).
    holds events waiting there are one amplitude per Port (the amounts added,
    the phase of the coherent sum, the momenta added).
 2. At every Node the size of the coherent sum of each number's arrivals is
-   formed (`Transit.sizes`, in 32nds of one unit's amplitude). A measured event
-   whose count is spent reads the sizes of the other numbers at its Node and
-   is suspended for `suspension` intervals per whole unit read (`Measured.owed`,
-   written when the count is spent, never accumulated; while it counts, its
-   clock does not tick). The events of a paid family that arrived this interval
+   formed (`Transit.sizes`, in 32nds of one unit's amplitude): this interval's
+   sizes, what a measured event reads at its self-creation (step 5) for the
+   count it owes, `suspension` intervals per whole unit of the other numbers'
+   sizes at its Node. The events of a paid family that arrived this interval
    read the free families' sizes at their Node and carry the same count
    (`Transit.suspend`, written once on arrival; what joins a waiting slot waits
    with it, the larger count kept: the next event is delayed). The size read is the
@@ -136,7 +135,11 @@ candidates (`transit.nearest_step`, `step_window`).
    amplitude, and the momentum the group carries goes with the units placed,
    exact per axis (`apportion_carried`). A suspended slot stays as arrivals,
    its count paid by one.
-5. A measured event whose count is spent is created here again (`_release`):
+5. A measured event that owes a count pays it by one (`_release`): it is
+   created here without a self-creation, no release and no turn, and `waited`
+   counts the interval (age + waited is the intervals completed, for every
+   measured event at every interval). One that owes nothing is created here
+   again, the self-creation:
    its age advances by one, and off its clock (`by_clock`: what the whole part
    of age x rate gained by this self-creation, no remainder anywhere) it
    releases, per free family it holds, content x the world's `release` per
@@ -150,9 +153,26 @@ candidates (`transit.nearest_step`, `step_window`).
    and phase and carrying its momentum from birth. Its phase turns by its
    content over K off its clock (refused when a step would reach half the
    circle) at every self-creation, whether or not it released: a lamp whose
-   phase leaves its window keeps turning and comes round to it again. One
-   whose count runs pays it by one and neither releases nor turns.
-6. A measured event steps by its momentum off its clock (`_move`): on an axis
+   phase leaves its window keeps turning and comes round to it again. After
+   its self-creation it reads the sizes of the other numbers at its Node,
+   this interval's (step 2), and owes `suspension` intervals per whole unit
+   read (`_suspend`, `Measured.owed`, written once per self-creation, never
+   accumulated), paid one per interval before its next self-creation. So a
+   measured event in a steady size of k whole units is created again once
+   every k + 1 intervals: its clock is slowed by 1 / (k + 1), the redshift
+   (Highlights 5.4: "a measured event that reads a large size releases and
+   turns slower"), and never stopped; with `suspension` 0 it is created
+   again every interval. The read follows the self-creation and never
+   precedes it: the first `events-v1` read before it, and in a steady size
+   of one whole unit or more the count was owed again every time it was
+   spent, so the clock stood still ([migration](MIGRATION.md#the-suspension-of-a-measured-event-read-after-its-self-creation-on-2026-09-19),
+   2026-09-19).
+6. A measured event steps by its momentum off its clock (`_move`) when it
+   owes nothing: in the interval of its self-creation when that read no
+   count, else in the interval the last unit of its count is paid (the
+   self-creation is then the last one made), so a suspended event is
+   created here for its count and each self-creation's step is read once.
+   On an axis
    with momentum p and content M, one Link per (M + p) / p self-creations, at
    most one step per interval, x before y before z, the momentum untouched;
    a step onto a measured event merges the two into the resident (amounts,

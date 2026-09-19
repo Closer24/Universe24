@@ -7,6 +7,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- A measured event is created again first and then reads its suspension:
+  the count it owes, `suspension` intervals per whole unit of the other
+  numbers' sizes at its Node, is read after its self-creation from this
+  interval's sizes and paid before the next, so in a steady size of k whole
+  units its clock is slowed by 1 / (k + 1), never frozen (Highlights 5.4:
+  "releases and turns slower"). The first `events-v1` read before the
+  self-creation and froze the clock of every measured event in a steady
+  field of one whole unit or more (found by the physics-rule review of
+  2026-09-19); worlds with `suspension` 0 are unchanged
+  (`EventSimulation.step`, `_release`, `_suspend`, [the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#the-suspension-of-a-measured-event-read-after-its-self-creation-on-2026-09-19)).
+  Test: `test_event_suspension` (b) re-pinned, (c) added
+  ([expectations](docs/TEST_EXPECTATIONS.md#the-suspension)).
 - The engine of the law of events (`events-v1`, `src/event_universe/events/`)
   is the one engine: one thing, the event, created at every interval at its
   next place from its record, at a neighbour or here; a measured event's clock
