@@ -65,6 +65,36 @@ apparatus energy law, physical reset or absorption mechanism, does not make
 default lossy transitions reversible, and derives no Heisenberg, Born or Bell
 result. A shared count does not establish entanglement.
 
+## The coupling series C under the law of events, on the plane - 2026-09-19
+
+Base: `ddb4470a` on `claude/universe24-new-3ytqde` (main after PR #345). No
+engine change: twenty-one worlds (`examples/events/coupling/`, written by
+`make_worlds.py`, a board of 121 x 121 x 1 with `"boundary": {"z":
+"periodic"}`), the analysis `tools/coupling_readings.py` and the register
+entry [C, the couplings under the law of events, on the plane](EXPERIMENTS.md#c-the-couplings-under-the-law-of-events-on-the-plane-2026-09-19).
+The physics-rule reviewer's design of 2026-09-19, pinned for 61^3 and moved
+to the plane by the model owner's decision the same day ("cancel the runs;
+let it run on two-dimensional boards"). A research run, made once; not a
+test; a reading outside its bound reported, never moved.
+
+| Check | Result |
+| --- | --- |
+| `python -m event_universe.configuration_validation examples/events/coupling/<name>.json` on the twenty-one worlds | all VALID (kind `events`) |
+| Twenty-one runs, `python -m event_universe --init examples/events/coupling/<name>.json --output artifacts/coupling/<name>`, four at a time | all completed; the books balanced at every completed tick; the measured content constant; age + waited = the intervals completed in every world; 168 s of wall time for the twenty worlds (19 to 102 s each) and 63 s for `5_long` (1000 intervals) |
+| Item 1, equivalence | identity held: push_m = m x push_1 at all 185 records and three axes for m = 4, 16; the free probes' 11 steps identical for the three m and equal to the rule off the clock on the reads' cumulative push; one merge each at tick 27; registered: the first read at tick 15 with amount 1, the first step at 16 |
+| Item 2, the third law with unequal contents | within the bound: \|P_A\| / \|P_B\| 1.256 and 1.213 over the last two windows (3.6 % apart), 1.071 cumulative, toward each other, transverse / axial 0.009 |
+| Item 3, superposition | identity held exactly (187 records per number; the total push the sum) |
+| Item 4, retardation | the front as derived by hand at every derived Node: -x 4 (5, 180), +y 6 (7, 2), -y 8 (9, 2), +x 4 (5, 180), +x 6 (7, 3); registered on +x past the front: r = 8 (11, 8), r = 12 to 40 (r + 3, 1), the same in every world |
+| Item 5, the far field (world 5, ticks 251-300) | the slopes count -0.993, flow -1.048, carried -1.014, size -0.481 (within the bounds); count x r / q 0.33 flat within 1.9 %; flow x 2 pi r / q 0.95 to 1.08; the flux through the square / q 0.995, 0.993, 0.988 at h = 4, 8, 12; outside the bound: carried x 2 pi r / q 1.43 to 1.50 (in-plane Ports 1.18 to 1.26), the flux at h = 20 (0.979) and 40 (0.931), the escape 0.892 q (the fixed point not reached); `5_long`: the escape 0.948 q over ticks 951-1000, rising 0.889 to 0.947 over the 100-interval windows from 300 to 1000 |
+| Item 5P, the axis pattern (ticks 151-200) | push x 2 pi r / (m q) 1.71, 1.57, 1.49, 1.54, 1.44, 1.35, 1.40, 1.30, 1.25 at r = 4 to 40; the amount read equal to the replay's count at every tick at every probe |
+| Item 6, the clock (`suspension` 1) | identity held: (age, waited, owed) equal to the replay at all nine radii, age + waited = 200; age(200) 6, 9, 13, 19, 25, 31, 38, 47, 63 at r = 4 to 40; outside the bound: age(200) = age(60) at r = 4, 6, 20 (k + 1 above 100 at every radius against the 200-interval window; the counts written finite, 403 to 118) |
+| Item 7, the electric reading | identity held: `pushed` (0, 0, 0) for like signs, twice (-2634004, 5855, 0) for unlike, the content-4 probe 3 times; electric / gravity -1 and -1/4 exactly |
+| Convergence | (a) carried x 2 pi r / q 1.454 flat within 3.8 % over r >= 5, not equal to the flow's 0.988 within 5 %; (b) the lost fraction 0.970 to 0.685 falling with r against k / (k + 1) 0.998 to 0.990; (c) 0.055, 0.031, 0.034; (d) exact |
+| `PYTHONPATH=src python tools/coupling_readings.py artifacts/coupling` | 405 criteria, 390 passed, 15 failed (every failure a reading outside its bound, listed above), exit 1; the negative control (a copy of the runs with one push of 1a_m4 changed by one unit, not kept) fails the equivalence identity as well, 16 failed, exit 1 |
+| Gates | `ruff check` and `ruff format --check` on the two new Python files clean; `MYPYPATH=src mypy --strict tools/coupling_readings.py` clean; `pytest -q tests/test_repository_language.py tests/test_repository_hygiene.py tests/test_repository_navigation.py tests/test_configuration_validation.py -p no:cacheprovider` 34 passed; `PYTHONPATH=src python tools/check.py --base origin/main`: ruff lint and format on the two new Python files and 80 passed in 68 seconds over `test_architecture`, `test_check_scope`, `test_configuration_validation`, `test_event_worlds` and the three repository gates (the worlds sit under `examples/events/coupling/`, one level below the glob of the shipped-world preflight test, so they are preflighted by the CLI and by every run, not by that test) |
+
+Runtime source SHA-256 `06a050c9d27a5ab11febe10be40865866e7f0dcbc129400e08c2d7f6b71c8560`, Python 3.14.0rc2, headless.
+
 ## The Bell run A2 under the law of events: S = 2 exactly - 2026-09-19
 
 Base: `1f9f280` on `main` (after PR #335), branch
