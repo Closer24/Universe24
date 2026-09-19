@@ -6,6 +6,118 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The law of the ray, on 2026-09-19 (`rays-v1`)
+
+The model owner's decision of 2026-09-19 (Highlights 5.4, "DECIDED: the law
+of the ray"; the design [the law of the ray](RAY_LAW.md), published before
+the engine changed): the Node holds no wave; a unit is a ray with a record
+on the digital line of its momentum at one speed, 1 / sqrt 3; rays that meet
+are permuted by the collision table; the interval is a bijection and the
+click its only one-way border; the ray's law is one generic function,
+`gonen_beam`, and every piece of logic exists once. The engine of the law of
+events (`events-v1`, the evening of the same day) is deleted with everything
+it computed at the Node. Base `ce0b22af` (the merge of the three reversible
+corrections into `claude/universe24-new-3ytqde`); the last commit holding
+`events-v1` is that one.
+
+- **The law selected.** `"law": "rays"` selects `rays-v1`; `run.json`
+  carries `"law": "rays-v1"`; `configuration_validation` reports the kind
+  `rays`. `"law": "events"` is refused naming the law of the ray and this
+  entry. The package is `event_universe` 0.3.0.
+- **Deleted modules.** `src/event_universe/events/mixing.py` (the coherent
+  sum, `coherent_weights`, `diagonal_weights`, `mix_arrivals`,
+  `place_departures`, `apportion_carried`, `tie_order`; `integer_root` and
+  `apportion_whole` move to `core/integer.py`, `by_clock` joins them);
+  `src/event_universe/events/transit.py` (the per-Port arrays, `receive`,
+  `suspend`, `cycle`, `sizes`, `phase_at`, `nearest_step`, `step_window`,
+  `frozen`, `take`, `place`, `walk`: the suspension of transit bundles is
+  deleted, a ray never waits, the seventh exit is the rest slot of the
+  collision, a measured event's delay is the owed count off its clock);
+  `src/event_universe/events/reversible.py` and the `reversible-detector-v1`
+  candidate (the `dynamics` key, `port_map`, `output`, `capacity`,
+  `reference_phase`, `groups`, `max_active_owners`, `_validate_reversible_world`,
+  `_reversible_*` and `_pointer` in `engine.py`, `detector_readouts`; its
+  pointer is the detector's record, its `transduce` the re-emission on
+  declared directions, its refusal of an open face the face detector); in
+  `engine.py` the coherent phase read in `_meet`, `EMISSION_CELL_BOUND` and
+  `EMISSION_MARGIN` (no cell). Nothing of these is re-exported.
+- **New modules.** `src/event_universe/events/gonen_beam.py` (`GonenBeam`,
+  `read_arrivals` and `READING_BASIS`, `flight_table`, `collision_table`,
+  `ray_tables`, `RayStore`, `gonen_beam`, `bounded`, `segment_sums`);
+  `src/event_universe/events/measured.py` (`Measured`, `Ledger`, `RULES`,
+  `FACE_NAMES`); `engine.py` and `world.py` rewritten in place.
+- **Renames.** `EVENTS_LAW` -> `RAYS_LAW` ("rays-v1"); `EventWorld` ->
+  `RayWorld`; `parse_event_world` -> `parse_ray_world`; `is_event_world` ->
+  `is_ray_world`; `EventSimulation` -> `RaySimulation`; `execute_event_run`
+  -> `execute_ray_run`; `Transit.walk` -> the walk inside `gonen_beam`;
+  `world.EMISSION_CELL_BOUND` -> gone (`world.MOMENTUM_BOUND`,
+  `world.AMOUNT_BOUND` 2^62 - 1 remain).
+- **The world file.** Added: `directions` and `direction_bound` at the
+  world, `phase_per_link` per family, `directions` per measured event, the
+  lamp's `directions` (in place of `headings`), a table entry's `reads`
+  (`scalar`, `outside`, `here`, `vector`, `tensor`), a ray's `direction` (a
+  vector or a rest index) and optional `age` in `in_transit` (in place of
+  `heading`). Refused: `dynamics`, `max_active_owners`, `port_map`,
+  `output`, `capacity`, `groups`, `reference_phase`, `headings`, `heading`.
+  `"phase": false` stays as "never turns, phase 0, no window"; its mixing
+  semantics (the diagonal weights) are gone with the mixing.
+- **The record.** `run.json` gains `directions`, per family
+  `phase_per_link`, per detector and per face the cumulative `record`, and
+  `escaped` per family (amount, content, momentum); `events.jsonl` gains the
+  `record` line (per interval, per detector Node and family, the pointer and
+  its square) and the `pass` record's `threshold` field, and its `pass` for
+  a window keeps `window`; `state.json` carries the rays per Node (rows)
+  in place of the arrival and departure slots.
+- **The books.** The transit line is in amount (rays), the content line
+  amount x content per unit, the momentum in transit amount x content x
+  D[direction]; the escaped lines the faces' sums as before.
+- **Tests deleted** (their rules re-pinned in the module named; the pins
+  that name a mixing, a scatter, a bundle's suspension or a diagonal weight
+  are deleted with the rule): `test_node_mixing.py` and
+  `test_node_mixing_numbers.py` (the sides; deleted, no rule remains);
+  `test_event_transit.py` -> `test_ray_flight.py` (a); `test_periodic_axis.py`
+  -> `test_ray_flight.py` (d); `test_event_boundaries.py` ->
+  `test_ray_flight.py` (e) and `test_ray_clock.py` (d);
+  `test_event_suspension.py` -> `test_ray_clock.py` (e) and
+  `test_ray_readings.py` (c) (the transit suspension's cases deleted);
+  `test_phaseless_family.py` -> `test_ray_readings.py` (b) (the diagonal
+  weights deleted); `test_event_clock.py` -> `test_ray_clock.py` (a, b, d)
+  and `test_ray_reemission.py` (c); `test_release_costs_by_phase_rate.py` ->
+  `test_ray_clock.py` (c); `test_detector_sensitivity.py` ->
+  `test_ray_detector.py` (b to d); `test_phase_window.py` ->
+  `test_ray_window.py`; `test_one_reading_set.py` -> `test_ray_readings.py`
+  (a to d) and `test_ray_detector.py` (b); `test_border_and_clock_corrections.py`
+  -> `test_ray_clock.py` (d, e) and `test_ray_reemission.py` (b);
+  `test_integer_bounds_of_measured_and_emission.py` ->
+  `test_ray_world_parsing.py` (d) (the mixing's cell bound and its refusals
+  deleted); `test_event_worlds.py` -> `test_ray_world_parsing.py` (a to c)
+  and `test_ray_worlds.py` (the coherent field's shell pins and the
+  diffusive field's flux pins deleted; the two slits re-pinned on the
+  record); `test_reversible_detector.py`, `test_reversible_detector_world.py`,
+  `test_physical_detector.py` (the candidate; deleted). New without a
+  predecessor: `test_ray_collision.py`, `test_ray_bijection.py`,
+  `test_ray_readings.py` (a), `test_ray_detector.py` (a),
+  `test_ray_reemission.py` (a). Consumers patched: `test_entity_definitions`,
+  `test_entity_loading_consumers`, `test_configuration_validation`,
+  `test_check_scope`, `test_architecture`, `test_json_documents`.
+- **Examples.** `examples/events/one_content.json`, `two_contents.json`,
+  `two_slits.json`, `one_slit.json` rewritten as ray worlds; the `bell/`
+  and `coupling/` generators re-emit `"law": "rays"` (the Bell worlds run
+  160 intervals for the flight table's pace, the model ids
+  `rays-bell-a{a}-b{b}-v1` and `rays-coupling-<name>-plane-v1`); the
+  `detector/` worlds and `entities/detectors.json` are plain ray apparatus
+  (measured events measuring the carrier, detectors with thresholds, the
+  single Node reading `tensor`), no `dynamics`.
+- **Tools.** `tools/bell_chsh.py` and `tools/coupling_readings.py` read
+  the ray record; the coupling tool's 1b merge criteria are the refusal,
+  its far-field bounds are readings against RAY_LAW section 8, printed
+  inside or outside the expectation and never a failure.
+- **Documents.** ENGINE.md is the bookkeeping around RAY_LAW.md;
+  DETECTOR_REQUIREMENTS drops its implementation contract; the registered
+  readings of `events-v1` (series C, Bell A2) keep their scope in
+  EXPERIMENTS.md and VALIDATION.md and are re-registered under `rays-v1`
+  there.
+
 ## No merge: a step onto a measured event is refused, on 2026-09-19
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "three reversible

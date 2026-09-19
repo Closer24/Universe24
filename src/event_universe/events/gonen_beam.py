@@ -3,11 +3,12 @@ the two pure tables and the one function `gonen_beam`, a Node's whole
 interval for the rays present (docs/RAY_LAW.md, the model owner's decision of
 2026-09-19, Highlights 5.4, "DECIDED: the law of the ray").
 
-The Node holds no wave. A unit is a ray with a record and moves along the
-digital line of its momentum at one speed for every direction, a bijection;
-rays that meet at a Node are permuted by the eight-slot collision table, a
-bijection; the wave is a reading of a crowd of rays at a detector and lives
-nowhere else; the click is the only one-way border. The law is ONE generic
+The Node holds no coherent sum. A unit is a ray with a record and moves
+along the digital line of its momentum at one speed for every direction, a
+bijection; rays that meet at a Node are permuted by the eight-slot collision
+table, a bijection; the interference is the squared record a detector reads
+of a crowd of rays and lives nowhere else; the click is the only one-way
+border. The law is ONE generic
 function (the owner's name): `gonen_beam` performs the interval's steps in
 order, each a bijection on the board's state except the border:
 

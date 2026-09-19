@@ -5,16 +5,16 @@ settings are in an entity definitions file, not in the engine; make sure the
 workflow is in the appropriate skill." This is an authoring/loading contract,
 not a new physical model. It supersedes the earlier assumption that inline world
 data alone completed that request. The engine continues to receive the immutable
-ordinary Events and detector groups specified by [ENGINE.md](ENGINE.md) and
-[the detector candidate](DETECTOR_REQUIREMENTS.md). An external definition file
-is outside the engine; the instantiated detector is physically on the board.
+ordinary measured events and detectors specified by [the law of the ray](RAY_LAW.md)
+and [the engine](ENGINE.md). An external definition file is outside the
+engine; the instantiated detector is physically on the board.
 
 ## Ownership and supported composition
 
 `event_universe.world_loading` is the single host owner of strict document
 resolution, entity placement and portable input assembly. It uses
 `json_documents.parse_json_document` for every JSON document, then
-`events.world.parse_event_world` for the fully expanded world. That engine parser
+`events.world.parse_ray_world` for the fully expanded world. That engine parser
 remains the one owner of physical schema and domain validation. Physical modules
 never open entity files, consult a catalog, branch on an entity name or retain
 instance definitions as evolving memory. The loader executes no Python,
@@ -23,7 +23,7 @@ expressions, formulas, callbacks or network requests.
 An ordinary inline world remains supported with identical loading and original
 input bytes. New detector examples keep reusable apparatus definitions in a
 separate file. Existing generic rule names select the already specified local
-laws; family names, geometry, material parameters, routes, coverage, groups and
+laws; family names, geometry, material parameters, directions, coverage and
 thresholds are configuration data. Translation does not prove connectivity or
 create a signal. Placement outside the board is invalid even on a periodic axis:
 periodicity governs Link transport, not silent initialization wrapping.
@@ -214,7 +214,7 @@ before preparing the output directory. For dependency-bearing inputs it writes:
 * `resolved_initialization.json`: the exact expanded engine document.
 
 The existing `initialization_sha256` still hashes the original input.
-`execute_event_run` gains the optional keyword-only
+`execute_ray_run` (until 2026-09-19 `execute_event_run`) gains the optional keyword-only
 `initialization_record: dict[str, object] | None = None`, used only to copy
 metadata under `run.json.initialization_resolution`. The runner supplies exactly
 `format: "event-world-bundle-v1"`, `bundle_sha256`, `expanded_sha256`, and

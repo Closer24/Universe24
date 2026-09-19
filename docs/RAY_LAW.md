@@ -450,3 +450,83 @@ a test asserts the six-orientation average of a head-on pair's exits is
 isotropic. (e) The re-registered readings are expectations, not results:
 series C item 6's slowing changes power (the accepted price), and the
 register must say so.
+
+## 10. Implementation notes (2026-09-19, the implementation)
+
+The decisions the implementation took where the design was silent,
+impossible as written or ambiguous, each decided by the design's principles
+(one generic function, every piece of logic once, a bijection but the click,
+the flight table's speed, integers only) and recorded here as the
+implementation's part of the contract. The design above is unchanged.
+
+1. **The reading's slots are the arrival Ports.** The seven slots of
+   `read_arrivals` are the amounts that arrived through the six Ports (the
+   Port a ray's last step entered by, recorded on the row as `port`) and
+   here (the rays that did not step this interval, the rest rays among
+   them). A ray on a declared direction counts in the Port of its last
+   Link, so the flow of a fan is the flow of its Links, exact.
+2. **Rest rays keep their age.** A rest direction has period 1 in the
+   flight table, but the age of a ray parked by the collision is kept (the
+   walk and its inverse leave a rest ray's age untouched); otherwise the
+   inverse walk could not restore the age a ray had when it parked and the
+   interval would not be a bijection. The seeding of a declared ray at rest
+   reduces its `age` modulo the heading period.
+3. **The amplitude is linear in the amount.** The design's isqrt(1024 x
+   amount) is not invariant under the merge of identical records (two rows
+   of amount 1 and one row of amount 2 would record differently), so the
+   amplitude of a row is 32 x amount, exact and merge-invariant; one unit
+   records 32^2 x 256^2 as the design says, a row of n identical rays
+   n^2 times that (the coherent sum of n equal amplitudes).
+4. **Home keeps the arriving phase and content.** What comes home is
+   created again with the phase and the content per unit it arrived with
+   (as the re-emission does), not re-stamped by the clock; the books'
+   absorbed and released lines carry it exactly.
+5. **A ray below the threshold or outside the window passes with a
+   `pass` record** naming `threshold` or `window`; a set at the threshold
+   clicks row by row (one `click` record per row, the amount on it) and the
+   window reads each row's own phase, no coherent phase of the set (the
+   record is the coherent reading; the window is a gate on the record).
+6. **The inverse interval exists only without a measured event**: with one
+   on the board `inverse_step` refuses (the click, the release and the home
+   are the one-way border and no inverse of them is defined); the
+   bijection test runs on a board of rays alone.
+7. **The two-slit example uses a dense fan.** A fan of five directions
+   gives ballistic spots on the screen, not fringes; the example and the
+   world test re-emit at the openings on the 91 primitive directions
+   (a, b, 0) with a >= 1 and a + |b| <= 12 (P = 12), the lamp of turn 8
+   (K 2^30) on five directions toward the wall, 500 intervals; the
+   correlation pinned at 0.85 for this fan (measured 0.893; the design's
+   0.9 was for a fan of 203).
+8. **The step table is `int8`** (D x L_max x 3, the step of each age per
+   direction), the collision table `int16` codes over 3^8, the store's
+   columns `int64`; every physical value is an integer and every bound
+   check is against 2^62 - 1.
+9. **The Bell worlds run 160 intervals**: the flight table's pace puts the
+   plus click of age a at tick a + 14 and the minus click at a + 16, so 128
+   pairs need 144 ticks; 160 leaves the margin. `tools/bell_chsh.py` admits
+   the `record` line among the record kinds and checks the minus offset
+   above the plus.
+10. **`reads` names the component**, one of `scalar` (outside + here, the
+    default: the presence, the threshold), `outside`, `here`, `vector` (the
+    flow) and `tensor` (the two traceless components); the push always
+    reads the flow and the clock's count always the scalar; a detector
+    entry may declare `tensor` and the world test of the detector
+    definitions does.
+11. **The section 2 example is illustrative**: its K 1024 with a content of
+    10^6 would give a turn of 976 steps beyond N; the shipped
+    `two_slits.json` uses K 2^30 and a content of 8 K + 1 400 000 (a turn
+    of 8, the phases stamped a mod 64). The parser refuses a content at or
+    past K x N / 2 as before.
+12. **A ray may be declared on a board without a measured event** (the
+    in_transit `number` bound is max(1, the number of measured events)),
+    so the bijection and the collision tests run on rays alone.
+13. **Every ray steps at its first interval**: the flight table's first
+    walk is at tau = 1 for every direction (T_d >= S_1 Q), so a declared
+    ray at age 0 crosses its first Link in the first interval and a ray
+    released at tick t first walks at t + 1.
+14. **The registered readings** (section 8) are marked measured against
+    expected in EXPERIMENTS.md; the far-field ring means of a six-heading
+    source follow the lattice ring's Node count (the rings at r = 16 and
+    r = 20 both hold 112 Nodes) and fall outside the ±10 % expectation,
+    registered and not moved; the fan the expectation was pinned on is the
+    owner's decision to run.

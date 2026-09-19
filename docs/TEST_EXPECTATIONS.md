@@ -11,64 +11,449 @@ research runs, made once and recorded with a fingerprint and a date in
 before that date describe the suite as it was and are brought under the rule
 when their tests change.
 
-## Reversible detector candidate (2026-09-19, before implementation)
+## Suite inventory of 2026-09-19: one engine, the law of the ray
 
-The [candidate contract](DETECTOR_REQUIREMENTS.md#invariants-examples-and-independent-checks)
-fixes the numerical contact, clock, readout and finite-domain expectations before
-implementation. `tests/test_reversible_detector.py` owns the generic operator and
-3240-input inverse/injectivity check; `tests/test_physical_detector.py` owns local
-transport, output causality, observer independence and atomic refusal;
-`tests/test_reversible_detector_world.py` owns schema, generic grouping and
-candidate/default compatibility. Example worlds are research configurations,
-not tests with pinned experiment outputs. The standalone 9-by-9 HTML demonstration
-needs its own dated source/configuration identity. None is a Heisenberg proof.
+Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: the law of the ray"; [the law of the ray](RAY_LAW.md)): one engine,
+`rays-v1`, the law of events of the same day deleted with its modules. The
+suite keeps one module per generic rule of the engine, on a minimal board,
+and the repository gates. Every rule the ray law kept from the law of events
+is re-pinned in a new module with the timing of the flight table; the
+deleted modules and their rules are named in the
+[migration notes](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1).
+The sections of the deleted modules stay below as history (their headings
+kept, their pins the law of events').
 
-## Per-axis topology (2026-09-19, before implementation)
-
-[The engine amendment](ENGINE.md#diagnostic-scope-and-acceptance) fixes the
-independent seam, extent-one, distinct-Port, no-escape, capacity and material
-self-movement expectations. `tests/test_event_boundaries.py` isolates those
-rules and serialization; schema checks cover the strict per-axis form and old
-all-open compatibility. A periodic example is a dated research run, not a pinned
-example-output test. No closed-3D equivalence or timing speedup is inferred.
-Since 2026-09-19 its wrapped-movement case onto a different resident expects
-the refusal (both Events remain, the mover at (2, 1, 0) with momentum
-(1, 0, 0) and one counted step) where it expected the merge (one Event of
-content 2 at (0, 1, 0)); [the corrections](#the-border-and-the-clocks-count).
-
-
-## Suite inventory of 2026-09-19: one engine
-
-Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)):
-one engine, the engine of the law of events since the evening of that day
-("Everything must be generic in the engine, without registers"; "only tests
-that everything is as designed"). The suite keeps one module per generic rule
-of the engine, on a minimal board, and the repository gates. The deleted
-modules are named in the [migration notes](MIGRATION.md).
-
-| Module | Rule isolated |
-| --- | --- |
-| `test_node_mixing.py` | The Node's computation of the sides on one Node of the engine's transit, one number: the 3B_h rule, the coherent sum, the largest remainder with the tick's ties, a group with no whole going by its momentum, the momentum carried, nothing kept ([below](#the-nodes-computation-of-the-sides)) |
-| `test_node_mixing_numbers.py` | The coherent sum over the numbers: two numbers at one Node share one common sum and common weights, each placing its own units by them; a number with no whole by its own momentum at the common phase; a number alone as before ([below](#the-coherent-sum-over-the-numbers)) |
-| `test_event_transit.py` | An event in transit: a single quantum whole by its momentum, no turn in transit, a part turned back apportioned again, a lone free unit straight from its release ([below](#an-event-in-transit)) |
-| `test_periodic_axis.py` | A periodic axis as a declared run parameter of the world: the departures through one face created at the first Node of the opposite face, nothing escaping on that axis, the momentum kept on the board; with an extent of 1 the one-interval stub; the other faces open; the refusals and the record; a measured event's step wrapping too, escaping through an open face, and landing on its own Node with an extent of 1 ([below](#a-periodic-axis)) |
-| `test_event_suspension.py` | The suspension the event carries: the count derived on arrival from the presence at the Node times `[n, d]`, the next event delayed, a measured event's clock slowed by the count it reads after its self-creation, never frozen; light on light; one presence read by a unit in transit and by a measured event ([below](#the-suspension)) |
-| `test_phaseless_family.py` | A family without a phase circle: the sides weighed by the diagonal of the coherent sum, 32^2 x (the amount present + 3 x the amount through the side's own Port), a lone arrival four ninths back and one ninth each other way, two opposite arrivals never cancelling, the group's momentum apportioned over its departures; the identity of the weights; the push of a free family reads the net flow and not the labels ([below](#a-family-without-a-phase-circle)) |
-| `test_event_clock.py` | The clock of a measured event: every rate off its age by whole division, the release, the phase, the lamp's recoil, the step ([below](#the-clock-of-a-measured-event)) |
-| `test_release_costs_by_phase_rate.py` | A release costs the emitter by its phase rate: each unit `quantum` x s content and momentum at a turn of s, a click measuring it (E = h f); a free family costing nothing and pushing by the flow; a turn of 0 releasing nothing ([below](#a-release-costs-the-emitter-by-its-phase-rate)) |
-| `test_event_worlds.py` | The worlds of the law of events on minimal boards: the books, the constant content, the flux, the shell means, the pair's pushes and the product law, the two-slit detector, the refusals and the runner ([below](#the-worlds-of-the-law-of-events)) |
-| `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
-| `test_phase_window.py` | The phase window: a table entry's window gates the response after the threshold, a bundle outside it passing with a `pass` record; a window and its complement cover the circle exactly; a lamp's window selects its releases while its clock turns regardless; the refusals ([below](#the-phase-window)) |
-| `test_integer_bounds_of_measured_and_emission.py` | The integer bounds of the measured line and of the emission: a measured event's momentum, push, content and what waits checked against 2^62 - 1 before assignment, refused naming the Node and the quantity; a free measured event's release per Port times 3 at most the mixing's cell bound 2^30 - 1, refused at parsing; the mixing's refusals naming the quantity ([below](#the-integer-bounds-of-the-measured-line-and-of-the-emission)) |
-| `test_border_and_clock_corrections.py` | The three reversible corrections of 2026-09-19: a step onto a measured event refused (no merge, both remain, the step counted); an open face a detector (an escape a click on the face, the books' escaped lines the faces' sums, a periodic axis without faces); the clock's count read off the clock (`by_clock(age, k x n, d)`: a presence of 1 at [1, 4] slows the clock by 1 / 4, a presence of 8 owes 2 as before) ([below](#the-border-and-the-clocks-count)) |
-| `test_one_reading_set.py` | One reading set for every coupling: the presence counts the waiting units and the measured content, here, a transit unit reading the content it passes; the push the flow of every number but the reader's own; a detector's threshold and window the set's amount and phase, the record per number; the own number excluded everywhere ([below](#one-reading-set)) |
+| Module | Rule isolated | Re-pins |
+| --- | --- | --- |
+| `test_ray_readings.py` | The one reading: the seven slots decomposed once into two scalars, the flow and the tensor; orthogonal, summing back, the 48 board symmetries; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
+| `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing ([below](#the-collision-table)) | new |
+| `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact ([below](#the-bijection)) | new |
+| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
+| `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
+| `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
+| `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
+| `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
+| `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
+| `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
 | `test_check_scope.py` | The affected-check's selection |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
+
+## The one reading
+
+`tests/test_ray_readings.py` (docs/RAY_LAW.md; the model owner, 2026-09-19:
+every piece of logic once): the seven slots of a Node (the six Ports a ray
+arrived through and here) are decomposed once by `read_arrivals` into two
+scalars (outside, here), the net flow and the traceless tensor, and every
+coupling selects its component by key.
+
+- (a) the decomposition: the seven basis vectors are mutually orthogonal;
+  the slots [3, 1, 4, 1, 5, 9, 2] read outside 23, here 2, the flow
+  (2, 3, -4), the tensor (4 + 5 - 28, 4 - 5) = (-19, -1), and 12 x slots =
+  sum_i (12 / |e_i|^2) c_i e_i (the slots recovered); under each of the 48
+  signed axis permutations of the board the scalars are fixed, the flow is
+  the rotated flow, and the tensor of the rotated slots is the tensor of the
+  permuted axis pairs; the shortest slot vectors, one unit on one Port, read
+  outside 1, here 0 and the flow the Port's heading.
+- (b) the push reads the flow of every number but the reader's own: a free
+  reader of content 4 met by 9 rays of number 1 arriving on +X and 9 of
+  number 2 arriving on -X is pushed by (0, 0, 0) and reads 18; by the 9 of
+  number 1 alone (-36, 0, 0); with 5 of its own number arriving too the own
+  add nothing (5 home, created again at the same interval's self-creation
+  on its first declared direction).
+- (c) the presence counts every ray at the Node of another number, rest and
+  moving alike, and never the own: a measured event at `suspension` [1, 4]
+  beside 64 rays of number 2 that arrived and 16 rays of number 3 at rest
+  owes `by_clock(0, 80, 4)` = 20 after its first self-creation; with 8 of
+  its own number among the arrivals still 20.
+- (d) a detector's threshold reads the set of every number but its own and
+  the window each ray's own phase: a receiver at threshold 3 met by 2 rays
+  of number 2 and 1 of number 3 clicks all three, the 2 alone pass with a
+  `pass` record each (`threshold` 3); at threshold 1 with the window 32,
+  the two rays at phase 0 pass (`window` 32) and the ray at phase 32
+  clicks.
+
+## The flight
+
+`tests/test_ray_flight.py` (docs/RAY_LAW.md, section 3): one speed for
+every direction, 1 / sqrt 3, on the digital line of the momentum, at most
+one Link per interval, the age modulo the direction's period.
+
+- (a) the flight table: for every direction T_d >= S_1 Q and m(tau + 1) -
+  m(tau) in {0, 1}; the periods (1, 0, 0) T 110, L 55; (1, 1, 0) T 156,
+  L 39; (1, 1, 1) T 192, L 3; (3, 1, 0) T 350, L 175; a rest direction never
+  moves; the first arrival of a heading ray at m Links, m = 1..11, in the
+  intervals 1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19.
+- (b) the lone unit: every heading and every declared direction of the
+  two-slit example, 150 intervals on a periodic 61^3 board: the ray's
+  position is the table's digital line, its direction and phase unchanged
+  (`phase_per_link` 0), one row at every interval, at most one Link per
+  interval; with `phase_per_link` 3 the phase turns 3 per Link crossed.
+- (c) isotropy: 1000 intervals on (1, 0, 0), (1, 1, 0), (1, 1, 1),
+  (3, 1, 0), (5, 2, 1): the Euclidean distance^2 within 2 % of 1000^2 / 3.
+- (d) the periodic axis (re-pinned from `test_periodic_axis`): a ray on +Z
+  at (2, 0, 0) of a 5 x 1 x 1 bar with {"z": "periodic"} steps onto its own
+  Node at every interval the table moves it and never escapes, its phase 5
+  kept; on the open bar it clicks on `face:+z` at the first interval (every
+  ray steps at its first interval); on a 1 x 1 x 4 bar with {"z":
+  "periodic"} the ray at z = 3 on +Z is at z = 0 after the first interval
+  and the ray at z = 0 on -Z at z = 3, the ray on +X escapes on `face:+x`;
+  the refusals of the boundary and the record.
+- (e) `adjacent_node` on (3, 2, 1) with x and z periodic (re-pinned from
+  `test_event_boundaries`): (2, 1, 0) +X -> (0, 1, 0), (0, 1, 0) -X ->
+  (2, 1, 0), (1, 1, 0) +Y -> None, +Z and -Z -> (1, 1, 0) itself.
+
+## The collision table
+
+`tests/test_ray_collision.py` (docs/RAY_LAW.md, section 4): eight slots per
+Node, the six headings in Port order and two rest slots; a slot empty,
+single or a crowd; the class of a state (the crowd mask, the number of
+singles, their headings' sum); inside a class the forward map is the cyclic
+shift by +1 and the inverse by -1, generated from the rule.
+
+- (a) 3^8 = 6561 states, 5440 classes, 2132 moving states, 202 of the 256
+  binary states; INV[FWD[s]] = s for every state; the class of FWD[s] is
+  the class of s; a crowd slot never changes; the amount and the heading sum
+  are conserved by every move.
+- (b) the 20 orbits of the (six-heading pattern, here flag) under the 48
+  signed axis permutations, with the sizes 1, 6, 3, 12, 12, 3, 8, 12, 6, 1
+  (here 0) and the same with here 1; a lone unit is fixed; the head-on pair
+  +x -x parks in the two rest slots, and ha hb becomes +z -z.
+- (c) on the board: two rays of amount 1 meeting head-on at the middle Node
+  of a 5 x 1 x 1 bar (x and z periodic) become the two rest rays at that
+  Node in the interval they meet, and stay; two rays of amount 2 (a crowd)
+  pass each other; over the six orientations of a head-on pair on a periodic
+  5^3 cube the x pair parks, the y pair turns onto x and the z pair onto y,
+  and after the second collision the rest pair leaves on z, the x pair
+  parks and the y pair turns onto x: the one cycle of the class, the tie by
+  Port order.
+
+## The bijection
+
+`tests/test_ray_bijection.py` (docs/RAY_LAW.md, section 3): a periodic
+8 x 8 x 4 board, 300 records of fixed arrays (rays on every heading, both
+rest slots and two fan directions, head-on pairs among them, amounts 1 and
+2, phases over the circle), 50 forward then 50 inverse intervals with no
+measured event: the sorted store equal to the start in every field; the
+state at the turning point differs from the start; the collision moved at
+least one ray on the way.
+
+## The detector's record
+
+`tests/test_ray_detector.py` (docs/RAY_LAW.md, section 5). K 2^20,
+`suspension` 0, `release` [0, 1], the families `m` (free) and `light`
+(paid), every measured event `fixed`.
+
+- (a) two rays of amount 1 arriving in one interval at a counter of
+  threshold 1, in phase (0 and 0): the record 4 x 32^2 x 256^2 = 268435456,
+  the amount 2 and two clicks; in antiphase (0 and 32): the record 0, the
+  amount 2 and two clicks; one ray alone: 32^2 x 256^2 = 67108864; the
+  `record` line of `events.jsonl` carries the pointer (X, Y) and the
+  square; the run's detector report carries the cumulative record.
+- (b) a receiver (a measured event of `m`, content 4, measuring light) at
+  threshold 3 (re-pinned from `test_detector_sensitivity` (a)): 2 rays of
+  another number pass with a `pass` record (`threshold` 3), no click, no
+  push, the rays going on whole; 3 rays are measured: 3 clicks, `held`
+  [4, 3], the momentum (3, 0, 0), nothing left in the store, the report 3
+  measured, 3 clicks, the record 9 x 32^2 x 256^2 (a row of three identical
+  rays is one coherent amplitude).
+- (c) a re-emitter at threshold 3: 2 rays pass; 3 rays are taken
+  (re-released 3, no click, the push (3, 0, 0), the recoil at the
+  re-emission -(1, 1, 1) leaving the momentum (2, -1, -1)) and created again
+  at the same interval's self-creation, one per declared direction (+X, +Y,
+  +Z), with the re-emitter's number, the arriving phase 20, content 1,
+  age 0.
+- (d) an emitter inside a detector reads no threshold: a lamp of light
+  (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases one
+  unit per heading per interval, its content 18 then 12; a reader of `m`
+  (content 4) at threshold 4 passes 3 rays and reads 4, pushed by -M c =
+  (-16, 0, 0).
+
+## The re-emission
+
+`tests/test_ray_reemission.py` (docs/RAY_LAW.md, section 5). K 2^20,
+`suspension` 0, `release` [0, 1], the families `m` (free) and `light`
+(paid).
+
+- (a) one ray of amount 3 (content 1 per unit, phase 20) into a `rerelease`
+  Node of `m` (content 4) with the three directions +X, (1, 1, 0) and
+  (2, 1, 0): three rays of amount 1 at the Node after the interval, one per
+  direction, phase 20, age 0, the re-emitter's number 1, content 1; the
+  push (3, 0, 0) taken, the recoil -(1 x (1, 0, 0) + 1 x (1, 1, 0) + 1 x
+  (2, 1, 0)) = (-4, -2, 0), the momentum (-1, -2, 0); the books closed
+  (absorbed 3, released 3; the content line absorbed 3, released 3); a ray
+  of amount 4 on the same Node: 2, 1, 1 (the leftover to the direction
+  `age mod 3` = 0, the first).
+- (b) the face click (re-pinned from `test_border_and_clock_corrections`
+  (b)): a ray of amount 1, phase 5, content 1 at (2, 0, 0) on +X of a
+  3 x 1 x 1 bar steps off the board at the first interval: one `click` on
+  `face:+x` (tick 1, Node (2, 0, 0), `measured` None, number 1, amount 1,
+  phase 5, momentum (1, 0, 0), content 1), the escaped amount 1, the face's
+  record 32^2 x (C[5]^2 + S[5]^2), the books' escaped lines the faces'
+  sums; the same bar with {"x": "periodic"}: no click, the ray at x = 0; a
+  measured event of `m` (content 16, momentum (16, 0, 0)) at x = 2 steps
+  off at interval 2: one `click` on `face:+x` with `measured` 1, amount 16,
+  phase 2 (K 16), momentum (16, 0, 0), `held` [16, 0], `home` [0, 0], the
+  measured line's escaped 16.
+- (c) home: a lamp's ray (content 1, phase 7) returning to its lamp on a
+  periodic 4 x 1 x 1 bar is home after 4 Links (the intervals 7, 14, ...)
+  and leaves again on the lamp's one direction with phase 7 and content 1,
+  the books closed.
+
+## The clock under the ray law
+
+`tests/test_ray_clock.py` (docs/RAY_LAW.md, section 3, step 5; re-pinned
+from `test_event_clock`, `test_release_costs_by_phase_rate` and
+`test_border_and_clock_corrections` (a, c) with the flight table's timing).
+
+- (a) `by_clock`: at rate 3 / 10 the gains over ages 0 to 9 are 0, 0, 0, 1,
+  0, 0, 1, 0, 0, 1; 70 over 30 ages at 7 / 3; `apportion_whole`: 7 over
+  [3, 3, 0, 0, 0, 1] from 0 is [3, 3, 0, 0, 0, 1], 5 over [2, 2, 2, 0, 0,
+  0] from 2 is [2, 1, 2, 0, 0, 0].
+- (b) a measured event of content 3 at `release` [1, 10] releases one ray
+  per declared direction (the six headings) at its self-creations to ages
+  4, 7 and 10: 18 released after 10 intervals, 0 after 3; at K 2 its phase
+  steps after four intervals are 1, 3, 4, 6.
+- (c) a lamp of content 100 at rate [1, 3] on six headings, K 82: 18 rays
+  after 9 intervals, each of content 1, the content 82, 9 phase steps, the
+  recoil zero; two lamps of turns 4 and 8 (K 4096, contents 4 K + 32 and
+  8 K + 64, one ray per self-creation toward a counter 3 Links away on a
+  7 x 1 x 1 bar): after 8 intervals A spent 32 and B 64, the releases of
+  intervals 1 to 3 clicked in intervals 6 to 8 (a ray created at tick t
+  first walks at t + 1 and 3 Links take 5 walks): 6 clicks, the counter's
+  content 37, its momentum (-12, 0, 0), each click record with `content` 4
+  or 8, 10 rays in flight carrying 60, the books balanced; a lamp of turn 0
+  releases nothing.
+- (d) the step: content 16 with momentum 16 on +x steps once per two
+  self-creations (three after six intervals); with momentum 1 none after 16
+  and one after 17; the momentum untouched; a step onto a Node that holds a
+  measured event is refused, both remain, the step counted.
+- (e) the count off the clock: a source of `m` of content k at x = 0 of a
+  2 x 1 x 1 bar releasing k rays per direction per self-creation at
+  `release` [1, 1] and a probe of `light` (content 1, measuring `m`) at
+  x = 1 at `suspension` [1, 4]: the probe reads the presence k every
+  interval from the second on, and with k = 1 owes `by_clock(age, 1, 4)`,
+  1 at the self-creations from the ages 3, 7, 11, 15: its age after
+  intervals 1 to 20 is 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13,
+  14, 15, 16, 16; with k = 8 it owes 2 at every self-creation: 1, 2, 2, 2,
+  3, 3, 3, 4, 4, 4.
+
+## The phase window under the ray law
+
+`tests/test_ray_window.py` (re-pinned from `test_phase_window` under the
+flight table: a ray released at tick t first walks at t + 1; 10 Links take
+17 walks, 11 Links 19). Bars of 1 x 1 in y and z, N 64, `suspension` 0,
+`release` [0, 1], the families `light` (paid) and `counter` (paid).
+
+- (a) the boundary of the window at N = 64: a counter at x = 6 of a
+  7 x 1 x 1 bar measuring `light` through the window 20; four rays of
+  number 1 on +X at x = 5 with phase 35 (d = 15), x = 4 with 36 (d = 16),
+  x = 3 with 3 (d = 47) and x = 2 with 4 (d = 48), reaching x = 6 in
+  intervals 1, 3, 5 and 7. d = 15 and d = 48 click (`click` records at
+  ticks 1 and 7 with `phase` 35 and 4, the push (1, 0, 0), `content` 1);
+  d = 16 and d = 47 pass (`pass` records at ticks 3 and 5 with the phase
+  and `window` 20), go on and click on `face:+x` at their next step (ticks
+  5 and 7). After 7 intervals `events` [2, 0], `held` [2, 1], the momentum
+  (2, 0, 0), 2 escaped, nothing in the store, the books balanced;
+  `in_window` at N = 64 admits d in [0, 16) and [48, 64), at N = 2 the step
+  0, at N = 4 the steps 0 and 3.
+- (b) the complement covers the circle exactly: a bar of 12 x 1 x 1,
+  K 2^14, a lamp of `light` (content K + 2, phase 0, rate [1, 1] on +X
+  only) at x = 0; a counter at x = 10 measuring through the window 40 and
+  its complement at x = 11 through the window 8. The release of age a
+  (tick a + 1) reaches x = 10 at tick a + 18 and x = 11 at tick a + 20:
+  after 83 intervals the two counters clicked 32 times each, x = 10 the
+  phases 24..55, x = 11 the phases 0..23 and 56..63, every one of the first
+  64 releases exactly once; 34 `pass` records at x = 10 and none at x = 11,
+  nothing escaped; the lamp at age 83, phase 19, content K + 2 - 83,
+  momentum (-83, 0, 0).
+- (c) a lamp with a window: the lamp of (b) with `phase_window` 8 and a
+  plain counter at x = 10: at each of the first 64 intervals t its age is
+  t, its phase t mod 64, and it released one ray at phase t - 1 when t - 1
+  is in the window (the ages 0..23 and 56..63) and none otherwise: after 64
+  intervals 32 released, content K + 2 - 32, momentum (-32, 0, 0), phase 0;
+  after 81 the counter clicked 32 times and the lamp released 17 more, 49
+  in all. The refusals, naming the key: a window of 64 at N = 64, a window
+  on `pass`, an object entry without `rule`, an object entry with an
+  unknown key, a lamp window of -1, a `reads` key outside the reading's
+  components.
+
+## The world file of the ray law
+
+`tests/test_ray_world_parsing.py` (docs/RAY_LAW.md, sections 2 and 7;
+re-pinned from `test_event_worlds` (e) and
+`test_integer_bounds_of_measured_and_emission` (a)).
+
+- (a) refused, naming the key: `"law": "events"` (naming the law of the ray
+  and MIGRATION), `dynamics`, `max_active_owners`, `headings` on a lamp,
+  `heading` on a ray, `port_map`, `groups` on a detector, a non-primitive
+  direction (2, 2, 0), a component beyond P (65 at the default bound), a
+  direction the world does not declare, a rest direction on a lamp, a
+  repeated direction, a momentum label beyond 2^62 - 1 on a declared ray
+  and on a lamp's release, `phase_per_link` outside 0 .. N - 1 or on a
+  family without a phase circle, the earlier engines' keys, `phase_turn`, a
+  closed board, an unknown key, a content at K x N / 2, a lamp on a free
+  family, two measured events at one Node, an unknown table rule, N not a
+  power of two, a detector on a Node without a measured event, a Node in
+  two detectors, a quantum on a free family, a `suspension` denominator of
+  0, a window for a family without a phase circle.
+- (b) accepted: the direction table of a world with `directions`
+  [[1, 1, 0]] is the two rest vectors, the six headings and (1, 1, 0); a
+  measured event's `directions` by vector or by index; a ray at rest (index
+  0); `suspension` 1 as (1, 1), [1, 4], [0, 4] as (0, 1); `reads` per entry.
+- (c) the runner: a 4-interval world into `run.json` (`law` "rays-v1",
+  completed, four ticks, four books, conserved, the measured events, the six
+  face detectors of the open board with their `record`, the directions
+  table, `suspension` [1, 1]), `state.json` (the law, tick 4, the Nodes with
+  rays) and `events.jsonl`; a negative tick count and a used output
+  directory refused.
+- (d) the bounds: two measured events of content 64 one Link apart at
+  `release` [1, 1] read each other's 64 rays from interval 2 on and are
+  pushed by 64 x 64 = 4096 toward each other; the second, declared with the
+  momentum -(2^62 - 1) + 4096 on x, reaches the bound exactly and is
+  accepted; one unit nearer it is refused with `OverflowError` naming the
+  measured event, its Node and the momentum; a reader of content 2^56 - 1
+  met by 64 rays takes the push -(2^62 - 64), and at 2^56 the push -2^62 is
+  refused naming the push.
+
+## The worlds of the ray law
+
+`tests/test_ray_worlds.py` (docs/RAY_LAW.md, section 7): the worlds of
+`examples/events/` on minimal boards, pinned as a check that the engine
+does what the law says and not as a result.
+
+- (a) the two slits (the example world's design, 60 x 121 x 1, z periodic,
+  500 intervals): a lamp at (2, 60) of turn 8 per self-creation (K 2^30,
+  content 8 K + 1 400 000, 64 rays per self-creation on five directions), a
+  wall at x = 8 measuring light with the openings at y = 55 and 65
+  re-emitting on the fan of the 91 primitive directions (a, b, 0) with
+  a >= 1 and a + |b| <= 12, a screen at x = 52 as the detector `screen`.
+  Three runs, both openings and each alone: the plain count is additive to
+  the unit (count_both = count_55 + count_65 at every screen Node) and the
+  interference term V(y) = (I_both - I_55 - I_65) / (2 sqrt(I_55 I_65)) of
+  the record correlates with the two-source Euclidean cosine at lambda =
+  c x period = 8 / sqrt 3 above 0.85 over the Nodes both openings reach
+  (the design pinned 0.9 for a fan of 203 directions; measured 0.893 with
+  the 91 of this world), and the correlation at the periods 4 and 16 is
+  below 0.5.
+- (b) Bell (the ten A2 worlds under `"law": "rays"`, `tools/bell_chsh.py`):
+  S = 2 exactly, S' = 3/2 exactly, the controls +1, -1, 0, no-signalling
+  exact, 0 criteria failed.
+- (c) one content of 2^24 at the centre of an open 11^3 board at `release`
+  [1, 128], 40 intervals: the books close at every tick, the content is
+  2^24 at every tick, the momentum on the measured events zero, the flux
+  through the cube of half-width 2 equals the emission q = 6 x 2^17 at
+  every interval once the front has passed (six beams on the six headings,
+  a ballistic stream: Gauss exact); the shell means once steady: the count
+  at r = 3 and r = 4 is 6 x 2^17 over the shell's Nodes, the presence at
+  r = 3 twice the count and at r = 4 equal to it.
+- (d) every example world (`examples/events/*.json`, `bell/`, `coupling/`,
+  `detector/` through the entity loader) parses as a ray world.
+
+## Generated-output lifetime
+
+These are host filesystem contracts; they do not change simulated time or costs.
+See [RETENTION.md](RETENTION.md) for ownership and expiry policy.
+
+| Suite | Independent expectations |
+| --- | --- |
+| `test_retention.py` | Registered generations expire at 24 hours; later writes extend age; active and dependent writer locks survive future cleanup; unregistered, protected, linked and replaced files survive; interrupted quarantine resumes without deleting replacement data; expected adoption identity rejects stale inventory; concurrent catalog use waits; duplicate watchers share one lock |
+| `test_check_scope.py` | Explicit non-import edges retain the kept resource consumers and every row names an existing test; the exact scope report expires while unrelated files survive; dry-run creates no output |
+
+Ordinary test execution leases its JUnit report. Neither test collection nor
+cleanup enables rendering.
+
+## Running and validating changes
+
+The suite reuses world runs when their inputs and required observations coincide.
+The historical scalar, stream, link, collision and balanced regressions were
+deleted with their engines on 2026-09-17 (issue #164, bucket A), and the same
+day the suite was reduced to one module per generic rule and one per feature
+of the ray-event model (inventory,
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule));
+the dated records in `VALIDATION.md` keep their original scope.
+
+Run `python tools/check.py` from the installed project. It checks style, types and
+behavior. Pure-function unit tests do not run a world. See `VALIDATION.md` for
+recorded validation and tool versions.
+
+A new law requires inputs, expected outputs and edge cases before implementation.
+Test its generic calculation and engine integration independently. Static checks
+enforce known boundaries; they do not replace behavioral tests.
+
+## Repository navigation
+
+`test_repository_navigation.py` checks local Markdown destinations in root
+documents, docs and Skills against the actual tree. It also checks that every
+specialist is reachable from Boss and references the shared workflow. Synthetic
+valid and missing file/heading links exercise rejection independently. No world
+runs are added. External URL reachability and instruction quality still require
+review; this check does not certify physical acceptance.
+
+## Shared instructions and architecture boundaries
+
+- Repository input: AGENTS.md must exist, be linked by README, contribution and
+  architecture documents, and be included in MANIFEST.in. Referenced documents
+  must exist. CI runs the same validation command used locally.
+- The dependency direction (`tests/architecture_rules.py`): `core` imports only
+  `core`; the engine (`events`) imports only `core` and `events`, except
+  `events/run`, which writes the artifacts; no physical module imports an
+  output or storage library; synthetic upward and output imports are rejected
+  and the legal ones pass. Every module of `core/` passes the static integer
+  audit (no float literal, division, `sqrt` or numpy).
+- These tests do not run worlds and do not prove that an agent in another
+  conversation has read the instructions.
+
+## Locality and bounded local work
+
+`test_locality.py` creates no world and advances no time: it checks that
+LOCALITY-1 is documented in SIMULATOR_DEFINITIONS.md and AGENTS.md without an
+exception (end-to-end provenance, fixed work and storage for fixed K).
+LOCALITY-1 also requires manual end-to-end review of every input of a physical
+rule; passing this check alone does not establish it.
+
+## Repository language
+
+The English-only rule is authoritative in AGENTS.md and linked from the
+architecture guide. The language test scans project source, tests (including
+frozen references), tools, docs, root text files and workflow configuration.
+Generated artifacts, installed dependencies and Git history are outside its scope.
+
+Examples contain escaped test data: a Hebrew comment, docstring or heading must
+be rejected; English prose and mathematical notation must pass. The script check
+also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is a
+guard against non-English scripts, not a language classifier: Latin-script prose
+still requires review. No physical calculation changes as part of translation.
+
+## Shared integer arithmetic
+
+`test_integer_arithmetic.py` covers decoded scalar/vector addition and
+subtraction, ordered sums, dot/cross products and integer rounding. Independent
+examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
+(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
+counts, cross-product orientation/parallel vectors, signed limits and overflow
+before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
+-7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
+even when the quotient would fit, preserving existing timing behavior.
+
+
+## The rules of the law of events, as pinned until 2026-09-19 (history)
+
+The sections below belong to the modules deleted with the law of events on
+2026-09-19 (`test_node_mixing`, `test_node_mixing_numbers`,
+`test_event_transit`, `test_periodic_axis`, `test_event_suspension`,
+`test_phaseless_family`, `test_release_costs_by_phase_rate`,
+`test_event_clock`, `test_detector_sensitivity`, `test_phase_window`,
+`test_one_reading_set`, `test_integer_bounds_of_measured_and_emission`,
+`test_border_and_clock_corrections`, `test_event_worlds`). Their headings
+are kept for the links of the dated records; their pins are the law of
+events' and are not the engine's ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
 
 ## The Node's computation of the sides
 
@@ -395,93 +780,6 @@ measurement records, six records in all where there were four.
 `test_event_suspension` (b), (c) and (e) read the count on age 0 or on an
 exact multiple and are unchanged; the Bell worlds (`suspension` 0, nothing
 escaped) are unchanged (326 criteria of `tools/bell_chsh.py`).
-
-## Generated-output lifetime
-
-These are host filesystem contracts; they do not change simulated time or costs.
-See [RETENTION.md](RETENTION.md) for ownership and expiry policy.
-
-| Suite | Independent expectations |
-| --- | --- |
-| `test_retention.py` | Registered generations expire at 24 hours; later writes extend age; active and dependent writer locks survive future cleanup; unregistered, protected, linked and replaced files survive; interrupted quarantine resumes without deleting replacement data; expected adoption identity rejects stale inventory; concurrent catalog use waits; duplicate watchers share one lock |
-| `test_check_scope.py` | Explicit non-import edges retain the kept resource consumers and every row names an existing test; the exact scope report expires while unrelated files survive; dry-run creates no output |
-
-Ordinary test execution leases its JUnit report. Neither test collection nor
-cleanup enables rendering.
-
-## Running and validating changes
-
-The suite reuses world runs when their inputs and required observations coincide.
-The historical scalar, stream, link, collision and balanced regressions were
-deleted with their engines on 2026-09-17 (issue #164, bucket A), and the same
-day the suite was reduced to one module per generic rule and one per feature
-of the ray-event model (inventory,
-[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule));
-the dated records in `VALIDATION.md` keep their original scope.
-
-Run `python tools/check.py` from the installed project. It checks style, types and
-behavior. Pure-function unit tests do not run a world. See `VALIDATION.md` for
-recorded validation and tool versions.
-
-A new law requires inputs, expected outputs and edge cases before implementation.
-Test its generic calculation and engine integration independently. Static checks
-enforce known boundaries; they do not replace behavioral tests.
-
-## Repository navigation
-
-`test_repository_navigation.py` checks local Markdown destinations in root
-documents, docs and Skills against the actual tree. It also checks that every
-specialist is reachable from Boss and references the shared workflow. Synthetic
-valid and missing file/heading links exercise rejection independently. No world
-runs are added. External URL reachability and instruction quality still require
-review; this check does not certify physical acceptance.
-
-## Shared instructions and architecture boundaries
-
-- Repository input: AGENTS.md must exist, be linked by README, contribution and
-  architecture documents, and be included in MANIFEST.in. Referenced documents
-  must exist. CI runs the same validation command used locally.
-- The dependency direction (`tests/architecture_rules.py`): `core` imports only
-  `core`; the engine (`events`) imports only `core` and `events`, except
-  `events/run`, which writes the artifacts; no physical module imports an
-  output or storage library; synthetic upward and output imports are rejected
-  and the legal ones pass. Every module of `core/` passes the static integer
-  audit (no float literal, division, `sqrt` or numpy).
-- These tests do not run worlds and do not prove that an agent in another
-  conversation has read the instructions.
-
-## Locality and bounded local work
-
-`test_locality.py` creates no world and advances no time: it checks that
-LOCALITY-1 is documented in SIMULATOR_DEFINITIONS.md and AGENTS.md without an
-exception (end-to-end provenance, fixed work and storage for fixed K).
-LOCALITY-1 also requires manual end-to-end review of every input of a physical
-rule; passing this check alone does not establish it.
-
-## Repository language
-
-The English-only rule is authoritative in AGENTS.md and linked from the
-architecture guide. The language test scans project source, tests (including
-frozen references), tools, docs, root text files and workflow configuration.
-Generated artifacts, installed dependencies and Git history are outside its scope.
-
-Examples contain escaped test data: a Hebrew comment, docstring or heading must
-be rejected; English prose and mathematical notation must pass. The script check
-also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is a
-guard against non-English scripts, not a language classifier: Latin-script prose
-still requires review. No physical calculation changes as part of translation.
-
-## Shared integer arithmetic
-
-`test_integer_arithmetic.py` covers decoded scalar/vector addition and
-subtraction, ordered sums, dot/cross products and integer rounding. Independent
-examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
-(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
-counts, cross-product orientation/parallel vectors, signed limits and overflow
-before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
--7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
-even when the quotient would fit, preserving existing timing behavior.
-
 
 ## The worlds of the law of events
 
