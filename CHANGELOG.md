@@ -27,6 +27,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   passes with no push and mixes on; a release reads no threshold
   (`EventSimulation._meet`, [the engine](docs/ENGINE.md)). Test:
   `test_detector_sensitivity` ([expectations](docs/TEST_EXPECTATIONS.md#a-detectors-sensitivity)).
+- The phase window, `phase_window`, by the model owner's decision of
+  2026-09-19 ("Approve the phase window as a declared width of a detector,
+  and of the emitter too"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)):
+  a setting on the circle of N steps and the half circle centred on it. On a
+  table entry (`{"rule": ..., "phase_window": s}`, any rule but `pass`; the
+  string form still accepted) the response, after the threshold, only to a
+  bundle whose phase at the Node falls in the window, a bundle outside it
+  passing with a `pass` record; on a lamp a release only at the
+  self-creations whose clock phase falls in it, the clock and the phase
+  turning regardless; the phase read on every measurement record
+  (`Transit.phase_at`, `engine.in_window`, [the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#the-phase-window-on-2026-09-19-phase_window)).
+  Test: `test_phase_window` ([expectations](docs/TEST_EXPECTATIONS.md#the-phase-window)).
 
 ### The law of events recorded (2026-09-19)
 

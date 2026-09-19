@@ -168,6 +168,23 @@ class Transit:
         y = (amplitude * self.sines[phase]).sum(axis=-1)
         return integer_root(x * x + y * y) // PHASE_COSINE_SCALE
 
+    def phase_at(self, position: Address3, rank: int) -> int:
+        """The phase of one number's arrivals at one Node: the nearest step of
+        the coherent sum whose size `sizes` reports, per travel Port the
+        integer root of the amount at its phase, the six summed on the circle
+        (step 0 for a zero sum). What a measured event reads for its phase
+        window and stamps on its records. The tables at 1/256 read a single
+        arrival's step back exactly on a circle of up to 64 steps; on a
+        larger circle neighbouring steps can read as one, as in `receive`
+        and `place`."""
+        assert self.cosines is not None and self.sines is not None
+        cell = (*position, rank)
+        amount, phase = self.arr_amt[cell], self.arr_ph[cell]
+        amplitude = integer_root(amount * (MIXING_AMPLITUDE_SCALE * MIXING_AMPLITUDE_SCALE))
+        x = (amplitude * self.cosines[phase]).sum(keepdims=True)
+        y = (amplitude * self.sines[phase]).sum(keepdims=True)
+        return int(self._nearest_step(x, y)[0])
+
     def count(self) -> np.ndarray:
         """Per Node the amount that arrived this interval, every number."""
         return self.arr_amt.sum(axis=(3, 4))
