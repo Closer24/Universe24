@@ -91,7 +91,16 @@ candidates (`transit.nearest_step`, `step_window`).
    click: the push taken and the amount joining the content, one click per
    unit), `rerelease` (the push taken, the amount taken to be created again
    like what came home, with the measured event's number and phase) or
-   `pass` (no push, the units mix on).
+   `pass` (no push, the units mix on). At a click the bundle's phase is the
+   detector's reading and nothing else: it is compared with the window and
+   written on the click record, and it does not enter the measured event,
+   whose phase is its own clock (step 5) and takes nothing from what it
+   measures, or its rates off the clock would depend on what fell on it;
+   the amount joins and the momentum enters, and those two the board keeps.
+   A click is the border between the board and the detector, one way: the
+   run's record is the detector's measurement, not a history outside the
+   model, and the board after a click does not tell the phase measured
+   (Highlights 5.4, 2026-09-19, issue #338).
 4. At every Node the arrivals of one number that are not suspended mix
    (`Transit.cycle`, node-mixing-v2, `mixing.mix_arrivals`): the events that
    arrived on each heading are one amplitude, sqrt(amount) in 32nds at their
@@ -192,7 +201,8 @@ phase, charge, momentum, its phase windows per family, its detector, age,
 count and what waits to be created again, intervals suspended, phase steps,
 steps, what each met per family by rule, the clicks, the push taken), the
 detectors' measurements (`detectors`: name, Nodes, threshold, per family the
-amount measured and the clicks) and the escapes; `events.jsonl` one record
+amount measured and the clicks) and the escapes; `events.jsonl` (the
+detectors' measurement of the board, step 3) one record
 per event (`home`, `read`, `click`, `rerelease`, `step`, `merged`,
 `escaped`) with the tick, the Node, the measured event, its detector, the
 family, the number, the amount and the push, the four measurements with the
