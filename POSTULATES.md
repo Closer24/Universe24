@@ -38,6 +38,17 @@ The exact assumed law and open limits are in
 [the detector contract](docs/DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1),
 following [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
 
+## Events board topology (2026-09-19)
+
+The owner-approved run parameter selects open or periodic topology independently
+per axis; open is the default. The exact schema, one-interval Link transfer,
+extent-one return, unchanged carried momentum and mixed-axis refusal rules are
+in [the engine contract](docs/ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment).
+This choice does not change a local contact law or establish equivalence between
+a thin periodic board and full 3D matter. Earlier topology descriptions below
+belong to their dated models, not an implicit events-world default.
+
+
 ## Active initialization-defined model
 
 The canonical Detector-owned sampling contract

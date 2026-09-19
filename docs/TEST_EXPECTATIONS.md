@@ -23,6 +23,16 @@ candidate/default compatibility. Example worlds are research configurations,
 not tests with pinned experiment outputs. The standalone 9-by-9 HTML demonstration
 needs its own dated source/configuration identity. None is a Heisenberg proof.
 
+## Per-axis topology (2026-09-19, before implementation)
+
+[The engine amendment](ENGINE.md#diagnostic-scope-and-acceptance) fixes the
+independent seam, extent-one, distinct-Port, no-escape, capacity and material
+self-movement expectations. `tests/test_event_boundaries.py` isolates those
+rules and serialization; schema checks cover the strict per-axis form and old
+all-open compatibility. A periodic example is a dated research run, not a pinned
+example-output test. No closed-3D equivalence or timing speedup is inferred.
+
+
 ## Suite inventory of 2026-09-19: one engine
 
 Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)):
