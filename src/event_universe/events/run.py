@@ -2,13 +2,14 @@
 
 `execute_event_run` steps a parsed world and preserves the input
 (`initialization.json`), the events (`events.jsonl`: the measurements per
-measured event, family and number with the push taken, the steps, the merges,
-the escapes), the final state (`state.json`, the measured events, the
-detectors and every Node with events in transit, written Node by Node through
-`snapshot_writer`) and the record (`run.json`: the law's marker, the world's
-keys, the books per completed tick with the conservation flag, the per-tick
-lines of the measured content, the content in transit and the momentum, the
-measured events' final states, the detectors' measurements and the escapes).
+measured event, family and number with the push taken, the steps, the clicks
+on the open faces), the final state (`state.json`, the measured events, the
+detectors with the face detectors and every Node with events in transit,
+written Node by Node through `snapshot_writer`) and the record (`run.json`:
+the law's marker, the world's keys, the books per completed tick with the
+conservation flag, the per-tick lines of the measured content, the content in
+transit and the momentum, the measured events' final states, the detectors'
+measurements with the face detectors' and the escapes).
 `tools/run_series.py` reads the same keys of `run.json` as for any run
 (`status`, `completed_ticks`, `elapsed_seconds`, `audit`,
 `conserved_at_every_completed_tick`).

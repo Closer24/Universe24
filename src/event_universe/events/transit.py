@@ -16,11 +16,14 @@ engine, `engine.py`, orders them with the measured events):
 
 - the walk: every departure is created one Link on, at the neighbour, with
   its record unchanged (an event in transit does not turn: a transfer is not
-  a tick of its clock), what leaves through an open face booked as escaped;
-  on an axis the world declares periodic the departures through one face
-  are created at the first Node of the opposite face (the wrap), nothing
-  escapes on that axis, and with an extent of 1 a departure returns to its
-  own Node as its arrival through that Port (a one-interval stub);
+  a tick of its clock), what leaves through an open face booked as escaped
+  and reported to the engine's face observer as a click on that face (an
+  open face is a detector, the model owner, 2026-09-19: the escape is a
+  measurement at the border, not a loss; `face_observer`); on an axis the
+  world declares periodic the departures through one face are created at
+  the first Node of the opposite face (the wrap), nothing escapes on that
+  axis, and with an extent of 1 a departure returns to its own Node as its
+  arrival through that Port (a one-interval stub);
 - the sizes: per Node and number the size of the coherent sum of the
   arrivals, the amplitude the mixing forms, in 32nds of one unit's (`sizes`),
   a reading (the shell means) and the phase window's sum; they no longer
@@ -54,6 +57,8 @@ engine, `engine.py`, orders them with the measured events):
 
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import numpy as np
 
 from event_universe.core.lattice import PORT_HEADINGS, Address3
@@ -71,6 +76,12 @@ HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
 # The momenta the transit carries are bounded by the 64-bit work register: a
 # push is a unit's momentum times the measured event's content.
 MOMENTUM_BOUND = (1 << 62) - 1
+# What the walk reports for every escape through an open face, one call per
+# Node, number and face: the family, the face (its Port index), the edge
+# Node the units left from, the number, the amount, the phase, the momentum
+# carried and the content carried. The engine records it as a click on the
+# face detector; the transit keeps no record of its own.
+FaceObserver = Callable[[int, int, Address3, int, int, int, list[int], int], None]
 
 
 def step_window(modulus: int) -> int:
@@ -131,9 +142,13 @@ class Transit:
         phased: bool = True,
         *,
         exact_transport: bool = False,
+        face_observer: FaceObserver | None = None,
     ) -> None:
         self.family = family
         self.shape = shape
+        # Told of every escape through an open face (a click on the face
+        # detector, recorded by the engine); None records nothing.
+        self.face_observer = face_observer
         # Per axis whether the walk wraps (the world's `boundary`); an open
         # axis lets its departures escape at the edge.
         self.periodic = periodic
@@ -249,10 +264,12 @@ class Transit:
         """Every departure created one Link on, its record unchanged, into the
         arrivals at the neighbour (joining what waits there as one amplitude
         per Port); what leaves through an open face is booked as escaped
-        with the momentum it carried, and on a periodic axis the departures
-        through one face are created at the first Node of the opposite face,
-        in the slot of their travel heading, nothing escaping. Returns, per
-        Node and number, whether anything arrived this interval."""
+        with the momentum and the content it carried and reported to the
+        face observer as a click on that face, one per Node and number, and
+        on a periodic axis the departures through one face are created at
+        the first Node of the opposite face, in the slot of their travel
+        heading, nothing escaping. Returns, per Node and number, whether
+        anything arrived this interval."""
         arrived = self.fresh.copy()
         self.fresh[...] = False
         if not self.fly_amt.any():
@@ -295,6 +312,8 @@ class Transit:
                 self.escaped += int(gone.sum())
                 self.escaped_momentum += momentum[tuple(edge)].reshape(-1, 3).sum(axis=0)
                 self.escaped_content += int(content[tuple(edge)].sum())
+                if self.face_observer is not None:
+                    self._report_face(port, axis, edge, gone, phase, momentum, content)
         self.fly_amt[...] = 0
         self.fly_ph[...] = 0
         self.fly_mom[...] = 0
@@ -302,6 +321,41 @@ class Transit:
         arrived |= incoming_amt.sum(axis=-1) > 0
         self.receive(incoming_amt, incoming_ph, incoming_mom, incoming_con)
         return arrived
+
+    def _report_face(
+        self,
+        port: int,
+        axis: int,
+        edge: list[slice | int],
+        gone: np.ndarray,
+        phase: np.ndarray,
+        momentum: np.ndarray,
+        content: np.ndarray,
+    ) -> None:
+        """The clicks on one open face this interval, one per edge Node and
+        number that left through it: the amount, the phase, the momentum and
+        the content of that slot, to the face observer (a record; the
+        physics of the escape is booked above)."""
+        assert self.face_observer is not None
+        gone_ph, gone_mom, gone_con = phase[tuple(edge)], momentum[tuple(edge)], content[tuple(edge)]
+        face_index = edge[axis]
+        assert isinstance(face_index, int)
+        edge_coordinate = face_index % self.shape[axis]
+        for found in np.argwhere(gone):
+            cell = tuple(int(value) for value in found)
+            coordinates = list(cell[:-1])
+            coordinates.insert(axis, edge_coordinate)
+            node: Address3 = (coordinates[0], coordinates[1], coordinates[2])
+            self.face_observer(
+                self.family,
+                port,
+                node,
+                self.owners[cell[-1]],
+                int(gone[cell]),
+                int(gone_ph[cell]),
+                [int(value) for value in gone_mom[cell]],
+                int(gone_con[cell]),
+            )
 
     def receive(
         self,

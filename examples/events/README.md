@@ -50,7 +50,10 @@ of 2026-09-19 to run the series on two-dimensional boards), a source of
 content 2^24 at the centre and probes of content 1 that read (the push
 taken, the units mix on). The items: the equivalence (a probe of content m
 pushed m times as much, record by record, and a free probe's steps the same
-for every m), the third law with unequal contents (4 : 1), superposition,
+for every m; since 2026-09-19 a step onto a measured event is refused, so a
+rerun of the free probes ends next to the source with no `merged` record
+where the registered run read a merge, [migration](../../docs/MIGRATION.md#no-merge-a-step-onto-a-measured-event-is-refused-on-2026-09-19)),
+the third law with unequal contents (4 : 1), superposition,
 retardation (the front derived by hand from the mixing rule), the far field
 (the ring means of the count, the flow, the carried momentum and the size,
 Gauss's flux through the square, the escape; the axis pattern at the

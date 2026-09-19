@@ -7,6 +7,31 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- The three reversible corrections that every path shares (the model
+  owner, 2026-09-19, Highlights 5.4; the architect's D2 and D3). No merge:
+  a measured event's step onto a Node that holds a measured event is
+  refused, the stepping event staying where it is with its momentum, the
+  resident untouched and the step counted (the `merged` record and the
+  merge branch of `_move` deleted; a world where two bodies met and merged
+  now keeps both). An open face is a detector: every escape through an open
+  face, in transit or a measured event's step, is a `click` on the face
+  detector named by the face (`face:+x` ... `face:-z`), recorded with the
+  tick, the Node, the number, the amount, the phase, the momentum and the
+  content, the face detectors listed in the run's `detectors` after the
+  declared ones, and the books' escaped lines their sums; nothing physical
+  changes at the face (the `escaped` record of a measured event becomes
+  that click). The clock's count read off the clock: the count a measured
+  event owes after its self-creation is `by_clock(age, k x n, d)` from the
+  presence k, like every other rate, no remainder kept, so the mean slowing
+  is k n / d (a presence of 1 at [1, 4] slows the clock by 1 / 4 where
+  `k x n // d` gave none; exact multiples unchanged)
+  ([the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#no-merge-a-step-onto-a-measured-event-is-refused-on-2026-09-19)).
+  Tests: `test_border_and_clock_corrections` (new); `test_event_boundaries`
+  (the wrapped target held: the refusal), `test_phase_window` (a) (two face
+  clicks among its records) re-pinned; `test_event_suspension` unchanged;
+  the Bell worlds unchanged
+  ([expectations](docs/TEST_EXPECTATIONS.md#the-border-and-the-clocks-count)).
 - The integer bounds of the measured line and of the emission (the
   architect's review of 2026-09-19, findings F2, F4 and F9). `engine.bounded`
   checks a measured event's momentum after a push, a recoil or a merge, the
