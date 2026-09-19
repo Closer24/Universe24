@@ -1104,7 +1104,7 @@ states "exactly" and means integer equality at every tick.
 - **Confronts.** Whether a light free probe closes an orbit about a heavy
   fixed source under the measured push law with the width of the push (the
   model owner's D1 of 2026-09-19, the world key `width`, [RAY_LAW section
-  3](RAY_LAW.md#3-the-nodes-interval-gonen_beam) step 5 and note 15), and
+  3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5 and note 15), and
   how its period scales with the radius: on the plane a ballistic stream
   falls as 1 / r (series C, Gauss exact), so the expected law is a flat
   rotation curve, T proportional to r, T(24)^2 / T(12)^2 = (24 / 12)^2 = 4

@@ -124,7 +124,7 @@ self-created, reads the owed count off the clock from the presence
 by their momentum (`_move`: on an axis whose momentum component is p, one
 Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M + |p|)`,
 M the content and S the world's `width`, 1 by default; the model owner's
-D1 of 2026-09-19, [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam)
+D1 of 2026-09-19, [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam)
 step 5 and note 15; at most one Link per interval, x before y before z,
 only in an interval where nothing is owed) and books the interval.
 `inverse_step` runs the

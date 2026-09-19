@@ -4,7 +4,7 @@ Six worlds of one base, written by `make_worlds.py`; the register entry is
 [D, the orbit under the law of the ray, on the plane (2026-09-19)](../../../docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)
 and the evidence is in [validation](../../../docs/VALIDATION.md). The
 question: with the width of the push (the model owner's D1 of 2026-09-19,
-the world key `width`, [RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-gonen_beam)
+the world key `width`, [RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
 step 5), does a light free probe close an orbit about a heavy fixed source
 under the measured push law, and how does its period scale with the radius?
 A research run, made once, never a test; the derivation and the

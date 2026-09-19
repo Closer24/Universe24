@@ -59,7 +59,7 @@ def bar(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        "families": [{"name": "m", "kind": "free", "charge": 0, "phase": False}],
+        "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": measured,
     }
     world.update(keys)

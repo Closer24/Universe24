@@ -39,7 +39,7 @@ establish no physical law.
 
 The worktree of `claude/universe24-new-3ytqde` on the base `0a33a202` (the
 law of the ray merged), the D1 commit (the world key `width`,
-[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam) step 5 and
+[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5 and
 note 15) and the orbit series on it. Runtime source SHA-256
 `587cbf4852a7fafddc07b2ab35a6a530ed27607ea1aaaec8b17d89933e66d788`,
 Python 3.14, headless, four cores.

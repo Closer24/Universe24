@@ -105,7 +105,7 @@ def world(width: int, radius: int) -> Json:
         "suspension": 0,
         "width": width,
         "directions": [list(v) for v in DECLARED],
-        "families": [{"name": "m", "kind": "free", "charge": 0, "phase": False}],
+        "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": [
             {
                 "position": list(CENTRE),

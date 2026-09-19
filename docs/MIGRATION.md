@@ -8,13 +8,14 @@ python -m pip install -e '.[render,dev]'
 
 ## The ray is NatureBeam, on 2026-09-19 (the night)
 
-The model owner renamed the ray's record and its one function: `GonenBeam` is
-`NatureBeam`, `gonen_beam` is `nature_beam`, and the module
-`src/event_universe/events/gonen_beam.py` is `nature_beam.py`. A mechanical
-rename of every token in the code, the tests, the tools and the documents;
-no rule, integer, record or artifact changed. Highlights 5.4 keeps the earlier
-name in its record of the day. Imports of `event_universe.events.gonen_beam`
-must become `event_universe.events.nature_beam`.
+The model owner renamed the ray's record and its one function: the record
+`GonenBeam` is `NatureBeam`, the function `gonen_beam` is `nature_beam`, and
+the module `src/event_universe/events/gonen_beam.py` is `nature_beam.py`. A
+mechanical rename of every token in the code, the tests, the tools and the
+documents; no rule, integer, record or artifact changed. Highlights 5.4 keeps
+the earlier name in its record of the day. Imports of
+`event_universe.events.gonen_beam` must become
+`event_universe.events.nature_beam`.
 
 ## The table from the keys and the moments, on 2026-09-19 (the night)
 

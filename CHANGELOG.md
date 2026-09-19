@@ -44,7 +44,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   naming the key; `run.json` records `width`. One unit of net flow gives
   any body p = M, so the speed it gives is 1 / (S + 1) for every content:
   the equivalence principle is kept and a world can declare slow motion
-  ([RAY_LAW section 3](docs/RAY_LAW.md#3-the-nodes-interval-gonen_beam)
+  ([RAY_LAW section 3](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
   step 5 and note 15, [the engine](docs/ENGINE.md),
   [terminology](docs/TERMINOLOGY.md)). Test: `tests/test_push_width.py`
   ([expectations](docs/TEST_EXPECTATIONS.md#the-width-of-the-push)).

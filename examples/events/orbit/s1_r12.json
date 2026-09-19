@@ -603,7 +603,7 @@
   "families": [
     {
       "name": "m",
-      "kind": "free",
+      "quantum": 0,
       "charge": 0,
       "phase": false
     }
