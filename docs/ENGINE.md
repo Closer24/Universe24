@@ -25,7 +25,8 @@ tests: `tests/test_node_mixing.py`, `tests/test_node_mixing_numbers.py`,
 `tests/test_periodic_axis.py`, `tests/test_phaseless_family.py`,
 `tests/test_release_costs_by_phase_rate.py`, `tests/test_event_worlds.py`,
 `tests/test_integer_bounds_of_measured_and_emission.py`,
-`tests/test_border_and_clock_corrections.py`
+`tests/test_border_and_clock_corrections.py`,
+`tests/test_one_reading_set.py`
 ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
@@ -280,16 +281,29 @@ candidates (`transit.nearest_step`, `step_window`).
    a periodic axis the departures wrap. Arrivals into a slot that
    holds events waiting there are one amplitude per Port (the amounts added,
    the phase of the coherent sum, the momenta added, the contents added).
-2. At every Node the presence of each number is formed: the amount that
-   arrived there this interval, over every family (the model owner,
-   2026-09-19: the suspension reads presence, of everything, with one
-   fractional width; no amplitude, no square root). This interval's
-   presence is what a measured event reads at its self-creation (step 5)
-   for the count it owes: the presence at its Node of every number but its
-   own, times the world's `suspension` `[n, d]`, the whole part,
-   `count = presence x n // d`. The events of a paid family that arrived
-   this interval read the same presence at their Node, of every family and
-   every number but their own, and carry the same count (`Transit.suspend`,
+2. At every Node the presence of each number is formed: everything present
+   there this interval, over every family (the model owner, 2026-09-19:
+   the suspension reads presence, of everything, with one fractional
+   width; no amplitude, no square root): the amount that arrived, the
+   units waiting there among it (held as arrivals while their count
+   runs), and, here, the content of the measured event at the Node,
+   booked under its number (one reading set for every coupling, the model
+   owner, 2026-09-19: "everything present at the Node but the reader's
+   own number, including here"; what came home waits in the measured
+   event's record and is not content, so it is not presence). This
+   interval's presence is what a measured event reads at its
+   self-creation (step 5) for the count it owes: the presence at its Node
+   of every number but its own (its own content is its own number and is
+   not read; the units waiting at its Node are), times the world's
+   `suspension` `[n, d]`, the whole part, `count = presence x n // d`.
+   The events of a paid family that arrived this interval read the same
+   presence at their Node, of every family and every number but their
+   own, the measured event's content there among it unless its number is
+   theirs (until 2026-09-19 a waiting unit counted as presence and a
+   measured event's content did not: a unit passing a content of 2^10
+   read 0 where it now reads 2^10;
+   [migration](MIGRATION.md#one-reading-set-for-every-coupling-on-2026-09-19)),
+   and carry the same count (`Transit.suspend`,
    written once on arrival; what joins a waiting slot waits with it, the
    larger count kept: the next event is delayed); a free family's events
    are not suspended, as before. The size of the coherent sum
@@ -310,21 +324,30 @@ candidates (`transit.nearest_step`, `step_window`).
 3. A measured event meets the events that arrive at its Node (`_meet`): its
    own number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
-   content constant); another number's are met by its table, at a detector's
-   Node only a bundle of one number at or above the detector's `threshold` in
-   one interval: a smaller bundle passes whatever the table says (no push,
-   the units mix on as at an empty Node), and the threshold gates every
+   content constant); every other number's are one set, the one reading
+   set (the model owner, 2026-09-19), met together by its table, at a
+   detector's Node only when the set's amount, summed over every number
+   but the reader's own in one interval, reaches the detector's
+   `threshold`: a smaller set passes whatever the table says (no push, the
+   units mix on as at an empty Node), and the threshold gates every
    response, `read`, `measure` and `rerelease` alike, a receiver's and a
-   re-emitter's; a release (step 5) reads no threshold. After the
+   re-emitter's; a release (step 5) reads no threshold (until 2026-09-19
+   the threshold was met by a bundle of one number, so two numbers' units
+   arriving together, each below it and at it in sum, passed). After the
    threshold, the window: where the table entry declares a `phase_window`
-   s, the bundle's phase at the Node is read (the nearest step of the
-   coherent sum of its arrivals over the six Ports, `Transit.phase_at`,
-   the sum whose size `sizes` reports) and only a bundle whose phase falls
+   s, the set's phase at the Node is read (the nearest step of the
+   coherent sum of the arrivals of every number but the reader's own over
+   the six Ports, `Transit.phase_at`; for one number the sum whose size
+   `sizes` reports) and only a set whose phase falls
    in the half circle centred on s is met, d = (phase - s) mod N below
    N / 4 or from 3 N / 4 (exactly N / 2 steps; for N = 2 the one step
-   d = 0; `engine.in_window`, integer arithmetic on N); a bundle outside it
+   d = 0; `engine.in_window`, integer arithmetic on N); a set outside it
    passes as a small one does, no push, the units mixing on, and a `pass`
-   record is written. The rules: `read`
+   record is written per number. The response, the push and the record
+   stay per number, the detector's label (`_respond`): each number's flow
+   or carried momentum pushes and the set's push is their sum, and each
+   record carries the number's amount, its push, the set's phase and the
+   content its units carry. The rules: `read`
    (the default for a free family: the push taken and the units left to mix
    on as at an empty Node), `measure` (the default for a paid family, the
    click: the push taken and the content the bundle carries joining the
@@ -334,7 +357,7 @@ candidates (`transit.nearest_step`, `step_window`).
    per unit whatever it carries), `rerelease` (the push taken, the amount
    taken to be created again like what came home, with the measured event's
    number and phase and carrying the content it arrived with) or `pass` (no
-   push, the units mix on). At a click the bundle's phase is the detector's
+   push, the units mix on). At a click the set's phase is the detector's
    reading and nothing else: it is compared with the window and written on
    the click record, and it does not enter the measured event, whose phase
    is its own clock (step 5) and takes nothing from what it measures, or its
@@ -343,7 +366,9 @@ candidates (`transit.nearest_step`, `step_window`).
    A click is the border between the board and the detector, one way: the
    run's record is the detector's measurement, not a history outside the
    model, and the board after a click does not tell the phase measured
-   (Highlights 5.4, 2026-09-19, issue #338).
+   (Highlights 5.4, 2026-09-19, issue #338). The own number's arrivals,
+   home, are written with their own phase; a response's record with the
+   set's.
 4. At every Node the arrivals of a family that are not suspended mix
    (`Transit.cycle`, node-mixing-v3, `mixing.mix_arrivals`): the Node reads
    what is present. The events of each number that arrived on each heading
@@ -366,8 +391,9 @@ candidates (`transit.nearest_step`, `step_window`).
    with its units placed, exact per axis (`apportion_carried`). Two numbers'
    arrivals at one Node so interfere (in antiphase nothing leaves sideways)
    while a family's units never mix with another family's (each family is
-   its own transit); the sizes and the phase a measured event reads
-   (`Transit.sizes`, `Transit.phase_at`) stay per number. The rule of the
+   its own transit); `Transit.sizes` stays a reading per number (the shell
+   means), and the phase a measured event reads (`Transit.phase_at`) is
+   the set's, every number at its Node but its own. The rule of the
    Node is one for every family (`mix_arrivals` for all, the model owner,
    2026-09-19: "everything generic must be replaced by generic"); only the
    weights of the sides know whether the family has a phase circle. With
@@ -426,7 +452,9 @@ candidates (`transit.nearest_step`, `step_window`).
    without a phase circle (`"phase": false`) never turns, its phase 0, and
    K does not apply to its content. After
    its self-creation it reads the presence k at its Node of every number but
-   its own, this interval's (step 2), and owes the count read off its
+   its own, this interval's (step 2; its own content, here, is its own
+   number and is not read, the units waiting at its Node are), and owes
+   the count read off its
    clock like every other rate, `by_clock(age, k x n, d)` at the world's
    `suspension` `[n, d]`: what the whole part of age x k n / d gained by
    this self-creation, with the age before it (`_suspend`,
@@ -477,23 +505,32 @@ candidates (`transit.nearest_step`, `step_window`).
 
 **The push** (Highlights 5.4, the law of events, the third law corrected the
 same day; the model owner, 2026-09-19, the push of a free family reads the
-net flow): for the units of one number of a free family arriving at a
-measured event's Node, c is their NET FLOW, the sum over the six Ports of
-amount times travel heading (the arrival slot's heading, what `Transit.flow`
-sums per Node), not the momentum labels they carry: they push the measured
+net flow): for the units of a free family arriving at a measured event's
+Node, of every number but its own (one reading set, the model owner,
+2026-09-19), c is their NET FLOW, the sum over the six Ports of amount
+times travel heading (the arrival slot's heading, what `Transit.flow` sums
+per Node), not the momentum labels they carry: they push the measured
 event by -M c (the gravity reading, toward the emitter, the content M the
-cross-section) and by (q_A / M_A) q c (the electric reading, the emitter's
-whole charge over its declared content times the measured event's whole
-charge, the whole part off the clock, D the least common multiple of the
-charged events' declared amounts, the flow in place of the carried
-momentum). The momentum from birth of a free family's events stays on their
+cross-section; linear in c, so the sum of the numbers' pushes is the push
+of the summed flow) and, per emitter number A with flow c_A, by
+(q_A / M_A) q c_A (the electric reading, the emitter's whole charge over
+its declared content times the measured event's whole charge, the whole
+part off the clock per emitter, D the least common multiple of the charged
+events' declared amounts, the flow in place of the carried momentum; the
+factor is the emitter's, so the electric sum runs emitter by emitter over
+the set). The engine takes the push number by number (`_respond`) once the
+set has passed the threshold and the window, and the measured event's
+`pushed` is the sum over the set; this was already so before 2026-09-19
+(the per-number pushes were added and the own number was home), and what
+the decision changed for the push is the gate before it. The momentum from birth of a free family's events stays on their
 record, apportioned with the units at every Node, and in the momentum book,
 unread by the push (until 2026-09-19 the push read the carried momentum;
 [migration](MIGRATION.md#the-field-of-matter-without-phase-the-suspension-as-presence-with-a-fractional-width-and-the-push-as-the-net-flow-on-2026-09-19)).
 A free family's release costs nothing and takes no recoil, and the third
-law is the symmetry of the two fields with what escapes. A group of a paid
-family pushes by +c, its own carried momentum (light's pressure), and its
-emitter took the recoil. The own number pushes nothing.
+law is the symmetry of the two fields with what escapes. The units of a paid
+family, of every number but the reader's own, push by +c, their carried
+momentum summed over the set (light's pressure), and their emitters took
+the recoil. The own number pushes nothing (home).
 
 **The books** (`EventSimulation.books`, the runner's `audit` per tick), exact
 at every interval: per family the measured line, in content, initial +
@@ -623,7 +660,9 @@ detectors' measurement of the board, step 3, and the faces', steps 1 and
 6) one record per event (`home`, `read`, `click`, `rerelease`, `step`)
 with the tick, the Node, the measured event, its detector, the family, the
 number, the amount and the push, the four measurements with the `phase`
-read at the Node (`Transit.phase_at`) and the `content` the bundle carried
+read at the Node (`Transit.phase_at`: the set's, every number but the
+measured event's own, on `read`, `click` and `rerelease`, its own number's
+on `home`) and the `content` the bundle carried
 (a click's content is the energy the detector measured, `quantum` x s per
 unit), a `click` on a face detector (`detector` the face's name, `measured`
 None for a bundle in transit or the number of the measured event that
@@ -648,15 +687,19 @@ read-only.
 sensitivity"; "every detector must state what its sensitivity is"): a
 detector is a named set of measured events with one table; its Nodes, its
 threshold and its phase windows are its sensitivity. The threshold, the
-smallest bundle of one
-number the detector measures in one interval, gates every response of a
+smallest amount of a family the detector measures at a Node in one
+interval, summed over every number but the Node's own (the one reading set,
+the model owner, 2026-09-19; until then the bundle of one number), gates
+every response of a
 detector's Node, `read`, `measure` and `rerelease` alike, so that every kind
 of external apparatus, a receiver or a re-emitter, works by its sensitivity:
-a smaller bundle passes, no push taken and the units mixing on. It gates
+a smaller set passes, no push taken and the units mixing on; the click
+record stays per number, the detector's label. It gates
 responses only: a release, a lamp's or a free family's, and what a measured
 event creates again after a re-release, read no threshold, and the own
 number's arrivals are home and not a response
-(`tests/test_detector_sensitivity.py`). One Node measures one quantum at one
+(`tests/test_detector_sensitivity.py`, `tests/test_one_reading_set.py`).
+One Node measures one quantum at one
 place; a detector over a region measures many, and its statement, "an event
 in this region", is read off the record (the run's measurements per detector
 and per Node with their intervals, numbers, amounts, pushes and phases). What
@@ -681,10 +724,11 @@ The phase window is the second part of the sensitivity, with the threshold
 declared width of a detector, and of the emitter too"): one generic key,
 `phase_window`, a setting s on the circle of N steps and the half circle
 centred on it. On a table entry (any rule but `pass`) the response is made,
-after the threshold, only to a bundle whose phase at the Node (the nearest
-step of the coherent sum of its arrivals, `Transit.phase_at`) falls in the
-window, and a bundle outside it passes as one below the threshold does,
-recorded as `pass` with the phase read and the setting; it is decided at the
+after the threshold, only to a set (every number at the Node but its own,
+the one reading set) whose phase at the Node (the nearest step of the
+coherent sum of its arrivals, `Transit.phase_at`) falls in the window, and
+a set outside it passes as one below the threshold does, recorded as
+`pass` per number with the phase read and the setting; it is decided at the
 Node from the arriving record and the local setting, no draw and no register.
 Two Nodes whose settings differ by N / 2 divide the circle exactly between
 them. On a lamp the same key makes an emitter of a declared phase: it

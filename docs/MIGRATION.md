@@ -104,6 +104,63 @@ key changes. The events in transit keep their count `presence x n // d`
   0, 16 x 1 // 4 at every self-creation and 17 x 1 // 4, 17 x 1 // 16 on
   age 0, where the two rules agree: unchanged
   ([expectations](TEST_EXPECTATIONS.md#the-border-and-the-clocks-count)).
+## One reading set for every coupling, on 2026-09-19
+
+The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+on the mathematician's list: "ONE READING SET FOR EVERY COUPLING, 'everything
+present at the Node but the reader's own number, including here'"): one
+generic law replaces two reading rules. Until then the suspension read the
+presence of every family and every number but the reader's own while the
+push, the size and a detector's threshold read one number, and the seventh
+exit was counted inconsistently: a waiting unit counted as presence, a
+measured event's content did not. No world file changes; nothing here is
+evidence of a physical law. What a world reads differently:
+
+- **A unit of a paid family passing a measured event of another number
+  reads its content as presence.** The presence at a Node counts the
+  content of the measured event there under its number (`EventSimulation.step`),
+  so at `suspension` `[n, d]` a transit bundle of another number arriving
+  there carries `(arrivals + content) x n // d` where it carried
+  `arrivals x n // d`: a unit of light passing a content of 2^10 at [1, 4]
+  is held 256 intervals where it passed unheld; at the default [1, 1],
+  1024. A measured event's own read is unchanged (its content is its own
+  number and is subtracted; the units waiting at its Node were counted
+  before and are counted now). What came home waits in the measured
+  event's record, is not content and is not presence. A world with a width
+  above 0, paid units and a measured event of another number on their path
+  reads a longer suspension there; every shipped world with a width
+  (`one_content.json`, coupling world 6) has one number per Node or free
+  streams only and reads as before.
+- **A detector's threshold is met by the set.** The amount of a family
+  arriving at a Node in one interval, summed over every number but the
+  Node's own, is compared with the threshold (`_meet`); until now each
+  number's bundle was compared alone, so two numbers' units arriving
+  together, each below the threshold and at it in sum, passed, and are now
+  met, pushed, clicked or re-released, the record per number as before. At
+  threshold 1 without a window nothing changes (the set is at 1 exactly
+  when some number is).
+- **A phase window reads the set's phase.** `Transit.phase_at(position,
+  ranks)` takes a sequence of ranks and reads the nearest step of the
+  coherent sum over them; the engine passes the set (every number but the
+  measured event's own) for a response and `[own]` for the home record. Two
+  numbers arriving at a windowed Node in one interval are gated by the phase
+  of their coherent sum, one verdict for both, and their `read`, `click`,
+  `rerelease` and `pass` records carry that phase; a `home` record carries
+  its own number's. A consumer that called `phase_at(position, rank)` passes
+  `[rank]`. `Transit.sizes` is unchanged, a reading per Node and number.
+- **The push** already summed the numbers' pushes (each number's flow, the
+  emitter's own electric factor) and excluded the own number, which is home;
+  what changed for it is the gate before it, the set's threshold and window.
+  The `_meet` of the engine is split into `_home` (the own number) and
+  `_respond` (one number of the set), the records' order at a Node being
+  home first, then the set in rank order.
+- **Tests.** `tests/test_one_reading_set.py` (new;
+  [expectations](TEST_EXPECTATIONS.md#one-reading-set)).
+  `test_event_suspension` (e) reads the presence 17 where it read 16 (the
+  content counted), its counts 4 and 1 unchanged; no other pin moves. The
+  Bell worlds read unchanged (326 criteria of `tools/bell_chsh.py`, S = 2).
+  Series C moves no reading: its streams are free families, never suspended,
+  and its probes read at threshold 1 without windows.
 
 ## The emission bound at parsing and the bounded measured line, on 2026-09-19
 

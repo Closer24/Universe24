@@ -32,6 +32,29 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   clicks among its records) re-pinned; `test_event_suspension` unchanged;
   the Bell worlds unchanged
   ([expectations](docs/TEST_EXPECTATIONS.md#the-border-and-the-clocks-count)).
+- One reading set for every coupling (the model owner, 2026-09-19, on the
+  mathematician's list: "everything present at the Node but the reader's
+  own number, including here"). The presence at a Node counts, beside the
+  arrivals and the units waiting there as arrivals, the content of the
+  measured event at the Node under its number (`EventSimulation.step`), so
+  a transit bundle of another number reads it (a unit of light passing a
+  content of 2^10 at `suspension` [1, 4] now carries 256 where it read 0)
+  and the measured event, reading every number but its own, does not; a
+  detector's threshold is met by the family's amount summed over every
+  number but the Node's own, and a phase window reads the phase of their
+  coherent sum (`Transit.phase_at(position, ranks)` over a sequence of
+  ranks), one verdict for the set, the record per number with the set's
+  phase (`_meet`, split into `_home` and `_respond`); the push was already
+  the sum over the numbers of each number's flow (the emitter's electric
+  factor its own) with the own number home, and now follows the set's gate.
+  What came home is not content and not presence ([the engine](docs/ENGINE.md),
+  [terminology](docs/TERMINOLOGY.md),
+  [migration](docs/MIGRATION.md#one-reading-set-for-every-coupling-on-2026-09-19)).
+  Test: `test_one_reading_set` (new;
+  [expectations](docs/TEST_EXPECTATIONS.md#one-reading-set));
+  `test_event_suspension` (e) reads 17 where it read 16, its counts
+  unchanged; no other pin moves. The Bell worlds run unchanged (326
+  criteria of `tools/bell_chsh.py`, S = 2).
 - The integer bounds of the measured line and of the emission (the
   architect's review of 2026-09-19, findings F2, F4 and F9). `engine.bounded`
   checks a measured event's momentum after a push, a recoil or a merge, the

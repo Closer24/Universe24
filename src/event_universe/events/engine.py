@@ -32,25 +32,31 @@ nothing (no quanta of zero content). The interval, in this order:
    `face:-z` in the run's detector record, `_face_click`); on an axis the
    world declares periodic the departures through one face are created at
    the first Node of the opposite face and nothing escapes on that axis;
-2. at every Node the presence of each number is formed, the amount that
-   arrived there this interval, over every family (and, a reading, the size
-   of the coherent sum, `Transit.sizes`); the events of a paid family that
-   arrived this interval read the presence at their Node of every number but
-   their own and carry the count `presence x n // d` at the world's
-   `suspension` `[n, d]` (`Transit.suspend`), the same read a measured event
-   makes at its self-creation (step 5);
+2. at every Node the presence of each number is formed, everything present
+   there this interval over every family: the amount that arrived (the
+   units waiting there among them, held as arrivals) and, here, the content
+   of the measured event at the Node under its number (and, a reading, the
+   size of the coherent sum, `Transit.sizes`); the events of a paid family
+   that arrived this interval read the presence at their Node of every
+   number but their own and carry the count `presence x n // d` at the
+   world's `suspension` `[n, d]` (`Transit.suspend`), the same read a
+   measured event makes at its self-creation (step 5): one reading set for
+   every coupling (the model owner, 2026-09-19), "everything present at the
+   Node but the reader's own number, including here";
 3. a measured event meets the events that arrive at its Node: its own
    number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
    content constant, Highlights 5.4, the law of the shadow, reading (i));
-   another number's are met by its table, at a detector's Node only a
-   bundle of one number at or above its threshold in one interval (a
-   smaller one passes whatever the table says: no push, the units mix on;
-   a release reads no threshold) and, where the entry declares a
-   `phase_window`, only a bundle whose phase at the Node (the nearest step
-   of the coherent sum of its arrivals, `Transit.phase_at`) falls in the
-   half circle centred on the setting (`in_window`; a bundle outside it
-   passes, no push, the units mix on, a `pass` record written): `read`
+   every other number's, one reading set, are met together by its table,
+   at a detector's Node only when their summed amount in one interval
+   reaches its threshold (a smaller set passes whatever the table says: no
+   push, the units mix on; a release reads no threshold) and, where the
+   entry declares a `phase_window`, only when the set's phase at the Node
+   (the nearest step of the coherent sum of the arrivals of every number
+   but the reader's own, `Transit.phase_at`) falls in the half circle
+   centred on the setting (`in_window`; a set outside it passes, no push,
+   the units mix on, a `pass` record written per number); the response,
+   the push and the record stay per number, the detector's label: `read`
    (the default for a free family: the push taken, the units left to mix on
    as at an empty Node), `measure` (the default for a paid family, the
    click: the push taken and the content the bundle carries joining the
@@ -93,7 +99,9 @@ nothing (no quanta of zero content). The interval, in this order:
    measured event of a family without a phase circle never turns). After its
    self-creation it
    reads the presence k at its Node of every number but its own, this
-   interval's (step 2), and owes the count read off its clock like every
+   interval's (step 2; its own content, here, is its own number and is not
+   read, the units waiting at its Node are), and owes the count read off
+   its clock like every
    other rate, `by_clock(age, k x n, d)` at the world's `suspension`
    `[n, d]` (what the whole part of age x k n / d gained by this
    self-creation; `Measured.owed`, written once per self-creation, never
@@ -128,16 +136,19 @@ nothing (no quanta of zero content). The interval, in this order:
 
 The push (Highlights 5.4, the law of events, the third law corrected; the
 model owner, 2026-09-19, the push as the net flow): the net flow c of the
-units of one number of a free family arriving at a measured event, the sum
-over the six Ports of amount times travel heading (what `Transit.flow` sums
-per Node), pushes it by -M c (gravity, toward the emitter, the content M the
-cross-section) and by (q_A / M_A) q c (electricity, the emitter's whole
-charge over its declared content times the measured event's whole charge,
-the whole part off the clock, no remainder), and the third law is the
+units of a free family arriving at a measured event, over every number but
+its own (one reading set), the sum over the six Ports of amount times travel
+heading (what `Transit.flow` sums per Node), pushes it by -M c (gravity,
+toward the emitter, the content M the cross-section) and by (q_A / M_A) q c
+per emitter number A (electricity, the emitter's whole charge over its
+declared content times the measured event's whole charge, the whole part
+off the clock, no remainder; the electric factor is the emitter's, so the
+sum runs emitter by emitter over the set), and the third law is the
 symmetry of the two fields; the momentum the units carry from birth stays on
 their record and in the books, unread by the push. A group of a paid family
-pushes by +c, its own carried momentum, and its emitter took the recoil
-(light's pressure). The books, per
+pushes by +c, its own carried momentum summed over the set, and its emitter
+took the recoil (light's pressure). The own number pushes nothing (home).
+The books, per
 family and interval: the measured line, in content, initial + measured (the
 clicks' content) = current + spent (the lamps' cost) + escaped (measured
 events off the board); the transit line, in units, initial + released =
@@ -497,9 +508,19 @@ class EventSimulation:
             per_number = transit.arr_amt.sum(axis=-1)
             for rank, number in enumerate(transit.owners):
                 presence_by_number[..., number] += per_number[..., rank]
+        # Here, the seventh exit, counts in the presence (one reading set,
+        # the model owner, 2026-09-19): the units waiting at a Node are in
+        # its arrivals already, and a measured event's content is booked
+        # under its number at its Node, so a reader of another number reads
+        # it and the measured event, reading every number but its own, does
+        # not (no double count). What came home waits in its record and is
+        # not content, so it is not presence.
+        for entry in self.measured.values():
+            presence_by_number[(*entry.position, entry.number)] += entry.content
         presence_total = presence_by_number.sum(axis=-1)
         # The suspension of a paid family's events at the Nodes they reached:
-        # each number's arrivals read the presence of every other number.
+        # each number's arrivals read the presence of every other number,
+        # the measured event's content at the Node among it.
         if world.suspension[0]:
             for index, transit in enumerate(self.transits):
                 if self.families[index].free or not transit.owners:
@@ -526,7 +547,9 @@ class EventSimulation:
     ) -> None:
         """The count a measured event owes after its self-creation: the
         presence k at its Node this interval of every number but its own (the
-        amount that arrived, over every family) times the width n / d, read
+        amount that arrived, over every family, the units waiting there
+        among it; its own content is its own number and is not read) times
+        the width n / d, read
         off its clock like every other rate, `by_clock(age, k x n, d)` with
         the age before this self-creation (the model owner, 2026-09-19: what
         the whole part of age x k n / d gained by this self-creation; no
@@ -796,89 +819,129 @@ class EventSimulation:
         return result
 
     def _meet(self, entry: Measured) -> None:
-        """The events at a measured event's Node: every arrival of its own
-        number measured home, every other number's met by the table when the
-        bundle reaches the detector's threshold (1 outside a detector: every
-        response, read, measure or rerelease, is gated; a smaller bundle
+        """The events at a measured event's Node, per family: every arrival of
+        its own number measured home (pushing nothing, counted as nothing,
+        its record carrying its own phase), and the rest read as one set
+        (the model owner, 2026-09-19: "everything present at the Node but
+        the reader's own number"): the bundles of every other number that
+        arrived this interval, met together by the table when their summed
+        amount reaches the detector's threshold (1 outside a detector:
+        every response, read, measure or rerelease, is gated; a smaller set
         passes with no push and mixes on) and, where the entry declares a
-        phase window, when the bundle's phase at the Node falls in it (a
-        bundle outside it passes the same way, and a `pass` record says so).
-        The phase read and the content the bundle carries are stamped on
-        every measurement record; a click's content, amount x quantum x s,
-        is the energy the detector measured, E = h f."""
+        phase window, when the set's phase at the Node falls in it (a set
+        outside it passes the same way, and a `pass` record per number says
+        so). The response, the push and the record stay per number, the
+        detector's label: each number's flow or carried momentum pushes,
+        the set's push their sum, and each record carries the number's
+        amount and push, the set's phase and the content the number's units
+        carry; a click's content, amount x quantum x s, is the energy the
+        detector measured, E = h f."""
         position = entry.position
         modulus = self.world.phase_steps
         for index, transit in enumerate(self.transits):
             if not transit.owners:
                 continue
+            own = transit.rank.get(entry.number)
+            if own is not None and transit.arr_amt[(*position, own)].any():
+                self._home(entry, index, own)
+            others = [
+                rank
+                for rank in range(len(transit.owners))
+                if rank != own and transit.arr_amt[(*position, rank)].any()
+            ]
+            if not others:
+                continue
             rule = entry.table[index]
             window = entry.windows[index]
-            free = self.families[index].free
-            for rank, number in enumerate(transit.owners):
-                cell = (*position, rank)
-                if not transit.arr_amt[cell].any():
+            # The set: the amount of every number but the reader's own.
+            total = int(transit.arr_amt[(*position, others)].sum())
+            if rule == "pass" or total < entry.threshold:
+                continue
+            # The phase of the set at the Node, read only when the window or
+            # the record needs it (fixed local work either way).
+            phase = None
+            if window is not None or self.record is not None:
+                phase = transit.phase_at(position, others)
+            if window is not None:
+                assert phase is not None
+                if not in_window(phase, window, modulus):
+                    for rank in others:
+                        amount = int(transit.arr_amt[(*position, rank)].sum())
+                        self._pass(entry, index, transit.owners[rank], amount, phase, window)
                     continue
-                total = int(transit.arr_amt[cell].sum())
-                content = int(transit.arr_con[cell].sum())
-                # The phase of the bundle at the Node, read only when the
-                # window or the record needs it (fixed local work either way).
-                phase = None
-                if window is not None or self.record is not None:
-                    phase = transit.phase_at(position, rank)
-                if number == entry.number:
-                    transit.take(position, rank)
-                    entry.home[index] = bounded(entry.home[index] + total, entry, "amount waiting")
-                    entry.home_content[index] = bounded(
-                        entry.home_content[index] + content, entry, "content waiting"
-                    )
-                    entry.measured[index]["home"] += total
-                    self.transit_absorbed[index] += total
-                    self.content_absorbed[index] += content
-                    self._event("home", entry, index, number, total, ZERO3, phase, content)
-                    continue
-                if rule == "pass" or total < entry.threshold:
-                    continue
-                if window is not None:
-                    assert phase is not None
-                    if not in_window(phase, window, modulus):
-                        self._pass(entry, index, number, total, phase, window)
-                        continue
-                # A free family's push reads the net flow of the bundle, a
-                # paid family's the momentum it carries.
-                if free:
-                    vector = [int(v) for v in transit.arr_amt[cell] @ HEADINGS]
-                else:
-                    vector = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
-                push = self._push(entry, free, number, vector)
-                entry.momentum = [
-                    bounded(int(a) + int(b), entry, "momentum")
-                    for a, b in zip(entry.momentum, push, strict=True)
-                ]
-                entry.pushed = [
-                    bounded(int(a) + int(b), entry, "push taken")
-                    for a, b in zip(entry.pushed, push, strict=True)
-                ]
-                if rule == "read":
-                    entry.measured[index]["read"] += total
-                    self._event("read", entry, index, number, total, push, phase, content)
-                    continue
-                transit.take(position, rank)
-                self.transit_absorbed[index] += total
-                self.content_absorbed[index] += content
-                entry.measured[index][rule] += total
-                if rule == "measure":
-                    # The click: the content the bundle carries joins, one
-                    # click per unit.
-                    entry.held[index] = bounded(entry.held[index] + content, entry, "content")
-                    entry.events[index] += total
-                    self.held_measured[index] += content
-                    self._event("click", entry, index, number, total, push, phase, content)
-                    continue
-                entry.home[index] = bounded(entry.home[index] + total, entry, "amount waiting")
-                entry.home_content[index] = bounded(
-                    entry.home_content[index] + content, entry, "content waiting"
-                )
-                self._event("rerelease", entry, index, number, total, push, phase, content)
+            for rank in others:
+                self._respond(entry, index, rank, rule, phase)
+
+    def _home(self, entry: Measured, index: int, rank: int) -> None:
+        """The arrivals of the measured event's own number at its Node: home,
+        taken to be created again at its next self-creation, pushing nothing
+        and not counted as content (the reading that keeps a content
+        constant); its record carries the phase of what came home."""
+        transit = self.transits[index]
+        position = entry.position
+        cell = (*position, rank)
+        total = int(transit.arr_amt[cell].sum())
+        content = int(transit.arr_con[cell].sum())
+        phase = transit.phase_at(position, [rank]) if self.record is not None else None
+        transit.take(position, rank)
+        entry.home[index] = bounded(entry.home[index] + total, entry, "amount waiting")
+        entry.home_content[index] = bounded(
+            entry.home_content[index] + content, entry, "content waiting"
+        )
+        entry.measured[index]["home"] += total
+        self.transit_absorbed[index] += total
+        self.content_absorbed[index] += content
+        self._event("home", entry, index, entry.number, total, ZERO3, phase, content)
+
+    def _respond(self, entry: Measured, index: int, rank: int, rule: str, phase: int | None) -> None:
+        """The response of the table to one number's arrivals once the set
+        they belong to passed the threshold and the window: the push taken
+        (a free family's by the number's net flow, a paid family's by the
+        momentum its units carry), then `read` (the units left to mix on),
+        `measure` (the click: the content carried joins, one click per
+        unit) or `rerelease` (the amount taken to be created again as the
+        measured event's own), the record stamped with the set's phase."""
+        transit = self.transits[index]
+        position = entry.position
+        number = transit.owners[rank]
+        cell = (*position, rank)
+        total = int(transit.arr_amt[cell].sum())
+        content = int(transit.arr_con[cell].sum())
+        free = self.families[index].free
+        if free:
+            vector = [int(v) for v in transit.arr_amt[cell] @ HEADINGS]
+        else:
+            vector = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
+        push = self._push(entry, free, number, vector)
+        entry.momentum = [
+            bounded(int(a) + int(b), entry, "momentum")
+            for a, b in zip(entry.momentum, push, strict=True)
+        ]
+        entry.pushed = [
+            bounded(int(a) + int(b), entry, "push taken")
+            for a, b in zip(entry.pushed, push, strict=True)
+        ]
+        if rule == "read":
+            entry.measured[index]["read"] += total
+            self._event("read", entry, index, number, total, push, phase, content)
+            return
+        transit.take(position, rank)
+        self.transit_absorbed[index] += total
+        self.content_absorbed[index] += content
+        entry.measured[index][rule] += total
+        if rule == "measure":
+            # The click: the content the bundle carries joins, one click
+            # per unit.
+            entry.held[index] = bounded(entry.held[index] + content, entry, "content")
+            entry.events[index] += total
+            self.held_measured[index] += content
+            self._event("click", entry, index, number, total, push, phase, content)
+            return
+        entry.home[index] = bounded(entry.home[index] + total, entry, "amount waiting")
+        entry.home_content[index] = bounded(
+            entry.home_content[index] + content, entry, "content waiting"
+        )
+        self._event("rerelease", entry, index, number, total, push, phase, content)
 
     def _pass(
         self, entry: Measured, family: int, number: int, amount: int, phase: int, window: int
@@ -905,11 +968,12 @@ class EventSimulation:
         )
 
     def _push(self, entry: Measured, free: bool, number: int, vector: list[int]) -> tuple[int, int, int]:
-        """The push of the units of one number arriving at a measured event:
-        for a free family the gravity and the electric readings of `vector`,
-        their net flow (amount times travel heading summed over the six
-        Ports); for a paid family `vector` is the momentum they carry and the
-        push is it."""
+        """The push of the units of one number arriving at a measured event
+        (the set's push is the sum over its numbers, each with its emitter's
+        electric factor): for a free family the gravity and the electric
+        readings of `vector`, their net flow (amount times travel heading
+        summed over the six Ports); for a paid family `vector` is the
+        momentum they carry and the push is it."""
         if not free:
             return (
                 bounded(vector[0], entry, "push"),

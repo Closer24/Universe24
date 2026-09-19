@@ -56,7 +56,8 @@ on 29^3 is not its steady state: the pins are a check, not a result.
     rule, N not a power of two, a detector on a Node without a measured
     event, a Node in two detectors, a quantum on a free family; and the
     runner's record: `run.json` with the law, the books per tick, the
-    measured events and the detectors; `state.json`; `events.jsonl`.
+    measured events and the detectors, the six face detectors of the open
+    board with no declared one; `state.json`; `events.jsonl`.
 """
 
 from __future__ import annotations
@@ -434,7 +435,17 @@ def test_the_world_refuses_by_name_and_the_runner_records_a_run(tmp_path):
     assert record["law"] == EVENTS_LAW and record["status"] == "completed"
     assert record["completed_ticks"] == 4 and record["conserved_at_every_completed_tick"] is True
     assert len(record["audit"]) == 4 and record["measured"][0]["content"] == CONTENT
-    assert record["detectors"] == [] and record["suspension"] == [1, 1]
+    # No declared detector; the six face detectors of the open board follow
+    # (an open face is a detector, 2026-09-19).
+    assert [entry["name"] for entry in record["detectors"]] == [
+        "face:+x",
+        "face:-x",
+        "face:+y",
+        "face:-y",
+        "face:+z",
+        "face:-z",
+    ]
+    assert record["suspension"] == [1, 1]
     assert record["families"][0]["phase"] is False
     assert (tmp_path / "run" / "state.json").exists() and (tmp_path / "run" / "events.jsonl").exists()
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))

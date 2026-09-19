@@ -61,6 +61,7 @@ modules are named in the [migration notes](MIGRATION.md).
 | `test_phase_window.py` | The phase window: a table entry's window gates the response after the threshold, a bundle outside it passing with a `pass` record; a window and its complement cover the circle exactly; a lamp's window selects its releases while its clock turns regardless; the refusals ([below](#the-phase-window)) |
 | `test_integer_bounds_of_measured_and_emission.py` | The integer bounds of the measured line and of the emission: a measured event's momentum, push, content and what waits checked against 2^62 - 1 before assignment, refused naming the Node and the quantity; a free measured event's release per Port times 3 at most the mixing's cell bound 2^30 - 1, refused at parsing; the mixing's refusals naming the quantity ([below](#the-integer-bounds-of-the-measured-line-and-of-the-emission)) |
 | `test_border_and_clock_corrections.py` | The three reversible corrections of 2026-09-19: a step onto a measured event refused (no merge, both remain, the step counted); an open face a detector (an escape a click on the face, the books' escaped lines the faces' sums, a periodic axis without faces); the clock's count read off the clock (`by_clock(age, k x n, d)`: a presence of 1 at [1, 4] slows the clock by 1 / 4, a presence of 8 owes 2 as before) ([below](#the-border-and-the-clocks-count)) |
+| `test_one_reading_set.py` | One reading set for every coupling: the presence counts the waiting units and the measured content, here, a transit unit reading the content it passes; the push the flow of every number but the reader's own; a detector's threshold and window the set's amount and phase, the record per number; the own number excluded everywhere ([below](#one-reading-set)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
@@ -172,9 +173,10 @@ family `m` and one measured event of it that steps. Written down first:
 `tests/test_event_suspension.py` isolates the suspension (the model owner,
 2026-09-19: "The event carries it; note that the next event is delayed"; the
 same day, the suspension reads presence, of everything, with one fractional
-width): a reader derives its suspension from the presence at its Node, the
-amount that arrived this interval over every family and every number but
-its own, times the world's `suspension` `[n, d]`, the whole part
+width): a reader derives its suspension from the presence at its Node,
+everything present this interval over every family and every number but
+its own (the arrivals and, since the one reading set of 2026-09-19, the
+content of a measured event there), times the world's `suspension` `[n, d]`, the whole part
 (`presence x n // d`; no amplitude, no square root); the event carries the
 count and counts down on itself, what arrives behind it waits with it, and
 a measured event reads the presence k after its self-creation and owes the
@@ -201,7 +203,7 @@ added the same day):
 | (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | interval 1: nothing owed, a self-creation (age 1), then the read of the presence 16, 16 x 1 // 4 = 4 owed; intervals 2 to 5 pay them (3, 2, 1, 0 left), no self-creation; interval 6 a self-creation (age 2) reading an empty Node; its age after intervals 1 to 6: 1, 1, 1, 1, 1, 2; intervals waited 4, nothing owed, phase 0; age + waited = 6 |
 | (c) a steady field | a bar of 2 x 1 x 1, `suspension` [1, 4], `release` [1, 128]; a content of 2048 of the free family at the corner x = 0 (five of its six exits off the open board), a measured event of light (content 1, measuring the free family) at x = 1; 30 intervals | the source is created again every interval (age 30; nothing of another number reaches it) and 16 units reach the probe every interval from the second on (464 taken after 30; since 2026-09-19 a free family's units carry no content, so the probe's content stays [0, 1] where it read [464, 1] before), the presence 16, k = 16 x 1 // 4 = 4; the probe's age after intervals 1 to 7: 1, 2, 2, 2, 2, 2, 3 (a self-creation in interval 2 owing 4, paid in 3 to 6, the next in 7), then once every 5 intervals (12, 17, 22, 27): after 10, 20 and 30 the ages 3, 5, 7, waited 23, 1 owed; age + waited = the interval at every interval; the age after 30 exceeds the age after 10 (slowed by 1 / 5, not frozen) |
 | (d) light on light | the bar with two measured events of light (numbers 1 and 2); at x = 4 in transit on +X 16 units of light of number 1 and one unit of light of number 2; `suspension` [1, 4], then [1, 4096] | at [1, 4] the unit reads the crowd's 16 (another number of the same family) and carries 16 x 1 // 4 = 4: its count after intervals 1 to 5 is 3, 2, 1, 0, 0, no departure of it before interval 5 and one unit on +X after it; the crowd reads 1, 1 x 1 // 4 = 0, and leaves whole in interval 1 (16 departures); at [1, 4096] the unit reads 16 x 1 // 4096 = 0, its counts 0, 0, 0, 0, 0, and it leaves on +X in interval 1 with the crowd |
-| (e) one presence, two readers | a measured event of light (content 1, number 2, measuring the free family and passing light) at x = 4; 16 units of the free family (number 1) and one unit of light of a third measured event (number 3) in transit there on +X; one interval at `suspension` [1, 4], then at [1, 16] | the unit reads every number but its own, 16, and carries 16 x 1 // 4 = 4 (3 after interval 1 pays one); the measured event, after its self-creation (age 1), reads every number but its own, 16 + 1 = 17, and owes 17 x 1 // 4 = 4: the same count; at [1, 16] the unit's count 1 (0 after the payment) and the measured event's 1 |
+| (e) one presence, two readers | a measured event of light (content 1, number 2, measuring the free family and passing light) at x = 4; 16 units of the free family (number 1) and one unit of light of a third measured event (number 3) in transit there on +X; one interval at `suspension` [1, 4], then at [1, 16] | the unit reads every number but its own, 16 + 1 = 17 (the 16 units and the measured event's content, here; until the one reading set of 2026-09-19 it read 16, the content unread) and carries 17 x 1 // 4 = 4 (3 after interval 1 pays one); the measured event, after its self-creation (age 1), reads every number but its own, 16 + 1 = 17, and owes 17 x 1 // 4 = 4: the same count from the same presence; at [1, 16] the unit's count 1 (0 after the payment) and the measured event's 1; the counts are those pinned before (16 // 4 = 17 // 4 and 16 // 16 = 17 // 16) |
 
 ## A family without a phase circle
 
@@ -268,8 +270,10 @@ anywhere. Written down first:
 `tests/test_detector_sensitivity.py` isolates a detector's sensitivity
 (Highlights 5.4, the model owner, 2026-09-19: "There are detectors by
 sensitivity"; "every detector must state what its sensitivity is"): a
-detector's threshold, the smallest bundle of one number it measures in one
-interval, gates every response of its Nodes (`read`, `measure`,
+detector's threshold, the smallest amount of a family it measures at a Node
+in one interval (since the one reading set of 2026-09-19 summed over every
+number but the Node's own; every case below arrives as one number, so the
+pins are unchanged), gates every response of its Nodes (`read`, `measure`,
 `rerelease`), a receiver's and a re-emitter's alike, and a smaller bundle
 passes with no push and mixes on; a release reads no threshold. A bar of
 9 x 3 x 3, K 2^20 so that no phase moves, `suspension` 0, `release` [0, 1],
@@ -291,9 +295,11 @@ detector, and of the emitter too"): one generic key, `phase_window`, a
 setting s on the circle of N steps and the half circle centred on it, with
 d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4 (exactly N / 2 steps; for
 N = 2 the one step d = 0; `engine.in_window`). On a table entry the response
-is made, after the threshold, only to a bundle whose phase at the Node
-(`Transit.phase_at`) falls in the window, a bundle outside it passing (no
-push, the units mixing on, a `pass` record with the phase and the window);
+is made, after the threshold, only to a set (every number at the Node but
+its own, the one reading set of 2026-09-19; one number in every case below,
+so the pins are unchanged) whose phase at the Node
+(`Transit.phase_at`) falls in the window, a set outside it passing (no
+push, the units mixing on, a `pass` record per number with the phase and the window);
 on a lamp a release only at the self-creations whose clock phase falls in
 it, the clock and the phase turning either way; every measurement record
 carries the phase read. Bars of 1 x 1 in y and z, N 64, `suspension` 0,
@@ -305,6 +311,36 @@ order, every measured event `fixed`. Written down first:
 | (a) the boundary of the window | a bar of 7 x 1 x 1, K 2^20; a source of `light` (content 8, number 1) at x = 0; a counter (content 1, number 2) at x = 6 measuring `light` through the window 20; four units of number 1 in transit on +X, at x = 5 with phase 35 (d = 15), x = 4 with 36 (d = 16), x = 3 with 3 (d = 47), x = 2 with 4 (d = 48), each reaching x = 6 alone in intervals 2 to 5 | d = 15 and d = 48 click (`click` records at ticks 2 and 5 with `phase` 35 and 4, the push (1, 0, 0) and, since 2026-09-19, `content` 1: a seeded unit carries one phase step of content); d = 16 and d = 47 pass (`pass` records at ticks 3 and 4 with the phase and `window` 20, no push), escaping in the next interval's walk; after 5 intervals `events` [2, 0], `held` [2, 1], the momentum (2, 0, 0), 2 escaped, nothing in transit, exactly those four records, the books balanced at every interval; `in_window` at N = 64 admits d in [0, 16) and [48, 64), at N = 2 the step 0, at N = 4 the steps 0 and 3 |
 | (b) the complement covers the circle | a bar of 12 x 1 x 1, K 2^14; a lamp of `light` (content K + 2, phase 0, rate [1, 1] on +X only) at x = 0, whose release of age a carries the phase a mod 64 exactly while 2 a (a + 1) < K; counters at x = 10 (window 8) and x = 11 (window 40 = 8 + 32); 64 + 10 intervals (the release of age a, interval a + 1, reaches x = 10 in interval a + 11 and x = 11 in a + 12) | 32 clicks at each counter: x = 10 the phases 0..23 and 56..63 (d in [0, 16) or [48, 64)), x = 11 the phases 24..55, each of the first 64 releases exactly once, the 64 click records' phases 0..63 each once, a click's tick its phase plus 11 (plus 12 at x = 11); 32 `pass` records at x = 10 (the phases 24..55, window 8), none at x = 11; nothing escaped; the lamp at age 74, phase 10, 74 phase steps, content K + 2 - 74, momentum (-74, 0, 0); in the 75th interval the release of age 64 (phase 0 again) clicks at x = 10 |
 | (c) a lamp with a window; the refusals | the lamp of (b) with `phase_window` 8; a plain counter (`measure`, no window) at x = 10; 64 intervals, then 10 more | after each interval t of the first 64: age t, phase t mod 64, phase steps t, the departure on +X one unit at phase t - 1 when t - 1 is in the window (the ages 0..23 and 56..63) and none otherwise; after 64: 32 released, content K + 2 - 32, momentum (-32, 0, 0), phase 0; after 74: 32 clicks at the counter, once at each of those phases, and 42 released (the ages 64..73, phases 0..9, released again); refused naming the key: a window of 64 at N = 64, a window on `pass`, an object entry without `rule`, an object entry with an unknown key, a lamp window of -1 |
+
+## One reading set
+
+`tests/test_one_reading_set.py` isolates the model owner's decision of
+2026-09-19 (Highlights 5.4, on the mathematician's list: "ONE READING SET FOR
+EVERY COUPLING, 'everything present at the Node but the reader's own number,
+including here'"): the presence a reader reads, the flow a measured event is
+pushed by, the amount a detector's threshold gates and the phase its window
+reads are formed over one set, every number at the Node but the reader's
+own, and the seventh exit counts in it, the units waiting at a Node (as
+arrivals, as before) and the content of the measured event at the Node under
+its number (new); a measured event's own content and its own number's units
+coming home are never read. K 2^20 so that no phase moves, `release` [0, 1],
+the families `m` (free, without a phase circle) and `light` (paid), every
+measured event `fixed`. Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) presence: the waiting units and the content here | a bar of 9 x 1 x 1 at `suspension` [1, 4]; lamps of light (content 1) at x = 0, 8, 7 as the numbers 1, 2, 3; at x = 4 64 units of number 1 on +X and 16 of number 2 on -X, at x = 3 one unit of number 3 on +X; two intervals. Then a measured event of `m` (content 2^10, number 1, passing light) at x = 4, a lamp of light (content 1, number 2) at x = 8, one unit of light of number 2 at x = 3 on +X; two intervals | interval 1: number 1 reads 16 and carries 16 x 1 // 4 = 4, number 2 reads 64 and carries 16, the counts at x = 4 after the payment [3, 15, 0]; interval 2: the lone unit of number 3 arrives beside the 80 waiting units and reads them, 80 x 1 // 4 = 20, the counts [2, 14, 19], the arrivals [64, 16, 1] (as before this change). The passing unit reads the measured content, here: 1024 x 1 // 4 = 256, its count 255 after interval 2, the unit held at x = 4 on +X and nothing in flight; the measured event at age 2 owes 0 (it reads the unit, 1 x 1 // 4 = 0; its own content unread), its content [1024, 0]; the books balanced (until this change the unit read 0) |
+| (b) the push over the set | 9 x 3 x 3, `suspension` 0, one free family `m`; sources of content 16 at x = 0 (number 1) and x = 8 (number 2), a reader of content 4 at x = 4 (number 3, `read`); at the reader 9 units of number 1 on +X, 9 of number 2 on -X and 5 of number 3 on +X; then the 9 of number 1 alone; then the 9 of number 1 with the 5 of number 3 | -4 x (9, 0, 0) + -4 x (-9, 0, 0) = (0, 0, 0): the push taken and the momentum (0, 0, 0), 18 read, 5 home, the content 4, the 5 created again whole on +X at the same interval's self-creation (age 0 mod 6), the other numbers' departures 18, nothing left in the arrivals; alone: (-36, 0, 0), 9 read; with the own 5: (-36, 0, 0), 9 read, 5 home, the 5 on +X (the own number adds nothing) |
+| (c) the threshold and the window read the set | 9 x 3 x 3, `suspension` 0; a receiver of `m` (content 4, number 1) measuring light in the detector `d` of threshold 3, lamps of light (content 4) at x = 0 (number 2) and x = 8 (number 3); 2 units of number 2 on +X and 1 unit of number 3 on -X arriving in interval 1; then the 2 alone; then the receiver measuring light through the window 32 at threshold 1 with the 2 units at phase 0 and the unit of number 3 at phase 32; then that unit alone | the set of 3 clicks: `events` [0, 3], `held` [4, 3] (a seeded unit carries one phase step of content), the push (2, 0, 0) + (-1, 0, 0) = (1, 0, 0) on the momentum and `pushed`, `measure` 3, the detector's report 3 measured and 3 clicks, nothing in transit, two `click` records at tick 1 in rank order, number 2 (amount 2, push (2, 0, 0), content 2) and number 3 (amount 1, push (-1, 0, 0), content 1), each with the set's `phase` 0; the 2 alone pass, no record, leaving whole on +X; the window: the set's phase is that of 45 at step 0 and 32 at step 32 (32nds, isqrt(2 x 1024) = 45), 13 x 256 on the cosine axis, step 0, outside the window 32 (d = 32): two `pass` records (number 2 amount 2, number 3 amount 1, `phase` 0, `window` 32), no click, the 3 units mixing on; the unit of number 3 alone clicks with `phase` 32 (`events` [0, 1], `held` [4, 1]) |
+| (d) the own number excluded everywhere | the bar at `suspension` [1, 1], one family `light`; a measured event of light (content 2^10, number 1, passing light) at x = 4, a lamp of light (content 1, number 2) at x = 8; at x = 4 one unit of number 1 on +X and one of number 2 on -X arriving in interval 1. Then the detector of (c) with 2 units of number 2 on +X and 5 units of the receiver's own number 1 on -X | the measured event (age 1) owes 1, the unit of number 2 alone (its content 1024 and its homing unit excluded), `held` [1024], 1 home and created again on +X; the unit of number 2 reads 1024 + 1 = 1025, its count 1024 after the payment, held on -X; the homing unit's count 0. At the detector the set is 2, below 3: no click, `held` [4, 0], no push, 5 home and created again whole on +X carrying their content 5, the 2 mixing on, 7 in flight |
+
+Re-pins: none. `test_event_suspension` (e) reads the presence 17 where it read
+16 (the measured event's content counted), the counts 4 and 1 unchanged
+(16 // 4 = 17 // 4, 16 // 16 = 17 // 16); `test_detector_sensitivity`,
+`test_phase_window` and `test_release_costs_by_phase_rate` arrive as one
+number or at threshold 1, where the set's gate is the number's;
+`test_event_worlds` has one number per Node. The Bell worlds read unchanged
+(326 criteria of `tools/bell_chsh.py`, S = 2, S' = 3/2).
 
 ## The integer bounds of the measured line and of the emission
 
@@ -551,7 +587,9 @@ designs, are given in brackets as (old ...).
   (0, 1)) and the release 1/128, and a declared detector with threshold 3.
   The runner runs a 4-interval world of (a) into `run.json` (`law`
   "events-v1", completed, four ticks, four books, conserved, the measured
-  events and the detectors, `suspension` [1, 1], the family's `phase`
+  events and the detectors (none declared: the six face detectors of the
+  open board, `face:+x` ... `face:-z`, since 2026-09-19), `suspension`
+  [1, 1], the family's `phase`
   false), `state.json` (the law,
   tick 4, the measured events, Nodes with events) and `events.jsonl`, keeps
   the input as read, and refuses a negative tick count and a used output

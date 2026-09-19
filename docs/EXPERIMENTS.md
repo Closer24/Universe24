@@ -875,9 +875,25 @@ states "exactly" and means integer equality at every tick.
   equivalence identity (16 failures against 15) and exits 1.
 - **Verdict per item.** Item 1, identity held (the 3-D prior for the
   first read, the first step and the merge did not hold on the plane, by
-  the arithmetic of the record: the plane's ticks registered). Item 2,
+  the arithmetic of the record: the plane's ticks registered). On
+  2026-09-19 the model owner decided, on the mathematician's list, that
+  item 1 is registered as an identity of the phase-less field of matter
+  only, since under node-mixing v3 the fields of a family with a phase
+  circle interfere, and that is the law and not a defect (the run read a
+  family with a phase circle, before that decision; a correction of the
+  register, not a law). Item 2,
   reading within the bound (1.256 and 1.213, within 5 % of each other;
-  the cumulative 1.071). Item 3, identity held. Item 4, the front as
+  the cumulative 1.071). Item 3, identity held; on 2026-09-19 registered,
+  by the same decision, as an identity of the phase-less field of matter
+  only (the superposition of two fields of a family with a phase circle is
+  their interference under v3). The one reading set of 2026-09-19 (the
+  presence counting a measured event's content, here; a detector's
+  threshold and window reading every number but the Node's own;
+  [migration](MIGRATION.md#one-reading-set-for-every-coupling-on-2026-09-19))
+  re-pins no reading of this series: its streams are free families, never
+  suspended, and its probes read at threshold 1 without windows, where the
+  set's gate is the number's; every reading and identity above stands as
+  registered (old = new). Item 4, the front as
   derived at every derived Node; the +x pattern past the front registered.
   Item 5, the exponents within their bounds (count -0.99, flow -1.05,
   carried -1.01, size -0.48: Gauss on a circle) and the flow about 1;

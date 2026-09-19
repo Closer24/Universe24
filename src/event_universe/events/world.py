@@ -65,8 +65,10 @@ law of events, the model owner, 2026-09-19):
   (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly N / 2
   steps; for N = 2 the one step d = 0). On a table entry (any rule but
   `pass`, which responds to nothing and is refused a window) the response
-  is made only to a bundle whose phase at the Node falls in the window; a
-  bundle outside it passes. On a lamp, a release only at the self-creations
+  is made only when the phase at the Node of the arrivals of every number
+  but the measured event's own (one reading set, the model owner,
+  2026-09-19) falls in the window; a set outside it passes. On a lamp, a
+  release only at the self-creations
   whose clock phase falls in the window; the clock and the phase turn
   regardless;
 - `in_transit`, optional: events in transit at the start, each with a
@@ -75,8 +77,10 @@ law of events, the model owner, 2026-09-19):
   transit line; the default is an empty board that the releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
   its `positions` (Nodes of measured events, each in at most one detector)
-  and its `threshold` (1 by default): the smallest bundle of one number the
-  detector measures in one interval; a smaller arrival passes. A detector's
+  and its `threshold` (1 by default): the smallest amount of a family the
+  detector measures at a Node in one interval, summed over every number but
+  the Node's own (one reading set, the model owner, 2026-09-19); a smaller
+  set passes. A detector's
   sensitivity is its Nodes and its threshold (Highlights 5.4, "a kind of
   detector sensitivity"); the record of a run reports its measurements per
   detector as well as per Node.
