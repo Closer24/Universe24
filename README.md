@@ -1,14 +1,17 @@
 # Universe24 — a three-dimensional event simulator
 
 Universe24 implements **Reality Theory (Universe24)**: one discrete world of
-Nodes and Links, bounded integer arithmetic and local rules. Since the evening
-of 2026-09-18 the model is the law of the shadow ([Highlights](docs/HIGHLIGHTS.md)
-section 5.4): matter is content held at Nodes, every ray in flight is a whole
-quantum spreading by the Node's mixing, and an event is a whole quantum at held
-content, absorbed, held or released again by the family's table; what is seen
-is events. Since 2026-09-19 there is one engine, the field-only engine of that
-law (`field-only-v1`); the old engine of the law of the bit is deleted
-([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+Nodes and Links, bounded integer arithmetic and local rules. Since 2026-09-19
+the model is the law of events ([Highlights](docs/HIGHLIGHTS.md) section 5.4,
+the model owner: "There is no shadow, no real. There are only events on the
+event board. There are detectors by sensitivity. That is it."): every event is
+created at every interval at its next place from its record, at a neighbour or
+here; a measured event is one created here without end, its clock the count of
+its self-creations; a single quantum goes whole in one direction, by its
+momentum; nothing is kept at a Node, no register, no remainder, no draw; what
+is seen is measured events, through detectors of a declared sensitivity. There
+is one engine, the engine of that law (`events-v1`); the engines before it are
+deleted and in git ([migration](docs/MIGRATION.md)).
 The name of the framework is Reality Theory; the simulator that realizes it is
 Universe24.
 
@@ -20,12 +23,12 @@ English-only repository language rule. The active implementation lives in
 `src/event_universe/`; [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
 define coordinated work and independent checks.
 
-A run is a **world file**: a JSON object with `"law": "shadow"`, the board's
+A run is a **world file**: a JSON object with `"law": "events"`, the board's
 shape and open boundary, the clock K and the phase width N, the release rate
-and the wait's unit, the families (free, matter; paid, light) and the held
-contents with their tables. The engine recognizes nothing by physical name.
-Read [the engine](docs/ENGINE.md)
-and the worlds under [examples/shadow/](examples/shadow/README.md) before
+and the suspension, the families (free, matter; paid, light), the measured
+events at the start with their tables and, where wanted, the detectors. The
+engine recognizes nothing by physical name. Read [the engine](docs/ENGINE.md)
+and the worlds under [examples/events/](examples/events/README.md) before
 defining a run.
 
 ## Project specification (Google Docs)
@@ -61,7 +64,7 @@ numpy, which the package installs:
 python3.14 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
-python -m event_universe --init examples/shadow/one_content.json --output artifacts/one_content
+python -m event_universe --init examples/events/one_content.json --output artifacts/one_content
 ```
 
 On Windows:
@@ -69,7 +72,7 @@ On Windows:
 ```powershell
 py -3.14 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e .
-.\.venv\Scripts\python.exe -m event_universe --init examples/shadow/one_content.json --output artifacts/one_content
+.\.venv\Scripts\python.exe -m event_universe --init examples/events/one_content.json --output artifacts/one_content
 ```
 
 Select the environment's interpreter explicitly if activation is unavailable.
@@ -78,7 +81,7 @@ For development, install `python -m pip install -e '.[render,dev]'`.
 Check a world file without running it:
 
 ```bash
-python -m event_universe.configuration_validation examples/shadow/one_content.json --json
+python -m event_universe.configuration_validation examples/events/one_content.json --json
 ```
 
 The world file is required. It supplies `ticks`; `--ticks` can override the
@@ -90,8 +93,8 @@ process per core with `tools/run_series.py`.
 | Output | When written |
 | --- | --- |
 | `initialization.json` | Exact input file copied for reproducibility |
-| `run.json` | The record: the law, the world's keys, the books per family at every tick, the contents, completion and elapsed time |
-| `state.json` | The held contents and every Node with content, written Node by Node |
+| `run.json` | The record: the law, the world's keys, the books per family at every tick, the measured events, the detectors, completion and elapsed time |
+| `state.json` | The measured events, the detectors and every Node with events in transit, written Node by Node |
 | `events.jsonl` | Streamed events |
 
 Runs are headless; there is no visualization switch. Runs require a new or
@@ -110,7 +113,7 @@ python -m event_universe.ui
 ```
 
 Open the printed local URL, normally `http://127.0.0.1:8765`. Choose a world of
-`examples/shadow/` as a template, edit its JSON, **Check** it, and **Run**.
+`examples/events/` as a template, edit its JSON, **Check** it, and **Run**.
 Each run reads a saved snapshot of the draft and runs headless in another
 process; the workspace stays responsive. The result shows the record (the
 law, the completed ticks, the books) and links to the input, state and events. Use `--configs` to select your own
@@ -147,11 +150,11 @@ active contracts, explicit experiments and revision-specific evidence.
 
 | Path | Responsibility |
 | --- | --- |
-| `src/event_universe/shadow/world.py` | The world file: its keys, their bounds and the refusals, named |
-| `src/event_universe/shadow/engine.py` | The engine: the held contents, the interval's steps (the events at held content, the wait, the mixing, the releases, the steps), the books and the readings |
-| `src/event_universe/shadow/layer.py` | The arrays of one family: arrivals, parked shares and departures per Node and number, the walk one Link per interval, the wait as a hold per Node |
-| `src/event_universe/shadow/mixing.py` | The Node's mixing kernels (`node-mixing-v1`, the remainder rule, the momentum carried) over the layer's arrays |
-| `src/event_universe/shadow/run.py` | The artifacts of a run: the input, the events, the state, the record |
+| `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
+| `src/event_universe/events/engine.py` | The engine: the measured events, the interval's steps (the suspension, the measurements by the tables, the mixing, the self-creations off the clock, the steps), the books and the readings |
+| `src/event_universe/events/transit.py` | The arrays of one family's events in transit: arrivals and departures per Node, number and Port with the count they carry, the walk one Link per interval |
+| `src/event_universe/events/mixing.py` | The Node's computation of the sides (`node-mixing-v2`: the vectors' shares in whole units, a single unit by its momentum, the momentum carried) |
+| `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
 | `src/event_universe/core/lattice.py` | The board's addresses, the six Port headings and the cell bound |
 | `src/event_universe/core/phase.py` | The phase circle's cosine and sine tables in bounded integers |
@@ -163,10 +166,10 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/diagnostics/numeric_audit.py` | Static audit that `core/` holds integer arithmetic only |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
-| `examples/shadow/` | The worlds of the law: one content, two contents, two slits and the one-slit control |
-| `tests/` | One module per generic rule on a minimal board (the mixing, the law's readings, the preflight, the decoder, retention, the repository gates) |
+| `examples/events/` | The worlds of the law: one content, two contents, two slits with a detector and the one-slit control |
+| `tests/` | One module per generic rule on a minimal board (the sides, an event in transit, the suspension, the clock, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
-| `docs/ENGINE.md` | The engine's contract as implemented: the world file, the interval, the wait, the events, the books, the record, the preflight |
+| `docs/ENGINE.md` | The engine's contract as implemented: the world file, the interval, the suspension, the measurements, the books, the record, the preflight |
 | `docs/DERIVATIONS.md`, `docs/EXPERIMENTS.md` | The derivations of the known laws, and the research runs with their records |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |

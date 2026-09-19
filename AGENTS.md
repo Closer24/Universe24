@@ -44,7 +44,7 @@ New active location identifiers use `node`, `nodes` and `NodeState`.
 | --- | --- |
 | Canonical names and state vocabulary | [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md) |
 | Any physical behavior or hypothesis | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) section 5.4 (the law), [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
-| The world file, the engine's steps and its record | [docs/ENGINE.md](docs/ENGINE.md) and [examples/shadow/README.md](examples/shadow/README.md) |
+| The world file, the engine's steps and its record | [docs/ENGINE.md](docs/ENGINE.md) and [examples/events/README.md](examples/events/README.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Test coverage and numerical expectations | [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
@@ -121,8 +121,9 @@ responsibilities. Keep renames, consumers, migration notes and the
 - Field, response, movement and transit calculations belong in generic components.
   Models select policies and compose components without copying formulas. The engine
   schedules work and validates contracts.
-- The engine requires world-defined families, contents and tables. Do not
-  branch on physical names or reintroduce an implicit default.
+- The engine requires world-defined families, measured events and tables. Do
+  not branch on physical names, reintroduce an implicit default, or keep
+  anything at a Node beyond the events there (no register, remainder or draw).
 - Displays and measurements only read state. Runs and tests are headless unless
   visualization is explicitly requested. Do not capture frames or load render
   dependencies in the ordinary runner path; see the definitions display contract.

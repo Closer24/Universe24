@@ -13,19 +13,21 @@ when their tests change.
 
 ## Suite inventory of 2026-09-19: one engine
 
-Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
-the status line of the law of the shadow): the field-only engine is the one
-engine and the old engine is deleted without the confrontation runs; "only
-tests that everything is as designed". The suite keeps one module per generic
-rule of the engine, on a minimal board, and the repository gates. The deleted
-modules are named in the [migration note](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted).
+Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)):
+one engine, the engine of the law of events since the evening of that day
+("Everything must be generic in the engine, without registers"; "only tests
+that everything is as designed"). The suite keeps one module per generic rule
+of the engine, on a minimal board, and the repository gates. The deleted
+modules are named in the [migration notes](MIGRATION.md).
 
 | Module | Rule isolated |
 | --- | --- |
-| `test_field_only.py` | The law of the shadow on minimal boards: the books, the fixed point and Gauss's flux, the shell means, the pair's pushes and the product law, the slits, the wait, the refusals, the nearest step, the step by the accumulators ([below](#the-law-of-the-shadow)) |
-| `test_node_mixing.py` | The Node's mixing on one Node of the engine's layer: the 3B_h rule, the coherent sum, the largest remainder, the parked ninths and their release, the momentum carried ([below](#the-nodes-mixing-on-one-node)) |
-| `test_family_turns.py` | A family's phase turn in flight as a declared rule: by the quantum uniformly (light's default), by the cell's amount, or none; the default by kind, the engine's wiring, one Link of the walk, the remainder per family ([below](#the-phase-turn-in-flight)) |
-| `test_family_quantum.py` | A family's quantum as a declared width: the event at an absorbing holder is one whole quantum per number, the rest waiting in the holder's register ([below](#the-quantum-of-a-family)) |
+| `test_node_mixing.py` | The Node's computation of the sides on one Node of the engine's transit: the 3B_h rule, the coherent sum, the largest remainder with the tick's ties, a group with no whole going by its momentum, the momentum carried, nothing kept ([below](#the-nodes-computation-of-the-sides)) |
+| `test_event_transit.py` | An event in transit: a single quantum whole by its momentum, no turn in transit, a part turned back apportioned again, a lone free unit straight from its release ([below](#an-event-in-transit)) |
+| `test_event_suspension.py` | The suspension the event carries: the count derived on arrival, the next event delayed, a measured event's clock waiting ([below](#the-suspension)) |
+| `test_event_clock.py` | The clock of a measured event: every rate off its age by whole division, the release, the phase, the lamp's recoil, the step ([below](#the-clock-of-a-measured-event)) |
+| `test_event_worlds.py` | The worlds of the law of events on minimal boards: the books, the constant content, the flux, the shell means, the pair's pushes and the product law, the two-slit detector, the refusals and the runner ([below](#the-worlds-of-the-law-of-events)) |
+| `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
@@ -34,58 +36,94 @@ modules are named in the [migration note](MIGRATION.md#one-engine-on-2026-09-19-
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
-## The Node's mixing on one Node
+## The Node's computation of the sides
 
-`tests/test_node_mixing.py` isolates `node-mixing-v1` (Highlights 5.4, point
-24) and the remainder rule (point 22) on one Node of the engine's layer
-(`ShadowLayer` of shape (1, 1, 1), one number, N = 8, no phase turn in
-flight), through the kernels of `event_universe/shadow/mixing.py`. The
-integers, written down before the first run, are those the old suite pinned
-on 2026-09-18 through the old engine's scalar rule, which the kernels
-reproduce byte for byte:
+`tests/test_node_mixing.py` isolates node-mixing-v2 (Highlights 5.4, point 24
+read under the law of events, the model owner, 2026-09-19) on one Node of the
+engine's transit (`Transit` of shape (1, 1, 1), one number, N = 8) through the
+kernels of `event_universe/events/mixing.py`: the events that arrived on each
+heading are one amplitude, sqrt(amount) in 32nds at their phase; the leaving
+amplitude of a heading is the coherent sum less three times the arrival that
+came in through its Port; the total is shared by the squared leaving
+amplitudes in whole units, the floors and the units left to the largest
+remainders (ties in the tick's Port order); a group with no whole for any side
+goes whole to the heading nearest the momentum it carries; nothing parks, the
+Node keeps nothing. Written down before the first run:
 
-| Case | Arrivals (Port, amount, phase) | Departures per Port [+X, -X, +Y, -Y, +Z, -Z] | Phases | Parked ninths |
-| --- | --- | --- | --- | --- |
-| (a) a lone arrival | +X 9 at 0 | 1, 4, 1, 1, 1, 1 | 0, 4, 0, 0, 0, 0 | none |
-| (b) two equal, in phase | +X 9 at 0; -X 9 at 0 | 1, 1, 4, 4, 4, 4 | 4, 4, 0, 0, 0, 0 | none |
-| (c) two equal, in antiphase | +X 9 at 0; -X 9 at 4 | 9, 9, 0, 0, 0, 0 | 0, 4, 0, 0, 0, 0 | none |
-| (d) two on one heading | +X 9 at 0 and 9 at 2 | 2, 8, 2, 2, 2, 2 | 1, 5, 1, 1, 1, 1 | none |
-| (e) unequal | +X 24 at 0; -X 8 at 2 | 6, 11, 3, 3, 3, 3 | 7, 4, 1, 1, 1, 1 | 2, 5, 5, 5, 5, 5 at those phases |
-| (f) the remainder rule | +X 5 at 0, twice | 0, 2, 0, 0, 0, 0 each time | 0, 4, 0, 0, 0, 0 | 5, 2, 5, 5, 5, 5 then 10, 4, 10, 10, 10, 10; the release 1, 0, 1, 1, 1, 1 leaves 1, 4, 1, 1, 1, 1 |
-| (g) the momentum carried | +X 9 at 0 carrying (9, 0, 0) | 1, 4, 1, 1, 1, 1 | | none; the x momentum 1, 4, 1, 1, 1, 1 with the departures, the sum (9, 0, 0) |
+| Case | Arrivals (Port, amount, phase, momentum) | Departures per Port [+X, -X, +Y, -Y, +Z, -Z] | Phases and momenta |
+| --- | --- | --- | --- |
+| (a) a lone arrival | +X 9 at 0 | 1, 4, 1, 1, 1, 1 | 0, 4, 0, 0, 0, 0 |
+| (b) two equal, in phase | +X 9 at 0; -X 9 at 0 | 1, 1, 4, 4, 4, 4 | 4, 4, 0, 0, 0, 0 |
+| (c) two equal, in antiphase | +X 9 at 0; -X 9 at 4 | 9, 9, 0, 0, 0, 0 | 0, 4, 0, 0, 0, 0 |
+| (d) two on one heading | +X 9 at 0 and 9 at 2 (one amplitude, 18 at step 1) | 2, 8, 2, 2, 2, 2 | 1, 5, 1, 1, 1, 1 |
+| (e) unequal, carrying | +X 24 at 0 carrying (24, 0, 0); -X 8 at 2 carrying (-8, 0, 0) | all 32 placed, each heading within one unit of its share 6.22, 11.56 and 3.56 (four times) | 7, 4, 1, 1, 1, 1; the momentum (16, 0, 0) shared by the units, exact in total, each heading's within a unit of its share |
+| (f) a single unit | +X 1 at 5 carrying (1, 0, 0); +X 1 at 5 carrying nothing; +X 2 at 0 carrying nothing | 1, 0, 0, 0, 0, 0; 0, 1, 0, 0, 0, 0; 0, 2, 0, 0, 0, 0 | phase 5 kept and (1, 0, 0) on +X; phase 1 on -X |
+| (g) the momentum carried | +X 9 at 0 carrying (9, 0, 0) | 1, 4, 1, 1, 1, 1 | the x momentum 1, 4, 1, 1, 1, 1, the sum (9, 0, 0) |
 
-## The phase turn in flight
+(h) After every cycle the arrivals are empty, the counts zero and the
+departures sum to what arrived.
 
-`tests/test_family_turns.py` isolates `families[i].phase_turn` (the model
-owner, 2026-09-19: light turns by its message, the same everywhere, "the
-default for light, that is, per family"; DERIVATIONS.md round 8, S5): per
-Link walked, `"quantum"` turns every quantum of the family by the family's
-quantum over K, the remainder carried per family, whatever the amount in the
-cell; `"amount"` turns by the amount in the cell over K, the old rule;
-`"none"` turns nothing. Expected, written down first:
+## An event in transit
 
-| Case | Input | Expected |
-| --- | --- | --- |
-| (a) the default by kind and the wiring | a free family; a paid one with quantum 16; a free one declared `"amount"`; a paid one declared `"none"`; `phase_turn: true` | none, quantum, amount, none; refused naming `families[0].phase_turn`; the engine's layers carry the same rules and quanta 1, 16, 1, 1 |
-| (b) one Link of the walk, K = 16, N = 64, a departure at phase 5 carrying (3, 0, 0) on +X | `"amount"`: 128 quanta; 5 quanta. `"quantum"` with quantum 16: 128; 5. `"none"`: 128; 5 | the arrival at the neighbour at phase 13 (8 steps); 5 (0 steps). 6; 6 (one step whatever the amount). 5; 5. The amount and the momentum (3, 0, 0) unchanged in every case |
-| (c) the remainder per family | `"quantum"` with quantum 8, K = 16: the departure walked on the first, the second or the third interval of the layer | at phase 5, 6, 5: a step every second interval, the family's clock advancing whether or not anything was in flight before |
-
-## The quantum of a family
-
-`tests/test_family_quantum.py` isolates `families[i].quantum` (the model owner,
-2026-09-19, "put it in, without an experiment"; DERIVATIONS.md round 8, S5 and
-S6): at a holder that absorbs a family, the units of one number wait in the
-holder's register until a whole quantum is there, then one event of the whole.
-One world, three marks of a free family `m` (content 8, fixed, no release) and
-two held contents of the paid family `light` (numbers 4 and 5) at the corners,
-light's quantum 3, the arrivals given with the board at the marks' Nodes, one
-interval. Expected, written down first:
+`tests/test_event_transit.py` isolates the motion of an event in transit
+(Highlights 5.4, the law of events): a single quantum goes whole in one
+direction, by its momentum, and does not turn. Written down first:
 
 | Case | Input | Expected |
 | --- | --- | --- |
-| (a) the default and the refusals | no key; 3; 0, -1, 2.5, "3" | 1; 3; refused naming `families[1].quantum` |
-| (b) the click, per number, and the books | mark A gets 2 units of number 4 on +X and 2 of number 5 on +Y; mark B 4 of number 4; mark C (`rerelease`) 7 | A: 0 events, pending {4: 2, 5: 2}, push (2, 2, 0); B: 1 click, 3 absorbed and held, 1 pending, push (4, 0, 0); C: 2 events, 6 pooled and released again in the same interval with C's number, 1 pending, push (7, 0, 0); the books balanced, light's shadows absorbed 15, released 6, current 6, held absorbed 3, pending 6 |
-| (c) the default | quantum 1, mark B gets 4 | 4 events, 4 absorbed and held, nothing pending |
+| (a) a single quantum | a bar of 7 x 3 x 3, K 16, no release; one unit of a paid family with quantum 3 in transit at x = 1 on +X at phase 5 | at intervals 1 to 6 the only departure is at x = 1 to 6 on +X, amount 1, phase 5, momentum (3, 0, 0); at interval 7 it escapes with (3, 0, 0) |
+| (b) a part turned back | 9 units at x = 3 on +X carrying (9, 0, 0) at quantum 3; then 2 units alone carrying (6, 0, 0) | interval 1: 4 back on -X with (12, 0, 0); interval 2 at x = 2: 2 back toward +X (one by the share, one by the largest remainder), 2 transverse, none on -X, nothing kept; the 2 units go whole to +X with (6, 0, 0) |
+| (c) a lone free unit | a measured event of content 1 at the centre of 7^3 releasing at rate 1 per Port | interval 1: one unit on each of the six Ports; interval 3: the first six are at distance two, one each way, created outward, the books closed |
+
+## The suspension
+
+`tests/test_event_suspension.py` isolates the suspension (the model owner,
+2026-09-19: "The event carries it; note that the next event is delayed"): an
+exit derives its suspension from the sizes read at the Node, the event
+carries the count and counts down on itself, what arrives behind it waits
+with it, and a measured event whose count is spent reads again. K 2^20 so
+that no phase moves. Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) an event in transit | a bar of 9 x 3 x 3, `suspension` 1; at x = 4 a unit of light and 16 units of a free family (the size 32 sqrt 16 = 128 in 32nds, 4 whole units) both in transit on +X; a second unit of light at x = 3 on +X | the light at x = 4 is held for intervals 1 to 4, its count after each interval 3, 2, 1, 0; the second unit arrives in interval 2 and waits with it; in interval 5 the two leave together on +X, amount 2, nothing left in the arrivals |
+| (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | its age after intervals 1 to 6: 0, 0, 0, 0, 1, 2; intervals waited 4, count spent, phase 0 |
+
+## The clock of a measured event
+
+`tests/test_event_clock.py` isolates the clock (the model owner, 2026-09-19:
+"every clock tick there is self-creation, that is, no transfer to the next
+Port"): the age is the count of self-creations, and every rate is read off it
+by whole division (`by_clock(age, n, d)`, the gain of the whole part of
+age x n / d at the self-creation from `age` to `age + 1`), no remainder
+anywhere. Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) `by_clock` | rate 3 / 10 over ages 0 to 9; rate 7 / 3 over 30 ages | 0, 0, 0, 1, 0, 0, 1, 0, 0, 1; the sum 70 |
+| (b) the release and the phase | a measured event of content 3 at `release` [1, 10], K 2^20; then at K 2 | 6 units released after intervals 4, 7 and 10 (18 in all), none after 3; at K 2 the phase steps after intervals 1 to 4 are 1, 3, 4, 6 |
+| (c) a lamp | content 100 at rate [1, 3] on six headings, no release | 18 units after 9 intervals (at 3, 6 and 9), the content 82, the recoil zero over six headings |
+| (d) the step | content 16 with momentum 16 on +x, 6 intervals; momentum 1, 16 then 17 intervals | three steps (one per two self-creations, 16 / 32); no step after 16, one after 17 (1 / 17); the momentum untouched |
+
+## A detector's sensitivity
+
+`tests/test_detector_sensitivity.py` isolates a detector's sensitivity
+(Highlights 5.4, the model owner, 2026-09-19: "There are detectors by
+sensitivity"; "every detector must state what its sensitivity is"): a
+detector's threshold, the smallest bundle of one number it measures in one
+interval, gates every response of its Nodes (`read`, `measure`,
+`rerelease`), a receiver's and a re-emitter's alike, and a smaller bundle
+passes with no push and mixes on; a release reads no threshold. A bar of
+9 x 3 x 3, K 2^20 so that no phase moves, `suspension` 0, `release` [0, 1],
+the families `m` (free) and `light` (paid), the detector `d` on the Node
+x = 4, every arrival a bundle of one number seeded at that Node on +X and
+met in interval 1. Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) a receiver | a measured event of `m` (content 4) measuring `light`, threshold 3; 2 units of light of another number; then 3 | 2 units pass: no click, no push, the content 4, the 2 leaving whole on +X (the departures at x = 4 after interval 1, at x = 5 after interval 2); 3 units are measured: 3 clicks, `held` [4, 3], the momentum (3, 0, 0), nothing left in transit, the detector's report 3 measured and 3 clicks |
+| (b) a re-emitter | the same Node re-releasing `light` at phase 9, threshold 3; 2 units at phase 20; then 3 | 2 units pass as in (a), no re-release recorded; 3 units are taken: re-released 3, no click, the push (3, 0, 0) taken, `home` [0, 3] when the record is written, then created again at the same interval's self-creation on +X as number 1 (the detector's), 3 units at phase 9 with momentum (3, 0, 0), the recoil leaving the momentum (0, 0, 0), released 3 and absorbed 3; after interval 2 the 3 leave x = 5 as number 1 and nothing of number 2 is in transit |
+| (c) an emitter inside a detector; a reading | a lamp of `light` (content 24, rate [1, 1]) in a detector with threshold 5; a measured event of `m` (content 4) reading `m` with threshold 4, 3 units of another number, then 4 | the lamp releases one unit per heading per interval as before: after intervals 1 and 2 its departures [1, 1, 1, 1, 1, 1], its content 18 then 12, spent 6 then 12, the momentum zero, nothing measured; 3 units pass with no push and mix on (3 departures at x = 4, none of the detector's number); 4 units push by -M c = (-16, 0, 0), read 4, and mix on |
 
 ## Generated-output lifetime
 
@@ -133,8 +171,8 @@ review; this check does not certify physical acceptance.
   architecture documents, and be included in MANIFEST.in. Referenced documents
   must exist. CI runs the same validation command used locally.
 - The dependency direction (`tests/architecture_rules.py`): `core` imports only
-  `core`; the engine (`shadow`) imports only `core` and `shadow`, except
-  `shadow/run`, which writes the artifacts; no physical module imports an
+  `core`; the engine (`events`) imports only `core` and `events`, except
+  `events/run`, which writes the artifacts; no physical module imports an
   output or storage library; synthetic upward and output imports are rejected
   and the legal ones pass. Every module of `core/` passes the static integer
   audit (no float literal, division, `sqrt` or numpy).
@@ -174,127 +212,69 @@ before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
 even when the quotient would fit, preserving existing timing behavior.
 
 
-## The law of the shadow
+## The worlds of the law of events
 
-`tests/test_field_only.py` is the isolated test of `field-only-v1`
-([the law of the shadow](ENGINE.md#the-law-of-the-shadow-field-only-v1);
-Highlights 5.4, "The law of the shadow: only shadows and events", the model
-owner's decision of 2026-09-18, the evening; feature 20), pinned here on
-2026-09-18 before its first run, as Highlights 5.5 requires, from
-DERIVATIONS.md round 7 (sections 46 to 50: the fixed point of an emitting
-thing on the open board, the fixed point in whole quanta, the tests under it,
-the run plan) and the readings of the engine's exploratory runs of the same
-day (the standing content of the integer rule, the per-Node ripple, the
-regime the two-slit needs). The worlds are built as data: one family `m`
-(free, charge 0) whose content of 2^24 at rest releases 1/128 of its content
-per Port heading per interval (q = 786 432 quanta per interval, the wave
-regime q >= 1740 r^2 out to r = 21), N = 64, K = 2^22 (four phase steps per
-interval, the period 16), an open cube, the content held in place (`fixed`).
+`tests/test_event_worlds.py` runs the worlds of `examples/events/` as data on
+minimal boards (Highlights 5.5, "The engine of the law of events: what the
+tests show"), pinned here on 2026-09-19 from the engine's first readings as a
+check that it does what the law says and not as a result. One family `m`
+(free, charge 0) whose measured event of 2^24 at rest releases 1/128 of its
+content per Port per self-creation (q = 786 432 units per interval), N 64,
+K 2^22 (four phase steps per self-creation), an open cube, the measured event
+held in place (`fixed`).
 
-- (a) one content (29^3, 300 intervals): at every tick the books close, the
-  held line reads current = initial = 2^24 with nothing absorbed, spent or
-  escaped, the shadows' line reads released = current + escaped + absorbed
-  with initial 0, and every momentum line is zero (a content at rest carries
-  none, its field none). The fixed point within the transit: Gauss's flux
-  through the closed surface about the cube of half-width 4 (`cube_flux`)
-  is the emission within 2 % over ticks 101 to 200 (2 sqrt 3 H = 48; the
-  derivation's "within 2 % by about 2 sqrt 3 H"), and over ticks 201 to 300
-  through the cubes of half-width 4, 8 and 12 (the derivation's 1.000 q;
-  the integer rule's 0.985 to 0.999); the escape per interval is the
-  emission within 3 % (0.983: the remainder rule sheds about 1.5 % of the
-  emission per interval into standing content, section 47 (ii)'s residue,
-  measured the same at N = 256 in this engine, where the parked release's
-  phase and not the circle's width is the source).
-- (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10 and 12 (the
-  Nodes within a half Link of r, `shell_readings`): the count (the amount
-  that arrived per Node per interval) times r^2 / q between 0.14 and 0.20
-  (the derivation's 0.147 with the standing excess of the integer rule, 0.16
-  to 0.17 after 200 intervals); the push (the radial flow, amount x heading
-  on the radial unit vector) times 4 pi r^2 / q within 20 % of 1 (the edge's
-  ripple per shell, 1.00 to 1.15 measured); the size (the coherent sum in
-  32nds over 32) times r / sqrt(q) within 5 % of 3 x 0.2143 = 0.643 (the
-  engine reads 3|u|, wait-reads-v1's note; 0.62 to 0.66 measured); the
-  log-log slopes over the five radii: the count -2.00 +- 0.10, the push
-  -2.00 +- 0.15, the size -1.00 +- 0.10 (the derivation's -2.00 +- 0.03 and
-  -1.00 +- 0.03 in the mean field; the integers' -2.00, -1.89, -1.05).
-- (c) two contents (21^3, d = 8 on the x axis symmetric about the centre,
-  no wait, 200 intervals, the pushes taken over ticks 101 to 200; each
-  content reads the other's field and passes it on, round 8 section 54
-  (ii): a sink would read the gradient, 1/r^3): the first content (at the
-  lower x) is pushed toward +x and the second toward -x, the two axial
-  pushes equal within 5 % (the third law by symmetry, round 8 section 55
-  (ii): 0.3 to 1.9 % in the mean field, and the rounding of whole units per
-  window at N = 64, round 7 section 47 (ii)'s 4 %), the transverse parts
-  below 3 % of the axial; the held momentum is the sum of the pushes at
-  every tick (no ledger of the field's momentum, S8); the axial push against
-  M_B rho M_A / (4 pi d^2) with rho = 6/128 between 0.4 and 1.6 (the free
-  flux read on the axis at d = 8 is 1.08 of the law in the mean field with a
-  sponge edge, section 55 (i); on this open board the edge's mirror ripples
-  the per-Node push by +-2 R r / (2 H - r), +-36 % at r = 8 on 21^3, with the
-  anisotropy on top, round 7 section 46 (iii); the law is read in the shell
-  mean of (b)); the product law: the
-  pair with both contents doubled and K doubled (the same period) is pushed
-  four times as much within 5 % (the emission and the cross-section each
-  double). An unequal pair is not pinned: the clock is the content, so its
-  two fields have two periods with two anisotropies and two transients.
-- (d) the two-slit reading (23 x 41 x 9, 200 intervals): a lamp of light (a
-  paid family, 2^36 quanta, 2^22 per interval on every heading, its clock
-  four steps per interval) at x = 2; a wall at x = 8 of held contents of the
-  paid family `wall` (content 1, holding light, the click) with two slits 14
-  apart, openings of 3 x 3 Nodes in the wall (a held content that transmits
-  stamps its own number on the light, and two numbers are two fields that
-  never interfere, point 24: two re-emitting slits give two humps and no
-  fringes; and an opening of one Node is far below the wavelength and
-  transmits almost nothing; both measured before this pin); a screen of
-  marks at x = 17. The marks' light counts by y, summed over z and smoothed
-  over three marks, are symmetric about the axis (within 5 % of the axis
-  value plus one: the largest-remainder rule's ties to the lower Port break
-  the mirror symmetry by a few per cent); with two slits the lowest smoothed
-  count 2 to 5 from the axis is exceeded by the highest 6 to 11 from it by
-  at least 10 % (the first minimum of two sources 14 apart read 9 behind
-  them at the wavelength 16 / sqrt 3 = 9.2 Links lies near 4 from the axis
-  and the next maximum near 8.5); with one slit on the axis it is not (the
-  control falls from the axis outward). A reading, not a law: the lamp is
-  six-fold (a lamp on one heading sheds two thirds of its light into
-  standing content beside it), the period 16 (at period 8 the lattice
-  anisotropy of a transmitted wave, (15/8) w^2 K_4, cuts the axis by half),
-  the light in flight reads no wait.
-- (e) the wait (29^3, 300 intervals, the fraction of intervals waited over
-  ticks 101 to 300): the content of (a) with nine probes of a paid family
-  (content 1, held in place, passing the mass's quanta so that they neither
-  push nor mirror) at E11's Nodes about it, (4, 0, 0), (8, 0, 0), (12, 0,
-  0), (3, 3, 0), (6, 6, 0), (9, 9, 0), (2, 2, 2), (5, 5, 5), (7, 7, 7), the
-  wait one interval per 512 whole units of size read. The mass waits never
-  (it reads only its own field, which it does not read) and its phase makes
-  four steps per interval; a probe's phase never turns (1 / K) and it
-  re-releases nothing; each probe's fraction is between 0.03 and 0.5 (the
-  size 3 x 0.2143 sqrt(q) / r in 32nds at 1 / 512 per unit: 0.28 at r = 4,
-  0.14 at 8, 0.09 at 12, rippled per Node), and the log-log slope of the
-  fraction against r over the nine probes lies between -1.5 and -0.5,
-  nearer -1 than -2 (the amplitude, not the flux; -0.85 to -0.94 measured).
-- (f) the refusals: the old parser refuses a world of the law for its
-  unknown key `law`; the new parser refuses `examples/nature/ring.json` and
-  every old key (`schema_version`, `dense_field`, `initial_field`,
-  `wait_reads`, `shadow_wait`) naming the law and the key, a closed board, a
-  world without `"law": "shadow"`, an unknown key, a content at or past
-  K x N / 2, a lamp on a free family, two contents at one Node, a table rule
-  outside `rerelease` | `hold` | `pass` | `transmit`, an N that is not a
-  power of two; the parsed world of (a) has one owner of `m`, the wait 1 and
-  the release 1/128. The runner runs a 4-interval world of (a) into
-  `run.json` (`law` "field-only-v1", completed, four ticks, four books,
-  conserved), `state.json` (the law, tick 4, Nodes with content) and
-  `events.jsonl`, and refuses `--dense-field` on it.
-- (h) the step (a bar of 41 x 9 x 9, a content of 2^24 at x = 4 free to
-  step, no wait, 60 intervals): given p = (M/16, 0, 0) it steps at ticks 16,
-  33 and 50 (the sixteenth interval fills the accumulator; the interval
-  after a step is the event's, T2, round 8 section 53), three steps to x = 7;
-  given p = (M, 0, 0) it steps at ticks 1, 3, 5, ..., thirty steps to x = 34,
-  the cap of a half Link per interval; in both its momentum stays what it was
-  given and its push is zero (the accumulator gives back the content; its
-  own number pushes nothing, section 54 (i)), its content 2^24 and nothing
-  read.
-- (g) the layer's nearest phase step (`layer.nearest_step`, over the window
-  `step_window` bounds: 1 up to N = 64, 4 at 256, 69 at 4096) equals the
-  engine's argmax over the whole circle, the first on a tie, at N = 2, 8,
-  64, 256 and 4096 on 4000 random sums per scale (1, 100, 10^9) and on
-  directions exactly on and between the steps, and the zero sum.
+- (a) one measured event (29^3, 300 intervals): at every tick the books
+  close, the measured line reads current = initial = 2^24 with nothing
+  measured, spent or escaped (what comes home is created again and never
+  counts as content), the transit line reads released = current + escaped +
+  absorbed with initial 0, and the measured events' momentum is zero. Gauss's
+  flux through the cube of half-width 4 (`cube_flux`) is the emission within
+  2 % over ticks 101 to 200 (0.995 measured) and over ticks 201 to 300
+  through the cubes of half-width 4, 8 and 12 (0.996, 0.992, 0.990); the
+  escape per interval is the emission within 3 % (0.989: nothing stands, the
+  1.5 % the shadow engine shed into parked shares is gone).
+- (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10 and 12
+  (`shell_readings`): the count times r^2 / q between 0.14 and 0.20 (0.157 to
+  0.169 measured); the push times 4 pi r^2 / q within 20 % of 1 (0.997 to
+  1.16); the size times r / sqrt(q) within 5 % of 3 x 0.2143 = 0.643 (0.622
+  to 0.660); the log-log slopes over the five radii: the count -2.00 +- 0.10
+  (-2.03), the push -2.00 +- 0.15 (-2.11), the size -1.00 +- 0.10 (-0.95).
+- (c) two measured events (21^3, d = 8 on the x axis, no suspension, 200
+  intervals, the pushes over ticks 101 to 200): the first (at the lower x)
+  pushed toward +x and the second toward -x, the axial pushes equal within
+  8 % (2.5 to 5 measured over three windows: whole units without parked
+  shares ripple more than the shadow engine's ninths), the transverse parts
+  below 3 % of the axial; the measured events' momentum is the sum of the
+  pushes at every tick; the axial push against M_B rho M_A / (4 pi d^2) with
+  rho = 6/128 between 0.4 and 1.6 (0.62); the product law: both contents
+  doubled with K doubled pushed four times as much within 10 % (4.1 to 4.2:
+  the far field of the smaller pair is more of beams, single units going by
+  their momentum, so the doubled pair reads a few per cent more of what
+  comes back).
+- (d) the two-slit detector (23 x 41 x 9, 200 intervals): a lamp of light
+  (paid, 2^36 units, 2^22 per self-creation on every heading, K 2^34) at
+  x = 2; a wall at x = 8 of measured events of the paid family `wall`
+  (content 1, measuring light) with two openings of 3 x 3 Nodes 14 apart; a
+  screen at x = 17 of the same, declared as the detector `screen`, threshold
+  1. The detector's clicks by y, summed over z and smoothed over three, are
+  symmetric about the axis (within 5 % of the axis value plus one); with two
+  openings the lowest smoothed count 2 to 5 from the axis is exceeded by the
+  highest 6 to 11 from it by at least 10 %; with one opening on the axis it
+  is not. The fringes come from the lamp's clock stamping the release phases;
+  an event in transit does not turn. The detector's report names `screen`
+  and counts the clicks the Nodes counted.
+- (e) the refusals, naming the law: `contents`, `initial_shadows`,
+  `wait_per_quantum`, `schema_version` and `dense_field` (the earlier
+  engines' keys), `phase_turn` as an unknown family key, a closed board, a
+  world without `"law": "events"`, an unknown key, a content at or past
+  K x N / 2, a lamp on a free family, two measured events at one Node, a
+  table rule outside `read` | `measure` | `rerelease` | `pass`, an N that is
+  not a power of two, a detector on a Node without a measured event, a Node
+  in two detectors, a quantum on a free family; the parsed world of (a) has
+  one owner of `m`, the suspension 1 and the release 1/128, and a declared
+  detector with threshold 3. The runner runs a 4-interval world of (a) into
+  `run.json` (`law` "events-v1", completed, four ticks, four books,
+  conserved, the measured events and the detectors), `state.json` (the law,
+  tick 4, the measured events, Nodes with events) and `events.jsonl`, keeps
+  the input as read, and refuses a negative tick count and a used output
+  directory.

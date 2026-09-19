@@ -13,6 +13,28 @@ Universe24 uses one canonical vocabulary for the active simulator. These names d
 - **Event** — a local state transition at a Node or a completed transfer on a Link.
 - **LocalRule** — configured local logic that reads only the NodeState and values that have already arrived through Links, then proposes the next local state and outgoing transfers.
 
+## The law of events (2026-09-19)
+
+The current model ([Highlights](HIGHLIGHTS.md) 5.4, "The law of events" and
+"The principles of the law of events"; `events-v1`, [the engine](ENGINE.md)):
+
+- **Event** — the one thing on the board: a place (a Node), a time (an interval) and a record (amount, phase, number, momentum, heading, counts). There is no shadow and no real, no field and no matter as other things.
+- **Event in transit** — an event created at a neighbour at the next interval, one Link per interval, whole, its record unchanged; it does not turn.
+- **Measured event** — an event created here without end (what was called matter, held content, a click's resident); its clock is the count of its self-creations; it meets what arrives by its table and releases off its clock.
+- **Self-creation** — an event created at the same Node at the next interval; a tick of its clock. A transfer is not one.
+- **Suspension** — the count an event carries after an exit reads the sizes at its Node: the intervals it is created here before it moves; what arrives behind it waits with it.
+- **Clock** — the count of a measured event's self-creations (its age); every rate (the release, the lamp, the phase, the step, the electric push) is read off it by whole division, with no remainder anywhere.
+- **The sides** — the six shares of a Node's computation from the vectors (the coherent sum, the squared leaving amplitudes), placed in whole units by the largest remainder with the ties in the interval's Port order; a group with no whole for any side goes whole by its momentum.
+- **Table** — a measured event's declared rule per family: `read`, `measure`, `rerelease` or `pass`.
+- **Measurement, click** — an event of another number merged into a measured event's record by the rule `measure`: the amount joins, the momentum enters, the phase is read, one click per unit.
+- **Detector** — a named set of measured events with one table and a threshold; its Nodes and its threshold are its sensitivity ("a kind of detector sensitivity"), and its statement is read off the record.
+- **Home** — an event of the measured event's own number that arrives at it: created again at its next self-creation, pushing nothing and never counted as content.
+- **Books** — the ledger per family, the measured line and the transit line, exact at every interval; the momentum reported on the measured events, in transit and escaped.
+
+The terms below are the road to this law: the ray-event model, the law of the
+bit and the law of the shadow. Where an entry names a store, a return, a bit,
+a draw or a shadow, the law of events has none; the entry is history.
+
 ## Ray-event terms
 
 The ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1;

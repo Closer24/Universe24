@@ -16,8 +16,8 @@ world run alone.
 Run with PYTHONPATH set to the checkout's src (the children run the package
 this process imports):
 
-    PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/shadow \\
-        examples/shadow/one_content.json examples/shadow/two_contents.json
+    PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/events \\
+        examples/events/one_content.json examples/events/two_contents.json
 
 `--ticks` overrides every world's duration, `--python` names the interpreter of the children (this one by default). A world's name is its
 file stem; two worlds of one name are refused. The output directory of a

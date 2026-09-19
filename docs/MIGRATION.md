@@ -6,6 +6,50 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The engine of the law of events, on 2026-09-19, the evening (`events-v1`)
+
+Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"The law of events" and "The principles of the law of events"): "There is no
+shadow, no real. There are only events on the event board. There are
+detectors by sensitivity. That is it. Everything must be generic in the
+engine, without registers. There are no draws." The engine of the law of the
+shadow (`field-only-v1`, `src/event_universe/shadow/`) is replaced by the
+engine of the law of events (`src/event_universe/events/`) and deleted, with
+what it kept that the law removes: the parked ninths of the mixing and their
+release at nine, the wait as intervals owed and held per Node and number, the
+phase turn's remainder per family, the register of units below a family's
+`quantum` at a holder, and every remainder of a held content (its release,
+pool, push, lamp and clock). Nothing of the old engine survives by name:
+`ShadowSimulation`, `ShadowWorld`, `ShadowLayer`, `Holder`,
+`parse_shadow_world`, `execute_shadow_run` and `SHADOW_LAW` are gone;
+`EventSimulation`, `EventWorld`, `Transit`, `Measured`, `parse_event_world`,
+`execute_event_run` and `EVENTS_LAW` take their places.
+
+The world file: `"law": "events"` in place of `"law": "shadow"`; `measured`
+in place of `contents`; `in_transit` in place of `initial_shadows`;
+`suspension` (an integer of intervals per whole unit of size read) in place of
+`wait_per_quantum`; the table rule `measure` in place of `keep`; the family
+key `phase_turn` is gone (an event in transit does not turn); `quantum` means
+the content of one unit of a paid family (its momentum from birth), no longer
+a threshold assembled at a holder; `detectors` is new. A world with any old
+key is refused naming the law and the key. `run.json` carries `law`
+"events-v1", `suspension`, `measured`, `detectors`, `measured_content` and
+`transit_content` in place of `wait_per_quantum`, `contents`, `held_content`
+and `shadow_content`; its books name the lines `measured` and `transit` in
+place of `held` and `shadows`; `state.json` lists `measured` and `detectors`
+and its Nodes' arrivals carry `suspended` in place of `waiting`, with no
+`parked` list. The examples moved from `examples/shadow/` to
+`examples/events/`, converted key for key (the slit worlds gained the detector
+`screen`).
+
+The tests: `test_field_only.py`, `test_family_turns.py` and
+`test_family_quantum.py` are deleted with the features they isolated;
+`test_node_mixing.py` now isolates node-mixing-v2; `test_event_transit.py`,
+`test_event_suspension.py`, `test_event_clock.py` and `test_event_worlds.py`
+are new ([expectations](TEST_EXPECTATIONS.md)). The readings of the worlds are
+re-pinned from the new engine (the escape 0.989 of the emission, the pair's
+pushes within 8 %, the product law within 10 %).
+
 ## The phase turn in flight per family, on 2026-09-19 (`phase_turn`)
 
 The model owner's decision of the evening (Highlights 5.4, the status line:
@@ -145,7 +189,7 @@ git, in order, if everything works": the documents of the old engine went too.
 
 ## The law of the shadow, a new engine mode, on 2026-09-18 (`field-only-v1`)
 
-Feature 20 ([the law of the shadow](ENGINE.md#the-law-of-the-shadow-field-only-v1);
+Feature 20 ([the law of the shadow](MIGRATION.md);
 Highlights 5.4, the model owner's decision of 2026-09-18, the evening): the
 field-only engine, `event_universe/shadow/`, beside the old one. Nothing of
 the old engine is deleted or changed in behaviour:

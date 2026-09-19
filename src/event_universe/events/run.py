@@ -1,16 +1,17 @@
-"""A run of the law of the shadow: the artifacts the runner writes for it.
+"""A run of the law of events: the artifacts the runner writes for it.
 
-`execute_shadow_run` steps a parsed world and preserves, as the old engine's
-runner does, the input (`initialization.json`), the events (`events.jsonl`:
-the absorptions per held content, family and number with the momentum carried
-and the push taken, the steps, the merges, the escapes), the final state
-(`state.json`, the held contents and every Node with content, written Node by
-Node through `snapshot_writer`) and the record (`run.json`: the law's marker,
-the world's keys, the books per completed tick with the conservation flag,
-the per-tick lines of the held content, the shadows and the momentum, the
-held contents' final states and the escapes). `tools/run_series.py` reads the
-same keys of `run.json` as for any run (`status`, `completed_ticks`,
-`elapsed_seconds`, `audit`, `conserved_at_every_completed_tick`).
+`execute_event_run` steps a parsed world and preserves the input
+(`initialization.json`), the events (`events.jsonl`: the measurements per
+measured event, family and number with the push taken, the steps, the merges,
+the escapes), the final state (`state.json`, the measured events, the
+detectors and every Node with events in transit, written Node by Node through
+`snapshot_writer`) and the record (`run.json`: the law's marker, the world's
+keys, the books per completed tick with the conservation flag, the per-tick
+lines of the measured content, the content in transit and the momentum, the
+measured events' final states, the detectors' measurements and the escapes).
+`tools/run_series.py` reads the same keys of `run.json` as for any run
+(`status`, `completed_ticks`, `elapsed_seconds`, `audit`,
+`conserved_at_every_completed_tick`).
 """
 
 from __future__ import annotations
@@ -21,20 +22,20 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
-from event_universe.shadow.engine import ShadowSimulation
-from event_universe.shadow.world import SHADOW_LAW, ShadowWorld
+from event_universe.events.engine import EventSimulation
+from event_universe.events.world import EVENTS_LAW, EventWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
-def execute_shadow_run(
-    world: ShadowWorld, source: bytes, output: Path, fingerprint: str, count: int
+def execute_event_run(
+    world: EventWorld, source: bytes, output: Path, fingerprint: str, count: int
 ) -> Path:
     """Run `count` intervals of the world into the empty directory `output`;
     returns the path of `run.json`. A failing interval is recorded and raised."""
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []
-    held_content: list[list[int]] = []
-    shadow_content: list[list[int]] = []
+    measured_content: list[list[int]] = []
+    transit_content: list[list[int]] = []
     momentum: list[dict[str, object]] = []
     failure: Exception | None = None
     completed = 0
@@ -44,7 +45,7 @@ def execute_shadow_run(
         def record(event: dict[str, object]) -> None:
             stream.write(json.dumps(event) + "\n")
 
-        simulation = ShadowSimulation(world, observer=record)
+        simulation = EventSimulation(world, observer=record)
         try:
             for _ in range(count):
                 simulation.step()
@@ -52,15 +53,15 @@ def execute_shadow_run(
                 audit.append(books)
                 families = books["families"]
                 assert isinstance(families, dict)
-                held_content.append(
-                    [int(families[family.name]["held"]["current"]) for family in world.families]
+                measured_content.append(
+                    [int(families[family.name]["measured"]["current"]) for family in world.families]
                 )
-                shadow_content.append(
-                    [int(families[family.name]["shadows"]["current"]) for family in world.families]
+                transit_content.append(
+                    [int(families[family.name]["transit"]["current"]) for family in world.families]
                 )
                 momentum.append(dict(books["momentum"]))  # type: ignore[call-overload]
                 if not books["balanced"]:
-                    raise ValueError(f"{SHADOW_LAW}: the books do not close at tick {simulation.tick}")
+                    raise ValueError(f"{EVENTS_LAW}: the books do not close at tick {simulation.tick}")
                 completed += 1
         except Exception as error:  # noqa: BLE001 - recorded, then raised
             failure = error
@@ -71,30 +72,29 @@ def execute_shadow_run(
         "package_version": __version__,
         "source_sha256": fingerprint,
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
-        "law": SHADOW_LAW,
+        "law": EVENTS_LAW,
         "model": world.model_id,
         "shape": list(world.shape),
         "boundary": "open",
         "K": world.clock,
         "N": world.phase_steps,
         "release": list(world.release),
-        "wait_per_quantum": list(world.wait),
+        "suspension": world.suspension,
         "families": [
             {
                 "name": family.name,
                 "kind": family.kind,
                 "charge": family.charge,
-                "phase_turn": family.turn,
                 "quantum": family.quantum,
             }
             for family in world.families
         ],
         "numbers": {
             str(index + 1): {
-                "position": list(content.position),
-                "family": world.families[content.family].name,
+                "position": list(entry.position),
+                "family": world.families[entry.family].name,
             }
-            for index, content in enumerate(world.contents)
+            for index, entry in enumerate(world.measured)
         },
         "status": "failed" if failure else "completed",
         "error": str(failure) if failure else None,
@@ -104,17 +104,18 @@ def execute_shadow_run(
         "elapsed_seconds": time.perf_counter() - started,
         "conserved_at_every_completed_tick": all(bool(entry["balanced"]) for entry in audit),
         "audit": audit,
-        "held_content": held_content,
-        "shadow_content": shadow_content,
+        "measured_content": measured_content,
+        "transit_content": transit_content,
         "momentum": momentum,
-        "contents": simulation.contents(),
+        "measured": simulation.contents(),
+        "detectors": simulation.detectors(),
         "escaped": [
             {
                 "family": family.name,
-                "amount": layer.escaped,
-                "momentum": [int(v) for v in layer.escaped_momentum],
+                "amount": transit.escaped,
+                "momentum": [int(v) for v in transit.escaped_momentum],
             }
-            for family, layer in zip(world.families, simulation.layers, strict=True)
+            for family, transit in zip(world.families, simulation.transits, strict=True)
         ],
         "display": "none",
     }
