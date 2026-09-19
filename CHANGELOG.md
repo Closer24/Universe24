@@ -5,6 +5,26 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The host's batching of the law of the ray (2026-09-19)
+
+- Five optimizations of how the host runs the law, none of the law
+  ([RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 22): step 4 taken in bulk across the measured events
+  (`FamilyPlan`); the dense readings of the board decomposed on request
+  for the active Nodes (`Readings`, `ArrivalRows`); the merge by one
+  packed key with the lexsort as the fallback (`RayStore.merge_key`); the
+  books as running ledger lines (`Ledger.transit_momentum`,
+  `RaySimulation.recount`, `books(recount=True)`) and the collision table
+  cached per process; the clocks' frame in bulk (`_frame_all`), the
+  self-creations visiting only the emitters, `events.jsonl` buffered.
+  Bit-exact: the 45 example worlds' `events.jsonl` and `state.json`
+  byte-identical to the base and the tools' outputs the same
+  ([validation](docs/VALIDATION.md)); the plane source of series C 2.97 ->
+  1.61 ms per interval, two slits 12.4 -> 3.5 ms, the suite 16.8 -> 5.5 s.
+  Tests: `test_ray_books` (new), `test_ray_bijection` (the merge),
+  `test_ray_readings` (e), `test_ray_push` (i)
+  ([expectations](docs/TEST_EXPECTATIONS.md)).
+
 ### The push as one form, the one label and the affordable amount (2026-09-19, the night)
 
 - The physics-rule review of the law of the ray and the model owner's

@@ -26,12 +26,12 @@ kept, their pins the law of events').
 
 | Module | Rule isolated | Re-pins |
 | --- | --- | --- |
-| `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray; the dense readings of the board decomposed on request for the active Nodes ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
-| `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact ([below](#the-bijection)) | new |
+| `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
 | `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the affordable amount bounded before the record's products ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
@@ -39,6 +39,7 @@ kept, their pins the law of events').
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
+| `test_ray_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
@@ -95,6 +96,17 @@ its component by key.
   `pass` record each (`threshold` 3); at threshold 1 with the window 32,
   the two rays at phase 0 pass (`window` 32) and the ray at phase 32
   clicks.
+- (e) the dense readings of the board are decomposed on request from the
+  rows of the walk, for the active Nodes only (added 2026-09-19 with the
+  optimizations of RAY_LAW section 10, note 22): on the open 9 x 3 x 3
+  board with no measured event, 9 units arriving at (4, 1, 1) on +X and 9
+  on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at (6, 1, 1): after
+  one interval the count is 18, 3 and 0 at those Nodes (21 over the
+  board), the flow (0, 0, 0), (0, 3, 0) and (0, 0, 0), the presence 18, 3
+  and 2 (23 over the board), the Links crossed per Port (9, 9, 0, 0, 0, 0)
+  at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1) (21 over the board);
+  before the first interval, and on an empty board, every array is zero
+  with its shape.
 
 ## The table generated from the keys
 
@@ -205,6 +217,41 @@ measured event: the sorted store equal to the start in every field; the
 state at the turning point differs from the start; the collision moved at
 least one ray on the way.
 
+The merge (step 6; added 2026-09-19 with the optimizations of RAY_LAW
+section 10, note 22): 82 fixed rows (60 distinct over 200 Nodes, 10
+directions, 23 ages, the circle, 3 numbers, 3 contents, charges 0 and -1,
+5 masses; 20 of them repeated; two extremes) merged by the packed key of
+the identity fields equal the Python sort of the identity tuples with the
+amounts of equal tuples added, 62 rows, every arrival reset to here; the
+same rows with every other mass raised by 2^61 (the key does not fit the
+register, `merge_key` is None) merged by the lexsort fallback equal their
+Python sort likewise; the empty store merges to the empty store.
+
+## The books
+
+`tests/test_ray_books.py` (docs/RAY_LAW.md, section 10, note 22; added
+2026-09-19 with the optimizations): `books()` reports the transit line,
+the content line and the transit momentum as the running lines of the
+ledger (what was released less what left: escaped, home, absorbed;
+O(families), no pass over the store) and `recount()` counts the same
+three lines from the rows of the store. On a 12 x 1 x 3 board with y
+periodic and every other face open (K 2^20, N 64, `release` [1, 4], the
+fan direction (2, 1, 0)): a lamp of `light` (content 2^23) at (1, 0, 1)
+releasing 3 units per self-creation on +X, (2, 1, 0) and +Y (the +Y unit
+home next interval, created again on the six headings), a re-emitter of
+`light` at (5, 0, 1) on +X and -X, the detector `screen` at (9, 0, 1), a
+free source `m` (content 2^19) at (10, 0, 1), beyond the screen, releasing
+2^17 per heading (escapes through the z and x faces, homes on +-Y, reads
+at the screen, the re-emitter and the lamp), and a head-on pair of `light` meeting at
+(4, 0, 0) in free space, parked at rest by the collision in the interval
+they meet (the table moves them on later): at every one of 40 intervals
+the running lines equal the recount, `books(recount=True)` equals
+`books()` and the books balance; the momentum line is nonzero at some
+tick; the two rest rays sit at (4, 0, 0) after the first interval; the
+records hold a home of each family, a re-release, a read, a click at the
+screen, a click at the lamp and face clicks (`m` on +z, +x and -x, `light`
+on -z). An empty world counts zero both ways.
+
 ## The detector's record
 
 `tests/test_ray_detector.py` (docs/RAY_LAW.md, section 5). K 2^20,
@@ -303,6 +350,11 @@ with y and z periodic unless said otherwise.
   coming home on a periodic 4 x 1 x 1 bar: the `home` record's `push` is
   its label (1, 0, 0) and the emitter's momentum (0, 0, 0) after the
   re-creation.
+- (i) the factor is read off the rows met (added 2026-09-19 with the bulk
+  step 4): the world of (a) with two bystander rays of the probe's number
+  (charge 1, mass 5 on their record) parked on the stub of the y axis at
+  x = 2 and 3, rows before the probe's in the store: every push (-17, 0, 0)
+  and `pushed` (-340, 0, 0) as in (a), the bystanders untouched.
 
 ## The re-emission
 

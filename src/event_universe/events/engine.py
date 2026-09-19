@@ -39,7 +39,7 @@ from event_universe.core.lattice import Address3, adjacent_node
 from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
 from event_universe.events.nature_beam import (
     HERE,
-    PORTS,
+    ArrivalRows,
     RayStore,
     RayTables,
     Readings,
@@ -49,7 +49,13 @@ from event_universe.events.nature_beam import (
     nature_beam,
     ray_tables,
 )
-from event_universe.events.world import HEADING_OFFSET, RAYS_LAW, MeasuredDefinition, RayWorld
+from event_universe.events.world import (
+    HEADING_OFFSET,
+    MOMENTUM_BOUND,
+    RAYS_LAW,
+    MeasuredDefinition,
+    RayWorld,
+)
 
 __all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
 
@@ -70,6 +76,7 @@ class RaySimulation:
         self.tick = 0
         self.shape = world.shape
         self.families = world.families
+        self._phased = [family.phase for family in world.families]
         count = len(world.families)
         self.tables: RayTables = ray_tables(world)
         self.stores = [RayStore(world.shape) for _ in world.families]
@@ -114,14 +121,14 @@ class RaySimulation:
             self.content_initial[item.family] += content * item.amount
         for store in self.stores:
             store.merge()
-        # The readings of the last interval (diagnostics): per family the
-        # arrivals per Node, their net flow, the Links crossed per Port and
-        # the presence.
+        # The running transit line of the momentum starts from the declared
+        # rows, counted once.
+        self.ledger.transit_momentum = self.recount()["momentum"]
+        # The readings of the last interval (diagnostics, decomposed on
+        # request): per family the arrivals per Node, their net flow, the
+        # Links crossed per Port and the presence.
         self.readings = Readings(
-            [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
-            [np.zeros((*world.shape, 3), dtype=np.int64) for _ in range(count)],
-            [np.zeros((*world.shape, PORTS), dtype=np.int64) for _ in range(count)],
-            [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
+            world.shape, self.tables.flight.vectors, [ArrivalRows.empty() for _ in range(count)]
         )
 
     @property
@@ -177,8 +184,7 @@ class RaySimulation:
         """One interval: the clocks' frame, the law, the clocks' count and
         the measured events' steps."""
         self.tick += 1
-        for entry in self.measured.values():
-            self._frame(entry)
+        self._frame_all()
         self.readings = nature_beam(
             self.stores,
             self.world,
@@ -213,27 +219,47 @@ class RaySimulation:
             inverse=True,
         )
 
-    def _frame(self, entry: Measured) -> None:
-        """The clock's frame: a measured event that owes a count pays it by
-        one (no self-creation, no release, no turn; `waited` counts the
-        interval); one that owes nothing self-creates: its age advances and
-        its turn is read off its clock."""
-        entry.turn = 0
-        if entry.owed > 0:
-            entry.owed -= 1
-            entry.waited += 1
-            entry.creating = False
+    def _frame_all(self) -> None:
+        """The clocks' frame, every measured event at once: one that owes a
+        count pays it by one (no self-creation, no release, no turn;
+        `waited` counts the interval); one that owes nothing self-creates:
+        its age advances and its turn is read off its clock, `by_clock(age,
+        content, K)`, the turns of the phased families taken in one array
+        where their products fit the register (row by row otherwise), and
+        refused at half the circle."""
+        phased: list[Measured] = []
+        for entry in self.measured.values():
+            entry.turn = 0
+            if entry.owed > 0:
+                entry.owed -= 1
+                entry.waited += 1
+                entry.creating = False
+                continue
+            entry.creating = True
+            entry.clock_age = entry.age
+            entry.age += 1
+            if self._phased[entry.family]:
+                phased.append(entry)
+        if not phased:
             return
-        entry.creating = True
-        entry.clock_age = entry.age
-        entry.age += 1
-        if self.families[entry.family].phase:
-            entry.turn = by_clock(entry.clock_age, entry.content, self.world.clock)
-            if 2 * entry.turn >= self.world.phase_steps:
+        clock = self.world.clock
+        ages = [entry.clock_age for entry in phased]
+        contents = [entry.content for entry in phased]
+        if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
+            age_column = np.array(ages, dtype=np.int64)
+            content_column = np.array(contents, dtype=np.int64)
+            turns = (
+                ((age_column + 1) * content_column) // clock - (age_column * content_column) // clock
+            ).tolist()
+        else:
+            turns = [by_clock(age, content, clock) for age, content in zip(ages, contents, strict=True)]
+        for entry, turn in zip(phased, turns, strict=True):
+            if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
                     f"{RAYS_LAW}: measured event {entry.number} turns its phase by half the circle "
                     "or more per self-creation (its content has grown past K x N / 2)"
                 )
+            entry.turn = turn
 
     def _suspend(self, entry: Measured) -> None:
         """The count a measured event owes after its self-creation: the
@@ -332,29 +358,59 @@ class RaySimulation:
 
     # -- the books -------------------------------------------------------------
 
-    def transit_momentum(self) -> list[int]:
-        """The momentum carried in transit: the one label of every row
-        (`momentum_labels`: content x amount x D[direction] per ray of a
-        paid family, amount x D of a free one), summed exactly."""
-        total = [0, 0, 0]
+    def recount(self) -> dict[str, list[int]]:
+        """The current lines counted from the store, a pass over every row:
+        the units and the content in transit per family and the momentum in
+        transit (the one label of every row, `momentum_labels`: content x
+        amount x D[direction] per ray of a paid family, amount x D of a
+        free one), every sum exact. The check of the running lines of the
+        ledger, on request (`books(recount=True)`; the tests assert it
+        equal at every tick)."""
+        units: list[int] = []
+        content: list[int] = []
+        momentum = [0, 0, 0]
         for family, store in enumerate(self.stores):
+            units.append(int(exact_sum(store.amount)))
+            content.append(int(exact_sum(store.amount * store.content)))
             if store.size:
                 definition = self.families[family]
                 labels = store.labels(np.arange(store.size), self.tables.flight.vectors, definition.free)
-                total = [int(a) + int(b) for a, b in zip(total, exact_column_sums(labels), strict=True)]
-        return total
+                momentum = [a + b for a, b in zip(momentum, exact_column_sums(labels), strict=True)]
+        return {"transit": units, "content": content, "momentum": momentum}
 
-    def books(self) -> dict[str, object]:
-        """The ledger at the current tick, every line with its identity."""
+    def transit_momentum(self) -> list[int]:
+        """The momentum carried in transit: the running line of the ledger,
+        the labels of the rows born less the labels of the rows that left
+        (escaped, home, absorbed), kept by `nature_beam` (the collision and
+        the merge conserve it); `recount` counts it from the rows."""
+        return list(self.ledger.transit_momentum)
+
+    def books(self, recount: bool = False) -> dict[str, object]:
+        """The ledger at the current tick, every line with its identity. The
+        `current` of the transit and content lines and the transit momentum
+        are the running lines of the ledger (what was released less what
+        left; O(families), no pass over the store); with `recount` they are
+        counted from the rows instead, and the identities then check the
+        running ledger against the store."""
+        counted = self.recount() if recount else None
         families: dict[str, object] = {}
         balanced = True
         ledger = self.ledger
+        # One pass over the measured events: what they hold per family,
+        # their momentum and their charge.
+        held_current = [0] * len(self.families)
+        held_momentum = [0, 0, 0]
+        charge = 0
+        for entry in self.measured.values():
+            for index, held in enumerate(entry.held):
+                held_current[index] += held
+            held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
+            charge += entry.charge
         for index, family in enumerate(self.families):
-            store = self.stores[index]
             measured = {
                 "initial": self.held_initial[index],
                 "measured": ledger.held_measured[index],
-                "current": sum(entry.held[index] for entry in self.measured.values()),
+                "current": held_current[index],
                 "spent": ledger.held_spent[index],
                 "escaped": ledger.held_escaped[index],
             }
@@ -364,7 +420,14 @@ class RaySimulation:
             in_transit = {
                 "initial": self.transit_initial[index],
                 "released": ledger.transit_released[index],
-                "current": int(exact_sum(store.amount)),
+                "current": (
+                    counted["transit"][index]
+                    if counted is not None
+                    else self.transit_initial[index]
+                    + ledger.transit_released[index]
+                    - ledger.escaped_units(index)
+                    - ledger.transit_absorbed[index]
+                ),
                 "escaped": ledger.escaped_units(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
@@ -374,7 +437,14 @@ class RaySimulation:
             content = {
                 "initial": self.content_initial[index],
                 "released": ledger.content_released[index],
-                "current": int(exact_sum(store.amount * store.content)),
+                "current": (
+                    counted["content"][index]
+                    if counted is not None
+                    else self.content_initial[index]
+                    + ledger.content_released[index]
+                    - ledger.escaped_content(index)
+                    - ledger.content_absorbed[index]
+                ),
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
@@ -388,18 +458,15 @@ class RaySimulation:
                 and bool(content["balanced"])
             )
             families[family.name] = {"measured": measured, "transit": in_transit, "content": content}
-        held_momentum = [0, 0, 0]
-        for entry in self.measured.values():
-            held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
         return {
             "tick": self.tick,
             "families": families,
             "momentum": {
                 "measured": held_momentum,
-                "transit": self.transit_momentum(),
+                "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
                 "escaped": ledger.escaped_momentum(),
             },
-            "charge": sum(entry.charge for entry in self.measured.values()),
+            "charge": charge,
             "balanced": balanced,
         }
 
