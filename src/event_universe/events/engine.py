@@ -82,7 +82,12 @@ in this order:
    momentum p and content M, one Link per (M + p) / p self-creations
    (`by_clock` with p over M + p), at most one step per interval, x before y
    before z, the momentum untouched; a step onto a measured event merges the
-   two into the resident, a step off the board escapes; `fixed` never steps.
+   two into the resident, a step off the board through an open face escapes,
+   and on a periodic axis the step wraps as the departures do (from the last
+   Node along +axis to the first, from the first along -axis to the last;
+   with an extent of 1 it lands on its own Node, no move and no merge, the
+   step counted in `steps` as every step off the clock is); `fixed` never
+   steps.
 
 The push (Highlights 5.4, the law of events, the third law corrected): the
 momentum an arriving group of a free family carries, from birth along its
@@ -824,7 +829,12 @@ class EventSimulation:
         """The step by the momentum off the clock, at most one per interval,
         when nothing is owed: in the self-creation's interval when it read no
         count, else in the interval the last unit of its count is paid (the
-        self-creation is then the last, `age - 1` its age before it)."""
+        self-creation is then the last, `age - 1` its age before it). One rule
+        for the board (the model owner, 2026-09-19): through an open face the
+        step escapes with the content; on a periodic axis it wraps as the
+        departures do, and with an extent of 1 it lands on its own Node, no
+        move and no merge (`steps` counts every step made off the clock,
+        wherever it lands: a move, a merge, an escape or its own Node)."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
@@ -842,6 +852,10 @@ class EventSimulation:
             origin = entry.position
             port = 2 * axis + (0 if sign > 0 else 1)
             destination = adjacent_node(origin, port, self.shape, self.world.periodic)
+            if destination == origin:
+                # A self-Link counts the step without a coordinate move,
+                # a movement record or a merge with the Event itself.
+                return
             del self.at[origin]
             if destination is None:
                 for index in range(len(self.families)):
@@ -854,8 +868,6 @@ class EventSimulation:
                 del self.measured[entry.number]
                 self._event("escaped", entry, entry.family, entry.number, content, ZERO3)
                 return
-            # Removing the origin above keeps an extent-one self-Link from
-            # merging an Event with itself or duplicating its inventory.
             if destination in self.at:
                 other = self.measured[self.at[destination]]
                 for index in range(len(self.families)):

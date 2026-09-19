@@ -2698,6 +2698,14 @@ states "exactly" and means integer equality at every tick.
   11 and this entry before it is quoted again; the prediction above stands
   as recorded until then.
 
+### A9, the graviton detector: one click per whole unit (planned, 2026-09-19)
+
+- **Confronts:** the single-graviton detector proposed by Tobar, Manikandan, Beitel and Pikovski (Nature Communications 15, 7229, 2024; construction begun in 2026): a massive acoustic resonator cooled to its ground state, weakly monitored, whose single quantum jump to its first level during a passing gravitational wave is one graviton absorbed, a gravito-phononic photoelectric effect; the key is to read individual transitions, since the mean energy is always consistent with a classical wave.
+- **Under the law of events:** quantum gravity is not a property of the board but what a declared detector reads at a point (the model owner, 2026-09-19: "quantum gravity is behind a detector; we need a detector for it"). The detector is a measured event with the table `measure` for the family read and `threshold` 1: one click per whole unit, its record carrying the emitter's number, the momentum entered and the phase read. The board is whole by construction, so such a detector always reads whole units; what is measured is the count per interval against the distance and the time, and the size of one click against the detector's declared width.
+- **What is missing before the run:** the units of the free family (the field of matter) carry no energy and no recoil, so they are not the graviton of nature, which is a quantum of a gravitational WAVE, emitted by accelerating masses and carrying energy. The run needs a paid family of gravitational waves (released at a measured event's acceleration, with recoil, with a phase circle and two polarizations as a second circle if wanted), not yet declared; the free family's suspension reads presence, not clicks.
+- **Reading planned:** a lamp of the wave family and a detector at threshold 1 far from it: clicks per interval, their record, and the digital slowing of a clock at the detector's Node; the negative control a threshold above the bundle (no click).
+- **Status:** planned; a catalog entry, no engine change until the wave family is declared by the owner.
+
 ## B. Proof for the paper
 
 ### B1. Exact conservation at every tick under every operation
