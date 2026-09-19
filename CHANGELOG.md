@@ -5,6 +5,32 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The detector's record exact, never refused (2026-09-19, after the batching)
+
+- The night's affordable amount (`RECORD_AMOUNT_BOUND` = 261123, the
+  amount a detector Node or a face could click of one family in one
+  interval) refused a lawful world: `examples/events/two_contents.json`,
+  which had run 200 intervals before the bound, was refused at its 20th
+  interval when its two +y beams of 2^17 left through `face:+y` together
+  (262144). The record is a host reading, not the law's local work, so it
+  is now exact and never refused ([RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  and [note 19](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the coherent pointer (X, Y) is summed in the int64 register while the
+  clicked amount is within `POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x
+  257) = 560759486676481 and in Python integers beyond it
+  (`nature_beam.coherent_pointer`); the square and the cumulative record
+  are Python integers always (`Measured.record`, `Ledger.face_record`).
+  `RECORD_AMOUNT_BOUND`, `check_record_amount`, `record_amount` and the
+  refusal are deleted. The `record` of `events.jsonl`, `run.json` and
+  `state.json` can exceed 2^63 and is parsed as an arbitrary-precision
+  integer. Bit-exact on every world that ran: 44 of the 45 example worlds
+  byte-identical before and after, `two_contents` completing its 200
+  intervals with the books closed, its first 19 intervals' `events.jsonl`
+  the byte prefix of the new one ([validation](docs/VALIDATION.md)).
+  Tests: `test_ray_detector` (e) rewritten, `test_ray_worlds` (e) new
+  ([expectations](docs/TEST_EXPECTATIONS.md),
+  [migration](docs/MIGRATION.md#the-detectors-record-exact-never-refused-on-2026-09-19-after-the-batching)).
+
 ### The host's batching of the law of the ray (2026-09-19)
 
 - Five optimizations of how the host runs the law, none of the law

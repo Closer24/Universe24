@@ -22,7 +22,10 @@ class Measured:
     counters. `pending` holds, per family, what came home or is re-released
     and waits for the next self-creation: (amount, content per unit, phase)
     per arriving record. `record` is the detector's squared coherent reading
-    per family, cumulative. The engine sets `creating`, `clock_age` and
+    per family, cumulative: an exact Python integer, a report of the host
+    that is never refused and may pass 2^63 (its readers in `run.json` and
+    `state.json` parse it as an arbitrary-precision integer). The engine
+    sets `creating`, `clock_age` and
     `turn` before every interval (the clock's frame) and reads `presence`
     after it (the clock's count)."""
 
