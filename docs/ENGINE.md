@@ -23,7 +23,7 @@ tests: `tests/test_node_mixing.py`, `tests/test_node_mixing_numbers.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
 `tests/test_detector_sensitivity.py`, `tests/test_phase_window.py`,
 `tests/test_periodic_axis.py`, `tests/test_phaseless_family.py`,
-`tests/test_event_worlds.py`
+`tests/test_release_costs_by_phase_rate.py`, `tests/test_event_worlds.py`
 ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
@@ -200,9 +200,14 @@ claiming implementation completion.
 **One thing.** An event, with a place (a Node), a time (an interval) and a
 record: an amount (whole units), a phase (a step of the circle of N), a number
 (the measured event whose continuation it is, the last emitter), a momentum
-(three integers, given at birth: the family's `quantum` times the amount along
-the release heading, and afterwards carried and apportioned), a heading, and
-its counts (the suspension it carries; for a measured event its age, the
+(three integers, given at birth and afterwards carried and apportioned: for
+a paid family the content the release cost along the release heading, for a
+free family the label `quantum` x amount along it), the content it carries
+(one integer per slot, given at birth: what the release cost its emitter,
+the family's `quantum` per unit per phase step of the emitter's turn, and
+afterwards carried and apportioned with the units; a free family's carries
+none; [below](#a-release-costs-the-emitter-by-its-phase-rate)), a heading,
+and its counts (the suspension it carries; for a measured event its age, the
 count of its self-creations). At every interval every event is created at its
 next place from its record, and the next place is one of seven: the six
 neighbours or here. An event in transit is created at a neighbour; a suspended
@@ -254,7 +259,7 @@ candidates (`transit.nearest_step`, `step_window`).
    and constant in flight. The escapes through the open faces are booked; on
    a periodic axis the departures wrap. Arrivals into a slot that
    holds events waiting there are one amplitude per Port (the amounts added,
-   the phase of the coherent sum, the momenta added).
+   the phase of the coherent sum, the momenta added, the contents added).
 2. At every Node the presence of each number is formed: the amount that
    arrived there this interval, over every family (the model owner,
    2026-09-19: the suspension reads presence, of everything, with one
@@ -302,15 +307,19 @@ candidates (`transit.nearest_step`, `step_window`).
    record is written. The rules: `read`
    (the default for a free family: the push taken and the units left to mix
    on as at an empty Node), `measure` (the default for a paid family, the
-   click: the push taken and the amount joining the content, one click per
-   unit), `rerelease` (the push taken, the amount taken to be created again
-   like what came home, with the measured event's number and phase) or
-   `pass` (no push, the units mix on). At a click the bundle's phase is the
-   detector's reading and nothing else: it is compared with the window and
-   written on the click record, and it does not enter the measured event,
-   whose phase is its own clock (step 5) and takes nothing from what it
-   measures, or its rates off the clock would depend on what fell on it;
-   the amount joins and the momentum enters, and those two the board keeps.
+   click: the push taken and the content the bundle carries joining the
+   content, amount x `quantum` x s with s the emitter's turn at the release
+   (the model owner, 2026-09-19, [below](#a-release-costs-the-emitter-by-its-phase-rate);
+   until then the amount joined, one unit of content per unit), one click
+   per unit whatever it carries), `rerelease` (the push taken, the amount
+   taken to be created again like what came home, with the measured event's
+   number and phase and carrying the content it arrived with) or `pass` (no
+   push, the units mix on). At a click the bundle's phase is the detector's
+   reading and nothing else: it is compared with the window and written on
+   the click record, and it does not enter the measured event, whose phase
+   is its own clock (step 5) and takes nothing from what it measures, or its
+   rates off the clock would depend on what fell on it; the content carried
+   joins and the momentum enters, and those two the board keeps.
    A click is the border between the board and the detector, one way: the
    run's record is the detector's measurement, not a history outside the
    model, and the board after a click does not tell the phase measured
@@ -369,22 +378,33 @@ candidates (`transit.nearest_step`, `step_window`).
    counts the interval (age + waited is the intervals completed, for every
    measured event at every interval). One that owes nothing is created here
    again, the self-creation:
-   its age advances by one, and off its clock (`by_clock`: what the whole part
-   of age x rate gained by this self-creation, no remainder anywhere) it
+   its age advances by one, its turn is read off its clock, s = `by_clock(age,
+   content, K)` phase steps (the whole part of age x content / K gained by
+   this self-creation, the content before this self-creation's releases; 0
+   for a family without a phase circle; refused when a step would reach
+   half the circle), and off its clock (`by_clock`: what the whole part of
+   age x rate gained by this self-creation, no remainder anywhere) it
    releases, per free family it holds, content x the world's `release` per
-   Port; a lamp its declared rate on its headings, spending its content and
-   taking the recoil (a lamp with a `phase_window` only at the
-   self-creations whose clock phase, the phase before this self-creation's
-   turn, the one its release is stamped with, falls in its window); and
-   what came home or is re-released on the six headings
-   in equal whole shares, the units below six going whole to the heading its
-   clock points at (the age modulo six); every release stamped with its number
-   and phase and carrying its momentum from birth. Its phase turns by its
-   content over K off its clock (refused when a step would reach half the
-   circle) at every self-creation, whether or not it released: a lamp whose
-   phase leaves its window keeps turning and comes round to it again; a
-   measured event of a family without a phase circle (`"phase": false`)
-   never turns, its phase 0, and K does not apply to its content. After
+   Port (costing nothing and carrying no content, whatever its turn: the
+   field is free); a lamp its declared rate on its headings when s > 0,
+   each unit costing it `quantum` x s content and carrying that content and
+   the momentum `quantum` x s along its heading, the lamp taking the recoil,
+   at most what its content pays for (a lamp with a `phase_window` only at
+   the self-creations whose clock phase, the phase before this
+   self-creation's turn, the one its release is stamped with, falls in its
+   window; a self-creation whose turn is 0 releases nothing: no quanta of
+   zero content; [below](#a-release-costs-the-emitter-by-its-phase-rate));
+   and what came home or is re-released on the six headings in equal whole
+   shares, the units below six going whole to the heading its clock points
+   at (the age modulo six), the content they carried going with the units
+   exactly (`apportion_whole`, the largest remainders with the ties in Port
+   order from that heading) and, for a paid family, their momentum that
+   content along the heading, the recoil taken; every release stamped with
+   its number and phase. Its phase turns by s at every self-creation,
+   whether or not it released: a lamp whose phase leaves its window keeps
+   turning and comes round to it again; a measured event of a family
+   without a phase circle (`"phase": false`) never turns, its phase 0, and
+   K does not apply to its content. After
    its self-creation it reads the presence at its Node of every number but
    its own, this interval's (step 2), and owes `presence x n // d`
    intervals at the world's `suspension` `[n, d]` (`_suspend`,
@@ -439,14 +459,24 @@ family pushes by +c, its own carried momentum (light's pressure), and its
 emitter took the recoil. The own number pushes nothing.
 
 **The books** (`EventSimulation.books`, the runner's `audit` per tick), exact
-at every interval: per family the measured line, initial + measured (the
-clicks) = current + spent (the lamps) + escaped (measured events off the
-board); the transit line, initial (the declared `in_transit`) + released (the
-releases, the lamps, what came home or was re-released and left again) =
-current (the arrivals and the departures) + escaped + absorbed (home, the
-clicks, the re-releases; what came home is on the absorbed line until it
-leaves again); the momentum reported on the measured events, in transit and
-escaped, and the charge summed. The momentum book is a report, not a
+at every interval: per family the measured line, in content, initial +
+measured (the clicks' content, amount x `quantum` x s) = current + spent
+(the lamps' cost, the sum over their releases of amount x `quantum` x s) +
+escaped (measured events off the board); the transit line, in units,
+initial (the declared `in_transit`) + released (the releases, the lamps,
+what came home or was re-released and left again) = current (the arrivals
+and the departures) + escaped + absorbed (home, the clicks, the re-releases;
+what came home is on the absorbed line until it leaves again); the content
+line (`content`), the content carried in transit, initial (the declared
+`in_transit`, one phase step of content per unit, `quantum` x amount for a
+paid family, none for a free one) + released (the lamps' cost, and the
+content of what came home or was re-released when it leaves again) =
+current (the sum over the slots of the content carried) + escaped +
+absorbed (home, the clicks, the re-releases; the content of what came home
+is on the absorbed line until it leaves again), so that at every interval
+what the lamps spent is what was measured plus what is in transit, escaped
+or waiting to be created again; the momentum reported on the measured
+events, in transit and escaped, and the charge summed. The momentum book is a report, not a
 balance: the measured line is the sum of the pushes taken (a free family's
 by the flow, a paid family's by the carried momentum) and the recoils; the
 transit line the momentum labels from birth, apportioned exactly with the
@@ -465,7 +495,9 @@ of the suspension, a reader owing `presence x n // d` intervals (an integer
 w is accepted as `[w, 1]`; `[1, 1]` by default; 0 or `[0, d]` for none,
 recorded as `[0, 1]`); `families` (`name`, `kind` `free` or `paid`,
 `charge` of a measured event of a free family, `quantum` the content of one
-unit of a paid family, 1 by default and 1 for a free family, `phase` true
+unit of a paid family per phase step of its emitter's turn, h (a unit
+released at a turn of s steps costs and carries `quantum` x s), 1 by
+default and 1 for a free family, `phase` true
 by default, false for a family without a phase circle: its events carry
 phase 0 and never turn, its measured events never turn and K does not apply
 to their content, no `phase_window` on its lamps or on a table entry for
@@ -505,24 +537,27 @@ record says what the board was; `suspension` as `[n, d]`; per family its
 `phase`),
 `numbers` (the measured events' numbers, positions and families), the books
 per completed tick (`audit`) with `conserved_at_every_completed_tick`, the
-per-tick `measured_content`, `transit_content` and `momentum` lines, the
-measured events' final states (`measured`: position, held per family, content,
-phase, charge, momentum, its phase windows per family, its detector, age,
-count and what waits to be created again, intervals suspended, phase steps,
-steps, what each met per family by rule, the clicks, the push taken), the
-detectors' measurements (`detectors`: name, Nodes, threshold, per family the
-amount measured and the clicks) and the escapes; `events.jsonl` (the
-detectors' measurement of the board, step 3) one record
-per event (`home`, `read`, `click`, `rerelease`, `step`, `merged`,
-`escaped`) with the tick, the Node, the measured event, its detector, the
-family, the number, the amount and the push, the four measurements with the
-`phase` read at the Node (`Transit.phase_at`), and a `pass` record for a
-bundle outside a window (the tick, the Node, the measured event, its
-detector, the family, the number, the amount, the `phase` read and the
-`window`); `state.json`, through `snapshot_writer.write_snapshot`, the
-`boundary` as declared, the measured events,
-the detectors and every Node with events in transit (arrivals with their
-count, departures, per number and heading, with phases and momenta).
+per-tick `measured_content`, `transit_content` (the units in transit) and `momentum`
+lines, the measured events' final states (`measured`: position, held per
+family, content, phase, charge, momentum, its phase windows per family, its
+detector, age, count and what waits to be created again with its content
+(`home`, `home_content`), intervals suspended, phase steps, steps, what
+each met per family by rule, the clicks, the push taken), the detectors'
+measurements (`detectors`: name, Nodes, threshold, per family the amount
+measured and the clicks) and the escapes; `events.jsonl` (the detectors'
+measurement of the board, step 3) one record per event (`home`, `read`,
+`click`, `rerelease`, `step`, `merged`, `escaped`) with the tick, the Node,
+the measured event, its detector, the family, the number, the amount and
+the push, the four measurements with the `phase` read at the Node
+(`Transit.phase_at`) and the `content` the bundle carried (a click's
+content is the energy the detector measured, `quantum` x s per unit), and
+a `pass` record for a bundle outside a window (the tick, the Node, the
+measured event, its detector, the family, the number, the amount, the
+`phase` read and the `window`); `state.json`, through
+`snapshot_writer.write_snapshot`, the `boundary` as declared, the measured
+events, the detectors and every Node with events in transit (arrivals with
+their count, departures, per number and heading, with phases, momenta and
+the content carried).
 `tools/run_series.py` runs these worlds as any. The readings the tests make
 are the engine's (`shell_readings`: the shell mean of the count, the radial
 flow and the size; `cube_flux`: Gauss's flux through a closed surface),
@@ -562,6 +597,58 @@ releases only at the self-creations whose clock phase falls in its window,
 each release stamped with that phase, while a lamp without one cycles through
 the circle with its clock; its clock advances and its phase turns at every
 self-creation either way (`tests/test_phase_window.py`).
+
+### A release costs the emitter by its phase rate
+
+The rule of the model owner, 2026-09-19 ("I approve the proposal"; until
+then a unit of a paid family
+cost its emitter one unit of content whatever the emitter's clock, so a blue
+lamp's click and a red lamp's carried the same content and the
+photoelectric effect was not reproduced). At a self-creation of a measured
+event whose family has a phase circle, the turn is s = `by_clock(age,
+content, K)` phase steps, the whole part off its clock, read from its
+content before that self-creation's releases (step 5). Each unit a lamp
+releases at that self-creation costs the emitter `quantum` x s content,
+carries `quantum` x s content and the momentum `quantum` x s along its
+heading, and gives `quantum` x s content to the measured event that
+measures it (step 3, `measure`; `rerelease` and `read` as before for the
+amount, the push by the carried momentum as before). So the content of a
+click is proportional to the emitter's frequency, E = h f with h the
+declared `quantum`, the content of one unit per phase step. The rule is
+carried on the event in transit as the content per slot (`Transit.arr_con`,
+`fly_con`), one integer beside the amount, the phase and the momentum: set
+at birth, added when arrivals join a waiting slot, kept through the
+suspension, and at every Node going with the units placed exactly as the
+momentum does (`apportion_carried` on one component, the floors and the
+largest remainders with the tick's ties), so that a slot whose units were
+all released at one turn s carries amount x `quantum` x s exactly, and
+where bundles of one number but different turns meet (releases of
+different self-creations at one Node) the sum is exact whatever the split;
+the content is carried rather than s because merged slots have no one s
+and the books must close. A self-creation whose turn is 0 (the content
+below what one step needs this self-creation, `(age + 1) x content // K`
+not above `age x content // K`) releases nothing: no quanta of zero
+content leave, the lamp's clock and window are read as always and the
+release rate is not made up later. A lamp of a family without a phase
+circle turns by nothing and so never releases. A free family's release
+costs nothing, whatever its turn, and its units carry no content: what
+costs nothing gives nothing, so a measured event that measures a free
+family's units (`measure` on a free family) takes them off the board and
+gains no content (until 2026-09-19 it gained the amount). The declared
+`in_transit` events of a paid family carry one phase step of content per
+unit, `quantum` x amount (no emitter declared their turn), and the momentum
+`quantum` x amount along the heading as before. The `kind` key stays as
+declared and still decides: the push rule (a free family's push reads the
+net flow, a paid family's the carried momentum), that a free family's
+release is the world's `release` off the clock, costs nothing and takes no
+recoil while a paid family's is a lamp's or a re-release with the recoil,
+the momentum label of a free family's units (`quantum` x amount along the
+heading, what the sides read for a unit with no whole share, unread by the
+push), the suspension of a paid family's arrivals only, the default table
+rule (`read` for free, `measure` for paid) and the parser's permissions
+(`charge`, `quantum`, `lamp`). What no longer depends on it: the cost, the
+content and the momentum of a paid family's unit, which follow s
+(`tests/test_release_costs_by_phase_rate.py`).
 
 **What does not exist here**: no shadow and no real, no bit, no register, no
 remainder, no parked share, no pool that counts as content, no return to the

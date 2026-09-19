@@ -7,6 +7,27 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- A release costs the emitter by its phase rate (the model owner,
+  2026-09-19, "I approve the proposal"): at a self-creation whose turn is
+  s = `by_clock(age, content, K)` phase steps, each unit a lamp releases
+  costs it `quantum` x s content, carries that content and the momentum
+  `quantum` x s along its heading, and gives it to the measured event that
+  measures it, so the content of a click is proportional to the emitter's
+  frequency, E = h f with h the declared `quantum` (the content of one unit
+  per phase step). A turn of 0 releases nothing (no quanta of zero content).
+  The content is carried per slot in transit (`Transit.arr_con`, `fly_con`)
+  and goes with the units at every Node exactly as the momentum does; the
+  books carry a content line balanced at every interval; measurement
+  records and `state.json` carry the content. A free family's release costs
+  nothing and its units carry no content, so `measure` on a free family adds
+  nothing ([the engine](docs/ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate),
+  [migration](docs/MIGRATION.md#a-release-costs-the-emitter-by-its-phase-rate-on-2026-09-19-e--h-f)).
+  Tests: `test_release_costs_by_phase_rate` (new); `test_event_clock` (c)
+  at K 82, `test_detector_sensitivity` (c) at K 24, `test_phase_window` (a)
+  records with `content`, `test_event_suspension` (c) re-pinned,
+  `test_event_worlds` (d) the screen's content
+  ([expectations](docs/TEST_EXPECTATIONS.md#a-release-costs-the-emitter-by-its-phase-rate)).
+  The Bell worlds run unchanged (326 criteria of `tools/bell_chsh.py`).
 - One rule of the Node: the phase-less scatter is the diagonal of the
   coherent sum inside `mix_arrivals` (the model owner, 2026-09-19:
   "everything generic must be replaced by generic"; the physics-rule

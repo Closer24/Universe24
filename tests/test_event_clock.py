@@ -13,8 +13,16 @@ of a measured event"), written down first:
     released after 10 intervals, 0 after 3; its phase at K = 2 turns by 3 / 2
     per self-creation, 1, 2, 1, 2: six steps after four intervals;
 (c) a lamp at rate [1, 3] releases at ages 3, 6 and 9: three units per
-    heading after 9 intervals, its content down by them and its momentum the
-    recoil, zero over six headings;
+    heading after 9 intervals, its content down by their cost and its
+    momentum the recoil, zero over six headings. Since 2026-09-19 a release
+    costs the emitter by its phase rate (each unit quantum x s, s the turn
+    of that self-creation, and a turn of 0 releases nothing), so the world
+    of (c) declares K 82: the content 100 then 94 then 88 keeps
+    (age + 1) x (content - K) below K through the run, so s = 1 at every
+    self-creation and each unit costs quantum x 1 = 1, the content
+    100 - 18 = 82 (at the K 2^20 of the other cases s would be 0 and the
+    lamp would release nothing); each unit in transit carries content 1 and
+    the momentum 1 along its heading;
 (d) the step off the clock: content 16 with momentum 16 on +x steps once
     per two self-creations (16 / (16 + 16)), three steps after six
     intervals; with momentum 1 once per seventeen, none after 16 and one
@@ -83,13 +91,19 @@ def test_a_lamp_releases_off_its_clock_and_takes_the_recoil():
         "fixed": True,
         "lamp": {"rate": [1, 3]},
     }
-    simulation = EventSimulation(parse_event_world(world([lamp], release=[0, 1])))
+    # K 82: the turn is one step at every self-creation of the run, so each
+    # unit costs quantum x 1 = 1 (at K 2^20 the turn is 0 and nothing leaves).
+    simulation = EventSimulation(parse_event_world(world([lamp], release=[0, 1], K=82)))
     for _ in range(9):
         simulation.step()
         assert simulation.books()["balanced"]
     entry = simulation.measured[1]
     assert simulation.transit_released[1] == 18 and entry.held == [0, 82]
     assert simulation.held_spent[1] == 18 and entry.momentum == [0, 0, 0]
+    assert entry.phase_steps == 9 and simulation.content_released[1] == 18
+    light = simulation.transits[1]
+    assert int(light.arr_con.sum()) + int(light.fly_con.sum()) == 18 - light.escaped_content
+    assert set(light.fly_con[light.fly_amt > 0].tolist()) <= {1}
 
 
 def test_a_measured_event_steps_off_its_clock_with_its_momentum_untouched():
