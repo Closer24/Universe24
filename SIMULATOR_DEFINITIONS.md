@@ -1,5 +1,18 @@
 # Event Universe — active modular 3D integer simulator
 
+## Physical detector candidate: DETECTOR-REVERSIBLE-1 (2026-09-19)
+
+An events world explicitly selecting `dynamics: "reversible-detector-v1"`
+uses the bounded local operator, inverse and admission domain defined in
+[the detector contract](docs/DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1).
+Coverage, output grouping and quantum threshold are independent data. A shared
+readout comes only from a current physical output Event reached through Links;
+its calibrated phase is referred to its own physical clock. No audit record or
+whole-board sum supplies memory, routing or a physical result. Fixed per-Node
+channel bounds are independent of total apparatus coverage. Atomic domain
+refusal is not a saturation or reset law. The default `events-v1` contract is
+unchanged; quantum uncertainty and Born behavior remain separate unproved goals.
+
 ## Active generic disturbance model
 
 Initialization accepts only `sampling_profile: "detector-only-v1"` under the

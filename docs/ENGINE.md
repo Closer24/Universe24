@@ -24,6 +24,17 @@ tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
 `tests/test_event_worlds.py` ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
+## Opt-in physical detector candidate
+
+The default contract below remains `events-v1`. The explicitly selected
+`dynamics: "reversible-detector-v1"` extends the same engine with a restricted
+reversible contact/transport path. Its authoritative schema, local operator,
+inverse, state domain, clock reference, capacity, atomic refusal and physical
+readout are in [the detector contract](DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1).
+This assumed nondestructive transduction candidate does not call the default
+absorption/mixing rules and does not establish a Heisenberg relation. It uses
+ordinary measured and transit Events and no extra detector memory.
+
 ## The law of events (`events-v1`)
 
 **One thing.** An event, with a place (a Node), a time (an interval) and a

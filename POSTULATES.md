@@ -23,6 +23,21 @@ Distinguish three categories:
 - **Candidate law:** a specific hypothesis under evaluation, not a proven law of nature.
 - **Open question:** an idea that has not been implemented or established.
 
+## Physical detector candidate (2026-09-19)
+
+The detector itself is ordinary Nodes and Events. Its complete physical state
+is definite; a common visible result is formed by local physical interactions.
+Information preservation is a separate requirement from determinism. The owner's
+hypothesis is that cell sensitivity together with on-board information retention
+can produce Heisenberg uncertainty; this remains a research target.
+The opt-in `reversible-detector-v1` candidate supplies a controlled reversible
+contact, local recoil and finite phase-pointer encoding, with explicit domain
+refusals. It does not replace the default one-way `events-v1` measurement,
+insert a quantum bound, or claim that every existing world is reversible.
+The exact assumed law and open limits are in
+[the detector contract](docs/DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1),
+following [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
+
 ## Active initialization-defined model
 
 The canonical Detector-owned sampling contract
