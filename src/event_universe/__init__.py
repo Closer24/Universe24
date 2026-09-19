@@ -1,6 +1,6 @@
-"""Universe24: the field-only engine of the law of the shadow, defined by a world file."""
+"""Universe24: the engine of the law of events, defined by a world file."""
 
-from event_universe.shadow import SHADOW_LAW, ShadowSimulation, ShadowWorld, parse_shadow_world
+from event_universe.events import EVENTS_LAW, EventSimulation, EventWorld, parse_event_world
 
 __version__ = "0.2.0"
-__all__ = ["SHADOW_LAW", "ShadowSimulation", "ShadowWorld", "parse_shadow_world", "__version__"]
+__all__ = ["EVENTS_LAW", "EventSimulation", "EventWorld", "parse_event_world", "__version__"]

@@ -2,7 +2,7 @@
 
 The layers: `core` holds the law-free substrate (bounded integers, the board's
 addresses and headings, the phase tables) and imports nothing but `core`;
-`shadow` is the engine and may import `core`; the host modules (the runner,
+`events` is the engine and may import `core`; the host modules (the runner,
 the workspace, retention, the snapshot writer) may import both. No physical
 module imports output or storage libraries.
 """
@@ -10,7 +10,7 @@ module imports output or storage libraries.
 import ast
 from importlib.util import resolve_name
 
-GENERIC_LAYERS = {"core", "shadow"}
+GENERIC_LAYERS = {"core", "events"}
 OUTPUT_MODULES = {"matplotlib", "PIL", "json", "pathlib", "os", "subprocess"}
 
 
@@ -43,9 +43,9 @@ def violations(source, module):
             target_layer = dependency.split(".")[0]
             if layer == "core" and target_layer != "core":
                 found.append((line, "core imports another layer"))
-            if layer == "shadow" and target_layer not in {"core", "shadow"} and relative != "shadow.run":
+            if layer == "events" and target_layer not in {"core", "events"} and relative != "events.run":
                 found.append((line, "the engine imports a host module"))
         elif layer in GENERIC_LAYERS and target.split(".")[0] in OUTPUT_MODULES:
-            if relative != "shadow.run":
+            if relative != "events.run":
                 found.append((line, "physical code imports output or storage"))
     return found

@@ -19,8 +19,8 @@ SPEC.loader.exec_module(CHECK)
 
 
 def test_the_worlds_readme_selects_the_engine_test():
-    selected, _ = CHECK.select(["examples/shadow/README.md"], {})
-    assert "tests/test_field_only.py" in selected
+    selected, _ = CHECK.select(["examples/events/README.md"], {})
+    assert "tests/test_event_worlds.py" in selected
     assert "tests/test_retention.py" not in selected
 
 
@@ -120,7 +120,7 @@ def test_example_script_selects_only_the_test_that_names_it():
 @pytest.mark.parametrize("resource", ["one_content.json", "two_slits.json"])
 def test_world_files_select_the_preflight_and_the_tests_that_name_them(resource):
     sources = {"tests/test_names_it.py": f'WORLD = "{resource}"', "tests/test_other.py": ""}
-    tests, _ = CHECK.select(["examples/shadow/" + resource], sources)
+    tests, _ = CHECK.select(["examples/events/" + resource], sources)
     assert "tests/test_configuration_validation.py" in tests
     assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
 

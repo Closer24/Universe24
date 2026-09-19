@@ -45,7 +45,7 @@ function refreshSummary() {
   $("#duration-label").textContent = `${summary?.ticks ?? "—"} ticks`;
   const name = templates.find(t => t.id === selected)?.name || "Custom world";
   $("#selected-description").textContent = summary
-    ? `${name} · ${summary.shape.join(" × ")} · ${summary.families} families · ${summary.contents} held contents`
+    ? `${name} · ${summary.shape.join(" × ")} · ${summary.families} families · ${summary.measured} measured events`
     : `${name} · check the world file to run it`;
   $("#template-label").textContent = selected === "custom" ? "CUSTOM WORLD" : `${selected.toUpperCase()} TEMPLATE`;
   $("#run").disabled = !checked || busy || loading || runs.some(run => run.status === "running");
@@ -83,7 +83,7 @@ function renderTemplates() {
     button.type = "button"; button.setAttribute("aria-pressed", String(selected === template.id));
     button.append(node("strong", template.name));
     const s = template.summary;
-    button.append(node("small", s ? `${s.shape.join("×")} · ${s.contents} contents · ${s.ticks} ticks` : "Your saved JSON draft"));
+    button.append(node("small", s ? `${s.shape.join("×")} · ${s.measured} measured · ${s.ticks} ticks` : "Your saved JSON draft"));
     button.addEventListener("click", () => selectTemplate(template.id).catch(error => message(error.message, "error")));
     return button;
   }));
@@ -109,15 +109,15 @@ function renderResults() {
     const last = Array.isArray(metadata.audit) && metadata.audit.length ? metadata.audit[metadata.audit.length - 1] : null;
     if (last?.families) {
       const table = node("table", "", "totals"), head = node("tr");
-      ["FAMILY", "HELD", "IN FLIGHT", "RELEASED", "ABSORBED", "ESCAPED"].forEach(label => head.append(node("th", label))); table.append(head);
+      ["FAMILY", "MEASURED", "IN TRANSIT", "RELEASED", "ABSORBED", "ESCAPED"].forEach(label => head.append(node("th", label))); table.append(head);
       for (const [name, books] of Object.entries(last.families)) {
         const row = node("tr");
-        [name, books.held?.current, books.shadows?.current, books.shadows?.released, books.shadows?.absorbed, books.shadows?.escaped]
+        [name, books.measured?.current, books.transit?.current, books.transit?.released, books.transit?.absorbed, books.transit?.escaped]
           .forEach(v => row.append(node("td", String(v ?? "")))); table.append(row);
       }
       result.append(table);
     }
-    if (Array.isArray(metadata.contents)) result.append(node("p", `${metadata.contents.length} held contents at the end of the run.`, "result-meta"));
+    if (Array.isArray(metadata.measured)) result.append(node("p", `${metadata.measured.length} measured events at the end of the run.`, "result-meta"));
   }
   const links = node("div", "", "artifact-links");
   for (const [name, path] of Object.entries(run.artifacts)) {

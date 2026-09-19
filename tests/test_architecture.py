@@ -41,10 +41,10 @@ def test_all_production_modules_respect_dependency_boundaries():
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("core.phase", "from ..shadow import engine"),
+        ("core.phase", "from ..events import engine"),
         ("core.lattice", "from event_universe.runner import run_initialization"),
-        ("shadow.engine", "from event_universe.runner import source_fingerprint"),
-        ("shadow.layer", "from pathlib import Path"),
+        ("events.engine", "from event_universe.runner import source_fingerprint"),
+        ("events.transit", "from pathlib import Path"),
         ("core.mixing", "import json"),
     ],
 )
@@ -56,10 +56,10 @@ def test_architecture_gate_rejects_upward_and_output_imports(module, source):
     "module,source",
     [
         ("core.phase", "from event_universe.core.integer import checked_work"),
-        ("shadow.layer", "from event_universe.core.lattice import Address3"),
-        ("shadow.engine", "from event_universe.shadow.layer import ShadowLayer"),
-        ("shadow.run", "import json\nfrom event_universe.snapshot_writer import write_snapshot"),
-        ("runner", "from event_universe.shadow.run import execute_shadow_run"),
+        ("events.transit", "from event_universe.core.lattice import Address3"),
+        ("events.engine", "from event_universe.events.transit import Transit"),
+        ("events.run", "import json\nfrom event_universe.snapshot_writer import write_snapshot"),
+        ("runner", "from event_universe.events.run import execute_event_run"),
     ],
 )
 def test_architecture_gate_allows_the_dependency_direction(module, source):

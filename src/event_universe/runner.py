@@ -1,11 +1,11 @@
 """A world file -> the engine -> headless artifacts.
 
-The one engine is the field-only engine of the law of the shadow
-(`event_universe.shadow`, `field-only-v1`; Highlights 5.4). A run reads a world
-(a JSON object with `"law": "shadow"`), refuses anything else by name, and
+The one engine is the engine of the law of events (`event_universe.events`,
+`events-v1`; Highlights 5.4). A run reads a world (a JSON object with
+`"law": "events"`), refuses anything else by name, and
 writes to an empty output directory the input as read (`initialization.json`),
 the events (`events.jsonl`), the final state (`state.json`) and the record
-(`run.json`); see `event_universe.shadow.run`. Runs are headless: there is no
+(`run.json`); see `event_universe.events.run`. Runs are headless: there is no
 visualization switch, no observer and one worker.
 """
 
@@ -13,10 +13,10 @@ import argparse
 import hashlib
 from pathlib import Path
 
+from event_universe.events.run import execute_event_run
+from event_universe.events.world import parse_event_world
 from event_universe.json_documents import parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
-from event_universe.shadow.run import execute_shadow_run
-from event_universe.shadow.world import parse_shadow_world
 
 
 def source_fingerprint() -> str:
@@ -34,13 +34,13 @@ def run_initialization(initialization: Path, output: Path, *, ticks: int | None 
     """Run the world at `initialization` into the empty directory `output` and
     return the path of its `run.json`; `ticks` overrides the world's own."""
     source = initialization.read_bytes()
-    world = parse_shadow_world(parse_json_document(source))
+    world = parse_event_world(parse_json_document(source))
     count = world.ticks if ticks is None else ticks
     if type(count) is not int or count < 0:
         raise ValueError("ticks must be nonnegative")
     _prepare_output(initialization, output)
     with ArtifactLease(output.parent, [output.resolve()]):
-        return execute_shadow_run(world, source, output, source_fingerprint(), count)
+        return execute_event_run(world, source, output, source_fingerprint(), count)
 
 
 def _prepare_output(initialization: Path, output: Path) -> None:
@@ -55,7 +55,7 @@ def _prepare_output(initialization: Path, output: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run a world of the law of the shadow.")
+    parser = argparse.ArgumentParser(description="Run a world of the law of events.")
     parser.add_argument("--init", required=True, type=Path, help="The world file (JSON)")
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
     parser.add_argument("--ticks", type=int, help="Override only the requested run duration")

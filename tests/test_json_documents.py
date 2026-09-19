@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pytest
 
+from event_universe.events import parse_event_world
 from event_universe.json_documents import parse_json_document
-from event_universe.shadow import parse_shadow_world
 
-WORLDS = Path(__file__).resolve().parents[1] / "examples" / "shadow"
+WORLDS = Path(__file__).resolve().parents[1] / "examples" / "events"
 
 
 @pytest.mark.parametrize("token", ["NaN", "Infinity", "-Infinity", "1e309", "-1e309", "1.0e400"])
@@ -66,7 +66,7 @@ def test_shipped_worlds_decode_to_their_independent_values(name):
     source = (WORLDS / name).read_bytes()
     independent_document = json.loads(source)
     assert parse_json_document(source) == independent_document
-    assert parse_shadow_world(parse_json_document(source)) == parse_shadow_world(independent_document)
+    assert parse_event_world(parse_json_document(source)) == parse_event_world(independent_document)
 
 
 @pytest.mark.parametrize("encoding", ["utf-8", "utf-8-sig", "utf-16", "utf-32"])

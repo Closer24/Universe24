@@ -1,14 +1,14 @@
 # Architecture and change boundaries
 
-The one engine is the field-only engine of the law of the shadow
-([ENGINE.md](ENGINE.md)): `src/event_universe/shadow/` on the substrate of
-`src/event_universe/core/`, with the host modules (the runner, the preflight,
-the workspace, retention, the snapshot writer) around them. This document owns
-the repository policy: the local integer operation contract every physical
-change obeys, who owns generated output, the monorepo's single owners, the
-dependency direction the gate enforces, and how a physical feature is added.
-The boundaries of the old engine, deleted on 2026-09-19, are in git
-([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+The one engine is the engine of the law of events ([ENGINE.md](ENGINE.md)):
+`src/event_universe/events/` on the substrate of `src/event_universe/core/`,
+with the host modules (the runner, the preflight, the workspace, retention,
+the snapshot writer) around them. This document owns the repository policy:
+the local integer operation contract every physical change obeys, who owns
+generated output, the monorepo's single owners, the dependency direction the
+gate enforces, and how a physical feature is added. The boundaries of the
+engines before it, deleted on 2026-09-19, are in git
+([migration](MIGRATION.md)).
 
 ## Local integer operation contract
 
@@ -129,7 +129,7 @@ table below defines code boundaries. Architecture owns this repository policy.
 | Information | Single owner | Update rule |
 | --- | --- | --- |
 | Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; the world file selects them |
-| The world file, the interval's steps and the record | [The law of the shadow](ENGINE.md#the-law-of-the-shadow-field-only-v1) | Keep the live contract separate from the historical candidates before it in the same document |
+| The world file, the interval's steps and the record | [The law of events](ENGINE.md#the-law-of-events-events-v1) | Keep the live contract in one document; the engines before it are in git |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
@@ -157,20 +157,20 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
 | `core/lattice` | Standard-library types; the board's addresses, the six Port headings in Port order and the cell bound |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
-| `shadow/mixing` | `core/lattice` and numpy; the Node's mixing kernels over any family's arrays, exact in bounded integers (the square root's float estimate corrected to the exact integer root) |
-| `shadow/layer` | `core/lattice`, `core/phase`, `shadow/mixing` and numpy; one family's arrays and the walk |
-| `shadow/world` | `core/integer`, `core/lattice`; the world file and its refusals; no execution |
-| `shadow/engine` | `core/integer`, `core/lattice`, `shadow/layer`, `shadow/mixing`, `shadow/world`; the interval and the books; no output or storage |
-| `shadow/run` | The engine, `snapshot_writer` and the standard library; the artifacts of a run |
+| `events/mixing` | `core/lattice` and numpy; the Node's computation of the sides over any family's arrays, exact in bounded integers (the square root's float estimate corrected to the exact integer root) |
+| `events/transit` | `core/lattice`, `core/phase`, `events/mixing` and numpy; one family's events in transit and the walk |
+| `events/world` | `core/integer`, `core/lattice`; the world file and its refusals; no execution |
+| `events/engine` | `core/lattice`, `events/transit`, `events/mixing`, `events/world`; the interval, the measured events and the books; no output or storage |
+| `events/run` | The engine, `snapshot_writer` and the standard library; the artifacts of a run |
 | `json_documents`, `snapshot_writer`, `retention` | Standard library; host modules with no physics |
-| `configuration_validation` | `json_documents`, `shadow/world`; read-only |
-| `runner` | `json_documents`, `retention`, `shadow/run`, `shadow/world` |
+| `configuration_validation` | `json_documents`, `events/world`; read-only |
+| `runner` | `json_documents`, `retention`, `events/run`, `events/world` |
 | `ui` | `configuration_validation`, `json_documents`, `retention`; local HTTP and isolated CLI process ownership |
 | `diagnostics/numeric_audit` | Standard library; the static integer audit of `core/` |
 
 The gate (`tests/architecture_rules.py`, `tests/test_architecture.py`): `core`
-imports only `core`; `shadow` imports only `core` and `shadow`, except
-`shadow/run`, which writes the artifacts; no physical module imports an output
+imports only `core`; `events` imports only `core` and `events`, except
+`events/run`, which writes the artifacts; no physical module imports an output
 or storage library; and every module of `core/` passes the integer audit.
 
 ## Verification scope

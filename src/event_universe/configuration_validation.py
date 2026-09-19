@@ -2,7 +2,7 @@
 
 A world file is checked without running it: decoded strictly
 (`json_documents`), then parsed by the engine's own world parser
-(`event_universe.shadow.world`), whose refusals name the key at fault. A valid
+(`event_universe.events.world`), whose refusals name the key at fault. A valid
 report summarizes the world; it does not certify a run or any physics.
 """
 
@@ -12,10 +12,10 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Never
 
+from event_universe.events.world import EVENTS_LAW, parse_event_world
 from event_universe.json_documents import parse_json_document
-from event_universe.shadow.world import SHADOW_LAW, parse_shadow_world
 
-KINDS = ("shadow",)
+KINDS = ("events",)
 
 
 @dataclass(frozen=True)
@@ -75,22 +75,23 @@ def validate_configuration(source: str | bytes, *, kind: str = "auto") -> Valida
     """Validate supplied content only: no implicit files, simulation or artifacts.
 
     A report contains the first concrete failure, and does not certify a run or
-    physical correctness. The only kind is `shadow`, a world of the law.
+    physical correctness. The only kind is `events`, a world of the law.
     """
     if kind not in (*KINDS, "auto"):
         issue = ValidationIssue("unsupported_kind", "input", f"unsupported configuration kind: {kind}")
         return ValidationReport(kind, False, {}, (issue,))
-    resolved = "shadow"
+    resolved = "events"
     try:
         document = _decode(source, "input")
-        world = parse_shadow_world(document)
+        world = parse_event_world(document)
         summary = {
             "model": world.model_id,
-            "law": SHADOW_LAW,
+            "law": EVENTS_LAW,
             "shape": world.shape,
             "ticks": world.ticks,
             "families": len(world.families),
-            "contents": len(world.contents),
+            "measured": len(world.measured),
+            "detectors": len(world.detectors),
         }
         return ValidationReport(resolved, True, summary)
     except _Rejected as error:

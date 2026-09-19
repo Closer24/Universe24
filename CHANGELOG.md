@@ -5,6 +5,22 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The engine of the law of events (2026-09-19)
+
+- The engine of the law of events (`events-v1`, `src/event_universe/events/`)
+  is the one engine: one thing, the event, created at every interval at its
+  next place from its record, at a neighbour or here; a measured event's clock
+  the count of its self-creations and every rate read off it (`by_clock`); the
+  suspension a count the event carries; the sides from the vectors in whole
+  units, a single quantum whole by its momentum; no turn in transit; no
+  register, remainder, parked share or draw; detectors by sensitivity
+  ([the engine](docs/ENGINE.md), [migration](docs/MIGRATION.md)). The engine of
+  the law of the shadow (`field-only-v1`) is deleted with its tests and worlds;
+  the world file's keys are renamed (`measured`, `in_transit`, `suspension`,
+  `detectors`; `phase_turn` gone). Tests: `test_node_mixing` (node-mixing-v2),
+  `test_event_transit`, `test_event_suspension`, `test_event_clock`,
+  `test_event_worlds` ([expectations](docs/TEST_EXPECTATIONS.md)).
+
 ### The law of events recorded (2026-09-19)
 
 - The model owner's law of events, after the one engine and `phase_turn`
@@ -69,7 +85,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
 
 - A new engine mode beside the old one, `event_universe/shadow/`, selected by
-  a world's `"law": "shadow"` key ([the law of the shadow](docs/ENGINE.md#the-law-of-the-shadow-field-only-v1)):
+  a world's `"law": "shadow"` key ([the law of the shadow](docs/MIGRATION.md)):
   only shadows and events. Matter is content held at Nodes; every ray is a
   shadow, a whole quantum in flight that moves one Link per interval and
   spreads by the Node's mixing, the dense layer's kernels by import; an event
@@ -84,7 +100,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   tests are untouched ([migration](docs/MIGRATION.md#the-law-of-the-shadow-a-new-engine-mode-on-2026-09-18-field-only-v1)).
 - The worlds `examples/shadow/` (one content, two contents, two slits and
   the one-slit control) and the isolated test `tests/test_field_only.py`
-  ([expectations](docs/TEST_EXPECTATIONS.md#the-law-of-the-shadow)), the
+  ([expectations](docs/MIGRATION.md)), the
   numbers from DERIVATIONS.md round 7.
 
 ### Charge per thing (`charge-per-thing-v1`, feature 16g, 2026-09-18)
