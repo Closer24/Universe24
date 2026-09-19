@@ -12,7 +12,8 @@ follows the Node rule of DERIVATIONS.md round 8, section 56 (S2 of section
 51), in this order:
 
 1. every shadow in flight moves one Link (`ShadowLayer.walk`; a paid
-   family's phase turns by its amount over K, a matter shadow's does not),
+   family's phase turns by its quantum over K, the same for all of it, a
+   matter shadow's does not; `phase_turn` per family),
    the escapes booked;
 2. at every Node the size of the coherent sum of each number's arrivals is
    formed; a held content reads the sizes of the other numbers at its Node
@@ -174,7 +175,8 @@ class ShadowSimulation:
                 world.owners(index),
                 world.phase_steps,
                 world.clock,
-                rotates=family.turns,
+                turn=family.turn,
+                quantum=family.quantum,
             )
             for index, family in enumerate(world.families)
         ]

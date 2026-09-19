@@ -18,10 +18,13 @@ refuse each other's worlds by name. What a world declares:
   releases shadows at the world's rate and whose quanta are read for gravity
   and electricity; `paid`: light, released only by a lamp that spends its
   content, its quanta carrying their own momentum), for a free family the
-  whole `charge` of a held content of it (0 by default), and `turns_in_flight`
-  (whether the family's quanta turn their phase in flight by their amount
-  over K on every Link: true by default for a paid family, false for a free
-  one; what a matter shadow rotates by, a declared width since 2026-09-19),
+  whole `charge` of a held content of it (0 by default), `phase_turn` (how the
+  family's quanta turn their phase in flight, per Link walked: `"quantum"`, by
+  the family's quantum over K, the same turn for every quantum of the family
+  wherever it is, a remainder carried per family, light's rule (round 8, S5);
+  `"amount"`, by the amount in the cell over K, the old rule; `"none"`;
+  `"quantum"` by default for a paid family and `"none"` for a free one, the
+  model owner's decision of 2026-09-19),
   and `quantum` (the units of the family that make one event at a holder that
   absorbs them, `keep` or `rerelease`: the units of one number arriving at the
   holder wait in its register until a whole quantum is there, then one click
@@ -99,7 +102,8 @@ WORLD_KEYS = {
     "contents",
     "initial_shadows",
 }
-FAMILY_KEYS = {"name", "kind", "charge", "turns_in_flight", "quantum"}
+FAMILY_KEYS = {"name", "kind", "charge", "phase_turn", "quantum"}
+TURNS = ("none", "amount", "quantum")
 CONTENT_KEYS = {"position", "family", "amount", "phase", "charge", "momentum", "fixed", "table", "lamp"}
 LAMP_KEYS = {"rate", "headings"}
 SHADOW_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
@@ -108,13 +112,13 @@ SHADOW_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
 @dataclass(frozen=True)
 class FamilyDefinition:
     """One family of the world: its name, its kind, the whole charge of a
-    held content of it, whether its quanta turn their phase in flight, and the
+    held content of it, how its quanta turn their phase in flight, and the
     units that make one event at a holder that absorbs them."""
 
     name: str
     kind: str
     charge: int
-    turns: bool
+    turn: str
     quantum: int
 
     @property
@@ -281,11 +285,11 @@ def _families(value: object) -> tuple[FamilyDefinition, ...]:
         charge = _integer(obj.get("charge", 0), f"families[{index}].charge", -MAX_VALUE, MAX_VALUE)
         if kind == "paid" and charge:
             raise ValueError(f"{SHADOW_LAW}: a paid family carries no charge ({name})")
-        turns = obj.get("turns_in_flight", kind == "paid")
-        if type(turns) is not bool:
-            raise ValueError(f"{SHADOW_LAW}: families[{index}].turns_in_flight must be true or false")
+        turn = obj.get("phase_turn", "quantum" if kind == "paid" else "none")
+        if turn not in TURNS:
+            raise ValueError(f"{SHADOW_LAW}: families[{index}].phase_turn must be one of {TURNS}")
         quantum = _integer(obj.get("quantum", 1), f"families[{index}].quantum", 1, MAX_VALUE)
-        found.append(FamilyDefinition(name, str(kind), charge, turns, quantum))
+        found.append(FamilyDefinition(name, str(kind), charge, str(turn), quantum))
     return tuple(found)
 
 

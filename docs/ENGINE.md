@@ -131,11 +131,15 @@ section 49 (i)).
 `release` `[n, d]` per Port heading per interval per quantum of held content
 of a free family; `wait_per_quantum` (1 by default; an integer or `[n, d]`;
 0 for no wait); `families` (`name`, `kind` `free` or `paid`, `charge` of a
-held content of a free family, `turns_in_flight` whether the family's quanta
-turn their phase in flight by their amount over K on every Link, true by
-default for a paid family and false for a free one, a declared width since
-2026-09-19, `quantum` the units of the family that make one event at a
-holder that absorbs them, 1 by default); `contents` (`position`, `family`, `amount`
+held content of a free family, `phase_turn` how the family's quanta turn
+their phase per Link walked: `"quantum"`, by the family's quantum over K, the
+same turn for every quantum of the family wherever it is, the remainder
+carried per family, light's rule (round 8, S5); `"amount"`, by the amount in
+the cell over K, the old rule, which slows as the field thins; `"none"`; the
+default `"quantum"` for a paid family and `"none"` for a free one (the model
+owner, 2026-09-19); `quantum` the units of the family that make one event at a
+holder that absorbs them, and the message the uniform turn is by, 1 by
+default); `contents` (`position`, `family`, `amount`
 with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`, `table`
 family name to `read` | `keep` | `rerelease` | `pass` with `read` the
 default for a free family and `keep` for a paid one, `lamp` `{rate: [n, d],

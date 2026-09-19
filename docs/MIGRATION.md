@@ -6,6 +6,23 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The phase turn in flight per family, on 2026-09-19 (`phase_turn`)
+
+The model owner's decision of the evening (Highlights 5.4, the status line:
+light turns by its message, the same everywhere, "the default for light, that
+is, per family"). The family key `turns_in_flight` (true or false, feature 21
+of the same morning, never in a merged world file but in the record) is
+replaced by `phase_turn`: `"quantum"` (the default for a paid family: by the
+family's `quantum` over K per Link walked, the same for every quantum of the
+family, a remainder carried per family), `"amount"` (the old rule, by the
+amount in the cell over K) or `"none"` (the default for a free family). A
+world declaring `turns_in_flight` is refused as any unknown key; one that
+declared nothing changes its light from the old rule to the uniform one, which
+at the default quantum of 1 turns 1/K per interval: declare the light's
+`quantum` for a frequency. `run.json` lists `phase_turn` per family in place of
+`turns_in_flight`; `ShadowLayer` takes `turn` and `quantum` in place of
+`rotates`.
+
 ## One engine, on 2026-09-19: the old engine deleted
 
 Decision of the model owner, 2026-09-19, the evening ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

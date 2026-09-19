@@ -114,12 +114,17 @@ class ShadowLayer:
         owners: tuple[int, ...],
         phase_steps: int,
         clock: int,
-        rotates: bool = True,
+        turn: str = "amount",
+        quantum: int = 1,
     ) -> None:
         self.family = family
-        # Whether the quanta turn their phase in flight by their amount over K
-        # (light does; a matter shadow does not, round 8 section 52 (iv)).
-        self.rotates = rotates
+        # How the quanta turn their phase per Link walked (`phase_turn`):
+        # "quantum", by the family's quantum over K, the same for every quantum
+        # of the family, the remainder carried per family (light's rule, round
+        # 8 S5); "amount", by the amount in the cell over K; "none".
+        self.turn = turn
+        self.quantum = quantum
+        self.turn_debt = 0
         self.shape = shape
         self.owners = owners
         self.rank = {number: rank for rank, number in enumerate(owners)}
@@ -216,10 +221,14 @@ class ShadowLayer:
     # -- the steps -------------------------------------------------------------
 
     def walk(self) -> None:
-        """Every departure one Link on, its phase turned by its amount over K,
-        into the arrivals at the neighbour (joining what waits there as one
-        amplitude per Port); what leaves the board is booked as escaped with
-        the momentum it carried."""
+        """Every departure one Link on, its phase turned by the family's rule
+        (`turn`), into the arrivals at the neighbour (joining what waits there
+        as one amplitude per Port); what leaves the board is booked as escaped
+        with the momentum it carried. The uniform rule advances the family's
+        clock every interval, whatever is in flight."""
+        uniform = 0
+        if self.turn == "quantum":
+            uniform, self.turn_debt = divmod(self.turn_debt + self.quantum, self.clock)
         if not self.fly_amt.any():
             return
         incoming_amt = np.zeros_like(self.arr_amt)
@@ -231,8 +240,10 @@ class ShadowLayer:
                 continue
             axis, forward = port >> 1, (port & 1) == 0
             phase = self.fly_ph[..., port, :]
-            if self.rotates:
+            if self.turn == "amount":
                 phase = (phase + source // self.clock) & self.mask
+            elif uniform:
+                phase = (phase + uniform) & self.mask
             momentum = self.fly_mom[..., port, :, :]
             ahead: list[slice | int] = [slice(None)] * 3
             behind: list[slice | int] = [slice(None)] * 3
