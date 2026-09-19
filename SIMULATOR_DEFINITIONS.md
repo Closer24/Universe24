@@ -13,6 +13,17 @@ channel bounds are independent of total apparatus coverage. Atomic domain
 refusal is not a saturation or reset law. The default `events-v1` contract is
 unchanged; quantum uncertainty and Born behavior remain separate unproved goals.
 
+## Events board topology (2026-09-19)
+
+The owner-approved run parameter selects open or periodic topology independently
+per axis; open is the default. The exact schema, one-interval Link transfer,
+extent-one return, unchanged carried momentum and mixed-axis refusal rules are
+in [the engine contract](docs/ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment).
+This choice does not change a local contact law or establish equivalence between
+a thin periodic board and full 3D matter. Earlier topology descriptions below
+belong to their dated models, not an implicit events-world default.
+
+
 ## Active generic disturbance model
 
 Initialization accepts only `sampling_profile: "detector-only-v1"` under the
