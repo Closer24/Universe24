@@ -26,6 +26,10 @@ and events. Runs are headless by default: do not capture frames, import renderin
 dependencies or create HTML/GIF unless visualization is explicitly requested.
 Use the existing Python runner and optional renderer; an API-only candidate must
 retain its actual identity in recorded evidence.
+When visualization is requested, the deliverable is an HTML page that embeds
+the GIF or the frames next to the run's readings (the world, the plane shown,
+the scale of each region, the intervals per frame); a GIF is never delivered
+on its own (model owner, 2026-09-19: "Always put a GIF inside HTML").
 
 For authorized physics comparisons, apply the shared
 [physics comparison method](../workflow.md#physics-comparison-method).
