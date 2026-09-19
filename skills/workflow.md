@@ -235,6 +235,13 @@ cross-chat notifications, automatic checkout updates or a background service.
 
 ## Checks proportional to the change
 
+**Tests are short and run in parallel (model owner, 2026-09-19: "For every
+test, run on a strong machine with several cores; they should be short, with
+fixed arrays").** A test uses a fixed small board and fixed arrays, pins its
+integers before the first run and finishes in seconds; the suite runs with
+`pytest -n auto` on every core of the machine, never serially on one; a long
+reading is a research run (section 6 of the experiments), not a test.
+
 Select the project interpreter from [.python-version](../.python-version) and
 [the run instructions](../README.md#install-and-run) before installing dependencies
 or executing checks. Use one project virtual environment; record the actual
