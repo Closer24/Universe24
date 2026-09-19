@@ -79,13 +79,14 @@ def execute_event_run(
         "K": world.clock,
         "N": world.phase_steps,
         "release": list(world.release),
-        "suspension": world.suspension,
+        "suspension": list(world.suspension),
         "families": [
             {
                 "name": family.name,
                 "kind": family.kind,
                 "charge": family.charge,
                 "quantum": family.quantum,
+                "phase": family.phase,
             }
             for family in world.families
         ],

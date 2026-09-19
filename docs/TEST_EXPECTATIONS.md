@@ -26,7 +26,8 @@ modules are named in the [migration notes](MIGRATION.md).
 | `test_node_mixing_numbers.py` | The coherent sum over the numbers: two numbers at one Node share one common sum and common weights, each placing its own units by them; a number with no whole by its own momentum at the common phase; a number alone as before ([below](#the-coherent-sum-over-the-numbers)) |
 | `test_event_transit.py` | An event in transit: a single quantum whole by its momentum, no turn in transit, a part turned back apportioned again, a lone free unit straight from its release ([below](#an-event-in-transit)) |
 | `test_periodic_axis.py` | A periodic axis as a declared run parameter of the world: the departures through one face created at the first Node of the opposite face, nothing escaping on that axis, the momentum kept on the board; with an extent of 1 the one-interval stub; the other faces open; the refusals and the record; a measured event's step wrapping too, escaping through an open face, and landing on its own Node with an extent of 1 ([below](#a-periodic-axis)) |
-| `test_event_suspension.py` | The suspension the event carries: the count derived on arrival, the next event delayed, a measured event's clock slowed by the count it reads after its self-creation, never frozen ([below](#the-suspension)) |
+| `test_event_suspension.py` | The suspension the event carries: the count derived on arrival from the presence at the Node times `[n, d]`, the next event delayed, a measured event's clock slowed by the count it reads after its self-creation, never frozen; light on light; one presence read by a unit in transit and by a measured event ([below](#the-suspension)) |
+| `test_phaseless_family.py` | A family without a phase circle: each Port's arrival scatters on its own, four ninths back and one ninth each other way, two opposite arrivals never cancelling, the momentum apportioned per Port; the push of a free family reads the net flow and not the labels ([below](#a-family-without-a-phase-circle)) |
 | `test_event_clock.py` | The clock of a measured event: every rate off its age by whole division, the release, the phase, the lamp's recoil, the step ([below](#the-clock-of-a-measured-event)) |
 | `test_event_worlds.py` | The worlds of the law of events on minimal boards: the books, the constant content, the flux, the shell means, the pair's pushes and the product law, the two-slit detector, the refusals and the runner ([below](#the-worlds-of-the-law-of-events)) |
 | `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
@@ -138,22 +139,50 @@ family `m` and one measured event of it that steps. Written down first:
 ## The suspension
 
 `tests/test_event_suspension.py` isolates the suspension (the model owner,
-2026-09-19: "The event carries it; note that the next event is delayed"): an
-exit derives its suspension from the sizes read at the Node, the event
-carries the count and counts down on itself, what arrives behind it waits
-with it, and a measured event reads the sizes after its self-creation and
-pays the count before its next one, so a steady size of k whole units slows
+2026-09-19: "The event carries it; note that the next event is delayed"; the
+same day, the suspension reads presence, of everything, with one fractional
+width): a reader derives its suspension from the presence at its Node, the
+amount that arrived this interval over every family and every number but
+its own, times the world's `suspension` `[n, d]`, the whole part
+(`presence x n // d`; no amplitude, no square root); the event carries the
+count and counts down on itself, what arrives behind it waits with it, and
+a measured event reads the presence after its self-creation and pays the
+count before its next one, so a steady presence whose count reads k slows
 its clock to one self-creation per k + 1 intervals and never stops it ("a
 measured event that reads a large size releases and turns slower"). K 2^20
-so that no phase moves. Written down first ((b) re-pinned and (c) added on
-2026-09-19, when the first `events-v1` was found to read before the
-self-creation and to freeze the clock in a steady field):
+so that no phase moves; `suspension` [1, 4], so that 16 units read as
+16 x 1 // 4 = 4 and the integers of (a) to (c) are those pinned when the
+read was 4 whole units of amplitude (32 sqrt 16 = 128 in 32nds). Written
+down first ((b) re-pinned and (c) added on 2026-09-19, when the first
+`events-v1` was found to read before the self-creation and to freeze the
+clock in a steady field; (a) to (c) re-pinned for the presence and (d), (e)
+added the same day):
 
 | Case | Input | Expected |
 | --- | --- | --- |
-| (a) an event in transit | a bar of 9 x 3 x 3, `suspension` 1; at x = 4 a unit of light and 16 units of a free family (the size 32 sqrt 16 = 128 in 32nds, 4 whole units) both in transit on +X; a second unit of light at x = 3 on +X | the light at x = 4 is held for intervals 1 to 4, its count after each interval 3, 2, 1, 0; the second unit arrives in interval 2 and waits with it; in interval 5 the two leave together on +X, amount 2, nothing left in the arrivals |
-| (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | interval 1: nothing owed, a self-creation (age 1), then the read of 128, 4 owed; intervals 2 to 5 pay them (3, 2, 1, 0 left), no self-creation; interval 6 a self-creation (age 2) reading an empty Node; its age after intervals 1 to 6: 1, 1, 1, 1, 1, 2; intervals waited 4, nothing owed, phase 0; age + waited = 6 |
-| (c) a steady field | a bar of 2 x 1 x 1, `suspension` 1, `release` [1, 128]; a content of 2048 of the free family at the corner x = 0 (five of its six exits off the open board), a measured event of light (content 1, measuring the free family) at x = 1; 30 intervals | the source is created again every interval (age 30; nothing of another number reaches it) and 16 units reach the probe every interval from the second on (464 held after 30), the size 128, k = 4; the probe's age after intervals 1 to 7: 1, 2, 2, 2, 2, 2, 3 (a self-creation in interval 2 owing 4, paid in 3 to 6, the next in 7), then once every 5 intervals (12, 17, 22, 27): after 10, 20 and 30 the ages 3, 5, 7, waited 23, 1 owed; age + waited = the interval at every interval; the age after 30 exceeds the age after 10 (slowed by 1 / 5, not frozen) |
+| (a) an event in transit | a bar of 9 x 3 x 3, `suspension` [1, 4]; at x = 4 a unit of light and 16 units of a free family both in transit on +X; a second unit of light at x = 3 on +X | the light at x = 4 reads the presence 16 and carries 16 x 1 // 4 = 4: held for intervals 1 to 4, its count after each interval 3, 2, 1, 0; the second unit arrives in interval 2 and waits with it; in interval 5 the two leave together on +X, amount 2, nothing left in the arrivals |
+| (b) a measured event | a measured event of light (content 1, measuring the free family) at x = 4 where the 16 units arrive in interval 1 | interval 1: nothing owed, a self-creation (age 1), then the read of the presence 16, 16 x 1 // 4 = 4 owed; intervals 2 to 5 pay them (3, 2, 1, 0 left), no self-creation; interval 6 a self-creation (age 2) reading an empty Node; its age after intervals 1 to 6: 1, 1, 1, 1, 1, 2; intervals waited 4, nothing owed, phase 0; age + waited = 6 |
+| (c) a steady field | a bar of 2 x 1 x 1, `suspension` [1, 4], `release` [1, 128]; a content of 2048 of the free family at the corner x = 0 (five of its six exits off the open board), a measured event of light (content 1, measuring the free family) at x = 1; 30 intervals | the source is created again every interval (age 30; nothing of another number reaches it) and 16 units reach the probe every interval from the second on (464 held after 30), the presence 16, k = 16 x 1 // 4 = 4; the probe's age after intervals 1 to 7: 1, 2, 2, 2, 2, 2, 3 (a self-creation in interval 2 owing 4, paid in 3 to 6, the next in 7), then once every 5 intervals (12, 17, 22, 27): after 10, 20 and 30 the ages 3, 5, 7, waited 23, 1 owed; age + waited = the interval at every interval; the age after 30 exceeds the age after 10 (slowed by 1 / 5, not frozen) |
+| (d) light on light | the bar with two measured events of light (numbers 1 and 2); at x = 4 in transit on +X 16 units of light of number 1 and one unit of light of number 2; `suspension` [1, 4], then [1, 4096] | at [1, 4] the unit reads the crowd's 16 (another number of the same family) and carries 16 x 1 // 4 = 4: its count after intervals 1 to 5 is 3, 2, 1, 0, 0, no departure of it before interval 5 and one unit on +X after it; the crowd reads 1, 1 x 1 // 4 = 0, and leaves whole in interval 1 (16 departures); at [1, 4096] the unit reads 16 x 1 // 4096 = 0, its counts 0, 0, 0, 0, 0, and it leaves on +X in interval 1 with the crowd |
+| (e) one presence, two readers | a measured event of light (content 1, number 2, measuring the free family and passing light) at x = 4; 16 units of the free family (number 1) and one unit of light of a third measured event (number 3) in transit there on +X; one interval at `suspension` [1, 4], then at [1, 16] | the unit reads every number but its own, 16, and carries 16 x 1 // 4 = 4 (3 after interval 1 pays one); the measured event, after its self-creation (age 1), reads every number but its own, 16 + 1 = 17, and owes 17 x 1 // 4 = 4: the same count; at [1, 16] the unit's count 1 (0 after the payment) and the measured event's 1 |
+
+## A family without a phase circle
+
+`tests/test_phaseless_family.py` isolates a family declared without a phase
+circle (`"phase": false`; the model owner, 2026-09-19, the field of matter
+without phase) and the push as the net flow (the same day): the kernels of
+`event_universe/events/mixing.py` (`scatter_arrivals`) on one Node of the
+engine's transit (`Transit` of shape (1, 1, 1), one number, N = 8, tick 1,
+`phased=False`), and the engine on a bar of 9 x 3 x 3 (K 2^20, `release`
+[0, 1], `suspension` 0, one free family `m` without a phase, a source of
+content 16 at x = 0 as number 1 and a reader of content 4 at x = 4 as number
+2). Written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) a lone arrival | 9 on +X carrying (9, 0, 0) | 4 back on -X and 1 to each other side, [1, 4, 1, 1, 1, 1]; every phase 0; the x momentum 1, 4, 1, 1, 1, 1 with the units, the sum (9, 0, 0); nothing kept |
+| (b) two opposite arrivals | 9 on +X carrying (9, 0, 0) and 9 on -X carrying (-9, 0, 0); the edge: 2 on +X carrying (2, 0, 0) with the 9 on -X | 4 back each way and 1 forward each, [5, 5, 2, 2, 2, 2] (2 = 1 + 1 on each transverse side), no cancellation (the coherent rule in antiphase would leave 9 and 9 along x, `test_node_mixing` (c)); every phase 0; the x momentum -3, 3, 0, 0, 0, 0, the sum (0, 0, 0); the edge: the 2 go whole on +X with (2, 0, 0) and the 9 scatter mirrored, [6, 1, 1, 1, 1, 1], the x momentum 2 - 4, -1, -1, -1, -1, -1 |
+| (c) the push reads the flow | at the reader's Node 9 units of number 1 on +X travel and 9 on -X travel, the labels rewritten to (9, 0, 0) and (-3, 0, 0), one interval; then a lone 9 on +X travel | the flow (0, 0, 0): the push (0, 0, 0), the reader's momentum (0, 0, 0), 18 read, its phase 0 and no phase step, while the labels sum to (6, 0, 0); the departures [5, 5, 2, 2, 2, 2]; the momentum book: in transit (6, 0, 0) (the labels apportioned exactly), on the measured events (0, 0, 0); the lone 9: the flow (9, 0, 0), the push -4 x (9, 0, 0) = (-36, 0, 0), the reader's momentum (-36, 0, 0) |
 
 ## The clock of a measured event
 
@@ -306,53 +335,62 @@ even when the quotient would fit, preserving existing timing behavior.
 `tests/test_event_worlds.py` runs the worlds of `examples/events/` as data on
 minimal boards (Highlights 5.5, "The engine of the law of events: what the
 tests show"), pinned here on 2026-09-19 from the engine's first readings as a
-check that it does what the law says and not as a result. One family `m`
-(free, charge 0) whose measured event of 2^24 at rest releases 1/128 of its
-content per Port per self-creation (q = 786 432 units per interval), N 64,
-K 2^22 (four phase steps per self-creation), an open cube, the measured event
-held in place (`fixed`).
+check that it does what the law says and not as a result, and re-pinned the
+same day when the free family lost its phase, the suspension read presence
+and the push read the flow (the model owner's three decisions,
+[migration](MIGRATION.md#the-field-of-matter-without-phase-the-suspension-as-presence-with-a-fractional-width-and-the-push-as-the-net-flow-on-2026-09-19)).
+One family `m` (free, charge 0, `"phase": false`: each Port's arrival
+scatters on its own, four ninths back, and nothing turns) whose measured
+event of 2^24 at rest releases 1/128 of its content per Port per
+self-creation (q = 786 432 units per interval), N 64, K 2^22 (no phase
+step: K does not apply to a phase-less family), an open cube, the measured
+event held in place (`fixed`). The phase-less field is diffusive, and 300
+intervals on 29^3 (or 200 on 25^3, the example world) is not its steady
+state: what is pinned is what the engine read, a check and not a result.
+The readings of the coherent field before the change, from the same
+designs, are given in brackets as (old ...).
 
 - (a) one measured event (29^3, 300 intervals): at every tick the books
   close, the measured line reads current = initial = 2^24 with nothing
   measured, spent or escaped (what comes home is created again and never
   counts as content), the transit line reads released = current + escaped +
   absorbed with initial 0, and the measured events' momentum is zero. Gauss's
-  flux through the cube of half-width 4 (`cube_flux`) is the emission within
-  2 % over ticks 101 to 200 (0.995 measured) and over ticks 201 to 300
-  through the cubes of half-width 4, 8 and 12 (0.996, 0.992, 0.990); the
-  escape per interval is the emission within 3 % (0.989: nothing stands, the
-  1.5 % the shadow engine shed into parked shares is gone).
+  flux through the cube of half-width 4 (`cube_flux`) over ticks 101 to 200
+  is 0.74 of the emission, within 0.04 (0.736 measured; old 0.995), and
+  over ticks 201 to 300 through the cubes of half-width 4, 8 and 12 it is
+  0.86, 0.46 and 0.17, each within 0.05 and falling with the half-width as
+  the field fills the board (0.861, 0.463, 0.174 measured; old 0.995,
+  0.990, 0.985); the escape per interval is 0.13 of the emission, within
+  0.03 (0.131 measured; old 0.983).
 - (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10 and 12
-  (`shell_readings`): the count times r^2 / q between 0.14 and 0.20 (0.157 to
-  0.169 measured); the push times 4 pi r^2 / q within 20 % of 1 (0.997 to
-  1.16); the size times r / sqrt(q) within 5 % of 3 x 0.2143 = 0.643 (0.622
-  to 0.660); the log-log slopes over the five radii: the count -2.00 +- 0.10
-  (-2.03), the push -2.00 +- 0.15 (-2.11), the size -1.00 +- 0.10 (-0.95).
+  (`shell_readings`): the count times r^2 / q reads 2.00, 1.93, 1.63, 1.11,
+  0.70, each within 10 % (old 0.157 to 0.172, flat as 1 / r^2); the radial
+  flow times 4 pi r^2 / q reads 2.78, 2.38, 2.00, 1.43, 0.99, each within
+  10 % (old 0.997 to 1.16; the shell's mean radial arrival counts what
+  enters the shell from inside less what enters from outside and is not
+  Gauss's flux where the field turns back on itself, `cube_flux` is); the
+  size times r / sqrt(q) reads 3.44, 3.38, 3.10, 2.56, 2.03, each within
+  10 % (old 0.622 to 0.661, within 5 % of 3 x 0.2143); the log-log slopes
+  over the five radii: the count -2.90 +- 0.15 (-2.898; old -1.99), the
+  radial flow -2.90 +- 0.15 (-2.898; old -2.11), the size -1.46 +- 0.15
+  (-1.455; old -0.95). The runtime of the scatter on 29^3 is about 0.29 s
+  per interval against 0.11 s for the coherent rule (the per-Port
+  apportionment), a host cost.
 - (c) two measured events (21^3, d = 8 on the x axis, no suspension, 200
   intervals, the pushes over ticks 101 to 200): the first (at the lower x)
-  pushed toward +x and the second toward -x, the axial pushes equal within
-  12 % (8.6 measured under node-mixing-v3; 2 to 13 over the three axes and
-  the windows 101 to 200 and 201 to 300; 2.5 to 5 under node-mixing-v2:
-  whole units without parked shares ripple more than the shadow engine's
-  ninths), the transverse parts below 6 % of the axial (4.8 measured; below
-  2 under v2); the measured events' momentum is the sum of the pushes at
+  pushed toward +x and the second toward -x, each by its content times the
+  net flow of the other's field at its Node; the axial pushes equal within
+  0.5 % (0.02 % measured, 2 376 912 076 800 against -2 376 509 423 616: the
+  flow of a diffusive field is symmetric where the momentum labels were
+  not; old 2.5 to 5 %), the transverse parts below 0.1 % of the axial (old
+  below 0.3 %); the measured events' momentum is the sum of the pushes at
   every tick; the axial push against M_B rho M_A / (4 pi d^2) with
-  rho = 6/128 between 10 and 25 (18.0 measured; 0.61 under v2); the product
-  law: both contents doubled with K doubled pushed four times as much within
-  10 % (3.8; 4.1 to 4.2 under v2: the far field of the smaller pair is more
-  of beams, single units going by their momentum). Re-pinned on 2026-09-19
-  under node-mixing-v3 (the coherent sum over all numbers present): the two
-  contents are two numbers of one family, and at the Nodes next to a
-  content the other number's units follow the common weights of that
-  content's own outgoing crowd, four ninths back into the content, where
-  they are read (pushed) and mix on alone, four ninths back out, to be
-  turned in again: the push on each content is 29 times v2's over ticks
-  101 to 200 (29.5 x 10^12 against 1.01 x 10^12 on x) and 17 times over
-  201 to 300 (17.4 x 10^12 against 1.04 x 10^12, v2 steady, v3 falling),
-  the same on the y and z axes (25.9 and 27.8 x 10^12). A check of the
-  engine, not a result: whether the focusing of one number's units by
-  another number's crowd, and the repeated reads it brings, is the law is
-  for the physics-rule review.
+  rho = 6/128 between 1.3 and 1.6 (1.449 measured; old 0.615); the product
+  law: both contents doubled with K doubled pushed four times as much
+  within 2 % (3.9993 measured; old 4.22). Node-mixing-v3 (the coherent sum over
+  all numbers present, the same day) does not act on this world: with
+  `m` phase-less its units never enter `mix_arrivals`, so the pins are
+  the field of matter's.
 - (d) the two-slit detector (23 x 41 x 9, 200 intervals): a lamp of light
   (paid, 2^36 units, 2^22 per self-creation on every heading, K 2^34) at
   x = 2; a wall at x = 8 of measured events of the paid family `wall`
@@ -369,14 +407,21 @@ held in place (`fixed`).
   `wait_per_quantum`, `schema_version` and `dense_field` (the earlier
   engines' keys), `phase_turn` as an unknown family key, a closed board, a
   world without `"law": "events"`, an unknown key, a content at or past
-  K x N / 2, a lamp on a free family, two measured events at one Node, a
-  table rule outside `read` | `measure` | `rerelease` | `pass`, an N that is
-  not a power of two, a detector on a Node without a measured event, a Node
-  in two detectors, a quantum on a free family; the parsed world of (a) has
-  one owner of `m`, the suspension 1 and the release 1/128, and a declared
-  detector with threshold 3. The runner runs a 4-interval world of (a) into
-  `run.json` (`law` "events-v1", completed, four ticks, four books,
-  conserved, the measured events and the detectors), `state.json` (the law,
+  K x N / 2 of a family with a phase (the same content of the phase-less
+  `m` parses: K does not apply), a lamp on a free family, two measured
+  events at one Node, a table rule outside `read` | `measure` | `rerelease`
+  | `pass`, an N that is not a power of two, a detector on a Node without a
+  measured event, a Node in two detectors, a quantum on a free family, a
+  `suspension` denominator of 0, a family `phase` that is not true or false,
+  a `phase_window` on a table entry for the phase-less family, a `phase` of
+  5 on a measured event of it, a `phase_window` on a lamp of a phase-less
+  paid family; the parsed world of (a) has one owner of `m`, the suspension
+  (1, 1) (an integer 1 read as [1, 1]; [1, 4] read as (1, 4); [0, 4] as
+  (0, 1)) and the release 1/128, and a declared detector with threshold 3.
+  The runner runs a 4-interval world of (a) into `run.json` (`law`
+  "events-v1", completed, four ticks, four books, conserved, the measured
+  events and the detectors, `suspension` [1, 1], the family's `phase`
+  false), `state.json` (the law,
   tick 4, the measured events, Nodes with events) and `events.jsonl`, keeps
   the input as read, and refuses a negative tick count and a used output
   directory.

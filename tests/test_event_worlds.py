@@ -9,28 +9,36 @@ are pinned in docs/TEST_EXPECTATIONS.md ("The worlds of the law of events")
 from the engine's first readings on 2026-09-19, as a check that it does what
 the law says and not as a result.
 
+The free family `m` of (a) to (c) declares no phase circle since
+2026-09-19 (`"phase": false`, the field of matter without phase: each
+Port's arrival scatters on its own, four ninths back), the suspension
+reads presence and a free family's push reads the net flow; (a) to (c)
+were re-pinned that day from the new engine's readings, the old ones
+in docs/TEST_EXPECTATIONS.md. The field is diffusive and 300 intervals
+on 29^3 is not its steady state: the pins are a check, not a result.
+
 (a) one measured event (29^3, 300 intervals): the books close every tick,
     the content is 2^24 at every tick (what comes home is created again),
     the momentum of the measured events zero; the flux through the cube of
-    half-width 4 is the emission within 2 % over ticks 101 to 200 and,
-    over ticks 201 to 300, through the cubes of half-width 4, 8 and 12; the
-    escape per interval the emission within 3 % (nothing stands: 0.989);
+    half-width 4 over ticks 101 to 200 is 0.74 of the emission (within
+    0.04) and, over ticks 201 to 300, through the cubes of half-width 4, 8
+    and 12 it is 0.86, 0.46 and 0.17 (each within 0.05), falling with the
+    half-width as the field fills; the escape per interval 0.13 of the
+    emission (within 0.03);
 (b) the shell means over ticks 201 to 300 at r = 4, 6, 8, 10, 12: the count
-    times r^2 / q between 0.14 and 0.20, the push times 4 pi r^2 / q within
-    20 % of 1, the size times r / sqrt q within 5 % of 3 x 0.2143; the
-    log-log slopes -2.00 +- 0.10, -2.00 +- 0.15, -1.00 +- 0.10;
+    times r^2 / q reads 2.00, 1.93, 1.63, 1.11, 0.70 (each within 10 %),
+    the radial flow times 4 pi r^2 / q reads 2.78, 2.38, 2.00, 1.43, 0.99
+    (each within 10 %; the shell's mean radial arrival is not Gauss's flux
+    where the field turns back on itself, `cube_flux` is), the size times
+    r / sqrt q reads 3.44, 3.38, 3.10, 2.56, 2.03 (each within 10 %); the
+    log-log slopes -2.90 +- 0.15, -2.90 +- 0.15, -1.46 +- 0.15;
 (c) two measured events (21^3, d = 8, 200 intervals, no suspension): pushed
-    toward each other, the axial pushes equal within 12 % (8.6 measured over
-    ticks 101 to 200 under node-mixing-v3, 2 to 13 over the three axes and
-    two windows; 2.5 to 5 under node-mixing-v2), the transverse below 6 % of
-    the axial (4.8 measured; below 2 under v2), the axial against
-    M_B rho M_A / (4 pi d^2) between 10 and 25 (18.0 measured; 0.61 under
-    v2: under v3 the other number's units at the Nodes next to a content
-    follow the content's own outgoing crowd, four ninths back into it, and
-    are read there again and again, so the push is 29 times v2's and falls
-    to 17 times over ticks 201 to 300, re-pinned 2026-09-19 as a check of
-    the engine, not as a result); the pair doubled with K doubled pushed
-    four times as much within 10 % (3.8 measured; 4.1 to 4.2 under v2);
+    toward each other by the net flow of each other's field, the axial
+    pushes equal within 0.5 % (0.02 % measured: the flow of a diffusive
+    field is symmetric where the labels were not), the transverse below
+    0.1 % of the axial, the axial against M_B rho M_A / (4 pi d^2) between
+    1.3 and 1.6 (1.45 measured); the pair doubled with K doubled pushed
+    four times as much within 2 % (3.999 measured);
 (d) the two-slit detector (23 x 41 x 9, 200 intervals): the screen's clicks
     by y are symmetric about the axis, with a minimum within 2 to 5 of the
     axis and a maximum beyond it within 6 to 11 at least 1.1 times the
@@ -76,7 +84,7 @@ def one_content(shape: int, ticks: int, *, suspension: int = 1) -> dict[str, obj
         "N": 64,
         "release": [1, 128],
         "suspension": suspension,
-        "families": [{"name": "m", "kind": "free", "charge": 0}],
+        "families": [{"name": "m", "kind": "free", "charge": 0, "phase": False}],
         "measured": [
             {"position": [centre, centre, centre], "family": "m", "amount": CONTENT, "fixed": True}
         ],
@@ -201,16 +209,28 @@ def test_one_measured_event_keeps_its_content_reaches_its_fixed_point_and_the_sh
                 [entry["size"] * r / math.sqrt(Q) for entry, r in zip(readings, radii, strict=True)]
             )
         escaped_before = transit["escaped"]
-    assert abs(early / 100 - 1) < 0.02, early / 100
+    assert abs(early / 100 - 0.74) < 0.04, early / 100
     flux, count, push, size = flux / window, count / window, push / window, size / window
-    assert all(abs(value - 1) < 0.02 for value in flux), flux
-    assert abs(escape / window - 1) < 0.03, escape / window
-    assert all(0.14 <= value <= 0.20 for value in count), count
-    assert all(abs(value - 1) < 0.20 for value in push), push
-    assert all(abs(value / SIZE_COEFFICIENT - 1) < 0.05 for value in size), size
-    assert abs(slope(radii, count / np.array(radii) ** 2) + 2) < 0.10
-    assert abs(slope(radii, push / np.array(radii) ** 2) + 2) < 0.15
-    assert abs(slope(radii, size / np.array(radii)) + 1) < 0.10
+    assert all(
+        abs(value - pinned) < 0.05 for value, pinned in zip(flux, (0.86, 0.46, 0.17), strict=True)
+    ), flux
+    assert flux[0] > flux[1] > flux[2]
+    assert abs(escape / window - 0.13) < 0.03, escape / window
+    assert all(
+        abs(value / pinned - 1) < 0.10
+        for value, pinned in zip(count, (2.00, 1.93, 1.63, 1.11, 0.70), strict=True)
+    ), count
+    assert all(
+        abs(value / pinned - 1) < 0.10
+        for value, pinned in zip(push, (2.78, 2.38, 2.00, 1.43, 0.99), strict=True)
+    ), push
+    assert all(
+        abs(value / pinned - 1) < 0.10
+        for value, pinned in zip(size, (3.44, 3.38, 3.10, 2.56, 2.03), strict=True)
+    ), size
+    assert abs(slope(radii, count / np.array(radii) ** 2) + 2.90) < 0.15
+    assert abs(slope(radii, push / np.array(radii) ** 2) + 2.90) < 0.15
+    assert abs(slope(radii, size / np.array(radii)) + 1.46) < 0.15
 
 
 def pushes(world: dict[str, object], ticks: int, window: int) -> tuple[list[int], list[int]]:
@@ -237,13 +257,13 @@ def test_two_measured_events_push_each_other_equally_and_the_product_law_holds()
     shape, distance, ticks, window = 21, 8, 200, 100
     first, second = pushes(pair(shape, distance, CONTENT, 1 << 22, ticks), ticks, window)
     assert first[0] > 0 > second[0]
-    assert abs(first[0] + second[0]) < 0.12 * first[0], (first, second)
+    assert abs(first[0] + second[0]) < 0.005 * first[0], (first, second)
     for push in (first, second):
-        assert abs(push[1]) < 0.06 * abs(push[0]) and abs(push[2]) < 0.06 * abs(push[0]), push
+        assert abs(push[1]) < 0.001 * abs(push[0]) and abs(push[2]) < 0.001 * abs(push[0]), push
     law = CONTENT * CONTENT * (6 / 128) / (4 * math.pi * distance * distance) * window
-    assert 10 < first[0] / law < 25, first[0] / law
+    assert 1.3 < first[0] / law < 1.6, first[0] / law
     doubled, _ = pushes(pair(shape, distance, 2 * CONTENT, 1 << 23, ticks), ticks, window)
-    assert abs(doubled[0] / first[0] - 4) < 0.10 * 4, doubled[0] / first[0]
+    assert abs(doubled[0] / first[0] - 4) < 0.02 * 4, doubled[0] / first[0]
 
 
 def screen_profile(world: dict[str, object], ticks: int) -> list[float]:
@@ -303,10 +323,13 @@ def test_the_world_refuses_by_name_and_the_runner_records_a_run(tmp_path):
         parse_event_world({key: value for key, value in world.items() if key != "law"})
     with pytest.raises(ValueError, match="unknown keys: prefill"):
         parse_event_world({**world, "prefill": 3})
+    phased = {**world, "families": [{"name": "m", "kind": "free", "charge": 0}]}
     with pytest.raises(ValueError, match="below K x N"):
         parse_event_world(
-            {**world, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]}
+            {**phased, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]}
         )
+    # K does not apply to a family without a phase circle.
+    parse_event_world({**world, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]})
     with pytest.raises(ValueError, match="a lamp is a measured event of a paid family"):
         parse_event_world(
             {
@@ -352,7 +375,46 @@ def test_the_world_refuses_by_name_and_the_runner_records_a_run(tmp_path):
     parsed = parse_event_world(
         {**world, "detectors": [{"name": "d", "positions": [[5, 5, 5]], "threshold": 3}]}
     )
-    assert parsed.owners(0) == (1,) and parsed.suspension == 1 and parsed.release == (1, 128)
+    assert parsed.owners(0) == (1,) and parsed.suspension == (1, 1) and parsed.release == (1, 128)
+    assert parse_event_world({**world, "suspension": [1, 4]}).suspension == (1, 4)
+    assert parse_event_world({**world, "suspension": [0, 4]}).suspension == (0, 1)
+    with pytest.raises(ValueError, match="suspension denominator"):
+        parse_event_world({**world, "suspension": [1, 0]})
+    with pytest.raises(ValueError, match=r"families\[0\].phase must be true or false"):
+        parse_event_world({**world, "families": [{"name": "m", "kind": "free", "phase": 0}]})
+    with pytest.raises(ValueError, match="refused for a family without a phase circle"):
+        parse_event_world(
+            {
+                **world,
+                "measured": [
+                    {
+                        "position": [1, 1, 1],
+                        "family": "m",
+                        "amount": 4,
+                        "table": {"m": {"rule": "read", "phase_window": 3}},
+                    }
+                ],
+            }
+        )
+    with pytest.raises(ValueError, match=r"measured\[0\].phase must be an integer from 0 through 0"):
+        parse_event_world(
+            {**world, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 4, "phase": 5}]}
+        )
+    with pytest.raises(ValueError, match="refused on a lamp of a family without a phase circle"):
+        parse_event_world(
+            {
+                **world,
+                "families": [{"name": "light", "kind": "paid", "phase": False}],
+                "measured": [
+                    {
+                        "position": [1, 1, 1],
+                        "family": "light",
+                        "amount": 4,
+                        "lamp": {"rate": 1, "phase_window": 3},
+                    }
+                ],
+            }
+        )
     assert parsed.detector_of((5, 5, 5)) == 0 and parsed.detectors[0].threshold == 3
     path = tmp_path / "world.json"
     path.write_text(json.dumps(world), encoding="utf-8")
@@ -360,7 +422,8 @@ def test_the_world_refuses_by_name_and_the_runner_records_a_run(tmp_path):
     assert record["law"] == EVENTS_LAW and record["status"] == "completed"
     assert record["completed_ticks"] == 4 and record["conserved_at_every_completed_tick"] is True
     assert len(record["audit"]) == 4 and record["measured"][0]["content"] == CONTENT
-    assert record["detectors"] == [] and record["suspension"] == 1
+    assert record["detectors"] == [] and record["suspension"] == [1, 1]
+    assert record["families"][0]["phase"] is False
     assert (tmp_path / "run" / "state.json").exists() and (tmp_path / "run" / "events.jsonl").exists()
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))
     assert state["law"] == EVENTS_LAW and state["tick"] == 4 and state["nodes"] and "measured" in state

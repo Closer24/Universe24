@@ -17,15 +17,25 @@ law of events, the model owner, 2026-09-19):
   the steps of the phase circle (64 by default, a power of two from 2 through
   4096); `release` `[n, d]`, the events a measured event of a free family
   releases per self-creation per Port heading per unit of content, read off
-  its clock; `suspension`, the intervals an exit is suspended per whole unit
-  of size read at the Node (an integer, 1 by default, 0 for none);
+  its clock; `suspension` `[n, d]`, the fractional width of the suspension:
+  a reader owes `presence x n // d` intervals, the presence being the amount
+  that arrived at its Node this interval over every family and every number
+  but its own (an integer w is accepted as `[w, 1]`; `[1, 1]` by default; 0
+  or `[0, d]` for none);
 - `families`: each with a `name`, a `kind` (`free`: matter, whose measured
   events release at the world's rate and whose events are read for gravity
   and electricity; `paid`: light, released only by a lamp that spends its
   content, its events carrying their own momentum), for a free family the
-  whole `charge` of a measured event of it (0 by default), and for a paid
+  whole `charge` of a measured event of it (0 by default), for a paid
   family `quantum`, the content of one unit of it (1 by default): the momentum
-  one unit carries from birth is its quantum times its heading;
+  one unit carries from birth is its quantum times its heading; and `phase`
+  (true by default): a family declaring `"phase": false` has no phase circle
+  (the model owner, 2026-09-19): its events carry phase 0 and never turn, its
+  measured events' phase never turns (K does not apply to their content), no
+  `phase_window` is accepted on its lamps or on a table entry for it, its
+  measured events and its events in transit declare no phase but 0, and at a
+  Node its arrivals do not sum coherently: each Port's arrival scatters on
+  its own (`mixing.scatter_arrivals`);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
   below K x N / 2), and optionally its `phase`, its whole `charge` (the
@@ -120,7 +130,7 @@ WORLD_KEYS = {
     "in_transit",
     "detectors",
 }
-FAMILY_KEYS = {"name", "kind", "charge", "quantum"}
+FAMILY_KEYS = {"name", "kind", "charge", "quantum", "phase"}
 MEASURED_KEYS = {"position", "family", "amount", "phase", "charge", "momentum", "fixed", "table", "lamp"}
 LAMP_KEYS = {"rate", "headings", "phase_window"}
 # A table entry's object form: the rule and, on any rule but `pass`, a window.
@@ -135,12 +145,15 @@ BOUNDARIES = ("open", "periodic")
 @dataclass(frozen=True)
 class FamilyDefinition:
     """One family of the world: its name, its kind, the whole charge of a
-    measured event of it, and the content of one unit of it."""
+    measured event of it, the content of one unit of it, and whether it has
+    a phase circle (`phase` false: its events carry phase 0 and never turn,
+    and at a Node each Port's arrival scatters on its own)."""
 
     name: str
     kind: str
     charge: int
     quantum: int
+    phase: bool = True
 
     @property
     def free(self) -> bool:
@@ -215,7 +228,9 @@ class EventWorld:
     clock: int
     phase_steps: int
     release: tuple[int, int]
-    suspension: int
+    # The suspension's fractional width (n, d): a reader owes presence x n // d
+    # intervals; (0, d) is none.
+    suspension: tuple[int, int]
     families: tuple[FamilyDefinition, ...]
     measured: tuple[MeasuredDefinition, ...]
     in_transit: tuple[TransitDefinition, ...]
@@ -364,7 +379,10 @@ def _families(value: object) -> tuple[FamilyDefinition, ...]:
         quantum = _integer(obj.get("quantum", 1), f"families[{index}].quantum", 1, MAX_VALUE)
         if kind == "free" and quantum != 1:
             raise ValueError(f"{EVENTS_LAW}: a free family's unit is the unit of content ({name})")
-        found.append(FamilyDefinition(name, str(kind), charge, quantum))
+        phase = obj.get("phase", True)
+        if type(phase) is not bool:
+            raise ValueError(f"{EVENTS_LAW}: families[{index}].phase must be true or false")
+        found.append(FamilyDefinition(name, str(kind), charge, quantum, phase))
     return tuple(found)
 
 
@@ -373,7 +391,7 @@ def _window(value: object, label: str, phase_steps: int) -> int:
     return _integer(value, label, 0, phase_steps - 1)
 
 
-def _lamp(value: object, label: str, phase_steps: int) -> LampDefinition:
+def _lamp(value: object, label: str, phase_steps: int, phased: bool) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
     headings_value = obj.get("headings", [list(heading) for heading in PORT_HEADINGS])
@@ -384,13 +402,19 @@ def _lamp(value: object, label: str, phase_steps: int) -> LampDefinition:
         raise ValueError(f"{EVENTS_LAW}: {label}.headings repeats a heading")
     window = None
     if "phase_window" in obj:
+        if not phased:
+            raise ValueError(
+                f"{EVENTS_LAW}: {label}.phase_window is refused on a lamp of a family without a "
+                "phase circle (a window is a width on the circle, and the family has none)"
+            )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     return LampDefinition(rate, headings, window)
 
 
-def _table_entry(value: object, label: str, phase_steps: int) -> tuple[str, int | None]:
+def _table_entry(value: object, label: str, phase_steps: int, phased: bool) -> tuple[str, int | None]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s}`
-    (the rule required; a window refused on `pass`, which responds to nothing)."""
+    (the rule required; a window refused on `pass`, which responds to nothing,
+    and for a family without a phase circle, whose bundles carry no phase)."""
     if isinstance(value, dict):
         obj = _object(value, label, TABLE_ENTRY_KEYS, {"rule"})
         rule = obj["rule"]
@@ -405,6 +429,11 @@ def _table_entry(value: object, label: str, phase_steps: int) -> tuple[str, int 
         raise ValueError(
             f"{EVENTS_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
             "response, and pass responds to nothing"
+        )
+    if window is not None and not phased:
+        raise ValueError(
+            f"{EVENTS_LAW}: {label}.phase_window is refused for a family without a phase circle: "
+            "its bundles carry no phase to read"
         )
     return str(rule), window
 
@@ -431,12 +460,14 @@ def _measured(
             raise ValueError(f"{EVENTS_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         amount = _integer(obj["amount"], f"{label}.amount", 1)
-        if 2 * amount >= clock * phase_steps:
+        phased = families[family].phase
+        if phased and 2 * amount >= clock * phase_steps:
             raise ValueError(
                 f"{EVENTS_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
                 "per self-creation below half the circle)"
             )
-        phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1)
+        # A measured event of a family without a phase circle has phase 0.
+        phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
         charge = _integer(
             obj.get("charge", families[family].charge), f"{label}.charge", -MAX_VALUE, MAX_VALUE
         )
@@ -460,13 +491,13 @@ def _measured(
             if key not in names:
                 raise ValueError(f"{EVENTS_LAW}: {label}.table names an unknown family {key!r}")
             table[names[key]], windows[names[key]] = _table_entry(
-                entry_value, f"{label}.table[{key!r}]", phase_steps
+                entry_value, f"{label}.table[{key!r}]", phase_steps, families[names[key]].phase
             )
         lamp = None
         if "lamp" in obj:
             if families[family].free:
                 raise ValueError(f"{EVENTS_LAW}: {label}: a lamp is a measured event of a paid family")
-            lamp = _lamp(obj["lamp"], f"{label}.lamp", phase_steps)
+            lamp = _lamp(obj["lamp"], f"{label}.lamp", phase_steps, phased)
         found.append(
             MeasuredDefinition(
                 position,
@@ -501,14 +532,16 @@ def _in_transit(
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
             raise ValueError(f"{EVENTS_LAW}: {label}.family names an unknown family")
+        family = names[family_name]
+        top = phase_steps - 1 if families[family].phase else 0
         found.append(
             TransitDefinition(
                 _address(obj["position"], f"{label}.position", shape),
-                names[family_name],
+                family,
                 _integer(obj["number"], f"{label}.number", 1, len(measured)),
                 _heading(obj["heading"], f"{label}.heading"),
                 _integer(obj["amount"], f"{label}.amount", 1),
-                _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1),
+                _integer(obj.get("phase", 0), f"{label}.phase", 0, top),
             )
         )
     return tuple(found)
@@ -582,7 +615,10 @@ def parse_event_world(document: object) -> EventWorld:
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"{EVENTS_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
     release = _ratio(obj["release"], "release", zero=True)
-    suspension = _integer(obj.get("suspension", 1), "suspension", 0, MAX_VALUE)
+    suspension = _ratio(obj.get("suspension", 1), "suspension", zero=True)
+    if suspension[0] == 0:
+        # Off: 0 and [0, d] alike, recorded as [0, 1].
+        suspension = (0, 1)
     families = _families(obj["families"])
     measured = _measured(obj["measured"], shape, families, clock, phase_steps)
     in_transit = _in_transit(obj.get("in_transit", []), shape, families, measured, phase_steps)

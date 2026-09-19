@@ -20,20 +20,27 @@ a Node: no parked share, no remainder. The interval's steps on the transit
   own Node as its arrival through that Port (a one-interval stub);
 - the sizes: per Node and number the size of the coherent sum of the
   arrivals, the amplitude the mixing forms, in 32nds of one unit's (`sizes`),
-  read by the measured events and by the exits for their suspension;
-- the suspension: the arrivals of one number that reached a Node this
-  interval read the sizes of the free families there and carry a count, the
-  whole intervals of the world's `suspension` per whole unit of size read;
-  while the count runs they are created here, interval after interval, and
-  what arrives behind them joins them and waits with them (the next event is
-  delayed); a count is written once, on arrival, never accumulated;
-- the mixing (node-mixing-v3, `mix_arrivals` by import): the sides' shares
-  from the vectors of all the arrivals at the Node, whatever their number,
-  the weights common to every number there; per number whole units placed
-  by the largest remainder with the ties in the tick's Port order, a number
-  with no whole for any side going whole by its own momentum, every unit
-  keeping its number; the departures into flight. The sizes and `phase_at`
-  read per number: what a measured event reads is a bundle of one number.
+  a reading (the shell means) and the phase window's sum; they no longer
+  feed the suspension;
+- the suspension: the arrivals of one number of a paid family that reached
+  a Node this interval read the presence there, the amount that arrived
+  this interval over every family and every number but their own, and
+  carry a count, `presence x n // d` intervals at the world's `suspension`
+  `[n, d]`; while the count runs they are created here, interval after
+  interval, and what arrives behind them joins them and waits with them
+  (the next event is delayed); a count is written once, on arrival, never
+  accumulated;
+- the mixing (node-mixing-v3, `mix_arrivals` by import) for a family with a
+  phase circle: the sides' shares from the vectors of all the arrivals at
+  the Node, whatever their number, the weights common to every number
+  there; per number whole units placed by the largest remainder with the
+  ties in the tick's Port order, a number with no whole for any side going
+  whole by its own momentum, every unit keeping its number; for a family
+  without a phase circle (`"phase": false`) the scatter (`scatter_arrivals`):
+  each Port's arrival on its own, four ninths back and one ninth each other
+  way, its momentum apportioned over its own departures; the departures into
+  flight. The sizes and `phase_at` read per number: what a measured event
+  reads is a bundle of one number.
 """
 
 from __future__ import annotations
@@ -47,6 +54,7 @@ from event_universe.events.mixing import (
     integer_root,
     mix_arrivals,
     place_departures,
+    scatter_arrivals,
 )
 
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
@@ -110,12 +118,17 @@ class Transit:
         phase_steps: int,
         clock: int,
         periodic: tuple[bool, bool, bool] = (False, False, False),
+        phased: bool = True,
     ) -> None:
         self.family = family
         self.shape = shape
         # Per axis whether the walk wraps (the world's `boundary`); an open
         # axis lets its departures escape at the edge.
         self.periodic = periodic
+        # Whether the family has a phase circle: without one every phase is
+        # 0, nothing turns, and the Node scatters each Port's arrival on its
+        # own instead of mixing the coherent sum.
+        self.phased = phased
         self.owners = owners
         self.rank = {number: rank for rank, number in enumerate(owners)}
         count = len(owners)
@@ -279,22 +292,27 @@ class Transit:
             assert self.cosines is not None and self.sines is not None
             old_amt, old_ph = self.arr_amt[both], self.arr_ph[both]
             new_amt, new_ph = amount[both], phase[both]
-            x = old_amt * self.cosines[old_ph] + new_amt * self.cosines[new_ph]
-            y = old_amt * self.sines[old_ph] + new_amt * self.sines[new_ph]
             self.arr_amt[both] = old_amt + new_amt
-            self.arr_ph[both] = self._nearest_step(x, y)
+            if self.phased:
+                x = old_amt * self.cosines[old_ph] + new_amt * self.cosines[new_ph]
+                y = old_amt * self.sines[old_ph] + new_amt * self.sines[new_ph]
+                self.arr_ph[both] = self._nearest_step(x, y)
             self.arr_mom[both] = self.arr_mom[both] + momentum[both]
 
-    def suspend(self, read: np.ndarray, width: int, arrived: np.ndarray) -> None:
+    def suspend(self, read: np.ndarray, width: tuple[int, int], arrived: np.ndarray) -> None:
         """The suspension of the arrivals: per Node and number where something
-        arrived this interval, the size read (the free families' sizes at the
-        Node, in 32nds) at `width` intervals per whole unit is the count the
-        arrivals carry, written once; what joins a waiting slot waits with it,
-        the larger count kept. A count above zero holds the number's arrivals
-        at the Node this interval."""
-        if not width:
+        arrived this interval, the presence read (per Node and number, the
+        amount that arrived this interval over every family and every number
+        but the reader's own) times the width's numerator over its denominator,
+        the whole part, is the count the arrivals carry, written once; what
+        joins a waiting slot waits with it, the larger count kept. A count
+        above zero holds the number's arrivals at the Node this interval."""
+        numerator, denominator = width
+        if not numerator:
             return
-        derived = np.where(arrived, read * width // MIXING_AMPLITUDE_SCALE, 0)
+        if int(read.max(initial=0)) * numerator >= 1 << 62:
+            raise OverflowError("64-bit intermediate range exceeded")
+        derived = np.where(arrived, read * numerator // denominator, 0)
         self.suspended = np.maximum(self.suspended, derived)
 
     def frozen(self) -> np.ndarray:
@@ -313,7 +331,8 @@ class Transit:
             self.arr_ph[frozen] = 0
             self.arr_mom[frozen] = 0
         if self.arr_amt.any():
-            whole, phase, momenta = mix_arrivals(self, MOMENTUM_BOUND)
+            compute = mix_arrivals if self.phased else scatter_arrivals
+            whole, phase, momenta = compute(self, MOMENTUM_BOUND)
             place_departures(self, whole, phase, momenta, MOMENTUM_BOUND)
         self.arr_amt[...] = 0
         self.arr_ph[...] = 0
@@ -355,9 +374,10 @@ class Transit:
             self.fly_mom[cell] = momentum
             return
         assert self.cosines is not None and self.sines is not None
-        held_phase = int(self.fly_ph[cell])
-        x = np.array(held * self.cosines[held_phase] + amount * self.cosines[phase])
-        y = np.array(held * self.sines[held_phase] + amount * self.sines[phase])
         self.fly_amt[cell] = held + amount
-        self.fly_ph[cell] = int(self._nearest_step(x, y))
+        if self.phased:
+            held_phase = int(self.fly_ph[cell])
+            x = np.array(held * self.cosines[held_phase] + amount * self.cosines[phase])
+            y = np.array(held * self.sines[held_phase] + amount * self.sines[phase])
+            self.fly_ph[cell] = int(self._nearest_step(x, y))
         self.fly_mom[cell] += momentum

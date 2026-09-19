@@ -25,13 +25,30 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   [migration](docs/MIGRATION.md#the-coherent-sum-at-a-node-over-all-numbers-present-on-2026-09-19-node-mixing-v3)).
   Test: `test_node_mixing_numbers` (new; `test_node_mixing` is the control
   of one number, unchanged; [expectations](docs/TEST_EXPECTATIONS.md#the-coherent-sum-over-the-numbers)).
-  The pair world of `test_event_worlds` (c), two numbers of one family, is
-  re-pinned: the other number's units next to a content follow the
-  content's own crowd back into it and are read again and again, so the
-  axial push is 29 times v2's over ticks 101 to 200 and falls to 17 times
-  over 201 to 300, the asymmetry 8.6 %, the transverse 4.8 %, the product
-  law 3.8; a check of the engine, not a result, referred to the
-  physics-rule review ([expectations](docs/TEST_EXPECTATIONS.md#the-worlds-of-the-law-of-events)).
+  With the field of matter phase-less (the next entry) the pair world of
+  `test_event_worlds` (c) reads as that entry's pins say: its `m` never
+  enters `mix_arrivals`, so v3 does not act on it.
+- The field of matter without phase, the suspension as presence with a
+  fractional width, and the push as the net flow (the model owner,
+  2026-09-19, three decisions implemented together, to be reverted if the
+  physics-rule reviewer's numbers say otherwise): a family may declare
+  `"phase": false` (its events carry phase 0 and never turn, its measured
+  events never turn, and at a Node each Port's arrival scatters on its own,
+  four ninths back and one ninth each other way, `mixing.scatter_arrivals`,
+  its momentum apportioned per Port); `suspension` is `[n, d]` and a reader
+  owes `presence x n // d` intervals, the presence being the amount that
+  arrived at its Node this interval over every family and every number but
+  its own (an integer w reads as `[w, 1]`; the sizes no longer feed it); a
+  free family's push is the content times the net flow of the bundle
+  (amount times travel heading over the six Ports), the electric part
+  likewise, a paid family's push its carried momentum as before. The example
+  worlds `one_content` and `two_contents` declare `"phase": false` for `m`;
+  `run.json` records `suspension` as a list and `phase` per family
+  ([the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#the-field-of-matter-without-phase-the-suspension-as-presence-with-a-fractional-width-and-the-push-as-the-net-flow-on-2026-09-19)).
+  Tests: `test_phaseless_family` new; `test_event_suspension` (a) to (c)
+  re-pinned at `[1, 4]`, (d) and (e) added; `test_event_worlds` re-pinned
+  ([expectations](docs/TEST_EXPECTATIONS.md)).
 - A periodic axis as a declared run parameter of the world, the model
   owner's approved exception to the open board (2026-09-19): `boundary`
   accepts, beside `"open"`, an object with any of `x`, `y`, `z` set to

@@ -6,6 +6,73 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The field of matter without phase, the suspension as presence with a fractional width, and the push as the net flow, on 2026-09-19
+
+Three decisions of the model owner, 2026-09-19, implemented together after
+the physics-rule review of that day found that a coherent field gives a
+clock slowing as sqrt(M) / r while nature's is M / r, and that no reading at
+a point of a coherent field gives M / r; the owner decided to implement now
+and to revert if the reviewer's numbers say otherwise. Nothing here is
+evidence of a physical law.
+
+1. **A family may declare no phase circle**: `"phase": false` in its
+   `families` entry (true by default, as before; `FamilyDefinition.phase`,
+   `Transit(..., phased=...)`). Its events carry phase 0 and never turn, its
+   measured events' phase never turns (K does not apply to their content,
+   so the K x N / 2 bound is not checked for them), a `phase_window` is
+   refused on its lamps and on a table entry for it, and its measured
+   events and events in transit may declare no `phase` but 0. At a Node its
+   arrivals do not sum coherently: each Port's arrival scatters on its own
+   (`mixing.scatter_arrivals`, chosen by `Transit.cycle`; `mix_arrivals` is
+   untouched) with the shares of a lone arrival, four ninths back out
+   through the Port it came in by and one ninth to each of the other five
+   sides, whole units by the largest remainder with the ties in the tick's
+   Port order, per Port; a Port's arrival with no whole share for any side
+   goes whole to the heading nearest its own momentum (on a tie the largest
+   share, then the tick's order); its momentum is apportioned over its own
+   departures exactly per axis (`apportion_carried` per Port) and the six
+   Ports' departures and momenta are added per heading. The example worlds
+   `one_content.json` and `two_contents.json` now declare `"phase": false`
+   for `m`; the slit worlds' light keeps its phase. `run.json` lists
+   `phase` per family.
+2. **The suspension reads presence with a fractional width.** `suspension`
+   is `[n, d]` (an integer w is accepted as `[w, 1]`, so a world declaring
+   `1` still parses, but it now means one interval per unit of presence
+   rather than per whole unit of amplitude; 0 or `[0, d]` is none, recorded
+   as `[0, 1]`; `EventWorld.suspension` is a pair and `run.json` records it
+   as a list). What is read is the presence at the Node, the amount that
+   arrived this interval over every family and every number but the
+   reader's own (a transit bundle of a paid family reads everything at its
+   Node but its own number; a measured event reads everything but its own
+   number), no amplitude and no square root: `count = presence x n // d`.
+   Until now the transit read the free families' sizes and the measured
+   event every family's sizes, in whole units of amplitude (32 sqrt(amount)
+   in 32nds). `Transit.sizes` stays as a reading and as the phase window's
+   sum; it no longer feeds the suspension. `Transit.suspend` takes the pair;
+   `EventSimulation._suspend` reads the presence. A world with `suspension`
+   1 and a steady arrival of 16 units per interval now suspends 16
+   intervals per self-creation where it suspended 4: declare `[1, 4]` for
+   the old count at that amount.
+3. **The push of a free family reads the net flow.** For the units of one
+   number of a free family arriving at a measured event, the push is the
+   content times the net flow of those arrivals, the sum over the six Ports
+   of amount times travel heading (what `Transit.flow` sums per Node),
+   toward the emitter as before (push = -flow x content), and the electric
+   part likewise with the flow in place of the carried momentum. A paid
+   family's push stays its carried momentum (light's pressure). The momentum
+   from birth of a free family's events stays on their record and in the
+   momentum book (the transit line still reports the labels in flight,
+   apportioned exactly at every Node; the measured line reports the pushes
+   taken, now by the flow; the two are a report, not a balance).
+
+The tests: `test_event_suspension` (a), (b) and (c) re-pinned at
+`suspension` [1, 4] (16 x 1 // 4 = 4, the same ages and counts as before),
+(d) light on light and (e) one presence, two readers, added;
+`test_phaseless_family` new; `test_event_worlds` re-pinned for the
+phase-less `m` and the flow push ([expectations](TEST_EXPECTATIONS.md)).
+The other tests declare `suspension` 0 and families with a phase and are
+unchanged.
+
 ## The coherent sum at a Node over all numbers present, on 2026-09-19 (node-mixing-v3)
 
 The model owner's decision of 2026-09-19, for genericity: "the Node reads
@@ -41,22 +108,13 @@ fields, with the number axis next to the Port axis
 ([the engine](ENGINE.md#the-law-of-events-events-v1),
 [expectations](TEST_EXPECTATIONS.md#the-coherent-sum-over-the-numbers)).
 
-One world of the tests changes its reading: the pair of `test_event_worlds`
-(c), two contents of one free family 8 Links apart, is two numbers of one
-family whose crowds meet at every Node between them. At the Nodes next to a
-content the other number's units now follow the common weights of that
-content's own outgoing crowd, four ninths back into the content, where they
-are read (pushed) and mix on alone, four ninths back out, to be turned in
-again: the axial push over ticks 101 to 200 is 29 times node-mixing-v2's
-(29.5 x 10^12 against 1.01 x 10^12 on x; 25.9 and 27.8 x 10^12 on y and z)
-and falls to 17 times over ticks 201 to 300 where v2 was steady; the
-asymmetry of the two pushes 8.6 % (2 to 13 over the axes and windows; 2.5
-to 5 under v2), the transverse parts up to 4.8 % of the axial (below 2
-under v2), the product law 3.8 (4.1 to 4.2 under v2). The test is re-pinned
-to these readings as a check of the engine, not a result
-([expectations](TEST_EXPECTATIONS.md#the-worlds-of-the-law-of-events)):
-whether the focusing of one number's units by another number's crowd, and
-the repeated reads it brings, is the law is for the physics-rule review.
+The pair of `test_event_worlds` (c), two contents of one free family 8
+Links apart, does not change its reading: with the field of matter
+phase-less (the note above) its `m` never enters `mix_arrivals`, so v3
+does not act on it and the pins are the field of matter's (the axial
+pushes equal within 0.5 %, 0.02 % measured; the axial push against
+M_B rho M_A / (4 pi d^2) 1.449; the product law 3.9993;
+[expectations](TEST_EXPECTATIONS.md#the-worlds-of-the-law-of-events)).
 The one-content world, the two-slit worlds (one lamp, the wall's number
 releasing nothing) and every other test read as before.
 
