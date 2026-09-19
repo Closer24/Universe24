@@ -149,6 +149,12 @@ This is an amount diagnostic, not an energy law or physical detector result.
 Other coordinate-based spatial summaries retain their declared coordinate
 meaning and do not become shortest-periodic-distance observables.
 
+The coupling-series tool `tools/coupling_readings.py`, added on main `9576883`
+(PR #347), calls this legacy diagnostic during its periodic-Z replay. Under this
+amendment that replay raises the explicit unsupported-diagnostic error; retain
+its historical readings with their original source fingerprints and dates,
+without treating them as acceptance of the revised diagnostic API.
+
 A thin periodic Z board is a compact graph with return Links. It reduces the
 number of allocated Nodes, but neither establishes measured wall-time speedup
 nor substitutes for arbitrary unbounded 3D matter, a star or resolved microscopic
