@@ -28,6 +28,13 @@ owner's; Boss reports facts, findings and what the runs show, in the fewest
 words that carry them. In Hebrew when the owner writes Hebrew; the repository's
 artefacts stay in English.
 
+**A moving picture is delivered inside an HTML page (model owner, 2026-09-19:
+"Always put a GIF inside HTML").** When the model owner asks to see events, a
+run or any animation, Boss delivers one HTML page (an artifact) that embeds the
+GIF or the frames and carries the run's readings beside it: the world, the
+plane shown, the scale of each region, the intervals per frame. A bare GIF is
+never the deliverable. The page is in English, like every artefact.
+
 - Dispatch an already-authorized task without asking again merely to delegate it.
   Apply the current user/project scope and chosen execution lane to the handoff;
   delegation adds no authority to edit, publish, contact people or merge.
