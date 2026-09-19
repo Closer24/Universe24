@@ -26,9 +26,11 @@ engine, `engine.py`, orders them with the measured events):
   a reading (the shell means) and the phase window's sum; they no longer
   feed the suspension;
 - the suspension: the arrivals of one number of a paid family that reached
-  a Node this interval read the presence there, the amount that arrived
-  this interval over every family and every number but their own, and
-  carry a count, `presence x n // d` intervals at the world's `suspension`
+  a Node this interval read the presence there, everything present this
+  interval over every family and every number but their own (the amount
+  that arrived, the units waiting there among it, and the content of the
+  measured event at the Node, here; the engine forms it), and carry a
+  count, `presence x n // d` intervals at the world's `suspension`
   `[n, d]`; while the count runs they are created here, interval after
   interval, and what arrives behind them joins them and waits with them
   (the next event is delayed); a count is written once, on arrival, never
@@ -47,12 +49,16 @@ engine, `engine.py`, orders them with the measured events):
   arrivals carry goes with its units placed as the momentum does, exact
   (`apportion_carried` on one component), so a slot's content is
   amount x quantum x s while every unit in it was released at one turn s,
-  and the sum over the slots is exact whatever met. The sizes and
-  `phase_at` read per number: what a measured event reads is a bundle of
-  one number.
+  and the sum over the slots is exact whatever met. `sizes` is a reading
+  per Node and number (the shell means); `phase_at` reads the coherent sum
+  over a set of numbers, and what a measured event reads for its window is
+  the one reading set, every number at its Node but its own (the model
+  owner, 2026-09-19).
 """
 
 from __future__ import annotations
+
+from collections.abc import Sequence
 
 import numpy as np
 
@@ -217,21 +223,24 @@ class Transit:
         y = (amplitude * self.sines[phase]).sum(axis=-1)
         return integer_root(x * x + y * y) // PHASE_COSINE_SCALE
 
-    def phase_at(self, position: Address3, rank: int) -> int:
-        """The phase of one number's arrivals at one Node: the nearest step of
-        the coherent sum whose size `sizes` reports, per travel Port the
-        integer root of the amount at its phase, the six summed on the circle
-        (step 0 for a zero sum). What a measured event reads for its phase
-        window and stamps on its records. The tables at 1/256 read a single
+    def phase_at(self, position: Address3, ranks: Sequence[int]) -> int:
+        """The phase of the arrivals of a set of numbers (their ranks) at one
+        Node: the nearest step of their coherent sum, per number and travel
+        Port the integer root of the amount at its phase, all summed on the
+        circle (step 0 for a zero sum; for one number the sum whose size
+        `sizes` reports). What a measured event reads for its phase window
+        and stamps on its records is the one reading set, every number at
+        its Node but its own (the model owner, 2026-09-19); the home record
+        reads its own number alone. The tables at 1/256 read a single
         arrival's step back exactly on a circle of up to 64 steps; on a
         larger circle neighbouring steps can read as one, as in `receive`
         and `place`."""
         assert self.cosines is not None and self.sines is not None
-        cell = (*position, rank)
+        cell = (*position, list(ranks))
         amount, phase = self.arr_amt[cell], self.arr_ph[cell]
         amplitude = integer_root(amount * (MIXING_AMPLITUDE_SCALE * MIXING_AMPLITUDE_SCALE))
-        x = (amplitude * self.cosines[phase]).sum(keepdims=True)
-        y = (amplitude * self.sines[phase]).sum(keepdims=True)
+        x = np.array([(amplitude * self.cosines[phase]).sum()], dtype=np.int64)
+        y = np.array([(amplitude * self.sines[phase]).sum()], dtype=np.int64)
         return int(self._nearest_step(x, y)[0])
 
     def count(self) -> np.ndarray:
@@ -344,9 +353,11 @@ class Transit:
 
     def suspend(self, read: np.ndarray, width: tuple[int, int], arrived: np.ndarray) -> None:
         """The suspension of the arrivals: per Node and number where something
-        arrived this interval, the presence read (per Node and number, the
-        amount that arrived this interval over every family and every number
-        but the reader's own) times the width's numerator over its denominator,
+        arrived this interval, the presence read (per Node and number,
+        everything present this interval over every family and every number
+        but the reader's own: the amount that arrived, the units waiting and
+        the content of a measured event there, formed by the engine) times
+        the width's numerator over its denominator,
         the whole part, is the count the arrivals carry, written once; what
         joins a waiting slot waits with it, the larger count kept. A count
         above zero holds the number's arrivals at the Node this interval."""
