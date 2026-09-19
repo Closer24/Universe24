@@ -50,7 +50,13 @@ a thin periodic board and full 3D matter. Earlier topology descriptions below
 belong to their dated models, not an implicit events-world default.
 
 
-## Active initialization-defined model
+## Initialization-defined model (history: deleted on 2026-09-19)
+
+History marker (2026-09-19): the generic disturbance simulator this section
+describes was deleted on 2026-09-19 with the engines before the law of the ray
+([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+the active contract is [the law of the ray](docs/RAY_LAW.md) with
+[the engine's bookkeeping](docs/ENGINE.md). The text is kept as written.
 
 The canonical Detector-owned sampling contract
 allows draws only at an actual external Detector encounter. Ordinary evolution
@@ -224,9 +230,11 @@ on 2026-09-17.
 Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
 
-**Active contract:** disturbance transfers cross one neighbor link after its
-fixed transit time; updates use already available local records. Extra node delay
-can make propagation slower. There is no global correction at the end of a tick.
+**Contract of the generic disturbance simulator (history: deleted on
+2026-09-19; the active contract is [the law of the ray](docs/RAY_LAW.md)):**
+disturbance transfers cross one neighbor link after its fixed transit time;
+updates use already available local records. Extra node delay can make
+propagation slower. There is no global correction at the end of a tick.
 
 **Not established:** that these local laws suffice for every kind of physical
 consistency, particularly quantum consistency and entanglement.

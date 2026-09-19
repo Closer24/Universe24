@@ -12,7 +12,9 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
-For the active API, read DISTURBANCES.md.
+For the active API, read [the law of the ray](../../docs/RAY_LAW.md) and
+[the engine's bookkeeping](../../docs/ENGINE.md); the generic disturbance
+contract (DISTURBANCES.md) was deleted on 2026-09-19.
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
 to the complete physical dependency path. Report unsupported tensor shapes and
 separately scoped historical paths instead of certifying all code as local.

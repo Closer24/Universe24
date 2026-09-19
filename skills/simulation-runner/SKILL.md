@@ -38,10 +38,11 @@ those research runs; ordinary automated tests remain headless. Execute the fixed
 observable/expectation plan without retuning and retain quantitative discrepancies
 alongside the inspected HTML. A visual match is not physical acceptance.
 
-For primary runs, require the explicit initialization file and read its field,
-disturbance, transport, coupling and cost definitions; see
-DISTURBANCES.md. Missing input must not select an
-implicit historical universe.
+For primary runs, require the explicit world file and read its families,
+measured events, tables and detectors; see [the law of the ray](../../docs/RAY_LAW.md)
+and [the engine's bookkeeping](../../docs/ENGINE.md) (the generic disturbance
+contract, DISTURBANCES.md, was deleted on 2026-09-19). Missing input must not
+select an implicit historical universe.
 
 Follow the shared
 [configuration task scope](../workflow.md#configuration-tasks-and-implementation-scope)

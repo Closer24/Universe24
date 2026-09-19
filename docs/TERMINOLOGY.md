@@ -69,7 +69,15 @@ The terms below are the road to this law: the ray-event model, the law of the
 bit and the law of the shadow. Where an entry names a store, a return, a bit,
 a draw or a shadow, the law of events has none; the entry is history.
 
-## Ray-event terms
+## Ray-event terms (2026-09-17 to 2026-09-18; deleted on 2026-09-19)
+
+History marker (2026-09-19): the ray-event model, the law of the bit and the
+law of the shadow were deleted on 2026-09-19 with the engines before the law
+of the ray ([migration](MIGRATION.md)); the terms below (`ray-event-state-v1`,
+`detector-mark-v1`, `detector-return-v1`, `spatial_fields[i].charge`,
+`charge_totals()`, the ledger's lines) are theirs and name nothing in the
+engine. The active terms are under
+[The law of the ray (2026-09-19)](#the-law-of-the-ray-2026-09-19).
 
 The ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1;
 ray-event model) uses these terms;

@@ -5,6 +5,20 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Cleanup after the law of the ray (2026-09-19)
+
+- The contributor instructions and the definitions that still sent a reader
+  to the deleted generic disturbance contract (docs/DISTURBANCES.md, deleted
+  on 2026-09-19) carry the history marker with the date and the pointer to
+  [the law of the ray](docs/RAY_LAW.md) and [the engine](docs/ENGINE.md):
+  the four skills and the shared workflow that named DISTURBANCES.md as the
+  active contract; SIMULATOR_DEFINITIONS "Active generic disturbance model"
+  (now "Historical ... (deleted on 2026-09-19)") and its display section's
+  pointer; POSTULATES "Active initialization-defined model" and its "Active
+  contract: disturbance transfers ..." line; TERMINOLOGY "Ray-event terms";
+  DETECTOR_REQUIREMENTS' status line; PHYSICAL_FEATURES' schema pointer.
+  No physics text was rewritten; the sections are marked, not deleted.
+
 ### The law of the ray (2026-09-19)
 
 - The engine of the law of the ray, `rays-v1` (the model owner, 2026-09-19,

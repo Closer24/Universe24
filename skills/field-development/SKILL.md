@@ -17,7 +17,9 @@ Before behavior edits, apply [the published-design requirement](../workflow.md#i
 Read [the shared workflow](../workflow.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 
-The active field contract is DISTURBANCES.md.
+The active contract is [the law of the ray](../../docs/RAY_LAW.md) with
+[the engine's bookkeeping](../../docs/ENGINE.md); the generic disturbance
+contract (DISTURBANCES.md) was deleted on 2026-09-19 and is in git.
 Configure identities and supported laws in JSON; do not add field-name branches
 or Python execution to the loader. Whole-record movement, extensive splitting,
 source accounting and paired exchange are distinct contracts.
@@ -36,9 +38,9 @@ For self-field work, inspect every upstream dependency. A local subtraction is
 not local physics if its estimator uses a shadow world, source history or global
 knowledge. Keep persistent source behavior, causal delivery and equal/opposite
 momentum exchange explicit; disabling response is not a self-force solution.
-The two existing ordering policies, `field_phase_first` and `arrival_port_blind`
-in spatial couplings,
-show the required test shape: an isolated straight emitter, a maximum-speed
+The two ordering policies of the deleted engines, `field_phase_first` and
+`arrival_port_blind` in spatial couplings (history: deleted on 2026-09-19),
+showed the required test shape: an isolated straight emitter, a maximum-speed
 turn, a held external-source control and rejected combinations.
 
 Check a minimal failing input first, then an external-source control so a cure
