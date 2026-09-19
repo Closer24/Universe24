@@ -21,6 +21,18 @@ Run one:
 python -m event_universe --init examples/events/one_content.json --output artifacts/one_content
 ```
 
+## The Bell run
+
+The folder [bell/](bell/README.md) holds the ten worlds of the Bell run A2
+under the law of events, written by `bell/make_worlds.py`: one bar of
+21 x 1 x 1, a lamp of `light` at the centre releasing one unit per
+self-creation on +X and on -X, and four counters with phase windows, Alice's
+pair at x = 2 and 1 and Bob's at x = 18 and 19, the settings the only
+difference between the files. `tools/bell_chsh.py` reads their records and
+prints the counts, E, S and every criterion; the register entry is
+[A2, under the law of events (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-law-of-events-2026-09-19):
+S = 2 exactly, the model's limit, as the reviewers predicted.
+
 The isolated tests of the engine are `tests/test_node_mixing.py`,
 `tests/test_event_transit.py`, `tests/test_event_suspension.py`,
 `tests/test_event_clock.py` and `tests/test_event_worlds.py`

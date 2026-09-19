@@ -1,0 +1,169 @@
+{
+  "law": "events",
+  "model_id": "events-bell-a0-b24-v1",
+  "shape": [
+    21,
+    1,
+    1
+  ],
+  "boundary": "open",
+  "ticks": 138,
+  "K": 1048576,
+  "N": 64,
+  "release": [
+    0,
+    1
+  ],
+  "suspension": 0,
+  "families": [
+    {
+      "name": "light",
+      "kind": "paid"
+    },
+    {
+      "name": "counter",
+      "kind": "paid"
+    }
+  ],
+  "measured": [
+    {
+      "position": [
+        10,
+        0,
+        0
+      ],
+      "family": "light",
+      "amount": 1048578,
+      "phase": 0,
+      "fixed": true,
+      "lamp": {
+        "rate": [
+          1,
+          1
+        ],
+        "headings": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "rule": "measure",
+          "phase_window": 0
+        }
+      }
+    },
+    {
+      "position": [
+        1,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "rule": "measure",
+          "phase_window": 32
+        }
+      }
+    },
+    {
+      "position": [
+        18,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "rule": "measure",
+          "phase_window": 24
+        }
+      }
+    },
+    {
+      "position": [
+        19,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "rule": "measure",
+          "phase_window": 56
+        }
+      }
+    }
+  ],
+  "detectors": [
+    {
+      "name": "alice_plus",
+      "positions": [
+        [
+          2,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    },
+    {
+      "name": "alice_minus",
+      "positions": [
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    },
+    {
+      "name": "bob_plus",
+      "positions": [
+        [
+          18,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    },
+    {
+      "name": "bob_minus",
+      "positions": [
+        [
+          19,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    }
+  ]
+}

@@ -11,6 +11,31 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The Bell run A2 under the law of events: S = 2 exactly - 2026-09-19
+
+Base: `1f9f280` on `main` (after PR #335), branch
+`claude/universe24-new-3ytqde`. No engine change: ten worlds
+(`examples/events/bell/`, written by `make_worlds.py`), the analysis
+`tools/bell_chsh.py` and the register entry
+[A2, under the law of events](EXPERIMENTS.md#a2-under-the-law-of-events-2026-09-19).
+The verdict the physicist and the mathematician pinned before the run
+(Highlights 5.4): with a deterministic local phase window CHSH is at most 2
+as an identity on the record, the correlation is the triangle 1 - 4 k / N,
+and the CHSH settings give S = 2 exactly, the model's limit, outcome 1 of A2
+against the 2015 data. A research run, made once; not a test.
+
+| Check | Result |
+| --- | --- |
+| Ten runs of 138 ticks, `python -m event_universe --init examples/events/bell/<name>.json --output artifacts/bell/<name>` | all completed; the books balanced at every completed tick; `escaped` 0 for both families; only `click` and `pass` records; the lamp's momentum [0, 0, 0] at the end; about 0.12 s per run |
+| E over 128 pairs (same / different) | (0, 8) +1/2 (96 / 32), (0, 24) -1/2 (32 / 96), (16, 8) +1/2 (96 / 32), (16, 24) +1/2 (96 / 32); the controls (0, 0) +1 (128 / 0), (0, 32) -1 (0 / 128), (0, 16) 0 (64 / 64); (0, 12) +1/4 (80 / 48), (4, 8) +3/4 (112 / 16), (4, 12) +1/2 (96 / 32): every one as pinned |
+| S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24); S' = E(0, 8) - E(0, 12) + E(4, 8) + E(4, 12) | 2 exactly; 3/2 exactly |
+| The tick offsets read off the record | plus tick = age + 9, minus tick = age + 10, the same in every run |
+| No-signalling | exact: the ages at which `alice_plus` clicks identical across every b for each a, and Bob's across every a for each b |
+| `python tools/bell_chsh.py artifacts/bell` | 326 criteria, 0 failed, exit 0; the negative control (a copy of one run with one click's phase changed by one, not kept) fails the phase criterion and exits 1 |
+| Gates | `ruff check tools tests src`, `ruff format --check tools`, `mypy tools/bell_chsh.py` clean; `pytest -q tests/test_repository_language.py tests/test_repository_hygiene.py tests/test_repository_navigation.py tests/test_configuration_validation.py` 34 passed; `python tools/check.py --base origin/main`: ruff lint and format on the two changed Python files and 80 passed in 63 seconds over `test_architecture`, `test_check_scope`, `test_configuration_validation`, `test_event_worlds` and the three repository gates (the ten worlds sit under `examples/events/bell/`, one level below the glob of the shipped-world preflight test, so they are preflighted by the CLI and by every run, not by that test) |
+
+Runtime source SHA-256 `53a70962c5f2c8c860a0895dbc9d6cb7cf125d53aa3d5f0ce6aa5464c79a87f9`, Python 3.14.0rc2, headless.
+
 ## Test suite reduced to one test per rule - 2026-09-17
 
 Base: main `5df25f3` (after PR #184), branch `cleanup/prune-tests`, merged

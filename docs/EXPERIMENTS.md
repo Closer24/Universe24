@@ -68,8 +68,9 @@ before adoption.
 **Status values.** `planned` (this page, criterion fixed, not run);
 `measured` with date, commit and fingerprint, and the outcome in one word
 (pass, fail, or the named alternative); `withdrawn` by the model owner, dated.
-Today every entry of sections A and B is `planned`; section E holds the dated
-demonstration runs, which confront nothing and are `measured` as made.
+Today every entry of sections A and B is `planned`, except A2 under the law of
+events, `measured` on 2026-09-19 as the model's limit; section E holds the
+dated demonstration runs, which confront nothing and are `measured` as made.
 
 **Conventions.** The board is the cubic Node lattice of Highlights 3.1 with
 its boundary stated per entry; c is one Link per interval; a Detector setting
@@ -465,6 +466,133 @@ states "exactly" and means integer equality at every tick.
   ray carrying 0 never drawn, so the independence of the two draws and the
   fair sample stated above are to be re-derived under that rule by
   hypothesis 11 and A13 before the price is quoted again.
+
+### A2, under the law of events (2026-09-19)
+
+- **Confronts.** As A2: the CHSH inequality, S <= 2 for every local model,
+  and its violation with spacelike settings in the loophole-free
+  experiments of 2015 (Delft, S = 2.42 +- 0.20; Vienna; NIST; the quantum
+  maximum 2 sqrt 2 = 2.828), in the phase form, the settings phases. Made at
+  the model owner's request of 2026-09-19 (Highlights 5.4: "Can we do a
+  Bell experiment with an emitter and two detectors, Alice and Bob? An
+  executing agent does it after the mathematician and the physicist
+  approved. A small board."), after the two reviewers pinned the verdict
+  below and the owner said "Yes to both": the run is made and registered
+  as the model's limit, never as a confrontation the model could pass.
+- **Model prediction, pinned before the run (the physicist and the
+  mathematician, Highlights 5.4, "The principles of the law of events").**
+  With a deterministic local phase window each click is a function of the
+  arriving phase and the local setting alone, so CHSH is at most 2 as an
+  identity on the record; the correlation is the triangle
+  E(a, b) = 1 - 4 k / N with d = (a - b) mod N and k = min(d, N - d); the
+  CHSH settings give S = 2 exactly, the model's limit (outcome 1 of A2
+  against the 2015 data), not a fluctuation.
+- **Features.** The one engine (`events-v1`, [the engine](ENGINE.md)): a
+  lamp of a paid family, detectors of threshold 1 and the phase window
+  (`phase_window`, `tests/test_phase_window.py`). Nothing of the ray-event
+  list above: no draw, no return, no splitter, no polarization.
+- **Run.** `examples/events/bell/` (ten worlds written by `make_worlds.py`,
+  the dictionary in the [README](../examples/events/bell/README.md)), one
+  base world with the settings the only difference: `"law": "events"`, a
+  bar of 21 x 1 x 1, open, K 2^20, N 64 (the phase tables read a single
+  arrival's step exactly only up to N = 64), `release` [0, 1],
+  `suspension` 0, the families `light` (paid) and `counter` (paid), every
+  measured event `fixed`. The lamp of `light` at x = 10, content
+  K + 2 = 1048578 (the release of age a stamped with the phase a mod 64
+  exactly for every age of the run), `phase` 0, one unit per self-creation
+  on +X and on -X, no window (the source cycles the whole circle). Four
+  counters of content 1, each its own detector of threshold 1, the table
+  `{"light": {"rule": "measure", "phase_window": s}}`: `alice_plus` at
+  x = 2 (s = a), `alice_minus` at x = 1 (s = a + 32 mod 64), `bob_plus` at
+  x = 18 (s = b), `bob_minus` at x = 19 (s = b + 32 mod 64). The unit
+  released on -X reaches x = 2 after 8 Links; outside the window a it
+  passes (a `pass` record) and reaches x = 1 at the next interval, where
+  the complement takes it: the two windows of a side cover the circle
+  exactly, so every unit clicks exactly once per side and nothing escapes.
+  A pair is the two releases of one age of the lamp; A = +1 for a click at
+  `alice_plus`, -1 at `alice_minus`, B likewise; the age of a click is its
+  tick less its Node's offset, read off the record itself (the earliest
+  click at a Node is the smallest age its window admits, whose phase is
+  that age). 128 pairs analysed, the ages 0..127 (two full circles, so E is
+  exact for any multiple of N / 2); `ticks` 138, so that the last minus
+  click of age 127 (tick 137) is on the record, the ages 128 and after,
+  still in flight, excluded. The settings: the CHSH quadruple
+  (a, b) = (0, 8), (0, 24), (16, 8), (16, 24); the controls (0, 0), (0, 32),
+  (0, 16); the non-saturating quadruple (0, 12), (4, 8), (4, 12) with
+  (0, 8) reused. Static settings, no last-moment choice. Recorded per run:
+  `run.json` (`audit`, `conserved_at_every_completed_tick`, `escaped`,
+  `measured`, `detectors`) and `events.jsonl` (the `click` and `pass`
+  records with their `detector`, `tick` and `phase`), read by
+  `tools/bell_chsh.py` (standard library, `fractions.Fraction`, no float
+  in a criterion), which prints the table and every criterion and exits
+  nonzero on a failure. The commands: `python
+  examples/events/bell/make_worlds.py`; for each of the ten worlds `python
+  -m event_universe --init examples/events/bell/<name>.json --output
+  artifacts/bell/<name>`; `python tools/bell_chsh.py artifacts/bell`.
+- **Expected (written before the run).** Per run at 128 pairs,
+  E = 1 - 4 k / 64: (0, 8) k 8, E +1/2, same 96 and different 32; (0, 24)
+  k 24, -1/2, 32 and 96; (16, 8) k 8, +1/2, 96 and 32; (16, 24) k 8, +1/2,
+  96 and 32; S = E(0, 8) - E(0, 24) + E(16, 8) + E(16, 24) = 2 exactly. The
+  controls: (0, 0) E +1, 128 and 0; (0, 32) E -1, 0 and 128; (0, 16) E 0,
+  64 and 64. The non-saturating quadruple: (0, 12) k 12, E +1/4, 80 and
+  48; (4, 8) k 4, +3/4, 112 and 16; (4, 12) k 8, +1/2, 96 and 32;
+  S' = E(0, 8) - E(0, 12) + E(4, 8) + E(4, 12) = 1/2 - 1/4 + 3/4 + 1/2
+  = 3/2 exactly (the cosine of the phase difference at the same settings
+  would give 2.828 and 1.739). Every run: the books balanced at every
+  completed tick; `escaped` 0 for both families; each windowed Node clicks
+  on exactly 64 of the 128 analysed pairs; exactly one outcome per side
+  per age; no `home`, `read`, `rerelease`, `step`, `merged` or `escaped`
+  record; the lamp's momentum [0, 0, 0] at the end (its two recoils cancel
+  at each self-creation); every click's phase equal to its age mod 64 and
+  inside its Node's window (d = (phase - s) mod 64 below 16 or from 48);
+  every pass at a plus Node, outside its window, clicking at the minus
+  Node next; the offsets plus tick = age + 9, minus tick = age + 10.
+  No-signalling, exact: the set of ages at which `alice_plus` clicks
+  identical across all runs with the same a whatever b, and Bob's likewise
+  for the same b.
+- **Criterion.** Every expectation is exact; a deviation is a defect of
+  the engine, the width or the bookkeeping, to be reproduced minimally and
+  reported, never tuned away. A2's verdict applies: S at or below 2 is
+  outcome 1 against the 2015 data, the model's stated limit.
+- **Result (2026-09-19, commit `1f9f280` on `main`, source fingerprint
+  `53a70962c5f2c8c860a0895dbc9d6cb7cf125d53aa3d5f0ce6aa5464c79a87f9`,
+  Python 3.14.0rc2, headless, about 0.12 s per run).** Every count as
+  pinned. The four counts (++, +-, -+, --) over the 128 pairs and E:
+  (0, 8) 48, 16, 16, 48, E +1/2; (0, 24) 16, 48, 48, 16, E -1/2; (16, 8)
+  48, 16, 16, 48, E +1/2; (16, 24) 48, 16, 16, 48, E +1/2;
+  S = 1/2 + 1/2 + 1/2 + 1/2 = 2 exactly. The controls: (0, 0) 64, 0, 0,
+  64, E +1; (0, 32) 0, 64, 64, 0, E -1; (0, 16) 32, 32, 32, 32, E 0. The
+  non-saturating quadruple: (0, 12) 40, 24, 24, 40, E +1/4; (4, 8) 56, 8,
+  8, 56, E +3/4; (4, 12) 48, 16, 16, 48, E +1/2; S' = 3/2 exactly. The
+  offsets read off the record: plus tick = age + 9, minus tick = age + 10,
+  the same in every run. `tools/bell_chsh.py`: 326 criteria checked, 0
+  failed, in every run the books balanced at all 138 ticks, nothing
+  escaped, only `click` and `pass` records, the lamp at the end at age 138,
+  phase 10, content K + 2 - 276, momentum [0, 0, 0], with 16 or 17 units
+  in flight and every unit in the books; each plus Node also met the ages
+  128 and 129 (ticks 137 and 138), clicked or passed by its window and
+  excluded. No-signalling exact: Alice's click ages the same for a = 0
+  across b in 0, 8, 12, 16, 24, 32, for a = 4 across b in 8, 12, for
+  a = 16 across b in 8, 24; Bob's likewise for each b. A negative control
+  of the analysis, not kept: one click's phase changed by one in a copy of
+  a run fails the phase criterion and exits 1.
+- **Verdict.** S = 2 exactly at the CHSH settings, the model's limit,
+  outcome 1 of A2 against the 2015 data (Delft S = 2.42 +- 0.20; the
+  quantum 2.828 at these settings), as the reviewers predicted before the
+  run: the correlation is the triangle 1 - 4 k / N at every setting
+  measured, not the cosine, and the non-saturating quadruple gives 3/2
+  where the cosine would give 1.739. Not a law of nature; the model's
+  stated limit, recorded.
+- **Limits.** Static settings declared in the world, no last-moment
+  choice (the bound here is an identity on the record, so no choice would
+  change it); single units, one per interval per heading, the trivial
+  regime of the law (no mixing, no suspension, a bundle of one at
+  threshold 1), so nothing of the crowd's physics is exercised; N = 64;
+  a bar of 21 Nodes with the sampling total by construction, every unit
+  clicking once per side; no state of the pair beyond one phase stamped
+  on both units.
+- **Status.** measured, 2026-09-19: the model's limit (outcome 1), as
+  A2's criterion states.
 
 ### A3. Bell test in phase form, delayed geometry
 
