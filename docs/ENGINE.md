@@ -67,7 +67,15 @@ candidates (`transit.nearest_step`, `step_window`).
    clock does not tick). The events of a paid family that arrived this interval
    read the free families' sizes at their Node and carry the same count
    (`Transit.suspend`, written once on arrival; what joins a waiting slot waits
-   with it, the larger count kept: the next event is delayed).
+   with it, the larger count kept: the next event is delayed). The size read is the
+   Node's, formed from the arrivals per Port and the same for the six exits,
+   and the wait is the seventh exit, here: after the count the Node computes
+   the held arrivals again with what joined them. Nothing is read per exit
+   Port: the free family's leaving shares are directed (four ninths back
+   toward its source for a lone arrival), so a count read at an exit would
+   slow an event by its heading, which no detector reads of a static field;
+   the same count on every exit is the isotropic index a detector reads
+   (Highlights 5.4, 2026-09-19, the rule proposed and withdrawn).
 3. A measured event meets the events that arrive at its Node (`_meet`): its
    own number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
