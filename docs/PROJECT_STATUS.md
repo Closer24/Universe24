@@ -48,10 +48,14 @@ one-opening control monotone.
 
 **What is open, by whose hand:**
 
-- The model owner's: the Bell setup and polarization as worlds and tables; a
-  decay as a table on a measured event; the mass ladder under this law; the
-  value of ρ and of the suspension's width; whether a detector's threshold is
-  wanted in a world.
+- The model owner's: a decay as a table on a measured event; the mass ladder
+  under this law; the value of ρ and of the suspension's width. Decided the
+  same day: a detector's threshold gates every response of its Nodes,
+  receivers and re-emitters alike (`test_detector_sensitivity`); `phase_window`
+  approved as a declared width of a detector and of a lamp, the setting of the
+  Bell run (Highlights 5.4), its feature with its isolated test and the run of
+  A2 on a small board pending, the run designed by the physicist and the
+  mathematician.
 - Derived and not solved: no inertia for a co-moving pair at first order in v
   (DERIVATIONS.md section 54); Bell at most 2; a single quantum does not
   interfere with itself, interference being of many of one number.
