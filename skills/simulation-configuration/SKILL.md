@@ -5,6 +5,12 @@ description: Check, author and explain Universe24 JSON configurations for space,
 
 # Configure a simulation
 
+> **One engine (2026-09-19).** A run is a world file of the law of the shadow
+> (`"law": "shadow"`; [the law](../../docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1),
+> [the worlds](../../examples/shadow/README.md)). The schema this Skill and its
+> guide describe (fields, disturbance types, seeds, spatial fields, couplings)
+> is the old engine's, deleted on 2026-09-19; use it only to read the history.
+
 For a check request, return the existing file's validation report. For authoring,
 produce a validated initialization file, its reusable dependencies, an exact run
 command, and display settings when requested. Apply the shared

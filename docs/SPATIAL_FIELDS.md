@@ -1,14 +1,22 @@
 # Configured outward spatial fields
 
+> **One engine (2026-09-19).** The live contract in this document is its last
+> section, [The law of the shadow](#the-law-of-the-shadow-field-only-v1), the
+> field-only engine `field-only-v1`. Every section before it describes the old
+> engine's candidates, from the outward spatial fields to the law of the bit,
+> deleted on 2026-09-19 ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> they are the record of the road to the law, and their links to code, worlds
+> and tests name files that no longer exist.
+
 These optional candidates separate a carried disturbance from the spatial fields
 it emits. Select fields through `spatial_fields` in initialization. Schema version
 1 selects `conservative-outward-v1`, with conservative transport and unlimited
 declared emission; its example is
-[moving_source.json](../examples/moving_source.json). Schema version 2 requires
+moving_source.json. Schema version 2 requires
 finite decay and source allowances and selects `finite-localizing-v1` by default:
 attenuated fractions become stationary stock at the receiving Node, so total
 signed inventory is preserved. Its example is
-[finite_fields.json](../examples/finite_fields.json). The explicit
+finite_fields.json. The explicit
 `"residue": "dissipate"` option selects the historical `finite-dissipative-v1`
 loss law instead. Names such as `radiation`,
 `strength` and `heading` remain configuration data. The runner derives the policy
@@ -617,7 +625,7 @@ that writes `bit`); a world that declares neither runs the same rule with
 its defaults and its record is what it was, byte for byte, unless a marked
 ray reaches a second mark (a `detector_pass` line, no draw) or meets another
 ray (the outputs carry the bit). The viewer
-([`tools/ray_viewer/extract.py`](../tools/ray_viewer/README.md)) reads
+(`tools/ray_viewer/extract.py`) reads
 `detector_pass` as the event kind `pass`, a marker listed in the captions
 like a click, and carries each ray's `bit` (`null`, 0 or 1) in `runs.json`.
 `test_detector_bit_property.py`
@@ -715,7 +723,7 @@ mode](#the-dense-mode-dense-field-v1) a mark is the engine's Node, so the
 absorption happens in the engine's delivery, and a dense world with a counting
 mark gives the same `state.json`, ledger and marks as the engine alone
 (`test_dense_field.py`, the `counter` case). The viewer
-([`tools/ray_viewer/extract.py`](../tools/ray_viewer/README.md)) ends the ray
+(`tools/ray_viewer/extract.py`) ends the ray
 at the mark on a click that absorbed ("Detector PASS, absorbed", the
 `absorbed` amount on the marker and on each `eye.clicks` entry), gives the
 transit into the mark the amount the receiver's reading leaves out, takes what
@@ -1959,7 +1967,7 @@ all), its period, its clock (the phase advance per interval of each family,
 read from the recorded phases) and the ticks it was read over; the run
 document lists `groups`, each ray carries its `group`, each tick row its
 `bound` content, which the viewer draws as matter
-([ray viewer](../tools/ray_viewer/README.md)). On `ring.json` the reading
+(ray viewer). On `ring.json` the reading
 is one group on the unit square, content 8, period 4, clock 2 on the 8-step
 circle, from tick 1; on `ring_open.json` none.
 
@@ -2081,7 +2089,7 @@ summing to zero, so every line of the [world
 ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1) stays
 exact, the charge lines with them (a family's sourced charge is its charge
 times that amount). A rule without `draw` keeps every family's stock as
-before; the generic key the [dictionary](../examples/nature/README.md)
+before; the generic key the dictionary
 states for such a rule (`"stock": "converted"` with a `converted` line of
 the audit) stays open.
 
@@ -3797,7 +3805,7 @@ records `finite-localizing-v1` when every spatial field localizes, otherwise
 The schema 1 conservation audits do not cover schema 2; the engine accounting
 `balanced` flag and the runner's conservation flag check the preserved total.
 This is a configured integer law, not a derived particle or absorption model.
-In [finite_fields.json](../examples/finite_fields.json) every emitted unit ends
+In finite_fields.json every emitted unit ends
 at rest at a known Node with zero dissipation.
 
 ## Event order and cost

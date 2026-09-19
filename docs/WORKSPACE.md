@@ -1,5 +1,12 @@
 # Local simulation workspace
 
+> **One engine (2026-09-19).** The workspace lists the worlds of
+> `examples/shadow/` as its templates, checks a draft with the world parser and
+> runs it headless; the recorded playback ("Run & watch") went with the old
+> engine's renderer ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+> The forms and names below that speak of fields, disturbance types and seeds
+> describe the old schema.
+
 The workspace selects and edits initialization-defined simulations using the
 same [JSON contract](DISTURBANCES.md) and validator as the CLI. It does not supply
 another engine or infer laws from field names.

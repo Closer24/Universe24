@@ -1,8 +1,15 @@
 # Generic local field response
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 The optional `spatial_couplings` list connects a carried field to local spatial
 input. It selects integer operations, not physical identities. The complete
-turning example is [spatial_turning.json](../examples/spatial_turning.json).
+turning example is spatial_turning.json.
 Transport and source ownership remain defined in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md).
 That example uses schema 1. Schema 2 keeps the same local operations but requires
 a finite `budget` on every spatial coupling and decay on every spatial field.

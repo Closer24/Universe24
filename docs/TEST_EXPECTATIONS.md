@@ -11,6 +11,47 @@ research runs, made once and recorded with a fingerprint and a date in
 before that date describe the suite as it was and are brought under the rule
 when their tests change.
 
+## Suite inventory of 2026-09-19: one engine
+
+Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+the status line of the law of the shadow): the field-only engine is the one
+engine and the old engine is deleted without the confrontation runs; "only
+tests that everything is as designed". The suite keeps one module per generic
+rule of the engine, on a minimal board, and the repository gates. The deleted
+modules are named in the [migration note](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted).
+
+| Module | Rule isolated |
+| --- | --- |
+| `test_field_only.py` | The law of the shadow on minimal boards: the books, the fixed point and Gauss's flux, the shell means, the pair's pushes and the product law, the slits, the wait, the refusals, the nearest step, the step by the accumulators ([below](#the-law-of-the-shadow)) |
+| `test_node_mixing.py` | The Node's mixing on one Node of the engine's layer: the 3B_h rule, the coherent sum, the largest remainder, the parked ninths and their release, the momentum carried ([below](#the-nodes-mixing-on-one-node)) |
+| `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
+| `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
+| `test_integer_arithmetic.py` | The shared bounded integer primitives |
+| `test_retention.py` | Generated-output ownership, lifetime and cleanup |
+| `test_check_scope.py` | The affected-check's selection |
+| `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
+| `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
+
+## The Node's mixing on one Node
+
+`tests/test_node_mixing.py` isolates `node-mixing-v1` (Highlights 5.4, point
+24) and the remainder rule (point 22) on one Node of the engine's layer
+(`ShadowLayer` of shape (1, 1, 1), one number, N = 8, no phase turn in
+flight), through the kernels of `event_universe/shadow/mixing.py`. The
+integers, written down before the first run, are those the old suite pinned
+on 2026-09-18 through the old engine's scalar rule, which the kernels
+reproduce byte for byte:
+
+| Case | Arrivals (Port, amount, phase) | Departures per Port [+X, -X, +Y, -Y, +Z, -Z] | Phases | Parked ninths |
+| --- | --- | --- | --- | --- |
+| (a) a lone arrival | +X 9 at 0 | 1, 4, 1, 1, 1, 1 | 0, 4, 0, 0, 0, 0 | none |
+| (b) two equal, in phase | +X 9 at 0; -X 9 at 0 | 1, 1, 4, 4, 4, 4 | 4, 4, 0, 0, 0, 0 | none |
+| (c) two equal, in antiphase | +X 9 at 0; -X 9 at 4 | 9, 9, 0, 0, 0, 0 | 0, 4, 0, 0, 0, 0 | none |
+| (d) two on one heading | +X 9 at 0 and 9 at 2 | 2, 8, 2, 2, 2, 2 | 1, 5, 1, 1, 1, 1 | none |
+| (e) unequal | +X 24 at 0; -X 8 at 2 | 6, 11, 3, 3, 3, 3 | 7, 4, 1, 1, 1, 1 | 2, 5, 5, 5, 5, 5 at those phases |
+| (f) the remainder rule | +X 5 at 0, twice | 0, 2, 0, 0, 0, 0 each time | 0, 4, 0, 0, 0, 0 | 5, 2, 5, 5, 5, 5 then 10, 4, 10, 10, 10, 10; the release 1, 0, 1, 1, 1, 1 leaves 1, 4, 1, 1, 1, 1 |
+| (g) the momentum carried | +X 9 at 0 carrying (9, 0, 0) | 1, 4, 1, 1, 1, 1 | | none; the x momentum 1, 4, 1, 1, 1, 1 with the departures, the sum (9, 0, 0) |
+
 ## Suite inventory of 2026-09-17
 
 Decision of the model owner, 2026-09-17: the engine is generic, so the suite
@@ -434,7 +475,7 @@ quantum event network, the origin cells and their suites went the same day.
 
 ## Local field impulse and node ownership
 `tests/test_node_state_contract.py` verifies formula-free evolving state on the
-[local field impulse input](../examples/local_lorentz_field.json) and rejects
+local field impulse input and rejects
 injected ASTs, laws, callbacks and formula strings. The pulse-behavior modules
 `test_local_lorentz_field.py` and `test_lorentz_response_physics.py` were
 deleted on 2026-09-17; see [the scoped candidate contract](LOCAL_LORENTZ_FIELD.md).
@@ -442,7 +483,7 @@ deleted on 2026-09-17; see [the scoped candidate contract](LOCAL_LORENTZ_FIELD.m
 ## Executable entity and conversion expectations
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
 defaults, causal/delayed commits and rejected invalid balances or carried progress
-on the [catalog conversion input](../examples/known-entities/conversion.json),
+on the catalog conversion input,
 and that an `interactions` entry with `outputs` (the N-to-M conversion of
 records, deleted on 2026-09-17 with issue #164 bucket B.6) is rejected at
 initialization. The catalog compiler, profile and family-conversion modules were
@@ -1899,7 +1940,7 @@ admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
 the six unit-axial headings) on an open 5 x 3 x 3 board with an 8-step phase
 advancing 1 per Link, runs it for six ticks through `run_initialization`
 headless, and reads the record back with `tools/ray_viewer/extract.py`
-([ray viewer](../tools/ray_viewer/README.md)), which never imports the
+(ray viewer), which never imports the
 simulator. Lamp A at (1,1,1) holds 3 quanta and emits 3 through +X with phase
 0; lamp B at (3,1,1) holds 3 and emits 3 through -X with phase 4; each
 recoils into its own momentum. The one declared coupling, `swap_headings`,
@@ -3269,7 +3310,7 @@ the first run. Pinned before the first run:
   momentum booked at any corner in the cycle of tick 2; the final totals
   are electron 8 and momentum (0, 0, 0) for (a), electron 0 with 8 escaped
   for (b). The ray viewer's extractor
-  ([ray viewer](../tools/ray_viewer/README.md)), reading the record of (a)
+  (ray viewer), reading the record of (a)
   with its phase recording (`record_sidecar.py`), reports exactly one
   group: ring `[P0, P1, P2, P3]` (the closed walk from the lowest Node
   through the lowest Port), ring size 4, content 8, families
@@ -3317,7 +3358,7 @@ Re-pinned on 2026-09-18 in the cleanup under the law of the bit (`cleanup-law-v1
 
 Re-pinned on 2026-09-18 under `clock-readings-v1`: a ray declares `content` (its rung, the former rest rate in m_0) and `clock`, the units name `content` and the world's `K`, `mass_field` and `mass_field_delay` are retired (11 rays, 15 couplings, 25 undecided entries, A6 no longer a decider), `weak_conversion` declares `decay.after_periods` (undecided, A9) and no `draw`, the neutron's decay names its coupling alone, and the apparatus family declares content 0 and no clock; the worlds case stays skipped (the field families' textual migration is in the feature's remaining list).
 
-`test_nature_catalog.py` reads [`catalog/nature.json`](../catalog/nature.json)
+`test_nature_catalog.py` reads `catalog/nature.json`
 ([catalog of nature](CATALOG.md)) through the strict decoder and builds its
 boards inline from the file under the shared Detector admission (schema 1,
 `link_ticks` 1, `metric: "links"`, pace 1/1, no decay, the six unit-axial

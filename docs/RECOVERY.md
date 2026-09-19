@@ -7,7 +7,7 @@ Clone the canonical repository and follow [installation](../README.md#install-an
 using the Python version in `.python-version`. Dependencies and entry points are
 declared in `pyproject.toml`; an installed virtual environment is not backed up.
 
-Run the [known-entity environment](../examples/known-entities/README.md) using the
+Run the known-entity environment using the
 existing interpreter after setup. Configuration edits do not require compilation.
 Use `python tools/check.py` for changed code and its affected consumers.
 

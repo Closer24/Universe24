@@ -1,6 +1,13 @@
 # Catalog of nature
 
-[`catalog/nature.json`](../catalog/nature.json) is the catalog of nature: the
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
+`catalog/nature.json` is the catalog of nature: the
 data file that declares what exists on the board of the one generic engine, by
 the model owner's decision of 2026-09-17 ([Highlights](HIGHLIGHTS.md) 3.26 and
 3.30). It is exactly two things:

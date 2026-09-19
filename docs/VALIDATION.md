@@ -852,7 +852,7 @@ not derived electromagnetic or quantum dynamics.
 
 ### Memory and architecture
 
-The reproducible host probe is [profile_node_vectors.py](../tools/profile_node_vectors.py):
+The reproducible host probe is profile_node_vectors.py:
 
 ```sh
 python tools/profile_node_vectors.py . artifacts/node-vector-memory/report.json
@@ -1150,7 +1150,7 @@ remain absent; their spatial-field composition is explicitly unsupported.
 ## Physical inventory and elementary probes — 2026-09-12
 
 Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced
-[entity catalog](../examples/known-entities/catalog.json) contains 11 field
+entity catalog contains 11 field
 categories and 35 particle/multiplet entries. These are inventory entries,
 not a count of implemented physical fields. Its definitions and support
 assessment are explained in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).

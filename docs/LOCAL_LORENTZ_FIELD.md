@@ -1,7 +1,14 @@
 # Local field impulse and formula-free NodeState
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 The active `Simulation` can run
-[the local pulse configuration](../examples/local_lorentz_field.json) without a
+the local pulse configuration without a
 new physical engine or compilation. It uses the existing
 [local field framework](LOCAL_FIELD_RULES.md), not the standalone instantaneous
 Fourier reference. This candidate is named `configured-local-lorentz-pulse-v1`.
@@ -56,8 +63,8 @@ shared immutable definitions; frozen pending before/after values and deltas are
 state, not executable formulas. There is no ban on mathematics in shared generic
 field/dynamics components or configured entity laws.
 
-[The canonical read-only guard](../src/event_universe/diagnostics/node_contract.py)
-walks the full reachable NodeState graph. [Its tests](../tests/test_node_state_contract.py)
+The canonical read-only guard
+walks the full reachable NodeState graph. Its tests
 inspect declared state fields as well as live Nodes, pending transactions and
 packets, and inject forbidden objects to verify rejection. The old
 `diagnostics/node_contract.py` path remains only as an explicit compatibility

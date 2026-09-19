@@ -1,5 +1,12 @@
 # Generic integer Node processor
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 This implements the bounded local execution part of [task 82](https://github.com/Closer24/Universe24/issues/82).
 The configuration opts in with `node_execution: true`. Existing configurations
 retain their existing timing. It is one execution path in the active engine,
@@ -156,15 +163,15 @@ and the fixed outgoing degree; it does not grow with elapsed event history.
 
 ## Reproducible configurations
 
-- [Six records](../examples/node-vector/six-records.json): a frozen six-role cyclic
+- Six records: a frozen six-role cyclic
   permutation, with k=3 and eight registers per carrier. Initial declared totals
   are energy 21, momentum (3, 0, 0), charge 0 and angular momentum (0, 15, 0).
-- [Two fields](../examples/node-vector/two-fields.json): one carrier exchanges its
+- Two fields: one carrier exchanges its
   first vector with the second local field, with k=2. Joint initial totals are
   energy 7 and zero momentum, charge and angular momentum. The other field remains
   independently addressable. The rule is an explicit register swap, not an
   inferred electromagnetic force.
-- [Joint reaction](../examples/node-vector/joint-reaction.json): two carriers and
+- Joint reaction: two carriers and
   two local fields rotate four vectors from one snapshot with k=3. Independently
   defined squared-length and vector-sum readouts remain 34 and (4, 6, 2). The
   configuration calls these readouts energy and momentum; this tests the generic

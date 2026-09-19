@@ -43,8 +43,8 @@ New active location identifiers use `node`, `nodes` and `NodeState`.
 | Scope | Authoritative source |
 | --- | --- |
 | Canonical names and state vocabulary | [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md) |
-| Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
-| Generic initialization, disturbance laws or local delay | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
+| Any physical behavior or hypothesis | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) section 5.4 (the law), [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
+| The world file, the engine's steps and its record | [docs/SPATIAL_FIELDS.md](docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1) and [examples/shadow/README.md](examples/shadow/README.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Test coverage and numerical expectations | [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
@@ -121,9 +121,8 @@ responsibilities. Keep renames, consumers, migration notes and the
 - Field, response, movement and transit calculations belong in generic components.
   Models select policies and compose components without copying formulas. The engine
   schedules work and validates contracts.
-- The active Simulation requires initialization-defined disturbance types and
-  fields. Do not branch on physical field names or reintroduce an implicit scalar
-  default.
+- The engine requires world-defined families, contents and tables. Do not
+  branch on physical names or reintroduce an implicit default.
 - Displays and measurements only read state. Runs and tests are headless unless
   visualization is explicitly requested. Do not capture frames or load render
   dependencies in the ordinary runner path; see the definitions display contract.

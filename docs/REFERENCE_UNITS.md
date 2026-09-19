@@ -1,9 +1,16 @@
 # Physical reference units and integer authoring
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 The canonical shared registry is
-[physical-units.json](../examples/known-entities/physical-units.json).
+physical-units.json.
 It defines SI base dimensions, named unit scales and sourced constants once.
-[reference_units.py](../src/event_universe/reference_units.py) resolves those
+reference_units.py resolves those
 definitions and prepares bounded Scalar/Vector values. It is a host authoring
 tool, outside physical stepping, costs, delays and state. It is not an automatic
 unit conversion inside the engine or a new physical law.

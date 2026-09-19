@@ -1,5 +1,12 @@
 # Physical entities and discrete support
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 The quantum-mode definitions of the 46 entries (`docs/QUANTUM_ENTITIES.md` and
 the `quantum_profile` members of the representation probes) were deleted on
 2026-09-17 with the shared quantum resource. Missing physical dynamics remain
@@ -7,7 +14,7 @@ missing: the classical probes are not a Standard Model field theory or a
 derivation of particle properties.
 
 
-The entity inventory is [catalog.json](../examples/known-entities/catalog.json).
+The entity inventory is catalog.json.
 It contains sourced physical properties, field/excitation links, 17 interaction
 families and 33 representative channels, without executable formulas. Alongside
 the 11 field families and 35 particle records, 14 disturbance families describe
@@ -40,7 +47,7 @@ target continuum equation. Physical equations may be independent external
 validation targets. A successful finite example establishes only its stated
 local mechanism and measured outcome.
 
-The older [unequal-mass collision](../examples/04-unequal-mass-collision.json)
+The older unequal-mass collision
 contains a configured elastic formula. It remains a reference benchmark, not
 evidence that the new elementary rules derived that formula. The new examples
 below do not use it to generate their updates.
@@ -119,8 +126,8 @@ outside these probes.
 
 | Input | Elementary operation | What its result can establish |
 | --- | --- | --- |
-| [discrete-pair.json](../examples/known-entities/discrete-pair.json) | Two equal-mass classical charged proxies exchange their momentum vectors at a selected head-on contact | Positive masses and opposite charges persist; the vectors reverse for the symmetric input while their total and squared-norm sum remain unchanged |
-| [field-channel.json](../examples/known-entities/field-channel.json) | A node moves two transverse vector payloads into one chosen outgoing port, retaining zero | Each payload has one owner and arrives only after the full link time; two-component representation works without a neighboring-state read |
+| discrete-pair.json | Two equal-mass classical charged proxies exchange their momentum vectors at a selected head-on contact | Positive masses and opposite charges persist; the vectors reverse for the symmetric input while their total and squared-norm sum remain unchanged |
+| field-channel.json | A node moves two transverse vector payloads into one chosen outgoing port, retaining zero | Each payload has one owner and arrives only after the full link time; two-component representation works without a neighboring-state read |
 | family-conversion (`examples/family-conversion/`, deleted on 2026-09-17) | N-to-M conversions declared between catalog electron, positron and photon families (values from the catalog through the authoring adapter) replace two records by two or three according to their energies, with a `when` threshold and summed invariants | The smallest change that closes the entity audit's gap: threshold conversion with `when` on energy plus invariants behaves as declared with exact totals. Still excluded: no nucleus or bound state, no binding energy, no field-mediated 1 -> 2 pair production; the rules remain supplied kinematics |
 
 The pair is a restricted non-annihilating classical model, not an electron/positron

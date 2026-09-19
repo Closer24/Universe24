@@ -20,7 +20,7 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 
 from event_universe.configuration_validation import validate_configuration
-from event_universe.initialization import parse_json_document
+from event_universe.json_documents import parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 if sys.platform == "win32":
@@ -40,14 +40,14 @@ def validate_source(source: object) -> dict[str, object]:
     """Use the same strict data validator as the CLI, without executing a simulation."""
     if not isinstance(source, str) or len(source.encode("utf-8")) > MAX_REQUEST:
         raise ValueError("configuration must be JSON text no larger than 1 MiB")
-    report = validate_configuration(source, kind="initialization")
+    report = validate_configuration(source, kind="shadow")
     if not report.valid:
         raise ValueError(report.issues[0].message)
     return report.summary
 
 
 def default_configs() -> Path:
-    source = Path(__file__).resolve().parents[2] / "examples"
+    source = Path(__file__).resolve().parents[2] / "examples" / "shadow"
     return source if source.is_dir() else Path(sys.prefix) / "share/event-universe/examples"
 
 
@@ -177,6 +177,8 @@ class Workspace:
         summary = validate_source(source)
         if type(visualize) is not bool or type(stride) is not int or stride < 1:
             raise ValueError("visualize must be a boolean and frame_stride a positive integer")
+        if visualize:
+            raise ValueError("the engine runs headless: a run records no movie")
         assert isinstance(source, str)
         with self.lock:
             for job in self.jobs.values():
@@ -203,11 +205,7 @@ class Workspace:
                 str(initialization),
                 "--output",
                 str(destination),
-                "--frame-stride",
-                str(stride),
             ]
-            if visualize:
-                command.append("--visualize")
             environment = os.environ.copy()
             package_root = str(Path(__file__).resolve().parent.parent)
             environment["PYTHONPATH"] = package_root + os.pathsep + environment.get("PYTHONPATH", "")

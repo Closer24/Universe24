@@ -1,18 +1,6 @@
-"""Generic local disturbance simulation defined by initialization data."""
+"""Universe24: the field-only engine of the law of the shadow, defined by a world file."""
 
-from importlib import import_module
-from typing import Any
-
-from .core.disturbance_state import InitialState
-from .disturbance_api import Simulation
+from event_universe.shadow import SHADOW_LAW, ShadowSimulation, ShadowWorld, parse_shadow_world
 
 __version__ = "0.2.0"
-__all__ = ["InitialState", "Simulation", "load_initial_state", "__version__"]
-
-
-def __getattr__(name: str) -> Any:
-    """Load the initialization parser on demand, keeping the package import light."""
-    modules = {"load_initial_state": ".initialization"}
-    if name not in modules:
-        raise AttributeError(name)
-    return getattr(import_module(modules[name], __name__), name)
+__all__ = ["SHADOW_LAW", "ShadowSimulation", "ShadowWorld", "parse_shadow_world", "__version__"]

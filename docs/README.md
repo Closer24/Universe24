@@ -5,18 +5,35 @@ Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured
 result are different claims. Revision-specific results are not a live status feed.
 
-## Active implementation contracts
+## The engine
+
+Since 2026-09-19 there is one engine, the field-only engine of the law of the
+shadow (`field-only-v1`; the model owner's decision, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector)).
 
 | Document | Responsibility |
 | --- | --- |
-| [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Scalar, Vector, Port, Link, Event and LocalRule vocabulary, the ray-event terms and the terms of the law of the bit (thing, shadow, owner, mixing, lane) |
-| [Physical reference units](REFERENCE_UNITS.md) | Shared constants, SI dimensions and bounded Scalar/Vector authoring with explicit encoding error |
+| [The law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1) | The world file, the interval's steps, the wait, the books and the record, as implemented; the sections before it are the history of the old engine |
+| [The worlds](../examples/shadow/README.md) | One content, two contents, two slits and the one-slit control: what each reads |
+| [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Port, Link, Event and LocalRule vocabulary, the terms of the law (content, quantum, event, family, table) and the historical terms of the law of the bit |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
+| [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight of a world file |
+| [Migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted) | What was deleted with the old engine on 2026-09-19, what moved, and what changed for a user |
+
+## Historical contracts of the old engine (deleted on 2026-09-19)
+
+The engine these documents describe, the law of the bit and the generic
+disturbance simulator before it, was deleted on 2026-09-19
+([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+They are kept as the record of what was built and measured; none of them
+describes code in this checkout.
+
+| Document | Responsibility |
+| --- | --- |
+| [Physical reference units](REFERENCE_UNITS.md) | Shared constants, SI dimensions and bounded Scalar/Vector authoring with explicit encoding error |
 | [Local Focus](LOCAL_FOCUS.md) | Optional carrier scheduling, exact-equivalence scope, wake conditions and host memory |
 | [Integer Node processor](NODE_VECTOR_PROCESSOR.md) | Opt-in rule durations, indexed interactions, aggregation and pre-commit readout guards |
-| [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
-| [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
-| [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
+| [Disturbances](DISTURBANCES.md) | The old initialization schema, transport, expressions and transactions |
+| [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting of the old engine, and the candidates that led to the law (its last section is the live one) |
 | [Ray-event model](RAY_EVENT_MODEL.md) | Design candidate `ray-event-model-v1`: ray as an event trajectory carrying a phase and its step count, a meeting of rays as the only interaction, Detector as pass-or-return, carried pair bit, fields and matter as rays; adopted target direction of 2026-09-17, migration steps 2 ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1), `ray-event-state-v1`) and 3 ([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1), `detector-mark-v1`), the layers ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1), `ray-layers-v1`), the meeting with N-to-M outputs ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1), `ray-meeting-conversion-v1`) and the wave-ray part of step 6 ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1), `wave-ray-family-v1`) implemented, the rest not; since 2026-09-18 the law of the bit (Highlights 5.4) supersedes its draw, walk back, release and split table, with `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`, `node-is-ports-v1` and `lanes-v1` implemented and the return as a field pending |
 | [Binding as a loop](LOOP_BINDING.md) | Design of feature 14, `loop-binding-v1` (2026-09-17): a bound group as a periodic orbit of the ordinary meeting table on a ring of Nodes, the unit-square electron and its corner table in today's schema, the closure condition as integer equalities, dispersal, mass and clock, the field of a loop, the ladder count for A10, the motion of a loop, the interim forms it supersedes and what it removes; the ring worlds `examples/nature/ring.json` and `ring_open.json` with their pinned expectations |
 | [Spatial computation delay](SPATIAL_COMPUTATION_DELAY.md) | Configurable shared field/carrier clock, fixed input buffers and integer departure timing |
@@ -42,7 +59,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Problem solving](PROBLEM_SOLVING.md) | How the project advanced: one line per problem, its solution and who solved it (the model owner, Boss or a specialist), from the field's remainder to the law of the bit, with what is open |
 | [Experiments register](EXPERIMENTS.md) | The research runs of the ray-event model, one entry each with its features, run design and criterion pinned before the run: confrontation with physics (two-slit Born intensities, Bell in phase form, Detector statistics, Coulomb, light bending and G_eff N², Newtonian attraction, hydrogen levels, neutron decay, the mass ladder, the wide phase, Malus and polarization Bell), proof for the paper, the order in which features unlock them, what it replaces, and the dated demonstrations of events (a photon absorbed by a bound electron, held and emitted, photofission with its control); runs made once at one fingerprint, never test-suite tests |
 | [Derivations of the known laws](DERIVATIONS.md) | The model owner's question of 2026-09-18 answered on paper, from one interval of the engine written as an operator on the lattice: Gauss's law and J = 11/8 Φ as exact identities, the diffusion equation with D = 4/9 and the k⁴ anisotropy, Newton's second and third laws, the inverse square and Coulomb's sign, E = m, light bending, the moving loop's clock, G and the units, gravity on a quantum, the mass ladder, what the lattice says that the textbooks do not, and what cannot be reached; round 2 (2026-09-18): the phase-steered spread as an operator (the tube theorem, no wave equation), the field of a clock (E = hν with h = K, λ = h/(mc)), Coulomb and Newton from one shadow set and two readings (product laws, equivalence, k_C = G), and the verdicts that change; no engine run |
-| [Catalog of nature](CATALOG.md) | `catalog/nature.json`, what exists on the board of the one engine, as data: the rays of nature (content and clock, charge, phase width, the size of the shadow set; colour and polarization later) with their couplings, one table per meeting, and the apparatus (the Detector and the external body); `"undecided"` with the experiment or hypothesis that decides it; the ids each register entry uses |
+| [Catalog of nature](CATALOG.md) | `catalog/nature.json` (deleted on 2026-09-19 with the old engine), what existed on the board of the law of the bit, as data: the rays of nature (content and clock, charge, phase width, the size of the shadow set; colour and polarization later) with their couplings, one table per meeting, and the apparatus (the Detector and the external body); `"undecided"` with the experiment or hypothesis that decides it; the ids each register entry uses |
 
 The dated research studies of 2026-09-16 (`examples/research/`: Bell and
 postulate 22, anomalies, ray form, entity audit, electron-photon scatter, ray
@@ -83,9 +100,8 @@ were deleted on 2026-09-17 under [Highlights](HIGHLIGHTS.md) sections 3.18
 | [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | Dated implementation inventory and specification coverage, not a live status feed |
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
-| [Workspace](WORKSPACE.md) | Local configuration UI, templates and recorded playback |
-| [Ray viewer](../tools/ray_viewer/README.md) | 3D viewer and GIF renderer of a run record: rays on their Links with trails and hue by phase, faint field rays, event markers by shape, Detector marks, external bodies with their pictures and captions from the record, every look rule in `style.json`; a rendering of a fingerprinted record, not evidence |
-| [Local observer](LOCAL_OBSERVER.md) | Completed Node receptions, cycle counter and local playback prefixes |
+| [Workspace](WORKSPACE.md) | Local configuration UI and templates (the recorded playback went with the old engine) |
+| [Local observer](LOCAL_OBSERVER.md) | Completed Node receptions, cycle counter and local playback prefixes (the old engine, deleted on 2026-09-19) |
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
 | [Performance](PERFORMANCE.md) | Revision-specific host-time measurements and reproduction |
 | [Test expectations](TEST_EXPECTATIONS.md) | Independent expected results and coverage ownership |

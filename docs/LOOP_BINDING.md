@@ -1,5 +1,12 @@
 # Binding as a loop (`loop-binding-v1`)
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 The design of feature 14 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
 written on 2026-09-17 from the model owner's decision in
 [Highlights](HIGHLIGHTS.md#34-matter-is-emergent) 3.4 ("Binding is a periodic
@@ -220,7 +227,7 @@ closure is `L r = 0 (mod N)`: at the catalog's r = 1 and N = 8 the smallest
 rectangles that close in one circuit have L = 8 (the 2 x 2 square, the
 1 x 3 rectangle), which is the loop form of the standing-wave condition
 that the helium-ion computation stated for an orbit
-(`8 r k = j N`, [README](../examples/nature/README.md#the-orbit-computed-what-a-stable-closed-orbit-needs)).
+(`8 r k = j N`, README).
 Loops with more than four corners obey the same reflection condition
 corner by corner.
 

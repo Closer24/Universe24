@@ -1,5 +1,12 @@
 # Shared field and carrier computation cycles
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 Set the top-level boolean `"spatial_computation_delay": true` in an initialization
 with spatial fields to select the `shared-field-carrier-cycle-v1` timing candidate.
 It works with schema 1 local/outward fields and schema 2 finite attenuating fields.
@@ -21,7 +28,7 @@ It does not select individual physical field names or add a force.
 
 This is a fragment to add to a complete initialization. The timing section of
 the configuration UI exposes the same boolean when spatial fields exist.
-Use [the complete example](../examples/spatial_computation_delay.json):
+Use the complete example:
 
 ```powershell
 python -m event_universe --init examples/spatial_computation_delay.json --output artifacts/field-delay --visualize

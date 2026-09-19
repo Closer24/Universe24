@@ -1,5 +1,12 @@
 # Initialization-defined disturbances
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 Emission expressions may read `{"node": "committed_cost"}` from the colocated
 Node's last completed carrier cycle, including local field processing. See
 [computational response](COMPUTATIONAL_RESPONSE.md) for ownership, timing,
@@ -82,7 +89,7 @@ world = Simulation(initial)
 world.step()
 ```
 
-The complete example is [examples/basic.json](../examples/basic.json). Its names
+The complete example is examples/basic.json. Its names
 are illustrative data, not a list of recognized physical entities.
 
 ## Concepts and owners

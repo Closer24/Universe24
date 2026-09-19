@@ -1,5 +1,12 @@
 # Local Focus scheduling and transition reuse
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 Local Focus is enabled by default in both ordinary initialization JSON and the
 Python InitialState interface. Set `"focus": false` to opt out. Only actual
 booleans are accepted. Focus skips certified empty carrier Nodes and reuses
@@ -104,7 +111,7 @@ therefore preserves NodeState, packets, event order and model cost across comple
 ticks. Capacity and arithmetic errors retain their ordinary handling; custom
 Python code that mutates another Node violates the premise and is not sandboxed.
 
-[The focused tests](../tests/test_local_focus.py) compare complete inventories,
+The focused tests compare complete inventories,
 snapshots, costs and ordered events at every tick. They cover all six Ports,
 periodic revisits, pending delays, parallel workers, ray transport, loaded phased
 rays, field reactions, finite decay, fallback paths and capacity failure.

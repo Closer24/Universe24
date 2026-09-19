@@ -1,17 +1,11 @@
-"""The final snapshot written Node by Node (the performance review of 2026-09-18).
+"""The final snapshot written Node by Node.
 
 `state.json` is the world's snapshot as JSON text, byte for byte
-`json.dumps(world.snapshot(), indent=2)`; `snapshot` holds every Node of the
-board as an object at once, and on a board that a field fills the dense
-region's Nodes read back as Node state cost about 16 KB each before the text
-is built, which is what killed the r = 20 runner of A5s Run 2 at 11.4 GB
-(docs/EXPERIMENTS.md). This host module writes the same text from
-`DisturbanceEngine.snapshot_stream`, the per-Node lists one entry at a time,
-the dense region's Nodes read one at a time from its arrays one x-slab at a
-time (`SpatialEngine.snapshot_nodes`), so the peak memory of the final
-snapshot is the arrays plus one slab's positions, one Node's state and one
-entry's text. Nothing of the physics is read here: the entries are the
-engine's, this module only lays them out as the JSON encoder does.
+`json.dumps(world.snapshot(), indent=2)`, written from the engine's
+`snapshot_stream` one entry at a time so that a filled board is never held as
+one object (the performance review of 2026-09-18, docs/EXPERIMENTS.md).
+Nothing of the physics is read here: the entries are the engine's, this module
+only lays them out as the JSON encoder does.
 """
 
 from __future__ import annotations
@@ -24,9 +18,8 @@ INDENT = 2
 
 
 class SnapshotSource(Protocol):
-    """A world whose snapshot streams as (key, value) pairs: the engine
-    (`DisturbanceEngine.snapshot_stream`) and, since feature 20, the
-    simulation of the law of the shadow (`ShadowSimulation.snapshot_stream`)."""
+    """A world whose snapshot streams as (key, value) pairs
+    (`ShadowSimulation.snapshot_stream`)."""
 
     def snapshot_stream(self) -> Iterator[tuple[str, object]]: ...
 

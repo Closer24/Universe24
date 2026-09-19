@@ -1,5 +1,12 @@
 # Local energy and momentum conservation audit
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 A local law that claims conservation must account for the energy and all three
 momentum components of its fields and disturbances together. At each event, the
 change in combined node inventory must match actual incoming and outgoing
@@ -329,9 +336,9 @@ particle dispersion, spin dynamics or gravity. Catalog properties and possible
 interactions remain descriptive until an explicit law and its independent
 acceptance evidence implement the claimed behavior.
 
-The [property-selected reservoir probe](../examples/known-entities/property-coupling-probes.json)
+The property-selected reservoir probe
 provides explicit carrier and joint spatial measurement data. Its configured
 energy and impulse registers are a finite demonstration, not measured particle
-energies. [Audit tests](../tests/test_local_conservation.py) cover independent
+energies. Audit tests cover independent
 residual and ownership expectations; passing data still needs the model-specific
 acceptance limits described above.

@@ -2,45 +2,42 @@
 
 ## Where the project stands on 2026-09-19 (read this first)
 
-**Two laws are recorded, two engines are in the code, one is the working one.**
-Everything below is on `main`; nothing is in a branch or a machine.
+**One law, one engine.** Everything below is on `main`; nothing is in a branch
+or a machine.
 
-1. **The law of the bit** ([Highlights](HIGHLIGHTS.md) section 5.4, points 1 to 25 with
-   their glossary): every ray is a thing (1) or its shadow (0), a thing walks one path,
-   a shadow is the thing's field and spreads by the Node's mixing (point 24), a shadow
-   meeting a thing pushes it and is turned back (point 3), a thing at rest reads the
-   count for its push and the size for its wait (points 16 and 23), the charge is per
-   thing (point 16 as amended), a thing emits its shadows every interval and a shadow
-   never disappears, and the board of a run is open (the evening's paragraphs of
-   2026-09-18). Its engine is the old one: `src/event_universe/core/`, `fields/`,
-   `dense_field.py`, `prefill.py`, every world under `examples/nature/` and the
-   catalog, about 700 tests, all green. Its confrontation runs of 2026-09-18 (E11,
-   A5s, E9, A1, A6 on closed boards, before the emission was decided) are registered in
-   [EXPERIMENTS.md](EXPERIMENTS.md) as measurements on a field that never settles:
-   the count-reading and the closed board give no static force (DERIVATIONS.md round 7,
-   Theorem 1), which is what forced the emission and the open board.
-2. **The law of the shadow** (Highlights 5.4, the paragraph "The law of the shadow: only
+1. **The law of the shadow** (Highlights 5.4, the paragraph "The law of the shadow: only
    shadows and events", the model owner's words of the evening of 2026-09-18; the
    whole document annotated to it on the same day, the consistency table at the end of
    5.4): "No real and shadow. There is only shadow. There are events, which are a whole
    quantum. That is all. The shadow spreads like a ray from the event." Matter is
-   content held at Nodes; every ray in flight is a shadow; an event is a whole quantum
-   at held content. It is derived in [DERIVATIONS.md](DERIVATIONS.md) round 8 (sections
-   51 to 56: the law in points S1 to S10 as a draft for the owner, stability, the step
-   and the speed, inertia, the tests one by one, the verdict table, the Node rule in
-   pseudo-code) on round 7's fixed point (sections 45 to 50). Its engine is the new one,
-   `src/event_universe/shadow/` (feature 20, `field-only-v1`, PR #327), selected by a
-   world's `"law": "shadow"`, with `tests/test_field_only.py` and the worlds under
-   `examples/shadow/`. **It is under test and not the working law** (the model owner,
-   2026-09-19): it becomes the law only after it has repeated every confrontation on
-   open boards (E11, A5s, A6, A1, E9) and the readings were registered. Until then the
-   old engine stays; when it passes, the old engine is retired in a cleanup and this
-   becomes one engine. The gate of the morning (feature 20b, `shadow-gate-v1`: a world
-   refused unless it declared `transmitted_number`, `wait_per_quantum` and `epsilon_g`)
-   was withdrawn by the model owner later the same day ("We do not need these three
-   things at all", Highlights 5.4, the status line): it is not written, the keys are
-   not added, and the engine runs as it stands. PR #331, which made the gate the first
-   task, is superseded.
+   content held at Nodes; every ray in flight is a whole quantum spreading by the
+   Node's mixing; an event is a whole quantum at held content. It is derived in
+   [DERIVATIONS.md](DERIVATIONS.md) round 8 (sections 51 to 56: the law in points S1
+   to S10, stability, the step and the speed, inertia, the tests one by one, the
+   verdict table, the Node rule in pseudo-code) on round 7's fixed point (sections 45
+   to 50). Its engine is the one engine, `src/event_universe/shadow/` (feature 20,
+   `field-only-v1`, PR #327) on the substrate of `core/` (bounded integers, the
+   board's addresses and headings, the phase tables), a world selected by
+   `"law": "shadow"`, with `tests/test_field_only.py`, `tests/test_node_mixing.py` and
+   the worlds under `examples/shadow/`. The readings of the day (Highlights 5.4, the
+   status line and "One speed, and what is seen"): a quantum passes, like everything,
+   at the speed of light between Nodes, all slowness a stay at a Node; the wait is
+   the delayed clock and `wait_per_quantum` a declared width like ρ, K and N; the
+   three decisions of the morning (`transmitted_number`, the wait's unit, ε_g) are
+   not needed and the gate of feature 20b is not written; "the field is, in fact, a
+   field of events".
+2. **The old engine of the law of the bit was deleted on 2026-09-19** by the model
+   owner's decision of the evening ("No confrontations are needed. Only tests that
+   everything is as designed."): `core/` but its substrate, `fields/`,
+   `dense_field.py`, `prefill.py`, the initialization schema, the catalog, every world
+   under `examples/nature/`, the ray viewer and about 1,000 tests; see the
+   [migration note](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted).
+   The law of the bit stays recorded in Highlights 5.4 (points 1 to 25 with their
+   glossary) with the dated sentences saying how each point reads under the law of
+   the shadow, and its confrontation runs of 2026-09-18 stay registered in
+   [EXPERIMENTS.md](EXPERIMENTS.md) as measurements on a field that never settles
+   (DERIVATIONS.md round 7, Theorem 1), which is what forced the emission and the
+   open board. Any state before the deletion can be checked out from git.
 
 **What the new engine already gave on its first worlds** (test_field_only, pinned before
 the runs): Gauss's flux through every shell equal to the emission within 2 %, the count
@@ -66,22 +63,30 @@ monotone), the wait falling as r^-0.9.
   under the law of the shadow (bound contents give Kepler's continuum; the law of the
   bit had one from loop-binding, hypothesis 12); Bell at most 2 (both laws, section 55
   (ix)); the field of a small content is a haze, not a wave (sections 47 (iii), 52 (v)).
-- Runs to make on the new engine, in this order, each with a page and a GIF: E11 (one
+- Research runs to make on the engine when wanted, each with a page, registered in
+  EXPERIMENTS.md and not a condition of anything (the owner, 2026-09-19): E11 (one
   held content), A5s (two), A6 (the four tests on an open 33³ board), A1 (a lamp with
   q_γ ≥ 2·10⁶ per quantum), E9. DERIVATIONS.md section 56 gives the worlds and the
-  numbers that decide.
+  numbers that decide. The GIF renderer went with the old engine.
 
 **How the work is done** ([AGENTS.md](../AGENTS.md)): every model decision is recorded in
 Highlights the same day in the owner's words, elaborations flagged; one feature per
 branch and PR with one isolated test module; `PYTHONPATH=src python tools/check.py
 --base origin/main` locally (the whole suite in CI); merge commits, never a rebase;
 experiments registered in EXPERIMENTS.md with their digests; hypotheses numbered in
-HYPOTHESES.md; the engine documented in SPATIAL_FIELDS.md (both engines) and its
+HYPOTHESES.md; the engine documented in SPATIAL_FIELDS.md (its last section) and its
 features in HIGHLIGHTS_IMPLEMENTATION.md; every deletion in MIGRATION.md.
 
 **Everything is in git.** The history is merge commits only; `git log --first-parent
-main` reads the day by PRs (#278 to #329 on 2026-09-18 and 19). Any earlier state can be
-checked out; the old engine needs no checkout, it runs today.
+main` reads the day by PRs (#278 to #331 on 2026-09-18 and 19). Any earlier state can be
+checked out, the old engine among them at any commit before its deletion.
+
+## History of the checkout before 2026-09-19
+
+Everything from here to "Specifications and gaps" describes the engine deleted
+on 2026-09-19 and the candidates that led to it, as it stood when each
+paragraph was written; the paths it names are gone from the checkout and stay
+in git ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 
 [Local Focus](LOCAL_FOCUS.md) defaults on: certified empty carrier Nodes sleep,
 and equal complete local planning inputs reuse immutable pure transition results.
@@ -338,30 +343,20 @@ records are temporary, while their recorded conclusions remain in the repository
 
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
-| Active generic simulator | [disturbance_api.py](../src/event_universe/disturbance_api.py), [disturbance_engine.py](../src/event_universe/core/disturbance_engine.py) | `Simulation(InitialState)`; laws and fields come from explicit initialization, not physical names |
-| Carrier Node activity and cost reporting | [disturbance_node.py](../src/event_universe/core/disturbance_node.py) | `carrier_work` and `report_cost`, pure functions over the immutable run definition; an arrival takes a spare slot and nothing merges (the record operation policy was deleted on 2026-09-17, bucket B.6) |
-| Rational particle candidates | [rational contract](RATIONAL_PARTICLES.md) | Explicit bounded rational regions, balanced routes, fractional movement credit and local checks; supplied reference laws |
-| Local expressions and transactions | [disturbances.py](../src/event_universe/fields/disturbances.py) | Bounded integer operations, declared balances, fixed local capacities and explicit rejection |
-| Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |
-| Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
-| Entity reference and representation | [entity_catalog.py](../src/event_universe/entity_catalog.py), [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | Sourced properties and interactions are validated separately; 46 explicitly supplied experiment profiles compile without deriving laws from labels |
-| Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
-| Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
-| Formula-free state diagnostic | [node_contract.py](../src/event_universe/diagnostics/node_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |
-| Standalone vector laboratory | [laboratory guide](../tools/generic_vector_lab/README.md) | Separate research/reference process, not the active generic Simulation |
-| Application and output | [runner.py](../src/event_universe/runner.py), [ui.py](../src/event_universe/ui.py) | Headless runs by default; optional read-only recording and workspace playback |
+| The world file | [world.py](../src/event_universe/shadow/world.py) | `"law": "shadow"`, an open board, K, N, the release, the wait's unit, the families, the held contents with their tables and lamps, the initial shadows; every refusal names its key |
+| The engine | [engine.py](../src/event_universe/shadow/engine.py) | `ShadowSimulation(world)`: the held contents, the interval's steps (the events at held content, the wait, the mixing, the releases and the clocks, the steps), the books per family exact at every tick, the readings (`shell_readings`, `cube_flux`, `snapshot_stream`) |
+| The layer of one family | [layer.py](../src/event_universe/shadow/layer.py) | Arrivals, parked shares and departures per Node and number as integer arrays; the walk one Link per interval; the wait a hold per Node (`charge_wait`); the escapes booked |
+| The Node's mixing | [mixing.py](../src/event_universe/shadow/mixing.py) | `node-mixing-v1`, the remainder rule and the momentum carried, as kernels over the layer's arrays |
+| The substrate | [integer.py](../src/event_universe/core/integer.py), [lattice.py](../src/event_universe/core/lattice.py), [phase.py](../src/event_universe/core/phase.py) | Bounded integer primitives; the board's addresses, the six Port headings and the cell bound; the phase circle's tables; integer-only, audited |
+| A run and its record | [run.py](../src/event_universe/shadow/run.py), [runner.py](../src/event_universe/runner.py) | `python -m event_universe --init WORLD --output OUT [--ticks N]`, headless; `run.json` with `law` "field-only-v1" |
+| Preflight and the workspace | [configuration_validation.py](../src/event_universe/configuration_validation.py), [ui.py](../src/event_universe/ui.py) | A world file checked without a run; the local workspace with the worlds of `examples/shadow/` as templates |
+| Standalone vector laboratory | [laboratory guide](../tools/generic_vector_lab/README.md) | Separate research/reference process, not the engine |
 
-The active package lives only in `src/event_universe/`, and the active
-`Simulation` resolves to `disturbance_api.py`. The historical scalar scheduler,
-its named research APIs, notebook facade and frozen archive were deleted on
-2026-09-17; see [migration](MIGRATION.md#historical-particle-candidates-deleted-on-2026-09-17).
-
-The unequal-mass collision configuration has one canonical file:
-[04-unequal-mass-collision.json](../examples/04-unequal-mass-collision.json).
-Both the workspace and [reference checks](../examples/known-entities/run_reference_checks.py)
-consume it. The reference runner does not maintain a second copy of the law.
-Its three-mass case likewise uses [three_mass_finite.json](../examples/three_mass_finite.json)
-with a 120-tick override instead of a duration-only copy of the initialization.
+The active package lives only in `src/event_universe/`. The old engine's
+`Simulation` and `InitialState` were deleted on 2026-09-19 with it; the
+historical scalar scheduler, its named research APIs, notebook facade and
+frozen archive had been deleted on 2026-09-17; see
+[migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted).
 
 ## Specifications and gaps
 

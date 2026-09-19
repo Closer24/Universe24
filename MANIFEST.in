@@ -1,7 +1,6 @@
 include LICENSE CITATION.cff AGENTS.md README.md CONTRIBUTING.md POSTULATES.md SIMULATOR_DEFINITIONS.md
 include .python-version
 recursive-include docs *.md
-recursive-include catalog *.json
 recursive-include examples *.json
 recursive-include src/event_universe/ui_assets *.html *.css *.js
 recursive-include skills *.md

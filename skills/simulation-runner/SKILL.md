@@ -5,6 +5,12 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 
 # Simulator execution
 
+> **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
+> only and runs a world of the law of the shadow headless; `--visualize`,
+> `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and
+> `--standing-field` went with the old engine ([migration](../../docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+> Where this Skill names them, read the history.
+
 For creating or changing the input, use
 [simulation-configuration](../simulation-configuration/SKILL.md), including its
 complete file map and runnable template. This skill executes the resulting input.

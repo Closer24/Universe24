@@ -1,10 +1,17 @@
 # Physical entity catalog and explicit representation probes
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 Optional [property coupling profiles](PROPERTY_COUPLINGS.md) add one explicit
 `shared_classical` law and local energy/momentum measurements to compatible
 carrier representations. Physical reference metadata remains formula-free.
 
-[catalog.json](../examples/known-entities/catalog.json) is a version 2 physical
+catalog.json is a version 2 physical
 reference. It contains identities, sourced properties and possible interaction
 families, with no executable profiles, update formulas, rates or Hamiltonians.
 Measured properties are external comparison targets; the engine does not load
@@ -82,7 +89,7 @@ mechanism, was deleted on 2026-09-17 with the shared quantum resource. No engine
 law is added by selecting an entity.
 
 The original 46 classical probes live in
-[representation-probes.json](../examples/known-entities/representation-probes.json).
+representation-probes.json.
 Its `profiles` array identifies each row by `entity_id`, separately from the
 physical reference. There is no automatic profile lookup or species dispatch.
 

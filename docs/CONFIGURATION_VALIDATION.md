@@ -1,5 +1,12 @@
 # Configuration validation
 
+> **One engine (2026-09-19).** Since 2026-09-19 the preflight checks world
+> files of the law of the shadow only (`python -m event_universe.configuration_validation WORLD [--json]`;
+> the kind `shadow`, the report's `summary` the world's model, law, shape, ticks,
+> families and contents, an issue the parser's refusal by name). The kinds
+> `initialization`, `catalog`, `profiles` and `observer` below, with `--catalog`
+> and `--initialization`, went with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+
 Validation is a read-only host operation. It checks declared data and supported
 composition; it does not construct `Simulation`, allocate a causal world, execute
 an experiment, render output or create artifacts. A valid configuration, a run

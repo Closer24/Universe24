@@ -1,5 +1,11 @@
 # Highlights implementation coverage
 
+> **One engine (2026-09-19).** Since 2026-09-19 the checkout holds one engine,
+> the field-only engine of the law of the shadow (the row of 5.4 "The law of the
+> shadow" below); every row that names a module, world or test of the old
+> engine records what was implemented when it was, and those files were deleted
+> on 2026-09-19 ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+
 ## Highlights as the edited specification and the ray-event decisions - 2026-09-17
 
 Reviewed `docs/HIGHLIGHTS.md` as revised on 2026-09-17 on branch
@@ -579,7 +585,7 @@ their statements that the live document was not edited refer to those earlier ta
 | 4.4.3 | Emission can read the Node's last committed work. Configured received-Port response exchanges momentum with a local field register; this is not derived gravity or physical energy. | [Computational response](COMPUTATIONAL_RESPONSE.md) |
 | 6.5-6.7, 10.10 | Node-owned commits, immutable worker planning, deterministic barriers and bounded physical-owner memory have scoped tests. Total host memory and full-world work are separate costs. | [Architecture](ARCHITECTURE.md), [validation](VALIDATION.md) |
 | 10.3.1 | Schema 2 localizes attenuation residue by default. Explicit dissipate retains the earlier loss policy. Stationary deposits remain owned inventory and are not sampled by local rules. | [Spatial fields](SPATIAL_FIELDS.md) |
-| 10.3.2 | Scalar straight-ray transport retains heading and integer routing phase; the lanes bound the Node's state (`lanes-v1`; `ray_slots` retired on 2026-09-18). Unsupported vector, octant-seed, field-rule, joint-interaction and alternative-clock combinations are rejected. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1), [ray tests](../tests/test_ray_field.py) |
+| 10.3.2 | Scalar straight-ray transport retains heading and integer routing phase; the lanes bound the Node's state (`lanes-v1`; `ray_slots` retired on 2026-09-18). Unsupported vector, octant-seed, field-rule, joint-interaction and alternative-clock combinations are rejected. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1), ray tests |
 | 10.9, 10.11 | Sourced particle reference data, explicit representation profiles, preflight, finite quantum events and read-only observers remain distinct from verified species dynamics. | [Entity catalog](ENTITY_CATALOG.md), [project status](PROJECT_STATUS.md) |
 
 ### Merged field changes and evidence

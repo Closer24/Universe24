@@ -1,5 +1,12 @@
 # Opt-in bounded rational particle candidate
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 This extension repairs representational and routing defects without choosing
 physical species inside the engine. Existing integer ASTs and cyclic transport
 retain their contracts. New configurations select balanced routing and rational

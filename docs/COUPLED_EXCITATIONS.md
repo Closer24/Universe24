@@ -1,5 +1,12 @@
 # Local unit-excitation coupling probe
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 `unit-local-excitation-field-transducer-v1` connects independently owned internal
 and spatial states through
 existing [local field/carrier transactions](LOCAL_FIELD_RULES.md#joint-fieldcarrier-transactions).
@@ -77,10 +84,10 @@ interference or arbitrary packet overlap conserves this candidate's U/P.
 
 ## Prepare, validate and run
 
-The [saved law](../examples/coupled-excitations/law.json),
-[case data](../examples/coupled-excitations/experiments.json) and
-[definition](../examples/coupled-excitations/definition.json) have separate owners.
-The [adapter](../examples/coupled-excitations/prepare.py) assembles ordinary JSON
+The saved law,
+case data and
+definition have separate owners.
+The adapter assembles ordinary JSON
 and checks the candidate's input envelope. The standard preflight checks the
 resulting initialization schema; these are different validation scopes.
 

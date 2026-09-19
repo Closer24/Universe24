@@ -6,6 +6,98 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## One engine, on 2026-09-19: the old engine deleted
+
+Decision of the model owner, 2026-09-19, the evening ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+the status line of the law of the shadow): "The field is, in fact, a field of
+events. No confrontations are needed. Only tests that everything is as
+designed." The engine of the law of the shadow (`field-only-v1`, feature 20)
+is the one engine; the old engine of the law of the bit is deleted without the
+confrontation runs the morning had made a condition. Nothing of the new
+engine's behaviour changes: `tests/test_field_only.py` passes with the same
+pinned integers before and after.
+
+What moved (the substrate the new engine had imported from the old one,
+byte-identical in what it does):
+
+- `core/lattice.py`: `Address3`, `Heading`, `PORT_HEADINGS`, `MIXING_OPPOSITE`
+  and `MAX_VALUE` (from `core/disturbance_state.py` and `core/spatial_state.py`);
+- `core/phase.py`: `phase_cosines`, `phase_sines`, `PHASE_COSINE_SCALE` and
+  `MAX_PHASE_STEPS` (from `core/spatial_state.py`);
+- `shadow/mixing.py`: the Node's mixing kernels `mix_arrivals`,
+  `apportion_carried`, `release_parked`, `merge_departures`, `place_departures`,
+  the `MixingArrays` protocol, `LAYERS`, `MIXING_DENOMINATOR`,
+  `MIXING_AMPLITUDE_SCALE` and `MIXING_WEIGHT_BITS` (from `dense_field.py` and
+  `core/spatial_state.py`); the isolated test of the rule is the new
+  `tests/test_node_mixing.py`, on one Node of the engine's layer.
+
+What was deleted:
+
+- the old engine: `core/` except `integer.py` and the two modules above
+  (`conservation_state`, `coupling_selectors`, `disturbance_engine`,
+  `disturbance_node`, `disturbance_state`, `event_resolution`, `node_boundary`,
+  `node_conservation`, `node_execution`, `node_ports`, `node_services`,
+  `plan_reuse`, `ray_event_audit`, `spatial_engine`, `spatial_node`,
+  `spatial_state`, `topology`, `validation`), the whole of `fields/`,
+  `dense_field.py`, `prefill.py`, `initialization.py`, `disturbance_api.py`,
+  `entities.py`, `entity_catalog.py`, `node_conservation_configuration.py`,
+  `observer_configuration.py`, `reference_units.py`, and of `diagnostics/`
+  everything but `numeric_audit.py` (`disturbance_render`, `local_conservation`,
+  `local_observer`, `node_conservation`, `node_contract`); with them the
+  `Simulation` and `InitialState` names of the package;
+- the old worlds: every file under `examples/` except `examples/shadow/`
+  (`basic.json`, the four numbered examples, `exchange`, `finite_fields`,
+  `isotropic_rays`, `local_field_rules`, `local_lorentz_field`,
+  `moving_source`, `open_world`, `spatial_computation_delay`,
+  `spatial_turning`, `three_mass_finite`, `coupled-excitations/`,
+  `directional-wave/`, `known-entities/`, `node-vector/`,
+  `particle-contracts/` and the 25 world directories of `examples/nature/`
+  with their pages, scripts and records) and `catalog/nature.json`;
+- the tools of the old engine: `tools/ray_viewer/` (the 3D viewer and GIF
+  renderer of the old record), `tools/audit_particle_contracts.py`,
+  `tools/benchmark_focus.py` and `tools/profile_node_vectors.py`;
+- the tests of the old engine, 41 modules (`test_bit_law`,
+  `test_boundary_configuration`, `test_charge_per_thing`, `test_clock_readings`,
+  `test_dense_field`, `test_detector_absorb`, `test_detector_mark`,
+  `test_detector_return`, `test_disturbance_application`,
+  `test_disturbance_engine`, `test_external_body`, `test_initialization`,
+  `test_inverse_split`, `test_lanes`, `test_local_conservation`,
+  `test_local_conversions`, `test_local_focus`, `test_loop_binding`,
+  `test_mean_field_gauss`, `test_nature_catalog`, `test_node_conservation`,
+  `test_node_is_ports`, `test_node_state_contract`, `test_payload_validation`,
+  `test_perf_arrays`, `test_plan_reuse`, `test_rational_particles`,
+  `test_ray_event_audit`, `test_ray_field`, `test_ray_hidden_state`,
+  `test_ray_layers`, `test_ray_meeting_conversion`, `test_ray_momentum_turn`,
+  `test_ray_polarization`, `test_ray_viewer`, `test_return_field`,
+  `test_shadow_wait`, `test_wait_reads`, `test_wait_rule`,
+  `test_wave_ray_families`, `tests/support/`), and the old versions of
+  `test_node_mixing`, `test_configuration_validation`, `test_json_documents`,
+  `test_architecture` and `test_locality`, rewritten for the one engine.
+
+What changed for a user:
+
+- `python -m event_universe --init WORLD --output OUT [--ticks N]` runs a
+  world of the law (`"law": "shadow"`) and nothing else; the switches
+  `--visualize`, `--frame-stride`, `--observer`, `--node-workers`,
+  `--dense-field` and `--standing-field` are gone with the engine they drove;
+- `python -m event_universe.configuration_validation WORLD [--json]` checks a
+  world file; the kinds `initialization`, `catalog`, `profiles` and `observer`
+  are gone, `--catalog` and `--initialization` with them;
+- the workspace (`python -m event_universe.ui`) lists the worlds of
+  `examples/shadow/` as its templates and runs headless; "Run & watch" is
+  refused;
+- `tools/run_series.py` is unchanged; `tools/check.py` no longer knows the
+  deleted resource consumers;
+- the record of a run is the engine's `run.json` as before (`law`
+  "field-only-v1"), unchanged.
+
+The dated evidence of the old engine stays where it was recorded
+([experiments](EXPERIMENTS.md), [validation](VALIDATION.md),
+[derivations](DERIVATIONS.md), [hypotheses](HYPOTHESES.md)); the contracts of
+the old engine under `docs/` stay as history, each marked at its head. The
+old engine is in git: `git log --first-parent main` reads the day by PRs, and
+any earlier state can be checked out.
+
 ## The law of the shadow, a new engine mode, on 2026-09-18 (`field-only-v1`)
 
 Feature 20 ([the law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1);
@@ -568,7 +660,7 @@ supersedes the phase-selected heading of `field-spreading-v1`:
   the `returned` case moves to (7,7,7), and every case checks the ledger at
   every tick. The screen run `examples/nature/screen_spread.json` was rerun
   (E6): see the
-  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+  README.
 
 ## Field spreading added on 2026-09-17 (`field-spreading-v1`)
 
@@ -1309,7 +1401,7 @@ API or runtime behavior changes; `external-body-v1` is not yet in the code.
 The model owner's visualization requirement of 2026-09-17 (issue #169) is
 implemented as a repository tool, ready before feature 7 lands: a Renderer
 under [Highlights](HIGHLIGHTS.md) 3.29 and 3.30 that reads the runner's
-record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
+record and never the engine (ray viewer).
 
 - `tools/ray_viewer/extract.py` turns one or more records (`run.json`,
   `events.jsonl`, `initialization.json`, an optional `ray-recording.json`)
@@ -1480,7 +1572,7 @@ There is no replacement API. Every deletion bucket of issue #164 is done.
 
 By the model owner's decision of 2026-09-17 under [Highlights](HIGHLIGHTS.md)
 3.26 and 3.30, the families of nature and their couplings are data on the one
-generic engine: [`catalog/nature.json`](../catalog/nature.json), described in
+generic engine: `catalog/nature.json`, described in
 [the catalog of nature](CATALOG.md). The catalog is exactly two things, the
 rays of nature with their couplings and the apparatus; the engine only reads
 it, a world file selects rays from it and places apparatus, and nothing else
@@ -1523,7 +1615,7 @@ exists on the board.
 ## Ray viewer: releases, fields, style file and sidecar, 2026-09-17
 
 The first render of a feature 7 run and the model owner's reading of the
-page on a phone (2026-09-17) changed what the [ray viewer](../tools/ray_viewer/README.md)
+page on a phone (2026-09-17) changed what the ray viewer
 draws; the record is unchanged.
 
 - `extract.py` resolves rays per family: a field family (`field_of`) passes
@@ -1564,7 +1656,7 @@ draws; the record is unchanged.
 
 Model owner's feedback on the second render, applied as defaults of
 `tools/ray_viewer/style.json` so that no change of look needs a code change
-([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+(ray viewer); the record is unchanged.
 
 - `sizes.trail_links` 0 means the whole path since the ray's event; the
   default is 10 with `trail_fade` [1.0, 0.0]: the ray bright at its Link
@@ -1589,7 +1681,7 @@ Model owner's feedback on the second render, applied as defaults of
 ## Ray viewer: faint white wake and momentum arrow, 2026-09-17
 
 Model owner's feedback on the fourth render, applied as defaults of
-`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+`tools/ray_viewer/style.json` (ray viewer);
 the record is unchanged.
 
 - `colors.trail` `#ffffff` (a family may override it with `trail` in its
@@ -1607,7 +1699,7 @@ the record is unchanged.
 ## Ray viewer: small head and small momentum arrow, 2026-09-17
 
 Model owner's feedback on the fifth render, applied as defaults of
-`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+`tools/ray_viewer/style.json` (ray viewer);
 the record is unchanged.
 
 - `sizes.head_links` 0.5 (new key: the bright head is a short segment from
@@ -1622,7 +1714,7 @@ the record is unchanged.
 ## Ray viewer: spheres and a softer look, 2026-09-17
 
 Model owner's feedback on the sixth render, applied as defaults of
-`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+`tools/ray_viewer/style.json` (ray viewer);
 the record is unchanged.
 
 - No cubes: `draw.marker_shape` `sphere` (with `cube` as an option and
@@ -1660,7 +1752,7 @@ the record is unchanged.
 By the model owner's decision on [Highlights](HIGHLIGHTS.md) 5.4
 ("everything begins and is realized at a marked Node"), the physical
 picture is the list of PASS clicks and the board rendering is the record's
-view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+view (ray viewer); the record is unchanged.
 
 - `extract.py` adds an `eye` block to every run: the marked Nodes, the
   list of PASS clicks (tick, Node, family, amount, bit, Port) and the hits
@@ -1683,7 +1775,7 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   `click_dot_px` x the square root of the count), a spot on a screen.
 - `examples/nature/screen.json` (Highlights 5.5, a demonstration made once,
   never a test; its section of the
-  [nature README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks)
+  nature README
   holds the record's fingerprints and the render lines): an electron at
   rest, the bound group of two `electron` rays of 4, releasing `light` on
   its six axis lines, and a screen of seven Detector marks at distance 6
@@ -1694,7 +1786,7 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
 ## Ray viewer: several runs on one page, the eye toggle, a tick cap, 2026-09-17
 
 The model owner wants one HTML page with the nature runs, no GIF
-([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+(ray viewer); the record is unchanged.
 
 - `style.json` gains `draw.page_text.runs` (the run buttons above the
   board when the document holds several runs; a button starts its run
@@ -1710,7 +1802,7 @@ The model owner wants one HTML page with the nature runs, no GIF
 ## Ray viewer: phone GIF preset, 2026-09-17
 
 The model owner's GIFs do not always open on the phone, and he wants GIFs
-only ([ray viewer](../tools/ray_viewer/README.md)); the record is
+only (ray viewer); the record is
 unchanged.
 
 - `style.json` gains `motion.gif_preset` (`phone`, the default) and

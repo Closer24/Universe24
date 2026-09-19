@@ -18,10 +18,10 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
-def test_local_field_example_selects_its_state_contract_consumer():
-    selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
-    assert "tests/test_node_state_contract.py" in selected
-    assert "tests/test_spatial_engine.py" not in selected
+def test_the_worlds_readme_selects_the_engine_test():
+    selected, _ = CHECK.select(["examples/shadow/README.md"], {})
+    assert "tests/test_field_only.py" in selected
+    assert "tests/test_retention.py" not in selected
 
 
 def test_every_resource_consumer_row_names_an_existing_test():
@@ -32,10 +32,10 @@ def test_every_resource_consumer_row_names_an_existing_test():
             assert (root / consumer).exists(), consumer
 
 
-@pytest.mark.parametrize("name", ["extract.py", "viewer.html", "render_gif.py", "README.md"])
-def test_ray_viewer_changes_select_its_extraction_test(name):
-    tests, typed = CHECK.select(["tools/ray_viewer/" + name], {})
-    assert "tests/test_ray_viewer.py" in tests
+@pytest.mark.parametrize("name", ["check.py", "run_series.py"])
+def test_tool_changes_select_the_scope_test(name):
+    tests, typed = CHECK.select(["tools/" + name], {})
+    assert "tests/test_check_scope.py" in tests
     assert not typed
 
 
@@ -117,13 +117,12 @@ def test_example_script_selects_only_the_test_that_names_it():
     assert "tests/test_historical.py" not in tests
 
 
-@pytest.mark.parametrize(
-    "resource", ["entities.json", "build_reference_configurations.py", "electron-proton.json"]
-)
-def test_particle_resources_select_the_dynamic_contract_consumer(resource):
-    tests, _ = CHECK.select(["examples/particle-contracts/" + resource], {})
-    assert "tests/test_rational_particles.py" in tests
-    assert "tests/test_spatial_engine.py" not in tests
+@pytest.mark.parametrize("resource", ["one_content.json", "two_slits.json"])
+def test_world_files_select_the_preflight_and_the_tests_that_name_them(resource):
+    sources = {"tests/test_names_it.py": f'WORLD = "{resource}"', "tests/test_other.py": ""}
+    tests, _ = CHECK.select(["examples/shadow/" + resource], sources)
+    assert "tests/test_configuration_validation.py" in tests
+    assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
 
 
 def no_change_main(monkeypatch, tmp_path, *arguments):

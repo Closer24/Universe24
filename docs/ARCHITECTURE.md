@@ -185,6 +185,12 @@ physical engine state. Its one-shot and singleton watcher interfaces share the
 
 ## Active generic ownership
 
+> **History (2026-09-19).** This section and the ones after it that name the
+> generic disturbance simulator, its engine, its fields and its workspace forms
+> describe the old engine, deleted on 2026-09-19
+> ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+> The live layout is the dependency table above.
+
 The record policy (`core/record_policy.RecordPolicy`,
 `fields/record_operations.RecordOperations`) was deleted on 2026-09-17 (issue
 #164, bucket B.6; see the
@@ -305,8 +311,8 @@ table below defines code boundaries. Architecture owns this repository policy.
 
 | Information | Single owner | Update rule |
 | --- | --- | --- |
-| Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; initialization data selects them |
-| Generic initialization schema and transition law | [DISTURBANCES.md](DISTURBANCES.md) | Keep the active source contract separate from historical candidates |
+| Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; the world file selects them |
+| The world file, the interval's steps and the record | [The law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1) | Keep the live contract separate from the historical candidates before it in the same document |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
@@ -332,15 +338,25 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | Module | Allowed dependencies |
 | --- | --- |
 | `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
-| `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
-| `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
-| `core/node_execution` | Host-only isolated-interpreter Node tasks and execution measurements; no physical state ownership |
-| `fields/disturbances` | Generic records and bounded integer arithmetic; no world or diagnostics |
-| `initialization` | JSON input and generic typed definitions; no arbitrary execution |
-| `disturbance_api` | Generic engine and disturbance local law |
-| `diagnostics` | Read-only engine views, immutable events, rendering libraries |
-| `runner` | Generic public API, initialization and optional diagnostics |
-| `ui` | Local HTTP, strict initialization validation and isolated CLI process ownership |
+| `core/lattice` | Standard-library types; the board's addresses, the six Port headings in Port order and the cell bound |
+| `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
+| `shadow/mixing` | `core/lattice` and numpy; the Node's mixing kernels over any family's arrays, exact in bounded integers (the square root's float estimate corrected to the exact integer root) |
+| `shadow/layer` | `core/lattice`, `core/phase`, `shadow/mixing` and numpy; one family's arrays and the walk |
+| `shadow/world` | `core/integer`, `core/lattice`; the world file and its refusals; no execution |
+| `shadow/engine` | `core/integer`, `core/lattice`, `shadow/layer`, `shadow/mixing`, `shadow/world`; the interval and the books; no output or storage |
+| `shadow/run` | The engine, `snapshot_writer` and the standard library; the artifacts of a run |
+| `json_documents`, `snapshot_writer`, `retention` | Standard library; host modules with no physics |
+| `configuration_validation` | `json_documents`, `shadow/world`; read-only |
+| `runner` | `json_documents`, `retention`, `shadow/run`, `shadow/world` |
+| `ui` | `configuration_validation`, `json_documents`, `retention`; local HTTP and isolated CLI process ownership |
+| `diagnostics/numeric_audit` | Standard library; the static integer audit of `core/` |
+
+The gate (`tests/architecture_rules.py`, `tests/test_architecture.py`): `core`
+imports only `core`; `shadow` imports only `core` and `shadow`, except
+`shadow/run`, which writes the artifacts; no physical module imports an output
+or storage library; and every module of `core/` passes the integer audit.
+Every row above that names a module of the old engine, in the sections
+that follow, is history as of 2026-09-19 ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 
 ## Configuration workspace
 

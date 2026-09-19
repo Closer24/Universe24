@@ -1,5 +1,9 @@
 # Universe24 configuration guide
 
+> **One engine (2026-09-19).** This guide describes the old engine's schema,
+> deleted on 2026-09-19; a run today is a world file of the law of the shadow
+> ([the worlds](../../../examples/shadow/README.md)).
+
 ## File map
 
 | File | Owns | Consumer |
@@ -140,9 +144,9 @@ declare a consistent integer normalization, and retain their physical limitation
 
 | Requested behavior | Configuration owner | Working reference |
 | --- | --- | --- |
-| Hold or move a whole carried record | Type `transport` with `hold` or `move` | [Basic input](../../../examples/basic.json) |
+| Hold or move a whole carried record | Type `transport` with `hold` or `move` | Basic input |
 | Split extensive payload by local weights | Type `transport` with `split` | [Disturbance contract](../../../docs/DISTURBANCES.md) |
-| Persistent spatial value and explicit local propagation | `spatial_fields` with `transport: local`, then `field_rules` | [Directional law](../../../examples/directional-wave/law.json) |
+| Persistent spatial value and explicit local propagation | `spatial_fields` with `transport: local`, then `field_rules` | Directional law |
 | Outward spatial propagation and baseline | `spatial_fields` with `transport: outward` | [Spatial fields](../../../docs/SPATIAL_FIELDS.md) |
 | Source injection | `emissions` | [Spatial fields](../../../docs/SPATIAL_FIELDS.md) |
 | Field acts on a carried record | `spatial_couplings` or schema 1 `spatial_interactions` | [Spatial response](../../../docs/SPATIAL_COUPLINGS.md), [local rules](../../../docs/LOCAL_FIELD_RULES.md) |
@@ -188,10 +192,10 @@ For the reusable directional candidate, these files have distinct roles:
 
 | File | Edit for |
 | --- | --- |
-| [law.json](../../../examples/directional-wave/law.json) | Six modes, transverse/bound guards, polarization encounters and streaming |
-| [definition.json](../../../examples/directional-wave/definition.json) | Declared energy/momentum, channel directions, assumptions and readouts |
-| [experiments.json](../../../examples/directional-wave/experiments.json) | Shape, tick count, link time, seed positions/amplitudes and encounter toggle |
-| [display.json](../../../examples/directional-wave/display.json) | Camera and visual options |
+| law.json | Six modes, transverse/bound guards, polarization encounters and streaming |
+| definition.json | Declared energy/momentum, channel directions, assumptions and readouts |
+| experiments.json | Shape, tick count, link time, seed positions/amplitudes and encounter toggle |
+| display.json | Camera and visual options |
 
 The experiment's `values` maps mode names to three-vectors. It is an authoring
 format; `prepare.py` expands it into valid `spatial_seeds`. For each mode the

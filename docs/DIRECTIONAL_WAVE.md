@@ -1,5 +1,12 @@
 # Conservative transverse directional-wave candidate
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 `conservative-transverse-directional-wave-v1` defines directional propagation and
 a conditional polarization interaction through ordinary initialization rules.
 Energy and momentum have explicit normalized definitions and exact local guards.
@@ -8,7 +15,7 @@ earlier E/B copy profile remains unchanged.
 
 ## Local contract
 
-The [law](../examples/directional-wave/law.json) owns six signed three-vectors
+The law owns six signed three-vectors
 `a_px, a_mx, a_py, a_my, a_pz, a_mz`. Each belongs to one cardinal travel direction
 `n_p` and satisfies `dot(n_p,a_p)=0`. Names are configured references; the engine
 has no directional-wave or electromagnetic name dispatch.
@@ -53,7 +60,7 @@ B = sum_p cross(n_p,a_p)
 U and P are the candidate's normalized wave energy and momentum. A momentum unit
 corresponds to an energy unit divided by that run's link speed; no SI calibration
 is supplied. E and B are local derived readouts, not additional owned stock.
-[definition.json](../examples/directional-wave/definition.json) records the
+definition.json records the
 channel identities, readout definitions and assumptions.
 
 Each changing rule checks per-mode U and P including retained stock and **all six
@@ -79,7 +86,7 @@ ambiguity; it does not prove that all aggregate E/B formulations are insufficien
 
 ## Configure once and reuse
 
-[experiments.json](../examples/directional-wave/experiments.json) places the named
+experiments.json places the named
 modes and selects duration, shape, link time and whether to enable encounters.
 The law is defined once. Preparing a run only assembles ordinary JSON; changing
 configuration does not compile or rebuild the simulator.
@@ -92,9 +99,9 @@ python -m event_universe --init artifacts/wave-input.json --output artifacts/wav
 Cases: `approach_unequal`, `free_unequal`, `coincident_electric`,
 `coincident_magnetic`, `six_way`, `periodic_seam`. Use new output paths and add
 `--visualize` only when recording is wanted. The ordinary HTML exposes actual
-mode fields. [observe.py](../examples/directional-wave/observe.py) reads copied
+mode fields. observe.py reads copied
 state for U/P and E/B without advancing or repairing the world.
-[display.json](../examples/directional-wave/display.json) controls the example GIF's
+display.json controls the example GIF's
 nodes, axes, readout/mode/travel arrows, camera, dimensions and playback timing.
 
 To reproduce the comparison, install the project's optional `render` dependencies,

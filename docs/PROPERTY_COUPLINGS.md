@@ -1,5 +1,12 @@
 # Couplings selected by properties
 
+> **History (2026-09-19).** The engine this document describes was deleted on
+> 2026-09-19 with the old engine ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+> the one engine is the field-only engine of the law of the shadow
+> ([SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)).
+> The text below is kept as the record of what was built and measured; its
+> links to code, worlds and tests name files that no longer exist.
+
 An executable rule can select a disturbance through the properties it owns.
 The engine compiles this compatibility once, then uses the same selection for
 scheduling, evaluation and carried fractional/budget state. Types still define
@@ -12,7 +19,7 @@ one of `left_type` or `left_requires`, and exactly one of `right_type` or
 at least one layout, and must include every carrier property read or written by
 the rule. Local value predicates can then restrict the configured response.
 
-The complete [property example](../examples/known-entities/property-coupling-probes.json)
+The complete property example
 uses `requires: ["energy", "momentum", "coupling"]`. Missing properties do not
 match through internal zero placeholders. Pair selection still uses two distinct
 local slots and declared rule order. When both role orientations fit the same
@@ -54,4 +61,4 @@ gravity or a derivation of measured energies.
 
 Tests: property selection (`tests/test_property_couplings.py` (deleted on 2026-09-17), deleted on 2026-09-17),
 entity profiles (`tests/test_property_entity_profiles.py` (deleted on 2026-09-17), deleted on 2026-09-17), and
-[local conservation](../tests/test_local_conservation.py).
+local conservation.

@@ -10,7 +10,7 @@ from .architecture_rules import violations
 
 def test_all_physical_modules_pass_integer_audit():
     audit = audit_physical_modules()
-    assert {Path(name).parts[0] for name in audit} == {"core", "fields"}
+    assert {Path(name).parts[0] for name in audit} == {"core"}
     assert all(not violations for violations in audit.values())
 
 
@@ -31,7 +31,7 @@ def test_numeric_audit_detects_forbidden_math(tmp_path, source):
     assert static_integer_audit(path)
 
 
-def test_all_production_modules_respect_dependency_and_composition_boundaries():
+def test_all_production_modules_respect_dependency_boundaries():
     root = Path(event_universe.__file__).parent
     for path in root.rglob("*.py"):
         module = "event_universe." + ".".join(path.relative_to(root).with_suffix("").parts)
@@ -41,40 +41,28 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("fields.rays", "from ..core.disturbance_engine import DisturbanceEngine as Settings"),
-        ("fields.rays", "from ..core import disturbance_engine"),
-        ("fields.disturbances", "from ..core.disturbance_engine import DisturbanceEngine"),
-        ("core.topology", "from ..fields import rays"),
-        ("fields.rays", "from ..diagnostics import local_observer"),
-        ("fields.rays", "from pathlib import Path"),
-        ("disturbance_api", "def calculate(momentum):\n    return -momentum"),
-        ("disturbance_api", "def update(value):\n    value += 1\n    return value"),
-        ("disturbance_api", "def update(source, count):\n    return source * count"),
+        ("core.phase", "from ..shadow import engine"),
+        ("core.lattice", "from event_universe.runner import run_initialization"),
+        ("shadow.engine", "from event_universe.runner import source_fingerprint"),
+        ("shadow.layer", "from pathlib import Path"),
+        ("core.mixing", "import json"),
     ],
 )
-def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source):
+def test_architecture_gate_rejects_upward_and_output_imports(module, source):
     assert violations(source, "event_universe." + module)
 
 
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("core.topology", "from .disturbance_state import Address3"),
-        ("fields.disturbances", "from ..core.disturbance_state import DisturbanceRecord"),
-        ("fields.disturbances", "from ..core.integer import checked_work"),
-        ("fields.disturbances", "from ..core.coupling_selectors import matches_pair"),
-        ("fields.disturbances", "from ..core.validation import ValidationMeter"),
-        ("fields.spatial_plan", "from ..core.sampling_contract import validate_spatial_sampling"),
-        ("fields.rays", "from .spatial import SpatialPlan"),
-        ("disturbance_api", "def build(value: int | None = None) -> int | None:\n    return value"),
-        ("disturbance_api", "selected: int | None = -1"),
-        (
-            "disturbance_api",
-            "from .fields.disturbances import DisturbanceLaw\nlaw = DisturbanceLaw(100, 1, 2)",
-        ),
+        ("core.phase", "from event_universe.core.integer import checked_work"),
+        ("shadow.layer", "from event_universe.core.lattice import Address3"),
+        ("shadow.engine", "from event_universe.shadow.layer import ShadowLayer"),
+        ("shadow.run", "import json\nfrom event_universe.snapshot_writer import write_snapshot"),
+        ("runner", "from event_universe.shadow.run import execute_shadow_run"),
     ],
 )
-def test_architecture_gate_allows_legal_dependencies_and_type_annotations(module, source):
+def test_architecture_gate_allows_the_dependency_direction(module, source):
     assert not violations(source, "event_universe." + module)
 
 

@@ -11,12 +11,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 # Every row names a kept test; main() still skips a selected test that does not exist.
-RESOURCE_CONSUMERS = {
-    "examples/local_lorentz_field.json": ("tests/test_node_state_contract.py",),
-    "catalog/nature.json": ("tests/test_nature_catalog.py",),
-    "docs/CATALOG.md": ("tests/test_nature_catalog.py",),
-    "docs/EXPERIMENTS.md": ("tests/test_nature_catalog.py",),
-    "docs/HYPOTHESES.md": ("tests/test_nature_catalog.py",),
+RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
+    "examples/shadow/README.md": ("tests/test_field_only.py",),
 }
 
 
@@ -156,19 +152,15 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
-        if path.startswith("tools/ray_viewer/"):
-            tests.add("tests/test_ray_viewer.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
             tests.add("tests/test_configuration_validation.py")
-        if path.startswith("examples/particle-contracts/"):
-            tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         # Paths and duplicate contents can change in any source file, not just Python.
         tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
-            tests.update(("tests/test_architecture.py", "tests/test_locality.py"))
+            tests.add("tests/test_architecture.py")
         if path.startswith("examples/") or path.startswith("src/event_universe/ui_assets/"):
             tests.update(
                 p
