@@ -32,12 +32,15 @@ Everything below is on `main`; nothing is in a branch or a machine.
    `src/event_universe/shadow/` (feature 20, `field-only-v1`, PR #327), selected by a
    world's `"law": "shadow"`, with `tests/test_field_only.py` and the worlds under
    `examples/shadow/`. **It is under test and not the working law** (the model owner,
-   2026-09-19): a world of its law is refused unless it declares the three decisions the
-   owner has not made (feature 20b, `shadow-gate-v1`: `transmitted_number`,
-   `wait_per_quantum`, `epsilon_g`), and it becomes the law only after it has repeated
-   every confrontation on open boards (E11, A5s, A6, A1, E9) and the readings were
-   registered. Until then the old engine stays; when it passes, the old engine is
-   retired in a cleanup and this becomes one engine.
+   2026-09-19): it becomes the law only after it has repeated every confrontation on
+   open boards (E11, A5s, A6, A1, E9) and the readings were registered. Until then the
+   old engine stays; when it passes, the old engine is retired in a cleanup and this
+   becomes one engine. The gate of the morning (feature 20b, `shadow-gate-v1`: a world
+   refused unless it declared `transmitted_number`, `wait_per_quantum` and `epsilon_g`)
+   was withdrawn by the model owner later the same day ("We do not need these three
+   things at all", Highlights 5.4, the status line): it is not written, the keys are
+   not added, and the engine runs as it stands. PR #331, which made the gate the first
+   task, is superseded.
 
 **What the new engine already gave on its first worlds** (test_field_only, pinned before
 the runs): Gauss's flux through every shell equal to the emission within 2 %, the count
@@ -48,13 +51,15 @@ monotone), the wait falling as r^-0.9.
 **What is open, by whose hand:**
 
 - The model owner's decisions (round 8's verdict table, PR #327's "Needs a decision",
-  Highlights 5.4's status line): the law in points S1 to S10 point by point; the number a
-  transmitted quantum carries (a slit or a mirror keeping the number of what it re-emits,
-  or its own); the wait's unit w; the gravity multiplier ε_g (nature's hierarchy needs it,
-  section 55 (x)); T2 (an event takes its interval); what a matter shadow rotates by;
+  Highlights 5.4's status line): the law in points S1 to S10 point by point; T2 (an
+  event takes its interval); what a matter shadow rotates by;
   hypothesis 19 or a per-family w (the bending of light: half of Einstein with one w,
   whole if light pays twice); the Compton table; the parked share's phase (1.5 % of the
-  emission stands still); a lamp's recoil; the plain or matched edge.
+  emission stands still); a lamp's recoil; the plain or matched edge. Settled on
+  2026-09-19 ("We do not need these three things at all"): the number a transmitted
+  quantum carries is the last emitter's, the wait's unit is the size read, one interval
+  per whole unit, and there is no gravity multiplier ε_g; the hierarchy of section 55
+  (x) stays an open question of the model, not a parameter.
 - Derived and not solved by either law: no inertia for a co-moving pair at first order
   in v (section 54: the lattice's preferred frame for composite matter); no mass ladder
   under the law of the shadow (bound contents give Kepler's continuum; the law of the
