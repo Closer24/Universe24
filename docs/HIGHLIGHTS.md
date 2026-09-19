@@ -8,7 +8,7 @@ and this file was taken verbatim from its revision modified on 2026-09-16 at
 directly and is the authoritative Highlights text; the Google Doc is the
 historical source up to that revision and is neither edited nor resynced.
 After every change here, [POSTULATES.md](../POSTULATES.md),
-[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) and every other document that restates
+RAY_EVENT_MODEL.md and every other document that restates
 a changed rule are brought into step with this file, and
 [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) records what the repository
 implements. Section numbering is the document's own.

@@ -43,7 +43,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
 
 - A new engine mode beside the old one, `event_universe/shadow/`, selected by
-  a world's `"law": "shadow"` key ([the law of the shadow](docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)):
+  a world's `"law": "shadow"` key ([the law of the shadow](docs/ENGINE.md#the-law-of-the-shadow-field-only-v1)):
   only shadows and events. Matter is content held at Nodes; every ray is a
   shadow, a whole quantum in flight that moves one Link per interval and
   spreads by the Node's mixing, the dense layer's kernels by import; an event

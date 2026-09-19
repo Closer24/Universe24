@@ -29,7 +29,7 @@ else:
     _creation_flags = 0
 
 MAX_REQUEST = 1_048_576
-ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl", "run.html"}
+ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl"}
 RUN_ROUTE = re.compile(r"/api/runs/([a-f0-9]{32})(?:/(stop))?")
 FILE_ROUTE = re.compile(r"/runs/([a-f0-9]{32})/([a-z.]+)")
 EXPORT_ROUTE = re.compile(r"/exports/([a-f0-9]{32})\.json")
@@ -173,12 +173,9 @@ class Workspace:
             )
         return result
 
-    def start(self, source: object, visualize: object, stride: object) -> dict[str, object]:
+    def start(self, source: object) -> dict[str, object]:
+        """One headless run of the draft, in another process, on a saved snapshot."""
         summary = validate_source(source)
-        if type(visualize) is not bool or type(stride) is not int or stride < 1:
-            raise ValueError("visualize must be a boolean and frame_stride a positive integer")
-        if visualize:
-            raise ValueError("the engine runs headless: a run records no movie")
         assert isinstance(source, str)
         with self.lock:
             for job in self.jobs.values():
@@ -415,9 +412,7 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
                 self._json({"valid": True, "summary": validate_source(body.get("source"))})
             elif path == "/api/runs":
                 self._json(
-                    self.server.workspace.start(
-                        body.get("source"), body.get("visualize", False), body.get("frame_stride", 1)
-                    ),
+                    self.server.workspace.start(body.get("source")),
                     HTTPStatus.ACCEPTED,
                 )
             elif (match := RUN_ROUTE.fullmatch(path)) and match[2] == "stop":

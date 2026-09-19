@@ -11,7 +11,7 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    select active laws in initialization data. Use `fields/disturbances.py` for
    initialization-defined expression evaluation; shared bounded arithmetic belongs
    in `core/integer.py`. Read
-   [the disturbance contract](docs/DISTURBANCES.md) for the active API.
+   the disturbance contract for the active API.
    Apply the [local integer operation contract](docs/ARCHITECTURE.md#local-integer-operation-contract)
    when reviewing operations, numeric bounds and input provenance; do not promote
    a global or floating-point prototype into the physical path.

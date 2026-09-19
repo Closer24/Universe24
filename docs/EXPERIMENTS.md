@@ -27,7 +27,7 @@ the model owner's decision, dated.
 needs (numbers 1 to 12 below), the board, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
 and its pass or fail criterion as an exact statement. The families and
-couplings it names are entries of the [catalog of nature](CATALOG.md)
+couplings it names are entries of the catalog of nature
 (`catalog/nature.json`), whose `experiments` section lists per entry the
 ids it uses, so that the register and the catalog agree. Nothing is retuned
 against the result and no criterion is redefined after a failure
@@ -37,7 +37,7 @@ reopen an adopted decision and does not authorize a new law.
 
 **Features.** The numbers are the ten features of issue #169, the eleventh
 of Highlights 3.26 and the twelfth of Highlights 3.5, in the order they land
-([ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)): 1 ray state
+(ray-event model): 1 ray state
 (done on 2026-09-17, `ray-event-state-v1`); 2 the Node Detector bit (mark,
 setting, ticket seed; done on 2026-09-17, `detector-mark-v1`, the
 `detectors` key with `position`, `setting` `[n, d]` and `seed`); 3 the
@@ -2022,7 +2022,7 @@ states "exactly" and means integer equality at every tick.
   m₀ = h/(N δt c²), so every ratio is a ratio of integers; the rungs of the
   elementary families are catalog values, not predictions; the test is
   representability at one N within the declared encoding error
-  ([reference units](REFERENCE_UNITS.md)). The self-field of the unit-square
+  (reference units). The self-field of the unit-square
   ring selects no content
   ([E10](#e10-the-ring-meets-its-own-field-the-loop-under-its-own-light-contents-32-to-128),
   2026-09-17): with the catalog's turn declared beside the corner table, a
@@ -2047,7 +2047,7 @@ states "exactly" and means integer equality at every tick.
   the declared tables, which the held-ray binding of feature 8, holding any
   content, cannot show. The counting procedure, ring by ring over the
   corner table, is written in
-  [loop binding](LOOP_BINDING.md#7-the-ladder-and-how-a10-counts-it)
+  loop binding
   (design of 2026-09-17), with its finding that the Port-form corner and
   the Born table give no content ladder and that the ladder needs the
   ring's turn produced by its own field.
@@ -2134,7 +2134,7 @@ states "exactly" and means integer equality at every tick.
 - **Deviations from the plan above, each stated before the run.** (i) The
   property landed as the transverse direction itself, not as a two-state
   property that would then be found wanting: feature 11
-  (`ray-polarization-v1`, [polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1))
+  (`ray-polarization-v1`, polarization)
   gives every light ray an integer step of a circle of 2^`polarization_bits`
   steps per half turn, the phase width by default, whose steps 0 and half
   the circle are the two lattice axes of Highlights 3.26 and whose other
@@ -2497,7 +2497,7 @@ unlocks; an entry runs when the last feature it names has landed.
 12. Feature 12, field spreading (Highlights 3.5, 2026-09-17): A1, A2 and the
     diagonal series of A6.
 13. Feature 14, binding as a loop (Highlights 3.4, 2026-09-17; design done
-    on 2026-09-17, [loop binding](LOOP_BINDING.md); implementation after
+    on 2026-09-17, loop binding; implementation after
     feature 8b): E5, the ladder count of A10 in its loop form, and A14 once
     a moving loop exists.
 
@@ -2808,7 +2808,7 @@ sign rule, and its other couplings are catalog entries.
   disperses. The dictionary and the tick-by-tick states are in the
   README;
   the rule, the closure condition and the open points in
-  [loop binding](LOOP_BINDING.md).
+  loop binding.
 - **Computed.** The closure of the unit square as integer equalities: a
   partner at every corner (two rays per sense at opposite corners at
   least, content 4; eight for every corner every interval), the headings by
@@ -2832,7 +2832,7 @@ sign rule, and its other couplings are catalog entries.
   tick 2 one ray of amount 2 at each corner, walking +Y or -Y off the
   square, the board empty from tick 8, 8 escaped, every line balanced, no
   group read. The integers are pinned in
-  [test expectations](TEST_EXPECTATIONS.md#loop-binding) beside the
+  test expectations beside the
   rate-1, four-ray and quadrature cases. A check run on `main` at
   `c21e03e` (2026-09-17, not this demonstration) agreed with every pinned
   line: the engine already held the ring under the Port form before the
@@ -3126,7 +3126,7 @@ sign rule, and its other couplings are catalog entries.
   and the readings are in the
   README;
   `tests/test_screen_loop.py` pins the first ticks in isolation
-  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)).
+  (expectations).
 - **Computed (before the run).** The content: at `[1, 4]` a ray of amount a
   releases floor(a / 4) per heading, 0 for a < 4, so 4 is the least amount
   that radiates, and with one ray of each sense at every corner, as
@@ -3259,7 +3259,7 @@ sign rule, and its other couplings are catalog entries.
   consider and which end the clicking at tick 72. The isolated test
   (`tests/test_screen_loop.py`, 32 ticks) pins the first seven clicks, the
   light line and the group reading from the first run of its board
-  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
+  (expectations). The
   record stays outside the tree; nothing was tuned after the run.
 - **Repeated under `detector-absorb-v1` (2026-09-18).** Status: repeated on
   2026-09-18 under the decision of Highlights 5.4, "A click is an
@@ -3523,7 +3523,7 @@ sign rule, and its other couplings are catalog entries.
   cross field it released earlier, and that is a meeting like any other; the
   field is matter's message about itself, read by the table of the ray that
   meets it) with 3.4 (the ladder of hypothesis 12 is the set of contents
-  that close a loop under the table) and [loop binding](LOOP_BINDING.md)
+  that close a loop under the table) and loop binding
   sections 6, 7 and 11: on a ring every corner is a change of trajectory,
   so a ring meets its own field, and a content ladder can come only from
   the ring's rays meeting the group's own field rays under a table whose
@@ -3556,7 +3556,7 @@ sign rule, and its other couplings are catalog entries.
   readings are in the
   README;
   `tests/test_ring_self_field.py` pins the content-32 worlds for 16 ticks
-  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+  (expectations).
 - **Computed (before the run, from the code and the tables).** (i) A corner
   meeting resets the register: a meeting's outputs are fresh rays
   (`_output` in `src/event_universe/fields/ray_interactions.py`: heading,
@@ -3733,7 +3733,7 @@ sign rule, and its other couplings are catalog entries.
   outside the tree, `record.json` beside the worlds. The isolated test
   (`tests/test_ring_self_field.py`, the content-32 worlds, 24 ticks) pins
   the pushes, the identity of the records and the group readings
-  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+  (expectations).
 
 ### E11. The field's books: the profile of a point source shell by shell, and the momentum between release and meeting
 
@@ -4074,7 +4074,7 @@ sign rule, and its other couplings are catalog entries.
   tick of both worlds and the plain statement; nothing tuned after the
   runs; `record.json` beside the worlds holds every row; the isolated test
   `tests/test_field_books.py` pins the worlds and the shell reader on a 9^3
-  point source ([expectations](TEST_EXPECTATIONS.md#the-fields-books)).
+  point source (expectations).
 
 ### E11 repeated under the law of the bit (2026-09-18)
 
@@ -4399,7 +4399,7 @@ sign rule, and its other couplings are catalog entries.
   dictionary and the readings are in the
   README;
   `tests/test_screen_no_draw.py` pins the smallest world of the question
-  ([expectations](TEST_EXPECTATIONS.md#the-screen-without-a-draw)).
+  (expectations).
 - **Computed (before the run).** (i) The mean field, `mean_field.py`: the
   split table as the linear map it is on average (A5s Run 2 measured the
   engine's integers against it to a part in a thousand at 4096 per heading),

@@ -24,7 +24,7 @@ A run is a **world file**: a JSON object with `"law": "shadow"`, the board's
 shape and open boundary, the clock K and the phase width N, the release rate
 and the wait's unit, the families (free, matter; paid, light) and the held
 contents with their tables. The engine recognizes nothing by physical name.
-Read [the law of the shadow](docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)
+Read [the engine](docs/ENGINE.md)
 and the worlds under [examples/shadow/](examples/shadow/README.md) before
 defining a run.
 
@@ -110,10 +110,10 @@ python -m event_universe.ui
 ```
 
 Open the printed local URL, normally `http://127.0.0.1:8765`. Choose a world of
-`examples/shadow/` as a template, edit it, check it, and select **Run
-simulation**. Each run reads a saved JSON snapshot at runtime and runs headless
-in another process; the workspace stays responsive. Results include the record
-and links to the input, state and events. Use `--configs` to select your own
+`examples/shadow/` as a template, edit its JSON, **Check** it, and **Run**.
+Each run reads a saved snapshot of the draft and runs headless in another
+process; the workspace stays responsive. The result shows the record (the
+law, the completed ticks, the books) and links to the input, state and events. Use `--configs` to select your own
 template folder, or `--port 0` to choose an available port. See the
 [workspace guide](docs/WORKSPACE.md) for drafts, files and interruption.
 
@@ -166,7 +166,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `examples/shadow/` | The worlds of the law: one content, two contents, two slits and the one-slit control |
 | `tests/` | One module per generic rule on a minimal board (the mixing, the law's readings, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
-| `docs/SPATIAL_FIELDS.md` | The law of the shadow as implemented (its last section; the rest is the history of the old engine) |
+| `docs/ENGINE.md` | The engine's contract as implemented: the world file, the interval, the wait, the events, the books, the record, the preflight |
 | `docs/DERIVATIONS.md`, `docs/EXPERIMENTS.md` | The derivations of the known laws, and the research runs with their records |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |

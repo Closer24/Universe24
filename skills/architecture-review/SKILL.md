@@ -12,7 +12,7 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
-For the active API, read [DISTURBANCES.md](../../docs/DISTURBANCES.md).
+For the active API, read DISTURBANCES.md.
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
 to the complete physical dependency path. Report unsupported tensor shapes and
 separately scoped historical paths instead of certifying all code as local.
@@ -35,7 +35,7 @@ may become a second owner of arithmetic. Review actual imports and data flow,
 not just the directory names or a passing static gate.
 
 For energy/momentum auditing, trace the
-[measurement boundary](../../docs/LOCAL_CONSERVATION.md): actual records, joint
+measurement boundary: actual records, joint
 node fields and actual packet owners must be counted once. Check nonlinear
 packet changes and complete carrier commits, not only intermediate couplings.
 Host-wide inventory snapshots are diagnostic inputs only; no residual, expression
@@ -53,7 +53,7 @@ An unsupported composition or suspected defect is a review finding; implement
 changes only within an authorized implementation scope.
 
 For configuration changes, apply the
-[validation boundary](../../docs/CONFIGURATION_VALIDATION.md): one strict JSON
+validation boundary: one strict JSON
 decoder, one semantic owner per format, and a thin dispatcher with explicit context.
 Trace CLI, UI, runner and sidecar entry points. Preflight must not construct a world,
 execute a profile, select laws from physical names, or claim runtime/physics proof.

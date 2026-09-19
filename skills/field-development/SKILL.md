@@ -17,7 +17,7 @@ Before behavior edits, apply [the published-design requirement](../workflow.md#i
 Read [the shared workflow](../workflow.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 
-The active field contract is [DISTURBANCES.md](../../docs/DISTURBANCES.md).
+The active field contract is DISTURBANCES.md.
 Configure identities and supported laws in JSON; do not add field-name branches
 or Python execution to the loader. Whole-record movement, extensive splitting,
 source accounting and paired exchange are distinct contracts.
@@ -37,7 +37,7 @@ not local physics if its estimator uses a shadow world, source history or global
 knowledge. Keep persistent source behavior, causal delivery and equal/opposite
 momentum exchange explicit; disabling response is not a self-force solution.
 The two existing ordering policies, `field_phase_first` and `arrival_port_blind`
-in [spatial couplings](../../docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering),
+in spatial couplings,
 show the required test shape: an isolated straight emitter, a maximum-speed
 turn, a held external-source control and rejected combinations.
 
@@ -55,17 +55,17 @@ For rotating field response, distinguish conserved combined vector components
 from preserved carrier norm. Require an external transverse-source control when
 parallel self flux produces no rotation. Price delayed atomic reactions without
 rewriting old in-flight packets or claiming reservation tariffs are measured host
-instruction counts; see [spatial response](../../docs/SPATIAL_COUPLINGS.md).
+instruction counts; see spatial response.
 
 For shared computation timing, keep original stock, frozen proposals and later
 input distinct. Test input arriving during a wait and at the ready tick,
 including empty intervals. Price bounded physical merges before freezing the
 ready time; revalidate joint guards before ownership changes. See the
-[shared-cycle contract](../../docs/SPATIAL_COMPUTATION_DELAY.md).
+shared-cycle contract.
 
 When a candidate claims energy and momentum conservation, define all owner
 contributions and actual six-port flux under the
-[local conservation contract](../../docs/LOCAL_CONSERVATION.md). Show that the
+local conservation contract. Show that the
 same quantities survive scattering, transport, merging and the complete coupled
 update. A component transformation ledger is not an energy reservoir. Keep the
 elementary state-generating rule independent of the measurement and of any

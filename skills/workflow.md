@@ -281,7 +281,7 @@ not newly invented physical tests. The repository's existing submission and CI
 gate still applies. Ordinary runs and tests are headless; render only when the
 user explicitly requests visualization or visual checks. Diagnostics may reject
 a run but may not repair physical state. Consult
-[the active disturbance contract](../docs/DISTURBANCES.md) before applying old
+the active disturbance contract before applying old
 scalar/particle assumptions to the primary Simulation API.
 
 ## Performance work

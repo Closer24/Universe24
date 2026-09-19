@@ -1,75 +1,20 @@
 # Architecture and change boundaries
 
-[Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
-pending completion and publication in `core/disturbance_node.py` and
-`core/spatial_node.py`. Shared services contain seed-free immutable definitions,
-local law providers and write-side accounting; Nodes receive no world lookup.
-Transport indexes local fixed output banks and validates adjacent delivery.
-`core/node_conservation.py` is a DTO/protocol boundary; generic readout arithmetic
-lives in `fields/node_conservation.py`, and its parser reuses initialization's
-expression grammar. A configured exact balance check precedes physical mutation.
-The profile's declared k and counted operation cost are separate quantities.
-Indexed spatial rules reuse carrier role selection and the existing expression
-evaluator with an additional local field owner. Pending proposals contain bounded
-slot snapshots and deltas, never executable expressions. Field-only pending
-proposals similarly retain per-rule deltas and outgoing views. Shared immutable
-law services revalidate them before Node-owned commits; they receive local state
-only. The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates consumed
-start triggers from persistent conditions and defines their failure behavior.
-
-The opt-in [shared field computation cycle](SPATIAL_COMPUTATION_DELAY.md)
-extends `PendingCycle` with one immutable spatial proposal, reaction phases
-and cached joint-guard input. `SpatialNodeState` retains fixed incoming populations,
-port readings, counts and decay cost while pending. Inventory includes these
-actual input owners once and excludes proposals. No expressions or histories
-enter evolving state. The carrier Node coordinates both local owners atomically.
-
-[Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
-sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.
-`core/validation.py` retains bounded checks without charging the physical clock.
-The optional [local conservation audit](LOCAL_CONSERVATION.md) lives in
-`diagnostics/local_conservation.py`; public assembly attaches it to committed
-events and exposes immutable `core/conservation_state.py` inventory views.
-Its host work is separate from model operation costs; it never provides an update or repair.
-
-The quantum-register extension (`quantum/mixed.py`, `quantum/operations.py`,
-`integration/quantum_entities.py`) was deleted on 2026-09-17; `entities.py`
-compiles classical profiles only.
-
-`entity_catalog.py` validates descriptive reference metadata and its links.
-Its decimal measurement parsing is host-side only and never updates physical
-state. `entities.py` requires separate explicit experiment profiles for version 2
-catalogs, compiles them into ordinary initialization, and delegates runtime schema
-validation to `initialization.py`. Reference properties and interaction lists do
-not enter runtime laws or select species-specific behavior. See
-[entity catalog](ENTITY_CATALOG.md).
-The [reference units](REFERENCE_UNITS.md) authoring tool owns the shared external
-constant/unit registry and one-time exact rational conversion into bounded
-Scalar/Vector initialization components. Rational calibration and error reports
-remain host metadata; they are never a physical arithmetic fallback or a runtime
-unit conversion. Integer scales and future physical intermediates still obey
-the ordinary bounds. Unit names do not select interactions or propagation laws.
-Optional two-record type conversion follows the existing frozen pair proposal
-and delayed engine commit; its ownership restrictions are in
-[local conversions](LOCAL_CONVERSIONS.md).
-
-## Configuration validation ownership
-
-The [configuration preflight contract](CONFIGURATION_VALIDATION.md) defines the
-shared JSON decoder, supported format dispatch and explicit context dependencies.
-`configuration_validation.py` coordinates existing format owners and returns
-reports without constructing a simulation. It shares initialization/observer
-preparation with the runner; the UI consumes its read-only validation result.
-Semantic rules remain in initialization, native programs, catalog, profiles and
-observer owners. Runtime execution and physical acceptance remain separate checks.
+The one engine is the field-only engine of the law of the shadow
+([ENGINE.md](ENGINE.md)): `src/event_universe/shadow/` on the substrate of
+`src/event_universe/core/`, with the host modules (the runner, the preflight,
+the workspace, retention, the snapshot writer) around them. This document owns
+the repository policy: the local integer operation contract every physical
+change obeys, who owns generated output, the monorepo's single owners, the
+dependency direction the gate enforces, and how a physical feature is added.
+The boundaries of the old engine, deleted on 2026-09-19, are in git
+([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 
 ## Local integer operation contract
 
-This contract applies to all new and changed physical code, entity definitions,
-configuration adapters and prototypes intended for the active Simulation.
-Use [DISTURBANCES.md](DISTURBANCES.md) for the supported operation vocabulary
-and [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md) for delivered field inputs.
-LOCALITY-1 and the numeric bounds in SIMULATOR_DEFINITIONS.md remain authoritative.
+This contract applies to all new and changed physical code, world definitions
+and prototypes intended for the engine ([ENGINE.md](ENGINE.md)). LOCALITY-1
+and the numeric bounds in SIMULATOR_DEFINITIONS.md remain authoritative.
 
 ### Generic operations and law ownership
 
@@ -140,8 +85,8 @@ For each affected operator or rule, identify its owner, scalar/vector shape,
 integer input/intermediate/output bounds, causal input path and failure behavior.
 Run the affected checks selected by tools/check.py, including related integer,
 initialization, architecture and locality gates when those contracts change.
-The existing entry points include tests/test_integer_contract.py,
-tests/test_initialization.py, tests/test_architecture.py and tests/test_locality.py.
+The existing entry points are tests/test_integer_arithmetic.py,
+tests/test_architecture.py and tests/test_locality.py.
 Review gaps in scanner coverage explicitly; passing static checks is not a proof
 about arbitrary Python or every possible configuration.
 
@@ -165,16 +110,6 @@ repository path already satisfies the active local integer contract.
 
 ## Generated output ownership
 
-The optional [local observer](LOCAL_OBSERVER.md) belongs to diagnostics.
-`observer_configuration.py` owns placement validation shared by initialization and
-the runner. Initialization validates the optional `observer` member without adding
-it to physical state; the runner selects recording without eager diagnostic imports.
-`diagnostics/local_observer.py` whitelists completed events at one node and
-archives copied reception values plus a cycle counter. The runner captures exact
-receipt prefixes beside playback frames. Enriched spatial reception events are
-emitted after ownership commits. Neither archive, display nor clock count is a
-physical planner input.
-
 `retention.py` owns host-only artifact registration, writer leases and expiry.
 Runners own complete fresh output directories; the workspace owns exact input,
 log and export files and declares the child-output dependency for companions.
@@ -182,124 +117,6 @@ Cleanup uses recorded filesystem generations and operating-system locks, with
 recoverable quarantine before removal. The module never imports or changes
 physical engine state. Its one-shot and singleton watcher interfaces share the
 [same retention contract](RETENTION.md).
-
-## Active generic ownership
-
-> **History (2026-09-19).** This section and the ones after it that name the
-> generic disturbance simulator, its engine, its fields and its workspace forms
-> describe the old engine, deleted on 2026-09-19
-> ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
-> The live layout is the dependency table above.
-
-The record policy (`core/record_policy.RecordPolicy`,
-`fields/record_operations.RecordOperations`) was deleted on 2026-09-17 (issue
-#164, bucket B.6; see the
-[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17)).
-`core/disturbance_node.py` owns what stays of it as pure functions over the
-immutable run definition: `carrier_work`, the activity predicate that decides
-whether resident records give a Node a cycle to plan, and `report_cost`, the
-write of an already-metered `cost_field`. A delivered record takes the first
-spare slot outside the pending lock; nothing is folded into a resident record.
-The engine alone determines arrival eligibility, supplies locks, validates slot
-capacity and commits proposals before clearing packets; `NodeServices` carries
-the carrier types a spatial coupling or interaction selects (`spatial_types`).
-Direct `DisturbanceEngine` callers pass no `record_policy=`. Configuration files
-are unchanged.
-
-
-`disturbance_api.Simulation(initial: InitialState)` composes the generic engine
-and local law; it is exported as the primary package Simulation.
-`initialization.py` reads strict JSON data and resolves names to bounded typed
-definitions. `core/disturbance_state.py` owns fixed schemas and payload coding;
-`fields/disturbances.py` owns expression arithmetic, updates, paired coupling
-and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
-fixed transit and delayed atomic commits. No layer branches on a physical field
-name or imports Python code named by initialization.
-
-The opt-in rational extension stays within these owners: `fields/ratios.py`
-owns finite exact arithmetic and projections; `fields/routing.py` owns balanced
-six-port selection and fractional credit. Neither receives world state. Fixed
-carrier bookkeeping travels through the existing scheduler. The numerical and
-cost amendment is explicit in [RATIONAL_PARTICLES.md](RATIONAL_PARTICLES.md).
-Physical formulas in its examples are reference benchmarks, separate from the
-elementary emergence probes in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
-
-Field, type, model and unit labels are data. Reordering field/type declarations
-must preserve the same resolved behavior; declared update/coupling order and
-spatial axes can be meaningful and are not interchangeable. The executable
-cross-layer checks live in `tests/test_generic_identity.py` (deleted on 2026-09-17). Genericity is scoped
-to the supported integer scalar/vector schema, three-dimensional six-port
-geometry, fixed capacities and declared operation set; it does not imply an
-arbitrary equation interpreter.
-
-Atomic interaction definitions share that path: initialization resolves bounded
-assignments, invariants and activation expressions; `fields/disturbances.py`
-evaluates frozen-pair proposals and exact per-transaction balances before routing.
-They add no per-source memory or alternate commit path. Example physics remains
-JSON data, including vector transforms and the unequal-mass elastic contact law.
-The shared evaluator propagates explicitly supplied spatial flux through nested
-operators. Atomic interactions operate after proposed spatial responses and
-ordinary exchanges, retaining carried emission/reaction allowances and the
-prepared opposite field reaction until the common delayed commit.
-
-The complete source contract is [DISTURBANCES.md](DISTURBANCES.md). Its six-port,
-bounded-record schema replaces the implicit scalar/particle schema for the
-primary API. Global diagnostics never drive physical rules, and rendering is
-absent unless explicitly requested.
-
-The optional spatial extension uses `core/spatial_state.py` for fixed schemas,
-`fields/spatial.py` for bounded emission/splitting and `fields/spatial_plan.py`
-for pure local proposals. `core/spatial_engine.py` schedules and owns field
-packets; `disturbance_api.py` composes its planner without formulas, and, when
-a world declares `dense_field`, the dense region of `dense_field.py` (numpy
-integer arrays, outside the core, behind the engine's `DenseRegion` protocol)
-that cycles the board's pure-field Nodes as one step with the same integers
-([the dense mode](SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1)). The shared
-engine combines diagnostics and costs while retaining separate field and
-carrier clocks. See [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) for the contract and
-the remaining self-attribution requirement. `fields/spatial_coupling.py` owns
-local sampling, fractional exchange, exact quarter-turn rotation and reaction
-allocation. The injected `SpatialCoupler` protocol keeps those calculations out
-of engine scheduling. Carrier and field owners validate together before committing
-the response; fixed sample registers and departure timestamps prevent future
-reads or edits to old in-flight packets. See [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md).
-
-The optional phased-ray law retains its bounded prepared cosine/sine tuples in
-immutable `SpatialFieldDefinition`, outside NodeState. Per-record departure,
-capture-ticket and absorbed-phase rows have fixed configuration-derived sizes.
-Each departure row carries four integers (amount, cursor, phase, advance); an
-absorbed-phase row carries phase and advance. These bounded owner registers
-preserve a ray's emitted advance without looking up a later emitter state;
-Nodes validate that a field proposal changes only selected stock/vector fields
-and permitted bookkeeping, preserving transport metadata. Funded/absorbed owners
-currently reject delayed carrier plans on the independent spatial clock. The
-read-only runner inventory binds ray momentum through explicit recoil/absorption
-field references and counts actual resident, in-flight and escaped owners.
-
-The opt-in [local field-rule contract](LOCAL_FIELD_RULES.md) reuses these owners.
-`fields/local_field_rules.py` evaluates bounded multi-field retained/outgoing
-proposals using delivered six-port data; `fields/spatial_plan.py` composes them
-with existing emission and outward routing. Logical groups reference existing
-scalar/vector fields and allocate no second physical owner.
-`fields/spatial_interactions.py` extends the injected coupler with generic
-field/carrier assignments and actual-commit invariant guards. The engine freezes
-carrier transaction views and additive field deltas, then validates the complete
-commit against current local field stock before either owner mutates. It never
-replaces live fields with sampled state. Old emission metadata keeps its owner
-through delayed carrier commits. Transformation ledgers are diagnostics, not
-sources or inputs to physical laws. The schema, bounded expression evaluator,
-fixed field clock and existing outward path remain shared.
-
-The historical scalar, stream, linked, collision and balanced candidates and
-their named research APIs were deleted on 2026-09-17 under Highlights sections
-3.3, 3.4, 3.5, 3.19, 3.20, 5.1 and 5.4 (issue #164, bucket A). Their contracts
-are no longer described here; the dated evidence in [VALIDATION.md](VALIDATION.md)
-keeps their original scope.
-
-[AGENTS.md](../AGENTS.md) is the shared contributor entry point.
-`POSTULATES.md` is the plain-language conceptual entry point.
-`SIMULATOR_DEFINITIONS.md` translates those principles into exact technical
-requirements, and this document describes the code boundaries that enforce them.
 
 ## Monorepo ownership
 
@@ -312,7 +129,7 @@ table below defines code boundaries. Architecture owns this repository policy.
 | Information | Single owner | Update rule |
 | --- | --- | --- |
 | Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; the world file selects them |
-| The world file, the interval's steps and the record | [The law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1) | Keep the live contract separate from the historical candidates before it in the same document |
+| The world file, the interval's steps and the record | [The law of the shadow](ENGINE.md#the-law-of-the-shadow-field-only-v1) | Keep the live contract separate from the historical candidates before it in the same document |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
@@ -355,73 +172,6 @@ The gate (`tests/architecture_rules.py`, `tests/test_architecture.py`): `core`
 imports only `core`; `shadow` imports only `core` and `shadow`, except
 `shadow/run`, which writes the artifacts; no physical module imports an output
 or storage library; and every module of `core/` passes the integer audit.
-Every row above that names a module of the old engine, in the sections
-that follow, is history as of 2026-09-19 ([migration](MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
-
-## Configuration workspace
-
-`ui.py` serves packaged `ui_assets/` HTML, CSS and JavaScript without a frontend
-build. Templates remain the canonical JSON files in `examples/`, included as
-package data files for installed use; `--configs` selects another directory.
-Full inputs and JSON fragments share `initialization.parse_json_document`
-duplicate-key enforcement. The existing validator checks configurations before
-runs. The browser previews initial seed positions, not computed motion.
-
-Each accepted request becomes immutable JSON passed to the existing runner in
-a separate Python process using the server's package source. The UI never steps
-an Engine or supplies physical arithmetic. It owns one active job, session
-history, cancellation and links restricted to known artifacts. Configuration
-edits require no compilation or restart. Output directories are unique;
-Run & watch explicitly requests a movie; recording can be disabled and the CLI
-remains headless by default. `diagnostics/disturbance_render.py` embeds copied
-frames and metadata in the packaged self-contained player. Neither the player
-nor its speed/projection controls supply simulation inputs. Name controls update
-declarative references only. Cancelled runs are labeled incomplete. Loopback
-binding, Host/Origin checks and a session token constrain HTTP access.
-See [WORKSPACE.md](WORKSPACE.md) for lifecycle and persistence behavior.
-
-## Generic calculations
-
-`core/integer.py` owns shared decoded component addition/subtraction, ordered
-sums, dot/cross products and nonnegative ceiling division. Products and ordered
-partial sums retain their working-register checks, including overflow before
-cancellation. Ceiling division retains the existing adjusted-numerator bound;
-`signed_divrem` instead rounds toward zero and returns a signed remainder.
-Callers supply schema-bounded components and retain payload encoding, field
-validation, operation pricing and atomic commit ownership. The expression
-interpreter delegates arithmetic while retaining broadcasting and AST costs.
-See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
-
-## Deleted on 2026-09-17: the source envelopes
-
-The modules `core/source_envelope_node.py`, `core/source_envelope_state.py`,
-`core/source_emission.py`, `core/source_emission_node.py`,
-`fields/source_envelope.py` and `fields/source_emission.py` (formula-free
-amplitudes, finite source state, pending proposals, twenty-four Port slots,
-the rational weight scale, the null record and their local transitions), the
-`CausalSourceResolver` protocol of `core/event_resolution.py`,
-`SpatialEngine.commit_source` with its `spatial_envelope_source` event, the
-`source_envelope` member of the disturbance NodeState and the envelope
-records of the formula-free state audit were deleted under Highlights section
-3.5 and the [ray-event model](RAY_EVENT_MODEL.md) section 5 (row R5) and
-section 6, step 7 (issue #164, bucket B.3): a field is the ray's own
-information spreading in ray form, not a complex envelope retained at a Node.
-Their runtime owners had gone with the integration layer on the same day.
-There is no replacement module; the dated evidence stays in
-[validation](VALIDATION.md).
-
-## Deleted on 2026-09-17: the shared quantum resource, Q-ORACLE-1
-
-The `quantum/` package (`deferred-unit-cost-oracle-v1`, the deferred event
-network, wave origins, focus, mixed states and the terminal trial) and the
-`integration/` package that bound it to the primary Simulation
-(`event_program`, `event_runtime`, the contact runtimes, `quantum_entities`,
-`quantum_bridge` and the two trials) were deleted under Highlights sections
-3.18 (deleted), 3.19, 3.20 and 5.4 (issue #164, buckets B.1 and B.2). No
-owner answers at a distance; the Detector is a marked Node, and every
-alternative is an event on the board ([ray-event model](RAY_EVENT_MODEL.md)
-section 5). The `event_program` initialization member went with them. Dated
-evidence in [VALIDATION.md](VALIDATION.md) keeps its original scope.
 
 ## Verification scope
 
@@ -475,44 +225,3 @@ coupling is a toy experiment of the lab alone; the repository's shared quantum
 resource was deleted on 2026-09-17. The active source-of-truth boundaries above
 remain unchanged.
 
-## Causal event ledger, deleted on 2026-09-17
-
-`core/event_space.py`, `core/event_links.py` and `tests/test_event_links.py`
-were deleted on 2026-09-17 under issue #164 bucket B.4: all the information is
-on the rays, the origin Node keeps nothing and there is no register
-([Highlights 3.20](HIGHLIGHTS.md), the "Where is state stored" row of the
-[ray/event model](RAY_EVENT_MODEL.md)). No engine, Node, packet, plan, pending
-cycle or view carries an event identity, cursor, reference bank or cause;
-`NodeEvents` only builds and publishes observer messages; the snapshot has no
-`event_support`. `core/event_resolution.py` keeps the `Planner` protocol used
-by the local planners and the resolver protocols, which no code implements.
-
-
-### Local carrier scheduling and prepared ray laws
-
-[Local Focus](LOCAL_FOCUS.md) defaults on. `core/plan_reuse.py` shares immutable
-pure transition results through the host `NodeExecution` service with bounded
-per-simulation caches. Full input equality is required; laws cannot read cache
-state. Local commits, guards, model charges and timing remain Node-owned.
-Event resolvers bypass reuse. `PortTable` indexes only
-active transport banks and retains stable creation order; schedulers refresh
-changed banks without adding callbacks or world references to PortBank.
-The detailed limits, metrics and supercell boundary are in the Focus contract.
-
-Local Focus owns a host address set and visit counters, never
-physical history or a new per-Node state type. Nodes certify dormancy from fixed
-local state; actual delivery wakes them. The spatial active index remains shared
-by both scheduling modes. Frozen field definitions own bounded immutable phase
-and pace tables prepared before any tick; no lazy pace cache grows across runs.
-Retained-ray owners pass the same trusted pre-commit/receipt validation
-boundary as outgoing payloads. No global reference enters initialization or
-planner composition; the bond registry was deleted on 2026-09-17.
-
-## Sampling admission ownership
-
-`core/sampling_contract.py` owns immutable profile validation under the
-[Detector-owned sampling contract](DETECTOR_SAMPLING.md). Generic field laws may
-read these bounded configuration guards, which do not read world state, schedule
-events or implement probability laws. Initialization and native adapters enforce
-the same admission boundary. Historical mathematical samplers remain separately
-scoped and are not Detector implementations.

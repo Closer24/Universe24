@@ -1,7 +1,7 @@
 # Worlds of the law of the shadow (field-only-v1)
 
 Four world files for the field-only engine of feature 20
-([the law of the shadow](../../docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1);
+([the law of the shadow](../../docs/ENGINE.md#the-law-of-the-shadow-field-only-v1);
 [Highlights](../../docs/HIGHLIGHTS.md) 5.4, the model owner's decision of
 2026-09-18, the evening: "No real and shadow. There is only shadow. There are
 events, which are a whole quantum."). Every world declares `"law": "shadow"`
