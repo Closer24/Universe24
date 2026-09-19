@@ -27,6 +27,15 @@ docs/TEST_EXPECTATIONS.md ("A detector's sensitivity"), written down first:
     and a detector Node reading the free family (content 4) with threshold
     4: 3 units of another number pass with no push and mix on, 4 units
     push by -M c = (-16, 0, 0) and mix on.
+
+Since 2026-09-19 a release costs the emitter by its phase rate (each unit
+quantum x s, s the turn of the self-creation; a turn of 0 releases nothing),
+so the lamp world of (c) declares K 24 in place of 2^20: the turn is one
+step at the ages 0 and 1 (content 24 then 18, (age + 1) x (content - K)
+below K), each unit costs 1 and the content reads 18 then 12 as before. The
+seeded units of (a) and (b) carry one phase step of content each, quantum
+x 1, so the receiver's content grows by 3 and the re-released 3 carry
+content 3 and momentum (3, 0, 0), the pins unchanged.
 """
 
 from __future__ import annotations
@@ -46,6 +55,7 @@ def world(
     measured: list[dict[str, object]],
     in_transit: list[dict[str, object]],
     threshold: int,
+    clock: int = 1 << 20,
 ) -> dict[str, object]:
     return {
         "law": "events",
@@ -53,7 +63,7 @@ def world(
         "shape": [9, 3, 3],
         "boundary": "open",
         "ticks": 2,
-        "K": 1 << 20,
+        "K": clock,
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
@@ -164,13 +174,16 @@ def test_a_re_emitter_takes_only_a_bundle_at_its_threshold_and_creates_it_again_
 def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement():
     """(c)."""
     lamp = {"position": NODE, "family": "light", "amount": 24, "fixed": True, "lamp": {"rate": [1, 1]}}
-    simulation = EventSimulation(parse_event_world(world([lamp], [], 5)))
+    # K 24: the lamp turns one step at each of the two self-creations, so
+    # each unit costs quantum x 1 = 1 (at K 2^20 it would release nothing).
+    simulation = EventSimulation(parse_event_world(world([lamp], [], 5, clock=24)))
     entry, light = simulation.measured[1], simulation.transits[LIGHT]
     assert entry.detector == 0 and entry.threshold == 5
     for tick in (1, 2):
         simulation.step()
         assert simulation.books()["balanced"], tick
         assert light.fly_amt[4, 1, 1, light.rank[1]].tolist() == [1, 1, 1, 1, 1, 1], tick
+        assert light.fly_con[4, 1, 1, light.rank[1]].tolist() == [1, 1, 1, 1, 1, 1], tick
         assert entry.held == [0, 24 - 6 * tick] and simulation.held_spent[LIGHT] == 6 * tick, tick
         assert simulation.transit_released[LIGHT] == 6 * tick and entry.momentum == [0, 0, 0], tick
     assert simulation.detectors()[0]["families"]["light"] == {"measured": 0, "clicks": 0}

@@ -4,12 +4,15 @@ step (the law of events, Highlights 5.4).
 
 The arrays have the axes (x, y, z, number, Port): `arr_*` hold the events
 that arrived at each Node this interval per number (the measured event whose
-continuation they are) and travel Port, with the amount, the phase and the
-momentum carried; `fly_*` the departures of the last cycle until the walk
-delivers them; `suspended` per Node and number the count the arrivals there
-carry, the intervals their exit is still suspended. Nothing else is kept at
-a Node: no parked share, no remainder. The interval's steps on the transit
-(the engine, `engine.py`, orders them with the measured events):
+continuation they are) and travel Port, with the amount, the phase, the
+momentum carried and the content carried (`*_con`: what the units cost their
+emitter, the family's `quantum` per unit per phase step of the emitter's turn
+at the release, E = h f; the model owner, 2026-09-19, "I approve the
+proposal"); `fly_*` the departures of the last cycle until the walk delivers
+them; `suspended` per Node and number the count the arrivals there carry,
+the intervals their exit is still suspended. Nothing else is kept at a Node:
+no parked share, no remainder. The interval's steps on the transit (the
+engine, `engine.py`, orders them with the measured events):
 
 - the walk: every departure is created one Link on, at the neighbour, with
   its record unchanged (an event in transit does not turn: a transfer is not
@@ -40,8 +43,13 @@ a Node: no parked share, no remainder. The interval's steps on the transit
   whole units placed by the largest remainder with the ties in the tick's
   Port order, a number with no whole for any side going whole by its own
   momentum, every unit keeping its number, its momentum apportioned over
-  its departures; the departures into flight. The sizes and `phase_at` read
-  per number: what a measured event reads is a bundle of one number.
+  its departures; the departures into flight. The content a number's
+  arrivals carry goes with its units placed as the momentum does, exact
+  (`apportion_carried` on one component), so a slot's content is
+  amount x quantum x s while every unit in it was released at one turn s,
+  and the sum over the slots is exact whatever met. The sizes and
+  `phase_at` read per number: what a measured event reads is a bundle of
+  one number.
 """
 
 from __future__ import annotations
@@ -52,9 +60,11 @@ from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
 from event_universe.events.mixing import (
     MIXING_AMPLITUDE_SCALE,
+    apportion_carried,
     integer_root,
     mix_arrivals,
     place_departures,
+    tie_order,
 )
 
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
@@ -155,13 +165,19 @@ class Transit:
         self.fly_amt = np.zeros(cells, dtype=np.int64)
         self.fly_ph = np.zeros(cells, dtype=np.int64)
         self.fly_mom = np.zeros((*cells, 3), dtype=np.int64)
+        # The content carried per slot: amount x quantum x s at birth (s the
+        # emitter's phase turn at the release), apportioned with the units.
+        self.arr_con = np.zeros(cells, dtype=np.int64)
+        self.fly_con = np.zeros(cells, dtype=np.int64)
         self.suspended = np.zeros((*shape, count), dtype=np.int64)
         # The slots filled at the start (the events in transit the world
         # declares), arrivals of the first interval for the suspension.
         self.fresh = np.zeros((*shape, count), dtype=bool)
-        # The escapes, cumulative: the amount and the momentum carried.
+        # The escapes, cumulative: the amount, the momentum and the content
+        # carried.
         self.escaped = 0
         self.escaped_momentum = np.zeros(3, dtype=np.int64)
+        self.escaped_content = 0
 
     # -- the kernels' protocol -------------------------------------------------
 
@@ -178,6 +194,11 @@ class Transit:
     def carried(self) -> np.ndarray:
         """The momentum in flight on the transit, three integers."""
         return self.arr_mom.reshape(-1, 3).sum(axis=0) + self.fly_mom.reshape(-1, 3).sum(axis=0)
+
+    def content(self) -> int:
+        """The content carried on the transit: the sum over the arrivals and
+        the departures of amount x quantum x s (what the emitters spent)."""
+        return int(self.arr_con.sum()) + int(self.fly_con.sum())
 
     def port_sums(self) -> tuple[np.ndarray, np.ndarray]:
         """Per Node, number and travel Port: the amount that arrived and the
@@ -239,6 +260,7 @@ class Transit:
         incoming_amt = np.zeros_like(self.arr_amt)
         incoming_ph = np.zeros_like(self.arr_ph)
         incoming_mom = np.zeros_like(self.arr_mom)
+        incoming_con = np.zeros_like(self.arr_con)
         for port in range(6):
             source = self.fly_amt[..., port]
             if not source.any():
@@ -246,6 +268,7 @@ class Transit:
             axis, forward = port >> 1, (port & 1) == 0
             phase = self.fly_ph[..., port]
             momentum = self.fly_mom[..., port, :]
+            content = self.fly_con[..., port]
             if self.periodic[axis]:
                 # The wrap: every Node's departure on this heading is created
                 # at the next Node along the axis, the last face's at the
@@ -254,6 +277,7 @@ class Transit:
                 incoming_amt[..., port] = np.roll(source, shift, axis=axis)
                 incoming_ph[..., port] = np.roll(phase, shift, axis=axis)
                 incoming_mom[..., port, :] = np.roll(momentum, shift, axis=axis)
+                incoming_con[..., port] = np.roll(content, shift, axis=axis)
                 continue
             ahead: list[slice | int] = [slice(None)] * 3
             behind: list[slice | int] = [slice(None)] * 3
@@ -265,25 +289,38 @@ class Transit:
             incoming_amt[(*ahead, slice(None), port)] = source[tuple(behind)]
             incoming_ph[(*ahead, slice(None), port)] = phase[tuple(behind)]
             incoming_mom[(*ahead, slice(None), port, slice(None))] = momentum[tuple(behind)]
+            incoming_con[(*ahead, slice(None), port)] = content[tuple(behind)]
             gone = source[tuple(edge)]
             if gone.any():
                 self.escaped += int(gone.sum())
                 self.escaped_momentum += momentum[tuple(edge)].reshape(-1, 3).sum(axis=0)
+                self.escaped_content += int(content[tuple(edge)].sum())
         self.fly_amt[...] = 0
         self.fly_ph[...] = 0
         self.fly_mom[...] = 0
+        self.fly_con[...] = 0
         arrived |= incoming_amt.sum(axis=-1) > 0
-        self.receive(incoming_amt, incoming_ph, incoming_mom)
+        self.receive(incoming_amt, incoming_ph, incoming_mom, incoming_con)
         return arrived
 
-    def receive(self, amount: np.ndarray, phase: np.ndarray, momentum: np.ndarray) -> None:
+    def receive(
+        self,
+        amount: np.ndarray,
+        phase: np.ndarray,
+        momentum: np.ndarray,
+        content: np.ndarray | None = None,
+    ) -> None:
         """Arrivals into the arrays: into empty slots as they are; where a slot
         holds events that wait, one amplitude per Port (the amounts added, the
-        phase of their coherent sum, the momenta added)."""
+        phase of their coherent sum, the momenta added, the contents added).
+        Arrivals given without a content carry none."""
+        if content is None:
+            content = np.zeros_like(amount)
         if not self.arr_amt.any():
             self.arr_amt[...] = amount
             self.arr_ph[...] = phase
             self.arr_mom[...] = momentum
+            self.arr_con[...] = content
             return
         held = self.arr_amt > 0
         coming = amount > 0
@@ -292,6 +329,7 @@ class Transit:
         self.arr_amt[free] = amount[free]
         self.arr_ph[free] = phase[free]
         self.arr_mom[free] = momentum[free]
+        self.arr_con[free] = content[free]
         if both.any():
             assert self.cosines is not None and self.sines is not None
             old_amt, old_ph = self.arr_amt[both], self.arr_ph[both]
@@ -302,6 +340,7 @@ class Transit:
                 y = old_amt * self.sines[old_ph] + new_amt * self.sines[new_ph]
                 self.arr_ph[both] = self._nearest_step(x, y)
             self.arr_mom[both] = self.arr_mom[both] + momentum[both]
+            self.arr_con[both] = self.arr_con[both] + content[both]
 
     def suspend(self, read: np.ndarray, width: tuple[int, int], arrived: np.ndarray) -> None:
         """The suspension of the arrivals: per Node and number where something
@@ -325,48 +364,84 @@ class Transit:
 
     def cycle(self) -> None:
         """The mixing at every Node of the arrivals that are not held, the
-        departures into flight; the held slots stay as arrivals for the next
-        interval, their count paid by one."""
+        departures into flight, each number's content carried going with its
+        units placed (exact per Node and number, `apportion_carried` on one
+        component with the tick's ties); the held slots stay as arrivals for
+        the next interval, their count paid by one."""
         frozen = self.frozen()
         kept = None
         if frozen.any():
-            kept = (self.arr_amt[frozen].copy(), self.arr_ph[frozen].copy(), self.arr_mom[frozen].copy())
+            kept = (
+                self.arr_amt[frozen].copy(),
+                self.arr_ph[frozen].copy(),
+                self.arr_mom[frozen].copy(),
+                self.arr_con[frozen].copy(),
+            )
             self.arr_amt[frozen] = 0
             self.arr_ph[frozen] = 0
             self.arr_mom[frozen] = 0
+            self.arr_con[frozen] = 0
         if self.arr_amt.any():
             whole, phase, momenta = mix_arrivals(self, MOMENTUM_BOUND)
             place_departures(self, whole, phase, momenta, MOMENTUM_BOUND)
+            self.fly_con[...] = self._apportion_content(self.arr_con.sum(axis=-1), whole)
         self.arr_amt[...] = 0
         self.arr_ph[...] = 0
         self.arr_mom[...] = 0
+        self.arr_con[...] = 0
         if kept is not None:
-            self.arr_amt[frozen], self.arr_ph[frozen], self.arr_mom[frozen] = kept
+            self.arr_amt[frozen], self.arr_ph[frozen], self.arr_mom[frozen], self.arr_con[frozen] = kept
             self.suspended[frozen] -= 1
 
-    def take(self, position: Address3, rank: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def _apportion_content(self, content: np.ndarray, whole: np.ndarray) -> np.ndarray:
+        """Per Node and number the content that arrived shared over the six
+        headings in proportion to the units placed on them, exact: the floors
+        and the units left to the largest remainders, the ties in the tick's
+        Port order (`apportion_carried` on one component, the momentum's own
+        rule). A slot of one turn s keeps amount x quantum x s exactly."""
+        if not content.any():
+            return np.zeros(whole.shape, dtype=np.int64)
+        if int(content.max(initial=0)) > MOMENTUM_BOUND:
+            raise OverflowError("64-bit intermediate range exceeded")
+        carried = np.zeros((*content.shape, 3), dtype=np.int64)
+        carried[..., 0] = content
+        return apportion_carried(carried, whole, tie_order(self.tick))[..., 0]
+
+    def take(
+        self, position: Address3, rank: int
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """The arrivals of one number at one Node, taken out of the arrays
-        (measured by a measured event): the amounts, phases and momenta per
-        Port."""
+        (measured by a measured event): the amounts, phases, momenta and
+        contents per Port."""
         cell = (*position, rank)
-        amount, phase, momentum = (
+        amount, phase, momentum, content = (
             self.arr_amt[cell].copy(),
             self.arr_ph[cell].copy(),
             self.arr_mom[cell].copy(),
+            self.arr_con[cell].copy(),
         )
         self.arr_amt[cell] = 0
         self.arr_ph[cell] = 0
         self.arr_mom[cell] = 0
+        self.arr_con[cell] = 0
         self.suspended[cell] = 0
-        return amount, phase, momentum
+        return amount, phase, momentum, content
 
     def place(
-        self, position: Address3, rank: int, port: int, amount: int, phase: int, momentum: np.ndarray
+        self,
+        position: Address3,
+        rank: int,
+        port: int,
+        amount: int,
+        phase: int,
+        momentum: np.ndarray,
+        content: int = 0,
     ) -> None:
         """A release from a measured event into the departures of its Node on
-        one Port: the slot as it is when empty, or one amplitude with what is
-        there (the amounts added, the phase of the coherent sum, the momenta
-        added)."""
+        one Port, with the content it carries (amount x quantum x s; 0 for a
+        release that costs nothing): the slot as it is when empty, or one
+        amplitude with what is there (the amounts added, the phase of the
+        coherent sum, the momenta added, the contents added)."""
         if amount <= 0:
             return
         cell = (*position, rank, port)
@@ -375,6 +450,7 @@ class Transit:
             self.fly_amt[cell] = amount
             self.fly_ph[cell] = phase
             self.fly_mom[cell] = momentum
+            self.fly_con[cell] = content
             return
         assert self.cosines is not None and self.sines is not None
         self.fly_amt[cell] = held + amount
@@ -384,3 +460,4 @@ class Transit:
             y = np.array(held * self.sines[held_phase] + amount * self.sines[phase])
             self.fly_ph[cell] = int(self._nearest_step(x, y))
         self.fly_mom[cell] += momentum
+        self.fly_con[cell] += content

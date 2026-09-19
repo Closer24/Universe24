@@ -12,8 +12,17 @@ is kept at a Node: no register, no remainder, no parked share, no draw.
 
 A measured event (`Measured`): an amount per family, a momentum, a phase, a
 number, a whole charge, a table, and its counts (its age, the self-creations
-made; the count it still owes before its next self-creation). The interval,
-in this order:
+made; the count it still owes before its next self-creation). An event in
+transit carries, beside its amount, phase, number and momentum, the content
+it cost its emitter (the model owner, 2026-09-19, "I approve the proposal":
+a release costs the emitter by its phase rate). At a self-creation whose
+turn is s = `by_clock(age, content, K)` phase steps, each unit a lamp
+releases costs it the family's `quantum` x s content, carries the momentum
+`quantum` x s along its heading and gives `quantum` x s content to the
+measured event that measures it: the content of a click is proportional to
+the emitter's frequency, E = h f with h the declared `quantum` (the content
+of one unit per phase step). A self-creation whose turn is 0 releases
+nothing (no quanta of zero content). The interval, in this order:
 
 1. every departure is created one Link on (`Transit.walk`), its record
    unchanged (an event in transit does not turn), the escapes through the
@@ -41,10 +50,11 @@ in this order:
    passes, no push, the units mix on, a `pass` record written): `read`
    (the default for a free family: the push taken, the units left to mix on
    as at an empty Node), `measure` (the default for a paid family, the
-   click: the push taken and the amount joining the content, one click per
-   unit), `rerelease` (the push taken, the amount taken to be created again
-   like what came home, with the measured event's number and phase) or
-   `pass` (no push, the units mix on);
+   click: the push taken and the content the bundle carries joining the
+   content, amount x quantum x s, one click per unit), `rerelease` (the
+   push taken, the amount taken to be created again like what came home,
+   with the measured event's number and phase and the content it carried)
+   or `pass` (no push, the units mix on);
 4. at every Node the arrivals of a family that are not suspended mix
    (node-mixing-v3): the sides' shares from the vectors of every number
    present, the weights common to the numbers at the Node, whole units
@@ -60,19 +70,25 @@ in this order:
    without a self-creation: no release, no turn (`waited` counts these
    intervals; age + waited is the intervals completed). One that owes
    nothing is created here again, the self-creation: its age
-   advances by one, and off its clock it releases, per free family it holds,
-   content x the world's `release` per Port (`by_clock`: what the whole part
-   of age x rate gained this self-creation, no remainder anywhere), a lamp
-   its declared rate on its headings spending its content and taking the
-   recoil, and what came home or is re-released on the six headings in equal
-   whole shares, the units below six going whole to the heading its clock
-   points at (the age modulo six), every release stamped with its number and
-   phase and carrying its momentum from birth (the family's quantum times the
-   amount, along the heading); a lamp with a `phase_window` releases only at
-   the self-creations whose clock phase, the one its release is stamped
-   with, falls in its window; its phase turns by its content over K off its
-   clock at every self-creation, released or not (a measured event of a
-   family without a phase circle never turns). After its self-creation it
+   advances by one, its turn is read, s = `by_clock(age, content, K)` phase
+   steps (0 for a family without a phase circle), and off its clock it
+   releases, per free family it holds, content x the world's `release` per
+   Port (`by_clock`: what the whole part of age x rate gained this
+   self-creation, no remainder anywhere; a free family's release costs
+   nothing, carries no content, and its units carry the label amount x
+   heading the sides read), a lamp its declared rate on its headings when
+   s > 0, each unit costing it quantum x s content and carrying that
+   content and the momentum quantum x s along its heading, the lamp taking
+   the recoil (a turn of 0 releases nothing), and what came home or is
+   re-released on the six headings in equal whole shares, the units below
+   six going whole to the heading its clock points at (the age modulo six),
+   the content they carried going with them exactly and their momentum that
+   content along the heading, every release stamped with its number and
+   phase; a lamp with a `phase_window` releases only at the self-creations
+   whose clock phase, the one its release is stamped with, falls in its
+   window; its phase turns by s at every self-creation, released or not (a
+   measured event of a family without a phase circle never turns). After its
+   self-creation it
    reads the presence at its Node of every number but its own, this
    interval's (step 2), and owes `presence x n // d` intervals at the
    world's `suspension` `[n, d]` (`Measured.owed`, written once per
@@ -111,11 +127,15 @@ symmetry of the two fields; the momentum the units carry from birth stays on
 their record and in the books, unread by the push. A group of a paid family
 pushes by +c, its own carried momentum, and its emitter took the recoil
 (light's pressure). The books, per
-family and interval: the measured line, initial + measured (home and the
-clicks) = current + spent (the lamps) + escaped (measured events off the
-board); the transit line, initial + released = current + escaped + absorbed
-(home, the clicks, the re-releases), exact at every interval; the momentum
-reported on the measured events, in transit and escaped.
+family and interval: the measured line, in content, initial + measured (the
+clicks' content) = current + spent (the lamps' cost) + escaped (measured
+events off the board); the transit line, in units, initial + released =
+current + escaped + absorbed (home, the clicks, the re-releases); the
+content line, the content carried in transit, initial (the declared events
+in transit, one phase step per unit) + released (the lamps' cost and what
+came home or was re-released leaving again) = current + escaped + absorbed
+(home, the clicks, the re-releases), all exact at every interval; the
+momentum reported on the measured events, in transit and escaped.
 """
 
 from __future__ import annotations
@@ -161,6 +181,25 @@ def by_clock(age: int, numerator: int, denominator: int) -> int:
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
 
 
+def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:
+    """`total` shared over the entries in proportion to `weights`, exact in
+    whole numbers: the floors, then the units left to the largest
+    remainders, ties broken in index order counted from `first` (the Port
+    order the clock points at). Nothing without weights."""
+    divisor = sum(weights)
+    if divisor <= 0 or total <= 0:
+        return [0] * len(weights)
+    shares = [total * weight // divisor for weight in weights]
+    remainders = [
+        total * weight - share * divisor for weight, share in zip(weights, shares, strict=True)
+    ]
+    left = total - sum(shares)
+    order = sorted(range(len(weights)), key=lambda k: (-remainders[k], (k - first) % len(weights)))
+    for index in order[:left]:
+        shares[index] += 1
+    return shares
+
+
 def in_window(phase: int, setting: int, modulus: int) -> bool:
     """Whether a phase falls in the phase window of a setting (Highlights
     5.4, "the phase window as a declared width of a detector, and of the
@@ -197,8 +236,10 @@ class Measured:
     age: int = 0
     owed: int = 0
     # What came home or is re-released, per family: created again at the
-    # next self-creation with this event's number and phase.
+    # next self-creation with this event's number and phase, with the
+    # content it carried (`home_content`, on the absorbed line until then).
     home: list[int] = field(default_factory=list)
+    home_content: list[int] = field(default_factory=list)
     # The counters: intervals suspended, phase steps made, steps walked, per
     # family what was met by each rule, the clicks and the push taken.
     waited: int = 0
@@ -228,6 +269,7 @@ class Measured:
             "age": self.age,
             "owed": self.owed,
             "home": list(self.home),
+            "home_content": list(self.home_content),
             "waited": self.waited,
             "phase_steps": self.phase_steps,
             "steps": self.steps,
@@ -273,8 +315,10 @@ class EventSimulation:
             group.output: group for detector in world.detectors for group in detector.groups
         }
         # The books (cumulative): per family the measured line's initial,
-        # measured in, spent and escaped; the transit line's initial, released
-        # and absorbed; the momentum escaped with measured events.
+        # measured in, spent and escaped (in content); the transit line's
+        # initial, released and absorbed (in units) and the content line's
+        # initial, released and absorbed (the content carried); the momentum
+        # escaped with measured events.
         self.held_initial = [sum(m.held[f] for m in self.measured.values()) for f in range(count)]
         self.held_measured = [0] * count
         self.held_spent = [0] * count
@@ -282,10 +326,16 @@ class EventSimulation:
         self.transit_initial = [0] * count
         self.transit_released = [0] * count
         self.transit_absorbed = [0] * count
+        self.content_initial = [0] * count
+        self.content_released = [0] * count
+        self.content_absorbed = [0] * count
         self.momentum_escaped = [0, 0, 0]
         for item in world.in_transit:
-            self._seed(item.position, item.family, item.number, item.port, item.amount, item.phase)
+            content = self._seed(
+                item.position, item.family, item.number, item.port, item.amount, item.phase
+            )
             self.transit_initial[item.family] += item.amount
+            self.content_initial[item.family] += content
         # The readings of the last interval (diagnostics): per family the
         # arrivals per Node, their net flow and the sizes per Node and number.
         self.count: list[np.ndarray] = [np.zeros(world.shape, dtype=np.int64) for _ in range(count)]
@@ -321,32 +371,48 @@ class EventSimulation:
             detector,
             threshold,
             home=[0] * count,
+            home_content=[0] * count,
             measured=[{rule: 0 for rule in RULES} for _ in range(count)],
             events=[0] * count,
         )
 
-    def _momentum(self, family: int, amount: int, port: int) -> np.ndarray:
-        """The momentum a release carries from birth: the family's quantum
-        times the amount, along the heading."""
-        return np.array(PORT_HEADINGS[port], dtype=np.int64) * (self.families[family].quantum * amount)
+    def _birth(self, family: int, amount: int, port: int, steps: int) -> tuple[int, np.ndarray]:
+        """What a release of `amount` units carries from birth at a turn of
+        `steps`: for a paid family the content quantum x steps x amount (what
+        it cost the emitter, E = h f) and that content as its momentum along
+        the heading; for a free family no content (its release costs nothing,
+        the field is free) and the label quantum x amount along the heading,
+        what the sides read for a unit with no whole share (unread by the
+        push, which reads the flow)."""
+        definition = self.families[family]
+        heading = np.array(PORT_HEADINGS[port], dtype=np.int64)
+        if definition.free:
+            return 0, heading * (definition.quantum * amount)
+        content = definition.quantum * steps * amount
+        return content, heading * content
 
     def _seed(
         self, position: Address3, family: int, number: int, port: int, amount: int, phase: int
-    ) -> None:
+    ) -> int:
         """An event in transit at the start: as an arrival at its Node on its
-        travel heading, the arrivals of tick 0 that the first interval mixes."""
+        travel heading, the arrivals of tick 0 that the first interval mixes;
+        a declared unit of a paid family carries one phase step of content,
+        quantum x 1 (no emitter declared its turn). Returns the content."""
         transit = self.transits[family]
         cell = (*position, transit.rank[number], port)
         if transit.arr_amt[cell]:
             raise ValueError(f"{EVENTS_LAW}: two events in transit on one slot at the start")
         transit.arr_amt[cell] = amount
         transit.arr_ph[cell] = phase
-        transit.arr_mom[cell] = (
-            canonical_momentum(amount, self.families[family].quantum, port)
-            if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS
-            else self._momentum(family, amount, port)
-        )
+        if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
+            # The candidate's carriers keep their own momentum and no content.
+            transit.arr_mom[cell] = canonical_momentum(amount, self.families[family].quantum, port)
+            content = 0
+        else:
+            content, transit.arr_mom[cell] = self._birth(family, amount, port, 1)
+        transit.arr_con[cell] = content
         transit.fresh[cell[:4]] = True
+        return content
 
     # -- the interval ----------------------------------------------------------
 
@@ -612,9 +678,11 @@ class EventSimulation:
                 transit.arr_amt,
                 transit.arr_ph,
                 transit.arr_mom,
+                transit.arr_con,
                 transit.fly_amt,
                 transit.fly_ph,
                 transit.fly_mom,
+                transit.fly_con,
                 transit.fresh,
             ):
                 values[...] = 0
@@ -675,7 +743,9 @@ class EventSimulation:
         passes with no push and mixes on) and, where the entry declares a
         phase window, when the bundle's phase at the Node falls in it (a
         bundle outside it passes the same way, and a `pass` record says so).
-        The phase read is stamped on every measurement record."""
+        The phase read and the content the bundle carries are stamped on
+        every measurement record; a click's content, amount x quantum x s,
+        is the energy the detector measured, E = h f."""
         position = entry.position
         modulus = self.world.phase_steps
         for index, transit in enumerate(self.transits):
@@ -689,6 +759,7 @@ class EventSimulation:
                 if not transit.arr_amt[cell].any():
                     continue
                 total = int(transit.arr_amt[cell].sum())
+                content = int(transit.arr_con[cell].sum())
                 # The phase of the bundle at the Node, read only when the
                 # window or the record needs it (fixed local work either way).
                 phase = None
@@ -697,9 +768,11 @@ class EventSimulation:
                 if number == entry.number:
                     transit.take(position, rank)
                     entry.home[index] += total
+                    entry.home_content[index] += content
                     entry.measured[index]["home"] += total
                     self.transit_absorbed[index] += total
-                    self._event("home", entry, index, number, total, ZERO3, phase)
+                    self.content_absorbed[index] += content
+                    self._event("home", entry, index, number, total, ZERO3, phase, content)
                     continue
                 if rule == "pass" or total < entry.threshold:
                     continue
@@ -719,19 +792,23 @@ class EventSimulation:
                 entry.pushed = [int(a) + int(b) for a, b in zip(entry.pushed, push, strict=True)]
                 if rule == "read":
                     entry.measured[index]["read"] += total
-                    self._event("read", entry, index, number, total, push, phase)
+                    self._event("read", entry, index, number, total, push, phase, content)
                     continue
                 transit.take(position, rank)
                 self.transit_absorbed[index] += total
+                self.content_absorbed[index] += content
                 entry.measured[index][rule] += total
                 if rule == "measure":
-                    entry.held[index] += total
+                    # The click: the content the bundle carries joins, one
+                    # click per unit.
+                    entry.held[index] += content
                     entry.events[index] += total
-                    self.held_measured[index] += total
-                    self._event("click", entry, index, number, total, push, phase)
+                    self.held_measured[index] += content
+                    self._event("click", entry, index, number, total, push, phase, content)
                     continue
                 entry.home[index] += total
-                self._event("rerelease", entry, index, number, total, push, phase)
+                entry.home_content[index] += content
+                self._event("rerelease", entry, index, number, total, push, phase, content)
 
     def _pass(
         self, entry: Measured, family: int, number: int, amount: int, phase: int, window: int
@@ -778,9 +855,11 @@ class EventSimulation:
 
     def _release(self, entry: Measured) -> bool:
         """The self-creation of a measured event that owes nothing: its clock
-        advances, its releases and its phase turn read off it (True). One
-        that owes a count pays it by one instead, no release and no turn,
-        and `waited` counts the interval (False)."""
+        advances, its turn s is read off it (`by_clock(age, content, K)`, the
+        content before this self-creation's releases; 0 for a family without
+        a phase circle), its releases are priced by s and its phase turns by
+        s (True). One that owes a count pays it by one instead, no release
+        and no turn, and `waited` counts the interval (False)."""
         if entry.owed > 0:
             entry.owed -= 1
             entry.waited += 1
@@ -788,6 +867,14 @@ class EventSimulation:
         age = entry.age
         entry.age += 1
         position = entry.position
+        steps = 0
+        if self.families[entry.family].phase:
+            steps = by_clock(age, entry.content, self.world.clock)
+            if 2 * steps >= self.world.phase_steps:
+                raise ValueError(
+                    f"{EVENTS_LAW}: measured event {entry.number} turns its phase by half the circle "
+                    "or more per self-creation (its content has grown past K x N / 2)"
+                )
         numerator, denominator = self.world.release
         for index, transit in enumerate(self.transits):
             if not transit.owners or entry.number not in transit.rank:
@@ -795,32 +882,43 @@ class EventSimulation:
             own = transit.rank[entry.number]
             family = self.families[index]
             if family.free and entry.held[index] > 0:
+                # The field of a free family: it costs nothing and carries
+                # no content, whatever the turn.
                 for port in range(6):
                     amount = by_clock(age, entry.held[index] * numerator, denominator)
                     if amount:
-                        transit.place(
-                            position, own, port, amount, entry.phase, self._momentum(index, amount, port)
-                        )
+                        content, momentum = self._birth(index, amount, port, steps)
+                        transit.place(position, own, port, amount, entry.phase, momentum, content)
                         self.transit_released[index] += amount
             if entry.home[index] > 0:
                 # What came home or is re-released: equal whole shares on the
                 # six headings, the units below six to the heading the clock
-                # points at; the momentum fresh, the recoil for a paid family.
+                # points at, the content they carried going with the units
+                # exactly and, for a paid family, the momentum that content
+                # along the heading, the recoil taken.
                 share, left = divmod(entry.home[index], 6)
+                amounts = [share + (left if port == age % 6 else 0) for port in range(6)]
+                contents = apportion_whole(entry.home_content[index], amounts, age % 6)
                 entry.home[index] = 0
-                for port in range(6):
-                    amount = share + (left if port == age % 6 else 0)
-                    if amount:
-                        momentum = self._momentum(index, amount, port)
-                        transit.place(position, own, port, amount, entry.phase, momentum)
-                        self.transit_released[index] += amount
-                        if not family.free:
-                            entry.momentum = [
-                                int(a) - int(b) for a, b in zip(entry.momentum, momentum, strict=True)
-                            ]
+                entry.home_content[index] = 0
+                for port, (amount, content) in enumerate(zip(amounts, contents, strict=True)):
+                    if not amount:
+                        continue
+                    heading = np.array(PORT_HEADINGS[port], dtype=np.int64)
+                    if family.free:
+                        momentum = heading * (family.quantum * amount)
+                    else:
+                        momentum = heading * content
+                        entry.momentum = [
+                            int(a) - int(b) for a, b in zip(entry.momentum, momentum, strict=True)
+                        ]
+                    transit.place(position, own, port, amount, entry.phase, momentum, content)
+                    self.transit_released[index] += amount
+                    self.content_released[index] += content
             if (
                 entry.lamp_rate is not None
                 and index == entry.family
+                and steps > 0
                 and (
                     entry.lamp_window is None
                     or in_window(entry.phase, entry.lamp_window, self.world.phase_steps)
@@ -828,28 +926,23 @@ class EventSimulation:
             ):
                 # A lamp with a window releases only at the self-creations
                 # whose clock phase (the one stamped on the release) falls in
-                # it; the clock and the phase turn below either way.
+                # it; the clock and the phase turn below either way. Each
+                # unit costs quantum x s, so the lamp releases at most what
+                # its content pays for; a turn of 0 releases nothing.
                 rate_n, rate_d = entry.lamp_rate
+                cost = family.quantum * steps
                 for port in entry.lamp_headings:
-                    amount = min(by_clock(age, rate_n, rate_d), entry.held[index])
+                    amount = min(by_clock(age, rate_n, rate_d), entry.held[index] // cost)
                     if amount:
-                        momentum = self._momentum(index, amount, port)
-                        transit.place(position, own, port, amount, entry.phase, momentum)
-                        entry.held[index] -= amount
+                        content, momentum = self._birth(index, amount, port, steps)
+                        transit.place(position, own, port, amount, entry.phase, momentum, content)
+                        entry.held[index] -= content
                         entry.momentum = [
                             int(a) - int(b) for a, b in zip(entry.momentum, momentum, strict=True)
                         ]
                         self.transit_released[index] += amount
-                        self.held_spent[index] += amount
-        if not self.families[entry.family].phase:
-            # A measured event of a family without a phase circle never turns.
-            return True
-        steps = by_clock(age, entry.content, self.world.clock)
-        if 2 * steps >= self.world.phase_steps:
-            raise ValueError(
-                f"{EVENTS_LAW}: measured event {entry.number} turns its phase by half the circle or "
-                "more per self-creation (its content has grown past K x N / 2)"
-            )
+                        self.content_released[index] += content
+                        self.held_spent[index] += content
         entry.phase = (entry.phase + steps) & self.world.phase_mask
         entry.phase_steps += steps
         return True
@@ -891,6 +984,8 @@ class EventSimulation:
                     self.held_escaped[index] += entry.held[index]
                     self.transit_absorbed[index] -= entry.home[index]
                     self.transits[index].escaped += entry.home[index]
+                    self.content_absorbed[index] -= entry.home_content[index]
+                    self.transits[index].escaped_content += entry.home_content[index]
                 self.momentum_escaped = [
                     int(a) + int(b) for a, b in zip(self.momentum_escaped, entry.momentum, strict=True)
                 ]
@@ -902,6 +997,7 @@ class EventSimulation:
                 for index in range(len(self.families)):
                     other.held[index] += entry.held[index]
                     other.home[index] += entry.home[index]
+                    other.home_content[index] += entry.home_content[index]
                 other.momentum = [
                     int(a) + int(b) for a, b in zip(other.momentum, entry.momentum, strict=True)
                 ]
@@ -933,10 +1029,12 @@ class EventSimulation:
         amount: int,
         push: tuple[int, int, int],
         phase: int | None = None,
+        content: int | None = None,
     ) -> None:
         """A record through the observer; a measurement (`home`, `read`,
-        `click`, `rerelease`) carries the phase read at the Node, a `merged`
-        or `escaped` measured event none."""
+        `click`, `rerelease`) carries the phase read at the Node and the
+        content the bundle carries (a click's energy, E = h f), a `merged`
+        or `escaped` measured event neither."""
         if self.record is None:
             return
         record: dict[str, object] = {
@@ -952,6 +1050,8 @@ class EventSimulation:
         }
         if phase is not None:
             record["phase"] = phase
+        if content is not None:
+            record["content"] = content
         self.record(record)
 
     # -- the books -------------------------------------------------------------
@@ -984,8 +1084,25 @@ class EventSimulation:
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
                 in_transit["current"] + in_transit["escaped"] + in_transit["absorbed"]
             )
-            balanced = balanced and bool(measured["balanced"]) and bool(in_transit["balanced"])
-            families[family.name] = {"measured": measured, "transit": in_transit}
+            # The content carried in transit: what the emitters spent and
+            # what was declared, until it is measured, escapes or comes home.
+            content = {
+                "initial": self.content_initial[index],
+                "released": self.content_released[index],
+                "current": transit.content(),
+                "escaped": transit.escaped_content,
+                "absorbed": self.content_absorbed[index],
+            }
+            content["balanced"] = content["initial"] + content["released"] == (
+                content["current"] + content["escaped"] + content["absorbed"]
+            )
+            balanced = (
+                balanced
+                and bool(measured["balanced"])
+                and bool(in_transit["balanced"])
+                and bool(content["balanced"])
+            )
+            families[family.name] = {"measured": measured, "transit": in_transit, "content": content}
         held_momentum = [0, 0, 0]
         for entry in self.measured.values():
             held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
@@ -1066,6 +1183,11 @@ class EventSimulation:
         """What came home or is re-released and waits for its self-creation,
         on the transit's absorbed line until then."""
         return sum(entry.home[index] for entry in self.measured.values())
+
+    def home_content_pending(self, index: int) -> int:
+        """The content of what came home or is re-released and waits, on the
+        content line's absorbed entry until it leaves again."""
+        return sum(entry.home_content[index] for entry in self.measured.values())
 
     def detectors(self) -> list[dict[str, object]]:
         """The measurements per detector: its Nodes, its threshold and per
@@ -1195,6 +1317,7 @@ class EventSimulation:
                                     "amount": int(transit.arr_amt[cell]),
                                     "phase": int(transit.arr_ph[cell]),
                                     "momentum": [int(v) for v in transit.arr_mom[cell]],
+                                    "content": int(transit.arr_con[cell]),
                                     "suspended": int(transit.suspended[(*position, rank)]),
                                 }
                             )
@@ -1206,6 +1329,7 @@ class EventSimulation:
                                     "amount": int(transit.fly_amt[cell]),
                                     "phase": int(transit.fly_ph[cell]),
                                     "momentum": [int(v) for v in transit.fly_mom[cell]],
+                                    "content": int(transit.fly_con[cell]),
                                 }
                             )
                 if arrivals or departures:
