@@ -36,16 +36,21 @@ of 4000 intervals. The probe reads nothing of its own number; the source is
 
 ## The derivation of p, before the runs
 
-The push per interval on a free measured event of content m is -m times
-the net arrival flow of the other number at its Node (the one reading; the
-`read` rule). Series C measured on this plane the flow through the ring at
-radius r as flow x 2 pi r / q = 1.00 +- 0.10 in the ring mean (0.785 to
-1.122 at r = 4 to 40; the mean 1.0075 over r >= 5;
-[C under the law of the ray](../../../docs/EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19),
-item 5), Gauss's flux through the square 1.0000 q: a ballistic stream on
-the plane falls as 1 / r. So the mean inward push per interval at r is
+The push per interval on a free measured event of content m is the one
+form of the law over the rays arriving at its Node ([RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+step 4): for an uncharged free source's rays, -m times their label
+moment, the sum of amount x D[direction] over the arriving rays ([RAY_LAW
+section 2](../../../docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file):
+the momentum of a ray is its label). A ray of direction D therefore
+pushes |D| units of momentum per unit of amount, not 1: a line of
+direction D crossing the probe's ring delivers |D| per ray, so the inward
+label flux through a ring of radius r is q x L per interval with L the
+fan's mean |D| (5.194 over the 120 directions of this fan; 1 on the six
+headings of series C, whose flow x 2 pi r / q = 1.00 +- 0.10 in the ring
+mean, Gauss's flux through the square 1.0000 q: a ballistic stream on the
+plane falls as 1 / r). So the mean inward push per interval at r is
 
-    F = m x q x C / (2 pi r),  C = 1 (taken; series C: 1.00 +- 0.10).
+    F = m x q x L x C / (2 pi r),  L = 5.194 (the fan's mean |D|),  C = 1 (taken; series C: 1.00 +- 0.10).
 
 With the width S the probe steps on an axis whose momentum component is p
 once per (S m + p) / p self-creations, the speed v = p / (S m + p) per axis
@@ -53,52 +58,42 @@ once per (S m + p) / p self-creations, the speed v = p / (S m + p) per axis
 turns the momentum vector of magnitude p at the rate v / r per interval,
 so it needs |dp/dt| = p v / r = F:
 
-    p v = p^2 / (S m + p) = m q C / (2 pi),
+    p v = p^2 / (S m + p) = m q L C / (2 pi),
 
 independent of r: on the plane a 1 / r force gives the same speed at
 every radius (a flat rotation curve) and T = 2 pi r / v proportional to r,
 so T(24)^2 / T(12)^2 = (24 / 12)^2 = 4, the exponent k = 2 (Kepler's k = 3
 of the 1 / r^2 force in space would give 8). With n = p / m (the
-equivalence: the push per unit of flow is m, so n counts the units of flow
-taken and the speed n / (S + n) does not depend on m) and A = q C /
-(2 pi) = 12 / 6.2832 = 1.9099:
+equivalence: the push per unit of label is m, so n counts the labels
+taken and the speed n / (S + n) does not depend on m) and A = q L C /
+(2 pi) = 12 x 5.194 / 6.2832 = 9.920:
 
     n = (A + sqrt(A^2 + 4 S A)) / 2.
 
-| S | n | p (the nearest whole) | v = p / (S + p) per axis | T(12) = 2 pi 12 / v | T(24) |
-| --- | --- | --- | --- | --- | --- |
-| 1 | 2.635 | 3 | 0.750 | 101 | 201 |
-| 8 | 4.979 | 5 | 0.385 | 196 | 392 |
-| 32 | 8.831 | 9 | 0.220 | 343 | 687 |
+| S | n | p (the nearest whole) | v = p / (S + p) per axis | T(12) = 2 pi 12 / v | T(24) | Against the rays' 1 / sqrt 3 = 0.577 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 10.836 | 11 | 0.917 | 82 | 165 | faster: no closed orbit expected |
+| 8 | 15.156 | 15 | 0.652 | 116 | 231 | faster: no closed orbit expected |
+| 32 | 23.455 | 23 | 0.418 | 180 | 361 | slower: closed expected within the grain |
 
-What the derivation leaves to the run, each expected to show in the
-readings:
+Until the night of 2026-09-19 the derivation took L = 1 (the push was the
+unit Link of a ray's last step) and gave p = 3, 5, 9; those worlds and
+their readings are the first registration, kept as history in the
+register entry and in git at the D1 commit. What the derivation leaves to
+the run, each expected to show in the readings:
 
-- **The push's grain.** The momentum changes by whole units of m per
-  arriving unit of flow, along the arrival Port's heading (+-x or +-y, not
-  the radial direction): a momentum of p = n m points on one of the lattice
-  vectors of length about n, so the orbit is a polygon. The field is
-  bursty: one shell every 10 intervals brings to a Node at r about 120 x
-  1.27 / (2 pi r) units (the lines through the Node: about 2 at r = 12,
-  about 1 at r = 24), so the momentum turns by about 2 / n rad per shell
-  at r = 12 (13 degrees at S = 32, 24 at S = 8, 40 at S = 1) and half that
-  at r = 24, with 2 pi n units per orbit in all (57 at S = 32, from 34
-  shells over T(12) = 343). At S = 1 the derived p = 3 is three grains and
-  v = 0.75 per axis is faster than the rays (1 / sqrt 3 = 0.577): no
-  closed orbit is expected at S = 1; the run shows what the push law does
-  with it.
-- **The field's granularity.** The fan's lines separate as r grows: near
-  the axes the widest gap of the disk fan is between (1, 0) and (8, 1),
-  7.1 degrees, 1.5 Links of arc at r = 12 and 3 at r = 24, so from r of
-  about 16 on some ring Nodes lie on no line and the probe coasts across
-  them; the kicks are where the lines are.
-- **The flight's anisotropy.** The speed n / (S + n) is per axis: at
-  45 degrees the components n / sqrt 2 give a Euclidean speed of n / (S +
-  n / sqrt 2), faster than on the axes by (S + n) / (S + n / sqrt 2) (1.05
-  at S = 32, 1.09 at S = 8, 1.17 at S = 1); and a step is at most one Link
-  per interval, x before y, so a y step that falls in an interval with an x
-  step is lost, nothing carried (rare at S = 32, about v_x v_y of the
-  intervals; at S = 1 with equal components every y step is lost).
+- **The push's grain.** The momentum changes by the whole label of each
+  arriving ray, |D| units of m along D (1 to 8 here), several rays at
+  once when a shell passes; a momentum of p = 23 turns by 2.5 to 20
+  degrees per ray, so the orbit is a polygon with kicks along the fan's
+  lines, not the radial direction.
+- **The field's granularity.** As before: the fan's lines separate as r
+  grows (from r of about 16 on some ring Nodes lie on no line).
+- **The flight's anisotropy.** As before: the speed n / (S + n) is per
+  axis, a step at most one Link per interval, x before y.
+- **The speed at S = 1 and 8.** The derived v exceeds the rays' speed, so
+  the probe is expected to outrun the field, as the S = 1 probes did in
+  the first registration.
 
 ## The criteria, pinned before the runs
 
@@ -108,8 +103,8 @@ readings:
   c unwrapped; at the first tick at which it reaches 2 pi, the probe is
   within one Link of its start on each axis (max(|dx|, |dy|) <= 1) and the
   y component of its momentum has the initial sign (+). Expected: closed
-  at S = 32 at both radii and at S = 8 at both radii, within the grain
-  above; not closed at S = 1.
+  at S = 32 at both radii, within the grain above; not closed at S = 1 or
+  S = 8.
 - **The period T**: that tick; expected T(12) and T(24) of the table within
   +- 15 % (C = 1.00 +- 0.10 and the anisotropy of the speed).
 - **The mean radius** over the first orbit: r +- 1 (the polygon's
@@ -119,16 +114,16 @@ readings:
   Link per orbit, the later orbits closing as the first.
 - **The ratio** T(24)^2 / T(12)^2 = 4 +- 15 % (k = 2, the plane); 8 would
   be Kepler's k = 3.
-- **The push read**: the mean inward push per interval over the run
-  divided by m q / (2 pi r_mean) gives C; expected 1.00 +- 0.15.
+- **The push read**: the mean inward push per interval over the orbit
+  divided by m q L / (2 pi r_mean) gives C; expected 1.00 +- 0.15.
 
 ## The worlds
 
 | World | S | r | p | Intervals |
 | --- | --- | --- | --- | --- |
-| `s1_r12`, `s1_r24` | 1 | 12, 24 | 3 | 4000 |
-| `s8_r12`, `s8_r24` | 8 | 12, 24 | 5 | 4000 |
-| `s32_r12`, `s32_r24` | 32 | 12, 24 | 9 | 4000 |
+| `s1_r12`, `s1_r24` | 1 | 12, 24 | 11 | 4000 |
+| `s8_r12`, `s8_r24` | 8 | 12, 24 | 15 | 4000 |
+| `s32_r12`, `s32_r24` | 32 | 12, 24 | 23 | 4000 |
 
 Run them in parallel and read the records:
 
@@ -139,36 +134,37 @@ PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
 
 `tools/orbit_readings.py` prints the record checks, the table of the
 readings (closed, T, the mean radius, the drift per orbit, the turns made,
-the least and greatest radius, the reads, the units taken, C measured, how
-the run ended) and the period ratios per width.
+the least and greatest radius, the reads, the units taken, C measured
+against m q L / (2 pi r), how the run ended) and the period ratios per
+width.
 
-## The readings (2026-09-19)
+## The readings (2026-09-19, the night; under the one push form)
 
 Source fingerprint
-`587cbf4852a7fafddc07b2ab35a6a530ed27607ea1aaaec8b17d89933e66d788`
-(the worktree of `claude/universe24-new-3ytqde` at the D1 commit), Python
-3.14, headless, four cores; every run completed in 5.5 to 6.4 s with the
-books balanced at every tick; `tools/orbit_readings.py`: 12 record checks
-passed, 0 failed, exit 0. The register entry marks every reading measured
-against expected; the short of it:
+`cc7815756f50640ad10582af461cf58267c424eb8182177e580d0b5eedbd4769`
+(the worktree of `claude/universe24-new-3ytqde` on the one-form commits),
+Python 3.14, headless, four cores; every run completed in 5.7 to 6.5 s
+with the books balanced at every tick; `tools/orbit_readings.py`: 12
+record checks passed, 0 failed, exit 0. The register entry marks every
+reading measured against expected; the short of it:
 
-| World | S | r | p | Closed | T (expected) | Mean radius | Drift per orbit | Reads / units | C on the first orbit | End |
+| World | S | r | p | Closed (expected) | T (expected) | Mean radius | Drift per orbit | Reads / units | C on the first orbit | End |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `s1_r12` | 1 | 12 | 3 | no turn | - (101) | - | - | 0 / 0 | - | escaped through face:+y at tick 82 |
-| `s1_r24` | 1 | 24 | 3 | no turn | - (201) | - | - | 0 / 0 | - | escaped through face:+y at tick 82 |
-| `s8_r12` | 8 | 12 | 5 | no turn | - (196) | - | - | 18 / 66 | 0.49 (run) | beside the source, then escaped through face:+x at tick 275 |
-| `s8_r24` | 8 | 24 | 5 | no | 825 (392) | 45.01 | +33.01 | 44 / 44 | 0.87 | escaped through face:+y at tick 978 |
-| `s32_r12` | 32 | 12 | 9 | yes | 346 (343) | 13.83 | -1.00, +1.04, +16.96 | 217 / 296 | 1.13 | escaped through face:-y at tick 2396 |
-| `s32_r24` | 32 | 24 | 9 | no | 541 (687) | 20.31 | -13.00, -5.00, +9.03 | 142 / 245 | 1.12 | escaped through face:+x at tick 1295 |
+| `s1_r12` | 1 | 12 | 11 | no turn (no) | - (82) | - | - | 0 / 0 | - | escaped through face:+y at tick 67 |
+| `s1_r24` | 1 | 24 | 11 | no turn (no) | - (165) | - | - | 0 / 0 | - | escaped through face:+y at tick 67 |
+| `s8_r12` | 8 | 12 | 15 | no turn (no) | - (116) | - | - | 0 / 0 | - | escaped through face:+y at tick 94 |
+| `s8_r24` | 8 | 24 | 15 | no turn (no) | - (231) | - | - | 0 / 0 | - | escaped through face:+y at tick 94 |
+| `s32_r12` | 32 | 12 | 23 | no: the return (-2, 0) (yes) | 229 (180) | 17.30 | -2.00 | 38 / 404 | 1.43 | escaped through face:-x at tick 470 |
+| `s32_r24` | 32 | 24 | 23 | no turn (yes) | - (361) | - | - | 28 / 221 | 0.30 (the run) | escaped through face:+x at tick 415 |
 
-T(24)^2 / T(12)^2 at S = 32: 2.44 against 4 (k = 2) and Kepler's 8. One
-orbit closes by the criterion (S = 32, r = 12: the turn in 346 intervals,
-the return one Link off on x) and it is an eccentric loop (the radius at
-eighths of the turn 12.0, 15.0, 18.8, 19.1, 18.4, 14.8, 10.0, 4.0, 11.0)
-whose later turns wander and escape; the S = 1 probes outrun the field
-(zero reads); the S = 8 probes spiral in or swing out; the r = 24 probe at
-S = 32 falls inward. The mean push reads as derived (C 1.1 on the first
-turns); the grain of the push, the bursts of the field, the empty source
-at the start (no push for the first 31 intervals at r = 12) and the
-flight's anisotropy break the orbit. `tests/test_orbit_world.py` pins the
-one closing (the probe of `s32_r12` at (71, 60, 0) after 346 intervals).
+No orbit closes at any width: the S = 1 and S = 8 probes outrun the
+field (zero reads); the S = 32 probe at r = 12 makes one eccentric turn
+(the radius at eighths 12.0, 16.3, 25.5, 26.0, 22.0, 19.7, 13.9, 6.7,
+10.0) in 229 intervals, returns two Links off and escapes; the S = 32
+probe at r = 24 falls in to the Node beside the source and escapes. The
+finding for the model owner: the magnitude of a fan ray's label grows
+with the integer length |D| of its direction, the law as designed and an
+open question ([RAY_LAW section 10](../../../docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+note 21). The first registration (p = 3, 5, 9 under the engine of the D1
+commit, fingerprint `587cbf48...`, one eccentric closing at S = 32, r =
+12) is kept as history in the register entry.
