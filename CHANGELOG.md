@@ -7,6 +7,31 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- The coherent sum at a Node runs over all the arrivals present, whatever
+  their number (node-mixing-v3, the model owner's decision of 2026-09-19:
+  "the Node reads what is present"; the number is a label for the detector,
+  not a kind). `mixing.mix_arrivals` sums the amplitude vectors over the
+  number axis per Port before the coherent sum; the leaving amplitude of
+  each side is the common sum less three times what came in through its
+  Port over all numbers; the weights per side are common to every number at
+  the Node and each number places its own units by them (the largest
+  remainder with the tick's ties, per number; a number with no whole by its
+  own momentum); the leaving phase of a side is the common one; every unit
+  keeps its number and the momenta are apportioned per number as before.
+  Two numbers' crowds at one Node now interfere (in antiphase nothing leaves
+  sideways) where before they passed through each other; a family with one
+  number at every Node, every example world, runs as before, and
+  `Transit.sizes` and `phase_at` stay per number ([the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#the-coherent-sum-at-a-node-over-all-numbers-present-on-2026-09-19-node-mixing-v3)).
+  Test: `test_node_mixing_numbers` (new; `test_node_mixing` is the control
+  of one number, unchanged; [expectations](docs/TEST_EXPECTATIONS.md#the-coherent-sum-over-the-numbers)).
+  The pair world of `test_event_worlds` (c), two numbers of one family, is
+  re-pinned: the other number's units next to a content follow the
+  content's own crowd back into it and are read again and again, so the
+  axial push is 29 times v2's over ticks 101 to 200 and falls to 17 times
+  over 201 to 300, the asymmetry 8.6 %, the transverse 4.8 %, the product
+  law 3.8; a check of the engine, not a result, referred to the
+  physics-rule review ([expectations](docs/TEST_EXPECTATIONS.md#the-worlds-of-the-law-of-events)).
 - A periodic axis as a declared run parameter of the world, the model
   owner's approved exception to the open board (2026-09-19): `boundary`
   accepts, beside `"open"`, an object with any of `x`, `y`, `z` set to

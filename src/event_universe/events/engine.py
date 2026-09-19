@@ -43,11 +43,13 @@ in this order:
    unit), `rerelease` (the push taken, the amount taken to be created again
    like what came home, with the measured event's number and phase) or
    `pass` (no push, the units mix on);
-4. at every Node the arrivals of one number that are not suspended mix
-   (node-mixing-v2): the sides' shares from the vectors, whole units placed
-   by the largest remainder with the ties in the tick's Port order, a group
-   with no whole for any side going whole by its momentum, the departures
-   into flight; a suspended slot stays, its count paid by one;
+4. at every Node the arrivals of a family that are not suspended mix
+   (node-mixing-v3): the sides' shares from the vectors of every number
+   present, the weights common to the numbers at the Node, whole units
+   placed per number by the largest remainder with the ties in the tick's
+   Port order, a number with no whole for any side going whole by its own
+   momentum, the departures into flight; a suspended slot stays, its count
+   paid by one;
 5. a measured event that owes a count pays it by one and is created here
    without a self-creation: no release, no turn (`waited` counts these
    intervals; age + waited is the intervals completed). One that owes
