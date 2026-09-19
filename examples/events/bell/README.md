@@ -21,8 +21,9 @@ intervals, fingerprint `53a70962...`) keeps its scope below.
 
 One bar of 21 x 1 x 1 Nodes, open, `"law": "rays"`, K 2^20, N 64 (the
 phase tables read a single arrival's step exactly only up to N = 64),
-`release` [0, 1], `suspension` 0, the families `light` (paid) and `counter`
-(paid), every measured event `fixed`.
+`release` [0, 1], `suspension` 0, the families `light` and `counter`, both
+paid (`quantum` 1; the kind follows from the quantum), every measured event
+`fixed`.
 
 - The lamp of `light` at x = 10: content K + 2 = 1048578 (so that the
   release of age a is stamped with the phase a mod 64 exactly for every age
@@ -30,7 +31,8 @@ phase tables read a single arrival's step exactly only up to N = 64),
   (`lamp.directions`), no window: the source cycles the whole circle. Its
   two recoils cancel at each self-creation, so its momentum stays [0, 0, 0].
 - Four counters of content 1, each its own detector of threshold 1, the
-  table `{"light": {"rule": "measure", "phase_window": s}}`: `alice_plus`
+  table `{"light": {"phase_window": s}}` (the rule `measure` is what the
+  keys give a paid family; the world declares only the window): `alice_plus`
   at x = 2 (s = a), `alice_minus` at x = 1 (s = a + 32 mod 64), `bob_plus`
   at x = 18 (s = b), `bob_minus` at x = 19 (s = b + 32 mod 64). A ray
   flies at 1 / sqrt 3 by the flight table: released at tick t it first

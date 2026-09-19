@@ -10,8 +10,9 @@ two-dimensional boards"): a board of 121 x 121 x 1 with the z axis declared
 periodic (`"boundary": {"z": "periodic"}`), so that the two z Ports of every
 Node return to the same Node at the next interval and nothing leaks; the
 centre c = (60, 60, 0), K 2^22, N 64, `release` [1, 128], `suspension` 0
-(1 in world 6 only), the free family `m` (charge 0; the family `q` of item
-7 carries the charges), the source a fixed measured event of content 2^24
+(1 in world 6 only), the free family `m` (`quantum` 0, the kind following
+from the quantum; charge 0; the family `q` of item 7 carries the charges),
+the source a fixed measured event of content 2^24
 at c (2^17 rays per heading at every self-creation; the two z headings'
 rays step onto the source's own Node through the stub and come home, to be
 created again over the six headings, so the net emission into the plane is
@@ -117,7 +118,7 @@ def world(
         "N": N,
         "release": RELEASE,
         "suspension": suspension,
-        "families": [{"name": family, "kind": "free", "charge": 0}],
+        "families": [{"name": family, "quantum": 0, "charge": 0}],
         "measured": entries,
     }
 

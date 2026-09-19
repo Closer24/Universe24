@@ -22,7 +22,7 @@ def authored():
         "N": 32,
         "release": 0,
         "suspension": 0,
-        "families": [{"name": "carrier", "kind": "paid"}],
+        "families": [{"name": "carrier", "quantum": 1}],
         "entity_definitions": "entities/apparatus.json",
         "entities": [{"name": "alice", "definition": "three", "position": [3, 4, 0]}],
     }

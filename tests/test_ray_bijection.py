@@ -80,7 +80,7 @@ WORLD = {
     "release": [0, 1],
     "suspension": 0,
     "directions": [[1, 1, 0], [2, -1, 1]],
-    "families": [{"name": "light", "kind": "paid", "phase_per_link": 5}],
+    "families": [{"name": "light", "quantum": 1, "phase_per_link": 5}],
     "measured": [],
     "in_transit": fixed_rays(),
 }

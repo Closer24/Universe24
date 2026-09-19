@@ -111,7 +111,7 @@ def slits(openings: tuple[int, ...]) -> dict[str, object]:
         "release": [1, 128],
         "suspension": 0,
         "directions": FAN,
-        "families": [{"name": "light", "kind": "paid"}, {"name": "wall", "kind": "paid"}],
+        "families": [{"name": "light", "quantum": 1}, {"name": "wall", "quantum": 1}],
         "measured": measured,
         "detectors": [{"name": "screen", "positions": screen, "threshold": 1}],
     }
@@ -199,7 +199,7 @@ def test_one_content_streams_outward_with_the_books_closed():
         "N": 64,
         "release": [1, 128],
         "suspension": 0,
-        "families": [{"name": "m", "kind": "free", "charge": 0, "phase": False}],
+        "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": [{"position": [5, 5, 5], "family": "m", "amount": content, "fixed": True}],
     }
     simulation = RaySimulation(parse_ray_world(world))

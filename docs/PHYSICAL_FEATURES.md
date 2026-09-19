@@ -2,9 +2,11 @@
 
 The goal is a law that can be understood, tested and replaced independently of
 the world using it. The binding sources are the [definitions](../SIMULATOR_DEFINITIONS.md)
-and [architecture](ARCHITECTURE.md). The active generic schema and allowed laws
-are in DISTURBANCES.md; candidate identities and physical names
-belong in initialization data. This procedure does not change those rules.
+and [architecture](ARCHITECTURE.md). The active schema and the laws a world
+selects are in [the law of the ray](RAY_LAW.md) and [the engine's bookkeeping](ENGINE.md)
+(the generic disturbance contract, DISTURBANCES.md, was deleted on 2026-09-19);
+candidate identities and physical names belong in the world file. This
+procedure does not change those rules.
 
 ## 1. Write a contract before code
 
@@ -51,19 +53,19 @@ sharing an atomic contract together, such as particle impulse and opposite field
 
 ## 3. Existing example: shared integer arithmetic
 
-`core/integer.py` owns generic calculations such as `signed_divrem`, `ceil_div`
-and `reduced_ratio`. A call takes bounded integer inputs and returns bounded
-integer results with explicit errors; it does not read a world, a configuration
-or a field name. Configured laws in initialization data select which
+`core/integer.py` owns generic calculations such as `integer_root`,
+`bounded_gcd`, `by_clock` and `apportion_whole`. A call takes bounded integer
+inputs and returns bounded integer results with explicit errors; it does not
+read a world, a configuration or a field name. The world file selects which
 calculations run and with which parameters. The law can be checked without
 running a world:
 
 | Calculation | Input | Expected result |
 | --- | --- | --- |
-| `signed_divrem` | 7, 3 | quotient 2, remainder 1 |
-| `signed_divrem` | -7, 3 | quotient -2, remainder -1 |
-| `ceil_div` | 15, 7 | 3 |
-| `reduced_ratio` | 6, 4 | 3, 2 |
+| `integer_root` | 17 | 4 |
+| `bounded_gcd` | 12, 18 | 6 |
+| `by_clock` | age 3, numerator 1, denominator 4 | 1 (the whole part of 4 / 4 less that of 3 / 4) |
+| `apportion_whole` | 5 over the weights 1, 1, 1, ties from index 0 | 2, 2, 1 |
 
 This demonstrates the separation of a reusable calculation from its selection,
 not a proven law of nature.

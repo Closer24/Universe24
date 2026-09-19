@@ -1,20 +1,32 @@
 """The one reading of a Node under the law of the ray (docs/RAY_LAW.md; the
-model owner, 2026-09-19: every piece of logic once, in generic code): the
-seven slots of a Node (the six Ports a ray arrived through and here) are
-decomposed ONCE by `read_arrivals` into two scalars (outside, here), the net
-flow (a vector) and the traceless tensor (two components), and every
+model owner, 2026-09-19: every piece of logic once, in generic code; "the one
+reading function is the amount-weighted moments of order 0, 1 and 2 of the
+direction vectors, valid for fans as for the six headings, here entering the
+zeroth moment alone"): `read_arrivals` takes ONCE, over one reading set, the
+moments of the arrivals' direction vectors weighted by their amounts: the
+count split outside / here (a ray that did not step has the direction
+(0, 0, 0)), the net flow (sum amount x D) and the traceless tensor (3 x sum
+amount x D (x) D less its trace on the diagonal, exact integers), and every
 coupling selects its component by key. The expected integers of
 docs/TEST_EXPECTATIONS.md ("The one reading"), written down first:
 
-(a) the decomposition: the seven basis vectors are mutually orthogonal; the
-    slots [3, 1, 4, 1, 5, 9, 2] read outside 23, here 2, the flow
-    (2, 3, -4), the tensor (4 + 5 - 28, 4 - 5) = (-19, -1), and
-    12 x slots = sum_i (12 / |e_i|^2) c_i e_i (the slots recovered); under
-    each of the 48 signed axis permutations of the board the scalars are
-    fixed, the flow is the rotated flow, and the tensor of the rotated slots
-    is the tensor of the permuted axis pairs (a representation of the
-    group); the shortest slot vectors, one unit on one Port, read outside 1,
-    here 0 and the flow the Port's heading;
+(a) the moments: on the six headings the amounts [3, 1, 4, 1, 5, 9] and 2
+    here read outside 23, here 2, the flow (2, 3, -4) and the tensor
+    diag(-11, -8, 19) (3 x diag(4, 5, 14) - 23 I), which is the slot
+    decomposition of the first ray worlds exactly (its (p_x + p_y - 2 p_z,
+    p_x - p_y) = (-19, -1) being -T_zz and (T_xx - T_yy) / 3); for 64 fixed
+    random integer amounts on the seven slots the moments equal that slot
+    decomposition through the same relations; on a fan (2 on (1, 1, 0), 3
+    on (2, -1, 0), 1 on (3, 1, 2), 4 on (1, 0, 0), 5 here) the flow is
+    (15, 0, 2) and the tensor [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
+    (3 x the second moment [[27, -1, 6], [-1, 6, 2], [6, 2, 4]] less its
+    trace 37), traceless; under each of the 48 signed axis permutations R of
+    the board the scalars are fixed, the flow is R x flow and the tensor
+    R T R^T (the moments are covariant, on the fan as on the headings); the
+    shortest reading, one unit on one heading e, reads outside 1, here 0,
+    the flow e and the tensor 3 e e^T - I; the keyed form over Nodes equals
+    the readings Node by Node; a reading whose second moment could pass
+    2^62 - 1 is refused with `OverflowError` before any product is formed;
 (b) the push reads the flow of every number but the reader's own (from
     `test_one_reading_set` (b) and `test_phaseless_family` (c), re-pinned
     under the ray law): a free reader of content 4 met by 9 rays of number 1
@@ -41,70 +53,109 @@ from __future__ import annotations
 import itertools
 
 import numpy as np
+import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.gonen_beam import READING_BASIS, read_arrivals
+from event_universe.events.nature_beam import read_arrivals
+from event_universe.events.world import MOMENTUM_BOUND
 
 NODE = [4, 1, 1]
 PLUS_X, MINUS_X = [1, 0, 0], [-1, 0, 0]
 NO_RESPONSE = {"home": 0, "read": 0, "measure": 0, "rerelease": 0}
-FAMILIES = [{"name": "m", "kind": "free"}, {"name": "light", "kind": "paid"}]
+FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
+HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
+# The seven slot vectors of the first ray worlds: the six headings and here.
+SLOT_VECTORS = np.concatenate([HEADINGS, np.zeros((1, 3), dtype=np.int64)])
+# The slot decomposition the moments replace (the reference of this test):
+# outside, here, the flow, and (p_x + p_y - 2 p_z, p_x - p_y) with p the sum
+# of the two slots of an axis.
+SLOT_BASIS = np.array(
+    [
+        [1, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 1],
+        [1, -1, 0, 0, 0, 0, 0],
+        [0, 0, 1, -1, 0, 0, 0],
+        [0, 0, 0, 0, 1, -1, 0],
+        [1, 1, 1, 1, -2, -2, 0],
+        [1, 1, -1, -1, 0, 0, 0],
+    ],
+    dtype=np.int64,
+)
+FAN = np.array([[1, 1, 0], [2, -1, 0], [3, 1, 2], [1, 0, 0], [0, 0, 0]], dtype=np.int64)
+FAN_AMOUNTS = np.array([2, 3, 1, 4, 5], dtype=np.int64)
 
 
-def cube_group() -> list[tuple[int, ...]]:
-    """The 48 signed axis permutations as maps on the six Port indices."""
-    maps = []
+def cube_group() -> list[np.ndarray]:
+    """The 48 signed axis permutations as integer matrices."""
+    matrices = []
     for perm in itertools.permutations(range(3)):
         for signs in itertools.product((1, -1), repeat=3):
-            image = []
-            for port in range(6):
-                axis, forward = port >> 1, (port & 1) == 0
-                sign = (1 if forward else -1) * signs[axis]
-                image.append(2 * perm[axis] + (0 if sign > 0 else 1))
-            maps.append(tuple(image))
-    return maps
+            matrix = np.zeros((3, 3), dtype=np.int64)
+            for axis in range(3):
+                matrix[perm[axis], axis] = signs[axis]
+            matrices.append(matrix)
+    return matrices
 
 
-def test_the_decomposition_is_orthogonal_sums_back_and_respects_the_board_symmetries():
+def assert_slot_decomposition(slots: np.ndarray) -> None:
+    """The moments on the seven slots equal the slot decomposition exactly."""
+    components = slots @ SLOT_BASIS.T
+    reading = read_arrivals(SLOT_VECTORS, slots)
+    assert int(reading.outside) == components[0] and int(reading.here) == components[1]
+    assert reading.vector.tolist() == components[2:5].tolist()
+    tensor = reading.tensor
+    assert int(tensor.trace()) == 0 and (tensor == tensor.T).all()
+    assert int(tensor[2, 2]) == -components[5] and int(tensor[0, 0] - tensor[1, 1]) == 3 * components[6]
+    assert not (tensor - np.diag(np.diag(tensor))).any()
+
+
+def test_the_moments_equal_the_slot_decomposition_and_respect_the_board_symmetries():
     """(a)."""
-    gram = READING_BASIS @ READING_BASIS.T
-    assert (gram == np.diag(np.diag(gram))).all() and (np.diag(gram) == [6, 1, 2, 2, 2, 12, 4]).all()
-    slots = np.array([3, 1, 4, 1, 5, 9, 2])
-    reading = read_arrivals(slots)
+    slots = np.array([3, 1, 4, 1, 5, 9, 2], dtype=np.int64)
+    reading = read_arrivals(SLOT_VECTORS, slots)
     assert int(reading.outside) == 23 and int(reading.here) == 2 and int(reading.scalar) == 25
-    assert reading.vector.tolist() == [2, 3, -4] and reading.tensor.tolist() == [-19, -1]
-    components = np.concatenate([[reading.outside, reading.here], reading.vector, reading.tensor])
-    recovered = ((12 // np.diag(gram)) * components) @ READING_BASIS
-    assert recovered.tolist() == (12 * slots).tolist()
-    for port, heading in enumerate(PORT_HEADINGS):
-        unit = np.zeros(7, dtype=np.int64)
-        unit[port] = 1
-        one = read_arrivals(unit)
-        assert int(one.outside) == 1 and int(one.here) == 0 and one.vector.tolist() == list(heading)
+    assert reading.vector.tolist() == [2, 3, -4]
+    assert reading.tensor.tolist() == np.diag([-11, -8, 19]).tolist()
+    assert_slot_decomposition(slots)
+    amounts = np.random.default_rng(20260919).integers(0, 1000, size=(64, 7), dtype=np.int64)
+    for row in amounts:
+        assert_slot_decomposition(row)
+    fan = read_arrivals(FAN, FAN_AMOUNTS)
+    assert int(fan.outside) == 10 and int(fan.here) == 5 and fan.vector.tolist() == [15, 0, 2]
+    assert fan.tensor.tolist() == [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
+    assert int(fan.tensor.trace()) == 0
+    second = (FAN_AMOUNTS[:, None, None] * FAN[:, :, None] * FAN[:, None, :]).sum(axis=0)
+    assert second.tolist() == [[27, -1, 6], [-1, 6, 2], [6, 2, 4]]
+    assert (fan.tensor == 3 * second - 37 * np.eye(3, dtype=np.int64)).all()
     group = cube_group()
-    assert len(set(group)) == 48
-    headings = np.array(PORT_HEADINGS)
-    for image in group:
-        rotated = np.zeros(7, dtype=np.int64)
-        rotated[6] = slots[6]
-        for port in range(6):
-            rotated[image[port]] = slots[port]
-        other = read_arrivals(rotated)
-        assert int(other.outside) == 23 and int(other.here) == 2
-        # The flow is a vector: the rotation of the six headings carries it.
-        expected_flow = sum(int(slots[port]) * headings[image[port]] for port in range(6))
-        assert other.vector.tolist() == expected_flow.tolist()
-        # The tensor: the axis pairs permute with the axes.
-        pairs = [slots[0] + slots[1], slots[2] + slots[3], slots[4] + slots[5]]
-        permuted = [0, 0, 0]
-        for axis in range(3):
-            permuted[image[2 * axis] >> 1] = pairs[axis]
-        assert other.tensor.tolist() == [
-            permuted[0] + permuted[1] - 2 * permuted[2],
-            permuted[0] - permuted[1],
-        ]
+    assert len({matrix.tobytes() for matrix in group}) == 48
+    for vectors, weights in ((SLOT_VECTORS, slots), (FAN, FAN_AMOUNTS)):
+        base = read_arrivals(vectors, weights)
+        for matrix in group:
+            rotated = read_arrivals(vectors @ matrix.T, weights)
+            assert int(rotated.outside) == int(base.outside) and int(rotated.here) == int(base.here)
+            assert rotated.vector.tolist() == (matrix @ base.vector).tolist()
+            assert rotated.tensor.tolist() == (matrix @ base.tensor @ matrix.T).tolist()
+    for heading in HEADINGS:
+        one = read_arrivals(heading[None, :], np.array([1]))
+        assert int(one.outside) == 1 and int(one.here) == 0 and one.vector.tolist() == heading.tolist()
+        expected = 3 * np.outer(heading, heading) - np.eye(3, dtype=np.int64)
+        assert one.tensor.tolist() == expected.tolist()
+    keyed = read_arrivals(
+        np.concatenate([SLOT_VECTORS, FAN]),
+        np.concatenate([slots, FAN_AMOUNTS]),
+        np.array([1] * 7 + [0] * 5),
+        2,
+    )
+    assert keyed.outside.tolist() == [10, 23] and keyed.here.tolist() == [5, 2]
+    assert keyed.vector.tolist() == [[15, 0, 2], [2, 3, -4]]
+    assert keyed.tensor[0].tolist() == fan.tensor.tolist()
+    assert keyed.tensor[1].tolist() == reading.tensor.tolist()
+    with pytest.raises(OverflowError, match="moments of a reading"):
+        read_arrivals(np.array([[64, 0, 0]]), np.array([MOMENTUM_BOUND // 4096 + 1]))
+    read_arrivals(np.array([[64, 0, 0]]), np.array([MOMENTUM_BOUND // 4096]))
 
 
 def world(

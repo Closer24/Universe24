@@ -1,8 +1,8 @@
 # Universe24 detector requirements
 
-Date: 2026-09-19. Status: consolidated requirements and published implementation contract for the explicitly selected `reversible-detector-v1` candidate. Code and physical validation are separate evidence. Tracked in [issue 342](https://github.com/Closer24/Universe24/issues/342).
+Date: 2026-09-19. Status: consolidated requirements; the implementation contract of the explicitly selected `reversible-detector-v1` candidate was deleted the same day, absorbed into [the law of the ray](RAY_LAW.md) (history marker in its section below). Code and physical validation are separate evidence. Tracked in [issue 342](https://github.com/Closer24/Universe24/issues/342).
 
-Source baseline: `events-v1`, commit `bfb463be6313ae226aa0a192d11036ead63dd0f1`. This document owns the detector requirements and the scoped candidate contract below. The default `events-v1` measurement and mixing rules remain as documented in ENGINE.md. The candidate deliberately does not call their lossy transitions.
+Source baseline of the candidate: `events-v1`, commit `bfb463be6313ae226aa0a192d11036ead63dd0f1` (history: `events-v1` was deleted on 2026-09-19 with the candidate; the active engine is the law of the ray). This document owns the detector requirements and the record of the scoped candidate contract below. The default `events-v1` measurement and mixing rules remained as documented in ENGINE.md until that deletion. The candidate deliberately did not call their lossy transitions.
 
 ## Definition and adopted requirements
 
@@ -73,13 +73,13 @@ The preparation and microscopic interaction laws must produce the restriction. A
 
 ## Current implementation gap and ownership
 
-The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb463be6313ae226aa0a192d11036ead63dd0f1/docs/ENGINE.md) of the law of events treated a click as a one-way boundary with the phase recorded externally; the law of the ray of 2026-09-19 keeps the click as the one one-way border and reads the phase on the board as the detector's coherent record ([the law of the ray](RAY_LAW.md), section 5). The ownership map below is the one under which the candidate was designed; the modules it names are `gonen_beam.py` (the interval) and `engine.py` (the frame) since that day.
+The baseline [engine contract](https://github.com/Closer24/Universe24/blob/bfb463be6313ae226aa0a192d11036ead63dd0f1/docs/ENGINE.md) of the law of events treated a click as a one-way boundary with the phase recorded externally; the law of the ray of 2026-09-19 keeps the click as the one one-way border and reads the phase on the board as the detector's coherent record ([the law of the ray](RAY_LAW.md), section 5). The ownership map below is the one under which the candidate was designed; the modules it names are `nature_beam.py` (the interval) and `engine.py` (the frame) since that day.
 
 | Existing owner | Required design work |
 | --- | --- |
 | `events/world.py` | Separate coverage, resolution, trigger and physical output layout in the world contract. Existing `positions` and per-Node `threshold` do not define a causal shared output. |
 | `events/engine.py`: `Measured`, `_meet` | Specify a local reversible interaction and physical record encoding, preserving incoming distinctions and prior apparatus information without overwriting its clock. |
-| `events/gonen_beam.py` (the walk and the collision, since 2026-09-19) | Carry all required physical information through local propagation; the flight and the collision are bijections and lose no distinction. |
+| `events/nature_beam.py` (the walk and the collision, since 2026-09-19) | Carry all required physical information through local propagation; the flight and the collision are bijections and lose no distinction. |
 | `events/engine.py`: `detectors()`, `_event` | Keep diagnostic aggregation and exported records separate from the physical result they describe. Neither supplies missing physical memory. |
 
 This is an ownership map, not a new API. Before coding, publish the local operator, its input/output domain, Event encoding and capacities, timing, saturation/reset behavior, invariant accounting, allowed preparations and observable/unit mapping. Missing physics must remain an open design decision. Full-board information preservation also requires examining other merges and mixing operations.

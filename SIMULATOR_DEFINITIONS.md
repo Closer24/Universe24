@@ -25,7 +25,15 @@ a thin periodic board and full 3D matter. Earlier topology descriptions below
 belong to their dated models, not an implicit events-world default.
 
 
-## Active generic disturbance model
+## Historical generic disturbance model (deleted on 2026-09-19)
+
+History marker (2026-09-19): the generic disturbance simulator this section
+describes was deleted on 2026-09-19 with the engines before the law of the ray
+([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted));
+its schema document, docs/DISTURBANCES.md, is in git at any commit before that
+deletion. The active contract is [the law of the ray](docs/RAY_LAW.md) with
+[the engine's bookkeeping](docs/ENGINE.md). The text below is kept as written,
+the record of that model; it defines nothing in the engine.
 
 Initialization accepts only `sampling_profile: "detector-only-v1"` under the
 Detector-owned sampling contract: an ordinary
@@ -473,8 +481,10 @@ that flag, physical assertions still execute and no HTML/GIF run reports are
 generated. Requested frame stride changes recording
 only, never the physical update interval.
 
-The active generic local commit and failure behavior is defined in
-docs/DISTURBANCES.md. The following field-phase description
+The generic local commit and failure behavior was defined in
+docs/DISTURBANCES.md until the generic disturbance simulator's deletion on
+2026-09-19; the active engine's refusals and failures are in
+[the engine's bookkeeping](docs/ENGINE.md). The following field-phase description
 applied to the historical scalar models deleted on 2026-09-17.
 
 Field proposals are validated before the field phase commits. Particle-field

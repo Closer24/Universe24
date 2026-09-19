@@ -10,14 +10,14 @@ the linked Issue/PR before treating it as live status.
 1. **The law of the ray** (Highlights 5.4, "DECIDED: the law of the ray",
    the model owner, 2026-09-19; the design published in
    [RAY_LAW.md](RAY_LAW.md) before the engine changed): the Node holds no
-   wave; a unit is a ray with a record (`GonenBeam`: Node, direction, age,
+   wave; a unit is a ray with a record (`NatureBeam`: Node, direction, age,
    phase, number, amount, content) moving along the digital line of its
    momentum at one speed for every direction, 1 / sqrt 3 (the flight
    table); rays that meet at a Node are permuted by the eight-slot collision
    table, a bijection inside its invariant classes; the interval is a
    bijection and the click its only one-way border; the interference is the
    squared coherent record a detector reads of the rays it clicked; the
-   ray's law is one generic function, `gonen_beam`, and every piece of
+   ray's law is one generic function, `nature_beam`, and every piece of
    logic exists once (one reading of the Node, `read_arrivals`, its
    components selected by the coupling's declared key). Its engine is the
    one engine, `src/event_universe/events/` (`rays-v1`) on the substrate of
@@ -58,7 +58,19 @@ performance: 0.23 to 1.0 us per Node per interval on the registered worlds
   as worlds and tables; whether the six-heading source of the coupling
   series should release on a fan of directions (the design's section 8
   expects the ring means of a fan, 0.31 to 0.33, and the six beams give the
-  lattice ring's count).
+  lattice ring's count); **the magnitude of a fan ray's label**: the
+  label is content x amount x D with D the integer direction, so equal
+  amounts on (1, 0, 0) and (7, 5, 0) carry the momenta 1 and sqrt 74 and
+  a fan source pushes its mean |D| times harder than six headings
+  ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 21; the orbit series D re-registered the night of 2026-09-19 under
+  the one push form with p re-derived for the fan's mean |D| = 5.19: no
+  orbit closes at any width), and whether the label should be along the
+  unit vector of the direction at the flight table's scale Q = 64 (one
+  table for the flight and the label), which the implementation
+  recommends the owner rule on; after that, whether to pre-fill the field,
+  to widen the push further or to read the count off the clock as well
+  ([D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)).
 - Derived and not solved: no inertia for a co-moving pair at first order in v
   (DERIVATIONS.md section 54); Bell at most 2; a single ray does not
   interfere with itself, interference being the record of many of one
@@ -86,7 +98,7 @@ out, the engines before this one among them.
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
 | The world file and its refusals | `src/event_universe/events/world.py` | [RAY_LAW.md](RAY_LAW.md), section 2; [ENGINE.md](ENGINE.md), "The world" |
-| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/gonen_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
+| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/nature_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
 | The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
 | The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the board's addresses and headings, the phase tables; the integer audit |

@@ -6,6 +6,127 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The push as one form, the one label and the affordable amount, on 2026-09-19 (the night)
+
+The physics-rule review of the law of the ray (its findings F1, F2, F3, F7)
+and the model owner's proposal 2 ("2 with the physicist"), implemented on
+the branch `claude/universe24-new-3ytqde` ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+notes 18 to 21). Nothing physical changes on the registered runs (the
+series C, series 7 and Bell records are identical byte for byte,
+[validation](VALIDATION.md)); what changes is where the momentum is read
+and what the record carries.
+
+- **The record of a free family's ray gains two columns**, `charge` and
+  `mass` (the emitter's charge and its held content of the family at the
+  ray's birth, the factor of the electric push), on `NatureBeam`, in the
+  store (`RayStore.append` requires them; the merge compares them) and in
+  `state.json` (on a free family's rows only). A paid family's rows carry
+  0 and 0. A declared ray in transit of a free family takes the charge and
+  the declared amount of the measured event its number names.
+- **The lookup of the emitter by number is deleted**: `push_of` (the three
+  branches and `world.measured[number - 1]`) is replaced by `push_form`,
+  the one bilinear form over the arriving rays; `RayWorld.content_lcm` and
+  the refusal "the charged events' denominator exceeds the bounded integer"
+  are gone (no lcm: the electric part is `sign x by_clock(age_A, |V q_A
+  q_B|, M_B)` per emitter factor, equal integer by integer to the lcm
+  form).
+- **No collision at a Node that holds a measured event** (`nature_beam`
+  step 3, forward and inverse). A world in which rays of one number met
+  head-on exactly at a measured event's Node collided there before; now
+  they meet the table with their directions as they arrived.
+- **The one label**: the click's momentum, the face click's, the recoil of
+  a release and of a re-emission and the transit line are all
+  `momentum_labels` (`RayStore.labels` calls it); the `home` record's
+  `push` is the labels' sum of what came home for a paid family (was
+  `[0, 0, 0]`), and the emitter's momentum takes it in at the home and
+  gives it back at the re-creation.
+- **The affordable amount**: `RECORD_AMOUNT_BOUND` (261123) bounds the
+  amount a detector Node or a face clicks of one family in one interval;
+  a larger set refuses the run with `OverflowError` naming the Node or the
+  face and the sum (before, the record's int64 products wrapped silently
+  beyond 2^50). Every reduction of the law is exact (`exact_sum`,
+  `exact_column_sums`; the merged amounts; `label_weights` checked before
+  its product).
+- **Tests**: `tests/test_ray_push.py` (new: the form, the sign, the
+  cancellation, the fractional floor, a paid emitter, a fan emitter, the
+  one label), `test_ray_collision.py` (d), `test_ray_detector.py` (e).
+- **Series D** is re-registered under this engine with the momenta
+  re-derived for the label's magnitude (`examples/events/orbit/`, p = 11,
+  15, 23 in place of 3, 5, 9; `tools/orbit_readings.py` measures C
+  against m q L / (2 pi r), L the fan's mean |D|).
+
+## The ray is NatureBeam, on 2026-09-19 (the night)
+
+The model owner renamed the ray's record and its one function: the record
+`GonenBeam` is `NatureBeam`, the function `gonen_beam` is `nature_beam`, and
+the module `src/event_universe/events/gonen_beam.py` is `nature_beam.py`. A
+mechanical rename of every token in the code, the tests, the tools and the
+documents; no rule, integer, record or artifact changed. Highlights 5.4 keeps
+the earlier name in its record of the day. Imports of
+`event_universe.events.gonen_beam` must become
+`event_universe.events.nature_beam`.
+
+## The table from the keys and the moments, on 2026-09-19 (the night)
+
+The model owner's decisions of the night of 2026-09-19 (Highlights 5.4, on
+the mathematician's review of the table of the physical entities: "I
+approve 1 and 3"; [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+notes 15 and 16): generic replaces generic, nothing physical changes on the
+six headings.
+
+- **`kind` is removed from the family schema.** A family declares its
+  `quantum` (now required): 0 is a free family (matter; its release costs
+  nothing, its rays carry no content, its label is `amount x D`, it is read
+  for gravity and electricity, it may carry a `charge`), 1 or more a paid
+  one (light; released by a lamp at the cost `quantum` x turn per unit, a
+  click measures it, no charge). `"kind": "free"` becomes `"quantum": 0`
+  and `"kind": "paid"` becomes `"quantum": 1` (or the declared quantum);
+  a world that still declares `kind` is refused naming this entry, since
+  the owner's rule is one canonical form. `FamilyDefinition.kind` is gone,
+  `FamilyDefinition.free` is `quantum == 0`, `FamilyDefinition.unit_label`
+  is the content one declared unit carries for its label (1 for a free
+  family); `world.KINDS` is gone; `RayStore.labels(rows, vectors, free)`
+  takes no quantum. `run.json` carries `quantum` per family and no `kind`.
+- **The table is generated from the keys.** `world.default_table(families)`
+  gives every measured event its table: `read` for a free family, `measure`
+  for a paid one, no window, the rule's component (`vector` on `read`,
+  `scalar` otherwise). A declared `table` overrides only the entries it
+  names; every entry that equals the default is optional (still accepted;
+  it changes nothing) and the object form may omit `rule`, so a window
+  alone (`{"light": {"phase_window": 32}}`) is a lawful entry. The shipped
+  worlds were rewritten to declare only what differs by
+  `tools/migrate_ray_worlds.py` (which also converts `kind`; run it on
+  your own worlds: `PYTHONPATH=src python tools/migrate_ray_worlds.py
+  WORLD.json`); the Bell and coupling generators emit the trimmed form.
+  Every example world parses to the same `RayWorld` as before, and the
+  Bell and coupling runs are unchanged record by record
+  ([validation](VALIDATION.md)).
+- **The one reading is the moments.** `read_arrivals(vectors, amounts,
+  keys=None, size=None)` replaces `read_arrivals(slots)`: it takes the
+  amount-weighted moments of order 0, 1 and 2 of the arrivals' direction
+  vectors (the count split outside / here, the net flow `sum amount x D`,
+  the traceless tensor `3 x sum amount x D (x) D - tr I`, exact integers)
+  in place of the decomposition of the seven Port slots over an orthogonal
+  basis; `READING_BASIS`, `READING_SLOTS` and the seven-slot form are gone;
+  `Reading.tensor` is a symmetric traceless 3 x 3 integer matrix (was two
+  components; the old pair is `-T_zz` and `(T_xx - T_yy) / 3`), so a
+  record with `"reads": "tensor"` carries three rows of three integers;
+  `Reading.second` holds the six entries of the second moment. The store's
+  `port` column is `arrival` (the direction the ray arrived on this
+  interval, `HERE` = 0, the first rest direction, for a ray that did not
+  step); `Readings.per_port` is (nodes, 6), the amount that crossed into
+  each Node through each Port this interval, a diagnostic of the walk that
+  `cube_flux` and `tools/coupling_readings.py` read for Gauss's flux. On
+  the six headings every reading is unchanged; on a fan a ray enters the
+  reading with its own vector `D[direction]` instead of the unit Link of
+  its last step, so the push a measured event takes from a fan ray is its
+  label (the two-slit worlds' wall momentum changes; their screen record
+  still fringes, `tests/test_ray_worlds.py` (a)). A reading whose second
+  moment could pass 2^62 - 1 is refused with `OverflowError`.
+- **Tests.** `test_ray_readings.py` (a) re-pinned on the moments;
+  `test_default_table.py` new; every test world declares `quantum` in
+  place of `kind`.
+
 ## The law of the ray, on 2026-09-19 (`rays-v1`)
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "DECIDED: the law
@@ -14,7 +135,7 @@ the engine changed): the Node holds no wave; a unit is a ray with a record
 on the digital line of its momentum at one speed, 1 / sqrt 3; rays that meet
 are permuted by the collision table; the interval is a bijection and the
 click its only one-way border; the ray's law is one generic function,
-`gonen_beam`, and every piece of logic exists once. The engine of the law of
+`nature_beam`, and every piece of logic exists once. The engine of the law of
 events (`events-v1`, the evening of the same day) is deleted with everything
 it computed at the Node. Base `ce0b22af` (the merge of the three reversible
 corrections into `claude/universe24-new-3ytqde`); the last commit holding
@@ -23,7 +144,8 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
 - **The law selected.** `"law": "rays"` selects `rays-v1`; `run.json`
   carries `"law": "rays-v1"`; `configuration_validation` reports the kind
   `rays`. `"law": "events"` is refused naming the law of the ray and this
-  entry. The package is `event_universe` 0.3.0.
+  entry. The package is `event_universe` 0.3.1 (its `__version__` string
+  read 0.3.0 until the cleanup of the same day, below).
 - **Deleted modules.** `src/event_universe/events/mixing.py` (the coherent
   sum, `coherent_weights`, `diagonal_weights`, `mix_arrivals`,
   `place_departures`, `apportion_carried`, `tie_order`; `integer_root` and
@@ -41,15 +163,15 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
   declared directions, its refusal of an open face the face detector); in
   `engine.py` the coherent phase read in `_meet`, `EMISSION_CELL_BOUND` and
   `EMISSION_MARGIN` (no cell). Nothing of these is re-exported.
-- **New modules.** `src/event_universe/events/gonen_beam.py` (`GonenBeam`,
+- **New modules.** `src/event_universe/events/nature_beam.py` (`NatureBeam`,
   `read_arrivals` and `READING_BASIS`, `flight_table`, `collision_table`,
-  `ray_tables`, `RayStore`, `gonen_beam`, `bounded`, `segment_sums`);
+  `ray_tables`, `RayStore`, `nature_beam`, `bounded`, `segment_sums`);
   `src/event_universe/events/measured.py` (`Measured`, `Ledger`, `RULES`,
   `FACE_NAMES`); `engine.py` and `world.py` rewritten in place.
 - **Renames.** `EVENTS_LAW` -> `RAYS_LAW` ("rays-v1"); `EventWorld` ->
   `RayWorld`; `parse_event_world` -> `parse_ray_world`; `is_event_world` ->
   `is_ray_world`; `EventSimulation` -> `RaySimulation`; `execute_event_run`
-  -> `execute_ray_run`; `Transit.walk` -> the walk inside `gonen_beam`;
+  -> `execute_ray_run`; `Transit.walk` -> the walk inside `nature_beam`;
   `world.EMISSION_CELL_BOUND` -> gone (`world.MOMENTUM_BOUND`,
   `world.AMOUNT_BOUND` 2^62 - 1 remain).
 - **The world file.** Added: `directions` and `direction_bound` at the
@@ -117,6 +239,38 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
   readings of `events-v1` (series C, Bell A2) keep their scope in
   EXPERIMENTS.md and VALIDATION.md and are re-registered under `rays-v1`
   there.
+
+## Cleanup after the law of the ray, on 2026-09-19
+
+The model owner's request of 2026-09-19 ("check what code can be cleaned"),
+applied from the cleanup audit of the same day. No integer the law produces
+changes.
+
+- **Deleted, `core/integer.py`:** `signed_divrem`, `ceil_div`, `checked_sum`,
+  `add_components`, `subtract_components`, `dot_product`, `cross_product` and
+  `reduced_ratio`, the component arithmetic of the deleted engines, with no
+  caller left in `src`, `tools` or `examples` (a grep of the repository found
+  only their definitions, their tests and the PHYSICAL_FEATURES example). The
+  ray law's integer primitives stay: `checked_work`, `bounded_gcd`,
+  `integer_root`, `by_clock`, `apportion_whole`. Their 13 tests in
+  `tests/test_integer_arithmetic.py` are deleted with them; the module pins
+  `checked_work`, `integer_root` and `bounded_gcd`, and `by_clock` and
+  `apportion_whole` stay pinned in `test_ray_clock`. The TEST_EXPECTATIONS
+  paragraph and the PHYSICAL_FEATURES example name the live primitives.
+- **Deleted, `core/lattice.py`:** `MIXING_OPPOSITE` (the opposite Port of a
+  heading, read by the deleted mixing; no caller). The docstring names
+  `MAX_VALUE` as what it is under the ray law, the bound of a declared charge
+  and quantum in the world file (no cell, no mixing).
+- **Packaging.** `pyproject.toml` declares `numpy>=2.5.3,<3` in
+  `dependencies` (the engine imports numpy at module level; the render extra
+  no longer repeats it). `event_universe.__version__` is 0.3.1, the version
+  of `pyproject.toml` and `CITATION.cff`; the string read 0.3.0 since the
+  0.3.1 release of 2026-09-15, so every `run.json` recorded
+  `package_version` 0.3.0 beside a 0.3.1 source digest, and records 0.3.1
+  from now on. `event_universe.RaySimulation` is a lazy attribute: the
+  package imports the world parser only, and the engine (numpy) loads on
+  the first read of the name, as `events/__init__.py` promises. Nothing in
+  `__all__` changes.
 
 ## No merge: a step onto a measured event is refused, on 2026-09-19
 

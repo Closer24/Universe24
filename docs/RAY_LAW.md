@@ -21,9 +21,9 @@ and no merge on a step, an open face as a detector, the owed count read off
 the clock ([the engine](ENGINE.md)).
 
 **The owner's name.** The ray's law is ONE generic function. The record is the
-dataclass `GonenBeam`; the law is the single function `gonen_beam(...)`, which
+dataclass `NatureBeam`; the law is the single function `nature_beam(...)`, which
 performs a Node's whole interval for the rays present. No other function holds
-a piece of the ray's law; helpers exist only as pure tables that `gonen_beam`
+a piece of the ray's law; helpers exist only as pure tables that `nature_beam`
 reads (the flight table, the collision table). The repository's rule that a
 name states a component's responsibility (AGENTS.md) yields to the owner's
 explicit name for this one component; this exception is recorded here and in
@@ -53,7 +53,7 @@ Highlights 5.4, and applies to nothing else.
 
 ## 2. The record of a ray and the world file
 
-`GonenBeam` (one record; the board's state is a multiset of them; identical
+`NatureBeam` (one record; the board's state is a multiset of them; identical
 records at one Node are one record with the amounts and contents added, which
 is a bijection since identical units are interchangeable):
 
@@ -66,15 +66,30 @@ is a bijection since identical units are interchangeable):
 | `number` | the last emitter (a measured event's number) | as today |
 | `amount` | whole units | 1 .. 2^62 - 1 (`AMOUNT_BOUND`) |
 | `content` | the content one unit carries (`quantum` x s at birth for a paid family, 0 for a free one) | 0 .. 2^62 - 1 |
+| `charge` | on a free family's ray, the charge q_B of its emitter at birth: the emitter's factor of the electric push, carried on the record from birth (section 10, note 20); 0 on a paid family's ray | a charge |
+| `mass` | on a free family's ray, the content M_B of its emitter at birth: the held content of the family that the release rate read at that self-creation (equal to the declared amount on every registered world, whose free measured events hold what they declared); 0 on a paid family's ray, whose factor is its `content` | 0 .. 2^62 - 1 |
 | `family` | the family index (one store per family, so implicit in the store) | |
 
-The momentum vector of a ray is not stored: it is `content x D[direction]`
-per unit for a paid family and `quantum x amount x D[direction]` for a free
-one (the label of today along the heading, the heading now any primitive
-vector; the family's `quantum` and the amount give its magnitude as today).
+The momentum vector of a ray is not stored: it is its **label**,
+`content x D[direction]` per unit for a paid family and `amount x
+D[direction]` for a free one (the label of today along the heading, the
+heading now any primitive vector; a free unit carries no content and its
+label is the unit; until the night of 2026-09-19 the free family's
+`quantum` was forced to 1 and multiplied here, section 10, note 15). Since
+the night of 2026-09-19 the label is the ONE momentum of the law
+(`nature_beam.momentum_labels`; section 10, note 18): what the push reads
+(the label moment, section 3 step 4), what a click moves onto the detector,
+what a face click books, what a re-emitter or a home takes in and gives
+back, what the transit line of the books sums; no momentum is read off a
+Port anywhere. The magnitude of a label grows with the integer length |D|
+of its direction (equal amounts on (1, 0, 0) and (7, 5, 0) carry the
+momenta 1 and sqrt 74): the law as designed, and an open question for the
+model owner (section 10, note 21).
 The bound check `MOMENTUM_BOUND` (2^62 - 1) applies to every component, so
 `P x content x amount` must fit; the parser refuses a world whose declared
-`in_transit`, lamp rate or re-emission could exceed it (risk, section 9).
+`in_transit`, lamp rate or re-emission could exceed it (risk, section 9),
+and the label's weight is checked again before every product the law
+forms (`label_weights`).
 
 World-file keys added: `"law": "rays"`; `directions` (optional, at the world:
 a list of integer vectors beyond the six headings that any lamp or re-emitter
@@ -88,18 +103,41 @@ on and a `rerelease` entry re-emits on; the six headings by default);
 `detectors[].record` is always written (no key). Keys removed and refused:
 `headings` on a lamp, `dynamics`, `port_map`, `output`, `capacity`, the
 `phase` false branch's mixing semantics (`"phase": false` stays as "never
-turns, phase 0, no window"). Unchanged: `shape`, `boundary`, `ticks`, `K`,
-`N`, `release`, `suspension`, `families`, `measured` (`table` with `read`,
-`measure`, `rerelease`, `pass` and `phase_window`), `in_transit` (gains
-`direction`, a vector, in place of `heading`; the six headings accepted as
-vectors), `detectors` (`threshold`).
+turns, phase 0, no window"), and, since the night of 2026-09-19 (the model
+owner: "the tables are generated from the keys and a world declares only
+what differs, `kind` derived from `quantum`"; section 10, note 15), `kind`
+on a family: a family declares its `quantum` (required), h = 0 a free
+family, h >= 1 a paid one, and the refusal names the derivation and
+MIGRATION. Added on 2026-09-19 after the implementation: `width` (S, an integer from 1, 1 by default: the width of the push, the
+step rule of section 3 step 5). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
+`suspension`, `families`, `measured` (`table` with `read`, `measure`,
+`rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
+a vector, in place of `heading`; the six headings accepted as vectors),
+`detectors` (`threshold`).
+
+**The table generated from the keys** (the same decision). The table of a
+measured event is one generic function of the families' keys,
+`world.default_table(families)`: per family the rule the arrival's key
+gives, `read` for a free family (h = 0: the push taken, the rays go on, the
+record carrying the flow) and `measure` for a paid one (h >= 1: the click,
+the record carrying the presence), no window. A world declares only the
+entries that differ: a `phase_window`, a rule off the default (`rerelease`
+for an opening or a mirror, `pass` for transparency, `read` on a paid
+family, `measure` on a free one), a `reads` component; the object form of
+an entry may omit `rule`, which is then the family's default, so a window
+alone (`{"light": {"phase_window": 32}}`) is a lawful entry. An entry equal
+to the default is accepted and changes nothing (the mathematician measured
+that in every world of the repository no declared rule differed from the
+key's; the forty declared entries were windows). The shipped worlds declare
+only what differs (`tools/migrate_ray_worlds.py` rewrote them; the Bell and
+coupling generators emit the trimmed form).
 
 ```json
 {"law": "rays", "model_id": "two-slits-rays", "shape": [60, 121, 1],
  "boundary": {"z": "periodic"}, "ticks": 500, "K": 1024, "N": 64,
  "release": [1, 128], "suspension": 0,
  "directions": [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]],
- "families": [{"name": "light", "kind": "paid", "quantum": 1, "phase_per_link": 0}],
+ "families": [{"name": "light", "quantum": 1, "phase_per_link": 0}],
  "measured": [
   {"position": [2, 60, 0], "family": "light", "amount": 1000000, "fixed": true,
    "lamp": {"rate": [16, 1], "directions": [[1, 0, 0], [1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0]]}},
@@ -114,13 +152,13 @@ vectors), `detectors` (`threshold`).
 (The wall's Nodes are measured events with `measure`, the screen's a
 detector as today; `"positions": "x=52"` stands for the list.)
 
-## 3. The Node's interval: `gonen_beam`
+## 3. The Node's interval: `nature_beam`
 
-Module `src/event_universe/events/gonen_beam.py`: the dataclass `GonenBeam`,
+Module `src/event_universe/events/nature_beam.py`: the dataclass `NatureBeam`,
 the one function
 
 ```
-gonen_beam(store: RayStore, world: RayWorld, tables: RayTables, measured: dict,
+nature_beam(store: RayStore, world: RayWorld, tables: RayTables, measured: dict,
            tick: int, record: Record, inverse: bool = False) -> Books
 ```
 
@@ -128,7 +166,7 @@ and nothing else with law in it. `RayTables` holds the two pure tables,
 computed once at load from the world's direction set and N: the flight table
 and the collision table (section 4). `engine.py` keeps the interval's frame
 (the tick, the books, the record, the measured events' clocks by `by_clock`,
-the snapshot) and calls `gonen_beam` once per interval; `transit.py`'s
+the snapshot) and calls `nature_beam` once per interval; `transit.py`'s
 per-Port arrays are replaced by the store.
 
 **The store** (per family): a structure of arrays, one row per record,
@@ -185,24 +223,64 @@ order with each step's inverse:
 2. **The readings** (one reading set): presence per number per Node = the
    amount of every ray at the Node, rest and moving alike, and the measured
    content; flow per number = `sum amount x D[direction]`; both read as the
-   other change specifies. Read-only; no bijection needed.
-3. **The collision.** At every Node the collision table permutes the
-   directions of the single units in the seven slots (section 4). Inverse:
-   the inverse table on the output pattern (the class is invariant).
+   other change specifies. Read-only; no bijection needed. Since the night
+   of 2026-09-19 (the model owner: "the one reading function is the
+   amount-weighted moments of order 0, 1 and 2 of the direction vectors,
+   valid for fans as for the six headings, here entering the zeroth moment
+   alone"; section 10, note 16) the one function `read_arrivals` takes,
+   over the arrivals of the reading set, the moments of their direction
+   vectors weighted by their amounts: order 0 the count, split outside (a
+   ray that arrived this interval, its vector `D[direction]` as it arrived,
+   before the collision) and here (a ray that did not step, its vector
+   (0, 0, 0), so it enters the zeroth moment alone); order 1 the net flow
+   `sum amount x D[direction]`; order 2 the traceless tensor `3 x sum
+   amount x D (x) D - tr(sum amount x D (x) D) I`, exact integers (the raw
+   second moment with its trace removed, times the number of dimensions;
+   |D| is not normalised). Every coupling selects its component by the key
+   `reads` (the clock's count and the threshold the scalar, the push the
+   vector, a detector may declare the tensor); the detector's record is the
+   same moments over the clicked rays with their amplitudes as weights, the
+   scalar squared. On the six headings the moments are the slot
+   decomposition of the first implementation exactly; on a fan they are
+   the moments of the fan's vectors, no projection onto the Ports.
+3. **The collision.** At every Node of free space, a Node that holds no
+   measured event, the collision table permutes the directions of the
+   single units in the seven slots (section 4). Since the night of
+   2026-09-19 (the model owner's decision on the physics-rule reviewer's
+   F1(c); section 10, note 18) there is **no collision at a Node that holds
+   a measured event**: rays meet the table there, not each other; the
+   collision is a rule of free space, and a measured event's Node never
+   parks a ray at rest or turns an arrival before the table reads it.
+   Inverse: the inverse table on the output pattern at the same Nodes (the
+   class is invariant).
 4. **The measured events' tables and the detectors.** A measured event meets
    the rays that arrived this interval at its Node, per family and number
-   other than its own, as today: the threshold on the one reading set, then
-   the `phase_window` on each ray's own phase (no coherent sum: the window
-   reads the record; a bundle is now the rays of one number arriving in one
-   interval), then the rule: `read` (the push taken: `-M x flow` for a free
-   family, the sum of the labels for a paid one; the rays go on), `measure`
-   (the click: the amount and its content join; the border), `rerelease`
-   (the re-emission, section 5), `pass`. A detector Node's record (section 5)
-   is written from the clicked rays. Own-number rays are home: taken to be
-   created again on the measured event's `directions` at its next
-   self-creation (as today), which is bijective given the record of what came
-   home. An open face is a detector whose click books the escape (the other
-   change). The click is the only one-way step of the interval.
+   other than its own, as today: the threshold on the arrivals (section 5),
+   then the `phase_window` on each ray's own phase (no coherent sum: the
+   window reads the record; a bundle is now the rays of one number arriving
+   in one interval), then the rule: `read` (the push taken; the rays go
+   on), `measure` (the click: the amount, its content and its label join;
+   the border), `rerelease` (the re-emission, section 5), `pass`. **The
+   push is ONE bilinear form** over the arriving rays (the model owner's
+   proposal 2, admissible with the reviewer's two corrections; section 10,
+   note 20): `push_A = sum over the rays of kappa(A, B) . V_B`, with `V_B`
+   the label moment of the rays, the vector moment of `read_arrivals` with
+   the labels as weights (`amount x D[direction]` for a free family,
+   `content x amount x D[direction]` for a paid one), and `kappa(A, B)` =
+   `-M_A` for a free family's ray (gravity, M_A the reader's content), `+
+   q_A x q_B / M_B` for a charged free family's ray (electricity, taken as
+   the whole part off the reader's clock, `sign x by_clock(age_A, |V q_A
+   q_B|, M_B)`, per emitter factor (q_B, M_B) carried on the rows), `+ 1`
+   for a paid ray (its label already carries h s). Every input is on the
+   reader's record or on the arriving rows; nothing is looked up by
+   number. A detector Node's record (section 5) is written from the
+   clicked rays. Own-number rays are home: taken to be created again on
+   the measured event's `directions` at its next self-creation (as today),
+   which is bijective given the record of what came home; a paid family's
+   home labels join the momentum at the home and leave it at the
+   re-creation (note 18). An open face is a detector whose click books
+   the escape (the other change). The click is the only one-way step of
+   the interval.
 5. **The self-creations** (unchanged in form): `by_clock` for the turn, the
    release (a free family: `content x release` per declared direction, phase
    the clock's; a lamp: `rate` per direction when s > 0, cost and label
@@ -211,7 +289,18 @@ order with each step's inverse:
    (`apportion_whole`, ties in table order from `age mod len(directions)`),
    the owed count read off the clock. Every new ray: `age` 0, the emitter's
    phase, its number. The step of a measured event by its momentum: as the
-   other change leaves it (no merge; refused onto an occupied Node).
+   other change leaves it (no merge; refused onto an occupied Node), with
+   the width of the push since 2026-09-19 (the model owner's D1): on an
+   axis whose momentum component is p, a free measured event of content M
+   steps one Link per (S x M + p) / p self-creations, `by_clock(age, |p|,
+   S x M + |p|)`, S the world key `width` (an integer from 1; 1 by default,
+   the rule as it was, one Link per (M + p) / p, so every world without the
+   key reads the same). One unit of net flow gives any body p = M, so the
+   speed it gives is 1 / (S + 1) for every content: the push stays
+   proportional to the content (the equivalence principle) and the world
+   chooses how slow its slowest motion is. No remainder is kept; the count
+   is the whole part off the clock (implementation note 15;
+   `tests/test_push_width.py`).
 6. **Merge identical rows; sort by Node.** A bijection (a permutation of rows
    and a sum of interchangeable units).
 
@@ -307,21 +396,48 @@ S[phase_u])` and the record `X^2 + Y^2`, an integer added to the detector's
 and the clicks; the phase of every click is written on its record as today.
 Two rays of equal amount in phase record 4 A^2 x 256^2, in antiphase 0, each
 alone A^2 x 256^2: the wave is this reading and nothing else (the plain count
-never fringes; rays, section 3). Bound: `X`, `Y` at most `256 x 32 x isqrt(sum
-amount)` per interval; `X^2 + Y^2` checked against 2^62 - 1 by `bounded`. The
-threshold reads the one reading set (the amount arriving of every number but
-the Node's own, rest included); a bundle below it passes as today.
+never fringes; rays, section 3). **Bound: the affordable amount** (the
+physics-rule reviewer's F2; section 10, note 19). The amplitude of a row is
+`32 x amount` (note 3) and every entry (C, S) of the 1/256 tables is shorter
+than 257 for every N (the largest C^2 + S^2 is 65897), so the pointer is a
+sum of vectors of length at most `32 x 257` per unit and its length is at
+most `32 x 257 x (the amount clicked)`; for the record to fit 2^62 - 1 the
+amount a detector Node clicks of one family in one interval is bounded by
+`isqrt(2^62 - 1) // (32 x 257)` = **261123** units (`RECORD_AMOUNT_BOUND`;
+2^17 inside, 2^18 refused). The clicked amount is summed exactly and
+checked against this bound before any product of the record is formed; a
+larger set refuses the run with `OverflowError` naming the detector's Node
+and the sum (the face detectors the same, naming the face). Every other
+sum the law forms (the amounts and the contents of a set, the labels of
+the transit line, the merged amounts) is exact (`exact_sum`), never a
+wrapped register. A lamp whose crowd at one Node passes the bound must
+lower its rate or its amount; the registered worlds are inside (the
+coupling series' faces click 174762 per interval). The threshold reads the
+**arrivals** of every number but the Node's own (the rays that stepped
+into the Node this interval; the reviewer's F3, settled by the decision of
+note 18: a ray that dwells at the Node on its digital line, or rests
+there, is not met again; it is the clock's presence, not the threshold's
+set, and no collision at a measured event's Node can put a ray at rest
+there); a set below the threshold passes as today.
 
 **The re-emission** (`rerelease`; the absorbed `transduce`): each arriving
 record met by the rule is re-emitted at the measured event's next
 self-creation on its declared `directions`, its amount apportioned whole over
 them (`apportion_whole`, the leftover to the direction `age mod len`), each
 part keeping the arriving phase and content per unit, stamped with the
-re-emitter's number, age 0; the re-emitter takes the recoil `-(label out) +
-(label in)`. An opening of declared width is a row of such Nodes. A lamp
-releases on its `directions` with its clock phase, the recoil as today. The
-books close (units are moved, not copied; the prototype's copying was a lamp
-of unbounded content and is not the law).
+re-emitter's number, age 0; the re-emitter of a paid family's rays takes
+the recoil `-(label out) + (label in)`, the one label of section 2 (in at
+the meeting as the push of step 4, kappa = 1; out at the re-creation as
+the labels of the rows born); a free family's rays met by the rule give
+the push of the form (gravity and electricity) and their re-emission takes
+no recoil, as a free release costs nothing. What comes home is the same
+in and out (note 18). An opening of declared width is a row of such Nodes.
+A lamp releases on its `directions` with its clock phase, the recoil the
+labels of the rows born. The books close for a paid family over the click,
+the re-emission and the home (measured + transit + escaped constant; a
+`read` of a paid ray is a report of its label, the ray going on); units
+are moved, not copied (the prototype's copying was a lamp of unbounded
+content and is not the law).
 
 **The face detectors.** An open face is a detector (the other change): a ray
 whose step leaves the board clicks there, its amount, label and content
@@ -360,7 +476,7 @@ Bell A2 under `rays-v1` (section 8) and keeps the `events-v1` readings as
 history; TEST_EXPECTATIONS lists the new modules (section 7);
 HIGHLIGHTS_IMPLEMENTATION rewrites the 5.4 rows; MIGRATION gains "The law of
 the ray, on 2026-09-19 (`rays-v1`)" naming every deletion; CHANGELOG one
-entry; README's project map lists `gonen_beam.py` and drops `mixing.py`,
+entry; README's project map lists `nature_beam.py` and drops `mixing.py`,
 `reversible.py`; DETECTOR_REQUIREMENTS drops its implementation contract;
 docs/README.md indexes this document (done with this commit).
 
@@ -409,15 +525,15 @@ the plane) and the argument that every ray present at a Node is leaving it
 1. `docs/`: this document is the contract; MIGRATION, CHANGELOG entries first
    (architecture owner).
 2. `core/integer.py`: `integer_root` moved from mixing (core owner).
-3. `events/gonen_beam.py` (new; engine owner): `GonenBeam`, `RayStore`,
+3. `events/nature_beam.py` (new; engine owner): `NatureBeam`, `RayStore`,
    `RayTables` (`flight_table(directions)`, `collision_table()`, both pure,
-   generated and checked at load), `gonen_beam(...)` with `inverse`.
+   generated and checked at load), `nature_beam(...)` with `inverse`.
 4. `events/world.py` (schema owner): `"law": "rays"`, `directions`,
    `phase_per_link`, the measured event's `directions`, the direction and
    label bounds, the refusals; `dynamics` and the reversible validation
    deleted.
 5. `events/engine.py` (engine owner): `EventSimulation.step` becomes the
-   frame around `gonen_beam`; `_meet`, `_release`, `_move` reduced to the
+   frame around `nature_beam`; `_meet`, `_release`, `_move` reduced to the
    measured event's clock and tables; the books gain `record` per detector;
    the reversible path deleted. `transit.py` reduced to the periodic
    `adjacent_node` use or deleted if nothing remains.
@@ -459,12 +575,15 @@ impossible as written or ambiguous, each decided by the design's principles
 the flight table's speed, integers only) and recorded here as the
 implementation's part of the contract. The design above is unchanged.
 
-1. **The reading's slots are the arrival Ports.** The seven slots of
-   `read_arrivals` are the amounts that arrived through the six Ports (the
-   Port a ray's last step entered by, recorded on the row as `port`) and
-   here (the rays that did not step this interval, the rest rays among
-   them). A ray on a declared direction counts in the Port of its last
-   Link, so the flow of a fan is the flow of its Links, exact.
+1. **The reading is of the arrivals.** (Amended by note 16.) Until the
+   night of 2026-09-19 the seven slots of `read_arrivals` were the amounts
+   that arrived through the six Ports (the Port a ray's last step entered
+   by) and here (the rays that did not step this interval, the rest rays
+   among them), a ray on a declared direction counting in the Port of its
+   last Link. What stays: the reading is of what arrived this interval
+   (the row's `arrival`, the direction the ray arrived on, kept through
+   the collision) and of what stayed; what changed: a fan ray now enters
+   with its own vector `D[direction]`, not the unit Link of its last step.
 2. **Rest rays keep their age.** A rest direction has period 1 in the
    flight table, but the age of a ray parked by the collision is kept (the
    walk and its inverse leave a rest ray's age untouched); otherwise the
@@ -508,7 +627,7 @@ implementation's part of the contract. The design above is unchanged.
    above the plus.
 10. **`reads` names the component**, one of `scalar` (outside + here, the
     default: the presence, the threshold), `outside`, `here`, `vector` (the
-    flow) and `tensor` (the two traceless components); the push always
+    flow) and `tensor` (the traceless second moment, since the night of 2026-09-19 a 3 x 3 matrix, note 16); the push always
     reads the flow and the clock's count always the scalar; a detector
     entry may declare `tensor` and the world test of the detector
     definitions does.
@@ -530,3 +649,139 @@ implementation's part of the contract. The design above is unchanged.
     r = 20 both hold 112 Nodes) and fall outside the ±10 % expectation,
     registered and not moved; the fan the expectation was pinned on is the
     owner's decision to run.
+15. **The table from the keys; the kind from the quantum** (the model
+    owner, the night of 2026-09-19, "I approve 1 and 3", Highlights 5.4;
+    `tests/test_default_table.py`). `world.default_table(families)` is the
+    one function that gives every measured event its table (section 2);
+    `FamilyDefinition.free` is `quantum == 0`; the constraints the parser
+    kept are expressed through the quantum and not widened: a charge is
+    refused on a paid family (h >= 1), a lamp on a free one, a free unit
+    carries no content and its label is `amount x D` (the mathematician's
+    note that "paid => q = 0 and free => h = 1 are decisions, not
+    necessities" is recorded, not acted on). `quantum` is required: a
+    default would be an implicit kind. The record (`run.json`) carries
+    `quantum` per family and no `kind`. Every example world parses to the
+    same `RayWorld` as before the change (checked structure by structure
+    over the 39 worlds), and the Bell and coupling runs are unchanged
+    record by record (VALIDATION.md).
+16. **The moments replace the slots** (the same decision; `tests/
+    test_ray_readings.py` (a)). `read_arrivals(vectors, amounts, keys,
+    size)` takes the moments of section 3, step 2, exact integers, with
+    the normalisation `tensor = 3 x M2 - tr(M2) I` for the second moment
+    `M2 = sum amount x D D^T` (the trace removed times the number of
+    dimensions, so no division); the `Reading` holds the six entries of
+    `M2` and forms the tensor on demand. On the six headings the moments
+    equal the slot decomposition exactly (the old `(p_x + p_y - 2 p_z,
+    p_x - p_y)` being `-T_zz` and `(T_xx - T_yy) / 3`); under the 48
+    signed axis permutations the scalars are fixed, the vector rotates and
+    the tensor is conjugated. What this changes on the board: only the
+    reading of a fan ray at a measured event, whose push is now its label
+    `content x amount x D` (the recoil its emitter took) and not the unit
+    Link of its last step, so the momentum a wall takes from a fan closes
+    with the lamp's recoil; the six-heading worlds (Bell, series C, one
+    and two contents) read exactly as before. The reading is bounded
+    before any product is formed (`amount x P^2 x rows` against 2^62 - 1,
+    `OverflowError` beyond it); the Links crossed per Port (`per_port`,
+    for Gauss's flux) remain a diagnostic of the walk, not of the reading.
+17. **The width of the push** (the model owner's D1, 2026-09-19, Highlights
+    5.4, "try D1"). The step rule of step 5 reads the world key `width`
+    (S, an integer from 1, 1 by default): `_move` steps on an axis when
+    `by_clock(age, |p|, S x M + |p|)` is 1, in place of `M + |p|`. With
+    S = 1 nothing changes for any existing world (the coupling series' 1b
+    identities hold as registered); with S = 8 a body with p = M steps once
+    per 9 self-creations. Kept as they were: at most one Link per interval,
+    x before y before z (an axis whose step coincides with an earlier
+    axis's step in one interval loses it, nothing carried); a measured
+    event steps only in an interval where it owes nothing, so the step of
+    a self-creation whose count is owed lands on the interval that pays
+    the count; the momentum is untouched by the step; `run.json` records
+    `width`. The parser refuses 0, a negative width, a string and a
+    fraction naming the key (`tests/test_push_width.py`; the experiment
+    that uses it is series D in EXPERIMENTS.md).
+18. **The one label; no collision at a measured event's Node** (the
+    physics-rule reviewer's F1, blocking, and the model owner's decision on
+    its case (c), the night of 2026-09-19; `tests/test_ray_push.py` (h),
+    `tests/test_ray_collision.py` (d)). Until this note the push read the
+    rows' arrival (the moments change) while the click's momentum, the
+    recoil and the transit line read the rows' direction, which the
+    collision could have turned at the detector's Node, and a head-on pair
+    of one number collided at a windowed detector left one ray stranded at
+    rest. Now every momentum the law reads or moves is the one label of
+    the rows, `momentum_labels` (section 2): the push's moment (step 4),
+    the click's momentum on its record and on the detector, the face
+    click's, the recoil of a release and of a re-emission (the labels of
+    the rows born) and the transit line; and the collision (step 3) does
+    not act at a Node that holds a measured event (rays meet the table
+    there, not each other), forward and inverse alike, so at such a Node
+    the arrival is the direction and the reviewer's three cases read
+    consistently: a (2, 1, 0) ray of content c and amount a clicking gives
+    the detector (2, 1, 0) x c x a; a re-emitter passing a ray straight
+    through on its own direction ends with the momentum it had; the
+    head-on pair at the windowed detector clicks one ray with its label
+    and passes the other on its way, nothing at rest. With it, what comes
+    home of a paid family joins the momentum at the home (`push` on the
+    `home` record, its labels' sum) and leaves at the re-creation, so the
+    momentum book of a paid family closes over the click, the re-emission
+    and the home (until this note a home leaked the label out). The
+    reviewer's F3 dissolves: the threshold reads the arrivals (section 5).
+    The bijection of the interval is unchanged (the inverse skips the same
+    Nodes; `tests/test_ray_bijection.py` passes as before) and the
+    registered runs are unchanged record by record (no collision acts in
+    them and their arrivals are their directions; VALIDATION.md).
+19. **The affordable amount** (the reviewer's F2, blocking;
+    `tests/test_ray_detector.py` (e)). The record's amplitude products were
+    unchecked int64 (an amount of 2^52 recorded 0 silently) and the
+    design's bound `256 x 32 x isqrt(sum amount)` was stale (the amplitude
+    is linear, note 3). The clicked amount of one detector Node per family
+    per interval is now summed exactly and checked against
+    `RECORD_AMOUNT_BOUND` = isqrt(2^62 - 1) // (32 x 257) = 261123 before
+    any product is formed, at a detector and at a face alike (section 5),
+    and every reduction of the law is exact (`exact_sum`,
+    `exact_column_sums`, the merge's sums, the label weights checked
+    before their product).
+20. **The push as one bilinear form; the emitter's factor on the record**
+    (the model owner's proposal 2, "2 with the physicist"; the reviewer's
+    verdict "admissible with two corrections"; `tests/test_ray_push.py` (a)
+    to (g)). `push_form` computes `push_A = sum kappa(A, B) . V_B` (step
+    4) in one place; the three-branch `push_of` and the lookup of the
+    emitter by number (`world.measured[number - 1]`, the one LOCALITY-1
+    deviation, with the lcm denominator `content_lcm`) are deleted. The
+    emitter's factor of a free family's ray is carried on its record from
+    birth as TWO integer columns, `charge` (q_B) and `mass` (M_B), never a
+    floored ratio (a floored 3/4 would destroy the coupling); M_B is the
+    content the release rate read at birth, the emitter's held content of
+    the family at that self-creation, equal to the declared amount on
+    every registered world; a declared ray in transit of a free family
+    takes the charge and the declared amount of the measured event its
+    number names (0 and 0 without one); a paid family's rows carry 0 and
+    0, their factor being their content. The electric part is `sign x
+    by_clock(age_A, |V q_A q_B|, M_B)` per (q_B, M_B) class among the
+    rows, which equals the earlier computation integer by integer
+    including the floor (the reviewer: since M_B divides the lcm D,
+    floor(n k / (k M_B)) = floor(n / M_B); 20160 cases, 0 mismatches), and
+    the registered series C and Bell runs read unchanged record by record
+    (VALIDATION.md; the series 7 worlds, kappa 0 in `7_pp` and `7_mm`,
+    -2^25 and -2 in `7_mp` and `7_pm`, -12582912 and -3 in `7_pp_m4`,
+    -2^24 and -1 in `7_00`, row by row). The rounding subtlety of today
+    survives unchanged and is stated: `age_A` is the reader's age after
+    the frame's advance, frozen while it is owed. The reviewer's F7 is
+    closed: fixed local work (one product and one `by_clock` per axis per
+    factor class met), fixed local storage (two more integers per row,
+    functions of the number today, so the store's bound does not grow;
+    the merge compares them), no lookup beyond the Node.
+21. **Open: the magnitude of a fan ray's label** (a finding for the model
+    owner from the re-registration of series D, the night of 2026-09-19;
+    not changed here). The label of a ray is `content x amount x D` with
+    D the integer direction (section 2, the law as designed), so its
+    magnitude grows with the integer length |D| of the direction: equal
+    amounts released on (1, 0, 0) and on (7, 5, 0) carry the momenta 1 and
+    sqrt 74, and the push a fan source gives is the fan's mean |D| times
+    what six headings give (the orbit series' 120 directions: 5.19). The
+    open question is whether the label should be along the unit vector of
+    the direction at the flight table's scale Q = 64 (the same table as
+    the flight, one table: every direction's momentum per unit of the same
+    length), which this implementation recommends the owner rule on; the
+    recoil, the click and the push would then read the same magnitude for
+    every direction. Registered in PROJECT_STATUS ("What is open") and in
+    the orbit register (EXPERIMENTS.md, D); nothing was changed in the
+    law.

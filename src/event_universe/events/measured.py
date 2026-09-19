@@ -1,5 +1,5 @@
 """The records the engine keeps beside the rays: a measured event and the
-ledger. Records only, no law: the law of the ray is `gonen_beam`, the frame
+ledger. Records only, no law: the law of the ray is `nature_beam`, the frame
 around it (the clocks, the steps, the books' identities) is `engine.py`.
 """
 
@@ -105,7 +105,7 @@ class Ledger:
     content), the transit line (in units), the content line (the content
     carried) and the momentum escaped; the face detectors' tallies per open
     face and family (the escaped lines are their sums). The engine owns the
-    identities; `gonen_beam` adds what the interval moved."""
+    identities; `nature_beam` adds what the interval moved."""
 
     families: int
     open_faces: tuple[int, ...]

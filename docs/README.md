@@ -13,7 +13,7 @@ Since 2026-09-19 there is one engine, the engine of the law of the ray
 
 | Document | Responsibility |
 | --- | --- |
-| [The law of the ray](RAY_LAW.md) | The published design and implementation contract of `rays-v1` (the model owner, 2026-09-19): the ray's record `GonenBeam`, the one function `gonen_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day |
+| [The law of the ray](RAY_LAW.md) | The published design and implementation contract of `rays-v1` (the model owner, 2026-09-19): the ray's record `NatureBeam`, the one function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests, the expectations, and the implementation notes of the same day |
 | [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the board and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance |
 | [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements, the quantum goals and the unresolved scope; the reversible detector contract of 2026-09-19 absorbed into the ray law and deleted |

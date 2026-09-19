@@ -5,12 +5,120 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The push as one form, the one label and the affordable amount (2026-09-19, the night)
+
+- The physics-rule review of the law of the ray and the model owner's
+  proposal 2 ([RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  notes 18 to 21). Every momentum the law reads or moves is the one label
+  of the rows (`nature_beam.momentum_labels`): the push's moment, the
+  click's momentum, the face click's, the recoil, what comes home and the
+  transit line; no collision at a Node that holds a measured event (rays
+  meet the table, not each other); the push is one bilinear form
+  `push_A = sum kappa(A, B) . V_B` (`push_form`) with the emitter's factor
+  (q_B, M_B) carried on a free family's record as two integer columns
+  `charge` and `mass`, the lookup by number and the lcm deleted; the
+  amount a detector Node or a face clicks in one interval bounded by the
+  affordable amount 261123 before the record's products are formed
+  (`RECORD_AMOUNT_BOUND`), every reduction exact. The series C, series 7
+  and Bell runs are unchanged record by record; series D is re-registered
+  with the momenta re-derived for the label's magnitude (no orbit closes;
+  the open question of the label's magnitude for the owner,
+  [PROJECT_STATUS](docs/PROJECT_STATUS.md)). Tests: `test_ray_push` (new),
+  `test_ray_collision` (d), `test_ray_detector` (e)
+  ([migration](docs/MIGRATION.md#the-push-as-one-form-the-one-label-and-the-affordable-amount-on-2026-09-19-the-night),
+  [expectations](docs/TEST_EXPECTATIONS.md), [validation](docs/VALIDATION.md)).
+
+### Cleanup after the law of the ray (2026-09-19)
+
+- The contributor instructions and the definitions that still sent a reader
+  to the deleted generic disturbance contract (docs/DISTURBANCES.md, deleted
+  on 2026-09-19) carry the history marker with the date and the pointer to
+  [the law of the ray](docs/RAY_LAW.md) and [the engine](docs/ENGINE.md):
+  the four skills and the shared workflow that named DISTURBANCES.md as the
+  active contract; SIMULATOR_DEFINITIONS "Active generic disturbance model"
+  (now "Historical ... (deleted on 2026-09-19)") and its display section's
+  pointer; POSTULATES "Active initialization-defined model" and its "Active
+  contract: disturbance transfers ..." line; TERMINOLOGY "Ray-event terms";
+  DETECTOR_REQUIREMENTS' status line; PHYSICAL_FEATURES' schema pointer.
+  No physics text was rewritten; the sections are marked, not deleted.
+- `core/integer.py` loses the component arithmetic of the deleted engines
+  (`signed_divrem`, `ceil_div`, `checked_sum`, `add_components`,
+  `subtract_components`, `dot_product`, `cross_product`, `reduced_ratio`:
+  no caller left) and `core/lattice.py` loses `MIXING_OPPOSITE` (no caller);
+  their 13 tests go with them, and `test_integer_arithmetic.py` pins the
+  primitives the ray law uses (`checked_work`, `integer_root`, `bounded_gcd`)
+  ([migration](docs/MIGRATION.md#cleanup-after-the-law-of-the-ray-on-2026-09-19)).
+- `pyproject.toml` declares numpy (`numpy>=2.5.3,<3`, the version of the
+  validated environment as the floor) as a dependency of the package: the
+  engine imports it at module level, and `pip install -e .` installed
+  nothing before; the render extra keeps matplotlib, Pillow and playwright.
+- `event_universe.__version__` is 0.3.1, the version of `pyproject.toml`,
+  `CITATION.cff` and the 0.3.1 release of 2026-09-15 (the string read 0.3.0
+  since then); `run.json` records `package_version` 0.3.1 from now on.
+- `import event_universe` loads the engine (numpy) on the first read of
+  `RaySimulation`, as the `events` package promised: the package, the world
+  parser and the preflight import only the generic physics.
+### The table from the keys and the moments (2026-09-19, the night)
+
+- Two decisions of the model owner on the mathematician's review of the
+  table of the physical entities (Highlights 5.4, "I approve 1 and 3";
+  [RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  notes 15 and 16), generic replacing generic. The table of a measured
+  event is generated from the families' keys (`world.default_table`: a
+  free family read, a paid one measured, no window) and a world declares
+  only what differs (a window, a rule off the default, a `reads`
+  component; `rule` optional in the object form; an entry equal to the
+  default accepted and changing nothing); the kind of a family is derived
+  from its `quantum` (0 free, 1 or more paid; `quantum` required) and the
+  key `kind` is refused naming MIGRATION. The one reading `read_arrivals`
+  is the amount-weighted moments of order 0, 1 and 2 of the arrivals'
+  direction vectors (the count split outside / here, the flow, the
+  traceless tensor `3 x sum amount x D (x) D - tr I`, exact integers,
+  bounded), valid for a fan as for the six headings, in place of the
+  seven-slot decomposition; on the six headings it reads exactly as
+  before, on a fan a ray enters with its own vector. The example worlds
+  are rewritten by `tools/migrate_ray_worlds.py` (new) to declare only
+  what differs; every example world parses as before and the Bell and
+  coupling runs are unchanged record by record
+  ([validation](docs/VALIDATION.md)). Tests: `test_default_table` (new),
+  `test_ray_readings` (a) re-pinned
+  ([migration](docs/MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night),
+  [expectations](docs/TEST_EXPECTATIONS.md)).
+### The width of the push (2026-09-19)
+
+- The world key `width` (S, an integer from 1; the model owner's D1,
+  2026-09-19, Highlights 5.4, "try D1"): a free measured event of content M
+  with the momentum component p on an axis steps one Link per
+  (S x M + p) / p self-creations on that axis, `by_clock(age, |p|, S x M +
+  |p|)` in `RaySimulation._move` in place of `M + |p|`, no remainder kept.
+  S = 1 is the default and the rule as it was (one Link per (M + p) / p),
+  so every existing world file reads the same and no migration note is
+  needed; the parser refuses 0, a negative width, a string and a fraction
+  naming the key; `run.json` records `width`. One unit of net flow gives
+  any body p = M, so the speed it gives is 1 / (S + 1) for every content:
+  the equivalence principle is kept and a world can declare slow motion
+  ([RAY_LAW section 3](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  step 5 and note 15, [the engine](docs/ENGINE.md),
+  [terminology](docs/TERMINOLOGY.md)). Test: `tests/test_push_width.py`
+  ([expectations](docs/TEST_EXPECTATIONS.md#the-width-of-the-push)).
+- The orbit series D on the plane (`examples/events/orbit/`, six worlds by
+  `make_worlds.py`, `tools/orbit_readings.py`): a fixed source releasing
+  one shell every 10 intervals on a fan of 120 primitive in-plane
+  directions and a free probe of content 1 at r = 12 or 24 with the
+  tangential momentum derived for a circular orbit under the measured push
+  law, at `width` 1, 8 and 32. Registered in
+  [D, the orbit under the law of the ray, on the plane](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
+  one orbit closes by the criterion (S = 32, r = 12: 346 intervals against
+  343 derived, an eccentric loop), no other closing, the mean push as
+  derived (C 1.1), the grain of the push the reason. No test pins the
+  registered run (the owner's rule of 2026-09-17).
+
 ### The law of the ray (2026-09-19)
 
 - The engine of the law of the ray, `rays-v1` (the model owner, 2026-09-19,
   Highlights 5.4, "DECIDED: the law of the ray"; the design
-  [docs/RAY_LAW.md](docs/RAY_LAW.md)): the record `GonenBeam` and the one
-  function `gonen_beam` (`src/event_universe/events/gonen_beam.py`), a
+  [docs/RAY_LAW.md](docs/RAY_LAW.md)): the record `NatureBeam` and the one
+  function `nature_beam` (`src/event_universe/events/nature_beam.py`), a
   Node's whole interval for the rays present; the flight table at
   1 / sqrt 3 on the digital line of every direction (at most one Link per
   interval, the age modulo the period); the eight-slot collision table
@@ -30,10 +138,15 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   [expectations](docs/TEST_EXPECTATIONS.md)). The example worlds, the Bell
   and coupling generators and the detector definitions are ray worlds; the
   Bell run A2 and the coupling series C are re-registered under `rays-v1`
-  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.0.
+  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.1 (the
+  `__version__` string read 0.3.0 until the cleanup above).
 
 ### The engine of the law of events (2026-09-19)
 
+- The ray is `NatureBeam` and its one function `nature_beam` (module
+  `events/nature_beam.py`), the model owner's name of 2026-09-19 replacing
+  GonenBeam given earlier the same day; a mechanical rename, nothing else
+  changed ([migration](docs/MIGRATION.md#the-ray-is-naturebeam-on-2026-09-19-the-night)).
 - The three reversible corrections that every path shares (the model
   owner, 2026-09-19, Highlights 5.4; the architect's D2 and D3). No merge:
   a measured event's step onto a Node that holds a measured event is

@@ -50,7 +50,7 @@ import numpy as np
 
 from event_universe.core.integer import by_clock
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.gonen_beam import flight_table
+from event_universe.events.nature_beam import flight_table
 from event_universe.json_documents import parse_json_document
 
 MODEL_PREFIX = "rays-coupling-"

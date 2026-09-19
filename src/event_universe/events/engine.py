@@ -1,27 +1,31 @@
 """The frame around the law of the ray (rays-v1): the tick, the measured
 events' clocks, the books, the record and the snapshot. The law itself is
-the one function `gonen_beam` (docs/RAY_LAW.md); this module schedules and
+the one function `nature_beam` (docs/RAY_LAW.md); this module schedules and
 books, it computes no physics.
 
 The interval (`RaySimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
-content, K)` phase steps, refused at half the circle), calls `gonen_beam`
+content, K)` phase steps, refused at half the circle), calls `nature_beam`
 once for the whole board (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
 clock from the presence the law read back (`by_clock(age, k x n, d)` at the
 world's `suspension` `[n, d]`), and steps the free measured events by their
-momentum off the clock (at most one Link per interval, x before y before z;
-a step onto a Node that holds a measured event is refused; through an open
-face the step is a click on the face detector; on a periodic axis it
-wraps). The books (`books`): per family the measured line, in content,
+momentum off the clock (one Link per (S x M + p) / p self-creations on an
+axis whose momentum component is p, M the content and S the world's
+`width`, `by_clock(age, |p|, S x M + |p|)`, 1 by default; at most one Link
+per interval, x before y before z; a step onto a Node that holds a measured
+event is refused; through an open face the step is a click on the face
+detector; on a periodic axis it wraps). The books (`books`): per family the
+measured line, in content,
 initial + measured = current + spent + escaped; the transit line, in units,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
-momentum reported on the measured events, in transit (content x amount x
-D[direction] per ray of a paid family, quantum x amount x D of a free one)
-and escaped; every escaped line the sum of the face detectors' clicks.
+momentum reported on the measured events, in transit (the one label of
+every row, content x amount x D[direction] per ray of a paid family, amount
+x D of a free one) and escaped; every escaped line the sum of the face
+detectors' clicks; every sum exact (`exact_sum`), never a wrapped register.
 """
 
 from __future__ import annotations
@@ -32,16 +36,19 @@ import numpy as np
 
 from event_universe.core.integer import by_clock as _by_clock
 from event_universe.core.lattice import Address3, adjacent_node
-from event_universe.events.gonen_beam import (
+from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
+from event_universe.events.nature_beam import (
     HERE,
+    PORTS,
     RayStore,
     RayTables,
     Readings,
     Record,
-    gonen_beam,
+    exact_column_sums,
+    exact_sum,
+    nature_beam,
     ray_tables,
 )
-from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
 from event_universe.events.world import HEADING_OFFSET, RAYS_LAW, MeasuredDefinition, RayWorld
 
 __all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
@@ -79,7 +86,16 @@ class RaySimulation:
         self.content_initial = [0] * count
         for item in world.in_transit:
             store = self.stores[item.family]
-            content = self.families[item.family].quantum if not self.families[item.family].free else 0
+            # One phase step of content per unit for a paid family; a free
+            # family's quantum is 0 and its rays carry none. A free family's
+            # declared ray carries its emitter's factor from the world file
+            # (the charge and the declared content of the measured event its
+            # number names; 0 and 0 without one).
+            content = self.families[item.family].quantum
+            charge, mass = 0, 0
+            if self.families[item.family].free and item.number <= len(world.measured):
+                emitter = world.measured[item.number - 1]
+                charge, mass = emitter.charge, emitter.amount
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
@@ -90,19 +106,21 @@ class RaySimulation:
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
                 content=np.array([content]),
-                port=np.array([HERE]),
+                charge=np.array([charge]),
+                mass=np.array([mass]),
+                arrival=np.array([HERE]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
         for store in self.stores:
             store.merge()
         # The readings of the last interval (diagnostics): per family the
-        # arrivals per Node, their net flow, the arrivals per Port and the
-        # presence.
+        # arrivals per Node, their net flow, the Links crossed per Port and
+        # the presence.
         self.readings = Readings(
             [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
             [np.zeros((*world.shape, 3), dtype=np.int64) for _ in range(count)],
-            [np.zeros((*world.shape, 7), dtype=np.int64) for _ in range(count)],
+            [np.zeros((*world.shape, PORTS), dtype=np.int64) for _ in range(count)],
             [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
         )
 
@@ -161,7 +179,7 @@ class RaySimulation:
         self.tick += 1
         for entry in self.measured.values():
             self._frame(entry)
-        self.readings = gonen_beam(
+        self.readings = nature_beam(
             self.stores,
             self.world,
             self.tables,
@@ -184,7 +202,7 @@ class RaySimulation:
         """The inverse interval on a board without measured events: the
         bijective steps in reverse order with their inverses."""
         self.tick -= 1
-        gonen_beam(
+        nature_beam(
             self.stores,
             self.world,
             self.tables,
@@ -229,19 +247,27 @@ class RaySimulation:
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum off the clock, at most one per interval,
-        when nothing is owed; a step onto a measured event is refused; an
-        escape is a click on the face; a periodic axis wraps."""
+        when nothing is owed: on an axis whose momentum component is p, one
+        Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M +
+        |p|)` with M the content and S the world's `width` (the model owner's
+        D1 of 2026-09-19; S = 1 is the rule as it was, one Link per (M + p) /
+        p; one unit of net flow gives p = M, so the speed it gives is
+        1 / (S + 1) for every content); no remainder is kept, the count is
+        the whole part off the clock. A step
+        onto a measured event is refused; an escape is a click on the face; a
+        periodic axis wraps."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
         if content <= 0:
             return
+        width = self.world.width
         for axis in range(3):
             momentum = entry.momentum[axis]
             if momentum == 0:
                 continue
             magnitude = abs(momentum)
-            if not by_clock(entry.age - 1, magnitude, content + magnitude):
+            if not by_clock(entry.age - 1, magnitude, width * content + magnitude):
                 continue
             sign = 1 if momentum > 0 else -1
             entry.steps += 1
@@ -307,19 +333,16 @@ class RaySimulation:
     # -- the books -------------------------------------------------------------
 
     def transit_momentum(self) -> list[int]:
-        """The momentum carried in transit: content x amount x D[direction]
-        per ray of a paid family, quantum x amount x D of a free one."""
-        total = np.zeros(3, dtype=np.int64)
+        """The momentum carried in transit: the one label of every row
+        (`momentum_labels`: content x amount x D[direction] per ray of a
+        paid family, amount x D of a free one), summed exactly."""
+        total = [0, 0, 0]
         for family, store in enumerate(self.stores):
             if store.size:
                 definition = self.families[family]
-                total += store.labels(
-                    np.arange(store.size),
-                    self.tables.flight.vectors,
-                    definition.free,
-                    definition.quantum,
-                ).sum(axis=0)
-        return [int(v) for v in total]
+                labels = store.labels(np.arange(store.size), self.tables.flight.vectors, definition.free)
+                total = [int(a) + int(b) for a, b in zip(total, exact_column_sums(labels), strict=True)]
+        return total
 
     def books(self) -> dict[str, object]:
         """The ledger at the current tick, every line with its identity."""
@@ -341,7 +364,7 @@ class RaySimulation:
             in_transit = {
                 "initial": self.transit_initial[index],
                 "released": ledger.transit_released[index],
-                "current": int(store.amount.sum()),
+                "current": int(exact_sum(store.amount)),
                 "escaped": ledger.escaped_units(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
@@ -351,7 +374,7 @@ class RaySimulation:
             content = {
                 "initial": self.content_initial[index],
                 "released": ledger.content_released[index],
-                "current": int((store.amount * store.content).sum()),
+                "current": int(exact_sum(store.amount * store.content)),
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
@@ -470,8 +493,10 @@ class RaySimulation:
     def cube_flux(self, family: int, centre: Address3, half: int) -> int:
         """The net outward flow through the closed surface between the cube of
         half-width `half` about the centre and its neighbours, this interval:
-        the amount that arrived just outside each face moving outward less the
-        amount that arrived on the face moving inward, Gauss's flux."""
+        the amount that crossed into the Node just outside each face through
+        its inner Port (moving outward) less the amount that crossed into the
+        face's Node through its outer Port (moving inward), Gauss's flux, read
+        off the Links crossed (`per_port`, a diagnostic of the walk)."""
         if any(self.world.periodic):
             raise ValueError("cube_flux supports only the all-open board")
         per_port = self.readings.per_port[family]
@@ -543,6 +568,12 @@ class RaySimulation:
                         "number": int(store.number[i]),
                         "amount": int(store.amount[i]),
                         "content": int(store.content[i]),
+                        # The emitter's factor a free family's ray carries.
+                        **(
+                            {"charge": int(store.charge[i]), "mass": int(store.mass[i])}
+                            if family.free
+                            else {}
+                        ),
                     }
                     for i in range(lo, hi)
                 ]

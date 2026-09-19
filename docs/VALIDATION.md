@@ -11,6 +11,72 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The push as one form, the one label, the affordable amount and series D re-registered - 2026-09-19 (the night)
+
+The worktree of `claude/universe24-new-3ytqde` on the tip `c5eb5868` (the
+moments change, the NatureBeam rename, the width of the push and series
+D). The physics-rule review's F1 and F2 corrected, F3 and F7 dissolved,
+proposal 2 implemented ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+notes 18 to 21; [migration](MIGRATION.md#the-push-as-one-form-the-one-label-and-the-affordable-amount-on-2026-09-19-the-night)).
+Runtime source SHA-256 `cc7815756f50640ad10582af461cf58267c424eb8182177e580d0b5eedbd4769`; the tip's `70763568dc216a8b7a0ecdfac36654cdf1e1da80bb6b20d34eccfac2d8c62c8e`. Python 3.14.0rc2,
+headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_ray_push.py` (new) | 5 passed: the reviewer's world (every push -5 V + by_clock(age, 3 V, 4), `pushed` (-340, 0, 0)), the sign, the uncharged probe, the cancellation q_A q_B = M_B (push 0 exactly), the fractional floor (-170, 0, 0), a paid emitter (the label sum, the lamp's momentum + transit + escaped = 0 at every tick), a fan emitter ((-40, -20, 0) per read), the one label at the click, the re-emission and the home |
+| `tests/test_ray_collision.py` (d), `tests/test_ray_detector.py` (e) | 4 and 5 passed: no collision at a measured event's Node (the head-on pair passes, the windowed click takes its label, nothing at rest); the affordable amount 261123 (a row at the bound records 2139119616^2, 261124, a sum of two rows, 2^52 and a face refused naming the sum) |
+| The ray suite and the consumers, `python tools/check.py --base HEAD` | ruff lint and format clean, mypy on the changed sources, every selected test passed |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4`, on both sources | every `events.jsonl` identical byte for byte between the tip's source and the new one (the series 7 `read` records row by row: the one form equals the three-branch push integer by integer); `tools/coupling_readings.py`: 392 criteria passed, 0 failed, 19 inside, 9 outside on both, the printed readings equal line by line but the fingerprint; `state.json` differs on the coupling worlds by the two columns `charge`, `mass` of the free family's rows, on nothing else |
+| Ten Bell runs on both sources | `events.jsonl` and `state.json` identical on all ten; `tools/bell_chsh.py`: 326 criteria passed, 0 failed on both, every printed line equal but the fingerprint and the order Python prints a set in |
+| The affordable amount on the registered worlds | the coupling faces click 174762 units per interval (the 2^17 beam and the two z rays re-emitted in six shares), inside the bound; the first draft of the bound (2^17) refused them and was corrected to the derived value before the register was read |
+| Six orbit runs (series D re-registered), `python tools/run_series.py --jobs 4` | all completed in 5.7 to 6.5 s, the books balanced at every tick; `tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; no orbit closes at any width (S = 1 and 8 zero reads, S = 32 at r = 12 one eccentric turn in 229 intervals returning two Links off, S = 32 at r = 24 falls in); registered in [D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19) |
+| `python tools/check.py --full` | ruff lint and format on 115 files clean, mypy on 21 source files clean, 437 passed in 17 s on four workers |
+
+The runs establish that the one form is the earlier computation on every
+registered world and that the label is read consistently; they establish
+no physical law. The orbit readings are research results, registered and
+not moved.
+
+## The table from the keys and the moments: the runs unchanged - 2026-09-19 (the night)
+
+Base `636f391c` on `claude/universe24-new-3ytqde` (the law of the ray with
+the owner's approval of the mathematician's proposals 1 and 3 recorded).
+The two generic replacements ([migration](MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night),
+[RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+notes 15 and 16) checked against the registered runs: the thirty-five example
+worlds (the ten Bell worlds, the twenty-one coupling worlds, `one_content`,
+`two_contents`, `two_slits`, `one_slit`) run through `tools/run_series.py`
+on the base source (runtime SHA-256 `703f9427...`, the fingerprint of the
+registered runs) and on the changed source (`5ba9a47b98e16c80ebf4e46ed57987a2274431f1abe35c2d74a09e6f9f24b794`),
+Python 3.14, headless.
+
+| Check | Result |
+| --- | --- |
+| Every example world parsed on both sources | 39 worlds (the `detector/` worlds through the entity loader): the parsed `RayWorld`s equal structure by structure (tables, windows, `reads`, the families' free flags, every other field) |
+| The Bell and coupling runs, `events.jsonl`, `state.json` and the `audit` per tick | identical SHA-256 digests on both sources for all 31 runs, and for `one_content` and `two_contents` (33 of 35) |
+| `tools/bell_chsh.py` on the ten new runs | 326 criteria passed, 0 failed; every printed line equal to the base run's but the source fingerprint (and the order Python prints a set in) |
+| `tools/coupling_readings.py` on the twenty-one new runs | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, the printed readings equal to the base run's line by line |
+| `two_slits`, `one_slit` (fans) | the digests differ, as the decision says: a fan ray now pushes by its label `content x amount x D` and not by the unit Link of its last step; the world test's correlation still passes (`test_ray_worlds` (a)) |
+| Host cost | `one_content` 0.24 s per 200 intervals (0.44 before), `1a_m1` 0.62 s (0.65), `5_long` 3.1 s (3.9), `two_slits` 5.8 s (4.6): the moments per Node cost about what the slots did |
+
+The runs are the register's evidence that the replacements are generic; they
+establish no physical law.
+## The width of the push and the orbit series D - 2026-09-19
+
+The worktree of `claude/universe24-new-3ytqde` on the base `0a33a202` (the
+law of the ray merged), the D1 commit (the world key `width`,
+[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5 and
+note 15) and the orbit series on it. Runtime source SHA-256
+`587cbf4852a7fafddc07b2ab35a6a530ed27607ea1aaaec8b17d89933e66d788`,
+Python 3.14, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_push_width.py` | 4 passed: S = 1 as the rule was, S = 8 once per 9 self-creations at p = M, the step off the clock with no remainder under a count owed (the step on the paying interval), the key's default, record and refusals |
+| `python tools/check.py` on the D1 commit | ruff lint and format clean, mypy on 11 source files, 228 passed in 25 s on four workers |
+| Six orbit runs, `python tools/run_series.py --jobs 4` | all completed in 5.5 to 6.4 s each (1 ms per interval on 121 x 121 with a fan of 120 directions and about 1200 rows in flight), the books balanced at every tick; `python tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; one orbit closed by the criterion (S = 32, r = 12: 346 intervals against 343 derived, the return one Link off), an eccentric loop; no other closing; the mean push C 1.1 on the first turns; registered in [D, the orbit under the law of the ray, on the plane](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19) |
+| `tests/test_orbit_world.py` | 1 passed in 0.5 s: the probe of `s32_r12` at (71, 60, 0) after 346 intervals with its momentum's y component positive, the books balanced |
+
 ## The law of the ray: the engine, the suite and the re-registered runs - 2026-09-19
 
 Base `ce0b22af` on `claude/universe24-new-3ytqde` (the merge of the three

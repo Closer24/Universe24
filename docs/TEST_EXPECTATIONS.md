@@ -26,13 +26,16 @@ kept, their pins the law of events').
 
 | Module | Rule isolated | Re-pins |
 | --- | --- | --- |
-| `test_ray_readings.py` | The one reading: the seven slots decomposed once into two scalars, the flow and the tensor; orthogonal, summing back, the 48 board symmetries; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
-| `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing ([below](#the-collision-table)) | new |
+| `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
+| `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact ([below](#the-bijection)) | new |
-| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
+| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the affordable amount bounded before the record's products ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
+| `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
@@ -47,20 +50,34 @@ kept, their pins the law of events').
 
 ## The one reading
 
-`tests/test_ray_readings.py` (docs/RAY_LAW.md; the model owner, 2026-09-19:
-every piece of logic once): the seven slots of a Node (the six Ports a ray
-arrived through and here) are decomposed once by `read_arrivals` into two
-scalars (outside, here), the net flow and the traceless tensor, and every
-coupling selects its component by key.
+`tests/test_ray_readings.py` (docs/RAY_LAW.md, section 3 step 2 and section
+10 note 16; the model owner, 2026-09-19: every piece of logic once; "the one
+reading function is the amount-weighted moments of order 0, 1 and 2 of the
+direction vectors, valid for fans as for the six headings, here entering the
+zeroth moment alone"): `read_arrivals` takes once, over one reading set, the
+moments of the arrivals' direction vectors weighted by their amounts (the
+count split outside / here, the net flow sum amount x D, the traceless
+tensor 3 x sum amount x D (x) D less its trace), and every coupling selects
+its component by key.
 
-- (a) the decomposition: the seven basis vectors are mutually orthogonal;
-  the slots [3, 1, 4, 1, 5, 9, 2] read outside 23, here 2, the flow
-  (2, 3, -4), the tensor (4 + 5 - 28, 4 - 5) = (-19, -1), and 12 x slots =
-  sum_i (12 / |e_i|^2) c_i e_i (the slots recovered); under each of the 48
-  signed axis permutations of the board the scalars are fixed, the flow is
-  the rotated flow, and the tensor of the rotated slots is the tensor of the
-  permuted axis pairs; the shortest slot vectors, one unit on one Port, read
-  outside 1, here 0 and the flow the Port's heading.
+- (a) the moments: on the six headings the amounts [3, 1, 4, 1, 5, 9] and 2
+  here read outside 23, here 2, the flow (2, 3, -4) and the tensor
+  diag(-11, -8, 19) (3 x diag(4, 5, 14) - 23 I), which is the slot
+  decomposition of the first ray worlds exactly (its (p_x + p_y - 2 p_z,
+  p_x - p_y) = (-19, -1) being -T_zz and (T_xx - T_yy) / 3); for 64 fixed
+  random integer amounts on the seven slots the moments equal that slot
+  decomposition through the same relations; on a fan (2 on (1, 1, 0), 3 on
+  (2, -1, 0), 1 on (3, 1, 2), 4 on (1, 0, 0), 5 here) the flow is
+  (15, 0, 2) and the tensor [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
+  (3 x the second moment [[27, -1, 6], [-1, 6, 2], [6, 2, 4]] less its
+  trace 37), traceless; under each of the 48 signed axis permutations R of
+  the board the scalars are fixed, the flow is R x flow and the tensor
+  R T R^T, on the fan as on the headings; the shortest reading, one unit on
+  one heading e, reads outside 1, here 0, the flow e and the tensor
+  3 e e^T - I; the keyed form over Nodes equals the readings Node by Node; a
+  reading whose second moment could pass 2^62 - 1 (an amount above
+  2^62 / 4096 on (64, 0, 0)) is refused with `OverflowError` before any
+  product is formed, and the amount at the bound is accepted.
 - (b) the push reads the flow of every number but the reader's own: a free
   reader of content 4 met by 9 rays of number 1 arriving on +X and 9 of
   number 2 arriving on -X is pushed by (0, 0, 0) and reads 18; by the 9 of
@@ -78,6 +95,39 @@ coupling selects its component by key.
   `pass` record each (`threshold` 3); at threshold 1 with the window 32,
   the two rays at phase 0 pass (`window` 32) and the ray at phase 32
   clicks.
+
+## The table generated from the keys
+
+`tests/test_default_table.py` (docs/RAY_LAW.md, section 2 and section 10
+note 15; the model owner, 2026-09-19, "I approve 1 and 3": the tables are
+generated from the keys and a world declares only what differs, `kind`
+derived from `quantum`).
+
+- (a) the default: for the families m (quantum 0) and light (quantum 3)
+  `default_table` is (("read", None, "vector"), ("measure", None,
+  "scalar")); a measured event without `table` parses to exactly that, and
+  so does one that writes the default out as strings, as objects with
+  `reads`, as empty objects, or for one family only: the `RayWorld`s are
+  equal field by field.
+- (b) what differs is kept: a window alone ({"phase_window": 8}) keeps the
+  default rule `measure`, the window 8 and the component `scalar`; `pass`
+  and `rerelease`, `read` on a paid family and `measure` on a free one are
+  kept with their components (`vector` on `read`, `scalar` otherwise);
+  `reads` `tensor` and `here` are kept with the default rule; a `read`
+  entry with the window 3 and `reads` `outside` on a paid family is kept
+  whole.
+- (c) the derived kind: quantum 0 is free, 1 and 2^30 paid; the unit label
+  is 1 for a free family and the quantum for a paid one; `kind` is refused
+  naming the removal of 2026-09-19 and docs/MIGRATION.md for the values
+  `free`, `paid` and `other`; a family without `quantum` is refused naming
+  the key; a negative quantum is refused; a charge on a paid family is
+  refused naming its quantum; a charge on a free family and a lamp on a
+  paid family are accepted, and a lamp on a free family is refused.
+- (d) the example worlds: every world of `examples/events/` (the ten Bell
+  and twenty-one coupling worlds, the four top-level worlds, the four
+  detector worlds through the entity loader) parses equal, field by field,
+  to the same document with the generated default written back into every
+  measured event's table; no shipped world writes a default entry out.
 
 ## The flight
 
@@ -133,6 +183,17 @@ shift by +1 and the inverse by -1, generated from the rule.
   and after the second collision the rest pair leaves on z, the x pair
   parks and the y pair turns onto x: the one cycle of the class, the tie by
   Port order.
+- (d) no collision at a Node that holds a measured event (the model owner's
+  decision of 2026-09-19 on the physics-rule reviewer's F1(c); RAY_LAW
+  section 3 step 3 and note 18): the head-on pair of (c) (one number,
+  amount 1, phases 0 and 32) meeting at the Node of a measured event of `m`
+  whose table passes `light` keeps its directions +x and -x (no rest ray),
+  dwells the two intervals of its line there and parts at the third (x = 5
+  and x = 3 on a 9 x 1 x 1 bar); at a measured event whose table measures
+  `light` in the window 32 the ray at phase 32 clicks with its label
+  (-1, 0, 0), the ray at phase 0 passes and goes on to x = 5, the transit
+  line is (1, 0, 0) and no ray is stranded at rest; measured + transit =
+  (0, 0, 0), the labels' sum before the interval.
 
 ## The bijection
 
@@ -174,6 +235,74 @@ least one ray on the way.
   unit per heading per interval, its content 18 then 12; a reader of `m`
   (content 4) at threshold 4 passes 3 rays and reads 4, pushed by -M c =
   (-16, 0, 0).
+- (e) the affordable amount (the physics-rule reviewer's F2; RAY_LAW
+  section 5 and note 19): every entry (C, S) of the 1/256 tables is
+  shorter than 257 for every N from 2 through 4096 (the largest C^2 + S^2
+  is 65897), so the pointer is at most 32 x 257 x the clicked amount long
+  and the record fits 2^62 - 1 up to isqrt(2^62 - 1) // (32 x 257) =
+  261123 units per detector Node per family per interval
+  (`RECORD_AMOUNT_BOUND`; 2^17 inside, 2^18 refused): a row of 261123 at
+  phase 0 records 2139119616^2 with the pointer (2139119616, 0); a row of
+  261124 is refused with `OverflowError` naming the Node [4, 1, 1] and the
+  sum 261124; two rows of 130561 and 130563 (two numbers, +X and -X) are
+  refused naming the sum 261124; a row of 2^52 (the reviewer's silent int64
+  wrap, admitted by the label bound) is refused naming the sum; a ray of
+  261124 stepping off an open face is refused naming `face:+x`.
+
+## The push as one form
+
+`tests/test_ray_push.py` (docs/RAY_LAW.md, section 3 step 4, section 5 and
+section 10 notes 18 to 20; the model owner's proposal 2 of 2026-09-19 with
+the physics-rule reviewer's two corrections): push_A = sum kappa(A, B) . V_B
+with V_B the label moment of the arriving rays and kappa = -M_A (a free
+family's ray), + q_A x q_B / M_B (a charged one, the whole part off the
+reader's clock, sign x by_clock(age_A, |V q_A q_B|, M_B)), + 1 (a paid
+ray); the emitter's factor (q_B, M_B) on the record from birth; every
+momentum the law reads or moves the one label. K 2^20, N 64, `suspension`
+0, `m` free and `light` paid, every measured event `fixed`, a 12 x 1 x 1 bar
+with y and z periodic unless said otherwise.
+
+- (a) the reviewer's isolated world: a source of content 4 and charge 3 at
+  x = 0 releasing on +X at `release` [1, 1] (4 rays per interval, one row of
+  amount 4), a probe of content 5 and charge 1 at x = 6; on (1, 0, 0) a ray
+  born at tick t is at x = 6 at tick t + 10, so the probe reads one row of
+  amount 4 at every tick 11 through 30: 20 `read` records, each the flow
+  V = 4 and the push -5 V + by_clock(age, 3 V, 4) = (-17, 0, 0), `pushed`
+  (-340, 0, 0) (80 x (-5 + 3/4) exactly); the record's `mass` 4 and
+  `charge` 3.
+- (b) the sign (the source's charge -3): every push (-23, 0, 0), `pushed`
+  (-460, 0, 0). (c) An uncharged probe: every push (-20, 0, 0), `pushed`
+  (-400, 0, 0).
+- (d) q_A q_B = M_B with M_A = 1 (the series 7 cancellation): the probe of
+  content 1 and charge 2, the source of charge 2 and content 4: every push
+  0 exactly, `pushed` (0, 0, 0).
+- (e) the fractional floor (the reviewer's F6): `release` [1, 2] gives
+  V = 2, |V q_A q_B| = 6, and by_clock(t, 6, 4) is 2 at odd t and 1 at
+  even t from t = 11; over the ticks 11 through 30 the electric part sums
+  to 30 and the gravity to -200: `pushed` (-170, 0, 0).
+- (f) a paid emitter: a lamp of `light` (content 2^23 at K 2^20, the turn
+  8 at every age below 362, `rate` [1, 1] on +X) releases one unit of
+  content 8 per interval with the recoil (-8, 0, 0); the probe (content 5,
+  `table` {"light": "read"}, `release` [0, 1]) reads (8, 0, 0) at every
+  tick 11 through 30, `pushed` (160, 0, 0); the lamp's momentum (-8 x its
+  releases) plus the transit line plus the escaped line is (0, 0, 0) at
+  every tick.
+- (g) a fan emitter: a source of content 4 at (0, 0, 0) of a 9 x 5 x 1
+  board releasing on (2, 1, 0) at `release` [1, 1], the probe of content 5
+  at (4, 2, 0) on its line (the sixth Manhattan step; the first read at
+  tick 9): every push -5 x 4 x (2, 1, 0) = (-40, -20, 0), 22 reads,
+  `pushed` (-880, -440, 0): the push of a fan ray is its label, |D| =
+  sqrt 5 per unit.
+- (h) the one label moves: a ray of `light` of amount 3 on (2, 1, 0)
+  (content 1; at (3, 2, 0) with age 7, one Link before (4, 2, 0)) clicking
+  at a `measure` event at (4, 2, 0): the click's `push` (6, 3, 0), the
+  event's momentum (6, 3, 0), the transit line (6, 3, 0) before and
+  (0, 0, 0) after; the same ray at a `rerelease` event whose one direction
+  is (2, 1, 0): the momentum (0, 0, 0) after the interval (in (6, 3, 0),
+  out the same), the transit line (6, 3, 0) before and after; a paid ray
+  coming home on a periodic 4 x 1 x 1 bar: the `home` record's `push` is
+  its label (1, 0, 0) and the emitter's momentum (0, 0, 0) after the
+  re-creation.
 
 ## The re-emission
 
@@ -244,6 +373,40 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
   14, 15, 16, 16; with k = 8 it owes 2 at every self-creation: 1, 2, 2, 2,
   3, 3, 3, 4, 4, 4.
 
+## The width of the push
+
+`tests/test_push_width.py` (docs/RAY_LAW.md, section 3, step 5 and
+implementation note 15; the model owner's D1, 2026-09-19). One rule in
+isolation: an open bar of 12 x 1 x 1, K 1024, N 64, `release` [0, 1] (no
+push arrives), a free measured event of content M with the momentum p on
++x; the step rule `by_clock(age, |p|, S x M + |p|)` with S the world's
+`width`. The expected integers, written down before the first run:
+
+- (a) S = 1 reads exactly as the rule was: content 16 with momentum 16 from
+  x = 4 steps at the ages 2, 4, 6 (x after intervals 1 to 6: 4, 5, 5, 6,
+  6, 7; `steps` 0, 1, 1, 2, 2, 3), with `width` 1 declared and with the key
+  absent alike; with momentum 1 none after 16 intervals and one after 17.
+- (b) S = 8 with p = M: content 16 with momentum 16 steps once per 9
+  self-creations, at the ages 9, 18, 27 (x 4 through interval 8, 5 from 9,
+  6 from 18, 7 at 27; `steps` 0, 1, 2, 3); content 3 with momentum 3 steps
+  at the same ages (the speed a unit of flow gives, 1 / (S + 1), is the
+  same for every content).
+- (c) off the clock, no remainder: the probe of (b) at x = 3 with
+  `suspension` [1, 4] and a crowd of 4 rays of another number (a fixed
+  anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
+  after every self-creation (age after interval n is ceil(n / 2), waited
+  floor(n / 2)); the step of the ages 9, 18, 27 lands on the interval that
+  pays the count (a measured event steps only in an interval where it owes
+  nothing), the intervals 18, 36, 54: x after intervals 17, 18, 35, 36,
+  53, 54, 60 is 3, 4, 4, 5, 5, 6, 6; age 30, waited 30, `steps` 3 after
+  60; after every paying interval `steps` = age x 16 // 144 and after every
+  self-creation (age - 1) x 16 // 144; the momentum untouched; the books
+  balanced at every interval. (The first run corrected the interval of the
+  step from 17 to 18: the order of the frame, not the rule.)
+- (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
+  runner's `run.json` carries `width` 8; 0, -1, `"8"` and 1.5 are refused
+  with "width must be an integer from 1".
+
 ## The phase window under the ray law
 
 `tests/test_ray_window.py` (re-pinned from `test_phase_window` under the
@@ -280,9 +443,10 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   intervals 32 released, content K + 2 - 32, momentum (-32, 0, 0), phase 0;
   after 81 the counter clicked 32 times and the lamp released 17 more, 49
   in all. The refusals, naming the key: a window of 64 at N = 64, a window
-  on `pass`, an object entry without `rule`, an object entry with an
-  unknown key, a lamp window of -1, a `reads` key outside the reading's
-  components.
+  on `pass`, an object entry with an unknown key, a lamp window of -1, a
+  `reads` key outside the reading's components; an object entry without
+  `rule` takes the family's default rule (since the night of 2026-09-19: a
+  window alone on a paid family measures in the window 8).
 
 ## The world file of the ray law
 
@@ -301,8 +465,10 @@ re-pinned from `test_event_worlds` (e) and
   closed board, an unknown key, a content at K x N / 2, a lamp on a free
   family, two measured events at one Node, an unknown table rule, N not a
   power of two, a detector on a Node without a measured event, a Node in
-  two detectors, a quantum on a free family, a `suspension` denominator of
-  0, a window for a family without a phase circle.
+  two detectors, `kind` on a family (naming MIGRATION: the quantum decides
+  the kind), a family without `quantum`, a negative quantum, a charge on a
+  paid family, a `suspension` denominator of 0, a window for a family
+  without a phase circle.
 - (b) accepted: the direction table of a world with `directions`
   [[1, 1, 0]] is the two rest vectors, the six headings and (1, 1, 0); a
   measured event's `directions` by vector or by index; a ray at rest (index
@@ -354,7 +520,12 @@ does what the law says and not as a result.
   at r = 3 and r = 4 is 6 x 2^17 over the shell's Nodes, the presence at
   r = 3 twice the count and at r = 4 equal to it.
 - (d) every example world (`examples/events/*.json`, `bell/`, `coupling/`,
-  `detector/` through the entity loader) parses as a ray world.
+  `detector/` through the entity loader) parses as a ray world. The orbit
+  worlds of series D are research runs registered in
+  [EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)
+  and pinned by no test (the model owner's rule of 2026-09-17; the pin of
+  the first registration, `test_orbit_world.py`, went with its numbers
+  when the engine changed).
 
 ## Generated-output lifetime
 
@@ -433,14 +604,20 @@ still requires review. No physical calculation changes as part of translation.
 
 ## Shared integer arithmetic
 
-`test_integer_arithmetic.py` covers decoded scalar/vector addition and
-subtraction, ordered sums, dot/cross products and integer rounding. Independent
-examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
-(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
-counts, cross-product orientation/parallel vectors, signed limits and overflow
-before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
--7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
-even when the quotient would fit, preserving existing timing behavior.
+`test_integer_arithmetic.py` pins the primitives of `core/integer.py` that the
+ray law uses: the working register (`checked_work` accepts +-(2^63 - 1),
+refuses one beyond and a boolean); the exact integer square root
+(`integer_root`: 0, 1, 2, 3, 4, 15, 16, 17, 2^62 and 2^63 - 1 give 0, 1, 1, 1,
+2, 3, 4, 4, 2^31 and 3037000499, each the floor with the next square above the
+input; a negative value, a float and an overflow are refused); the bounded gcd
+(`bounded_gcd`: 12 and 18 give 6, 0 and 5 give 5, 5 and 0 give 5, -4 and 6
+give 2, 0 and 0 give 0, 2^63 - 1 and 1 give 1; an overflow and a boolean are
+refused). `by_clock` and `apportion_whole` are pinned where the clock uses
+them (`test_ray_clock`, `test_ray_readings`). The component arithmetic of the
+deleted engines (signed and ceiling division, ordered sums, component addition
+and subtraction, dot and cross products, reduced ratios) was deleted with its
+pins on 2026-09-19
+([migration](MIGRATION.md#cleanup-after-the-law-of-the-ray-on-2026-09-19)).
 
 
 ## The rules of the law of events, as pinned until 2026-09-19 (history)

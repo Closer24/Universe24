@@ -92,13 +92,13 @@ def execute_ray_run(
         "N": world.phase_steps,
         "release": list(world.release),
         "suspension": list(world.suspension),
+        "width": world.width,
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {
                 "name": family.name,
-                "kind": family.kind,
-                "charge": family.charge,
                 "quantum": family.quantum,
+                "charge": family.charge,
                 "phase": family.phase,
                 "phase_per_link": family.phase_per_link,
             }
