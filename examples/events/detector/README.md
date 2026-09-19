@@ -1,38 +1,32 @@
-# Physical detector examples
+# Detector definition examples
 
 These worlds place reusable apparatus from the separate definitions file
-`entities/detectors.json` and select `dynamics: "reversible-detector-v1"` in the
-ordinary events engine. The [entity loading contract](../../../docs/ENTITY_DEFINITIONS.md)
-keeps geometry, local-rule selections and detector settings in data; the world
-declares placement, board shape, topology and incoming Events. The candidate's
-[published contract](../../../docs/DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1)
-defines its assumed local law, physical state, inverse and limits. Default
-`events-v1` worlds keep their existing measurement and mixing rules.
+`entities/detectors.json` into worlds of the law of the ray (`"law": "rays"`).
+The [entity loading contract](../../../docs/ENTITY_DEFINITIONS.md) keeps
+geometry, tables and detector settings in data; the world declares placement,
+board shape, topology and the incoming rays. The law that runs them is
+[the law of the ray](../../../docs/RAY_LAW.md): every measured event of the
+apparatus measures the family `carrier`, and the detector that groups them
+reads the squared coherent record of what clicked at each of its Nodes. The
+`reversible-detector-v1` candidate these worlds selected until 2026-09-19 is
+absorbed into the ray law and deleted
+([migration](../../../docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)):
+the pointer is the record, the routing is the flight table.
 
-An incoming Event physically traverses a chain of ordinary measured Events.
-Each contact preserves the carrier's amount, identity and phase, routes it by a
-port permutation, and changes the local material phase and recoil. One declared
-output Event supplies a group result from its phase relative to its own clock.
-The observer does not sum the covered Nodes or recover a result from the log.
-
-| World | Coverage and output | Trigger | Declared duration |
+| World | Apparatus | Incoming rays | Intervals |
 | --- | --- | --- | --- |
-| `shared_3_nodes.json` | Three Nodes on a 9-by-9-by-1 board; one output at `(5,4,0)` | One unit arriving from any covered position can produce the common result | 4 ticks for the supplied carrier starting at `(2,4,0)` |
-| `shared_100_nodes.json` | A 100-Node serpentine chain on a 12-by-12-by-1 board; one output at `(1,10,0)` | One unit; 100 covered Nodes do not require 100 quanta | 101 ticks for the supplied carrier starting at `(0,1,0)` |
-| `grouped_12_nodes.json` | Four disjoint chains of three Nodes on a 9-by-9-by-1 board; four distinguishable output groups | Two units per group; supplied as one amount-2 bundle per chain | 4 ticks |
-| `periodic_z_node.json` | One Node at `(4,4,0)` on a 9-by-9-by-1 board, open X/Y and periodic Z | One initial +Z carrier returns through the same signed Port on each later tick | 3 ticks; three encounters of the same carrier |
+| `shared_3_nodes.json` | `three_node_detector`: three Nodes in a row on a 9-by-9-by-1 board, one detector `apparatus` of threshold 1 | one ray of amount 1, phase 16, on +X from `(2,4,0)` | 4 |
+| `shared_100_nodes.json` | `serpentine_100_detector`: a 100-Node serpentine chain on a 12-by-12-by-1 board, one detector of threshold 1 | one ray of amount 1, phase 16, on +X from `(0,1,0)` | 101 |
+| `grouped_12_nodes.json` | `grouped_12_detector`: four disjoint chains of three Nodes on a 9-by-9-by-1 board, four detectors `group_0` to `group_3` of threshold 2 | one ray of amount 2 per chain at the phases 0, 8, 16 and 24 | 4 |
+| `periodic_z_node.json` | `single_node_detector`: one Node at `(4,4,0)` on a 9-by-9-by-1 board with z periodic, its entry `{"rule": "measure", "reads": "tensor"}` | one ray of amount 1, phase 16, on +Z at the Node itself (the stub of extent 1) | 3 |
 
-All four examples use `N=32`, `K=1024`, fixed material content 1,
-output capacity 31 and reference phase 0. The shared-output carriers have phase
-16; the four separate groups use phases 0, 8, 16 and 24. Only declared initial Events supply the incoming inventory; no new signal
-is created during a contact. A port permutation at a corner routes the actual
-carrier and takes its balancing recoil. The first three finite routes stop with
-the carriers on the board; increasing their duration can hit an open exit. The
-periodic Z example uses the native `boundary: {"z":"periodic"}` form: a Link
-returns to the same Node only next interval, preserving Port, phase and momentum.
-Its output counts repeated encounters, not three new quanta, and eventually
-reaches its declared finite capacity. A thin periodic axis is a different graph,
-not an automatic replacement for unbounded 3D matter.
+All four use `N=32`, `K=1024`, fixed material content 1 and the paid family
+`carrier` of quantum 1. Only the declared rays supply the incoming
+inventory; a ray that reaches a Node of the apparatus with the threshold met
+clicks there (the amount and the content enter the measured event, the
+record line carries the pointer and its square) and the run's detector
+report accumulates the record per detector. The ray of the periodic example
+lands on its own Node at every interval the flight table moves it.
 
 The definitions are `three_node_detector`, `serpentine_100_detector`,
 `grouped_12_detector` and `single_node_detector`. Their world origins are
@@ -58,30 +52,7 @@ The normal runner retains `initialization.json`, `run.json`, `state.json` and
 `initialization_bundle.json` with the dependency closure and
 `resolved_initialization.json` with the expanded physical world. Metadata records
 their fingerprints and the exact definitions-file fingerprint. An existing
-prepared input does not change when its original definitions file is edited. Candidate snapshots identify `dynamics` and contain
-`detector_readouts`: each detector has `name`, `positions` and `groups`, and
-each group has `name`, `value` and `triggered`. `value` counts units transduced
-at the physical output, and `triggered` compares it with that group's threshold.
-Old `detectors` summaries and transduction logs are diagnostics, not missing
-physical memory. The user-requested demonstration additionally retains a
-standalone HTML with its dated source and initialization fingerprints.
-
-Coverage, grouping and threshold are independent configuration choices. To
-change an entry position, preserve the declared actual route and allow its
-travel time. Group membership alone does not deliver a signal. Different path
-lengths can reveal position through timing; these examples do not promise
-complete spatial anonymity. Repeated passage through the output counts again,
-so the first three trial paths cross it once and the periodic example deliberately
-demonstrates repeated crossing.
-
-This is nondestructive transduction, not matter absorption or a thermal model.
-Full output capacity, a forbidden slot state, integer overflow or an attempted
-escape refuses the interval before committing it; refusal is not a physical
-reset or saturation mechanism. The candidate preserves amount and total
-material-plus-carrier momentum on its domain. It supplies no energy law for the
-fixed support and no derivation of Heisenberg, Born statistics or Bell violation.
-The owner's sensitivity-and-information hypothesis remains a separate research
-question. Composite absorbers and reduced coarse cells are separate designs.
+prepared input does not change when its original definitions file is edited.
 
 For the workspace, choose a file-backed template or import a self-contained
 bundle. Create one without running the world:
@@ -93,6 +64,6 @@ python -m event_universe.world_loading --input examples/events/detector/shared_3
 The output must be a new file. Exported bundles can move to another directory and
 run without access to the original definitions path. Source-only Check, Export
 and Run accept complete bundles; they do not search for a missing dependency.
-The legacy `cube_flux` arrival-cache diagnostic is unsupported for this candidate
-and for periodic worlds and reports an explicit error. Readout and momentum
-checks use their declared physical/audit APIs; no energy claim is inferred.
+These are research configurations, not tests with pinned outputs; the two
+dated runs of the candidate they replaced keep their scope in
+[validation](../../../docs/VALIDATION.md).

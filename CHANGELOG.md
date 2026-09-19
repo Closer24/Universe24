@@ -5,6 +5,33 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The law of the ray (2026-09-19)
+
+- The engine of the law of the ray, `rays-v1` (the model owner, 2026-09-19,
+  Highlights 5.4, "DECIDED: the law of the ray"; the design
+  [docs/RAY_LAW.md](docs/RAY_LAW.md)): the record `GonenBeam` and the one
+  function `gonen_beam` (`src/event_universe/events/gonen_beam.py`), a
+  Node's whole interval for the rays present; the flight table at
+  1 / sqrt 3 on the digital line of every direction (at most one Link per
+  interval, the age modulo the period); the eight-slot collision table
+  generated from its rule and checked at load (a bijection inside invariant
+  classes); the one reading `read_arrivals` (two scalars, the flow, the
+  tensor; every coupling selects its component by `reads`); the detector's
+  squared coherent record per interval (`record`); the re-emission on
+  declared directions; the inverse interval (`inverse_step`) on a board
+  without a measured event; the store of records per family. The world
+  selects it with `"law": "rays"` and gains `directions`,
+  `direction_bound`, `phase_per_link`, a measured event's `directions`, a
+  table entry's `reads`, a ray's `direction` and `age`. `events-v1` is
+  deleted with `mixing.py`, `transit.py`, `reversible.py`, the
+  `reversible-detector-v1` candidate and fourteen test modules; every rule
+  the ray law keeps is re-pinned in the ten `test_ray_*` modules
+  ([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1),
+  [expectations](docs/TEST_EXPECTATIONS.md)). The example worlds, the Bell
+  and coupling generators and the detector definitions are ray worlds; the
+  Bell run A2 and the coupling series C are re-registered under `rays-v1`
+  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.0.
+
 ### The engine of the law of events (2026-09-19)
 
 - The three reversible corrections that every path shares (the model

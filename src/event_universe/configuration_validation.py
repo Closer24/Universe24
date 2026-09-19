@@ -11,10 +11,10 @@ import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from event_universe.events.world import EVENTS_LAW
+from event_universe.events.world import RAYS_LAW
 from event_universe.world_loading import DocumentSyntaxError, load_world
 
-KINDS = ("events",)
+KINDS = ("rays",)
 
 
 @dataclass(frozen=True)
@@ -49,17 +49,17 @@ def validate_configuration(
     """Validate supplied content only: no implicit files, simulation or artifacts.
 
     A report contains the first concrete failure, and does not certify a run or
-    physical correctness. The only kind is `events`, a world of the law.
+    physical correctness. The only kind is `rays`, a world of the law of the ray.
     """
     if kind not in (*KINDS, "auto"):
         issue = ValidationIssue("unsupported_kind", "input", f"unsupported configuration kind: {kind}")
         return ValidationReport(kind, False, {}, (issue,))
-    resolved = "events"
+    resolved = "rays"
     try:
         world = load_world(source, base_dir=base_dir).world
         summary = {
             "model": world.model_id,
-            "law": EVENTS_LAW,
+            "law": RAYS_LAW,
             "shape": world.shape,
             "boundary": world.boundary_per_axis,
             "ticks": world.ticks,
@@ -67,8 +67,6 @@ def validate_configuration(
             "measured": len(world.measured),
             "detectors": len(world.detectors),
         }
-        if world.dynamics != EVENTS_LAW:
-            summary["dynamics"] = world.dynamics
         return ValidationReport(resolved, True, summary)
     except DocumentSyntaxError as error:
         issue = ValidationIssue("syntax", error.document, str(error), error.line, error.column)

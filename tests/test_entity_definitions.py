@@ -8,13 +8,13 @@ from pathlib import Path
 import pytest
 
 from event_universe.configuration_validation import validate_configuration
-from event_universe.events.world import parse_event_world
+from event_universe.events.world import parse_ray_world
 from event_universe.world_loading import BUNDLE_FORMAT, DocumentSyntaxError, load_world, main
 
 
 def authored():
     return {
-        "law": "events",
+        "law": "rays",
         "model_id": "entity-placement-test",
         "shape": [9, 9, 1],
         "ticks": 1,
@@ -22,8 +22,6 @@ def authored():
         "N": 32,
         "release": 0,
         "suspension": 0,
-        "dynamics": "reversible-detector-v1",
-        "max_active_owners": 1,
         "families": [{"name": "carrier", "kind": "paid"}],
         "entity_definitions": "entities/apparatus.json",
         "entities": [{"name": "alice", "definition": "three", "position": [3, 4, 0]}],
@@ -43,27 +41,11 @@ def definitions():
                         "family": "carrier",
                         "amount": 1,
                         "fixed": True,
-                        "table": {"carrier": "transduce"},
-                        "port_map": [0, 1, 2, 3, 4, 5],
+                        "table": {"carrier": "measure"},
                     }
                     for position in positions
                 ],
-                "detectors": [
-                    {
-                        "name": "readout",
-                        "positions": positions,
-                        "groups": [
-                            {
-                                "name": "shared",
-                                "positions": positions,
-                                "output": [2, 0, 0],
-                                "threshold": 2,
-                                "capacity": 31,
-                                "reference_phase": 0,
-                            }
-                        ],
-                    }
-                ],
+                "detectors": [{"name": "readout", "positions": positions, "threshold": 2}],
             }
         ],
     }
@@ -95,11 +77,10 @@ def test_positions_order_outputs_and_names_are_literal():
         (5, 6, 0),
     ]
     assert [detector.name for detector in loaded.world.detectors] == ["/alice/readout", "/bob/readout"]
-    assert [detector.groups[0].output for detector in loaded.world.detectors] == [(5, 4, 0), (5, 6, 0)]
-    assert [detector.groups[0].threshold for detector in loaded.world.detectors] == [2, 2]
+    assert [detector.threshold for detector in loaded.world.detectors] == [2, 2]
     expanded = json.loads(loaded.expanded_source)
     assert "entities" not in expanded and "entity_definitions" not in expanded
-    assert loaded.world == parse_event_world(expanded)
+    assert loaded.world == parse_ray_world(expanded)
 
 
 @pytest.mark.parametrize(
@@ -112,7 +93,7 @@ def test_names_only_change_labels(name, escaped):
     renamed = load_world(bundle(world)).world
     assert renamed.measured == original.measured and renamed.in_transit == original.in_transit
     assert renamed.detectors[0].name == f"/{escaped}/readout"
-    assert renamed.detectors[0].groups == original.detectors[0].groups
+    assert renamed.detectors[0].positions == original.detectors[0].positions
 
 
 def test_inline_entries_precede_instances_and_negative_offsets_are_translated_once():
@@ -128,9 +109,6 @@ def test_inline_entries_precede_instances_and_negative_offsets_are_translated_on
     ]
     for event in entities["entities"][0]["measured"]:
         event["position"][0] -= 1
-    detector = entities["entities"][0]["detectors"][0]
-    # The fixture shares position arrays, so their relative coordinates moved above.
-    detector["groups"][0]["output"][0] -= 1
     loaded = load_world(bundle(world, entities)).world
     assert [event.position for event in loaded.measured] == [(0, 0, 0), (2, 4, 0), (3, 4, 0), (4, 4, 0)]
 
@@ -160,7 +138,7 @@ def test_plain_world_keeps_decoder_behavior_and_exact_source(encoding):
     plain = json.loads(load_world(bundle()).expanded_source)
     raw = json.dumps(plain, indent=2).encode(encoding)
     loaded = load_world(raw)
-    assert loaded.world == parse_event_world(plain)
+    assert loaded.world == parse_ray_world(plain)
     assert loaded.portable_source == raw and loaded.dependencies == ()
 
 
@@ -226,7 +204,7 @@ def test_invalid_placements_are_refused_without_clipping(change, expected):
             "duplicate relative",
         ),
         (
-            lambda entity: entity["detectors"][0]["groups"][0].update(output=[3, 0, 0]),
+            lambda entity: entity["detectors"][0].update(positions=[[3, 0, 0]]),
             "measured geometry",
         ),
         (lambda entity: entity["measured"][0].update(lamp={"formula": "x"}), "unsupported keys"),
@@ -254,7 +232,7 @@ def test_physical_semantics_stay_in_the_canonical_world_parser():
     with pytest.raises(ValueError, match="family"):
         load_world(bundle(entities=entities))
     entities = definitions()
-    entities["entities"][0]["detectors"][0]["groups"][0]["threshold"] = 32
+    entities["entities"][0]["detectors"][0]["threshold"] = 0
     with pytest.raises(ValueError, match="threshold"):
         load_world(bundle(entities=entities))
 
@@ -326,5 +304,5 @@ def test_plain_escaped_surrogate_names_keep_the_existing_parser_domain():
     source = json.dumps(plain).encode("ascii")
     loaded = load_world(source)
     assert loaded.portable_source == source
-    assert loaded.world == parse_event_world(plain)
+    assert loaded.world == parse_ray_world(plain)
     assert json.loads(loaded.expanded_source)["model_id"] == chr(0xD800)

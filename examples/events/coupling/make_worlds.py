@@ -1,9 +1,10 @@
-"""Write the worlds of the coupling series C under the law of events, on the
-plane.
+"""Write the worlds of the coupling series C under the law of the ray, on
+the plane.
 
 One base world, the items' worlds from it (README.md here; the entry "C, the
-couplings under the law of events, on the plane (2026-09-19)" in
-docs/EXPERIMENTS.md). The series runs on a two-dimensional board by the
+couplings under the law of the ray, on the plane (2026-09-19)" in
+docs/EXPERIMENTS.md; the readings under the law of events stay registered
+as history). The series runs on a two-dimensional board by the
 model owner's decision of 2026-09-19 ("cancel the runs; let it run on
 two-dimensional boards"): a board of 121 x 121 x 1 with the z axis declared
 periodic (`"boundary": {"z": "periodic"}`), so that the two z Ports of every
@@ -11,16 +12,18 @@ Node return to the same Node at the next interval and nothing leaks; the
 centre c = (60, 60, 0), K 2^22, N 64, `release` [1, 128], `suspension` 0
 (1 in world 6 only), the free family `m` (charge 0; the family `q` of item
 7 carries the charges), the source a fixed measured event of content 2^24
-at c (2^17 per Port at every self-creation; the two z Ports' releases come
-home the next interval as its own number and are created again: the net
-emission into the plane is q = 6 x 2^17 = 786432 units per interval at the
-fixed point, exact), the probes fixed measured events of content 1 (m in
-item 1) with the default table (`read`: the push taken, the units mix on).
+at c (2^17 rays per heading at every self-creation; the two z headings'
+rays step onto the source's own Node through the stub and come home, to be
+created again over the six headings, so the net emission into the plane is
+q = 6 x 2^17 = 786432 units per interval at the fixed point, exact), the
+probes fixed measured events of content 1 (m in item 1) with the default
+table (`read`: the push taken, the rays go on).
 The worlds:
 
 - item 1, equivalence: `1a_m<m>` one fixed probe of content m in 1, 4, 16 at
   (72, 60, 0), r = 12 on +x; `1b_m<m>` the same probe free (`fixed` false,
-  momentum 0);
+  momentum 0; since 2026-09-19 a step onto the source is refused, so the free
+  probe ends beside it);
 - item 2, the third law with unequal contents: `2`, A = 2^22 at (56, 60, 0)
   and B = 2^20 at (64, 60, 0), both fixed;
 - item 3, superposition: `3` the item-2 world with a fixed probe of content 1
@@ -105,8 +108,8 @@ def world(
     name: str, entries: list[Json], *, ticks: int = TICKS, suspension: int = 0, family: str = "m"
 ) -> Json:
     return {
-        "law": "events",
-        "model_id": f"events-coupling-{name.replace('_', '-')}-plane-v1",
+        "law": "rays",
+        "model_id": f"rays-coupling-{name.replace('_', '-')}-plane-v1",
         "shape": list(SHAPE),
         "boundary": dict(BOUNDARY),
         "ticks": ticks,

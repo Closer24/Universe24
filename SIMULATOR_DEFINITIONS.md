@@ -1,17 +1,18 @@
 # Event Universe — active modular 3D integer simulator
 
-## Physical detector candidate: DETECTOR-REVERSIBLE-1 (2026-09-19)
+## The law of the ray: RAYS-1 (2026-09-19)
 
-An events world explicitly selecting `dynamics: "reversible-detector-v1"`
-uses the bounded local operator, inverse and admission domain defined in
-[the detector contract](docs/DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1).
-Coverage, output grouping and quantum threshold are independent data. A shared
-readout comes only from a current physical output Event reached through Links;
-its calibrated phase is referred to its own physical clock. No audit record or
-whole-board sum supplies memory, routing or a physical result. Fixed per-Node
-channel bounds are independent of total apparatus coverage. Atomic domain
-refusal is not a saturation or reset law. The default `events-v1` contract is
-unchanged; quantum uncertainty and Born behavior remain separate unproved goals.
+A world selecting `"law": "rays"` runs the law of the ray
+([docs/RAY_LAW.md](docs/RAY_LAW.md)): a ray with a record on the digital line
+of its momentum at one speed, the collision table a bijection inside its
+invariant classes, the detector's record the squared coherent sum of what it
+clicked, the click the one one-way border. Coverage (a detector's Nodes), the
+threshold and the `reads` component are independent data. No audit record or
+whole-board sum supplies memory, routing or a physical result; the readings
+of the engine (`shell_readings`, `cube_flux`) are read-only. The
+`reversible-detector-v1` candidate of the same day is absorbed and deleted
+([migration](docs/MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1));
+quantum uncertainty and Born behavior remain separate unproved goals.
 
 ## Events board topology (2026-09-19)
 

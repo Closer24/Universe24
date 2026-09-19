@@ -1,7 +1,5 @@
 {
-  "law": "events",
-  "dynamics": "reversible-detector-v1",
-  "max_active_owners": 1,
+  "law": "rays",
   "model_id": "detector-grouped-12",
   "shape": [
     9,
@@ -30,7 +28,7 @@
       ],
       "family": "carrier",
       "number": 1,
-      "heading": [
+      "direction": [
         1,
         0,
         0
@@ -46,7 +44,7 @@
       ],
       "family": "carrier",
       "number": 1,
-      "heading": [
+      "direction": [
         1,
         0,
         0
@@ -62,7 +60,7 @@
       ],
       "family": "carrier",
       "number": 1,
-      "heading": [
+      "direction": [
         1,
         0,
         0
@@ -78,7 +76,7 @@
       ],
       "family": "carrier",
       "number": 1,
-      "heading": [
+      "direction": [
         1,
         0,
         0

@@ -11,6 +11,31 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The law of the ray: the engine, the suite and the re-registered runs - 2026-09-19
+
+Base `ce0b22af` on `claude/universe24-new-3ytqde` (the merge of the three
+reversible corrections). The engine of the law of the ray
+([RAY_LAW.md](RAY_LAW.md)) implemented in stages on that base (the engine,
+then the tests, the examples and the tools, then the coupling tool, then the
+documents), `events-v1` deleted ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
+Runtime source SHA-256 `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless.
+
+| Check | Result |
+| --- | --- |
+| `pytest -n auto` over the suite | 372 passed in 20 s on four workers (the ten `test_ray_*` modules, the consumers, retention and the gates); `tests/test_ray_worlds.py` runs the two slits three times on 60 x 121 x 1 for 500 intervals and the ten Bell worlds through `tools/bell_chsh.py` |
+| The collision table at load | 6561 states, 5440 classes, INV[FWD[s]] = s on every state, the amount and the heading sum conserved by every move (`test_ray_collision` (a)) |
+| The bijection | 50 intervals forward and 50 inverse on a periodic 8 x 8 x 4 board with 324 records return the store bit-exact (`test_ray_bijection`) |
+| The one reading | the seven basis vectors orthogonal, the slots recovered, the 48 board symmetries rotate the flow and fix the scalars (`test_ray_readings` (a)) |
+| The two slits (world test) | the record's interference term correlates with the two-source cosine at lambda = 8 / sqrt 3 at 0.893 (the design pinned 0.9 for a fan of 203 directions; this world's fan is 91), below 0.5 at the periods 4 and 16; the plain count additive to the unit |
+| Ten Bell runs of 160 ticks, `python -m event_universe --init examples/events/bell/<name>.json` | all completed, the books balanced, nothing escaped; E as pinned in every run; S = 2 exactly; S' = 3/2 exactly; the offsets plus 14, minus 16; no-signalling exact; `python tools/bell_chsh.py`: 326 criteria, 0 failed, exit 0 ([A2 under the law of the ray](EXPERIMENTS.md#a2-under-the-law-of-the-ray-2026-09-19)) |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4` | all completed in 0.5 to 3.3 s each; the books balanced at every tick; the measured content constant; age + waited = the intervals completed; `PYTHONPATH=src python tools/coupling_readings.py`: 392 criteria passed, 0 failed, exit 0; 19 readings inside the expectation of RAY_LAW section 8 and 9 outside, registered in [C under the law of the ray](EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19) (the ring means of six beams follow the lattice ring's Node count; the presence slope -0.76; the clock on the axis owed the beam's presence) |
+| Performance | 0.23 us per Node per interval on the coupling plane (121 x 121, one source), about 1.0 us on the two slits (about 5100 rows in flight, about 2.7 us per row), against the design's budget of 3.6 us; measured with `time.perf_counter` around `RaySimulation.step`, a host cost |
+| Gates | `ruff check`, `ruff format --check` and `mypy --strict` on `src`, `tests` and `tools` clean; `tests/test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` passed; `python tools/check.py --full`: ruff lint and format on 108 files, mypy on 21 source files, 372 passed |
+
+The register entries mark measured against expected line by line; a reading
+outside its expectation is reported, not moved. The runs of the law of events
+below keep their scope.
+
 ## External detector definition with a periodic return - 2026-09-19
 
 [Experiment E14](EXPERIMENTS.md#e14-an-external-detector-definition-with-a-periodic-return)

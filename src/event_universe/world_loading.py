@@ -16,13 +16,12 @@ from pathlib import Path
 from typing import cast
 
 from event_universe.events.world import (
-    DETECTOR_GROUP_KEYS,
     DETECTOR_KEYS,
     LAMP_KEYS,
     MEASURED_KEYS,
     TABLE_ENTRY_KEYS,
-    EventWorld,
-    parse_event_world,
+    RayWorld,
+    parse_ray_world,
 )
 from event_universe.json_documents import parse_json_document
 
@@ -42,7 +41,7 @@ class DefinitionSource:
 
 @dataclass(frozen=True)
 class LoadedWorld:
-    world: EventWorld
+    world: RayWorld
     portable_source: bytes
     expanded_source: bytes
     dependencies: tuple[DefinitionSource, ...]
@@ -146,21 +145,21 @@ def _definition_geometry(definition: dict[str, object], label: str) -> None:
     for index, raw in enumerate(measured):
         entry_label = f"{label}.measured[{index}]"
         entry = _object(raw, entry_label)
-        _keys(entry, MEASURED_KEYS | {"port_map"}, {"position"}, entry_label)
+        _keys(entry, MEASURED_KEYS, {"position"}, entry_label)
         position = _relative(entry["position"], f"{entry_label}.position")
         if position in geometry:
             raise ValueError(f"{entry_label}: duplicate relative measured position {position}")
         geometry.add(position)
         if "family" in entry:
             _name(entry["family"], f"{entry_label}.family")
-        for key in ("momentum", "port_map"):
+        for key in ("momentum", "directions"):
             if key in entry:
                 _array(entry[key], f"{entry_label}.{key}")
         if "lamp" in entry:
             lamp_label = f"{entry_label}.lamp"
             lamp = _object(entry["lamp"], lamp_label)
             _keys(lamp, LAMP_KEYS, set(), lamp_label)
-            for key in ("rate", "headings"):
+            for key in ("rate", "directions"):
                 if key in lamp:
                     _array(lamp[key], f"{lamp_label}.{key}")
         if "table" in entry:
@@ -176,23 +175,12 @@ def _definition_geometry(definition: dict[str, object], label: str) -> None:
     for index, raw in enumerate(_array(definition["detectors"], f"{label}.detectors")):
         detector_label = f"{label}.detectors[{index}]"
         detector = _object(raw, detector_label)
-        _keys(detector, DETECTOR_KEYS | {"groups"}, {"name", "positions"}, detector_label)
+        _keys(detector, DETECTOR_KEYS, {"name", "positions"}, detector_label)
         name = _name(detector["name"], f"{detector_label}.name")
         if name in names:
             raise ValueError(f"{detector_label}: duplicate detector name {name!r}")
         names.add(name)
         _check_geometry(detector["positions"], geometry, f"{detector_label}.positions")
-        if "groups" in detector:
-            group_names: set[str] = set()
-            for group_raw in _array(detector["groups"], f"{detector_label}.groups"):
-                group = _object(group_raw, f"{detector_label}.groups")
-                _keys(group, DETECTOR_GROUP_KEYS, {"name", "positions", "output"}, detector_label)
-                group_name = _name(group["name"], f"{detector_label}.group.name")
-                if group_name in group_names:
-                    raise ValueError(f"{detector_label}: duplicate group name {group_name!r}")
-                group_names.add(group_name)
-                _check_geometry(group["positions"], geometry, f"{detector_label}.group.positions")
-                _check_geometry([group["output"]], geometry, f"{detector_label}.group.output")
 
 
 def _check_geometry(value: object, geometry: set[tuple[int, int, int]], label: str) -> None:
@@ -282,13 +270,6 @@ def _entries(
                     _translated(position, origin, shape, name)
                     for position in _array(entry["positions"], name)
                 ]
-                for raw_group in _array(entry.get("groups", []), name):
-                    group = _object(raw_group, name)
-                    group["positions"] = [
-                        _translated(position, origin, shape, name)
-                        for position in _array(group["positions"], name)
-                    ]
-                    group["output"] = _translated(group["output"], origin, shape, name)
             yield entry
 
 
@@ -315,7 +296,7 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
     document = _object(decoded, "input")
     bundled = document.get("format") == BUNDLE_FORMAT
     if not bundled and not (_AUTHOR_KEYS & document.keys()):
-        world = parse_event_world(document)
+        world = parse_ray_world(document)
         return LoadedWorld(world, raw, _encode(document), ())
     _utf8(raw, "input")
     supplied: dict[str, object] | None = None
@@ -345,7 +326,7 @@ def load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWo
         dependency = path.read_bytes()
     definitions = _definitions(dependency, reference)
     expanded_document = _expand(document, definitions)
-    world = parse_event_world(expanded_document)
+    world = parse_ray_world(expanded_document)
     expanded = _encode(expanded_document)
     portable = _encode(
         {
