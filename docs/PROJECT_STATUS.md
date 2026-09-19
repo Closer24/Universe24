@@ -32,9 +32,14 @@ Everything below is on `main`; nothing is in a branch or a machine.
    `src/event_universe/shadow/` (feature 20, `field-only-v1`, PR #327), selected by a
    world's `"law": "shadow"`, with `tests/test_field_only.py` and the worlds under
    `examples/shadow/`. **It is under test and not the working law** (the model owner,
-   2026-09-19): a world of its law is refused unless it declares the three decisions the
+   2026-09-19): a world of its law is to be refused unless it declares the three decisions the
    owner has not made (feature 20b, `shadow-gate-v1`: `transmitted_number`,
-   `wait_per_quantum`, `epsilon_g`), and it becomes the law only after it has repeated
+   `wait_per_quantum`, `epsilon_g`; **not yet written**: the session that recorded
+   the decision was closed before the gate was coded, so the first task of whoever
+   continues is that gate: a required key for each of the three in
+   `src/event_universe/shadow/world.py`, a refusal that names them as the owner's
+   pending decisions, the example worlds declaring the values the tests used, and
+   `transmitted_number` and `epsilon_g` wired into the engine), and it becomes the law only after it has repeated
    every confrontation on open boards (E11, A5s, A6, A1, E9) and the readings were
    registered. Until then the old engine stays; when it passes, the old engine is
    retired in a cleanup and this becomes one engine.
