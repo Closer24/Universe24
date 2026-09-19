@@ -88,6 +88,7 @@ def validate_configuration(source: str | bytes, *, kind: str = "auto") -> Valida
             "model": world.model_id,
             "law": EVENTS_LAW,
             "shape": world.shape,
+            "boundary": world.boundary_per_axis,
             "ticks": world.ticks,
             "families": len(world.families),
             "measured": len(world.measured),

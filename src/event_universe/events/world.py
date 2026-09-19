@@ -6,8 +6,13 @@ earlier engines' schemas (no `contents`, no `initial_shadows`, no
 refusal names the key at fault. What a world declares (Highlights 5.4, the
 law of events, the model owner, 2026-09-19):
 
-- `shape`, three positive extents; `boundary` `"open"` (the edge is infinity,
-  what leaves is booked as escaped; a closed board is refused); `ticks`;
+- `shape`, three positive extents; `boundary` `"open"` (the default: the edge
+  is infinity on every face, what leaves is booked as escaped) or an object
+  with any of the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the
+  missing axes open (the declared exception of the model owner, 2026-09-19:
+  on a periodic axis the departures that would leave through one face are
+  created at the first Node of the opposite face, nothing escapes on that
+  axis; a closed board and every other word are refused); `ticks`;
 - `K`, the content per phase step per self-creation, one for the world; `N`,
   the steps of the phase circle (64 by default, a power of two from 2 through
   4096); `release` `[n, d]`, the events a measured event of a free family
@@ -126,6 +131,9 @@ TABLE_ENTRY_KEYS = {"rule", "phase_window"}
 TRANSIT_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
 DETECTOR_KEYS = {"name", "positions", "threshold"}
 DETECTOR_GROUP_KEYS = {"name", "positions", "output", "threshold", "capacity", "reference_phase"}
+# The board's faces per axis: open (the default) or periodic (the wrap).
+AXES = ("x", "y", "z")
+BOUNDARIES = ("open", "periodic")
 
 
 @dataclass(frozen=True)
@@ -213,10 +221,14 @@ class DetectorDefinition:
 
 @dataclass(frozen=True)
 class EventWorld:
-    """A parsed world of the law of events."""
+    """A parsed world of the law of events. `boundary` is the declared value
+    as the record carries it (the string `"open"` or the object per axis);
+    `periodic` says per axis (x, y, z) whether the walk wraps."""
 
     model_id: str
     shape: Address3
+    boundary: str | dict[str, str]
+    periodic: tuple[bool, bool, bool]
     ticks: int
     clock: int
     phase_steps: int
@@ -232,6 +244,14 @@ class EventWorld:
     @property
     def phase_mask(self) -> int:
         return self.phase_steps - 1
+
+    @property
+    def boundary_per_axis(self) -> dict[str, str]:
+        """The board's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
+        return {
+            axis: BOUNDARIES[1] if wraps else BOUNDARIES[0]
+            for axis, wraps in zip(AXES, self.periodic, strict=True)
+        }
 
     def owners(self, family: int) -> tuple[int, ...]:
         """The numbers whose events of a family can exist: the measured events
@@ -331,6 +351,29 @@ def _port_map(value: object, label: str) -> tuple[int, ...]:
     if len(set(result)) != 6:
         raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must be a permutation of 0 through 5")
     return result
+
+
+def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
+    """The board's faces: `"open"` on every face, or an object with any of
+    the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the missing axes
+    open. Returns the value as declared (what the record carries) and, per
+    axis, whether the walk wraps. A closed board and every other word are
+    refused."""
+    if value == BOUNDARIES[0]:
+        return BOUNDARIES[0], (False, False, False)
+    if (
+        isinstance(value, dict)
+        and set(value) <= set(AXES)
+        and all(item in BOUNDARIES for item in value.values())
+    ):
+        declared = {str(key): str(item) for key, item in value.items()}
+        wraps = tuple(declared.get(axis, BOUNDARIES[0]) == BOUNDARIES[1] for axis in AXES)
+        return declared, (wraps[0], wraps[1], wraps[2])
+    raise ValueError(
+        f"{EVENTS_LAW}: the board is open (its edge is infinity) unless an axis is declared "
+        'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic"); '
+        "a closed board is refused"
+    )
 
 
 def _families(value: object) -> tuple[FamilyDefinition, ...]:
@@ -724,10 +767,7 @@ def parse_event_world(document: object) -> EventWorld:
         raise ValueError(f"{EVENTS_LAW}: shape must be three positive extents")
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
-    if obj.get("boundary", "open") != "open":
-        raise ValueError(
-            f"{EVENTS_LAW}: the board is open (its edge is infinity); a closed board is refused"
-        )
+    boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
     ticks = _integer(obj["ticks"], "ticks", 0)
     clock = _integer(obj["K"], "K", 1)
     phase_steps = _integer(obj.get("N", 64), "N", 2, MAX_PHASE_STEPS)
@@ -755,6 +795,8 @@ def parse_event_world(document: object) -> EventWorld:
     world = EventWorld(
         model_id,
         shape,
+        boundary,
+        periodic,
         ticks,
         clock,
         phase_steps,
