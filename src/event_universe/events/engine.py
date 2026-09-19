@@ -107,7 +107,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from event_universe.core.integer import checked_work
-from event_universe.core.lattice import PORT_HEADINGS, Address3
+from event_universe.core.lattice import PORT_HEADINGS, Address3, adjacent_node
 from event_universe.events.mixing import MIXING_AMPLITUDE_SCALE
 from event_universe.events.reversible import (
     STATE_BOUND,
@@ -436,16 +436,10 @@ class EventSimulation:
                 validate_carrier(carrier, self.world.phase_steps, self.families[family].quantum)
                 position = (x, y, z)
                 if not initial:
-                    heading = PORT_HEADINGS[port]
-                    destination = tuple(
-                        checked_work(a + b) for a, b in zip(position, heading, strict=True)
-                    )
-                    if any(
-                        not 0 <= value < extent
-                        for value, extent in zip(destination, self.shape, strict=True)
-                    ):
+                    destination = adjacent_node(position, port, self.shape, self.world.periodic)
+                    if destination is None:
                         raise ValueError("reversible detector: open-edge escape is unsupported")
-                    position = (destination[0], destination[1], destination[2])
+                    position = destination
                 found.setdefault(position, []).append(carrier)
         return found
 
@@ -845,11 +839,11 @@ class EventSimulation:
                 continue
             sign = 1 if momentum > 0 else -1
             entry.steps += 1
-            target = list(entry.position)
-            target[axis] += sign
             origin = entry.position
+            port = 2 * axis + (0 if sign > 0 else 1)
+            destination = adjacent_node(origin, port, self.shape, self.world.periodic)
             del self.at[origin]
-            if not 0 <= target[axis] < self.shape[axis]:
+            if destination is None:
                 for index in range(len(self.families)):
                     self.held_escaped[index] += entry.held[index]
                     self.transit_absorbed[index] -= entry.home[index]
@@ -860,7 +854,8 @@ class EventSimulation:
                 del self.measured[entry.number]
                 self._event("escaped", entry, entry.family, entry.number, content, ZERO3)
                 return
-            destination: Address3 = (target[0], target[1], target[2])
+            # Removing the origin above keeps an extent-one self-Link from
+            # merging an Event with itself or duplicating its inventory.
             if destination in self.at:
                 other = self.measured[self.at[destination]]
                 for index in range(len(self.families)):
@@ -1083,6 +1078,8 @@ class EventSimulation:
         half-width `half` about the centre and its neighbours, this interval:
         the amount that arrived just outside each face moving outward less the
         amount that arrived on the face moving inward, Gauss's flux."""
+        if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS or any(self.world.periodic):
+            raise ValueError("cube_flux supports only the all-open default arrival diagnostic")
         per_port = self.per_port[family]
         total = 0
         for axis in range(3):
