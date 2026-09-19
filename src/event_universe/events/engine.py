@@ -39,7 +39,7 @@ from event_universe.core.lattice import Address3, adjacent_node
 from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
 from event_universe.events.nature_beam import (
     HERE,
-    PORTS,
+    ArrivalRows,
     RayStore,
     RayTables,
     Readings,
@@ -114,14 +114,11 @@ class RaySimulation:
             self.content_initial[item.family] += content * item.amount
         for store in self.stores:
             store.merge()
-        # The readings of the last interval (diagnostics): per family the
-        # arrivals per Node, their net flow, the Links crossed per Port and
-        # the presence.
+        # The readings of the last interval (diagnostics, decomposed on
+        # request): per family the arrivals per Node, their net flow, the
+        # Links crossed per Port and the presence.
         self.readings = Readings(
-            [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
-            [np.zeros((*world.shape, 3), dtype=np.int64) for _ in range(count)],
-            [np.zeros((*world.shape, PORTS), dtype=np.int64) for _ in range(count)],
-            [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
+            world.shape, self.tables.flight.vectors, [ArrivalRows.empty() for _ in range(count)]
         )
 
     @property

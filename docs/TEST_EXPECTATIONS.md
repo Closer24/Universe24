@@ -26,7 +26,7 @@ kept, their pins the law of events').
 
 | Module | Rule isolated | Re-pins |
 | --- | --- | --- |
-| `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray; the dense readings of the board decomposed on request for the active Nodes ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
@@ -95,6 +95,17 @@ its component by key.
   `pass` record each (`threshold` 3); at threshold 1 with the window 32,
   the two rays at phase 0 pass (`window` 32) and the ray at phase 32
   clicks.
+- (e) the dense readings of the board are decomposed on request from the
+  rows of the walk, for the active Nodes only (added 2026-09-19 with the
+  optimizations of RAY_LAW section 10, note 22): on the open 9 x 3 x 3
+  board with no measured event, 9 units arriving at (4, 1, 1) on +X and 9
+  on -X, 3 arriving at (2, 1, 1) on +Y and 2 at rest at (6, 1, 1): after
+  one interval the count is 18, 3 and 0 at those Nodes (21 over the
+  board), the flow (0, 0, 0), (0, 3, 0) and (0, 0, 0), the presence 18, 3
+  and 2 (23 over the board), the Links crossed per Port (9, 9, 0, 0, 0, 0)
+  at (4, 1, 1) and (0, 0, 3, 0, 0, 0) at (2, 1, 1) (21 over the board);
+  before the first interval, and on an empty board, every array is zero
+  with its shape.
 
 ## The table generated from the keys
 

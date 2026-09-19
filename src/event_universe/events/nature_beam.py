@@ -18,7 +18,9 @@ order, each a bijection on the board's state except the border:
    direction's period, its phase turned by the family's `phase_per_link`;
 2. the readings: at every Node the amount-weighted moments of order 0, 1
    and 2 of the direction vectors of the arrivals, taken ONCE by
-   `read_arrivals` over the one reading set: the count (split outside /
+   `read_arrivals` over the one reading set (at the measured events in
+   step 4; the dense arrays of the whole board are the engine's
+   diagnostics, decomposed on request): the count (split outside /
    here, a ray that did not step this interval having the direction
    (0, 0, 0) and entering the zeroth moment alone), the net flow (the
    vector sum of amount x D[direction]) and the traceless tensor (three
@@ -651,20 +653,98 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
     return value
 
 
-@dataclass
-class Readings:
-    """The interval's readings per family, dense over the board (diagnostics
-    for the engine's shell means and flux): the amount that arrived per
-    Node (the zeroth moment outside), its net flow (the first moment), the
-    presence of every ray (the zeroth moment whole) and, a diagnostic of
-    the walk and not of the reading, the amount that crossed into each Node
-    through each of its six Ports this interval (`per_port`, the Links
-    crossed, for Gauss's flux)."""
+@dataclass(frozen=True)
+class ArrivalRows:
+    """One family's rows as the walk left them, held for the readings on
+    request: the Node, the direction each row arrived on (`HERE` for a row
+    that did not step), its amount, and the rows that crossed a Link this
+    interval with their Port (the walk's diagnostic). Arrays the store
+    does not write again (every later step replaces its columns)."""
 
-    count: list[np.ndarray]
-    flow: list[np.ndarray]
-    per_port: list[np.ndarray]
-    presence: list[np.ndarray]
+    node: np.ndarray
+    arrival: np.ndarray
+    amount: np.ndarray
+    crossed_node: np.ndarray
+    crossed_port: np.ndarray
+    crossed_amount: np.ndarray
+
+    @classmethod
+    def empty(cls) -> ArrivalRows:
+        none = np.zeros(0, dtype=np.int64)
+        return cls(none, none, none, none, none, none)
+
+
+class Readings:
+    """The interval's readings per family, dense over the board, decomposed
+    on request from the rows of the walk (diagnostics for the engine's
+    shell means and flux; the law reads none of them, its own readings
+    being taken at the measured events in step 4): the amount that arrived
+    per Node (the zeroth moment outside), its net flow (the first moment),
+    the presence of every ray (the zeroth moment whole) and, a diagnostic
+    of the walk and not of the reading, the amount that crossed into each
+    Node through each of its six Ports this interval (`per_port`, the
+    Links crossed, for Gauss's flux). Only the active Nodes (the Nodes with
+    rows) are decomposed, by the one keyed `read_arrivals` with its bound;
+    every other Node is zero."""
+
+    def __init__(self, shape: Address3, vectors: np.ndarray, rows: list[ArrivalRows]) -> None:
+        self.shape = shape
+        self.vectors = vectors
+        self.rows = rows
+        self._moments: tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]] | None = None
+        self._per_port: list[np.ndarray] | None = None
+
+    @property
+    def nodes(self) -> int:
+        return self.shape[0] * self.shape[1] * self.shape[2]
+
+    def _decompose(self) -> tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]]:
+        if self._moments is None:
+            count: list[np.ndarray] = []
+            flow: list[np.ndarray] = []
+            presence: list[np.ndarray] = []
+            for rows in self.rows:
+                outside = np.zeros(self.nodes, dtype=np.int64)
+                vector = np.zeros((self.nodes, DIMENSIONS), dtype=np.int64)
+                scalar = np.zeros(self.nodes, dtype=np.int64)
+                if rows.node.shape[0]:
+                    active, inverse = np.unique(rows.node, return_inverse=True)
+                    reading = read_arrivals(
+                        self.vectors[rows.arrival], rows.amount, inverse, active.shape[0]
+                    )
+                    outside[active] = reading.outside
+                    vector[active] = reading.vector
+                    scalar[active] = reading.scalar
+                count.append(outside.reshape(self.shape))
+                flow.append(vector.reshape((*self.shape, DIMENSIONS)))
+                presence.append(scalar.reshape(self.shape))
+            self._moments = (count, flow, presence)
+        return self._moments
+
+    @property
+    def count(self) -> list[np.ndarray]:
+        return self._decompose()[0]
+
+    @property
+    def flow(self) -> list[np.ndarray]:
+        return self._decompose()[1]
+
+    @property
+    def presence(self) -> list[np.ndarray]:
+        return self._decompose()[2]
+
+    @property
+    def per_port(self) -> list[np.ndarray]:
+        if self._per_port is None:
+            self._per_port = [
+                segment_sums(
+                    rows.crossed_node * PORTS + rows.crossed_port,
+                    rows.crossed_amount,
+                    self.nodes * PORTS,
+                ).reshape((*self.shape, PORTS))
+                for rows in self.rows
+            ]
+        return self._per_port
 
 
 # -- the host's batching of step 4 -------------------------------------------------
@@ -903,15 +983,14 @@ def nature_beam(
             store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
             store.arrival[:] = HERE
             store.merge()
-        return Readings([], [], [], [])
+        return Readings(shape, vectors, [])
 
     # 1. The walk: departures become arrivals; the escapes click on the faces.
-    readings = Readings([], [], [], [])
+    arrivals: list[ArrivalRows] = []
     for family, store in enumerate(stores):
         definition = families[family]
-        crossings = np.zeros(nodes * PORTS, dtype=np.int64)
         if store.size == 0:
-            readings.per_port.append(crossings.reshape((*shape, PORTS)))
+            arrivals.append(ArrivalRows.empty())
             continue
         step = flight.steps[store.direction, store.age].astype(np.int64)
         moved = step.any(axis=1)
@@ -976,10 +1055,8 @@ def nature_beam(
                     )
         store.node = coordinates @ np.array(store.strides, dtype=np.int64)
         crossed = moved & ~escaped
-        crossings = segment_sums(
-            store.node[crossed] * PORTS + port[crossed], store.amount[crossed], nodes * PORTS
-        )
-        readings.per_port.append(crossings.reshape((*shape, PORTS)))
+        crossed_node, crossed_port = store.node[crossed], port[crossed]
+        crossed_amount = store.amount[crossed]
         # A rest ray keeps its age (the rest slots belong to the six-heading
         # alphabet, whose period it resumes when a collision moves it).
         resting = store.direction < REST_DIRECTIONS
@@ -989,13 +1066,17 @@ def nature_beam(
         if escaped.any():
             store.keep(~escaped)
         store.sort()
+        arrivals.append(
+            ArrivalRows(
+                store.node, store.arrival, store.amount, crossed_node, crossed_port, crossed_amount
+            )
+        )
 
-    # 2. The readings: the moments of every Node's arrivals, taken once.
-    for store in stores:
-        reading = read_arrivals(vectors[store.arrival], store.amount, store.node, nodes)
-        readings.count.append(reading.outside.reshape(shape))
-        readings.flow.append(reading.vector.reshape((*shape, DIMENSIONS)))
-        readings.presence.append(reading.scalar.reshape(shape))
+    # 2. The readings: the moments of every Node's arrivals, taken once,
+    # where they are read: at the measured events in step 4 (their own
+    # local sets) and, for the diagnostics of the whole board, on request
+    # from the rows of the walk (the active Nodes only; `Readings`).
+    readings = Readings(shape, vectors, arrivals)
 
     # 3. The collision.
     for store in stores:
