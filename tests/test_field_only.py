@@ -35,8 +35,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.spatial_state import phase_cosines, phase_sines
-from event_universe.initialization import parse_initial_state
+from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.runner import run_initialization
 from event_universe.shadow import SHADOW_LAW, ShadowSimulation, parse_shadow_world
 from event_universe.shadow.layer import nearest_step, step_window
@@ -430,14 +429,12 @@ def test_a_content_with_momentum_steps_by_its_accumulators_and_its_own_field_pus
         assert holder.held == [CONTENT] and holder.absorbed[0]["read"] == 0
 
 
-def test_the_mode_refuses_the_old_keys_and_the_old_engine_refuses_the_law(tmp_path):
-    """(f): the refusals, both ways, and the runner's switches."""
+def test_the_world_refuses_the_old_keys_and_the_runner_records_a_run(tmp_path):
+    """(f): the refusals of the old engine's keys by name, and the runner."""
     world = one_content(11, 4)
-    with pytest.raises(ValueError, match="unknown keys.*law"):
-        parse_initial_state(world)
-    ring = json.loads((ROOT / "examples/nature/ring.json").read_text(encoding="utf-8"))
+    old_world = {"schema_version": 1, "model_id": "old", "shape": [3, 3, 3], "ticks": 1}
     with pytest.raises(ValueError, match=f"{SHADOW_LAW}.*old engine's keys"):
-        parse_shadow_world(ring)
+        parse_shadow_world(old_world)
     for key in ("schema_version", "dense_field", "initial_field", "wait_reads", "shadow_wait"):
         with pytest.raises(ValueError, match=f"{SHADOW_LAW}.*{key}"):
             parse_shadow_world({**world, key: 1})
@@ -491,8 +488,10 @@ def test_the_mode_refuses_the_old_keys_and_the_old_engine_refuses_the_law(tmp_pa
     assert (tmp_path / "run" / "state.json").exists() and (tmp_path / "run" / "events.jsonl").exists()
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))
     assert state["law"] == SHADOW_LAW and state["tick"] == 4 and state["nodes"]
-    with pytest.raises(ValueError, match="headless and alone"):
-        run_initialization(path, tmp_path / "dense", dense_field=True)
+    with pytest.raises(ValueError, match="ticks must be nonnegative"):
+        run_initialization(path, tmp_path / "negative", ticks=-1)
+    with pytest.raises(ValueError, match="empty output directory"):
+        run_initialization(path, tmp_path / "run")
 
 
 @pytest.mark.parametrize("modulus", [2, 8, 64, 256, 4096])

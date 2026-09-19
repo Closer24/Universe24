@@ -5,10 +5,45 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### One engine (2026-09-19)
+
+- The engine of the law of the shadow (`field-only-v1`, feature 20) is the one
+  engine, by the model owner's decision of 2026-09-19 ("The field is, in fact,
+  a field of events. No confrontations are needed. Only tests that everything
+  is as designed."; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)). The
+  old engine of the law of the bit, its worlds, catalog, tools and tests are
+  deleted ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+  The substrate the new engine took from the old one moved to
+  `core/lattice.py`, `core/phase.py` and `shadow/mixing.py`, byte-identical in
+  what it does; the Node's mixing has its own isolated test again,
+  `tests/test_node_mixing.py`, on one Node of the engine's layer.
+- The runner takes `--init`, `--output` and `--ticks` only; the preflight
+  checks world files only; the workspace lists the worlds of `examples/shadow/`
+  and runs headless.
+- The same day, earlier: the three pending decisions of the morning's status
+  line (`transmitted_number`, the wait's unit, ε_g) were withdrawn ("We do not
+  need these three things at all"), so the gate of feature 20b is not written;
+  the wait is the delayed clock and `wait_per_quantum` stays a declared width
+  of the world; and the owner's reading "A quantum passes, like everything, at
+  the speed of light between Nodes" is recorded in 5.4 ("One speed, and what
+  is seen").
+
+- `families[i].turns_in_flight` (the owner's "what can be put as a parameter,
+  put"): whether a family's quanta turn their phase in flight by their amount
+  over K on every Link, true by default for a paid family and false for a free
+  one, what the engine did by kind until now; `tests/test_family_turns.py`.
+
+- `families[i].quantum` (the owner's "put it in, without an experiment"): the
+  units of a family that make one event at a holder that absorbs them (`keep`,
+  the click; `rerelease`), per number, the rest waiting in the holder's
+  register (`pending` in the content's state and on the held line of the
+  books, `events` per family); 1 by default, every unit its own event as
+  before; the derivation's q_γ as a declared width; `tests/test_family_quantum.py`.
+
 ### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
 
 - A new engine mode beside the old one, `event_universe/shadow/`, selected by
-  a world's `"law": "shadow"` key ([the law of the shadow](docs/SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1)):
+  a world's `"law": "shadow"` key ([the law of the shadow](docs/ENGINE.md#the-law-of-the-shadow-field-only-v1)):
   only shadows and events. Matter is content held at Nodes; every ray is a
   shadow, a whole quantum in flight that moves one Link per interval and
   spreads by the Node's mixing, the dense layer's kernels by import; an event

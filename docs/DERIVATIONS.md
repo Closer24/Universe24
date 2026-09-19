@@ -45,12 +45,12 @@ itself. A physical dictionary appears in each section.
   the whole quanta a(x, h, t) that arrived at x during interval t on heading
   h (resident at x at the end of tick t), and per Node, family, sign and Port
   the remainder register ρ(x, h) ∈ {0, …, S − 1} in units of 1/S (Highlights
-  3.17; [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1),
+  3.17; field spreading,
   `field-remainder-v1`).
 - Things (bit 1): each with a position x_i, a content m_i (its amount, its
   mass by Highlights 3.4 and 3.28), a momentum register p_i ∈ ℤ³ and three
-  accumulators A_i ∈ ℤ³ ([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2);
-  [the external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)),
+  accumulators A_i ∈ ℤ³ (a free ray turns by momentum;
+  the external body),
   a phase φ_i on the circle of N = 2^phase_bits steps and a family rest rate
   r (Highlights 3.3).
 
@@ -102,8 +102,8 @@ used anywhere below.
   interval the accumulators add the register, the axis furthest ahead steps
   one Link and loses the register's Manhattan length |p|₁
   (`ray-momentum-turn-v2`, "the DDA walks the register"). A bound group: the
-  corner table on a ring (Highlights 3.4; [binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)).
-- **R7, the phase** (Highlights 3.3; [loop binding](LOOP_BINDING.md#3-closure-as-integer-equalities)).
+  corner table on a ring (Highlights 3.4; binding as a loop).
+- **R7, the phase** (Highlights 3.3; loop binding).
   A thing's phase advances by its family's rest rate r at every Link, modulo
   N; light's rate is 0; a shadow carries its owner's phase and no clock (law
   of the bit, point 9).
@@ -148,7 +148,7 @@ n(x, t + 1) − n(x, t) = Σ_{h'} [φ(x − h' → x) − φ(x → x + h')]
 
 This is the discrete continuity equation, exact. In the integer form n(x)
 counts the in-flight quanta plus the registers' content (the ledger's
-`current` line, [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1),
+`current` line, field spreading,
 "the booking"), and the identity holds in integers because
 Σ_{h'} ⌊A·W/S⌋ + Σ_{h'} (A·W mod S)/S = A.
 
@@ -340,7 +340,7 @@ place of the mass; the DDA takes its +Y Links at intervals 9, 15, 20 and 24
 
 **A bound group.** The motion of a loop as a whole is its corners shifting
 (Highlights 3.4), a periodic orbit not yet established
-([loop binding](LOOP_BINDING.md#8-motion-of-a-loop-as-a-whole)); no velocity
+(loop binding); no velocity
 law for a loop can be derived today (section 9 gives what step counting
 alone allows).
 
@@ -809,7 +809,7 @@ P (1 − v) ≥ L_int(v),     so the clock rate      P₀ / P  ≤  (1 − v) ·
 The factor 1/(1 − v) is derived: it is the cost of the drift in a world
 where every ray spends every interval on one Link. L_int(v) is not: the
 moving orbit is a different periodic orbit of the corner table, not yet
-constructed ([loop binding](LOOP_BINDING.md#8-motion-of-a-loop-as-a-whole)),
+constructed (loop binding),
 and it may need more steps than the rest orbit (extra −x steps, each
 costing two) or, conceivably, fewer. With L_int = P₀ the rate is 1 − v,
 hypothesis 15's curve.
@@ -1030,7 +1030,7 @@ exist); the `corner` rule of `examples/nature/ring.json`, the Port form
 (each input's amount and phase leaving through the Port the other came in
 by; [E5](EXPERIMENTS.md#e5-the-ring-an-electron-at-rest-as-a-loop)), and the
 catalog's `born_steering` as the alternative corner table (the Born form,
-T[d] = round(N cos²(πd/N)); [loop binding](LOOP_BINDING.md#3-closure-as-integer-equalities));
+T[d] = round(N cos²(πd/N)); loop binding);
 R2 and R7; hypothesis 12; experiment A10 (planned, not run).
 
 **The corner map.** A ring is a rectangle a × b Links, L = 2(a + b), with
@@ -1120,7 +1120,7 @@ is predicted.
 stand (the Port form of the corner, the Born form as the alternative) every
 content closes: the ladder of hypothesis 12 needs a corner turn produced by
 the group's own field with a table proportional to what is met
-([loop binding](LOOP_BINDING.md#7-the-ladder-and-how-a10-counts-it)), which
+(loop binding), which
 is open. This is a derivation A10 would confirm by counting the same sets
 on the same tables; the statement is exact, not sampled, for the Port form
 and for the quadrature of the Born form, and enumerated for the rest.

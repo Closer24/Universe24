@@ -17,8 +17,15 @@ refuse each other's worlds by name. What a world declares:
 - `families`: each with a `name`, a `kind` (`free`: matter, whose held content
   releases shadows at the world's rate and whose quanta are read for gravity
   and electricity; `paid`: light, released only by a lamp that spends its
-  content, its quanta carrying their own momentum) and, for a free family, the
-  whole `charge` of a held content of it (0 by default);
+  content, its quanta carrying their own momentum), for a free family the
+  whole `charge` of a held content of it (0 by default), and `turns_in_flight`
+  (whether the family's quanta turn their phase in flight by their amount
+  over K on every Link: true by default for a paid family, false for a free
+  one; what a matter shadow rotates by, a declared width since 2026-09-19),
+  and `quantum` (the units of the family that make one event at a holder that
+  absorbs them, `keep` or `rerelease`: the units of one number arriving at the
+  holder wait in its register until a whole quantum is there, then one click
+  or one re-release of that whole; 1 by default, every unit its own event);
 - `contents`: the held contents, one per Node, each with a `position`, its
   `family`, its `amount` (a positive whole number of quanta, below K x N / 2),
   and optionally its `phase`, its whole `charge` (the family's by default), its
@@ -40,9 +47,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from event_universe.core.disturbance_state import MAX_VALUE, Address3
 from event_universe.core.integer import bounded_gcd, checked_work
-from event_universe.core.spatial_state import PORT_HEADINGS
+from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 SHADOW_LAW = "field-only-v1"
 LAW_VALUE = "shadow"
@@ -93,7 +99,7 @@ WORLD_KEYS = {
     "contents",
     "initial_shadows",
 }
-FAMILY_KEYS = {"name", "kind", "charge"}
+FAMILY_KEYS = {"name", "kind", "charge", "turns_in_flight", "quantum"}
 CONTENT_KEYS = {"position", "family", "amount", "phase", "charge", "momentum", "fixed", "table", "lamp"}
 LAMP_KEYS = {"rate", "headings"}
 SHADOW_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
@@ -101,12 +107,15 @@ SHADOW_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
 
 @dataclass(frozen=True)
 class FamilyDefinition:
-    """One family of the world: its name, its kind and the whole charge of a
-    held content of it."""
+    """One family of the world: its name, its kind, the whole charge of a
+    held content of it, whether its quanta turn their phase in flight, and the
+    units that make one event at a holder that absorbs them."""
 
     name: str
     kind: str
     charge: int
+    turns: bool
+    quantum: int
 
     @property
     def free(self) -> bool:
@@ -272,7 +281,11 @@ def _families(value: object) -> tuple[FamilyDefinition, ...]:
         charge = _integer(obj.get("charge", 0), f"families[{index}].charge", -MAX_VALUE, MAX_VALUE)
         if kind == "paid" and charge:
             raise ValueError(f"{SHADOW_LAW}: a paid family carries no charge ({name})")
-        found.append(FamilyDefinition(name, str(kind), charge))
+        turns = obj.get("turns_in_flight", kind == "paid")
+        if type(turns) is not bool:
+            raise ValueError(f"{SHADOW_LAW}: families[{index}].turns_in_flight must be true or false")
+        quantum = _integer(obj.get("quantum", 1), f"families[{index}].quantum", 1, MAX_VALUE)
+        found.append(FamilyDefinition(name, str(kind), charge, turns, quantum))
     return tuple(found)
 
 

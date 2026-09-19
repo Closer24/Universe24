@@ -30,7 +30,7 @@ runs.
 | `python tools/check.py` against `origin/main` | ruff lint and format, mypy on the changed tool, and the affected kept modules passed |
 
 The dated records below keep their original scope: a module they name that is
-absent from the [suite inventory](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17)
+absent from the suite inventory
 was deleted on 2026-09-17, and its numbers remain evidence about that revision.
 
 ## Integrated ray ownership and local Focus - 2026-09-14
@@ -76,7 +76,7 @@ This result does not promise faster dense-world or pure-ray execution.
 
 The input and measured report use the normal 24-hour artifact retention under
 `artifacts/local-focus-integration-20260914`. The scheduler argument, memory scope
-and reproducible A/B controls remain in [Local Focus](LOCAL_FOCUS.md) and its
+and reproducible A/B controls remain in Local Focus and its
 tests. Existing architecture/physics-review Skills already require local owner
 validation, bounded state and independent expectations; no new Skill rule is
 needed for these fixes.
@@ -745,7 +745,7 @@ The physics-review Skill now links to the checkpoint/readiness contract;
 Boss, architecture and test-runner instructions already cover ownership,
 independent expectations and proportional checks; no extra role or Skill is
 needed. Live Highlights reconciliation is recorded in
-[the coverage map](HIGHLIGHTS_IMPLEMENTATION.md#quantum-origin-cells-and-event-spacetime---2026-09-13).
+the coverage map.
 Generated artifacts stay outside source commits and retain their 24-hour leases.
 
 ## Joint reactions and delayed rule validity - 2026-09-13
@@ -753,7 +753,7 @@ Generated artifacts stay outside source commits and retain their 24-hour leases.
 Incremental base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`, continuing PR 86
 on main `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Final active source SHA-256:
 `1c85d9200fc57378c971fc7409532555713be04916139027eb9c08439cc918c8`.
-The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates indexed
+The rule contract separates indexed
 participant/field proposals, consumed triggers and persistent conditions.
 The final affected gate passed: **1,879 tests passed and five visual-only tests
 were skipped**. Ruff, formatting and strict mypy (55 affected modules) passed.
@@ -816,7 +816,7 @@ this work correctly, so no new Skill or scheduler was introduced.
 
 Base: `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Tested active source SHA-256:
 `68cec05fc6463e4ef2ced0f1d0d2ff1b63de4d1cb30b6b011424e26245bebf9f`.
-The [Node contract](NODE_VECTOR_PROCESSOR.md) defines the supported scope and
+The Node contract defines the supported scope and
 separates imposed constraints from unestablished physical emergence.
 
 The dependency-selected gate completed with **1,814 passed and five visual-only
@@ -852,7 +852,7 @@ not derived electromagnetic or quantum dynamics.
 
 ### Memory and architecture
 
-The reproducible host probe is [profile_node_vectors.py](../tools/profile_node_vectors.py):
+The reproducible host probe is profile_node_vectors.py:
 
 ```sh
 python tools/profile_node_vectors.py . artifacts/node-vector-memory/report.json
@@ -909,9 +909,9 @@ the explicit user clarification of h and k.
 ## Property-selected couplings and passive local conservation - 2026-09-13
 
 Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The
-[property contract](PROPERTY_COUPLINGS.md) covers all supported single-carrier
+property contract covers all supported single-carrier
 and pair selectors, shared property ownership, overlapping matches and sequential
-drivers. The [audit contract](LOCAL_CONSERVATION.md) measures configured energy
+drivers. The audit contract measures configured energy
 and all three momentum components from committed owners and actual link flux.
 Independent physics review passed this declared additive-owner scope; it does
 not establish physical quantity identification or universal field laws.
@@ -959,7 +959,7 @@ editing the live document. The PR records the submitted head/tree and final CI.
 ## Coupled unit-excitation candidate - 2026-09-13
 
 Base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`.
-The [candidate contract](COUPLED_EXCITATIONS.md) uses saved initialization rules,
+The candidate contract uses saved initialization rules,
 with no changes under `src/` or to the physical reference catalog. Independent
 physics review checked local ownership, elementary state generation, fixed
 bounds, live delayed-commit guards and the explicit single-packet envelope.
@@ -1001,7 +1001,7 @@ new technical knowledge is linked through this candidate's contract and maps.
 ## Read-only configuration preflight - 2026-09-13
 
 Base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. The
-[validation architecture](CONFIGURATION_VALIDATION.md) gives strict JSON decoding
+validation architecture gives strict JSON decoding
 one owner and delegates each format to its existing semantic validator. The UI
 and runner share initialization/observer preparation. It introduces no physical
 formula, inferred law, catalog measurement conversion or simulation during a check.
@@ -1048,7 +1048,7 @@ The live Highlights revision is reconciled in its
 ## Descriptive physical catalog and explicit profiles — 2026-09-12
 
 Base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`. The version 2
-[physical reference](ENTITY_CATALOG.md) adds sourced properties and possible
+physical reference adds sourced properties and possible
 channels without introducing runtime laws. All 46 original classical/quantum
 profile pairs were extracted unchanged into `representation-probes.json`.
 
@@ -1088,7 +1088,7 @@ with main `fb083c159fe1f51612203962d9a7921683eb31c8`, then `0f94cbd`, and finall
 source file. The final source fingerprint is
 `8de38e5f4ba9db0b188168bf9d33c647b3abe3df2a3450a7cbaa9016a29f2e8d`.
 
-The [candidate contract](DIRECTIONAL_WAVE.md) and six saved cases use ordinary
+The candidate contract and six saved cases use ordinary
 local field rules. The unequal encounter changes 3Y/2Y into 3Z/-2Z and preserves
 normalized U=13 and P=5X. All physical guards, encounters and streaming are JSON;
 preparation assembles input and observation/rendering do not advance the world.
@@ -1121,7 +1121,7 @@ preparation assembles input and observation/rendering do not advance the world.
   Swapped reference roles, duplicate comparison inputs and a changed recording
   with a stale proof were all rejected. The [saved GIF](https://drive.google.com/file/d/1_q_8CEM4pY_jRn_jI3kw5m_KrfsSTez-/view)
   shows the free/reference and interacting runs with nodes, axes, modes, E/B and U/P.
-- The new [configuration Skill](../skills/simulation-configuration/SKILL.md)
+- The new configuration Skill
   explains the distinct input, catalog/law, execution and display formats. Its
   complete two-stream template completed 18 ticks with inventory 2 conserved;
   its electron/proton/neutron catalog command compiled and completed 36 ticks
@@ -1150,10 +1150,10 @@ remain absent; their spatial-field composition is explicitly unsupported.
 ## Physical inventory and elementary probes — 2026-09-12
 
 Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced
-[entity catalog](../examples/known-entities/catalog.json) contains 11 field
+entity catalog contains 11 field
 categories and 35 particle/multiplet entries. These are inventory entries,
 not a count of implemented physical fields. Its definitions and support
-assessment are explained in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
+assessment are explained in PHYSICAL_ENTITIES.md.
 Highlights was retrieved on 2026-09-12, including its implemented-entities
 section; the user's elementary-vector-operation restriction is binding.
 
@@ -1188,7 +1188,7 @@ Skill rule or new agent role is needed.
 ## Generic local field rules — 2026-09-12
 
 The extension starts from main `12c85316f011d0601adcd0f4a31f0f52e59eaa27`.
-Its authoritative scope is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md): retained
+Its authoritative scope is LOCAL_FIELD_RULES.md: retained
 field stock, six delivered/outgoing ports, multiple scalar/vector components,
 explicit invariants and joint carrier/field transactions. It introduces no
 electromagnetic law or quantum-photon result. Highlights was read on 2026-09-12;
@@ -1445,7 +1445,7 @@ This change continues local `4a976f827ae62e16e5d23e319b1d2ce963227d9e`.
 The user selected opposite-face reentry for a closed world and removal with
 escaped-quantity accounting for an open world. Both schemas default to periodic
 boundaries; the chosen configuration applies to carriers and spatial fields.
-See [the boundary contract](DISTURBANCES.md#domain-boundary).
+See the boundary contract.
 
 | Check | Result |
 | --- | --- |
@@ -1515,7 +1515,7 @@ environment across worktrees, following a detected wrong-checkout import.
 
 This change continues local `e8e5c4cd59ec3ddd8c191e0faac4468acd0a5d71`.
 Schema 2 selects `finite-dissipative-v1`; schema 1 keeps its separately named
-conservative law. See [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) for the law and
+conservative law. See SPATIAL_FIELDS.md for the law and
 [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) for independent acceptance inputs.
 
 | Check | Result |
@@ -1563,7 +1563,7 @@ Highlights document was modified in this implementation task.
 
 The response extension continues local commit `5ff53888413afd421d129ffacb0d749ca0be8f08`
 on base main `a53e1a2f83d4dca898ed827b2f6e4d101932be95`.
-[SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md) defines the selected integer law,
+SPATIAL_COUPLINGS.md defines the selected integer law,
 local sampling, atomic recoil, timing and fixed preparation tariff. This section
 supersedes the earlier outward-only candidate's missing-turning limitation;
 general source attribution is still a separate unimplemented capability.
@@ -1616,7 +1616,7 @@ the new executable contract is persisted here, without modifying that document.
 
 This optional candidate is based on main
 `a53e1a2f83d4dca898ed827b2f6e4d101932be95`. Its transport, timing and remaining
-model gaps are defined in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md). The implementation
+model gaps are defined in SPATIAL_FIELDS.md. The implementation
 separates a continuously emitting carrier from its spatial stock and selects the
 new law explicitly through initialization. This section records local evidence;
 the submitted PR records its exact commit and remote CI result.
@@ -1697,7 +1697,7 @@ gravity, wave equations, relativity or arbitrary energy conservation.
 
 The agreed high-level specification was reconciled with Universe 24 Highlights
 on 2026-09-11. Detailed executable requirements are in
-[DISTURBANCES.md](DISTURBANCES.md), with inputs and acceptance cases in
+DISTURBANCES.md, with inputs and acceptance cases in
 [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md). Earlier evidence below describes
 historical candidates and earlier output defaults.
 

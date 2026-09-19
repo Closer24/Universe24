@@ -45,14 +45,14 @@ causal paths; a receiving port identifies the last hop, not the remote source.
 For each timing claim, identify the model/audit tick, completed local-cycle counter
 or playback time being used. Equal local-counter readings do not prove simultaneous
 events, and playback sampling or speed does not change physical event order.
-Apply the [local observer contract](../../docs/LOCAL_OBSERVER.md); do not infer
+Apply the local observer contract; do not infer
 proper time, optical appearance or an emergent relativistic spacetime from the
 current reception probe or an audit snapshot. This framing uses the declared
 model contracts and does not add a new physical law.
 
 ## Review energy and momentum claims
 
-Use the [local conservation contract](../../docs/LOCAL_CONSERVATION.md) when a
+Use the local conservation contract when a
 model claims joint energy and momentum balance. Identify all actual owners and
 fluxes, and inspect the complete update chain, including arrival merging and
 later carrier rules. Distinguish declared component sums, normalized probe
@@ -86,7 +86,7 @@ expose a partial-conjugation defect.
 
 ## Review the declared rules
 
-For [delayed Node rules](../../docs/NODE_VECTOR_PROCESSOR.md#local-rules),
+For delayed Node rules,
 distinguish a consumed start trigger from a persistent commit condition. Exercise
 an arrival during the wait and inspect every frozen substep against live stock,
 including chains with zero net delta. A balanced final component sum does not
@@ -94,7 +94,7 @@ prove each nonlinear rule invariant remained valid. Check that rejected proposal
 leave all actual owners and already received inventory intact.
 
 For initialization-defined simulation, use
-[DISTURBANCES.md](../../docs/DISTURBANCES.md) for active contracts. Verify
+DISTURBANCES.md for active contracts. Verify
 whole-record versus extensive transport, exact source accounting, paired
 exchange, fixed transit and cost-dependent frozen local commits. Historical
 self-force and particle-momentum laws apply only to their named candidates.

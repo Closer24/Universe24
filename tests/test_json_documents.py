@@ -1,22 +1,14 @@
-"""Strict decoding is shared by inputs, editor fragments and observer files."""
+"""Strict decoding is shared by world files and the workspace's editor fragments."""
 
 import json
 from pathlib import Path
 
 import pytest
 
-from event_universe.initialization import (
-    parse_initial_json,
-    parse_initial_state,
-)
-from event_universe.initialization import (
-    parse_json_document as public_parse_json_document,
-)
 from event_universe.json_documents import parse_json_document
-from event_universe.observer_configuration import ObserverDefinition
-from event_universe.runner import run_initialization
+from event_universe.shadow import parse_shadow_world
 
-EXAMPLES = Path(__file__).resolve().parents[1] / "examples"
+WORLDS = Path(__file__).resolve().parents[1] / "examples" / "shadow"
 
 
 @pytest.mark.parametrize("token", ["NaN", "Infinity", "-Infinity", "1e309", "-1e309", "1.0e400"])
@@ -35,7 +27,7 @@ def test_nonfinite_numbers_are_rejected_at_every_document_depth(token, nested, a
     [
         '{"name": 1, "name": 2}',
         '{"draft": [{"name": 1, "name": 2}]}',
-        r'{"name": 1, "\u006eame": 2}',
+        r'{"name": 1, "name": 2}',
     ],
 )
 def test_duplicate_keys_are_rejected_including_decoded_escapes(source):
@@ -69,82 +61,16 @@ def test_scalar_editor_fragments_remain_valid(source, expected):
     assert parse_json_document(source) == expected
 
 
-def test_initialization_reexports_the_shared_decoder():
-    assert public_parse_json_document is parse_json_document
-
-
-@pytest.mark.parametrize("name", ["basic.json", "exchange.json"])
-def test_complete_valid_initializations_keep_their_independent_decoded_values(name):
-    source = (EXAMPLES / name).read_bytes()
+@pytest.mark.parametrize("name", ["one_content.json", "two_slits.json"])
+def test_shipped_worlds_decode_to_their_independent_values(name):
+    source = (WORLDS / name).read_bytes()
     independent_document = json.loads(source)
     assert parse_json_document(source) == independent_document
-    assert parse_initial_json(source) == parse_initial_state(independent_document)
-
-
-@pytest.mark.parametrize(
-    "observer_source, key",
-    [
-        ('{"position": [0, 0, 0], "position": [1, 2, 0]}', "position"),
-        ('{"position": [1, 2, 0], "max_receipts": 3, "max_receipts": 4}', "max_receipts"),
-    ],
-)
-def test_inline_and_external_observers_reject_identical_duplicate_keys(tmp_path, observer_source, key):
-    observer_path = tmp_path / "observer.json"
-    observer_path.write_text(observer_source, encoding="utf-8")
-    source = (EXAMPLES / "basic.json").read_text(encoding="utf-8").rstrip()
-    inline_source = source[:-1] + ', "observer": ' + observer_source + "}"
-    with pytest.raises(ValueError, match=f"duplicate JSON key '{key}'") as inline:
-        parse_initial_json(inline_source)
-    with pytest.raises(ValueError, match=f"duplicate JSON key '{key}'") as external:
-        ObserverDefinition.load(observer_path, (17, 17, 17))
-    assert str(inline.value) == str(external.value)
-    assert observer_path.read_text(encoding="utf-8") == observer_source
-    assert sorted(path.name for path in tmp_path.iterdir()) == ["observer.json"]
-
-
-@pytest.mark.parametrize("location", ["inline", "external"])
-@pytest.mark.parametrize(
-    "observer_source, message",
-    [
-        ('{"position": [0, 0, 0], "position": [1, 2, 0]}', "duplicate JSON key"),
-        ('{"position": [0, 0, 0], "max_receipts": NaN}', "non-finite JSON number"),
-        ('{"position": [0, 0, 0], "max_receipts": Infinity}', "non-finite JSON number"),
-        ('{"position": [0, 0, 0], "max_receipts": -Infinity}', "non-finite JSON number"),
-        ('{"position": [0, 0, 0], "max_receipts": 1e309}', "non-finite JSON number"),
-    ],
-)
-def test_invalid_observer_input_creates_no_run_output(tmp_path, location, observer_source, message):
-    source = (EXAMPLES / "basic.json").read_text(encoding="utf-8").rstrip()
-    input_path = tmp_path / "input.json"
-    observer_path = None
-    if location == "inline":
-        source = source[:-1] + ', "observer": ' + observer_source + "}"
-    else:
-        observer_path = tmp_path / "observer.json"
-        observer_path.write_text(observer_source, encoding="utf-8")
-    input_path.write_text(source, encoding="utf-8")
-    before = {path.name: path.read_bytes() for path in tmp_path.iterdir()}
-    with pytest.raises(ValueError, match=message):
-        run_initialization(input_path, tmp_path / "output", observer=observer_path)
-    assert {path.name: path.read_bytes() for path in tmp_path.iterdir()} == before
-
-
-def test_valid_observer_loading_preserves_explicit_definition_without_writes(tmp_path):
-    path = tmp_path / "observer.json"
-    source = '{"position": [1, 2, 0], "max_receipts": 3}'
-    path.write_text(source, encoding="utf-8")
-    assert ObserverDefinition.load(path, (3, 3, 3)) == ObserverDefinition((1, 2, 0), 3)
-    assert path.read_text(encoding="utf-8") == source
-    assert list(tmp_path.iterdir()) == [path]
+    assert parse_shadow_world(parse_json_document(source)) == parse_shadow_world(independent_document)
 
 
 @pytest.mark.parametrize("encoding", ["utf-8", "utf-8-sig", "utf-16", "utf-32"])
-def test_observer_file_uses_the_same_byte_decoding_as_initialization(tmp_path, encoding):
-    raw = {"position": [0, 0, 0], "max_receipts": 3}
+def test_world_files_decode_from_every_unicode_encoding(encoding):
+    raw = json.loads((WORLDS / "one_content.json").read_text(encoding="utf-8"))
     source = json.dumps(raw).encode(encoding)
-    path = tmp_path / "observer.json"
-    path.write_bytes(source)
-    expected = ObserverDefinition((0, 0, 0), 3)
-    assert ObserverDefinition.parse(parse_json_document(source), (3, 3, 3)) == expected
-    assert ObserverDefinition.load(path, (3, 3, 3)) == expected
-    assert path.read_bytes() == source
+    assert parse_json_document(source) == raw

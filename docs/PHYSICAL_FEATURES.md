@@ -3,7 +3,7 @@
 The goal is a law that can be understood, tested and replaced independently of
 the world using it. The binding sources are the [definitions](../SIMULATOR_DEFINITIONS.md)
 and [architecture](ARCHITECTURE.md). The active generic schema and allowed laws
-are in [DISTURBANCES.md](DISTURBANCES.md); candidate identities and physical names
+are in DISTURBANCES.md; candidate identities and physical names
 belong in initialization data. This procedure does not change those rules.
 
 ## 1. Write a contract before code

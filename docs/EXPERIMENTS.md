@@ -27,7 +27,7 @@ the model owner's decision, dated.
 needs (numbers 1 to 12 below), the board, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
 and its pass or fail criterion as an exact statement. The families and
-couplings it names are entries of the [catalog of nature](CATALOG.md)
+couplings it names are entries of the catalog of nature
 (`catalog/nature.json`), whose `experiments` section lists per entry the
 ids it uses, so that the register and the catalog agree. Nothing is retuned
 against the result and no criterion is redefined after a failure
@@ -37,7 +37,7 @@ reopen an adopted decision and does not authorize a new law.
 
 **Features.** The numbers are the ten features of issue #169, the eleventh
 of Highlights 3.26 and the twelfth of Highlights 3.5, in the order they land
-([ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)): 1 ray state
+(ray-event model): 1 ray state
 (done on 2026-09-17, `ray-event-state-v1`); 2 the Node Detector bit (mark,
 setting, ticket seed; done on 2026-09-17, `detector-mark-v1`, the
 `detectors` key with `position`, `setting` `[n, d]` and `seed`); 3 the
@@ -612,7 +612,7 @@ states "exactly" and means integer equality at every tick.
   `field-remainder-v1`, in it), as `examples/nature/a5_coulomb/`: thirteen
   worlds written by `make_worlds.py`, the records read by `analyze.py`, its
   integers in `record.json`, the dictionary in the
-  [README](../examples/nature/README.md#a5-coulombs-law-through-the-spreading-field).
+  README.
   The world: board 97 × 49 × 49, open, N = 2^12; ray a of amount 64 from
   (0, 24 − b/2, 24) heading +X and ray b of amount 64 from (96, 24 + b/2, 24)
   heading −X, closest approach at x = 48 at tick 48, the read-off at tick
@@ -807,7 +807,7 @@ states "exactly" and means integer equality at every tick.
   the audits. Made as `examples/nature/a5_static/`: fifteen worlds
   written by `make_worlds.py`, the records read by `analyze.py`, its
   integers in `record.json`, the dictionary in the
-  [README](../examples/nature/README.md#a5s-coulombs-force-law-between-two-charges-at-rest).
+  README.
 - **Criterion.** Pass, all of: (1) every ledger line balanced and
   `conserved_at_every_completed_tick` at every tick of every world; (2)
   the control's register (0, 0, 0) at every tick; (3) in every two-body
@@ -962,7 +962,7 @@ states "exactly" and means integer equality at every tick.
   transient alone (the mean field at the plan's settings gives −3.7 ±
   0.3, in free space at its steady state −3.2 ± 0.1). The records stay
   outside the tree; `record.json` holds the integers and the
-  [README](../examples/nature/README.md#what-the-static-runs-show) the
+  README the
   tables. Run times with two runs in parallel on four cores shared with
   other work: 156, 197, 239, 341, 448 s for the like-charge axis worlds,
   154, 328, 247, 342, 443 s for the opposite-charge ones, 209, 264, 396,
@@ -1197,7 +1197,7 @@ states "exactly" and means integer equality at every tick.
   above; 16e and 16f present and not declared.
 - **Run.** `examples/nature/a5s_law/` (eight closed worlds written by
   `make_worlds.py`, the dictionary in the
-  [README](../examples/nature/README.md#a5s-repeated-under-the-law-of-the-bit-two-things-at-rest)),
+  README),
   on the law as E11 repeated: `N` 64 declared once, K 1, `wait_per_quantum`
   1, the dense mode, no retired key, `boundary` periodic, 120 ticks,
   `standing_field` on, a margin of 12 empty Nodes beyond each body (the
@@ -1419,7 +1419,7 @@ states "exactly" and means integer equality at every tick.
   fingerprints of the forty-six worlds in `record.json`), as
   `examples/nature/a6_bending/` (`make_worlds.py`, `predict.py`,
   `analyze.py`, the dictionary and the computation in the
-  [README](../examples/nature/README.md#a6-light-bending-by-a-mass);
+  README;
   `tests/test_a6_bending.py`). The mechanism the delay table drives today,
   read from the code before the series: `Ray.lag` of `ray-binding-v1`, spent
   as one Link toward the lagging side when a transverse component reaches
@@ -1566,7 +1566,7 @@ states "exactly" and means integer equality at every tick.
   worlds, `analyze.py` reads the records, `probe_field.py` reads the
   prefilled field through the API, `make_page.py` writes the page
   `a6_law.html`; the README row in
-  [examples/nature](../examples/nature/README.md#a6-under-the-law-the-four-gravitational-tests)).
+  examples/nature).
   A closed board (`boundary` `periodic`, the model owner's decision of
   2026-09-18) of 33 × 33 × 33 Nodes with the mass at its centre (16, 16,
   16), so that the field wraps around 16 Links from the mass on every axis,
@@ -2022,7 +2022,7 @@ states "exactly" and means integer equality at every tick.
   m₀ = h/(N δt c²), so every ratio is a ratio of integers; the rungs of the
   elementary families are catalog values, not predictions; the test is
   representability at one N within the declared encoding error
-  ([reference units](REFERENCE_UNITS.md)). The self-field of the unit-square
+  (reference units). The self-field of the unit-square
   ring selects no content
   ([E10](#e10-the-ring-meets-its-own-field-the-loop-under-its-own-light-contents-32-to-128),
   2026-09-17): with the catalog's turn declared beside the corner table, a
@@ -2047,7 +2047,7 @@ states "exactly" and means integer equality at every tick.
   the declared tables, which the held-ray binding of feature 8, holding any
   content, cannot show. The counting procedure, ring by ring over the
   corner table, is written in
-  [loop binding](LOOP_BINDING.md#7-the-ladder-and-how-a10-counts-it)
+  loop binding
   (design of 2026-09-17), with its finding that the Port-form corner and
   the Born table give no content ladder and that the ladder needs the
   ring's turn produced by its own field.
@@ -2134,7 +2134,7 @@ states "exactly" and means integer equality at every tick.
 - **Deviations from the plan above, each stated before the run.** (i) The
   property landed as the transverse direction itself, not as a two-state
   property that would then be found wanting: feature 11
-  (`ray-polarization-v1`, [polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1))
+  (`ray-polarization-v1`, polarization)
   gives every light ray an integer step of a circle of 2^`polarization_bits`
   steps per half turn, the phase width by default, whose steps 0 and half
   the circle are the two lattice axes of Highlights 3.26 and whose other
@@ -2170,7 +2170,7 @@ states "exactly" and means integer equality at every tick.
   wait or escape. Made as `examples/nature/a12_malus/`: eight worlds
   written by `make_worlds.py`, the records read by `analyze.py`, its
   integers in `record.json`, the dictionary in the
-  [README](../examples/nature/README.md#a12-maluss-law-and-the-three-polarizer-chain).
+  README.
 - **Status.** measured on 2026-09-17, commit
   `54d159390071534de4409647b928ca9139f298f9` (the feature's commit
   `cd4d971` merged with `main` at `b64de24`), source
@@ -2215,7 +2215,7 @@ states "exactly" and means integer equality at every tick.
   of the viewer documents. Run times 0.08 to 0.34 s per world; the records
   and the viewer documents (`ray-recording.json`, `viewer/runs.json` per
   world) stay outside the tree, `record.json` holds the integers and the
-  [README](../examples/nature/README.md#what-the-malus-runs-show) the
+  README the
   tables. Nothing was tuned after the first look: the eight worlds were run
   once on the feature's commit and once more on the merge with `main`
   (PRs #246 to #248, records byte for byte the same in every number that
@@ -2497,7 +2497,7 @@ unlocks; an entry runs when the last feature it names has landed.
 12. Feature 12, field spreading (Highlights 3.5, 2026-09-17): A1, A2 and the
     diagonal series of A6.
 13. Feature 14, binding as a loop (Highlights 3.4, 2026-09-17; design done
-    on 2026-09-17, [loop binding](LOOP_BINDING.md); implementation after
+    on 2026-09-17, loop binding; implementation after
     feature 8b): E5, the ladder count of A10 in its loop form, and A14 once
     a moving loop exists.
 
@@ -2521,9 +2521,9 @@ Dated research runs under Highlights 5.5 that show one event of nature each
 in the engine's language, with the rules that exist on `main` today. They are
 not confrontations (no measured value is compared) and not tests: each is
 made once by the runner (`run_initialization`) from its world file under
-`examples/nature/`, whose [README](../examples/nature/README.md) is the
+`examples/nature/`, whose README is the
 dictionary from each physical word to the engine word, recorded here with
-its fingerprint, and rendered with the [ray viewer](../tools/ray_viewer/README.md);
+its fingerprint, and rendered with the ray viewer;
 the records and the renders stay outside the tree. They stand beside B8,
 which stays `planned`: B8 holds its group for 2^12 intervals and pins the
 threshold criterion, while these runs show the events over a dozen ticks.
@@ -2565,7 +2565,7 @@ sign rule, and its other couplings are catalog entries.
   world's sources and total. At every tick: totals electron 8, light 3, the
   charge line electron -24, every audit line balanced,
   `conserved_at_every_completed_tick` true. The record's reading (the ray
-  viewer's extractor, [ring](../examples/nature/README.md#the-ring-an-electron-at-rest-as-a-loop)):
+  viewer's extractor, ring):
   one group on the square, content 11 (electron 8, light 3), period 8, clock
   electron 1 and light 0, read from tick 5 to tick 23.
 - **The literal translation refused.** As in the first record: the outputs
@@ -2725,7 +2725,7 @@ sign rule, and its other couplings are catalog entries.
   over `[electron, light_of_electron]` (never met); `phase_plate`. The
   catalog change of this run is one line: the proton among the releasers of
   `light`. The dictionary, the orbit computed and the limits are in the
-  [README](../examples/nature/README.md#the-helium-ion-one-electron-at-a-nucleus-of-charge-2).
+  README.
 - **Computed.** The square orbit of half-side r at speed 1/k: period
   T = 8 r k intervals, frequency 1/T; r = 8, k = 1: T = 64, f = 1/64. Its
   stability as integer equalities at every turn: the turn where the field
@@ -2806,9 +2806,9 @@ sign rule, and its other couplings are catalog entries.
   `examples/nature/ring_open.json`: the same with the catalog's Born table
   (`born_steering`) at the corner and the senses in phase, the control that
   disperses. The dictionary and the tick-by-tick states are in the
-  [README](../examples/nature/README.md#the-ring-an-electron-at-rest-as-a-loop);
+  README;
   the rule, the closure condition and the open points in
-  [loop binding](LOOP_BINDING.md).
+  loop binding.
 - **Computed.** The closure of the unit square as integer equalities: a
   partner at every corner (two rays per sense at opposite corners at
   least, content 4; eight for every corner every interval), the headings by
@@ -2832,7 +2832,7 @@ sign rule, and its other couplings are catalog entries.
   tick 2 one ray of amount 2 at each corner, walking +Y or -Y off the
   square, the board empty from tick 8, 8 escaped, every line balanced, no
   group read. The integers are pinned in
-  [test expectations](TEST_EXPECTATIONS.md#loop-binding) beside the
+  test expectations beside the
   rate-1, four-ray and quadrature cases. A check run on `main` at
   `c21e03e` (2026-09-17, not this demonstration) agreed with every pinned
   line: the engine already held the ring under the Port form before the
@@ -2870,7 +2870,7 @@ sign rule, and its other couplings are catalog entries.
   since feature 12b it runs 48 ticks (`ticks` raised from 24 on 2026-09-17,
   24 showing nothing off the axis).
   The dictionary and the eye view are in the
-  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+  README.
 - **Shows.** Before spreading the field lives on the six axis lines of the
   group, so the +X line reaches the on-axis mark (7, 5, 5) alone: one click
   of amount 2 every tick from 7 to 24, eighteen clicks at that mark and none
@@ -2979,7 +2979,7 @@ sign rule, and its other couplings are catalog entries.
   at about 2.5 ms per Node and interval (the parallel backend is slower), so
   the smallest board around the orbit took about an hour for 152 ticks; the
   dictionary, the computation and the readings are in the
-  [README](../examples/nature/README.md#the-helium-ion-with-the-field-spreading-and-the-momentum-turn),
+  README,
   and `examples/nature/helium_orbit_table.py` prints the record tick by tick
   with the verdict.
 - **Computed.** In the rule's dynamics (the register turned by the net flux
@@ -3124,9 +3124,9 @@ sign rule, and its other couplings are catalog entries.
   construction; in the plane y = 5 the source, the marks and the split table
   are exactly symmetric under y -> 10 - y. The dictionary, the computation
   and the readings are in the
-  [README](../examples/nature/README.md#the-screen-with-a-loop-the-ring-radiating-on-seven-marks);
+  README;
   `tests/test_screen_loop.py` pins the first ticks in isolation
-  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)).
+  (expectations).
 - **Computed (before the run).** The content: at `[1, 4]` a ray of amount a
   releases floor(a / 4) per heading, 0 for a < 4, so 4 is the least amount
   that radiates, and with one ray of each sense at every corner, as
@@ -3236,7 +3236,7 @@ sign rule, and its other couplings are catalog entries.
   other kind; `ray_layer_families` `[["electron"], ["light"]]`. The
   readings tick by tick, the eye view and the deviations from the
   computation are in the
-  [README](../examples/nature/README.md#screen_loopjson-tick-by-tick-the-first-clicks).
+  README.
 - **Status.** measured, 2026-09-17, commit
   `ed2078f1dfc73f97f682d0bc3cf1c5dab6eb8810` (the commit that carries this
   entry and the world); `screen_loop.json`, source
@@ -3259,7 +3259,7 @@ sign rule, and its other couplings are catalog entries.
   consider and which end the clicking at tick 72. The isolated test
   (`tests/test_screen_loop.py`, 32 ticks) pins the first seven clicks, the
   light line and the group reading from the first run of its board
-  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
+  (expectations). The
   record stays outside the tree; nothing was tuned after the run.
 - **Repeated under `detector-absorb-v1` (2026-09-18).** Status: repeated on
   2026-09-18 under the decision of Highlights 5.4, "A click is an
@@ -3523,7 +3523,7 @@ sign rule, and its other couplings are catalog entries.
   cross field it released earlier, and that is a meeting like any other; the
   field is matter's message about itself, read by the table of the ray that
   meets it) with 3.4 (the ladder of hypothesis 12 is the set of contents
-  that close a loop under the table) and [loop binding](LOOP_BINDING.md)
+  that close a loop under the table) and loop binding
   sections 6, 7 and 11: on a ring every corner is a change of trajectory,
   so a ring meets its own field, and a content ladder can come only from
   the ring's rays meeting the group's own field rays under a table whose
@@ -3554,9 +3554,9 @@ sign rule, and its other couplings are catalog entries.
   tree; `analyze.py` prints the per-tick reading, the pushes and the verdict
   table and writes `record.json`. The dictionary, the computation and the
   readings are in the
-  [README](../examples/nature/README.md#the-ring-meets-its-own-field);
+  README;
   `tests/test_ring_self_field.py` pins the content-32 worlds for 16 ticks
-  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+  (expectations).
 - **Computed (before the run, from the code and the tables).** (i) A corner
   meeting resets the register: a meeting's outputs are fresh rays
   (`_output` in `src/event_universe/fields/ray_interactions.py`: heading,
@@ -3695,7 +3695,7 @@ sign rule, and its other couplings are catalog entries.
   `corner_first` record; the pushes after tick 3; the one-axis near field
   at content 32 reaching the ray's amount once over 96 ticks (the
   computation over 16 ticks had 3 below 4). The reading tick by tick is in
-  the [README](../examples/nature/README.md#what-the-runs-show).
+  the README.
 - **Status.** measured, 2026-09-17, commit
   `2ababa5a6bd45618bdfc47686832d149cacd3061` (the worlds, the computation
   and the criterion; the readings, `record.json` and this status in the
@@ -3733,7 +3733,7 @@ sign rule, and its other couplings are catalog entries.
   outside the tree, `record.json` beside the worlds. The isolated test
   (`tests/test_ring_self_field.py`, the content-32 worlds, 24 ticks) pins
   the pushes, the identity of the records and the group readings
-  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
+  (expectations).
 
 ### E11. The field's books: the profile of a point source shell by shell, and the momentum between release and meeting
 
@@ -3762,7 +3762,7 @@ sign rule, and its other couplings are catalog entries.
   mode (`dense-field-v1`).
 - **Run.** `examples/nature/e11_field_books/` (written by `make_worlds.py`;
   the dictionary and the tables in the
-  [README](../examples/nature/README.md#the-fields-books-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting)).
+  README).
   (b) `point_source.json`: one external body of family `proton` (amount
   2^20, charge +3) at (24, 24, 24) of a 49 × 49 × 49 open board, its
   `light` `field_of` `proton` with `release` [1, 256], 4096 quanta per
@@ -3905,7 +3905,7 @@ sign rule, and its other couplings are catalog entries.
 - **Shows.** Run once each on 2026-09-18 (the point source 343 s for 192
   ticks, the spread book world 9.0 s, the axis book world 0.8 s); every
   ledger line balanced at every completed tick of all three; the tables in
-  the [README](../examples/nature/README.md#what-the-e11-runs-show), the
+  the README, the
   integers in `record.json`. (b) The profile. The ledger: the body's content
   2^20 at every tick and its register (0, 0, 0) at every tick; light sourced
   24576 per tick; at tick 192 sourced 4718592 = in flight 3492438 + registers
@@ -4074,7 +4074,7 @@ sign rule, and its other couplings are catalog entries.
   tick of both worlds and the plain statement; nothing tuned after the
   runs; `record.json` beside the worlds holds every row; the isolated test
   `tests/test_field_books.py` pins the worlds and the shell reader on a 9^3
-  point source ([expectations](TEST_EXPECTATIONS.md#the-fields-books)).
+  point source (expectations).
 
 ### E11 repeated under the law of the bit (2026-09-18)
 
@@ -4123,7 +4123,7 @@ sign rule, and its other couplings are catalog entries.
   search (`standing-field-v1`) and the series runner of `perf-arrays-v1`.
 - **Run.** `examples/nature/e11_law/` (the worlds written by `make_worlds.py`,
   the dictionary in the
-  [README](../examples/nature/README.md#e11-repeated-under-the-law-of-the-bit-the-field-of-one-thing-at-rest)),
+  README),
   every world on the law: `N` 64 declared once for the world, K 1,
   `wait_per_quantum` 1, the dense mode, no `spread`, `steering`,
   `mass_field`, `seed` or `field_of` key. The thing at rest is an external
@@ -4397,9 +4397,9 @@ sign rule, and its other couplings are catalog entries.
   tree, no GIF; `analyze.py` prints the readings and writes `record.json`;
   `mean_field.py` writes `predictions.json`, the computation below. The
   dictionary and the readings are in the
-  [README](../examples/nature/README.md#the-screen-without-a-draw-a-counter-against-a-drawn-mark-and-interference-in-counts);
+  README;
   `tests/test_screen_no_draw.py` pins the smallest world of the question
-  ([expectations](TEST_EXPECTATIONS.md#the-screen-without-a-draw)).
+  (expectations).
 - **Computed (before the run).** (i) The mean field, `mean_field.py`: the
   split table as the linear map it is on average (A5s Run 2 measured the
   engine's integers against it to a part in a thousand at 4096 per heading),

@@ -32,7 +32,7 @@ and return the existing validator's report. The coverage work below applies when
 implementing or changing validation software, not to a check-only request.
 
 For configuration implementation work, follow the
-[preflight contract](../../docs/CONFIGURATION_VALIDATION.md). Cover valid and invalid
+preflight contract. Cover valid and invalid
 inputs through their real entry points, explicit dependency failures, whole-profile
 coverage and rejection before runtime/output creation. Keep semantic cases in the
 format owner's tests and cross-entry consistency in adapter tests. Syntax success,

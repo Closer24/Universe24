@@ -5,8 +5,14 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 
 # Simulator execution
 
+> **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
+> only and runs a world of the law of the shadow headless; `--visualize`,
+> `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and
+> `--standing-field` went with the old engine ([migration](../../docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
+> Where this Skill names them, read the history.
+
 For creating or changing the input, use
-[simulation-configuration](../simulation-configuration/SKILL.md), including its
+simulation-configuration, including its
 complete file map and runnable template. This skill executes the resulting input.
 
 Read [the shared workflow](../workflow.md), current
@@ -30,7 +36,7 @@ alongside the inspected HTML. A visual match is not physical acceptance.
 
 For primary runs, require the explicit initialization file and read its field,
 disturbance, transport, coupling and cost definitions; see
-[DISTURBANCES.md](../../docs/DISTURBANCES.md). Missing input must not select an
+DISTURBANCES.md. Missing input must not select an
 implicit historical universe.
 
 Follow the shared
@@ -39,7 +45,7 @@ when a preflight or run fails. Return the diagnostic to the appropriate owner;
 running an experiment does not authorize a simulator fix.
 
 For configuration-only checks, use the read-only
-[preflight API/CLI](../../docs/CONFIGURATION_VALIDATION.md) and return its report;
+preflight API/CLI and return its report;
 do not launch a simulation. The active runner shares its initialization/observer
 preparation with preflight. A valid report does not certify future capacities or
 physical behavior; actual execution and acceptance remain separate evidence.

@@ -6,9 +6,129 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## One engine, on 2026-09-19: the old engine deleted
+
+Decision of the model owner, 2026-09-19, the evening ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+the status line of the law of the shadow): "The field is, in fact, a field of
+events. No confrontations are needed. Only tests that everything is as
+designed." The engine of the law of the shadow (`field-only-v1`, feature 20)
+is the one engine; the old engine of the law of the bit is deleted without the
+confrontation runs the morning had made a condition. Nothing of the new
+engine's behaviour changes: `tests/test_field_only.py` passes with the same
+pinned integers before and after.
+
+What moved (the substrate the new engine had imported from the old one,
+byte-identical in what it does):
+
+- `core/lattice.py`: `Address3`, `Heading`, `PORT_HEADINGS`, `MIXING_OPPOSITE`
+  and `MAX_VALUE` (from `core/disturbance_state.py` and `core/spatial_state.py`);
+- `core/phase.py`: `phase_cosines`, `phase_sines`, `PHASE_COSINE_SCALE` and
+  `MAX_PHASE_STEPS` (from `core/spatial_state.py`);
+- `shadow/mixing.py`: the Node's mixing kernels `mix_arrivals`,
+  `apportion_carried`, `release_parked`, `merge_departures`, `place_departures`,
+  the `MixingArrays` protocol, `LAYERS`, `MIXING_DENOMINATOR`,
+  `MIXING_AMPLITUDE_SCALE` and `MIXING_WEIGHT_BITS` (from `dense_field.py` and
+  `core/spatial_state.py`); the isolated test of the rule is the new
+  `tests/test_node_mixing.py`, on one Node of the engine's layer.
+
+What was deleted:
+
+- the old engine: `core/` except `integer.py` and the two modules above
+  (`conservation_state`, `coupling_selectors`, `disturbance_engine`,
+  `disturbance_node`, `disturbance_state`, `event_resolution`, `node_boundary`,
+  `node_conservation`, `node_execution`, `node_ports`, `node_services`,
+  `plan_reuse`, `ray_event_audit`, `spatial_engine`, `spatial_node`,
+  `spatial_state`, `topology`, `validation`), the whole of `fields/`,
+  `dense_field.py`, `prefill.py`, `initialization.py`, `disturbance_api.py`,
+  `entities.py`, `entity_catalog.py`, `node_conservation_configuration.py`,
+  `observer_configuration.py`, `reference_units.py`, and of `diagnostics/`
+  everything but `numeric_audit.py` (`disturbance_render`, `local_conservation`,
+  `local_observer`, `node_conservation`, `node_contract`); with them the
+  `Simulation` and `InitialState` names of the package;
+- the old worlds: every file under `examples/` except `examples/shadow/`
+  (`basic.json`, the four numbered examples, `exchange`, `finite_fields`,
+  `isotropic_rays`, `local_field_rules`, `local_lorentz_field`,
+  `moving_source`, `open_world`, `spatial_computation_delay`,
+  `spatial_turning`, `three_mass_finite`, `coupled-excitations/`,
+  `directional-wave/`, `known-entities/`, `node-vector/`,
+  `particle-contracts/` and the 25 world directories of `examples/nature/`
+  with their pages, scripts and records) and `catalog/nature.json`;
+- the tools of the old engine: `tools/ray_viewer/` (the 3D viewer and GIF
+  renderer of the old record), `tools/audit_particle_contracts.py`,
+  `tools/benchmark_focus.py` and `tools/profile_node_vectors.py`;
+- the tests of the old engine, 41 modules (`test_bit_law`,
+  `test_boundary_configuration`, `test_charge_per_thing`, `test_clock_readings`,
+  `test_dense_field`, `test_detector_absorb`, `test_detector_mark`,
+  `test_detector_return`, `test_disturbance_application`,
+  `test_disturbance_engine`, `test_external_body`, `test_initialization`,
+  `test_inverse_split`, `test_lanes`, `test_local_conservation`,
+  `test_local_conversions`, `test_local_focus`, `test_loop_binding`,
+  `test_mean_field_gauss`, `test_nature_catalog`, `test_node_conservation`,
+  `test_node_is_ports`, `test_node_state_contract`, `test_payload_validation`,
+  `test_perf_arrays`, `test_plan_reuse`, `test_rational_particles`,
+  `test_ray_event_audit`, `test_ray_field`, `test_ray_hidden_state`,
+  `test_ray_layers`, `test_ray_meeting_conversion`, `test_ray_momentum_turn`,
+  `test_ray_polarization`, `test_ray_viewer`, `test_return_field`,
+  `test_shadow_wait`, `test_wait_reads`, `test_wait_rule`,
+  `test_wave_ray_families`, `tests/support/`), and the old versions of
+  `test_node_mixing`, `test_configuration_validation`, `test_json_documents`,
+  `test_architecture` and `test_locality`, rewritten for the one engine.
+
+What changed for a user:
+
+- `python -m event_universe --init WORLD --output OUT [--ticks N]` runs a
+  world of the law (`"law": "shadow"`) and nothing else; the switches
+  `--visualize`, `--frame-stride`, `--observer`, `--node-workers`,
+  `--dense-field` and `--standing-field` are gone with the engine they drove;
+- `python -m event_universe.configuration_validation WORLD [--json]` checks a
+  world file; the kinds `initialization`, `catalog`, `profiles` and `observer`
+  are gone, `--catalog` and `--initialization` with them;
+- the workspace (`python -m event_universe.ui`) lists the worlds of
+  `examples/shadow/` as its templates and runs headless; "Run & watch" is
+  refused;
+- `tools/run_series.py` is unchanged; `tools/check.py` no longer knows the
+  deleted resource consumers;
+- the record of a run is the engine's `run.json` as before (`law`
+  "field-only-v1"), unchanged.
+
+The dated evidence of the old engine stays where it was recorded
+([experiments](EXPERIMENTS.md), [validation](VALIDATION.md),
+[derivations](DERIVATIONS.md), [hypotheses](HYPOTHESES.md)); the contracts of
+the old engine under `docs/` stay as history, each marked at its head. The
+old engine is in git: `git log --first-parent main` reads the day by PRs, and
+any earlier state can be checked out.
+
+Later the same day, by the owner's "delete what needs deleting; everything in
+git, in order, if everything works": the documents of the old engine went too.
+
+- deleted under `docs/`: `CATALOG`, `COMPUTATIONAL_RESPONSE`,
+  `CONFIGURATION_VALIDATION` (the live preflight is a section of `ENGINE.md`),
+  `COUPLED_EXCITATIONS`, `DETECTOR_SAMPLING`, `DIRECTIONAL_WAVE`,
+  `DISTURBANCES`, `ENTITY_CATALOG`, `LOCAL_CONSERVATION`, `LOCAL_CONVERSIONS`,
+  `LOCAL_FIELD_RULES`, `LOCAL_FOCUS`, `LOCAL_LORENTZ_FIELD`, `LOCAL_OBSERVER`,
+  `LOOP_BINDING`, `NODE_VECTOR_PROCESSOR`, `PERFORMANCE`, `PHYSICAL_ENTITIES`,
+  `PROPERTY_COUPLINGS`, `RATIONAL_PARTICLES`, `RAY_EVENT_MODEL`,
+  `REFERENCE_UNITS`, `SHARED_RAY_COUPLING`, `SPATIAL_COMPUTATION_DELAY`,
+  `SPATIAL_COUPLINGS` and `SPATIAL_FIELDS`, whose last section, the law of the
+  shadow, is now `ENGINE.md` (the anchor
+  `#the-law-of-the-shadow-field-only-v1` unchanged); every link to a deleted
+  document or to a section of the old engine became plain text;
+- trimmed to the one engine: `PROJECT_STATUS.md` (the restart guide, the
+  checkout table, how to resume), `TEST_EXPECTATIONS.md` (the suite of
+  2026-09-19 and the repository gates), `HIGHLIGHTS_IMPLEMENTATION.md` (one
+  table, Highlights section by section) and `ARCHITECTURE.md` (the integer
+  contract, ownership, the dependency direction); the dated versions before
+  are in git;
+- deleted under `skills/`: `simulation-configuration` (the old schema's
+  authoring guide and template) and `visualization-check` (no renderer);
+- the workspace reduced to the world file: the JSON editor, **Check**,
+  **Run**, **Stop**, the record and the files; the forms of the old schema,
+  the placement preview and the movie (`ui_assets/playback.html`) deleted;
+  `/api/runs` takes the source alone.
+
 ## The law of the shadow, a new engine mode, on 2026-09-18 (`field-only-v1`)
 
-Feature 20 ([the law of the shadow](SPATIAL_FIELDS.md#the-law-of-the-shadow-field-only-v1);
+Feature 20 ([the law of the shadow](ENGINE.md#the-law-of-the-shadow-field-only-v1);
 Highlights 5.4, the model owner's decision of 2026-09-18, the evening): the
 field-only engine, `event_universe/shadow/`, beside the old one. Nothing of
 the old engine is deleted or changed in behaviour:
@@ -45,7 +165,7 @@ the old engine is deleted or changed in behaviour:
 
 ## Charge per thing, on 2026-09-18 (`charge-per-thing-v1`)
 
-Feature 16g ([charge per thing](SPATIAL_FIELDS.md#charge-per-thing-charge-per-thing-v1);
+Feature 16g (charge per thing;
 Highlights 5.4 point 16 as amended by the model owner, 2026-09-18). No world
 key is added or removed; the meaning of one changes:
 
@@ -97,7 +217,7 @@ key is added or removed; the meaning of one changes:
 
 ## The engine clean under the law of the bit, on 2026-09-18 (`cleanup-law-v1`)
 
-The cleanup lane of 2026-09-18 ([the engine clean](SPATIAL_FIELDS.md#the-engine-clean-under-the-law-of-the-bit-cleanup-law-v1)),
+The cleanup lane of 2026-09-18 (the engine clean),
 on the model owner's instruction. Keys and code deleted, not kept behind an
 option; a world that writes a deleted key is refused:
 
@@ -123,7 +243,7 @@ option; a world that writes a deleted key is refused:
   is deleted; `split_ports` and `transmit` take no mode;
 - the catalog: no `phase_bits`, `lag_bits`, `field`, `field_of`, `kind:
   field`, `source_sign`; `release` on every ray record; `recoil_return`
-  deleted; `electron_field_turn` a momentum table ([catalog](CATALOG.md));
+  deleted; `electron_field_turn` a momentum table (catalog);
 - examples: `examples/nature/bit_law_migration.py` gains `migrate_n` (one N)
   and the drop of orphan field families; 96 worlds gain `N`, 32 lose an
   orphan family, the 23 `delay_*` worlds and the `turn_n14` / `turn_n16`
@@ -175,7 +295,7 @@ Part 2, the same day (`cleanup/law-of-the-bit-2`):
 
 ## A click is an absorption, landed on 2026-09-18 (`detector-absorb-v1`)
 
-Issue #169, feature 2c ([a click is an absorption](SPATIAL_FIELDS.md#a-click-is-an-absorption-detector-absorb-v1);
+Issue #169, feature 2c (a click is an absorption;
 Highlights 5.4 "A click is an absorption", model owner, 2026-09-18). One new
 key, one new default, no existing key changes:
 
@@ -224,7 +344,7 @@ key, one new default, no existing key changes:
 
 ## Polarization landed on 2026-09-17 (`ray-polarization-v1`)
 
-Issue #169, feature 11 ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1);
+Issue #169, feature 11 (polarization;
 Highlights 3.26 and 3.19). New keys, no existing key changes:
 
 - `spatial_fields[].polarization_bits` (ray transport only): the family's
@@ -259,14 +379,14 @@ Highlights 3.26 and 3.19). New keys, no existing key changes:
 ## A spatial plan is validated once, when it is made, on 2026-09-17
 
 The second of the two levers scheduled in
-[Run performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables):
+Run performance:
 the Node boundary's `validate_spatial_plan` runs once per evaluated plan, at
 the execution, before the plan is returned or retained, so a plan-reuse hit
 is served a plan validated at its miss and the Node validates only what it
 changes after planning (an external body's part, whose registers are outside
 the key). Host work only; every run record is byte for byte the same (the
 measurement is recorded in
-[Run performance](PERFORMANCE.md#ray-event-engine-no-validation-on-a-plan-reuse-hit-2026-09-17)).
+Run performance).
 
 - `NodeExecution` (`core/node_execution.py`) takes `spatial_validator`, a
   `SpatialValidator` (`Callable[[SpatialPlanningInput, SpatialPlan], None]`),
@@ -281,12 +401,12 @@ measurement is recorded in
 ## The spatial plan key drops the world tick on 2026-09-17
 
 The first of the two levers scheduled in
-[Run performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables):
+Run performance:
 the spatial law reads nothing from the clock, so the tick left the plan-reuse
 key and the law's signature, and a Node whose local input repeats reuses its
 plan across ticks. Host work only; every run record is byte for byte the same
 (the measurement is recorded in
-[Run performance](PERFORMANCE.md#ray-event-engine-the-tick-leaves-the-spatial-plan-key-2026-09-17)).
+Run performance).
 
 - `SpatialPlanningInput` (`core/node_execution.py`) has no `tick` field; its
   fields are `states`, `records`, `received`, `node_cost`, `rays`, `ray_hold`,
@@ -326,12 +446,12 @@ identity only; no schema key, record field or world file changes:
   first push of a ray on a unit-axial line, every push of
   `test_ray_momentum_turn.py`), are byte-identical.
 - `test_momentum_turn_walk.py`
-  ([expectations](TEST_EXPECTATIONS.md#the-walk-kept-through-a-push)) pins
+  (expectations) pins
   the staircases of a push of 1 and of 8 per interval on a ray of 64, the
   flip, the cancel, the shrink and the lift by hand, and two boards where a
   field ray meets the ray at every Node. `test_helium_orbit.py`'s pins were
   re-read under v2 and are unchanged, the kept walk taking the same -X
-  Links on that board ([expectations](TEST_EXPECTATIONS.md#the-helium-orbit)).
+  Links on that board (expectations).
 
 ## Binding as a loop landed on 2026-09-17 (`loop-binding-v1`)
 
@@ -350,7 +470,7 @@ schema, as the design's section 9 lists:
   `steps` 0) is met by nothing there and leaves; no rule can hold its
   participants by meeting them again (`_meet` in `fields/ray_interactions.py`).
   A `delay` assignment or output is a wait, as the
-  [shared coupling](SHARED_RAY_COUPLING.md) always said.
+  shared coupling always said.
 - The `ray_delay` key of a rule and the Node's `bound_delay` wait,
   `bound_group`, `held_ray`, the snapshot's `bound_groups`, the `bound_tick`
   record, and the six-heading release of a held ray in `release_field` (a
@@ -389,7 +509,7 @@ waiting ray). Deleted: `tests/test_bound_group_motion.py`, the
 `binding`, `unbinding` and `ray_delay` cases of `test_ray_binding.py`, the
 `group` world of `test_ray_momentum_turn.py`, the screen geometry test of
 `test_ray_viewer.py`. The catalog's `binds` entries are corner tables
-(`outputs` with a `closes` note; [catalog](CATALOG.md)). The nature examples
+(`outputs` with a `closes` note; catalog). The nature examples
 `absorption.json`, `absorption_emission.json` and `photofission.json` are
 rewritten as loops (E1 to E3 measured again); `screen.json` and
 `screen_spread.json` are retired with their records kept (E6).
@@ -415,7 +535,7 @@ feature 8c now belongs to every ray:
   that assigns a new heading clears it (`_replacement`).
 - A `ray_interactions` entry without outputs and without assignments may
   declare `momentum_table` naming a participant family
-  ([disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)); the parser
+  (disturbances); the parser
   admits it without `assignments` and `validate_ray_participants` requires
   exactly one unnamed role. `apply_ray_interactions` takes a `turns` list
   beside `bound` and `pushes`; `_table_pushes` is the shared scan of the
@@ -440,7 +560,7 @@ feature 8c now belongs to every ray:
 
 ## Binding as a loop designed on 2026-09-17 (`loop-binding-v1`, design only)
 
-Issue #169, feature 14 ([loop binding](LOOP_BINDING.md); Highlights 3.4,
+Issue #169, feature 14 (loop binding; Highlights 3.4,
 "Binding is a periodic orbit of the meeting rule", model owner,
 2026-09-17). Documents and two world files only; no module, schema key,
 record or test changes with this note:
@@ -453,7 +573,7 @@ record or test changes with this note:
   `ring_open.json` are the unit-square electron and its dispersing control,
   registered as E5 (planned) and in the nature README; the expected
   integers of the future `tests/test_loop_binding.py` are pinned in
-  [test expectations](TEST_EXPECTATIONS.md#loop-binding).
+  test expectations.
 - When the feature is implemented, after feature 8b, the following are
   removed with their own dated note here: the binding form of a
   `ray_interactions` rule without outputs (assignments of `delay` 1 as a
@@ -493,7 +613,7 @@ matter, the same integers:
   held ray released nothing on the heading its group is carried through
   (`release_field(..., carried)`); `carry_rays` in `fields/rays.py`.
 - A binding rule may declare `momentum_table` (`InteractionDefinition.momentum_table`,
-  [disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)); the named families join
+  disturbances); the named families join
   the rule's layer (`ray_layers`), and `apply_ray_interactions` takes a
   `pushes` list beside `bound`.
 - The world ledger and the local conservation audit read a bound group's
@@ -518,7 +638,7 @@ matter, the same integers:
   the push (booked to the world ledger only, as the momentum a split moves).
 ## The Node owns the sub-quantum remainder on 2026-09-17 (`field-remainder-v1`)
 
-Feature 12b of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+Feature 12b of the ray-event model,
 the model owner's decision of 2026-09-17 in Highlights 3.5 and 3.17 (the
 split and the remainder in [field
 spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)), which
@@ -561,18 +681,18 @@ supersedes the phase-selected heading of `field-spreading-v1`:
   `field_spreading` only when a family declares `spread`; a world that
   declares none runs byte-identically (the `unchanged` case still pins the
   hashes of main `f3809be`). `test_field_spreading.py` is repinned
-  ([expectations](TEST_EXPECTATIONS.md#field-spreading-deleted-on-2026-09-18)): the `quantum` case
+  (expectations): the `quantum` case
   becomes `stream` (a ray of amount 1 fills the forward register by 6/11 per
   arrival and the transverse by 1/11; the second quantum releases forward
   after two arrivals, a transverse quantum after eleven), the Detector of
   the `returned` case moves to (7,7,7), and every case checks the ledger at
   every tick. The screen run `examples/nature/screen_spread.json` was rerun
   (E6): see the
-  [README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks).
+  README.
 
 ## Field spreading added on 2026-09-17 (`field-spreading-v1`)
 
-Feature 12 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+Feature 12 of the ray-event model,
 the model owner's decision of 2026-09-17 in Highlights 3.5 ("Light is the
 field, and the field spreads"; [field
 spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
@@ -646,11 +766,11 @@ spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
   emitting their whole stock at once), pinned by the `resident` case.
 - Tests: `tests/test_field_spreading.py` (single, superposition, cancelled,
   quantum, sign, returned, source, resident, rejected, unchanged;
-  [expectations](TEST_EXPECTATIONS.md#field-spreading-deleted-on-2026-09-18)).
+  expectations).
 ## The Detector's bit as a property on 2026-09-17 (`detector-bit-property-v1`)
 
-Issue #169, feature 2b ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1),
-[the bit read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1);
+Issue #169, feature 2b (the bit as a property,
+the bit read;
 Highlights 5.4, model owner, 2026-09-17):
 
 - A marked Node reads the bit a ray carries before it draws: a ray carrying
@@ -695,8 +815,8 @@ Highlights 5.4, model owner, 2026-09-17):
 
 ## Ray-event audits on 2026-09-17 (`ray-event-audit-v1`)
 
-Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),
-[the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
+Issue #169, feature 10 (audits,
+the world ledger):
 
 - `Simulation.audit()` returns the world ledger at the current tick; the
   runner records one per completed tick under `audit` and
@@ -710,7 +830,7 @@ Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),
   dissipative world (schema 2) still reads false. Pins updated with a dated
   note: `test_inverse_split.py` (`annul`), `test_ray_viewer.py`,
   `test_ray_integration_guards.py`, `test_disturbance_application.py`
-  ([expectations](TEST_EXPECTATIONS.md#ray-event-audit)).
+  (expectations).
 - `charge_totals()` counts the stock a record holds of a charged family,
   the owners `totals()` reads, beside the rays; `escaped_charge_totals()` is
   a new readout, and the ledger's `absorbed` line is `external_body_totals()`
@@ -731,7 +851,7 @@ Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),
 
 The model owner's instruction of 2026-09-17, recorded in
 [HIGHLIGHTS.md](HIGHLIGHTS.md) sections 3.3, 3.4, 3.5, 3.19, 3.20, 5.1 and 5.4
-and in [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 6, is that everything
+and in RAY_EVENT_MODEL.md section 6, is that everything
 not used is deleted. Issue #164, bucket A, removed the unused historical
 particle candidates from the package, tests, tools and documents:
 
@@ -751,7 +871,7 @@ particle candidates from the package, tests, tools and documents:
   the documents `SCALAR_FIELDS.md`, `BALANCED_MOTION.md` and `CAUSAL_STREAM_FIELD.md`.
 
 There is no replacement API: the active `Simulation` is initialization-defined
-([DISTURBANCES.md](DISTURBANCES.md)), shared bounded arithmetic is
+(DISTURBANCES.md), shared bounded arithmetic is
 `core/integer.py`, and `pytest --visualize-runs` now only enables the
 visualization-marked tests. `core/state.py` was deleted in the next step,
 below. Dated validation records keep their original scope.
@@ -761,7 +881,7 @@ below. Dated validation records keep their original scope.
 Under the same instruction, issue #164 buckets B.1 and B.2 removed the shared
 quantum resource and the integration layer built on it, following
 [HIGHLIGHTS.md](HIGHLIGHTS.md) sections 3.18 (deleted), 3.19, 3.20 and 5.4
-and [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 6, steps 3 and 4: no
+and RAY_EVENT_MODEL.md section 6, steps 3 and 4: no
 owner answers at a distance, the Detector is a marked Node and every
 alternative is an event on the board.
 
@@ -809,7 +929,7 @@ the bond registry were deleted in the next steps, below.
 
 Under the same instruction, issue #164 bucket B.3 removed the source
 envelopes, following [HIGHLIGHTS.md](HIGHLIGHTS.md) section 3.5 and
-[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 5 (row R5) and section 6,
+RAY_EVENT_MODEL.md section 5 (row R5) and section 6,
 step 7: a field is the ray's own information spreading in ray form to the
 Nodes around it, and no Node retains a source envelope.
 
@@ -831,7 +951,7 @@ Nodes around it, and no Node retains a source envelope.
 `core/event_space.py`, `core/event_links.py` and `tests/test_event_links.py`
 were deleted on 2026-09-17 under issue #164 bucket B.4, following
 [HIGHLIGHTS.md](HIGHLIGHTS.md) section 3.20 and the "Where is state stored"
-row of [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md): all the information is on
+row of RAY_EVENT_MODEL.md: all the information is on
 the rays, the origin Node keeps nothing and there is no register.
 
 - `DisturbanceEngine` and `SpatialEngine` no longer accept `event_space=`.
@@ -857,7 +977,7 @@ There is no replacement API. `core/event_resolution.py` and
 Under the same instruction, issue #164 bucket B.5 removed the last owners that
 answered at a distance, kept a register at a Node or made a ray wait for room
 ([Highlights](HIGHLIGHTS.md) 3.18 deleted, 3.19, 3.20, 5.1 and 5.4;
-[ray-event model](RAY_EVENT_MODEL.md) section 5 and section 6 step 5):
+ray-event model section 5 and section 6 step 5):
 
 - `fields/bonds.py` (`BondRegistry`), the ray fields `bond`, `train` and
   `homing`, the `Claim` record, the spatial-field keys `bond` and `claim`, the
@@ -895,11 +1015,11 @@ the same day.
 ## Ray hidden state added on 2026-09-17 (`ray-event-state-v1`)
 
 Issue #169, feature 1, the first implementation step of the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) (step 2) under
+ray-event model (step 2) under
 [Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1: every ray carries the
 number of steps it has made since its event and the information of that
 event, as hidden variables that no rule reads
-([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)).
+(ray state).
 
 - `Ray` (`core/spatial_state.py`) gains `steps`, `outbound`, `event_ports`,
   `event_shares` (six bounded entries in Port order) and `detector`, all with
@@ -915,7 +1035,7 @@ event, as hidden variables that no rule reads
   events used to merge: `ray_count` and slot use count events, and one-Link
   self-exclusion excludes exactly the departure cycle's rays, so a moving
   absorber-emitter absorbs its earlier cycle's quantum back
-  (`test_energy_audit.py`, [expectations](TEST_EXPECTATIONS.md#ray-hidden-state)).
+  (`test_energy_audit.py`, expectations).
 - Tests that construct rays or compare emitted or interacted rays directly
   include the stamp (`test_ray_field.py`, `test_native_ray_coupling.py`,
   `test_ray_merge_contracts.py`, `test_ray_integration_guards.py`).
@@ -926,18 +1046,18 @@ Detector reads the new fields in this step.
 ## Node Detector bit added on 2026-09-17 (`detector-mark-v1`)
 
 Issue #169, feature 2, migration step 3 of the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+ray-event model under
 [Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4: a Node marked in the
 initialization draws one bit per arriving ray from its own ticket stream and
 is otherwise an ordinary Node
-([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)).
+(Detector mark).
 
 - New optional initialization key `detectors`: a list of marks, each with
   `position`, `setting` `[n, d]` and `seed`, all required, no default rate,
   one mark per position, admitted only under the shared Detector admission
   (schema 1, `link_ticks` 1, ray fields on the links metric at pace 1/1
   without decay, unit-axial headings closed under negation)
-  ([schema](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)).
+  (schema).
 - `DetectorMark(position, pass_numerator, pass_denominator, seed)`,
   `DETECTOR_MARK`, `MAX_DETECTORS`, `detector_draw` and `ray_merge_key` in
   `core/spatial_state.py`; `InitialState.detectors`;
@@ -964,12 +1084,12 @@ nowhere and runs exactly as before.
 ## Detector return added on 2026-09-17 (`detector-return-v1`)
 
 Issue #169, feature 3, the first half of migration step 4 of the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+ray-event model under
 [Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4: a draw of 0 at a marked Node
 returns the arriving ray, the same wave ray reversed on its line, unchanged,
 walking back the number of steps it has made since its event
-([the return](DETECTOR_SAMPLING.md#the-return-detector-return-v1),
-[transport](SPATIAL_FIELDS.md#detector-return-detector-return-v1)).
+(the return,
+transport).
 
 - `return_ray(ray, definition)` and `DETECTOR_RETURN` in
   `core/spatial_state.py`: heading index replaced by the negated heading's
@@ -999,19 +1119,19 @@ walking back the number of steps it has made since its event
 Pinned consequences in existing tests: the four rays of
 `test_detector_mark.py` that draw 0 now return to their lamps and rest there,
 and the returning ray of `test_ray_hidden_state.py` is kept resident at
-`steps` 0 instead of failing the forwarding ([expectations](TEST_EXPECTATIONS.md#node-detector-bit)).
+`steps` 0 instead of failing the forwarding (expectations).
 A document without `detectors` has no returning ray and runs byte for byte
 as before.
 
 ## Inverse split added on 2026-09-17 (`inverse-split-v1`)
 
 Issue #169, feature 4, the second half of migration step 4 of the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+ray-event model under
 [Highlights](HIGHLIGHTS.md) 3.20 and 5.4 and the model owner's decisions of
 2026-09-17: a returned ray at its event Node performs the inverse split of
 its own share by the world's `return_mode`
-([the inverse split](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1),
-[transport and bookkeeping](SPATIAL_FIELDS.md#inverse-split-inverse-split-v1)).
+(the inverse split,
+transport and bookkeeping).
 
 - The initialization key `return_mode` (`siblings`, the default, `straight`
   or `annul`; any other value rejected), `InitialState.return_mode`,
@@ -1046,14 +1166,14 @@ Pinned consequences in existing tests: the returned ray of
 emitted again by it, and the four returned rays of `test_detector_mark.py`
 are restored to their lamps, which then hold their share with its recoil
 undone, that test running three ticks
-([expectations](TEST_EXPECTATIONS.md#inverse-split)). A world without a mark
+(expectations). A world without a mark
 has no returned ray and runs byte for byte as before.
 ## Ray layers added on 2026-09-17 (`ray-layers-v1`)
 
 Issue #169, feature 5, under [Highlights](HIGHLIGHTS.md) 5.1 and the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): event spacetime
+ray-event model: event spacetime
 has layers, a layer is a set of families that couple, and a meeting exists
-only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+only inside a layer (layers).
 
 - `ray_layers` (`core/spatial_state.py`) derives the layers from the catalog
   as the connected components of the ray fields over the participants of the
@@ -1080,7 +1200,7 @@ only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
 Decision of the model owner, 2026-09-17: the engine is generic, so the test
 suite keeps one module per generic rule, each exercising that rule in isolation
 on a minimal board, and one module per feature of the
-[ray-event model](RAY_EVENT_MODEL.md) (issue #169); modules that pin the numbers
+ray-event model (issue #169); modules that pin the numbers
 of an example world, combine several rules to reach a pinned number, duplicate a
 kept rule under another world, or exist for a study, a gallery, a probe, a
 comparison of worlds, rendering or playback were deleted, and so were the dated
@@ -1090,7 +1210,7 @@ research studies and every `examples/` directory that no kept test loads and
 (about 15 minutes in CI). After: 40 modules with `test_detector_mark.py` of
 the merged PR #186, 1,009 tests, 35 seconds on the same host. The kept
 modules and the rule each isolates are the
-[suite inventory](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17).
+suite inventory.
 
 Deleted test modules (69):
 
@@ -1193,10 +1313,10 @@ runtime behavior changes.
 
 Issue #169, feature 6, under [Highlights](HIGHLIGHTS.md) 3.15, 3.17, 3.26
 and 5.1 and step 6 of the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a rule of
+ray-event model: a rule of
 `ray_interactions` with declared `outputs` replaces its participants by one
 to six new event rays at the meeting Node
-([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
+(meetings with outputs).
 
 - `convert_values` (`fields/disturbances.py`) is the arithmetic of the record
   conversion's `_convert_group` factored into one pure function over bounded
@@ -1233,12 +1353,12 @@ to six new event rays at the meeting Node
 ## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
 
 Issue #169, feature 9, the wave-ray part of
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) migration step 6
+ray-event model migration step 6
 under [Highlights](HIGHLIGHTS.md) 3.3 and 5.1: every ray is a wave ray, a
 plain ray the special case with rest rate 0, light a family with rest rate 0
 that carries its emitter's phase unchanged, and the phase the one value with
 its own declared width
-([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+(wave-ray families).
 
 - `spatial_fields[i]` (ray transport) admits `phase_bits` (the phase width;
   default 0, or log2 of `kerengonen.phase_steps`) and `charge` (per quantum,
@@ -1289,7 +1409,7 @@ standing for a star, a neutron star, a fixed proton, a large charge or a
 piece of apparatus; it radiates by the one field rule, does not spread and
 is not pushed by matter. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
 text; the [postulates](../POSTULATES.md) section 23, the
-[ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
+ray-event model section 1 and its
 migration step 7b (`external-body-v1`, after feature 7), the
 [experiments register](EXPERIMENTS.md) (A1, A2, A3, A6, A8, A12, A13 and
 section C), the [terminology](TERMINOLOGY.md) (External body, Apparatus)
@@ -1309,7 +1429,7 @@ API or runtime behavior changes; `external-body-v1` is not yet in the code.
 The model owner's visualization requirement of 2026-09-17 (issue #169) is
 implemented as a repository tool, ready before feature 7 lands: a Renderer
 under [Highlights](HIGHLIGHTS.md) 3.29 and 3.30 that reads the runner's
-record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
+record and never the engine (ray viewer).
 
 - `tools/ray_viewer/extract.py` turns one or more records (`run.json`,
   `events.jsonl`, `initialization.json`, an optional `ray-recording.json`)
@@ -1326,7 +1446,7 @@ record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
   Playwright, headless Chromium and Pillow; `playwright` joins the `render`
   extra in `pyproject.toml`.
 - `tests/test_ray_viewer.py` pins the extraction of a two-lamp, six-tick
-  world ([expectations](TEST_EXPECTATIONS.md#ray-viewer-extraction));
+  world (expectations);
   `tools/check.py` selects it for any change under `tools/ray_viewer/`.
 
 No engine, schema or record change. The prototype under the session
@@ -1334,7 +1454,7 @@ scratchpad (`gif-electrons-3d`) is superseded by the tool.
 
 ## Binding and gravity by delay added on 2026-09-17 (`ray-binding-v1`)
 
-Issue #169, feature 8 ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1);
+Issue #169, feature 8 (binding;
 Highlights 3.4 and 3.28). A `ray_interactions` rule without outputs whose
 assignments set `delay` 1 binds its participants as a bound group: the rays
 stay at the Node, the rule fires again every interval (the group's tick,
@@ -1359,10 +1479,10 @@ delay table run byte-identically.
 
 Issue #169, feature 7, under [Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.15,
 3.17 and 3.28 and step 7 of the
-[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a ray field
+ray-event model: a ray field
 declared with `field_of` and `release` is the field of that family, released
 at every Node a ray of the family crosses
-([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)).
+(released field).
 
 - `SpatialFieldDefinition.field_of`, `release_numerator` and
   `release_denominator` (`core/spatial_state.py`) carry the declaration;
@@ -1418,7 +1538,7 @@ body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)).
   `external_body_momentum`; a body cannot leave an open world.
 - Worlds without `external_bodies` are byte-identical. New test module
   `tests/test_external_body.py` (sink, stars, uniform, mirror, rejected),
-  pinned in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md#external-body).
+  pinned in TEST_EXPECTATIONS.md.
 
 ## Records as owners deleted on 2026-09-17
 
@@ -1426,7 +1546,7 @@ Issue #164 bucket B.6, the last deletion bucket, following
 [HIGHLIGHTS.md](HIGHLIGHTS.md) sections 3.20 (all the information is on the
 rays; the origin Node keeps nothing and there is no register) and 5.1 (no
 occupied channel and no capacity rule) and row R1 and migration step 6 of
-[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md): an interaction is a property of the
+RAY_EVENT_MODEL.md: an interaction is a property of the
 meeting of rays, and since `ray-meeting-conversion-v1` the N-to-M arithmetic
 lives at the meeting (`convert_values`), not on a resident record.
 
@@ -1453,7 +1573,7 @@ lives at the meeting (`convert_values`), not on a resident record.
   `interactions` entry with `outputs` is rejected with a dated message;
   `outputs` in `ray_interactions` is unchanged and `convert_values` stays as
   the arithmetic of the meeting. The two-to-two `output_types` rule of
-  [local conversions](LOCAL_CONVERSIONS.md) is unchanged.
+  local conversions is unchanged.
 - The carrier commit's guard "outgoing links still occupied; no implicit
   packet queue is allowed" (`core/disturbance_node.py`) is gone, as the
   spatial pre-planning refusal went with bucket B.5.
@@ -1480,8 +1600,8 @@ There is no replacement API. Every deletion bucket of issue #164 is done.
 
 By the model owner's decision of 2026-09-17 under [Highlights](HIGHLIGHTS.md)
 3.26 and 3.30, the families of nature and their couplings are data on the one
-generic engine: [`catalog/nature.json`](../catalog/nature.json), described in
-[the catalog of nature](CATALOG.md). The catalog is exactly two things, the
+generic engine: `catalog/nature.json`, described in
+the catalog of nature. The catalog is exactly two things, the
 rays of nature with their couplings and the apparatus; the engine only reads
 it, a world file selects rays from it and places apparatus, and nothing else
 exists on the board.
@@ -1516,14 +1636,14 @@ exists on the board.
   declaration, its coupling form and the apparatus family a coupled body
   needs, and the binding and gravity couplings name `ray-binding-v1` as their
   engine with their tables open.
-- Documentation: [the catalog of nature](CATALOG.md), a row in the
+- Documentation: the catalog of nature, a row in the
   [documentation index](README.md), a sentence in the
   [register](EXPERIMENTS.md), the expectations in
-  [test expectations](TEST_EXPECTATIONS.md#catalog-of-nature).
+  test expectations.
 ## Ray viewer: releases, fields, style file and sidecar, 2026-09-17
 
 The first render of a feature 7 run and the model owner's reading of the
-page on a phone (2026-09-17) changed what the [ray viewer](../tools/ray_viewer/README.md)
+page on a phone (2026-09-17) changed what the ray viewer
 draws; the record is unchanged.
 
 - `extract.py` resolves rays per family: a field family (`field_of`) passes
@@ -1564,7 +1684,7 @@ draws; the record is unchanged.
 
 Model owner's feedback on the second render, applied as defaults of
 `tools/ray_viewer/style.json` so that no change of look needs a code change
-([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+(ray viewer); the record is unchanged.
 
 - `sizes.trail_links` 0 means the whole path since the ray's event; the
   default is 10 with `trail_fade` [1.0, 0.0]: the ray bright at its Link
@@ -1589,7 +1709,7 @@ Model owner's feedback on the second render, applied as defaults of
 ## Ray viewer: faint white wake and momentum arrow, 2026-09-17
 
 Model owner's feedback on the fourth render, applied as defaults of
-`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+`tools/ray_viewer/style.json` (ray viewer);
 the record is unchanged.
 
 - `colors.trail` `#ffffff` (a family may override it with `trail` in its
@@ -1607,7 +1727,7 @@ the record is unchanged.
 ## Ray viewer: small head and small momentum arrow, 2026-09-17
 
 Model owner's feedback on the fifth render, applied as defaults of
-`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+`tools/ray_viewer/style.json` (ray viewer);
 the record is unchanged.
 
 - `sizes.head_links` 0.5 (new key: the bright head is a short segment from
@@ -1622,7 +1742,7 @@ the record is unchanged.
 ## Ray viewer: spheres and a softer look, 2026-09-17
 
 Model owner's feedback on the sixth render, applied as defaults of
-`tools/ray_viewer/style.json` ([ray viewer](../tools/ray_viewer/README.md));
+`tools/ray_viewer/style.json` (ray viewer);
 the record is unchanged.
 
 - No cubes: `draw.marker_shape` `sphere` (with `cube` as an option and
@@ -1660,7 +1780,7 @@ the record is unchanged.
 By the model owner's decision on [Highlights](HIGHLIGHTS.md) 5.4
 ("everything begins and is realized at a marked Node"), the physical
 picture is the list of PASS clicks and the board rendering is the record's
-view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+view (ray viewer); the record is unchanged.
 
 - `extract.py` adds an `eye` block to every run: the marked Nodes, the
   list of PASS clicks (tick, Node, family, amount, bit, Port) and the hits
@@ -1683,7 +1803,7 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   `click_dot_px` x the square root of the count), a spot on a screen.
 - `examples/nature/screen.json` (Highlights 5.5, a demonstration made once,
   never a test; its section of the
-  [nature README](../examples/nature/README.md#the-screen-the-field-of-an-electron-at-rest-on-seven-marks)
+  nature README
   holds the record's fingerprints and the render lines): an electron at
   rest, the bound group of two `electron` rays of 4, releasing `light` on
   its six axis lines, and a screen of seven Detector marks at distance 6
@@ -1694,7 +1814,7 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
 ## Ray viewer: several runs on one page, the eye toggle, a tick cap, 2026-09-17
 
 The model owner wants one HTML page with the nature runs, no GIF
-([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+(ray viewer); the record is unchanged.
 
 - `style.json` gains `draw.page_text.runs` (the run buttons above the
   board when the document holds several runs; a button starts its run
@@ -1710,7 +1830,7 @@ The model owner wants one HTML page with the nature runs, no GIF
 ## Ray viewer: phone GIF preset, 2026-09-17
 
 The model owner's GIFs do not always open on the phone, and he wants GIFs
-only ([ray viewer](../tools/ray_viewer/README.md)); the record is
+only (ray viewer); the record is
 unchanged.
 
 - `style.json` gains `motion.gif_preset` (`phone`, the default) and
@@ -1745,7 +1865,7 @@ python -m event_universe --init examples/basic.json --output artifacts/basic
 Programmatic users import `Simulation` from `event_universe` and
 `load_initial_state` from `event_universe.initialization`. Field/type names,
 transport, updates, coupling and costs are data. Read
-[DISTURBANCES.md](DISTURBANCES.md) for the complete schema and limits.
+DISTURBANCES.md for the complete schema and limits.
 
 Runs are headless. Visualization requires `--visualize`; standard tests do not
 produce animation reports. `pytest --visualize-runs` explicitly enables them.

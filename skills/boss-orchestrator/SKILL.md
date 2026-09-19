@@ -51,9 +51,9 @@ artefacts stay in English.
 
 ## Project reference
 
-Treat **Universe 24 Highlights** as the high-level specification and use [the implementation map](../../docs/HIGHLIGHTS_IMPLEMENTATION.md) to distinguish implemented behavior, hypotheses and gaps. The active model contract is [initialization-defined disturbances](../../docs/DISTURBANCES.md). Technical workflow belongs in the repository, not in Highlights.
+Treat **Universe 24 Highlights** as the high-level specification and use [the implementation map](../../docs/HIGHLIGHTS_IMPLEMENTATION.md) to distinguish implemented behavior, hypotheses and gaps. The active model contract is initialization-defined disturbances. Technical workflow belongs in the repository, not in Highlights.
 
-Since 2026-09-17, by the model owner's decision, the Highlights text is [docs/HIGHLIGHTS.md](../../docs/HIGHLIGHTS.md) and that file is the only copy to edit. The Google Doc is its historical source up to the revision of 2026-09-16 and is neither edited nor resynced; do not propose text for it or keep "proposed revision" paragraphs waiting for it. Boss records each decision of the model owner in `docs/HIGHLIGHTS.md` first, in the section it changes, then dispatches one synchronization specialist per change to carry it into [POSTULATES.md](../../POSTULATES.md), [the ray-event model](../../docs/RAY_EVENT_MODEL.md) and every other document that restates the changed rule, and to report the resulting diff. At any published revision, Highlights and those documents must not disagree; when they do, Highlights is the text to follow and the others are corrected.
+Since 2026-09-17, by the model owner's decision, the Highlights text is [docs/HIGHLIGHTS.md](../../docs/HIGHLIGHTS.md) and that file is the only copy to edit. The Google Doc is its historical source up to the revision of 2026-09-16 and is neither edited nor resynced; do not propose text for it or keep "proposed revision" paragraphs waiting for it. Boss records each decision of the model owner in `docs/HIGHLIGHTS.md` first, in the section it changes, then dispatches one synchronization specialist per change to carry it into [POSTULATES.md](../../POSTULATES.md), the ray-event model and every other document that restates the changed rule, and to report the resulting diff. At any published revision, Highlights and those documents must not disagree; when they do, Highlights is the text to follow and the others are corrected.
 
 Since 2026-09-17, by the model owner's decision, an implementation specialist does not run the full test suite locally: it runs the documentation gates, its own test module and the test modules that import the files it changed, then pushes; the full suite runs once in CI (`tools/check.py`, in parallel with `pytest -n auto`) and a CI failure comes back to the same specialist to fix. Boss opens the pull request and merges when CI is green.
 
@@ -145,7 +145,6 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 
 | Need | Skill |
 | --- | --- |
-| Configuration check/authoring | [simulation-configuration](../simulation-configuration/SKILL.md) |
 | Field law or response | [field-development](../field-development/SKILL.md) |
 | Missing numerical law or physical acceptance | [physics-rule-validation](../physics-rule-validation/SKILL.md), then [mathematical-validation](../mathematical-validation/SKILL.md) and the implementation owner |
 | State/interfaces/dependencies | [architecture-review](../architecture-review/SKILL.md) |
@@ -153,7 +152,6 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
-| Visual validation | [visualization-check](../visualization-check/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 

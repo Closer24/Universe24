@@ -459,7 +459,7 @@ say which rungs are occupied: the masses of the elementary families
 What can be tested is representability: with the bounded integers of the
 engine, the measured ratios (muon to electron 206.77, tau to electron
 3477.2, proton to electron 1836.15) must all fit one grid within the encoding
-error the [reference units](REFERENCE_UNITS.md) declare, at one `N`. If no
+error the reference units declare, at one `N`. If no
 single `N` fits them within that error, the ladder fails. The external body
 of Highlights 3.19 (model owner, 2026-09-17) stands outside the ladder: the
 ladder comes from the spreading law, since a bound group is rays that must

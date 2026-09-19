@@ -4,7 +4,7 @@ This document explains the ideas underlying the simulator without programming
 details. Consult it before any change. A change contradicting a binding principle
 requires an explicit decision to change the model.
 
-The user-authorized [Node execution profile](docs/NODE_VECTOR_PROCESSOR.md)
+The user-authorized Node execution profile
 declares h as one adjacent-node transit step and each interaction's k as an
 explicit positive integer duration in h units. Sequential fired interactions add
 their durations; link transit follows local completion. Operation cost is measured
@@ -25,14 +25,14 @@ Distinguish three categories:
 
 ## Active initialization-defined model
 
-The canonical [Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md)
+The canonical Detector-owned sampling contract
 allows draws only at an actual external Detector encounter. Ordinary evolution
 is deterministic. The earlier autonomous lottery, bond and contact descriptions
 below are historical: the `historical-autonomous-v1` research profile, the
 lottery capture and the bond registry were deleted on 2026-09-17 (issue #164,
 bucket B.5), and the text is kept with that date, not renumbered.
 
-The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
+The opt-in bounded rational candidate preserves
 finite integer state while representing fractional quantities in explicitly
 configured whole/remainder/denominator fields. Its larger finite intermediate
 registers, balanced neighbor selection and exact fractional clock are named
@@ -51,22 +51,22 @@ explicit reference benchmarks; reproducing them does not mean they emerged from
 a computational field. New emergence experiments must use simple local vector
 operations to produce states, not supplied continuum force or collision formulas.
 Guards and conservation diagnostics validate proposals without replacing this
-elementary rule. See [physical entities](docs/PHYSICAL_ENTITIES.md) and the example in
-[DISTURBANCES.md](docs/DISTURBANCES.md).
+elementary rule. See physical entities and the example in
+DISTURBANCES.md.
 
-The optional [bounded conversion](docs/LOCAL_CONVERSIONS.md) also permits two
+The optional bounded conversion also permits two
 local records to become two explicitly configured output types under the same
 atomic conservation checks. This is a supplied transformation, not evidence of
-emergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)
+emergent annihilation. Executable entity profiles
 describe bounded representations; physical identity and dynamics cannot be
 inferred solely from the ability to store or transport their registers.
 
 The user-defined cost of a local cycle sets a general node delay above the
 normal cost. Neighbor transit is fixed, and no computation debt accumulates
 between cycles. The exact schema, exchange, timing and source rules are in
-[the disturbance contract](docs/DISTURBANCES.md).
+the disturbance contract.
 
-The optional [outward spatial-field candidate](docs/SPATIAL_FIELDS.md) separates
+The optional outward spatial-field candidate separates
 source records from the fields they emit. By default its field transport uses a fixed
 clock; priced field work contributes to new local carrier cycles while field
 forwarding continues at causal link speed. Schema 1 preserves conservative
@@ -81,7 +81,7 @@ of its own departure cycle from the flux it samples on arrival, using only its
 own registers; returning self-field at any other distance is not excluded.
 
 Two explicit opt-in policies now
-exist for the generic engine, described in [spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering):
+exist for the generic engine, described in spatial couplings:
 `field_phase_first` completes every field link before carriers sample, so an
 emitter's own field is one link ahead on every free-space path; `arrival_port_blind`
 keeps the default clock and lets an arriving carrier ignore, for that one sample,
@@ -89,13 +89,13 @@ the travel port it came in on, so straight paths are self-blind while maximum-sp
 corners still coarrive. Both pass isolated-source and external-source controls;
 neither uses source identity, and neither is a derived physical law.
 
-The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md) applies
+The opt-in shared computation cycle applies
 the same budget delay to all local fields and carriers. It freezes updates and
 directional departures together; later input belongs to the next cycle.
 The integer link transit remains fixed. This alternative timing candidate is
 selected with `spatial_computation_delay`; existing inputs keep the default.
 
-The optional [spatial response candidate](docs/SPATIAL_COUPLINGS.md) can turn a
+The optional spatial response candidate can turn a
 configured vector while preserving its length exactly, transferring the opposite
 vector change to the same spatial field. This is an integer quarter-turn law;
 it does not infer physical names, continuous angles or energy conservation.
@@ -103,7 +103,7 @@ Straight cardinal self flux is parallel to its carrier and cannot turn that
 vector under the flux-driven law. Turns, periodic return and other coupling
 laws require separate self-interaction analysis.
 
-The optional [local field-rule framework](docs/LOCAL_FIELD_RULES.md) treats a
+The optional local field-rule framework treats a
 location as a node with six directional connections. Several scalar/vector
 components can evolve together from local state and received information, with
 explicit retained and outgoing amounts. Joint field/carrier transactions must
@@ -138,7 +138,7 @@ fields and disturbances together at every local event. The combined node change
 must match actual incoming and outgoing flux. An internal exchange must balance the
 participants' energy changes and all three momentum changes at that node;
 external sources and losses must be distinguished from closed transfers.
-The [local conservation contract](docs/LOCAL_CONSERVATION.md) defines the optional
+The local conservation contract defines the optional
 read-only audit and its supported ownership boundaries. It measures declared
 quantities without repairing state, choosing laws or adding model-time cost.
 Locality, a passing component ledger and catalog properties alone do not establish
@@ -250,7 +250,7 @@ step, without exception. The joint outcome of a bonded pair, two rays emitted
 together, is the one thing that does not: each ray carries the Node and tick
 of its birth through the lattice at link speed, and when either end is
 measured, the bond registry answers for both ends at once, at any distance (the
-[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
+bonded ray field).
 That answer carries no energy, no momentum and no message: each end alone sees
 an even coin whatever the other end does, which the Bell probe measures as
 plus rates that do not move with the other side's setting, not a consequence
@@ -336,7 +336,7 @@ a remainder, and makes integer dynamic fields vanish after their last input. The
 immutable background is exempt in both cases. It can change a vector's direction and does not
 preserve momentum or energy. It does not alter conservative splitting, fractional
 source requests or the historical models' remainder rules. See
-[the finite field contract](docs/SPATIAL_FIELDS.md#finite-completed-link-decay).
+the finite field contract.
 
 Numbers have fixed bounds. An out-of-range calculation stops the run with an error
 rather than hiding overflow or distorting the result.
@@ -435,7 +435,7 @@ The generic engine's default clock fails this requirement for a value-driven
 exchange response: a carrier and the field it emits in its departure interval
 cross one link together, and `tests/test_field_phase_first.py` (deleted on 2026-09-17) records that
 baseline. The opt-in `field_phase_first` and `arrival_port_blind` policies in
-[spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering) satisfy
+spatial couplings satisfy
 it for straight motion by ordering alone; the flux-driven rotation law satisfies
 it under the default clock by geometry, as `tests/test_rotation_self_interaction.py` (deleted on 2026-09-17)
 shows. None of these selects a self-force law under acceleration.
@@ -858,7 +858,7 @@ Detector interaction, 1 or 0 for each transfer arriving at a marked node,
 every ray being a wave ray, 1 ordinary behavior and the only measurement,
 0 return and no measurement (nothing measured or recorded as an outcome),
 one bit per arriving transfer, and the bit is all the Detector adds
-(the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
+(the Detector-only contract made concrete in
 [section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
@@ -936,7 +936,7 @@ postulate 4 holds for everything physical. The number is a hidden variable in
 Bell's sense, local for a lottery capture, where it lives in the detector's
 record row and `S` stays at or below 2, and shared for a bonded pair, where
 one number answers both ends and `S` reaches the quantum value. The
-[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
+bonded ray field
 implemented the pair's single number; the Bell probe (`examples/bell-chsh/`,
 deleted on 2026-09-17) measured it. What the sequence is, beyond a configured seed, is the open
 question of postulate 12 in another form.
@@ -968,7 +968,7 @@ Adopted as the target direction by the model owner on 2026-09-17 and recorded
 in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) (sections 3.3, 3.4, 3.5, 3.15,
 3.19, 3.20, 5.1 and 5.4), the Highlights specification edited directly since
 that date. The design candidate `ray-event-model-v1` in
-[docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md) holds the complete
+docs/RAY_EVENT_MODEL.md holds the complete
 statement, the migration order and the acceptance criteria.
 Nothing in this section is implemented yet; every implementation step is a
 separate published change measured against that document. Since 2026-09-18
@@ -1293,7 +1293,7 @@ comes from the spreading law, since a bound group is rays that must keep
 moving and bind again every interval, so only the closed patterns the
 binding table can hold exist; a body that does not spread has no closure
 condition and any amount is allowed. It is feature 7b of the migration in
-[docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md#6-migration-in-order),
+docs/RAY_EVENT_MODEL.md,
 after feature 7, `external-body-v1`. Since 2026-09-18 (section 25, point 22
 and the settled rule (v)) the external body is a thing with declared
 tables: its shadows are given with the board, it radiates nothing per
@@ -1402,7 +1402,7 @@ time: the share walks its line backward and the event is undone by exactly
 the amount that share carried, and only that. Exact integer conservation on
 the lattice is what makes this undoing exact rather than approximate.
 
-The design candidate in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
+The design candidate in docs/RAY_EVENT_MODEL.md
 carries this section's consequences for ray state and for the acceptance
 criteria.
 
@@ -1518,6 +1518,6 @@ there is stays.
 **Implementation.** `bit-law-v1`, `node-mixing-v1`, `clock-readings-v1`,
 `node-is-ports-v1` and `lanes-v1` (feature 18, the lanes of point 25) are
 on `main`
-([spatial fields](docs/SPATIAL_FIELDS.md#the-law-of-the-bit-bit-law-v1));
+(spatial fields);
 the return as a field (point 3 as amended, in place of the walk on the
 trace those features implement) is pending.

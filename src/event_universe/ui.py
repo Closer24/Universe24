@@ -20,7 +20,7 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 
 from event_universe.configuration_validation import validate_configuration
-from event_universe.initialization import parse_json_document
+from event_universe.json_documents import parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 if sys.platform == "win32":
@@ -29,7 +29,7 @@ else:
     _creation_flags = 0
 
 MAX_REQUEST = 1_048_576
-ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl", "run.html"}
+ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl"}
 RUN_ROUTE = re.compile(r"/api/runs/([a-f0-9]{32})(?:/(stop))?")
 FILE_ROUTE = re.compile(r"/runs/([a-f0-9]{32})/([a-z.]+)")
 EXPORT_ROUTE = re.compile(r"/exports/([a-f0-9]{32})\.json")
@@ -40,14 +40,14 @@ def validate_source(source: object) -> dict[str, object]:
     """Use the same strict data validator as the CLI, without executing a simulation."""
     if not isinstance(source, str) or len(source.encode("utf-8")) > MAX_REQUEST:
         raise ValueError("configuration must be JSON text no larger than 1 MiB")
-    report = validate_configuration(source, kind="initialization")
+    report = validate_configuration(source, kind="shadow")
     if not report.valid:
         raise ValueError(report.issues[0].message)
     return report.summary
 
 
 def default_configs() -> Path:
-    source = Path(__file__).resolve().parents[2] / "examples"
+    source = Path(__file__).resolve().parents[2] / "examples" / "shadow"
     return source if source.is_dir() else Path(sys.prefix) / "share/event-universe/examples"
 
 
@@ -173,10 +173,9 @@ class Workspace:
             )
         return result
 
-    def start(self, source: object, visualize: object, stride: object) -> dict[str, object]:
+    def start(self, source: object) -> dict[str, object]:
+        """One headless run of the draft, in another process, on a saved snapshot."""
         summary = validate_source(source)
-        if type(visualize) is not bool or type(stride) is not int or stride < 1:
-            raise ValueError("visualize must be a boolean and frame_stride a positive integer")
         assert isinstance(source, str)
         with self.lock:
             for job in self.jobs.values():
@@ -203,11 +202,7 @@ class Workspace:
                 str(initialization),
                 "--output",
                 str(destination),
-                "--frame-stride",
-                str(stride),
             ]
-            if visualize:
-                command.append("--visualize")
             environment = os.environ.copy()
             package_root = str(Path(__file__).resolve().parent.parent)
             environment["PYTHONPATH"] = package_root + os.pathsep + environment.get("PYTHONPATH", "")
@@ -417,9 +412,7 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
                 self._json({"valid": True, "summary": validate_source(body.get("source"))})
             elif path == "/api/runs":
                 self._json(
-                    self.server.workspace.start(
-                        body.get("source"), body.get("visualize", False), body.get("frame_stride", 1)
-                    ),
+                    self.server.workspace.start(body.get("source")),
                     HTTPStatus.ACCEPTED,
                 )
             elif (match := RUN_ROUTE.fullmatch(path)) and match[2] == "stop":

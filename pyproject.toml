@@ -31,7 +31,7 @@ package-dir = {"" = "src"}
 event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
 
 [tool.setuptools.data-files]
-"share/event-universe/examples" = ["examples/*.json"]
+"share/event-universe/examples" = ["examples/shadow/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

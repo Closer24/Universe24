@@ -9,13 +9,13 @@ description: Check Universe24 regressions and daily genericity across the active
 
 Include `tests/test_node_state_contract.py` in the authorized daily genericity
 audit, alongside its existing baseline.
-Follow [the node-state ownership contract](../../docs/LOCAL_LORENTZ_FIELD.md).
+Follow the node-state ownership contract.
 Inspect transitive evolving state, pending proposals and packets for embedded
 formulas, expression trees, definitions or executable laws. Shared immutable
 initialization definitions and generic evaluators remain permitted outside nodes.
 Check local causal field response and paired field reaction; a keyword scan or
 global source reconstruction behind a local accessor does not satisfy this rule.
-For the opt-in [integer Node profile](../../docs/NODE_VECTOR_PROCESSOR.md), include
+For the opt-in integer Node profile, include
 `tests/test_node_rule_contract.py` and `tests/test_node_conservation.py`. Keep
 explicit k timing separate from operation cost, and check actual pending/packet
 owners before accepting a balance. For joint indexed reactions and persistent
@@ -23,7 +23,7 @@ conditions, include `tests/test_spatial_interactions.py`; follow the delayed-rul
 review in
 [physics validation](../physics-rule-validation/SKILL.md#review-the-declared-rules).
 The suite was reduced on 2026-09-17 to one module per generic rule
-([inventory](../../docs/TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17)); a
+(inventory); a
 module named by an older audit record and absent from the inventory was deleted
 that day, not lost.
 Aggregation metadata must match each carrier and spatial receipt implementation;

@@ -3,7 +3,7 @@
 ## Active generic disturbance model
 
 Initialization accepts only `sampling_profile: "detector-only-v1"` under the
-[Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md): an ordinary
+Detector-owned sampling contract: an ordinary
 absorber never draws. The ray lottery, the bond registry and the
 `historical-autonomous-v1` research profile were deleted on 2026-09-17 (issue
 #164, bucket B.5), after the native instrument/contact bindings (buckets B.1
@@ -13,7 +13,7 @@ composition restrictions. Since 2026-09-18 nothing draws (Highlights 5.4,
 point 14): a mark absorbs a thing and returns a shadow, and it declares no
 seed (`bit-law-v1`).
 
-The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the
+The opt-in integer Node contract extends the
 active engine with indexed bounded interactions, 1..32-component properties,
 explicit aggregation and pre-commit conserved readouts. In this profile one hop
 takes one h and local rules take their declared k*h before dispatch. Existing
@@ -24,7 +24,7 @@ selection and against the rebased pre-substep state before committing, while
 `when` remains a start trigger. Each delayed field-only or joint substep must
 preserve its declared invariants on its actual before/after values. A failed
 condition, invariant or bound faults before any owner in the proposal changes.
-The [local rule contract](docs/NODE_VECTOR_PROCESSOR.md#local-rules) defines
+The local rule contract defines
 bounded selection, stored guard metadata and the complete-owner balance check.
 
 The primary API is `Simulation(initial: InitialState)`. An initialization JSON
@@ -37,31 +37,31 @@ New emergence experiments produce states using elementary local vector
 operations rather than supplied continuum physical formulas. Comparisons,
 invariants and independent external benchmarks remain validation tools. Existing
 formula-based reference configurations are labeled separately; they do not
-establish emergence. The [entity audit](docs/PHYSICAL_ENTITIES.md) records the
+establish emergence. The entity audit records the
 physical inventory, executable probes and remaining classical/quantum gaps.
 
-[docs/DISTURBANCES.md](docs/DISTURBANCES.md) is the authoritative active schema
+docs/DISTURBANCES.md is the authoritative active schema
 and transition contract: bounded scalar/vector payloads, whole-record or extensive
 transport, atomic local exchange, explicit sources, fixed link transit, local
 computation delay without debt, capacity failures and headless output.
 
-Optional [spatial fields](docs/SPATIAL_FIELDS.md) add initialization-defined
+Optional spatial fields add initialization-defined
 baselines, continuous external emission and fixed-clock outward octant transport
-by default. The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md)
+by default. The opt-in shared computation cycle
 freezes field and carrier updates under one combined budget, retaining later
 input separately until commit; all waits and transits are integer tick counts.
 Their six delivered channels preserve travel direction; eight internal sign
 classes prevent reversal of an emitted branch. The document specifies source
 cadence, bounded residual ownership, cost coupling and periodic/self-field limits.
 
-Optional [spatial couplings](docs/SPATIAL_COUPLINGS.md) add same-field atomic
+Optional spatial couplings add same-field atomic
 exchange and discrete norm-preserving rotation, driven by local values or scalar
 directional flux. Samples precede fresh emission; a delayed carrier proposal
 commits its equal-and-opposite spatial reaction with the carrier. The response
 contract defines same-timestamp packet preparation, fixed local cost and the
 restricted straight-line isolation result without general source attribution.
 
-Optional [generic local field rules](docs/LOCAL_FIELD_RULES.md) add schema 1
+Optional generic local field rules add schema 1
 local transport alongside existing outward fields. A node can retain dynamic
 stock, read six delivered scalar/vector channels independently, and assign
 several retained/outgoing values from one frozen rule view. Groups are metadata
@@ -81,7 +81,7 @@ carry a phase that advances per link, and the coherence of the rays meeting at
 a Node gates what is absorbed and sampled there while every amount stays whole.
 Its fixed law tables are prepared before stepping. Funded/absorbed ray owners
 currently reject delayed carrier plans; phased/attenuating self-exclusion composes with
-absorption only. See the exact [candidate bounds](docs/SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1).
+absorption only. See the exact candidate bounds.
 A ray field may set `"metric": "euclidean"` (`euclidean-ray-pace-v1`): rays
 wait at Nodes by their heading's pace, never faster than one link per tick, so
 every heading covers equal Euclidean distance per tick. Historical (deleted on
@@ -106,8 +106,8 @@ it comes to rest as whole units at known Nodes. The explicit
 `"residue": "dissipate"` option (`finite-dissipative-v1`) records removed
 fractions as loss instead. Immutable baselines are exempt. Per-record finite allowances bound absolute
 emission and opposite coupling reactions; they are not physical reservoirs.
-The complete laws belong to [spatial fields](docs/SPATIAL_FIELDS.md) and
-[spatial response](docs/SPATIAL_COUPLINGS.md).
+The complete laws belong to spatial fields and
+spatial response.
 
 The version 2 combined balance is initial inventory plus committed sources minus
 committed signed dissipation and escaped quantity, where deposits count as
@@ -128,7 +128,7 @@ is independent of schema version and named in metadata. Combined accounting is
 `current + dissipated + escaped = initial + sources` for declared conserved
 quantities; spatial-only accounting also includes committed reactions and, for
 nonconserved local fields, configured transformations. The escaped ledger is diagnostic,
-never a global repair or a physical input. See [the schema](docs/DISTURBANCES.md).
+never a global repair or a physical input. See the schema.
 
 Optional atomic pair `interactions` assign multiple fields from one frozen input
 pair, enforce each declared invariant and conserved-field pair balance, then
@@ -149,7 +149,7 @@ integer bounds, read-only diagnostics and honest failure reporting still apply.
 
 The optional initialization `conservation` member defines scalar energy and
 three-component momentum measurements for property-selected carrier records and
-joint spatial values. The [local conservation contract](docs/LOCAL_CONSERVATION.md)
+joint spatial values. The local conservation contract
 owns its schema, additive-owner interpretation and restrictions. The first
 contract permits zero-baseline closed systems and measured open-boundary escape;
 it rejects external sources, decay and native-event composition.
@@ -216,7 +216,7 @@ field propagation. It does not yet establish quantum consistency or entanglement
 ## Hard physical constraints
 
 The active generic simulator also supports an explicitly selected
-[bounded rational expression candidate](docs/RATIONAL_PARTICLES.md). Only inside
+bounded rational expression candidate. Only inside
 those opt-in regions, canonical numerators/denominators allow 127 magnitude bits
 and temporaries allow 255 magnitude bits, with bounded integer arithmetic and
 fixed model work charges. Persistent payload bounds, legacy integer expressions,
@@ -227,7 +227,7 @@ The numbered record/source/response constraints here describe the historical
 scalar models whose named APIs were deleted on 2026-09-17. Their
 five-register node and sixteen-register particle schema is not universal. The
 active generic state and its smaller payload bound are defined in
-[the disturbance contract](docs/DISTURBANCES.md).
+the disturbance contract.
 
 1. All dynamic physical registers and arithmetic are integers. No floats, true
    division, trigonometry, square roots, logarithms or vector normalization occur
@@ -428,7 +428,7 @@ does not alter simulation ticks, physical updates or failure detection.
 
 ### Default run display
 
-The optional [local reception probe](docs/LOCAL_OBSERVER.md) records completed
+The optional local reception probe records completed
 inputs at one node with a completed-node-cycle counter. Six receiver ports
 identify the last hop, not distant source positions. Archive prefixes are
 captured alongside frames; global tick and state remain audit information.
@@ -449,7 +449,7 @@ generated. Requested frame stride changes recording
 only, never the physical update interval.
 
 The active generic local commit and failure behavior is defined in
-[docs/DISTURBANCES.md](docs/DISTURBANCES.md). The following field-phase description
+docs/DISTURBANCES.md. The following field-phase description
 applied to the historical scalar models deleted on 2026-09-17.
 
 Field proposals are validated before the field phase commits. Particle-field
@@ -731,13 +731,13 @@ The 3:4 matrix is a
 test fixture and explicit demonstration parameter, never a hidden default law.
 ## Executable entity profiles and bounded conversion
 
-The host-side [entity catalog adapter](docs/ENTITY_CATALOG.md) selects explicit
+The host-side entity catalog adapter selects explicit
 profiles and emits ordinary validated initialization. It adds no physical-name
 dispatch, enlarged local registers or alternate engine. Representation probes
 do not certify physical field dynamics.
 
 The optional `interactions.output_types` contract is defined in
-[local conversions](docs/LOCAL_CONVERSIONS.md): exactly two outputs replace the
+local conversions: exactly two outputs replace the
 same two local slots, with complete explicit payload assignments, exact declared
 balances, zero carried routing progress and the documented schema/ownership
 restrictions. Invalid proposals cannot install partial converted records.
