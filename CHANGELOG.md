@@ -33,6 +33,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   over K on every Link, true by default for a paid family and false for a free
   one, what the engine did by kind until now; `tests/test_family_turns.py`.
 
+- `families[i].quantum` (the owner's "put it in, without an experiment"): the
+  units of a family that make one event at a holder that absorbs them (`keep`,
+  the click; `rerelease`), per number, the rest waiting in the holder's
+  register (`pending` in the content's state and on the held line of the
+  books, `events` per family); 1 by default, every unit its own event as
+  before; the derivation's q_γ as a declared width; `tests/test_family_quantum.py`.
+
 ### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
 
 - A new engine mode beside the old one, `event_universe/shadow/`, selected by

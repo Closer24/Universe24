@@ -25,7 +25,11 @@ or a machine.
    the delayed clock and `wait_per_quantum` a declared width like ρ, K and N; the
    three decisions of the morning (`transmitted_number`, the wait's unit, ε_g) are
    not needed and the gate of feature 20b is not written; "the field is, in fact, a
-   field of events".
+   field of events". The first declared widths of "what can be put as a
+   parameter, put": `turns_in_flight` and `quantum` per family (features 21 and 22),
+   both defaulting to today's behaviour; open with them, the owner's call: whether
+   light's phase in flight turns by its message (round 8, S5) or by the cell's amount
+   as the engine does.
 2. **The old engine of the law of the bit was deleted on 2026-09-19** by the model
    owner's decision of the evening ("No confrontations are needed. Only tests that
    everything is as designed."): `core/` but its substrate, `fields/`,

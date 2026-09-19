@@ -28,7 +28,9 @@ follows the Node rule of DERIVATIONS.md round 8, section 56 (S2 of section
    `keep` (the default for a paid family: the click, the push taken and the
    amount joining the holder's content), `rerelease` (the push taken, the
    amount pooled to leave again with the holder's release and number) or
-   `pass` (no push, the units mix on);
+   `pass` (no push, the units mix on); an absorbing table acts once per
+   whole `quantum` of the family (1 by default): the units of one number
+   wait in the holder's register until a whole is there;
 4. at every Node the shadows of one number mix (node-mixing-v1), the
    remainders park and release, the departures go into flight;
 5. a held content releases: per free family it holds, content x the world's
@@ -119,6 +121,10 @@ class Holder:
     steps: int = 0
     absorbed: list[dict[str, int]] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
+    # The register of a family's units below one quantum, per number (the
+    # content whose field they are), and the events made: one per whole quantum.
+    pending: list[dict[int, int]] = field(default_factory=list)
+    events: list[int] = field(default_factory=list)
 
     @property
     def content(self) -> int:
@@ -143,6 +149,11 @@ class Holder:
             "absorbed": [dict(entry) for entry in self.absorbed],
             "pushed": list(self.pushed),
             "pool": list(self.pool),
+            "pending": [
+                {str(number): amount for number, amount in sorted(register.items())}
+                for register in self.pending
+            ],
+            "events": list(self.events),
         }
 
 
@@ -221,6 +232,8 @@ class ShadowSimulation:
             pool=[0] * count,
             pool_remainder=[0] * count,
             absorbed=[{"home": 0, "read": 0, "keep": 0, "rerelease": 0} for _ in range(count)],
+            pending=[{} for _ in range(count)],
+            events=[0] * count,
         )
 
     def _seed(
@@ -322,19 +335,33 @@ class ShadowSimulation:
                 push = self._push(holder, free, number, per_port)
                 holder.momentum = [int(a) + int(b) for a, b in zip(holder.momentum, push, strict=True)]
                 holder.pushed = [int(a) + int(b) for a, b in zip(holder.pushed, push, strict=True)]
-                holder.absorbed[index][rule] += total
                 if rule == "read":
+                    holder.absorbed[index][rule] += total
                     self._event("read", holder, index, number, total, push)
                     continue
                 layer.take(position, rank)
                 self.shadow_absorbed[index] += total
-                if rule == "keep":
-                    holder.held[index] += total
-                    self.held_absorbed[index] += total
-                    self._event("click", holder, index, number, total, push)
+                # The event is a whole quantum of the family (`quantum`, 1 by
+                # default): the units of this number wait in the holder's
+                # register until a whole is there; the push entered with them.
+                register = holder.pending[index]
+                events, rest = divmod(register.get(number, 0) + total, self.families[index].quantum)
+                if rest:
+                    register[number] = rest
                 else:
-                    holder.pool[index] += total
-                    self._event("rerelease", holder, index, number, total, push)
+                    register.pop(number, None)
+                if not events:
+                    continue
+                whole = events * self.families[index].quantum
+                holder.absorbed[index][rule] += whole
+                holder.events[index] += events
+                if rule == "keep":
+                    holder.held[index] += whole
+                    self.held_absorbed[index] += whole
+                    self._event("click", holder, index, number, whole, push)
+                else:
+                    holder.pool[index] += whole
+                    self._event("rerelease", holder, index, number, whole, push)
 
     def _push(
         self, holder: Holder, free: bool, number: int, per_port: np.ndarray
@@ -509,6 +536,9 @@ class ShadowSimulation:
                 "initial": self.held_initial[index],
                 "absorbed": self.held_absorbed[index],
                 "current": held_current,
+                # The units below one quantum waiting in the holders' registers:
+                # taken from the shadows' line, not yet an event on this one.
+                "pending": sum(sum(holder.pending[index].values()) for holder in self.holders.values()),
                 "spent": self.held_spent[index],
                 "escaped": self.held_escaped[index],
             }

@@ -3410,7 +3410,8 @@ of a free family; `wait_per_quantum` (1 by default; an integer or `[n, d]`;
 held content of a free family, `turns_in_flight` whether the family's quanta
 turn their phase in flight by their amount over K on every Link, true by
 default for a paid family and false for a free one, a declared width since
-2026-09-19); `contents` (`position`, `family`, `amount`
+2026-09-19, `quantum` the units of the family that make one event at a
+holder that absorbs them, 1 by default); `contents` (`position`, `family`, `amount`
 with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`, `table`
 family name to `read` | `keep` | `rerelease` | `pass` with `read` the
 default for a free family and `keep` for a paid one, `lamp` `{rate: [n, d],
@@ -3423,6 +3424,23 @@ on a free family, a charge on a paid family, two contents at one Node, a
 table naming an unknown family or rule, a content at or past K x N / 2, N
 not a power of two, a repeated lamp heading. `event_universe.configuration_validation`
 reports a world of the law as kind `shadow`.
+
+**The quantum of a family (2026-09-19).** `families[i].quantum`, 1 by default:
+at a holder whose table absorbs the family (`keep`, the click; `rerelease`),
+the units of one number arriving in an interval are taken from flight, their
+push entering the holder as before, and wait in the holder's register for
+that number until a whole quantum is there; then one event of the whole: one
+click counted (`events` per family in the content's state, `absorbed` the
+units that made events) with the whole joining the holder's content, or the
+whole pooled to leave again. Nothing changes in flight, and `read` and `pass`
+are unchanged. The units waiting are on the shadows' absorbed line and on the
+held line's `pending`, not yet on its absorbed; a content's state lists its
+`pending` per family and number. With the default every unit is its own
+event, byte for byte as before. The derivation's q_γ (round 8, S5 and S6: a
+whole q_γ assembled at a holder by the remainder rule, per number, one
+absorption per quantum) as a declared width; whether light's phase in flight
+turns by its message q/K rather than by the cell's amount, as S5 reads, is
+not decided (`tests/test_family_quantum.py`).
 
 **The record.** `run.json` carries `law` "field-only-v1", the world's keys,
 `numbers` (the contents' numbers, positions and families), the books per

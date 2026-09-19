@@ -25,6 +25,7 @@ modules are named in the [migration note](MIGRATION.md#one-engine-on-2026-09-19-
 | `test_field_only.py` | The law of the shadow on minimal boards: the books, the fixed point and Gauss's flux, the shell means, the pair's pushes and the product law, the slits, the wait, the refusals, the nearest step, the step by the accumulators ([below](#the-law-of-the-shadow)) |
 | `test_node_mixing.py` | The Node's mixing on one Node of the engine's layer: the 3B_h rule, the coherent sum, the largest remainder, the parked ninths and their release, the momentum carried ([below](#the-nodes-mixing-on-one-node)) |
 | `test_family_turns.py` | A family's phase turn in flight as a declared width: the default by kind, the engine's wiring, one Link of the walk ([below](#the-phase-turn-in-flight)) |
+| `test_family_quantum.py` | A family's quantum as a declared width: the event at an absorbing holder is one whole quantum per number, the rest waiting in the holder's register ([below](#the-quantum-of-a-family)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
@@ -66,6 +67,25 @@ all otherwise. Expected, written down first:
 | (a) the default by kind | a free family, a paid family, a free one declared true, a paid one declared false | turns false, true, true, false; `turns_in_flight: 1` refused by name |
 | (b) the engine's wiring | three families, free, free turning, paid | the layers' turn false, true, true |
 | (c) one Link of the walk | 128 quanta at phase 5 carrying (3, 0, 0) on +X, K = 16, N = 64, a board of 3 x 1 x 1 | at the neighbour: 128 quanta at phase 13 when the family turns (128 / 16 = 8 steps), at phase 5 when it does not; the momentum (3, 0, 0) and the departures cleared either way |
+
+## The quantum of a family
+
+`tests/test_family_quantum.py` isolates `families[i].quantum` (the model owner,
+2026-09-19, "put it in, without an experiment"; DERIVATIONS.md round 8, S5 and
+S6): at a holder that absorbs a family, the units of one number wait in the
+holder's register until a whole quantum is there, then one event of the whole.
+One world, three marks of a free family `m` (content 8, fixed, no release) and
+two held contents of the paid family `light` (numbers 4 and 5) at the corners,
+light's quantum 3, the arrivals given with the board at the marks' Nodes, one
+interval. Expected, written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) the default and the refusals | no key; 3; 0, -1, 2.5, "3" | 1; 3; refused naming `families[1].quantum` |
+| (b) the click | mark A gets 2 units of number 4 on +X; mark B 4; mark C (`rerelease`) 7 | A: 0 events, 0 absorbed, 2 pending, push (2, 0, 0); B: 1 click, 3 absorbed and held, 1 pending, push (4, 0, 0); C: 2 events, 6 pooled and released again in the same interval with C's number, 1 pending, push (7, 0, 0) |
+| (c) per number | mark A gets 2 of number 4 on +X and 2 of number 5 on +Y | 0 events, pending {4: 2, 5: 2}, push (2, 2, 0) |
+| (d) the books | the world of (b) after the interval | balanced; light's shadows absorbed 13, released 6 (C's re-release) and current 6; held absorbed 3, pending 4 |
+| the default | quantum 1, mark B gets 4 | 4 events, 4 absorbed and held, nothing pending |
 
 ## Suite inventory of 2026-09-17
 

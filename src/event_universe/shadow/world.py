@@ -21,7 +21,11 @@ refuse each other's worlds by name. What a world declares:
   whole `charge` of a held content of it (0 by default), and `turns_in_flight`
   (whether the family's quanta turn their phase in flight by their amount
   over K on every Link: true by default for a paid family, false for a free
-  one; what a matter shadow rotates by, a declared width since 2026-09-19);
+  one; what a matter shadow rotates by, a declared width since 2026-09-19),
+  and `quantum` (the units of the family that make one event at a holder that
+  absorbs them, `keep` or `rerelease`: the units of one number arriving at the
+  holder wait in its register until a whole quantum is there, then one click
+  or one re-release of that whole; 1 by default, every unit its own event);
 - `contents`: the held contents, one per Node, each with a `position`, its
   `family`, its `amount` (a positive whole number of quanta, below K x N / 2),
   and optionally its `phase`, its whole `charge` (the family's by default), its
@@ -95,7 +99,7 @@ WORLD_KEYS = {
     "contents",
     "initial_shadows",
 }
-FAMILY_KEYS = {"name", "kind", "charge", "turns_in_flight"}
+FAMILY_KEYS = {"name", "kind", "charge", "turns_in_flight", "quantum"}
 CONTENT_KEYS = {"position", "family", "amount", "phase", "charge", "momentum", "fixed", "table", "lamp"}
 LAMP_KEYS = {"rate", "headings"}
 SHADOW_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
@@ -104,12 +108,14 @@ SHADOW_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
 @dataclass(frozen=True)
 class FamilyDefinition:
     """One family of the world: its name, its kind, the whole charge of a
-    held content of it, and whether its quanta turn their phase in flight."""
+    held content of it, whether its quanta turn their phase in flight, and the
+    units that make one event at a holder that absorbs them."""
 
     name: str
     kind: str
     charge: int
     turns: bool
+    quantum: int
 
     @property
     def free(self) -> bool:
@@ -278,7 +284,8 @@ def _families(value: object) -> tuple[FamilyDefinition, ...]:
         turns = obj.get("turns_in_flight", kind == "paid")
         if type(turns) is not bool:
             raise ValueError(f"{SHADOW_LAW}: families[{index}].turns_in_flight must be true or false")
-        found.append(FamilyDefinition(name, str(kind), charge, turns))
+        quantum = _integer(obj.get("quantum", 1), f"families[{index}].quantum", 1, MAX_VALUE)
+        found.append(FamilyDefinition(name, str(kind), charge, turns, quantum))
     return tuple(found)
 
 

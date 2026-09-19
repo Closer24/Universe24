@@ -85,6 +85,7 @@ def execute_shadow_run(
                 "kind": family.kind,
                 "charge": family.charge,
                 "turns_in_flight": family.turns,
+                "quantum": family.quantum,
             }
             for family in world.families
         ],
