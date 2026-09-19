@@ -20,11 +20,13 @@ in this order:
    open faces booked; on an axis the world declares periodic the departures
    through one face are created at the first Node of the opposite face and
    nothing escapes on that axis;
-2. at every Node the size of the coherent sum of each number's arrivals is
-   formed, this interval's sizes, what the measured events read at their
-   self-creations (step 5); the events of a paid family that arrived this
-   interval read the free families' sizes at their Node and carry the same
-   count (`Transit.suspend`);
+2. at every Node the presence of each number is formed, the amount that
+   arrived there this interval, over every family (and, a reading, the size
+   of the coherent sum, `Transit.sizes`); the events of a paid family that
+   arrived this interval read the presence at their Node of every number but
+   their own and carry the count `presence x n // d` at the world's
+   `suspension` `[n, d]` (`Transit.suspend`), the same read a measured event
+   makes at its self-creation (step 5);
 3. a measured event meets the events that arrive at its Node: its own
    number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
@@ -47,7 +49,10 @@ in this order:
    (node-mixing-v2): the sides' shares from the vectors, whole units placed
    by the largest remainder with the ties in the tick's Port order, a group
    with no whole for any side going whole by its momentum, the departures
-   into flight; a suspended slot stays, its count paid by one;
+   into flight; for a family without a phase circle (`"phase": false`) each
+   Port's arrival scatters on its own, four ninths back and one ninth each
+   other way (`scatter_arrivals`); a suspended slot stays, its count paid
+   by one;
 5. a measured event that owes a count pays it by one and is created here
    without a self-creation: no release, no turn (`waited` counts these
    intervals; age + waited is the intervals completed). One that owes
@@ -63,13 +68,15 @@ in this order:
    amount, along the heading); a lamp with a `phase_window` releases only at
    the self-creations whose clock phase, the one its release is stamped
    with, falls in its window; its phase turns by its content over K off its
-   clock at every self-creation, released or not. After its self-creation
-   it reads the sizes of the other numbers at its Node, this interval's
-   (step 2), and owes `suspension` intervals per whole unit read
-   (`Measured.owed`, written once per self-creation, never accumulated),
-   paid before its next self-creation: in a steady size of k whole units it
-   is created again once every k + 1 intervals, its clock slowed by
-   1 / (k + 1) and never stopped (the redshift). The read follows the
+   clock at every self-creation, released or not (a measured event of a
+   family without a phase circle never turns). After its self-creation it
+   reads the presence at its Node of every number but its own, this
+   interval's (step 2), and owes `presence x n // d` intervals at the
+   world's `suspension` `[n, d]` (`Measured.owed`, written once per
+   self-creation, never accumulated), paid before its next self-creation:
+   in a steady presence that reads k it is created again once every k + 1
+   intervals, its clock slowed by 1 / (k + 1) and never stopped (the
+   redshift). The read follows the
    self-creation and never precedes it: a read before it, of the same steady
    size, would owe the count again every time it was spent and the clock
    would never tick (the order of the first `events-v1`, corrected on
@@ -84,14 +91,18 @@ in this order:
    before z, the momentum untouched; a step onto a measured event merges the
    two into the resident, a step off the board escapes; `fixed` never steps.
 
-The push (Highlights 5.4, the law of events, the third law corrected): the
-momentum an arriving group of a free family carries, from birth along its
-release heading, pushes a measured event by -M c (gravity, toward the
-emitter, the content M the cross-section) and by (q_A / M_A) q c (electricity,
-the emitter's whole charge over its declared content times the measured
-event's whole charge, the whole part off the clock, no remainder), and the
-third law is the symmetry of the two fields; a group of a paid family pushes
-by +c, its own momentum, and its emitter took the recoil. The books, per
+The push (Highlights 5.4, the law of events, the third law corrected; the
+model owner, 2026-09-19, the push as the net flow): the net flow c of the
+units of one number of a free family arriving at a measured event, the sum
+over the six Ports of amount times travel heading (what `Transit.flow` sums
+per Node), pushes it by -M c (gravity, toward the emitter, the content M the
+cross-section) and by (q_A / M_A) q c (electricity, the emitter's whole
+charge over its declared content times the measured event's whole charge,
+the whole part off the clock, no remainder), and the third law is the
+symmetry of the two fields; the momentum the units carry from birth stays on
+their record and in the books, unread by the push. A group of a paid family
+pushes by +c, its own carried momentum, and its emitter took the recoil
+(light's pressure). The books, per
 family and interval: the measured line, initial + measured (home and the
 clicks) = current + spent (the lamps) + escaped (measured events off the
 board); the transit line, initial + released = current + escaped + absorbed
@@ -218,8 +229,9 @@ class EventSimulation:
                 world.phase_steps,
                 world.clock,
                 periodic=world.periodic,
+                phased=family.phase,
             )
-            for index in range(count)
+            for index, family in enumerate(world.families)
         ]
         self.denominator = world.content_lcm()
         self.measured: dict[int, Measured] = {}
@@ -309,29 +321,30 @@ class EventSimulation:
         for transit in self.transits:
             transit.tick = self.tick
         arrived = [transit.walk() for transit in self.transits]
-        # The readings: the sizes per Node and number, per family; the total
-        # over families per number, over numbers per Node, and the free
-        # families' total per Node (what a paid family's exit reads).
+        # The presence: per Node and number the amount that arrived this
+        # interval, over every family, and its total per Node (what a reader
+        # reads less its own number); the readings (the count, the flow and
+        # the sizes per family) alongside.
         numbers = len(world.measured)
-        size_by_number = np.zeros((*self.shape, numbers + 1), dtype=np.int64)
-        free_size = np.zeros(self.shape, dtype=np.int64)
+        presence_by_number = np.zeros((*self.shape, numbers + 1), dtype=np.int64)
         for index, transit in enumerate(self.transits):
             self.count[index] = transit.count()
             self.per_port[index] = transit.arr_amt.sum(axis=3)
             self.flow[index] = self.per_port[index] @ HEADINGS
-            sizes = transit.sizes() if transit.owners else np.zeros((*self.shape, 0), dtype=np.int64)
-            self.size[index] = sizes
+            self.size[index] = (
+                transit.sizes() if transit.owners else np.zeros((*self.shape, 0), dtype=np.int64)
+            )
+            per_number = transit.arr_amt.sum(axis=-1)
             for rank, number in enumerate(transit.owners):
-                size_by_number[..., number] += sizes[..., rank]
-            if self.families[index].free:
-                free_size += sizes.sum(axis=-1)
-        size_total = size_by_number.sum(axis=-1)
-        # The suspension of a paid family's events at the Nodes they reached.
-        if world.suspension:
+                presence_by_number[..., number] += per_number[..., rank]
+        presence_total = presence_by_number.sum(axis=-1)
+        # The suspension of a paid family's events at the Nodes they reached:
+        # each number's arrivals read the presence of every other number.
+        if world.suspension[0]:
             for index, transit in enumerate(self.transits):
                 if self.families[index].free or not transit.owners:
                     continue
-                read = np.repeat(free_size[..., None], len(transit.owners), axis=-1)
+                read = presence_total[..., None] - presence_by_number[..., list(transit.owners)]
                 transit.suspend(read, world.suspension, arrived[index])
         # The events at the measured events, then the mixing.
         for number in sorted(self.measured):
@@ -343,23 +356,28 @@ class EventSimulation:
         for number in sorted(self.measured):
             entry = self.measured[number]
             if self._release(entry):
-                self._suspend(entry, size_total, size_by_number)
+                self._suspend(entry, presence_total, presence_by_number)
         for number in sorted(self.measured):
             if number in self.measured:
                 self._move(self.measured[number])
 
-    def _suspend(self, entry: Measured, size_total: np.ndarray, size_by_number: np.ndarray) -> None:
-        """The count a measured event owes after its self-creation: the sizes
-        of the other numbers at its Node this interval, `suspension` intervals
-        per whole unit read, written once per self-creation and paid one per
-        interval before the next (never accumulated; nothing without a
-        width). A steady size of k whole units slows the clock to one
-        self-creation per k + 1 intervals and never stops it."""
-        width = self.world.suspension
-        if not width:
+    def _suspend(
+        self, entry: Measured, presence_total: np.ndarray, presence_by_number: np.ndarray
+    ) -> None:
+        """The count a measured event owes after its self-creation: the
+        presence at its Node this interval of every number but its own (the
+        amount that arrived, over every family) times the width's numerator
+        over its denominator, the whole part, written once per self-creation
+        and paid one per interval before the next (never accumulated; nothing
+        without a width). A steady presence that reads k slows the clock to
+        one self-creation per k + 1 intervals and never stops it."""
+        numerator, denominator = self.world.suspension
+        if not numerator:
             return
-        read = int(size_total[entry.position]) - int(size_by_number[(*entry.position, entry.number)])
-        entry.owed = read * width // MIXING_AMPLITUDE_SCALE
+        read = int(presence_total[entry.position]) - int(
+            presence_by_number[(*entry.position, entry.number)]
+        )
+        entry.owed = read * numerator // denominator
 
     def _meet(self, entry: Measured) -> None:
         """The events at a measured event's Node: every arrival of its own
@@ -402,8 +420,13 @@ class EventSimulation:
                     if not in_window(phase, window, modulus):
                         self._pass(entry, index, number, total, phase, window)
                         continue
-                carried = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
-                push = self._push(entry, free, number, carried)
+                # A free family's push reads the net flow of the bundle, a
+                # paid family's the momentum it carries.
+                if free:
+                    vector = [int(v) for v in transit.arr_amt[cell] @ HEADINGS]
+                else:
+                    vector = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
+                push = self._push(entry, free, number, vector)
                 entry.momentum = [int(a) + int(b) for a, b in zip(entry.momentum, push, strict=True)]
                 entry.pushed = [int(a) + int(b) for a, b in zip(entry.pushed, push, strict=True)]
                 if rule == "read":
@@ -446,21 +469,21 @@ class EventSimulation:
             }
         )
 
-    def _push(
-        self, entry: Measured, free: bool, number: int, carried: list[int]
-    ) -> tuple[int, int, int]:
+    def _push(self, entry: Measured, free: bool, number: int, vector: list[int]) -> tuple[int, int, int]:
         """The push of the units of one number arriving at a measured event:
-        the gravity and the electric readings of the momentum they carry for a
-        free family, the units' own momentum for a paid one."""
+        for a free family the gravity and the electric readings of `vector`,
+        their net flow (amount times travel heading summed over the six
+        Ports); for a paid family `vector` is the momentum they carry and the
+        push is it."""
         if not free:
-            return carried[0], carried[1], carried[2]
+            return vector[0], vector[1], vector[2]
         content = entry.content
-        push = [-carried[axis] * content for axis in range(3)]
+        push = [-vector[axis] * content for axis in range(3)]
         owner = self.world.measured[number - 1]
         if owner.charge and entry.charge:
             scale = owner.charge * entry.charge * (self.denominator // owner.amount)
             for axis in range(3):
-                total = carried[axis] * scale
+                total = vector[axis] * scale
                 whole = by_clock(entry.age, abs(total), self.denominator)
                 push[axis] += -whole if total < 0 else whole
         return push[0], push[1], push[2]
@@ -530,6 +553,9 @@ class EventSimulation:
                         ]
                         self.transit_released[index] += amount
                         self.held_spent[index] += amount
+        if not self.families[entry.family].phase:
+            # A measured event of a family without a phase circle never turns.
+            return True
         steps = by_clock(age, entry.content, self.world.clock)
         if 2 * steps >= self.world.phase_steps:
             raise ValueError(

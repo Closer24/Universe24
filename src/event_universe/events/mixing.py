@@ -18,6 +18,19 @@ ties. The kernels are exact in bounded integers: the only float is the
 square root's estimate, corrected to the exact integer root on both sides
 before it is used.
 
+A family that declares no phase circle (`"phase": false`, the model owner,
+2026-09-19: the field of matter without phase) does not sum coherently at a
+Node: each Port's arrival scatters on its own (`scatter_arrivals`) with the
+shares of a lone arrival, four ninths back out through the Port it came in
+by and one ninth to each of the other five sides, whole units by the largest
+remainder with the ties in the tick's Port order, per Port; a Port's arrival
+with no whole share for any side (one or two units) goes whole to the heading
+nearest its own momentum, on a tie the largest share (back), then the tick's
+order; its momentum is apportioned over its own departures exactly per axis
+(`apportion_carried` per Port), and the six Ports' departures are added per
+heading. Two arrivals through opposite Ports never cancel: each leaves four
+ninths back and the transverse sides read one ninth of each.
+
 The arrays are those of `MixingArrays`, whatever their leading axes; the
 engine's transit (`event_universe.events.transit`) is one such family with
 the axes (x, y, z, number).
@@ -33,6 +46,10 @@ from event_universe.core.lattice import MAX_VALUE, MIXING_OPPOSITE, PORT_HEADING
 
 MIXING_AMPLITUDE_SCALE = 32
 MIXING_WEIGHT_BITS = 28
+# The shares of a lone arrival for a family without a phase circle: four
+# ninths back out through the Port it came in by, one ninth each other way.
+SCATTER_BACK = 4
+SCATTER_TOTAL = 9
 # The six unit-axial headings in Port order, as an array, and the opposite of
 # each (the travel heading of the arrival that came in through a Port).
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
@@ -150,6 +167,58 @@ def mix_arrivals(
     if int(np.abs(momenta).max(initial=0)) > momentum_bound:
         raise ValueError("value exceeds the disturbance integer bound")
     return whole, np.where(whole > 0, leaving_phase, 0), momenta
+
+
+def scatter_arrivals(
+    family: MixingArrays, momentum_bound: int = MAX_VALUE
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """The Node's computation for a family without a phase circle, per group
+    (one number): each Port's arrival scatters on its own, four ninths back
+    out through the Port it came in by and one ninth to each of the other
+    five sides, whole units by the largest remainder (ties in the tick's Port
+    order), a Port's arrival with no whole for any side going whole to the
+    heading nearest its own momentum (on a tie the largest share, then the
+    tick's order); its momentum apportioned over its own departures exactly
+    (`apportion_carried` per Port); the six Ports' departures added per
+    heading. Returns the units leaving per heading, their phases (all 0)
+    and the momenta they carry. Fixed local work, 64-bit integers."""
+    amounts = family.arr_amt.astype(np.int64)
+    shape = amounts.shape
+    if amounts.max(initial=0) > MAX_VALUE:
+        raise ValueError("value exceeds the disturbance integer bound")
+    order = tie_order(family.tick)
+    rank = (np.arange(6) - family.tick) % 6
+    # The shares of a lone arrival per source Port and leaving heading, in
+    # ninths: [k, h] is 4 where h is the Port k's arrival came in by, else 1.
+    shares = np.ones((6, 6), dtype=np.int64)
+    shares[np.arange(6), OPPOSITE] = SCATTER_BACK
+    product = amounts[..., :, None] * shares
+    quotas = product // SCATTER_TOTAL
+    remainders = product - quotas * SCATTER_TOTAL
+    left = amounts - quotas.sum(axis=-1)
+    ahead = (
+        (remainders[..., :, None] > remainders[..., None, :])
+        | ((remainders[..., :, None] == remainders[..., None, :]) & order)
+    ).sum(axis=-2)
+    repaired = quotas + (ahead < left[..., None])
+    # A Port's arrival with no whole for any side goes whole to the heading
+    # nearest its own momentum; on a tie the largest share, then the tick's
+    # order.
+    carried = family.arr_mom.astype(np.int64)
+    dots = carried @ HEADINGS.T
+    candidates = dots == dots.max(axis=-1, keepdims=True)
+    masked = np.where(candidates, shares, -1)
+    candidates &= masked == masked.max(axis=-1, keepdims=True)
+    chosen = np.where(candidates, rank, 6).argmin(axis=-1)
+    by_momentum = np.where(np.arange(6) == chosen[..., None], amounts[..., None], 0)
+    per_port = np.where((quotas.sum(axis=-1) == 0)[..., None], by_momentum, repaired)
+    per_port = np.where((amounts > 0)[..., None], per_port, 0)
+    momenta_per_port = apportion_carried(carried, per_port, order)
+    whole = per_port.sum(axis=-2)
+    momenta = momenta_per_port.sum(axis=-3)
+    if int(np.abs(momenta).max(initial=0)) > momentum_bound:
+        raise ValueError("value exceeds the disturbance integer bound")
+    return whole, np.zeros(shape, dtype=np.int64), momenta
 
 
 def apportion_carried(carried: np.ndarray, whole: np.ndarray, order: np.ndarray) -> np.ndarray:

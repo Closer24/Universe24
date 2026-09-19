@@ -21,7 +21,8 @@ on `src/event_universe/core/` (`integer.py`, `lattice.py`, `phase.py`). The
 tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
 `tests/test_detector_sensitivity.py`, `tests/test_phase_window.py`,
-`tests/test_periodic_axis.py`, `tests/test_event_worlds.py`
+`tests/test_periodic_axis.py`, `tests/test_phaseless_family.py`,
+`tests/test_event_worlds.py`
 ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
@@ -82,22 +83,33 @@ candidates (`transit.nearest_step`, `step_window`).
    a periodic axis the departures wrap. Arrivals into a slot that
    holds events waiting there are one amplitude per Port (the amounts added,
    the phase of the coherent sum, the momenta added).
-2. At every Node the size of the coherent sum of each number's arrivals is
-   formed (`Transit.sizes`, in 32nds of one unit's amplitude): this interval's
-   sizes, what a measured event reads at its self-creation (step 5) for the
-   count it owes, `suspension` intervals per whole unit of the other numbers'
-   sizes at its Node. The events of a paid family that arrived this interval
-   read the free families' sizes at their Node and carry the same count
-   (`Transit.suspend`, written once on arrival; what joins a waiting slot waits
-   with it, the larger count kept: the next event is delayed). The size read is the
-   Node's, formed from the arrivals per Port and the same for the six exits,
-   and the wait is the seventh exit, here: after the count the Node computes
-   the held arrivals again with what joined them. Nothing is read per exit
-   Port: the free family's leaving shares are directed (four ninths back
-   toward its source for a lone arrival), so a count read at an exit would
-   slow an event by its heading, which no detector reads of a static field;
-   the same count on every exit is the isotropic index a detector reads
-   (Highlights 5.4, 2026-09-19, the rule proposed and withdrawn).
+2. At every Node the presence of each number is formed: the amount that
+   arrived there this interval, over every family (the model owner,
+   2026-09-19: the suspension reads presence, of everything, with one
+   fractional width; no amplitude, no square root). This interval's
+   presence is what a measured event reads at its self-creation (step 5)
+   for the count it owes: the presence at its Node of every number but its
+   own, times the world's `suspension` `[n, d]`, the whole part,
+   `count = presence x n // d`. The events of a paid family that arrived
+   this interval read the same presence at their Node, of every family and
+   every number but their own, and carry the same count (`Transit.suspend`,
+   written once on arrival; what joins a waiting slot waits with it, the
+   larger count kept: the next event is delayed); a free family's events
+   are not suspended, as before. The size of the coherent sum
+   (`Transit.sizes`, in 32nds of one unit's amplitude) is still formed, a
+   reading (the shell means) and the sum the phase window reads; it no
+   longer feeds the suspension (until 2026-09-19 the transit read the free
+   families' sizes and a measured event every family's sizes, whole units
+   of amplitude; [migration](MIGRATION.md#the-field-of-matter-without-phase-the-suspension-as-presence-with-a-fractional-width-and-the-push-as-the-net-flow-on-2026-09-19)).
+   The presence read is the Node's, formed from the arrivals per Port and
+   the same for the six exits, and the wait is the seventh exit, here:
+   after the count the Node computes the held arrivals again with what
+   joined them. Nothing is read per exit Port: the free family's leaving
+   shares are directed (four ninths back toward its source for a lone
+   arrival), so a count read at an exit would slow an event by its heading,
+   which no detector reads of a static field; the same count on every exit
+   is the isotropic index a detector reads (Highlights 5.4, 2026-09-19, the
+   rule proposed and withdrawn).
 3. A measured event meets the events that arrive at its Node (`_meet`): its
    own number's are home, taken to be created again at its next self-creation,
    pushing nothing and not counted as content (the reading that keeps a
@@ -145,8 +157,23 @@ candidates (`transit.nearest_step`, `step_window`).
    the largest share, then the tick's order): a single unit leaves whole by
    its momentum. Each leaving share carries the phase of its leaving
    amplitude, and the momentum the group carries goes with the units placed,
-   exact per axis (`apportion_carried`). A suspended slot stays as arrivals,
-   its count paid by one.
+   exact per axis (`apportion_carried`). A family that declares no phase
+   circle (`"phase": false`; the model owner, 2026-09-19, the field of
+   matter without phase) does not sum coherently: at every Node each Port's
+   arrival scatters on its own (`mixing.scatter_arrivals`, chosen by
+   `Transit.cycle` from the family's declaration) with the shares of a lone
+   arrival, four ninths back out through the Port it came in by and one
+   ninth to each of the other five sides, whole units by the largest
+   remainder with the ties in the tick's Port order, per Port; a Port's
+   arrival with no whole share for any side (one or two units) goes whole to
+   the heading nearest its own momentum (on a tie the largest share, back,
+   then the tick's order); its momentum is apportioned over its own six
+   departures exactly per axis (`apportion_carried` per Port), and the six
+   Ports' departures and momenta are added per heading. Two arrivals of 9
+   through opposite Ports leave 5 and 5 along the axis (4 back and 1
+   forward each) and 2 on each transverse side (1 + 1), never cancelling;
+   every phase leaving is 0. Fixed local work, 64-bit integers. A suspended
+   slot stays as arrivals, its count paid by one.
 5. A measured event that owes a count pays it by one (`_release`): it is
    created here without a self-creation, no release and no turn, and `waited`
    counts the interval (age + waited is the intervals completed, for every
@@ -165,12 +192,15 @@ candidates (`transit.nearest_step`, `step_window`).
    and phase and carrying its momentum from birth. Its phase turns by its
    content over K off its clock (refused when a step would reach half the
    circle) at every self-creation, whether or not it released: a lamp whose
-   phase leaves its window keeps turning and comes round to it again. After
-   its self-creation it reads the sizes of the other numbers at its Node,
-   this interval's (step 2), and owes `suspension` intervals per whole unit
-   read (`_suspend`, `Measured.owed`, written once per self-creation, never
-   accumulated), paid one per interval before its next self-creation. So a
-   measured event in a steady size of k whole units is created again once
+   phase leaves its window keeps turning and comes round to it again; a
+   measured event of a family without a phase circle (`"phase": false`)
+   never turns, its phase 0, and K does not apply to its content. After
+   its self-creation it reads the presence at its Node of every number but
+   its own, this interval's (step 2), and owes `presence x n // d`
+   intervals at the world's `suspension` `[n, d]` (`_suspend`,
+   `Measured.owed`, written once per self-creation, never accumulated),
+   paid one per interval before its next self-creation. So a measured
+   event in a steady presence whose count reads k is created again once
    every k + 1 intervals: its clock is slowed by 1 / (k + 1), the redshift
    (Highlights 5.4: "a measured event that reads a large size releases and
    turns slower"), and never stopped; with `suspension` 0 it is created
@@ -193,16 +223,24 @@ candidates (`transit.nearest_step`, `step_window`).
    steps.
 
 **The push** (Highlights 5.4, the law of events, the third law corrected the
-same day): the momentum an arriving group of a free family carries, from birth
-along its release heading, pushes a measured event by -M c (the gravity
-reading, toward the emitter, the content M the cross-section) and by
-(q_A / M_A) q c (the electric reading, the emitter's whole charge over its
-declared content times the measured event's whole charge, the whole part off
-the clock, D the least common multiple of the charged events' declared
-amounts); a free family's release costs nothing and takes no recoil, and the
-third law is the symmetry of the two fields with what escapes. A group of a
-paid family pushes by +c, its own momentum, and its emitter took the recoil.
-The own number pushes nothing.
+same day; the model owner, 2026-09-19, the push of a free family reads the
+net flow): for the units of one number of a free family arriving at a
+measured event's Node, c is their NET FLOW, the sum over the six Ports of
+amount times travel heading (the arrival slot's heading, what `Transit.flow`
+sums per Node), not the momentum labels they carry: they push the measured
+event by -M c (the gravity reading, toward the emitter, the content M the
+cross-section) and by (q_A / M_A) q c (the electric reading, the emitter's
+whole charge over its declared content times the measured event's whole
+charge, the whole part off the clock, D the least common multiple of the
+charged events' declared amounts, the flow in place of the carried
+momentum). The momentum from birth of a free family's events stays on their
+record, apportioned with the units at every Node, and in the momentum book,
+unread by the push (until 2026-09-19 the push read the carried momentum;
+[migration](MIGRATION.md#the-field-of-matter-without-phase-the-suspension-as-presence-with-a-fractional-width-and-the-push-as-the-net-flow-on-2026-09-19)).
+A free family's release costs nothing and takes no recoil, and the third
+law is the symmetry of the two fields with what escapes. A group of a paid
+family pushes by +c, its own carried momentum (light's pressure), and its
+emitter took the recoil. The own number pushes nothing.
 
 **The books** (`EventSimulation.books`, the runner's `audit` per tick), exact
 at every interval: per family the measured line, initial + measured (the
@@ -212,7 +250,13 @@ releases, the lamps, what came home or was re-released and left again) =
 current (the arrivals and the departures) + escaped + absorbed (home, the
 clicks, the re-releases; what came home is on the absorbed line until it
 leaves again); the momentum reported on the measured events, in transit and
-escaped, and the charge summed. At the fixed point of a content at rest,
+escaped, and the charge summed. The momentum book is a report, not a
+balance: the measured line is the sum of the pushes taken (a free family's
+by the flow, a paid family's by the carried momentum) and the recoils; the
+transit line the momentum labels from birth, apportioned exactly with the
+units at every Node, so a free family's labels in flight sum to what its
+releases carried and what escaped carries them off; the two lines are not
+each other's negatives. At the fixed point of a content at rest,
 released - absorbed = escaped = the emission.
 
 **The world** (`events/world.py`). `law` "events"; `model_id`; `shape`;
@@ -220,11 +264,19 @@ released - absorbed = escaped = the emission.
 to "open" or "periodic", the missing axes open; `ticks`; `K`; `N` (64 by
 default, a power of two from 2
 through 4096); `release` `[n, d]` per Port heading per self-creation per unit
-of content of a free family; `suspension` (an integer, 1 by default, 0 for
-none); `families` (`name`, `kind` `free` or `paid`, `charge` of a measured
-event of a free family, `quantum` the content of one unit of a paid family,
-1 by default and 1 for a free family); `measured` (`position`, `family`,
-`amount` with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`,
+of content of a free family; `suspension` `[n, d]`, the fractional width
+of the suspension, a reader owing `presence x n // d` intervals (an integer
+w is accepted as `[w, 1]`; `[1, 1]` by default; 0 or `[0, d]` for none,
+recorded as `[0, 1]`); `families` (`name`, `kind` `free` or `paid`,
+`charge` of a measured event of a free family, `quantum` the content of one
+unit of a paid family, 1 by default and 1 for a free family, `phase` true
+by default, false for a family without a phase circle: its events carry
+phase 0 and never turn, its measured events never turn and K does not apply
+to their content, no `phase_window` on its lamps or on a table entry for
+it, no `phase` but 0 on its measured events and its events in transit, and
+its arrivals scatter per Port instead of mixing); `measured` (`position`,
+`family`, `amount` with 2 x amount < K x N for a family with a phase,
+`phase`, `charge`, `momentum`, `fixed`,
 `table` family name to `read` | `measure` | `rerelease` | `pass`, or to
 `{"rule": ..., "phase_window": s}` with s a step of the circle from 0
 through N - 1 on any rule but `pass`, with `read` the default for a free
@@ -239,16 +291,21 @@ old engine's), `phase_turn` as any unknown key, a closed board or any
 boundary but "open" and an axis object of "open" | "periodic", a lamp on a
 free family, a charge or a quantum where the kind forbids it, two measured
 events at one Node, a table naming an unknown family or rule, a content at or
-past K x N / 2, N not a power of two, a repeated lamp heading, a detector on a
-Node without a measured event, a Node in two detectors, a `phase_window` not
-an integer from 0 through N - 1 on a table entry or a lamp, a window on
-`pass`, a table entry object without `rule` or with any other key.
+past K x N / 2 of a family with a phase, N not a power of two, a repeated
+lamp heading, a detector on a Node without a measured event, a Node in two
+detectors, a `phase_window` not an integer from 0 through N - 1 on a table
+entry or a lamp, a window on `pass`, a table entry object without `rule` or
+with any other key, a family `phase` that is not true or false, a
+`phase_window` on a lamp of a family without a phase circle or on a table
+entry for one, a nonzero `phase` on a measured event or an event in transit
+of such a family, a `suspension` denominator of 0.
 `event_universe.configuration_validation` reports a world of the law as kind
 `events`.
 
 **The record.** `run.json` carries `law` "events-v1", the world's keys
 (`boundary` as declared, the string or the object per axis, so that the
-record says what the board was),
+record says what the board was; `suspension` as `[n, d]`; per family its
+`phase`),
 `numbers` (the measured events' numbers, positions and families), the books
 per completed tick (`audit`) with `conserved_at_every_completed_tick`, the
 per-tick `measured_content`, `transit_content` and `momentum` lines, the
