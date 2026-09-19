@@ -16,6 +16,7 @@ measured events' final states, the detectors' measurements and the escapes).
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import time
@@ -28,10 +29,17 @@ from event_universe.snapshot_writer import write_snapshot
 
 
 def execute_event_run(
-    world: EventWorld, source: bytes, output: Path, fingerprint: str, count: int
+    world: EventWorld,
+    source: bytes,
+    output: Path,
+    fingerprint: str,
+    count: int,
+    *,
+    initialization_record: dict[str, object] | None = None,
 ) -> Path:
     """Run `count` intervals of the world into the empty directory `output`;
     returns the path of `run.json`. A failing interval is recorded and raised."""
+    initialization_metadata = copy.deepcopy(initialization_record)
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []
     measured_content: list[list[int]] = []
@@ -122,6 +130,8 @@ def execute_event_run(
     if world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
         metadata["dynamics"] = world.dynamics
         metadata["detector_readouts"] = simulation.detector_readouts()
+    if initialization_metadata is not None:
+        metadata["initialization_resolution"] = initialization_metadata
     path = output / "run.json"
     path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     if failure is not None:

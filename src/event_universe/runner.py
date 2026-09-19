@@ -14,9 +14,8 @@ import hashlib
 from pathlib import Path
 
 from event_universe.events.run import execute_event_run
-from event_universe.events.world import parse_event_world
-from event_universe.json_documents import parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
+from event_universe.world_loading import load_world
 
 
 def source_fingerprint() -> str:
@@ -34,13 +33,34 @@ def run_initialization(initialization: Path, output: Path, *, ticks: int | None 
     """Run the world at `initialization` into the empty directory `output` and
     return the path of its `run.json`; `ticks` overrides the world's own."""
     source = initialization.read_bytes()
-    world = parse_event_world(parse_json_document(source))
+    loaded = load_world(source, base_dir=initialization.parent)
+    world = loaded.world
     count = world.ticks if ticks is None else ticks
     if type(count) is not int or count < 0:
         raise ValueError("ticks must be nonnegative")
     _prepare_output(initialization, output)
     with ArtifactLease(output.parent, [output.resolve()]):
-        return execute_event_run(world, source, output, source_fingerprint(), count)
+        initialization_record: dict[str, object] | None = None
+        if loaded.dependencies:
+            (output / "initialization_bundle.json").write_bytes(loaded.portable_source)
+            (output / "resolved_initialization.json").write_bytes(loaded.expanded_source)
+            initialization_record = {
+                "format": "event-world-bundle-v1",
+                "bundle_sha256": hashlib.sha256(loaded.portable_source).hexdigest(),
+                "expanded_sha256": hashlib.sha256(loaded.expanded_source).hexdigest(),
+                "sources": [
+                    {"path": dependency.path, "sha256": dependency.sha256}
+                    for dependency in loaded.dependencies
+                ],
+            }
+        return execute_event_run(
+            world,
+            source,
+            output,
+            source_fingerprint(),
+            count,
+            initialization_record=initialization_record,
+        )
 
 
 def _prepare_output(initialization: Path, output: Path) -> None:

@@ -2,14 +2,16 @@
   "law": "events",
   "dynamics": "reversible-detector-v1",
   "max_active_owners": 1,
-  "model_id": "detector-shared-100",
+  "model_id": "detector-periodic-z-node",
   "shape": [
-    12,
-    12,
+    9,
+    9,
     1
   ],
-  "boundary": "open",
-  "ticks": 101,
+  "boundary": {
+    "z": "periodic"
+  },
+  "ticks": 3,
   "K": 1024,
   "N": 32,
   "release": 0,
@@ -24,16 +26,16 @@
   "in_transit": [
     {
       "position": [
-        0,
-        1,
+        4,
+        4,
         0
       ],
       "family": "carrier",
       "number": 1,
       "heading": [
-        1,
         0,
-        0
+        0,
+        1
       ],
       "amount": 1,
       "phase": 16
@@ -43,10 +45,10 @@
   "entities": [
     {
       "name": "apparatus",
-      "definition": "serpentine_100_detector",
+      "definition": "single_node_detector",
       "position": [
-        1,
-        1,
+        4,
+        4,
         0
       ]
     }
