@@ -9,7 +9,7 @@ import pytest
 from event_universe.configuration_validation import main, validate_configuration
 
 ROOT = Path(__file__).resolve().parents[1]
-WORLDS = sorted((ROOT / "examples" / "events").glob("*.json"))
+WORLDS = sorted((ROOT / "examples" / "events").rglob("*.json"))
 
 
 @pytest.mark.parametrize("path", WORLDS, ids=[path.stem for path in WORLDS])

@@ -11,6 +11,18 @@ research runs, made once and recorded with a fingerprint and a date in
 before that date describe the suite as it was and are brought under the rule
 when their tests change.
 
+## Reversible detector candidate (2026-09-19, before implementation)
+
+The [candidate contract](DETECTOR_REQUIREMENTS.md#invariants-examples-and-independent-checks)
+fixes the numerical contact, clock, readout and finite-domain expectations before
+implementation. `tests/test_reversible_detector.py` owns the generic operator and
+3240-input inverse/injectivity check; `tests/test_physical_detector.py` owns local
+transport, output causality, observer independence and atomic refusal;
+`tests/test_reversible_detector_world.py` owns schema, generic grouping and
+candidate/default compatibility. Example worlds are research configurations,
+not tests with pinned experiment outputs. The standalone 9-by-9 HTML demonstration
+needs its own dated source/configuration identity. None is a Heisenberg proof.
+
 ## Suite inventory of 2026-09-19: one engine
 
 Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector)):

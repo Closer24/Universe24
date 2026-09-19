@@ -23,7 +23,7 @@ from pathlib import Path
 
 from event_universe import __version__
 from event_universe.events.engine import EventSimulation
-from event_universe.events.world import EVENTS_LAW, EventWorld
+from event_universe.events.world import EVENTS_LAW, REVERSIBLE_DETECTOR_DYNAMICS, EventWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
@@ -119,6 +119,9 @@ def execute_event_run(
         ],
         "display": "none",
     }
+    if world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
+        metadata["dynamics"] = world.dynamics
+        metadata["detector_readouts"] = simulation.detector_readouts()
     path = output / "run.json"
     path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     if failure is not None:
