@@ -13,6 +13,7 @@ Since 2026-09-19 there is one engine, the engine of the law of events
 | Document | Responsibility |
 | --- | --- |
 | [The engine](ENGINE.md) | The world file, the interval's steps, the suspension, the measurements, the books, the record and the preflight, as implemented |
+| [The law of the ray](RAY_LAW.md) | The published design and implementation contract of `rays-v1` (the model owner, 2026-09-19): the ray's record `GonenBeam`, the one function `gonen_beam`, the flight table at 1 / sqrt 3, the seven-slot collision table and its inverse, the detector's squared record, the re-emission, the deletions, the tests and the expectations, before implementation |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance |
 | [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements and exact opt-in reversible detector contract; quantum goals and unresolved scope |
 | [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control: what each reads |
