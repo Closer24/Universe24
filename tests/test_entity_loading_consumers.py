@@ -6,10 +6,10 @@ import json
 from pathlib import Path
 
 import pytest
-from event_universe.world_loading import load_world
 
 from event_universe import ui
 from event_universe.runner import run_initialization
+from event_universe.world_loading import load_world
 
 
 def _authored_world(*, ticks=0, flight=False):

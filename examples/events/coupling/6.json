@@ -1,0 +1,139 @@
+{
+  "law": "events",
+  "model_id": "events-coupling-6-plane-v1",
+  "shape": [
+    121,
+    121,
+    1
+  ],
+  "boundary": {
+    "z": "periodic"
+  },
+  "ticks": 200,
+  "K": 4194304,
+  "N": 64,
+  "release": [
+    1,
+    128
+  ],
+  "suspension": 1,
+  "families": [
+    {
+      "name": "m",
+      "kind": "free",
+      "charge": 0
+    }
+  ],
+  "measured": [
+    {
+      "position": [
+        60,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 16777216,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        64,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        66,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        68,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        72,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        76,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        80,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        84,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        90,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    },
+    {
+      "position": [
+        100,
+        60,
+        0
+      ],
+      "family": "m",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true
+    }
+  ]
+}

@@ -69,8 +69,10 @@ before adoption.
 `measured` with date, commit and fingerprint, and the outcome in one word
 (pass, fail, or the named alternative); `withdrawn` by the model owner, dated.
 Today every entry of sections A and B is `planned`, except A2 under the law of
-events, `measured` on 2026-09-19 as the model's limit; section E holds the
-dated demonstration runs, which confront nothing and are `measured` as made.
+events, `measured` on 2026-09-19 as the model's limit, and C, the couplings
+under the law of events on the plane, `measured` on 2026-09-19 with its
+verdict per item; section E holds the dated demonstration runs, which
+confront nothing and are `measured` as made.
 
 **Conventions.** The board is the cubic Node lattice of Highlights 3.1 with
 its boundary stated per entry; c is one Link per interval; a Detector setting
@@ -593,6 +595,327 @@ states "exactly" and means integer equality at every tick.
   on both units.
 - **Status.** measured, 2026-09-19: the model's limit (outcome 1), as
   A2's criterion states.
+
+### C, the couplings under the law of events, on the plane (2026-09-19)
+
+- **Confronts.** What physics calls the couplings of a static field and
+  their tests: the gravitational constant G (the push of a content M on a
+  content m at r; the pinned reading is G_push from the carried momentum of
+  the stream); the clock at a potential (the fraction of its rate a clock
+  at r from M loses, Pound and Rebka 1960, the model's `suspension` width
+  against it); the index of the field (the size read at a Node, the
+  isotropic index a detector reads); Gauss's law (the flux of the stream
+  through every closed curve equal to the emission, 1 / r on the plane);
+  the equivalence principle (the push proportional to the content pushed,
+  so that every content falls alike, Eotvos to MICROSCOPE 2022, eta below
+  10^-14); Newton's third law (the pushes of two contents on each other
+  equal and opposite, here with unequal contents 4 : 1); the superposition
+  of fields (the push of two sources the sum of the pushes of each alone);
+  retardation (the field of a source arriving at r after r Links at c, one
+  Link per interval); and Coulomb's law read in the same stream (the
+  electric push of a charge Q on a charge q along the same units, its sign
+  by the product of the charges, its ratio to the gravity push -Qq / (M m)).
+  The physics-rule reviewer pinned the design and its identities on
+  2026-09-19 for an open board of 61^3; the model owner cancelled that
+  version the same day ("cancel the runs; let it run on two-dimensional
+  boards"), so the series runs on the plane: the same seven items and
+  identities, the plane's exponents, the 3-D readings of the review as the
+  prior, the plane's readings registered as the plane's.
+- **Model prediction, pinned before the run (the physics-rule review of
+  2026-09-19, credited to the reviewer; the plane's constants and exponents
+  by the executing agent before the run).** Constants: a board of
+  121 x 121 x 1 with `"boundary": {"z": "periodic"}` (with an extent of 1
+  the two z Ports of every Node return to the same Node at the next
+  interval: a true two-dimensional board, nothing leaks on z; the x and y
+  faces open), the centre c = (60, 60, 0), K 2^22, N 64, `release`
+  [1, 128], the free family `m` (charge 0 unless stated), the source a
+  fixed measured event of content 2^24 at c (`by_clock` gives 2^17 per Port
+  at every self-creation; the two z Ports' releases come home at the next
+  interval as its own number and are created again in six shares, so at
+  the fixed point the source releases 3 x 2^16 per Port and the net
+  emission into the plane is q = 6 x 2^17 = 786432 units per interval,
+  exact), the probes fixed measured events of content 1 with the default
+  table (`read`: the push taken, the units mix on, transparent),
+  `suspension` 0 in every world but item 6. In every world:
+  `audit[t].balanced` at every interval, `measured_content` constant (read
+  absorbs nothing), age + waited = the intervals completed for every
+  surviving measured event. What the plane changes: a Node's count and the
+  momentum a probe reads include what came back through its own z stub
+  (about 2 / 9 of every mixing, one interval later), the radial flow does
+  not; Gauss on a circle: 1 / r for the count, the flow and the carried
+  momentum, 1 / sqrt(r) for the size; the front of the stream along an
+  axis is the same lone-arrival chain as in three dimensions (the z shares
+  come back one interval later); `cube_flux` sums the four in-plane faces
+  (the z faces have no outside Node): Gauss's flux through the square.
+  Item 1, equivalence (identity): a fixed probe of content m in 1, 4, 16 at
+  (72, 60, 0), r = 12 on +x, reads push_m(t) = m x push_1(t) at every tick
+  and axis; the same probe free steps identically for the three m, one
+  x-step per interval, one `merged` record, the probe absent afterwards,
+  the source's content 2^24 + m; the first read's tick and amount, the
+  first step's tick and the merge's tick are the plane's, registered (the
+  3-D prior on 61^3: the first read at tick 14 with amount 2, the first
+  step at the first read, the merge at 2r + 1 = 25); the steps are the
+  rule off the clock, by_clock(t - 1, |p|, m + |p|) on the reads'
+  cumulative push p, x before y, at most one per interval (identity on the
+  record).
+  Item 2, the third law with unequal contents (a reading, not an
+  identity): A = 2^22 at (56, 60, 0) and B = 2^20 at (64, 60, 0), both
+  fixed, 200 intervals; P_A,x > 0 and P_B,x < 0 (toward each other);
+  |P_A| / |P_B| within [1.0, 1.5] over each of the last two 50-interval
+  windows, the two windows within 5 % of each other; transverse / axial
+  below 5 % (on 21^3 the ratio read 1.28; no Newtonian scale on the plane).
+  Item 3, superposition (identity): the item-2 pair with a fixed probe of
+  content 1 at (60, 68, 0), and each source alone with the same probe:
+  the probe's per-tick `read` records by `number` equal exactly, its total
+  push exactly the sum (the numbers are separate groups).
+  Item 4, retardation (exact where derived): the first `read` record
+  (tick, amount) of a probe at r, derived by hand before the run from the
+  mixing rule (the lone-arrival chain: isqrt(u x 32^2) amplitudes, the
+  weights 4 : 1 : 1 : 1 : 1 : 1 reduced to 28 bits, the floors, the units
+  left to the largest remainders in the tick's Port order, a group with no
+  whole share going whole by its momentum; the table with its steps in the
+  [README](../examples/events/coupling/README.md)): on +x r = 1..6 at tick
+  r + 1: 131072, 14563, 1618, 180, 20, 3, then exhausted (the three units
+  at r = 6 leave on -x and +y); on -x the same to r = 6 and (r + 1, 1) from
+  r = 7; on +y 131072, 14564, 1618, 179, 20 and (r + 1, 2) from r = 6; on
+  -y 131072, 14564, 1619, 180, 20 and (r + 1, 2) from r = 6. World 4 holds
+  probes at r = 4 on -x, 6 on +y, 8 on -y and 12 on +x, and the +x probes
+  of 1A, 7 (r = 12) and of 5P and 6 (r = 4, 6, 8, 12, 16, 20, 24, 30, 40)
+  are read too: derived at -x 4 (5, 180), +y 6 (7, 2), -y 8 (9, 2), +x 4
+  (5, 180), +x 6 (7, 3); registered, not derived, on +x past the front
+  (r = 8 and r >= 12), the same in every world that holds a probe there;
+  the push -amount x m along the axis at every first read (identity).
+  Item 5, the far field (Gauss on a circle): world 5, the source alone,
+  300 intervals, replayed through the API over ticks 251-300: the ring
+  means (the Nodes at Euclidean distance |d - r| < 1 / 2 in the plane,
+  about 2 pi r of them) per r in 4, 6, 8, 12, 16, 20, 24, 30, 40 of the
+  count x r / q (a constant: flat within 10 % over r >= 8), the flow
+  x 2 pi r / q (about 1 in the far field: within [0.90, 1.10] for
+  r >= 8), the carried radial momentum x 2 pi r / q (likewise; from
+  `sim.transits[0].fly_mom.sum(axis=(3, 4))` after `step()`, the six Ports,
+  and the four in-plane Ports read beside it) and the size x sqrt(r) /
+  sqrt(q) (a constant, flat within 10 % over r >= 8; the size in whole
+  units, the engine's 32nds over 32); the log-log slopes over the nine
+  radii count -1.00 +- 0.10, flow -1.00 +- 0.15, carried -1.00 +- 0.15,
+  size -0.50 +- 0.10; `cube_flux` at h = 4, 8, 12, 20, 40 within 2 % of q
+  (Gauss); the escape per interval over the window 0.95 to 1.00 of q (below
+  0.95 the fixed point is not reached). World 5P, the source with content-1
+  probes at r = 4, 6, 8, 12, 16, 20, 24, 30, 40 on +x: the axis readings
+  push x 2 pi r / (m q), count x r / q and size x sqrt(r) / sqrt(q) at the
+  probes' Nodes over ticks 151-200, registered as the axis pattern (the
+  61^3 review found the axis strongly modulated: about 1.73, 1.34, 0.92,
+  0.75 at r = 4, 6, 8, 12 on 31^3); no exponent is fitted through axis
+  Nodes; the amount each probe reads equals the replay's count at every
+  tick (identity).
+  Item 6, the clock (`suspension` 1, the only world with a width): the
+  probes of 5P; with the fix of 2026-09-19 a probe pays its count,
+  self-creates, then reads the sizes at its Node (all other numbers) and
+  owes read x 1 // 32. Expected: age + waited = 200; every count written
+  equals size x 1 // 32 read at that self-creation and the ages match the
+  replay exactly (identity); the clock slowed, never frozen (age(200) >
+  age(60)); age(r) and the lost fraction 1 - age / 200 per r and its trend
+  (the size ~ 1 / sqrt(r) on the plane, so k ~ 1 / sqrt(r)).
+  Item 7, the electric reading (identity): the family `q` of kind free,
+  the source with `charge` Q in 0, +2^23, -2^23 and a fixed probe of
+  content 1 at (72, 60, 0) with `charge` q in 0, +2, -2, the pairs (0, 0),
+  (+, +), (+, -), (-, +), (-, -), 200 intervals; D = 2^24, scale = Qq
+  (D // 2^24) = +-2^24, whole = |carried| exactly: the electric part of
+  each push sign(Qq) x carried (away from the emitter for like signs); the
+  total push per read 0 for like signs and -2 x carried for unlike;
+  `pushed` [0, 0, 0] exactly for like signs and exactly twice the (0, 0)
+  world's for unlike; a (+, +) world with a probe of content 4 at the same
+  Node gives the same electric part as the content-1 twin, the gravity
+  parts in the ratio 4.
+  Convergence, read after the runs: (a) G_push on the plane = the constant
+  of carried x 2 pi r / q, flat within 5 % over r >= 5 and equal to the
+  flow's within 5 %; G from step rates unreadable (every free probe steps
+  one Link per interval; the equivalence identity is what is readable).
+  (b) The clock: the lost fraction per r from item 6 against k / (k + 1)
+  with k = size x width // 32, and the reviewer's limit: the suspension
+  reads an amplitude, the size ~ sqrt(count), so the slowing scales as
+  sqrt(M), on the plane as sqrt(M / r), while a potential is proportional
+  to the count. (c) The exponents: |slope_count - slope_flow| <= 0.10,
+  |2 slope_size - slope_count| <= 0.15, |slope_carried - slope_flow|
+  <= 0.15. (d) electric / gravity = -Qq / (M m) per arrival exactly.
+- **Features.** The one engine (`events-v1`, [the engine](ENGINE.md)): the
+  periodic axis as a run parameter (`tests/test_periodic_axis.py`), a free
+  family's release off the clock, the mixing, the push (gravity -M c,
+  electric (q_A / M_A) q c), the suspension of a measured event read after
+  its self-creation, the free step off the clock and the merge, the books,
+  `shell_readings` and `cube_flux`. Nothing of the ray-event list above.
+- **Run.** `examples/events/coupling/` (twenty-one worlds written by
+  `make_worlds.py`, the dictionary in the
+  [README](../examples/events/coupling/README.md), model ids
+  `events-coupling-<name>-plane-v1`): `1a_m1`, `1a_m4`, `1a_m16`, `1b_m1`,
+  `1b_m4`, `1b_m16`, `2`, `3`, `3a`, `3b`, `4`, `5` (300 intervals), `5p`,
+  `6`, `7_00`, `7_pp`, `7_pm`, `7_mp`, `7_mm`, `7_pp_m4`, every one 200
+  intervals unless stated, and `5_long` (the source alone, 1000 intervals),
+  the one supplementary world, added after world 5 read an escape of 0.89 q
+  over its last window, to read how the escape approaches q; not pinned.
+  Commit `ddb4470a` (the base of the branch; the engine unchanged by this
+  change), source fingerprint
+  `06a050c9d27a5ab11febe10be40865866e7f0dcbc129400e08c2d7f6b71c8560`,
+  Python 3.14.0rc2, headless, four runs at a time on four cores: 168 s of
+  wall time for the twenty worlds (19 to 102 s per world) and 63 s for
+  `5_long`. Recorded per run: `run.json` (`audit`,
+  `conserved_at_every_completed_tick`, `measured_content`, `escaped`,
+  `measured` with `pushed`, `age`, `waited`, `owed`) and `events.jsonl`
+  (the `read`, `step` and `merged` records), read by
+  `tools/coupling_readings.py` (integers and `fractions.Fraction` for the
+  identities, floats for the ring means, the ripple bounds and the slopes;
+  the replay of worlds 5 and 5_long through `EventSimulation`), which
+  prints the tables and every criterion and exits nonzero on a failure.
+  The commands: `python examples/events/coupling/make_worlds.py`; for each
+  world `python -m event_universe --init examples/events/coupling/<name>.json
+  --output artifacts/coupling/<name>`; `PYTHONPATH=src python
+  tools/coupling_readings.py artifacts/coupling`.
+- **Result (2026-09-19).** Every run completed; in every world the books
+  balanced at every interval, the measured content constant and age +
+  waited = the intervals completed. 390 criteria passed, 15 failed, exit 1;
+  every failure a reading outside its bound, none an identity. Per item:
+  Item 1: 185 reads per probe; push_m(t) = m x push_1(t) at every record
+  and axis for m = 4 and 16 (the pushes have a transverse y part at most
+  records: -amount x m on x exactly at 2 of the 185); `pushed`
+  (-2634004, 5855, 0), (-10536016, 23420, 0), (-42144064, 93680, 0), m
+  times exactly; the first read at tick 15 (r + 3) with amount 1 and push
+  (-m, 0, 0). The free probes: 11 steps at ticks 16..26, x 72 down to 61,
+  identical for the three m and their momenta m times 1b_m1's
+  ((-3, 0, 0) at the first step to (-403785, 797, 0) at the last); the
+  steps and the merge equal the rule off the clock on the reads' cumulative
+  push at every tick (the first read of one unit gives p / (m + p) = 1 / 2
+  and by_clock(14, 1, 2) = 0, so the first step comes at tick 16 after the
+  second read, p = 3m, by_clock(15, 3, 4) = 1); one `merged` record at tick
+  27 = 2r + 3 into the source with amount m; the source's content
+  2^24 + m at the end; 13 reads per free probe, m times 1b_m1's.
+  Item 2: per 50-interval window (P_A, P_B, the ratio of the axial parts)
+  1-50 (135840923648, -41943040, 0), (-176993337344, 186646528, 0), 0.768;
+  51-100 (280443748352, -2403336192, 0), (-307688898560, -2453667840, 0),
+  0.912; 101-150 (375159521280, -1660944384, 0), (-298589356032,
+  -1201668096, 0), 1.256; 151-200 (405610168320, 15309209600, 0),
+  (-334517764096, -6669991936, 0), 1.213; cumulative (1197054361600,
+  11202985984, 0), (-1117789356032, -10138681344, 0), 1.071; the last two
+  windows 3.6 % apart; transverse / axial 0.0094 and 0.0091. Item 3: 187
+  records per number, the probe's records of A and of B in world 3 equal
+  to 3a's and 3b's exactly, `pushed` (-287187, -807291, 0) = (-423030,
+  -647305, 0) + (135843, -159986, 0) exactly, A's and B's mutual records
+  unchanged by the probe. Item 4: -x 4 (5, 180, push (180, 0, 0)), +y 6
+  (7, 2, (0, -2, 0)), -y 8 (9, 2, (0, 2, 0)), +x 4 (5, 180, (-180, 0, 0)),
+  +x 6 (7, 3, (-3, 0, 0)), every derived entry as derived; registered on +x
+  past the front, the same in every world: r = 8 (11, 8), r = 12 (15, 1),
+  16 (19, 1), 20 (23, 1), 24 (27, 1), 30 (33, 1), 40 (43, 1): past the
+  front the first read comes three intervals after r Links, one unit whole
+  by its momentum from r = 12 on. Item 5, world 5 over ticks 251-300 (r:
+  count x r / q, flow x 2 pi r / q, carried x 2 pi r / q over the six
+  Ports, over the four in-plane Ports, size x sqrt(r) / sqrt(q)): 4:
+  0.3320, 1.0762, 1.5023, 1.2642, 0.8743; 6: 0.3252, 1.0325, 1.4468,
+  1.1875, 0.9525; 8: 0.3375, 1.0294, 1.4890, 1.2463, 0.9012; 12: 0.3336,
+  0.9577, 1.4571, 1.2098, 0.9135; 16: 0.3343, 0.9851, 1.4476, 1.1884,
+  0.9465; 20: 0.3394, 0.9981, 1.4681, 1.1940, 0.9748; 24: 0.3343, 1.0007,
+  1.4425, 1.1790, 0.9418; 30: 0.3331, 0.9503, 1.4340, 1.1753, 0.9427; 40:
+  0.3352, 0.9461, 1.4468, 1.1971, 0.9088; the count flat within 1.9 % and
+  the size within 8.2 % over r >= 8; the slopes count -0.993, flow -1.048,
+  carried -1.014 (in-plane -1.023), size -0.481; the flux through the
+  square / q 0.9948, 0.9929, 0.9876, 0.9793, 0.9311 at h = 4, 8, 12, 20,
+  40; the escape 0.8921 q per interval. Outside the bound: carried
+  x 2 pi r / q 1.43 to 1.49 at the seven far-field radii (about 1
+  expected), the flux at h = 20 (0.9793) and h = 40 (0.9311), the escape
+  (0.8921): the fixed point is not reached at 300 intervals. World 5_long
+  (supplementary): the escape per interval / q over the 100-interval
+  windows ending at 200 to 1000: 0.6596, 0.8885, 0.9177, 0.9262, 0.9310,
+  0.9400, 0.9418, 0.9473, 0.9465 (0.9479 over ticks 951-1000, still below
+  0.95); over ticks 951-1000 the flow x 2 pi r / q 0.96 to 1.10 and the
+  flux through the square / q 0.9985, 0.9964, 0.9936, 0.9867, 0.9672,
+  while the count x r / q has risen to 0.41-0.46, the carried to 1.69-1.89
+  (in-plane 1.41-1.54) and the size to 0.88-0.98: the radial flow is
+  Gauss's from 300 intervals on, the standing population at the rings is
+  still growing at 1000 (the slopes there count -0.942, flow -1.050,
+  carried -0.972, size -0.474). World 5P, the axis pattern over ticks
+  151-200 (r: -push_x x 2 pi r / (m q), count x r / q, size x sqrt(r) /
+  sqrt(q)): 4: 1.7148, 0.3113, 0.8910; 6: 1.5662, 0.3023, 0.8926; 8:
+  1.4930, 0.2992, 0.8948; 12: 1.5358, 0.3194, 0.8962; 16: 1.4399, 0.3043,
+  0.9084; 20: 1.3532, 0.2884, 0.9315; 24: 1.4013, 0.3002, 0.9476; 30:
+  1.3018, 0.2801, 0.8590; 40: 1.2488, 0.2693, 0.7167; the amount read equal
+  to the replay's count at every tick at every probe (identity), 196 to 147
+  reads per probe. Item 6: (age, waited, owed) at 200 equal to the replay
+  of the counts read at every radius (identity): r = 4 (6, 194, 222), 6
+  (9, 191, 178), 8 (13, 187, 219), 12 (19, 181, 131), 16 (25, 175, 62), 20
+  (31, 169, 43), 24 (38, 162, 134), 30 (47, 153, 21), 40 (63, 137, 8); age
+  + waited = 200 everywhere; the source at age 200, waited 0; the lost
+  fraction 0.970, 0.955, 0.935, 0.905, 0.875, 0.845, 0.810, 0.765, 0.685,
+  falling with r; k over ticks 151-200 395, 323, 281, 229, 201, 185, 172,
+  139, 100 (k x sqrt(r) 790 to 840 up to r = 24, then 762 and 636 where
+  the field is still filling), k / (k + 1) 0.9975 to 0.9901; the count
+  written at the last self-creation 403 (tick 19), 346 (32), 330 (89), 251
+  (80), 183 (79), 186 (57), 190 (144), 147 (74), 118 (90). Outside the
+  bound: age(200) = age(60) at r = 4, 6 and 20 (6, 9, 31): with k + 1 above
+  100 at every radius the 200 intervals hold at most one self-creation
+  after the field builds, so the criterion cannot separate slow from
+  frozen there; the counts written are finite and being paid down (the
+  rule stops no clock). Item 7: 185 records per world, the same ticks and
+  amounts as 7_00 whose records equal 1a_m1's; every push (m - sign(Qq))
+  times the (0, 0) push: 0 for (+, +) and (-, -) with `pushed` (0, 0, 0),
+  2 for (+, -) and (-, +) with `pushed` (-5268008, 11710, 0) = 2 x
+  (-2634004, 5855, 0), and 3 for the content-4 (+, +) probe with `pushed`
+  (-7902012, 17565, 0); electric / gravity -1 and -1/4 on every axis of
+  every record; the electric part of the content-4 probe equal to the
+  content-1 twin's and equal to the carried momentum at every record.
+  Convergence: (a) carried x 2 pi r / q over r >= 5: 1.4540 (min 1.4340,
+  max 1.4890, flat within 3.8 %; 1.1972 over the four in-plane Ports); the
+  flow's 0.9875 (0.9461 to 1.0325); not equal within 5 % (0.47 apart): the
+  departures' momentum at a Node counts the back-scattered shares, which
+  carry outward momentum while moving inward, and the stub's returns,
+  while the flow counts the net units; the flow is Gauss's constant, the
+  carried is 1.45 times it on the plane. (b) The lost fraction against
+  k / (k + 1): 0.685 to 0.970 found against 0.990 to 0.998, the difference
+  the self-creations before the front arrives and the field builds (age
+  about the arrival tick plus a few); the reviewer's limit stands: the
+  suspension reads an amplitude. (c) 0.055, 0.031, 0.034, within their
+  bounds. (d) Exact. A negative control of the analysis, not kept: one
+  push changed by one unit in a copy of 1a_m4's events fails the
+  equivalence identity (16 failures against 15) and exits 1.
+- **Verdict per item.** Item 1, identity held (the 3-D prior for the
+  first read, the first step and the merge did not hold on the plane, by
+  the arithmetic of the record: the plane's ticks registered). Item 2,
+  reading within the bound (1.256 and 1.213, within 5 % of each other;
+  the cumulative 1.071). Item 3, identity held. Item 4, the front as
+  derived at every derived Node; the +x pattern past the front registered.
+  Item 5, the exponents within their bounds (count -0.99, flow -1.05,
+  carried -1.01, size -0.48: Gauss on a circle) and the flow about 1;
+  outside the bound: the carried momentum (1.45, a lattice reading of what
+  the departures carry, not an engine bug: the books balance and the
+  replay equals the audit) and the flux at h >= 20 with the escape 0.89 at
+  300 and 0.948 at 1000 (a lattice limit: on the plane the back-scattered
+  population fills the board slowly and the fixed point is approached, not
+  reached, in 1000 intervals). Item 6, identity held; the bound age(200) >
+  age(60) outside at three radii (a design limit of the 200-interval
+  window against k + 1 above 100 on the plane, not a frozen clock). Item
+  7, identity held. Convergence (a) flat, not equal to the flow; (b) the
+  trend read, the limit stated; (c) within the bounds; (d) exact.
+- **Limits.** No Newtonian regime: the far field on the plane is Gauss's
+  1 / r, the push on a probe is the stream's carried momentum, and no G in
+  the units of physics is read (G_push is a lattice constant, 1.45 over
+  the six Ports and 1.20 over the in-plane Ports, in units of q / (2 pi
+  r)). The axis pattern: the readings on the source's own lattice line are
+  strongly modulated (push x 2 pi r / (m q) 1.71 at r = 4 falling to 1.25
+  at r = 40) and are not the law; no exponent through axis Nodes. sqrt(M):
+  the suspension reads an amplitude, so the clock's slowing scales as
+  sqrt(M / r) on the plane, and at this source the size on the axis is 100
+  to 400 whole units, so a probe self-creates once per 100 to 400
+  intervals: a longer run is needed to read the slowed rate itself. The
+  third law with unequal contents reads 1.2 to 1.3 in the late windows,
+  not 1: the two contents read each other's stream through different
+  cross-sections and the pushes ripple with the whole units. The plane
+  against space: the stub returns 2 / 9 of every mixing to the same Node,
+  so the count and the carried momentum at a Node are not those of a
+  three-dimensional board, and the fixed point is approached slowly (the
+  escape 0.948 q at 1000 intervals). Every reading is one run at one
+  fingerprint; nothing is a law of nature.
+- **Status.** measured, 2026-09-19: identities held (items 1, 3, 6, 7, the
+  derived front of item 4, convergence (d)); readings within the bound
+  (item 2, the exponents and the flow of item 5, convergence (c));
+  readings outside the bound reported (the carried momentum, the flux at
+  h >= 20 and the escape of item 5, the not-frozen bound of item 6 at three
+  radii, convergence (a)'s equality with the flow).
 
 ### A3. Bell test in phase form, delayed geometry
 
