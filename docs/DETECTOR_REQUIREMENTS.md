@@ -1,8 +1,8 @@
 # Universe24 detector requirements
 
-Date: 2026-09-19. Status: consolidated requirements and published implementation contract for the explicitly selected `reversible-detector-v1` candidate. Code and physical validation are separate evidence. Tracked in [issue 342](https://github.com/Closer24/Universe24/issues/342).
+Date: 2026-09-19. Status: consolidated requirements; the implementation contract of the explicitly selected `reversible-detector-v1` candidate was deleted the same day, absorbed into [the law of the ray](RAY_LAW.md) (history marker in its section below). Code and physical validation are separate evidence. Tracked in [issue 342](https://github.com/Closer24/Universe24/issues/342).
 
-Source baseline: `events-v1`, commit `bfb463be6313ae226aa0a192d11036ead63dd0f1`. This document owns the detector requirements and the scoped candidate contract below. The default `events-v1` measurement and mixing rules remain as documented in ENGINE.md. The candidate deliberately does not call their lossy transitions.
+Source baseline of the candidate: `events-v1`, commit `bfb463be6313ae226aa0a192d11036ead63dd0f1` (history: `events-v1` was deleted on 2026-09-19 with the candidate; the active engine is the law of the ray). This document owns the detector requirements and the record of the scoped candidate contract below. The default `events-v1` measurement and mixing rules remained as documented in ENGINE.md until that deletion. The candidate deliberately did not call their lossy transitions.
 
 ## Definition and adopted requirements
 

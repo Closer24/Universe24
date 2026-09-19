@@ -1,7 +1,7 @@
 """The law of the ray, the one engine (rays-v1): selected by a world's
 `"law": "rays"` key; see docs/RAY_LAW.md. The engine (numpy) loads on first
-use: importing the package, the world parser or the runner imports only
-generic physics."""
+use: importing the package, the world parser or the preflight imports only
+generic physics; the runner and `RaySimulation` load the engine."""
 
 from __future__ import annotations
 

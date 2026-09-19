@@ -162,8 +162,8 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
-| `core/lattice` | Standard-library types; the board's addresses, the six Port headings in Port order and the cell bound |
+| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the ray law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
+| `core/lattice` | Standard-library types; the board's addresses, the six Port headings in Port order and the bound of a declared charge and quantum |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
 | `events/mixing` | `core/lattice` and numpy; the Node's computation of the sides over any family's arrays, exact in bounded integers (the square root's float estimate corrected to the exact integer root) |
 | `events/transit` | `core/lattice`, `core/phase`, `events/mixing` and numpy; one family's events in transit and the walk |

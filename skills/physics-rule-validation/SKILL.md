@@ -93,8 +93,9 @@ including chains with zero net delta. A balanced final component sum does not
 prove each nonlinear rule invariant remained valid. Check that rejected proposals
 leave all actual owners and already received inventory intact.
 
-For initialization-defined simulation, use
-DISTURBANCES.md for active contracts. Verify
+For the active engine, use [the law of the ray](../../docs/RAY_LAW.md) and
+[the engine's bookkeeping](../../docs/ENGINE.md) for active contracts (the
+generic disturbance contract, DISTURBANCES.md, was deleted on 2026-09-19). Verify
 whole-record versus extensive transport, exact source accounting, paired
 exchange, fixed transit and cost-dependent frozen local commits. Historical
 self-force and particle-momentum laws apply only to their named candidates.

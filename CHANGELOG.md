@@ -5,6 +5,36 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### Cleanup after the law of the ray (2026-09-19)
+
+- The contributor instructions and the definitions that still sent a reader
+  to the deleted generic disturbance contract (docs/DISTURBANCES.md, deleted
+  on 2026-09-19) carry the history marker with the date and the pointer to
+  [the law of the ray](docs/RAY_LAW.md) and [the engine](docs/ENGINE.md):
+  the four skills and the shared workflow that named DISTURBANCES.md as the
+  active contract; SIMULATOR_DEFINITIONS "Active generic disturbance model"
+  (now "Historical ... (deleted on 2026-09-19)") and its display section's
+  pointer; POSTULATES "Active initialization-defined model" and its "Active
+  contract: disturbance transfers ..." line; TERMINOLOGY "Ray-event terms";
+  DETECTOR_REQUIREMENTS' status line; PHYSICAL_FEATURES' schema pointer.
+  No physics text was rewritten; the sections are marked, not deleted.
+- `core/integer.py` loses the component arithmetic of the deleted engines
+  (`signed_divrem`, `ceil_div`, `checked_sum`, `add_components`,
+  `subtract_components`, `dot_product`, `cross_product`, `reduced_ratio`:
+  no caller left) and `core/lattice.py` loses `MIXING_OPPOSITE` (no caller);
+  their 13 tests go with them, and `test_integer_arithmetic.py` pins the
+  primitives the ray law uses (`checked_work`, `integer_root`, `bounded_gcd`)
+  ([migration](docs/MIGRATION.md#cleanup-after-the-law-of-the-ray-on-2026-09-19)).
+- `pyproject.toml` declares numpy (`numpy>=2.5.3,<3`, the version of the
+  validated environment as the floor) as a dependency of the package: the
+  engine imports it at module level, and `pip install -e .` installed
+  nothing before; the render extra keeps matplotlib, Pillow and playwright.
+- `event_universe.__version__` is 0.3.1, the version of `pyproject.toml`,
+  `CITATION.cff` and the 0.3.1 release of 2026-09-15 (the string read 0.3.0
+  since then); `run.json` records `package_version` 0.3.1 from now on.
+- `import event_universe` loads the engine (numpy) on the first read of
+  `RaySimulation`, as the `events` package promised: the package, the world
+  parser and the preflight import only the generic physics.
 ### The table from the keys and the moments (2026-09-19, the night)
 
 - Two decisions of the model owner on the mathematician's review of the
@@ -57,8 +87,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   [D, the orbit under the law of the ray, on the plane](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
   one orbit closes by the criterion (S = 32, r = 12: 346 intervals against
   343 derived, an eccentric loop), no other closing, the mean push as
-  derived (C 1.1), the grain of the push the reason. The world test
-  `tests/test_orbit_world.py` pins that closing.
+  derived (C 1.1), the grain of the push the reason. No test pins the
+  registered run (the owner's rule of 2026-09-17).
 
 ### The law of the ray (2026-09-19)
 
@@ -85,7 +115,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   [expectations](docs/TEST_EXPECTATIONS.md)). The example worlds, the Bell
   and coupling generators and the detector definitions are ray worlds; the
   Bell run A2 and the coupling series C are re-registered under `rays-v1`
-  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.0.
+  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.1 (the
+  `__version__` string read 0.3.0 until the cleanup above).
 
 ### The engine of the law of events (2026-09-19)
 
