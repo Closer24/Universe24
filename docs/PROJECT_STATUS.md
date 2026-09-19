@@ -1,5 +1,82 @@
 # Project status and restart guide
 
+## Where the project stands on 2026-09-19 (read this first)
+
+**Two laws are recorded, two engines are in the code, one is the working one.**
+Everything below is on `main`; nothing is in a branch or a machine.
+
+1. **The law of the bit** ([Highlights](HIGHLIGHTS.md) section 5.4, points 1 to 25 with
+   their glossary): every ray is a thing (1) or its shadow (0), a thing walks one path,
+   a shadow is the thing's field and spreads by the Node's mixing (point 24), a shadow
+   meeting a thing pushes it and is turned back (point 3), a thing at rest reads the
+   count for its push and the size for its wait (points 16 and 23), the charge is per
+   thing (point 16 as amended), a thing emits its shadows every interval and a shadow
+   never disappears, and the board of a run is open (the evening's paragraphs of
+   2026-09-18). Its engine is the old one: `src/event_universe/core/`, `fields/`,
+   `dense_field.py`, `prefill.py`, every world under `examples/nature/` and the
+   catalog, about 700 tests, all green. Its confrontation runs of 2026-09-18 (E11,
+   A5s, E9, A1, A6 on closed boards, before the emission was decided) are registered in
+   [EXPERIMENTS.md](EXPERIMENTS.md) as measurements on a field that never settles:
+   the count-reading and the closed board give no static force (DERIVATIONS.md round 7,
+   Theorem 1), which is what forced the emission and the open board.
+2. **The law of the shadow** (Highlights 5.4, the paragraph "The law of the shadow: only
+   shadows and events", the model owner's words of the evening of 2026-09-18; the
+   whole document annotated to it on the same day, the consistency table at the end of
+   5.4): "No real and shadow. There is only shadow. There are events, which are a whole
+   quantum. That is all. The shadow spreads like a ray from the event." Matter is
+   content held at Nodes; every ray in flight is a shadow; an event is a whole quantum
+   at held content. It is derived in [DERIVATIONS.md](DERIVATIONS.md) round 8 (sections
+   51 to 56: the law in points S1 to S10 as a draft for the owner, stability, the step
+   and the speed, inertia, the tests one by one, the verdict table, the Node rule in
+   pseudo-code) on round 7's fixed point (sections 45 to 50). Its engine is the new one,
+   `src/event_universe/shadow/` (feature 20, `field-only-v1`, PR #327), selected by a
+   world's `"law": "shadow"`, with `tests/test_field_only.py` and the worlds under
+   `examples/shadow/`. **It is under test and not the working law** (the model owner,
+   2026-09-19): a world of its law is refused unless it declares the three decisions the
+   owner has not made (feature 20b, `shadow-gate-v1`: `transmitted_number`,
+   `wait_per_quantum`, `epsilon_g`), and it becomes the law only after it has repeated
+   every confrontation on open boards (E11, A5s, A6, A1, E9) and the readings were
+   registered. Until then the old engine stays; when it passes, the old engine is
+   retired in a cleanup and this becomes one engine.
+
+**What the new engine already gave on its first worlds** (test_field_only, pinned before
+the runs): Gauss's flux through every shell equal to the emission within 2 %, the count
+falling as r^-2.00 and the size as r^-1.05, the third law within 2.1 %, the product law,
+two slits giving fringes in the counts event by event (ratio 3.2, the one-slit control
+monotone), the wait falling as r^-0.9.
+
+**What is open, by whose hand:**
+
+- The model owner's decisions (round 8's verdict table, PR #327's "Needs a decision",
+  Highlights 5.4's status line): the law in points S1 to S10 point by point; the number a
+  transmitted quantum carries (a slit or a mirror keeping the number of what it re-emits,
+  or its own); the wait's unit w; the gravity multiplier ε_g (nature's hierarchy needs it,
+  section 55 (x)); T2 (an event takes its interval); what a matter shadow rotates by;
+  hypothesis 19 or a per-family w (the bending of light: half of Einstein with one w,
+  whole if light pays twice); the Compton table; the parked share's phase (1.5 % of the
+  emission stands still); a lamp's recoil; the plain or matched edge.
+- Derived and not solved by either law: no inertia for a co-moving pair at first order
+  in v (section 54: the lattice's preferred frame for composite matter); no mass ladder
+  under the law of the shadow (bound contents give Kepler's continuum; the law of the
+  bit had one from loop-binding, hypothesis 12); Bell at most 2 (both laws, section 55
+  (ix)); the field of a small content is a haze, not a wave (sections 47 (iii), 52 (v)).
+- Runs to make on the new engine, in this order, each with a page and a GIF: E11 (one
+  held content), A5s (two), A6 (the four tests on an open 33³ board), A1 (a lamp with
+  q_γ ≥ 2·10⁶ per quantum), E9. DERIVATIONS.md section 56 gives the worlds and the
+  numbers that decide.
+
+**How the work is done** ([AGENTS.md](../AGENTS.md)): every model decision is recorded in
+Highlights the same day in the owner's words, elaborations flagged; one feature per
+branch and PR with one isolated test module; `PYTHONPATH=src python tools/check.py
+--base origin/main` locally (the whole suite in CI); merge commits, never a rebase;
+experiments registered in EXPERIMENTS.md with their digests; hypotheses numbered in
+HYPOTHESES.md; the engine documented in SPATIAL_FIELDS.md (both engines) and its
+features in HIGHLIGHTS_IMPLEMENTATION.md; every deletion in MIGRATION.md.
+
+**Everything is in git.** The history is merge commits only; `git log --first-parent
+main` reads the day by PRs (#278 to #329 on 2026-09-18 and 19). Any earlier state can be
+checked out; the old engine needs no checkout, it runs today.
+
 [Local Focus](LOCAL_FOCUS.md) defaults on: certified empty carrier Nodes sleep,
 and equal complete local planning inputs reuse immutable pure transition results.
 Host transport indexes active output banks in their original creation order.
