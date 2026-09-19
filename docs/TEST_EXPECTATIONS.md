@@ -32,7 +32,7 @@ kept, their pins the law of events').
 | `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact; the merge by one packed key and by the lexsort alike ([below](#the-bijection)) | new |
-| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
+| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the record exact and never refused (the pointer in the register up to its bound, the square in Python integers); the detector a set of Nodes with one record (the record, the threshold and the window over the set); the phase returned to the set's events after a click; the `beam` reading (the pairing by opposite phase, the count) ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
@@ -256,7 +256,8 @@ on -z). An empty world counts zero both ways.
 
 `tests/test_ray_detector.py` (docs/RAY_LAW.md, section 5). K 2^20,
 `suspension` 0, `release` [0, 1], the families `m` (free) and `light`
-(paid), every measured event `fixed`.
+(paid), every measured event `fixed`; the detector `d` of (a) to (e)
+declares the reading `wave` (since 2026-09-19 the default is `beam`).
 
 - (a) two rays of amount 1 arriving in one interval at a counter of
   threshold 1, in phase (0 and 0): the record 4 x 32^2 x 256^2 = 268435456,
@@ -301,9 +302,49 @@ on -z). An empty world counts zero both ways.
   (2^13 x 130561)^2 + (2^13 x 130563)^2; a row of 2^52 (the reviewer's
   silent int64 wrap, once refused) records 2^130 with the pointer
   (2^65, 0); two rows of 2^18 clicking in the intervals 1 and 3 accumulate
-  2^63, beyond int64, in the measured event's record, its state and the
-  report, round-tripped through JSON; a ray of 2^18 stepping off the open
-  face +x records 2^62 on `face:+x`.
+  2^63, beyond int64, in the detector's record and the report,
+  round-tripped through JSON; a ray of 2^18 stepping off the open face +x
+  records 2^62 on `face:+x`.
+- (f) the set (the model owner's principle, 2026-09-19): a `wave`
+  detector `d3` of three Nodes, (4, 0, 1), (4, 1, 1) and (4, 2, 1), each a
+  counter of `m` (content 4) measuring light: one ray of amount 1 arriving
+  at any one of the three gives one `record` line naming `d3` (its `node`
+  and `measured` None), the record 32^2 x 256^2 the same whichever Node
+  it reached, and the click at the Node it reached (that counter holds
+  [4, 1], the other two [4, 0]); at threshold 2 one ray of amount 1 at
+  one Node passes (`threshold` 2) while two rays of amount 1 at two
+  different Nodes in the same interval both click and record 4 x 32^2 x
+  256^2 (one pointer over the set); the window reads the set's phase: two
+  rays at the phases 0 and 16 at two Nodes have the set's phase 8, and
+  with the window 20 on every counter both click (the phase 0 alone would
+  be outside) while with the window 56 both pass with `window` 56 (the
+  phase 0 alone would be inside).
+- (g) the phase returned (the model owner, 2026-09-19): a click of one ray
+  of phase 40 at a one-Node `wave` detector whose counter is at phase 0
+  leaves the counter at phase 40 (the report's and the `record` line's
+  `phase` 40), the turn of K 2^20 being 0; a lamp of light (content 24,
+  K 24, rate [1, 1]) in a `wave` detector that clicks a ray of phase 40
+  at tick 1 releases its six rays of that tick at the received phase 40
+  and is at phase 41 after the interval (the frame's turn 1 added after
+  the click), at 42 after the next with its rays at 41; the set of three
+  Nodes of (f) with the rays at 0 and 16 puts all three counters at phase
+  8; a ray below the threshold leaves the counter at phase 0, and a
+  `read` of `m` (a ray of phase 40) leaves the reader at phase 0.
+- (h) the reading `beam` (the default): at a one-Node beam detector, two
+  rays of amount 1 in phase (0 and 0, +X and -X) both click, the record
+  (the count) 2, the `record` line without a pointer and with `phase` 0;
+  opposite (0 and 32) both pass with `cancelled` true, no click, the two
+  rays going on whole, the record 0 and no `record` line; a quarter turn
+  apart (0 and 16) with the window 16 on the counter both are admitted by
+  the gate and paired (the arc the half circle centred on the opposite
+  phase), both pass cancelled; without a window they are not paired and
+  both click; three rays at the phases 0 (+X), 32 (-X) and 0 (+Y) in the
+  order of their numbers: the first pairs with the second, the third
+  clicks alone (1 click, record 1); rows of 3 (phase 0) and 2 (phase 32):
+  2 units pair and pass, 1 unit clicks (the click line's amount 1, the
+  two `cancelled` lines 2 and 2, the rows of 2 and 2 in the store); the
+  books balanced in every case; `"reading": "field"` is refused naming
+  the key.
 
 ## The push as one form
 
@@ -560,7 +601,11 @@ does what the law says and not as a result.
   content 8 K + 1 400 000, 64 rays per self-creation on five directions), a
   wall at x = 8 measuring light with the openings at y = 55 and 65
   re-emitting on the fan of the 91 primitive directions (a, b, 0) with
-  a >= 1 and a + |b| <= 12, a screen at x = 52 as the detector `screen`.
+  a >= 1 and a + |b| <= 12, a screen at x = 52 read as 121 one-Node
+  `wave` detectors `screen_<y>` (the screen's pixels; since 2026-09-19 a
+  detector is a set with one record, so one detector of 121 Nodes would
+  read one record with no resolution in y, and a pixel one Node wide
+  reads what the Node read before).
   Three runs, both openings and each alone: the plain count is additive to
   the unit (count_both = count_55 + count_65 at every screen Node) and the
   interference term V(y) = (I_both - I_55 - I_65) / (2 sqrt(I_55 I_65)) of

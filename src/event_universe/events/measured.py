@@ -17,14 +17,45 @@ Pending = tuple[int, int, int]
 
 
 @dataclass
+class DetectorSet:
+    """A detector at run time: a set of measured events with ONE record (the
+    model owner, 2026-09-19: a detector measuring three Nodes sees one
+    electron that can be on any of the three; a click says "here, in one
+    of these" and not which). A declared detector (`name` its name) or a
+    measured event outside every declared detector, a detector of one Node
+    (`name` None, the reading the default). `reading` is `wave` (the record
+    the square of the coherent pointer of what the set clicked in an
+    interval) or `beam` (the arriving rays paired by opposite phase over
+    the set, the record the plain count of what clicked); `threshold` the
+    smallest amount of a family arriving over the set in one interval that
+    the set responds to; `numbers` its measured events; `record` per
+    family, cumulative: an exact Python integer, a report of the host that
+    is never refused and may pass 2^63 (its readers in `run.json` and
+    `state.json` parse it as an arbitrary-precision integer); `phase` per
+    family the set's phase at its last click (None before one), the phase
+    its measured events took."""
+
+    index: int
+    name: str | None
+    reading: str
+    threshold: int
+    numbers: list[int] = field(default_factory=list)
+    record: list[int] = field(default_factory=list)
+    phase: list[int | None] = field(default_factory=list)
+
+    @property
+    def wave(self) -> bool:
+        return self.reading == "wave"
+
+
+@dataclass
 class Measured:
     """A measured event at a Node: its declaration, its clock and its
     counters. `pending` holds, per family, what came home or is re-released
     and waits for the next self-creation: (amount, content per unit, phase)
-    per arriving record. `record` is the detector's squared coherent reading
-    per family, cumulative: an exact Python integer, a report of the host
-    that is never refused and may pass 2^63 (its readers in `run.json` and
-    `state.json` parse it as an arbitrary-precision integer). The engine
+    per arriving record. `detector_set` is the detector the event belongs
+    to (a declared one, or itself as a detector of one Node): the threshold
+    and the record are the set's, not the Node's. The engine
     sets `creating`, `clock_age` and
     `turn` before every interval (the clock's frame) and reads `presence`
     after it (the clock's count)."""
@@ -46,7 +77,7 @@ class Measured:
     lamp_window: int | None
     declared_content: int
     detector: int | None
-    threshold: int
+    detector_set: DetectorSet
     age: int = 0
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
@@ -56,7 +87,6 @@ class Measured:
     measured: list[dict[str, int]] = field(default_factory=list)
     events: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
-    record: list[int] = field(default_factory=list)
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it and the turn read off the clock; and
     # what the law read back: the presence at the Node of every other number.
@@ -68,6 +98,11 @@ class Measured:
     @property
     def content(self) -> int:
         return sum(self.held)
+
+    @property
+    def threshold(self) -> int:
+        """The threshold of the detector the event belongs to."""
+        return self.detector_set.threshold
 
     def pending_amount(self, family: int) -> int:
         return sum(amount for amount, _, _ in self.pending[family])
@@ -98,7 +133,6 @@ class Measured:
             "measured": [dict(entry) for entry in self.measured],
             "events": list(self.events),
             "pushed": list(self.pushed),
-            "record": list(self.record),
         }
 
 

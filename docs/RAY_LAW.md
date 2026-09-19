@@ -387,16 +387,85 @@ static field (its second-order tensor is isotropic; the mathematician, 3.5).
 
 ## 5. The detector's record, the re-emission, the face detectors
 
-**The record.** At a detector Node, per interval and per family, with the
-rays clicked this interval (after threshold and window; `measure` only): with
-`A_u = isqrt(1024 x amount_u)` (the engine's 32nds) and the 1/256 tables `C`,
-`S` of `core/phase.py`, the pointer `(X, Y) = (sum A_u C[phase_u], sum A_u
-S[phase_u])` and the record `X^2 + Y^2`, an integer added to the detector's
-`record` (per Node and per detector, cumulative) beside the amount measured
-and the clicks; the phase of every click is written on its record as today.
-Two rays of equal amount in phase record 4 A^2 x 256^2, in antiphase 0, each
-alone A^2 x 256^2: the wave is this reading and nothing else (the plain count
-never fringes; rays, section 3). **The record is exact and never refused**
+**The detector is a set of Nodes with ONE record** (the model owner,
+2026-09-19, Highlights 5.4: "a detector measuring three Nodes sees one
+electron that can be on any of the three"; a click says "here, in one of
+these" and not which; the declared width of the set is the position's
+uncertainty, and the reading, not the board, is what is uncertain).
+Per interval and per family, a detector's set (its declared `positions`;
+a measured event outside every declared detector is a detector of one
+Node with the default reading) reads the arrivals of every number but
+each Node's own at all its Nodes as one set: the **threshold** on the
+amount summed over the whole set (a smaller set passes at every Node of
+it with a `pass` record naming `threshold`), then the **reading** the
+detector declares (`reading`: `beam` by default, or `wave`; section 10,
+note 23):
+
+- `wave`: with the rays the set clicks this interval (after the threshold
+  and the window; `measure` only), `A_u = 32 x amount_u` (note 3) and the
+  1/256 tables `C`, `S` of `core/phase.py`, the coherent pointer over the
+  whole set `(X, Y) = (sum A_u C[phase_u], sum A_u S[phase_u])` and the
+  record `X^2 + Y^2`, an integer added to the detector's one `record`
+  (per detector, cumulative, never per Node). The set's phase is the
+  pointer's nearest step (`nature_beam.pointer_phases`: the step of the
+  circle whose table entry is nearest in direction, the least
+  `|X S[k] - Y C[k]|` among the k with `X C[k] + Y S[k] > 0`, exact
+  integers; a zero pointer has no phase). The **window** of a Node's
+  entry reads the set's phase (the pointer of the arrivals the threshold
+  admitted), not each ray's own: the set is admitted or passes as one.
+  After a click the set's phase is **returned to the board** (the model
+  owner: "the detector must also return to the board the information it
+  received"): every measured event of the set takes it as its own phase,
+  so what it emits afterwards, a lamp's release or a re-emission, carries
+  the phase it received, as the content and the momentum already return
+  by joining the event and pushing it; the frame's turn by content over K
+  is added after it as always (E = h f untouched); a pass or a read
+  leaves the phase alone. This reading is the reversible detector's idea
+  absorbed (the pointer is the detector's phase) and it is **the one
+  imported law of physics in the engine**, intensity = the square of the
+  summed amplitudes, kept as an option a world declares. Two rays of
+  equal amount in phase record 4 A^2 x 256^2, in antiphase 0, each alone
+  A^2 x 256^2: the wave is this reading and nothing else (the plain count
+  never fringes; rays, section 3).
+- `beam` (the default; the model owner's "only events"): a rule on whole
+  rays with no amplitude and no square. Over the set, in one interval,
+  the rays that would click (after the threshold and the window, which
+  here reads each ray's own phase) are paired by opposite phase, greedily
+  in the fixed order of the rows (measured event, number, row): a row
+  pairs its units with the first later rows of the set whose phase is
+  opposite to its own, exactly (a difference of N / 2) when the row's
+  Node declares no window and within the half circle centred on the
+  opposite phase (the window's own width, the pairing arc) when it does;
+  a paired couple does not click and is not absorbed, both parts pass on
+  whole with their records (`pass` lines naming `cancelled`), and the
+  rest of a row clicks as `measure` does (the content and the momentum
+  join, one click record per row naming the detector). The record is the
+  plain count of the units clicked; the set's phase returned to the
+  events is the phase of the last clicked row of the interval (chosen
+  over the mean step: no division, one integer of the record). The books
+  close, a cancelled ray going on. Expectation registered: two coherent
+  beams of n1 and n2 units meeting at a beam detector click n1 + n2 at
+  phase difference 0 and |n1 - n2| at N / 2; between them the pairing
+  as implemented gives, for two rows of fixed phases, a step of the arc
+  (paired or not), and the law two spread beams read (the model owner
+  expects a triangle where `wave` reads a cosine) is the reading A10
+  registers on the two-slit screen under both readings, not a pin.
+
+**What stays per Node.** Everything the law does with an arrival's
+physics: `measure` joins the content and the label of the ray to the
+measured event at the Node the ray actually reached (its held content,
+its momentum, the push), the recoil, the momentum labels, the books, the
+re-emission (each Node of an opening of declared width re-emits what it
+took), the `click` line (its `node`, its `measured` and the ray's own
+`phase`); only the reading is over the set. The `record` line is one per
+detector per family per interval, after the set's last measured event of
+the interval, with its `node` and `measured` None for a set of several
+Nodes, the `pointer` under `wave`, the `record` (the square, or the
+count) and the set's `phase`; the run's detector report carries per
+detector its `reading`, its one `record` and its `phase` at the last
+click; a measured event's state carries no record of its own. A face
+detector keeps the square of what left through it (no set to pair over).
+**The record is exact and never refused**
 (section 10, note 19; the physics-rule reviewer's F2, corrected twice).
 The record is a reading the host reports, not the law's local work: the
 law's bound 2^62 - 1 governs what a Node holds and moves (the amounts,
@@ -411,9 +480,9 @@ family in one interval is within `(2^62 - 1) // (32 x 257)` =
 and in Python integers beyond it (`coherent_pointer`: one comparison of
 the exact clicked amount per group, a few groups per interval); the
 square `X^2 + Y^2` and the record that accumulates it are Python
-integers always, per detector Node per family (`Measured.record`) and
+integers always, per detector per family (`DetectorSet.record`) and
 per face per family (`Ledger.face_record`), held beside the arrays and
-updated only for the Nodes clicked. The record of `events.jsonl`,
+updated only for the sets clicked. The record of `events.jsonl`,
 `run.json` and `state.json` is this exact integer: it can exceed 2^63
 (`two_contents` holds 181 x 2^62 on `face:+y` after 200 intervals) and a
 reader parses it as an arbitrary-precision integer (JSON has no bound;
@@ -864,3 +933,50 @@ implementation's part of the contract. The design above is unchanged.
     and the measured events met, not of the Nodes, the store's promise of
     section 3 (the plane's 14641 Nodes cost 0.11 us each, the two slits'
     5100 rows 0.69 us each).
+23. **The detector's set, its two readings and the phase returned** (the
+    model owner, 2026-09-19, three decisions of the same day: the
+    detector a set with one record, "the detector must also return to
+    the board the information it received", and the key `reading` with
+    `beam` the default and `wave` the imported law; section 5;
+    `tests/test_ray_detector.py` (f), (g), (h)). The decisions the
+    implementation took: (i) the set's phase is `pointer_phases`, the
+    step whose table entry is nearest in direction to the pointer, exact
+    integers (in the int64 register while every component is within
+    `POINTER_STEP_BOUND` = (2^62 - 1) // 257, Python integers beyond);
+    a pointer of one ray at phase p reads p wherever the 1/256 tables
+    tell the steps apart (every N through 64; at N = 4096 adjacent
+    entries coincide and the reading is to the tables' resolution, as
+    the record itself is); a zero pointer (an antiphase pair) has no
+    phase: the window treats it as outside and the events keep their
+    phase. (ii) Under `wave` the window reads the phase of the pointer of
+    the arrivals the threshold admitted over the set; the record's
+    pointer is of the rows that clicked (equal when every Node of the
+    set measures under one window, the declared case). (iii) The
+    `record` line and the phase returned follow the set's last measured
+    event that had anything this interval, per family in family order
+    (when two families click one set in one interval the later family's
+    phase is the one the events keep). (iv) The `click` line keeps the
+    ray's own phase (the ray's record, what `tools/bell_chsh.py` reads
+    as the age mod N); the set's phase is on the `record` line and in the
+    report. (v) Under `beam` the pairing walks the rows of the set in
+    the order (measured event, number, row) and splits a row: the paired
+    units stay in the store as the row's amount (the row is not
+    absorbed), the rest clicks; the reading's moments, the push and the
+    labels are of the clicked units; the `record` line under `beam`
+    carries the count and the phase and no pointer. (vi) A measured event
+    outside every declared detector is a detector of one Node with the
+    default reading `beam`: the wall of the two-slit worlds now counts
+    what it absorbs; the face detectors keep the square (a face has no
+    set to pair over and is not declared). (vii) The screen of
+    `two_slits.json`, `one_slit.json` and the world test is declared as
+    121 one-Node `wave` detectors `screen_<y>` (the screen's pixels):
+    declared as one detector of 121 Nodes it would read one record with
+    no resolution in y (the declared width is the uncertainty), and a
+    pixel one Node wide reads what the Node read before, so its record
+    and the pinned correlation are unchanged. (viii) The Bell worlds
+    read exactly as before under the default `beam`: one ray per
+    interval per detector, nothing to pair, every `click` and `pass`
+    line identical; their `record` lines now carry the count 1 and the
+    phase, `run.json` carries no `measured[].record` and its counters'
+    `phase` is the last click's (VALIDATION.md). `Measured.record` and
+    the per-Node threshold are gone (`DetectorSet`, MIGRATION.md).

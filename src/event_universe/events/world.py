@@ -86,11 +86,20 @@ the model owner, 2026-09-19):
   `phase` and optionally `age`, booked as initial content of the transit
   line; the default is an empty board that the releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
-  its `positions` (Nodes of measured events, each in at most one detector)
-  and its `threshold` (1 by default): the smallest amount of a family the
-  detector measures at a Node in one interval, summed over every number but
-  the Node's own; a smaller set passes. Every detector writes its `record`,
-  the squared coherent reading of the rays it clicked.
+  its `positions` (Nodes of measured events, each in at most one detector),
+  its `threshold` (1 by default): the smallest amount of a family arriving
+  at the detector's Nodes in one interval, summed over the whole set and
+  over every number but each Node's own; a smaller set passes; and its
+  `reading`, `"beam"` (the default) or `"wave"` (the model owner,
+  2026-09-19): a detector is a set of Nodes with ONE record (a click says
+  "here, in one of these" and not which; the declared width is the
+  position's uncertainty). Under `wave` the record is the square of the
+  coherent pointer of the rays the set clicked in the interval, the
+  window reads the set's phase and the set's phase is returned to its
+  measured events; under `beam` the arriving rays are paired by opposite
+  phase over the set, a paired couple passes on and the rest click, the
+  record is the plain count. A measured event outside every detector is a
+  detector of one Node with the default reading.
 
 Refused, naming the key: `kind` on a family (the quantum decides it),
 `headings` on a lamp (`directions` replaces it),
@@ -195,7 +204,9 @@ LAMP_KEYS = {"rate", "directions", "phase_window"}
 # and the reading's component the record carries.
 TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
-DETECTOR_KEYS = {"name", "positions", "threshold"}
+DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
+# The readings a detector may declare; the first is the default.
+DETECTOR_READINGS = ("beam", "wave")
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
 # The board's faces per axis: open (the default) or periodic (the wrap).
@@ -309,11 +320,13 @@ class TransitDefinition:
 
 @dataclass(frozen=True)
 class DetectorDefinition:
-    """A named set of measured events and its threshold."""
+    """A named set of measured events, its threshold and its reading
+    (`beam` or `wave`)."""
 
     name: str
     positions: tuple[Address3, ...]
     threshold: int
+    reading: str = DETECTOR_READINGS[0]
 
 
 @dataclass(frozen=True)
@@ -814,7 +827,12 @@ def _detectors(
             taken.add(position)
             positions.append(position)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
-        found.append(DetectorDefinition(name, tuple(positions), threshold))
+        reading = obj.get("reading", DETECTOR_READINGS[0])
+        if reading not in DETECTOR_READINGS:
+            raise ValueError(
+                f"{RAYS_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}, not {reading!r}"
+            )
+        found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
     return tuple(found)
 
 

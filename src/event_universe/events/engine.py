@@ -36,7 +36,7 @@ import numpy as np
 
 from event_universe.core.integer import by_clock as _by_clock
 from event_universe.core.lattice import Address3, adjacent_node
-from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
+from event_universe.events.measured import FACE_NAMES, RULES, DetectorSet, Ledger, Measured
 from event_universe.events.nature_beam import (
     HERE,
     ArrivalRows,
@@ -50,6 +50,7 @@ from event_universe.events.nature_beam import (
     ray_tables,
 )
 from event_universe.events.world import (
+    DETECTOR_READINGS,
     HEADING_OFFSET,
     MOMENTUM_BOUND,
     RAYS_LAW,
@@ -82,6 +83,22 @@ class RaySimulation:
         self.stores = [RayStore(world.shape) for _ in world.families]
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
+        # The detectors at run time: the declared ones first, in their
+        # order, then a detector of one Node for every measured event
+        # outside them (the model owner, 2026-09-19: a detector is a set
+        # of Nodes with one record).
+        self.detector_sets: list[DetectorSet] = [
+            DetectorSet(
+                index,
+                detector.name,
+                detector.reading,
+                detector.threshold,
+                [],
+                [0] * count,
+                [None] * count,
+            )
+            for index, detector in enumerate(world.detectors)
+        ]
         self.measured: dict[int, Measured] = {}
         self.at: dict[Address3, int] = {}
         for index, definition in enumerate(world.measured):
@@ -152,7 +169,20 @@ class RaySimulation:
         held = [0] * count
         held[definition.family] = definition.amount
         detector = self.world.detector_of(definition.position)
-        threshold = 1 if detector is None else self.world.detectors[detector].threshold
+        if detector is None:
+            detector_set = DetectorSet(
+                len(self.detector_sets),
+                None,
+                DETECTOR_READINGS[0],
+                1,
+                [number],
+                [0] * count,
+                [None] * count,
+            )
+            self.detector_sets.append(detector_set)
+        else:
+            detector_set = self.detector_sets[detector]
+            detector_set.numbers.append(number)
         return Measured(
             number,
             definition.position,
@@ -171,11 +201,10 @@ class RaySimulation:
             None if definition.lamp is None else definition.lamp.window,
             definition.amount,
             detector,
-            threshold,
+            detector_set,
             pending=[[] for _ in range(count)],
             measured=[dict.fromkeys(RULES, 0) for _ in range(count)],
             events=[0] * count,
-            record=[0] * count,
         )
 
     # -- the interval ----------------------------------------------------------
@@ -474,17 +503,22 @@ class RaySimulation:
         return [self.measured[number].state() for number in sorted(self.measured)]
 
     def detectors(self) -> list[dict[str, object]]:
-        """The measurements per detector: its Nodes, its threshold and per
-        family the amount measured, the clicks and the record; then the face
+        """The measurements per declared detector: its Nodes, its threshold,
+        its reading and per family the amount measured and the clicks
+        (summed over its Nodes), the set's one `record` (the square of its
+        coherent pointer accumulated under `wave`, the count clicked under
+        `beam`) and the set's `phase` at its last click; then the face
         detectors, one per open face of the board (`face_detectors`)."""
         found = []
         for index, detector in enumerate(self.world.detectors):
-            members = [entry for entry in self.measured.values() if entry.detector == index]
+            detector_set = self.detector_sets[index]
+            members = [self.measured[n] for n in detector_set.numbers if n in self.measured]
             families = {
                 family.name: {
                     "measured": sum(entry.measured[f]["measure"] for entry in members),
                     "clicks": sum(entry.events[f] for entry in members),
-                    "record": sum(entry.record[f] for entry in members),
+                    "record": detector_set.record[f],
+                    "phase": detector_set.phase[f],
                 }
                 for f, family in enumerate(self.families)
             }
@@ -493,6 +527,7 @@ class RaySimulation:
                     "name": detector.name,
                     "nodes": len(detector.positions),
                     "threshold": detector.threshold,
+                    "reading": detector.reading,
                     "families": families,
                 }
             )

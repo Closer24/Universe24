@@ -5,6 +5,37 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The detector as a set with one record, its two readings and the phase returned (2026-09-19)
+
+- The model owner's principle of the detector's sensitivity ("a detector
+  measuring three Nodes sees one electron that can be on any of the
+  three"): a detector is a set of Nodes with ONE record. The threshold is
+  on the amount arriving over the whole set in one interval, the coherent
+  pointer and its squared record are over the set (one `record` line per
+  detector naming it, its `node` None for a set of several Nodes), the
+  window reads the set's phase; the click's content, momentum and
+  re-emission stay at the Node the ray reached. After a click the set's
+  phase (the pointer's nearest step, `nature_beam.pointer_phases`) is
+  returned to every measured event of the set, so a lamp or a re-emitter
+  releases at the phase it received, the frame's turn added after it. A
+  detector declares its `reading`: `wave` (the coherent pointer, the
+  square, the phase returned: the one imported law of physics, kept as an
+  option) or `beam` (the default; the owner's "only events": the rays
+  that would click are paired by opposite phase over the set, a paired
+  couple passes on whole, the rest click, the record the count).
+  `Measured.record` is gone (`DetectorSet.record`, `run.json`'s
+  `detectors[]` with `reading` and `phase`; no `measured[].record`). The
+  two-slit worlds declare their screen as 121 one-Node `wave` detectors
+  (their record per pixel and the pinned correlation unchanged); the Bell
+  worlds read the same under the default; every `click` and `pass` line
+  of the 45 example worlds but the two-slit screens' declaration is
+  unchanged ([validation](docs/VALIDATION.md)). Tests:
+  `test_ray_detector` (f), (g), (h) new, (a), (b), (e) under `wave`
+  ([expectations](docs/TEST_EXPECTATIONS.md),
+  [RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  and note 23,
+  [migration](docs/MIGRATION.md#the-detector-as-a-set-with-one-record-the-reading-key-and-the-phase-returned-on-2026-09-19)).
+
 ### The detector's record exact, never refused (2026-09-19, after the batching)
 
 - The night's affordable amount (`RECORD_AMOUNT_BOUND` = 261123, the

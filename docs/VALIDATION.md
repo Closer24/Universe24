@@ -11,6 +11,34 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The detector as a set with one record, the two readings and the phase returned: the runs compared - 2026-09-19
+
+The worktree of `claude/universe24-new-3ytqde` on the tip `382a17df` (the
+Highlights record of the owner's principle), one commit: the detector set
+(`DetectorSet`), the `reading` key (`beam` the default, `wave`) and the
+phase returned to the set's measured events ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+note 23; [changelog](../CHANGELOG.md)). Python 3.14.0rc2, numpy 2.5.3,
+headless, four cores. The 45 example worlds run through
+`tools/run_series.py --jobs 2` on the tip's source (extracted with `git
+archive`) and on the changed source; `events.jsonl` compared line by line
+with the `record` lines set aside, `run.json` by its `audit`, its
+detectors and its status.
+
+| Check | Result |
+| --- | --- |
+| The 45 worlds, tip against the change: every `click`, `pass`, `home`, `read`, `rerelease` and `step` line | identical in 43 of 45 worlds (the Bell ten, the coupling twenty-one, the detector four, the orbit six, `one_content`, `two_contents`); `two_slits` and `one_slit` identical after the screen's pixel detectors are renamed (`screen` -> `screen_<y>`: the only difference in their 59320 and 30881 lines) |
+| The books (`audit` per tick), the status, the faces' records | equal in 45 of 45 |
+| The `record` lines | the same number of lines in every world (one per detector set per family per interval, the sets being one Node each in every shipped world); their values differ where the default `beam` now counts (the Bell counters 1 per click instead of 32^2 x 256^2; the detector examples likewise) and are equal on the `wave` screens |
+| `two_slits`, `one_slit`: the screen's record per pixel | equal on all 121 pixels (the tip's one detector's per-Node `measured[].record` against the change's 121 one-Node `wave` detectors), 27220 and 13610 clicks alike |
+| `tools/bell_chsh.py` on the ten Bell runs, tip and change | 326 criteria passed, 0 failed on both; every printed line equal but the order Python prints a set in; S = 2, S' = 3/2, the offsets 14 and 16; the change's `run.json` carries the counters' `phase` as the last click's (15, 16, 18, 55 in `a0_b8`; 0 on the tip) and their detectors' record as the count (80, 65, 83, 64) with `reading` `beam` |
+| `tests/test_ray_detector.py` (f), (g), (h); `tests/test_ray_worlds.py` (a) | passed: the set of three Nodes records 32^2 x 256^2 whichever Node the ray reached, the threshold 2 over the set, the window on the set's phase 8; the phase returned 40 and the lamp's rays at the received phase; the beam pairing (2 in phase click, opposite cancel, the arc with a window, the greedy order, the split row); the two-slit correlation with the two-source cosine unchanged above 0.85 with the screen as 121 one-Node `wave` detectors |
+| `python tools/check.py --full` | ruff lint and format, mypy and the whole suite (390 tests) green |
+
+The runs establish what the set changed in the record of the shipped
+worlds (the reading, not the board: no click, pass, push, step or book
+moved) and that the Bell readings are unchanged under the default; they
+establish no physical law.
+
 ## The detector's record exact, never refused: the runs unchanged and `two_contents` completed - 2026-09-19 (after the batching)
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `3fb70572` (the
