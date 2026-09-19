@@ -5,6 +5,29 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The push as one form, the one label and the affordable amount (2026-09-19, the night)
+
+- The physics-rule review of the law of the ray and the model owner's
+  proposal 2 ([RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  notes 18 to 21). Every momentum the law reads or moves is the one label
+  of the rows (`nature_beam.momentum_labels`): the push's moment, the
+  click's momentum, the face click's, the recoil, what comes home and the
+  transit line; no collision at a Node that holds a measured event (rays
+  meet the table, not each other); the push is one bilinear form
+  `push_A = sum kappa(A, B) . V_B` (`push_form`) with the emitter's factor
+  (q_B, M_B) carried on a free family's record as two integer columns
+  `charge` and `mass`, the lookup by number and the lcm deleted; the
+  amount a detector Node or a face clicks in one interval bounded by the
+  affordable amount 261123 before the record's products are formed
+  (`RECORD_AMOUNT_BOUND`), every reduction exact. The series C, series 7
+  and Bell runs are unchanged record by record; series D is re-registered
+  with the momenta re-derived for the label's magnitude (no orbit closes;
+  the open question of the label's magnitude for the owner,
+  [PROJECT_STATUS](docs/PROJECT_STATUS.md)). Tests: `test_ray_push` (new),
+  `test_ray_collision` (d), `test_ray_detector` (e)
+  ([migration](docs/MIGRATION.md#the-push-as-one-form-the-one-label-and-the-affordable-amount-on-2026-09-19-the-night),
+  [expectations](docs/TEST_EXPECTATIONS.md), [validation](docs/VALIDATION.md)).
+
 ### The table from the keys and the moments (2026-09-19, the night)
 
 - Two decisions of the model owner on the mathematician's review of the

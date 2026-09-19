@@ -29,16 +29,16 @@ kept, their pins the law of events').
 | `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
 | `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
-| `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing ([below](#the-collision-table)) | new |
+| `test_ray_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
+| `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing; no collision at a Node that holds a measured event ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact ([below](#the-bijection)) | new |
-| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
+| `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold; the affordable amount bounded before the record's products ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
-| `test_orbit_world.py` | The orbit world `s32_r12` of series D: one world, 346 intervals, the probe's pinned position at the one closing of the registered run ([below](#the-worlds-of-the-ray-law), (e)) | new (2026-09-19; a milestone pin of a registered run, to go if the model owner's rule of 2026-09-17 excludes it) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
@@ -183,6 +183,17 @@ shift by +1 and the inverse by -1, generated from the rule.
   and after the second collision the rest pair leaves on z, the x pair
   parks and the y pair turns onto x: the one cycle of the class, the tie by
   Port order.
+- (d) no collision at a Node that holds a measured event (the model owner's
+  decision of 2026-09-19 on the physics-rule reviewer's F1(c); RAY_LAW
+  section 3 step 3 and note 18): the head-on pair of (c) (one number,
+  amount 1, phases 0 and 32) meeting at the Node of a measured event of `m`
+  whose table passes `light` keeps its directions +x and -x (no rest ray),
+  dwells the two intervals of its line there and parts at the third (x = 5
+  and x = 3 on a 9 x 1 x 1 bar); at a measured event whose table measures
+  `light` in the window 32 the ray at phase 32 clicks with its label
+  (-1, 0, 0), the ray at phase 0 passes and goes on to x = 5, the transit
+  line is (1, 0, 0) and no ray is stranded at rest; measured + transit =
+  (0, 0, 0), the labels' sum before the interval.
 
 ## The bijection
 
@@ -224,6 +235,74 @@ least one ray on the way.
   unit per heading per interval, its content 18 then 12; a reader of `m`
   (content 4) at threshold 4 passes 3 rays and reads 4, pushed by -M c =
   (-16, 0, 0).
+- (e) the affordable amount (the physics-rule reviewer's F2; RAY_LAW
+  section 5 and note 19): every entry (C, S) of the 1/256 tables is
+  shorter than 257 for every N from 2 through 4096 (the largest C^2 + S^2
+  is 65897), so the pointer is at most 32 x 257 x the clicked amount long
+  and the record fits 2^62 - 1 up to isqrt(2^62 - 1) // (32 x 257) =
+  261123 units per detector Node per family per interval
+  (`RECORD_AMOUNT_BOUND`; 2^17 inside, 2^18 refused): a row of 261123 at
+  phase 0 records 2139119616^2 with the pointer (2139119616, 0); a row of
+  261124 is refused with `OverflowError` naming the Node [4, 1, 1] and the
+  sum 261124; two rows of 130561 and 130563 (two numbers, +X and -X) are
+  refused naming the sum 261124; a row of 2^52 (the reviewer's silent int64
+  wrap, admitted by the label bound) is refused naming the sum; a ray of
+  261124 stepping off an open face is refused naming `face:+x`.
+
+## The push as one form
+
+`tests/test_ray_push.py` (docs/RAY_LAW.md, section 3 step 4, section 5 and
+section 10 notes 18 to 20; the model owner's proposal 2 of 2026-09-19 with
+the physics-rule reviewer's two corrections): push_A = sum kappa(A, B) . V_B
+with V_B the label moment of the arriving rays and kappa = -M_A (a free
+family's ray), + q_A x q_B / M_B (a charged one, the whole part off the
+reader's clock, sign x by_clock(age_A, |V q_A q_B|, M_B)), + 1 (a paid
+ray); the emitter's factor (q_B, M_B) on the record from birth; every
+momentum the law reads or moves the one label. K 2^20, N 64, `suspension`
+0, `m` free and `light` paid, every measured event `fixed`, a 12 x 1 x 1 bar
+with y and z periodic unless said otherwise.
+
+- (a) the reviewer's isolated world: a source of content 4 and charge 3 at
+  x = 0 releasing on +X at `release` [1, 1] (4 rays per interval, one row of
+  amount 4), a probe of content 5 and charge 1 at x = 6; on (1, 0, 0) a ray
+  born at tick t is at x = 6 at tick t + 10, so the probe reads one row of
+  amount 4 at every tick 11 through 30: 20 `read` records, each the flow
+  V = 4 and the push -5 V + by_clock(age, 3 V, 4) = (-17, 0, 0), `pushed`
+  (-340, 0, 0) (80 x (-5 + 3/4) exactly); the record's `mass` 4 and
+  `charge` 3.
+- (b) the sign (the source's charge -3): every push (-23, 0, 0), `pushed`
+  (-460, 0, 0). (c) An uncharged probe: every push (-20, 0, 0), `pushed`
+  (-400, 0, 0).
+- (d) q_A q_B = M_B with M_A = 1 (the series 7 cancellation): the probe of
+  content 1 and charge 2, the source of charge 2 and content 4: every push
+  0 exactly, `pushed` (0, 0, 0).
+- (e) the fractional floor (the reviewer's F6): `release` [1, 2] gives
+  V = 2, |V q_A q_B| = 6, and by_clock(t, 6, 4) is 2 at odd t and 1 at
+  even t from t = 11; over the ticks 11 through 30 the electric part sums
+  to 30 and the gravity to -200: `pushed` (-170, 0, 0).
+- (f) a paid emitter: a lamp of `light` (content 2^23 at K 2^20, the turn
+  8 at every age below 362, `rate` [1, 1] on +X) releases one unit of
+  content 8 per interval with the recoil (-8, 0, 0); the probe (content 5,
+  `table` {"light": "read"}, `release` [0, 1]) reads (8, 0, 0) at every
+  tick 11 through 30, `pushed` (160, 0, 0); the lamp's momentum (-8 x its
+  releases) plus the transit line plus the escaped line is (0, 0, 0) at
+  every tick.
+- (g) a fan emitter: a source of content 4 at (0, 0, 0) of a 9 x 5 x 1
+  board releasing on (2, 1, 0) at `release` [1, 1], the probe of content 5
+  at (4, 2, 0) on its line (the sixth Manhattan step; the first read at
+  tick 9): every push -5 x 4 x (2, 1, 0) = (-40, -20, 0), 22 reads,
+  `pushed` (-880, -440, 0): the push of a fan ray is its label, |D| =
+  sqrt 5 per unit.
+- (h) the one label moves: a ray of `light` of amount 3 on (2, 1, 0)
+  (content 1; at (3, 2, 0) with age 7, one Link before (4, 2, 0)) clicking
+  at a `measure` event at (4, 2, 0): the click's `push` (6, 3, 0), the
+  event's momentum (6, 3, 0), the transit line (6, 3, 0) before and
+  (0, 0, 0) after; the same ray at a `rerelease` event whose one direction
+  is (2, 1, 0): the momentum (0, 0, 0) after the interval (in (6, 3, 0),
+  out the same), the transit line (6, 3, 0) before and after; a paid ray
+  coming home on a periodic 4 x 1 x 1 bar: the `home` record's `push` is
+  its label (1, 0, 0) and the emitter's momentum (0, 0, 0) after the
+  re-creation.
 
 ## The re-emission
 
@@ -441,18 +520,12 @@ does what the law says and not as a result.
   at r = 3 and r = 4 is 6 x 2^17 over the shell's Nodes, the presence at
   r = 3 twice the count and at r = 4 equal to it.
 - (d) every example world (`examples/events/*.json`, `bell/`, `coupling/`,
-  `detector/` through the entity loader) parses as a ray world.
-
-- (e) the orbit world (`tests/test_orbit_world.py`; the registered run of
-  series D, [EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19),
-  source fingerprint `587cbf48...`): `examples/events/orbit/s32_r12.json`
-  parses with `width` 32 and a direction table of 124 entries; its probe
-  (content 1, momentum [0, 9, 0] at (72, 60, 0)) is at (71, 60, 0) after
-  346 intervals with its momentum's y component positive, age 346 and
-  nothing waited, the books balanced at every interval. A pin of one
-  registered reading, about 0.5 s; if the model owner's rule of 2026-09-17
-  (no test pins an example world's numbers) excludes it, the register keeps
-  the numbers and the module goes.
+  `detector/` through the entity loader) parses as a ray world. The orbit
+  worlds of series D are research runs registered in
+  [EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)
+  and pinned by no test (the model owner's rule of 2026-09-17; the pin of
+  the first registration, `test_orbit_world.py`, went with its numbers
+  when the engine changed).
 
 ## Generated-output lifetime
 

@@ -22,9 +22,10 @@ measured line, in content,
 initial + measured = current + spent + escaped; the transit line, in units,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
-momentum reported on the measured events, in transit (content x amount x
-D[direction] per ray of a paid family, amount x D of a free one) and
-escaped; every escaped line the sum of the face detectors' clicks.
+momentum reported on the measured events, in transit (the one label of
+every row, content x amount x D[direction] per ray of a paid family, amount
+x D of a free one) and escaped; every escaped line the sum of the face
+detectors' clicks; every sum exact (`exact_sum`), never a wrapped register.
 """
 
 from __future__ import annotations
@@ -43,6 +44,8 @@ from event_universe.events.nature_beam import (
     RayTables,
     Readings,
     Record,
+    exact_column_sums,
+    exact_sum,
     nature_beam,
     ray_tables,
 )
@@ -84,8 +87,15 @@ class RaySimulation:
         for item in world.in_transit:
             store = self.stores[item.family]
             # One phase step of content per unit for a paid family; a free
-            # family's quantum is 0 and its rays carry none.
+            # family's quantum is 0 and its rays carry none. A free family's
+            # declared ray carries its emitter's factor from the world file
+            # (the charge and the declared content of the measured event its
+            # number names; 0 and 0 without one).
             content = self.families[item.family].quantum
+            charge, mass = 0, 0
+            if self.families[item.family].free and item.number <= len(world.measured):
+                emitter = world.measured[item.number - 1]
+                charge, mass = emitter.charge, emitter.amount
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
@@ -96,6 +106,8 @@ class RaySimulation:
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
                 content=np.array([content]),
+                charge=np.array([charge]),
+                mass=np.array([mass]),
                 arrival=np.array([HERE]),
             )
             self.transit_initial[item.family] += item.amount
@@ -321,16 +333,16 @@ class RaySimulation:
     # -- the books -------------------------------------------------------------
 
     def transit_momentum(self) -> list[int]:
-        """The momentum carried in transit: content x amount x D[direction]
-        per ray of a paid family, amount x D of a free one."""
-        total = np.zeros(3, dtype=np.int64)
+        """The momentum carried in transit: the one label of every row
+        (`momentum_labels`: content x amount x D[direction] per ray of a
+        paid family, amount x D of a free one), summed exactly."""
+        total = [0, 0, 0]
         for family, store in enumerate(self.stores):
             if store.size:
                 definition = self.families[family]
-                total += store.labels(
-                    np.arange(store.size), self.tables.flight.vectors, definition.free
-                ).sum(axis=0)
-        return [int(v) for v in total]
+                labels = store.labels(np.arange(store.size), self.tables.flight.vectors, definition.free)
+                total = [int(a) + int(b) for a, b in zip(total, exact_column_sums(labels), strict=True)]
+        return total
 
     def books(self) -> dict[str, object]:
         """The ledger at the current tick, every line with its identity."""
@@ -352,7 +364,7 @@ class RaySimulation:
             in_transit = {
                 "initial": self.transit_initial[index],
                 "released": ledger.transit_released[index],
-                "current": int(store.amount.sum()),
+                "current": int(exact_sum(store.amount)),
                 "escaped": ledger.escaped_units(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
@@ -362,7 +374,7 @@ class RaySimulation:
             content = {
                 "initial": self.content_initial[index],
                 "released": ledger.content_released[index],
-                "current": int((store.amount * store.content).sum()),
+                "current": int(exact_sum(store.amount * store.content)),
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
@@ -556,6 +568,12 @@ class RaySimulation:
                         "number": int(store.number[i]),
                         "amount": int(store.amount[i]),
                         "content": int(store.content[i]),
+                        # The emitter's factor a free family's ray carries.
+                        **(
+                            {"charge": int(store.charge[i]), "mass": int(store.mass[i])}
+                            if family.free
+                            else {}
+                        ),
                     }
                     for i in range(lo, hi)
                 ]

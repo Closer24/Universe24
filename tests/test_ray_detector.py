@@ -32,12 +32,33 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases
     one unit per heading per interval, its content 18 then 12; a reader of
     `m` (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
-    -M c = (-16, 0, 0).
+    -M c = (-16, 0, 0);
+(e) the affordable amount (the physics-rule reviewer's F2, 2026-09-19): the
+    clicked amount of one detector Node in one interval is bounded before
+    any product of the record is formed: every entry (C, S) of the 1/256
+    tables is shorter than 257 for every N from 2 through 4096 (the
+    largest C^2 + S^2 is 65897), so the pointer is at most 32 x 257 x the
+    amount long and the record fits 2^62 - 1 up to the amount isqrt(2^62 -
+    1) // (32 x 257) = 2147483647 // 8224 = 261123 (2^17 inside, 2^18
+    refused, as the reviewer measured): a row of 261123 units at phase 0
+    records (2^13 x 261123)^2 = 2139119616^2 with the pointer
+    (2139119616, 0); a row of 261124 is refused with `OverflowError` naming
+    the Node [4, 1, 1] and the sum 261124; two rows of 130561 and 130563
+    (two numbers, +X and -X) are refused naming the sum 261124 (a sum over
+    rows, not one row); a row of 2^52 (the reviewer's silent wrap of the
+    int64 product, admitted by the label bound) is refused naming the sum;
+    a ray of 261124 stepping off an open face is refused naming the face
+    `face:+x`.
 """
 
 from __future__ import annotations
 
+import pytest
+
+from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events.nature_beam import RECORD_AMOUNT_BOUND
+from event_universe.events.world import MOMENTUM_BOUND
 
 M, LIGHT = 0, 1
 NODE = [4, 1, 1]
@@ -254,3 +275,50 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
         assert simulation.detectors()[0]["families"]["m"] == {"measured": 0, "clicks": 0, "record": 0}, (
             amount
         )
+
+
+def test_the_clicked_amount_is_bounded_before_the_records_products():
+    """(e)."""
+    counter = {
+        "position": NODE,
+        "family": "m",
+        "amount": 4,
+        "fixed": True,
+        "table": {"light": "measure"},
+    }
+    other = {"position": [8, 1, 1], "family": "light", "amount": 4, "fixed": True}
+    for k in range(1, 13):
+        cosines, sines = phase_cosines(1 << k), phase_sines(1 << k)
+        assert max(c * c + s * s for c, s in zip(cosines, sines, strict=True)) < 257 * 257
+    assert RECORD_AMOUNT_BOUND == 261123 and (1 << 17) < RECORD_AMOUNT_BOUND < (1 << 18)
+    records: list[dict[str, object]] = []
+    simulation = RaySimulation(
+        parse_ray_world(world([counter, SOURCE, other], [arrival(261123)], 1)), records.append
+    )
+    simulation.step()
+    assert simulation.books()["balanced"]
+    assert simulation.measured[1].record == [0, 2139119616**2]
+    lines = [r for r in records if r["event"] == "record"]
+    assert len(lines) == 1 and lines[0]["pointer"] == [2139119616, 0]
+    assert lines[0]["record"] == 2139119616**2 < MOMENTUM_BOUND
+    for rays, sum_named in (
+        ([arrival(261124)], 261124),
+        ([arrival(130561), arrival(130563, number=3, direction=[-1, 0, 0])], 261124),
+        ([arrival(1 << 52)], 1 << 52),
+    ):
+        simulation = RaySimulation(parse_ray_world(world([counter, SOURCE, other], rays, 1)))
+        with pytest.raises(
+            OverflowError, match=rf"amount {sum_named} clicked at measured event 1 at \[4, 1, 1\]"
+        ):
+            simulation.step()
+    off = {
+        "position": [8, 1, 1],
+        "family": "light",
+        "number": 2,
+        "direction": [1, 0, 0],
+        "amount": 261124,
+        "phase": 0,
+    }
+    simulation = RaySimulation(parse_ray_world(world([counter, SOURCE, other], [off], 1)))
+    with pytest.raises(OverflowError, match=r"amount 261124 clicked at face:\+x"):
+        simulation.step()
