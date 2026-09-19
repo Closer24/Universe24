@@ -92,6 +92,7 @@ def execute_ray_run(
         "N": world.phase_steps,
         "release": list(world.release),
         "suspension": list(world.suspension),
+        "width": world.width,
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {

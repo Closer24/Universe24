@@ -31,6 +31,34 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `test_ray_readings` (a) re-pinned
   ([migration](docs/MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night),
   [expectations](docs/TEST_EXPECTATIONS.md)).
+### The width of the push (2026-09-19)
+
+- The world key `width` (S, an integer from 1; the model owner's D1,
+  2026-09-19, Highlights 5.4, "try D1"): a free measured event of content M
+  with the momentum component p on an axis steps one Link per
+  (S x M + p) / p self-creations on that axis, `by_clock(age, |p|, S x M +
+  |p|)` in `RaySimulation._move` in place of `M + |p|`, no remainder kept.
+  S = 1 is the default and the rule as it was (one Link per (M + p) / p),
+  so every existing world file reads the same and no migration note is
+  needed; the parser refuses 0, a negative width, a string and a fraction
+  naming the key; `run.json` records `width`. One unit of net flow gives
+  any body p = M, so the speed it gives is 1 / (S + 1) for every content:
+  the equivalence principle is kept and a world can declare slow motion
+  ([RAY_LAW section 3](docs/RAY_LAW.md#3-the-nodes-interval-gonen_beam)
+  step 5 and note 15, [the engine](docs/ENGINE.md),
+  [terminology](docs/TERMINOLOGY.md)). Test: `tests/test_push_width.py`
+  ([expectations](docs/TEST_EXPECTATIONS.md#the-width-of-the-push)).
+- The orbit series D on the plane (`examples/events/orbit/`, six worlds by
+  `make_worlds.py`, `tools/orbit_readings.py`): a fixed source releasing
+  one shell every 10 intervals on a fan of 120 primitive in-plane
+  directions and a free probe of content 1 at r = 12 or 24 with the
+  tangential momentum derived for a circular orbit under the measured push
+  law, at `width` 1, 8 and 32. Registered in
+  [D, the orbit under the law of the ray, on the plane](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
+  one orbit closes by the criterion (S = 32, r = 12: 346 intervals against
+  343 derived, an eccentric loop), no other closing, the mean push as
+  derived (C 1.1), the grain of the push the reason. The world test
+  `tests/test_orbit_world.py` pins that closing.
 
 ### The law of the ray (2026-09-19)
 

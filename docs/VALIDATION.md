@@ -35,6 +35,21 @@ Python 3.14, headless.
 
 The runs are the register's evidence that the replacements are generic; they
 establish no physical law.
+## The width of the push and the orbit series D - 2026-09-19
+
+The worktree of `claude/universe24-new-3ytqde` on the base `0a33a202` (the
+law of the ray merged), the D1 commit (the world key `width`,
+[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam) step 5 and
+note 15) and the orbit series on it. Runtime source SHA-256
+`587cbf4852a7fafddc07b2ab35a6a530ed27607ea1aaaec8b17d89933e66d788`,
+Python 3.14, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_push_width.py` | 4 passed: S = 1 as the rule was, S = 8 once per 9 self-creations at p = M, the step off the clock with no remainder under a count owed (the step on the paying interval), the key's default, record and refusals |
+| `python tools/check.py` on the D1 commit | ruff lint and format clean, mypy on 11 source files, 228 passed in 25 s on four workers |
+| Six orbit runs, `python tools/run_series.py --jobs 4` | all completed in 5.5 to 6.4 s each (1 ms per interval on 121 x 121 with a fan of 120 directions and about 1200 rows in flight), the books balanced at every tick; `python tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; one orbit closed by the criterion (S = 32, r = 12: 346 intervals against 343 derived, the return one Link off), an eccentric loop; no other closing; the mean push C 1.1 on the first turns; registered in [D, the orbit under the law of the ray, on the plane](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19) |
+| `tests/test_orbit_world.py` | 1 passed in 0.5 s: the probe of `s32_r12` at (71, 60, 0) after 346 intervals with its momentum's y component positive, the books balanced |
 
 ## The law of the ray: the engine, the suite and the re-registered runs - 2026-09-19
 

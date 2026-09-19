@@ -95,7 +95,8 @@ owner: "the tables are generated from the keys and a world declares only
 what differs, `kind` derived from `quantum`"; section 10, note 15), `kind`
 on a family: a family declares its `quantum` (required), h = 0 a free
 family, h >= 1 a paid one, and the refusal names the derivation and
-MIGRATION. Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
+MIGRATION. Added on 2026-09-19 after the implementation: `width` (S, an integer from 1, 1 by default: the width of the push, the
+step rule of section 3 step 5). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
@@ -254,7 +255,18 @@ order with each step's inverse:
    (`apportion_whole`, ties in table order from `age mod len(directions)`),
    the owed count read off the clock. Every new ray: `age` 0, the emitter's
    phase, its number. The step of a measured event by its momentum: as the
-   other change leaves it (no merge; refused onto an occupied Node).
+   other change leaves it (no merge; refused onto an occupied Node), with
+   the width of the push since 2026-09-19 (the model owner's D1): on an
+   axis whose momentum component is p, a free measured event of content M
+   steps one Link per (S x M + p) / p self-creations, `by_clock(age, |p|,
+   S x M + |p|)`, S the world key `width` (an integer from 1; 1 by default,
+   the rule as it was, one Link per (M + p) / p, so every world without the
+   key reads the same). One unit of net flow gives any body p = M, so the
+   speed it gives is 1 / (S + 1) for every content: the push stays
+   proportional to the content (the equivalence principle) and the world
+   chooses how slow its slowest motion is. No remainder is kept; the count
+   is the whole part off the clock (implementation note 15;
+   `tests/test_push_width.py`).
 6. **Merge identical rows; sort by Node.** A bijection (a permutation of rows
    and a sum of interchangeable units).
 
@@ -610,3 +622,18 @@ implementation's part of the contract. The design above is unchanged.
     before any product is formed (`amount x P^2 x rows` against 2^62 - 1,
     `OverflowError` beyond it); the Links crossed per Port (`per_port`,
     for Gauss's flux) remain a diagnostic of the walk, not of the reading.
+17. **The width of the push** (the model owner's D1, 2026-09-19, Highlights
+    5.4, "try D1"). The step rule of step 5 reads the world key `width`
+    (S, an integer from 1, 1 by default): `_move` steps on an axis when
+    `by_clock(age, |p|, S x M + |p|)` is 1, in place of `M + |p|`. With
+    S = 1 nothing changes for any existing world (the coupling series' 1b
+    identities hold as registered); with S = 8 a body with p = M steps once
+    per 9 self-creations. Kept as they were: at most one Link per interval,
+    x before y before z (an axis whose step coincides with an earlier
+    axis's step in one interval loses it, nothing carried); a measured
+    event steps only in an interval where it owes nothing, so the step of
+    a self-creation whose count is owed lands on the interval that pays
+    the count; the momentum is untouched by the step; `run.json` records
+    `width`. The parser refuses 0, a negative width, a string and a
+    fraction naming the key (`tests/test_push_width.py`; the experiment
+    that uses it is series D in EXPERIMENTS.md).

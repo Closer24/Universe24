@@ -20,7 +20,12 @@ the model owner, 2026-09-19):
   clock's count: a measured event owes `by_clock(age, presence x n, d)`
   intervals after its self-creation, the presence being the amount of every
   ray at its Node of every number but its own (an integer w is accepted as
-  `[w, 1]`; `[1, 1]` by default; 0 or `[0, d]` for none);
+  `[w, 1]`; `[1, 1]` by default; 0 or `[0, d]` for none); `width`, the
+  width S of the push (the model owner's D1, 2026-09-19): a free measured
+  event of content M with the momentum component p on an axis steps one
+  Link per (S x M + p) / p self-creations on that axis, an integer from 1
+  (the default: the rule as it was, one Link per (M + p) / p); 0 or a
+  negative width is refused;
 - `directions`, optional: integer vectors beyond the six headings that a
   lamp, a measured event or a ray in transit may name; the world's direction
   table `D` is the two rest vectors (0, 0, 0) ("here a", "here b"), the six
@@ -162,6 +167,7 @@ WORLD_KEYS = {
     "N",
     "release",
     "suspension",
+    "width",
     "directions",
     "direction_bound",
     "families",
@@ -327,6 +333,7 @@ class RayWorld:
     phase_steps: int
     release: tuple[int, int]
     suspension: tuple[int, int]
+    width: int
     directions: tuple[Vector, ...]
     direction_bound: int
     families: tuple[FamilyDefinition, ...]
@@ -870,6 +877,9 @@ def parse_ray_world(document: object) -> RayWorld:
     if suspension[0] == 0:
         # Off: 0 and [0, d] alike, recorded as [0, 1].
         suspension = (0, 1)
+    # The width S of the push: one Link per (S x M + p) / p self-creations;
+    # 1 (the rule as it was) unless the world declares it, never below 1.
+    width = _integer(obj.get("width", 1), "width", 1)
     bound = _integer(obj.get("direction_bound", DEFAULT_DIRECTION_BOUND), "direction_bound", 1, 4096)
     table = _direction_table(obj.get("directions", []), bound)
     families = _families(obj["families"], phase_steps)
@@ -886,6 +896,7 @@ def parse_ray_world(document: object) -> RayWorld:
         phase_steps,
         release,
         suspension,
+        width,
         table,
         bound,
         families,
