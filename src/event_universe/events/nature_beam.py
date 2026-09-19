@@ -66,6 +66,7 @@ function holds a piece of the law: `flight_table`, `collision_table` and
 
 from __future__ import annotations
 
+import functools
 import itertools
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -373,10 +374,13 @@ def state_code(state: tuple[int, ...]) -> int:
     return sum(s * SLOT_STATES**k for k, s in enumerate(state))
 
 
+@functools.lru_cache(maxsize=1)
 def collision_table() -> CollisionTable:
     """Generated from its rule over the classes, never written by hand: the
     members of a class sorted as 8-tuples, the forward map the cyclic shift
-    by +1, the inverse by -1; a class of one is fixed."""
+    by +1, the inverse by -1; a class of one is fixed. A constant of the
+    law (the 3^8 states), generated once per process and shared read-only
+    by every `RaySimulation` (the arrays refuse a write)."""
     classes: dict[object, list[tuple[int, ...]]] = {}
     for state in itertools.product(range(SLOT_STATES), repeat=COLLISION_SLOTS):
         classes.setdefault(class_key(state), []).append(state)
@@ -396,6 +400,8 @@ def collision_table() -> CollisionTable:
         found = [i for i, s in enumerate(state) if s == 1]
         singles[code, : len(found)] = found
     powers = SLOT_STATES ** np.arange(COLLISION_SLOTS, dtype=np.int64)
+    for array in (forward, inverse, singles, powers):
+        array.setflags(write=False)
     return CollisionTable(forward, inverse, singles, powers)
 
 
@@ -895,6 +901,9 @@ class FamilyPlan:
     t_label: list[list[int]] = field(default_factory=list)
     # The detector's pointer per measured event: (clicked amount, X, Y).
     pointer: dict[int, tuple[int, int, int]] = field(default_factory=dict)
+    # The label sum of the rows that leave the store this interval (the
+    # home rows and the rows a table absorbs): off the running transit line.
+    left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
 
 
 # -- the law ---------------------------------------------------------------------
@@ -1059,11 +1068,12 @@ def nature_beam(
                     read_arrivals(directions, amplitude * tables.sines[store.phase[through]]).scalar
                 )
                 ledger.face_record[face][family] += pointer_x * pointer_x + pointer_y * pointer_y
+                escaped_momentum = exact_column_sums(labels[on_face])
                 ledger.face_momentum[face] = [
-                    int(a) + int(b)
-                    for a, b in zip(
-                        ledger.face_momentum[face], exact_column_sums(labels[on_face]), strict=True
-                    )
+                    a + b for a, b in zip(ledger.face_momentum[face], escaped_momentum, strict=True)
+                ]
+                ledger.transit_momentum = [
+                    a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
                 ]
             if record is not None:
                 for k, index in enumerate(gone):
@@ -1179,12 +1189,19 @@ def nature_beam(
                 total = grouped_sums(amount[home], starts, widest)
                 carried = grouped_sums(amount[home] * content[home], starts, widest)
                 taken_in = np.zeros((starts.shape[0], DIMENSIONS), dtype=np.int64)
-                if not free:
+                if free:
+                    weights = amount[home]
+                else:
                     overflow = first_label_overflow(ev_h, events, amount[home], content[home])
                     if overflow is not None:
                         failures[(overflow[0], family, 0, 0, 1)] = overflow[1]
                     weights = amount[home] * content[home]
-                    taken_in = grouped_sums(vectors[direction[home]] * weights[:, None], starts, widest)
+                home_labels = vectors[direction[home]] * weights[:, None]
+                if not free:
+                    taken_in = grouped_sums(home_labels, starts, widest)
+                # The home rows leave the store: their labels leave the
+                # running transit line (a paid family's join the momentum).
+                plan.left_momentum = exact_column_sums(home_labels)
                 keep[family][at[home]] = False
                 h_events = ev_h[starts].tolist()
                 h_starts, h_ends = starts.tolist(), (starts + sizes).tolist()
@@ -1315,7 +1332,12 @@ def nature_beam(
             # before any product), then the same reading over the clicked
             # rows with their amplitudes as weights, its scalar.
             rule_t = ev_rule[ev_t, family]
-            keep[family][at[taken[rule_t != READ_RULE]]] = False
+            absorbed = rule_t != READ_RULE
+            keep[family][at[taken[absorbed]]] = False
+            plan.left_momentum = [
+                a + b
+                for a, b in zip(plan.left_momentum, exact_column_sums(labels[absorbed]), strict=True)
+            ]
             clicked = np.flatnonzero(rule_t == MEASURE_RULE)
             if clicked.shape[0]:
                 ev_c = ev_t[clicked]
@@ -1338,6 +1360,11 @@ def nature_beam(
             return plan
 
         plans = [family_plan(family, store) for family, store in enumerate(stores)]
+        for plan in plans:
+            if plan is not None:
+                ledger.transit_momentum = [
+                    a - b for a, b in zip(ledger.transit_momentum, plan.left_momentum, strict=True)
+                ]
         # The presence read back (the clock's count), exact over the families.
         totals = presence[0].tolist() if count == 1 else [sum(c) for c in presence.T.tolist()]
         for i, entry in enumerate(entries):
@@ -1609,11 +1636,15 @@ def nature_beam(
                     f"{RAYS_LAW}: the momentum label of a release of measured event {entry.number} at "
                     f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
                 )
+            born_momentum = exact_column_sums(labels)
             if not definition.free:
                 entry.momentum = [
-                    bounded(int(a) - int(b), entry, "momentum")
-                    for a, b in zip(entry.momentum, exact_column_sums(labels), strict=True)
+                    bounded(a - b, entry, "momentum")
+                    for a, b in zip(entry.momentum, born_momentum, strict=True)
                 ]
+            ledger.transit_momentum = [
+                a + b for a, b in zip(ledger.transit_momentum, born_momentum, strict=True)
+            ]
             store.append(
                 node=np.full(count, store.flat(entry.position), dtype=np.int64),
                 direction=direction_column,

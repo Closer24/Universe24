@@ -114,6 +114,9 @@ class RaySimulation:
             self.content_initial[item.family] += content * item.amount
         for store in self.stores:
             store.merge()
+        # The running transit line of the momentum starts from the declared
+        # rows, counted once.
+        self.ledger.transit_momentum = self.recount()["momentum"]
         # The readings of the last interval (diagnostics, decomposed on
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
@@ -329,25 +332,45 @@ class RaySimulation:
 
     # -- the books -------------------------------------------------------------
 
-    def transit_momentum(self) -> list[int]:
-        """The momentum carried in transit: the one label of every row
-        (`momentum_labels`: content x amount x D[direction] per ray of a
-        paid family, amount x D of a free one), summed exactly."""
-        total = [0, 0, 0]
+    def recount(self) -> dict[str, list[int]]:
+        """The current lines counted from the store, a pass over every row:
+        the units and the content in transit per family and the momentum in
+        transit (the one label of every row, `momentum_labels`: content x
+        amount x D[direction] per ray of a paid family, amount x D of a
+        free one), every sum exact. The check of the running lines of the
+        ledger, on request (`books(recount=True)`; the tests assert it
+        equal at every tick)."""
+        units: list[int] = []
+        content: list[int] = []
+        momentum = [0, 0, 0]
         for family, store in enumerate(self.stores):
+            units.append(int(exact_sum(store.amount)))
+            content.append(int(exact_sum(store.amount * store.content)))
             if store.size:
                 definition = self.families[family]
                 labels = store.labels(np.arange(store.size), self.tables.flight.vectors, definition.free)
-                total = [int(a) + int(b) for a, b in zip(total, exact_column_sums(labels), strict=True)]
-        return total
+                momentum = [a + b for a, b in zip(momentum, exact_column_sums(labels), strict=True)]
+        return {"transit": units, "content": content, "momentum": momentum}
 
-    def books(self) -> dict[str, object]:
-        """The ledger at the current tick, every line with its identity."""
+    def transit_momentum(self) -> list[int]:
+        """The momentum carried in transit: the running line of the ledger,
+        the labels of the rows born less the labels of the rows that left
+        (escaped, home, absorbed), kept by `nature_beam` (the collision and
+        the merge conserve it); `recount` counts it from the rows."""
+        return list(self.ledger.transit_momentum)
+
+    def books(self, recount: bool = False) -> dict[str, object]:
+        """The ledger at the current tick, every line with its identity. The
+        `current` of the transit and content lines and the transit momentum
+        are the running lines of the ledger (what was released less what
+        left; O(families), no pass over the store); with `recount` they are
+        counted from the rows instead, and the identities then check the
+        running ledger against the store."""
+        counted = self.recount() if recount else None
         families: dict[str, object] = {}
         balanced = True
         ledger = self.ledger
         for index, family in enumerate(self.families):
-            store = self.stores[index]
             measured = {
                 "initial": self.held_initial[index],
                 "measured": ledger.held_measured[index],
@@ -361,7 +384,14 @@ class RaySimulation:
             in_transit = {
                 "initial": self.transit_initial[index],
                 "released": ledger.transit_released[index],
-                "current": int(exact_sum(store.amount)),
+                "current": (
+                    counted["transit"][index]
+                    if counted is not None
+                    else self.transit_initial[index]
+                    + ledger.transit_released[index]
+                    - ledger.escaped_units(index)
+                    - ledger.transit_absorbed[index]
+                ),
                 "escaped": ledger.escaped_units(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
@@ -371,7 +401,14 @@ class RaySimulation:
             content = {
                 "initial": self.content_initial[index],
                 "released": ledger.content_released[index],
-                "current": int(exact_sum(store.amount * store.content)),
+                "current": (
+                    counted["content"][index]
+                    if counted is not None
+                    else self.content_initial[index]
+                    + ledger.content_released[index]
+                    - ledger.escaped_content(index)
+                    - ledger.content_absorbed[index]
+                ),
                 "escaped": ledger.escaped_content(index),
                 "absorbed": ledger.content_absorbed[index],
             }
@@ -393,7 +430,7 @@ class RaySimulation:
             "families": families,
             "momentum": {
                 "measured": held_momentum,
-                "transit": self.transit_momentum(),
+                "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
                 "escaped": ledger.escaped_momentum(),
             },
             "charge": sum(entry.charge for entry in self.measured.values()),

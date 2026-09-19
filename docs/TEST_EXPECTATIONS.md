@@ -39,6 +39,7 @@ kept, their pins the law of events').
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
+| `test_ray_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
@@ -225,6 +226,31 @@ amounts of equal tuples added, 62 rows, every arrival reset to here; the
 same rows with every other mass raised by 2^61 (the key does not fit the
 register, `merge_key` is None) merged by the lexsort fallback equal their
 Python sort likewise; the empty store merges to the empty store.
+
+## The books
+
+`tests/test_ray_books.py` (docs/RAY_LAW.md, section 10, note 22; added
+2026-09-19 with the optimizations): `books()` reports the transit line,
+the content line and the transit momentum as the running lines of the
+ledger (what was released less what left: escaped, home, absorbed;
+O(families), no pass over the store) and `recount()` counts the same
+three lines from the rows of the store. On a 12 x 1 x 3 board with y
+periodic and every other face open (K 2^20, N 64, `release` [1, 4], the
+fan direction (2, 1, 0)): a lamp of `light` (content 2^23) at (1, 0, 1)
+releasing 3 units per self-creation on +X, (2, 1, 0) and +Y (the +Y unit
+home next interval, created again on the six headings), a re-emitter of
+`light` at (5, 0, 1) on +X and -X, the detector `screen` at (9, 0, 1), a
+free source `m` (content 2^19) at (10, 0, 1), beyond the screen, releasing
+2^17 per heading (escapes through the z and x faces, homes on +-Y, reads
+at the screen, the re-emitter and the lamp), and a head-on pair of `light` meeting at
+(4, 0, 0) in free space, parked at rest by the collision in the interval
+they meet (the table moves them on later): at every one of 40 intervals
+the running lines equal the recount, `books(recount=True)` equals
+`books()` and the books balance; the momentum line is nonzero at some
+tick; the two rest rays sit at (4, 0, 0) after the first interval; the
+records hold a home of each family, a re-release, a read, a click at the
+screen, a click at the lamp and face clicks (`m` on +z, +x and -x, `light`
+on -z). An empty world counts zero both ways.
 
 ## The detector's record
 

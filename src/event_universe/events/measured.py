@@ -104,11 +104,16 @@ class Ledger:
     """The cumulative books of a run, per family: the measured line (in
     content), the transit line (in units), the content line (the content
     carried) and the momentum escaped; the face detectors' tallies per open
-    face and family (the escaped lines are their sums). The engine owns the
-    identities; `nature_beam` adds what the interval moved."""
+    face and family (the escaped lines are their sums); and the running
+    transit line of the momentum, `transit_momentum`, the one label of
+    every row in the stores, kept as the rows come and go (born, escaped,
+    home, absorbed; the collision and the merge conserve it) so that the
+    books need no pass over the store. The engine owns the identities;
+    `nature_beam` adds what the interval moved."""
 
     families: int
     open_faces: tuple[int, ...]
+    transit_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     held_measured: list[int] = field(default_factory=list)
     held_spent: list[int] = field(default_factory=list)
     held_escaped: list[int] = field(default_factory=list)
