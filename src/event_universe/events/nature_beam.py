@@ -790,11 +790,21 @@ RULE_CODES = {"pass": 0, "read": 1, "measure": 2, "rerelease": 3}
 PASS_RULE, READ_RULE, MEASURE_RULE = RULE_CODES["pass"], RULE_CODES["read"], RULE_CODES["measure"]
 
 
+FIRST = np.zeros(1, dtype=np.int64)
+NEW_RUN = np.ones(1, dtype=bool)
+
+
 def group_starts(keys: np.ndarray) -> np.ndarray:
     """The first index of every run of equal keys in a grouped array."""
     if keys.shape[0] == 0:
         return np.zeros(0, dtype=np.int64)
-    return np.flatnonzero(np.r_[True, keys[1:] != keys[:-1]])
+    return np.concatenate((FIRST, np.flatnonzero(keys[1:] != keys[:-1]) + 1))
+
+
+def group_sizes(starts: np.ndarray, count: int) -> np.ndarray:
+    """The rows of every group given the group starts and the row count."""
+    result: np.ndarray = np.append(starts[1:], count) - starts
+    return result
 
 
 def grouped_sums(values: np.ndarray, starts: np.ndarray, widest: int) -> np.ndarray:
@@ -924,6 +934,7 @@ def nature_beam(
     run in reverse order with their inverses (the collision, then the walk)
     on a board without measured events; the border has no inverse."""
     families = world.families
+    free_of = [definition.free for definition in families]
     flight, collision = tables.flight, tables.collision
     vectors = flight.vectors
     modulus = world.phase_steps
@@ -1148,7 +1159,7 @@ def nature_beam(
         failures: dict[tuple[int, int, int, int, int], OverflowError] = {}
 
         def family_plan(family: int, store: RayStore) -> FamilyPlan | None:
-            free = families[family].free
+            free = free_of[family]
             if store.size == 0:
                 return None
             found = node_event[store.node]
@@ -1184,7 +1195,7 @@ def nature_beam(
             if home.shape[0]:
                 ev_h = ev[home]
                 starts = group_starts(ev_h)
-                sizes = np.diff(np.r_[starts, home.shape[0]])
+                sizes = group_sizes(starts, home.shape[0])
                 widest = int(sizes.max())
                 total = grouped_sums(amount[home], starts, widest)
                 carried = grouped_sums(amount[home] * content[home], starts, widest)
@@ -1220,7 +1231,7 @@ def nature_beam(
                 return plan
             ev_m = ev[met]
             starts = group_starts(ev_m)
-            sizes = np.diff(np.r_[starts, met.shape[0]])
+            sizes = group_sizes(starts, met.shape[0])
             total = grouped_sums(amount[met], starts, int(sizes.max()))
             below = np.repeat(np.asarray(total < ev_threshold[ev_m[starts]], dtype=bool), sizes)
             window = ev_window[ev_m, family]
@@ -1230,7 +1241,7 @@ def nature_beam(
             if p.shape[0]:
                 ev_p = ev_m[p]
                 p_starts = group_starts(ev_p)
-                p_ends = np.r_[p_starts[1:], p.shape[0]]
+                p_ends = np.append(p_starts[1:], p.shape[0])
                 p_events = ev_p[p_starts].tolist()
                 p_lo, p_hi = p_starts.tolist(), p_ends.tolist()
                 for k, event in enumerate(p_events):
@@ -1248,10 +1259,10 @@ def nature_beam(
             # of a group in row order.
             taken = taken[np.lexsort((number[taken], ev[taken]))]
             ev_t, num_t = ev[taken], number[taken]
-            new = np.r_[True, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])]
+            new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
             g_starts = np.flatnonzero(new)
             groups = g_starts.shape[0]
-            g_sizes = np.diff(np.r_[g_starts, taken.shape[0]])
+            g_sizes = group_sizes(g_starts, taken.shape[0])
             widest = int(g_sizes.max())
             of_row = np.cumsum(new) - 1
             g_ev = ev_t[g_starts]
@@ -1321,7 +1332,7 @@ def nature_beam(
             plan.t_phase = ph_t.tolist()
             plan.t_carried = carried_t.tolist()
             plan.t_label = labels.tolist()
-            e_ends = np.r_[e_starts[1:], groups]
+            e_ends = np.append(e_starts[1:], groups)
             g_events = g_ev[e_starts].tolist()
             e_lo, e_hi = e_starts.tolist(), e_ends.tolist()
             for k, event in enumerate(g_events):
@@ -1342,7 +1353,7 @@ def nature_beam(
             if clicked.shape[0]:
                 ev_c = ev_t[clicked]
                 c_starts = group_starts(ev_c)
-                c_sizes = np.diff(np.r_[c_starts, clicked.shape[0]])
+                c_sizes = group_sizes(c_starts, clicked.shape[0])
                 totals_c = grouped_sums(a_t[clicked], c_starts, int(c_sizes.max())).tolist()
                 amplitude = a_t[clicked] * AMPLITUDE_SCALE
                 weights_x = amplitude * tables.cosines[ph_t[clicked]]
@@ -1392,7 +1403,7 @@ def nature_beam(
                 if plan is None:
                     continue
                 name = families[family].name
-                free = families[family].free
+                free = free_of[family]
                 rule = entry.table[family]
                 home_plan = plan.home.get(i)
                 if home_plan is not None:
@@ -1575,19 +1586,26 @@ def nature_beam(
 
     # 5. The self-creations: the releases into the store.
     numerator, denominator_release = world.release
-    for number in sorted(measured):
-        entry = measured[number]
-        if not entry.creating:
+    # Only a measured event that can release anything is visited (in number
+    # order): a lamp, a holder of a free family's content, or one with rows
+    # pending (home or re-released); any other would find nothing to create.
+    for entry in entries:
+        if not entry.creating or not (
+            entry.lamp_rate is not None
+            or any(free and held > 0 for free, held in zip(free_of, entry.held, strict=True))
+            or any(entry.pending)
+        ):
             continue
         age, turn = entry.clock_age, entry.turn
         for family, store in enumerate(stores):
             definition = families[family]
+            free = free_of[family]
             born: list[tuple[int, int, int, int]] = []  # (direction, amount, content, phase)
             # The emitter's factor a free family's ray carries from birth:
             # its charge and the content the release rate reads (its held
             # content of the family at this self-creation).
-            charge, mass = (entry.charge, entry.held[family]) if definition.free else (0, 0)
-            if definition.free and entry.held[family] > 0:
+            charge, mass = (entry.charge, entry.held[family]) if free else (0, 0)
+            if free and entry.held[family] > 0:
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
                     born.extend((direction, amount, 0, entry.phase) for direction in entry.directions)
@@ -1628,16 +1646,14 @@ def nature_beam(
             # The labels of the born rows (the one label; bounded before the
             # product): a paid family's emitter takes their sum as its
             # recoil, a lamp's release and a re-emission alike.
-            labels = momentum_labels(
-                vectors, direction_column, amount_column, content_column, definition.free
-            )
+            labels = momentum_labels(vectors, direction_column, amount_column, content_column, free)
             if int(np.abs(labels).max(initial=0)) > MOMENTUM_BOUND:
                 raise OverflowError(
                     f"{RAYS_LAW}: the momentum label of a release of measured event {entry.number} at "
                     f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
                 )
             born_momentum = exact_column_sums(labels)
-            if not definition.free:
+            if not free:
                 entry.momentum = [
                     bounded(a - b, entry, "momentum")
                     for a, b in zip(entry.momentum, born_momentum, strict=True)

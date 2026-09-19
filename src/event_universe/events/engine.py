@@ -49,7 +49,13 @@ from event_universe.events.nature_beam import (
     nature_beam,
     ray_tables,
 )
-from event_universe.events.world import HEADING_OFFSET, RAYS_LAW, MeasuredDefinition, RayWorld
+from event_universe.events.world import (
+    HEADING_OFFSET,
+    MOMENTUM_BOUND,
+    RAYS_LAW,
+    MeasuredDefinition,
+    RayWorld,
+)
 
 __all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
 
@@ -70,6 +76,7 @@ class RaySimulation:
         self.tick = 0
         self.shape = world.shape
         self.families = world.families
+        self._phased = [family.phase for family in world.families]
         count = len(world.families)
         self.tables: RayTables = ray_tables(world)
         self.stores = [RayStore(world.shape) for _ in world.families]
@@ -177,8 +184,7 @@ class RaySimulation:
         """One interval: the clocks' frame, the law, the clocks' count and
         the measured events' steps."""
         self.tick += 1
-        for entry in self.measured.values():
-            self._frame(entry)
+        self._frame_all()
         self.readings = nature_beam(
             self.stores,
             self.world,
@@ -213,27 +219,47 @@ class RaySimulation:
             inverse=True,
         )
 
-    def _frame(self, entry: Measured) -> None:
-        """The clock's frame: a measured event that owes a count pays it by
-        one (no self-creation, no release, no turn; `waited` counts the
-        interval); one that owes nothing self-creates: its age advances and
-        its turn is read off its clock."""
-        entry.turn = 0
-        if entry.owed > 0:
-            entry.owed -= 1
-            entry.waited += 1
-            entry.creating = False
+    def _frame_all(self) -> None:
+        """The clocks' frame, every measured event at once: one that owes a
+        count pays it by one (no self-creation, no release, no turn;
+        `waited` counts the interval); one that owes nothing self-creates:
+        its age advances and its turn is read off its clock, `by_clock(age,
+        content, K)`, the turns of the phased families taken in one array
+        where their products fit the register (row by row otherwise), and
+        refused at half the circle."""
+        phased: list[Measured] = []
+        for entry in self.measured.values():
+            entry.turn = 0
+            if entry.owed > 0:
+                entry.owed -= 1
+                entry.waited += 1
+                entry.creating = False
+                continue
+            entry.creating = True
+            entry.clock_age = entry.age
+            entry.age += 1
+            if self._phased[entry.family]:
+                phased.append(entry)
+        if not phased:
             return
-        entry.creating = True
-        entry.clock_age = entry.age
-        entry.age += 1
-        if self.families[entry.family].phase:
-            entry.turn = by_clock(entry.clock_age, entry.content, self.world.clock)
-            if 2 * entry.turn >= self.world.phase_steps:
+        clock = self.world.clock
+        ages = [entry.clock_age for entry in phased]
+        contents = [entry.content for entry in phased]
+        if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
+            age_column = np.array(ages, dtype=np.int64)
+            content_column = np.array(contents, dtype=np.int64)
+            turns = (
+                ((age_column + 1) * content_column) // clock - (age_column * content_column) // clock
+            ).tolist()
+        else:
+            turns = [by_clock(age, content, clock) for age, content in zip(ages, contents, strict=True)]
+        for entry, turn in zip(phased, turns, strict=True):
+            if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
                     f"{RAYS_LAW}: measured event {entry.number} turns its phase by half the circle "
                     "or more per self-creation (its content has grown past K x N / 2)"
                 )
+            entry.turn = turn
 
     def _suspend(self, entry: Measured) -> None:
         """The count a measured event owes after its self-creation: the
@@ -370,11 +396,21 @@ class RaySimulation:
         families: dict[str, object] = {}
         balanced = True
         ledger = self.ledger
+        # One pass over the measured events: what they hold per family,
+        # their momentum and their charge.
+        held_current = [0] * len(self.families)
+        held_momentum = [0, 0, 0]
+        charge = 0
+        for entry in self.measured.values():
+            for index, held in enumerate(entry.held):
+                held_current[index] += held
+            held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
+            charge += entry.charge
         for index, family in enumerate(self.families):
             measured = {
                 "initial": self.held_initial[index],
                 "measured": ledger.held_measured[index],
-                "current": sum(entry.held[index] for entry in self.measured.values()),
+                "current": held_current[index],
                 "spent": ledger.held_spent[index],
                 "escaped": ledger.held_escaped[index],
             }
@@ -422,9 +458,6 @@ class RaySimulation:
                 and bool(content["balanced"])
             )
             families[family.name] = {"measured": measured, "transit": in_transit, "content": content}
-        held_momentum = [0, 0, 0]
-        for entry in self.measured.values():
-            held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
         return {
             "tick": self.tick,
             "families": families,
@@ -433,7 +466,7 @@ class RaySimulation:
                 "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
                 "escaped": ledger.escaped_momentum(),
             },
-            "charge": sum(entry.charge for entry in self.measured.values()),
+            "charge": charge,
             "balanced": balanced,
         }
 

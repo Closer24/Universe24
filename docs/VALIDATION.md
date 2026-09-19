@@ -11,6 +11,31 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The host's batching: the runs unchanged byte for byte - 2026-09-19
+
+The worktree of `claude/universe24-new-3ytqde` on the base `b2830bf9` (the
+law of the ray with the one push form), five commits of optimizations
+([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+note 22; [changelog](../CHANGELOG.md)). Python 3.14.0rc2, numpy 2.5.3,
+headless, four cores. The byte-identity check: the 45 example worlds (the
+ten Bell worlds, the twenty-one coupling worlds, the four detector worlds,
+the six orbit worlds, `one_content`, `two_contents`, `two_slits`,
+`one_slit`) run through `tools/run_series.py --jobs 4` on the base source
+(extracted with `git archive`) and on every commit's source; `events.jsonl`
+and `state.json` compared byte for byte, `run.json` compared as a document
+without `elapsed_seconds` and `source_sha256`.
+
+| Check | Result |
+| --- | --- |
+| The 45 worlds after each of the five commits | 45 of 45 identical (`events.jsonl`, `state.json`, `run.json` with the per-tick `audit`) on every commit; `two_contents` fails at tick 19 on the base and after alike (the affordable amount at `face:+y`, 2^18 > 261123, a pre-existing refusal of the night's bound), its partial artifacts identical |
+| `tools/bell_chsh.py` on the ten Bell runs, `tools/coupling_readings.py` on the twenty-one coupling runs | 326 and 392 criteria passed, 0 failed, on the base and after every commit; every printed line equal but the order Python prints a set in and the seconds line |
+| The suite, `python -m pytest -n auto` | 381 passed in 16.8 s on the base; 386 passed in 5.5 s after (the flight test 7.3 -> 0.75 s with the cached collision table, the two slits' world test 12.7 -> 3.8 s) |
+| `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
+| Timings, the best of three headless runs with the record and the books every tick (ms per interval / us per Node / us per row, base -> final) | plane source `coupling/5` 2.97 / 0.203 / 0.745 -> 1.61 / 0.110 / 0.403; `two_slits` 12.38 / 1.71 / 2.43 -> 3.51 / 0.48 / 0.69; Bell `a0_b8` 0.53 / 25.2 / 19.9 -> 0.47 / 22.4 / 17.6; `one_content` 0.77 / 0.049 / 6.2 -> 0.58 / 0.037 / 4.7; orbit `s32_r12` 1.47 / 0.101 / 1.11 -> 0.77 / 0.053 / 0.58 |
+
+The runs establish that the host's batching changed no integer of the law;
+they establish no physical law.
+
 ## The push as one form, the one label, the affordable amount and series D re-registered - 2026-09-19 (the night)
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `c5eb5868` (the

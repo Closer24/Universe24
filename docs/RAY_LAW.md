@@ -561,6 +561,8 @@ loop in rays2), so a board with one ray per Node breaks even and a dense
 gas of the six headings with `sum L_d x N` rows per Node is slower; the
 collision must be vectorized (segment ids, a `bincount` per Node, one table
 read on the 3^8 code, `np.put` of the new directions) to reach the budget.
+Resolved by the implementation and its optimizations (section 10, notes 8
+and 22: 0.11 us per Node on the plane, 0.69 us per row on the two slits).
 (d) The tie by Port order in the collision is the one undeclared breaking;
 a test asserts the six-orientation average of a head-on pair's exits is
 isotropic. (e) The re-registered readings are expectations, not results:
@@ -785,3 +787,55 @@ implementation's part of the contract. The design above is unchanged.
     every direction. Registered in PROJECT_STATUS ("What is open") and in
     the orbit register (EXPERIMENTS.md, D); nothing was changed in the
     law.
+22. **The host's batching** (the optimizations of 2026-09-19; the model
+    owner: "make sure there is optimization in everything"). Five changes
+    to how the host runs the law and none to the law: the same integers
+    in the same order of reduction, every example world's `events.jsonl`
+    and `state.json` byte-identical before and after (VALIDATION.md), the
+    bijection and every pinned test unchanged. (i) Step 4 is taken in
+    bulk across the measured events: the rows at measured events found by
+    one gather per family, grouped by (measured event, number) with one
+    segmented sum per moment, the threshold and the window as masks,
+    every bound of the per-set rule checked per group (the same
+    condition, the same refusal at the same point of the interval), the
+    records and the side effects then applied per group in the order of
+    the records (`FamilyPlan`); the walk already batched the rays and the
+    collision the Nodes the same way. (ii) The dense readings of the board
+    (`count`, `flow`, `presence`, `per_port`) are diagnostics, decomposed
+    on request from the rows the walk left (`Readings`, `ArrivalRows`)
+    over the active Nodes only; the law reads its own local sets at the
+    measured events; the keyed reading's bound is checked when the
+    diagnostics are read. (iii) The merge orders the rows by one packed
+    key of the identity fields when their ranges fit 62 bits (checked at
+    every merge from the columns' extremes, `merge_key`) and by the
+    lexsort of the fields otherwise, the same total order; the second
+    sort by Node is gone, the Node being the first field. (iv) The books
+    are running ledger lines: the transit momentum is kept by the law as
+    rows are born and leave (`Ledger.transit_momentum`; the collision
+    conserves it, its class fixing the vector sum of the singles, and the
+    merge conserves it), the transit and content `current` are what was
+    released less what left; `RaySimulation.recount()` counts the three
+    lines from the rows on request and `tests/test_ray_books.py` asserts
+    the running lines equal the recount at every interval; the per-tick
+    `balanced` of `run.json` now checks the ledger's own consistency, the
+    recount the store. The collision table is generated once per process
+    and shared read-only. (v) The clocks' frame is taken for every
+    measured event at once (`_frame_all`), the self-creations visit only
+    the measured events that can release, `np.r_` and the per-family
+    property reads are gone from the interval, `events.jsonl` is written
+    through a megabyte buffer. Not done: a process pool (the audit's
+    condition: it pays only above about 10^6 rows per interval; the
+    per-world parallelism of `tools/run_series.py` uses the cores) and
+    narrower dtypes (the store's columns stay int64 for the bound checks,
+    the step table int8; no measurable cost at these sizes). Measured
+    (headless, the record and the books every tick, the best of three
+    runs): the plane source of series C 2.97 -> 1.61 ms per interval
+    (0.20 -> 0.11 us per Node, 0.75 -> 0.40 us per row), two slits 12.4
+    -> 3.5 ms (1.71 -> 0.48 us per Node, 2.43 -> 0.69 us per row), Bell
+    0.53 -> 0.47 ms, one content 0.77 -> 0.58 ms, the orbit s32_r12 1.47
+    -> 0.77 ms; the suite 16.8 -> 5.5 s. Risk (c) of section 9 is
+    resolved: the collision is vectorized (segment ids, one table read
+    per Node) and the interval's cost is a function of the rows in flight
+    and the measured events met, not of the Nodes, the store's promise of
+    section 3 (the plane's 14641 Nodes cost 0.11 us each, the two slits'
+    5100 rows 0.69 us each).
