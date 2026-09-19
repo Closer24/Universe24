@@ -1,11 +1,12 @@
-"""A world file -> the engine -> headless artifacts.
+"""A world or portable entity bundle -> the engine -> headless artifacts.
 
 The one engine is the engine of the law of events (`event_universe.events`,
-`events-v1`; Highlights 5.4). A run reads a world (a JSON object with
-`"law": "events"`), refuses anything else by name, and
+`events-v1`; Highlights 5.4). The host loader resolves literal entity data
+before preparing output or constructing the physical world. A run
 writes to an empty output directory the input as read (`initialization.json`),
 the events (`events.jsonl`), the final state (`state.json`) and the record
-(`run.json`); see `event_universe.events.run`. Runs are headless: there is no
+(`run.json`). Dependency-bearing runs also preserve the portable bundle and
+expanded world; see `docs/ENTITY_DEFINITIONS.md`. Runs are headless: there is no
 visualization switch, no observer and one worker.
 """
 

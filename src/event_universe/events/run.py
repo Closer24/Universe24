@@ -38,7 +38,9 @@ def execute_event_run(
     initialization_record: dict[str, object] | None = None,
 ) -> Path:
     """Run `count` intervals of the world into the empty directory `output`;
-    returns the path of `run.json`. A failing interval is recorded and raised."""
+    returns the path of `run.json`. A failing interval is recorded and raised.
+    Optional initialization provenance is copied for output only, never physics.
+    """
     initialization_metadata = copy.deepcopy(initialization_record)
     (output / "initialization.json").write_bytes(source)
     audit: list[dict[str, object]] = []

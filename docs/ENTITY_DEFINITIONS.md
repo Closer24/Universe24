@@ -146,7 +146,10 @@ load_world(source: str | bytes, *, base_dir: Path | None = None) -> LoadedWorld
 `expanded_source` is deterministic JSON for the plain engine world after removing
 the two authoring keys and adding the placed arrays. Serialize generated JSON as
 UTF-8 with sorted object keys, compact separators, `ensure_ascii=False`, and one
-terminal newline; array order is unchanged. For a plain world, `portable_source`
+terminal newline; array order is unchanged. Preserve previously accepted escaped
+unpaired surrogate code points as JSON Unicode escapes when encoding generated
+UTF-8; do not reject their original valid escaped input or change its meaning.
+For a plain world, `portable_source`
 is exactly the input bytes (or the UTF-8 encoding of the input string), and the
 parsed physical state follows the existing parser unchanged. Dependencies are
 empty. No filesystem is touched for plain worlds or portable bundles.

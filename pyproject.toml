@@ -37,6 +37,8 @@ event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
     "examples/events/detector/README.md",
 ]
 
+"share/event-universe/examples/detector/entities" = ["examples/events/detector/entities/*.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--import-mode=importlib -ra"
