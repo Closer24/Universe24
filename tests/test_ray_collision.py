@@ -32,7 +32,7 @@ import numpy as np
 
 from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.gonen_beam import class_key, collision_table, slot_heading, state_code
+from event_universe.events.nature_beam import class_key, collision_table, slot_heading, state_code
 
 STATES = list(itertools.product(range(3), repeat=8))
 

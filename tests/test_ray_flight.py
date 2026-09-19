@@ -41,7 +41,7 @@ from event_universe.configuration_validation import validate_configuration
 from event_universe.core.lattice import PORT_HEADINGS, adjacent_node
 from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.gonen_beam import Q, flight_table
+from event_universe.events.nature_beam import Q, flight_table
 from event_universe.events.run import execute_ray_run
 
 SLIT_DIRECTIONS = [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]]

@@ -10,14 +10,14 @@ the linked Issue/PR before treating it as live status.
 1. **The law of the ray** (Highlights 5.4, "DECIDED: the law of the ray",
    the model owner, 2026-09-19; the design published in
    [RAY_LAW.md](RAY_LAW.md) before the engine changed): the Node holds no
-   wave; a unit is a ray with a record (`GonenBeam`: Node, direction, age,
+   wave; a unit is a ray with a record (`NatureBeam`: Node, direction, age,
    phase, number, amount, content) moving along the digital line of its
    momentum at one speed for every direction, 1 / sqrt 3 (the flight
    table); rays that meet at a Node are permuted by the eight-slot collision
    table, a bijection inside its invariant classes; the interval is a
    bijection and the click its only one-way border; the interference is the
    squared coherent record a detector reads of the rays it clicked; the
-   ray's law is one generic function, `gonen_beam`, and every piece of
+   ray's law is one generic function, `nature_beam`, and every piece of
    logic exists once (one reading of the Node, `read_arrivals`, its
    components selected by the coupling's declared key). Its engine is the
    one engine, `src/event_universe/events/` (`rays-v1`) on the substrate of
@@ -86,7 +86,7 @@ out, the engines before this one among them.
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
 | The world file and its refusals | `src/event_universe/events/world.py` | [RAY_LAW.md](RAY_LAW.md), section 2; [ENGINE.md](ENGINE.md), "The world" |
-| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/gonen_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
+| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/nature_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
 | The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
 | The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the board's addresses and headings, the phase tables; the integer audit |

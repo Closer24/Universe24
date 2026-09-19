@@ -36,8 +36,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 - The engine of the law of the ray, `rays-v1` (the model owner, 2026-09-19,
   Highlights 5.4, "DECIDED: the law of the ray"; the design
-  [docs/RAY_LAW.md](docs/RAY_LAW.md)): the record `GonenBeam` and the one
-  function `gonen_beam` (`src/event_universe/events/gonen_beam.py`), a
+  [docs/RAY_LAW.md](docs/RAY_LAW.md)): the record `NatureBeam` and the one
+  function `nature_beam` (`src/event_universe/events/nature_beam.py`), a
   Node's whole interval for the rays present; the flight table at
   1 / sqrt 3 on the digital line of every direction (at most one Link per
   interval, the age modulo the period); the eight-slot collision table
@@ -61,6 +61,10 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- The ray is `NatureBeam` and its one function `nature_beam` (module
+  `events/nature_beam.py`), the model owner's name of 2026-09-19 replacing
+  GonenBeam given earlier the same day; a mechanical rename, nothing else
+  changed ([migration](docs/MIGRATION.md#the-ray-is-naturebeam-on-2026-09-19-the-night)).
 - The three reversible corrections that every path shares (the model
   owner, 2026-09-19, Highlights 5.4; the architect's D2 and D3). No merge:
   a measured event's step onto a Node that holds a measured event is

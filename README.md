@@ -13,7 +13,7 @@ self-creations, and what is seen is measured events through detectors of a
 declared sensitivity, whose record is the squared coherent sum of the rays
 they clicked; nothing is kept at a Node, no register, no remainder, no draw.
 There is one engine, the engine of that law (`rays-v1`, the one function
-`gonen_beam`); the engines before it, the law of events of the same day
+`nature_beam`); the engines before it, the law of events of the same day
 among them, are deleted and in git ([migration](docs/MIGRATION.md)).
 The name of the framework is Reality Theory; the simulator that realizes it is
 Universe24.
@@ -157,7 +157,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | Path | Responsibility |
 | --- | --- |
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
-| `src/event_universe/events/gonen_beam.py` | The law of the ray (`rays-v1`): the record `GonenBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `gonen_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
+| `src/event_universe/events/nature_beam.py` | The law of the ray (`rays-v1`): the record `NatureBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `nature_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
 | `src/event_universe/events/measured.py` | The measured event's record (`Measured`) and the ledger of an interval |
 | `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |

@@ -1,5 +1,5 @@
-"""The law of the ray (rays-v1): the record `GonenBeam`, the store of records,
-the two pure tables and the one function `gonen_beam`, a Node's whole
+"""The law of the ray (rays-v1): the record `NatureBeam`, the store of records,
+the two pure tables and the one function `nature_beam`, a Node's whole
 interval for the rays present (docs/RAY_LAW.md, the model owner's decision of
 2026-09-19, Highlights 5.4, "DECIDED: the law of the ray").
 
@@ -9,7 +9,7 @@ bijection; rays that meet at a Node are permuted by the eight-slot collision
 table, a bijection; the interference is the squared record a detector reads
 of a crowd of rays and lives nowhere else; the click is the only one-way
 border. The law is ONE generic
-function (the owner's name): `gonen_beam` performs the interval's steps in
+function (the owner's name): `nature_beam` performs the interval's steps in
 order, each a bijection on the board's state except the border:
 
 1. the walk: every ray whose flight table steps this interval is created at
@@ -90,7 +90,7 @@ ZERO3 = (0, 0, 0)
 
 
 @dataclass(frozen=True)
-class GonenBeam:
+class NatureBeam:
     """The record of a ray: its Node, its direction (an index of the world's
     table), its age (the flight phase, modulo the direction's period), its
     phase (a step of the circle), its number (the last emitter), its amount
@@ -460,10 +460,10 @@ class RayStore:
         hi = int(np.searchsorted(self.node, flat, side="right"))
         return lo, hi
 
-    def rows(self) -> list[GonenBeam]:
+    def rows(self) -> list[NatureBeam]:
         x, y, z = self.coordinates(self.node)
         return [
-            GonenBeam(
+            NatureBeam(
                 (int(x[i]), int(y[i]), int(z[i])),
                 int(self.direction[i]),
                 int(self.age[i]),
@@ -522,7 +522,7 @@ class Readings:
 # -- the law ---------------------------------------------------------------------
 
 
-def gonen_beam(
+def nature_beam(
     stores: list[RayStore],
     world: RayWorld,
     tables: RayTables,

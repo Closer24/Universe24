@@ -1,12 +1,12 @@
 """The frame around the law of the ray (rays-v1): the tick, the measured
 events' clocks, the books, the record and the snapshot. The law itself is
-the one function `gonen_beam` (docs/RAY_LAW.md); this module schedules and
+the one function `nature_beam` (docs/RAY_LAW.md); this module schedules and
 books, it computes no physics.
 
 The interval (`RaySimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
-content, K)` phase steps, refused at half the circle), calls `gonen_beam`
+content, K)` phase steps, refused at half the circle), calls `nature_beam`
 once for the whole board (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
@@ -32,17 +32,17 @@ import numpy as np
 
 from event_universe.core.integer import by_clock as _by_clock
 from event_universe.core.lattice import Address3, adjacent_node
-from event_universe.events.gonen_beam import (
+from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
+from event_universe.events.nature_beam import (
     HERE,
     PORTS,
     RayStore,
     RayTables,
     Readings,
     Record,
-    gonen_beam,
+    nature_beam,
     ray_tables,
 )
-from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
 from event_universe.events.world import HEADING_OFFSET, RAYS_LAW, MeasuredDefinition, RayWorld
 
 __all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
@@ -164,7 +164,7 @@ class RaySimulation:
         self.tick += 1
         for entry in self.measured.values():
             self._frame(entry)
-        self.readings = gonen_beam(
+        self.readings = nature_beam(
             self.stores,
             self.world,
             self.tables,
@@ -187,7 +187,7 @@ class RaySimulation:
         """The inverse interval on a board without measured events: the
         bijective steps in reverse order with their inverses."""
         self.tick -= 1
-        gonen_beam(
+        nature_beam(
             self.stores,
             self.world,
             self.tables,

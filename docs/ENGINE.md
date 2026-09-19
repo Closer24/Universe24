@@ -3,8 +3,8 @@
 The one engine of Universe24 is the engine of the law of the ray (`rays-v1`;
 [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the law of the
 ray", the model owner, 2026-09-19). Its design and implementation contract is
-[the law of the ray](RAY_LAW.md): the ray's record `GonenBeam`, the one
-function `gonen_beam`, the flight table at 1 / sqrt 3, the eight-slot
+[the law of the ray](RAY_LAW.md): the ray's record `NatureBeam`, the one
+function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot
 collision table and its inverse, the detector's squared record, the
 re-emission, the deletions and the expectations. This document is the
 bookkeeping around that law as implemented: the code, the board, the frame of
@@ -16,9 +16,9 @@ evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 
 The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
-`gonen_beam.py` the law (the record, the one reading `read_arrivals`, the
+`nature_beam.py` the law (the record, the one reading `read_arrivals`, the
 flight table, the collision table, the store of records per family and the
-function `gonen_beam`), `engine.py` the frame (`RaySimulation`: the clocks,
+function `nature_beam`), `engine.py` the frame (`RaySimulation`: the clocks,
 the owed count, the steps, the books, the readings, the snapshot), `run.py`
 the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `lattice.py`, `phase.py`). The tests: `tests/test_ray_readings.py`,
@@ -91,7 +91,7 @@ last emitter), an amount (whole units) and a content per unit; its momentum
 is not stored, it is amount x content x D[direction] for a paid family and
 amount x D[direction] for a free one (its unit carries no content). The Node holds nothing
 between intervals but the rays present at it and the measured event there.
-The law of one interval at one Node is `gonen_beam` ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam)):
+The law of one interval at one Node is `nature_beam` ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam)):
 the walk by the flight table, the one reading, the collision by the table,
 the measured event's table (`read`, `measure`, `rerelease`, `pass`, each
 gated by the detector's threshold and its window), the self-creations (the
@@ -108,13 +108,13 @@ entry (`scalar` by default: the clock's count and the threshold read the
 presence, the push reads the flow, a detector may declare `tensor`); the
 detector's coherent record is the same moments over the clicked rays with
 their amplitudes as weights (32 x amount at cos and sin over 256), the
-scalar squared ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam),
+scalar squared ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam),
 step 2, and section 10, note 16).
 
 **The frame** (`RaySimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
 release rate, its lamp's rate and window, its owed count) is read and
-handed to `gonen_beam` with the stores; `gonen_beam` returns the readings
+handed to `nature_beam` with the stores; `nature_beam` returns the readings
 (the count, the flow and the presence per Node, dense arrays read-only, and
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
@@ -123,7 +123,7 @@ self-created, reads the owed count off the clock from the presence
 (`_suspend`, `by_clock(age, presence x n, d)`), moves the measured events
 by their momentum (`_move`) and books the interval. `inverse_step` runs the
 inverse collision and the inverse walk on a board without a measured event
-(the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam);
+(the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
 with a measured event on the board it refuses: the click is the one-way
 border). The frame computes no physics.
 
@@ -158,7 +158,7 @@ the sum over the store of amount x content x D[direction] (amount x
 D[direction] for a free family, whose unit carries no content), the escaped
 line the faces' sums. Every escaped line is the sum over the open faces of the face
 detectors' clicks (`face_detectors`). The measured line is bounded before
-assignment (`gonen_beam.bounded`): a measured event's momentum after a push
+assignment (`nature_beam.bounded`): a measured event's momentum after a push
 or a recoil, the push taken, its content after a click and what waits to
 be created again are checked against 2^62 - 1 (`world.MOMENTUM_BOUND`), and
 a value beyond it refuses the run with `OverflowError` naming the measured

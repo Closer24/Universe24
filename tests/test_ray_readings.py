@@ -58,7 +58,7 @@ import pytest
 from event_universe.core.integer import by_clock
 from event_universe.core.lattice import PORT_HEADINGS
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.gonen_beam import read_arrivals
+from event_universe.events.nature_beam import read_arrivals
 from event_universe.events.world import MOMENTUM_BOUND
 
 NODE = [4, 1, 1]

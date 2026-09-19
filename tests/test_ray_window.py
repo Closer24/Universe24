@@ -59,7 +59,7 @@ from __future__ import annotations
 import pytest
 
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.gonen_beam import ray_tables
+from event_universe.events.nature_beam import ray_tables
 
 LIGHT, COUNTER = 0, 1
 FAMILIES = [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}]

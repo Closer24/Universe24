@@ -6,6 +6,16 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The ray is NatureBeam, on 2026-09-19 (the night)
+
+The model owner renamed the ray's record and its one function: `GonenBeam` is
+`NatureBeam`, `gonen_beam` is `nature_beam`, and the module
+`src/event_universe/events/gonen_beam.py` is `nature_beam.py`. A mechanical
+rename of every token in the code, the tests, the tools and the documents;
+no rule, integer, record or artifact changed. Highlights 5.4 keeps the earlier
+name in its record of the day. Imports of `event_universe.events.gonen_beam`
+must become `event_universe.events.nature_beam`.
+
 ## The table from the keys and the moments, on 2026-09-19 (the night)
 
 The model owner's decisions of the night of 2026-09-19 (Highlights 5.4, on
@@ -75,7 +85,7 @@ the engine changed): the Node holds no wave; a unit is a ray with a record
 on the digital line of its momentum at one speed, 1 / sqrt 3; rays that meet
 are permuted by the collision table; the interval is a bijection and the
 click its only one-way border; the ray's law is one generic function,
-`gonen_beam`, and every piece of logic exists once. The engine of the law of
+`nature_beam`, and every piece of logic exists once. The engine of the law of
 events (`events-v1`, the evening of the same day) is deleted with everything
 it computed at the Node. Base `ce0b22af` (the merge of the three reversible
 corrections into `claude/universe24-new-3ytqde`); the last commit holding
@@ -102,15 +112,15 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
   declared directions, its refusal of an open face the face detector); in
   `engine.py` the coherent phase read in `_meet`, `EMISSION_CELL_BOUND` and
   `EMISSION_MARGIN` (no cell). Nothing of these is re-exported.
-- **New modules.** `src/event_universe/events/gonen_beam.py` (`GonenBeam`,
+- **New modules.** `src/event_universe/events/nature_beam.py` (`NatureBeam`,
   `read_arrivals` and `READING_BASIS`, `flight_table`, `collision_table`,
-  `ray_tables`, `RayStore`, `gonen_beam`, `bounded`, `segment_sums`);
+  `ray_tables`, `RayStore`, `nature_beam`, `bounded`, `segment_sums`);
   `src/event_universe/events/measured.py` (`Measured`, `Ledger`, `RULES`,
   `FACE_NAMES`); `engine.py` and `world.py` rewritten in place.
 - **Renames.** `EVENTS_LAW` -> `RAYS_LAW` ("rays-v1"); `EventWorld` ->
   `RayWorld`; `parse_event_world` -> `parse_ray_world`; `is_event_world` ->
   `is_ray_world`; `EventSimulation` -> `RaySimulation`; `execute_event_run`
-  -> `execute_ray_run`; `Transit.walk` -> the walk inside `gonen_beam`;
+  -> `execute_ray_run`; `Transit.walk` -> the walk inside `nature_beam`;
   `world.EMISSION_CELL_BOUND` -> gone (`world.MOMENTUM_BOUND`,
   `world.AMOUNT_BOUND` 2^62 - 1 remain).
 - **The world file.** Added: `directions` and `direction_bound` at the

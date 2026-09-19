@@ -74,7 +74,7 @@ the model owner, 2026-09-19):
   the response's record carries, `scalar` (the presence), `outside`, `here`,
   `vector` (the net flow) or `tensor` (the traceless part); `vector` by
   default on `read`, `scalar` otherwise. No rule changes with it: every
-  coupling reads the one reading, the moments of the arrivals (`gonen_beam.read_arrivals`);
+  coupling reads the one reading, the moments of the arrivals (`nature_beam.read_arrivals`);
 - `in_transit`, optional: rays at the start, each with a `position`,
   `family`, `number` (the measured event whose continuation it is),
   `direction` (a vector of the world's table or its index), `amount`,

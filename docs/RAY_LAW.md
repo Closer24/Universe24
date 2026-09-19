@@ -21,9 +21,9 @@ and no merge on a step, an open face as a detector, the owed count read off
 the clock ([the engine](ENGINE.md)).
 
 **The owner's name.** The ray's law is ONE generic function. The record is the
-dataclass `GonenBeam`; the law is the single function `gonen_beam(...)`, which
+dataclass `NatureBeam`; the law is the single function `nature_beam(...)`, which
 performs a Node's whole interval for the rays present. No other function holds
-a piece of the ray's law; helpers exist only as pure tables that `gonen_beam`
+a piece of the ray's law; helpers exist only as pure tables that `nature_beam`
 reads (the flight table, the collision table). The repository's rule that a
 name states a component's responsibility (AGENTS.md) yields to the owner's
 explicit name for this one component; this exception is recorded here and in
@@ -53,7 +53,7 @@ Highlights 5.4, and applies to nothing else.
 
 ## 2. The record of a ray and the world file
 
-`GonenBeam` (one record; the board's state is a multiset of them; identical
+`NatureBeam` (one record; the board's state is a multiset of them; identical
 records at one Node are one record with the amounts and contents added, which
 is a bijection since identical units are interchangeable):
 
@@ -138,13 +138,13 @@ coupling generators emit the trimmed form).
 (The wall's Nodes are measured events with `measure`, the screen's a
 detector as today; `"positions": "x=52"` stands for the list.)
 
-## 3. The Node's interval: `gonen_beam`
+## 3. The Node's interval: `nature_beam`
 
-Module `src/event_universe/events/gonen_beam.py`: the dataclass `GonenBeam`,
+Module `src/event_universe/events/nature_beam.py`: the dataclass `NatureBeam`,
 the one function
 
 ```
-gonen_beam(store: RayStore, world: RayWorld, tables: RayTables, measured: dict,
+nature_beam(store: RayStore, world: RayWorld, tables: RayTables, measured: dict,
            tick: int, record: Record, inverse: bool = False) -> Books
 ```
 
@@ -152,7 +152,7 @@ and nothing else with law in it. `RayTables` holds the two pure tables,
 computed once at load from the world's direction set and N: the flight table
 and the collision table (section 4). `engine.py` keeps the interval's frame
 (the tick, the books, the record, the measured events' clocks by `by_clock`,
-the snapshot) and calls `gonen_beam` once per interval; `transit.py`'s
+the snapshot) and calls `nature_beam` once per interval; `transit.py`'s
 per-Port arrays are replaced by the store.
 
 **The store** (per family): a structure of arrays, one row per record,
@@ -403,7 +403,7 @@ Bell A2 under `rays-v1` (section 8) and keeps the `events-v1` readings as
 history; TEST_EXPECTATIONS lists the new modules (section 7);
 HIGHLIGHTS_IMPLEMENTATION rewrites the 5.4 rows; MIGRATION gains "The law of
 the ray, on 2026-09-19 (`rays-v1`)" naming every deletion; CHANGELOG one
-entry; README's project map lists `gonen_beam.py` and drops `mixing.py`,
+entry; README's project map lists `nature_beam.py` and drops `mixing.py`,
 `reversible.py`; DETECTOR_REQUIREMENTS drops its implementation contract;
 docs/README.md indexes this document (done with this commit).
 
@@ -452,15 +452,15 @@ the plane) and the argument that every ray present at a Node is leaving it
 1. `docs/`: this document is the contract; MIGRATION, CHANGELOG entries first
    (architecture owner).
 2. `core/integer.py`: `integer_root` moved from mixing (core owner).
-3. `events/gonen_beam.py` (new; engine owner): `GonenBeam`, `RayStore`,
+3. `events/nature_beam.py` (new; engine owner): `NatureBeam`, `RayStore`,
    `RayTables` (`flight_table(directions)`, `collision_table()`, both pure,
-   generated and checked at load), `gonen_beam(...)` with `inverse`.
+   generated and checked at load), `nature_beam(...)` with `inverse`.
 4. `events/world.py` (schema owner): `"law": "rays"`, `directions`,
    `phase_per_link`, the measured event's `directions`, the direction and
    label bounds, the refusals; `dynamics` and the reversible validation
    deleted.
 5. `events/engine.py` (engine owner): `EventSimulation.step` becomes the
-   frame around `gonen_beam`; `_meet`, `_release`, `_move` reduced to the
+   frame around `nature_beam`; `_meet`, `_release`, `_move` reduced to the
    measured event's clock and tables; the books gain `record` per detector;
    the reversible path deleted. `transit.py` reduced to the periodic
    `adjacent_node` use or deleted if nothing remains.
