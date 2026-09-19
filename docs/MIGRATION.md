@@ -6,6 +6,60 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A release costs the emitter by its phase rate, on 2026-09-19 (E = h f)
+
+The model owner's decision of 2026-09-19 ("I approve the proposal"): until
+then a unit of a paid family cost its emitter one unit of content whatever
+the emitter's clock, so a blue lamp's click and a red lamp's carried the
+same content. Now, at a self-creation whose turn is s = `by_clock(age,
+content, K)` phase steps (the content before that self-creation's releases),
+each unit a lamp releases costs it `quantum` x s content, carries that
+content and the momentum `quantum` x s along its heading, and gives it to the
+measured event that measures it ([the engine](ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)).
+Nothing here is evidence of a physical law.
+
+- **The record.** `Transit` carries the content per slot (`arr_con`,
+  `fly_con`, `escaped_content`, `Transit.content()`), set at birth, added
+  when arrivals join a slot, kept through the suspension and apportioned with
+  the units at every Node exactly (`apportion_carried` on one component);
+  `Transit.take` returns a fourth array, `Transit.place` and `Transit.receive`
+  take an optional content (0 or none by default). `Measured.home_content`
+  holds the content of what came home or is re-released until it leaves
+  again (`state()` lists it). The engine's `_momentum` is replaced by
+  `_birth(family, amount, port, steps)`, returning the content and the
+  momentum a release carries; `apportion_whole` shares the content of a
+  re-release over its six headings.
+- **The books.** `books()["families"][name]` gains a `content` line
+  (`initial`, `released`, `current`, `escaped`, `absorbed`, `balanced`),
+  part of `balanced`; the measured line's `measured` and `spent` are in
+  content (the clicks' content, the lamps' cost), the transit line stays in
+  units. `EventSimulation.content_initial`, `content_released`,
+  `content_absorbed` and `home_content_pending` are the counters.
+- **The record of a run.** Measurement records (`home`, `read`, `click`,
+  `rerelease`) carry `content`; `state.json` Node entries carry `content`
+  per arrival and departure; `run.json`'s `measured` entries carry
+  `home_content`. The `quantum` key is now the content of one unit per
+  phase step (h); worlds parse unchanged.
+- **What changes in a run.** A lamp whose turn is 0 at a self-creation
+  releases nothing there (a lamp of content below K / (age + 1) at K 2^20
+  releases nothing for a long time; a lamp of a family without a phase
+  circle never); the turn of a lamp is read from its content before it
+  spends (until now after). A free family's release costs nothing and its
+  units carry no content, so `measure` on a free family takes the units and
+  adds nothing to the content (until now the amount). The declared
+  `in_transit` units of a paid family carry one phase step of content each.
+  The Bell worlds (content K + 2 at K 2^20: s = 1) and `test_phase_window`'s
+  lamps (K + 2 at K 2^14) run as before; the slit worlds' lamp (2^36 at
+  K 2^34) spends 4 per unit at the start and the screen's content grows by
+  the turn per click, the click counts unchanged.
+- **Tests.** `tests/test_release_costs_by_phase_rate.py` (new);
+  `test_event_clock` (c) at K 82 (the same 82 pin; at K 2^20 the lamp
+  would release nothing), `test_detector_sensitivity` (c) at K 24 (the
+  same 18 and 12), `test_phase_window` (a) records with `content` 1,
+  `test_event_suspension` (c) the probe's content [0, 1] (was [464, 1]),
+  `test_event_worlds` (d) the screen's content between 3 and 4 times its
+  clicks ([expectations](TEST_EXPECTATIONS.md#a-release-costs-the-emitter-by-its-phase-rate)).
+
 ## The field of matter without phase, the suspension as presence with a fractional width, and the push as the net flow, on 2026-09-19
 
 Three decisions of the model owner, 2026-09-19, implemented together after

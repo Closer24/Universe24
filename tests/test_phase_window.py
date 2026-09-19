@@ -24,7 +24,11 @@ measured event `fixed`. The expected integers of docs/TEST_EXPECTATIONS.md
     edge and escape in the walk of the next interval. After 5 intervals:
     `events` [2, 0], `held` [2, 1], the momentum (2, 0, 0), 2 escaped,
     nothing in transit, exactly those four records, the books balanced at
-    every interval.
+    every interval. Since 2026-09-19 a measurement record carries the
+    content the bundle carried (a release costs the emitter by its phase
+    rate, and a click measures that content): a seeded unit carries one
+    phase step of content, quantum x 1 = 1, so each click record reads
+    `"content"` 1 and the counter's content grows by 1 per click, as before.
 (b) the complement covers the circle exactly: a bar of 12 x 1 x 1, K 2^14,
     a lamp of `light` (content K + 2, phase 0, rate [1, 1] on +X only) at
     x = 0; with content K + 2 the release of age a carries phase a mod 64
@@ -40,6 +44,10 @@ measured event `fixed`. The expected integers of docs/TEST_EXPECTATIONS.md
     window 8) and none at x = 11, nothing escaped; the lamp at age 74, phase
     10, 74 phase steps, content K + 2 - 74, momentum (-74, 0, 0). In the
     75th interval the release of age 64 (phase 0 again) clicks at x = 10.
+    The lamp's turn is one step at every self-creation of the run (its
+    content K + 2 - a at age a keeps (a + 1)(2 - a) above -K), so under the
+    rule of 2026-09-19 each unit costs quantum x 1 = 1, carries content 1
+    and momentum (1, 0, 0), and the pins of (b) and (c) are unchanged.
 (c) a lamp with a window: the lamp of (b) with `phase_window` 8 and a plain
     counter (`measure`, no window) at x = 10. At each of the first 64
     intervals t its age is t, its phase t mod 64 and its phase steps t, and
@@ -144,11 +152,12 @@ def test_the_window_is_the_centred_half_circle_and_a_bundle_outside_it_passes():
     assert light.escaped == 2 and int(light.arr_amt.sum()) == 0 and int(light.fly_amt.sum()) == 0
     assert simulation.transit_absorbed[LIGHT] == 2 and simulation.held_measured[LIGHT] == 2
     common = {"node": [6, 0, 0], "measured": 2, "detector": None, "family": "light", "number": 1}
+    click = {"amount": 1, "push": [1, 0, 0], "content": 1}
     assert records == [
-        {"event": "click", "tick": 2, **common, "amount": 1, "push": [1, 0, 0], "phase": 35},
+        {"event": "click", "tick": 2, **common, **click, "phase": 35},
         {"event": "pass", "tick": 3, **common, "amount": 1, "phase": 36, "window": 20},
         {"event": "pass", "tick": 4, **common, "amount": 1, "phase": 3, "window": 20},
-        {"event": "click", "tick": 5, **common, "amount": 1, "push": [1, 0, 0], "phase": 4},
+        {"event": "click", "tick": 5, **common, **click, "phase": 4},
     ]
 
 
@@ -180,6 +189,7 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
         sorted(record["phase"] for record in clicks if record["node"] == [11, 0, 0]) == OUT_OF_WINDOW_8
     )
     assert all(record["amount"] == 1 and record["push"] == [1, 0, 0] for record in clicks)
+    assert all(record["content"] == 1 for record in clicks)
     assert sorted(record["phase"] for record in passes) == OUT_OF_WINDOW_8
     assert all(record["node"] == [10, 0, 0] and record["window"] == 8 for record in passes)
     # The release of age a reaches x = 10 in interval a + 11: the click's tick

@@ -27,8 +27,11 @@ law of events, the model owner, 2026-09-19):
   and electricity; `paid`: light, released only by a lamp that spends its
   content, its events carrying their own momentum), for a free family the
   whole `charge` of a measured event of it (0 by default), for a paid
-  family `quantum`, the content of one unit of it (1 by default): the momentum
-  one unit carries from birth is its quantum times its heading; and `phase`
+  family `quantum`, the content of one unit of it per phase step of its
+  emitter's turn (1 by default; h: a release costs the emitter quantum x s
+  per unit at a self-creation whose turn is s steps, the unit carries that
+  content and the momentum quantum x s along its heading, and a click
+  measures it, E = h f; the model owner, 2026-09-19); and `phase`
   (true by default): a family declaring `"phase": false` has no phase circle
   (the model owner, 2026-09-19): its events carry phase 0 and never turn, its
   measured events' phase never turns (K does not apply to their content), no
@@ -149,9 +152,10 @@ BOUNDARIES = ("open", "periodic")
 @dataclass(frozen=True)
 class FamilyDefinition:
     """One family of the world: its name, its kind, the whole charge of a
-    measured event of it, the content of one unit of it, and whether it has
-    a phase circle (`phase` false: its events carry phase 0 and never turn,
-    and at a Node each Port's arrival scatters on its own)."""
+    measured event of it, the content of one unit of it per phase step of
+    its emitter's turn (`quantum`, h), and whether it has a phase circle
+    (`phase` false: its events carry phase 0 and never turn, and at a Node
+    each Port's arrival scatters on its own)."""
 
     name: str
     kind: str

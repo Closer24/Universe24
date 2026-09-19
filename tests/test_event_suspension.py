@@ -30,8 +30,10 @@ docs/TEST_EXPECTATIONS.md ("The suspension"), written down first:
     measuring the free family, `suspension` [1, 4]) at x = 1. The source is
     created again every interval (nothing of another number reaches it:
     age 30 after 30 intervals) and 16 units reach the probe in every
-    interval from the second on (measured: 16 x 29 = 464 held after 30),
-    the presence 16, k = 16 x 1 // 4 = 4. The probe: interval 1 a
+    interval from the second on (measured: 16 x 29 = 464 units taken after
+    30; since 2026-09-19 a free family's units carry no content, its release
+    costs nothing, so the probe's content stays [0, 1] where it read
+    [464, 1] before), the presence 16, k = 16 x 1 // 4 = 4. The probe: interval 1 a
     self-creation (age 1) that reads nothing; interval 2 a self-creation
     (age 2) that reads 16 and owes 4; intervals 3 to 6 paid; interval 7 a
     self-creation (age 3) that owes 4 again; and so on, once every
@@ -173,7 +175,11 @@ def test_a_measured_event_in_a_steady_field_is_slowed_by_its_count_and_never_fro
     assert (ages[9], ages[19], ages[29]) == (3, 5, 7)
     assert ages[29] > ages[9]
     assert entry.waited == 23 and entry.owed == 1
-    assert source_entry.age == 30 and entry.held == [464, 1]
+    # The 464 units of the free family were taken, carrying no content: a
+    # free family's release costs nothing and gives nothing (2026-09-19).
+    assert source_entry.age == 30 and entry.held == [0, 1]
+    assert entry.measured[0]["measure"] == 464 and simulation.transit_absorbed[0] == 464
+    assert simulation.held_measured[0] == 0 and simulation.content_absorbed[0] == 0
 
 
 def test_a_crowd_of_a_paid_family_suspends_a_unit_of_another_number_of_it():

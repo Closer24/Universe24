@@ -10,6 +10,10 @@ readings are made from the record (`run.json`, `events.jsonl`, `state.json`).
 The board is open on every face unless the world declares an axis periodic
 (`"boundary": {"z": "periodic"}`: the departures through one face are created
 at the opposite face and nothing escapes on that axis; [the engine](../../docs/ENGINE.md)).
+Since 2026-09-19 a release costs the emitter by its phase rate: each unit a
+lamp releases at a self-creation of turn s costs and carries `quantum` x s
+content (E = h f), a turn of 0 releases nothing, and a click measures that
+content ([the engine](../../docs/ENGINE.md#a-release-costs-the-emitter-by-its-phase-rate)).
 
 | World | What it declares | What its record reads |
 | --- | --- | --- |

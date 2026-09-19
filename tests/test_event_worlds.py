@@ -42,7 +42,13 @@ on 29^3 is not its steady state: the pins are a check, not a result.
 (d) the two-slit detector (23 x 41 x 9, 200 intervals): the screen's clicks
     by y are symmetric about the axis, with a minimum within 2 to 5 of the
     axis and a maximum beyond it within 6 to 11 at least 1.1 times the
-    minimum; the one-slit control has no such rise;
+    minimum; the one-slit control has no such rise. Since 2026-09-19 a
+    release costs the emitter by its phase rate and a click measures that
+    content: the lamp of 2^36 at K 2^34 turns 4 steps per self-creation at
+    the start and fewer as it spends (its content over K falls toward 3 and
+    below during the run), so the screen's content grows by more than 3 and
+    at most 4 times its clicks, while the click counts are unchanged (a
+    click is one unit whatever it carries);
 (e) the refusals by name: the earlier engines' keys, `phase_turn`, a closed
     board, the law's value, an unknown key, a content at K x N / 2, a lamp
     on a free family, two measured events at one Node, an unknown table
@@ -275,11 +281,16 @@ def screen_profile(world: dict[str, object], ticks: int) -> list[float]:
     extent_y = world["shape"][1]  # type: ignore[index]
     assert isinstance(extent_y, int)
     counts = [0] * extent_y
+    content = 0
     for entry in simulation.measured.values():
         if entry.detector == 0:
             counts[entry.position[1]] += entry.events[0]
+            content += entry.held[0]
     report = simulation.detectors()[0]
     assert report["name"] == "screen" and report["families"]["light"]["clicks"] == sum(counts) > 0
+    # Each click measured the lamp's cost of its unit, quantum x s: the turn
+    # s is 4 at the start and falls as the lamp spends.
+    assert 3 * sum(counts) < content <= 4 * sum(counts), (content, sum(counts))
     return [
         (counts[max(y - 1, 0)] + counts[y] + counts[min(y + 1, extent_y - 1)]) / 3
         for y in range(extent_y)
