@@ -23,7 +23,8 @@ tests: `tests/test_node_mixing.py`, `tests/test_node_mixing_numbers.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
 `tests/test_detector_sensitivity.py`, `tests/test_phase_window.py`,
 `tests/test_periodic_axis.py`, `tests/test_phaseless_family.py`,
-`tests/test_release_costs_by_phase_rate.py`, `tests/test_event_worlds.py`
+`tests/test_release_costs_by_phase_rate.py`, `tests/test_event_worlds.py`,
+`tests/test_integer_bounds_of_measured_and_emission.py`
 ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
@@ -483,7 +484,18 @@ transit line the momentum labels from birth, apportioned exactly with the
 units at every Node, so a free family's labels in flight sum to what its
 releases carried and what escaped carries them off; the two lines are not
 each other's negatives. At the fixed point of a content at rest,
-released - absorbed = escaped = the emission.
+released - absorbed = escaped = the emission. The measured line is bounded
+as the transit line is (`engine.bounded`, since 2026-09-19): a measured
+event's momentum after a push, a recoil or a merge, the push taken and its
+terms (the gravity reading -M c, the electric scale and reading), its
+content after a click or a merge, and what waits to be created again with
+its content are checked against 2^62 - 1 (`transit.MOMENTUM_BOUND`, the
+bound of a declared and of a carried momentum) before they are assigned,
+and a value beyond it refuses the run with `OverflowError` naming the
+measured event, its Node and the quantity ("the momentum of measured event
+2 at [1, 0, 0] exceeds the integer bound 4611686018427387903"); Python's
+integers would not overflow, the model's 64-bit register does
+(`tests/test_integer_bounds_of_measured_and_emission.py`).
 
 **The world** (`events/world.py`). `law` "events"; `model_id`; `shape`;
 `boundary` "open" (the default) or an object with any of `x`, `y`, `z` set
@@ -504,7 +516,15 @@ to their content, no `phase_window` on its lamps or on a table entry for
 it, no `phase` but 0 on its measured events and its events in transit, and
 its sides weighed by the diagonal of the coherent sum, no cross term);
 `measured` (`position`,
-`family`, `amount` with 2 x amount < K x N for a family with a phase,
+`family`, `amount` with 2 x amount < K x N for a family with a phase and,
+for a free family, 3 x (amount x n // d) at the world's `release` at most
+2^30 - 1, the mixing's cell bound (`world.EMISSION_CELL_BOUND`,
+`EMISSION_MARGIN`: what the measured event releases per Port per
+self-creation, times three, must fit a cell, since a neighbour's slot holds
+up to about 2.3 x the release per Port; a content of 2^36 at [1, 128]
+releases 2^29 per Port and is refused at parsing where until 2026-09-19 the
+preflight certified it and the first crowded mixing refused it at interval
+4 to 14),
 `phase`, `charge`, `momentum`, `fixed`,
 `table` family name to `read` | `measure` | `rerelease` | `pass`, or to
 `{"rule": ..., "phase_window": s}` with s a step of the circle from 0
@@ -527,7 +547,13 @@ entry or a lamp, a window on `pass`, a table entry object without `rule` or
 with any other key, a family `phase` that is not true or false, a
 `phase_window` on a lamp of a family without a phase circle or on a table
 entry for one, a nonzero `phase` on a measured event or an event in transit
-of such a family, a `suspension` denominator of 0.
+of such a family, a `suspension` denominator of 0, a measured event of a
+free family whose release per Port per self-creation times 3 exceeds the
+mixing's cell bound 2^30 - 1 (the refusal names the Node, the amount, the
+release per Port, the `release` and the bound: "measured[0].amount
+68719476736 at [1, 1, 1] releases 536870912 units per Port per
+self-creation at release [1, 128]; 3 x that, 1610612736, exceeds the
+mixing's cell bound 1073741823").
 `event_universe.configuration_validation` reports a world of the law as kind
 `events`.
 

@@ -7,6 +7,31 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ### The engine of the law of events (2026-09-19)
 
+- The integer bounds of the measured line and of the emission (the
+  architect's review of 2026-09-19, findings F2, F4 and F9). `engine.bounded`
+  checks a measured event's momentum after a push, a recoil or a merge, the
+  push taken and its terms, its content after a click or a merge, and what
+  waits to be created again with its content against 2^62 - 1
+  (`transit.MOMENTUM_BOUND`, the bound of a declared and of a carried
+  momentum) before they are assigned; beyond it the run is refused with
+  `OverflowError` naming the measured event, its Node and the quantity
+  (until now `Measured.momentum` and `pushed` were unbounded Python
+  integers). The parser refuses a measured event of a free family whose
+  release per Port per self-creation, amount x n // d at the world's
+  `release`, times 3 exceeds the mixing's cell bound 2^30 - 1
+  (`world.EMISSION_CELL_BOUND`, `EMISSION_MARGIN`: a neighbour's slot holds
+  up to about 2.3 x the release per Port), naming the Node, the amount, the
+  release and the bound, where until now the preflight certified a content
+  of 2^36 at [1, 128] and the first crowded mixing refused the run at
+  interval 4 to 14; every shipped example passes (the largest free emission,
+  2^24 at [1, 128], is 3 x 131072 = 393216). The four refusals of
+  `mixing.py` that said "value exceeds the disturbance integer bound" (the
+  retired engine's word) now name the quantity: the amount in a cell, the
+  momentum carried by a departure, the amount placed on a departure, and the
+  coherent sum's component ([the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#the-emission-bound-at-parsing-and-the-bounded-measured-line-on-2026-09-19)).
+  Test: `test_integer_bounds_of_measured_and_emission` (new;
+  [expectations](docs/TEST_EXPECTATIONS.md#the-integer-bounds-of-the-measured-line-and-of-the-emission)).
 - A release costs the emitter by its phase rate (the model owner,
   2026-09-19, "I approve the proposal"): at a self-creation whose turn is
   s = `by_clock(age, content, K)` phase steps, each unit a lamp releases

@@ -41,7 +41,13 @@ law of events, the model owner, 2026-09-19):
   diagonal of the coherent sum (`mixing.diagonal_weights`);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
-  below K x N / 2), and optionally its `phase`, its whole `charge` (the
+  below K x N / 2; for a free family, what it releases per Port per
+  self-creation, amount x n // d at the world's `release`, times 3 must not
+  exceed the mixing's cell bound 2^30 - 1, `EMISSION_CELL_BOUND`: a
+  neighbour's slot holds up to about 2.3 x the release per Port, and the
+  parser refuses at once what the first crowded mixing would refuse at
+  the fourth to fourteenth interval), and optionally its `phase`, its
+  whole `charge` (the
   family's by default), its `momentum` (three integers), `fixed` (true: an
   apparatus held in place, it takes pushes into its momentum and never
   steps), its `table` (family name to `read`, `measure`, `rerelease` or
@@ -92,6 +98,14 @@ MAX_PHASE_STEPS = 4096
 # The bound of an amount, a clock and a momentum component of this law: the
 # arrays hold 64-bit integers and the mixing's own guards bound a cell.
 AMOUNT_BOUND = (1 << 62) - 1
+# The bound on what a free measured event releases per Port per self-creation
+# (amount x n // d at the world's `release`): the mixing refuses a cell above
+# `MAX_VALUE` (2^30 - 1), and a neighbour's slot holds up to about 2.3 x the
+# release per Port (the release itself and what the sides turn back), so
+# `EMISSION_MARGIN` x the release must fit the cell. Checked at parsing, so
+# that the preflight refuses what the first crowded mixing would.
+EMISSION_CELL_BOUND = MAX_VALUE
+EMISSION_MARGIN = 3
 # Keys of the earlier engines' worlds, refused by name so that the refusal
 # says which law the world belongs to.
 OLD_KEYS = (
@@ -427,6 +441,25 @@ def _window(value: object, label: str, phase_steps: int) -> int:
     return _integer(value, label, 0, phase_steps - 1)
 
 
+def _emission(amount: int, release: tuple[int, int], label: str, position: Address3) -> None:
+    """The emission bound of a free measured event: `EMISSION_MARGIN` times
+    what it releases per Port per self-creation, amount x n // d, must not
+    exceed the mixing's cell bound (`EMISSION_CELL_BOUND`, 2^30 - 1), or a
+    crowded slot next to it would be refused by the mixing a few intervals
+    into the run. Refused at parsing, naming the Node, the release and the
+    bound."""
+    numerator, denominator = release
+    per_port = amount * numerator // denominator
+    if per_port * EMISSION_MARGIN > EMISSION_CELL_BOUND:
+        raise ValueError(
+            f"{EVENTS_LAW}: {label}.amount {amount} at {list(position)} releases {per_port} units "
+            f"per Port per self-creation at release [{numerator}, {denominator}]; "
+            f"{EMISSION_MARGIN} x that, {per_port * EMISSION_MARGIN}, exceeds the mixing's cell "
+            f"bound {EMISSION_CELL_BOUND} (a neighbour's slot holds up to about 2.3 x the "
+            "release per Port)"
+        )
+
+
 def _lamp(value: object, label: str, phase_steps: int, phased: bool) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -484,6 +517,7 @@ def _measured(
     families: tuple[FamilyDefinition, ...],
     clock: int,
     phase_steps: int,
+    release: tuple[int, int],
     *,
     reversible: bool = False,
 ) -> tuple[MeasuredDefinition, ...]:
@@ -513,6 +547,8 @@ def _measured(
                 f"{EVENTS_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
                 "per self-creation below half the circle)"
             )
+        if families[family].free:
+            _emission(amount, release, label, position)
         # A measured event of a family without a phase circle has phase 0.
         phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
         charge = _integer(
@@ -827,7 +863,9 @@ def parse_event_world(document: object) -> EventWorld:
             raise ValueError(
                 f"{REVERSIBLE_DETECTOR_DYNAMICS}: families must contain at most 8 paid families"
             )
-    measured = _measured(obj["measured"], shape, families, clock, phase_steps, reversible=reversible)
+    measured = _measured(
+        obj["measured"], shape, families, clock, phase_steps, release, reversible=reversible
+    )
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, reversible=reversible
     )
