@@ -12,10 +12,13 @@ and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
 clock from the presence the law read back (`by_clock(age, k x n, d)` at the
 world's `suspension` `[n, d]`), and steps the free measured events by their
-momentum off the clock (at most one Link per interval, x before y before z;
-a step onto a Node that holds a measured event is refused; through an open
-face the step is a click on the face detector; on a periodic axis it
-wraps). The books (`books`): per family the measured line, in content,
+momentum off the clock (one Link per (S x M + p) / p self-creations on an
+axis whose momentum component is p, M the content and S the world's
+`width`, `by_clock(age, |p|, S x M + |p|)`, 1 by default; at most one Link
+per interval, x before y before z; a step onto a Node that holds a measured
+event is refused; through an open face the step is a click on the face
+detector; on a periodic axis it wraps). The books (`books`): per family the
+measured line, in content,
 initial + measured = current + spent + escaped; the transit line, in units,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
@@ -229,19 +232,27 @@ class RaySimulation:
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum off the clock, at most one per interval,
-        when nothing is owed; a step onto a measured event is refused; an
-        escape is a click on the face; a periodic axis wraps."""
+        when nothing is owed: on an axis whose momentum component is p, one
+        Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M +
+        |p|)` with M the content and S the world's `width` (the model owner's
+        D1 of 2026-09-19; S = 1 is the rule as it was, one Link per (M + p) /
+        p; one unit of net flow gives p = M, so the speed it gives is
+        1 / (S + 1) for every content); no remainder is kept, the count is
+        the whole part off the clock. A step
+        onto a measured event is refused; an escape is a click on the face; a
+        periodic axis wraps."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
         if content <= 0:
             return
+        width = self.world.width
         for axis in range(3):
             momentum = entry.momentum[axis]
             if momentum == 0:
                 continue
             magnitude = abs(momentum)
-            if not by_clock(entry.age - 1, magnitude, content + magnitude):
+            if not by_clock(entry.age - 1, magnitude, width * content + magnitude):
                 continue
             sign = 1 if momentum > 0 else -1
             entry.steps += 1

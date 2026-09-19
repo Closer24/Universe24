@@ -33,6 +33,7 @@ kept, their pins the law of events').
 | `test_ray_detector.py` | The detector's record: two rays in phase and in antiphase; the threshold gating a receiver and a re-emitter over the set; a release reading no threshold ([below](#the-detectors-record)) | `test_detector_sensitivity` (a to c), `test_one_reading_set` (c) |
 | `test_ray_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
+| `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
@@ -243,6 +244,40 @@ from `test_event_clock`, `test_release_costs_by_phase_rate` and
   intervals 1 to 20 is 1, 2, 3, 4, 4, 5, 6, 7, 8, 8, 9, 10, 11, 12, 12, 13,
   14, 15, 16, 16; with k = 8 it owes 2 at every self-creation: 1, 2, 2, 2,
   3, 3, 3, 4, 4, 4.
+
+## The width of the push
+
+`tests/test_push_width.py` (docs/RAY_LAW.md, section 3, step 5 and
+implementation note 15; the model owner's D1, 2026-09-19). One rule in
+isolation: an open bar of 12 x 1 x 1, K 1024, N 64, `release` [0, 1] (no
+push arrives), a free measured event of content M with the momentum p on
++x; the step rule `by_clock(age, |p|, S x M + |p|)` with S the world's
+`width`. The expected integers, written down before the first run:
+
+- (a) S = 1 reads exactly as the rule was: content 16 with momentum 16 from
+  x = 4 steps at the ages 2, 4, 6 (x after intervals 1 to 6: 4, 5, 5, 6,
+  6, 7; `steps` 0, 1, 1, 2, 2, 3), with `width` 1 declared and with the key
+  absent alike; with momentum 1 none after 16 intervals and one after 17.
+- (b) S = 8 with p = M: content 16 with momentum 16 steps once per 9
+  self-creations, at the ages 9, 18, 27 (x 4 through interval 8, 5 from 9,
+  6 from 18, 7 at 27; `steps` 0, 1, 2, 3); content 3 with momentum 3 steps
+  at the same ages (the speed a unit of flow gives, 1 / (S + 1), is the
+  same for every content).
+- (c) off the clock, no remainder: the probe of (b) at x = 3 with
+  `suspension` [1, 4] and a crowd of 4 rays of another number (a fixed
+  anchor of content 1 at x = 11) at rest on x = 3 to 7 owes one interval
+  after every self-creation (age after interval n is ceil(n / 2), waited
+  floor(n / 2)); the step of the ages 9, 18, 27 lands on the interval that
+  pays the count (a measured event steps only in an interval where it owes
+  nothing), the intervals 18, 36, 54: x after intervals 17, 18, 35, 36,
+  53, 54, 60 is 3, 4, 4, 5, 5, 6, 6; age 30, waited 30, `steps` 3 after
+  60; after every paying interval `steps` = age x 16 // 144 and after every
+  self-creation (age - 1) x 16 // 144; the momentum untouched; the books
+  balanced at every interval. (The first run corrected the interval of the
+  step from 17 to 18: the order of the frame, not the rule.)
+- (d) a world without `width` parses to 1; `width` 8 parses to 8 and the
+  runner's `run.json` carries `width` 8; 0, -1, `"8"` and 1.5 are refused
+  with "width must be an integer from 1".
 
 ## The phase window under the ray law
 

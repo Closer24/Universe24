@@ -33,6 +33,7 @@ keep their meaning; what the ray law changes is named here.
 - **Bijection** — the walk and the collision have inverses (`RaySimulation.inverse_step`): T forward intervals followed by T inverse intervals return the store bit-exact on a board without a measured event. The click is the only one-way border.
 - **Suspension, the count** — a measured event's owed count is read off its clock from the presence it read (`by_clock(age, presence x n, d)`), as under the law of events; there is no suspension of a ray (a ray in transit never waits; the seventh exit is the rest slot).
 - **Phase per Link** — the family key `phase_per_link`: the phase steps a ray turns at every Link crossed, 0 by default (a ray does not turn in transit unless the family declares it).
+- **Width (of the push)** — the world key `width`, S, an integer from 1 (the model owner's D1, 2026-09-19): a free measured event of content M with the momentum component p on an axis steps one Link per (S x M + p) / p self-creations on that axis, `by_clock(age, |p|, S x M + |p|)`, no remainder kept. S = 1 (the default) is the rule as it was, one Link per (M + p) / p. One unit of net flow gives any body p = M, so the speed it gives is 1 / (S + 1) for every content: the equivalence principle is kept and the world chooses its slowest motion. Distinct from `suspension` `[n, d]`, the width of the clock's count, and from `phase_window`, the width of a detector.
 
 ## The law of events (2026-09-19, deleted the same day)
 

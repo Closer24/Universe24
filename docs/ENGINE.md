@@ -111,7 +111,13 @@ handed to `gonen_beam` with the stores; `gonen_beam` returns the readings
 arrays read-only); the frame turns the phases of the measured events that
 self-created, reads the owed count off the clock from the presence
 (`_suspend`, `by_clock(age, presence x n, d)`), moves the measured events
-by their momentum (`_move`) and books the interval. `inverse_step` runs the
+by their momentum (`_move`: on an axis whose momentum component is p, one
+Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M + |p|)`,
+M the content and S the world's `width`, 1 by default; the model owner's
+D1 of 2026-09-19, [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam)
+step 5 and note 15; at most one Link per interval, x before y before z,
+only in an interval where nothing is owed) and books the interval.
+`inverse_step` runs the
 inverse collision and the inverse walk on a board without a measured event
 (the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam);
 with a measured event on the board it refuses: the click is the one-way
@@ -159,7 +165,8 @@ event, its Node and the quantity ([expectations](TEST_EXPECTATIONS.md#the-world-
 default, a power of two from 2 through 4096); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
 `suspension` `[n, d]` (an integer w as `[w, 1]`; 0 or `[0, d]` for none,
-recorded as `[0, 1]`); `directions` (the declared primitive vectors beyond
+recorded as `[0, 1]`); `width` (S, the width of the push, an integer from
+1; 1 by default, the step rule as it was); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -190,12 +197,13 @@ a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
 family without a phase circle, a table entry object without `rule` or with
 an unknown key, a `reads` outside the reading's components, a `suspension`
-denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)).
+denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)),
+a `width` below 1 or not an integer ([the width of the push](TEST_EXPECTATIONS.md#the-width-of-the-push)).
 `event_universe.configuration_validation` reports a world of the law as
 kind `rays`.
 
 **The record.** `run.json` carries `law` "rays-v1", the world's keys
-(`boundary` as declared; `suspension` as `[n, d]`; `directions`, the table
+(`boundary` as declared; `suspension` as `[n, d]`; `width`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `phase` and
 `phase_per_link`), `numbers`, the books per completed tick (`audit`) with
 `conserved_at_every_completed_tick`, the measured events' final states
