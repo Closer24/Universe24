@@ -21,7 +21,9 @@ the pointer is the record, the routing is the flight table.
 | `periodic_z_node.json` | `single_node_detector`: one Node at `(4,4,0)` on a 9-by-9-by-1 board with z periodic, its entry `{"rule": "measure", "reads": "tensor"}` | one ray of amount 1, phase 16, on +Z at the Node itself (the stub of extent 1) | 3 |
 
 All four use `N=32`, `K=1024`, fixed material content 1 and the paid family
-`carrier` of quantum 1. Only the declared rays supply the incoming
+`carrier` of `quantum` 1 (the kind follows from the quantum; the apparatus
+definitions write `measure` out, the rule the keys give a paid family, as
+the apparatus's own intent). Only the declared rays supply the incoming
 inventory; a ray that reaches a Node of the apparatus with the threshold met
 clicks there (the amount and the content enter the measured event, the
 record line carries the pointer and its square) and the run's detector

@@ -66,13 +66,16 @@ leave the board as before. A periodic axis has no faces.
 
 ### Diagnostic scope and acceptance
 
-`cube_flux(family, centre, half)` sums the amount x heading of the rays that
-cross the six faces of the cube of the given half-width around the centre
-on an all-open board, read-only; on a world with any periodic axis it raises
-`ValueError` (a periodic seam is not a face). `shell_readings` gives the
-shell means of the count (the amount that arrived), the presence (every ray
-at the Node) and the radial flow, read-only. `tools/coupling_readings.py`
-sums the four in-plane faces itself on the plane. A thin periodic board is a
+`cube_flux(family, centre, half)` sums the amount of the rays that cross
+the six faces of the cube of the given half-width around the centre on an
+all-open board, read off the Links crossed per Port (`per_port`, a
+diagnostic of the walk, not the reading's moments), read-only; on a world
+with any periodic axis it raises `ValueError` (a periodic seam is not a
+face). `shell_readings` gives the shell means of the count (the amount that
+arrived, the zeroth moment outside), the presence (every ray at the Node)
+and the radial flow (the first moment), read-only.
+`tools/coupling_readings.py` sums the four in-plane faces itself on the
+plane. A thin periodic board is a
 compact graph with return Links; it establishes no equivalence with
 unbounded three-dimensional space and requires its own experiment
 configuration. The independent expectations of the topology are pinned in
@@ -86,7 +89,7 @@ index into the world's direction table D), an age (the flight phase, modulo
 the direction's period), a phase (a step of the circle of N), a number (the
 last emitter), an amount (whole units) and a content per unit; its momentum
 is not stored, it is amount x content x D[direction] for a paid family and
-`quantum` x amount x D[direction] for a free one. The Node holds nothing
+amount x D[direction] for a free one (its unit carries no content). The Node holds nothing
 between intervals but the rays present at it and the measured event there.
 The law of one interval at one Node is `gonen_beam` ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam)):
 the walk by the flight table, the one reading, the collision by the table,
@@ -94,21 +97,28 @@ the measured event's table (`read`, `measure`, `rerelease`, `pass`, each
 gated by the detector's threshold and its window), the self-creations (the
 release, the lamp, what came home and what is re-emitted) and the merge of
 identical records. Every piece of logic exists once: one reading
-(`read_arrivals`) decomposes the seven slots of a Node (the six Ports a ray
-arrived through and here) into two scalars (outside, here), the net flow
-and the traceless tensor, and every coupling selects its component by the
-declared key `reads` of its table entry (`scalar` by default: the clock's
-count and the threshold read the presence, the push reads the flow, a
-detector may declare `tensor`); the detector's coherent record is the same
-decomposition applied to the amplitude vectors (32 x amount at cos and sin
-over 256), its scalar part squared.
+(`read_arrivals`) takes the amount-weighted moments of order 0, 1 and 2 of
+the direction vectors of a Node's arrivals (the model owner, 2026-09-19:
+valid for a fan as for the six headings; a ray that did not step has the
+direction (0, 0, 0) and enters the zeroth moment alone): two scalars
+(outside, here), the net flow (sum amount x D) and the traceless tensor
+(3 x sum amount x D (x) D less its trace, exact integers), and every
+coupling selects its component by the declared key `reads` of its table
+entry (`scalar` by default: the clock's count and the threshold read the
+presence, the push reads the flow, a detector may declare `tensor`); the
+detector's coherent record is the same moments over the clicked rays with
+their amplitudes as weights (32 x amount at cos and sin over 256), the
+scalar squared ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-gonen_beam),
+step 2, and section 10, note 16).
 
 **The frame** (`RaySimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
 release rate, its lamp's rate and window, its owed count) is read and
 handed to `gonen_beam` with the stores; `gonen_beam` returns the readings
-(the count, the flow, the per-Port amounts and the presence per Node, dense
-arrays read-only); the frame turns the phases of the measured events that
+(the count, the flow and the presence per Node, dense arrays read-only, and
+`per_port`, the amount that crossed into each Node through each Port this
+interval, a diagnostic of the walk for Gauss's flux); the frame turns the
+phases of the measured events that
 self-created, reads the owed count off the clock from the presence
 (`_suspend`, `by_clock(age, presence x n, d)`), moves the measured events
 by their momentum (`_move`) and books the interval. `inverse_step` runs the
@@ -144,9 +154,9 @@ came home is on the absorbed line until it leaves again); the content line
 (`content`), the content carried in transit (amount x content per unit),
 the same identity; and the momentum lines, a report and not a balance: the
 measured line the sum of the pushes taken and the recoils, the transit line
-the sum over the store of amount x content x D[direction] (`quantum` x
-amount x D[direction] for a free family), the escaped line the faces'
-sums. Every escaped line is the sum over the open faces of the face
+the sum over the store of amount x content x D[direction] (amount x
+D[direction] for a free family, whose unit carries no content), the escaped
+line the faces' sums. Every escaped line is the sum over the open faces of the face
 detectors' clicks (`face_detectors`). The measured line is bounded before
 assignment (`gonen_beam.bounded`): a measured event's momentum after a push
 or a recoil, the push taken, its content after a click and what waits to
@@ -163,15 +173,20 @@ recorded as `[0, 1]`); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
-(`name`, `kind` `free` or `paid`, `charge`, `quantum`, `phase` true by
-default, `phase_per_link` 0 .. N - 1); `measured` (`position`, `family`,
+(`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
+kind is derived, never declared), `charge` (a free family only), `phase`
+true by default, `phase_per_link` 0 .. N - 1); `measured` (`position`, `family`,
 `amount`, `phase`, `charge`, `momentum`, `fixed`, `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
 `rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "reads":
 component}` with `reads` one of `scalar`, `outside`, `here`, `vector`,
-`tensor`, `lamp` `{rate: [n, d], directions, phase_window}` on a measured
-event of a paid family); `in_transit` (`position`, `family`, `number`,
+`tensor`, the table generated from the keys by `world.default_table` (a
+free family read, a paid one measured, no window) and the world declaring
+only the entries that differ, `rule` optional in the object form, an entry
+equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
+directions, phase_window}` on a measured event of a paid family);
+`in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
 default). Refused, naming the key and the law: `"law": "events"` (pointing
@@ -184,20 +199,24 @@ P, a direction the world does not declare, a rest direction on a lamp or a
 re-emitter, a repeated direction, a momentum label beyond 2^62 - 1 on a
 declared ray or a lamp's release, `phase_per_link` outside 0 .. N - 1 or on
 a family without a phase circle, a content at or past K x N / 2 of a family
-with a phase, a lamp on a free family, a charge or a quantum where the kind
-forbids it, two measured events at one Node, an unknown table rule, N not
+with a phase, a lamp on a free family, `kind` on a family (pointing to
+MIGRATION: the quantum decides the kind), a family without `quantum`, a
+negative quantum, a charge on a paid family, two measured events at one
+Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
-family without a phase circle, a table entry object without `rule` or with
-an unknown key, a `reads` outside the reading's components, a `suspension`
+family without a phase circle, a table entry object with an unknown key (one
+without `rule` takes the family's default rule), a `reads` outside the
+reading's components, a `suspension`
 denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)).
 `event_universe.configuration_validation` reports a world of the law as
 kind `rays`.
 
 **The record.** `run.json` carries `law` "rays-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `directions`, the table
-D beyond the rest vectors and the headings; per family its `phase` and
-`phase_per_link`), `numbers`, the books per completed tick (`audit`) with
+D beyond the rest vectors and the headings; per family its `quantum`,
+`charge`, `phase` and `phase_per_link`, no `kind`), `numbers`, the books
+per completed tick (`audit`) with
 `conserved_at_every_completed_tick`, the measured events' final states
 (`measured`: position, held per family, content, phase, charge, momentum,
 windows, detector, age, owed, what waits to be created again (`home`,

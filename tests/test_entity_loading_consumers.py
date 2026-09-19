@@ -22,7 +22,7 @@ def _authored_world(*, ticks=0, flight=False):
         "N": 8,
         "release": [0, 1],
         "suspension": 0,
-        "families": [{"name": "packet", "kind": "paid"}],
+        "families": [{"name": "packet", "quantum": 1}],
         "entity_definitions": "entities/device.json",
         "entities": [{"name": "a", "definition": "probe", "position": [1, 0, 0]}],
     }

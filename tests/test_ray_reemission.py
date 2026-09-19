@@ -41,7 +41,7 @@ from event_universe.events import RaySimulation, parse_ray_world
 from event_universe.events.engine import FACE_NAMES
 
 M, LIGHT = 0, 1
-FAMILIES = [{"name": "m", "kind": "free"}, {"name": "light", "kind": "paid"}]
+FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
 
 
 def bar(

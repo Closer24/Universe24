@@ -16,8 +16,10 @@ law"), written down first:
     a closed board, an unknown key, a content at K x N / 2, a lamp on a free
     family, two measured events at one Node, an unknown table rule, N not a
     power of two, a detector on a Node without a measured event, a Node in
-    two detectors, a quantum on a free family, a `suspension` denominator
-    of 0, a window for a family without a phase circle;
+    two detectors, `kind` on a family (naming MIGRATION: the quantum decides
+    the kind), a family without `quantum`, a negative quantum, a charge on a
+    paid family, a `suspension` denominator of 0, a window for a family
+    without a phase circle;
 (b) accepted: the direction table of a world with `directions` [[1, 1, 0]]
     is the two rest vectors, the six headings and (1, 1, 0); a measured
     event's `directions` by vector or by index; a ray at rest (index 0);
@@ -62,7 +64,7 @@ def base(**keys: object) -> dict[str, object]:
         "N": 64,
         "release": [1, 128],
         "suspension": 1,
-        "families": [{"name": "m", "kind": "free", "charge": 0, "phase": False}],
+        "families": [{"name": "m", "quantum": 0, "charge": 0, "phase": False}],
         "measured": [{"position": [5, 5, 5], "family": "m", "amount": CONTENT, "fixed": True}],
     }
     world.update(keys)
@@ -77,7 +79,7 @@ def refused(document: dict[str, object], text: str) -> None:
 def test_the_world_refuses_by_name():
     """(a)."""
     world = base()
-    light = {"name": "light", "kind": "paid"}
+    light = {"name": "light", "quantum": 1}
     lamp = {"position": [1, 1, 1], "family": "light", "amount": 4, "fixed": True}
     refused({**world, "law": "events"}, '"law": "events" names the law of events.*MIGRATION')
     refused({key: value for key, value in world.items() if key != "law"}, '"law": "rays"')
@@ -153,19 +155,19 @@ def test_the_world_refuses_by_name():
         "phase_per_link must be an integer from 0 through 63",
     )
     refused(
-        {**world, "families": [{"name": "m", "kind": "free", "phase": False, "phase_per_link": 3}]},
+        {**world, "families": [{"name": "m", "quantum": 0, "phase": False, "phase_per_link": 3}]},
         "refused for a family without a phase circle",
     )
     refused({**world, "contents": []}, "earlier engines' keys")
     for key in ("initial_shadows", "wait_per_quantum", "schema_version", "dense_field"):
         refused({**world, key: 1}, key)
     refused(
-        {**world, "families": [{"name": "m", "kind": "free", "phase_turn": "none"}]},
+        {**world, "families": [{"name": "m", "quantum": 0, "phase_turn": "none"}]},
         "unknown keys: phase_turn",
     )
     refused({**world, "boundary": "periodic"}, "closed board is refused")
     refused({**world, "prefill": 3}, "unknown keys: prefill")
-    phased = {**world, "families": [{"name": "m", "kind": "free", "charge": 0}]}
+    phased = {**world, "families": [{"name": "m", "quantum": 0, "charge": 0}]}
     refused(
         {**phased, "measured": [{"position": [1, 1, 1], "family": "m", "amount": 1 << 28}]},
         "below K x N",
@@ -204,8 +206,14 @@ def test_the_world_refuses_by_name():
         "a Node in two detectors",
     )
     refused(
-        {**world, "families": [{"name": "m", "kind": "free", "quantum": 2}]},
-        "unit is the unit of content",
+        {**world, "families": [{"name": "m", "kind": "free", "quantum": 0}]},
+        "declares kind, a key removed on 2026-09-19.*MIGRATION",
+    )
+    refused({**world, "families": [{"name": "m"}]}, "lacks keys: quantum")
+    refused({**world, "families": [{"name": "m", "quantum": -1}]}, "quantum must be an integer from 0")
+    refused(
+        {**world, "families": [{"name": "light", "quantum": 3, "charge": 1}]},
+        "a paid family \\(quantum 3\\) carries no charge",
     )
     refused({**world, "suspension": [1, 0]}, "suspension denominator")
     refused(
@@ -305,7 +313,7 @@ def pair(momentum: int) -> dict[str, object]:
         K=1024,
         release=[1, 1],
         suspension=0,
-        families=[{"name": "m", "kind": "free"}],
+        families=[{"name": "m", "quantum": 0}],
         measured=[
             {"position": [0, 0, 0], "family": "m", "amount": 64, "fixed": True},
             {
@@ -341,7 +349,7 @@ def test_the_measured_line_is_bounded_before_assignment():
             K=1 << 60,
             release=[0, 1],
             suspension=0,
-            families=[{"name": "m", "kind": "free", "phase": False}],
+            families=[{"name": "m", "quantum": 0, "phase": False}],
             measured=[
                 {"position": [2, 0, 0], "family": "m", "amount": 4, "fixed": True},
                 {"position": [1, 0, 0], "family": "m", "amount": content, "fixed": True},

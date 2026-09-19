@@ -21,8 +21,9 @@ A board of 121 x 121 x 1 Nodes with the z axis declared periodic
 (`"boundary": {"z": "periodic"}`, [the engine](../../../docs/ENGINE.md)): a
 true two-dimensional board, nothing leaks on z; the x and y faces are open.
 The centre c = (60, 60, 0), `"law": "rays"`, K 2^22, N 64, `release`
-[1, 128], `suspension` 0 (1 in world 6 only), one free family `m` of charge
-0 (the family `q` in item 7, where the measured events carry the charges),
+[1, 128], `suspension` 0 (1 in world 6 only), one free family `m`
+(`quantum` 0, the kind following from the quantum) of charge 0 (the family
+`q` in item 7, where the measured events carry the charges),
 every measured event `fixed` unless the item says otherwise, `phase` 0. The
 source is a measured event of content 2^24 at c releasing on the six
 headings: `by_clock` gives 2^17 per heading at every self-creation; the two
@@ -34,8 +35,9 @@ per interval on the in-plane headings. Under the ray law a beam does not
 spread: the ring's Nodes off the four in-plane axes are empty, a ring mean
 is the axial Nodes' reading over the ring's Node count, and the count on an
 axis is constant with r. A probe is a measured event of content 1 (m in
-item 1) with the default table (`read` for a free family: the push taken,
-the rays go on), so a probe is transparent to the beam it reads. A probe
+item 1) with the table the keys give (`read` for a free family: the push
+taken, the rays go on; no table declared), so a probe is transparent to the
+beam it reads. A probe
 releases six lone rays at age 128 / m along its six lattice lines; the tool
 filters records by `number`.
 

@@ -5,6 +5,33 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The table from the keys and the moments (2026-09-19, the night)
+
+- Two decisions of the model owner on the mathematician's review of the
+  table of the physical entities (Highlights 5.4, "I approve 1 and 3";
+  [RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  notes 15 and 16), generic replacing generic. The table of a measured
+  event is generated from the families' keys (`world.default_table`: a
+  free family read, a paid one measured, no window) and a world declares
+  only what differs (a window, a rule off the default, a `reads`
+  component; `rule` optional in the object form; an entry equal to the
+  default accepted and changing nothing); the kind of a family is derived
+  from its `quantum` (0 free, 1 or more paid; `quantum` required) and the
+  key `kind` is refused naming MIGRATION. The one reading `read_arrivals`
+  is the amount-weighted moments of order 0, 1 and 2 of the arrivals'
+  direction vectors (the count split outside / here, the flow, the
+  traceless tensor `3 x sum amount x D (x) D - tr I`, exact integers,
+  bounded), valid for a fan as for the six headings, in place of the
+  seven-slot decomposition; on the six headings it reads exactly as
+  before, on a fan a ray enters with its own vector. The example worlds
+  are rewritten by `tools/migrate_ray_worlds.py` (new) to declare only
+  what differs; every example world parses as before and the Bell and
+  coupling runs are unchanged record by record
+  ([validation](docs/VALIDATION.md)). Tests: `test_default_table` (new),
+  `test_ray_readings` (a) re-pinned
+  ([migration](docs/MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night),
+  [expectations](docs/TEST_EXPECTATIONS.md)).
+
 ### The law of the ray (2026-09-19)
 
 - The engine of the law of the ray, `rays-v1` (the model owner, 2026-09-19,

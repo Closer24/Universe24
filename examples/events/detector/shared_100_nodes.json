@@ -15,7 +15,6 @@
   "families": [
     {
       "name": "carrier",
-      "kind": "paid",
       "quantum": 1
     }
   ],

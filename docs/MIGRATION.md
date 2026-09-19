@@ -6,6 +6,67 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The table from the keys and the moments, on 2026-09-19 (the night)
+
+The model owner's decisions of the night of 2026-09-19 (Highlights 5.4, on
+the mathematician's review of the table of the physical entities: "I
+approve 1 and 3"; [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+notes 15 and 16): generic replaces generic, nothing physical changes on the
+six headings.
+
+- **`kind` is removed from the family schema.** A family declares its
+  `quantum` (now required): 0 is a free family (matter; its release costs
+  nothing, its rays carry no content, its label is `amount x D`, it is read
+  for gravity and electricity, it may carry a `charge`), 1 or more a paid
+  one (light; released by a lamp at the cost `quantum` x turn per unit, a
+  click measures it, no charge). `"kind": "free"` becomes `"quantum": 0`
+  and `"kind": "paid"` becomes `"quantum": 1` (or the declared quantum);
+  a world that still declares `kind` is refused naming this entry, since
+  the owner's rule is one canonical form. `FamilyDefinition.kind` is gone,
+  `FamilyDefinition.free` is `quantum == 0`, `FamilyDefinition.unit_label`
+  is the content one declared unit carries for its label (1 for a free
+  family); `world.KINDS` is gone; `RayStore.labels(rows, vectors, free)`
+  takes no quantum. `run.json` carries `quantum` per family and no `kind`.
+- **The table is generated from the keys.** `world.default_table(families)`
+  gives every measured event its table: `read` for a free family, `measure`
+  for a paid one, no window, the rule's component (`vector` on `read`,
+  `scalar` otherwise). A declared `table` overrides only the entries it
+  names; every entry that equals the default is optional (still accepted;
+  it changes nothing) and the object form may omit `rule`, so a window
+  alone (`{"light": {"phase_window": 32}}`) is a lawful entry. The shipped
+  worlds were rewritten to declare only what differs by
+  `tools/migrate_ray_worlds.py` (which also converts `kind`; run it on
+  your own worlds: `PYTHONPATH=src python tools/migrate_ray_worlds.py
+  WORLD.json`); the Bell and coupling generators emit the trimmed form.
+  Every example world parses to the same `RayWorld` as before, and the
+  Bell and coupling runs are unchanged record by record
+  ([validation](VALIDATION.md)).
+- **The one reading is the moments.** `read_arrivals(vectors, amounts,
+  keys=None, size=None)` replaces `read_arrivals(slots)`: it takes the
+  amount-weighted moments of order 0, 1 and 2 of the arrivals' direction
+  vectors (the count split outside / here, the net flow `sum amount x D`,
+  the traceless tensor `3 x sum amount x D (x) D - tr I`, exact integers)
+  in place of the decomposition of the seven Port slots over an orthogonal
+  basis; `READING_BASIS`, `READING_SLOTS` and the seven-slot form are gone;
+  `Reading.tensor` is a symmetric traceless 3 x 3 integer matrix (was two
+  components; the old pair is `-T_zz` and `(T_xx - T_yy) / 3`), so a
+  record with `"reads": "tensor"` carries three rows of three integers;
+  `Reading.second` holds the six entries of the second moment. The store's
+  `port` column is `arrival` (the direction the ray arrived on this
+  interval, `HERE` = 0, the first rest direction, for a ray that did not
+  step); `Readings.per_port` is (nodes, 6), the amount that crossed into
+  each Node through each Port this interval, a diagnostic of the walk that
+  `cube_flux` and `tools/coupling_readings.py` read for Gauss's flux. On
+  the six headings every reading is unchanged; on a fan a ray enters the
+  reading with its own vector `D[direction]` instead of the unit Link of
+  its last step, so the push a measured event takes from a fan ray is its
+  label (the two-slit worlds' wall momentum changes; their screen record
+  still fringes, `tests/test_ray_worlds.py` (a)). A reading whose second
+  moment could pass 2^62 - 1 is refused with `OverflowError`.
+- **Tests.** `test_ray_readings.py` (a) re-pinned on the moments;
+  `test_default_table.py` new; every test world declares `quantum` in
+  place of `kind`.
+
 ## The law of the ray, on 2026-09-19 (`rays-v1`)
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "DECIDED: the law

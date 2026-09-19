@@ -128,7 +128,7 @@ def bar(shape: list[int], boundary: object, rays: list[dict[str, object]]) -> di
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        "families": [{"name": "light", "kind": "paid"}],
+        "families": [{"name": "light", "quantum": 1}],
         "measured": [
             {
                 "position": [0, 0, 0],

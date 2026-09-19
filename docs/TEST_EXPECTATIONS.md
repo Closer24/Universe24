@@ -26,7 +26,8 @@ kept, their pins the law of events').
 
 | Module | Rule isolated | Re-pins |
 | --- | --- | --- |
-| `test_ray_readings.py` | The one reading: the seven slots decomposed once into two scalars, the flow and the tensor; orthogonal, summing back, the 48 board symmetries; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_ray_readings.py` | The one reading: the moments of order 0, 1 and 2 of the arrivals' direction vectors, taken once; equal to the slot decomposition on the six headings, the moments of the fan on a fan, covariant under the 48 board symmetries, bounded; the push by the flow of every number but the reader's own; the presence over rest and moving rays; the threshold over the set and the window per ray ([below](#the-one-reading)) | `test_one_reading_set` (a to d), `test_phaseless_family` (c), `test_detector_sensitivity` (b), `test_event_suspension` (e) |
+| `test_default_table.py` | The table generated from the keys: a free family read, a paid one measured, no window; explicit defaults change nothing; what differs is kept; the kind derived from the quantum and `kind` refused; every example world equal to itself with the defaults written back ([below](#the-table-generated-from-the-keys)) | new |
 | `test_ray_flight.py` | The flight: the table at 1 / sqrt 3 with its periods, a lone unit straight and unchanged, the isotropy, the periodic axis and the stub, the open face's click, `adjacent_node` ([below](#the-flight)) | `test_event_transit` (a), `test_periodic_axis` (a to c), `test_event_boundaries` |
 | `test_ray_collision.py` | The collision table: the classes, the bijection on all 3^8 states, the conservation, the 20 orbits, a head-on pair parking and a crowd passing ([below](#the-collision-table)) | new |
 | `test_ray_bijection.py` | The bijection: 50 intervals forward and 50 inverse return the store bit-exact ([below](#the-bijection)) | new |
@@ -47,20 +48,34 @@ kept, their pins the law of events').
 
 ## The one reading
 
-`tests/test_ray_readings.py` (docs/RAY_LAW.md; the model owner, 2026-09-19:
-every piece of logic once): the seven slots of a Node (the six Ports a ray
-arrived through and here) are decomposed once by `read_arrivals` into two
-scalars (outside, here), the net flow and the traceless tensor, and every
-coupling selects its component by key.
+`tests/test_ray_readings.py` (docs/RAY_LAW.md, section 3 step 2 and section
+10 note 16; the model owner, 2026-09-19: every piece of logic once; "the one
+reading function is the amount-weighted moments of order 0, 1 and 2 of the
+direction vectors, valid for fans as for the six headings, here entering the
+zeroth moment alone"): `read_arrivals` takes once, over one reading set, the
+moments of the arrivals' direction vectors weighted by their amounts (the
+count split outside / here, the net flow sum amount x D, the traceless
+tensor 3 x sum amount x D (x) D less its trace), and every coupling selects
+its component by key.
 
-- (a) the decomposition: the seven basis vectors are mutually orthogonal;
-  the slots [3, 1, 4, 1, 5, 9, 2] read outside 23, here 2, the flow
-  (2, 3, -4), the tensor (4 + 5 - 28, 4 - 5) = (-19, -1), and 12 x slots =
-  sum_i (12 / |e_i|^2) c_i e_i (the slots recovered); under each of the 48
-  signed axis permutations of the board the scalars are fixed, the flow is
-  the rotated flow, and the tensor of the rotated slots is the tensor of the
-  permuted axis pairs; the shortest slot vectors, one unit on one Port, read
-  outside 1, here 0 and the flow the Port's heading.
+- (a) the moments: on the six headings the amounts [3, 1, 4, 1, 5, 9] and 2
+  here read outside 23, here 2, the flow (2, 3, -4) and the tensor
+  diag(-11, -8, 19) (3 x diag(4, 5, 14) - 23 I), which is the slot
+  decomposition of the first ray worlds exactly (its (p_x + p_y - 2 p_z,
+  p_x - p_y) = (-19, -1) being -T_zz and (T_xx - T_yy) / 3); for 64 fixed
+  random integer amounts on the seven slots the moments equal that slot
+  decomposition through the same relations; on a fan (2 on (1, 1, 0), 3 on
+  (2, -1, 0), 1 on (3, 1, 2), 4 on (1, 0, 0), 5 here) the flow is
+  (15, 0, 2) and the tensor [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
+  (3 x the second moment [[27, -1, 6], [-1, 6, 2], [6, 2, 4]] less its
+  trace 37), traceless; under each of the 48 signed axis permutations R of
+  the board the scalars are fixed, the flow is R x flow and the tensor
+  R T R^T, on the fan as on the headings; the shortest reading, one unit on
+  one heading e, reads outside 1, here 0, the flow e and the tensor
+  3 e e^T - I; the keyed form over Nodes equals the readings Node by Node; a
+  reading whose second moment could pass 2^62 - 1 (an amount above
+  2^62 / 4096 on (64, 0, 0)) is refused with `OverflowError` before any
+  product is formed, and the amount at the bound is accepted.
 - (b) the push reads the flow of every number but the reader's own: a free
   reader of content 4 met by 9 rays of number 1 arriving on +X and 9 of
   number 2 arriving on -X is pushed by (0, 0, 0) and reads 18; by the 9 of
@@ -78,6 +93,39 @@ coupling selects its component by key.
   `pass` record each (`threshold` 3); at threshold 1 with the window 32,
   the two rays at phase 0 pass (`window` 32) and the ray at phase 32
   clicks.
+
+## The table generated from the keys
+
+`tests/test_default_table.py` (docs/RAY_LAW.md, section 2 and section 10
+note 15; the model owner, 2026-09-19, "I approve 1 and 3": the tables are
+generated from the keys and a world declares only what differs, `kind`
+derived from `quantum`).
+
+- (a) the default: for the families m (quantum 0) and light (quantum 3)
+  `default_table` is (("read", None, "vector"), ("measure", None,
+  "scalar")); a measured event without `table` parses to exactly that, and
+  so does one that writes the default out as strings, as objects with
+  `reads`, as empty objects, or for one family only: the `RayWorld`s are
+  equal field by field.
+- (b) what differs is kept: a window alone ({"phase_window": 8}) keeps the
+  default rule `measure`, the window 8 and the component `scalar`; `pass`
+  and `rerelease`, `read` on a paid family and `measure` on a free one are
+  kept with their components (`vector` on `read`, `scalar` otherwise);
+  `reads` `tensor` and `here` are kept with the default rule; a `read`
+  entry with the window 3 and `reads` `outside` on a paid family is kept
+  whole.
+- (c) the derived kind: quantum 0 is free, 1 and 2^30 paid; the unit label
+  is 1 for a free family and the quantum for a paid one; `kind` is refused
+  naming the removal of 2026-09-19 and docs/MIGRATION.md for the values
+  `free`, `paid` and `other`; a family without `quantum` is refused naming
+  the key; a negative quantum is refused; a charge on a paid family is
+  refused naming its quantum; a charge on a free family and a lamp on a
+  paid family are accepted, and a lamp on a free family is refused.
+- (d) the example worlds: every world of `examples/events/` (the ten Bell
+  and twenty-one coupling worlds, the four top-level worlds, the four
+  detector worlds through the entity loader) parses equal, field by field,
+  to the same document with the generated default written back into every
+  measured event's table; no shipped world writes a default entry out.
 
 ## The flight
 
@@ -280,9 +328,10 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   intervals 32 released, content K + 2 - 32, momentum (-32, 0, 0), phase 0;
   after 81 the counter clicked 32 times and the lamp released 17 more, 49
   in all. The refusals, naming the key: a window of 64 at N = 64, a window
-  on `pass`, an object entry without `rule`, an object entry with an
-  unknown key, a lamp window of -1, a `reads` key outside the reading's
-  components.
+  on `pass`, an object entry with an unknown key, a lamp window of -1, a
+  `reads` key outside the reading's components; an object entry without
+  `rule` takes the family's default rule (since the night of 2026-09-19: a
+  window alone on a paid family measures in the window 8).
 
 ## The world file of the ray law
 
@@ -301,8 +350,10 @@ re-pinned from `test_event_worlds` (e) and
   closed board, an unknown key, a content at K x N / 2, a lamp on a free
   family, two measured events at one Node, an unknown table rule, N not a
   power of two, a detector on a Node without a measured event, a Node in
-  two detectors, a quantum on a free family, a `suspension` denominator of
-  0, a window for a family without a phase circle.
+  two detectors, `kind` on a family (naming MIGRATION: the quantum decides
+  the kind), a family without `quantum`, a negative quantum, a charge on a
+  paid family, a `suspension` denominator of 0, a window for a family
+  without a phase circle.
 - (b) accepted: the direction table of a world with `directions`
   [[1, 1, 0]] is the two rest vectors, the six headings and (1, 1, 0); a
   measured event's `directions` by vector or by index; a ray at rest (index

@@ -48,8 +48,10 @@ measured event `fixed`:
     each of those phases, and the lamp released 17 more (the ages 64..80,
     the phases 0..16, all in the window), 49 in all. The
     refusals, naming the key: a window of 64 at N = 64, a window on `pass`,
-    an object entry without `rule`, an object entry with an unknown key, a
-    lamp window of -1, a `reads` key outside the reading's components.
+    an object entry with an unknown key, a lamp window of -1, a `reads` key
+    outside the reading's components; an object entry without `rule` takes
+    the family's default rule (a window alone on a paid family measures in
+    the window 8).
 """
 
 from __future__ import annotations
@@ -60,7 +62,7 @@ from event_universe.events import RaySimulation, parse_ray_world
 from event_universe.events.gonen_beam import ray_tables
 
 LIGHT, COUNTER = 0, 1
-FAMILIES = [{"name": "light", "kind": "paid"}, {"name": "counter", "kind": "paid"}]
+FAMILIES = [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}]
 NO_RESPONSE = {"home": 0, "read": 0, "measure": 0, "rerelease": 0}
 K_B = 1 << 14
 IN_WINDOW_8 = [*range(0, 24), *range(56, 64)]
@@ -237,8 +239,12 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
         parse_ray_world(
             {**base, "measured": [lamp(), counter(10, {"light": {"rule": "pass", "phase_window": 8}})]}
         )
-    with pytest.raises(ValueError, match=r"table\['light'\] lacks keys: rule"):
-        parse_ray_world({**base, "measured": [lamp(), counter(10, {"light": {"phase_window": 8}})]})
+    # A window alone is a lawful entry: the rule is the family's default
+    # (`measure` for a paid family; the table generated from the keys).
+    windowed = parse_ray_world(
+        {**base, "measured": [lamp(), counter(10, {"light": {"phase_window": 8}})]}
+    )
+    assert windowed.measured[1].table[0] == "measure" and windowed.measured[1].windows[0] == 8
     with pytest.raises(ValueError, match=r"table\['light'\] has unknown keys: width"):
         parse_ray_world(
             {**base, "measured": [lamp(), counter(10, {"light": {"rule": "measure", "width": 8}})]}

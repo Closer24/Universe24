@@ -16,10 +16,14 @@ order, each a bijection on the board's state except the border:
    the neighbour along its step (the wrap on a periodic axis; through an
    open face it clicks on the face detector), its age advanced modulo its
    direction's period, its phase turned by the family's `phase_per_link`;
-2. the readings: every Node's seven slots (the six Ports a ray arrived
-   through this interval and "here", the rays that did not step) decomposed
-   ONCE by `read_arrivals` into two scalars (outside, here), the net flow and
-   the traceless tensor; every coupling reads its component by key;
+2. the readings: at every Node the amount-weighted moments of order 0, 1
+   and 2 of the direction vectors of the arrivals, taken ONCE by
+   `read_arrivals` over the one reading set: the count (split outside /
+   here, a ray that did not step this interval having the direction
+   (0, 0, 0) and entering the zeroth moment alone), the net flow (the
+   vector sum of amount x D[direction]) and the traceless tensor (three
+   times the sum of amount x D (x) D with its trace removed); valid for a
+   fan as for the six headings; every coupling reads its component by key;
 3. the collision: at every Node, per (number, content) class, the single
    units in the eight slots (six headings, two rest slots) permuted by the
    collision table, the forward map a cyclic shift inside the class;
@@ -28,8 +32,8 @@ order, each a bijection on the board's state except the border:
    own, as one set (the threshold on the set), then each ray by its own
    phase (the window), then the rule: `read` (the push, the rays go on),
    `measure` (the click: the content joins, the border; the detector's
-   record is the squared scalar of the same decomposition applied to the
-   clicked rays' amplitude vectors), `rerelease` (re-emitted at the next
+   record is the squared scalar of the same moments taken over the clicked
+   rays with their amplitudes as weights), `rerelease` (re-emitted at the next
    self-creation on the declared directions), `pass`; own-number rays are
    home;
 5. the self-creations: the free release, what came home or is re-released
@@ -38,7 +42,7 @@ order, each a bijection on the board's state except the border:
 6. merge identical rows and sort by Node.
 
 No other function holds a piece of the law: `flight_table`, `collision_table`
-and `read_arrivals` are the pure tables and the one decomposition it reads;
+and `read_arrivals` are the pure tables and the one reading it takes;
 `RayStore` is the structure of arrays it moves. Integers only. The engine
 (`engine.py`) schedules and books; it computes no physics.
 """
@@ -67,9 +71,13 @@ from event_universe.events.world import (
 Record = Callable[[dict[str, object]], None]
 # The time resolution of the flight table: T_d = isqrt(3 |v|^2 Q^2).
 Q = 64
-# The reading's slots: the six Ports in Port order and "here".
-HERE = 6
-READING_SLOTS = 7
+# The arrival of a ray that did not step this interval: the first rest
+# direction, whose vector is (0, 0, 0), so "here" enters the zeroth moment
+# of the reading alone.
+HERE = 0
+# The Ports of a Node, the Links a ray may cross into it (a walk diagnostic).
+PORTS = 6
+DIMENSIONS = 3
 # The collision's slots: the six headings in Port order and the two rest slots.
 COLLISION_SLOTS = 8
 SLOT_STATES = 3
@@ -78,7 +86,6 @@ SLOT_STATES = 3
 # merge of identical rows (a bookkeeping bijection) leaves the reading
 # unchanged; two rows in phase add their amplitudes.
 AMPLITUDE_SCALE = 32
-HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
 ZERO3 = (0, 0, 0)
 
 
@@ -98,24 +105,51 @@ class GonenBeam:
     content: int
 
 
-# -- the one decomposition -------------------------------------------------------
+# -- the one reading: the moments ------------------------------------------------
+
+# The six independent entries of the symmetric second moment, (i, j) with
+# i <= j, in the order the packed column holds them: xx, yy, zz, xy, xz, yz.
+PAIR_I = np.array([0, 1, 2, 0, 0, 1], dtype=np.int64)
+PAIR_J = np.array([0, 1, 2, 1, 2, 2], dtype=np.int64)
+IDENTITY = np.eye(DIMENSIONS, dtype=np.int64)
+# The columns of the per-row moment table: the two counts (outside, here),
+# the three components of amount x D and the six entries of amount x D_i D_j.
+MOMENT_COLUMNS = 2 + DIMENSIONS + PAIR_I.shape[0]
 
 
 @dataclass(frozen=True)
 class Reading:
-    """The seven slots of a Node decomposed once: two scalars (outside, the
-    six Ports' sum; here), the net flow (a vector) and the traceless tensor
-    (two components). Every coupling selects its component by key."""
+    """The moments of order 0, 1 and 2 of the direction vectors of one
+    reading set, weighted by the amounts (the model owner, 2026-09-19): the
+    zeroth moment split into `outside` (the rays that arrived, their
+    direction nonzero) and `here` (the rays that did not step, their
+    direction zero), `vector` the first moment (the net flow, sum amount x
+    D) and `second` the six entries of the second moment (sum amount x
+    D_i D_j for xx, yy, zz, xy, xz, yz), whose traceless part is `tensor`
+    (3 x the second moment less its trace on the diagonal, a symmetric
+    3 x 3 integer matrix of trace zero). Every coupling selects its
+    component by key. Keyed over Nodes the arrays carry a leading axis."""
 
     outside: np.ndarray
     here: np.ndarray
     vector: np.ndarray
-    tensor: np.ndarray
+    second: np.ndarray
 
     @property
     def scalar(self) -> np.ndarray:
-        """The presence: everything at the Node, outside and here."""
+        """The presence: everything in the set, outside and here."""
         result: np.ndarray = self.outside + self.here
+        return result
+
+    @property
+    def tensor(self) -> np.ndarray:
+        """The traceless second moment, 3 x sum amount x D D^T - tr I: exact
+        integers, the trace removed times the number of dimensions."""
+        matrix = np.zeros((*self.second.shape[:-1], DIMENSIONS, DIMENSIONS), dtype=np.int64)
+        matrix[..., PAIR_I, PAIR_J] = self.second
+        matrix[..., PAIR_J, PAIR_I] = self.second
+        trace = self.second[..., 0] + self.second[..., 1] + self.second[..., 2]
+        result: np.ndarray = DIMENSIONS * matrix - trace[..., None, None] * IDENTITY
         return result
 
     def component(self, key: str) -> np.ndarray:
@@ -132,32 +166,51 @@ class Reading:
         raise ValueError(f"{RAYS_LAW}: no reading component {key!r}")
 
 
-# The orthogonal integer basis of the decomposition over the seven slots
-# [+X, -X, +Y, -Y, +Z, -Z, here]: the two scalars, the vector, the tensor.
-READING_BASIS = np.array(
-    [
-        [1, 1, 1, 1, 1, 1, 0],
-        [0, 0, 0, 0, 0, 0, 1],
-        [1, -1, 0, 0, 0, 0, 0],
-        [0, 0, 1, -1, 0, 0, 0],
-        [0, 0, 0, 0, 1, -1, 0],
-        [1, 1, 1, 1, -2, -2, 0],
-        [1, 1, -1, -1, 0, 0, 0],
-    ],
-    dtype=np.int64,
-)
-
-
-def read_arrivals(slots: np.ndarray) -> Reading:
-    """The one reading: the seven slots (..., 7) of a Node, the six Ports in
-    Port order and here, decomposed into the components of `READING_BASIS`,
-    integers: outside = the six Ports' sum, here, the net flow (+X - -X, ...)
-    and the traceless tensor (p_x + p_y - 2 p_z, p_x - p_y) with p the sum
-    of the two Ports of an axis. Orthogonal, and the slots are recovered as
-    sum_i c_i e_i / |e_i|^2."""
-    values = np.asarray(slots, dtype=np.int64)
-    components = values @ READING_BASIS.T
-    return Reading(components[..., 0], components[..., 1], components[..., 2:5], components[..., 5:7])
+def read_arrivals(
+    vectors: np.ndarray,
+    amounts: np.ndarray,
+    keys: np.ndarray | None = None,
+    size: int | None = None,
+) -> Reading:
+    """The one reading of a set of rays: `vectors` (rows, 3) the direction
+    vector of each ray's arrival (D[direction] for a ray that arrived this
+    interval, (0, 0, 0) for one that did not step) and `amounts` (rows,)
+    its weight (the amount; the amplitude at the detector), summed as the
+    moments of order 0, 1 and 2, exact integers: outside = the amounts on
+    a nonzero vector, here = the amounts on the zero vector, the vector sum
+    of amount x v, and the second moment sum amount x v v^T (its traceless
+    part the tensor). With `keys` (rows,) and `size` the moments are taken
+    per key (one reading per Node), the arrays gaining a leading axis of
+    `size`. Valid for a fan as for the six headings: no projection onto
+    the Ports."""
+    v = np.asarray(vectors, dtype=np.int64).reshape(-1, DIMENSIONS)
+    a = np.asarray(amounts, dtype=np.int64).reshape(-1)
+    bins = None if keys is None else np.asarray(keys, dtype=np.int64).reshape(-1)
+    # Every entry of the table is at most amount x P^2 and every sum has at
+    # most the rows of one key: the bound is checked before a product is
+    # formed, so the integers below never wrap.
+    per_row = int(np.abs(a).max(initial=0)) * max(1, int(np.abs(v).max(initial=0))) ** 2
+    rows = a.shape[0] if bins is None else int(np.bincount(bins, minlength=1).max(initial=0))
+    if per_row * rows > MOMENTUM_BOUND:
+        raise OverflowError(
+            f"{RAYS_LAW}: the moments of a reading of {rows} rows of up to {per_row} exceed the "
+            f"integer bound {MOMENTUM_BOUND} (lower the amounts or the direction bound)"
+        )
+    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=np.int64)
+    table[:, 0] = a * v.any(axis=1)
+    table[:, 1] = a - table[:, 0]
+    table[:, 2 : 2 + DIMENSIONS] = v * a[:, None]
+    table[:, 2 + DIMENSIONS :] = a[:, None] * v[:, PAIR_I] * v[:, PAIR_J]
+    if bins is None:
+        sums = table.sum(axis=0)
+    else:
+        if size is None:
+            raise ValueError(f"{RAYS_LAW}: a keyed reading needs its size")
+        sums = np.zeros((size, MOMENT_COLUMNS), dtype=np.int64)
+        np.add.at(sums, bins, table)
+    return Reading(
+        sums[..., 0], sums[..., 1], sums[..., 2 : 2 + DIMENSIONS], sums[..., 2 + DIMENSIONS :]
+    )
 
 
 # -- the flight table ------------------------------------------------------------
@@ -327,15 +380,17 @@ def ray_tables(world: RayWorld) -> RayTables:
 
 # -- the store -------------------------------------------------------------------
 
-FIELDS = ("node", "direction", "age", "phase", "number", "amount", "content", "port")
+FIELDS = ("node", "direction", "age", "phase", "number", "amount", "content", "arrival")
 
 
 class RayStore:
     """The records of one family as a structure of arrays, one row per
     record: `node` the flat index, `direction`, `age`, `phase`, `number`,
-    `amount`, `content` (per unit) and `port`, the slot of the last interval
-    (the Port the ray arrived through, or `HERE`). Rows sorted by `node`
-    after every interval; identical rows merged."""
+    `amount`, `content` (per unit) and `arrival`, the direction the ray
+    arrived on this interval (its direction at the walk, kept through the
+    collision so the reading is of the arrivals) or `HERE` for a ray that
+    did not step. Rows sorted by `node` after every interval; identical rows
+    merged."""
 
     def __init__(self, shape: Address3) -> None:
         self.shape = shape
@@ -349,7 +404,7 @@ class RayStore:
         self.number: np.ndarray
         self.amount: np.ndarray
         self.content: np.ndarray
-        self.port: np.ndarray
+        self.arrival: np.ndarray
 
     @property
     def size(self) -> int:
@@ -396,7 +451,7 @@ class RayStore:
         amount = np.add.reduceat(self.amount, starts)
         self.keep(~same)
         self.amount = amount
-        self.port[:] = HERE
+        self.arrival[:] = HERE
         self.sort()
 
     def slice(self, flat: int) -> tuple[int, int]:
@@ -420,11 +475,11 @@ class RayStore:
             for i in range(self.size)
         ]
 
-    def labels(self, rows: np.ndarray, vectors: np.ndarray, free: bool, quantum: int) -> np.ndarray:
+    def labels(self, rows: np.ndarray, vectors: np.ndarray, free: bool) -> np.ndarray:
         """The momentum label of the given rows: content x amount x
-        D[direction] for a paid family, quantum x amount x D[direction] for
-        a free one."""
-        weight = self.amount[rows] * (quantum if free else self.content[rows])
+        D[direction] for a paid family, amount x D[direction] for a free
+        one (its unit carries no content; its label is the unit)."""
+        weight = self.amount[rows] if free else self.amount[rows] * self.content[rows]
         result: np.ndarray = vectors[self.direction[rows]] * weight[:, None]
         return result
 
@@ -452,7 +507,11 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
 class Readings:
     """The interval's readings per family, dense over the board (diagnostics
     for the engine's shell means and flux): the amount that arrived per
-    Node, its net flow, the arrivals per Port and the presence of every ray."""
+    Node (the zeroth moment outside), its net flow (the first moment), the
+    presence of every ray (the zeroth moment whole) and, a diagnostic of
+    the walk and not of the reading, the amount that crossed into each Node
+    through each of its six Ports this interval (`per_port`, the Links
+    crossed, for Gauss's flux)."""
 
     count: list[np.ndarray]
     flow: list[np.ndarray]
@@ -561,14 +620,17 @@ def gonen_beam(
             store.node = coordinates @ np.array(store.strides, dtype=np.int64)
             store.age = back
             store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
-            store.port[:] = HERE
+            store.arrival[:] = HERE
             store.merge()
         return Readings([], [], [], [])
 
     # 1. The walk: departures become arrivals; the escapes click on the faces.
+    readings = Readings([], [], [], [])
     for family, store in enumerate(stores):
         definition = families[family]
+        crossings = np.zeros(nodes * PORTS, dtype=np.int64)
         if store.size == 0:
+            readings.per_port.append(crossings.reshape((*shape, PORTS)))
             continue
         step = flight.steps[store.direction, store.age].astype(np.int64)
         moved = step.any(axis=1)
@@ -580,35 +642,37 @@ def gonen_beam(
                 coordinates[:, axis] %= extents[axis]
             else:
                 escaped |= (coordinates[:, axis] < 0) | (coordinates[:, axis] >= extents[axis])
-        port = np.full(store.size, HERE, dtype=np.int64)
+        # The Port of the Link crossed (a diagnostic of the walk, and the
+        # face a ray leaves through) and the direction the ray arrived on.
+        port = np.full(store.size, -1, dtype=np.int64)
         port[moved] = heading_port(step[moved])
+        arrival = np.where(moved, store.direction, HERE)
         if escaped.any():
             gone = np.flatnonzero(escaped)
-            labels = store.labels(gone, vectors, definition.free, definition.quantum)
+            labels = store.labels(gone, vectors, definition.free)
             amplitude = store.amount[gone] * AMPLITUDE_SCALE
             for face in ledger.open_faces:
-                through = gone[port[gone] == face]
+                on_face = port[gone] == face
+                through = gone[on_face]
                 if through.shape[0] == 0:
                     continue
                 amounts = store.amount[through]
                 ledger.face_units[face][family] += int(amounts.sum())
                 ledger.face_content[face][family] += int((amounts * store.content[through]).sum())
-                # The face's record: the same decomposition on the amplitude
-                # vectors of what clicked, its scalar squared.
-                on_face = port[gone] == face
-                slots_x = segment_sums(
-                    port[through],
-                    amplitude[on_face] * tables.cosines[store.phase[through]],
-                    READING_SLOTS,
+                # The face's record: the same reading over what clicked with
+                # the amplitudes as weights, its scalar squared.
+                directions = vectors[store.direction[through]]
+                pointer_x = int(
+                    read_arrivals(
+                        directions, amplitude[on_face] * tables.cosines[store.phase[through]]
+                    ).scalar
                 )
-                slots_y = segment_sums(
-                    port[through], amplitude[on_face] * tables.sines[store.phase[through]], READING_SLOTS
+                pointer_y = int(
+                    read_arrivals(
+                        directions, amplitude[on_face] * tables.sines[store.phase[through]]
+                    ).scalar
                 )
-                pointer_x = int(read_arrivals(slots_x).scalar)
-                pointer_y = int(read_arrivals(slots_y).scalar)
                 ledger.face_record[face][family] += pointer_x * pointer_x + pointer_y * pointer_y
-            for face in ledger.open_faces:
-                on_face = port[gone] == face
                 ledger.face_momentum[face] = [
                     int(a) + int(b)
                     for a, b in zip(ledger.face_momentum[face], labels[on_face].sum(axis=0), strict=True)
@@ -631,27 +695,26 @@ def gonen_beam(
                         }
                     )
         store.node = coordinates @ np.array(store.strides, dtype=np.int64)
+        crossed = moved & ~escaped
+        crossings = segment_sums(
+            store.node[crossed] * PORTS + port[crossed], store.amount[crossed], nodes * PORTS
+        )
+        readings.per_port.append(crossings.reshape((*shape, PORTS)))
         # A rest ray keeps its age (the rest slots belong to the six-heading
         # alphabet, whose period it resumes when a collision moves it).
         resting = store.direction < REST_DIRECTIONS
         store.age = np.where(resting, store.age, (store.age + 1) % flight.period[store.direction])
         store.phase = (store.phase + definition.phase_per_link * moved) % modulus
-        store.port = port
+        store.arrival = arrival
         if escaped.any():
             store.keep(~escaped)
         store.sort()
 
-    # 2. The readings: the seven slots of every Node decomposed once.
-    readings = Readings([], [], [], [])
+    # 2. The readings: the moments of every Node's arrivals, taken once.
     for store in stores:
-        slots = segment_sums(
-            store.node * READING_SLOTS + store.port, store.amount, nodes * READING_SLOTS
-        )
-        slots = slots.reshape(nodes, READING_SLOTS)
-        reading = read_arrivals(slots)
+        reading = read_arrivals(vectors[store.arrival], store.amount, store.node, nodes)
         readings.count.append(reading.outside.reshape(shape))
-        readings.flow.append(reading.vector.reshape((*shape, 3)))
-        readings.per_port.append(slots.reshape((*shape, READING_SLOTS)))
+        readings.flow.append(reading.vector.reshape((*shape, DIMENSIONS)))
         readings.presence.append(reading.scalar.reshape(shape))
 
     # 3. The collision.
@@ -711,13 +774,14 @@ def gonen_beam(
                 continue
             rows = np.arange(lo, hi)
             own = store.number[rows] == entry.number
-            arrived = store.port[rows] != HERE
+            arrived = store.arrival[rows] != HERE
             # The presence for the clock: every ray at the Node of another
             # number, rest and moving alike (the scalar of the one reading).
             others = rows[~own]
             if others.shape[0]:
-                slots = segment_sums(store.port[others], store.amount[others], READING_SLOTS)
-                entry.presence += int(read_arrivals(slots).scalar)
+                entry.presence += int(
+                    read_arrivals(vectors[store.arrival[others]], store.amount[others]).scalar
+                )
             # Home: the own number's arrivals, taken to be created again.
             home = rows[own & arrived]
             if home.shape[0]:
@@ -770,19 +834,16 @@ def gonen_beam(
             taken = met[inside]
             if taken.shape[0] == 0:
                 continue
-            clicked_x = np.zeros(READING_SLOTS, dtype=np.int64)
-            clicked_y = np.zeros(READING_SLOTS, dtype=np.int64)
+            clicked: list[np.ndarray] = []
             for other in np.unique(store.number[taken]):
                 group = taken[store.number[taken] == other]
                 amounts = store.amount[group]
-                ports = store.port[group]
-                amount_reading = read_arrivals(segment_sums(ports, amounts, READING_SLOTS))
+                directions = vectors[store.arrival[group]]
+                amount_reading = read_arrivals(directions, amounts)
                 if definition.free:
                     push = push_of(entry, True, int(other), amount_reading.vector)
                 else:
-                    label_reading = read_arrivals(
-                        segment_sums(ports, amounts * store.content[group], READING_SLOTS)
-                    )
+                    label_reading = read_arrivals(directions, amounts * store.content[group])
                     push = push_of(entry, False, int(other), label_reading.vector)
                 entry.momentum = [
                     bounded(int(a) + int(b), entry, "momentum")
@@ -794,10 +855,7 @@ def gonen_beam(
                 ]
                 group_total = int(amounts.sum())
                 group_content = int((amounts * store.content[group]).sum())
-                component = amount_reading.component(entry.reads[family])
-                reading_value: object = (
-                    int(component) if component.ndim == 0 else [int(v) for v in component]
-                )
+                reading_value: object = amount_reading.component(entry.reads[family]).tolist()
                 entry.measured[family][rule] += group_total
                 if rule == "read":
                     write(
@@ -839,11 +897,9 @@ def gonen_beam(
                 entry.held[family] = bounded(entry.held[family] + group_content, entry, "content")
                 entry.events[family] += group_total
                 ledger.held_measured[family] += group_content
-                amplitude = amounts * AMPLITUDE_SCALE
-                np.add.at(clicked_x, ports, amplitude * tables.cosines[store.phase[group]])
-                np.add.at(clicked_y, ports, amplitude * tables.sines[store.phase[group]])
+                clicked.append(group)
                 if record is not None:
-                    labels = store.labels(group, vectors, definition.free, definition.quantum)
+                    labels = store.labels(group, vectors, definition.free)
                     for k, index in enumerate(group):
                         write(
                             "click",
@@ -856,9 +912,15 @@ def gonen_beam(
                             content=int(amounts[k] * store.content[index]),
                             reading=reading_value,
                         )
-            if rule == "measure" and (clicked_x.any() or clicked_y.any()):
-                pointer_x = int(read_arrivals(clicked_x).scalar)
-                pointer_y = int(read_arrivals(clicked_y).scalar)
+            if rule == "measure" and clicked:
+                # The detector's record: the same reading over the clicked
+                # rays with their amplitudes as weights, its scalar squared.
+                rows_clicked = np.concatenate(clicked)
+                directions = vectors[store.arrival[rows_clicked]]
+                amplitude = store.amount[rows_clicked] * AMPLITUDE_SCALE
+                phases = store.phase[rows_clicked]
+                pointer_x = int(read_arrivals(directions, amplitude * tables.cosines[phases]).scalar)
+                pointer_y = int(read_arrivals(directions, amplitude * tables.sines[phases]).scalar)
                 square = bounded(pointer_x * pointer_x + pointer_y * pointer_y, entry, "record")
                 entry.record[family] = bounded(entry.record[family] + square, entry, "record")
                 write("record", entry, family, 0, record=square, pointer=[pointer_x, pointer_y])
@@ -925,10 +987,10 @@ def gonen_beam(
             direction_column = np.array([b[0] for b in born], dtype=np.int64)
             amount_column = np.array([b[1] for b in born], dtype=np.int64)
             content_column = np.array([b[2] for b in born], dtype=np.int64)
+            # The label of a unit: its content along its direction, the unit
+            # for a free family (its rays carry no content).
             largest = np.abs(vectors[direction_column]).max(axis=1) * amount_column
-            largest = largest * np.where(
-                definition.free, definition.quantum, np.maximum(content_column, 1)
-            )
+            largest = largest * np.maximum(content_column, 1)
             if int(largest.max(initial=0)) > MOMENTUM_BOUND:
                 raise OverflowError(
                     f"{RAYS_LAW}: the momentum label of a release of measured event {entry.number} at "
@@ -942,7 +1004,7 @@ def gonen_beam(
                 number=np.full(count, entry.number, dtype=np.int64),
                 amount=amount_column,
                 content=content_column,
-                port=np.full(count, HERE, dtype=np.int64),
+                arrival=np.full(count, HERE, dtype=np.int64),
             )
             ledger.transit_released[family] += int(amount_column.sum())
 

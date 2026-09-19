@@ -100,7 +100,7 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
         "release": [0, 1],
         "suspension": 0,
         "directions": directions,
-        "families": [{"name": "light", "kind": "paid", "phase_per_link": per_link}],
+        "families": [{"name": "light", "quantum": 1, "phase_per_link": per_link}],
         "measured": [{"position": [0, 0, 0], "family": "light", "amount": 1, "fixed": True}],
         "in_transit": [],
     }
@@ -184,7 +184,7 @@ def bar(
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        "families": [{"name": "light", "kind": "paid"}],
+        "families": [{"name": "light", "quantum": 1}],
         "measured": [{"position": measured_at, "family": "light", "amount": 1, "fixed": True}],
         "in_transit": in_transit,
     }
