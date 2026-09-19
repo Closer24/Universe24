@@ -34,8 +34,8 @@ law of events, the model owner, 2026-09-19):
   measured events' phase never turns (K does not apply to their content), no
   `phase_window` is accepted on its lamps or on a table entry for it, its
   measured events and its events in transit declare no phase but 0, and at a
-  Node its arrivals do not sum coherently: each Port's arrival scatters on
-  its own (`mixing.scatter_arrivals`);
+  Node its arrivals do not sum coherently: the weight of a side is the
+  diagonal of the coherent sum (`mixing.diagonal_weights`);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
   below K x N / 2), and optionally its `phase`, its whole `charge` (the
