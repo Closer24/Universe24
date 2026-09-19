@@ -32,6 +32,12 @@ event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
 
 [tool.setuptools.data-files]
 "share/event-universe/examples" = ["examples/events/*.json"]
+"share/event-universe/examples/detector" = [
+    "examples/events/detector/*.json",
+    "examples/events/detector/README.md",
+]
+
+"share/event-universe/examples/detector/entities" = ["examples/events/detector/entities/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

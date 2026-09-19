@@ -1,0 +1,54 @@
+{
+  "law": "events",
+  "dynamics": "reversible-detector-v1",
+  "max_active_owners": 1,
+  "model_id": "detector-shared-3",
+  "shape": [
+    9,
+    9,
+    1
+  ],
+  "boundary": "open",
+  "ticks": 4,
+  "K": 1024,
+  "N": 32,
+  "release": 0,
+  "suspension": 0,
+  "families": [
+    {
+      "name": "carrier",
+      "kind": "paid",
+      "quantum": 1
+    }
+  ],
+  "in_transit": [
+    {
+      "position": [
+        2,
+        4,
+        0
+      ],
+      "family": "carrier",
+      "number": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "amount": 1,
+      "phase": 16
+    }
+  ],
+  "entity_definitions": "entities/detectors.json",
+  "entities": [
+    {
+      "name": "apparatus",
+      "definition": "three_node_detector",
+      "position": [
+        3,
+        4,
+        0
+      ]
+    }
+  ]
+}

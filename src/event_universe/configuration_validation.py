@@ -10,10 +10,9 @@ import argparse
 import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Never
 
-from event_universe.events.world import EVENTS_LAW, parse_event_world
-from event_universe.json_documents import parse_json_document
+from event_universe.events.world import EVENTS_LAW
+from event_universe.world_loading import DocumentSyntaxError, load_world
 
 KINDS = ("events",)
 
@@ -44,34 +43,9 @@ class ValidationReport:
         }
 
 
-class _Rejected(ValueError):
-    def __init__(self, issue: ValidationIssue) -> None:
-        super().__init__(issue.message)
-        self.issue = issue
-
-
-def _reject(code: str, document: str, message: str) -> Never:
-    raise _Rejected(ValidationIssue(code, document, message))
-
-
-def _decode(source: str | bytes, document: str) -> object:
-    try:
-        if not isinstance(source, (str, bytes)):
-            raise ValueError("configuration source must be JSON text or bytes")
-        return parse_json_document(source)
-    except json.JSONDecodeError as error:
-        raise _Rejected(
-            ValidationIssue("syntax", document, error.msg, error.lineno, error.colno)
-        ) from error
-    except RecursionError as error:
-        raise _Rejected(
-            ValidationIssue("syntax", document, "JSON nesting exceeds the supported depth")
-        ) from error
-    except ValueError as error:
-        raise _Rejected(ValidationIssue("syntax", document, str(error))) from error
-
-
-def validate_configuration(source: str | bytes, *, kind: str = "auto") -> ValidationReport:
+def validate_configuration(
+    source: str | bytes, *, kind: str = "auto", base_dir: Path | None = None
+) -> ValidationReport:
     """Validate supplied content only: no implicit files, simulation or artifacts.
 
     A report contains the first concrete failure, and does not certify a run or
@@ -82,8 +56,7 @@ def validate_configuration(source: str | bytes, *, kind: str = "auto") -> Valida
         return ValidationReport(kind, False, {}, (issue,))
     resolved = "events"
     try:
-        document = _decode(source, "input")
-        world = parse_event_world(document)
+        world = load_world(source, base_dir=base_dir).world
         summary = {
             "model": world.model_id,
             "law": EVENTS_LAW,
@@ -94,9 +67,14 @@ def validate_configuration(source: str | bytes, *, kind: str = "auto") -> Valida
             "measured": len(world.measured),
             "detectors": len(world.detectors),
         }
+        if world.dynamics != EVENTS_LAW:
+            summary["dynamics"] = world.dynamics
         return ValidationReport(resolved, True, summary)
-    except _Rejected as error:
-        return ValidationReport(resolved, False, {}, (error.issue,))
+    except DocumentSyntaxError as error:
+        issue = ValidationIssue("syntax", error.document, str(error), error.line, error.column)
+        return ValidationReport(resolved, False, {}, (issue,))
+    except OSError as error:
+        return ValidationReport(resolved, False, {}, (ValidationIssue("io", "input", str(error)),))
     except RecursionError:
         issue = ValidationIssue(
             "validation", "input", "configuration nesting exceeds the supported depth"
@@ -118,7 +96,7 @@ def main(argv: list[str] | None = None) -> int:
     results: list[dict[str, object]] = []
     for path in args.paths:
         try:
-            report = validate_configuration(path.read_bytes(), kind=args.kind)
+            report = validate_configuration(path.read_bytes(), kind=args.kind, base_dir=path.parent)
         except OSError as error:
             report = ValidationReport(
                 args.kind, False, {}, (ValidationIssue("io", "input", str(error)),)

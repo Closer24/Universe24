@@ -81,6 +81,7 @@ from event_universe.core.integer import bounded_gcd, checked_work
 from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 EVENTS_LAW = "events-v1"
+REVERSIBLE_DETECTOR_DYNAMICS = "reversible-detector-v1"
 LAW_VALUE = "events"
 KINDS = ("free", "paid")
 TABLES = ("read", "measure", "rerelease", "pass")
@@ -129,6 +130,8 @@ WORLD_KEYS = {
     "measured",
     "in_transit",
     "detectors",
+    "dynamics",
+    "max_active_owners",
 }
 FAMILY_KEYS = {"name", "kind", "charge", "quantum", "phase"}
 MEASURED_KEYS = {"position", "family", "amount", "phase", "charge", "momentum", "fixed", "table", "lamp"}
@@ -137,6 +140,7 @@ LAMP_KEYS = {"rate", "headings", "phase_window"}
 TABLE_ENTRY_KEYS = {"rule", "phase_window"}
 TRANSIT_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
 DETECTOR_KEYS = {"name", "positions", "threshold"}
+DETECTOR_GROUP_KEYS = {"name", "positions", "output", "threshold", "capacity", "reference_phase"}
 # The board's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
@@ -190,6 +194,7 @@ class MeasuredDefinition:
     table: tuple[str, ...]
     windows: tuple[int | None, ...]
     lamp: LampDefinition | None
+    port_map: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -206,12 +211,25 @@ class TransitDefinition:
 
 
 @dataclass(frozen=True)
+class DetectorGroupDefinition:
+    """A declared response region and its single physical output Event."""
+
+    name: str
+    positions: tuple[Address3, ...]
+    output: Address3
+    threshold: int
+    capacity: int
+    reference_phase: int
+
+
+@dataclass(frozen=True)
 class DetectorDefinition:
     """A named set of measured events and its threshold."""
 
     name: str
     positions: tuple[Address3, ...]
     threshold: int
+    groups: tuple[DetectorGroupDefinition, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -235,6 +253,8 @@ class EventWorld:
     measured: tuple[MeasuredDefinition, ...]
     in_transit: tuple[TransitDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
+    dynamics: str = EVENTS_LAW
+    max_active_owners: int = 0
 
     @property
     def phase_mask(self) -> int:
@@ -254,6 +274,8 @@ class EventWorld:
         the measured events whose table re-releases it (their number is
         stamped on what leaves them) and the numbers of the events in transit
         at the start."""
+        if self.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
+            return tuple(sorted({item.number for item in self.in_transit if item.family == family}))
         found = []
         for index, entry in enumerate(self.measured):
             number = index + 1
@@ -336,6 +358,16 @@ def _heading(value: object, label: str) -> int:
     return PORT_HEADINGS.index((int(value[0]), int(value[1]), int(value[2])))
 
 
+def _port_map(value: object, label: str) -> tuple[int, ...]:
+    """Accept only an explicit bijection of the six Port indices."""
+    if not isinstance(value, list) or len(value) != 6:
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must have six Port indices")
+    result = tuple(_integer(item, label, 0, 5) for item in value)
+    if len(set(result)) != 6:
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must be a permutation of 0 through 5")
+    return result
+
+
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
     """The board's faces: `"open"` on every face, or an object with any of
     the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the missing axes
@@ -411,20 +443,24 @@ def _lamp(value: object, label: str, phase_steps: int, phased: bool) -> LampDefi
     return LampDefinition(rate, headings, window)
 
 
-def _table_entry(value: object, label: str, phase_steps: int, phased: bool) -> tuple[str, int | None]:
+def _table_entry(
+    value: object, label: str, phase_steps: int, phased: bool, *, reversible: bool = False
+) -> tuple[str, int | None]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s}`
     (the rule required; a window refused on `pass`, which responds to nothing,
     and for a family without a phase circle, whose bundles carry no phase)."""
     if isinstance(value, dict):
-        obj = _object(value, label, TABLE_ENTRY_KEYS, {"rule"})
+        keys = {"rule"} if reversible else TABLE_ENTRY_KEYS
+        obj = _object(value, label, keys, {"rule"})
         rule = obj["rule"]
         window = None
         if "phase_window" in obj:
             window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     else:
         rule, window = value, None
-    if rule not in TABLES:
-        raise ValueError(f"{EVENTS_LAW}: {label} must be one of {TABLES}")
+    rules = ("pass", "transduce") if reversible else TABLES
+    if rule not in rules:
+        raise ValueError(f"{EVENTS_LAW}: {label} must be one of {rules}")
     if window is not None and rule == "pass":
         raise ValueError(
             f"{EVENTS_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
@@ -444,6 +480,8 @@ def _measured(
     families: tuple[FamilyDefinition, ...],
     clock: int,
     phase_steps: int,
+    *,
+    reversible: bool = False,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{EVENTS_LAW}: measured must be a list")
@@ -451,7 +489,8 @@ def _measured(
     found: list[MeasuredDefinition] = []
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
-        obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
+        keys = MEASURED_KEYS | {"port_map"} if reversible else MEASURED_KEYS
+        obj = _object(entry, label, keys, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
             raise ValueError(f"{EVENTS_LAW}: two measured events at one Node {list(position)}")
@@ -461,7 +500,11 @@ def _measured(
         family = names[family_name]
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         phased = families[family].phase
-        if phased and 2 * amount >= clock * phase_steps:
+        twice_amount, clock_circle = 2 * amount, clock * phase_steps
+        if reversible:
+            checked_work(twice_amount)
+            checked_work(clock_circle)
+        if phased and twice_amount >= clock_circle:
             raise ValueError(
                 f"{EVENTS_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
                 "per self-creation below half the circle)"
@@ -487,11 +530,26 @@ def _measured(
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
             raise ValueError(f"{EVENTS_LAW}: {label}.table must map family names to rules")
+        if reversible and set(declared) != set(names):
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label}.table must name every family")
         for key, entry_value in declared.items():
             if key not in names:
                 raise ValueError(f"{EVENTS_LAW}: {label}.table names an unknown family {key!r}")
             table[names[key]], windows[names[key]] = _table_entry(
-                entry_value, f"{label}.table[{key!r}]", phase_steps, families[names[key]].phase
+                entry_value,
+                f"{label}.table[{key!r}]",
+                phase_steps,
+                families[names[key]].phase,
+                reversible=reversible,
+            )
+        port_map: tuple[int, ...] = ()
+        if "port_map" in obj:
+            port_map = _port_map(obj["port_map"], f"{label}.port_map")
+        if reversible and "transduce" in table and not port_map:
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label}.port_map is required")
+        if reversible and (not fixed or charge or "lamp" in obj):
+            raise ValueError(
+                f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} requires fixed true, zero charge and no lamp"
             )
         lamp = None
         if "lamp" in obj:
@@ -510,6 +568,7 @@ def _measured(
                 tuple(table),
                 tuple(windows),
                 lamp,
+                port_map,
             )
         )
     return tuple(found)
@@ -521,6 +580,8 @@ def _in_transit(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
     phase_steps: int,
+    *,
+    reversible: bool = False,
 ) -> tuple[TransitDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{EVENTS_LAW}: in_transit must be a list")
@@ -534,6 +595,11 @@ def _in_transit(
             raise ValueError(f"{EVENTS_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         top = phase_steps - 1 if families[family].phase else 0
+        heading = obj["heading"]
+        if reversible and (
+            not isinstance(heading, list) or any(type(component) is not int for component in heading)
+        ):
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label}.heading must contain integers")
         found.append(
             TransitDefinition(
                 _address(obj["position"], f"{label}.position", shape),
@@ -582,6 +648,123 @@ def _detectors(
     return tuple(found)
 
 
+def _node_positions(value: object, label: str, shape: Address3) -> tuple[Address3, ...]:
+    """Decode a nonempty region without repeated Nodes."""
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must be a nonempty list of Nodes")
+    positions = tuple(_address(item, label, shape) for item in value)
+    if len(set(positions)) != len(positions):
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} repeats a Node")
+    return positions
+
+
+def _named(value: object, label: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must be a nonempty string")
+    return value
+
+
+def _detector_groups(
+    value: object,
+    label: str,
+    shape: Address3,
+    coverage: tuple[Address3, ...],
+    measured: dict[Address3, MeasuredDefinition],
+    outputs: set[Address3],
+    phase_steps: int,
+) -> tuple[DetectorGroupDefinition, ...]:
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must be a nonempty list")
+    found: list[DetectorGroupDefinition] = []
+    assigned: set[Address3] = set()
+    for index, entry in enumerate(value):
+        group_label = f"{label}[{index}]"
+        obj = _object(entry, group_label, DETECTOR_GROUP_KEYS, DETECTOR_GROUP_KEYS)
+        name = _named(obj["name"], f"{group_label}.name")
+        if any(group.name == name for group in found):
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} repeats name {name!r}")
+        positions = _node_positions(obj["positions"], f"{group_label}.positions", shape)
+        if not set(positions) <= set(coverage) or assigned.intersection(positions):
+            raise ValueError(
+                f"{REVERSIBLE_DETECTOR_DYNAMICS}: {group_label}.positions must partition coverage"
+            )
+        assigned.update(positions)
+        output = _address(obj["output"], f"{group_label}.output", shape)
+        if output not in measured or output in outputs:
+            raise ValueError(
+                f"{REVERSIBLE_DETECTOR_DYNAMICS}: {group_label}.output must name a unique measured Node"
+            )
+        outputs.add(output)
+        capacity = _integer(obj["capacity"], f"{group_label}.capacity", 1, phase_steps - 1)
+        threshold = _integer(obj["threshold"], f"{group_label}.threshold", 1, capacity)
+        reference = _integer(
+            obj["reference_phase"], f"{group_label}.reference_phase", 0, phase_steps - 1
+        )
+        if (measured[output].phase - reference) % phase_steps > capacity:
+            raise ValueError(
+                f"{REVERSIBLE_DETECTOR_DYNAMICS}: {group_label}.capacity is below initial displacement"
+            )
+        found.append(DetectorGroupDefinition(name, positions, output, threshold, capacity, reference))
+    if assigned != set(coverage):
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label} must partition coverage exactly")
+    return tuple(found)
+
+
+def _physical_detectors(
+    value: object,
+    shape: Address3,
+    measured: tuple[MeasuredDefinition, ...],
+    phase_steps: int,
+) -> tuple[DetectorDefinition, ...]:
+    if not isinstance(value, list):
+        raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: detectors must be a list")
+    at = {entry.position: entry for entry in measured}
+    covered: set[Address3] = set()
+    outputs: set[Address3] = set()
+    found: list[DetectorDefinition] = []
+    keys = {"name", "positions", "groups"}
+    for index, entry in enumerate(value):
+        label = f"detectors[{index}]"
+        obj = _object(entry, label, keys, keys)
+        name = _named(obj["name"], f"{label}.name")
+        if any(detector.name == name for detector in found):
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: detectors repeats name {name!r}")
+        positions = _node_positions(obj["positions"], f"{label}.positions", shape)
+        if not set(positions) <= set(at) or covered.intersection(positions):
+            raise ValueError(
+                f"{REVERSIBLE_DETECTOR_DYNAMICS}: {label}.positions must name distinct measured Nodes"
+            )
+        covered.update(positions)
+        groups = _detector_groups(
+            obj["groups"], f"{label}.groups", shape, positions, at, outputs, phase_steps
+        )
+        found.append(DetectorDefinition(name, positions, 1, groups))
+    return tuple(found)
+
+
+def _validate_reversible_world(world: EventWorld) -> None:
+    """Check the candidate's initialized physical domain without running it."""
+    law = REVERSIBLE_DETECTOR_DYNAMICS
+    for family in range(len(world.families)):
+        if len(world.owners(family)) > world.max_active_owners:
+            raise ValueError(f"{law}: max_active_owners exceeded by families[{family}]")
+    occupied: set[tuple[Address3, int, int, int]] = set()
+    local_amounts: dict[Address3, int] = {}
+    for index, entry in enumerate(world.in_transit):
+        label = f"in_transit[{index}]"
+        slot = entry.position, entry.family, entry.number, entry.port
+        if slot in occupied:
+            raise ValueError(f"{law}: {label} repeats an occupied initial slot")
+        occupied.add(slot)
+        momentum = checked_work(entry.amount * world.families[entry.family].quantum)
+        if momentum > AMOUNT_BOUND:
+            raise ValueError(f"{law}: {label}.amount times quantum exceeds the momentum bound")
+        total = checked_work(local_amounts.get(entry.position, 0) + entry.amount)
+        if total > AMOUNT_BOUND:
+            raise ValueError(f"{law}: {label}.amount exceeds the per-Node amount bound")
+        local_amounts[entry.position] = total
+
+
 def parse_event_world(document: object) -> EventWorld:
     """Reject anything but a lawful world of the law of events."""
     if not isinstance(document, dict):
@@ -600,6 +783,19 @@ def parse_event_world(document: object) -> EventWorld:
         WORLD_KEYS,
         {"law", "model_id", "shape", "ticks", "K", "release", "families", "measured"},
     )
+    dynamics = obj.get("dynamics", EVENTS_LAW)
+    if dynamics not in (EVENTS_LAW, REVERSIBLE_DETECTOR_DYNAMICS):
+        raise ValueError(
+            f"{EVENTS_LAW}: dynamics must be {EVENTS_LAW} or {REVERSIBLE_DETECTOR_DYNAMICS}"
+        )
+    reversible = dynamics == REVERSIBLE_DETECTOR_DYNAMICS
+    max_active_owners = 0
+    if reversible:
+        if "max_active_owners" not in obj:
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: max_active_owners is required")
+        max_active_owners = _integer(obj["max_active_owners"], "max_active_owners", 1, 16)
+    elif "max_active_owners" in obj:
+        raise ValueError(f"{EVENTS_LAW}: max_active_owners requires {REVERSIBLE_DETECTOR_DYNAMICS}")
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
         raise ValueError(f"{EVENTS_LAW}: model_id must be a nonempty string")
@@ -620,9 +816,22 @@ def parse_event_world(document: object) -> EventWorld:
         # Off: 0 and [0, d] alike, recorded as [0, 1].
         suspension = (0, 1)
     families = _families(obj["families"])
-    measured = _measured(obj["measured"], shape, families, clock, phase_steps)
-    in_transit = _in_transit(obj.get("in_transit", []), shape, families, measured, phase_steps)
-    detectors = _detectors(obj.get("detectors", []), shape, measured)
+    if reversible:
+        if release[0] or suspension[0]:
+            raise ValueError(f"{REVERSIBLE_DETECTOR_DYNAMICS}: release and suspension must be zero")
+        if len(families) > 8 or any(family.free for family in families):
+            raise ValueError(
+                f"{REVERSIBLE_DETECTOR_DYNAMICS}: families must contain at most 8 paid families"
+            )
+    measured = _measured(obj["measured"], shape, families, clock, phase_steps, reversible=reversible)
+    in_transit = _in_transit(
+        obj.get("in_transit", []), shape, families, measured, phase_steps, reversible=reversible
+    )
+    detectors = (
+        _physical_detectors(obj.get("detectors", []), shape, measured, phase_steps)
+        if reversible
+        else _detectors(obj.get("detectors", []), shape, measured)
+    )
     world = EventWorld(
         model_id,
         shape,
@@ -637,6 +846,10 @@ def parse_event_world(document: object) -> EventWorld:
         measured,
         in_transit,
         detectors,
+        str(dynamics),
+        max_active_owners,
     )
+    if reversible:
+        _validate_reversible_world(world)
     world.content_lcm()
     return world

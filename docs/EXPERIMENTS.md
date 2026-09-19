@@ -5165,3 +5165,57 @@ sign rule, and its other couplings are catalog entries.
   and the strong catalog entries; its outcomes are those of hypothesis 13:
   the content grows and no lone quark appears, or it falls off as for a
   charge, or the pattern does not close.
+
+### E13. A shared physical detector retains incoming phase
+
+- **Scope and authority.** The model owner's detector implementation and small
+  board request, 2026-09-19; issue #342. The opt-in
+  [reversible-detector-v1 contract](DETECTOR_REQUIREMENTS.md) supplies the
+  local contact and finite physical pointer. This is a demonstration of that
+  candidate, separate from the historical ray-event catalog features above.
+- **Frozen setup.** `examples/events/detector/shared_3_nodes.json`: open
+  9-by-9-by-1 world; three material Nodes at x=3,4,5, y=4, z=0; one shared
+  output at x=5. One +X carrier starts at x=2. Two preparations differ only
+  in carrier phase, 0 or 16 of N=32. K=1024, local reference 0, threshold 1,
+  capacity 31, four intervals each. No law, calibration or threshold is fitted.
+- **Acceptance fixed before execution.** Output values at ticks 0 through 4
+  are exactly 0,0,0,0,1 for both preparations; the complete live physical
+  states remain different at all five times; total amount is 4, total
+  material-plus-transit momentum is (1,0,0), and nothing escapes throughout.
+- **Status.** Measured, pass within this scope, 2026-09-19 10:01 UTC, source
+  commit `17dd34c0f8d54b045ab0e4ff9c28e0399dfe6911`, fingerprint
+  `5d4d2dcf360f8a0f8375977e151b451b64d42fa76ff163ad5561887d6c57b84b`.
+  Each case was run once through the active engine. Exact outcomes, input
+  digests, checks and display verification are recorded in
+  [the validation entry](VALIDATION.md#reversible-detector-a-shared-output-retains-incoming-phase---2026-09-19).
+  The saved report is `universe24_physical_detector_9x9.html`, with embedded
+  records and motion; visible plane z=0, one Link per grid spacing, one
+  interval per frame. No absorption, reset, energy law, uncertainty relation
+  or quantum entanglement is established.
+
+### E14. An external detector definition with a periodic return
+
+- **Scope and authority.** The model owner's approved periodic axes and
+  separate entity definitions, 2026-09-19. The published
+  [topology](ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment)
+  and [loading contract](ENTITY_DEFINITIONS.md) compose the existing detector
+  candidate; they do not introduce an absorption or energy law.
+- **Frozen setup.** `examples/events/detector/periodic_z_node.json` loads
+  `single_node_detector` from `entities/detectors.json` at (4,4,0), on a
+  9-by-9-by-1 world with periodic Z and open X/Y. One +Z carrier, identity
+  route, N=32, K=1024, threshold 1, reference 0, capacity 31; three intervals.
+  The two preparations differ only in carrier phase, 0 or 16.
+- **Acceptance fixed before execution.** Pointer values 0,1,2,3 at ticks
+  0 through 3, from repeated contacts with the same carrier; one transit
+  unit and one material unit remain, momentum (0,0,1), no escapes; owner,
+  signed Port and incoming phase retained; live states remain distinct.
+- **Status.** Measured, pass within scope, 2026-09-19 11:15 UTC, source
+  `32235267e55ac8c9df5b1d4bafa3f02a209b7faf`, fingerprint
+  `7e6367eeed29b3d44e48aee05b3ecd2a68d7c3f9fc122fbfa6efd17da679c0c2`.
+  Each case ran once through the canonical runner. The separate report
+  `universe24_periodic_detector_entities_9x9.html` embeds original, portable
+  and expanded inputs, dependencies, records and motion. Exact fingerprints,
+  the 458-test gate and display checks are in the
+  [validation entry](VALIDATION.md#external-detector-definition-with-a-periodic-return---2026-09-19).
+  This is a compact graph demonstration, not arbitrary 3D equivalence or a
+  derivation of quantum measurement laws.

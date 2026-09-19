@@ -134,8 +134,9 @@ A data error belongs to configuration authoring. A check-only request returns th
 error and a proposed correction without applying it. An invalid result can complete
 a check-only task: success is an accurate report, not making every input pass.
 Correct data when authoring
-or correction is requested; reuse catalog entities and explicit experiment
-profiles where appropriate. Unsupported format or composition means a capability
+or correction is requested; reuse [external entity definitions](../docs/ENTITY_DEFINITIONS.md)
+and explicit placements through the canonical loader. Keep the complete portable
+input when exporting or handing it to a runner. Unsupported format or composition means a capability
 gap. A suspected validator/engine defect needs a minimal reproduction, expected
 versus actual behavior and an identified owner. Report these findings separately;
 a failed check or unexpected physical result does not open an implementation task.

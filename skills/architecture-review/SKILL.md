@@ -55,7 +55,7 @@ changes only within an authorized implementation scope.
 For configuration changes, apply the
 validation boundary: one strict JSON
 decoder, one semantic owner per format, and a thin dispatcher with explicit context.
-Trace CLI, UI, runner and sidecar entry points. Preflight must not construct a world,
+Trace CLI, UI, runner and sidecar entry points. Preflight parses immutable world definitions but must not construct a Simulation,
 execute a profile, select laws from physical names, or claim runtime/physics proof.
 Keep runtime-dependent bounds in their owner and reject unsupported file formats.
 
@@ -83,3 +83,11 @@ example inputs to one file, and recheck dynamic resource consumers as well as
 imports. Preserve revision-specific evidence rather than rewriting it to resemble
 the renamed source. The [documentation index](../../docs/README.md) must route each
 contract without becoming another copy of its definitions.
+
+For external entity definitions, trace [the canonical loading boundary](../../docs/ENTITY_DEFINITIONS.md)
+from reusable data and placement to the immutable expanded world. Verify that all
+entry points use that provider, portable inputs retain exact dependencies after
+relocation, and names affect labels rather than physical rules. File ownership
+outside the engine never supplies off-board physical memory. Review both source
+and installed example paths and keep authoring limits distinct from physical
+capacities.
