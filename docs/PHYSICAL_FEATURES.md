@@ -53,19 +53,19 @@ sharing an atomic contract together, such as particle impulse and opposite field
 
 ## 3. Existing example: shared integer arithmetic
 
-`core/integer.py` owns generic calculations such as `signed_divrem`, `ceil_div`
-and `reduced_ratio`. A call takes bounded integer inputs and returns bounded
-integer results with explicit errors; it does not read a world, a configuration
-or a field name. Configured laws in initialization data select which
+`core/integer.py` owns generic calculations such as `integer_root`,
+`bounded_gcd`, `by_clock` and `apportion_whole`. A call takes bounded integer
+inputs and returns bounded integer results with explicit errors; it does not
+read a world, a configuration or a field name. The world file selects which
 calculations run and with which parameters. The law can be checked without
 running a world:
 
 | Calculation | Input | Expected result |
 | --- | --- | --- |
-| `signed_divrem` | 7, 3 | quotient 2, remainder 1 |
-| `signed_divrem` | -7, 3 | quotient -2, remainder -1 |
-| `ceil_div` | 15, 7 | 3 |
-| `reduced_ratio` | 6, 4 | 3, 2 |
+| `integer_root` | 17 | 4 |
+| `bounded_gcd` | 12, 18 | 6 |
+| `by_clock` | age 3, numerator 1, denominator 4 | 1 (the whole part of 4 / 4 less that of 3 / 4) |
+| `apportion_whole` | 5 over the weights 1, 1, 1, ties from index 0 | 2, 2, 1 |
 
 This demonstrates the separation of a reusable calculation from its selection,
 not a proven law of nature.

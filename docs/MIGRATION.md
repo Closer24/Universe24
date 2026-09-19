@@ -118,6 +118,28 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
   EXPERIMENTS.md and VALIDATION.md and are re-registered under `rays-v1`
   there.
 
+## Cleanup after the law of the ray, on 2026-09-19
+
+The model owner's request of 2026-09-19 ("check what code can be cleaned"),
+applied from the cleanup audit of the same day. No integer the law produces
+changes.
+
+- **Deleted, `core/integer.py`:** `signed_divrem`, `ceil_div`, `checked_sum`,
+  `add_components`, `subtract_components`, `dot_product`, `cross_product` and
+  `reduced_ratio`, the component arithmetic of the deleted engines, with no
+  caller left in `src`, `tools` or `examples` (a grep of the repository found
+  only their definitions, their tests and the PHYSICAL_FEATURES example). The
+  ray law's integer primitives stay: `checked_work`, `bounded_gcd`,
+  `integer_root`, `by_clock`, `apportion_whole`. Their 13 tests in
+  `tests/test_integer_arithmetic.py` are deleted with them; the module pins
+  `checked_work`, `integer_root` and `bounded_gcd`, and `by_clock` and
+  `apportion_whole` stay pinned in `test_ray_clock`. The TEST_EXPECTATIONS
+  paragraph and the PHYSICAL_FEATURES example name the live primitives.
+- **Deleted, `core/lattice.py`:** `MIXING_OPPOSITE` (the opposite Port of a
+  heading, read by the deleted mixing; no caller). The docstring names
+  `MAX_VALUE` as what it is under the ray law, the bound of a declared charge
+  and quantum in the world file (no cell, no mixing).
+
 ## No merge: a step onto a measured event is refused, on 2026-09-19
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "three reversible

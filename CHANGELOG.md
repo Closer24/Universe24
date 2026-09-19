@@ -18,6 +18,13 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   contract: disturbance transfers ..." line; TERMINOLOGY "Ray-event terms";
   DETECTOR_REQUIREMENTS' status line; PHYSICAL_FEATURES' schema pointer.
   No physics text was rewritten; the sections are marked, not deleted.
+- `core/integer.py` loses the component arithmetic of the deleted engines
+  (`signed_divrem`, `ceil_div`, `checked_sum`, `add_components`,
+  `subtract_components`, `dot_product`, `cross_product`, `reduced_ratio`:
+  no caller left) and `core/lattice.py` loses `MIXING_OPPOSITE` (no caller);
+  their 13 tests go with them, and `test_integer_arithmetic.py` pins the
+  primitives the ray law uses (`checked_work`, `integer_root`, `bounded_gcd`)
+  ([migration](docs/MIGRATION.md#cleanup-after-the-law-of-the-ray-on-2026-09-19)).
 
 ### The law of the ray (2026-09-19)
 

@@ -433,14 +433,20 @@ still requires review. No physical calculation changes as part of translation.
 
 ## Shared integer arithmetic
 
-`test_integer_arithmetic.py` covers decoded scalar/vector addition and
-subtraction, ordered sums, dot/cross products and integer rounding. Independent
-examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
-(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
-counts, cross-product orientation/parallel vectors, signed limits and overflow
-before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
--7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
-even when the quotient would fit, preserving existing timing behavior.
+`test_integer_arithmetic.py` pins the primitives of `core/integer.py` that the
+ray law uses: the working register (`checked_work` accepts +-(2^63 - 1),
+refuses one beyond and a boolean); the exact integer square root
+(`integer_root`: 0, 1, 2, 3, 4, 15, 16, 17, 2^62 and 2^63 - 1 give 0, 1, 1, 1,
+2, 3, 4, 4, 2^31 and 3037000499, each the floor with the next square above the
+input; a negative value, a float and an overflow are refused); the bounded gcd
+(`bounded_gcd`: 12 and 18 give 6, 0 and 5 give 5, 5 and 0 give 5, -4 and 6
+give 2, 0 and 0 give 0, 2^63 - 1 and 1 give 1; an overflow and a boolean are
+refused). `by_clock` and `apportion_whole` are pinned where the clock uses
+them (`test_ray_clock`, `test_ray_readings`). The component arithmetic of the
+deleted engines (signed and ceiling division, ordered sums, component addition
+and subtraction, dot and cross products, reduced ratios) was deleted with its
+pins on 2026-09-19
+([migration](MIGRATION.md#cleanup-after-the-law-of-the-ray-on-2026-09-19)).
 
 
 ## The rules of the law of events, as pinned until 2026-09-19 (history)
