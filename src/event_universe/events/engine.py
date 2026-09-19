@@ -136,6 +136,15 @@ in transit, one phase step per unit) + released (the lamps' cost and what
 came home or was re-released leaving again) = current + escaped + absorbed
 (home, the clicks, the re-releases), all exact at every interval; the
 momentum reported on the measured events, in transit and escaped.
+
+The bound (`bounded`): every quantity assigned to a measured event, its
+momentum after a push, a recoil or a merge, the push taken and its terms,
+its content after a click or a merge, and what waits to be created again
+with its content, is checked against `transit.MOMENTUM_BOUND` (2^62 - 1,
+the bound of a declared and of a carried momentum) before the assignment,
+and beyond it the run is refused with `OverflowError` naming the measured
+event, its Node and the quantity; Python's integers would not overflow, the
+model's register does.
 """
 
 from __future__ import annotations
@@ -159,7 +168,7 @@ from event_universe.events.reversible import (
     validate_carrier,
     validate_material,
 )
-from event_universe.events.transit import HEADINGS, Transit
+from event_universe.events.transit import HEADINGS, MOMENTUM_BOUND, Transit
 from event_universe.events.world import (
     EVENTS_LAW,
     REVERSIBLE_DETECTOR_DYNAMICS,
@@ -277,6 +286,25 @@ class Measured:
             "events": list(self.events),
             "pushed": list(self.pushed),
         }
+
+
+def bounded(value: int, entry: Measured, quantity: str) -> int:
+    """A quantity of a measured event checked before it is assigned against
+    the bound of the law, `MOMENTUM_BOUND` (2^62 - 1: the 64-bit work
+    register with a bit to spare for one more sum, what the parser allows a
+    declared momentum and the transit a carried one): its momentum after a
+    push, a recoil or a merge, the push taken and its terms, its content
+    after a click or a merge, and what waits to be created again with its
+    content. Python's integers do not overflow; the model's register does
+    (ARCHITECTURE.md, the local integer operation contract: check
+    intermediates before assignment). Beyond the bound the run is refused
+    naming the measured event, its Node and the quantity."""
+    if not -MOMENTUM_BOUND <= value <= MOMENTUM_BOUND:
+        raise OverflowError(
+            f"{EVENTS_LAW}: the {quantity} of measured event {entry.number} at "
+            f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
+        )
+    return value
 
 
 class EventSimulation:
@@ -767,8 +795,10 @@ class EventSimulation:
                     phase = transit.phase_at(position, rank)
                 if number == entry.number:
                     transit.take(position, rank)
-                    entry.home[index] += total
-                    entry.home_content[index] += content
+                    entry.home[index] = bounded(entry.home[index] + total, entry, "amount waiting")
+                    entry.home_content[index] = bounded(
+                        entry.home_content[index] + content, entry, "content waiting"
+                    )
                     entry.measured[index]["home"] += total
                     self.transit_absorbed[index] += total
                     self.content_absorbed[index] += content
@@ -788,8 +818,14 @@ class EventSimulation:
                 else:
                     vector = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
                 push = self._push(entry, free, number, vector)
-                entry.momentum = [int(a) + int(b) for a, b in zip(entry.momentum, push, strict=True)]
-                entry.pushed = [int(a) + int(b) for a, b in zip(entry.pushed, push, strict=True)]
+                entry.momentum = [
+                    bounded(int(a) + int(b), entry, "momentum")
+                    for a, b in zip(entry.momentum, push, strict=True)
+                ]
+                entry.pushed = [
+                    bounded(int(a) + int(b), entry, "push taken")
+                    for a, b in zip(entry.pushed, push, strict=True)
+                ]
                 if rule == "read":
                     entry.measured[index]["read"] += total
                     self._event("read", entry, index, number, total, push, phase, content)
@@ -801,13 +837,15 @@ class EventSimulation:
                 if rule == "measure":
                     # The click: the content the bundle carries joins, one
                     # click per unit.
-                    entry.held[index] += content
+                    entry.held[index] = bounded(entry.held[index] + content, entry, "content")
                     entry.events[index] += total
                     self.held_measured[index] += content
                     self._event("click", entry, index, number, total, push, phase, content)
                     continue
-                entry.home[index] += total
-                entry.home_content[index] += content
+                entry.home[index] = bounded(entry.home[index] + total, entry, "amount waiting")
+                entry.home_content[index] = bounded(
+                    entry.home_content[index] + content, entry, "content waiting"
+                )
                 self._event("rerelease", entry, index, number, total, push, phase, content)
 
     def _pass(
@@ -841,16 +879,25 @@ class EventSimulation:
         Ports); for a paid family `vector` is the momentum they carry and the
         push is it."""
         if not free:
-            return vector[0], vector[1], vector[2]
+            return (
+                bounded(vector[0], entry, "push"),
+                bounded(vector[1], entry, "push"),
+                bounded(vector[2], entry, "push"),
+            )
         content = entry.content
-        push = [-vector[axis] * content for axis in range(3)]
+        # The gravity reading, -M c, checked as the register would hold it.
+        push = [bounded(-vector[axis] * content, entry, "push") for axis in range(3)]
         owner = self.world.measured[number - 1]
         if owner.charge and entry.charge:
-            scale = owner.charge * entry.charge * (self.denominator // owner.amount)
+            scale = bounded(
+                owner.charge * entry.charge * (self.denominator // owner.amount),
+                entry,
+                "electric scale",
+            )
             for axis in range(3):
-                total = vector[axis] * scale
+                total = bounded(vector[axis] * scale, entry, "electric push")
                 whole = by_clock(entry.age, abs(total), self.denominator)
-                push[axis] += -whole if total < 0 else whole
+                push[axis] = bounded(push[axis] + (-whole if total < 0 else whole), entry, "push")
         return push[0], push[1], push[2]
 
     def _release(self, entry: Measured) -> bool:
@@ -910,7 +957,8 @@ class EventSimulation:
                     else:
                         momentum = heading * content
                         entry.momentum = [
-                            int(a) - int(b) for a, b in zip(entry.momentum, momentum, strict=True)
+                            bounded(int(a) - int(b), entry, "momentum")
+                            for a, b in zip(entry.momentum, momentum, strict=True)
                         ]
                     transit.place(position, own, port, amount, entry.phase, momentum, content)
                     self.transit_released[index] += amount
@@ -938,7 +986,8 @@ class EventSimulation:
                         transit.place(position, own, port, amount, entry.phase, momentum, content)
                         entry.held[index] -= content
                         entry.momentum = [
-                            int(a) - int(b) for a, b in zip(entry.momentum, momentum, strict=True)
+                            bounded(int(a) - int(b), entry, "momentum")
+                            for a, b in zip(entry.momentum, momentum, strict=True)
                         ]
                         self.transit_released[index] += amount
                         self.content_released[index] += content
@@ -995,11 +1044,16 @@ class EventSimulation:
             if destination in self.at:
                 other = self.measured[self.at[destination]]
                 for index in range(len(self.families)):
-                    other.held[index] += entry.held[index]
-                    other.home[index] += entry.home[index]
-                    other.home_content[index] += entry.home_content[index]
+                    other.held[index] = bounded(other.held[index] + entry.held[index], other, "content")
+                    other.home[index] = bounded(
+                        other.home[index] + entry.home[index], other, "amount waiting"
+                    )
+                    other.home_content[index] = bounded(
+                        other.home_content[index] + entry.home_content[index], other, "content waiting"
+                    )
                 other.momentum = [
-                    int(a) + int(b) for a, b in zip(other.momentum, entry.momentum, strict=True)
+                    bounded(int(a) + int(b), other, "momentum")
+                    for a, b in zip(other.momentum, entry.momentum, strict=True)
                 ]
                 other.charge += entry.charge
                 del self.measured[entry.number]

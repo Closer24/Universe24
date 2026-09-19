@@ -6,6 +6,50 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The emission bound at parsing and the bounded measured line, on 2026-09-19
+
+The architect's review of 2026-09-19 (findings F2, F4 and F9) found the
+measured line unbounded and the emission bound enforced only at the first
+crowded mixing. No physical law changes; a world that ran to its end runs
+unchanged. What changes:
+
+- **A previously valid world file can be refused at parsing.** A measured
+  event of a free family must keep 3 x (amount x n // d), three times what
+  it releases per Port per self-creation at the world's `release` `[n, d]`,
+  at most 2^30 - 1, the mixing's cell bound (`world.EMISSION_CELL_BOUND`,
+  `EMISSION_MARGIN` 3: a neighbour's slot holds up to about 2.3 x the
+  release per Port). Until now the parser accepted any amount up to
+  2^62 - 1, so the preflight certified a world of 2^36 at `release`
+  [1, 128] that the mixing refused at interval 14 ("value exceeds the
+  disturbance integer bound"); now the parser and the preflight refuse it,
+  naming the Node, the amount, the release per Port, the `release` and the
+  bound. Every shipped example passes (the largest free emission, 2^24 at
+  [1, 128], is 3 x 131072 = 393216 against 1073741823); a world of a larger
+  free content lowers its `release` or its content. A paid family's lamp
+  and a world with `release` [0, d] are not affected.
+- **A run can be refused where it silently continued.** `engine.bounded`
+  checks a measured event's momentum after a push, a recoil or a merge, the
+  push taken and its terms, its content after a click or a merge, and what
+  waits to be created again with its content against 2^62 - 1
+  (`transit.MOMENTUM_BOUND`) before assignment, and raises `OverflowError`
+  naming the measured event, its Node and the quantity ("the momentum of
+  measured event 2 at [1, 0, 0] exceeds the integer bound
+  4611686018427387903"). Until now `Measured.momentum` and `pushed` grew as
+  unbounded Python integers (two fixed events of 2^20 one Link apart reached
+  5 x 10^12 in 120 intervals; stars of 2^35 passed 2^63 with no refusal).
+- **The mixing's refusals are renamed.** "value exceeds the disturbance
+  integer bound" (four messages of `mixing.py`) becomes "the amount in a
+  cell exceeds the integer bound of the mixing (1073741823)", "the momentum
+  carried by a departure exceeds the integer bound of the mixing (...)" and
+  "the amount placed on a departure exceeds the integer bound of the mixing
+  (1073741823)"; the coherent sum's "64-bit intermediate range exceeded"
+  becomes "the coherent sum's component at a Node exceeds the integer bound
+  of the mixing (2147483647: its square must fit the 64-bit register)". A
+  consumer matching the old text updates its match.
+- **Tests.** `tests/test_integer_bounds_of_measured_and_emission.py` (new;
+  [expectations](TEST_EXPECTATIONS.md#the-integer-bounds-of-the-measured-line-and-of-the-emission)).
+  No existing pin changes.
+
 ## A release costs the emitter by its phase rate, on 2026-09-19 (E = h f)
 
 The model owner's decision of 2026-09-19 ("I approve the proposal"): until

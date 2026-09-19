@@ -142,7 +142,10 @@ def coherent_weights(
     cx = sum_x - 3 * ax[..., OPPOSITE]
     cy = sum_y - 3 * ay[..., OPPOSITE]
     if max(int(np.abs(cx).max(initial=0)), int(np.abs(cy).max(initial=0))) >= 1 << 31:
-        raise OverflowError("64-bit intermediate range exceeded")
+        raise OverflowError(
+            "the coherent sum's component at a Node exceeds the integer bound of the mixing "
+            f"({(1 << 31) - 1}: its square must fit the 64-bit register)"
+        )
     return cx * cx + cy * cy, sum_x, sum_y, cx, cy
 
 
@@ -173,7 +176,7 @@ def mix_arrivals(
     phases = family.arr_ph.astype(np.int64)
     shape = amounts.shape
     if amounts.max(initial=0) > MAX_VALUE:
-        raise ValueError("value exceeds the disturbance integer bound")
+        raise ValueError(f"the amount in a cell exceeds the integer bound of the mixing ({MAX_VALUE})")
     if family.phased:
         weights, sum_x, sum_y, cx, cy = coherent_weights(family, amounts, phases)
     else:
@@ -226,7 +229,10 @@ def mix_arrivals(
         leaving_phase = np.broadcast_to(side_phase, shape)
     momenta = apportion_carried(carried, whole, order)
     if int(np.abs(momenta).max(initial=0)) > momentum_bound:
-        raise ValueError("value exceeds the disturbance integer bound")
+        raise ValueError(
+            "the momentum carried by a departure exceeds the integer bound of the mixing "
+            f"({momentum_bound})"
+        )
     return whole, np.where(whole > 0, leaving_phase, 0), momenta
 
 
@@ -268,9 +274,14 @@ def place_departures(
     """The units leaving per heading into the departures, with their phases
     and momenta."""
     if int(whole.max(initial=0)) > MAX_VALUE:
-        raise ValueError("value exceeds the disturbance integer bound")
+        raise ValueError(
+            f"the amount placed on a departure exceeds the integer bound of the mixing ({MAX_VALUE})"
+        )
     if int(np.abs(momenta).max(initial=0)) > momentum_bound:
-        raise ValueError("value exceeds the disturbance integer bound")
+        raise ValueError(
+            "the momentum carried by a departure exceeds the integer bound of the mixing "
+            f"({momentum_bound})"
+        )
     family.fly_amt[...] = whole
     family.fly_ph[...] = np.where(whole > 0, phase, 0)
     family.fly_mom[...] = momenta
