@@ -48,7 +48,7 @@ def validate_source(source: object) -> dict[str, object]:
     """Use the same strict data validator as the CLI, without executing a simulation."""
     if not isinstance(source, str) or len(source.encode("utf-8")) > MAX_REQUEST:
         raise ValueError("configuration must be JSON text no larger than 1 MiB")
-    report = validate_configuration(source, kind="events")
+    report = validate_configuration(source, kind="rays")
     if not report.valid:
         raise ValueError(report.issues[0].message)
     return report.summary

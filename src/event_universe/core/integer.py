@@ -87,3 +87,47 @@ def reduced_ratio(numerator: int, denominator: int) -> tuple[int, int]:
         raise ValueError("positive rational denominator required")
     divisor = bounded_gcd(numerator, denominator)
     return numerator // divisor, denominator // divisor
+
+
+def integer_root(value: int) -> int:
+    """The integer square root, the floor, exact: Newton's iteration on
+    integers from a power-of-two estimate (no float anywhere)."""
+    checked_work(value)
+    if value < 0:
+        raise ValueError("integer root of a negative value")
+    if value < 2:
+        return value
+    estimate = 1 << ((value.bit_length() + 1) // 2)
+    while True:
+        better = (estimate + value // estimate) // 2
+        if better >= estimate:
+            return estimate
+        estimate = better
+
+
+def by_clock(age: int, numerator: int, denominator: int) -> int:
+    """What the whole part of age x numerator / denominator gains at the
+    self-creation that takes the age from `age` to `age + 1`: a rate read
+    off a clock, exact on average, with no remainder kept anywhere."""
+    if denominator < 1:
+        raise ValueError("positive denominator required")
+    return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
+
+
+def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:
+    """`total` shared over the entries in proportion to `weights`, exact in
+    whole numbers: the floors, then the units left to the largest
+    remainders, ties broken in index order counted from `first`. Nothing
+    without weights."""
+    divisor = sum(weights)
+    if divisor <= 0 or total <= 0:
+        return [0] * len(weights)
+    shares = [total * weight // divisor for weight in weights]
+    remainders = [
+        total * weight - share * divisor for weight, share in zip(weights, shares, strict=True)
+    ]
+    left = total - sum(shares)
+    order = sorted(range(len(weights)), key=lambda k: (-remainders[k], (k - first) % len(weights)))
+    for index in order[:left]:
+        shares[index] += 1
+    return shares
