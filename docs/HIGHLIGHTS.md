@@ -41,6 +41,15 @@ head of the law of the bit, its points 1 to 25 and the paragraphs of sections
 saying how they read under it, every reading the orchestrator's and flagged;
 5.5 lists what round 8 must show. Nothing is deleted.
 
+Revision 2026-09-19 (the model owner's status of the engine, and a reading):
+the law of the shadow in section 5.4 carries the status line of the morning
+(the engine under test, unusable without the three decisions), and after the
+consistency table a paragraph, "One speed, and what is seen", records the
+owner's words of the day ("A quantum passes, like everything, at the speed of
+light between Nodes"; what is seen is events, only through a Detector; the
+picture read without the word "shadow") with the orchestrator's readings
+flagged. No rule changes; nothing is deleted.
+
 ---
 
 *Sole author: Alon Gonen*
@@ -362,6 +371,8 @@ Propagation, funded emission, remainders, six independent output clocks, no inpu
 | The field, its force | A push on a thing's momentum, read by content or charge; the shadow turned back and absorbed at home, the recoil through the field (points 3, 15, 16) | The push is an absorption of a whole quantum, its momentum with the family's sign times the holder's content or whole charge; no return and no home, the third law the symmetry of the two fields (reading (ii)) | 5.4, points 3, 15, 16, 18; 3.5, 3.13, 3.14 annotated |
 | Measurement, the click | A mark absorbs a thing and returns a shadow, drawing nothing; the bit set at birth decides what arrives (points 6, 14) | An event is a whole quantum at held content, created when measuring; a click is that absorption, there is no bit and nothing is returned, and the distribution over many is the amount's, Born by counting (readings (i), (vi)) | 5.4, points 6, 14, "A click is an absorption"; 3.19, 3.20 annotated |
 | Measurement, Bell | The number of a pair travels through the birth event on a return; CHSH at most 2 for spacelike settings ("The price") | Two events of one field at two places, each born of the local field and the local setting, at most 2; unchanged (reading (vii)) | 5.4, "The price", "A pair"; 3.2, 3.20 annotated |
+
+**One speed, and what is seen (model owner, 2026-09-19; a reading of the law of the shadow, not a change to it).** The model owner's words, given in Hebrew and translated: "A quantum passes, like everything, at the speed of light between Nodes." And the same day, on what is seen: what we see are events, and only through a Detector; at an event one whole quantum is fixed at that Node, completing the information there, and the rest spreads, the information about the event, at the speed of light. The owner also asked to read the picture, for the moment, without the word "shadow": there is held amount at a Node, amount in transit on the Links, and the event that moves amount from the one to the other; "shadow" is only the name of the amount in transit, and light and matter are two families that differ by their table. The orchestrator's readings, flagged: (a) every transfer between two Nodes is one Link in one interval, for everything, and there is no other speed on a Link; all slowness is a stay at a Node. (b) A held content's speed is the intervals it stays between one step and the next, the step itself a release that crosses the Link at the field's speed and an absorption at the neighbour (reading (v)), so nothing outruns the field. (c) Light's index in a potential, n = 1 + 2GM/r (reading (iii)), is the wait charged at the Node, intervals owed for the size read there, after which the quantum moves one Link per interval again. (d) A content's clock advances while it stays, so the redshift is the stays it accumulated: speed and clock are two readings of one counter. (e) The absorbed quantum is the record of the event, the amount that joined the content, the push that entered its momentum and the phase, completed at the local holder alone; what the rest of the board receives is the release from the event, carrying the last emitter's phase and number (reading (iv)) and no message, so locality holds without a report. Nothing here changes a rule: point 21 (every ray moves one Link per interval) and readings (iii) and (v) stand, and the engine already works this way, the wait a hold per Node and the transfer one Link per interval ([Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md)). Whether the word "shadow" stays as the name of the amount in transit, in the documents and the code, is not decided here.
 
 ## 5.5 Acceptance tests and open decisions
 
