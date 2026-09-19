@@ -9,3 +9,5 @@ dist/
 *.egg-info/
 artifacts/
 .event-universe-retention/
+# Agents' git worktrees are checkouts, not repository content.
+.claude/worktrees/

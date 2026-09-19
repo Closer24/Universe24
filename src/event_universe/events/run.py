@@ -75,7 +75,7 @@ def execute_event_run(
         "law": EVENTS_LAW,
         "model": world.model_id,
         "shape": list(world.shape),
-        "boundary": "open",
+        "boundary": world.boundary,
         "K": world.clock,
         "N": world.phase_steps,
         "release": list(world.release),
