@@ -54,6 +54,13 @@ transit and is now the canonical provider. Its actual API supersedes the stricte
 all-axes draft published in `eacc96834819a10ad68c7cbbaeb0ceab0dff7eb3`.
 Reuse it rather than replacing working transit or adding a second boundary schema.
 
+Main `7a0aa24c46e7544cd1c3cc7ee587f657498ff509` (PR #348) subsequently
+implemented measured movement on the same declared graph. Preserve its native
+self-link record semantics: `steps` increments, but returning to the same Node
+emits no coordinate-movement `step` record. The shared scalar neighbor helper
+serves material movement and candidate proposals; native bulk transit, clocks
+and the candidate contact law remain unchanged.
+
 `shape` remains exactly three integers from 1 through 4096. An omitted `boundary`
 or the string `"open"` means three open axes. The additional form is an object
 with any subset of `x`, `y`, `z`, each equal to `"open"` or `"periodic"`;
@@ -122,7 +129,8 @@ Default measured movement uses the same neighbor provider. Existing timing,
 self-creation/suspension order, open escape and collision/merge policy are kept.
 A self-loop movement retains its one original Event and inventory, counts one
 completed step and preserves momentum; it never merges the Event with itself,
-deletes it, or doubles its content. A wrapped target occupied by a different
+deletes it, or doubles its content. It emits no coordinate-movement record when
+the destination is its origin. A wrapped target occupied by a different
 Event follows the existing merge law. This does not make that law reversible.
 
 The candidate uses the same provider while building immutable local proposals.
@@ -213,13 +221,14 @@ that axis return to the same Node in the next interval as its arrivals
 through those Ports (a unit leaving +z at the last Node arrives at the first
 Node in the +z slot; with an extent of 1, at the same Node in the +z slot):
 the Node behaves as a four-Port node with a one-interval stub, as a
-two-dimensional transmission-line-matrix (TLM) node with a stub does. The
-periodic axis was initially implemented only for the walk (step 1) in main
-`ddb4470`. The [compatibility amendment](#per-axis-board-topology-2026-09-19-implementation-amendment)
-extends the same declared graph to measured movement (step 6) and the opt-in
-detector path; escape remains on open faces. Open
-stays the default and the meaning of "the edge is infinity"; `"closed"` and
-every other word are refused. Per family the
+two-dimensional transmission-line-matrix (TLM) node with a stub does. One
+rule for the board (the model owner, 2026-09-19): a measured event's step by
+its momentum (step 6, `_move`) wraps on a periodic axis as the departures do,
+from the last Node along +axis to the first and from the first along -axis
+to the last, and with an extent of 1 it lands on its own Node, no move and
+no merge with itself; through an open face it escapes with its content and
+its momentum as before. Open stays the default and the meaning of "the edge
+is infinity"; `"closed"` and every other word are refused. Per family the
 arrays of `Transit` with the axes (x, y, z, number, Port): the arrivals of the
 interval (`arr_*`: amount, phase, momentum), the departures (`fly_*`), and per
 Node and number the count the arrivals there carry (`suspended`). Per Node with
@@ -345,10 +354,14 @@ candidates (`transit.nearest_step`, `step_window`).
    most one step per interval, x before y before z, the momentum untouched;
    a step onto a measured event merges the two into the resident (amounts,
    what came home, momentum and charge added, the resident's number, phase and
-   table kept); under the topology amendment, a step through a periodic face
-   wraps, a self-loop preserves its one Event, and an open exit escapes with
-   its content; `fixed` never
-   steps.
+   table kept), a step off the board through an open face escapes with its
+   content and its momentum, and on a periodic axis the step wraps as the
+   departures do (the last Node's step along +axis lands on the first, the
+   first's along -axis on the last; with an extent of 1 on that axis it
+   lands on its own Node, no move and no merge with itself, the event staying
+   with its momentum untouched); `steps` counts every step made off the
+   clock, wherever it lands (a move, a merge, an escape or its own Node);
+   `fixed` never steps.
 
 **The push** (Highlights 5.4, the law of events, the third law corrected the
 same day): the momentum an arriving group of a free family carries, from birth
