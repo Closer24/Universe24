@@ -22,8 +22,15 @@ opposite face (`Transit.walk`), nothing escapes on that axis and the momentum
 they carry stays on the board; `escaped` counts only what leaves through the
 open faces; with an extent of 1 the two departures on that axis return to
 the same Node in the next interval as its arrivals through those Ports (a
-four-Port node with a one-interval stub). A measured event's step off the
-board (step 6) is unchanged. New: `EventWorld.boundary` (the declared value)
+four-Port node with a one-interval stub). On 2026-09-19, later the same
+day, the model owner ruled one rule for the board: a measured event's step
+by its momentum (`_move`, step 6) wraps on a periodic axis too, the last
+Node's step along +axis landing on the first and the first's along -axis on
+the last, with an extent of 1 on its own Node (no move, no merge with itself,
+the momentum untouched, the step counted in `steps`); through an open face
+it escapes with its content and momentum as before (the first periodic axis
+escaped a measured event on every face; `test_periodic_axis` (d)). New:
+`EventWorld.boundary` (the declared value)
 and `EventWorld.periodic` (per axis), `EventWorld.boundary_per_axis`,
 `Transit(..., periodic=...)`; `run.json` and `state.json` carry `boundary` as
 declared (the string or the object) in place of the constant `"open"`; the

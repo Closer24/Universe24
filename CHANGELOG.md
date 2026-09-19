@@ -21,6 +21,15 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   preflight's summary shows the boundary per axis ([the engine](docs/ENGINE.md),
   [migration](docs/MIGRATION.md#a-periodic-axis-as-a-declared-run-parameter-of-the-world-on-2026-09-19-boundary-per-axis)).
   Test: `test_periodic_axis` ([expectations](docs/TEST_EXPECTATIONS.md#a-periodic-axis)).
+- A measured event's step wraps on a periodic axis, one rule for the board
+  (the model owner, 2026-09-19): its step by its momentum (`_move`, step 6)
+  lands on the first Node of the opposite face as the departures do, and
+  with an extent of 1 on its own Node, no move and no merge with itself, the
+  momentum untouched and the step counted in `steps`; through an open face
+  it escapes with its content and momentum as before (the first periodic
+  axis escaped a measured event on every face; [the engine](docs/ENGINE.md),
+  [migration](docs/MIGRATION.md#a-periodic-axis-as-a-declared-run-parameter-of-the-world-on-2026-09-19-boundary-per-axis)).
+  Test: `test_periodic_axis` (d) ([expectations](docs/TEST_EXPECTATIONS.md#a-periodic-axis)).
 - A measured event is created again first and then reads its suspension:
   the count it owes, `suspension` intervals per whole unit of the other
   numbers' sizes at its Node, is read after its self-creation from this
