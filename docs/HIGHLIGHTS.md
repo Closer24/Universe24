@@ -50,11 +50,17 @@ light between Nodes"; what is seen is events, only through a Detector; the
 picture read without the word "shadow") with the orchestrator's readings
 flagged. Later the same day the owner ruled that the three pending decisions
 of the status line are not needed ("We do not need these three things at
-all"): no gate, no keys, the engine as it stands; and in the evening that
-there is one engine ("The field is, in fact, a field of events. No confrontations
-are needed. Only tests that everything is as designed."): the old engine is
-retired without the confrontation runs, see MIGRATION.md. No rule changes;
-nothing is deleted from this document.
+all"): no gate, no keys, the engine as it stands, and the wait is the delayed
+clock with `wait_per_quantum` a declared width like the others ("there is only
+a delayed clock"); in the evening that there is one engine ("The field is, in
+fact, a field of events. No confrontations are needed. Only tests that
+everything is as designed."): the old engine is retired without the
+confrontation runs, see MIGRATION.md, and 5.5's open decisions carry the
+sentence; and that a choice the law leaves open is a declared width of the
+world ("What can be put as a parameter, put"; "Put it in, without an
+experiment"): `turns_in_flight` and `quantum` per family, both defaulting to
+the engine's behaviour so far. No rule changes; nothing is deleted from this
+document.
 
 ---
 
@@ -390,7 +396,7 @@ Every supported operation needs declared initial ownership, input, operator, exp
 
 **The constants: what is derived and what is an input (2026-09-17).** Mass ratios are derivable: the ladder of hypothesis 12 is the set of loop-closing contents under the catalog's binding table, and experiment A10 counts them against the known spectrum, the proton-to-electron ratio first. The strength of the electric coupling and the strength of gravity are inputs today: the release ratio n/d of a field family and the modulus N of the lag register (section 3.28) are declared widths, and hypothesis 14's G = ħc/(N m₀)² is a reparametrization until something fixes N. The Born table's ratios were an input of the same kind until 2026-09-18, when the model owner ruled that the table is computed from the phase width N (section 5.4, point 17). Two open hypotheses record the question, 16 (what fixes the lag modulus: the top of the mass ladder, the resolution the spreading field needs, or nothing) and 17 (what fixes the release ratio and the table: the symmetry of section 3.27 and the path counting of 3.5, or nothing); until they are answered the model predicts forms, 1/N² and 1/r², and not the values of G and α. (2026-09-18: the field family is retired, point 12, the ratio being the size of a family's shadow set, "A thing does not emit"; the lag register is retired with point 22; the Born table is computed from N, point 17; what fixes G remains hypothesis 16's question.) (2026-09-18, the evening, the law of the shadow: the size of a shadow set became a rate with "A thing emits", ρ, the release per unit of held content per interval, the orchestrator's name, and it is the input for the strength of a force, the model owner's to choose; what fixes G remains hypothesis 16's question.)
 
-**Open decisions of the law of the shadow (2026-09-18, the evening; section 5.4).** What round 8 of DERIVATIONS.md must show before the new engine (feature 20, field-only-v1) is trusted, none of it assumed: that a held content is stable, its gravity and electricity free and its light paid; that its step, a release toward the neighbour and an absorption there, keeps it at or below the field's speed; that a content in uniform motion absorbs no net momentum from its own field, which is inertia; that bound contents exchanging quanta give the ladder of hypothesis 12; and what a split and a pair creation are as tables. Open with them, the orchestrator's list, flagged: what a mark that misses does, what the steering of two things of one family becomes, what a decay is as a table on held content, and what the siblings of one event are when nothing walks a path. Not open: Bell, two events of one field at two places, each born of the local field and the local setting, at most 2 (reading (vii)). The value of ρ, the rate of release, is the model owner's, as the size of the shadow set was.
+**Open decisions of the law of the shadow (2026-09-18, the evening; section 5.4).** What round 8 of DERIVATIONS.md must show before the new engine (feature 20, field-only-v1) is trusted, none of it assumed: that a held content is stable, its gravity and electricity free and its light paid; that its step, a release toward the neighbour and an absorption there, keeps it at or below the field's speed; that a content in uniform motion absorbs no net momentum from its own field, which is inertia; that bound contents exchanging quanta give the ladder of hypothesis 12; and what a split and a pair creation are as tables. Open with them, the orchestrator's list, flagged: what a mark that misses does, what the steering of two things of one family becomes, what a decay is as a table on held content, and what the siblings of one event are when nothing walks a path. Not open: Bell, two events of one field at two places, each born of the local field and the local setting, at most 2 (reading (vii)). The value of ρ, the rate of release, is the model owner's, as the size of the shadow set was. (2026-09-19, the evening, the model owner: "No confrontations are needed. Only tests that everything is as designed." The engine is the one engine without any of the above shown by a run; what round 8 was to show stays a list of research questions for runs made when wanted and registered in EXPERIMENTS.md, not a condition of anything; what round 8 did show on paper is in DERIVATIONS.md sections 51 to 56. The two choices decided as declared widths the same day, the phase turn in flight and the quantum of a family, are in 5.4's status line.)
 
 # 6. History, implementation and evidence
 
