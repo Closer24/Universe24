@@ -96,9 +96,8 @@ def execute_ray_run(
         "families": [
             {
                 "name": family.name,
-                "kind": family.kind,
-                "charge": family.charge,
                 "quantum": family.quantum,
+                "charge": family.charge,
                 "phase": family.phase,
                 "phase_per_link": family.phase_per_link,
             }

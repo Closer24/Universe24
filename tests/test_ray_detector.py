@@ -42,7 +42,7 @@ from event_universe.events import RaySimulation, parse_ray_world
 M, LIGHT = 0, 1
 NODE = [4, 1, 1]
 NO_RESPONSE = {"home": 0, "read": 0, "measure": 0, "rerelease": 0}
-FAMILIES = [{"name": "m", "kind": "free"}, {"name": "light", "kind": "paid"}]
+FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
 SOURCE = {"position": [0, 1, 1], "family": "light", "amount": 4, "fixed": True}
 UNIT_RECORD = 32 * 32 * 256 * 256
 

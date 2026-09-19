@@ -63,7 +63,7 @@ def world(measured: list[dict[str, object]], **keys: object) -> dict[str, object
         "N": 64,
         "release": [1, 10],
         "suspension": 0,
-        "families": [{"name": "m", "kind": "free"}, {"name": "light", "kind": "paid"}],
+        "families": [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}],
         "measured": measured,
     }
     base.update(keys)

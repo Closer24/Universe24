@@ -69,9 +69,11 @@ is a bijection since identical units are interchangeable):
 | `family` | the family index (one store per family, so implicit in the store) | |
 
 The momentum vector of a ray is not stored: it is `content x D[direction]`
-per unit for a paid family and `quantum x amount x D[direction]` for a free
-one (the label of today along the heading, the heading now any primitive
-vector; the family's `quantum` and the amount give its magnitude as today).
+per unit for a paid family and `amount x D[direction]` for a free one (the
+label of today along the heading, the heading now any primitive vector; a
+free unit carries no content and its label is the unit; until the night of
+2026-09-19 the free family's `quantum` was forced to 1 and multiplied here,
+section 10, note 15).
 The bound check `MOMENTUM_BOUND` (2^62 - 1) applies to every component, so
 `P x content x amount` must fit; the parser refuses a world whose declared
 `in_transit`, lamp rate or re-emission could exceed it (risk, section 9).
@@ -88,18 +90,40 @@ on and a `rerelease` entry re-emits on; the six headings by default);
 `detectors[].record` is always written (no key). Keys removed and refused:
 `headings` on a lamp, `dynamics`, `port_map`, `output`, `capacity`, the
 `phase` false branch's mixing semantics (`"phase": false` stays as "never
-turns, phase 0, no window"). Unchanged: `shape`, `boundary`, `ticks`, `K`,
-`N`, `release`, `suspension`, `families`, `measured` (`table` with `read`,
-`measure`, `rerelease`, `pass` and `phase_window`), `in_transit` (gains
-`direction`, a vector, in place of `heading`; the six headings accepted as
-vectors), `detectors` (`threshold`).
+turns, phase 0, no window"), and, since the night of 2026-09-19 (the model
+owner: "the tables are generated from the keys and a world declares only
+what differs, `kind` derived from `quantum`"; section 10, note 15), `kind`
+on a family: a family declares its `quantum` (required), h = 0 a free
+family, h >= 1 a paid one, and the refusal names the derivation and
+MIGRATION. Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
+`suspension`, `families`, `measured` (`table` with `read`, `measure`,
+`rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
+a vector, in place of `heading`; the six headings accepted as vectors),
+`detectors` (`threshold`).
+
+**The table generated from the keys** (the same decision). The table of a
+measured event is one generic function of the families' keys,
+`world.default_table(families)`: per family the rule the arrival's key
+gives, `read` for a free family (h = 0: the push taken, the rays go on, the
+record carrying the flow) and `measure` for a paid one (h >= 1: the click,
+the record carrying the presence), no window. A world declares only the
+entries that differ: a `phase_window`, a rule off the default (`rerelease`
+for an opening or a mirror, `pass` for transparency, `read` on a paid
+family, `measure` on a free one), a `reads` component; the object form of
+an entry may omit `rule`, which is then the family's default, so a window
+alone (`{"light": {"phase_window": 32}}`) is a lawful entry. An entry equal
+to the default is accepted and changes nothing (the mathematician measured
+that in every world of the repository no declared rule differed from the
+key's; the forty declared entries were windows). The shipped worlds declare
+only what differs (`tools/migrate_ray_worlds.py` rewrote them; the Bell and
+coupling generators emit the trimmed form).
 
 ```json
 {"law": "rays", "model_id": "two-slits-rays", "shape": [60, 121, 1],
  "boundary": {"z": "periodic"}, "ticks": 500, "K": 1024, "N": 64,
  "release": [1, 128], "suspension": 0,
  "directions": [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]],
- "families": [{"name": "light", "kind": "paid", "quantum": 1, "phase_per_link": 0}],
+ "families": [{"name": "light", "quantum": 1, "phase_per_link": 0}],
  "measured": [
   {"position": [2, 60, 0], "family": "light", "amount": 1000000, "fixed": true,
    "lamp": {"rate": [16, 1], "directions": [[1, 0, 0], [1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0]]}},
@@ -185,7 +209,26 @@ order with each step's inverse:
 2. **The readings** (one reading set): presence per number per Node = the
    amount of every ray at the Node, rest and moving alike, and the measured
    content; flow per number = `sum amount x D[direction]`; both read as the
-   other change specifies. Read-only; no bijection needed.
+   other change specifies. Read-only; no bijection needed. Since the night
+   of 2026-09-19 (the model owner: "the one reading function is the
+   amount-weighted moments of order 0, 1 and 2 of the direction vectors,
+   valid for fans as for the six headings, here entering the zeroth moment
+   alone"; section 10, note 16) the one function `read_arrivals` takes,
+   over the arrivals of the reading set, the moments of their direction
+   vectors weighted by their amounts: order 0 the count, split outside (a
+   ray that arrived this interval, its vector `D[direction]` as it arrived,
+   before the collision) and here (a ray that did not step, its vector
+   (0, 0, 0), so it enters the zeroth moment alone); order 1 the net flow
+   `sum amount x D[direction]`; order 2 the traceless tensor `3 x sum
+   amount x D (x) D - tr(sum amount x D (x) D) I`, exact integers (the raw
+   second moment with its trace removed, times the number of dimensions;
+   |D| is not normalised). Every coupling selects its component by the key
+   `reads` (the clock's count and the threshold the scalar, the push the
+   vector, a detector may declare the tensor); the detector's record is the
+   same moments over the clicked rays with their amplitudes as weights, the
+   scalar squared. On the six headings the moments are the slot
+   decomposition of the first implementation exactly; on a fan they are
+   the moments of the fan's vectors, no projection onto the Ports.
 3. **The collision.** At every Node the collision table permutes the
    directions of the single units in the seven slots (section 4). Inverse:
    the inverse table on the output pattern (the class is invariant).
@@ -459,12 +502,15 @@ impossible as written or ambiguous, each decided by the design's principles
 the flight table's speed, integers only) and recorded here as the
 implementation's part of the contract. The design above is unchanged.
 
-1. **The reading's slots are the arrival Ports.** The seven slots of
-   `read_arrivals` are the amounts that arrived through the six Ports (the
-   Port a ray's last step entered by, recorded on the row as `port`) and
-   here (the rays that did not step this interval, the rest rays among
-   them). A ray on a declared direction counts in the Port of its last
-   Link, so the flow of a fan is the flow of its Links, exact.
+1. **The reading is of the arrivals.** (Amended by note 16.) Until the
+   night of 2026-09-19 the seven slots of `read_arrivals` were the amounts
+   that arrived through the six Ports (the Port a ray's last step entered
+   by) and here (the rays that did not step this interval, the rest rays
+   among them), a ray on a declared direction counting in the Port of its
+   last Link. What stays: the reading is of what arrived this interval
+   (the row's `arrival`, the direction the ray arrived on, kept through
+   the collision) and of what stayed; what changed: a fan ray now enters
+   with its own vector `D[direction]`, not the unit Link of its last step.
 2. **Rest rays keep their age.** A rest direction has period 1 in the
    flight table, but the age of a ray parked by the collision is kept (the
    walk and its inverse leave a rest ray's age untouched); otherwise the
@@ -508,7 +554,7 @@ implementation's part of the contract. The design above is unchanged.
    above the plus.
 10. **`reads` names the component**, one of `scalar` (outside + here, the
     default: the presence, the threshold), `outside`, `here`, `vector` (the
-    flow) and `tensor` (the two traceless components); the push always
+    flow) and `tensor` (the traceless second moment, since the night of 2026-09-19 a 3 x 3 matrix, note 16); the push always
     reads the flow and the clock's count always the scalar; a detector
     entry may declare `tensor` and the world test of the detector
     definitions does.
@@ -530,3 +576,37 @@ implementation's part of the contract. The design above is unchanged.
     r = 20 both hold 112 Nodes) and fall outside the ±10 % expectation,
     registered and not moved; the fan the expectation was pinned on is the
     owner's decision to run.
+15. **The table from the keys; the kind from the quantum** (the model
+    owner, the night of 2026-09-19, "I approve 1 and 3", Highlights 5.4;
+    `tests/test_default_table.py`). `world.default_table(families)` is the
+    one function that gives every measured event its table (section 2);
+    `FamilyDefinition.free` is `quantum == 0`; the constraints the parser
+    kept are expressed through the quantum and not widened: a charge is
+    refused on a paid family (h >= 1), a lamp on a free one, a free unit
+    carries no content and its label is `amount x D` (the mathematician's
+    note that "paid => q = 0 and free => h = 1 are decisions, not
+    necessities" is recorded, not acted on). `quantum` is required: a
+    default would be an implicit kind. The record (`run.json`) carries
+    `quantum` per family and no `kind`. Every example world parses to the
+    same `RayWorld` as before the change (checked structure by structure
+    over the 39 worlds), and the Bell and coupling runs are unchanged
+    record by record (VALIDATION.md).
+16. **The moments replace the slots** (the same decision; `tests/
+    test_ray_readings.py` (a)). `read_arrivals(vectors, amounts, keys,
+    size)` takes the moments of section 3, step 2, exact integers, with
+    the normalisation `tensor = 3 x M2 - tr(M2) I` for the second moment
+    `M2 = sum amount x D D^T` (the trace removed times the number of
+    dimensions, so no division); the `Reading` holds the six entries of
+    `M2` and forms the tensor on demand. On the six headings the moments
+    equal the slot decomposition exactly (the old `(p_x + p_y - 2 p_z,
+    p_x - p_y)` being `-T_zz` and `(T_xx - T_yy) / 3`); under the 48
+    signed axis permutations the scalars are fixed, the vector rotates and
+    the tensor is conjugated. What this changes on the board: only the
+    reading of a fan ray at a measured event, whose push is now its label
+    `content x amount x D` (the recoil its emitter took) and not the unit
+    Link of its last step, so the momentum a wall takes from a fan closes
+    with the lamp's recoil; the six-heading worlds (Bell, series C, one
+    and two contents) read exactly as before. The reading is bounded
+    before any product is formed (`amount x P^2 x rows` against 2^62 - 1,
+    `OverflowError` beyond it); the Links crossed per Port (`per_port`,
+    for Gauss's flux) remain a diagnostic of the walk, not of the reading.

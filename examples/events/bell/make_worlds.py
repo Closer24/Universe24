@@ -4,11 +4,13 @@ One base world, the settings the only difference between the files
 (README.md here; the entry "A2, under the law of the ray (2026-09-19)" in
 docs/EXPERIMENTS.md): a bar of 21 x 1 x 1, open, `"law": "rays"`, K 2^20,
 N 64, no release of a free family, no suspension, the families `light`
-(paid) and `counter` (paid). The lamp of `light` at x = 10, content K + 2
-(so that the release of age a is stamped with the phase a mod 64 exactly for
-every age of the run), one ray per self-creation on +X and on -X, no window
-(the source cycles the whole circle). Four counters of content 1, each its
-own detector of threshold 1, measuring `light` through a phase window:
+and `counter`, both paid (`quantum` 1; the kind follows from the quantum).
+The lamp of `light` at x = 10, content K + 2 (so that the release of age a
+is stamped with the phase a mod 64 exactly for every age of the run), one
+ray per self-creation on +X and on -X, no window (the source cycles the
+whole circle). Four counters of content 1, each its own detector of
+threshold 1, measuring `light` (the rule the keys give a paid family; the
+table declares only the window) through a phase window:
 `alice_plus` at x = 2 (window a), `alice_minus` at x = 1 (window a + 32 mod
 64), `bob_plus` at x = 18 (window b), `bob_minus` at x = 19 (window b + 32
 mod 64). The two windows of a side cover the circle exactly, so every ray
@@ -45,7 +47,7 @@ def counter(x: int, window: int) -> dict[str, object]:
         "family": "counter",
         "amount": 1,
         "fixed": True,
-        "table": {"light": {"rule": "measure", "phase_window": window}},
+        "table": {"light": {"phase_window": window}},
     }
 
 
@@ -60,7 +62,7 @@ def world(a: int, b: int) -> dict[str, object]:
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "families": [{"name": "light", "kind": "paid"}, {"name": "counter", "kind": "paid"}],
+        "families": [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}],
         "measured": [
             {
                 "position": [LAMP_X, 0, 0],

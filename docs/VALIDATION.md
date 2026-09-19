@@ -11,6 +11,31 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The table from the keys and the moments: the runs unchanged - 2026-09-19 (the night)
+
+Base `636f391c` on `claude/universe24-new-3ytqde` (the law of the ray with
+the owner's approval of the mathematician's proposals 1 and 3 recorded).
+The two generic replacements ([migration](MIGRATION.md#the-table-from-the-keys-and-the-moments-on-2026-09-19-the-night),
+[RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+notes 15 and 16) checked against the registered runs: the thirty-five example
+worlds (the ten Bell worlds, the twenty-one coupling worlds, `one_content`,
+`two_contents`, `two_slits`, `one_slit`) run through `tools/run_series.py`
+on the base source (runtime SHA-256 `703f9427...`, the fingerprint of the
+registered runs) and on the changed source (`5ba9a47b98e16c80ebf4e46ed57987a2274431f1abe35c2d74a09e6f9f24b794`),
+Python 3.14, headless.
+
+| Check | Result |
+| --- | --- |
+| Every example world parsed on both sources | 39 worlds (the `detector/` worlds through the entity loader): the parsed `RayWorld`s equal structure by structure (tables, windows, `reads`, the families' free flags, every other field) |
+| The Bell and coupling runs, `events.jsonl`, `state.json` and the `audit` per tick | identical SHA-256 digests on both sources for all 31 runs, and for `one_content` and `two_contents` (33 of 35) |
+| `tools/bell_chsh.py` on the ten new runs | 326 criteria passed, 0 failed; every printed line equal to the base run's but the source fingerprint (and the order Python prints a set in) |
+| `tools/coupling_readings.py` on the twenty-one new runs | 392 criteria passed, 0 failed; 19 readings inside, 9 outside, the printed readings equal to the base run's line by line |
+| `two_slits`, `one_slit` (fans) | the digests differ, as the decision says: a fan ray now pushes by its label `content x amount x D` and not by the unit Link of its last step; the world test's correlation still passes (`test_ray_worlds` (a)) |
+| Host cost | `one_content` 0.24 s per 200 intervals (0.44 before), `1a_m1` 0.62 s (0.65), `5_long` 3.1 s (3.9), `two_slits` 5.8 s (4.6): the moments per Node cost about what the slots did |
+
+The runs are the register's evidence that the replacements are generic; they
+establish no physical law.
+
 ## The law of the ray: the engine, the suite and the re-registered runs - 2026-09-19
 
 Base `ce0b22af` on `claude/universe24-new-3ytqde` (the merge of the three

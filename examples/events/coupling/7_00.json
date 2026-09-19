@@ -20,7 +20,7 @@
   "families": [
     {
       "name": "q",
-      "kind": "free",
+      "quantum": 0,
       "charge": 0
     }
   ],

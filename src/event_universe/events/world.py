@@ -27,20 +27,23 @@ the model owner, 2026-09-19):
   headings in Port order and these, in that order; each declared vector is
   primitive with every component in -P .. P, P = `direction_bound` (64 by
   default, at most 4096 entries in the table);
-- `families`: each with a `name`, a `kind` (`free`: matter, whose measured
-  events release at the world's rate and whose rays are read for gravity
-  and electricity; `paid`: light, released only by a lamp that spends its
-  content, its rays carrying their own momentum), for a free family the
-  whole `charge` of a measured event of it (0 by default), for a paid
-  family `quantum`, the content of one unit of it per phase step of its
-  emitter's turn (1 by default; h: a release costs the emitter quantum x s
-  per unit at a self-creation whose turn is s steps, the unit carries that
-  content and the momentum quantum x s along its direction, and a click
-  measures it, E = h f), `phase` (true by default; false: the family has no
-  phase circle, its rays carry phase 0 and never turn, its measured events
-  never turn, no `phase_window` is accepted for it) and `phase_per_link`
-  (an integer 0 .. N - 1, 0 by default: the phase steps a ray of the family
-  turns at every Link crossed);
+- `families`: each with a `name`, its `quantum` (h, required: the content
+  of one unit of it per phase step of its emitter's turn; the kind of the
+  family follows from it and is not declared: h = 0 is a free family,
+  matter, whose measured events release at the world's rate, whose rays
+  carry no content and are read for gravity and electricity, their label
+  the amount along the direction; h >= 1 is a paid family, light, released
+  only by a lamp that spends its content: a release costs the emitter
+  quantum x s per unit at a self-creation whose turn is s steps, the unit
+  carries that content and the momentum quantum x s along its direction,
+  and a click measures it, E = h f), for a free family the whole `charge`
+  of a measured event of it (0 by default; refused on a paid family),
+  `phase` (true by default; false: the family has no phase circle, its rays
+  carry phase 0 and never turn, its measured events never turn, no
+  `phase_window` is accepted for it) and `phase_per_link` (an integer
+  0 .. N - 1, 0 by default: the phase steps a ray of the family turns at
+  every Link crossed). The key `kind` of the first ray worlds is refused
+  naming this derivation and docs/MIGRATION.md (one canonical form);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
   below K x N / 2 for a family with a phase circle), and optionally its
@@ -50,9 +53,12 @@ the model owner, 2026-09-19):
   directions it releases on and re-emits on, as vectors or indices of the
   world's table; the six headings by default), its `table` (family name to
   `read`, `measure`, `rerelease` or `pass`, or to an object `{"rule": ...,
-  "phase_window": s, "reads": key}`; a free family is read by default, the
-  push taken and the rays going on, a paid family measured, the click) and,
-  for a measured event of a paid family, its `lamp` (`rate` `[n, d]` units
+  "phase_window": s, "reads": key}`; the table is generated from the
+  families' keys by `default_table`, a free family read, the push taken and
+  the rays going on, a paid family measured, the click, and a world declares
+  only the entries that differ: a window, a rule off the default, a `reads`
+  component; an entry equal to the default is accepted and changes nothing)
+  and, for a measured event of a paid family, its `lamp` (`rate` `[n, d]` units
   per self-creation per direction, `directions` the directions it releases
   on, the six headings by default, and optionally its `phase_window`);
   every measured event is given its number at parsing, 1, 2, ... in
@@ -68,7 +74,7 @@ the model owner, 2026-09-19):
   the response's record carries, `scalar` (the presence), `outside`, `here`,
   `vector` (the net flow) or `tensor` (the traceless part); `vector` by
   default on `read`, `scalar` otherwise. No rule changes with it: every
-  coupling reads the one decomposition of the seven slots;
+  coupling reads the one reading, the moments of the arrivals (`gonen_beam.read_arrivals`);
 - `in_transit`, optional: rays at the start, each with a `position`,
   `family`, `number` (the measured event whose continuation it is),
   `direction` (a vector of the world's table or its index), `amount`,
@@ -81,7 +87,8 @@ the model owner, 2026-09-19):
   the Node's own; a smaller set passes. Every detector writes its `record`,
   the squared coherent reading of the rays it clicked.
 
-Refused, naming the key: `headings` on a lamp (`directions` replaces it),
+Refused, naming the key: `kind` on a family (the quantum decides it),
+`headings` on a lamp (`directions` replaces it),
 `heading` on a ray in transit (`direction` replaces it), `dynamics`,
 `max_active_owners`, `port_map`, `output`, `capacity`, `groups`, a direction
 that is not primitive, a component beyond P, a direction the world does not
@@ -98,8 +105,9 @@ from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 RAYS_LAW = "rays-v1"
 LAW_VALUE = "rays"
-KINDS = ("free", "paid")
 TABLES = ("read", "measure", "rerelease", "pass")
+# The quantum of a free family: its unit costs nothing and carries no content.
+FREE_QUANTUM = 0
 # The components of the one reading a table entry may select for its record.
 READS = ("scalar", "outside", "here", "vector", "tensor")
 MAX_PHASE_STEPS = 4096
@@ -161,7 +169,9 @@ WORLD_KEYS = {
     "in_transit",
     "detectors",
 }
-FAMILY_KEYS = {"name", "kind", "charge", "quantum", "phase", "phase_per_link"}
+FAMILY_KEYS = {"name", "quantum", "charge", "phase", "phase_per_link"}
+# The key of the first ray worlds that named the kind; the quantum decides it.
+KIND_KEY = "kind"
 MEASURED_KEYS = {
     "position",
     "family",
@@ -189,21 +199,56 @@ BOUNDARIES = ("open", "periodic")
 
 @dataclass(frozen=True)
 class FamilyDefinition:
-    """One family of the world: its name, its kind, the whole charge of a
-    measured event of it, the content of one unit of it per phase step of
-    its emitter's turn (`quantum`, h), whether it has a phase circle and the
-    phase steps its rays turn per Link crossed."""
+    """One family of the world: its name, the content of one unit of it per
+    phase step of its emitter's turn (`quantum`, h; 0 for a free family,
+    1 or more for a paid one: the kind is derived, never declared), the
+    whole charge of a measured event of it, whether it has a phase circle
+    and the phase steps its rays turn per Link crossed."""
 
     name: str
-    kind: str
-    charge: int
     quantum: int
+    charge: int = 0
     phase: bool = True
     phase_per_link: int = 0
 
     @property
     def free(self) -> bool:
-        return self.kind == "free"
+        """A free family (h = 0): its release costs nothing and its rays
+        carry no content."""
+        return self.quantum == FREE_QUANTUM
+
+    @property
+    def unit_label(self) -> int:
+        """The content one declared unit of the family carries for its
+        momentum label: the quantum (one phase step of content, no emitter
+        having declared its turn) for a paid family, the unit for a free
+        one, whose label is the amount along the direction."""
+        return max(self.quantum, 1)
+
+
+def default_rule(family: FamilyDefinition) -> str:
+    """The rule the family's key gives: a free family (h = 0) is read, the
+    push taken and the rays going on; a paid one (h >= 1) is measured, the
+    click."""
+    return "read" if family.free else "measure"
+
+
+def default_reads(rule: str) -> str:
+    """The component of the one reading a rule's record carries unless the
+    entry declares one: the net flow on `read`, the presence otherwise."""
+    return "vector" if rule == "read" else "scalar"
+
+
+def default_table(
+    families: tuple[FamilyDefinition, ...],
+) -> tuple[tuple[str, int | None, str], ...]:
+    """The table generated from the keys (the model owner, 2026-09-19): per
+    family in family order its rule, no window and the rule's component. A
+    measured event's declared `table` overrides only the entries it names;
+    an entry equal to this default is accepted and changes nothing."""
+    return tuple(
+        (default_rule(family), None, default_reads(default_rule(family))) for family in families
+    )
 
 
 @dataclass(frozen=True)
@@ -474,21 +519,22 @@ def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
         raise ValueError(f"{RAYS_LAW}: families must be a nonempty list")
     found: list[FamilyDefinition] = []
     for index, entry in enumerate(value):
-        obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "kind"})
+        if isinstance(entry, dict) and KIND_KEY in entry:
+            raise ValueError(
+                f"{RAYS_LAW}: families[{index}] declares {KIND_KEY}, a key removed on 2026-09-19: "
+                "the kind of a family follows from its quantum (0 free, 1 or more paid) and is "
+                "not declared; see docs/MIGRATION.md"
+            )
+        obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
             raise ValueError(f"{RAYS_LAW}: families[{index}].name must be a nonempty string")
         if any(item.name == name for item in found):
             raise ValueError(f"{RAYS_LAW}: two families named {name!r}")
-        kind = obj["kind"]
-        if kind not in KINDS:
-            raise ValueError(f"{RAYS_LAW}: families[{index}].kind must be free or paid")
+        quantum = _integer(obj["quantum"], f"families[{index}].quantum", FREE_QUANTUM, MAX_VALUE)
         charge = _integer(obj.get("charge", 0), f"families[{index}].charge", -MAX_VALUE, MAX_VALUE)
-        if kind == "paid" and charge:
-            raise ValueError(f"{RAYS_LAW}: a paid family carries no charge ({name})")
-        quantum = _integer(obj.get("quantum", 1), f"families[{index}].quantum", 1, MAX_VALUE)
-        if kind == "free" and quantum != 1:
-            raise ValueError(f"{RAYS_LAW}: a free family's unit is the unit of content ({name})")
+        if quantum != FREE_QUANTUM and charge:
+            raise ValueError(f"{RAYS_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
         phase = obj.get("phase", True)
         if type(phase) is not bool:
             raise ValueError(f"{RAYS_LAW}: families[{index}].phase must be true or false")
@@ -500,7 +546,7 @@ def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
                 f"{RAYS_LAW}: families[{index}].phase_per_link is refused for a family without a "
                 "phase circle"
             )
-        found.append(FamilyDefinition(name, str(kind), charge, quantum, phase, per_link))
+        found.append(FamilyDefinition(name, quantum, charge, phase, per_link))
     return tuple(found)
 
 
@@ -556,17 +602,18 @@ def _lamp(
 
 
 def _table_entry(
-    value: object, label: str, phase_steps: int, phased: bool
+    value: object, label: str, phase_steps: int, phased: bool, default: str
 ) -> tuple[str, int | None, str]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s,
-    "reads": key}` (the rule required; a window refused on `pass`, which
+    "reads": key}` (the rule the family's default when the object omits it,
+    so a window alone is a lawful entry; a window refused on `pass`, which
     responds to nothing, and for a family without a phase circle, whose
     rays carry no phase; the reading's component `vector` by default on
     `read`, `scalar` otherwise)."""
     reads: object = None
     if isinstance(value, dict):
-        obj = _object(value, label, TABLE_ENTRY_KEYS, {"rule"})
-        rule = obj["rule"]
+        obj = _object(value, label, TABLE_ENTRY_KEYS, set())
+        rule = obj.get("rule", default)
         window = None
         if "phase_window" in obj:
             window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
@@ -586,7 +633,7 @@ def _table_entry(
             "its rays carry no phase to read"
         )
     if reads is None:
-        reads = "vector" if rule == "read" else "scalar"
+        reads = default_reads(str(rule))
     if reads not in READS:
         raise ValueError(f"{RAYS_LAW}: {label}.reads must be one of {READS}")
     return str(rule), window, str(reads)
@@ -641,9 +688,14 @@ def _measured(
             f"{label}.directions",
             table,
         )
-        rules = ["read" if item.free else "measure" for item in families]
-        windows: list[int | None] = [None] * len(families)
-        reads = ["vector" if item.free else "scalar" for item in families]
+        # The table the keys give; the declared entries override what they name.
+        rules: list[str] = []
+        windows: list[int | None] = []
+        reads: list[str] = []
+        for rule, window, component in default_table(families):
+            rules.append(rule)
+            windows.append(window)
+            reads.append(component)
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
             raise ValueError(f"{RAYS_LAW}: {label}.table must map family names to rules")
@@ -651,10 +703,14 @@ def _measured(
             if key not in names:
                 raise ValueError(f"{RAYS_LAW}: {label}.table names an unknown family {key!r}")
             rules[names[key]], windows[names[key]], reads[names[key]] = _table_entry(
-                entry_value, f"{label}.table[{key!r}]", phase_steps, families[names[key]].phase
+                entry_value,
+                f"{label}.table[{key!r}]",
+                phase_steps,
+                families[names[key]].phase,
+                rules[names[key]],
             )
         if families[family].free:
-            # The label of a free release: quantum x amount x D along a heading.
+            # The label of a free release: amount x D along a heading.
             _label_bound(amount * release[0] // release[1] or 1, 1, table, directions, label)
         lamp = None
         if "lamp" in obj:
@@ -714,9 +770,9 @@ def _in_transit(
         direction = _direction(obj["direction"], f"{label}.direction", table, rest=True)
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         # A declared ray of a paid family carries one phase step of content
-        # per unit, quantum x 1 (no emitter declared its turn).
-        content = families[family].quantum
-        _label_bound(amount, content, table, (direction,), label)
+        # per unit, quantum x 1 (no emitter declared its turn); a free one
+        # carries none and its label is the amount along the direction.
+        _label_bound(amount, families[family].unit_label, table, (direction,), label)
         found.append(
             TransitDefinition(
                 _address(obj["position"], f"{label}.position", shape),

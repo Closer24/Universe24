@@ -20,8 +20,8 @@ initial + measured = current + spent + escaped; the transit line, in units,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
 momentum reported on the measured events, in transit (content x amount x
-D[direction] per ray of a paid family, quantum x amount x D of a free one)
-and escaped; every escaped line the sum of the face detectors' clicks.
+D[direction] per ray of a paid family, amount x D of a free one) and
+escaped; every escaped line the sum of the face detectors' clicks.
 """
 
 from __future__ import annotations
@@ -34,6 +34,7 @@ from event_universe.core.integer import by_clock as _by_clock
 from event_universe.core.lattice import Address3, adjacent_node
 from event_universe.events.gonen_beam import (
     HERE,
+    PORTS,
     RayStore,
     RayTables,
     Readings,
@@ -79,7 +80,9 @@ class RaySimulation:
         self.content_initial = [0] * count
         for item in world.in_transit:
             store = self.stores[item.family]
-            content = self.families[item.family].quantum if not self.families[item.family].free else 0
+            # One phase step of content per unit for a paid family; a free
+            # family's quantum is 0 and its rays carry none.
+            content = self.families[item.family].quantum
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
@@ -90,19 +93,19 @@ class RaySimulation:
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
                 content=np.array([content]),
-                port=np.array([HERE]),
+                arrival=np.array([HERE]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
         for store in self.stores:
             store.merge()
         # The readings of the last interval (diagnostics): per family the
-        # arrivals per Node, their net flow, the arrivals per Port and the
-        # presence.
+        # arrivals per Node, their net flow, the Links crossed per Port and
+        # the presence.
         self.readings = Readings(
             [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
             [np.zeros((*world.shape, 3), dtype=np.int64) for _ in range(count)],
-            [np.zeros((*world.shape, 7), dtype=np.int64) for _ in range(count)],
+            [np.zeros((*world.shape, PORTS), dtype=np.int64) for _ in range(count)],
             [np.zeros(world.shape, dtype=np.int64) for _ in range(count)],
         )
 
@@ -308,16 +311,13 @@ class RaySimulation:
 
     def transit_momentum(self) -> list[int]:
         """The momentum carried in transit: content x amount x D[direction]
-        per ray of a paid family, quantum x amount x D of a free one."""
+        per ray of a paid family, amount x D of a free one."""
         total = np.zeros(3, dtype=np.int64)
         for family, store in enumerate(self.stores):
             if store.size:
                 definition = self.families[family]
                 total += store.labels(
-                    np.arange(store.size),
-                    self.tables.flight.vectors,
-                    definition.free,
-                    definition.quantum,
+                    np.arange(store.size), self.tables.flight.vectors, definition.free
                 ).sum(axis=0)
         return [int(v) for v in total]
 
@@ -470,8 +470,10 @@ class RaySimulation:
     def cube_flux(self, family: int, centre: Address3, half: int) -> int:
         """The net outward flow through the closed surface between the cube of
         half-width `half` about the centre and its neighbours, this interval:
-        the amount that arrived just outside each face moving outward less the
-        amount that arrived on the face moving inward, Gauss's flux."""
+        the amount that crossed into the Node just outside each face through
+        its inner Port (moving outward) less the amount that crossed into the
+        face's Node through its outer Port (moving inward), Gauss's flux, read
+        off the Links crossed (`per_port`, a diagnostic of the walk)."""
         if any(self.world.periodic):
             raise ValueError("cube_flux supports only the all-open board")
         per_port = self.readings.per_port[family]
