@@ -6,6 +6,24 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The phase window, on 2026-09-19 (`phase_window`)
+
+The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"Approve the phase window as a declared width of a detector, and of the
+emitter too"). Additive: a table entry of a measured event may be an object
+`{"rule": ..., "phase_window": s}` beside the string form, which is still
+accepted and means the same; a lamp may declare `phase_window`; s is a step
+of the circle, 0 through N - 1, and is refused otherwise, on `pass`, in an
+object without `rule` or with any other key. New in the record: the
+measurement records `home`, `read`, `click` and `rerelease` of `events.jsonl`
+carry `phase`, the bundle's phase at the Node; a `pass` record (tick, node,
+measured, detector, family, number, amount, phase, window) is written for a
+bundle outside a window; the measured events' states in `run.json` and
+`state.json` list `windows` per family. `MeasuredDefinition.windows`,
+`LampDefinition.window`, `Measured.windows`, `Measured.lamp_window`,
+`Transit.phase_at` and `engine.in_window` are new. A world without the key
+runs as before ([the engine](ENGINE.md), [expectations](TEST_EXPECTATIONS.md#the-phase-window)).
+
 ## The engine of the law of events, on 2026-09-19, the evening (`events-v1`)
 
 Decision of the model owner, 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

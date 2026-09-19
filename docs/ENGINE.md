@@ -20,8 +20,8 @@ interval, the measured events and the books, `run.py` the artifacts of a run)
 on `src/event_universe/core/` (`integer.py`, `lattice.py`, `phase.py`). The
 tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
-`tests/test_detector_sensitivity.py`, `tests/test_event_worlds.py`
-([expectations](TEST_EXPECTATIONS.md)). The worlds:
+`tests/test_detector_sensitivity.py`, `tests/test_phase_window.py`,
+`tests/test_event_worlds.py` ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
 ## The law of events (`events-v1`)
@@ -76,7 +76,16 @@ candidates (`transit.nearest_step`, `step_window`).
    one interval: a smaller bundle passes whatever the table says (no push,
    the units mix on as at an empty Node), and the threshold gates every
    response, `read`, `measure` and `rerelease` alike, a receiver's and a
-   re-emitter's; a release (step 5) reads no threshold. The rules: `read`
+   re-emitter's; a release (step 5) reads no threshold. After the
+   threshold, the window: where the table entry declares a `phase_window`
+   s, the bundle's phase at the Node is read (the nearest step of the
+   coherent sum of its arrivals over the six Ports, `Transit.phase_at`,
+   the sum whose size `sizes` reports) and only a bundle whose phase falls
+   in the half circle centred on s is met, d = (phase - s) mod N below
+   N / 4 or from 3 N / 4 (exactly N / 2 steps; for N = 2 the one step
+   d = 0; `engine.in_window`, integer arithmetic on N); a bundle outside it
+   passes as a small one does, no push, the units mixing on, and a `pass`
+   record is written. The rules: `read`
    (the default for a free family: the push taken and the units left to mix
    on as at an empty Node), `measure` (the default for a paid family, the
    click: the push taken and the amount joining the content, one click per
@@ -104,12 +113,17 @@ candidates (`transit.nearest_step`, `step_window`).
    of age x rate gained by this self-creation, no remainder anywhere) it
    releases, per free family it holds, content x the world's `release` per
    Port; a lamp its declared rate on its headings, spending its content and
-   taking the recoil; and what came home or is re-released on the six headings
+   taking the recoil (a lamp with a `phase_window` only at the
+   self-creations whose clock phase, the phase before this self-creation's
+   turn, the one its release is stamped with, falls in its window); and
+   what came home or is re-released on the six headings
    in equal whole shares, the units below six going whole to the heading its
    clock points at (the age modulo six); every release stamped with its number
    and phase and carrying its momentum from birth. Its phase turns by its
    content over K off its clock (refused when a step would reach half the
-   circle). One whose count runs pays it by one and neither releases nor turns.
+   circle) at every self-creation, whether or not it released: a lamp whose
+   phase leaves its window keeps turning and comes round to it again. One
+   whose count runs pays it by one and neither releases nor turns.
 6. A measured event steps by its momentum off its clock (`_move`): on an axis
    with momentum p and content M, one Link per (M + p) / p self-creations, at
    most one step per interval, x before y before z, the momentum untouched;
@@ -149,9 +163,12 @@ none); `families` (`name`, `kind` `free` or `paid`, `charge` of a measured
 event of a free family, `quantum` the content of one unit of a paid family,
 1 by default and 1 for a free family); `measured` (`position`, `family`,
 `amount` with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`,
-`table` family name to `read` | `measure` | `rerelease` | `pass` with `read`
-the default for a free family and `measure` for a paid one, `lamp`
-`{rate: [n, d], headings}` on a measured event of a paid family); `in_transit`
+`table` family name to `read` | `measure` | `rerelease` | `pass`, or to
+`{"rule": ..., "phase_window": s}` with s a step of the circle from 0
+through N - 1 on any rule but `pass`, with `read` the default for a free
+family and `measure` for a paid one, `lamp`
+`{rate: [n, d], headings, phase_window}` on a measured event of a paid
+family); `in_transit`
 (optional: `position`, `family`, `number`, `heading`, `amount`, `phase`);
 `detectors` (optional: `name`, `positions` of measured events, each in at most
 one detector, `threshold` 1 by default). Refused, naming the law: any key of
@@ -160,7 +177,9 @@ old engine's), `phase_turn` as any unknown key, a closed board, a lamp on a
 free family, a charge or a quantum where the kind forbids it, two measured
 events at one Node, a table naming an unknown family or rule, a content at or
 past K x N / 2, N not a power of two, a repeated lamp heading, a detector on a
-Node without a measured event, a Node in two detectors.
+Node without a measured event, a Node in two detectors, a `phase_window` not
+an integer from 0 through N - 1 on a table entry or a lamp, a window on
+`pass`, a table entry object without `rule` or with any other key.
 `event_universe.configuration_validation` reports a world of the law as kind
 `events`.
 
@@ -169,14 +188,19 @@ Node without a measured event, a Node in two detectors.
 per completed tick (`audit`) with `conserved_at_every_completed_tick`, the
 per-tick `measured_content`, `transit_content` and `momentum` lines, the
 measured events' final states (`measured`: position, held per family, content,
-phase, charge, momentum, its detector, age, count and what waits to be created
-again, intervals suspended, phase steps, steps, what each met per family by
-rule, the clicks, the push taken), the detectors' measurements (`detectors`:
-name, Nodes, threshold, per family the amount measured and the clicks) and the
-escapes; `events.jsonl` one record per event (`home`, `read`, `click`,
-`rerelease`, `step`, `merged`, `escaped`) with the tick, the Node, the
-measured event, its detector, the family, the number, the amount and the push;
-`state.json`, through `snapshot_writer.write_snapshot`, the measured events,
+phase, charge, momentum, its phase windows per family, its detector, age,
+count and what waits to be created again, intervals suspended, phase steps,
+steps, what each met per family by rule, the clicks, the push taken), the
+detectors' measurements (`detectors`: name, Nodes, threshold, per family the
+amount measured and the clicks) and the escapes; `events.jsonl` one record
+per event (`home`, `read`, `click`, `rerelease`, `step`, `merged`,
+`escaped`) with the tick, the Node, the measured event, its detector, the
+family, the number, the amount and the push, the four measurements with the
+`phase` read at the Node (`Transit.phase_at`), and a `pass` record for a
+bundle outside a window (the tick, the Node, the measured event, its
+detector, the family, the number, the amount, the `phase` read and the
+`window`); `state.json`, through `snapshot_writer.write_snapshot`, the
+measured events,
 the detectors and every Node with events in transit (arrivals with their
 count, departures, per number and heading, with phases and momenta).
 `tools/run_series.py` runs these worlds as any. The readings the tests make
@@ -186,8 +210,9 @@ read-only.
 
 **A detector's sensitivity** (Highlights 5.4, "a kind of detector
 sensitivity"; "every detector must state what its sensitivity is"): a
-detector is a named set of measured events with one table; its Nodes and its
-threshold are its sensitivity. The threshold, the smallest bundle of one
+detector is a named set of measured events with one table; its Nodes, its
+threshold and its phase windows are its sensitivity. The threshold, the
+smallest bundle of one
 number the detector measures in one interval, gates every response of a
 detector's Node, `read`, `measure` and `rerelease` alike, so that every kind
 of external apparatus, a receiver or a re-emitter, works by its sensitivity:
@@ -200,6 +225,23 @@ place; a detector over a region measures many, and its statement, "an event
 in this region", is read off the record (the run's measurements per detector
 and per Node with their intervals, numbers, amounts, pushes and phases). What
 reached no Node of it is unknowable.
+
+The phase window is the second part of the sensitivity, with the threshold
+(Highlights 5.4, the model owner, 2026-09-19: "Approve the phase window as a
+declared width of a detector, and of the emitter too"): one generic key,
+`phase_window`, a setting s on the circle of N steps and the half circle
+centred on it. On a table entry (any rule but `pass`) the response is made,
+after the threshold, only to a bundle whose phase at the Node (the nearest
+step of the coherent sum of its arrivals, `Transit.phase_at`) falls in the
+window, and a bundle outside it passes as one below the threshold does,
+recorded as `pass` with the phase read and the setting; it is decided at the
+Node from the arriving record and the local setting, no draw and no register.
+Two Nodes whose settings differ by N / 2 divide the circle exactly between
+them. On a lamp the same key makes an emitter of a declared phase: it
+releases only at the self-creations whose clock phase falls in its window,
+each release stamped with that phase, while a lamp without one cycles through
+the circle with its clock; its clock advances and its phase turns at every
+self-creation either way (`tests/test_phase_window.py`).
 
 **What does not exist here**: no shadow and no real, no bit, no register, no
 remainder, no parked share, no pool that counts as content, no return to the

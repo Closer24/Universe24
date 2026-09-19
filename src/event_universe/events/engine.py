@@ -31,13 +31,17 @@ order:
    another number's are met by its table, at a detector's Node only a
    bundle of one number at or above its threshold in one interval (a
    smaller one passes whatever the table says: no push, the units mix on;
-   a release reads no threshold): `read` (the default for a free family:
-   the push taken, the units left to mix on as at an empty Node), `measure`
-   (the default for a paid family, the click: the push taken and the amount
-   joining the content, one click per unit), `rerelease` (the push taken,
-   the amount taken to be created again like what came home, with the
-   measured event's number and phase) or `pass` (no push, the units mix
-   on);
+   a release reads no threshold) and, where the entry declares a
+   `phase_window`, only a bundle whose phase at the Node (the nearest step
+   of the coherent sum of its arrivals, `Transit.phase_at`) falls in the
+   half circle centred on the setting (`in_window`; a bundle outside it
+   passes, no push, the units mix on, a `pass` record written): `read`
+   (the default for a free family: the push taken, the units left to mix on
+   as at an empty Node), `measure` (the default for a paid family, the
+   click: the push taken and the amount joining the content, one click per
+   unit), `rerelease` (the push taken, the amount taken to be created again
+   like what came home, with the measured event's number and phase) or
+   `pass` (no push, the units mix on);
 4. at every Node the arrivals of one number that are not suspended mix
    (node-mixing-v2): the sides' shares from the vectors, whole units placed
    by the largest remainder with the ties in the tick's Port order, a group
@@ -52,8 +56,11 @@ order:
    whole shares, the units below six going whole to the heading its clock
    points at (the age modulo six), every release stamped with its number and
    phase and carrying its momentum from birth (the family's quantum times the
-   amount, along the heading); its phase turns by its content over K off its
-   clock; one whose count runs pays it by one and neither releases nor turns;
+   amount, along the heading); a lamp with a `phase_window` releases only at
+   the self-creations whose clock phase, the one its release is stamped
+   with, falls in its window; its phase turns by its content over K off its
+   clock at every self-creation, released or not; one whose count runs pays
+   it by one and neither releases nor turns;
 6. a measured event steps by its momentum off its clock: on an axis with
    momentum p and content M, one Link per (M + p) / p self-creations
    (`by_clock` with p over M + p), at most one step per interval, x before y
@@ -100,6 +107,16 @@ def by_clock(age: int, numerator: int, denominator: int) -> int:
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
 
 
+def in_window(phase: int, setting: int, modulus: int) -> bool:
+    """Whether a phase falls in the phase window of a setting (Highlights
+    5.4, "the phase window as a declared width of a detector, and of the
+    emitter too"): the half circle centred on the setting, with
+    d = (phase - setting) mod N, d < N / 4 or d >= 3 N / 4, exactly N / 2
+    of the N steps; for N = 2 the one step d = 0. Integer arithmetic on N."""
+    distance = (phase - setting) % modulus
+    return 4 * distance < modulus or 4 * distance >= 3 * modulus
+
+
 @dataclass
 class Measured:
     """A measured event at a Node."""
@@ -113,8 +130,11 @@ class Measured:
     momentum: list[int]
     fixed: bool
     table: tuple[str, ...]
+    # The phase window of each table entry, None without one.
+    windows: list[int | None]
     lamp_rate: tuple[int, int] | None
     lamp_headings: tuple[int, ...]
+    lamp_window: int | None
     declared_content: int
     detector: int | None
     threshold: int
@@ -148,6 +168,7 @@ class Measured:
             "charge": self.charge,
             "momentum": list(self.momentum),
             "fixed": self.fixed,
+            "windows": list(self.windows),
             "detector": self.detector,
             "age": self.age,
             "owed": self.owed,
@@ -223,8 +244,10 @@ class EventSimulation:
             list(definition.momentum),
             definition.fixed,
             definition.table,
+            list(definition.windows),
             None if definition.lamp is None else definition.lamp.rate,
             () if definition.lamp is None else definition.lamp.headings,
+            None if definition.lamp is None else definition.lamp.window,
             definition.amount,
             detector,
             threshold,
@@ -312,34 +335,49 @@ class EventSimulation:
         number measured home, every other number's met by the table when the
         bundle reaches the detector's threshold (1 outside a detector: every
         response, read, measure or rerelease, is gated; a smaller bundle
-        passes with no push and mixes on)."""
+        passes with no push and mixes on) and, where the entry declares a
+        phase window, when the bundle's phase at the Node falls in it (a
+        bundle outside it passes the same way, and a `pass` record says so).
+        The phase read is stamped on every measurement record."""
         position = entry.position
+        modulus = self.world.phase_steps
         for index, transit in enumerate(self.transits):
             if not transit.owners:
                 continue
             rule = entry.table[index]
+            window = entry.windows[index]
             free = self.families[index].free
             for rank, number in enumerate(transit.owners):
                 cell = (*position, rank)
                 if not transit.arr_amt[cell].any():
                     continue
                 total = int(transit.arr_amt[cell].sum())
+                # The phase of the bundle at the Node, read only when the
+                # window or the record needs it (fixed local work either way).
+                phase = None
+                if window is not None or self.record is not None:
+                    phase = transit.phase_at(position, rank)
                 if number == entry.number:
                     transit.take(position, rank)
                     entry.home[index] += total
                     entry.measured[index]["home"] += total
                     self.transit_absorbed[index] += total
-                    self._event("home", entry, index, number, total, ZERO3)
+                    self._event("home", entry, index, number, total, ZERO3, phase)
                     continue
                 if rule == "pass" or total < entry.threshold:
                     continue
+                if window is not None:
+                    assert phase is not None
+                    if not in_window(phase, window, modulus):
+                        self._pass(entry, index, number, total, phase, window)
+                        continue
                 carried = [int(v) for v in transit.arr_mom[cell].sum(axis=0)]
                 push = self._push(entry, free, number, carried)
                 entry.momentum = [int(a) + int(b) for a, b in zip(entry.momentum, push, strict=True)]
                 entry.pushed = [int(a) + int(b) for a, b in zip(entry.pushed, push, strict=True)]
                 if rule == "read":
                     entry.measured[index]["read"] += total
-                    self._event("read", entry, index, number, total, push)
+                    self._event("read", entry, index, number, total, push, phase)
                     continue
                 transit.take(position, rank)
                 self.transit_absorbed[index] += total
@@ -348,10 +386,34 @@ class EventSimulation:
                     entry.held[index] += total
                     entry.events[index] += total
                     self.held_measured[index] += total
-                    self._event("click", entry, index, number, total, push)
+                    self._event("click", entry, index, number, total, push, phase)
                     continue
                 entry.home[index] += total
-                self._event("rerelease", entry, index, number, total, push)
+                self._event("rerelease", entry, index, number, total, push, phase)
+
+    def _pass(
+        self, entry: Measured, family: int, number: int, amount: int, phase: int, window: int
+    ) -> None:
+        """The record of a bundle that passed a measured event's Node outside
+        the entry's phase window: no push, the units mixing on."""
+        if self.record is None:
+            return
+        self.record(
+            {
+                "event": "pass",
+                "tick": self.tick,
+                "node": list(entry.position),
+                "measured": entry.number,
+                "detector": None
+                if entry.detector is None
+                else self.world.detectors[entry.detector].name,
+                "family": self.families[family].name,
+                "number": number,
+                "amount": amount,
+                "phase": phase,
+                "window": window,
+            }
+        )
 
     def _push(
         self, entry: Measured, free: bool, number: int, carried: list[int]
@@ -412,7 +474,17 @@ class EventSimulation:
                             entry.momentum = [
                                 int(a) - int(b) for a, b in zip(entry.momentum, momentum, strict=True)
                             ]
-            if entry.lamp_rate is not None and index == entry.family:
+            if (
+                entry.lamp_rate is not None
+                and index == entry.family
+                and (
+                    entry.lamp_window is None
+                    or in_window(entry.phase, entry.lamp_window, self.world.phase_steps)
+                )
+            ):
+                # A lamp with a window releases only at the self-creations
+                # whose clock phase (the one stamped on the release) falls in
+                # it; the clock and the phase turn below either way.
                 rate_n, rate_d = entry.lamp_rate
                 for port in entry.lamp_headings:
                     amount = min(by_clock(age, rate_n, rate_d), entry.held[index])
@@ -501,24 +573,27 @@ class EventSimulation:
         number: int,
         amount: int,
         push: tuple[int, int, int],
+        phase: int | None = None,
     ) -> None:
+        """A record through the observer; a measurement (`home`, `read`,
+        `click`, `rerelease`) carries the phase read at the Node, a `merged`
+        or `escaped` measured event none."""
         if self.record is None:
             return
-        self.record(
-            {
-                "event": kind,
-                "tick": self.tick,
-                "node": list(entry.position),
-                "measured": entry.number,
-                "detector": None
-                if entry.detector is None
-                else self.world.detectors[entry.detector].name,
-                "family": self.families[family].name,
-                "number": number,
-                "amount": amount,
-                "push": list(push),
-            }
-        )
+        record: dict[str, object] = {
+            "event": kind,
+            "tick": self.tick,
+            "node": list(entry.position),
+            "measured": entry.number,
+            "detector": None if entry.detector is None else self.world.detectors[entry.detector].name,
+            "family": self.families[family].name,
+            "number": number,
+            "amount": amount,
+            "push": list(push),
+        }
+        if phase is not None:
+            record["phase"] = phase
+        self.record(record)
 
     # -- the books -------------------------------------------------------------
 

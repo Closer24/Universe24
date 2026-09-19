@@ -27,12 +27,24 @@ law of events, the model owner, 2026-09-19):
   family's by default), its `momentum` (three integers), `fixed` (true: an
   apparatus held in place, it takes pushes into its momentum and never
   steps), its `table` (family name to `read`, `measure`, `rerelease` or
-  `pass`; a free family is read by default, the push taken and the units
-  mixed on, a paid family measured, the click) and, for a measured event of a
-  paid family, its `lamp` (`rate` `[n, d]` units per self-creation per
-  heading, `headings` the Port headings it releases on, all six by default);
-  every measured event is given its number at parsing, 1, 2, ... in
-  declaration order;
+  `pass`, or to an object `{"rule": ..., "phase_window": s}`; a free family
+  is read by default, the push taken and the units mixed on, a paid family
+  measured, the click) and, for a measured event of a paid family, its
+  `lamp` (`rate` `[n, d]` units per self-creation per heading, `headings`
+  the Port headings it releases on, all six by default, and optionally its
+  `phase_window`); every measured event is given its number at parsing, 1,
+  2, ... in declaration order;
+- `phase_window`, the declared width of a detector and of an emitter
+  (Highlights 5.4, the model owner, 2026-09-19: "Approve the phase window
+  as a declared width of a detector, and of the emitter too"): a setting
+  `s`, an integer from 0 through N - 1, and the half circle centred on it
+  (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly N / 2
+  steps; for N = 2 the one step d = 0). On a table entry (any rule but
+  `pass`, which responds to nothing and is refused a window) the response
+  is made only to a bundle whose phase at the Node falls in the window; a
+  bundle outside it passes. On a lamp, a release only at the self-creations
+  whose clock phase falls in the window; the clock and the phase turn
+  regardless;
 - `in_transit`, optional: events in transit at the start, each with a
   `position`, `family`, `number` (the measured event whose continuation it
   is), `heading`, `amount` and `phase`, booked as initial content of the
@@ -105,7 +117,9 @@ WORLD_KEYS = {
 }
 FAMILY_KEYS = {"name", "kind", "charge", "quantum"}
 MEASURED_KEYS = {"position", "family", "amount", "phase", "charge", "momentum", "fixed", "table", "lamp"}
-LAMP_KEYS = {"rate", "headings"}
+LAMP_KEYS = {"rate", "headings", "phase_window"}
+# A table entry's object form: the rule and, on any rule but `pass`, a window.
+TABLE_ENTRY_KEYS = {"rule", "phase_window"}
 TRANSIT_KEYS = {"position", "family", "number", "heading", "amount", "phase"}
 DETECTOR_KEYS = {"name", "positions", "threshold"}
 
@@ -129,17 +143,21 @@ class FamilyDefinition:
 class LampDefinition:
     """A measured event of a paid family that releases it at a declared rate,
     `rate` = (n, d) units per self-creation on each of its `headings` (Port
-    indices), spending its content."""
+    indices), spending its content; with a `window` (a phase setting), only
+    at the self-creations whose clock phase falls in the half circle centred
+    on it."""
 
     rate: tuple[int, int]
     headings: tuple[int, ...]
+    window: int | None
 
 
 @dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
     phase, its whole charge, its momentum, whether it is held in place, its
-    table per family (in family order) and its lamp."""
+    table per family (in family order) with the phase window of each entry
+    (None without one) and its lamp."""
 
     position: Address3
     family: int
@@ -149,6 +167,7 @@ class MeasuredDefinition:
     momentum: tuple[int, int, int]
     fixed: bool
     table: tuple[str, ...]
+    windows: tuple[int | None, ...]
     lamp: LampDefinition | None
 
 
@@ -306,7 +325,12 @@ def _families(value: object) -> tuple[FamilyDefinition, ...]:
     return tuple(found)
 
 
-def _lamp(value: object, label: str) -> LampDefinition:
+def _window(value: object, label: str, phase_steps: int) -> int:
+    """A phase window's setting: a step of the circle, 0 through N - 1."""
+    return _integer(value, label, 0, phase_steps - 1)
+
+
+def _lamp(value: object, label: str, phase_steps: int) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
     headings_value = obj.get("headings", [list(heading) for heading in PORT_HEADINGS])
@@ -315,7 +339,31 @@ def _lamp(value: object, label: str) -> LampDefinition:
     headings = tuple(_heading(item, f"{label}.headings") for item in headings_value)
     if len(set(headings)) != len(headings):
         raise ValueError(f"{EVENTS_LAW}: {label}.headings repeats a heading")
-    return LampDefinition(rate, headings)
+    window = None
+    if "phase_window" in obj:
+        window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
+    return LampDefinition(rate, headings, window)
+
+
+def _table_entry(value: object, label: str, phase_steps: int) -> tuple[str, int | None]:
+    """One table entry: a rule string, or `{"rule": ..., "phase_window": s}`
+    (the rule required; a window refused on `pass`, which responds to nothing)."""
+    if isinstance(value, dict):
+        obj = _object(value, label, TABLE_ENTRY_KEYS, {"rule"})
+        rule = obj["rule"]
+        window = None
+        if "phase_window" in obj:
+            window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
+    else:
+        rule, window = value, None
+    if rule not in TABLES:
+        raise ValueError(f"{EVENTS_LAW}: {label} must be one of {TABLES}")
+    if window is not None and rule == "pass":
+        raise ValueError(
+            f"{EVENTS_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
+            "response, and pass responds to nothing"
+        )
+    return str(rule), window
 
 
 def _measured(
@@ -361,20 +409,21 @@ def _measured(
         if type(fixed) is not bool:
             raise ValueError(f"{EVENTS_LAW}: {label}.fixed must be true or false")
         table = ["read" if item.free else "measure" for item in families]
+        windows: list[int | None] = [None] * len(families)
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
             raise ValueError(f"{EVENTS_LAW}: {label}.table must map family names to rules")
-        for key, rule in declared.items():
+        for key, entry_value in declared.items():
             if key not in names:
                 raise ValueError(f"{EVENTS_LAW}: {label}.table names an unknown family {key!r}")
-            if rule not in TABLES:
-                raise ValueError(f"{EVENTS_LAW}: {label}.table[{key!r}] must be one of {TABLES}")
-            table[names[key]] = str(rule)
+            table[names[key]], windows[names[key]] = _table_entry(
+                entry_value, f"{label}.table[{key!r}]", phase_steps
+            )
         lamp = None
         if "lamp" in obj:
             if families[family].free:
                 raise ValueError(f"{EVENTS_LAW}: {label}: a lamp is a measured event of a paid family")
-            lamp = _lamp(obj["lamp"], f"{label}.lamp")
+            lamp = _lamp(obj["lamp"], f"{label}.lamp", phase_steps)
         found.append(
             MeasuredDefinition(
                 position,
@@ -385,6 +434,7 @@ def _measured(
                 (momentum[0], momentum[1], momentum[2]),
                 fixed,
                 tuple(table),
+                tuple(windows),
                 lamp,
             )
         )
