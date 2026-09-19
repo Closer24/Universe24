@@ -21,7 +21,8 @@ on `src/event_universe/core/` (`integer.py`, `lattice.py`, `phase.py`). The
 tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
 `tests/test_event_suspension.py`, `tests/test_event_clock.py`,
 `tests/test_detector_sensitivity.py`, `tests/test_phase_window.py`,
-`tests/test_event_worlds.py` ([expectations](TEST_EXPECTATIONS.md)). The worlds:
+`tests/test_periodic_axis.py`, `tests/test_event_worlds.py`
+([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
 ## The law of events (`events-v1`)
@@ -40,8 +41,29 @@ end. Nothing is kept at a Node: no register, no remainder, no parked share, no
 draw. The seven slots per Node and number, six lanes and here, are the whole
 state.
 
-**The board.** Open (a closed board is refused: the edge is infinity, what
-leaves is booked as escaped with the momentum it carried). Per family the
+**The board.** Open on every face by default (`boundary` `"open"`: the
+edge is infinity, what leaves is booked as escaped with the momentum it
+carried; a closed board is refused). The declared exception (the model owner,
+2026-09-19), a run parameter of the world file, each experiment deciding what
+to run: an axis may be declared periodic (`boundary` an object with any of
+`x`, `y`, `z` set to `"open"` or `"periodic"`, the missing axes open, for
+example `{"z": "periodic"}`). On a periodic axis the departures that would
+leave the board through one face are created at the first Node of the
+opposite face, the wrap (`Transit.walk`, a roll of the departures along that
+axis: fixed local work per Node and Port, integers only), each in the slot of
+its travel heading; nothing escapes on that axis and the momentum they carry
+stays on the board, so `escaped` and the momentum escaped count only what
+leaves through the open faces and the books balance with nothing lost on a
+periodic axis. With an extent of 1 on a periodic axis the two departures on
+that axis return to the same Node in the next interval as its arrivals
+through those Ports (a unit leaving +z at the last Node arrives at the first
+Node in the +z slot; with an extent of 1, at the same Node in the +z slot):
+the Node behaves as a four-Port node with a one-interval stub, as a
+two-dimensional transmission-line-matrix (TLM) node with a stub does. The
+periodic axis is a rule of the walk (step 1); a measured event's step (step
+6) off the board escapes with its content as before, on every face. Open
+stays the default and the meaning of "the edge is infinity"; `"closed"` and
+every other word are refused. Per family the
 arrays of `Transit` with the axes (x, y, z, number, Port): the arrivals of the
 interval (`arr_*`: amount, phase, momentum), the departures (`fly_*`), and per
 Node and number the count the arrivals there carry (`suspended`). Per Node with
@@ -56,7 +78,8 @@ candidates (`transit.nearest_step`, `step_window`).
 1. Every departure is created one Link on (`Transit.walk`), its record
    unchanged: an event in transit does not turn, a transfer is not a tick of
    its clock, so light's frequency is its emitter's clock stamped on the stream
-   and constant in flight. The escapes are booked. Arrivals into a slot that
+   and constant in flight. The escapes through the open faces are booked; on
+   a periodic axis the departures wrap. Arrivals into a slot that
    holds events waiting there are one amplitude per Port (the amounts added,
    the phase of the coherent sum, the momenta added).
 2. At every Node the size of the coherent sum of each number's arrivals is
@@ -193,7 +216,9 @@ escaped, and the charge summed. At the fixed point of a content at rest,
 released - absorbed = escaped = the emission.
 
 **The world** (`events/world.py`). `law` "events"; `model_id`; `shape`;
-`boundary` "open"; `ticks`; `K`; `N` (64 by default, a power of two from 2
+`boundary` "open" (the default) or an object with any of `x`, `y`, `z` set
+to "open" or "periodic", the missing axes open; `ticks`; `K`; `N` (64 by
+default, a power of two from 2
 through 4096); `release` `[n, d]` per Port heading per self-creation per unit
 of content of a free family; `suspension` (an integer, 1 by default, 0 for
 none); `families` (`name`, `kind` `free` or `paid`, `charge` of a measured
@@ -210,7 +235,8 @@ family); `in_transit`
 `detectors` (optional: `name`, `positions` of measured events, each in at most
 one detector, `threshold` 1 by default). Refused, naming the law: any key of
 the earlier engines (`contents`, `initial_shadows`, `wait_per_quantum`, the
-old engine's), `phase_turn` as any unknown key, a closed board, a lamp on a
+old engine's), `phase_turn` as any unknown key, a closed board or any
+boundary but "open" and an axis object of "open" | "periodic", a lamp on a
 free family, a charge or a quantum where the kind forbids it, two measured
 events at one Node, a table naming an unknown family or rule, a content at or
 past K x N / 2, N not a power of two, a repeated lamp heading, a detector on a
@@ -220,7 +246,9 @@ an integer from 0 through N - 1 on a table entry or a lamp, a window on
 `event_universe.configuration_validation` reports a world of the law as kind
 `events`.
 
-**The record.** `run.json` carries `law` "events-v1", the world's keys,
+**The record.** `run.json` carries `law` "events-v1", the world's keys
+(`boundary` as declared, the string or the object per axis, so that the
+record says what the board was),
 `numbers` (the measured events' numbers, positions and families), the books
 per completed tick (`audit`) with `conserved_at_every_completed_tick`, the
 per-tick `measured_content`, `transit_content` and `momentum` lines, the
@@ -238,7 +266,7 @@ family, the number, the amount and the push, the four measurements with the
 bundle outside a window (the tick, the Node, the measured event, its
 detector, the family, the number, the amount, the `phase` read and the
 `window`); `state.json`, through `snapshot_writer.write_snapshot`, the
-measured events,
+`boundary` as declared, the measured events,
 the detectors and every Node with events in transit (arrivals with their
 count, departures, per number and heading, with phases and momenta).
 `tools/run_series.py` runs these worlds as any. The readings the tests make

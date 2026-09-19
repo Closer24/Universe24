@@ -13,7 +13,11 @@ a Node: no parked share, no remainder. The interval's steps on the transit
 
 - the walk: every departure is created one Link on, at the neighbour, with
   its record unchanged (an event in transit does not turn: a transfer is not
-  a tick of its clock), what leaves the open board booked as escaped;
+  a tick of its clock), what leaves through an open face booked as escaped;
+  on an axis the world declares periodic the departures through one face
+  are created at the first Node of the opposite face (the wrap), nothing
+  escapes on that axis, and with an extent of 1 a departure returns to its
+  own Node as its arrival through that Port (a one-interval stub);
 - the sizes: per Node and number the size of the coherent sum of the
   arrivals, the amplitude the mixing forms, in 32nds of one unit's (`sizes`),
   read by the measured events and by the exits for their suspension;
@@ -102,9 +106,13 @@ class Transit:
         owners: tuple[int, ...],
         phase_steps: int,
         clock: int,
+        periodic: tuple[bool, bool, bool] = (False, False, False),
     ) -> None:
         self.family = family
         self.shape = shape
+        # Per axis whether the walk wraps (the world's `boundary`); an open
+        # axis lets its departures escape at the edge.
+        self.periodic = periodic
         self.owners = owners
         self.rank = {number: rank for rank, number in enumerate(owners)}
         count = len(owners)
@@ -199,9 +207,11 @@ class Transit:
     def walk(self) -> np.ndarray:
         """Every departure created one Link on, its record unchanged, into the
         arrivals at the neighbour (joining what waits there as one amplitude
-        per Port); what leaves the board is booked as escaped with the
-        momentum it carried. Returns, per Node and number, whether anything
-        arrived this interval."""
+        per Port); what leaves through an open face is booked as escaped
+        with the momentum it carried, and on a periodic axis the departures
+        through one face are created at the first Node of the opposite face,
+        in the slot of their travel heading, nothing escaping. Returns, per
+        Node and number, whether anything arrived this interval."""
         arrived = self.fresh.copy()
         self.fresh[...] = False
         if not self.fly_amt.any():
@@ -216,6 +226,15 @@ class Transit:
             axis, forward = port >> 1, (port & 1) == 0
             phase = self.fly_ph[..., port]
             momentum = self.fly_mom[..., port, :]
+            if self.periodic[axis]:
+                # The wrap: every Node's departure on this heading is created
+                # at the next Node along the axis, the last face's at the
+                # first (with an extent of 1, at the same Node).
+                shift = 1 if forward else -1
+                incoming_amt[..., port] = np.roll(source, shift, axis=axis)
+                incoming_ph[..., port] = np.roll(phase, shift, axis=axis)
+                incoming_mom[..., port, :] = np.roll(momentum, shift, axis=axis)
+                continue
             ahead: list[slice | int] = [slice(None)] * 3
             behind: list[slice | int] = [slice(None)] * 3
             edge: list[slice | int] = [slice(None)] * 3

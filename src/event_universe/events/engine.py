@@ -16,7 +16,10 @@ made; the count it still owes before its next self-creation). The interval,
 in this order:
 
 1. every departure is created one Link on (`Transit.walk`), its record
-   unchanged (an event in transit does not turn), the escapes booked;
+   unchanged (an event in transit does not turn), the escapes through the
+   open faces booked; on an axis the world declares periodic the departures
+   through one face are created at the first Node of the opposite face and
+   nothing escapes on that axis;
 2. at every Node the size of the coherent sum of each number's arrivals is
    formed, this interval's sizes, what the measured events read at their
    self-creations (step 5); the events of a paid family that arrived this
@@ -208,7 +211,14 @@ class EventSimulation:
         self.families = world.families
         count = len(world.families)
         self.transits = [
-            Transit(index, world.shape, world.owners(index), world.phase_steps, world.clock)
+            Transit(
+                index,
+                world.shape,
+                world.owners(index),
+                world.phase_steps,
+                world.clock,
+                periodic=world.periodic,
+            )
             for index in range(count)
         ]
         self.denominator = world.content_lcm()
@@ -759,7 +769,7 @@ class EventSimulation:
         yield "law", EVENTS_LAW
         yield "tick", self.tick
         yield "shape", list(self.shape)
-        yield "boundary", "open"
+        yield "boundary", self.world.boundary
         yield "measured", self.contents()
         yield "detectors", self.detectors()
         yield (
