@@ -81,6 +81,13 @@ def validate_carrier(carrier: CarrierState, phase_steps: int, quantum: int) -> N
         raise ValueError("reversible detector: noncanonical carrier momentum")
 
 
+def validate_material(material: ContactState, phase_steps: int) -> None:
+    """Validate one material Event's existing pointer and momentum."""
+    modulus = _phase_modulus(phase_steps)
+    _integer(material.phase, "material phase", 0, modulus - 1)
+    _momentum(material.momentum)
+
+
 def _contact_inputs(
     carrier: CarrierState,
     material: ContactState,
@@ -89,8 +96,7 @@ def _contact_inputs(
     quantum: int,
 ) -> None:
     validate_carrier(carrier, phase_steps, quantum)
-    _integer(material.phase, "material phase", 0, phase_steps - 1)
-    _momentum(material.momentum)
+    validate_material(material, phase_steps)
     if (
         not isinstance(port_map, tuple)
         or len(port_map) != 6
@@ -113,9 +119,7 @@ def transduce(
     momentum = canonical_momentum(carrier.amount, quantum, port)
     recoil = tuple(
         _result(checked_work(checked_work(held + incoming) - outgoing))
-        for held, incoming, outgoing in zip(
-            material.momentum, carrier.momentum, momentum, strict=True
-        )
+        for held, incoming, outgoing in zip(material.momentum, carrier.momentum, momentum, strict=True)
     )
     phase = checked_work(material.phase + carrier.amount) % phase_steps
     return (
@@ -137,9 +141,7 @@ def inverse_transduce(
     momentum = canonical_momentum(carrier.amount, quantum, port)
     recoil = tuple(
         _result(checked_work(checked_work(held - incoming) + outgoing))
-        for held, incoming, outgoing in zip(
-            material.momentum, momentum, carrier.momentum, strict=True
-        )
+        for held, incoming, outgoing in zip(material.momentum, momentum, carrier.momentum, strict=True)
     )
     phase = checked_work(material.phase - carrier.amount) % phase_steps
     return (
@@ -148,9 +150,7 @@ def inverse_transduce(
     )
 
 
-def clock_step(
-    age: int, content: int, clock: int, phase_steps: int, phase: int
-) -> tuple[int, int]:
+def clock_step(age: int, content: int, clock: int, phase_steps: int, phase: int) -> tuple[int, int]:
     """Advance the material clock, preserving its exact integer reference."""
     modulus = _phase_modulus(phase_steps)
     _integer(age, "age")
@@ -179,5 +179,7 @@ def pointer_displacement(
     _integer(age, "age")
     _integer(content, "content", 1)
     _integer(clock, "clock", 1)
-    reference = checked_work(age * content) // clock
+    # Only the phase-circle residue participates in the readout. Reducing
+    # before subtraction avoids an artificial overflow near the age bound.
+    reference = (checked_work(age * content) // clock) % modulus
     return checked_work(checked_work(phase - reference_phase) - reference) % modulus

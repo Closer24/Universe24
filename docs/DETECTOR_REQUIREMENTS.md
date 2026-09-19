@@ -155,6 +155,8 @@ Each occupied transit slot holds exactly the existing Event record: family, numb
 
 Storage bounds use the existing amount/component bound `B = 2^62 - 1`; every arithmetic intermediate uses signed `W = 2^63 - 1` through the generic integer checker, including products before cancellation. Explicitly check the total local amount, recoil sums, `age + 1`, `age * content`, `(age + 1) * content`, and pointer sums. Each occupied channel is unique. Empty channel numeric payload is canonical zero. Candidate diagnostics cannot enter physical formulas and may not grow beyond declared bounds.
 
+Snapshot-derived host audit totals use exact Python integer sums rather than overflow-prone fixed-width NumPy reductions. Their finite bounds follow from the validated board size, channel/material counts and component bound, and can exceed the physical working-register width. They are not physical state or cumulative memory, never feed a local operator, and do not impose a global 64-bit admission limit on otherwise valid local states. Their computation and storage are host costs reported separately.
+
 The only normalized physical boundaries are the initial state (seeded arrivals, no flights) and completed steps (flights, no arrivals). Complete-state reversibility is asserted on those timed boundaries. Refuse arbitrary mixed arrival/flight input, slot overwrite, nonzero suspension/home content and noncanonical momentum. Physical inverse/replay never consults diagnostic counters or callbacks.
 
 ### Local operator and explicit inverse
