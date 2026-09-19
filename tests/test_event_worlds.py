@@ -10,8 +10,9 @@ from the engine's first readings on 2026-09-19, as a check that it does what
 the law says and not as a result.
 
 The free family `m` of (a) to (c) declares no phase circle since
-2026-09-19 (`"phase": false`, the field of matter without phase: each
-Port's arrival scatters on its own, four ninths back), the suspension
+2026-09-19 (`"phase": false`, the field of matter without phase: its
+sides weighed by the diagonal of the coherent sum, a lone arrival four
+ninths back, the one rule of the Node since the same day), the suspension
 reads presence and a free family's push reads the net flow; (a) to (c)
 were re-pinned that day from the new engine's readings, the old ones
 in docs/TEST_EXPECTATIONS.md. The field is diffusive and 300 intervals

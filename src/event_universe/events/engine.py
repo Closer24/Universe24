@@ -51,9 +51,11 @@ in this order:
    placed per number by the largest remainder with the ties in the tick's
    Port order, a number with no whole for any side going whole by its own
    momentum, the departures into flight; for a family without a phase
-   circle (`"phase": false`) each Port's arrival scatters on its own, four
-   ninths back and one ninth each other way (`scatter_arrivals`), no sum
-   over the numbers; a suspended slot stays, its count paid by one;
+   circle (`"phase": false`) the weights are the diagonal of the coherent
+   sum, per number (`diagonal_weights`: the sum of the amounts plus three
+   times the amount through the opposite Port), a lone arrival four ninths
+   back and one ninth each other way; a suspended slot stays, its count
+   paid by one;
 5. a measured event that owes a count pays it by one and is created here
    without a self-creation: no release, no turn (`waited` counts these
    intervals; age + waited is the intervals completed). One that owes
