@@ -1,0 +1,53 @@
+{
+  "law": "events",
+  "model_id": "events-coupling-7-pm-plane-v1",
+  "shape": [
+    121,
+    121,
+    1
+  ],
+  "boundary": {
+    "z": "periodic"
+  },
+  "ticks": 200,
+  "K": 4194304,
+  "N": 64,
+  "release": [
+    1,
+    128
+  ],
+  "suspension": 0,
+  "families": [
+    {
+      "name": "q",
+      "kind": "free",
+      "charge": 0
+    }
+  ],
+  "measured": [
+    {
+      "position": [
+        60,
+        60,
+        0
+      ],
+      "family": "q",
+      "amount": 16777216,
+      "phase": 0,
+      "fixed": true,
+      "charge": 8388608
+    },
+    {
+      "position": [
+        72,
+        60,
+        0
+      ],
+      "family": "q",
+      "amount": 1,
+      "phase": 0,
+      "fixed": true,
+      "charge": -2
+    }
+  ]
+}

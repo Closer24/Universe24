@@ -36,6 +36,26 @@ prints the counts, E, S and every criterion; the register entry is
 [A2, under the law of events (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-law-of-events-2026-09-19):
 S = 2 exactly, the model's limit, as the reviewers predicted.
 
+## The coupling series
+
+The folder [coupling/](coupling/README.md) holds the twenty-one worlds of
+the coupling series C under the law of events, written by
+`coupling/make_worlds.py` from one base: a board of 121 x 121 x 1 with the z
+axis periodic (a true two-dimensional board, by the model owner's decision
+of 2026-09-19 to run the series on two-dimensional boards), a source of
+content 2^24 at the centre and probes of content 1 that read (the push
+taken, the units mix on). The items: the equivalence (a probe of content m
+pushed m times as much, record by record, and a free probe's steps the same
+for every m), the third law with unequal contents (4 : 1), superposition,
+retardation (the front derived by hand from the mixing rule), the far field
+(the ring means of the count, the flow, the carried momentum and the size,
+Gauss's flux through the square, the escape; the axis pattern at the
+probes), the clock (`suspension` 1: the ages replayed from the sizes read)
+and the electric reading (like and unlike charges on the same stream).
+`tools/coupling_readings.py` reads their records, replays the source-alone
+worlds through the API and prints every criterion; the register entry is
+[C, the couplings under the law of events, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#c-the-couplings-under-the-law-of-events-on-the-plane-2026-09-19).
+
 The isolated tests of the engine are `tests/test_node_mixing.py`,
 `tests/test_event_transit.py`, `tests/test_event_suspension.py`,
 `tests/test_event_clock.py`, `tests/test_periodic_axis.py` and
