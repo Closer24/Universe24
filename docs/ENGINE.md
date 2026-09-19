@@ -10,6 +10,10 @@ deleted with the engine it described ([migration](MIGRATION.md#one-engine-on-202
 names of the old candidates that appear below (the dense layer, the readings
 R and points of the law of the bit) are the road to this law, recorded in
 Highlights 5.4 and in git.
+The law of events of 2026-09-19 (Highlights 5.4, the paragraph after "One
+speed, and what is seen") is recorded and not implemented: this document
+describes the engine as it is, which parks, counts and carries what that law
+removes ([Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md)).
 
 The code: `src/event_universe/shadow/` (`world.py` the world file and its
 refusals, `layer.py` the arrays of one family and the walk, `mixing.py` the

@@ -25,3 +25,16 @@ Bell setup (A2) and polarization as worlds and tables; a decay as a table on
 held content; the mass ladder of hypothesis 12 under this law; the research
 runs on open boards (E11, A5s, A6, A1, E9), to be made when wanted and
 registered in [EXPERIMENTS.md](EXPERIMENTS.md).
+
+**The law of events (Highlights 5.4, the model owner, 2026-09-19, after the one
+engine): recorded, not implemented.** The engine is the engine of the law of the
+shadow. Of what the law of events removes it has: the parked ninths of the mixing
+and their release at nine (`shadow/mixing.py`, `reg`, `reg_mom`), the wait as
+intervals owed and held per Node and number (`shadow/layer.py`, `wait_debt`),
+the phase turn's remainder per family (`turn_debt`), the register of units below
+a family's `quantum` at a holder (`Holder.pending`) and the holder's remainders
+of its release, pool, push, lamp and clock (`shadow/engine.py`). What the law
+asks instead, whole units placed by the conservations in the interval, a Port's
+exit suspended by what is present, and one word, event, for what is in transit
+and what is measured, is not written; what will show it is tests of the code on
+minimal boards, not runs.

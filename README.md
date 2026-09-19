@@ -6,7 +6,10 @@ of 2026-09-18 the model is the law of the shadow ([Highlights](docs/HIGHLIGHTS.m
 section 5.4): matter is content held at Nodes, every ray in flight is a whole
 quantum spreading by the Node's mixing, and an event is a whole quantum at held
 content, absorbed, held or released again by the family's table; what is seen
-is events. Since 2026-09-19 there is one engine, the field-only engine of that
+is events. On 2026-09-19 the model owner's law of events (Highlights 5.4)
+reads all of it as events, with no fields, no matter and no registers, a single
+event leaving a Node whole in one direction; it is recorded and not yet
+implemented. Since 2026-09-19 there is one engine, the field-only engine of that
 law (`field-only-v1`); the old engine of the law of the bit is deleted
 ([migration](docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 The name of the framework is Reality Theory; the simulator that realizes it is

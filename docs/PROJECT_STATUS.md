@@ -5,6 +5,16 @@
 **One law, one engine.** Everything below is on `main`; nothing is in a branch
 or a machine.
 
+**The law of events (2026-09-19, after the one engine; recorded, not implemented).**
+The model owner's definitions, in Highlights 5.4 after "One speed, and what is
+seen": there are no fields, no matter and no registers; there are events, in
+transit or measured; a Node keeps nothing and handles every entering event by one
+generic computation; a single event leaves whole in one direction and does not
+spread; the wait is a Port's exit suspended by what is present. The engine below
+is the engine of the law of the shadow, which parks, counts and carries what this
+law removes ([Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md)); its rewrite is
+the next task, with tests of the code only.
+
 1. **The law of the shadow** (Highlights 5.4, the paragraph "The law of the shadow: only
    shadows and events", the model owner's words of the evening of 2026-09-18; the
    whole document annotated to it on the same day, the consistency table at the end of

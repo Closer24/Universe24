@@ -5,6 +5,19 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The law of events recorded (2026-09-19)
+
+- The model owner's law of events, after the one engine and `phase_turn`
+  ("there are no registers"; "there are no fields; a field is an event";
+  "there is no matter either; matter is a measured event"; "a single quantum
+  does not split; in the space of events the quantum leaves in one
+  direction"), is recorded in [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)
+  after "One speed, and what is seen", in the owner's words with the
+  orchestrator's readings flagged, and the paragraphs it changes carry a dated
+  sentence. Nothing of it is implemented: [Highlights coverage](docs/HIGHLIGHTS_IMPLEMENTATION.md),
+  [ENGINE.md](docs/ENGINE.md), [PROJECT_STATUS.md](docs/PROJECT_STATUS.md) and the
+  README say so. No code changes.
+
 ### One engine (2026-09-19)
 
 - The engine of the law of the shadow (`field-only-v1`, feature 20) is the one
