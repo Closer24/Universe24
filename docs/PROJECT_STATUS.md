@@ -57,9 +57,10 @@ monotone), the wait falling as r^-0.9.
   whole if light pays twice); the Compton table; the parked share's phase (1.5 % of the
   emission stands still); a lamp's recoil; the plain or matched edge. Settled on
   2026-09-19 ("We do not need these three things at all"): the number a transmitted
-  quantum carries is the last emitter's, the wait's unit is the size read, one interval
-  per whole unit, and there is no gravity multiplier ε_g; the hierarchy of section 55
-  (x) stays an open question of the model, not a parameter.
+  quantum carries is the last emitter's, the wait is the delayed clock and
+  `wait_per_quantum` stays a declared width of the world like ρ, K and N ("there is
+  only a delayed clock"), and there is no gravity multiplier ε_g; the hierarchy of
+  section 55 (x) stays an open question of the model, not a parameter.
 - Derived and not solved by either law: no inertia for a co-moving pair at first order
   in v (section 54: the lattice's preferred frame for composite matter); no mass ladder
   under the law of the shadow (bound contents give Kepler's continuum; the law of the
