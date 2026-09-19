@@ -129,7 +129,7 @@ def execute_ray_run(
                 "family": family.name,
                 "amount": simulation.ledger.escaped_units(index),
                 "content": simulation.ledger.escaped_content(index),
-                "momentum": simulation.ledger.escaped_momentum() if index == 0 else None,
+                "momentum": simulation.ledger.escaped_momentum(),
             }
             for index, family in enumerate(world.families)
         ],

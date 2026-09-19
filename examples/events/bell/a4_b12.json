@@ -1,13 +1,13 @@
 {
-  "law": "events",
-  "model_id": "events-bell-a4-b12-v1",
+  "law": "rays",
+  "model_id": "rays-bell-a4-b12-v1",
   "shape": [
     21,
     1,
     1
   ],
   "boundary": "open",
-  "ticks": 138,
+  "ticks": 160,
   "K": 1048576,
   "N": 64,
   "release": [
@@ -41,7 +41,7 @@
           1,
           1
         ],
-        "headings": [
+        "directions": [
           [
             1,
             0,

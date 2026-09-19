@@ -38,10 +38,8 @@ order, each a bijection on the board's state except the border:
 
 No other function holds a piece of the law: `flight_table`, `collision_table`
 and `read_arrivals` are the pure tables and the one decomposition it reads;
-`RayStore` is the structure of arrays it moves. Integers only: the only
-float is the square root's estimate, corrected to the exact integer root
-(`integer_roots`). The engine (`engine.py`) schedules and books; it computes
-no physics.
+`RayStore` is the structure of arrays it moves. Integers only. The engine
+(`engine.py`) schedules and books; it computes no physics.
 """
 
 from __future__ import annotations
@@ -74,7 +72,10 @@ READING_SLOTS = 7
 # The collision's slots: the six headings in Port order and the two rest slots.
 COLLISION_SLOTS = 8
 SLOT_STATES = 3
-# The amplitude of one unit in 32nds: A_u = isqrt(1024 x amount).
+# The amplitude of one unit in 32nds: a row of `amount` identical rays (one
+# phase) is the coherent sum of its units, A = 32 x amount, so that the
+# merge of identical rows (a bookkeeping bijection) leaves the reading
+# unchanged; two rows in phase add their amplitudes.
 AMPLITUDE_SCALE = 32
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
 ZERO3 = (0, 0, 0)
@@ -158,15 +159,6 @@ def read_arrivals(slots: np.ndarray) -> Reading:
     return Reading(components[..., 0], components[..., 1], components[..., 2:5], components[..., 5:7])
 
 
-def integer_roots(scaled: np.ndarray) -> np.ndarray:
-    """The integer square root of every entry, the floor, exact (the float
-    root corrected by one either way)."""
-    root = np.floor(np.sqrt(scaled.astype(np.float64))).astype(np.int64)
-    root = np.where(root * root > scaled, root - 1, root)
-    result: np.ndarray = np.where((root + 1) * (root + 1) <= scaled, root + 1, root)
-    return result
-
-
 # -- the flight table ------------------------------------------------------------
 
 
@@ -233,7 +225,8 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
             lines[index, j] = step
     table = FlightTable(np.array(vectors, dtype=np.int64), manhattan, turns, period, lines, np.zeros(0))
     longest_period = int(period.max(initial=1))
-    steps = np.zeros((count, longest_period, 3), dtype=np.int64)
+    # The step table is small integers (a heading or zero): one byte each.
+    steps = np.zeros((count, longest_period, 3), dtype=np.int8)
     for index in range(count):
         s1 = int(manhattan[index])
         if s1 == 0:
@@ -551,8 +544,9 @@ def gonen_beam(
             if store.size == 0:
                 continue
             collide(store, backward=True)
-            age = (store.age - 1) % flight.period[store.direction]
-            step = flight.steps[store.direction, age]
+            resting = store.direction < REST_DIRECTIONS
+            back = np.where(resting, store.age, (store.age - 1) % flight.period[store.direction])
+            step = flight.steps[store.direction, back].astype(np.int64)
             moved = step.any(axis=1)
             x, y, z = store.coordinates(store.node)
             coordinates = np.stack([x, y, z], axis=1) - step
@@ -564,7 +558,7 @@ def gonen_beam(
                         f"{RAYS_LAW}: the inverse walk crosses an open face (a click has no inverse)"
                     )
             store.node = coordinates @ np.array(store.strides, dtype=np.int64)
-            store.age = age
+            store.age = back
             store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
             store.port[:] = HERE
             store.merge()
@@ -575,7 +569,7 @@ def gonen_beam(
         definition = families[family]
         if store.size == 0:
             continue
-        step = flight.steps[store.direction, store.age]
+        step = flight.steps[store.direction, store.age].astype(np.int64)
         moved = step.any(axis=1)
         x, y, z = store.coordinates(store.node)
         coordinates = np.stack([x, y, z], axis=1) + step
@@ -590,7 +584,7 @@ def gonen_beam(
         if escaped.any():
             gone = np.flatnonzero(escaped)
             labels = store.labels(gone, vectors, definition.free, definition.quantum)
-            amplitude = integer_roots(store.amount[gone] * (AMPLITUDE_SCALE * AMPLITUDE_SCALE))
+            amplitude = store.amount[gone] * AMPLITUDE_SCALE
             for face in ledger.open_faces:
                 through = gone[port[gone] == face]
                 if through.shape[0] == 0:
@@ -636,7 +630,10 @@ def gonen_beam(
                         }
                     )
         store.node = coordinates @ np.array(store.strides, dtype=np.int64)
-        store.age = (store.age + 1) % flight.period[store.direction]
+        # A rest ray keeps its age (the rest slots belong to the six-heading
+        # alphabet, whose period it resumes when a collision moves it).
+        resting = store.direction < REST_DIRECTIONS
+        store.age = np.where(resting, store.age, (store.age + 1) % flight.period[store.direction])
         store.phase = (store.phase + definition.phase_per_link * moved) % modulus
         store.port = port
         if escaped.any():
@@ -841,7 +838,7 @@ def gonen_beam(
                 entry.held[family] = bounded(entry.held[family] + group_content, entry, "content")
                 entry.events[family] += group_total
                 ledger.held_measured[family] += group_content
-                amplitude = integer_roots(amounts * (AMPLITUDE_SCALE * AMPLITUDE_SCALE))
+                amplitude = amounts * AMPLITUDE_SCALE
                 np.add.at(clicked_x, ports, amplitude * tables.cosines[store.phase[group]])
                 np.add.at(clicked_y, ports, amplitude * tables.sines[store.phase[group]])
                 if record is not None:
@@ -883,9 +880,9 @@ def gonen_beam(
                 if amount:
                     born.extend((direction, amount, 0, entry.phase) for direction in entry.directions)
             if entry.pending[family]:
-                count = len(entry.directions)
+                ways = len(entry.directions)
                 for amount, content, phase in entry.pending[family]:
-                    shares = apportion_whole(amount, [1] * count, age % count)
+                    shares = apportion_whole(amount, [1] * ways, age % ways)
                     for direction, share in zip(entry.directions, shares, strict=True):
                         if share:
                             born.append((direction, share, content, phase))

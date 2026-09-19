@@ -721,7 +721,7 @@ def _in_transit(
             TransitDefinition(
                 _address(obj["position"], f"{label}.position", shape),
                 family,
-                _integer(obj["number"], f"{label}.number", 1, len(measured)),
+                _integer(obj["number"], f"{label}.number", 1, max(1, len(measured))),
                 direction,
                 amount,
                 _integer(obj.get("phase", 0), f"{label}.phase", 0, top),

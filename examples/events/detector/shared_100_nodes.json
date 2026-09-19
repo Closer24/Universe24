@@ -1,7 +1,5 @@
 {
-  "law": "events",
-  "dynamics": "reversible-detector-v1",
-  "max_active_owners": 1,
+  "law": "rays",
   "model_id": "detector-shared-100",
   "shape": [
     12,
@@ -9,7 +7,7 @@
     1
   ],
   "boundary": "open",
-  "ticks": 101,
+  "ticks": 6,
   "K": 1024,
   "N": 32,
   "release": 0,
@@ -30,7 +28,7 @@
       ],
       "family": "carrier",
       "number": 1,
-      "heading": [
+      "direction": [
         1,
         0,
         0

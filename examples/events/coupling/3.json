@@ -1,6 +1,6 @@
 {
-  "law": "events",
-  "model_id": "events-coupling-3-plane-v1",
+  "law": "rays",
+  "model_id": "rays-coupling-3-plane-v1",
   "shape": [
     121,
     121,

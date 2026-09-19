@@ -42,7 +42,7 @@ from event_universe.events.gonen_beam import (
     ray_tables,
 )
 from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
-from event_universe.events.world import RAYS_LAW, MeasuredDefinition, RayWorld
+from event_universe.events.world import HEADING_OFFSET, RAYS_LAW, MeasuredDefinition, RayWorld
 
 __all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
 
@@ -83,7 +83,9 @@ class RaySimulation:
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
-                age=np.array([item.age % int(self.tables.flight.period[item.direction])]),
+                age=np.array(
+                    [item.age % int(self.tables.flight.period[max(item.direction, HEADING_OFFSET)])]
+                ),
                 phase=np.array([item.phase]),
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
