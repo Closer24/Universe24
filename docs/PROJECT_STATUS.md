@@ -25,11 +25,11 @@ or a machine.
    the delayed clock and `wait_per_quantum` a declared width like ρ, K and N; the
    three decisions of the morning (`transmitted_number`, the wait's unit, ε_g) are
    not needed and the gate of feature 20b is not written; "the field is, in fact, a
-   field of events". The first declared widths of "what can be put as a
-   parameter, put": `turns_in_flight` and `quantum` per family (features 21 and 22),
-   both defaulting to today's behaviour; open with them, the owner's call: whether
-   light's phase in flight turns by its message (round 8, S5) or by the cell's amount
-   as the engine does.
+   field of events". The declared widths of "what can be put as a
+   parameter, put": `phase_turn` and `quantum` per family (features 21 to 23); light
+   turns by its message, uniformly, by default ("constant frequency for light? Yes,
+   make it the default for light. That is, per family."), so a world that wants
+   light with a frequency declares the family's `quantum`, the photon.
 2. **The old engine of the law of the bit was deleted on 2026-09-19** by the model
    owner's decision of the evening ("No confrontations are needed. Only tests that
    everything is as designed."): `core/` but its substrate, `fields/`,
@@ -54,7 +54,7 @@ monotone), the wait falling as r^-0.9.
 - The model owner's decisions (round 8's verdict table, PR #327's "Needs a decision",
   Highlights 5.4's status line): the law in points S1 to S10 point by point; T2 (an
   event takes its interval); what a matter shadow rotates by, since 2026-09-19 a declared
-  width of the family (`turns_in_flight`, the owner's "what can be a parameter, put");
+  rule of the family (`phase_turn`: none for matter, by the quantum for light);
   hypothesis 19 or a per-family w (the bending of light: half of Einstein with one w,
   whole if light pays twice); the Compton table; the parked share's phase (1.5 % of the
   emission stands still); a lamp's recoil; the plain or matched edge. Settled on

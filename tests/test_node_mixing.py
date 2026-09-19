@@ -48,7 +48,7 @@ X, MINUS_X = 0, 1
 
 def one_node(steps: int = 8) -> ShadowLayer:
     """One Node, one number, the circle of `steps` steps; no phase turn in flight."""
-    return ShadowLayer(0, (1, 1, 1), (1,), steps, 1 << 20, rotates=False)
+    return ShadowLayer(0, (1, 1, 1), (1,), steps, 1 << 20, turn="none")
 
 
 def arrive(layer: ShadowLayer, port: int, amount: int, phase: int = 0, slot: int = 0) -> None:

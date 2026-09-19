@@ -28,10 +28,17 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the speed of light between Nodes" is recorded in 5.4 ("One speed, and what
   is seen").
 
-- `families[i].turns_in_flight` (the owner's "what can be put as a parameter,
-  put"): whether a family's quanta turn their phase in flight by their amount
-  over K on every Link, true by default for a paid family and false for a free
-  one, what the engine did by kind until now; `tests/test_family_turns.py`.
+- `families[i].phase_turn` (features 21 and 23; the owner's "what can be put
+  as a parameter, put" and "constant frequency for light? Yes, make it the
+  default for light. That is, per family."): how a family's quanta turn their
+  phase per Link walked. `"quantum"`, the default for a paid family: by the
+  family's quantum over K, the same for every quantum of the family wherever it
+  is, the remainder carried per family, so light keeps the frequency it was
+  born with (round 8, S5); `"none"`, the default for a free family; `"amount"`,
+  the old rule by the amount in the cell, which slowed as the field thinned and
+  stopped a few Links from a lamp, kept as a choice. Replaces the key
+  `turns_in_flight` of the same morning ([migration](docs/MIGRATION.md#the-phase-turn-in-flight-per-family-on-2026-09-19-phase_turn));
+  `tests/test_family_turns.py`.
 
 - `families[i].quantum` (the owner's "put it in, without an experiment"): the
   units of a family that make one event at a holder that absorbs them (`keep`,

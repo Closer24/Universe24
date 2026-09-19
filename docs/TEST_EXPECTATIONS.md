@@ -24,7 +24,7 @@ modules are named in the [migration note](MIGRATION.md#one-engine-on-2026-09-19-
 | --- | --- |
 | `test_field_only.py` | The law of the shadow on minimal boards: the books, the fixed point and Gauss's flux, the shell means, the pair's pushes and the product law, the slits, the wait, the refusals, the nearest step, the step by the accumulators ([below](#the-law-of-the-shadow)) |
 | `test_node_mixing.py` | The Node's mixing on one Node of the engine's layer: the 3B_h rule, the coherent sum, the largest remainder, the parked ninths and their release, the momentum carried ([below](#the-nodes-mixing-on-one-node)) |
-| `test_family_turns.py` | A family's phase turn in flight as a declared width: the default by kind, the engine's wiring, one Link of the walk ([below](#the-phase-turn-in-flight)) |
+| `test_family_turns.py` | A family's phase turn in flight as a declared rule: by the quantum uniformly (light's default), by the cell's amount, or none; the default by kind, the engine's wiring, one Link of the walk, the remainder per family ([below](#the-phase-turn-in-flight)) |
 | `test_family_quantum.py` | A family's quantum as a declared width: the event at an absorbing holder is one whole quantum per number, the rest waiting in the holder's register ([below](#the-quantum-of-a-family)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
@@ -56,17 +56,19 @@ reproduce byte for byte:
 
 ## The phase turn in flight
 
-`tests/test_family_turns.py` isolates `families[i].turns_in_flight` (the model
-owner, 2026-09-19, "what can be put as a parameter, put"; DERIVATIONS.md round
-8 section 52 (iv), what a matter shadow rotates by): a quantum in flight turns
-its phase by its amount over K on every Link when its family turns, and not at
-all otherwise. Expected, written down first:
+`tests/test_family_turns.py` isolates `families[i].phase_turn` (the model
+owner, 2026-09-19: light turns by its message, the same everywhere, "the
+default for light, that is, per family"; DERIVATIONS.md round 8, S5): per
+Link walked, `"quantum"` turns every quantum of the family by the family's
+quantum over K, the remainder carried per family, whatever the amount in the
+cell; `"amount"` turns by the amount in the cell over K, the old rule;
+`"none"` turns nothing. Expected, written down first:
 
 | Case | Input | Expected |
 | --- | --- | --- |
-| (a) the default by kind | a free family, a paid family, a free one declared true, a paid one declared false | turns false, true, true, false; `turns_in_flight: 1` refused by name |
-| (b) the engine's wiring | three families, free, free turning, paid | the layers' turn false, true, true |
-| (c) one Link of the walk | 128 quanta at phase 5 carrying (3, 0, 0) on +X, K = 16, N = 64, a board of 3 x 1 x 1 | at the neighbour: 128 quanta at phase 13 when the family turns (128 / 16 = 8 steps), at phase 5 when it does not; the momentum (3, 0, 0) and the departures cleared either way |
+| (a) the default by kind and the wiring | a free family; a paid one with quantum 16; a free one declared `"amount"`; a paid one declared `"none"`; `phase_turn: true` | none, quantum, amount, none; refused naming `families[0].phase_turn`; the engine's layers carry the same rules and quanta 1, 16, 1, 1 |
+| (b) one Link of the walk, K = 16, N = 64, a departure at phase 5 carrying (3, 0, 0) on +X | `"amount"`: 128 quanta; 5 quanta. `"quantum"` with quantum 16: 128; 5. `"none"`: 128; 5 | the arrival at the neighbour at phase 13 (8 steps); 5 (0 steps). 6; 6 (one step whatever the amount). 5; 5. The amount and the momentum (3, 0, 0) unchanged in every case |
+| (c) the remainder per family | `"quantum"` with quantum 8, K = 16: the departure walked on the first, the second or the third interval of the layer | at phase 5, 6, 5: a step every second interval, the family's clock advancing whether or not anything was in flight before |
 
 ## The quantum of a family
 
