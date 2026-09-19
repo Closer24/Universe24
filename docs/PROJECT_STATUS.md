@@ -58,7 +58,11 @@ performance: 0.23 to 1.0 us per Node per interval on the registered worlds
   as worlds and tables; whether the six-heading source of the coupling
   series should release on a fan of directions (the design's section 8
   expects the ring means of a fan, 0.31 to 0.33, and the six beams give the
-  lattice ring's count).
+  lattice ring's count); after the orbit series D under the width of the
+  push (D1 tried on 2026-09-19: one eccentric closing at `width` 32, r =
+  12, no other), whether to pre-fill the field, to widen the push further
+  or to read the count off the clock as well
+  ([D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)).
 - Derived and not solved: no inertia for a co-moving pair at first order in v
   (DERIVATIONS.md section 54); Bell at most 2; a single ray does not
   interfere with itself, interference being the record of many of one

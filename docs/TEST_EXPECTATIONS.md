@@ -37,6 +37,7 @@ kept, their pins the law of events').
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
+| `test_orbit_world.py` | The orbit world `s32_r12` of series D: one world, 346 intervals, the probe's pinned position at the one closing of the registered run ([below](#the-worlds-of-the-ray-law), (e)) | new (2026-09-19; a milestone pin of a registered run, to go if the model owner's rule of 2026-09-17 excludes it) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
@@ -390,6 +391,17 @@ does what the law says and not as a result.
   r = 3 twice the count and at r = 4 equal to it.
 - (d) every example world (`examples/events/*.json`, `bell/`, `coupling/`,
   `detector/` through the entity loader) parses as a ray world.
+
+- (e) the orbit world (`tests/test_orbit_world.py`; the registered run of
+  series D, [EXPERIMENTS](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19),
+  source fingerprint `587cbf48...`): `examples/events/orbit/s32_r12.json`
+  parses with `width` 32 and a direction table of 124 entries; its probe
+  (content 1, momentum [0, 9, 0] at (72, 60, 0)) is at (71, 60, 0) after
+  346 intervals with its momentum's y component positive, age 346 and
+  nothing waited, the books balanced at every interval. A pin of one
+  registered reading, about 0.5 s; if the model owner's rule of 2026-09-17
+  (no test pins an example world's numbers) excludes it, the register keeps
+  the numbers and the module goes.
 
 ## Generated-output lifetime
 

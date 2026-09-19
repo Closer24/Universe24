@@ -22,6 +22,17 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   step 5 and note 15, [the engine](docs/ENGINE.md),
   [terminology](docs/TERMINOLOGY.md)). Test: `tests/test_push_width.py`
   ([expectations](docs/TEST_EXPECTATIONS.md#the-width-of-the-push)).
+- The orbit series D on the plane (`examples/events/orbit/`, six worlds by
+  `make_worlds.py`, `tools/orbit_readings.py`): a fixed source releasing
+  one shell every 10 intervals on a fan of 120 primitive in-plane
+  directions and a free probe of content 1 at r = 12 or 24 with the
+  tangential momentum derived for a circular orbit under the measured push
+  law, at `width` 1, 8 and 32. Registered in
+  [D, the orbit under the law of the ray, on the plane](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
+  one orbit closes by the criterion (S = 32, r = 12: 346 intervals against
+  343 derived, an eccentric loop), no other closing, the mean push as
+  derived (C 1.1), the grain of the push the reason. The world test
+  `tests/test_orbit_world.py` pins that closing.
 
 ### The law of the ray (2026-09-19)
 

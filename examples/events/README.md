@@ -58,6 +58,22 @@ prints every criterion and every reading against the expectations of
 the register entry is
 [C, the couplings under the law of the ray, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#c-the-couplings-under-the-law-of-the-ray-on-the-plane-2026-09-19).
 
+## The orbit series
+
+The folder [orbit/](orbit/README.md) holds the six worlds of the orbit
+series D, written by `orbit/make_worlds.py`: the same plane, a fixed source
+of content 2^10 releasing one shell every 10 intervals on a fan of 120
+primitive in-plane directions (q = 12 units per interval), and a free probe
+of content 1 at r = 12 or 24 with the tangential momentum the README derives
+for a circular orbit under the measured push law, at the widths of the push
+`width` 1, 8 and 32. `tools/orbit_readings.py` reads the probe's steps and
+pushes and prints whether the orbit closed, its period, its mean radius,
+its drift and the period ratio against the plane's k = 2; the register
+entry is
+[D, the orbit under the law of the ray, on the plane (2026-09-19)](../../docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
+one orbit closes by the criterion (S = 32, r = 12, an eccentric loop), the
+mean push reads as derived, the grain of the push breaks the rest.
+
 ## The detector definitions
 
 The folder [detector/](detector/README.md) holds four worlds that place
