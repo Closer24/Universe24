@@ -1,0 +1,525 @@
+{
+  "law": "events",
+  "dynamics": "reversible-detector-v1",
+  "max_active_owners": 1,
+  "model_id": "detector-grouped-12",
+  "shape": [
+    9,
+    9,
+    1
+  ],
+  "boundary": "open",
+  "ticks": 4,
+  "K": 1024,
+  "N": 32,
+  "release": 0,
+  "suspension": 0,
+  "families": [
+    {
+      "name": "carrier",
+      "kind": "paid",
+      "quantum": 1
+    }
+  ],
+  "measured": [
+    {
+      "position": [
+        3,
+        1,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        4,
+        1,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        5,
+        1,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        3,
+        3,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        4,
+        3,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        5,
+        3,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        3,
+        5,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        4,
+        5,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        5,
+        5,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        3,
+        7,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        4,
+        7,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "position": [
+        5,
+        7,
+        0
+      ],
+      "family": "carrier",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "carrier": "transduce"
+      },
+      "port_map": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "in_transit": [
+    {
+      "position": [
+        2,
+        1,
+        0
+      ],
+      "family": "carrier",
+      "number": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "amount": 2,
+      "phase": 0
+    },
+    {
+      "position": [
+        2,
+        3,
+        0
+      ],
+      "family": "carrier",
+      "number": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "amount": 2,
+      "phase": 8
+    },
+    {
+      "position": [
+        2,
+        5,
+        0
+      ],
+      "family": "carrier",
+      "number": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "amount": 2,
+      "phase": 16
+    },
+    {
+      "position": [
+        2,
+        7,
+        0
+      ],
+      "family": "carrier",
+      "number": 1,
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "amount": 2,
+      "phase": 24
+    }
+  ],
+  "detectors": [
+    {
+      "name": "apparatus",
+      "positions": [
+        [
+          3,
+          1,
+          0
+        ],
+        [
+          4,
+          1,
+          0
+        ],
+        [
+          5,
+          1,
+          0
+        ],
+        [
+          3,
+          3,
+          0
+        ],
+        [
+          4,
+          3,
+          0
+        ],
+        [
+          5,
+          3,
+          0
+        ],
+        [
+          3,
+          5,
+          0
+        ],
+        [
+          4,
+          5,
+          0
+        ],
+        [
+          5,
+          5,
+          0
+        ],
+        [
+          3,
+          7,
+          0
+        ],
+        [
+          4,
+          7,
+          0
+        ],
+        [
+          5,
+          7,
+          0
+        ]
+      ],
+      "groups": [
+        {
+          "name": "group-1",
+          "positions": [
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              4,
+              1,
+              0
+            ],
+            [
+              5,
+              1,
+              0
+            ]
+          ],
+          "output": [
+            5,
+            1,
+            0
+          ],
+          "threshold": 2,
+          "capacity": 31,
+          "reference_phase": 0
+        },
+        {
+          "name": "group-2",
+          "positions": [
+            [
+              3,
+              3,
+              0
+            ],
+            [
+              4,
+              3,
+              0
+            ],
+            [
+              5,
+              3,
+              0
+            ]
+          ],
+          "output": [
+            5,
+            3,
+            0
+          ],
+          "threshold": 2,
+          "capacity": 31,
+          "reference_phase": 0
+        },
+        {
+          "name": "group-3",
+          "positions": [
+            [
+              3,
+              5,
+              0
+            ],
+            [
+              4,
+              5,
+              0
+            ],
+            [
+              5,
+              5,
+              0
+            ]
+          ],
+          "output": [
+            5,
+            5,
+            0
+          ],
+          "threshold": 2,
+          "capacity": 31,
+          "reference_phase": 0
+        },
+        {
+          "name": "group-4",
+          "positions": [
+            [
+              3,
+              7,
+              0
+            ],
+            [
+              4,
+              7,
+              0
+            ],
+            [
+              5,
+              7,
+              0
+            ]
+          ],
+          "output": [
+            5,
+            7,
+            0
+          ],
+          "threshold": 2,
+          "capacity": 31,
+          "reference_phase": 0
+        }
+      ]
+    }
+  ]
+}
