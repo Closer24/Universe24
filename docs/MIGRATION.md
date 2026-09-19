@@ -23,7 +23,8 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
 - **The law selected.** `"law": "rays"` selects `rays-v1`; `run.json`
   carries `"law": "rays-v1"`; `configuration_validation` reports the kind
   `rays`. `"law": "events"` is refused naming the law of the ray and this
-  entry. The package is `event_universe` 0.3.0.
+  entry. The package is `event_universe` 0.3.1 (its `__version__` string
+  read 0.3.0 until the cleanup of the same day, below).
 - **Deleted modules.** `src/event_universe/events/mixing.py` (the coherent
   sum, `coherent_weights`, `diagonal_weights`, `mix_arrivals`,
   `place_departures`, `apportion_carried`, `tie_order`; `integer_root` and
@@ -139,6 +140,16 @@ changes.
   heading, read by the deleted mixing; no caller). The docstring names
   `MAX_VALUE` as what it is under the ray law, the bound of a declared charge
   and quantum in the world file (no cell, no mixing).
+- **Packaging.** `pyproject.toml` declares `numpy>=2.5.3,<3` in
+  `dependencies` (the engine imports numpy at module level; the render extra
+  no longer repeats it). `event_universe.__version__` is 0.3.1, the version
+  of `pyproject.toml` and `CITATION.cff`; the string read 0.3.0 since the
+  0.3.1 release of 2026-09-15, so every `run.json` recorded
+  `package_version` 0.3.0 beside a 0.3.1 source digest, and records 0.3.1
+  from now on. `event_universe.RaySimulation` is a lazy attribute: the
+  package imports the world parser only, and the engine (numpy) loads on
+  the first read of the name, as `events/__init__.py` promises. Nothing in
+  `__all__` changes.
 
 ## No merge: a step onto a measured event is refused, on 2026-09-19
 

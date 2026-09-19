@@ -25,6 +25,16 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   their 13 tests go with them, and `test_integer_arithmetic.py` pins the
   primitives the ray law uses (`checked_work`, `integer_root`, `bounded_gcd`)
   ([migration](docs/MIGRATION.md#cleanup-after-the-law-of-the-ray-on-2026-09-19)).
+- `pyproject.toml` declares numpy (`numpy>=2.5.3,<3`, the version of the
+  validated environment as the floor) as a dependency of the package: the
+  engine imports it at module level, and `pip install -e .` installed
+  nothing before; the render extra keeps matplotlib, Pillow and playwright.
+- `event_universe.__version__` is 0.3.1, the version of `pyproject.toml`,
+  `CITATION.cff` and the 0.3.1 release of 2026-09-15 (the string read 0.3.0
+  since then); `run.json` records `package_version` 0.3.1 from now on.
+- `import event_universe` loads the engine (numpy) on the first read of
+  `RaySimulation`, as the `events` package promised: the package, the world
+  parser and the preflight import only the generic physics.
 
 ### The law of the ray (2026-09-19)
 
@@ -51,7 +61,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   [expectations](docs/TEST_EXPECTATIONS.md)). The example worlds, the Bell
   and coupling generators and the detector definitions are ray worlds; the
   Bell run A2 and the coupling series C are re-registered under `rays-v1`
-  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.0.
+  ([experiments](docs/EXPERIMENTS.md)). Package version 0.3.1 (the
+  `__version__` string read 0.3.0 until the cleanup above).
 
 ### The engine of the law of events (2026-09-19)
 
