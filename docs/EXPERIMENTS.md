@@ -4834,3 +4834,30 @@ sign rule, and its other couplings are catalog entries.
   and the strong catalog entries; its outcomes are those of hypothesis 13:
   the content grows and no lone quark appears, or it falls off as for a
   charge, or the pattern does not close.
+
+### E8. A shared physical detector retains incoming phase
+
+- **Scope and authority.** The model owner's detector implementation and small
+  board request, 2026-09-19; issue #342. The opt-in
+  [reversible-detector-v1 contract](DETECTOR_REQUIREMENTS.md) supplies the
+  local contact and finite physical pointer. This is a demonstration of that
+  candidate, separate from the historical ray-event catalog features above.
+- **Frozen setup.** `examples/events/detector/shared_3_nodes.json`: open
+  9-by-9-by-1 world; three material Nodes at x=3,4,5, y=4, z=0; one shared
+  output at x=5. One +X carrier starts at x=2. Two preparations differ only
+  in carrier phase, 0 or 16 of N=32. K=1024, local reference 0, threshold 1,
+  capacity 31, four intervals each. No law, calibration or threshold is fitted.
+- **Acceptance fixed before execution.** Output values at ticks 0 through 4
+  are exactly 0,0,0,0,1 for both preparations; the complete live physical
+  states remain different at all five times; total amount is 4, total
+  material-plus-transit momentum is (1,0,0), and nothing escapes throughout.
+- **Status.** Measured, pass within this scope, 2026-09-19 10:01 UTC, source
+  commit `17dd34c0f8d54b045ab0e4ff9c28e0399dfe6911`, fingerprint
+  `5d4d2dcf360f8a0f8375977e151b451b64d42fa76ff163ad5561887d6c57b84b`.
+  Each case was run once through the active engine. Exact outcomes, input
+  digests, checks and display verification are recorded in
+  [the validation entry](VALIDATION.md#reversible-detector-a-shared-output-retains-incoming-phase---2026-09-19).
+  The saved report is `universe24_physical_detector_9x9.html`, with embedded
+  records and motion; visible plane z=0, one Link per grid spacing, one
+  interval per frame. No absorption, reset, energy law, uncertainty relation
+  or quantum entanglement is established.

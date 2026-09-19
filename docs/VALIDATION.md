@@ -11,6 +11,60 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## Reversible detector: a shared output retains incoming phase - 2026-09-19
+
+Recorded at 10:01 UTC on source commit
+`17dd34c0f8d54b045ab0e4ff9c28e0399dfe6911`, Python 3.14.7. This is the
+explicitly selected `reversible-detector-v1` candidate of
+[the detector contract](DETECTOR_REQUIREMENTS.md), not the default absorption
+rule. [Experiment E8](EXPERIMENTS.md#e8-a-shared-physical-detector-retains-incoming-phase)
+uses `examples/events/detector/shared_3_nodes.json`, with only the incoming
+phase varied between 0 and 16. Each four-interval case was executed once through
+`EventSimulation`; its initial state and every completed state were recorded.
+The world is 9 by 9 by 1, open, with the x-y plane at z=0. Material Nodes
+(3,4,0), (4,4,0), (5,4,0) form a chain; the last Node is the shared output.
+One carrier starts at (2,4,0), heading +X. N=32, K=1024, reference phase 0,
+threshold 1, capacity 31. Expectations below were fixed before execution.
+
+| Observable | Expected and observed exactly, in both cases |
+| --- | --- |
+| Physical output at ticks 0 through 4 | 0, 0, 0, 0, 1; it changes only when the carrier reaches the output |
+| Complete live states, phase 0 versus phase 16 | Different at all five recorded times; the carrier retains its input phase |
+| Shared visible output, phase 0 versus phase 16 | Equal at all five recorded times |
+| Amount on the board | One transit unit plus three material units, total 4, at every recorded time |
+| Material-plus-transit momentum | (1,0,0) at every recorded time |
+| Escaped amount | 0 |
+
+The package source fingerprint from `event_universe.runner.source_fingerprint`
+was `5d4d2dcf360f8a0f8375977e151b451b64d42fa76ff163ad5561887d6c57b84b`
+before and after the run and submission checks. The saved input JSON SHA-256
+values are `95f8ee4d986645edb47c4640cf1f68fedecef5cbfe2169997c3e5f481393c562`
+(phase 0) and `b9d5ae382cd6fb320b3ad4694dba33f488373d8f8498887bce938a4d570dbe00`
+(phase 16). The self-contained report `universe24_physical_detector_9x9.html`
+was saved with both input documents, full state records, event records,
+fingerprints, an embedded GIF and the existing interactive HTML viewer.
+Every displayed region uses one Link per grid spacing and one interval per
+frame; GIF playback uses 850 ms per frame. First and last frames were visually
+inspected. Viewer JavaScript passed a minimal-DOM execution check for both
+scenario selection and final-tick display; full browser rendering was not
+verified because the browser download was unavailable.
+
+Independent rule tests passed 26 cases, including the published 3,240-input
+injectivity/inverse domain, recoil, retained prior apparatus state, causal
+timing, threshold independence, distinct owner channels, detached diagnostics,
+deterministic replay and atomic capacity/edge refusals. A near-bound pointer
+decoding overflow was reproduced before correction and its regression now
+passes. On the exact source commit above,
+`PYTHONPATH=src python tools/check.py --base origin/main` selected the related
+engine consumers and, because packaging configuration changed, the repository
+checks: **344 passed in 77.92 seconds**, Ruff lint/format passed, strict mypy
+passed on 21 source files, and both source and wheel distributions built.
+
+Scope: a finite nondestructive transduction demonstration. It supplies no
+apparatus energy law, physical reset or absorption mechanism, does not make
+default lossy transitions reversible, and derives no Heisenberg, Born or Bell
+result. A shared count does not establish entanglement.
+
 ## The Bell run A2 under the law of events: S = 2 exactly - 2026-09-19
 
 Base: `1f9f280` on `main` (after PR #335), branch
