@@ -338,24 +338,32 @@ candidates (`transit.nearest_step`, `step_window`).
    arrivals at one Node so interfere (in antiphase nothing leaves sideways)
    while a family's units never mix with another family's (each family is
    its own transit); the sizes and the phase a measured event reads
-   (`Transit.sizes`, `Transit.phase_at`) stay per number. A family that
-   declares no phase circle (`"phase": false`; the model owner,
-   2026-09-19, the field of matter without phase) does not sum
-   coherently: at every Node each Port's
-   arrival scatters on its own (`mixing.scatter_arrivals`, chosen by
-   `Transit.cycle` from the family's declaration) with the shares of a lone
-   arrival, four ninths back out through the Port it came in by and one
-   ninth to each of the other five sides, whole units by the largest
-   remainder with the ties in the tick's Port order, per Port; a Port's
-   arrival with no whole share for any side (one or two units) goes whole to
-   the heading nearest its own momentum (on a tie the largest share, back,
-   then the tick's order); its momentum is apportioned over its own six
-   departures exactly per axis (`apportion_carried` per Port), and the six
-   Ports' departures and momenta are added per heading. Two arrivals of 9
-   through opposite Ports leave 5 and 5 along the axis (4 back and 1
-   forward each) and 2 on each transverse side (1 + 1), never cancelling;
-   every phase leaving is 0. Fixed local work, 64-bit integers. A suspended
-   slot stays as arrivals, its count paid by one.
+   (`Transit.sizes`, `Transit.phase_at`) stay per number. The rule of the
+   Node is one for every family (`mix_arrivals` for all, the model owner,
+   2026-09-19: "everything generic must be replaced by generic"); only the
+   weights of the sides know whether the family has a phase circle. With
+   one they are the coherent |c_h|^2 above (`mixing.coherent_weights`). A
+   family that declares none (`"phase": false`; the model owner,
+   2026-09-19, the field of matter without phase) has mutually incoherent
+   arrivals, and its weights are the diagonal of the same expansion
+   (`mixing.diagonal_weights`): with c_h = S - 3 a_opp(h),
+   |c_h|^2 = |S|^2 - 6 Re(S conj(a_opp)) + 9 |a_opp|^2, and dropping every
+   cross term between different arrivals leaves
+   weight_h = 32^2 x (the number's amount over the six Ports + 3 x its
+   amount that came in through the side's own Port), exact integers, no
+   root and no phase table; a number's weights are its own, another
+   number at the Node adds nothing to them (no cross term survives between
+   numbers either). A lone arrival weighs 4 back and 1 to each other side,
+   four ninths back and one ninth each other way, and two arrivals of 9
+   through opposite Ports leave 5 and 5 along the axis and 2 on each
+   transverse side, never cancelling. The placement is the common one
+   above, once per number by its weights and not once per Port (the
+   largest-remainder rounding falls per group, where the per-Port scatter
+   of the first `events-v1` rounded per Port; the shares agree in the mean
+   exactly), a number with no whole for any side whole by the momentum it
+   carries, its momentum apportioned over its departures
+   (`apportion_carried`), every phase leaving 0. Fixed local work, 64-bit
+   integers. A suspended slot stays as arrivals, its count paid by one.
 5. A measured event that owes a count pays it by one (`_release`): it is
    created here without a self-creation, no release and no turn, and `waited`
    counts the interval (age + waited is the intervals completed, for every
@@ -462,7 +470,8 @@ by default, false for a family without a phase circle: its events carry
 phase 0 and never turn, its measured events never turn and K does not apply
 to their content, no `phase_window` on its lamps or on a table entry for
 it, no `phase` but 0 on its measured events and its events in transit, and
-its arrivals scatter per Port instead of mixing); `measured` (`position`,
+its sides weighed by the diagonal of the coherent sum, no cross term);
+`measured` (`position`,
 `family`, `amount` with 2 x amount < K x N for a family with a phase,
 `phase`, `charge`, `momentum`, `fixed`,
 `table` family name to `read` | `measure` | `rerelease` | `pass`, or to

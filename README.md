@@ -155,7 +155,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
 | `src/event_universe/events/engine.py` | The engine: the measured events, the interval's steps (the suspension, the measurements by the tables, the mixing, the self-creations off the clock, the steps), the books and the readings |
 | `src/event_universe/events/transit.py` | The arrays of one family's events in transit: arrivals and departures per Node, number and Port with the count they carry, the walk one Link per interval |
-| `src/event_universe/events/mixing.py` | The Node's computation of the sides (`node-mixing-v3`: the coherent sum over all numbers present, the vectors' shares in whole units per number, a single unit by its momentum, the momentum carried; for a family without a phase circle the per-Port scatter, `scatter_arrivals`) |
+| `src/event_universe/events/mixing.py` | The Node's computation of the sides (`node-mixing-v3`: the coherent sum over all numbers present, the vectors' shares in whole units per number, a single unit by its momentum, the momentum carried; one rule for every family, the weights the coherent |c_h|^2 or, for a family without a phase circle, its diagonal, `diagonal_weights`) |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
 | `src/event_universe/core/lattice.py` | The board's addresses, the six Port headings and the cell bound |

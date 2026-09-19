@@ -30,17 +30,18 @@ a Node: no parked share, no remainder. The interval's steps on the transit
   interval, and what arrives behind them joins them and waits with them
   (the next event is delayed); a count is written once, on arrival, never
   accumulated;
-- the mixing (node-mixing-v3, `mix_arrivals` by import) for a family with a
-  phase circle: the sides' shares from the vectors of all the arrivals at
-  the Node, whatever their number, the weights common to every number
-  there; per number whole units placed by the largest remainder with the
-  ties in the tick's Port order, a number with no whole for any side going
-  whole by its own momentum, every unit keeping its number; for a family
-  without a phase circle (`"phase": false`) the scatter (`scatter_arrivals`):
-  each Port's arrival on its own, four ninths back and one ninth each other
-  way, its momentum apportioned over its own departures; the departures into
-  flight. The sizes and `phase_at` read per number: what a measured event
-  reads is a bundle of one number.
+- the mixing (node-mixing-v3, `mix_arrivals` by import, one rule for every
+  family): the sides' weights from all the arrivals at the Node, whatever
+  their number, the coherent sum's squared leaving amplitudes for a family
+  with a phase circle (the weights common to every number there) and its
+  diagonal, per number 32^2 x (its amount over the six Ports + 3 x its
+  amount through the side's own Port), for a family without one
+  (`"phase": false`); per number
+  whole units placed by the largest remainder with the ties in the tick's
+  Port order, a number with no whole for any side going whole by its own
+  momentum, every unit keeping its number, its momentum apportioned over
+  its departures; the departures into flight. The sizes and `phase_at` read
+  per number: what a measured event reads is a bundle of one number.
 """
 
 from __future__ import annotations
@@ -54,7 +55,6 @@ from event_universe.events.mixing import (
     integer_root,
     mix_arrivals,
     place_departures,
-    scatter_arrivals,
 )
 
 HEADINGS = np.array(PORT_HEADINGS, dtype=np.int64)
@@ -128,8 +128,8 @@ class Transit:
         # axis lets its departures escape at the edge.
         self.periodic = periodic
         # Whether the family has a phase circle: without one every phase is
-        # 0, nothing turns, and the Node scatters each Port's arrival on its
-        # own instead of mixing the coherent sum.
+        # 0, nothing turns, and the Node's weights are the diagonal of the
+        # coherent sum (`mixing.diagonal_weights`).
         self.phased = phased
         self.owners = owners
         self.rank = {number: rank for rank, number in enumerate(owners)}
@@ -335,8 +335,7 @@ class Transit:
             self.arr_ph[frozen] = 0
             self.arr_mom[frozen] = 0
         if self.arr_amt.any():
-            compute = mix_arrivals if self.phased else scatter_arrivals
-            whole, phase, momenta = compute(self, MOMENTUM_BOUND)
+            whole, phase, momenta = mix_arrivals(self, MOMENTUM_BOUND)
             place_departures(self, whole, phase, momenta, MOMENTUM_BOUND)
         self.arr_amt[...] = 0
         self.arr_ph[...] = 0

@@ -49,7 +49,7 @@ modules are named in the [migration notes](MIGRATION.md).
 | `test_event_transit.py` | An event in transit: a single quantum whole by its momentum, no turn in transit, a part turned back apportioned again, a lone free unit straight from its release ([below](#an-event-in-transit)) |
 | `test_periodic_axis.py` | A periodic axis as a declared run parameter of the world: the departures through one face created at the first Node of the opposite face, nothing escaping on that axis, the momentum kept on the board; with an extent of 1 the one-interval stub; the other faces open; the refusals and the record; a measured event's step wrapping too, escaping through an open face, and landing on its own Node with an extent of 1 ([below](#a-periodic-axis)) |
 | `test_event_suspension.py` | The suspension the event carries: the count derived on arrival from the presence at the Node times `[n, d]`, the next event delayed, a measured event's clock slowed by the count it reads after its self-creation, never frozen; light on light; one presence read by a unit in transit and by a measured event ([below](#the-suspension)) |
-| `test_phaseless_family.py` | A family without a phase circle: each Port's arrival scatters on its own, four ninths back and one ninth each other way, two opposite arrivals never cancelling, the momentum apportioned per Port; the push of a free family reads the net flow and not the labels ([below](#a-family-without-a-phase-circle)) |
+| `test_phaseless_family.py` | A family without a phase circle: the sides weighed by the diagonal of the coherent sum, 32^2 x (the amount present + 3 x the amount through the side's own Port), a lone arrival four ninths back and one ninth each other way, two opposite arrivals never cancelling, the group's momentum apportioned over its departures; the identity of the weights; the push of a free family reads the net flow and not the labels ([below](#a-family-without-a-phase-circle)) |
 | `test_event_clock.py` | The clock of a measured event: every rate off its age by whole division, the release, the phase, the lamp's recoil, the step ([below](#the-clock-of-a-measured-event)) |
 | `test_event_worlds.py` | The worlds of the law of events on minimal boards: the books, the constant content, the flux, the shell means, the pair's pushes and the product law, the two-slit detector, the refusals and the runner ([below](#the-worlds-of-the-law-of-events)) |
 | `test_detector_sensitivity.py` | A detector's sensitivity: its threshold gates every response of its Nodes, a receiver's and a re-emitter's alike, a smaller bundle passing; a release reads no threshold ([below](#a-detectors-sensitivity)) |
@@ -192,19 +192,26 @@ added the same day):
 
 `tests/test_phaseless_family.py` isolates a family declared without a phase
 circle (`"phase": false`; the model owner, 2026-09-19, the field of matter
-without phase) and the push as the net flow (the same day): the kernels of
-`event_universe/events/mixing.py` (`scatter_arrivals`) on one Node of the
-engine's transit (`Transit` of shape (1, 1, 1), one number, N = 8, tick 1,
-`phased=False`), and the engine on a bar of 9 x 3 x 3 (K 2^20, `release`
-[0, 1], `suspension` 0, one free family `m` without a phase, a source of
-content 16 at x = 0 as number 1 and a reader of content 4 at x = 4 as number
-2). Written down first:
+without phase) and the push as the net flow (the same day): the one kernel
+of `event_universe/events/mixing.py` (`mix_arrivals` with the weights of
+`diagonal_weights`, 32^2 x (the number's amount over the six Ports + 3 x
+its amount through the side's own Port), the diagonal of the coherent sum)
+on one Node of the engine's transit (`Transit` of shape (1, 1, 1), one
+number, N = 8, tick 1, `phased=False`), and the engine on a bar of 9 x 3 x 3
+(K 2^20, `release` [0, 1], `suspension` 0, one free family `m` without a
+phase, a source of content 16 at x = 0 as number 1 and a reader of content
+4 at x = 4 as number 2). Derived by hand first; the integers that moved on
+2026-09-19 when the per-Port scatter (`scatter_arrivals`) was folded into
+the one kernel are given with the old value in brackets (the placement and
+the momentum fall once per group where they fell once per Port; the shares
+agree in the mean exactly):
 
 | Case | Input | Expected |
 | --- | --- | --- |
-| (a) a lone arrival | 9 on +X carrying (9, 0, 0) | 4 back on -X and 1 to each other side, [1, 4, 1, 1, 1, 1]; every phase 0; the x momentum 1, 4, 1, 1, 1, 1 with the units, the sum (9, 0, 0); nothing kept |
-| (b) two opposite arrivals | 9 on +X carrying (9, 0, 0) and 9 on -X carrying (-9, 0, 0); the edge: 2 on +X carrying (2, 0, 0) with the 9 on -X | 4 back each way and 1 forward each, [5, 5, 2, 2, 2, 2] (2 = 1 + 1 on each transverse side), no cancellation (the coherent rule in antiphase would leave 9 and 9 along x, `test_node_mixing` (c)); every phase 0; the x momentum -3, 3, 0, 0, 0, 0, the sum (0, 0, 0); the edge: the 2 go whole on +X with (2, 0, 0) and the 9 scatter mirrored, [6, 1, 1, 1, 1, 1], the x momentum 2 - 4, -1, -1, -1, -1, -1 |
+| (a) a lone arrival | 9 on +X carrying (9, 0, 0) | the weights 9 x 1024 x [1, 4, 1, 1, 1, 1]: 4 back on -X and 1 to each other side, [1, 4, 1, 1, 1, 1]; every phase 0; the x momentum 1, 4, 1, 1, 1, 1 with the units, the sum (9, 0, 0); nothing kept |
+| (b) two opposite arrivals | 9 on +X carrying (9, 0, 0) and 9 on -X carrying (-9, 0, 0); the edge: 2 on +X carrying (2, 0, 0) with the 9 on -X | the weights 1024 x [45, 45, 18, 18, 18, 18], 18 units as w / 9 exactly, [5, 5, 2, 2, 2, 2], no cancellation (the coherent rule in antiphase would leave 9 and 9 along x, `test_node_mixing` (c)); every phase 0; the group's momentum the net (0, 0, 0), every label 0, 0, 0, 0, 0, 0 (old -3, 3, 0, 0, 0, 0, each Port's own), the sum (0, 0, 0); the edge: the weights 1024 x [38, 17, 11, 11, 11, 11], the floors [4, 1, 1, 1, 1, 1] with the remainders [22, 88, 22, 22, 22, 22], the two left to -X and to the first tied 22 from tick 1, +Y: [4, 2, 2, 1, 1, 1] (old [6, 1, 1, 1, 1, 1], the 2 whole on +X and the 9 mirrored); the momentum (-7, 0, 0) over [4, 2, 2, 1, 1, 1]: the floors [2, 1, 1, 0, 0, 0] with the remainders [6, 3, 3, 7, 7, 7], the three left to the 7s, -2, -1, -1, -1, -1, -1 (unchanged), the sum (-7, 0, 0) |
 | (c) the push reads the flow | at the reader's Node 9 units of number 1 on +X travel and 9 on -X travel, the labels rewritten to (9, 0, 0) and (-3, 0, 0), one interval; then a lone 9 on +X travel | the flow (0, 0, 0): the push (0, 0, 0), the reader's momentum (0, 0, 0), 18 read, its phase 0 and no phase step, while the labels sum to (6, 0, 0); the departures [5, 5, 2, 2, 2, 2]; the momentum book: in transit (6, 0, 0) (the labels apportioned exactly), on the measured events (0, 0, 0); the lone 9: the flow (9, 0, 0), the push -4 x (9, 0, 0) = (-36, 0, 0), the reader's momentum (-36, 0, 0) |
+| (d) the identity of the weights | 7 on +X, 5 on +Y and 3 on -Z (15 present); the bundle three times over (21, 15, 9); the same 15 with a second number's 1000 on -X at the Node; a lone 9 on +X of a family with a phase circle | the weights 1024 x [15, 36, 15, 30, 24, 15] = 32^2 x (15 + 3 x the amount through the side's own Port) exactly; 45 units placed as w / 3, [5, 12, 5, 10, 8, 5], every phase 0; the second number changes nothing of the first's weights and weighs its own 1000 x 1024 x [4, 1, 1, 1, 1, 1], leaving [445, 111, 111, 111, 111, 111]; the coherent weights of the lone 9 are 256^2 x its diagonal ones, 1024 x [9, 36, 9, 9, 9, 9] (no cross term exists for one arrival) |
 
 ## The clock of a measured event
 
@@ -361,8 +368,9 @@ check that it does what the law says and not as a result, and re-pinned the
 same day when the free family lost its phase, the suspension read presence
 and the push read the flow (the model owner's three decisions,
 [migration](MIGRATION.md#the-field-of-matter-without-phase-the-suspension-as-presence-with-a-fractional-width-and-the-push-as-the-net-flow-on-2026-09-19)).
-One family `m` (free, charge 0, `"phase": false`: each Port's arrival
-scatters on its own, four ninths back, and nothing turns) whose measured
+One family `m` (free, charge 0, `"phase": false`: the sides weighed by
+the diagonal of the coherent sum, a lone arrival four ninths back, and
+nothing turns) whose measured
 event of 2^24 at rest releases 1/128 of its content per Port per
 self-creation (q = 786 432 units per interval), N 64, K 2^22 (no phase
 step: K does not apply to a phase-less family), an open cube, the measured
@@ -395,21 +403,29 @@ designs, are given in brackets as (old ...).
   10 % (old 0.622 to 0.661, within 5 % of 3 x 0.2143); the log-log slopes
   over the five radii: the count -2.90 +- 0.15 (-2.898; old -1.99), the
   radial flow -2.90 +- 0.15 (-2.898; old -2.11), the size -1.46 +- 0.15
-  (-1.455; old -0.95). The runtime of the scatter on 29^3 is about 0.29 s
-  per interval against 0.11 s for the coherent rule (the per-Port
-  apportionment), a host cost.
+  (-1.455; old -0.95). The runtime of the one kernel on 29^3 is about
+  0.07 s per interval for the phase-less family (the per-Port scatter it
+  replaced on 2026-09-19 took 0.29 s, its six apportionments per Node; the
+  coherent rule 0.11 s), a host cost.
 - (c) two measured events (21^3, d = 8 on the x axis, no suspension, 200
   intervals, the pushes over ticks 101 to 200): the first (at the lower x)
   pushed toward +x and the second toward -x, each by its content times the
   net flow of the other's field at its Node; the axial pushes equal within
   0.5 % (0.02 % measured, 2 376 912 076 800 against -2 376 509 423 616: the
   flow of a diffusive field is symmetric where the momentum labels were
-  not; old 2.5 to 5 %), the transverse parts below 0.1 % of the axial (old
-  below 0.3 %); the measured events' momentum is the sum of the pushes at
-  every tick; the axial push against M_B rho M_A / (4 pi d^2) with
-  rho = 6/128 between 1.3 and 1.6 (1.449 measured; old 0.615); the product
-  law: both contents doubled with K doubled pushed four times as much
-  within 2 % (3.9993 measured; old 4.22). Node-mixing-v3 (the coherent sum over
+  not; old 2.5 to 5 %; with the scatter folded into the one kernel the same
+  day 2 376 576 532 480 against -2 376 375 205 888, 0.01 %, a change of
+  0.014 % in the push, the rounding per group), the transverse parts below
+  0.1 % of the axial (old below 0.3 %); the measured events' momentum is
+  the sum of the pushes at every tick; the axial push against
+  M_B rho M_A / (4 pi d^2) with rho = 6/128 between 1.3 and 1.6 (1.449
+  measured, 1.4486 with the one kernel; old 0.615); the product law: both
+  contents doubled with K doubled pushed four times as much within 2 %
+  (3.9993 measured, 3.99996 with the one kernel; old 4.22). The one kernel
+  is the diagonal per number: the diagonal over all numbers present would
+  let the reader's own dense field steer the other number's labels near
+  it, and read 5.96 against the law here (10 times the scatter's push at
+  60 intervals), the sides' total the same. Node-mixing-v3 (the coherent sum over
   all numbers present, the same day) does not act on this world: with
   `m` phase-less its units never enter `mix_arrivals`, so the pins are
   the field of matter's.

@@ -6,6 +6,35 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## One rule of the Node: the phase-less scatter folded into `mix_arrivals`, on 2026-09-19
+
+The model owner, 2026-09-19: "everything generic must be replaced by
+generic". The physics-rule reviewer showed that the per-Port scatter of a
+family without a phase circle is the diagonal of the coherent sum: with
+c_h = S - 3 a_opp(h), |c_h|^2 = |S|^2 - 6 Re(S conj(a_opp)) + 9 |a_opp|^2,
+and dropping every cross term between mutually incoherent arrivals leaves
+weight_h = 32^2 x (the number's amount over the six Ports + 3 x its amount
+through the side's own Port), 4 : 1 : 1 : 1 : 1 : 1 for a lone arrival.
+`mixing.scatter_arrivals` and its constants `SCATTER_BACK`, `SCATTER_TOTAL`
+are removed; `mixing.mix_arrivals` computes every family, reading
+`phased` from the family's arrays (`MixingArrays.phased`, `Transit.phased`),
+its weights `mixing.coherent_weights` for a family with a phase circle and
+`mixing.diagonal_weights` for one without; `Transit.cycle` calls it for
+every family. The same expectation: the shares per side agree in the mean
+exactly, the leaving phase is 0 and the units keep their number. What
+moves is the rounding and the labels: the largest-remainder placement and
+the momentum's apportionment fall once per group (one number at the Node)
+where the scatter placed once per Port, so `test_phaseless_family` (b)
+re-pinned two integers (the labels of two opposite 9s, 0 each where each
+Port's own gave -3 and 3; the edge of 2 with 9, [4, 2, 2, 1, 1, 1] where
+the 2 went whole and the 9 mirrored, [6, 1, 1, 1, 1, 1]) and the pinned
+worlds of `test_event_worlds` (a) to (c) stay within their bands. A
+number's weights are its own: no cross term survives between numbers
+either, so another number's field at the Node does not steer its labels
+(the diagonal over all numbers present would, measured at 4 to 10 times
+the pair world's push; the sides' total is the same either way). The
+kernel runs about four times faster than the per-Port scatter on 29^3.
+
 ## The field of matter without phase, the suspension as presence with a fractional width, and the push as the net flow, on 2026-09-19
 
 Three decisions of the model owner, 2026-09-19, implemented together after
@@ -22,16 +51,14 @@ evidence of a physical law.
    so the K x N / 2 bound is not checked for them), a `phase_window` is
    refused on its lamps and on a table entry for it, and its measured
    events and events in transit may declare no `phase` but 0. At a Node its
-   arrivals do not sum coherently: each Port's arrival scatters on its own
-   (`mixing.scatter_arrivals`, chosen by `Transit.cycle`; `mix_arrivals` is
-   untouched) with the shares of a lone arrival, four ninths back out
-   through the Port it came in by and one ninth to each of the other five
-   sides, whole units by the largest remainder with the ties in the tick's
-   Port order, per Port; a Port's arrival with no whole share for any side
-   goes whole to the heading nearest its own momentum (on a tie the largest
-   share, then the tick's order); its momentum is apportioned over its own
-   departures exactly per axis (`apportion_carried` per Port) and the six
-   Ports' departures and momenta are added per heading. The example worlds
+   arrivals do not sum coherently: each Port's arrival scattered on its own
+   (`mixing.scatter_arrivals`, chosen by `Transit.cycle`) with the shares of
+   a lone arrival, four ninths back out through the Port it came in by and
+   one ninth to each of the other five sides, whole units by the largest
+   remainder per Port, its momentum apportioned over its own departures,
+   the six Ports' departures added per heading; later the same day the
+   scatter was folded into the one kernel as the diagonal of the coherent
+   sum (the section above). The example worlds
    `one_content.json` and `two_contents.json` now declare `"phase": false`
    for `m`; the slit worlds' light keeps its phase. `run.json` lists
    `phase` per family.
