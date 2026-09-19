@@ -40,9 +40,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from event_universe.core.disturbance_state import MAX_VALUE, Address3
 from event_universe.core.integer import bounded_gcd, checked_work
-from event_universe.core.spatial_state import PORT_HEADINGS
+from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 SHADOW_LAW = "field-only-v1"
 LAW_VALUE = "shadow"

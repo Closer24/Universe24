@@ -70,10 +70,10 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from event_universe.core.disturbance_state import Address3
 from event_universe.core.integer import signed_divrem
-from event_universe.core.spatial_state import MIXING_AMPLITUDE_SCALE, PORT_HEADINGS
+from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.shadow.layer import HEADINGS, ShadowLayer
+from event_universe.shadow.mixing import MIXING_AMPLITUDE_SCALE
 from event_universe.shadow.world import SHADOW_LAW, ContentDefinition, ShadowWorld
 
 Record = Callable[[dict[str, object]], None]

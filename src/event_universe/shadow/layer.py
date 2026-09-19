@@ -33,17 +33,12 @@ from __future__ import annotations
 
 import numpy as np
 
-from event_universe.core.disturbance_state import Address3
-from event_universe.core.spatial_state import (
+from event_universe.core.lattice import PORT_HEADINGS, Address3
+from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
+from event_universe.shadow.mixing import (
+    LAYERS,
     MIXING_AMPLITUDE_SCALE,
     MIXING_DENOMINATOR,
-    PHASE_COSINE_SCALE,
-    PORT_HEADINGS,
-    phase_cosines,
-    phase_sines,
-)
-from event_universe.dense_field import (
-    LAYERS,
     merge_departures,
     mix_arrivals,
     place_departures,
