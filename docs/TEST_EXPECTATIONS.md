@@ -82,10 +82,8 @@ interval. Expected, written down first:
 | Case | Input | Expected |
 | --- | --- | --- |
 | (a) the default and the refusals | no key; 3; 0, -1, 2.5, "3" | 1; 3; refused naming `families[1].quantum` |
-| (b) the click | mark A gets 2 units of number 4 on +X; mark B 4; mark C (`rerelease`) 7 | A: 0 events, 0 absorbed, 2 pending, push (2, 0, 0); B: 1 click, 3 absorbed and held, 1 pending, push (4, 0, 0); C: 2 events, 6 pooled and released again in the same interval with C's number, 1 pending, push (7, 0, 0) |
-| (c) per number | mark A gets 2 of number 4 on +X and 2 of number 5 on +Y | 0 events, pending {4: 2, 5: 2}, push (2, 2, 0) |
-| (d) the books | the world of (b) after the interval | balanced; light's shadows absorbed 13, released 6 (C's re-release) and current 6; held absorbed 3, pending 4 |
-| the default | quantum 1, mark B gets 4 | 4 events, 4 absorbed and held, nothing pending |
+| (b) the click, per number, and the books | mark A gets 2 units of number 4 on +X and 2 of number 5 on +Y; mark B 4 of number 4; mark C (`rerelease`) 7 | A: 0 events, pending {4: 2, 5: 2}, push (2, 2, 0); B: 1 click, 3 absorbed and held, 1 pending, push (4, 0, 0); C: 2 events, 6 pooled and released again in the same interval with C's number, 1 pending, push (7, 0, 0); the books balanced, light's shadows absorbed 15, released 6, current 6, held absorbed 3, pending 6 |
+| (c) the default | quantum 1, mark B gets 4 | 4 events, 4 absorbed and held, nothing pending |
 
 ## Suite inventory of 2026-09-17
 
