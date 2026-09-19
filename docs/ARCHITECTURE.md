@@ -137,7 +137,7 @@ table below defines code boundaries. Architecture owns this repository policy.
 | Information | Single owner | Update rule |
 | --- | --- | --- |
 | Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; the world file selects them |
-| The world file, the interval's steps and the record | [The law of events](ENGINE.md#the-law-of-events-events-v1) | Keep the live contract in one document; the engines before it are in git |
+| The world file, the interval's steps and the record | [The law of the ray](RAY_LAW.md) and [the engine's bookkeeping](ENGINE.md) | Keep the live contract in one document; the engines before it are in git |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |

@@ -14,13 +14,11 @@ from event_universe.world_loading import load_world
 
 def _authored_world(*, ticks=0, flight=False):
     document = {
-        "law": "events",
-        "dynamics": "reversible-detector-v1",
-        "max_active_owners": 1,
+        "law": "rays",
         "model_id": "entity-consumer-fixture",
         "shape": [2, 1, 1],
         "ticks": ticks,
-        "K": 1024,
+        "K": 1,
         "N": 8,
         "release": [0, 1],
         "suspension": 0,
@@ -31,10 +29,10 @@ def _authored_world(*, ticks=0, flight=False):
     if flight:
         document["in_transit"] = [
             {
-                "position": [1, 0, 0],
+                "position": [0, 0, 0],
                 "family": "packet",
                 "number": 1,
-                "heading": [1, 0, 0],
+                "direction": [1, 0, 0],
                 "amount": 1,
                 "phase": 0,
             }
@@ -42,7 +40,7 @@ def _authored_world(*, ticks=0, flight=False):
     return document
 
 
-def _definitions(amount=1):
+def _definitions(amount=3):
     return {
         "format": "event-entities-v1",
         "entities": [
@@ -54,7 +52,7 @@ def _definitions(amount=1):
                         "family": "packet",
                         "amount": amount,
                         "fixed": True,
-                        "table": {"packet": "pass"},
+                        "table": {"packet": "measure"},
                     }
                 ],
                 "detectors": [],
@@ -140,9 +138,17 @@ def test_plain_runner_retains_original_artifact_schema(tmp_path):
 
 
 def test_resolution_artifacts_survive_a_recorded_runtime_refusal(tmp_path):
+    # A second probe `b` at x = 0 owns the ray; the probe `a` at x = 1
+    # (content 3 at K 1, N 8) measures it in interval 1 and turns 4 steps,
+    # half the circle, at its next self-creation: refused at interval 2
+    # with one completed tick.
     path, _ = _write_authoring(tmp_path / "input", ticks=2, flight=True)
+    document = json.loads(path.read_text(encoding="utf-8"))
+    document["entities"].append({"name": "b", "definition": "probe", "position": [0, 0, 0]})
+    document["in_transit"][0]["number"] = 2
+    path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
     output = tmp_path / "failed-run"
-    with pytest.raises(ValueError, match="open-edge escape"):
+    with pytest.raises(ValueError, match="half the circle"):
         run_initialization(path, output)
     record = json.loads((output / "run.json").read_bytes())
     assert record["status"] == "failed" and record["completed_ticks"] == 1
@@ -183,14 +189,14 @@ def test_workspace_prepares_frozen_portable_templates_export_and_start(tmp_path,
     assert ui.validate_source(original)["measured"] == 1
     definition_path.write_text(json.dumps(_definitions(2)), encoding="utf-8")
     refreshed = next(item["source"] for item in workspace.templates() if item["id"] == "nested/world")
-    assert load_world(original).world.measured[0].amount == 1
+    assert load_world(original).world.measured[0].amount == 3
     assert load_world(refreshed).world.measured[0].amount == 2
     definition_path.unlink()
     exported = workspace.export(original)
     export_id = Path(exported["url"]).stem
     exported_bytes = workspace.exports[export_id][0].read_bytes()
     assert exported_bytes == original.encode()
-    assert load_world(exported_bytes).world.measured[0].amount == 1
+    assert load_world(exported_bytes).world.measured[0].amount == 3
     commands = []
     process = _Process()
 
@@ -204,7 +210,7 @@ def test_workspace_prepares_frozen_portable_templates_export_and_start(tmp_path,
         job = workspace.jobs[result["id"]]
         assert job.initialization.read_bytes() == exported_bytes
         assert commands[0][commands[0].index("--init") + 1] == str(job.initialization)
-        assert load_world(job.initialization.read_bytes()).world.measured[0].amount == 1
+        assert load_world(job.initialization.read_bytes()).world.measured[0].amount == 3
         job.output.mkdir(parents=True)
         for name in ("initialization_bundle.json", "resolved_initialization.json"):
             (job.output / name).write_bytes(b"{}")
@@ -226,17 +232,17 @@ def test_metadata_copy_cannot_be_changed_during_execution(tmp_path, monkeypatch)
     loaded = load_world(path.read_bytes(), base_dir=path.parent)
     initialization_record = {"sources": [{"path": "fixed.json", "sha256": "original"}]}
     expected = copy.deepcopy(initialization_record)
-    original_simulation = run.EventSimulation
+    original_simulation = run.RaySimulation
 
     def construct(world, observer=None):
         initialization_record["sources"][0]["sha256"] = "changed"
         return original_simulation(world, observer)
 
-    monkeypatch.setattr(run, "EventSimulation", construct)
+    monkeypatch.setattr(run, "RaySimulation", construct)
     output = tmp_path / "run"
     output.mkdir()
     record = json.loads(
-        run.execute_event_run(
+        run.execute_ray_run(
             loaded.world,
             path.read_bytes(),
             output,

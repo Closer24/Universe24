@@ -2,16 +2,19 @@
 
 Universe24 implements **Reality Theory (Universe24)**: one discrete world of
 Nodes and Links, bounded integer arithmetic and local rules. Since 2026-09-19
-the model is the law of events ([Highlights](docs/HIGHLIGHTS.md) section 5.4,
-the model owner: "There is no shadow, no real. There are only events on the
-event board. There are detectors by sensitivity. That is it."): every event is
-created at every interval at its next place from its record, at a neighbour or
-here; a measured event is one created here without end, its clock the count of
-its self-creations; a single quantum goes whole in one direction, by its
-momentum; nothing is kept at a Node, no register, no remainder, no draw; what
-is seen is measured events, through detectors of a declared sensitivity. There
-is one engine, the engine of that law (`events-v1`); the engines before it are
-deleted and in git ([migration](docs/MIGRATION.md)).
+the model is the law of the ray ([Highlights](docs/HIGHLIGHTS.md) section
+5.4, the model owner, "DECIDED: the law of the ray"; the design
+[docs/RAY_LAW.md](docs/RAY_LAW.md)): the Node holds no wave; a unit is a ray
+with a record moving along the digital line of its momentum at one speed for
+every direction; rays that meet at a Node are permuted by the collision
+table; the interval is a bijection and the click its only one-way border; a
+measured event is created here without end, its clock the count of its
+self-creations, and what is seen is measured events through detectors of a
+declared sensitivity, whose record is the squared coherent sum of the rays
+they clicked; nothing is kept at a Node, no register, no remainder, no draw.
+There is one engine, the engine of that law (`rays-v1`, the one function
+`gonen_beam`); the engines before it, the law of events of the same day
+among them, are deleted and in git ([migration](docs/MIGRATION.md)).
 The name of the framework is Reality Theory; the simulator that realizes it is
 Universe24.
 
@@ -23,11 +26,12 @@ English-only repository language rule. The active implementation lives in
 `src/event_universe/`; [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
 define coordinated work and independent checks.
 
-A run is a **world file**: a JSON object with `"law": "events"`, the board's
-shape and open boundary, the clock K and the phase width N, the release rate
-and the suspension, the families (free, matter; paid, light), the measured
-events at the start with their tables and, where wanted, the detectors. The
-engine recognizes nothing by physical name. Read [the engine](docs/ENGINE.md)
+A run is a **world file**: a JSON object with `"law": "rays"`, the board's
+shape and boundary, the clock K and the phase width N, the release rate and
+the suspension, the declared directions, the families (free, matter; paid,
+light), the measured events at the start with their tables and directions
+and, where wanted, the detectors. The engine recognizes nothing by physical
+name. Read [the law of the ray](docs/RAY_LAW.md), [the engine](docs/ENGINE.md)
 and the worlds under [examples/events/](examples/events/README.md) before
 defining a run.
 
@@ -153,9 +157,9 @@ active contracts, explicit experiments and revision-specific evidence.
 | Path | Responsibility |
 | --- | --- |
 | `src/event_universe/events/world.py` | The world file: its keys, their bounds and the refusals, named |
-| `src/event_universe/events/engine.py` | The engine: the measured events, the interval's steps (the suspension, the measurements by the tables, the mixing, the self-creations off the clock, the steps), the books and the readings |
-| `src/event_universe/events/transit.py` | The arrays of one family's events in transit: arrivals and departures per Node, number and Port with the count they carry, the walk one Link per interval |
-| `src/event_universe/events/mixing.py` | The Node's computation of the sides (`node-mixing-v3`: the coherent sum over all numbers present, the vectors' shares in whole units per number, a single unit by its momentum, the momentum carried; one rule for every family, the weights the coherent |c_h|^2 or, for a family without a phase circle, its diagonal, `diagonal_weights`) |
+| `src/event_universe/events/gonen_beam.py` | The law of the ray (`rays-v1`): the record `GonenBeam`, the one reading `read_arrivals`, the flight table, the collision table, the store of records per family and the one function `gonen_beam`, a Node's whole interval (the walk, the reading, the collision, the measured event's table, the detector's record, the self-creations, the merge) |
+| `src/event_universe/events/measured.py` | The measured event's record (`Measured`) and the ledger of an interval |
+| `src/event_universe/events/engine.py` | The frame around the law: the clocks, the owed count off the clock, the steps by the momentum, the books, the readings, the inverse interval, the snapshot; it computes no physics |
 | `src/event_universe/events/run.py` | The artifacts of a run: the input, the events, the state, the record |
 | `src/event_universe/core/integer.py` | Shared bounded integer primitives |
 | `src/event_universe/core/lattice.py` | The board's addresses, the six Port headings and the cell bound |
@@ -168,10 +172,11 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/diagnostics/numeric_audit.py` | Static audit that `core/` holds integer arithmetic only |
 | `tools/run_series.py` | The worlds of a series run one process per core, each with its log and artifacts, a summary table at the end |
 | `tools/check.py` | The affected-check: changed files and their consumers; `--full` for everything |
-| `examples/events/` | The worlds of the law: one content, two contents, two slits with a detector and the one-slit control |
-| `tests/` | One module per generic rule on a minimal board (the sides, an event in transit, the suspension, the clock, the worlds, the preflight, the decoder, retention, the repository gates) |
+| `examples/events/` | The worlds of the law of the ray: one content, two contents, two slits with a detector and the one-slit control; the Bell worlds, the coupling series and the detector definitions |
+| `tests/` | One module per generic rule on a minimal board (the one reading, the flight, the collision table, the bijection, the detector's record, the re-emission, the clock, the phase window, the world file, the worlds, the preflight, the decoder, retention, the repository gates) |
 | `docs/HIGHLIGHTS.md` | The specification, edited by the model owner |
-| `docs/ENGINE.md` | The engine's contract as implemented: the world file, the interval, the suspension, the measurements, the books, the record, the preflight |
+| `docs/RAY_LAW.md` | The law of the ray: the design, the implementation contract and the implementation notes |
+| `docs/ENGINE.md` | The bookkeeping around the law as implemented: the board, the frame of an interval, the books, the world file's refusals, the record, the preflight |
 | `docs/DERIVATIONS.md`, `docs/EXPERIMENTS.md` | The derivations of the known laws, and the research runs with their records |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |

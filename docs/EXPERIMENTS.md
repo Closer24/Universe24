@@ -933,6 +933,172 @@ states "exactly" and means integer equality at every tick.
   h >= 20 and the escape of item 5, the not-frozen bound of item 6 at three
   radii, convergence (a)'s equality with the flow).
 
+### A2, under the law of the ray (2026-09-19)
+
+- **Confronts.** As A2 and as the entry above: the CHSH inequality in the
+  phase form, the settings phases, the loophole-free experiments of 2015
+  (Delft, S = 2.42 +- 0.20; the quantum maximum 2 sqrt 2). Re-registered
+  under `rays-v1` the night of 2026-09-19, when the law of the ray replaced
+  the law of events ([the law of the ray](RAY_LAW.md), section 8: "Bell A2
+  unchanged: S = 2 exactly, E(a, b) the triangle 1 - 4 k / N").
+- **Model prediction, pinned before the run (the physicist and the
+  mathematician, Highlights 5.4; RAY_LAW section 8).** Unchanged: with a
+  deterministic local phase window each click is a function of the arriving
+  phase and the local setting alone, so CHSH is at most 2 as an identity on
+  the record; E(a, b) = 1 - 4 k / N; S = 2 exactly, S' = 3/2 exactly,
+  no-signalling exact. What the ray law changes is the timing only: a ray
+  flies at 1 / sqrt 3 by the flight table, so the eight Links to a plus Node
+  take 13 walks after the ray's first walk and the ninth two more; the
+  offsets are expected at plus 14 and minus 16 (the law of events: 9 and
+  10) and the run needs 160 intervals for the 128 pairs.
+- **Features.** The one engine (`rays-v1`): a lamp of a paid family releasing
+  one ray per self-creation on +X and on -X (`lamp.directions`), detectors
+  of threshold 1 and the phase window (`tests/test_ray_window.py`); the
+  window reads each ray's own phase. Nothing else: one ray per interval per
+  direction, no collision on the bar (rays of one number on one line never
+  meet head-on), no suspension.
+- **Run.** `examples/events/bell/` (ten worlds written by `make_worlds.py`,
+  the dictionary in the [README](../examples/events/bell/README.md)): the
+  base of the entry above with `"law": "rays"`, `ticks` 160, the model ids
+  `rays-bell-a{a}-b{b}-v1`; the same ten settings; the analysis
+  `tools/bell_chsh.py` unchanged in its criteria (the `record` line admitted
+  among the record kinds; the plus offset checked below the minus).
+  `tests/test_ray_worlds.py` (b) runs the ten worlds through the tool.
+- **Result (2026-09-19, measured).** Branch `claude/universe24-new-3ytqde`,
+  the ray law's commits on the base `ce0b22af`, source fingerprint
+  `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless, about 0.2 s per run. Every
+  count as pinned: E +1/2 (96 / 32), -1/2 (32 / 96), +1/2, +1/2 at the CHSH
+  settings, S = 2 exactly; the controls +1 (128 / 0), -1 (0 / 128), 0
+  (64 / 64); E +1/4 (80 / 48), +3/4 (112 / 16), +1/2 on the non-saturating
+  quadruple, S' = 3/2 exactly; the offsets plus 14, minus 16 in every run
+  (expected 14 and 16); no-signalling exact; the books balanced at every
+  tick, nothing escaped, the lamp's momentum [0, 0, 0]; 326 criteria, 0
+  failed, exit 0. Measured = expected on every line. The model's limit,
+  outcome 1 of A2 against the 2015 data; not a law of nature. Limits as in
+  the entry above.
+
+### C, the couplings under the law of the ray, on the plane (2026-09-19)
+
+- **Confronts.** As the entry above (G, the clock at a potential, Gauss's
+  law, the equivalence principle, the third law, superposition,
+  retardation, Coulomb's law read in the same stream), re-registered under
+  `rays-v1` the night of 2026-09-19 with the expectations of
+  [the law of the ray](RAY_LAW.md), section 8: the beams do not spread, so
+  the readings of a ballistic stream replace the readings of a diffusive
+  field; the 1b merge criteria become the refusal; item 6's slowing
+  changes power (the accepted price: on the axis the presence does not
+  fall with r).
+- **Model prediction, pinned before the run (RAY_LAW section 8, the design
+  of 2026-09-19; the details by the executing agent before the rerun).**
+  The base of the entry above with `"law": "rays"` and the source releasing
+  on the six headings (`by_clock` 2^17 per heading per self-creation; the
+  two z rays home at their first walk and created again in six shares, so
+  q = 6 x 2^17 = 786432 per interval into the plane in four in-plane beams
+  of 3 x 2^16). Expected: item 1 the identity push_m = m x push_1 record by
+  record, the first read at tick 21 (1 + the flight table's first arrival
+  at 12 Links) with amount 2^17 whole, the free probes stepping from the
+  first read to the Node beside the source and every further step refused
+  (no merge), no `merged` record; item 2 the third law 1.00 exactly where
+  both streams are lone rays on the axis, here to the grain of the whole
+  apportioning of 2^15 and 2^13 over six headings (the cumulative ratio
+  1.0000 at four decimals, zero over the first window); item 3 the identity
+  (the probe off both axes reads nothing); item 4 the front at r at tick
+  1 + m^-1(r): r = 4 tick 8, 6: 11, 8: 14, 12: 21, 16: 28, 20: 35, 24: 42,
+  30: 52, 40: 69, amount 2^17 whole; item 5 count x r / q constant within
+  10 % for r >= 8, on the six headings a ring mean over mostly empty Nodes
+  0.15 to 0.19, flow x 2 pi r / q 1.00 +- 0.10, the flux through the square
+  within 2 % of q, the slopes -1.00 +- 0.10 (the flow +- 0.15); item 6 the
+  count k ~ presence, ~ 1 / r in the mean over a ring, granular (a Node
+  reads one ray or none), the replay of (age, waited, owed) exact; item 7
+  electric / gravity = -Qq / (M m) exactly. Criteria (identities, books,
+  timing) fail the tool; the far-field readings are registered inside or
+  outside the expectation and never moved.
+- **Features.** The one engine (`rays-v1`): the flight table, the six-heading
+  release, the one reading (the push by the flow, the presence over rest
+  and moving rays), the clock's count off the clock, the refused step, the
+  face detectors. No collision acts (the beams of one number on one axis
+  never meet head-on; the two sources of item 2 have different numbers and
+  never collide).
+- **Run.** `examples/events/coupling/` (twenty-one worlds written by
+  `make_worlds.py`, the dictionary in the
+  [README](../examples/events/coupling/README.md)), the model ids
+  `rays-coupling-<name>-plane-v1`; `tools/run_series.py --jobs 4`;
+  `tools/coupling_readings.py` rewritten for the ray record (the replay of
+  world 5 reading the count, the presence and the flow at every tick, the
+  flux through the square summed in the tool, the readings printed inside
+  or outside).
+- **Result (2026-09-19, measured against expected).** Branch
+  `claude/universe24-new-3ytqde`, the ray law's commits on the base
+  `ce0b22af`, source fingerprint `703f9427d9f70e6c619218e457edca0b7647381a8cc7a20d140e4a3d9dd3f671`, Python 3.14, headless;
+  every run completed with the books balanced at every tick, the measured
+  content constant, age + waited = the intervals completed; 0.5 to 3.3 s per
+  run; 392 criteria passed, 0 failed, exit 0; 19 readings inside the
+  expectation, 9 outside, registered, none moved.
+  - Item 1 (expected the identity; the first read at tick 21 with 2^17; the
+    steps to x = 61 then refused): measured the identity at all 180 records
+    and three axes for m = 4, 16; the first read (21, 131072); the steps at
+    ticks 21 to 31, x from 72 to 61, identical for the three m and equal to
+    the rule off the clock; no `merged` record. Measured = expected.
+  - Item 2 (expected 1.00 to the apportioning's grain): measured
+    P_A = (9612145197056, 0, 0), P_B = (-9612088573952, 0, 0), the ratio
+    1.0000, the sum 5.9e-6 of the push; per tick the difference at most
+    0.05 %; zero over the first window (1881199869952 each way). Measured
+    = expected.
+  - Item 3 (expected the identity): measured 0 records of either number at
+    the probe (off both axes) in `3`, `3a` and `3b`, the push (0, 0, 0):
+    the identity holds trivially. Measured = expected; the item reads
+    nothing under a law whose beams do not spread.
+  - Item 4 (expected the flight table's ticks with 2^17 whole): measured
+    (8, 131072) at r = 4 on -x, (11, 131072) at 6 on +y, (14, 131072) at 8
+    on -y, (21, 131072) at 12 on +x, and on +x in `5p` and `6` (8, 11, 14,
+    21, 28, 35, 42, 52, 69) at r = 4 to 40. Measured = expected.
+  - Item 5 (world 5, ticks 251-300; expected count x r / q constant within
+    10 %, 0.15 to 0.19 on the six headings; flow x 2 pi r / q 1.00 +- 0.10;
+    the flux within 2 %; the slopes -1.00): measured count x r / q 0.125,
+    0.150, 0.167, 0.176, 0.143, 0.179, 0.167, 0.150, 0.152 at r = 4, 6, 8,
+    12, 16, 20, 24, 30, 40 (the ripple over r >= 8 0.25, outside; r = 16
+    0.143, outside; the others inside: a ring mean of six beams is
+    r / Nodes(r) x the axial count / q, and the lattice rings at r = 16 and
+    r = 20 both hold 112 Nodes); presence x r / q twice the count at r >= 6
+    (the presence / count 2.000: two rays of the beam at a Node in the mean,
+    against 1 / c = 1.73); flow x 2 pi r / q 0.785, 0.942, 1.047, 1.109,
+    0.898, 1.122, 1.047, 0.942, 0.952 (r = 12, 16, 20 outside 0.90 to 1.10,
+    the same ring counts); the slopes count -0.944 and flow -0.944 (inside),
+    presence -0.760 (outside); the flux through the square / q 1.0000 at
+    h = 4, 8, 12, 20, 40 and the escape 1.0000 q (inside: Gauss exact for a
+    ballistic stream). World 5_long over ticks 951-1000 reads the same.
+  - Item 5P (the axis pattern): -push_x x 2 pi r / (m q) = 2 pi r / 4 at
+    every r (6.28 to 62.83), count x r / q = r / 4 (the axial count q / 4
+    per interval, constant with r), the presence 196609 at r = 4 and 393216
+    to 393217 at r >= 6; the amount read equal to the replay's count at
+    every tick at every probe.
+  - Item 6 (expected the replay exact; k ~ 1 / r in the mean over a ring,
+    granular): measured (age, waited, owed) equal to the replay at all nine
+    radii; the clock counts until the front's arrival (age(200) = 8, 11,
+    14, 21, 28, 35, 42, 52, 69 at r = 4 to 40) and is then owed 130880 to
+    130941 intervals, the beam's presence 2^17 or 2^18 read at one
+    self-creation: on the axis the slowing does not fall with r (the
+    design's accepted price, section 8 item 6); off the axis a Node reads
+    nothing. The reading "the share lost against k / (k + 1), k = q /
+    (6 r)" 0.96 to 0.66 at r = 4 to 40 is inside the expectation at every r
+    and says only that the clock counted before the front arrived.
+  - Item 7 (expected -Qq / (M m) exactly): measured like signs `pushed`
+    [0, 0, 0], unlike twice the uncharged world's (-70582384, 0, 0), the
+    content-4 probe 3 times; electric / gravity -1 and -1/4 exactly.
+    Measured = expected.
+  - Convergence: (a) flow x 2 pi r / q mean 1.0075 over r >= 5, the ripple
+    0.25 (outside 0.10); (c) |slope_count - slope_flow| 0.000 (inside),
+    |slope_presence - slope_count| 0.18 (outside 0.10); (d) exact.
+- **Verdict.** Every identity, book and timing of the ray law holds on the
+  plane exactly; the far-field readings of a six-beam source follow the
+  lattice ring's Node count and not r, so the design's ±10 % expectation for
+  the ring means is not met by six beams (the design expected 0.15 to 0.19
+  on the six headings and 0.31 to 0.33 on a fan); the clock on a beam's axis
+  is owed the beam's presence and does not slow as 1 / r. Whether the series
+  should be rerun with a source releasing on a fan of directions is the
+  model owner's decision (PROJECT_STATUS, "What is open"); nothing was
+  tuned.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

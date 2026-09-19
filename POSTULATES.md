@@ -30,13 +30,14 @@ is definite; a common visible result is formed by local physical interactions.
 Information preservation is a separate requirement from determinism. The owner's
 hypothesis is that cell sensitivity together with on-board information retention
 can produce Heisenberg uncertainty; this remains a research target.
-The opt-in `reversible-detector-v1` candidate supplies a controlled reversible
-contact, local recoil and finite phase-pointer encoding, with explicit domain
-refusals. It does not replace the default one-way `events-v1` measurement,
-insert a quantum bound, or claim that every existing world is reversible.
-The exact assumed law and open limits are in
-[the detector contract](docs/DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1),
-following [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
+Under the law of the ray (`rays-v1`, 2026-09-19) the interval is a bijection
+on a board without a measured event and the click is the one one-way border;
+the detector's record is the squared coherent sum of the rays it clicked,
+read on the board. This inserts no quantum bound and does not claim that a
+world with clicks is reversible. The law and its open limits are in
+[the law of the ray](docs/RAY_LAW.md) and
+[the detector requirements](docs/DETECTOR_REQUIREMENTS.md), following
+[Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector).
 
 ## Events board topology (2026-09-19)
 

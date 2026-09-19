@@ -2,96 +2,70 @@
 
 ## Where the project stands on 2026-09-19 (read this first)
 
-**One engine; explicit candidate selection.** The default-engine description
-below is a snapshot of `main` at `bfb463be6313ae226aa0a192d11036ead63dd0f1`.
-Read current Git and the linked Issue/PR before treating it as live status.
+**One engine: the law of the ray.** This description is a snapshot of the
+branch `claude/universe24-new-3ytqde` at the commits that implemented
+[the law of the ray](RAY_LAW.md) on the base `ce0b22af`. Read current Git and
+the linked Issue/PR before treating it as live status.
 
-**Physical detector work (2026-09-19, issue 342).** The
-[published detector contract](DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1)
-defines the opt-in `reversible-detector-v1` candidate: ordinary measured Events
-route intact carriers and create a shared output by a reversible local phase
-coupling and recoil. Coverage, grouping and threshold are separate data; a
-group of 100 Nodes need not require 100 quanta. Complete state is definite and
-accepted no-escape transitions preserve information on the scoped domain.
-Default `events-v1` absorption remains one-way; its general mixing rules are
-not claimed reversible. The owner's proposal that sensitivity and information
-retention produce Heisenberg remains an unproved research hypothesis. Absorption
-into a composite body, physical reset, energy accounting and coarse cells with
-many microscopic Nodes are separate research work, not hidden additions to this
-candidate. Implementation, checks and merge state are tracked in
-[issue 342](https://github.com/Closer24/Universe24/issues/342), not inferred from
-this design description.
+1. **The law of the ray** (Highlights 5.4, "DECIDED: the law of the ray",
+   the model owner, 2026-09-19; the design published in
+   [RAY_LAW.md](RAY_LAW.md) before the engine changed): the Node holds no
+   wave; a unit is a ray with a record (`GonenBeam`: Node, direction, age,
+   phase, number, amount, content) moving along the digital line of its
+   momentum at one speed for every direction, 1 / sqrt 3 (the flight
+   table); rays that meet at a Node are permuted by the eight-slot collision
+   table, a bijection inside its invariant classes; the interval is a
+   bijection and the click its only one-way border; the interference is the
+   squared coherent record a detector reads of the rays it clicked; the
+   ray's law is one generic function, `gonen_beam`, and every piece of
+   logic exists once (one reading of the Node, `read_arrivals`, its
+   components selected by the coupling's declared key). Its engine is the
+   one engine, `src/event_universe/events/` (`rays-v1`) on the substrate of
+   `core/`, a world selected by `"law": "rays"`, with the ten `tests/test_ray_*.py`
+   modules and the worlds under `examples/events/`
+   ([the engine's bookkeeping](ENGINE.md), [coverage](HIGHLIGHTS_IMPLEMENTATION.md),
+   [expectations](TEST_EXPECTATIONS.md)).
+2. **The engines before it are deleted, on 2026-09-19:** the law of the bit
+   in the morning, the law of the shadow (`field-only-v1`) in the evening,
+   and the law of events (`events-v1`, with the coherent sum at the Node,
+   the sides, the scatter, the suspension of a bundle and the
+   `reversible-detector-v1` candidate) in the night; see the
+   [migration notes](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1).
+   Every rule the ray law keeps (the clock, the tables, the phase window,
+   the release priced by the turn, the face detectors, the refused step,
+   the one reading set, the count off the clock) is re-pinned in the new
+   modules. Any state before a deletion can be checked out from git.
 
-**Later main and integration scope (2026-09-19).** Main `e7717d7` corrected
-measured self-creation/suspension ordering; main `ddb4470` added per-axis periodic
-transit, including an extent-one return on the next interval. The detector
-integration follows the [native topology contract](ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment)
-for candidate and material movement. [Separate entity definitions](ENTITY_DEFINITIONS.md)
-own reusable apparatus data, deterministic placement, portable dependency bundles
-and input provenance. Their workflow is linked from field development and
-architecture review. Track the actual implementation and merge in
-[PR 344](https://github.com/Closer24/Universe24/pull/344); this entry does not
-claim unmerged integration is already on main. Periodic thin boards do not
-establish full-3D equivalence, and unsupported flux caches cannot stand in for a
-physical detector or executed-transfer measurement.
-
-1. **The law of events** (Highlights 5.4, the paragraphs "The law of events"
-   and "The principles of the law of events", the model owner's words of
-   2026-09-19; the whole document annotated to it the same day, a reading note
-   at its head): "There is no shadow, no real. There are only events on the
-   event board. There are detectors by sensitivity. That is it. Everything must
-   be generic in the engine, without registers. There are no draws. There are
-   only opening events that spread by the physics of the engine." One thing,
-   the event, with its record (amount, phase, number, momentum from birth,
-   heading, its counts); at every interval every event is created at its next
-   place, one of seven, a neighbour or here; a measured event is created here
-   without end and its clock is the count of its self-creations ("every clock
-   tick there is self-creation, that is, no transfer to the next Port"); a
-   single quantum goes whole in one direction, by its momentum ("By the
-   momentum"), and does not turn ("Correct, an event does not turn"); the
-   suspension is a count the event carries ("The event carries it; note that
-   the next event is delayed"); no return to the source; a detector states its
-   sensitivity, "and that is exactly the uncertainty principle". Its engine is
-   the one engine, `src/event_universe/events/` (`events-v1`) on the substrate
-   of `core/`, a world selected by `"law": "events"`, with the tests
-   `test_node_mixing`, `test_node_mixing_numbers`, `test_event_transit`,
-   `test_event_suspension`,
-   `test_event_clock` and `test_event_worlds` and the worlds under
-   `examples/events/` ([the engine](ENGINE.md), [coverage](HIGHLIGHTS_IMPLEMENTATION.md)).
-2. **The engines before it are deleted, on 2026-09-19:** the old engine of the
-   law of the bit in the morning ("No confrontations are needed. Only tests that
-   everything is as designed.") and the engine of the law of the shadow
-   (`field-only-v1`, 2026-09-18 to 2026-09-19) in the evening, with what it
-   kept that the law of events removes: the parked ninths, the wait as a hold,
-   the remainders, the register of `quantum`, the phase turn in flight; see the
-   [migration notes](MIGRATION.md). The law of the bit and the law of the
-   shadow stay recorded in Highlights 5.4 with the dated sentences saying how
-   each rule reads under the law of events. Any state before a deletion can be
-   checked out from git.
-
-**What the engine gave on its first worlds** (`test_event_worlds`, pinned from
-the first readings): the content of a measured event at rest constant at every
-tick, Gauss's flux through every closed surface equal to the emission within
-1 %, the escape 0.989 of the emission (nothing stands), the count falling as
-r^-2.03 and the size as r^-0.95, the third law within 5 %, the product law within
-6 %, two openings giving a minimum and a maximum on the detector with the
-one-opening control monotone.
+**What the engine gave on its first worlds** (`test_ray_worlds`, and the
+re-registered runs in [EXPERIMENTS.md](EXPERIMENTS.md)): the content of a
+measured event at rest constant at every tick; six ballistic beams with
+Gauss's flux through every cube equal to the emission exactly once the front
+has passed; the two slits fringing in the record at lambda = period / sqrt 3
+(the correlation with the two-source cosine 0.893) and not in the count;
+Bell S = 2 and S' = 3/2 exactly with no-signalling exact; the equivalence and
+the superposition identities exact, the third law to the grain of the whole
+apportioning (5.9e-6), the front at the flight table's tick with the whole
+amount; the far-field ring means following the lattice ring's Node count
+(registered outside the design's ±10 % expectation) and the clock on a
+beam's axis frozen after the front (the design's accepted price). The
+performance: 0.23 to 1.0 us per Node per interval on the registered worlds
+(the design's budget 3.6 us).
 
 **What is open, by whose hand:**
 
 - The model owner's: a decay as a table on a measured event; the mass ladder
-  under this law; the value of ρ and of the suspension's width. Decided the
-  same day: a detector's threshold gates every response of its Nodes,
-  receivers and re-emitters alike (`test_detector_sensitivity`); `phase_window`
-  approved as a declared width of a detector and of a lamp, the setting of the
-  Bell run (Highlights 5.4), its feature with its isolated test and the run of
-  A2 on a small board pending, the run designed by the physicist and the
-  mathematician.
+  under this law; the value of ρ and of the suspension's width; polarization
+  as worlds and tables; whether the six-heading source of the coupling
+  series should release on a fan of directions (the design's section 8
+  expects the ring means of a fan, 0.31 to 0.33, and the six beams give the
+  lattice ring's count).
 - Derived and not solved: no inertia for a co-moving pair at first order in v
-  (DERIVATIONS.md section 54); Bell at most 2; a single quantum does not
-  interfere with itself, interference being of many of one number.
-- Research runs to make on the engine when wanted, each with a page, registered
-  in [EXPERIMENTS.md](EXPERIMENTS.md) and not a condition of anything.
+  (DERIVATIONS.md section 54); Bell at most 2; a single ray does not
+  interfere with itself, interference being the record of many of one
+  number.
+- Research runs to make on the engine when wanted, each with a page,
+  registered in [EXPERIMENTS.md](EXPERIMENTS.md) and not a condition of
+  anything.
 
 **How the work is done** ([AGENTS.md](../AGENTS.md)): every model decision is
 recorded in Highlights the same day in the owner's words, elaborations flagged;
@@ -99,9 +73,9 @@ one feature per branch and PR with one isolated test module; `PYTHONPATH=src
 python tools/check.py --base origin/main` locally and the affected-check selector
 in CI under current CONTRIBUTING.md; merge
 commits, never a rebase; experiments registered in EXPERIMENTS.md with their
-digests; hypotheses numbered in HYPOTHESES.md; the engine documented in
-ENGINE.md and its coverage in HIGHLIGHTS_IMPLEMENTATION.md; every deletion in
-MIGRATION.md.
+digests; hypotheses numbered in HYPOTHESES.md; the law documented in
+RAY_LAW.md, its bookkeeping in ENGINE.md and its coverage in
+HIGHLIGHTS_IMPLEMENTATION.md; every deletion in MIGRATION.md.
 
 **Everything is in git.** The history is merge commits only; `git log
 --first-parent main` reads the days by PRs. Any earlier state can be checked
@@ -111,12 +85,13 @@ out, the engines before this one among them.
 
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
-| The world file and its refusals | `src/event_universe/events/world.py` | [ENGINE.md](ENGINE.md), "The world" |
-| The interval, the measured events, the books | `src/event_universe/events/engine.py` | [ENGINE.md](ENGINE.md), "The interval", "The push", "The books" |
-| The events in transit and the sides | `src/event_universe/events/transit.py`, `mixing.py` | [ENGINE.md](ENGINE.md); [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
+| The world file and its refusals | `src/event_universe/events/world.py` | [RAY_LAW.md](RAY_LAW.md), section 2; [ENGINE.md](ENGINE.md), "The world" |
+| The law: the record, the reading, the tables, the store, the interval | `src/event_universe/events/gonen_beam.py` | [RAY_LAW.md](RAY_LAW.md), sections 3 to 5; [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) |
+| The frame: the clocks, the steps, the books, the readings, the inverse | `src/event_universe/events/engine.py`, `measured.py` | [ENGINE.md](ENGINE.md), "The frame", "The books" |
 | The record of a run | `src/event_universe/events/run.py`, `snapshot_writer.py`, `runner.py` | [ENGINE.md](ENGINE.md), "The record" |
-| The substrate | `src/event_universe/core/` | Bounded integers, the board's addresses and headings, the phase tables; the integer audit |
+| The substrate | `src/event_universe/core/` | Bounded integers (`by_clock`, `apportion_whole`, `integer_root`), the board's addresses and headings, the phase tables; the integer audit |
 | The preflight and the workspace | `configuration_validation.py`, `ui.py` | [ENGINE.md](ENGINE.md), "Preflight"; [WORKSPACE.md](WORKSPACE.md) |
+| The entity definitions | `world_loading.py` | [ENTITY_DEFINITIONS.md](ENTITY_DEFINITIONS.md) |
 | Generated output | `retention.py` | [RETENTION.md](RETENTION.md) |
 | The check | `tools/check.py` | [CONTRIBUTING.md](../CONTRIBUTING.md) |
 
