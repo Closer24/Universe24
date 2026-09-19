@@ -54,11 +54,11 @@ measured event of it that steps:
     measured event left, the books balanced; and a bar of 3 x 1 x 1 with
     {"z": "periodic"}, extent 1 on the periodic axis: a measured event of
     `m`, content 16, momentum (0, 0, 16), at (1, 0, 0) stays at (1, 0, 0)
-    through six intervals, neither merged nor escaped (it is still the one
-    measured event, escaped 0), its momentum (0, 0, 16) untouched and its
-    `steps` 3: `steps` counts every step made off the clock, wherever it
-    lands (a move, a merge, an escape or, with an extent of 1, its own Node,
-    which is no move and no merge).
+    through six intervals, never escaped (it is still the one measured
+    event, escaped 0), its momentum (0, 0, 16) untouched and its `steps` 3:
+    `steps` counts every step made off the clock, wherever it lands (a move,
+    a refused step onto a measured event, an escape or, with an extent of 1,
+    its own Node, which is no move).
 """
 
 from __future__ import annotations
@@ -257,7 +257,7 @@ def test_a_measured_events_step_wraps_on_a_periodic_axis_and_escapes_through_an_
     assert line["escaped"] == 16 and line["current"] == 0
     assert books["momentum"] == {"measured": [0, 0, 0], "transit": [0, 0, 0], "escaped": [0, 0, 16]}
     # An extent of 1 on the periodic axis: the step lands on its own Node,
-    # no move and no merge with itself; `steps` counts it as a step made.
+    # no move; `steps` counts it as a step made.
     simulation = EventSimulation(parse_event_world(moving_bar([3, 1, 1], {"z": "periodic"}, [1, 0, 0])))
     for tick in range(1, 7):
         simulation.step()

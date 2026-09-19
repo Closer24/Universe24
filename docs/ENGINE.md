@@ -25,6 +25,7 @@ tests: `tests/test_node_mixing.py`, `tests/test_node_mixing_numbers.py`,
 `tests/test_periodic_axis.py`, `tests/test_phaseless_family.py`,
 `tests/test_release_costs_by_phase_rate.py`, `tests/test_event_worlds.py`,
 `tests/test_integer_bounds_of_measured_and_emission.py`,
+`tests/test_border_and_clock_corrections.py`,
 `tests/test_one_reading_set.py`
 ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
@@ -130,12 +131,14 @@ transport, so phase preservation of the transfer alone does not assert unchanged
 phase after a later default interaction.
 
 Default measured movement uses the same neighbor provider. Existing timing,
-self-creation/suspension order, open escape and collision/merge policy are kept.
-A self-loop movement retains its one original Event and inventory, counts one
-completed step and preserves momentum; it never merges the Event with itself,
-deletes it, or doubles its content. It emits no coordinate-movement record when
-the destination is its origin. A wrapped target occupied by a different
-Event follows the existing merge law. This does not make that law reversible.
+self-creation/suspension order and open escape are kept. A self-loop movement
+retains its one original Event and inventory, counts one completed step and
+preserves momentum; it never deletes the Event or doubles its content. It
+emits no coordinate-movement record when the destination is its origin. A
+wrapped target occupied by a different Event refuses the step (the model
+owner, 2026-09-19, no merge: both Events remain, the stepping one where it
+was with its momentum, the step counted; until that day the two merged into
+the resident, [migration](MIGRATION.md#no-merge-a-step-onto-a-measured-event-is-refused-on-2026-09-19)).
 
 The candidate uses the same provider while building immutable local proposals.
 A periodic transfer is admitted subject to its existing slot, integer and output
@@ -184,6 +187,7 @@ Independent expectations, fixed before implementation:
 | +Y from `(1,1,0)` on the same mixed graph | Default transport books the existing escape; candidate refuses atomically |
 | One candidate output, identity route, `N=8`, `K=1024`, content 1, initial displacement 0, `q=1`, capacity 2, periodic Z | Accepted ticks 1 and 2 read 1 and 2; tick 3 refuses with complete state and tick unchanged |
 | Default movable material at an extent-one periodic axis, otherwise valid one-step state | One retained Event with unchanged inventory and momentum; one completed move |
+| Default movable material whose wrapped target holds a different Event (since 2026-09-19) | Both Events retained with their inventories and momenta, the mover where it was; one counted step, no record |
 | `cube_flux` on a periodic world or on any candidate world | `ValueError`, never an apparent zero from an unpopulated cache |
 | All-open input omitted, string, or explicit/empty axis object | Same periodic flags; raw declared boundary retained in artifacts, normalized all-open dictionary in preflight |
 
@@ -220,7 +224,18 @@ state.
 
 **The board.** Open on every face by default (`boundary` `"open"`: the
 edge is infinity, what leaves is booked as escaped with the momentum it
-carried; a closed board is refused). The declared exception (the model owner,
+carried; a closed board is refused). An open face is a detector (the model
+owner, 2026-09-19, one of the three reversible corrections that every path
+shares): every event that leaves the board through it, a bundle in transit
+in the walk (step 1) or a measured event's step (step 6), is a click on
+that face, recorded like a detector's click under the face detector named
+by the face (`face:+x`, `face:-x`, `face:+y`, `face:-y`, `face:+z`,
+`face:-z`; the detectors' record below), so the
+escape is a measurement at the border and not a loss; what happens
+physically is unchanged (the amount, the momentum and the content leave
+the board as before) and the books' escaped lines are the sums of the face
+clicks ([migration](MIGRATION.md#an-open-face-is-a-detector-on-2026-09-19)).
+The declared exception (the model owner,
 2026-09-19), a run parameter of the world file, each experiment deciding what
 to run: an axis may be declared periodic (`boundary` an object with any of
 `x`, `y`, `z` set to `"open"` or `"periodic"`, the missing axes open, for
@@ -240,9 +255,9 @@ two-dimensional transmission-line-matrix (TLM) node with a stub does. One
 rule for the board (the model owner, 2026-09-19): a measured event's step by
 its momentum (step 6, `_move`) wraps on a periodic axis as the departures do,
 from the last Node along +axis to the first and from the first along -axis
-to the last, and with an extent of 1 it lands on its own Node, no move and
-no merge with itself; through an open face it escapes with its content and
-its momentum as before. Open stays the default and the meaning of "the edge
+to the last, and with an extent of 1 it lands on its own Node, no move;
+through an open face it escapes with its content and its momentum as
+before, a click on that face. Open stays the default and the meaning of "the edge
 is infinity"; `"closed"` and every other word are refused. Per family the
 arrays of `Transit` with the axes (x, y, z, number, Port): the arrivals of the
 interval (`arr_*`: amount, phase, momentum), the departures (`fly_*`), and per
@@ -258,7 +273,11 @@ candidates (`transit.nearest_step`, `step_window`).
 1. Every departure is created one Link on (`Transit.walk`), its record
    unchanged: an event in transit does not turn, a transfer is not a tick of
    its clock, so light's frequency is its emitter's clock stamped on the stream
-   and constant in flight. The escapes through the open faces are booked; on
+   and constant in flight. The escapes through the open faces are booked and
+   each is a click on the face detector of that face (one record per edge
+   Node, family and number that left: the tick, the Node, the number, the
+   amount, the phase, the momentum and the content; `Transit.face_observer`,
+   `EventSimulation._face_click`); on
    a periodic axis the departures wrap. Arrivals into a slot that
    holds events waiting there are one amplitude per Port (the amounts added,
    the phase of the coherent sum, the momenta added, the contents added).
@@ -432,18 +451,28 @@ candidates (`transit.nearest_step`, `step_window`).
    turning and comes round to it again; a measured event of a family
    without a phase circle (`"phase": false`) never turns, its phase 0, and
    K does not apply to its content. After
-   its self-creation it reads the presence at its Node of every number but
+   its self-creation it reads the presence k at its Node of every number but
    its own, this interval's (step 2; its own content, here, is its own
    number and is not read, the units waiting at its Node are), and owes
-   `presence x n // d`
-   intervals at the world's `suspension` `[n, d]` (`_suspend`,
-   `Measured.owed`, written once per self-creation, never accumulated),
-   paid one per interval before its next self-creation. So a measured
-   event in a steady presence whose count reads k is created again once
-   every k + 1 intervals: its clock is slowed by 1 / (k + 1), the redshift
-   (Highlights 5.4: "a measured event that reads a large size releases and
-   turns slower"), and never stopped; with `suspension` 0 it is created
-   again every interval. The read follows the self-creation and never
+   the count read off its
+   clock like every other rate, `by_clock(age, k x n, d)` at the world's
+   `suspension` `[n, d]`: what the whole part of age x k n / d gained by
+   this self-creation, with the age before it (`_suspend`,
+   `Measured.owed`, written once per self-creation, never accumulated; no
+   remainder is kept anywhere, the age is the remainder's owner as for the
+   release, the turn and the step; the model owner, 2026-09-19, the clock's
+   count read off the clock), paid one per interval before its next
+   self-creation. So a measured event in a steady presence k is created
+   again on average once every 1 + k n / d intervals: its clock is slowed
+   by the mean k n / d, the redshift (Highlights 5.4: "a measured event
+   that reads a large size releases and turns slower"), and never stopped;
+   a presence of 1 at `[1, 4]` slows it by 1 / 4 (four self-creations in
+   five intervals), a presence of 8 owes 2 at every self-creation as
+   before; with `suspension` 0 it is created again every interval. Until
+   2026-09-19 the count was `k x n // d` written whole, so the smallest
+   slowing was 1 / 2 and a presence below d / n gave none
+   ([migration](MIGRATION.md#the-clocks-count-read-off-the-clock-on-2026-09-19)).
+   The read follows the self-creation and never
    precedes it: the first `events-v1` read before it, and in a steady size
    of one whole unit or more the count was owed again every time it was
    spent, so the clock stood still ([migration](MIGRATION.md#the-suspension-of-a-measured-event-read-after-its-self-creation-on-2026-09-19),
@@ -456,16 +485,23 @@ candidates (`transit.nearest_step`, `step_window`).
    On an axis
    with momentum p and content M, one Link per (M + p) / p self-creations, at
    most one step per interval, x before y before z, the momentum untouched;
-   a step onto a measured event merges the two into the resident (amounts,
-   what came home, momentum and charge added, the resident's number, phase and
-   table kept), a step off the board through an open face escapes with its
-   content and its momentum, and on a periodic axis the step wraps as the
-   departures do (the last Node's step along +axis lands on the first, the
-   first's along -axis on the last; with an extent of 1 on that axis it
-   lands on its own Node, no move and no merge with itself, the event staying
-   with its momentum untouched); `steps` counts every step made off the
-   clock, wherever it lands (a move, a merge, an escape or its own Node);
-   `fixed` never steps.
+   a step onto a Node that holds a measured event is refused (the model
+   owner, 2026-09-19, no merge, one of the three reversible corrections
+   that every path shares: the stepping event stays where it is, its
+   momentum untouched, the resident untouched, no record written; until
+   that day the two merged into the resident, amounts, what came home,
+   momentum and charge added, and a `merged` record was written,
+   [migration](MIGRATION.md#no-merge-a-step-onto-a-measured-event-is-refused-on-2026-09-19)),
+   a step off the board through an open face escapes with its content and
+   its momentum, a click on that face (the record carries the measured
+   event's number as `measured`, its content as the amount and the content,
+   its phase, its momentum and its `held`, `home` and `home_content`, what
+   left with it), and on a periodic axis the step wraps as the departures do
+   (the last Node's step along +axis lands on the first, the first's along
+   -axis on the last; with an extent of 1 on that axis it lands on its own
+   Node, no move, the event staying with its momentum untouched); `steps`
+   counts every step made off the clock, wherever it lands (a move, a
+   refused step, an escape or its own Node); `fixed` never steps.
 
 **The push** (Highlights 5.4, the law of events, the third law corrected the
 same day; the model owner, 2026-09-19, the push of a free family reads the
@@ -521,11 +557,18 @@ transit line the momentum labels from birth, apportioned exactly with the
 units at every Node, so a free family's labels in flight sum to what its
 releases carried and what escaped carries them off; the two lines are not
 each other's negatives. At the fixed point of a content at rest,
-released - absorbed = escaped = the emission. The measured line is bounded
+released - absorbed = escaped = the emission. Every escaped line is the sum
+over the open faces of the face detectors' clicks (since 2026-09-19, an open
+face is a detector; `face_detectors`): the transit line's `escaped` the
+units that clicked on the faces, the content line's the content they
+carried, the measured line's the `measured_content` of the measured events
+that stepped off, and the momentum escaped the faces' `momentum`; the
+numbers are what they were, the escape is a measurement and not a loss.
+The measured line is bounded
 as the transit line is (`engine.bounded`, since 2026-09-19): a measured
-event's momentum after a push, a recoil or a merge, the push taken and its
+event's momentum after a push or a recoil, the push taken and its
 terms (the gravity reading -M c, the electric scale and reading), its
-content after a click or a merge, and what waits to be created again with
+content after a click, and what waits to be created again with
 its content are checked against 2^62 - 1 (`transit.MOMENTUM_BOUND`, the
 bound of a declared and of a carried momentum) before they are assigned,
 and a value beyond it refuses the run with `OverflowError` naming the
@@ -607,22 +650,34 @@ detector, age, count and what waits to be created again with its content
 (`home`, `home_content`), intervals suspended, phase steps, steps, what
 each met per family by rule, the clicks, the push taken), the detectors'
 measurements (`detectors`: name, Nodes, threshold, per family the amount
-measured and the clicks) and the escapes; `events.jsonl` (the detectors'
-measurement of the board, step 3) one record per event (`home`, `read`,
-`click`, `rerelease`, `step`, `merged`, `escaped`) with the tick, the Node,
-the measured event, its detector, the family, the number, the amount and
-the push, the four measurements with the `phase` read at the Node
-(`Transit.phase_at`: the set's, every number but the measured event's own,
-on `read`, `click` and `rerelease`, its own number's on `home`) and the
-`content` the bundle carried (a click's
-content is the energy the detector measured, `quantum` x s per unit), and
+measured and the clicks; then, since 2026-09-19, the face detectors, one
+per open face in Port order, `face:+x` ... `face:-z`, each with the Nodes
+of the face, threshold 1, per family the units that clicked there in
+transit (`measured`, `clicks`), the `content` they carried and the
+`measured_content` of the measured events that stepped off through it, and
+the `momentum` that left through it) and the escapes; `events.jsonl` (the
+detectors' measurement of the board, step 3, and the faces', steps 1 and
+6) one record per event (`home`, `read`, `click`, `rerelease`, `step`)
+with the tick, the Node, the measured event, its detector, the family, the
+number, the amount and the push, the four measurements with the `phase`
+read at the Node (`Transit.phase_at`: the set's, every number but the
+measured event's own, on `read`, `click` and `rerelease`, its own number's
+on `home`) and the `content` the bundle carried
+(a click's content is the energy the detector measured, `quantum` x s per
+unit), a `click` on a face detector (`detector` the face's name, `measured`
+None for a bundle in transit or the number of the measured event that
+stepped off, the Node it left from, the family, the number, the amount, the
+`phase`, the `momentum` and the `content` that left; for a measured event
+also its `held`, `home` and `home_content`; no push), and
 a `pass` record for a bundle outside a window (the tick, the Node, the
 measured event, its detector, the family, the number, the amount, the
-`phase` read and the `window`); `state.json`, through
+`phase` read and the `window`); until 2026-09-19 a measured event's escape
+wrote an `escaped` record and a step onto a measured event a `merged`
+record, and an escape in transit wrote nothing; `state.json`, through
 `snapshot_writer.write_snapshot`, the `boundary` as declared, the measured
-events, the detectors and every Node with events in transit (arrivals with
-their count, departures, per number and heading, with phases, momenta and
-the content carried).
+events, the detectors (with the face detectors) and every Node with events
+in transit (arrivals with their count, departures, per number and heading,
+with phases, momenta and the content carried).
 `tools/run_series.py` runs these worlds as any. The readings the tests make
 are the engine's (`shell_readings`: the shell mean of the count, the radial
 flow and the size; `cube_flux`: Gauss's flux through a closed surface),
@@ -649,6 +704,20 @@ place; a detector over a region measures many, and its statement, "an event
 in this region", is read off the record (the run's measurements per detector
 and per Node with their intervals, numbers, amounts, pushes and phases). What
 reached no Node of it is unknowable.
+
+The open faces of the board are detectors too (the model owner, 2026-09-19,
+one of the three reversible corrections that every path shares): each open
+face is the face detector named by it (`face:+x`, `face:-x`, `face:+y`,
+`face:-y`, `face:+z`, `face:-z`), its Nodes the Nodes of the face and its
+threshold 1, and every event that leaves the board through it, a bundle in
+transit in the walk or a measured event's step, is a click on it, one
+record per interval, edge Node, family and number with the tick, the Node,
+the number, the amount, the phase, the momentum and the content that left
+(`_face_click`, `_record_face_click`); the run's detector record lists the
+face detectors after the declared ones (`face_detectors`), and the books'
+escaped lines are their sums. A periodic axis has no faces and no face
+detectors. The escape is a measurement at the border, not a loss; nothing
+physical changes at the face (`tests/test_border_and_clock_corrections.py`).
 
 The phase window is the second part of the sensitivity, with the threshold
 (Highlights 5.4, the model owner, 2026-09-19: "Approve the phase window as a

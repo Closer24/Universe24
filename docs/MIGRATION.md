@@ -6,6 +6,104 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## No merge: a step onto a measured event is refused, on 2026-09-19
+
+The model owner's decision of 2026-09-19 (Highlights 5.4, "three reversible
+corrections that every path shares"; the architect's D3): a measured event's
+step by its momentum (`_move`, step 6) onto a Node that already holds a
+measured event is refused. The stepping event stays where it is, its
+momentum untouched, the resident untouched, and `steps` counts the step made
+(as for a wrapped step onto its own Node); no record is written. Until then
+the two merged into the resident (amounts, what came home, momentum and
+charge added) and a `merged` record was written; the architect's finding F1
+(the absorbed number's units in flight pushing their former body)
+disappears with the merge.
+
+- **A world where two bodies met and merged now keeps both**, each with its
+  own content, momentum and number. The coupling worlds `1b_m1`, `1b_m4`,
+  `1b_m16` (`examples/events/coupling/`) run to a probe that reaches the
+  Node next to the source and stays there, its steps onto the source
+  refused; their `merged` record and the source's content 2^24 + m are gone
+  from a rerun, so the 1b criteria of `tools/coupling_readings.py` that read
+  a merge fail on the new engine. The registered result of the series
+  (fingerprint `06a050c9...`, 2026-09-19) keeps its own scope and is not
+  relabelled. `test_event_worlds` asserts no merge; no pin there moves.
+- **The record.** `events.jsonl` has no `merged` record; `engine.bounded`
+  no longer guards a merge (nothing is added to a resident).
+- **Tests.** `tests/test_border_and_clock_corrections.py` (a) (new);
+  `tests/test_event_boundaries.py`, the wrapped target held by a different
+  Event: the refusal (both remain, the mover at (2, 1, 0) with momentum
+  (1, 0, 0), one step) where it read the merge (one Event of content 2 at
+  (0, 1, 0)) ([expectations](TEST_EXPECTATIONS.md#the-border-and-the-clocks-count)).
+
+## An open face is a detector, on 2026-09-19
+
+The model owner's decision of 2026-09-19 (the second of the three
+reversible corrections): an event that leaves the board through an open
+face, a bundle in transit in the walk (step 1) or a measured event's step
+(step 6), is a click on that face, recorded like a detector's click under
+the face detector named by the face (`face:+x`, `face:-x`, `face:+y`,
+`face:-y`, `face:+z`, `face:-z`). Nothing physical changes: the amount, the
+momentum and the content leave the board as before and the books'
+escaped lines read the same numbers; the escape is a measurement at the
+border, not a loss. No world key changes.
+
+- **The record.** `events.jsonl` gains `click` records with `detector`
+  `"face:..."`: for a bundle in transit `measured` None, the edge Node it
+  left from, the family, the number, the amount, the `phase`, the
+  `momentum` and the `content` (one record per interval, edge Node, family
+  and number; no `push`); for a measured event that stepped off, `measured`
+  its number, the amount and the content its content, its phase and
+  momentum, and its `held`, `home` and `home_content`. The `escaped` record
+  of a measured event is replaced by that click (a consumer reading
+  `"event": "escaped"` reads `"event": "click"` with a `"face:"` detector).
+  `run.json`'s and `state.json`'s `detectors` list the face detectors after
+  the declared ones, one per open face in Port order (`name`, `nodes` the
+  Nodes of the face, `threshold` 1, per family `measured` and `clicks` the
+  units that clicked there in transit, `content` what they carried,
+  `measured_content` the content of the measured events that stepped off,
+  and `momentum`); a consumer that expected `detectors` to hold only the
+  declared detectors filters by name. `run.json`'s `escaped` list and every
+  books key are unchanged.
+- **The API.** `Transit(..., face_observer=...)` (keyword-only, None by
+  default) reports each escape; `EventSimulation.face_detectors()` and the
+  counters `face_units`, `face_content`, `face_measured_content`,
+  `face_momentum`, `open_faces`.
+- **Tests.** `tests/test_border_and_clock_corrections.py` (b) (new);
+  `tests/test_phase_window.py` (a): six records where there were four, the
+  two passers' escapes clicking on `face:+x` at ticks 4 and 5. The Bell
+  worlds (nothing escaped) are unchanged.
+
+## The clock's count read off the clock, on 2026-09-19
+
+The model owner's decision of 2026-09-19 (the third of the three reversible
+corrections; the architect's D2): the count a measured event owes after its
+self-creation is read off its clock like every other rate,
+`by_clock(age, k x n, d)` with k the presence read and `[n, d]` the world's
+`suspension` (what the whole part of age x k n / d gained by this
+self-creation; `_suspend`, `Measured.owed`, written once per self-creation,
+never accumulated, no remainder kept: the age owns it, as for the release,
+the turn and the step). Until then the count was `k x n // d` written
+whole, so the smallest slowing was 1 / 2 and a presence below d / n gave no
+slowing at all. Now a measured event in a steady presence k is created
+again on average every 1 + k n / d intervals: a presence of 1 at [1, 4]
+slows its clock by 1 / 4 (four self-creations in five intervals) where it
+was not slowed. Where k n / d is a whole number, and at the first
+self-creation (age 0), the count is what it was. No world key and no record
+key changes. The events in transit keep their count `presence x n // d`
+(`Transit.suspend`): they carry no clock.
+
+- **What changes in a run.** A world with `suspension` `[n, d]` whose
+  measured events read a presence that is not a multiple of d / n ages
+  differently: slower where k n < d gave 0, and by the exact mean
+  elsewhere. Worlds with `suspension` 0 (the Bell worlds), with d = 1
+  (`one_content.json`, the coupling world 6: `suspension` 1) or whose
+  reads are exact multiples are unchanged.
+- **Tests.** `tests/test_border_and_clock_corrections.py` (c) (new).
+  `tests/test_event_suspension.py` (b), (c) and (e) read 16 x 1 // 4 on age
+  0, 16 x 1 // 4 at every self-creation and 17 x 1 // 4, 17 x 1 // 16 on
+  age 0, where the two rules agree: unchanged
+  ([expectations](TEST_EXPECTATIONS.md#the-border-and-the-clocks-count)).
 ## One reading set for every coupling, on 2026-09-19
 
 The model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
