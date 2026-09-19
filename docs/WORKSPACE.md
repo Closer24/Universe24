@@ -27,6 +27,18 @@ the key at fault) and shows the world's model, shape, ticks, families and
 measured events. **Export JSON** saves the checked draft. Drafts are kept per template
 in the browser's storage; **Reset** returns to the template's file.
 
+## Reusable apparatus inputs
+
+[The entity authoring contract](ENTITY_DEFINITIONS.md) defines separate reusable
+apparatus files. File-backed templates resolve them once and put a self-contained
+portable bundle in the editor. Check, Export and Run retain that exact closure,
+including after moving the exported JSON to another directory. Plain world drafts
+stay plain. To import a world with external definitions, first create its portable
+bundle with `python -m event_universe.world_loading --input world.json --output portable.json`.
+Source-only browser requests do not search the server filesystem for dependencies.
+Editing the original definitions file affects a newly loaded template, not an
+already prepared draft or running input.
+
 ## Run and inspect
 
 **Run** writes a snapshot of the draft and starts `python -m event_universe`

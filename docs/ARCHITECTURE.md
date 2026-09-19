@@ -10,6 +10,14 @@ gate enforces, and how a physical feature is added. The boundaries of the
 engines before it, deleted on 2026-09-19, are in git
 ([migration](MIGRATION.md)).
 
+## Entity authoring boundary
+
+[Reusable entity definitions](ENTITY_DEFINITIONS.md) owns separate definitions,
+placement, strict dependency resolution, portable bundles and input provenance.
+The host loader expands data before the canonical world parser; physical modules
+receive immutable ordinary Events and never load a file or branch on an entity
+label. All runner, preflight and workspace paths use that one loading boundary.
+
 ## Local integer operation contract
 
 This contract applies to all new and changed physical code, world definitions
