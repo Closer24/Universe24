@@ -80,7 +80,12 @@ def execute_shadow_run(
         "release": list(world.release),
         "wait_per_quantum": list(world.wait),
         "families": [
-            {"name": family.name, "kind": family.kind, "charge": family.charge}
+            {
+                "name": family.name,
+                "kind": family.kind,
+                "charge": family.charge,
+                "turns_in_flight": family.turns,
+            }
             for family in world.families
         ],
         "numbers": {

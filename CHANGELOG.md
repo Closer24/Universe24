@@ -28,6 +28,11 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   the speed of light between Nodes" is recorded in 5.4 ("One speed, and what
   is seen").
 
+- `families[i].turns_in_flight` (the owner's "what can be put as a parameter,
+  put"): whether a family's quanta turn their phase in flight by their amount
+  over K on every Link, true by default for a paid family and false for a free
+  one, what the engine did by kind until now; `tests/test_family_turns.py`.
+
 ### The law of the shadow, the field-only engine (`field-only-v1`, feature 20, 2026-09-18)
 
 - A new engine mode beside the old one, `event_universe/shadow/`, selected by

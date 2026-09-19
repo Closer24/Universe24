@@ -3407,7 +3407,10 @@ section 49 (i)).
 `release` `[n, d]` per Port heading per interval per quantum of held content
 of a free family; `wait_per_quantum` (1 by default; an integer or `[n, d]`;
 0 for no wait); `families` (`name`, `kind` `free` or `paid`, `charge` of a
-held content of a free family); `contents` (`position`, `family`, `amount`
+held content of a free family, `turns_in_flight` whether the family's quanta
+turn their phase in flight by their amount over K on every Link, true by
+default for a paid family and false for a free one, a declared width since
+2026-09-19); `contents` (`position`, `family`, `amount`
 with 2 x amount < K x N, `phase`, `charge`, `momentum`, `fixed`, `table`
 family name to `read` | `keep` | `rerelease` | `pass` with `read` the
 default for a free family and `keep` for a paid one, `lamp` `{rate: [n, d],

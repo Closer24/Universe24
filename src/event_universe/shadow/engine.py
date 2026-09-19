@@ -163,7 +163,7 @@ class ShadowSimulation:
                 world.owners(index),
                 world.phase_steps,
                 world.clock,
-                rotates=not family.free,
+                rotates=family.turns,
             )
             for index, family in enumerate(world.families)
         ]

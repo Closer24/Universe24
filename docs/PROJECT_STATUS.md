@@ -49,7 +49,8 @@ monotone), the wait falling as r^-0.9.
 
 - The model owner's decisions (round 8's verdict table, PR #327's "Needs a decision",
   Highlights 5.4's status line): the law in points S1 to S10 point by point; T2 (an
-  event takes its interval); what a matter shadow rotates by;
+  event takes its interval); what a matter shadow rotates by, since 2026-09-19 a declared
+  width of the family (`turns_in_flight`, the owner's "what can be a parameter, put");
   hypothesis 19 or a per-family w (the bending of light: half of Einstein with one w,
   whole if light pays twice); the Compton table; the parked share's phase (1.5 % of the
   emission stands still); a lamp's recoil; the plain or matched edge. Settled on

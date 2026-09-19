@@ -24,6 +24,7 @@ modules are named in the [migration note](MIGRATION.md#one-engine-on-2026-09-19-
 | --- | --- |
 | `test_field_only.py` | The law of the shadow on minimal boards: the books, the fixed point and Gauss's flux, the shell means, the pair's pushes and the product law, the slits, the wait, the refusals, the nearest step, the step by the accumulators ([below](#the-law-of-the-shadow)) |
 | `test_node_mixing.py` | The Node's mixing on one Node of the engine's layer: the 3B_h rule, the coherent sum, the largest remainder, the parked ninths and their release, the momentum carried ([below](#the-nodes-mixing-on-one-node)) |
+| `test_family_turns.py` | A family's phase turn in flight as a declared width: the default by kind, the engine's wiring, one Link of the walk ([below](#the-phase-turn-in-flight)) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
@@ -51,6 +52,20 @@ reproduce byte for byte:
 | (e) unequal | +X 24 at 0; -X 8 at 2 | 6, 11, 3, 3, 3, 3 | 7, 4, 1, 1, 1, 1 | 2, 5, 5, 5, 5, 5 at those phases |
 | (f) the remainder rule | +X 5 at 0, twice | 0, 2, 0, 0, 0, 0 each time | 0, 4, 0, 0, 0, 0 | 5, 2, 5, 5, 5, 5 then 10, 4, 10, 10, 10, 10; the release 1, 0, 1, 1, 1, 1 leaves 1, 4, 1, 1, 1, 1 |
 | (g) the momentum carried | +X 9 at 0 carrying (9, 0, 0) | 1, 4, 1, 1, 1, 1 | | none; the x momentum 1, 4, 1, 1, 1, 1 with the departures, the sum (9, 0, 0) |
+
+## The phase turn in flight
+
+`tests/test_family_turns.py` isolates `families[i].turns_in_flight` (the model
+owner, 2026-09-19, "what can be put as a parameter, put"; DERIVATIONS.md round
+8 section 52 (iv), what a matter shadow rotates by): a quantum in flight turns
+its phase by its amount over K on every Link when its family turns, and not at
+all otherwise. Expected, written down first:
+
+| Case | Input | Expected |
+| --- | --- | --- |
+| (a) the default by kind | a free family, a paid family, a free one declared true, a paid one declared false | turns false, true, true, false; `turns_in_flight: 1` refused by name |
+| (b) the engine's wiring | three families, free, free turning, paid | the layers' turn false, true, true |
+| (c) one Link of the walk | 128 quanta at phase 5 carrying (3, 0, 0) on +X, K = 16, N = 64, a board of 3 x 1 x 1 | at the neighbour: 128 quanta at phase 13 when the family turns (128 / 16 = 8 steps), at phase 5 when it does not; the momentum (3, 0, 0) and the departures cleared either way |
 
 ## Suite inventory of 2026-09-17
 
