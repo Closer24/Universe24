@@ -11,7 +11,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   ("there are no registers"; "there are no fields; a field is an event";
   "there is no matter either; matter is a measured event"; "a single quantum
   does not split; in the space of events the quantum leaves in one
-  direction"), is recorded in [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)
+  direction"; "there is no shadow and no real; on the board there are only
+  events"), is recorded in [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector)
   after "One speed, and what is seen", in the owner's words with the
   orchestrator's readings flagged, and the paragraphs it changes carry a dated
   sentence. Nothing of it is implemented: [Highlights coverage](docs/HIGHLIGHTS_IMPLEMENTATION.md),
