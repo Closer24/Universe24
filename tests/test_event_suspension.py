@@ -54,11 +54,13 @@ docs/TEST_EXPECTATIONS.md ("The suspension"), written down first:
     that the unit is not taken), 16 units of the free
     family (number 1) and one unit of light of a third measured event
     (number 3) arrive on +X in interval 1, `suspension` [1, 4]. The unit in
-    transit reads the presence of every number but its own, 16, and carries
-    16 x 1 // 4 = 4 (3 after interval 1 pays one); the measured event, after
-    its self-creation, reads every number but its own, 16 + 1 = 17, and owes
-    17 x 1 // 4 = 4: the same count. At [1, 16] both read 1 (16 // 16 and
-    17 // 16).
+    transit reads the presence of every number but its own, the 16 units and
+    the measured event's content, here (one reading set, 2026-09-19; until
+    then 16, the content unread), 16 + 1 = 17, and carries 17 x 1 // 4 = 4
+    (3 after interval 1 pays one); the measured event, after its
+    self-creation, reads every number but its own, 16 + 1 = 17, and owes
+    17 x 1 // 4 = 4: the same count from the same presence. At [1, 16] both
+    read 1 (17 // 16).
 """
 
 from __future__ import annotations
