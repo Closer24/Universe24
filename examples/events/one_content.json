@@ -9,7 +9,7 @@
   "release": [1, 128],
   "suspension": 1,
   "families": [
-    {"name": "m", "kind": "free", "charge": 0}
+    {"name": "m", "kind": "free", "charge": 0, "phase": false}
   ],
   "measured": [
     {"position": [12, 12, 12], "family": "m", "amount": 16777216, "phase": 0, "fixed": true}
