@@ -13,6 +13,7 @@ Since 2026-09-19 there is one engine, the engine of the law of events
 | Document | Responsibility |
 | --- | --- |
 | [The engine](ENGINE.md) | The world file, the interval's steps, the suspension, the measurements, the books, the record and the preflight, as implemented |
+| [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements and exact opt-in reversible detector contract; quantum goals and unresolved scope |
 | [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control: what each reads |
 | [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Port, Link, Event and LocalRule vocabulary, the terms of the law of events (event in transit, measured event, self-creation, suspension, detector) and the historical terms of the laws before it |
 | [Architecture](ARCHITECTURE.md) | Module ownership, the integer contract, the dependency direction and the gates |

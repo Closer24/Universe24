@@ -94,6 +94,8 @@ def validate_configuration(source: str | bytes, *, kind: str = "auto") -> Valida
             "measured": len(world.measured),
             "detectors": len(world.detectors),
         }
+        if world.dynamics != EVENTS_LAW:
+            summary["dynamics"] = world.dynamics
         return ValidationReport(resolved, True, summary)
     except _Rejected as error:
         return ValidationReport(resolved, False, {}, (error.issue,))

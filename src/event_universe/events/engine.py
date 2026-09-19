@@ -111,10 +111,28 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from event_universe.core.lattice import PORT_HEADINGS, Address3
+from event_universe.core.integer import checked_work
+from event_universe.core.lattice import PORT_HEADINGS, Address3, adjacent_node
 from event_universe.events.mixing import MIXING_AMPLITUDE_SCALE
+from event_universe.events.reversible import (
+    STATE_BOUND,
+    CarrierState,
+    ContactState,
+    canonical_momentum,
+    clock_step,
+    pointer_displacement,
+    transduce,
+    validate_carrier,
+    validate_material,
+)
 from event_universe.events.transit import HEADINGS, Transit
-from event_universe.events.world import EVENTS_LAW, EventWorld, MeasuredDefinition
+from event_universe.events.world import (
+    EVENTS_LAW,
+    REVERSIBLE_DETECTOR_DYNAMICS,
+    DetectorGroupDefinition,
+    EventWorld,
+    MeasuredDefinition,
+)
 
 Record = Callable[[dict[str, object]], None]
 ZERO3 = (0, 0, 0)
@@ -222,6 +240,7 @@ class EventSimulation:
                 world.owners(index),
                 world.phase_steps,
                 world.clock,
+                exact_transport=world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS,
                 periodic=world.periodic,
             )
             for index in range(count)
@@ -233,6 +252,11 @@ class EventSimulation:
             entry = self._measured(index + 1, definition)
             self.measured[entry.number] = entry
             self.at[entry.position] = entry.number
+        # Immutable local readout definitions; they do not collect physical
+        # input from the group's coverage Nodes.
+        self._output_groups = {
+            group.output: group for detector in world.detectors for group in detector.groups
+        }
         # The books (cumulative): per family the measured line's initial,
         # measured in, spent and escaped; the transit line's initial, released
         # and absorbed; the momentum escaped with measured events.
@@ -302,13 +326,20 @@ class EventSimulation:
             raise ValueError(f"{EVENTS_LAW}: two events in transit on one slot at the start")
         transit.arr_amt[cell] = amount
         transit.arr_ph[cell] = phase
-        transit.arr_mom[cell] = self._momentum(family, amount, port)
+        transit.arr_mom[cell] = (
+            canonical_momentum(amount, self.families[family].quantum, port)
+            if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS
+            else self._momentum(family, amount, port)
+        )
         transit.fresh[cell[:4]] = True
 
     # -- the interval ----------------------------------------------------------
 
     def step(self) -> None:
         """One interval, in the order of the module docstring."""
+        if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
+            self._reversible_step()
+            return
         self.tick += 1
         world = self.world
         for transit in self.transits:
@@ -365,6 +396,255 @@ class EventSimulation:
             return
         read = int(size_total[entry.position]) - int(size_by_number[(*entry.position, entry.number)])
         entry.owed = read * width // MIXING_AMPLITUDE_SCALE
+
+    # -- the explicitly selected reversible candidate -------------------------
+
+    def _reversible_arrivals(self) -> dict[Address3, list[CarrierState]]:
+        """Read bounded local inputs without combining slots or changing state.
+
+        Initial arrivals are already at their Nodes. At later normalized
+        boundaries each flight travels exactly one Link. The host gathers
+        proposals; every gathered physical input came from that local Link.
+        """
+        found: dict[Address3, list[CarrierState]] = {}
+        initial = self.tick == 0
+        for family, transit in enumerate(self.transits):
+            if transit.suspended.any() or transit.escaped or transit.escaped_momentum.any():
+                raise ValueError("reversible detector: suspension or escaped content is unsupported")
+            inactive = (
+                (transit.fly_amt, transit.fly_ph, transit.fly_mom)
+                if initial
+                else (transit.arr_amt, transit.arr_ph, transit.arr_mom)
+            )
+            if any(values.any() for values in inactive):
+                raise ValueError("reversible detector: mixed or nonnormalized boundary state")
+            amounts, phases, momenta = (
+                (transit.arr_amt, transit.arr_ph, transit.arr_mom)
+                if initial
+                else (transit.fly_amt, transit.fly_ph, transit.fly_mom)
+            )
+            empty = amounts == 0
+            if phases[empty].any() or momenta[empty].any():
+                raise ValueError("reversible detector: empty channel payload must be zero")
+            for indices in np.argwhere(amounts != 0):
+                x, y, z, rank, port = (int(value) for value in indices)
+                cell = (x, y, z, rank, port)
+                carried = tuple(int(value) for value in momenta[cell])
+                carrier = CarrierState(
+                    family,
+                    transit.owners[rank],
+                    int(amounts[cell]),
+                    int(phases[cell]),
+                    port,
+                    (carried[0], carried[1], carried[2]),
+                )
+                validate_carrier(carrier, self.world.phase_steps, self.families[family].quantum)
+                position = (x, y, z)
+                if not initial:
+                    destination = adjacent_node(position, port, self.shape, self.world.periodic)
+                    if destination is None:
+                        raise ValueError("reversible detector: open-edge escape is unsupported")
+                    position = destination
+                found.setdefault(position, []).append(carrier)
+        return found
+
+    def _reversible_material(self, entry: Measured) -> ContactState:
+        """Validate the restricted ordinary material Event before proposing."""
+        definition = self.world.measured[entry.number - 1]
+        expected = [0] * len(self.families)
+        expected[definition.family] = definition.amount
+        if (
+            entry.position != definition.position
+            or entry.held != expected
+            or not entry.fixed
+            or entry.charge != 0
+            or entry.lamp_rate is not None
+            or entry.owed != 0
+            or any(entry.home)
+            or any(window is not None for window in entry.windows)
+            or entry.table != definition.table
+        ):
+            raise ValueError("reversible detector: unsupported material state")
+        if len(entry.momentum) != 3:
+            raise ValueError("reversible detector: material momentum must have three components")
+        state = ContactState(entry.phase, (entry.momentum[0], entry.momentum[1], entry.momentum[2]))
+        validate_material(state, self.world.phase_steps)
+        return state
+
+    def _reversible_capacity(self, entry: Measured, amount: int) -> None:
+        """A finite pointer admits only the increment already at its Node."""
+        group = self._output_groups.get(entry.position)
+        if group is None:
+            return
+        value = self._pointer(entry, group)
+        if checked_work(value + amount) > group.capacity:
+            raise ValueError("reversible detector: output capacity exceeded")
+
+    @staticmethod
+    def _carrier_record(carrier: CarrierState) -> dict[str, object]:
+        """Detached audit payload; an observer cannot mutate the proposal."""
+        return {
+            "family": carrier.family,
+            "number": carrier.number,
+            "amount": carrier.amount,
+            "phase": carrier.phase,
+            "port": carrier.port,
+            "momentum": list(carrier.momentum),
+        }
+
+    def _reversible_node(
+        self, position: Address3, arrivals: list[CarrierState], tick: int
+    ) -> tuple[list[CarrierState], tuple[int, ContactState, int] | None, list[dict[str, object]]]:
+        """Propose one Node from its arrived channels and resident only."""
+        ordered = sorted(arrivals, key=lambda item: (item.family, item.number, item.port))
+        local_amount = 0
+        input_slots: set[tuple[int, int, int]] = set()
+        for carrier in ordered:
+            slot = (carrier.family, carrier.number, carrier.port)
+            if slot in input_slots:
+                raise ValueError("reversible detector: duplicate arrival slot")
+            input_slots.add(slot)
+            local_amount = checked_work(local_amount + carrier.amount)
+            if local_amount > STATE_BOUND:
+                raise OverflowError("reversible detector: local amount bound exceeded")
+        number = self.at.get(position)
+        if number is None:
+            return ordered, None, []
+        entry = self.measured[number]
+        material = self._reversible_material(entry)
+        definition = self.world.measured[number - 1]
+        increment = 0
+        for carrier in ordered:
+            if entry.table[carrier.family] == "transduce":
+                increment = checked_work(increment + carrier.amount)
+        self._reversible_capacity(entry, increment)
+        outgoing = []
+        records: list[dict[str, object]] = []
+        output_slots: set[tuple[int, int, int]] = set()
+        for incoming in ordered:
+            rule = entry.table[incoming.family]
+            after = incoming
+            if rule == "transduce":
+                before_material = material
+                after, material = transduce(
+                    incoming,
+                    material,
+                    definition.port_map,
+                    self.world.phase_steps,
+                    self.families[incoming.family].quantum,
+                )
+                if self.record is not None:
+                    records.append(
+                        {
+                            "kind": "transduction",
+                            "tick": tick,
+                            "node": list(position),
+                            "incoming": self._carrier_record(incoming),
+                            "outgoing": self._carrier_record(after),
+                            "material_before": {
+                                "phase": before_material.phase,
+                                "momentum": list(before_material.momentum),
+                            },
+                            "material_after": {
+                                "phase": material.phase,
+                                "momentum": list(material.momentum),
+                            },
+                        }
+                    )
+            elif rule != "pass":
+                raise ValueError("reversible detector: unsupported contact rule")
+            slot = (after.family, after.number, after.port)
+            if slot in output_slots:
+                raise ValueError("reversible detector: outgoing slot conflict")
+            output_slots.add(slot)
+            outgoing.append(after)
+        age, phase = clock_step(
+            entry.age, entry.content, self.world.clock, self.world.phase_steps, material.phase
+        )
+        return outgoing, (number, ContactState(phase, material.momentum), age), records
+
+    def _reversible_step(self) -> None:
+        """Validate the whole interval before committing any physical owner.
+
+        Proposals are temporary host scheduling data. No prior board, input
+        history or proposal survives the commit as hidden physical state.
+        """
+        tick = checked_work(self.tick + 1)
+        if tick > STATE_BOUND:
+            raise OverflowError("reversible detector: tick bound exceeded")
+        arrivals = self._reversible_arrivals()
+        nodes = set(arrivals) | set(self.at)
+        departures: list[tuple[Address3, CarrierState]] = []
+        material_updates: list[tuple[int, ContactState, int]] = []
+        records = []
+        for position in sorted(nodes):
+            outgoing, material, node_records = self._reversible_node(
+                position, arrivals.get(position, []), tick
+            )
+            departures.extend((position, carrier) for carrier in outgoing)
+            if material is not None:
+                material_updates.append(material)
+            records.extend(node_records)
+        # Nothing above this boundary mutates physical state or audit state.
+        for transit in self.transits:
+            for values in (
+                transit.arr_amt,
+                transit.arr_ph,
+                transit.arr_mom,
+                transit.fly_amt,
+                transit.fly_ph,
+                transit.fly_mom,
+                transit.fresh,
+            ):
+                values[...] = 0
+            transit.tick = tick
+        for position, carrier in departures:
+            transit = self.transits[carrier.family]
+            cell = (*position, transit.rank[carrier.number], carrier.port)
+            transit.fly_amt[cell] = carrier.amount
+            transit.fly_ph[cell] = carrier.phase
+            transit.fly_mom[cell] = carrier.momentum
+        for number, updated_material, age in material_updates:
+            entry = self.measured[number]
+            entry.phase = updated_material.phase
+            entry.momentum = list(updated_material.momentum)
+            entry.age = age
+        self.tick = tick
+        if self.record is not None:
+            for record in records:
+                self.record(record)
+
+    def _pointer(self, entry: Measured, group: DetectorGroupDefinition) -> int:
+        return pointer_displacement(
+            entry.phase,
+            entry.age,
+            entry.content,
+            group.reference_phase,
+            self.world.clock,
+            self.world.phase_steps,
+        )
+
+    def detector_readouts(self) -> list[dict[str, object]]:
+        """Read existing output Events; coverage never supplies an input."""
+        if self.world.dynamics != REVERSIBLE_DETECTOR_DYNAMICS:
+            return []
+        result: list[dict[str, object]] = []
+        for detector in self.world.detectors:
+            groups = []
+            for group in detector.groups:
+                entry = self.measured[self.at[group.output]]
+                value = self._pointer(entry, group)
+                groups.append(
+                    {"name": group.name, "value": value, "triggered": value >= group.threshold}
+                )
+            result.append(
+                {
+                    "name": detector.name,
+                    "positions": [list(position) for position in detector.positions],
+                    "groups": groups,
+                }
+            )
+        return result
 
     def _meet(self, entry: Measured) -> None:
         """The events at a measured event's Node: every arrival of its own
@@ -569,18 +849,15 @@ class EventSimulation:
                 continue
             sign = 1 if momentum > 0 else -1
             entry.steps += 1
-            target = list(entry.position)
-            target[axis] += sign
             origin = entry.position
-            if self.world.periodic[axis]:
-                # The wrap: the last Node's step along +axis lands on the
-                # first, the first's along -axis on the last; with an extent
-                # of 1, on its own Node, no move and no merge with itself.
-                target[axis] %= self.shape[axis]
-                if target[axis] == origin[axis]:
-                    return
+            port = 2 * axis + (0 if sign > 0 else 1)
+            destination = adjacent_node(origin, port, self.shape, self.world.periodic)
+            if destination == origin:
+                # A self-Link counts the step without a coordinate move,
+                # a movement record or a merge with the Event itself.
+                return
             del self.at[origin]
-            if not 0 <= target[axis] < self.shape[axis]:
+            if destination is None:
                 for index in range(len(self.families)):
                     self.held_escaped[index] += entry.held[index]
                     self.transit_absorbed[index] -= entry.home[index]
@@ -591,7 +868,6 @@ class EventSimulation:
                 del self.measured[entry.number]
                 self._event("escaped", entry, entry.family, entry.number, content, ZERO3)
                 return
-            destination: Address3 = (target[0], target[1], target[2])
             if destination in self.at:
                 other = self.measured[self.at[destination]]
                 for index in range(len(self.families)):
@@ -653,6 +929,8 @@ class EventSimulation:
 
     def books(self) -> dict[str, object]:
         """The ledger at the current tick, every line with its identity."""
+        if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
+            return self._reversible_books()
         families: dict[str, object] = {}
         balanced = True
         for index, family in enumerate(self.families):
@@ -696,6 +974,59 @@ class EventSimulation:
                 "escaped": [int(v) for v in escaped],
             },
             "charge": sum(entry.charge for entry in self.measured.values()),
+            "balanced": balanced,
+        }
+
+    def _reversible_books(self) -> dict[str, object]:
+        """Exact read-only host totals, bounded by the finite world layout.
+
+        These sums may exceed a physical working register. They never enter
+        an admission guard or a physical update (DETECTOR_REQUIREMENTS.md).
+        """
+        families: dict[str, object] = {}
+        carried = [0, 0, 0]
+        balanced = True
+        for index, family in enumerate(self.families):
+            transit = self.transits[index]
+            amount = sum(int(value) for value in transit.arr_amt.flat) + sum(
+                int(value) for value in transit.fly_amt.flat
+            )
+            for axis in range(3):
+                carried[axis] += sum(int(value) for value in transit.arr_mom[..., axis].flat)
+                carried[axis] += sum(int(value) for value in transit.fly_mom[..., axis].flat)
+            content = sum(entry.held[index] for entry in self.measured.values())
+            held_ok = content == self.held_initial[index]
+            transit_ok = amount == self.transit_initial[index]
+            families[family.name] = {
+                "measured": {
+                    "initial": self.held_initial[index],
+                    "measured": 0,
+                    "current": content,
+                    "spent": 0,
+                    "escaped": 0,
+                    "balanced": held_ok,
+                },
+                "transit": {
+                    "initial": self.transit_initial[index],
+                    "released": 0,
+                    "current": amount,
+                    "escaped": 0,
+                    "absorbed": 0,
+                    "balanced": transit_ok,
+                },
+            }
+            balanced = balanced and held_ok and transit_ok
+        return {
+            "tick": self.tick,
+            "families": families,
+            "momentum": {
+                "measured": [
+                    sum(entry.momentum[axis] for entry in self.measured.values()) for axis in range(3)
+                ],
+                "transit": carried,
+                "escaped": [0, 0, 0],
+            },
+            "charge": 0,
             "balanced": balanced,
         }
 
@@ -759,6 +1090,8 @@ class EventSimulation:
         half-width `half` about the centre and its neighbours, this interval:
         the amount that arrived just outside each face moving outward less the
         amount that arrived on the face moving inward, Gauss's flux."""
+        if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS or any(self.world.periodic):
+            raise ValueError("cube_flux supports only the all-open default arrival diagnostic")
         per_port = self.per_port[family]
         total = 0
         for axis in range(3):
@@ -784,6 +1117,9 @@ class EventSimulation:
         """The snapshot as (key, value) pairs, the Nodes with events in transit
         as an iterator over one entry at a time (`snapshot_writer`)."""
         yield "law", EVENTS_LAW
+        if self.world.dynamics == REVERSIBLE_DETECTOR_DYNAMICS:
+            yield "dynamics", self.world.dynamics
+            yield "detector_readouts", self.detector_readouts()
         yield "tick", self.tick
         yield "shape", list(self.shape)
         yield "boundary", self.world.boundary

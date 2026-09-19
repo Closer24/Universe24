@@ -25,6 +25,168 @@ tests: `tests/test_node_mixing.py`, `tests/test_event_transit.py`,
 ([expectations](TEST_EXPECTATIONS.md)). The worlds:
 [examples/events/](../examples/events/README.md).
 
+## Opt-in physical detector candidate
+
+The default contract below remains `events-v1`. The explicitly selected
+`dynamics: "reversible-detector-v1"` extends the same engine with a restricted
+reversible contact/transport path. Its authoritative schema, local operator,
+inverse, state domain, clock reference, capacity, atomic refusal and physical
+readout are in [the detector contract](DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1).
+This assumed nondestructive transduction candidate does not call the default
+absorption/mixing rules and does not establish a Heisenberg relation. It uses
+ordinary measured and transit Events and no extra detector memory.
+
+## Per-axis board topology (2026-09-19 implementation amendment)
+
+The owner approved periodic axes as an experiment parameter in
+[Highlights 5.4](HIGHLIGHTS.md#54-the-detector), published in
+`c43c5789f761647229792590c368bbc9328ec214`. This amendment is the implementation
+contract for both `events-v1` and `reversible-detector-v1`; its publication
+precedes the behavior change. It changes the declared graph, not a local contact,
+clock, suspension or mixing law. Earlier dated open-only results retain their
+original configuration and source identity.
+
+### Configuration and public interfaces
+
+**Compatibility revision after main `ddb4470a4fe05ccc54b9d097b4c4bf9f51ed2550`
+(PR #345).** That revision independently implemented the owner-approved periodic
+transit and is now the canonical provider. Its actual API supersedes the stricter
+all-axes draft published in `eacc96834819a10ad68c7cbbaeb0ceab0dff7eb3`.
+Reuse it rather than replacing working transit or adding a second boundary schema.
+
+Main `7a0aa24c46e7544cd1c3cc7ee587f657498ff509` (PR #348) subsequently
+implemented measured movement on the same declared graph. Preserve its native
+self-link record semantics: `steps` increments, but returning to the same Node
+emits no coordinate-movement `step` record. The shared scalar neighbor helper
+serves material movement and candidate proposals; native bulk transit, clocks
+and the candidate contact law remain unchanged.
+
+`shape` remains exactly three integers from 1 through 4096. An omitted `boundary`
+or the string `"open"` means three open axes. The additional form is an object
+with any subset of `x`, `y`, `z`, each equal to `"open"` or `"periodic"`;
+omitted axes are open. Thus `{}` and `{"z":"periodic"}` are supported. Unknown
+axes, other modes and standalone `"closed"` or `"periodic"` are refused.
+No axis, extent, physical family or apparatus name implies a topology.
+
+Keep main's `EventWorld.boundary: str | dict[str, str]` as the declared record,
+`periodic: tuple[bool, bool, bool]` as its x/y/z flags and `boundary_per_axis`
+as the normalized dictionary property. These required fields stay in main's
+constructor order; candidate-specific fields remain trailing defaults. Snapshot
+and `run.json` retain `world.boundary`, including a declared partial object.
+Preflight always reports `world.boundary_per_axis`, including all-open, as main
+now does. The earlier proposed `Boundary3`, `OPEN_BOUNDARY`, `boundary_record()`
+and omission of all-open preflight metadata are withdrawn. Preserve the original
+initialization bytes and adapt any direct constructor consumers to this one API.
+
+Main's `Transit` accepts `periodic: tuple[bool, bool, bool] = (False, False, False)`
+after `clock`; retain that signature and its `numpy.roll` periodic transport.
+The candidate's independent `exact_transport` option remains keyword-only.
+`EventSimulation` passes `world.periodic` for both dynamics.
+
+The missing scalar transport paths share one small provider in `core/lattice.py`:
+
+```
+adjacent_node(position: Address3, port: int, shape: Address3,
+              periodic: tuple[bool, bool, bool] = (False, False, False))
+    -> Address3 | None
+```
+
+This pure fixed-work function accepts exact three-tuples, exact integer extents
+in 1..4096, an in-board integer address and a Port in 0..5 (integer booleans are
+refused). Periodic flags are exactly three booleans. Invalid input raises
+`ValueError`; coordinate arithmetic uses existing bounded integer operations.
+It returns one neighboring address, or `None` only for a transfer through an
+open outer face. It neither reads state nor advances time. Candidate proposals
+and default measured movement use it. Verify its addresses against the native
+bulk transport on seam, extent-one and extent-two cases; do not rewrite the
+already correct bulk operation merely to call the scalar helper.
+
+### One Link and one interval
+
+For a Port, add its signed unit heading on its axis. An in-range target is the
+ordinary neighbor. If that coordinate exits a periodic axis, choose zero after
+the positive face or `extent - 1` after the negative face; other coordinates are
+unchanged. The same record crosses once: family, owner, amount, phase, signed
+Port and momentum survive transport unchanged. Never derive momentum from the
+large wrapped coordinate difference. This is adjacency in the declared graph.
+
+The existing interval order remains binding. A departure reaches its neighbor
+only in the following transport interval, including when a periodic extent is
+one and the target equals its origin. Positive and negative Ports remain distinct
+channels when their destinations coincide at extent one or two. No same-step
+relay, extra contact, repeated drain, copy or new signal is allowed. The initial
+seeded arrivals may contact on tick 1 as before; they are not a prior wrap.
+
+The default `Transit.walk` retains main's existing `numpy.roll` periodic branch
+and open-axis bulk slices. The scalar neighbor helper supplies the same graph
+semantics to material movement and the separate candidate proposal scheduler.
+Open faces keep the existing escaped amount and momentum accounting. A periodic
+face books no escape. Existing local reception/mixing remains separate from
+transport, so phase preservation of the transfer alone does not assert unchanged
+phase after a later default interaction.
+
+Default measured movement uses the same neighbor provider. Existing timing,
+self-creation/suspension order, open escape and collision/merge policy are kept.
+A self-loop movement retains its one original Event and inventory, counts one
+completed step and preserves momentum; it never merges the Event with itself,
+deletes it, or doubles its content. It emits no coordinate-movement record when
+the destination is its origin. A wrapped target occupied by a different
+Event follows the existing merge law. This does not make that law reversible.
+
+The candidate uses the same provider while building immutable local proposals.
+A periodic transfer is admitted subject to its existing slot, integer and output
+capacity constraints. An open exit still refuses the entire interval before
+mutation. Wrapping itself is bijective on coordinate-plus-signed-Port channels;
+it needs no history or hidden state. All three axes may be periodic. Finite
+storage and local work remain fixed for the declared capacities. Repeated
+encounters can exhaust a physical pointer: a return counts another crossing of
+the same carrier, not a newly created quantum.
+
+### Diagnostic scope and acceptance
+
+`cube_flux` currently defines a clipped Euclidean cube and cannot silently omit
+periodic seam Links. In this amendment it explicitly raises `ValueError` for a
+world with any periodic axis or for `reversible-detector-v1` on any topology.
+Only all-open default `events-v1` behavior remains unchanged. Its legacy
+cached arrivals include seeded and suspended arrivals, and the candidate does not
+populate those caches; changing seam coordinates alone would not measure executed
+transfers. A future transfer audit must record actual directed Links and define
+region membership R, with amount flux `sum(q * (in_R(source) - in_R(target)))`.
+An open outside target has membership zero, and a self-loop contributes zero.
+This is an amount diagnostic, not an energy law or physical detector result.
+Other coordinate-based spatial summaries retain their declared coordinate
+meaning and do not become shortest-periodic-distance observables.
+
+A thin periodic Z board is a compact graph with return Links. It reduces the
+number of allocated Nodes, but neither establishes measured wall-time speedup
+nor substitutes for arbitrary unbounded 3D matter, a star or resolved microscopic
+information. It changes boundary-dependent predictions and requires its own
+experiment configuration.
+
+Independent expectations, fixed before implementation:
+
+| Isolated case | Expected result |
+| --- | --- |
+| Shape `(3,2,1)`, periodic X/Z, open Y; `(2,1,0)` on +X | `(0,1,0)` after one transport interval; inverse predecessor `(2,1,0)` |
+| Same graph; `(0,1,0)` on -X | `(2,1,0)` after one interval |
+| Same graph; +Z and -Z at `(1,1,0)` | Same Node next interval in distinct Ports 4 and 5; no immediate second contact |
+| +Z carrier `q=2`, phase 16, momentum `(0,0,2)` through an extent-one periodic Z Link | Same payload and Port; escaped amount and momentum zero |
+| +Y from `(1,1,0)` on the same mixed graph | Default transport books the existing escape; candidate refuses atomically |
+| One candidate output, identity route, `N=8`, `K=1024`, content 1, initial displacement 0, `q=1`, capacity 2, periodic Z | Accepted ticks 1 and 2 read 1 and 2; tick 3 refuses with complete state and tick unchanged |
+| Default movable material at an extent-one periodic axis, otherwise valid one-step state | One retained Event with unchanged inventory and momentum; one completed move |
+| `cube_flux` on a periodic world or on any candidate world | `ValueError`, never an apparent zero from an unpopulated cache |
+| All-open input omitted, string, or explicit/empty axis object | Same periodic flags; raw declared boundary retained in artifacts, normalized all-open dictionary in preflight |
+
+The integration/schema owner reconciles main's `world.py` and preflight with the
+candidate additions; main's boundary parser and serialization remain authoritative.
+The engine owner adds only the scalar neighbor helper, missing candidate/material
+paths and the unsupported-flux guard, preserving native bulk transit and metadata.
+The schema owner supplies parser compatibility checks and data examples. Independent behavior tests belong to
+`tests/test_event_boundaries.py`; architecture owns this contract and cross-links.
+The 9-by-9-by-1 periodic example is a separate dated run, not an example-output
+unit test. Physics review and affected regression evidence are required before
+claiming implementation completion.
+
 ## The law of events (`events-v1`)
 
 **One thing.** An event, with a place (a Node), a time (an interval) and a

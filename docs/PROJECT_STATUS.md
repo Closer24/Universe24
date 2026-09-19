@@ -2,8 +2,25 @@
 
 ## Where the project stands on 2026-09-19 (read this first)
 
-**One law, one engine.** Everything below is on `main`; nothing is in a branch
-or a machine.
+**One engine; explicit candidate selection.** The default-engine description
+below is a snapshot of `main` at `bfb463be6313ae226aa0a192d11036ead63dd0f1`.
+Read current Git and the linked Issue/PR before treating it as live status.
+
+**Physical detector work (2026-09-19, issue 342).** The
+[published detector contract](DETECTOR_REQUIREMENTS.md#implementation-contract-reversible-detector-v1)
+defines the opt-in `reversible-detector-v1` candidate: ordinary measured Events
+route intact carriers and create a shared output by a reversible local phase
+coupling and recoil. Coverage, grouping and threshold are separate data; a
+group of 100 Nodes need not require 100 quanta. Complete state is definite and
+accepted no-escape transitions preserve information on the scoped domain.
+Default `events-v1` absorption remains one-way; its general mixing rules are
+not claimed reversible. The owner's proposal that sensitivity and information
+retention produce Heisenberg remains an unproved research hypothesis. Absorption
+into a composite body, physical reset, energy accounting and coarse cells with
+many microscopic Nodes are separate research work, not hidden additions to this
+candidate. Implementation, checks and merge state are tracked in
+[issue 342](https://github.com/Closer24/Universe24/issues/342), not inferred from
+this design description.
 
 1. **The law of events** (Highlights 5.4, the paragraphs "The law of events"
    and "The principles of the law of events", the model owner's words of
@@ -119,4 +136,3 @@ research runs registered in [EXPERIMENTS.md](EXPERIMENTS.md).
 5. Hand off the scope, validation, limits and integration state through the PR and
    [shared workflow](../skills/workflow.md). A Git rename changes the source fingerprint;
    retain older fingerprints as historical evidence rather than relabeling old runs.
-

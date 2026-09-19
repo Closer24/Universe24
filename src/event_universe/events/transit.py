@@ -107,6 +107,8 @@ class Transit:
         phase_steps: int,
         clock: int,
         periodic: tuple[bool, bool, bool] = (False, False, False),
+        *,
+        exact_transport: bool = False,
     ) -> None:
         self.family = family
         self.shape = shape
@@ -122,8 +124,10 @@ class Transit:
         # The interval's tick, set by the engine before the cycle: the ties of
         # the sides' apportionment are broken in Port order counted from it.
         self.tick = 0
-        cosines = np.array(phase_cosines(phase_steps), dtype=np.int64)
-        sines = np.array(phase_sines(phase_steps), dtype=np.int64)
+        # Exact transport does not call the default coherent-mixing kernels.
+        # It keeps their array protocol but needs no phase lookup tables.
+        cosines = np.array([] if exact_transport else phase_cosines(phase_steps), dtype=np.int64)
+        sines = np.array([] if exact_transport else phase_sines(phase_steps), dtype=np.int64)
         self.cosines: np.ndarray | None = cosines
         self.sines: np.ndarray | None = sines
         self.mix_cosines = cosines
