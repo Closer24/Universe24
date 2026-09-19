@@ -5158,7 +5158,7 @@ sign rule, and its other couplings are catalog entries.
   the content grows and no lone quark appears, or it falls off as for a
   charge, or the pattern does not close.
 
-### E8. A shared physical detector retains incoming phase
+### E13. A shared physical detector retains incoming phase
 
 - **Scope and authority.** The model owner's detector implementation and small
   board request, 2026-09-19; issue #342. The opt-in
@@ -5184,3 +5184,30 @@ sign rule, and its other couplings are catalog entries.
   records and motion; visible plane z=0, one Link per grid spacing, one
   interval per frame. No absorption, reset, energy law, uncertainty relation
   or quantum entanglement is established.
+
+### E14. An external detector definition with a periodic return
+
+- **Scope and authority.** The model owner's approved periodic axes and
+  separate entity definitions, 2026-09-19. The published
+  [topology](ENGINE.md#per-axis-board-topology-2026-09-19-implementation-amendment)
+  and [loading contract](ENTITY_DEFINITIONS.md) compose the existing detector
+  candidate; they do not introduce an absorption or energy law.
+- **Frozen setup.** `examples/events/detector/periodic_z_node.json` loads
+  `single_node_detector` from `entities/detectors.json` at (4,4,0), on a
+  9-by-9-by-1 world with periodic Z and open X/Y. One +Z carrier, identity
+  route, N=32, K=1024, threshold 1, reference 0, capacity 31; three intervals.
+  The two preparations differ only in carrier phase, 0 or 16.
+- **Acceptance fixed before execution.** Pointer values 0,1,2,3 at ticks
+  0 through 3, from repeated contacts with the same carrier; one transit
+  unit and one material unit remain, momentum (0,0,1), no escapes; owner,
+  signed Port and incoming phase retained; live states remain distinct.
+- **Status.** Measured, pass within scope, 2026-09-19 11:15 UTC, source
+  `32235267e55ac8c9df5b1d4bafa3f02a209b7faf`, fingerprint
+  `7e6367eeed29b3d44e48aee05b3ecd2a68d7c3f9fc122fbfa6efd17da679c0c2`.
+  Each case ran once through the canonical runner. The separate report
+  `universe24_periodic_detector_entities_9x9.html` embeds original, portable
+  and expanded inputs, dependencies, records and motion. Exact fingerprints,
+  the 458-test gate and display checks are in the
+  [validation entry](VALIDATION.md#external-detector-definition-with-a-periodic-return---2026-09-19).
+  This is a compact graph demonstration, not arbitrary 3D equivalence or a
+  derivation of quantum measurement laws.

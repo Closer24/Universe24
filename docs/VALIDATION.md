@@ -11,13 +11,71 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## External detector definition with a periodic return - 2026-09-19
+
+[Experiment E14](EXPERIMENTS.md#e14-an-external-detector-definition-with-a-periodic-return)
+was recorded at 11:15 UTC on source
+`32235267e55ac8c9df5b1d4bafa3f02a209b7faf`, Python 3.14.7. Each of two
+three-interval cases ran once through `runner.run_initialization`, using
+`examples/events/detector/periodic_z_node.json` and its external
+`entities/detectors.json`. The checked-in phase-16 input was preserved exactly;
+the control changes only the incoming phase to 0. The 9-by-9-by-1 world has
+only Z periodic. One ordinary material Event at (4,4,0), loaded from
+`single_node_detector`, routes one +Z carrier through its same-Node return Link.
+N=32, K=1024, reference 0, threshold 1 and capacity 31 were fixed before the run.
+
+Both cases exactly meet the independent expectations: pointer values at ticks
+0 through 3 are **0,1,2,3**; the same one carrier retains its owner, phase and
+momentum (0,0,1); one material unit plus one transit unit remains 2; nothing
+escapes. Complete live states differ at all four times. The three contacts are
+three encounters with one circulating carrier, not three distinct quanta.
+The material phase and local age are 0,1,2,3; the readout reads that physical
+state. Read-only profiling captures only successful constructor/step returns,
+and its hook is restored in `finally`. Final captured state equals `state.json`.
+An initial host-output lease conflict stopped before simulation construction;
+correcting the helper's output layout did not repeat a physical case.
+
+The package fingerprint was unchanged before and after the gate and run:
+`7e6367eeed29b3d44e48aee05b3ecd2a68d7c3f9fc122fbfa6efd17da679c0c2`.
+The exact definitions SHA-256 is
+`3ad1e2351a905044ccd6e61717959276029c3e4b70cdcfaa1e48830e51137cb5`.
+Runner metadata matches each preserved input, bundle and expanded document:
+
+| Phase | Document | SHA-256 |
+| --- | --- | --- |
+| 0 | Original | `05de03b2e231694460a94f8c234c66523e4957436e0d059cd07e5396bde35bc8` |
+| 0 | Portable bundle | `197fbf7a0f008c4108f7735a988cf47271adf478b7492a93ece545c09de2ceeb` |
+| 0 | Expanded | `a2fc96e389a279e17f9467b1e6e147438c0ffaccbbece445fe90701f9e259e6b` |
+| 16 | Original | `143e3f1d0c8f8470f97c8d34c63e5164f168ba130c5e0ee31eb5e9b1aad6e494` |
+| 16 | Portable bundle | `931f4ee392c5bde399ec684ba0576664f64afdb056b617bdc778cfb632f57e52` |
+| 16 | Expanded | `daf5c37916ff07d6508fa0e156cfe9e5fa65f86ceb0587eaf26988aef140085e` |
+
+On that exact source, `PYTHONPATH=src python tools/check.py --base origin/main`
+against main `95768835097c0afcd422bb48e1a065479de1fc01` passed **458 tests in
+60.80 seconds** with nine workers, Ruff lint/format, strict mypy on 22 source
+files, and source/wheel builds containing the external definitions.
+Independent topology and detector checks previously passed 52 cases; the final
+selection includes their coverage and entity loading/consumer checks.
+
+The separate saved report `universe24_periodic_detector_entities_9x9.html`
+embeds both complete input closures, full states, event/run records and GIF
+frames. Its SHA-256 is
+`a2aee7d2d3855380164ac9ccd062726fa53ba8b022c9a4b2f427dfc40baf7f92`.
+The display is the x-y plane at z=0, uniformly one Link per grid spacing and
+one interval per frame; GIF playback is 850 ms/frame. First/last images were
+visually inspected. Actual viewer JavaScript passed phase selection and
+timeline checks, rendering 81 Nodes, total 2 and final contact count 3.
+Full-browser rendering was not verified. The earlier open-board report is
+unchanged. This compact periodic graph establishes no arbitrary 3D equivalence,
+speedup, energy law, absorption/reset, Heisenberg relation or entanglement.
+
 ## Reversible detector: a shared output retains incoming phase - 2026-09-19
 
 Recorded at 10:01 UTC on source commit
 `17dd34c0f8d54b045ab0e4ff9c28e0399dfe6911`, Python 3.14.7. This is the
 explicitly selected `reversible-detector-v1` candidate of
 [the detector contract](DETECTOR_REQUIREMENTS.md), not the default absorption
-rule. [Experiment E8](EXPERIMENTS.md#e8-a-shared-physical-detector-retains-incoming-phase)
+rule. [Experiment E13](EXPERIMENTS.md#e13-a-shared-physical-detector-retains-incoming-phase)
 uses `examples/events/detector/shared_3_nodes.json`, with only the incoming
 phase varied between 0 and 16. Each four-interval case was executed once through
 `EventSimulation`; its initial state and every completed state were recorded.
