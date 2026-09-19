@@ -271,4 +271,3 @@ def place_departures(
     family.fly_amt[..., 1] = layer_1
     family.fly_ph[..., 1] = np.where(layer_1 > 0, phase_1, 0)
     family.fly_mom[..., 1, :] = momenta_1
-

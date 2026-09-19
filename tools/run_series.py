@@ -1,9 +1,8 @@
 """Run the worlds of a series as separate processes, one per core.
 
-The series scripts of `examples/nature` (A5s, A6, E11) express a series as a
-list of world files written by their `make_worlds.py` and run one after the
-other through `event_universe.runner.run_initialization`. This tool launches
-those runs in parallel: every world in its own process (`python -m
+A series is a list of world files, run one after the other through
+`event_universe.runner.run_initialization`. This tool launches those runs in
+parallel: every world in its own process (`python -m
 event_universe --init WORLD --output OUT/<name>/run`), at most `--jobs` at
 once (the machine's cores by default), each with its own log (`OUT/<name>/
 log.txt`, the child's stdout and stderr) and its own artifacts directory, and
@@ -12,17 +11,15 @@ the status, the ticks, the runner's seconds, the child's wall seconds, its
 peak RSS, the digests of `state.json` and of the ledger (`audit` of
 `run.json`), and the conservation flag. The engine is untouched: a run is the
 runner's, deterministic, and its files are byte for byte those of the same
-world run alone (`tests/test_perf_arrays.py` pins it).
+world run alone.
 
 Run with PYTHONPATH set to the checkout's src (the children run the package
 this process imports):
 
-    PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/a5sd \\
-        examples/nature/a5_static/pp_r12d.json examples/nature/a5_static/pp_r16d.json
+    PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/shadow \\
+        examples/shadow/one_content.json examples/shadow/two_contents.json
 
-`--ticks` overrides every world's duration, `--dense-field` forces the dense
-mode on every world (the runner's own switch), `--python` names the
-interpreter of the children (this one by default). A world's name is its
+`--ticks` overrides every world's duration, `--python` names the interpreter of the children (this one by default). A world's name is its
 file stem; two worlds of one name are refused. The output directory of a
 run must be empty or absent, as the runner requires.
 """
@@ -62,7 +59,6 @@ def run_one(
     directory: Path,
     *,
     ticks: int | None,
-    dense_field: bool,
     python: str,
     environment: dict[str, str],
 ) -> dict[str, object]:
@@ -72,8 +68,6 @@ def run_one(
     command = [python, "-m", "event_universe", "--init", str(world), "--output", str(run_dir)]
     if ticks is not None:
         command += ["--ticks", str(ticks)]
-    if dense_field:
-        command.append("--dense-field")
     started = time.perf_counter()
     with (directory / "log.txt").open("w", encoding="utf-8") as log:
         log.write(" ".join(command) + "\n")
@@ -121,7 +115,6 @@ def run_series(
     *,
     jobs: int | None = None,
     ticks: int | None = None,
-    dense_field: bool = False,
     python: str | None = None,
 ) -> list[dict[str, object]]:
     """Every world in its own process, at most `jobs` at once; the rows of the
@@ -152,7 +145,6 @@ def run_series(
                     world,
                     out / world.stem,
                     ticks=ticks,
-                    dense_field=dense_field,
                     python=interpreter,
                     environment=environment,
                 ),
@@ -186,7 +178,6 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True, help="Directory of the runs and the summary")
     parser.add_argument("--jobs", type=int, help="Runs at once (default: the machine's cores)")
     parser.add_argument("--ticks", type=int, help="Override every world's duration")
-    parser.add_argument("--dense-field", action="store_true", help="Force the dense mode on every run")
     parser.add_argument("--python", help="Interpreter of the children (default: this one)")
     args = parser.parse_args()
     try:
@@ -195,7 +186,6 @@ def main() -> None:
             args.out,
             jobs=args.jobs,
             ticks=args.ticks,
-            dense_field=args.dense_field,
             python=args.python,
         )
     except ValueError as error:
