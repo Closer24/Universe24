@@ -21,7 +21,20 @@ docs/TEST_EXPECTATIONS.md ("The collision table"), written down first:
     over the six orientations of a head-on pair on a periodic 5^3 cube the
     x pair parks, the y pair turns onto x and the z pair onto y, and after
     the second collision the rest pair leaves on z, the x pair parks and the
-    y pair turns onto x: the one cycle of the class, the tie by Port order.
+    y pair turns onto x: the one cycle of the class, the tie by Port order;
+(d) no collision at a Node that holds a measured event (the model owner's
+    decision of 2026-09-19 on the physics-rule reviewer's F1(c): rays meet
+    the table there, not each other; the collision is a rule of free
+    space): the head-on pair of (c) (one number, amount 1, the phases 0 and
+    32) meeting at the Node of a measured event of `m` whose table passes
+    `light` keeps its directions +x and -x (no rest ray), dwells the two
+    intervals of its line at that Node and parts at the third interval
+    (x = 5 and x = 3 on a 9 x 1 x 1 bar); the same pair at a measured
+    event whose table measures `light` in the window 32: the ray at phase
+    32 clicks with its label (-1, 0, 0) (the event's momentum), the ray at
+    phase 0 passes and goes on to x = 5, the transit line is (1, 0, 0) and
+    no ray is stranded at rest; the momentum book closes, measured +
+    transit = (0, 0, 0), the labels' sum before the interval.
 """
 
 from __future__ import annotations
@@ -203,3 +216,35 @@ def test_a_head_on_pair_parks_and_a_crowd_passes():
         assert sorted(store.direction.tolist()) == after_two[port], port
         exits.append(tuple(sorted(store.direction.tolist())))
     assert sorted(set(exits)) == [(0, 1), (2, 3), (6, 7)]
+
+
+def test_no_collision_at_a_node_that_holds_a_measured_event():
+    """(d)."""
+    lamp = {"position": [0, 0, 0], "family": "light", "amount": 4, "fixed": True}
+    pair = [ray([3, 0, 0], [1, 0, 0]), ray([5, 0, 0], [-1, 0, 0], phase=32)]
+    families = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
+    window = {"rule": "measure", "phase_window": 32}
+    for table, momentum, transit, rows_after in (
+        ({"light": "pass"}, [0, 0, 0], [0, 0, 0], [(2, 5), (3, 3)]),
+        ({"light": window}, [-1, 0, 0], [1, 0, 0], [(2, 5)]),
+    ):
+        taker = {"position": [4, 0, 0], "family": "m", "amount": 4, "fixed": True, "table": table}
+        world = bar([9, 1, 1], {"y": "periodic", "z": "periodic"}, pair)
+        world["families"] = families
+        world["measured"] = [lamp, taker]
+        simulation = RaySimulation(parse_ray_world(world))
+        light = simulation.stores[1]
+        assert simulation.books()["momentum"]["transit"] == [0, 0, 0]
+        simulation.step()
+        assert simulation.books()["balanced"]
+        rows = sorted((int(light.direction[i]), int(light.node[i])) for i in range(light.size))
+        assert rows == sorted((d, light.flat((4, 0, 0))) for d, _ in rows_after)
+        assert not (light.direction < 2).any()
+        assert simulation.measured[2].momentum == momentum
+        books = simulation.books()
+        assert books["momentum"]["transit"] == transit and books["momentum"]["measured"] == momentum
+        simulation.step()
+        simulation.step()
+        assert simulation.books()["balanced"]
+        rows = sorted((int(light.direction[i]), int(light.node[i])) for i in range(light.size))
+        assert rows == sorted((d, light.flat((x, 0, 0))) for d, x in rows_after)

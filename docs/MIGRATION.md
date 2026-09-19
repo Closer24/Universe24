@@ -6,6 +6,55 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The push as one form, the one label and the affordable amount, on 2026-09-19 (the night)
+
+The physics-rule review of the law of the ray (its findings F1, F2, F3, F7)
+and the model owner's proposal 2 ("2 with the physicist"), implemented on
+the branch `claude/universe24-new-3ytqde` ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+notes 18 to 21). Nothing physical changes on the registered runs (the
+series C, series 7 and Bell records are identical byte for byte,
+[validation](VALIDATION.md)); what changes is where the momentum is read
+and what the record carries.
+
+- **The record of a free family's ray gains two columns**, `charge` and
+  `mass` (the emitter's charge and its held content of the family at the
+  ray's birth, the factor of the electric push), on `NatureBeam`, in the
+  store (`RayStore.append` requires them; the merge compares them) and in
+  `state.json` (on a free family's rows only). A paid family's rows carry
+  0 and 0. A declared ray in transit of a free family takes the charge and
+  the declared amount of the measured event its number names.
+- **The lookup of the emitter by number is deleted**: `push_of` (the three
+  branches and `world.measured[number - 1]`) is replaced by `push_form`,
+  the one bilinear form over the arriving rays; `RayWorld.content_lcm` and
+  the refusal "the charged events' denominator exceeds the bounded integer"
+  are gone (no lcm: the electric part is `sign x by_clock(age_A, |V q_A
+  q_B|, M_B)` per emitter factor, equal integer by integer to the lcm
+  form).
+- **No collision at a Node that holds a measured event** (`nature_beam`
+  step 3, forward and inverse). A world in which rays of one number met
+  head-on exactly at a measured event's Node collided there before; now
+  they meet the table with their directions as they arrived.
+- **The one label**: the click's momentum, the face click's, the recoil of
+  a release and of a re-emission and the transit line are all
+  `momentum_labels` (`RayStore.labels` calls it); the `home` record's
+  `push` is the labels' sum of what came home for a paid family (was
+  `[0, 0, 0]`), and the emitter's momentum takes it in at the home and
+  gives it back at the re-creation.
+- **The affordable amount**: `RECORD_AMOUNT_BOUND` (261123) bounds the
+  amount a detector Node or a face clicks of one family in one interval;
+  a larger set refuses the run with `OverflowError` naming the Node or the
+  face and the sum (before, the record's int64 products wrapped silently
+  beyond 2^50). Every reduction of the law is exact (`exact_sum`,
+  `exact_column_sums`; the merged amounts; `label_weights` checked before
+  its product).
+- **Tests**: `tests/test_ray_push.py` (new: the form, the sign, the
+  cancellation, the fractional floor, a paid emitter, a fan emitter, the
+  one label), `test_ray_collision.py` (d), `test_ray_detector.py` (e).
+- **Series D** is re-registered under this engine with the momenta
+  re-derived for the label's magnitude (`examples/events/orbit/`, p = 11,
+  15, 23 in place of 3, 5, 9; `tools/orbit_readings.py` measures C
+  against m q L / (2 pi r), L the fan's mean |D|).
+
 ## The ray is NatureBeam, on 2026-09-19 (the night)
 
 The model owner renamed the ray's record and its one function: the record

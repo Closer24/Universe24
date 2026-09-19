@@ -26,7 +26,8 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_ray_bijection.py`, `tests/test_ray_detector.py`,
 `tests/test_ray_reemission.py`, `tests/test_ray_clock.py`,
 `tests/test_ray_window.py`, `tests/test_ray_world_parsing.py`,
-`tests/test_ray_worlds.py` ([expectations](TEST_EXPECTATIONS.md)). The
+`tests/test_ray_worlds.py`, `tests/test_ray_push.py`
+([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
 ## Per-axis board topology (2026-09-19 implementation amendment)
@@ -92,11 +93,14 @@ is not stored, it is amount x content x D[direction] for a paid family and
 amount x D[direction] for a free one (its unit carries no content). The Node holds nothing
 between intervals but the rays present at it and the measured event there.
 The law of one interval at one Node is `nature_beam` ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam)):
-the walk by the flight table, the one reading, the collision by the table,
+the walk by the flight table, the one reading, the collision by the table
+(at the Nodes of free space: none at a Node that holds a measured event),
 the measured event's table (`read`, `measure`, `rerelease`, `pass`, each
-gated by the detector's threshold and its window), the self-creations (the
-release, the lamp, what came home and what is re-emitted) and the merge of
-identical records. Every piece of logic exists once: one reading
+gated by the detector's threshold and its window; the push one bilinear
+form over the arriving rays' labels, `push_form`, the emitter's factor
+read off the rays' records, nothing looked up by number), the
+self-creations (the release, the lamp, what came home and what is
+re-emitted) and the merge of identical records. Every piece of logic exists once: one reading
 (`read_arrivals`) takes the amount-weighted moments of order 0, 1 and 2 of
 the direction vectors of a Node's arrivals (the model owner, 2026-09-19:
 valid for a fan as for the six headings; a ray that did not step has the
@@ -158,17 +162,32 @@ what came home or was re-released and left again) = current (the rays in
 the store) + escaped + absorbed (home, the clicks, the re-releases; what
 came home is on the absorbed line until it leaves again); the content line
 (`content`), the content carried in transit (amount x content per unit),
-the same identity; and the momentum lines, a report and not a balance: the
-measured line the sum of the pushes taken and the recoils, the transit line
-the sum over the store of amount x content x D[direction] (amount x
-D[direction] for a free family, whose unit carries no content), the escaped
-line the faces' sums. Every escaped line is the sum over the open faces of the face
-detectors' clicks (`face_detectors`). The measured line is bounded before
-assignment (`nature_beam.bounded`): a measured event's momentum after a push
-or a recoil, the push taken, its content after a click and what waits to
-be created again are checked against 2^62 - 1 (`world.MOMENTUM_BOUND`), and
-a value beyond it refuses the run with `OverflowError` naming the measured
-event, its Node and the quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)).
+the same identity; and the momentum lines: the measured line the sum of
+the pushes taken, the labels of what clicked or came home and the recoils,
+the transit line the sum over the store of the one label of every row
+(`nature_beam.momentum_labels`: amount x content x D[direction] for a paid
+family, amount x D[direction] for a free family, whose unit carries no
+content), the escaped line the faces' sums. For a paid family the three
+lines close over the click, the re-emission and the home (measured +
+transit + escaped constant; a `read` of a paid ray is a report of its
+label, the ray going on); for a free family the push is the form of
+[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 4
+(gravity and electricity) and its release takes no recoil, so its lines
+are a report and not a balance. Every escaped line is the sum over the
+open faces of the face detectors' clicks (`face_detectors`). Every sum of
+the books is exact (`nature_beam.exact_sum`, `exact_column_sums`: in the
+register when no partial sum can leave it, in Python integers otherwise).
+The measured line is bounded before assignment (`nature_beam.bounded`): a
+measured event's momentum after a push or a recoil, the push taken, its
+content after a click and what waits to be created again are checked
+against 2^62 - 1 (`world.MOMENTUM_BOUND`), and a value beyond it refuses
+the run with `OverflowError` naming the measured event, its Node and the
+quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law));
+the amount a detector Node or a face clicks of one family in one interval
+is checked against the affordable amount `nature_beam.RECORD_AMOUNT_BOUND`
+(261123; [RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors))
+before the record's products are formed, refused naming the Node or the
+face and the sum.
 
 **The world** (`events/world.py`; the keys of [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
 `law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K`; `N` (64 by
@@ -245,7 +264,10 @@ names the face, `measured` None for a ray or the number of the measured
 event that stepped off. `state.json`, through
 `snapshot_writer.write_snapshot`, carries `"law": "rays-v1"`, the
 `boundary`, the measured events, the detectors and every Node with rays
-(its rows: direction, age, phase, number, amount, content per family).
+(its rows: direction, age, phase, number, amount, content per family, and
+on a free family's rows `charge` and `mass`, the emitter's factor of the
+electric push carried on the record since the night of 2026-09-19,
+[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
 `tools/run_series.py` runs these worlds as any.
 
 ## The law of events (`events-v1`)

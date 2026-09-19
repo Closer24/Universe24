@@ -105,7 +105,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from event_universe.core.integer import bounded_gcd, checked_work
+from event_universe.core.integer import bounded_gcd
 from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 RAYS_LAW = "rays-v1"
@@ -370,17 +370,6 @@ class RayWorld:
             ):
                 found.append(number)
         return tuple(found)
-
-    def content_lcm(self) -> int:
-        """The denominator of the electric reading, the least common multiple of
-        the declared contents of the charged measured events (1 without any)."""
-        result = 1
-        for entry in self.measured:
-            if entry.charge:
-                result = checked_work(result * entry.amount) // bounded_gcd(result, entry.amount)
-        if result > AMOUNT_BOUND:
-            raise ValueError(f"{RAYS_LAW}: the charged events' denominator exceeds the bounded integer")
-        return result
 
     def detector_of(self, position: Address3) -> int | None:
         """The index of the detector a Node belongs to, if any."""
@@ -904,5 +893,4 @@ def parse_ray_world(document: object) -> RayWorld:
         in_transit,
         detectors,
     )
-    world.content_lcm()
     return world

@@ -11,6 +11,32 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The push as one form, the one label, the affordable amount and series D re-registered - 2026-09-19 (the night)
+
+The worktree of `claude/universe24-new-3ytqde` on the tip `c5eb5868` (the
+moments change, the NatureBeam rename, the width of the push and series
+D). The physics-rule review's F1 and F2 corrected, F3 and F7 dissolved,
+proposal 2 implemented ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+notes 18 to 21; [migration](MIGRATION.md#the-push-as-one-form-the-one-label-and-the-affordable-amount-on-2026-09-19-the-night)).
+Runtime source SHA-256 `cc7815756f50640ad10582af461cf58267c424eb8182177e580d0b5eedbd4769`; the tip's `70763568dc216a8b7a0ecdfac36654cdf1e1da80bb6b20d34eccfac2d8c62c8e`. Python 3.14.0rc2,
+headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_ray_push.py` (new) | 5 passed: the reviewer's world (every push -5 V + by_clock(age, 3 V, 4), `pushed` (-340, 0, 0)), the sign, the uncharged probe, the cancellation q_A q_B = M_B (push 0 exactly), the fractional floor (-170, 0, 0), a paid emitter (the label sum, the lamp's momentum + transit + escaped = 0 at every tick), a fan emitter ((-40, -20, 0) per read), the one label at the click, the re-emission and the home |
+| `tests/test_ray_collision.py` (d), `tests/test_ray_detector.py` (e) | 4 and 5 passed: no collision at a measured event's Node (the head-on pair passes, the windowed click takes its label, nothing at rest); the affordable amount 261123 (a row at the bound records 2139119616^2, 261124, a sum of two rows, 2^52 and a face refused naming the sum) |
+| The ray suite and the consumers, `python tools/check.py --base HEAD` | ruff lint and format clean, mypy on the changed sources, every selected test passed |
+| Twenty-one coupling runs, `python tools/run_series.py --jobs 4`, on both sources | every `events.jsonl` identical byte for byte between the tip's source and the new one (the series 7 `read` records row by row: the one form equals the three-branch push integer by integer); `tools/coupling_readings.py`: 392 criteria passed, 0 failed, 19 inside, 9 outside on both, the printed readings equal line by line but the fingerprint; `state.json` differs on the coupling worlds by the two columns `charge`, `mass` of the free family's rows, on nothing else |
+| Ten Bell runs on both sources | `events.jsonl` and `state.json` identical on all ten; `tools/bell_chsh.py`: 326 criteria passed, 0 failed on both, every printed line equal but the fingerprint and the order Python prints a set in |
+| The affordable amount on the registered worlds | the coupling faces click 174762 units per interval (the 2^17 beam and the two z rays re-emitted in six shares), inside the bound; the first draft of the bound (2^17) refused them and was corrected to the derived value before the register was read |
+| Six orbit runs (series D re-registered), `python tools/run_series.py --jobs 4` | all completed in 5.7 to 6.5 s, the books balanced at every tick; `tools/orbit_readings.py`: 12 record checks passed, 0 failed, exit 0; no orbit closes at any width (S = 1 and 8 zero reads, S = 32 at r = 12 one eccentric turn in 229 intervals returning two Links off, S = 32 at r = 24 falls in); registered in [D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19) |
+| `python tools/check.py --full` | ruff lint and format on 115 files clean, mypy on 21 source files clean, 437 passed in 17 s on four workers |
+
+The runs establish that the one form is the earlier computation on every
+registered world and that the label is read consistently; they establish
+no physical law. The orbit readings are research results, registered and
+not moved.
+
 ## The table from the keys and the moments: the runs unchanged - 2026-09-19 (the night)
 
 Base `636f391c` on `claude/universe24-new-3ytqde` (the law of the ray with

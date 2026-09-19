@@ -12,19 +12,29 @@ primitive vectors of a square), one shell of `directions` rays every
 gives one ray per direction at the ages 10, 20, ...), so the net emission
 into the plane is q = directions x RATE units per interval; and a light
 free probe of content 1 at radius r on +x with the tangential momentum
-[0, p, 0] chosen for a circular orbit under the measured push law (the
-derivation in README.md, written before the runs): with the push per
-interval m x q x C / (2 pi r) toward the source (series C: flow x 2 pi r /
-q = 1.00 +- 0.10, C = 1 taken) and the speed p / (S x m + p) per axis, a
-circular orbit needs p^2 / (S m + p) = m q C / (2 pi), so with n = p / m
+[0, p, 0] chosen for a circular orbit under the push law as it reads (the
+derivation in README.md, written before the runs). The push a free probe
+takes from an arriving fan ray is its label, -m x amount x D[direction]
+(RAY_LAW section 2; the one label since the night of 2026-09-19), whose
+magnitude is |D| per unit and not 1: a line of direction D crossing the
+probe's ring delivers |D| units of momentum per ray, so the inward label
+flux through a ring is q x L per interval with L the fan's mean |D|
+(`LABEL_MAGNITUDE`, 5.194 for this fan of 120 directions; 1 on the six
+headings of series C). With the push per interval m x q x L x C / (2 pi r)
+toward the source (series C: flow x 2 pi r / q = 1.00 +- 0.10, C = 1
+taken) and the speed p / (S x m + p) per axis, a circular orbit needs
+p^2 / (S m + p) = m q L C / (2 pi), so with n = p / m
 
-    n = (A + sqrt(A^2 + 4 S A)) / 2,  A = q C / (2 pi),
+    n = (A + sqrt(A^2 + 4 S A)) / 2,  A = q L C / (2 pi),
 
 independent of r (a 1 / r force on the plane: the same speed at every
 radius, T proportional to r, k = 2). The worlds: `s<S>_r<r>` for S in 1, 8,
 32 and r in 12, 24, the momentum the nearest whole number to n (the grain
-of the push: whole units of m per arriving unit of flow). `suspension` 0:
-the clock's count is not read, the push law alone moves the probe.
+of the push: whole labels per arriving ray). `suspension` 0: the clock's
+count is not read, the push law alone moves the probe. Until the night of
+2026-09-19 the derivation took L = 1 (the push was the unit Link of a
+ray's last step); the worlds of that first registration (p = 3, 5, 9) are
+in git at the D1 commit.
 
     python examples/events/orbit/make_worlds.py
 """
@@ -75,12 +85,16 @@ FAN = fan(FAN_RADIUS)
 HEADINGS = {(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0)}
 DECLARED = [v for v in FAN if tuple(v) not in HEADINGS]
 EMISSION = len(FAN) * RATE
+# The mean magnitude of a label of the fan, the mean |D| over its
+# directions: the push a fan ray gives is its label, |D| units of momentum
+# per unit of amount (RAY_LAW section 2 and section 10, note 21).
+LABEL_MAGNITUDE = sum(math.hypot(a, b) for a, b, _ in FAN) / len(FAN)
 
 
 def orbit_momentum(width: int) -> tuple[float, int]:
     """The circular-orbit momentum in units of the probe's content, from
     the derivation of the README: the real root and the nearest whole."""
-    a = EMISSION * FLOW_CONSTANT / (2 * math.pi)
+    a = EMISSION * LABEL_MAGNITUDE * FLOW_CONSTANT / (2 * math.pi)
     n = (a + math.sqrt(a * a + 4 * width * a)) / 2
     return n, max(1, round(n))
 
