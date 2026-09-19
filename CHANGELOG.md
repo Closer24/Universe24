@@ -17,7 +17,12 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   orchestrator's readings flagged, and the paragraphs it changes carry a dated
   sentence. Nothing of it is implemented: [Highlights coverage](docs/HIGHLIGHTS_IMPLEMENTATION.md),
   [ENGINE.md](docs/ENGINE.md), [PROJECT_STATUS.md](docs/PROJECT_STATUS.md) and the
-  README say so. No code changes.
+  README say so. No code changes. The same day: every event carries momentum
+  from birth ("By the momentum"); no return to the source; the suspension is a
+  count the event carries; fifteen principles recorded after the law with the
+  owner's decision on each, the fixing mechanism of their points 8 to 12 not
+  adopted; what follows for Highlights and the engine, and the tests of the
+  engine of events in 5.5.
 
 ### One engine (2026-09-19)
 

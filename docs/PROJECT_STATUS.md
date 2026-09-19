@@ -13,7 +13,12 @@ generic computation; a single event leaves whole in one direction and does not
 spread; the wait is a Port's exit suspended by what is present. The engine below
 is the engine of the law of the shadow, which parks, counts and carries what this
 law removes ([Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md)); its rewrite is
-the next task, with tests of the code only.
+the next task, with tests of the code only. The same day: every event carries
+momentum from birth and a single event goes by it; no return to the source; the
+suspension is a count the event carries and delays what is behind it; fifteen
+principles recorded after the law with the owner's decision on each, the fixing
+mechanism (a candidate, a returning report, a confirmation) not adopted; what
+follows for the engine is listed there and the tests in 5.5.
 
 1. **The law of the shadow** (Highlights 5.4, the paragraph "The law of the shadow: only
    shadows and events", the model owner's words of the evening of 2026-09-18; the

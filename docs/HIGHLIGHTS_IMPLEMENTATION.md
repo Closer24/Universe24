@@ -37,4 +37,10 @@ of its release, pool, push, lamp and clock (`shadow/engine.py`). What the law
 asks instead, whole units placed by the conservations in the interval, a Port's
 exit suspended by what is present, and one word, event, for what is in transit
 and what is measured, is not written; what will show it is tests of the code on
-minimal boards, not runs.
+minimal boards, not runs (Highlights 5.5, "The engine of the law of events: what
+the tests show"). The decisions of the same day the engine must carry: every
+event carries momentum from birth and a single event goes by it; no return to
+the source; the suspension a count the event carries, the event behind it
+delayed; the clock in the record and every rate read off it (for the owner to
+confirm); the fifteen principles recorded after the law, the fixing mechanism
+of their points 8 to 12 not adopted.
