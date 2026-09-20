@@ -95,6 +95,7 @@ def execute_ray_run(
         "release": list(world.release),
         "suspension": list(world.suspension),
         "width": world.width,
+        "age_bound": world.age_bound,
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {

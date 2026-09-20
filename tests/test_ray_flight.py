@@ -1,7 +1,8 @@
 """The flight of a ray under the law of the ray (docs/RAY_LAW.md, section 3):
 one speed for every direction, 1 / sqrt 3, on the digital line of its
-momentum, at most one Link per interval, the age modulo the direction's
-period; a lone unit is straight and unchanged; the board's faces open or
+momentum, at most one Link per interval, the age whole on the record and
+read modulo the direction's period by the flight; a lone unit is straight
+and unchanged; the board's faces open or
 periodic (the wrap, the stub of extent 1). The expected integers of
 docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
 
@@ -99,6 +100,8 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
+        # The age bound a board periodic on every axis must declare.
+        "age_bound": 256,
         "directions": directions,
         "families": [{"name": "light", "quantum": 1, "phase_per_link": per_link}],
         "measured": [{"position": [0, 0, 0], "family": "light", "amount": 1, "fixed": True}],
@@ -136,7 +139,7 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
             x, y, z = store.coordinates(store.node)
             assert [int(x[0]), int(y[0]), int(z[0])] == expected.tolist(), (vector, tau)
             assert int(store.direction[0]) == index and int(store.phase[0]) == 17
-            assert int(store.age[0]) == (tau + 1) % int(table.period[index])
+            assert int(store.age[0]) == tau + 1
     turned = {
         **periodic_cube(SLIT_DIRECTIONS, per_link=3),
         "in_transit": [

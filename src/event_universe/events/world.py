@@ -25,7 +25,15 @@ the model owner, 2026-09-19):
   event of content M with the momentum component p on an axis steps one
   Link per (S x M + p) / p self-creations on that axis, an integer from 1
   (the default: the rule as it was, one Link per (M + p) / p); 0 or a
-  negative width is refused;
+  negative width is refused; `age_bound`, the largest age a ray may carry
+  (an integer from 1; the age is the count of intervals since the measured
+  event that created the ray, kept whole on the record since 2026-09-20 so
+  that a measured event may read it; RAY_LAW section 2): on a board with an
+  open axis it is by default twice the flight bound, the age at which every
+  straight ray has left a board of that diameter (`flight_bound`); on a
+  board periodic on every axis, which no ray leaves, it is required and
+  refused if absent; a declared ray's `age` must not exceed it, and a run
+  in which a ray on the board carries an age beyond it is refused;
 - `directions`, optional: integer vectors beyond the six headings that a
   lamp, a measured event or a ray in transit may name; the world's direction
   table `D` is the two rest vectors (0, 0, 0) ("here a", "here b"), the six
@@ -77,14 +85,21 @@ the model owner, 2026-09-19):
   self-creations whose clock phase falls in the window;
 - `reads` on a table entry: the component of the Node's one reading that
   the response's record carries, `scalar` (the presence), `outside`, `here`,
-  `vector` (the net flow) or `tensor` (the traceless part); `vector` by
-  default on `read`, `scalar` otherwise. No rule changes with it: every
-  coupling reads the one reading, the moments of the arrivals (`nature_beam.read_arrivals`);
+  `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
+  moment, sum amount x age over the set: a reading aid of the measured
+  event, the external thing, since 2026-09-20; the board's rules never read
+  the age whole); `vector` by default on `read`, `scalar` otherwise. No
+  rule of the board changes with it: every coupling reads the one reading,
+  the moments of the arrivals (`nature_beam.read_arrivals`); the one thing
+  the key selects beside the record is what the clock counts
+  (`measured.count_component`): the age moment on an entry that reads
+  `age`, the presence on every other entry;
 - `in_transit`, optional: rays at the start, each with a `position`,
   `family`, `number` (the measured event whose continuation it is),
   `direction` (a vector of the world's table or its index), `amount`,
-  `phase` and optionally `age`, booked as initial content of the transit
-  line; the default is an empty board that the releases fill;
+  `phase` and optionally `age` (0 through `age_bound`), booked as initial
+  content of the transit line; the default is an empty board that the
+  releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
   its `positions` (Nodes of measured events, each in at most one detector)
   and its `threshold` (1 by default): the smallest amount of a family the
@@ -98,14 +113,15 @@ Refused, naming the key: `kind` on a family (the quantum decides it),
 `max_active_owners`, `port_map`, `output`, `capacity`, `groups`, a direction
 that is not primitive, a component beyond P, a direction the world does not
 declare, a label `P x content x amount` beyond 2^62 - 1 on a declared ray or
-a lamp's release, `phase_per_link` outside 0 .. N - 1.
+a lamp's release, `phase_per_link` outside 0 .. N - 1, `age_bound` below 1
+or absent on a board periodic on every axis, a declared `age` beyond it.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-from event_universe.core.integer import bounded_gcd
+from event_universe.core.integer import bounded_gcd, integer_root
 from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
 RAYS_LAW = "rays-v1"
@@ -113,8 +129,15 @@ LAW_VALUE = "rays"
 TABLES = ("read", "measure", "rerelease", "pass")
 # The quantum of a free family: its unit costs nothing and carries no content.
 FREE_QUANTUM = 0
-# The components of the one reading a table entry may select for its record.
-READS = ("scalar", "outside", "here", "vector", "tensor")
+# The components of the one reading a table entry may select for its record;
+# `age` is the age moment, the reading aid of the measured event (the
+# external thing) that also decides what its clock counts.
+AGE_READS = "age"
+READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS)
+# The time resolution of the flight table (RAY_LAW section 3): the turn of a
+# direction is T_d = isqrt(3 |v|^2 Q^2) and a ray makes S_1 Manhattan steps
+# per T_d / Q intervals in the mean.
+Q = 64
 MAX_PHASE_STEPS = 4096
 # The bound of an amount, a content, a clock and a momentum component of this
 # law: the 64-bit work register with a bit to spare for one more sum.
@@ -168,6 +191,7 @@ WORLD_KEYS = {
     "release",
     "suspension",
     "width",
+    "age_bound",
     "directions",
     "direction_bound",
     "families",
@@ -334,6 +358,7 @@ class RayWorld:
     release: tuple[int, int]
     suspension: tuple[int, int]
     width: int
+    age_bound: int
     directions: tuple[Vector, ...]
     direction_bound: int
     families: tuple[FamilyDefinition, ...]
@@ -485,6 +510,46 @@ def _directions(value: object, label: str, table: tuple[Vector, ...]) -> tuple[i
     if len(set(found)) != len(found):
         raise ValueError(f"{RAYS_LAW}: {label} repeats a direction")
     return found
+
+
+def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
+    """The age at which every straight ray has left an open board of this
+    shape: the longest Manhattan flight on the board is D = X + Y + Z - 2
+    Links (inside and out), a ray of direction v makes S_1 = |a| + |b| + |c|
+    steps per period of its line and the least tau with m(tau) >= M steps
+    is at most ceil(M x T_d / (S_1 Q)) (RAY_LAW section 3), so the exiting
+    walk of a ray of direction v is at age at most ceil(ceil(D / S_1) x
+    T_d / Q); the largest over the table's moving directions. A rest
+    direction never moves and a collision or a periodic axis may keep a ray
+    longer: the bound is exact for the straight flight alone."""
+    diameter = shape[0] + shape[1] + shape[2] - 2
+    largest = 1
+    for vector in table:
+        manhattan = sum(abs(component) for component in vector)
+        if manhattan == 0:
+            continue
+        turn = integer_root(3 * sum(component * component for component in vector) * Q * Q)
+        periods = -(-diameter // manhattan)
+        largest = max(largest, -(-(periods * turn) // Q))
+    return largest
+
+
+def _age_bound(
+    value: object, shape: Address3, periodic: tuple[bool, bool, bool], table: tuple[Vector, ...]
+) -> int:
+    """The largest age a ray may carry: declared, or twice the flight bound
+    on a board with an open axis (the slack of one collision or one wrap of
+    a periodic axis), required on a board periodic on every axis, which no
+    ray leaves."""
+    if value is not None:
+        return _integer(value, "age_bound", 1)
+    if all(periodic):
+        raise ValueError(
+            f"{RAYS_LAW}: age_bound is required on a board periodic on every axis: no ray "
+            "leaves it, so the largest age a ray may carry (the bound of the store) must be "
+            "declared"
+        )
+    return 2 * flight_bound(shape, table)
 
 
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
@@ -748,6 +813,7 @@ def _in_transit(
     measured: tuple[MeasuredDefinition, ...],
     phase_steps: int,
     table: tuple[Vector, ...],
+    age_bound: int,
 ) -> tuple[TransitDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{RAYS_LAW}: in_transit must be a list")
@@ -777,7 +843,7 @@ def _in_transit(
                 direction,
                 amount,
                 _integer(obj.get("phase", 0), f"{label}.phase", 0, top),
-                _integer(obj.get("age", 0), f"{label}.age", 0),
+                _integer(obj.get("age", 0), f"{label}.age", 0, age_bound),
             )
         )
     return tuple(found)
@@ -871,9 +937,12 @@ def parse_ray_world(document: object) -> RayWorld:
     width = _integer(obj.get("width", 1), "width", 1)
     bound = _integer(obj.get("direction_bound", DEFAULT_DIRECTION_BOUND), "direction_bound", 1, 4096)
     table = _direction_table(obj.get("directions", []), bound)
+    age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
     families = _families(obj["families"], phase_steps)
     measured = _measured(obj["measured"], shape, families, clock, phase_steps, release, table)
-    in_transit = _in_transit(obj.get("in_transit", []), shape, families, measured, phase_steps, table)
+    in_transit = _in_transit(
+        obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
+    )
     detectors = _detectors(obj.get("detectors", []), shape, measured)
     world = RayWorld(
         model_id,
@@ -886,6 +955,7 @@ def parse_ray_world(document: object) -> RayWorld:
         release,
         suspension,
         width,
+        age_bound,
         table,
         bound,
         families,

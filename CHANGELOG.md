@@ -5,6 +5,29 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The age of a ray kept whole and read by the measured event (2026-09-20)
+
+- The model owner's "go for it" on the clock beside a mass (2026-09-19,
+  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 24): the ray's age, the count of intervals since the measured event
+  that created it, is kept whole on the record (the flight reads it modulo
+  the direction's period, the collision never; the board's step is
+  unchanged, `tests/test_ray_age.py` (e)); the one reading gains the age
+  moment `sum amount x age` (`Reading.age`, `reads: "age"`), a reading aid
+  of the measured event, the external thing; the clock of a table entry
+  that reads `age` counts it in place of the presence
+  (`measured.count_component`, `Measured.counted`), so a clock beside a
+  mass reads (M / r^2) x r = M / r in space while the push keeps reading
+  the flow, M / r^2 (Einstein's pair from two readings of the same rays);
+  the world key `age_bound` bounds the age (twice the flight bound by
+  default on a board with an open axis, required on a board periodic on
+  every axis; a ray beyond it refuses the run, nothing on the board
+  changed). Every world without the key reads the same integer by integer;
+  the all-periodic test worlds declare the key. Tests: `test_ray_age` (a)
+  to (e) ([expectations](docs/TEST_EXPECTATIONS.md#the-age),
+  [migration](docs/MIGRATION.md#the-age-of-a-ray-kept-whole-and-read-by-the-measured-event-on-2026-09-20)).
+  The experiment in space is series E ([EXPERIMENTS.md](docs/EXPERIMENTS.md)).
+
 ### The detector's record exact, never refused (2026-09-19, after the batching)
 
 - The night's affordable amount (`RECORD_AMOUNT_BOUND` = 261123, the
