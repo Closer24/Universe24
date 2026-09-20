@@ -49,6 +49,8 @@ kept, their pins the law of events').
 | `test_weak_readings.py` | The weak-force readings tool (series J) reads the runner's record and the flight table: on a short bar run through the runner, the first reader's 3 clicks of 192 arrivals, the far detector's 151, the first-arrival ages 13 and 51; on the toy of the transformation with a shell of 62 readers, the `become` line and the shell's one click ([below](#the-width-of-a-window), [the transformation](#the-transformation)) | new (2026-09-20, series J2; (b) with series J1) |
 | `test_become.py` | The transformation `become`, `weak-v1`: the clock trigger at the self-creation whose clock reaches `at`, the products born as a re-release is with the recoil over all of them, the `became` line and the charge line exact; the click trigger within a window and the entry consumed; the crowd slowing the trigger and the gate holding it; the charge line through the click of the product; the refusals and the run refused when the event cannot pay ([below](#the-transformation)) | new (2026-09-20, the model owner's "go on everything", item (1)) |
 | `test_w_world.py` | The W world, the exchange at one Link: the W (paid, charge -7344 per unit, lifetime 1) thrown at the neutron's key and measured by the proton one interval later, its content and charge a neutron's; the W into empty space on the border; the click trigger on the proton refused with the design's sketch and balanced with a positive product; the refusals ([below](#the-w-world)) | new (2026-09-20, the model owner's "go on everything", item (3)) |
+| `test_nature_beam_window_reads.py` | A table entry's window read from a reading (`phase_window` `{"reads": ..., "offset": ...}`): the centre the setting ray's phase plus the offset, a ray inside clicking with the `window` on its record and a ray outside passing with `window` and `reads`; the edge case of no setting ray (a `pass` naming `window` None) and of an antiphase pair; the parsing and the refusals ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
+| `test_bell_choosers.py` | The reader of the Bell run with the choosers on the GameBoard (`tools/bell_choosers.py`) reads the engine on a minimal case run through the runner: the offsets off `FlightTable.manhattan_steps`, one bin at fixed settings with E the triangle exactly, the written windows reading the same and merging, the CHSH sums on synthetic bins ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
 | `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_nature_beam_worlds.py` | The worlds of the Beam Law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-beam-law)) | `test_event_worlds` (a, d) |
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
@@ -336,10 +338,20 @@ declares the reading `wave` (the default since 2026-09-20; from
 - (d) an emitter inside a detector reads no threshold: a lamp of light
   (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases one
   unit per heading per interval, its content 18 then 12; a reader of `m`
-  (content 4) at threshold 4 passes 1 ray (the square 1) and reads 2 (the
-  square 4), pushed by -M x 64 x 2 = (-512, 0, 0) (re-pinned on
-  2026-09-20 from 3 passed and 4 read, (-1024, 0, 0); before that from
-  (-16, 0, 0)).
+  (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
+  -M x 64 x 4 = (-1024, 0, 0): a `read` keeps the amount gate under both
+  readings (re-pinned on 2026-09-20 to the pointer gate, 1 passed and 2
+  read, (-512, 0, 0), and pinned back the same day by the closing gate's
+  finding F1, test (k); before that from (-16, 0, 0)).
+- (k) the pointer gate is the click's (the closing gate's finding F1,
+  2026-09-20; BEAM_LAW note 32): two free rays of one number, amount 1
+  each, into a fixed reader of content 5 with the keys' own `read` push it
+  by -5 x 2 x 64 = (-640, 0, 0) in antiphase under the default `wave` set,
+  in antiphase under a declared `beam` set and in phase under `wave`, with
+  no `pass` record and the rays going on (two identical records at one
+  Node one record of amount 2); the amount gate still holds on a `read`
+  (one ray at a threshold of 2 passes); the same rays into a `measure`
+  counter under `wave` pass (test (i)).
 - (e) the record is exact and never refused (BEAM_LAW section 5 and note
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the
@@ -843,6 +855,19 @@ DESIGN.md test (f) and section 4.4):
   read) the labels after 40 intervals 39 x 300 805 525 696 =
   11 731 415 502 144 on the proton and -39 x 300 805 534 720 =
   -11 731 415 854 080 on the neutron, no record.
+- (e) the frame's order, a declared tie (the closing gate's genericity
+  probe, 2026-09-20, G1): two phase-less free bodies of content 1 at
+  (2, 1, 1) with momentum (64, 0, 0) and at (3, 1, 1) with (-192, 0, 0),
+  `width` 1, `release` [0, 1], three intervals on an open 6 x 3 x 3
+  GameBoard. Declared in that order (a is 1, b is 2): at tick 2 a steps
+  onto b and hands 64 (a 0, b -128), then b steps onto a and hands -128
+  (b 0, a -128), and a steps to (1, 1, 1) at tick 3: a ends at (1, 1, 1)
+  with (-128, 0, 0), b at (3, 1, 1) with 0, two `contact` records at tick
+  2. Declared the other way round (b is 1, a is 2): b steps onto a and
+  hands -192 (b 0, a -128), one `contact`; a then steps to (1, 1, 1) at
+  tick 2 and (0, 1, 1) at tick 3, ending with (-128, 0, 0). The sum of
+  the momenta is (-128, 0, 0) and the books balanced in both; the holder
+  and the positions follow the declaration order.
 
 ## The re-emission
 
@@ -1276,7 +1301,7 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
 ## The transformation
 
 `tests/test_become.py` (docs/BEAM_LAW.md, section 2 and section 10 note
-34 (iii); the model owner, 2026-09-20, "go on everything", item (1): the
+35 (iii); the model owner, 2026-09-20, "go on everything", item (1): the
 transformation `become` with the identity `weak-v1`; the physicist's
 design, WEAK.md sections 2 and 4.3). The toy of the design: `n` (free, no
 phase circle, content 7, charge 0), `p` (free, charge [1, 5]: +1 on a
@@ -1372,7 +1397,7 @@ expectation outside.
 
 ## The W world
 
-`tests/test_w_world.py` (docs/BEAM_LAW.md, section 10 note 34 (iv); the
+`tests/test_w_world.py` (docs/BEAM_LAW.md, section 10 note 35 (iv); the
 model owner, 2026-09-20, "go on everything", item (3): the W world after
 the transformation; the physicist's design, WEAK.md 1.1 and 4.5). A bar
 of 7 x 1 x 1, K 2^20, N 64, `release` [1, 2^20] (no free release of 1839
@@ -1428,7 +1453,7 @@ outside.
 ## A paid family's charge
 
 `tests/test_paid_charge.py` (docs/BEAM_LAW.md, section 2 and section 10
-note 34 (ii); the model owner, 2026-09-20, "go on everything", item (2),
+note 35 (ii); the model owner, 2026-09-20, "go on everything", item (2),
 D-1: a paid family may declare a whole charge per unit of amount, read on
 the charge line only, the push untouched). Bars of 7 x 1 x 1, K 2^20,
 N 64, `release` [0, 1], `suspension` 0; `p` (free, charge [1, 5]: +1 on a
@@ -1470,7 +1495,7 @@ written down before the first run:
 ## The width of a window
 
 `tests/test_window_width.py` (docs/BEAM_LAW.md, section 2 and section 10
-note 34 (i); the model owner, 2026-09-20, "go on everything": the neutrino
+note 35 (i); the model owner, 2026-09-20, "go on everything": the neutrino
 first with the table-entry key `phase_width` and no change of law; the
 physicist's design, WEAK.md 1.2). The expected integers, written down
 before the first run:
@@ -1529,6 +1554,60 @@ off `flight_table`; the first reader 192 arrivals, 3 clicks (the phases 0
 of the rays born at the ticks 1, 65, 129), 189 passes; the readers at 9
 and 10 no click; the far detector 151 clicks (154 rays reach it, less the
 three of phase 0); the stride 1; the three criteria of `j2_filter` inside.
+## A window read from a reading
+
+`tests/test_nature_beam_window_reads.py` (issue #363, 2026-09-20;
+[BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+A bar of 7 x 1 x 1, N 64, K 2^20, `suspension` 0, `release` [0, 1], the
+families `light` (paid), `counter` (paid) and `s` (free, the setting),
+every measured event `fixed`; a counter at x = 3 measuring `light` through
+`{"reads": "s", "offset": 4}` and passing `s`; a measured event of `s` at
+x = 6 (the number the setting rays carry; it passes `light`) and one of
+`light` at x = 0 (the number the pair rays carry).
+
+- (a) the centre is the setting ray's phase plus the offset: a ray of `s`
+  (number 3, phase 20) and a ray of `light` (number 1, phase 30) both at
+  x = 2 on +X reach x = 3 in the first interval; the centre is 24 and
+  d = 6 is inside, so the light ray clicks at tick 1 with `window` 24 on
+  its click record, `held` [1, 1, 0], the push (64, 0, 0); a second light
+  ray of phase 45 (d = 21, outside) at x = 2 with the age 1 arrives at
+  tick 2, the setting ray still present (its second interval at x = 3: the
+  presence counts it), and passes with `window` 24 and `reads` "s", no
+  `threshold` key; the setting ray meets `pass` with no record and goes on
+  (the store holds it, the counter measured none of `s`); the numeric
+  window 24 on the same world gives the same click and pass, without
+  `window` on the click and without `reads` on the pass, the same `held`.
+- (b) no setting ray present: a light ray of phase 24 alone at x = 2
+  passes at tick 1 with `window` None and `reads` "s", no `threshold`
+  key, no click, and clicks on `face:+x` at tick 8 (five Links, m(8) = 5);
+  two setting rays in antiphase (20 and 52) arriving with the light ray at
+  tick 1 give a zero pointer, no centre, and the light ray passes the same
+  way.
+- (c) the parsing: on the `light` entry `windows` None and `window_reads`
+  (2, 4) (the family `s` at index 2, the offset 4; the other entries None),
+  the offset 0 by default, a numeric window leaving `window_reads` None;
+  refused naming the key: `reads` naming an unknown family, the entry's
+  own family (`light`) or a family without a phase circle, the form on
+  `pass`, an `offset` of 64 at N = 64, an object with the key `width`, an
+  object without `reads`, and the form on a lamp (`lamp.phase_window must
+  be an integer`).
+
+`tests/test_bell_choosers.py` (the reader of the run, the experimenter's
+rule): the design of `examples/events/bell/make_chooser_worlds.py`
+(`base`) with the two setting streams at fixed phases (the lamps' contents
+3 and 5 at `release` [1, 1], the turn 0: every `sa` row carries 20 and
+every `sb` row 44; the offsets 0 and 32) run through the runner for the
+warm-up 7 plus 64 pairs: (a) the offsets read off the record (tick - phase
+mod N, one value per counter) equal 1 + the flight age at which the pair
+ray reaches each counter off `FlightTable.manhattan_steps`, 6, 11, 13, 14;
+(b) one bin (20, 44) of 64 pairs, the counts 8, 24, 24, 8, E = -1/2 the
+triangle's 1 - 4 x 24 / 64, both marginals 1/2, 0 criteria failed; (c)
+the windows written in the file (20, 52, 44, 12) read the same bin and
+counts, the two runs merged one bin of 128 with E -1/2, the command line
+on both exit 0; (d) on synthetic bins whose E are the triangle's for 0/25
+and 8/29, `chsh_sum` 2 (None with a bin missing), `best_quadruple` 2 on
+that quadruple with the triangle 2, `signed_sums` the minus sign on each
+term in turn, `in_window` the engine's half circle.
 
 ## The world file of the Beam Law
 

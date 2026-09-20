@@ -39,7 +39,7 @@ Highlights 5.4, and applies to nothing else.
 
 - **Model identity** `beam-v1`. A world selects it with `"law": "beam"`; the
   record (`run.json`) carries `"law": "beam-v1"`. `configuration_validation`
-  reports the kind `rays`.
+  reports the kind `beam`.
 - **`events-v1` is deleted** (the owner's rule, one engine). `"law": "events"`
   is refused naming the Beam Law and pointing to MIGRATION. The engine
   package `src/event_universe/events/` keeps its name (the GameBoard's things are
@@ -125,7 +125,7 @@ World-file keys added: `"law": "beam"`; per family `charge`, since
 `[c, 1]`) or a pair `[n, d]` with d from 1 (a measured event's charge is
 rho times its content, a report; on a paid family since 2026-09-20 the
 whole charge per unit of amount, an integer, read on the charge line of the
-books alone, D-1, note 34 (ii); refused with a denominator of 0 or a part
+books alone, D-1, note 35 (ii); refused with a denominator of 0 or a part
 that is not an integer, and on a paid family with a denominator other than
 1); the
 key `charge` on a measured event is refused naming MIGRATION; since
@@ -201,7 +201,7 @@ identity `bohr-v1` under `hypotheses` when `action` is declared).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`, since 2026-09-20 with its width
-`phase_width`, note 34 (i)), `in_transit` (gains `direction`,
+`phase_width`, note 35 (i)), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
 `detectors` (`threshold`).
 
@@ -376,7 +376,7 @@ order with each step's inverse:
    window reads the record; a bundle is now the rays of one number arriving
    in one interval; since 2026-09-20 the window has a width, `phase_width`,
    the w consecutive steps centred on the setting, N / 2 by default, note
-   34 (i)), then the rule: `read` (the push taken; the rays go
+   35 (i)), then the rule: `read` (the push taken; the rays go
    on), `measure` (the click: the amount, its content and its label join;
    the border), `rerelease` (the re-emission, section 5), `pass`. **The
    push is ONE signed inner product over the columns** (since 2026-09-20,
@@ -588,7 +588,9 @@ pointer of the set's arrivals in units of one ray, the nearest integer to
 (X^2 + Y^2) / 2^26 (`nature_beam.pointer_units`, 2^26 the square of one
 unit's pointer at phase 0: one unit at any phase reads 1, a rays in phase
 a^2, rays that cancel 0, so a pair in antiphase passes whether or not a
-window is declared; no memory between intervals), a set below it passing
+window is declared; no memory between intervals; the pointer gate is the
+click's, the entries that absorb, and a `read` entry keeps the amount gate
+under both readings, note 32), a set below it passing
 at every Node of it with a `pass` record naming `threshold`; then the
 **reading** the detector declares (`reading`: `wave` by default since 2026-09-20, the
 model owner's decision, "on the GameBoard a ray, in the world a wave"; or
@@ -953,7 +955,7 @@ implementation's part of the contract. The design above is unchanged.
     one function that gives every measured event its table (section 2);
     `FamilyDefinition.free` is `quantum == 0`; the constraints the parser
     kept are expressed through the quantum and not widened: a charge is
-    refused on a paid family (h >= 1; lifted on 2026-09-20 by D-1, note 34
+    refused on a paid family (h >= 1; lifted on 2026-09-20 by D-1, note 35
     (ii): a paid family's whole charge per unit of amount on the charge
     line), a lamp on a free one, a free unit
     carries no content and its label is `amount x D` (the mathematician's
@@ -1748,7 +1750,18 @@ implementation's part of the contract. The design above is unchanged.
     (the free probe beside its source from tick 31, 169 hand-overs), Bohr
     `r2` and `r4` (the electron beside the proton) and the orbit `s8_r12`
     (one hand-over at tick 174), registered old against new in
-    VALIDATION.md.
+    VALIDATION.md. A TIE OF THE FRAME, declared (the closing gate's
+    genericity probe, 2026-09-20, finding G1; `tests/test_contact.py`
+    (e)): the frame moves the bodies one after another in number order,
+    so when two bodies step in one interval and one's destination is the
+    other's Node, the lower number steps first: it makes the contact if
+    the other has not yet moved, and the other, moving after, finds the
+    Node it vacated free or hands over to it in turn; the sum of the
+    momenta is the same either way, the holder and the positions are not.
+    The declaration order is therefore a tie of the same kind as the axis
+    order and `age mod n` (the mathematician's list), stated here and in
+    ENGINE "The frame"; a simultaneous step of one interval would be a
+    change of the law and is the owner's to decide.
 32. **The `wave` threshold on the pointer's square; the escaped momentum
     per family** (the model owner, 2026-09-20; issue #359 step A and
     issues #360 and #361 item 1; `tests/test_nature_beam_detector.py`
@@ -1763,6 +1776,13 @@ implementation's part of the contract. The design above is unchanged.
     exact and never refused; the set clicks when it is at least the
     threshold, and passes otherwise with `pass` records naming
     `threshold` as before, the window and the rule following unchanged.
+    The pointer gate is the click's: it applies to the entries that absorb
+    (`measure`, and `rerelease`, whose re-emission is a click), and a
+    `read` entry, the push of a body, keeps the amount gate under both
+    readings, since the push reads the flow and not the pointer (section
+    3 step 4, note 25: the gravity of two rays does not depend on their
+    relative phase at the reader; the closing gate's finding F1 of
+    2026-09-20, `tests/test_nature_beam_detector.py` (k)).
     Why the nearest integer: the tables' `C^2 + S^2` is 65536 within 361
     for every N through 4096 (within 237 at N = 64), so one unit at any
     phase reads 1 exactly, a rays in phase read a^2 within a^2 x
@@ -1928,7 +1948,52 @@ implementation's part of the contract. The design above is unchanged.
     registered series moves (C, 7, D, E, G, H, I, K, Bell, A10, the
     catalog: every charged product of theirs is a multiple of its
     denominators, or their reads never met a fractional floor).
-34. **The weak force in the world's terms: (i) the window's width** (the
+34. **A table entry's window read from a reading** (issue #363, the model
+    owner's go of 2026-09-20: "Alice and Bob are part of the GameBoard,
+    no?"; a measurement, not a change of law; `tests/test_nature_beam_window_reads.py`
+    (a) to (c); [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1)). One
+    additive key: on a measured event's table entry, `phase_window` may be
+    the object `{"reads": "<family>", "offset": s}` in place of the number.
+    The centre of the window is then the phase of the coherent pointer of
+    the named family's rows present at the set in the interval, every row
+    at the set but the reader's own number, rest and moving alike, as the
+    presence counts them (the same first moment over the circle as the
+    detector's record, `coherent_pointer`, its nearest step
+    `pointer_phases`; `nature_beam.setting_steps`, read once per named
+    family from the rows after the walk and the collision, before any table
+    acts, so the order of the families changes nothing), plus the offset s
+    in phase steps (0 by default); the width stays the law's half circle
+    (`phase_width`, once it exists, applies to it as to a number). With no
+    row of the named family at the set, or a zero pointer (an antiphase
+    pair), the entry has no centre and passes, the `pass` record naming
+    `window` None and `reads`; every `click` of such an entry carries the
+    `window` used, so a reader bins by the setting off the record. What the
+    implementation decided: (i) the setting is read over the SET (the
+    detector set the reader belongs to), as the threshold and the window
+    are, so a counter of one Node reads the rows at its Node and a declared
+    set reads the rows at all of its Nodes; (ii) the rows read are the rows
+    present (the presence), not the arrivals alone: a stream of one row per
+    interval at a heading dwells one or two intervals at a Node (the flight
+    table's 32 Links per 55 intervals), and the window must exist at every
+    interval the stream is there; (iii) the setting rows meet the reader's
+    table by their own entry (`pass` in the Bell worlds: no push, no
+    record, the rays go on), the reading of their pointer being a reading
+    aid of the measured event and no rule of the GameBoard; (iv) refused
+    naming the key: an unknown family, a family without a phase circle (no
+    phase to read), the entry's own family (the window gates those rows),
+    the form on `pass` (as any window on `pass`) and on a lamp (a lamp's
+    window is a number); the `offset` outside 0 .. N - 1 and an object with
+    other keys or without `reads`. Every world without the key is the same
+    integer by integer: 21 example worlds (the Bell ten, `one_content`,
+    `two_contents`, `two_slits`, `one_slit`, the four of the catalog,
+    `w1_wave` and two detector worlds) replayed byte-identical in
+    `events.jsonl`, `state.json` and `run.json` before and after
+    ([validation](VALIDATION.md)). The run that uses it is
+    [A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
+    the settings of a Bell run decided by GameBoard events, S = 2 exactly
+    with every E on the triangle, the law found not to correlate what
+    never met.
+35. **The weak force in the world's terms: (i) the window's width** (the
     model owner, 2026-09-20, Highlights 5.4, "DECIDED: go on everything;
     just make sure again that it is good and generic", item (1): the weak
     force in the recommended order, the neutrino first with the table-entry

@@ -10,7 +10,7 @@ python -m pip install -e '.[render,dev]'
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything", item (3): the W world after the
-transformation; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
+transformation; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iv)).
 No key, no refusal and no record line is added: the W is a paid family
 with a whole charge per unit of amount (D-1, (ii)) and the family key
 `lifetime` 1 ([the lifetime](#the-columns-of-the-one-coupling-the-lifetime-the-held-content-and-the-contact-through-the-table-on-2026-09-20-columns-and-lifetime-per-family-held-per-measured-event-columns-v1-the-contact-record)), thrown as
@@ -29,7 +29,7 @@ clicks per family), `tests/test_w_world.py` (a) to (d) and
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything", item (1): "the transformation `become` with
-the identity `weak-v1`", after the neutrino; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+the identity `weak-v1`", after the neutrino; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii)). Identities: no world file changes; no registered world declares a
 transformation, so every example world replays byte-identical in
 `events.jsonl`, and `state.json` and `run.json` equal but for the added
@@ -103,7 +103,7 @@ transformation, so every example world replays byte-identical in
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything", item (2): "D-1, a paid family may declare a
 whole charge per unit of amount, read on the charge line only, the push
-untouched"; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+untouched"; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (ii)). Identities: no world file changes; no registered world declares a
 charge on a paid family, so every example world replays byte-identical in
 `events.jsonl`, `state.json` and `run.json` (VALIDATION).
@@ -138,7 +138,7 @@ charge on a paid family, so every example world replays byte-identical in
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: go on everything; just make sure again that it is good and
 generic", item (1): the neutrino first with the table-entry key
-`phase_width` and no change of law; [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+`phase_width` and no change of law; [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i)). Identities: no world file changes; every example world replays
 byte-identical in `events.jsonl`, and `state.json` and `run.json` equal
 but for the added `widths` (VALIDATION).
@@ -170,6 +170,41 @@ but for the added `widths` (VALIDATION).
 - **Series J2** under `examples/events/weak/` with `tools/weak_readings.py`
   and `tests/test_weak_readings.py`; `tests/test_window_width.py` (a) to
   (e) pins the rule.
+## A table entry's window read from a reading, on 2026-09-20 (`phase_window` as `{"reads": ..., "offset": ...}`; issue #363)
+
+An additive key of the world file ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1);
+[expectations](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)): a
+measured event's table entry may declare `"phase_window": {"reads":
+"<family>", "offset": s}` in place of the number. The centre of the window
+is then the phase of the coherent pointer of the named family's rows
+present at the set in the interval (every row at the set but the reader's
+own number) plus the offset in phase steps (0 by default); the width is
+the law's. With no such row at the set, or a zero pointer, the entry
+passes with a `pass` record naming `window` None and `reads`; every
+`click` of such an entry carries the `window` used. Refused naming the
+key: an unknown family, a family without a phase circle, the entry's own
+family, the form on `pass` or on a lamp, an `offset` outside 0 .. N - 1,
+an object with other keys or without `reads`.
+
+- **No world file changes**: the number form and the string form of a
+  table entry mean what they meant; a lamp's window stays a number. Every
+  world without the key replays byte-identical in `events.jsonl`,
+  `state.json` and `run.json` (21 example worlds compared,
+  [validation](VALIDATION.md)).
+- **The API**: `world.WindowReading` (the declared form, resolved by the
+  parser), `MeasuredDefinition.window_reads` and `Measured.window_reads`
+  (per family the `(family index, offset)` read, or None; a definition
+  made without the field reads no window), `nature_beam.setting_steps`
+  (per detector set the nearest step of the pointer of a family's rows
+  present at it, None without one), `FamilyPlan.t_window` (the window
+  used per taken row of such an entry). `_table_entry` returns the window
+  as `int | WindowReading | None`.
+- **The record**: the `pass` line of such an entry carries `reads`; its
+  `click` line carries `window`. Other lines are unchanged.
+- **The run**: `examples/events/bell/make_chooser_worlds.py`,
+  `tools/bell_choosers.py`, `tests/test_bell_choosers.py`, the entry
+  [A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20).
 
 ## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
 

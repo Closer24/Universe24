@@ -257,6 +257,8 @@ class NatureBeamSimulation:
             unit_charges=tuple(NO_CHARGE if f.free else f.charge for f in self.families),
             become=definition.become,
             transforms=list(definition.transforms),
+            window_reads=tuple(definition.window_reads)
+            + (None,) * (count - len(definition.window_reads)),
         )
 
     def occupant(self, node: Address3) -> int | None:

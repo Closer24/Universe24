@@ -241,6 +241,10 @@ class Measured:
     # family the hand-overs taken.
     contact: tuple[str, ...] = ()
     contacts: list[int] = field(default_factory=list)
+    # The windows read from a reading (issue #363, 2026-09-20): per family
+    # the (family, offset) whose rows at the set give the entry's centre,
+    # None where the centre is declared or absent (`windows`).
+    window_reads: tuple[tuple[int, int] | None, ...] = ()
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once

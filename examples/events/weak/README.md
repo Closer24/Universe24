@@ -25,7 +25,7 @@ tool is `tools/weak_readings.py`, every line labelled by its kind.
 
 ## J2: the neutrino's passage through a filled bar
 
-**What was added on the law's side** ([BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+**What was added on the law's side** ([BEAM_LAW note 35](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i)): the table-entry key `phase_width`, the width w of a window in phase
 steps, N / 2 by default (the half circle as it was: every registered world
 bit-identical). A window admits the w consecutive steps centred on its
@@ -101,7 +101,7 @@ deterministic fraction, no draw, a filter and not an attenuation.
 
 ## J1 and J3: the neutron's decay against its clock
 
-**What was added on the law's side** ([BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+**What was added on the law's side** ([BEAM_LAW note 35](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii)): the transformation `become`, the identity `weak-v1`, one table
 rule on the one-way side of the border: a measured event becomes an event
 of another family and releases the rest as products, born as a re-release
@@ -202,7 +202,7 @@ the next series is a range from the count's history over a dwell period.
 
 ## The W world: the exchange at one Link
 
-**What was added on the law's side** ([BEAM_LAW note 34](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+**What was added on the law's side** ([BEAM_LAW note 35](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iv)): nothing. The W is a paid family with a whole charge per unit of
 amount (D-1) and the family key `lifetime` 1, no column: a row born at a
 self-creation is at one Link at the age 1 and is measured there by the

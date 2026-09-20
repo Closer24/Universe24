@@ -445,3 +445,72 @@ def test_the_register_pair_over_a_thousand_intervals():
     assert simulation.measured[2].momentum == [-39 * PUSH_NUCLEAR_ON_N, 0, 0]
     assert 39 * PUSH_NUCLEAR == 11_731_415_502_144 and 39 * PUSH_NUCLEAR_ON_N == 11_731_415_854_080
     assert not contacts(records)
+
+
+# -- (e) ---------------------------------------------------------------------------
+
+
+def order_world(first_a: bool) -> dict[str, object]:
+    a = {"position": [2, 1, 1], "family": "p", "amount": 1, "momentum": [64, 0, 0]}
+    b = {"position": [3, 1, 1], "family": "p", "amount": 1, "momentum": [-192, 0, 0]}
+    return {
+        "law": "beam",
+        "model_id": "contact-order",
+        "shape": [6, 3, 3],
+        "boundary": "open",
+        "ticks": 3,
+        "K": 1 << 20,
+        "N": 64,
+        "release": [0, 1],
+        "suspension": 0,
+        "width": 1,
+        "families": [{"name": "p", "quantum": 0, "phase": False}],
+        "measured": [a, b] if first_a else [b, a],
+    }
+
+
+def test_the_frames_order_is_a_declared_tie():
+    """(e). The frame steps the bodies in number order (BEAM_LAW note 31
+    (ix); the closing gate's finding G1, 2026-09-20): two bodies stepping
+    into each other in one interval hand over by the declaration order.
+    a (content 1, +64 on x) one Link before b (content 1, -192 on x): with
+    a declared first, a steps onto b and hands 64, then b steps onto a and
+    hands -128, and a steps free at tick 3; with b declared first, b hands
+    -192 in one contact and a steps free twice. The sum of the momenta and
+    the books are the same either way; the holder and the positions are
+    not. Edge case: a body alone (no occupant) steps one Link in three
+    intervals and makes no contact."""
+    outcomes = {}
+    for first_a in (True, False):
+        simulation, records = run(order_world(first_a), 3)
+        a, b = (1, 2) if first_a else (2, 1)
+        outcomes[first_a] = (
+            simulation.measured[a].position,
+            simulation.measured[a].momentum,
+            simulation.measured[b].position,
+            simulation.measured[b].momentum,
+            [(r["tick"], r["number"] == a, r["component"]) for r in contacts(records)],
+            [(r["tick"], r["number"] == a, tuple(r["to"])) for r in records if r["event"] == "step"],
+        )
+        assert simulation.books()["momentum"]["measured"] == [-128, 0, 0], first_a
+    assert outcomes[True] == (
+        (1, 1, 1),
+        [-128, 0, 0],
+        (3, 1, 1),
+        [0, 0, 0],
+        [(2, True, 64), (2, False, -128)],
+        [(3, True, (1, 1, 1))],
+    )
+    assert outcomes[False] == (
+        (0, 1, 1),
+        [-128, 0, 0],
+        (3, 1, 1),
+        [0, 0, 0],
+        [(2, False, -192)],
+        [(2, True, (1, 1, 1)), (3, True, (0, 1, 1))],
+    )
+    alone = order_world(True)
+    alone["measured"] = [alone["measured"][0]]
+    simulation, records = run(alone, 3)
+    # One Link per (Q S M + |p|) / |p| = 2 self-creations: one step in three intervals.
+    assert simulation.measured[1].position == (3, 1, 1) and not contacts(records)

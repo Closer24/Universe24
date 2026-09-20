@@ -386,7 +386,10 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
 
 
 def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement():
-    """(d)."""
+    """(d). The read cases were pinned on the amount gate (3 passed, 4 read at
+    a threshold of 4), re-pinned on the pointer gate on 2026-09-20 (1, 2) and
+    pinned back the same day when the closing gate found that a `read` keeps
+    the amount gate (test (k)); the lamp cases never moved."""
     lamp = {"position": NODE, "family": "light", "amount": 24, "fixed": True, "lamp": {"rate": [1, 1]}}
     simulation = NatureBeamSimulation(parse_nature_beam_world(world([lamp], [], 5, clock=24)))
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
@@ -410,7 +413,7 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
 
     source = {"position": [0, 1, 1], "family": "m", "amount": 16, "fixed": True}
     reader = {"position": NODE, "family": "m", "amount": 4, "fixed": True, "table": {"m": "read"}}
-    for amount, push, read in ((1, [0, 0, 0], 0), (2, [-512, 0, 0], 2)):
+    for amount, push, read in ((3, [0, 0, 0], 0), (4, [-1024, 0, 0], 4)):
         simulation = NatureBeamSimulation(
             parse_nature_beam_world(world([source, reader], [arrival(amount, family="m", number=1)], 4))
         )
@@ -836,6 +839,45 @@ def test_the_wave_threshold_reads_the_pointers_square():
             # it is read into the next interval's set.
             simulation.step()
             assert simulation.books()["balanced"] and entry.clicks == [0, 0], label
+
+
+def test_the_pointer_gate_is_the_clicks_and_a_read_keeps_the_amount_gate():
+    """(k). The closing gate's finding F1 (2026-09-20): the `wave` pointer
+    threshold belongs to the entries that absorb (`measure`, `rerelease`);
+    a `read` entry, the push of a body, keeps the amount gate under both
+    readings, so the gravity of two rays does not depend on their relative
+    phase at the reader. Two free rays of one number, amount 1 each, into a
+    fixed reader of content 5 with the keys' own `read`: in antiphase under
+    the default `wave` set, in antiphase under a declared `beam` set and in
+    phase under `wave` the push is -5 x 2 x Q on the axis and no `pass`
+    record names the threshold; the same rays into a `measure` counter under
+    `wave` pass (test (i)). Edge case: the amount gate still holds on a
+    `read`, one ray at a threshold of 2 passes."""
+    reader = {"position": NODE, "family": "m", "amount": 5, "fixed": True}
+    far = {"position": [8, 1, 1], "family": "m", "amount": 1, "fixed": True}
+    antiphase = [arrival(1, "m", number=2, phase=0), arrival(1, "m", number=2, phase=32)]
+    in_phase = [arrival(1, "m", number=2, phase=0), arrival(1, "m", number=2, phase=0)]
+    cases = (
+        ("antiphase, wave", antiphase, 1, "wave", [-640, 0, 0], 0),
+        ("antiphase, beam", antiphase, 1, "beam", [-640, 0, 0], 0),
+        ("in phase, wave", in_phase, 1, "wave", [-640, 0, 0], 0),
+        ("one ray below the amount gate", [arrival(1, "m", number=2, phase=0)], 2, "wave", [0, 0, 0], 1),
+    )
+    for label, beams, threshold, reading, push, passes in cases:
+        records: list[dict[str, object]] = []
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(world([reader, far], beams, threshold, reading=reading)),
+            records.append,
+        )
+        entry = simulation.measured[1]
+        simulation.step()
+        assert simulation.books()["balanced"], label
+        assert entry.momentum == push, label
+        assert entry.clicks == [0, 0], label
+        assert len([r for r in records if r["event"] == "pass"]) == passes, label
+        # The rays go on (a `read` absorbs nothing); two identical records
+        # at one Node are one record with the amounts added.
+        assert int(simulation.stores[M].amount.sum()) == len(beams), label
 
 
 def test_the_pointer_is_the_first_moment_of_the_one_reading_over_the_circle():

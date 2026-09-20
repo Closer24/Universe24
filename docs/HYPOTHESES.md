@@ -471,6 +471,29 @@ single-click counts and is falsified there unless A10 at a low rate
 otherwise; the owner refused the detector memory that would reproduce the
 counts by a mechanism nature's detectors do not have.
 
+The superdeterminism suspicion, stated so that it can fail and measured
+(2026-09-20, issue #363, the owner's "Alice and Bob are part of the
+GameBoard, no?"): A2's S = 2 was read with the settings written in the
+world file, a hand from outside the universe, and a model in which
+everything is on the GameBoard and everything is determined by the initial
+state is open to the reading that the settings and the pairs are
+correlated through their common past, in which case S says nothing either
+way. The hypothesis, falsifiable: the law does not correlate things that
+never met, so with the settings read from the phases of two streams
+released by two further lamps that share no clock, no release and no
+reading with the pair lamp, every E stays on the triangle 1 - 4 k / N and
+S = 2 exactly on an ordered quadruple; it fails if any bin leaves the
+triangle or any marginal leaves 1/2 while the same reading, on a world
+whose three lamps are fed from one clock, sees the correlation built in.
+Measured ([A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20)):
+fifteen bins of 128 pairs, every E the triangle exactly, S = 2 exactly on
+(0, 25) x (8, 29), the largest S over every quadruple 2, every marginal
+1/2 exactly; the one-clock control E = 1 in every bin with no quadruple
+possible. Bell's assumption is an assumption in the universe and a
+measurement in the model; the verdict above stands with its full weight,
+and the model's limit is the local determination of each outcome, not a
+conspiracy of the initial state.
+
 ## 12. One mass ladder, and the composite spectrum from binding
 
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.4) a rest mass

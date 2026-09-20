@@ -21,7 +21,7 @@ fingerprint of the entry below), Python 3.14.0rc2, numpy 2.5.3, headless,
 four cores. Every world of `examples/events/` (85 before series J's worlds
 were added) was run with the runner at its declared `ticks` before the
 first change and after each commit of the model owner's decision of
-2026-09-20, "go on everything" ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+2026-09-20, "go on everything" ([BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 and `events.jsonl`, `state.json` and `run.json` (its volatile fields
 `elapsed_seconds`, `source_sha256` and `package_version` removed) compared
 by SHA-256, file by file, raw and normalized (the document parsed, the
@@ -47,7 +47,12 @@ hold no measured event for the key to enter). The commands: `python -m
 event_universe --init <world> --output <dir>` per world, four at a time,
 the outputs digested and pruned; `python tools/check.py --base 6a596b34`
 green after the commit (487 tests selected), `--base 2605f75f` green after
-(ii) (464 tests), `--base af7ce995` green after (iii) (507 tests).
+(ii) (464 tests), `--base af7ce995` green after (iii) (507 tests), `--base
+HEAD` green after (iv) (196 tests) and after the clock's correction (28
+tests); `python tools/check.py --full` green on the merge with the branch
+tip `4c9be1f6` (the window read from a reading, issue #363, and the choosers
+on the GameBoard: both sides kept, the weak force's note renumbered 35):
+ruff, mypy strict and 603 tests.
 
 **Series J1 and J3, the neutron's decay against its clock** (the register
 entry [J, the weak force (2026-09-20)](EXPERIMENTS.md#j-the-weak-force-2026-09-20)):
@@ -103,6 +108,35 @@ first reader of `j2_filter` (1 / 64), 0 at the 127 behind it, 699 at the
 far detector; 64 readers of 16 in `j2_ladder` and 0 beyond; 512 and 352
 in `j2_default`; 32 and 688 in `j2_stride2`; 0 and 711 in
 `j2_stride2_odd`.
+## The choosers on the GameBoard: the key replayed, and the run - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` from its tip `9379b01c`
+with the one additive key of issue #363 (a table entry's `phase_window`
+read from a reading, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+source fingerprint after the key
+`38792132301970e7c276cfee4184534dcd2223fe3a4d906c78be3714afd5c142`,
+Python 3.14.0rc2, numpy 2.5.3, headless. Twenty-one example worlds (the
+Bell ten, `one_content`, `two_contents`, `two_slits`, `one_slit`,
+`lamp_mirror_screen`, `clock_near_mass`, `sun_planet`, `neutron_star`,
+`w1_wave`, `shared_3_nodes`, `periodic_z_node`) run with the runner at
+their declared `ticks` on a copy of the source tree before the key and on
+the tree after it, and `events.jsonl`, `state.json` and `run.json` (its
+volatile fields `elapsed_seconds`, `source_sha256` and `package_version`
+removed) compared by SHA-256: 21 identical, 0 changed, in each of the
+three files. The Bell ten read again through `tools/bell_chsh.py` on the
+tree after the key: S = 2 and S' = 3/2 exactly, 326 criteria, 0 failed.
+
+The run ([A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20);
+`examples/events/bell/read.json` and its six controls, `tools/bell_choosers.py`):
+`read` 1940 intervals in about 5 s, the books balanced at every tick, 1920
+pairs in 15 bins, every E the triangle exactly, S = 2 exactly on
+(0, 25) x (8, 29), the largest S over every quadruple 2, every marginal
+1/2, 46 criteria, 0 failed; the four `written` worlds S = 2 exactly, 91
+criteria, 0 failed; `fixed` E(0, 8) = 1/2, 24 criteria, 0 failed;
+`one_clock` E = 1 in 64 bins of one phase, no quadruple, 68 of 214
+criteria failed (the control that must fail). `python tools/check.py`
+green on the change, `python tools/check.py --full` green on the merge
+with the branch tip.
 
 ## The four unifications of the formulas: the 85 example worlds replayed after each commit - 2026-09-20
 

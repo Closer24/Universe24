@@ -1,5 +1,5 @@
 """The width of a window, `phase_width` (docs/BEAM_LAW.md, section 2 and
-section 10 note 34; the model owner, 2026-09-20, "go on everything": the
+section 10 note 35; the model owner, 2026-09-20, "go on everything": the
 weak force in the recommended order, the neutrino first with the
 table-entry key `phase_width` and no change of law; the physicist's design,
 WEAK.md 1.2): a window is its setting s and its width w, the w consecutive

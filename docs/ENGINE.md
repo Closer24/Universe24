@@ -26,7 +26,7 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_flight.py`, `tests/test_nature_beam_collision.py`,
 `tests/test_nature_beam_bijection.py`, `tests/test_nature_beam_detector.py`,
 `tests/test_nature_beam_reemission.py`, `tests/test_nature_beam_clock.py`,
-`tests/test_nature_beam_window.py`, `tests/test_window_width.py`,
+`tests/test_nature_beam_window.py`, `tests/test_window_width.py`, `tests/test_nature_beam_window_reads.py`,
 `tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
@@ -157,7 +157,11 @@ reading over the clicked rays, taken on the circle's unit vectors
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam),
 step 2, and section 10, notes 16 and 33).
 
-**The frame** (`NatureBeamSimulation.step`, `engine.py`): for every measured
+**The frame** (`NatureBeamSimulation.step`, `engine.py`; the bodies are
+moved one after another in number order, a declared tie: when two bodies
+step in one interval and one's destination is the other's Node, the lower
+number steps first, [BEAM_LAW note 31 (ix)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+for every measured
 event, its clock (its age, the turn `by_clock(age, content x n, d)` at the
 clock's rate `K` = [n, d], an integer K being [1, K] (`NatureBeamWorld.turn`;
 the four unifications (2), 2026-09-20: the turn is the free release's own
@@ -294,7 +298,9 @@ Node with the default reading); every measured event points to its set
 threshold (under `beam` on the amount summed over the set; under `wave`,
 since 2026-09-20, on the square of the coherent pointer of the set's
 arrivals in units of one ray, `nature_beam.pointer_units`, so that rays
-which cancel pass; [BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
+which cancel pass; the pointer gate is the click's, the entries that
+absorb, and a `read` entry keeps the amount gate under both readings;
+[BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 the window under `wave`, the pointer, the record and the
 pairing under `beam` are taken over the set by `nature_beam` step 4; the
 click's content, momentum and re-emission stay at the Node the ray
@@ -304,7 +310,7 @@ set before the frame adds the turn (`step`: the click sets the phase in
 the law, the frame turns it by `turn` after).
 
 **The world** (`events/world.py`; the keys of [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
-`law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K` (the clock's
+`law` "beam"; `model_id`; `shape`; `boundary`; `ticks`; `K` (the clock's
 rate: an integer K, the content per phase step per self-creation, read as
 the pair `[1, K]`, or since 2026-09-20 a pair `[n, d]` of phase steps per
 unit of content per self-creation like `release`, the turn `by_clock(age,
@@ -327,7 +333,7 @@ the six headings in Port order and these, in that order); `families`
 (`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
 kind is derived, never declared), `charge` (a free family: the charge per
 unit of content, an integer or `[n, d]`, since 2026-09-20; a paid family,
-since the same day (D-1, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+since the same day (D-1, [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (ii)): the whole charge per unit of amount, an integer, read on the
 charge line of the books only, the push untouched: the charge of a
 measured event is rho times its content for a free family and the
@@ -355,7 +361,7 @@ from 1 each: the content the event holds of families other than its own;
 its content the sum, its charge in every column the rational sum over
 what it holds, every free family held released at the world's rate
 beside its own), `become` (since 2026-09-20, the transformation's clock
-trigger, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+trigger, [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii): `{"at": a, "into": family, "products": [[family, amount, content per
 unit], ...], "crowd": c}`, fired at the self-creation whose clock reaches
 `at` (the age against the key, first at `at`, then at every multiple of
@@ -367,20 +373,37 @@ re-release is with the recoil over all of them, and the key is consumed),
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
 `rerelease` | `pass` | `become` or to `{"rule": ..., "phase_window": s, "phase_width":
-w, "reads": component}` (`phase_width` since 2026-09-20, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+w, "reads": component}` (`phase_width` since 2026-09-20, [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (i): the width of the window in steps, 1 through N, N / 2 by default, the
 w consecutive steps centred on s by the one floor `nature_beam.window_admits`)
 with `reads` one of `scalar`, `outside`, `here`, `vector`,
 `tensor`, `age` (the age moment; the entry's clock then counts it in place
 of the presence), and on a `become` entry (the click trigger of the
-transformation, since 2026-09-20, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iii)) its `into` and `products`: the
+transformation, since 2026-09-20, [BEAM_LAW note 35](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation) (iii)) its `into` and `products`: the
 arrival clicked as `measure` clicks it and the same transformation fired,
 its products born at the reader's next self-creation, the entry consumed;
 the table generated from the keys by `world.default_table` (a
 free family read, a paid one measured, no window) and the world declaring
 only the entries that differ, `rule` optional in the object form, an entry
-equal to the default accepted and changing nothing; `lamp` `{rate: [n, d],
-directions, phase_window, phase_width}` on a measured event of a paid family);
+equal to the default accepted and changing nothing; since 2026-09-20
+(issue #363, [BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+the entry's `phase_window` may be an object `{"reads": "<family>",
+"offset": s}` in place of the number: the centre of the window is then the
+phase of the coherent pointer (`nature_beam.coherent_pointer`, the first
+moment over the circle, its nearest step `pointer_phases`) of the named
+family's rows present at the set in the interval, every row at the set but
+the reader's own number, rest and moving alike, as the presence counts
+them (`nature_beam.setting_steps`, read once per named family from the
+rows after the walk and the collision, before any table acts), plus the
+offset in phase steps (0 by default), the width the entry's `phase_width`,
+N / 2 by default;
+with no such row at the set, or a zero pointer, the entry passes with a
+`pass` record naming `window` None and `reads`; every `click` of such an
+entry carries the `window` used (`MeasuredDefinition.window_reads`,
+`Measured.window_reads`: per family the (family, offset) read, None for a
+number or none); `lamp` `{rate: [n, d],
+directions, phase_window, phase_width}` on a measured event of a paid
+family, its window a number);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
@@ -431,6 +454,11 @@ two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
 family without a phase circle, a `phase_width` outside 1 .. N, on `pass`,
 for a family without a phase circle or without a `phase_window` (on a
 table entry and on a lamp alike; [the width of a window](TEST_EXPECTATIONS.md#the-width-of-a-window)),
+a `phase_window` read from a reading that
+names an unknown family, a family without a phase circle or the entry's
+own family, whose `offset` is outside 0 .. N - 1, whose object has an
+unknown key or lacks `reads`, or that is declared on a lamp
+([a window read from a reading](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)),
 a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
 reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
@@ -447,7 +475,7 @@ below 1 or not an integer, `phase_by_momentum` without `action`, on a
 turning body whose `ticks x |p| x N` exceeds 2^62 - 1 for its declared
 momentum ([a body on a set and the turn](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 `event_universe.configuration_validation` reports a world of the law as
-kind `rays`.
+kind `beam`.
 
 **The record.** `run.json` carries `law` "beam-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
@@ -496,9 +524,13 @@ per family (amount, content and, since 2026-09-20, the family's own
 momentum: the faces and the border summed; until then the world's total
 momentum was written into every family's line). `events.jsonl` holds one
 record per event: `home`, `read`, `click`, `rerelease` (per number and
-tick, with the amount, the phase, the push and the content), `pass` (a ray
+tick, with the amount, the phase, the push and the content; a `click` of
+an entry whose window is read from a reading carries the `window` used),
+`pass` (a ray
 below the threshold, with `threshold`, or outside the window, with
-`window`, or paired under `beam`, with `cancelled` true), `step` (the
+`window`, or paired under `beam`, with `cancelled` true; on an entry whose
+window is read from a reading also `reads`, the family read, and `window`
+None where no setting row was present), `step` (the
 measured event's number, its Node before and after, its momentum and,
 since 2026-09-20, its `phase` after the step: what the turn by momentum
 turned it to, the phase it had otherwise), `contact` (since 2026-09-20:

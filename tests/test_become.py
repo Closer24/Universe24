@@ -1,5 +1,5 @@
 """The transformation `become`, the weak force in the world's terms,
-`weak-v1` (docs/BEAM_LAW.md, section 2 and section 10 note 34 (iii); the
+`weak-v1` (docs/BEAM_LAW.md, section 2 and section 10 note 35 (iii); the
 model owner, 2026-09-20, "go on everything", item (1): the transformation
 `become` with the identity `weak-v1`; the physicist's design, WEAK.md
 sections 2 and 4.3, with its integers in `weak_integers.out` 2 to 6): one

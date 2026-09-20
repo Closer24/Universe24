@@ -2215,7 +2215,14 @@ states "exactly" and means integer equality at every tick.
   the square's rows are sheared apart by exactly Q^2 x U_d per interval, a
   proton leaves at tick 57 and the four disperse by tick 538, while the
   line holds for 3000 intervals with every hand-over cancelled by its
-  mirror. The engine's flight delays and the fan's lumps moved one number
+  mirror. The readings of the worlds with contacts (the deuterons, the
+  pairs, the square, the line) are readings of the declared order of the
+  bodies: the frame steps the bodies in number order, a declared tie
+  (BEAM_LAW note 31 (ix); the closing gate's finding G1, 2026-09-20), so
+  a permutation of the measured events moves the holder of a hand-over
+  and, in the square, which neutron leaves first; the sum of the momenta
+  and the verdicts (bound at one Link, free at three, the line rigid and
+  the square sheared) do not depend on it. The engine's flight delays and the fan's lumps moved one number
   outside the steady toy's bracket (the first step of two protons at three
   Links) and none of the designed pushes. What the law lacked, as read
   here: a bond that resists shear (the bonds are central pushes and the
@@ -2340,6 +2347,130 @@ states "exactly" and means integer equality at every tick.
   readings, the conclusion) is in the session's scratchpad, not
   published.
 
+### A2 with the choosers on the GameBoard (2026-09-20)
+
+- **Confronts.** Issue #363, the model owner's question of 2026-09-20
+  ("Alice and Bob are part of the GameBoard, no?") and his go: a
+  measurement, not a change of law. In A2 the settings (the counters'
+  `phase_window`) are numbers in the world file, a hand from outside the
+  universe, so its S = 2 is established only given a free choice from
+  outside; a fully deterministic model in which everything is on the
+  GameBoard is suspect of superdeterminism, the settings and the pairs
+  correlated through a common past, and then S says nothing either way
+  ([HYPOTHESES 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail)).
+  Here the suspicion is measured: each counter's window is read from the
+  phase of a ray arriving from a third source (Alice's) and a fourth
+  (Bob's), far from each other and from the pair lamp, with no causal
+  meeting between the three (different strides and starting phases, no
+  suspension, every stream passing every table with `pass`); the settings
+  are events of the GameBoard with a past of their own, and the question
+  is whether the law carries a correlation from the shared initial state
+  to things that never met. A run under the
+  [experimenter skill](../skills/experimenter/SKILL.md): every number
+  labelled a detector reading or a GameBoard reading.
+- **Model prediction, pinned before the run (the owner's, issue #363;
+  the physicist and the mathematician on A2, BEAM_LAW section 8).** S = 2
+  exactly with every E on the triangle 1 - 4 k / N in the settings'
+  difference, the marginals 1/2 exactly (no-signalling), the largest S
+  over every quadruple of settings that occurred 2 (the triangle's own).
+  Not 2: the mechanism is the first thing to find; if it is in the file
+  (a shared clock, a common release) it is our tuning and not physics
+  (control 3 shows what that looks like), if it is in the law it is a
+  real finding. Nothing tuned after the run; S is read from the click
+  lines only, binned by the window they carry.
+- **Features.** One additive engine key
+  ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  [ENGINE, the world](ENGINE.md#the-beam-law-beam-v1)): a table entry's
+  `phase_window` as `{"reads": "<family>", "offset": s}`, the centre the
+  phase of the coherent pointer of the named family's rows present at the
+  set plus the offset, the width the law's, a `pass` naming `window` None
+  without a setting row, the `window` used on every click
+  (`tests/test_nature_beam_window_reads.py`; 21 example worlds
+  byte-identical without the key, [validation](VALIDATION.md#the-choosers-on-the-gameboard-the-key-replayed-and-the-run---2026-09-20)).
+  Free families with a phase circle as the streams (`sa`, `sb`), one row
+  per interval from a free measured event held in place, `pass` on every
+  table for them; the face detectors.
+- **Run.** `examples/events/bell/` (seven worlds by
+  `make_chooser_worlds.py`, whose docstring derives the design from the
+  engine's flight table and `by_clock` before the run; the dictionary in
+  the [README](../examples/events/bell/README.md#the-choosers-on-the-gameboard-issue-363-2026-09-20)):
+  A2's bar and pair lamp (K = 15 x 2^20 so that the pair lamp's turn stays
+  exactly 1 over the run), Alice's counters at 7 Links (plus, x = 7) and
+  4 Links (minus, x = 4) from her lamp at x = 0, one `sa` row at each
+  Node at every interval, the setting a ray's phase plus the offset; Bob's
+  at 3 (plus, x = 17) and 2 (minus, x = 18) Links from his at x = 20, two
+  `sb` rows each, the setting the pointer of two consecutive releases;
+  the streams' phases periodic with the odd periods 5 (Alice, the turns
+  12, 13, 13, 13, 13) and 3 (Bob, the turns 21, 21, 22), coprime to each
+  other and to the circle, so that the two counters of a side read one
+  setting per pair (the minus window the exact complement, `offset` +
+  32) and every combination of settings meets every phase of the pair
+  equally (the joint period 15, over 960 pairs each combination sees each
+  phase once). A two-valued setting from one clock (0 / 16) is impossible
+  without a period dividing 64, which would share a residue of the
+  interval with the pair's phase, a correlation built by the file; the
+  odd periods are the generic choice, and the quadruple read is an
+  ordered one within a half circle, Alice's 0 and 25 with Bob's 8 and 29,
+  on which the triangle gives 2. The settings: Alice's 0, 12, 25, 38, 51
+  and Bob's 8, 29, 51 (the bisectors read with the engine's tables). The
+  ages 7..1926, 1920 pairs (128 per combination), after the warm-up of 7
+  pairs before the first `sa` ray reaches Alice's plus counter; 1940
+  intervals. The reading `tools/bell_choosers.py` (the offsets off the
+  record, the bins by the window carried on the plus counters' lines, the
+  complement, one outcome per side per age, every E against the triangle,
+  S on the quadruple, the largest S over every quadruple that occurred,
+  the marginals; `--replay` the streams' rows at the counters, GAMEBOARD;
+  `tests/test_bell_choosers.py` pins it to the engine on a minimal case).
+  Controls, all registered: (1) the four `written_a<a>_b<b>` worlds, the
+  same GameBoard and streams with the windows written in the file (A2's
+  form) at the quadruple's settings, 128 pairs each; and A2's ten worlds
+  replayed on the engine with the key, byte-identical to the registered
+  run; (2) `fixed`, the streams released with the settings fixed (the
+  turn 0: Alice's 0, Bob's 8); (3) `one_clock`, the three lamps fed from
+  one clock (the setting lamps with the pair lamp's stride 1 and phase 0).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` from its tip `9379b01c` with the key
+  added, source fingerprint
+  `38792132301970e7c276cfee4184534dcd2223fe3a4d906c78be3714afd5c142`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, about 5 s per 1940 intervals,
+  the books balanced at every tick, the pair lamp's momentum [0, 0, 0].
+
+  | Reading | Kind | Expected | Measured | Verdict |
+  | --- | --- | --- | --- | --- |
+  | The offsets (tick = age + offset) | detector | 6, 11, 13, 14 (the flight table) | 6, 11, 13, 14, one value per counter | inside |
+  | The warm-up, the pairs before every counter had a setting | detector | 7 | 7 (3 of them escaped on -x, the other 4 clicked at Alice's minus) | inside |
+  | The settings read | detector | Alice 0, 12, 25, 38, 51; Bob 8, 29, 51 | the same, 15 bins of 128 pairs | inside |
+  | Every minus window the plus window's complement | detector | every pair | every pair | inside |
+  | E per bin | detector | the triangle 1 - 4 k / 64 | E(0, 8) = 1/2 (48, 16, 16, 48), E(0, 29) = -13/16, E(0, 51) = 3/16, E(12, 8) = 3/4, E(12, 29) = -1/16, E(12, 51) = -9/16, E(25, 8) = -1/16, E(25, 29) = 3/4, E(25, 51) = -5/8, E(38, 8) = -7/8, E(38, 29) = 7/16, E(38, 51) = 3/16, E(51, 8) = -5/16, E(51, 29) = -3/8, E(51, 51) = 1: every one the triangle exactly | inside |
+  | S on (0, 25) x (8, 29) | detector | 2 | E(0,8) - E(0,29) + E(25,8) + E(25,29) = 1/2 + 13/16 - 1/16 + 3/4 = 2 exactly | inside |
+  | The largest S over the 5 x 3 settings' quadruples | detector | 2 | 2, on (0, 12) x (8, 29), the triangle's own | inside |
+  | No-signalling: each side's marginal per own setting | detector | 1/2, equal across the other side's settings | 1/2 exactly in every one of the 15 bins | inside |
+  | Control 1a: A2's ten worlds replayed with the key in the engine | detector | byte-identical, S = 2 | `events.jsonl`, `state.json`, `run.json` identical; `tools/bell_chsh.py` 326 criteria, 0 failed | inside |
+  | Control 1b: the four written worlds, the streams present and unread | detector | S = 2 | E 1/2, -13/16, -1/16, 3/4; S = 2 exactly; 91 criteria, 0 failed | inside |
+  | Control 2: the streams at fixed phases (0 and 8) | detector | E(0, 8) = 1/2 as A2's a0_b8 | 1/2 (48, 16, 16, 48), 24 criteria, 0 failed | inside |
+  | Control 3: the three lamps fed from one clock | detector | not the triangle (a correlation built in) | 64 bins of one pair phase each, E = 1 in every bin, both plus counters clicking every pair and the minus counters never, no quadruple of settings occurring (Alice's and Bob's settings locked 13 steps apart), 68 of 214 criteria failed | seen, as it must be |
+  | The streams at the counters | gameboard | one `sa` row at x = 4 and 7 at every interval from ticks 8 and 13, two `sb` rows at x = 17 and 18 from ticks 7 and 5 | as expected (`--replay`), the phases 7, 19, 32, 45, 58 and 40, 61, 18 | inside |
+
+  46 criteria checked on the run, 0 failed; 141 on the controls 1b and 2,
+  0 failed; every reading inside, none moved.
+- **Verdict.** S = 2 exactly with every E on the triangle and the
+  marginals 1/2, with the choosers on the GameBoard: the law does not
+  correlate the settings with the pair through their common past (the
+  initial state, the one clock of the intervals); when a correlation IS
+  built in by the file (control 3) the same reading sees it at once.
+  What A2 established given a free choice from outside is now established
+  with the choice made by GameBoard events: Bell's assumption, an
+  assumption in the universe, is a measurement in the model. The model's
+  limit stands as it was, S = 2 against nature's 2.4 to 2.7; this run
+  cleans the measurement and does not change the outcome (entanglement
+  stays with #362). What the law lacked: nothing for this run. What the
+  design could not do: a two-valued setting from one clock without a
+  period that divides the circle; the odd periods replace it, and the
+  quadruple is an ordered one within a half circle rather than the
+  owner's 0/16 and 8/24. The page of the run (the GameBoard drawn with
+  the three lamps and the four counters, why it was tested, the moving
+  picture with a time control, the readings, the conclusion) is in the
+  session's scratchpad, not published.
 ### J, the weak force (2026-09-20)
 
 - **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
@@ -2387,7 +2518,7 @@ change of law).**
   cross-section rises linearly with the neutrino's energy, and a filter
   where nature attenuates exponentially in the depth; both registered as
   the law's limits, nothing tuned.
-- **Features.** The window's width `phase_width` (BEAM_LAW note 34 (i);
+- **Features.** The window's width `phase_width` (BEAM_LAW note 35 (i);
   `tests/test_window_width.py`); the free release at the world's rate; the
   clock's turn as the stride.
 - **Run.** `examples/events/weak/` (the five `j2_*.json` worlds written by
@@ -2430,7 +2561,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   ([the expectations](../examples/events/weak/README.md#j1-and-j3-the-neutrons-decay-against-its-clock),
   `examples/events/weak/expectations.json`, written by the generator).**
   The clock trigger fires at the self-creation whose clock reaches `at`
-  (BEAM_LAW note 34 (iii)); at the suspension [1, 2^20] a clock that
+  (BEAM_LAW note 35 (iii)); at the suspension [1, 2^20] a clock that
   reads a constant count c at every self-creation owes `by_clock(a, c,
   2^20)` after each, and the sum over the ages 0 .. at - 1 telescopes to
   floor(at x c / 2^20), so the self-creation that takes the age to `at`
@@ -2483,8 +2614,8 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   the count) where nature's is stable by its binding energy; nothing
   tuned.
 - **Features.** The transformation `become` with its clock trigger `at`
-  and gate `crowd` (BEAM_LAW note 34 (iii); `tests/test_become.py`), D-1
-  for the beta's charge (note 34 (ii)), the strong column and the
+  and gate `crowd` (BEAM_LAW note 35 (iii); `tests/test_become.py`), D-1
+  for the beta's charge (note 35 (ii)), the strong column and the
   lifetime (series I), the `beam` detector set with `reads` `age`.
 - **Run.** `examples/events/weak/` (`j1_lattice`, `j1_source`,
   `j3_deuteron`, `j3_deuteron_crowd`, `j3_neutron_free`, the model ids
@@ -2541,7 +2672,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
 - **Model prediction, pinned before the run
   ([the expectations](../examples/events/weak/README.md#the-w-world-the-exchange-at-one-link),
   `expectations.json` under `w`).** The W is a paid family with a whole
-  charge per unit of amount and the lifetime 1 (BEAM_LAW note 34 (iv)):
+  charge per unit of amount and the lifetime 1 (BEAM_LAW note 35 (iv)):
   a row born at a self-creation is at one Link at the age 1 (m(1) = 1)
   and is measured there by the keys' rule for a paid arrival, its units
   clicked and its label the push, or booked on the border `lifetime` at
@@ -2559,7 +2690,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   exchanged, -192 on the neutron become proton and +192 on the proton
   (GAMEBOARD: the label 64 x 1 x 3). The contact form (L = 0, no
   carrier) is series J1 and J3's `become` itself; no Z family.
-- **Features.** `become` (note 34 (iii)), D-1 (note 34 (ii)), the
+- **Features.** `become` (note 35 (iii)), D-1 (note 35 (ii)), the
   lifetime (note 31 (vii)); `tests/test_w_world.py`.
 - **Run.** `examples/events/weak/w_exchange.json` (the model id
   `beam-weak-w_exchange-v1`, written by `make_worlds.py`),

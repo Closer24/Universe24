@@ -49,6 +49,22 @@ prints the counts, E, S and every criterion; the register entry is
 [A2, under the Beam Law (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19):
 S = 2 exactly, the model's limit, unchanged from the law of events.
 
+The same folder holds the seven worlds of the run with the choosers on the
+GameBoard (issue #363), written by `bell/make_chooser_worlds.py`: the same
+bar and pair lamp, and four counters whose windows are not written in the
+file but read from the phase of a stream arriving from a third lamp
+(`sa`, at x = 0, Alice's) and a fourth (`sb`, at x = 20, Bob's), the key
+`phase_window` `{"reads": "<family>", "offset": s}`; the streams have odd
+periods (5 and 3) coprime to each other and to the circle, so every
+combination of settings meets every phase of the pair; `read.json` is the
+run, `written_a<a>_b<b>.json`, `fixed.json` and `one_clock.json` its
+three controls. `tools/bell_choosers.py` bins the clicks by the window
+they carry and prints every E, S on the quadruple, the largest S over
+every quadruple that occurred and the marginals; the register entry is
+[A2 with the choosers on the GameBoard (2026-09-20)](../../docs/EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
+S = 2 exactly with every E on the triangle, the law found not to
+correlate what never met.
+
 ## The coupling series
 
 The folder [coupling/](coupling/README.md) holds the twenty-one worlds of
@@ -244,7 +260,7 @@ the 127 behind it nothing (a filter, not an attenuation), the ladder
 exhausts the beam after 64 readers, the stride 2 gives 1 / 32 at the centre
 0 and nothing at the centre 1; 13 readings inside, 0 outside, registered
 and not tuned. J1, the free neutron's decay count against its clock (the
-transformation `become`, `weak-v1`, [BEAM_LAW note 34](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+transformation `become`, `weak-v1`, [BEAM_LAW note 35](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 (iii)): 64 neutrons of the register's `n` on a lattice of pitch 4 in an
 open 41^3 GameBoard, each with `become` at 512 into `p` with the products
 `beta` and `nu`, a shell of readers at r = 18 declared as one `beam`
