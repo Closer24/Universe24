@@ -227,6 +227,7 @@ the register without a row or a gap row.
 | `q` | a test charge of the coupling series (`charge` `[0, 1]`, `[-1, 2]`, `[1, 2]`); not a thing of physics | series C | `test_charge` |
 | `sa`, `sb` | the choosers of the Bell run with the settings decided by GameBoard events (issue #363): a free family whose rows at a counter set its window | series A2 and L | `choosers` |
 | `mx1`, `mx2`, `mx3`, `mx4`, `my1`, `my2`, `my3`, `my4`, `mz1`, `mz2`, `mz3`, `mz4`, `px1`, `px2`, `px3`, `px4`, `py1`, `py2`, `py3`, `py4`, `pz1`, `pz2`, `pz3`, `pz4` | the thrown sources of series G (the galaxy row): one family per source because a set's `record` is per family; the clicks carry `number`, so one family with 24 measured events would do with the tool reading `number` | series G | `thrown_sources` |
+| `s_px1`, `s_px2`, `s_px3`, `s_px4`, `s_mx1`, `s_mx2`, `s_mx3`, `s_mx4`, `s_py1`, `s_py2`, `s_py3`, `s_py4`, `s_my1`, `s_my2`, `s_my3`, `s_my4`, `s_pz1`, `s_pz2`, `s_pz3`, `s_pz4`, `s_mz1`, `s_mz2`, `s_mz3`, `s_mz4` | the stars of series G2 (the star row above: one measured event of a paid light family holding `mass`, a lamp toward the centre, E = h f), one family per star because a set's `record` is per family; the light of a star, not a thing of physics beyond the star itself | series G2 (`hubble_stars/`, drafted, not registered) | inline in the worlds of series G2 (`hubble_stars/`, not yet migrated to a definition) |
 
 ## The gap list
 
