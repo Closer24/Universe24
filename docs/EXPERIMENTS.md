@@ -1869,6 +1869,44 @@ states "exactly" and means integer equality at every tick.
   emitters' clocks that count only their own crowd (the reading's factor
   1 + k is the model's); and a step rule whose whole part does not cluster
   under a changing momentum.
+- **Follow-up (the physicist's review of the verdict, 2026-09-20; the
+  runs unchanged, nothing pinned, nothing moved).** The tool's
+  `--from-one-point` option fits every window again with each source's
+  tau reduced by (r_0 / c) / (1 + z), the exact equivalent of a coasting
+  throw from the centre (a source from r_0 at v is the source from the
+  centre at the time -r_0 / v), and prints what the near fit itself reads
+  off an exact coasting form at the window's taus. Found: (i) the near fit
+  through the origin on z <= 0.2 reads an exact coasting throw from one
+  point, with no offset at all, as H t_0 = 1.10 to 1.15 (the Milne
+  curvature (H tau)^2 read as a larger H: the "near" part reaches H tau =
+  0.16), so the far part of the coasting form itself lies below the
+  coasting form at that H and q = -0.55 is "the nearest" for a pure
+  coasting throw: the criterion "the nearest of the three at the near
+  fit's H" cannot tell a coasting throw from an accelerating one, and the
+  ten of twelve windows are the criterion's bias, not a signature; (ii)
+  the initial distances depress every source below the Milne form of H =
+  1 / t_0 by (r_0 / c) / (t_0 - tau), 0.016 at rank 1 to 0.074 at rank 4
+  at t_0 = 350, and pull the near fit down (0.83, 0.93, 0.98 for the exact
+  throw at t_0 = 150, 250, 350), the two biases nearly cancelling in the
+  late window (1.03 read); (iii) from one point the coasting readings lie
+  on the Milne form with H t_0 = 1.01 to 1.04 at a best-H rms of 0.0045
+  to 0.0056 in z, the accelerating form within 0.001 of it and the
+  decelerating one at 0.012 to 0.013: at this range (z <= 0.6) and grain
+  (0.003 in z, 1.3 intervals in tau) the reading tells q = +0.5 from q =
+  0 but not q = 0 from q = -0.55 (the exact forms with H free differ by
+  0.0055 rms in z, and by 0.009 to 0.012 against q = +0.5); a fifth run of
+  the coasting world with r_0 = 2, 3, 4, 5 (the review's scratchpad, not
+  registered) read H t_0 = 0.98, 1.03, 1.09 and q = -0.55 "the nearest" in
+  all three windows, as the exact throw predicts; (iv) in the pushing
+  worlds the emitters' clocks add k / (v / c) = 0.8 to the near sources
+  against 0.1 to the far ones (the scalar clock, t_0 = 350), inflating the
+  near fit's H by 1.08 to 1.41 over the Doppler part; the Doppler part
+  from one point reads H t_0 3 to 11 % below the coasting run's by the
+  same method (the deceleration, as derived) and the best-H form q = 0 in
+  four of six windows, q = -0.55 by 0.001 or less in the other two, at an
+  rms of 0.009 to 0.017 (the step rule's grain).
+  The surprise is a limit of the reading and an artefact of the world, not
+  a finding of the law; the register keeps the verdict above as read.
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 

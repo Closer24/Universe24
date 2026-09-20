@@ -85,13 +85,16 @@ and the worlds' [README](../examples/events/hubble/README.md).
 | The bend of the age clock | reported: zero in the coasting crowd, -0.089 to +0.081 per source in the pushing crowd, no monotone bend |
 | `tests/test_hubble_readings.py` | passed: c = 32 / 55 and m(17) = 10, m(34) = 20 off the flight table; on a bar of 61 the tool's `record` lines, click ages and steps equal the engine's, k = 0, z within 0.05 of 1 + v / c at v = 1 / 2 |
 | `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green |
+| `tools/hubble_readings.py --no-replay --from-one-point` on the same four runs (the physicist's review, 2026-09-20; not pinned) | the near fit reads an exact coasting throw from one point at the windows' taus as H t_0 = 1.10 to 1.15, so q = -0.55 is "the nearest at the near H" for a coasting form itself; with every tau reduced by (r_0 / c) / (1 + z) the coasting readings lie on the Milne form at H t_0 = 1.01 to 1.04 with a best-H rms of 0.0045 to 0.0056 (q = -0.55 within 0.001 of it, q = +0.5 at 0.012 to 0.013); the pushing Doppler part from one point 3 to 11 % below the coasting run's H t_0, q = 0 the best form in 4 of 6 windows (q = -0.55 by 0.001 or less in the other two); `tests/test_hubble_readings.py` 3 passed (the collapse onto the Milne form exact, the near fit's bias upward) |
 
 The runs establish what this detector reads of a throw on this engine (the
 Doppler of the throw times the emitters' clocks, and the shape of the curve
 against three forms); they establish no physical law, and the resemblance
 to the accelerating form is registered with its two causes on the GameBoard
 (the throw's initial distances and the emitters' clocks), not as an
-acceleration.
+acceleration. The review's follow-up (the register entry's last bullet)
+finds the resemblance to be the near fit's own bias on any coasting form
+plus the initial distances: a limit of the reading, not a finding.
 
 ## A body on a set, the turn by momentum and series H, Bohr's lines behind the detector - 2026-09-20
 

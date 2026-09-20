@@ -269,7 +269,13 @@ and v and the momentum left), the Hubble diagram per window as a table,
 the fits and the verdicts, then the late half [200, 400) as one window
 and the Doppler part of the reading alone (the emitter's clock removed),
 both printed after the runs and not pinned; `--png DIR` writes the
-diagrams with matplotlib (the repository gets the numbers).
+diagrams with matplotlib (the repository gets the numbers);
+`--from-one-point` (the physicist's review, 2026-09-20) fits every window
+again with each tau reduced by (r_0 / c) / (1 + z), the exact equivalent of
+a coasting throw from the centre, and prints what the near fit itself reads
+off an exact coasting form at the window's taus (H t_0 = 1.10 to 1.15 here:
+the criterion "the nearest at the near fit's H" names q = -0.55 for a
+coasting form too; the register entry's follow-up bullet).
 `tests/test_hubble_readings.py` pins the tool to the engine on a bar of
 61 Nodes. The runs take about 40 s each (the 301^3 GameBoard's per-interval
 host cost, not the rays: about 6 000 rows in flight).
