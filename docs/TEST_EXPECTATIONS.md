@@ -1568,7 +1568,7 @@ before the first run:
   `hypotheses` ["columns-v1", "doppler-v1"] on the bar. The gate set's
   fifteen worlds parse with `doppler` false and without the identity.
 - (f) the fan over three intervals: a free reader of content 2^20 at
-  (4, 6, 4) of a 9 x 12 x 9 open board with the three declared directions
+  (4, 6, 4) of a 9 x 12 x 9 open GameBoard with the three declared directions
   (1, 1, 0), (1, 2, 0), (1, 3, 2), the push the weighted flow as in (b);
   one row of amount 64 of the direction placed on the flight table's line
   to step into the reader's Node at each of the ticks 1, 2, 3 from number
@@ -1606,7 +1606,10 @@ before the first run:
   on `claude/series-g2-stars`: 24 free stars of content 2^22 + 4096 at
   width 2^20, one detector) parses with `doppler` true and the identity
   and runs 20 intervals without a refusal, its books balanced and a star
-  pushed.
+  pushed. Its table is the eight headings, where the flux equals the
+  heading pair, so (h) is the stars' fit and not the fan's integers,
+  which rest on (f); the copy is temporary, and series G2's merge
+  replaces it by the example's path (one canonical copy per world).
 
 ## The age
 

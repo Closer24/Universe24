@@ -65,7 +65,7 @@ the relative speed"), written down before the first run:
     (`run.json` carrying `doppler` and the identity under `hypotheses`);
     every world of the gate set parsing without the key;
 (f) the fan, pinned as integers over three intervals (a free reader of
-    content 2^20 at (4, 6, 4) of a 9 x 12 x 9 open board, the push the
+    content 2^20 at (4, 6, 4) of a 9 x 12 x 9 open GameBoard, the push the
     weighted flow as in (b), one row of amount 64 of the direction
     arriving at each of the ticks 1, 2, 3 from number 2, the reader's
     clock ages 0, 1, 2, its first step after the third reading at 1 / 3
@@ -96,7 +96,10 @@ the relative speed"), written down before the first run:
     json`, the reviewer's copy of `hubble_stars/gravity_scalar.json`: 24
     stars of content 2^22 + 4096 at width 2^20, rows of amount 64) parses
     under the key with the identity and runs 20 intervals without a
-    refusal, its books balanced: the stars fit as registered.
+    refusal, its books balanced: the stars fit as registered. Its table
+    is the eight headings, where the flux equals the heading pair; the
+    fan's integers rest on (f). The copy is temporary: series G2's merge
+    replaces it by the example's path (one canonical copy).
 """
 
 from __future__ import annotations
@@ -369,6 +372,14 @@ def test_the_refusals_and_the_budget():
         OverflowError, match=r"weighted flow of measured event 2 .* direction 2 under doppler"
     ):
         weighted_flow(table, [2], [[1 << 50, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
+    # The speed's register intermediate G x |p_a| is tested before it is
+    # formed: a momentum of 2^50 + 1 on the y axis (above bound / G) is
+    # refused naming the body, its Node and the axis; 2^50 - 1 is not.
+    entry.frame_momentum = [0, (1 << 50) + 1, 0]
+    with pytest.raises(OverflowError, match=r"speed of measured event 2 .* on axis 1 under doppler"):
+        weighted_flow(table, [2], [[64, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
+    entry.frame_momentum = [0, (1 << 50) - 1, 0]
+    weighted_flow(table, [2], [[64, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
     headings = (
         (0, 0, 0),
         (0, 0, 0),

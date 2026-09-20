@@ -2738,11 +2738,16 @@ implementation's part of the contract. The design above is unchanged.
     stated: the speed's above, and the flow's floor `(|V_d| x num_d) mod
     (G Q |v|^2)`, read off the reader's clock by `by_clock`, exact on
     average and below one label unit per direction and component per
-    interval, the same kind as every column's. **The bounds.** |V_d| x
-    num_d is tested by division before it is formed and refused naming
-    the body and the direction (R1; a numerator of 0 forms nothing); the
-    weighted flow is bounded per component (R2) and then the columns'
-    own tests run as today. The numerator is at most G (Q |v|^2 + T_d
+    interval, the same kind as every column's. **The bounds.** The
+    speed's intermediate G x |p_a| is tested by division before it is
+    formed and refused naming the body, its Node and the axis (|p_a| at
+    most 2^50, the register's bound over G); |V_d| x num_d is tested by
+    division before it is formed and refused naming the body and the
+    direction (R1; a numerator of 0 forms nothing); the product of the
+    clock age with |V_d| x num_d inside `by_clock` is the host's, the
+    columns' convention for every count off the clock; the weighted flow
+    is bounded per component (R2) and then the columns' own tests run as
+    today. The numerator is at most G (Q |v|^2 + T_d
     S_1), 2^33.6 on the widest direction of a table, so |V_d| x num_d
     fits the register for an amount up to 2^22 per direction per
     interval; no load-time bound is new: the weighted flow is at most
@@ -2755,8 +2760,9 @@ implementation's part of the contract. The design above is unchanged.
     4096 at width 2^20, D_a = 2^48, one mass row of amount 64 on a
     heading) the weighted flow's product is 2^29 and today's push on it
     2^34, against the pair's 2^87 (`grain_map.out` 1); a registered star
-    world parses under the key and runs (`tests/test_doppler.py` (h)),
-    and the review's B1 is moot. **What is bit-identical.** A fixed body
+    world parses under the key and runs (`tests/test_doppler.py` (h), a
+    headings-only table: the stars' fit, not the fan's integers), and the
+    review's B1 is moot. **What is bit-identical.** A fixed body
     has no speed and reads at the weight 1 whatever momentum its record
     books (its momentum is the push it took, not a motion); a free body
     at rest has w = 0 on every axis, the pair `(G Q |v|^2, G Q |v|^2)`

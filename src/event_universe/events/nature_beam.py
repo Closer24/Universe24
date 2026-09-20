@@ -1912,6 +1912,18 @@ def flux_bound_error(entry: Measured, direction: int, moment: int, factor: int) 
     )
 
 
+def speed_bound_error(entry: Measured, axis: int, momentum: int) -> OverflowError:
+    """The refusal of a speed's register intermediate G x |p_a| that would
+    leave the register, naming the measured event, its Node and the axis
+    (the physics-rule review's S1: tested by division before it is formed,
+    as R1 tests the weighted flow)."""
+    return OverflowError(
+        f"{BEAM_LAW}: the speed of measured event {entry.number} at {list(entry.position)} on "
+        f"axis {axis} under {DOPPLER_KEY} exceeds the integer bound {MOMENTUM_BOUND}: "
+        f"|p_a| = {abs(momentum)} is above {MOMENTUM_BOUND // SPEED_GRAIN} = bound / G"
+    )
+
+
 def quantised_speed(momentum: list[int], content: int, width: int) -> tuple[tuple[int, int], ...]:
     """A body's speed per axis at the grain G (`world.SPEED_GRAIN`; BEAM_LAW
     note 38; GRAIN.md section 1), read once per interval from its own
@@ -1921,12 +1933,16 @@ def quantised_speed(momentum: list[int], content: int, width: int) -> tuple[tupl
     is discarded each interval, a declared grain of 1 / G Links per
     interval like S and Q: the quantised speed is below |p_a| / D_a by
     less than 1 / G, nothing accumulates, and a body slower than 1 / G
-    Links per interval on an axis reads there as at rest."""
+    Links per interval on an axis reads there as at rest. The register
+    intermediate G x |p_a| is tested by division before it is formed
+    (`weighted_flow` refuses it naming the body, its Node and the axis,
+    `speed_bound_error`); here it is asserted."""
     found = []
     for p in momentum:
         if p == 0:
             found.append((0, 0))
             continue
+        assert abs(p) <= MOMENTUM_BOUND // SPEED_GRAIN, "the caller tests the speed's intermediate"
         found.append((SPEED_GRAIN * abs(p) // step_divisor(p, content, width), 1 if p > 0 else -1))
     return tuple(found)
 
@@ -1979,12 +1995,17 @@ def weighted_flow(
     today (`push_form`, untouched). The body's speed is `quantised_speed`
     of the momentum and content the frame read (`frame_momentum`,
     `frame_content`: one speed for every group of the interval whatever
-    the family order), S the world's `width`. |V_d| x num_d is tested by
+    the family order), S the world's `width`; the speed's intermediate G
+    x |p_a| is tested by division before it is formed and refused naming
+    the body, its Node and the axis. |V_d| x num_d is tested by
     division before it is formed and refused naming the body and the
     direction (R1); a numerator of 0 (a body moving with the rows at
     their own speed) forms nothing; the sum is bounded per component
     (R2). At w = 0 on every axis the pair is (G Q |v|^2, G Q |v|^2) and
     by_clock gives |V_d| exactly: the flow as today, bit for bit."""
+    for axis, momentum in enumerate(entry.frame_momentum):
+        if abs(momentum) > MOMENTUM_BOUND // SPEED_GRAIN:
+            raise speed_bound_error(entry, axis, momentum)
     speeds = quantised_speed(entry.frame_momentum, entry.frame_content, width)
     moments: dict[int, list[int]] = {}
     for direction, label in zip(arrivals, labels, strict=True):
