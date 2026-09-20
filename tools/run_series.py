@@ -37,6 +37,18 @@ verdict in one command.
 
     PYTHONPATH=src python tools/run_series.py --list examples/events/gate_set.json \\
         --jobs 4 --out runs/gate/head --compare runs/gate/base/summary.json
+
+`--wall-seconds N` and `--memory-mb M` guard the host; both are off by default
+and nothing changes without them. A world whose run exceeds N seconds of wall
+clock is killed and reported as `not completed: wall N s`. With `--memory-mb`
+the child sets its own address-space bound (`resource.setrlimit(RLIMIT_AS)`,
+M MB, before it imports the package) and a run stopped by that bound (a
+`MemoryError`, a library that cannot be mapped, the OS refusing memory) is
+reported as `not completed: memory M MB`. The other worlds continue; the tool
+exits 1 as for any world not completed, and `--compare` reports the status.
+
+    PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/gate/head \\
+        --wall-seconds 600 --memory-mb 4096 --list examples/events/gate_set.json
 """
 
 from __future__ import annotations
@@ -45,6 +57,8 @@ import argparse
 import hashlib
 import json
 import os
+import resource
+import signal
 import subprocess
 import sys
 import time
@@ -68,9 +82,43 @@ COLUMNS = (
 # The digests `--compare` reads, in the order they are reported.
 DIGESTS = ("state_sha256", "audit_sha256", "events_sha256")
 
+# What a child stopped by its address-space bound writes to its log: the
+# interpreter's error, the loader's when a library cannot be mapped, the OS's.
+MEMORY_MARKS = ("MemoryError", "failed to map segment", "Cannot allocate memory")
+
+# The child under `--memory-mb`: the bound set before the package is imported,
+# then the module run exactly as `python -m event_universe` runs it.
+MEMORY_BOOTSTRAP = (
+    "import resource, runpy; limit = {megabytes} * 1024 * 1024; "
+    "resource.setrlimit(resource.RLIMIT_AS, (limit, limit)); "
+    "runpy.run_module('event_universe', run_name='__main__', alter_sys=True)"
+)
+
+# The wall guard polls the child this often.
+POLL_SECONDS = 0.05
+
 
 def _digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def _wait(pid: int, started: float, wall_seconds: float | None) -> tuple[int, object, bool]:
+    """Reap the child with its resource usage: at once without a wall limit,
+    otherwise polled and killed once the limit has passed since `started`.
+    Returns the wait status, the usage and whether the guard stopped it."""
+    if wall_seconds is None:
+        _, status, usage = os.wait4(pid, 0)
+        return status, usage, False
+    while True:
+        done, status, usage = os.wait4(pid, os.WNOHANG)
+        if done:
+            return status, usage, False
+        if time.perf_counter() - started > wall_seconds:
+            # The pid is ours until reaped below, so the signal cannot miss.
+            os.kill(pid, signal.SIGKILL)
+            _, status, usage = os.wait4(pid, 0)
+            return status, usage, True
+        time.sleep(POLL_SECONDS)
 
 
 def run_one(
@@ -80,11 +128,20 @@ def run_one(
     ticks: int | None,
     python: str,
     environment: dict[str, str],
+    wall_seconds: float | None = None,
+    memory_mb: int | None = None,
 ) -> dict[str, object]:
-    """One world in its own process; returns its row of the summary."""
+    """One world in its own process; returns its row of the summary. Under
+    `wall_seconds` the child is killed past that wall clock; under `memory_mb`
+    it bounds its own address space at that many MB. A run a guard stopped is
+    reported `not completed: wall N s` or `not completed: memory M MB`."""
     directory.mkdir(parents=True, exist_ok=True)
     run_dir = directory / "run"
-    command = [python, "-m", "event_universe", "--init", str(world), "--output", str(run_dir)]
+    if memory_mb is None:
+        command = [python, "-m", "event_universe"]
+    else:
+        command = [python, "-c", MEMORY_BOOTSTRAP.format(megabytes=memory_mb)]
+    command += ["--init", str(world), "--output", str(run_dir)]
     if ticks is not None:
         command += ["--ticks", str(ticks)]
     started = time.perf_counter()
@@ -92,9 +149,16 @@ def run_one(
         log.write(" ".join(command) + "\n")
         log.flush()
         child = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, env=environment)
-        _, status, usage = os.wait4(child.pid, 0)
+        status, usage, stopped = _wait(child.pid, started, wall_seconds)
     wall = time.perf_counter() - started
     code = os.waitstatus_to_exitcode(status)
+    guard = None
+    if stopped:
+        guard = f"not completed: wall {wall_seconds:g} s"
+    elif memory_mb is not None and code:
+        text = (directory / "log.txt").read_text(encoding="utf-8", errors="replace")
+        if any(mark in text for mark in MEMORY_MARKS):
+            guard = f"not completed: memory {memory_mb} MB"
     row: dict[str, object] = {
         "world": world.stem,
         "path": str(world),
@@ -129,6 +193,8 @@ def run_one(
     events = run_dir / "events.jsonl"
     if events.exists():
         row["events_sha256"] = _digest(events.read_bytes())
+    if guard is not None:
+        row["status"] = guard
     return row
 
 
@@ -189,17 +255,26 @@ def run_series(
     ticks: int | None = None,
     python: str | None = None,
     durations: dict[Path, int] | None = None,
+    wall_seconds: float | None = None,
+    memory_mb: int | None = None,
 ) -> list[dict[str, object]]:
     """Every world in its own process, at most `jobs` at once; the rows of the
     summary in the order of `worlds`, written beside the runs. `ticks` overrides
     every world's duration; otherwise a world listed in `durations` runs for
-    that many intervals and the others for their declared `ticks`."""
+    that many intervals and the others for their declared `ticks`. The guards
+    `wall_seconds` and `memory_mb` are those of `run_one`, off when None."""
     names = [world.stem for world in worlds]
     if len(set(names)) != len(names):
         raise ValueError("two worlds of a series must not share a name")
     for world in worlds:
         if not world.is_file():
             raise ValueError(f"world file not found: {world}")
+    if wall_seconds is not None and wall_seconds < 0:
+        raise ValueError("--wall-seconds must not be negative")
+    if memory_mb is not None and memory_mb <= 0:
+        raise ValueError("--memory-mb must be positive")
+    if memory_mb is not None and not hasattr(resource, "RLIMIT_AS"):
+        raise ValueError("--memory-mb needs RLIMIT_AS, which this host lacks")
     workers = max(1, jobs if jobs is not None else (os.cpu_count() or 1))
     interpreter = python or sys.executable
     environment = dict(os.environ)
@@ -222,6 +297,8 @@ def run_series(
                     ticks=ticks if ticks is not None else (durations or {}).get(world),
                     python=interpreter,
                     environment=environment,
+                    wall_seconds=wall_seconds,
+                    memory_mb=memory_mb,
                 ),
                 worlds,
             )
@@ -269,6 +346,16 @@ def main() -> None:
         type=Path,
         help="An earlier run's summary.json: print identical or changed per world, exit 1 on a change",
     )
+    parser.add_argument(
+        "--wall-seconds",
+        type=float,
+        help="Kill a world's run past this wall clock and report it not completed (default: no limit)",
+    )
+    parser.add_argument(
+        "--memory-mb",
+        type=int,
+        help="Bound each run's address space (RLIMIT_AS) at this many MB and report a run it stops (default: no limit)",
+    )
     args = parser.parse_args()
     if args.fast and args.list is None:
         parser.error("--fast needs --list")
@@ -287,6 +374,8 @@ def main() -> None:
             ticks=args.ticks,
             python=args.python,
             durations=durations,
+            wall_seconds=args.wall_seconds,
+            memory_mb=args.memory_mb,
         )
     except ValueError as error:
         parser.exit(1, f"Series refused: {error}\n")
