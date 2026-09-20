@@ -913,5 +913,28 @@
    "S": 11584
   },
   "design_S_1024": 2896
+ },
+ "cone": {
+  "links": {
+   "axis": 17,
+   "diagonal": 24
+  },
+  "age_at_click": {
+   "axis": 29,
+   "diagonal": 29
+  },
+  "same_age": true,
+  "cone_links": {
+   "path_phase": {
+    "axis": 51,
+    "diagonal": 8
+   }
+  },
+  "cone_intervals": {
+   "path_phase": {
+    "axis": 23,
+    "diagonal": 23
+   }
+  }
  }
 }
