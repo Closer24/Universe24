@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from event_universe.core.integer import bounded_gcd
 from event_universe.core.lattice import Address3
 from event_universe.events.world import AGE_READS
 
@@ -15,9 +16,6 @@ RULES = ("home", "read", "measure", "rerelease")
 # default: the presence, the scalar over every ray at its Node of another
 # number.
 PRESENCE_READS = "scalar"
-# The face detectors, one per open face of the board, named by the face in
-# Port order (an open face is a detector, the model owner, 2026-09-19).
-FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
 Pending = tuple[int, int, int]
 
 
@@ -33,6 +31,20 @@ def count_component(reads: str) -> str:
     the board; the board's rules (the flight, the collision) never read the
     age whole."""
     return AGE_READS if reads == AGE_READS else PRESENCE_READS
+
+
+def reduced(numerator: int, denominator: int) -> tuple[int, int]:
+    """A rational as the pair (n, d) in lowest terms with d positive."""
+    common = bounded_gcd(abs(numerator), denominator) or 1
+    return numerator // common, denominator // common
+
+
+def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
+    """The exact sum of rationals (n, d), reduced: a report of the books."""
+    numerator, denominator = 0, 1
+    for n, d in terms:
+        numerator, denominator = reduced(numerator * d + n * denominator, denominator * d)
+    return numerator, denominator
 
 
 @dataclass
@@ -86,7 +98,10 @@ class Measured:
     family: int
     held: list[int]
     phase: int
-    charge: int
+    # The family's charge per unit of content, rho = (n, d): the event's
+    # charge is rho x its content (`charge`, a report), and the electric
+    # push reads rho and the content the frame read.
+    rho: tuple[int, int]
     momentum: list[int]
     fixed: bool
     directions: tuple[int, ...]
@@ -109,17 +124,29 @@ class Measured:
     events: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
     # The interval's frame, set by the engine: whether this interval is a
-    # self-creation, the age before it and the turn read off the clock; and
-    # what the law read back: the presence at the Node of every other number.
+    # self-creation, the age before it, the turn read off the clock and the
+    # content the frame read (`frame_content`, M_A of the push: taken once
+    # before the law's step 4, so the push of an interval is independent of
+    # the order in which the families' clicks join `held` within it; the
+    # orchestrator's D1 on the architect's B3, 2026-09-20); and what the
+    # law read back: the presence at the Node of every other number.
     creating: bool = False
     clock_age: int = 0
     turn: int = 0
+    frame_content: int = 0
     presence: int = 0
     counted: int = 0
 
     @property
     def content(self) -> int:
         return sum(self.held)
+
+    @property
+    def charge(self) -> tuple[int, int]:
+        """The event's charge, rho x its content, as a reduced pair (n, d):
+        a report (the model owner, 2026-09-20: charge is per unit of
+        content of a family); the law reads rho and the content."""
+        return reduced(self.rho[0] * self.content, self.rho[1])
 
     @property
     def threshold(self) -> int:
@@ -140,7 +167,7 @@ class Measured:
             "held": list(self.held),
             "content": self.content,
             "phase": self.phase,
-            "charge": self.charge,
+            "charge": list(self.charge),
             "momentum": list(self.momentum),
             "fixed": self.fixed,
             "windows": list(self.windows),

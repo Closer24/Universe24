@@ -104,8 +104,10 @@ the walk by the flight table, the one reading, the collision by the table
 (at the Nodes of free space: none at a Node that holds a measured event),
 the measured event's table (`read`, `measure`, `rerelease`, `pass`, each
 gated by the detector's threshold and its window; the push one bilinear
-form over the arriving rays' labels, `push_form`, the emitter's factor
-read off the rays' records, nothing looked up by number), the
+form over the arriving rays' labels, `push_form`: one product per
+arriving free ray, `M_A x (rho_A rho_B - 1) x V_B` with the families'
+charges per unit of content, nothing on the record but the ray's number
+and nothing looked up by number), the
 self-creations (the release, the lamp, what came home and what is
 re-emitted) and the merge of identical records. Every piece of logic exists once: one reading
 (`read_arrivals`) takes the amount-weighted moments of order 0, 1 and 2 of
@@ -125,8 +127,11 @@ step 2, and section 10, note 16).
 
 **The frame** (`RaySimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
-release rate, its lamp's rate and window, its owed count) is read and
-handed to `nature_beam` with the stores; `nature_beam` returns the readings
+release rate, its lamp's rate and window, its owed count) and its content
+(`frame_content`, read once before the law: M_A of the interval's push,
+the same whatever the order in which the families' clicks join `held`
+within the interval; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+are read and handed to `nature_beam` with the stores; `nature_beam` returns the readings
 (the count, the flow and the presence per Node, dense arrays read-only, and
 `per_port`, the amount that crossed into each Node through each Port this
 interval, a diagnostic of the walk for Gauss's flux); the frame turns the
@@ -150,7 +155,9 @@ an interval where nothing is owed) and books the interval.
 inverse collision and the inverse walk on a board without a measured event
 (the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
 with a measured event on the board it refuses: the click is the one-way
-border). The frame computes no physics.
+border). The frame computes no physics of the ray; the measured event's
+clock rules (the turn, the owed count, the step rule with the width) are
+its own, placed in the frame by design ([RAY_LAW section 9](RAY_LAW.md#9-implementation-plan-one-pr-one-agent-and-risks)).
 
 ### A release costs the emitter by its phase rate
 
@@ -238,9 +245,10 @@ the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
 (`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
-kind is derived, never declared), `charge` (a free family only), `phase`
-true by default, `phase_per_link` 0 .. N - 1); `measured` (`position`, `family`,
-`amount`, `phase`, `charge`, `momentum`, `fixed`, `directions` (the
+kind is derived, never declared), `charge` (a free family only: the
+charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
+`phase` true by default, `phase_per_link` 0 .. N - 1); `measured`
+(`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
 `rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "reads":
@@ -254,7 +262,7 @@ directions, phase_window}` on a measured event of a paid family);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
-default, `reading` `beam` by default or `wave`). Refused, naming the key and the law: `"law": "events"` (pointing
+default, `reading` `wave` by default (since 2026-09-20) or `beam`). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,
@@ -267,7 +275,10 @@ below 2^56), `phase_per_link` outside 0 .. N - 1 or on
 a family without a phase circle, a content at or past K x N / 2 of a family
 with a phase, a lamp on a free family, `kind` on a family (pointing to
 MIGRATION: the quantum decides the kind), a family without `quantum`, a
-negative quantum, a charge on a paid family, two measured events at one
+negative quantum, a charge on a paid family, `charge` on a measured event
+(pointing to MIGRATION: the charge is the family's per unit of content), a
+family `charge` with a denominator of 0 or a part that is not an integer, a
+detector named as a face detector is, two measured events at one
 Node, an unknown table rule, N not
 a power of two, a detector on a Node without a measured event, a Node in
 two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
@@ -285,10 +296,12 @@ kind `rays`.
 **The record.** `run.json` carries `law` "rays-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,
-`charge`, `phase` and `phase_per_link`, no `kind`), `numbers`, the books
-per completed tick (`audit`) with
+`charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
+`numbers`, the books per completed tick (`audit`, the `charge` line the
+exact rational sum of the measured events' charges as a reduced pair) with
 `conserved_at_every_completed_tick`, the measured events' final states
-(`measured`: position, held per family, content, phase, charge, momentum,
+(`measured`: position, held per family, content, phase, charge (the pair
+rho x content, reduced), momentum,
 windows, detector, age, owed, what waits to be created again (`home`,
 `home_content`), `waited`, phase steps, steps, what each met per family by
 rule, the clicks and the push taken; no record of its own since
@@ -313,9 +326,11 @@ for a ray or the number of the measured event that stepped off. `state.json`, th
 `snapshot_writer.write_snapshot`, carries `"law": "rays-v1"`, the
 `boundary`, the measured events, the detectors and every Node with rays
 (its rows: direction, age, phase, number, amount, content per family, and
-on a free family's rows `charge` and `mass`, the emitter's factor of the
-electric push carried on the record since the night of 2026-09-19,
-[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
+nothing of the emitter but the number: the columns `charge` and `mass` of
+the night of 2026-09-19 are gone since 2026-09-20, the factor of the
+electric push being the family's charge per unit of content,
+[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+and note 28).
 `tools/run_series.py` runs these worlds as any.
 
 ## The law of events (`events-v1`)

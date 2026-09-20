@@ -47,21 +47,25 @@ order, each a bijection on the board's state except the border:
    rays with their amplitudes as weights, an exact integer: a report of
    the host, never refused), `rerelease` (re-emitted at the next self-creation on the
    declared directions), `pass`; own-number rays are home. The push is ONE
-   bilinear form over the arriving rays, `push_A = sum kappa(A, B) . V_B`
-   with `V_B` the label moment of the rays (the vector moment of
-   `read_arrivals` with the labels as weights) and `kappa` = -M_A for a
-   free family's ray (gravity), + q_A x q_B / M_B for a charged one
-   (electricity, the whole part off the reader's clock), + 1 for a paid
-   ray (its label already carries h s); the emitter's factor (q_B, M_B)
-   travels on the ray's record, nothing is looked up by number. What the
-   clock counts is read here too, over every ray of another number at the
-   Node: the presence, or on a table entry that reads `age` the age moment
-   (`measured.count_component`), the measured event's reading of the
-   whole age;
+   product per arriving free ray (`push_form`, the model owner's decision
+   of 2026-09-20: charge is per unit of content of a family, rho): with
+   `V_B` the label moment of the rays (the vector moment of
+   `read_arrivals` with the labels as weights), M_A the reader's content
+   as the frame read it and rho_A, rho_B the families' charges per unit
+   of content, `push_A = M_A x (rho_A rho_B - 1) x V_B` for a free
+   family's rays (gravity -M_A V_B and electricity rho_A rho_B M_A V_B,
+   the latter the whole part off the reader's clock by the declared
+   pairs, `sign x by_clock(age_A, |V n_A n_B M_A|, d_A d_B)`), and
+   `push_A = V_B` for a paid family's rays (their label already carries
+   h s); every input is the reader's or the arriving family's key,
+   nothing is looked up by number and the record carries no factor. What
+   the clock counts is read here too, over every ray of another number at
+   the Node: the presence, or on a table entry that reads `age` the age
+   moment (`measured.count_component`), the measured event's reading of
+   the whole age;
 5. the self-creations: the free release, what came home or is re-released
    apportioned whole over the declared directions, the lamp's release at
-   its rate, every new ray at age 0 with its emitter's number and, for a
-   free family, its emitter's charge and content at birth;
+   its rate, every new ray at age 0 with its emitter's number;
 6. merge identical rows and sort by Node; a row whose age passed the
    world's `age_bound` refuses the run (the store's bound; the world must
    be small enough or declare its bound).
@@ -95,9 +99,10 @@ import numpy as np
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.lattice import PORT_HEADINGS, Address3
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events.measured import FACE_NAMES, Ledger, Measured, count_component
+from event_universe.events.measured import Ledger, Measured, count_component
 from event_universe.events.world import (
     AGE_READS,
+    FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     MOMENTUM_BOUND,
@@ -156,10 +161,11 @@ class NatureBeam:
     created it, whole; the flight reads it modulo the direction's period,
     a measured event may read it whole), its
     phase (a step of the circle), its number (the last emitter), its amount
-    (whole units), the content one unit carries and, for a free family's
-    ray, its emitter's charge and content at birth (`charge`, `mass`: the
-    emitter's factor of the electric push, carried on the record; 0 and 0
-    on a paid family's ray, whose factor is its content)."""
+    (whole units) and the content one unit carries. Nothing else: the
+    family (the store it is in) suffices for the electric push, whose
+    factor is the family's charge per unit of content (the model owner,
+    2026-09-20; until then a free family's ray carried its emitter's charge
+    and content at birth)."""
 
     node: Address3
     direction: int
@@ -168,8 +174,17 @@ class NatureBeam:
     number: int
     amount: int
     content: int
-    charge: int = 0
-    mass: int = 0
+
+    def record(self, vectors: np.ndarray) -> dict[str, object]:
+        """The row as `state.json` writes it, the direction as its vector."""
+        return {
+            "direction": [int(v) for v in vectors[self.direction]],
+            "age": self.age,
+            "phase": self.phase,
+            "number": self.number,
+            "amount": self.amount,
+            "content": self.content,
+        }
 
 
 # -- the one reading: the moments ------------------------------------------------
@@ -557,20 +572,9 @@ def ray_tables(world: RayWorld) -> RayTables:
 
 # -- the store -------------------------------------------------------------------
 
-FIELDS = (
-    "node",
-    "direction",
-    "age",
-    "phase",
-    "number",
-    "amount",
-    "content",
-    "charge",
-    "mass",
-    "arrival",
-)
+FIELDS = ("node", "direction", "age", "phase", "number", "amount", "content", "arrival")
 # The fields that make two rows identical (the amount is what the merge adds).
-IDENTITY_FIELDS = ("node", "direction", "age", "phase", "number", "content", "charge", "mass")
+IDENTITY_FIELDS = ("node", "direction", "age", "phase", "number", "content")
 
 
 def exact_sum(values: np.ndarray) -> int:
@@ -594,49 +598,104 @@ def exact_column_sums(values: np.ndarray) -> list[int]:
     return [int(v) for v in values.sum(axis=0, dtype=object)]
 
 
-def label_bound_error(largest: int) -> OverflowError:
-    """The refusal of a row whose label could pass the bound: its weight
-    (content x amount, the amount for a free family) times Q."""
+def label_bound_error(
+    amount: int, content: int, free: bool, unit: Vector, node: Address3 | None
+) -> OverflowError:
+    """The refusal of a row whose momentum label could pass the bound,
+    naming the Node, the amount, the content, the unit vector of the
+    direction and the product that would leave the register."""
+    weight = amount if free else amount * content
+    reach = max(abs(component) for component in unit)
+    where = "" if node is None else f" at Node {list(node)}"
     return OverflowError(
-        f"{RAYS_LAW}: the momentum label of a row, {Q} x content x amount up to {Q * largest}, "
-        f"exceeds the integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // Q})"
+        f"{RAYS_LAW}: the momentum label of a row of amount {amount} and content {content}{where} "
+        f"along {list(unit)}, its weight {weight} times the largest component {reach} = "
+        f"{weight * reach}, exceeds the integer bound {MOMENTUM_BOUND}"
     )
 
 
-def largest_label_weight(amount: np.ndarray, content: np.ndarray, free: bool) -> int:
-    """The largest label weight among rows: the largest amount for a free
-    family, the largest amount times the largest content for a paid one."""
-    largest = int(np.abs(amount).max(initial=0))
-    if not free:
-        largest *= int(np.abs(content).max(initial=0))
-    return largest
+def label_overflow_rows(
+    amount: np.ndarray, content: np.ndarray, free: bool, unit: np.ndarray
+) -> np.ndarray:
+    """The pre-check of the one label, per row and BEFORE any product is
+    formed (ARCHITECTURE: never wrap): a row overflows when its weight
+    (the amount for a free family, content x amount for a paid one) cannot
+    be formed in the register, or when the weight times the largest
+    component of its unit vector `unit` (rows, 3) exceeds the bound. Both
+    products are tested by division, so nothing wraps in the test itself.
+    Returns the mask of the overflowing rows."""
+    a = np.abs(np.asarray(amount, dtype=np.int64))
+    if free:
+        fits = np.ones(a.shape, dtype=bool)
+        weight = a
+    else:
+        c = np.abs(np.asarray(content, dtype=np.int64))
+        fits = a <= MOMENTUM_BOUND // np.maximum(c, 1)
+        weight = a * np.where(fits, c, 0)
+    reach = np.abs(np.asarray(unit, dtype=np.int64)).max(axis=1)
+    result: np.ndarray = ~fits | ((reach > 0) & (weight > MOMENTUM_BOUND // np.maximum(reach, 1)))
+    return result
 
 
 def label_weights(amount: np.ndarray, content: np.ndarray, free: bool) -> np.ndarray:
     """The weight of a row's momentum label: the amount for a free family
     (its unit carries no content; its label is the unit), content x amount
-    for a paid one, bounded before the product is formed: a row whose
-    label, Q times its weight, could pass the integer bound is refused
-    loudly with the number (content x amount below 2^56)."""
+    for a paid one. The product is bounded before it is formed: a row
+    whose content x amount could leave the register is refused. The label
+    itself, the weight along the unit vector, is bounded per direction by
+    `momentum_labels`, the one place a label is formed."""
     weight = np.asarray(amount, dtype=np.int64)
-    largest = largest_label_weight(weight, content, free)
-    if Q * largest > MOMENTUM_BOUND:
-        raise label_bound_error(largest)
     if free:
         return weight
-    result: np.ndarray = weight * np.asarray(content, dtype=np.int64)
+    c = np.asarray(content, dtype=np.int64)
+    over = np.flatnonzero(np.abs(weight) > MOMENTUM_BOUND // np.maximum(np.abs(c), 1))
+    if over.shape[0]:
+        i = int(over[0])
+        raise label_bound_error(int(weight[i]), int(c[i]), free, ZERO3, None)
+    result: np.ndarray = weight * c
     return result
 
 
 def momentum_labels(
-    labels: np.ndarray, direction: np.ndarray, amount: np.ndarray, content: np.ndarray, free: bool
+    labels: np.ndarray,
+    direction: np.ndarray,
+    amount: np.ndarray,
+    content: np.ndarray,
+    free: bool,
+    node: np.ndarray | Address3 | None = None,
 ) -> np.ndarray:
     """The one momentum label of rows of rays, (rows, 3): the label weight
     (`label_weights`) along the unit vector of the direction at the scale
     Q (`labels`, the flight table's `labels`), content x amount x u_d for
-    a paid family, amount x u_d for a free one."""
+    a paid family, amount x u_d for a free one. The product is checked
+    BEFORE it is formed, per row, weight x max|u_d| within 2^62 - 1
+    (`label_overflow_rows`); the first row beyond it is refused loudly
+    naming its Node (`node`: the coordinates per row, (rows, 3), or the
+    one Node of every row) and its amount. Every place a label is formed
+    (a birth, a re-emission, a home, a face click, the transit line's
+    recount) comes through here or through the same per-row rule taken
+    in bulk (`first_label_overflow`)."""
+    d = np.asarray(direction, dtype=np.int64)
+    unit = labels[d]
+    over = np.flatnonzero(label_overflow_rows(amount, content, free, unit))
+    if over.shape[0]:
+        i = int(over[0])
+        where: Address3 | None
+        if node is None:
+            where = None
+        elif isinstance(node, np.ndarray):
+            where = (int(node[i, 0]), int(node[i, 1]), int(node[i, 2]))
+        else:
+            where = node
+        raise label_bound_error(
+            int(amount[i]),
+            int(content[i]),
+            free,
+            (int(unit[i, 0]), int(unit[i, 1]), int(unit[i, 2])),
+            where,
+        )
     weight = label_weights(amount, content, free)
-    result: np.ndarray = labels[np.asarray(direction, dtype=np.int64)] * weight[:, None]
+    result: np.ndarray = unit * weight[:, None]
     return result
 
 
@@ -712,10 +771,7 @@ class RayStore:
     record: `node` the flat index, `direction`, `age` (whole: the intervals
     since the measured event that created the ray; rows of different ages
     are distinct rows, the host cost of the whole age), `phase`, `number`,
-    `amount`, `content` (per unit), `charge` and `mass` (the emitter's
-    charge and content at the ray's birth for a free family, the factor of
-    the electric push carried on the record; 0 and 0 for a paid family) and
-    `arrival`, the direction the ray arrived on this interval (its
+    `amount`, `content` (per unit) and `arrival`, the direction the ray arrived on this interval (its
     direction at the walk; the reading is of the arrivals) or `HERE` for a
     ray that did not step. Rows sorted by `node` after every interval;
     identical rows merged."""
@@ -732,8 +788,6 @@ class RayStore:
         self.number: np.ndarray
         self.amount: np.ndarray
         self.content: np.ndarray
-        self.charge: np.ndarray
-        self.mass: np.ndarray
         self.arrival: np.ndarray
 
     @property
@@ -829,28 +883,36 @@ class RayStore:
         hi = int(np.searchsorted(self.node, flat, side="right"))
         return lo, hi
 
-    def rows(self) -> list[NatureBeam]:
-        x, y, z = self.coordinates(self.node)
+    def rows(self, lo: int = 0, hi: int | None = None) -> list[NatureBeam]:
+        """The records of the rows `lo` to `hi` (every row by default): the
+        one materialization of a ray's record (`NatureBeam`)."""
+        stop = self.size if hi is None else hi
+        x, y, z = self.coordinates(self.node[lo:stop])
         return [
             NatureBeam(
-                (int(x[i]), int(y[i]), int(z[i])),
+                (int(x[k]), int(y[k]), int(z[k])),
                 int(self.direction[i]),
                 int(self.age[i]),
                 int(self.phase[i]),
                 int(self.number[i]),
                 int(self.amount[i]),
                 int(self.content[i]),
-                int(self.charge[i]),
-                int(self.mass[i]),
             )
-            for i in range(self.size)
+            for k, i in enumerate(range(lo, stop))
         ]
 
     def labels(self, rows: np.ndarray, unit: np.ndarray, free: bool) -> np.ndarray:
         """The momentum labels of the given rows (`momentum_labels`, the one
         label of the law) along the unit vectors `unit` (the flight table's
         `labels`)."""
-        return momentum_labels(unit, self.direction[rows], self.amount[rows], self.content[rows], free)
+        return momentum_labels(
+            unit,
+            self.direction[rows],
+            self.amount[rows],
+            self.content[rows],
+            free,
+            np.stack(self.coordinates(self.node[rows]), axis=1),
+        )
 
 
 def segment_sums(keys: np.ndarray, values: np.ndarray, size: int) -> np.ndarray:
@@ -1040,26 +1102,34 @@ def first_reading_overflow(
 
 
 def first_label_overflow(
-    group: np.ndarray, groups: int, amount: np.ndarray, content: np.ndarray, free: bool
+    group: np.ndarray,
+    amount: np.ndarray,
+    content: np.ndarray,
+    free: bool,
+    unit: np.ndarray,
+    node_of: Callable[[int], Address3],
 ) -> tuple[int, OverflowError] | None:
-    """The bound of `label_weights` taken per group in bulk (Q times the
-    weight within the bound): None when every group passes, else the first
-    failing group in group order with the error `label_weights` raises."""
+    """The pre-check of `momentum_labels` taken per group in bulk, the same
+    per-row rule (`label_overflow_rows`: the weight times the largest
+    component of the row's unit vector `unit` within the bound, tested
+    before any product): None when every row passes, else the lowest
+    failing group with the error the per-row check raises, naming the
+    Node of its first failing row (`node_of` maps a row index to its
+    Node) and the row's amount."""
     if amount.shape[0] == 0:
         return None
-    a = np.abs(amount)
-    c = np.ones_like(a) if free else np.abs(content)
-    if Q * int(a.max()) * int(c.max()) <= MOMENTUM_BOUND:
+    over = np.flatnonzero(label_overflow_rows(amount, content, free, unit))
+    if over.shape[0] == 0:
         return None
-    a_max = np.zeros(groups, dtype=np.int64)
-    np.maximum.at(a_max, group, a)
-    c_max = np.zeros(groups, dtype=np.int64)
-    np.maximum.at(c_max, group, c)
-    for g in range(groups):
-        largest = int(a_max[g]) * int(c_max[g])
-        if Q * largest > MOMENTUM_BOUND:
-            return g, label_bound_error(largest)
-    return None
+    g = int(group[over].min())
+    i = int(over[group[over] == g][0])
+    return g, label_bound_error(
+        int(amount[i]),
+        int(content[i]),
+        free,
+        (int(unit[i, 0]), int(unit[i, 1]), int(unit[i, 2])),
+        node_of(i),
+    )
 
 
 def first_moment_overflow(
@@ -1122,7 +1192,6 @@ class FamilyPlan:
     g_content: list[int] = field(default_factory=list)
     g_moment: list[list[int]] = field(default_factory=list)
     readings: dict[str, list[object]] = field(default_factory=dict)
-    classes: dict[int, list[tuple[int, int, list[int]]]] = field(default_factory=dict)
     t_amount: list[int] = field(default_factory=list)
     t_content: list[int] = field(default_factory=list)
     t_phase: list[int] = field(default_factory=list)
@@ -1139,6 +1208,52 @@ class FamilyPlan:
     # The label sum of the rows that leave the store this interval (the
     # home rows and the rows a table absorbs): off the running transit line.
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
+
+
+# -- the push -------------------------------------------------------------------
+
+
+def push_form(
+    free: bool,
+    moment: list[int],
+    content: int,
+    reader: tuple[int, int],
+    emitter: tuple[int, int],
+    age: int,
+    entry: Measured,
+) -> list[int]:
+    """The push a measured event A takes from one group of arriving rays,
+    ONE product per arriving free ray (the model owner's decision of
+    2026-09-20, Highlights 5.4: charge is per unit of content of a
+    family): `moment` is V_B, the label moment of the group (Python
+    integers, exact), `content` M_A the reader's content as the frame
+    read it, `reader` rho_A = (n_A, d_A) and `emitter` rho_B = (n_B, d_B)
+    the two families' charges per unit of content, `age` the reader's age
+    after the frame's advance. For a free family's rays
+
+        push_A = M_A x (rho_A rho_B - 1) x V_B,
+
+    formed in integers as the gravity -M_A V_B plus the electric part
+    taken as the whole part off the reader's clock by the declared pairs,
+    per axis `sign(V n_A n_B) x by_clock(age_A, |V x n_A n_B x M_A|,
+    d_A d_B)`, which equals the earlier `sign x by_clock(age_A, |V q_A
+    q_B|, M_B)` integer by integer wherever q_A = rho_A M_A and q_B =
+    rho_B M_B were integers (the same rational, floored at the same
+    clock); no zero divisor can arise (d_A d_B >= 1). For a paid family's
+    rays the push is V_B itself (kappa = 1, the label carries h s). Every
+    quantity is bounded before it is assigned (`bounded`)."""
+    if not free:
+        return [bounded(moment[axis], entry, "push") for axis in range(3)]
+    push = [bounded(-moment[axis] * content, entry, "push") for axis in range(3)]
+    n_a, d_a = reader
+    n_b, d_b = emitter
+    if n_a and n_b:
+        denominator = d_a * d_b
+        for axis in range(3):
+            total = bounded(moment[axis] * n_a * n_b * content, entry, "electric push")
+            whole = by_clock(age, abs(total), denominator)
+            push[axis] = bounded(push[axis] + (-whole if total < 0 else whole), entry, "push")
+    return push
 
 
 # -- the law ---------------------------------------------------------------------
@@ -1160,6 +1275,7 @@ def nature_beam(
     on a board without measured events; the border has no inverse."""
     families = world.families
     free_of = [definition.free for definition in families]
+    rho_of = [definition.charge for definition in families]
     flight, collision = tables.flight, tables.collision
     # The unit vectors of the directions at the scale Q: what every label
     # and every vector or tensor moment of the reading is taken on.
@@ -1385,7 +1501,6 @@ def nature_beam(
     if events:
         count = len(families)
         ev_number = np.array([e.number for e in entries], dtype=np.int64)
-        ev_charge = np.array([e.charge for e in entries], dtype=np.int64)
         ev_rule = np.array([[RULE_CODES[r] for r in e.table] for e in entries], dtype=np.int64)
         ev_window = np.array(
             [[-1 if w is None else w for w in e.windows] for e in entries], dtype=np.int64
@@ -1462,11 +1577,19 @@ def nature_beam(
                 total = grouped_sums(amount[home], starts, widest)
                 carried = grouped_sums(amount[home] * content[home], starts, widest)
                 taken_in = np.zeros((starts.shape[0], DIMENSIONS), dtype=np.int64)
-                overflow = first_label_overflow(ev_h, events, amount[home], content[home], free)
+                home_unit = unit[direction[home]]
+                overflow = first_label_overflow(
+                    ev_h,
+                    amount[home],
+                    content[home],
+                    free,
+                    home_unit,
+                    lambda i: entries[int(ev_h[i])].position,
+                )
                 if overflow is not None:
                     failures[(overflow[0], family, 0, 0, 1)] = overflow[1]
                 weights = amount[home] if free else amount[home] * content[home]
-                home_labels = unit[direction[home]] * weights[:, None]
+                home_labels = home_unit * weights[:, None]
                 if not free:
                     taken_in = grouped_sums(home_labels, starts, widest)
                 # The home rows leave the store: their labels leave the
@@ -1619,12 +1742,13 @@ def nature_beam(
             reading = reading_of(np.add.reduceat(moment_table(v_arrival, a_t, age_t), g_starts, axis=0))
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
-            # The push, ONE bilinear form over the rows: the label moment per
-            # group (the weights bounded before the product), and per
-            # (charge, mass) class of the charged rows a charged reader met,
-            # in the order of first appearance, the part the electric push
-            # reads off the clock.
-            overflow = first_label_overflow(of_row, groups, a_t, c_t, free)
+            # The push, ONE product per group of arriving rays (`push_form`):
+            # the label moment per group, the weights bounded before the
+            # product; the electric factor is the family's charge per unit
+            # of content, so no class of rows is kept.
+            overflow = first_label_overflow(
+                of_row, a_t, c_t, free, v_direction, lambda i: entries[int(ev_t[i])].position
+            )
             if overflow is not None:
                 fail(overflow[0], 3, overflow[1])
             weights = a_t if free else a_t * c_t
@@ -1633,20 +1757,6 @@ def nature_beam(
                 fail(overflow[0], 4, overflow[1])
             labels = v_direction * weights[:, None]
             plan.g_moment = np.add.reduceat(labels, g_starts, axis=0).tolist()
-            if free:
-                charge_t, mass_t = store.charge[at[taken]], store.mass[at[taken]]
-                electric = np.flatnonzero((charge_t != 0) & (ev_charge[ev_t] != 0))
-                if electric.shape[0]:
-                    keys = np.stack([of_row[electric], charge_t[electric], mass_t[electric]], axis=1)
-                    unique, first, inverse = np.unique(
-                        keys, axis=0, return_index=True, return_inverse=True
-                    )
-                    parts = np.zeros((unique.shape[0], DIMENSIONS), dtype=np.int64)
-                    np.add.at(parts, inverse.reshape(-1), labels[electric])
-                    unique_list, parts_list = unique.tolist(), parts.tolist()
-                    for c in np.lexsort((first, unique[:, 0])).tolist():
-                        group, charge, mass = unique_list[c]
-                        plan.classes.setdefault(group, []).append((charge, mass, parts_list[c]))
             carried_t = a_t * c_t
             plan.g_number = num_t[g_starts].tolist()
             plan.g_start = g_starts.tolist()
@@ -1819,26 +1929,22 @@ def nature_beam(
                             for stage in (2, 3, 4):
                                 refuse((i, family, 1, gi - span[0], stage))
                         other = plan.g_number[gi]
-                        moment = plan.g_moment[gi]
-                        if free:
-                            push = [
-                                bounded(-moment[axis] * entry.content, entry, "push")
-                                for axis in range(3)
-                            ]
-                            if entry.charge:
-                                for charge, mass, part in plan.classes.get(gi, ()):
-                                    for axis in range(3):
-                                        total = bounded(
-                                            part[axis] * entry.charge * charge, entry, "electric push"
-                                        )
-                                        whole = by_clock(entry.age, abs(total), mass)
-                                        push[axis] = bounded(
-                                            push[axis] + (-whole if total < 0 else whole),
-                                            entry,
-                                            "push",
-                                        )
-                        else:
-                            push = [bounded(moment[axis], entry, "push") for axis in range(3)]
+                        # M_A is the content the frame read at the start of the
+                        # interval (`frame_content`), the same for every family's
+                        # rays whatever the family order: a click of this
+                        # interval joins `held` and is read by the next frame
+                        # (the orchestrator's D1, 2026-09-20); rho_A the reader's
+                        # family's charge per unit of content, rho_B the
+                        # arriving family's.
+                        push = push_form(
+                            free,
+                            plan.g_moment[gi],
+                            entry.frame_content,
+                            entry.rho,
+                            rho_of[family],
+                            entry.age,
+                            entry,
+                        )
                         entry.momentum = [
                             bounded(a + b, entry, "momentum")
                             for a, b in zip(entry.momentum, push, strict=True)
@@ -1977,10 +2083,6 @@ def nature_beam(
             definition = families[family]
             free = free_of[family]
             born: list[tuple[int, int, int, int]] = []  # (direction, amount, content, phase)
-            # The emitter's factor a free family's ray carries from birth:
-            # its charge and the content the release rate reads (its held
-            # content of the family at this self-creation).
-            charge, mass = (entry.charge, entry.held[family]) if free else (0, 0)
             if free and entry.held[family] > 0:
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
@@ -2019,15 +2121,13 @@ def nature_beam(
             direction_column = np.array([b[0] for b in born], dtype=np.int64)
             amount_column = np.array([b[1] for b in born], dtype=np.int64)
             content_column = np.array([b[2] for b in born], dtype=np.int64)
-            # The labels of the born rows (the one label; bounded before the
-            # product): a paid family's emitter takes their sum as its
+            # The labels of the born rows (the one label, its product checked
+            # per row before it is formed, refused naming the Node and the
+            # amount): a paid family's emitter takes their sum as its
             # recoil, a lamp's release and a re-emission alike.
-            labels = momentum_labels(unit, direction_column, amount_column, content_column, free)
-            if int(np.abs(labels).max(initial=0)) > MOMENTUM_BOUND:
-                raise OverflowError(
-                    f"{RAYS_LAW}: the momentum label of a release of measured event {entry.number} at "
-                    f"{list(entry.position)} exceeds the integer bound {MOMENTUM_BOUND}"
-                )
+            labels = momentum_labels(
+                unit, direction_column, amount_column, content_column, free, entry.position
+            )
             born_momentum = exact_column_sums(labels)
             if not free:
                 entry.momentum = [
@@ -2045,8 +2145,6 @@ def nature_beam(
                 number=np.full(count, entry.number, dtype=np.int64),
                 amount=amount_column,
                 content=content_column,
-                charge=np.full(count, charge, dtype=np.int64),
-                mass=np.full(count, mass, dtype=np.int64),
                 arrival=np.full(count, HERE, dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
