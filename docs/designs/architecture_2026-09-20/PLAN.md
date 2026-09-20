@@ -121,6 +121,14 @@ per cell instead of once per record. Both are bit-exact fixes (O8).
 
 ## 2. What is no longer needed once the one click lands
 
+**Amendment of 13:00 UTC.** Record 101 of 2026-09-20: stage (vi) was
+stopped by its rule and the key `amplitude` is kept; the one click is
+stage (vii), in flight (record 103). D1, D2 and D3 below therefore wait for
+stage (vii) and are not part of the cleanup pull request until it lands;
+D4 to D8 and the rest of the plan stand. The gate fix of stage (v) (merged
+in #370, record 109) resolved C4: the hold reads the pending rows alone.
+
+
 ### 2.1 Dead paths (D-findings), each with its evidence and MIGRATION line
 
 Assumption for D1 to D3: stage (vi) as the brief states it. Where (vi)
