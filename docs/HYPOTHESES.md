@@ -744,3 +744,53 @@ couplings.
   Links of travel; a per-family w declared instead (point 16) gives the same
   numbers and is the alternative if the lane rule is struck.
 - **Status.** Open; the model owner's.
+
+## 20. A moving body's clock: the engine's rate is one at every speed, nature's gamma a limit stated so that it can fail
+
+- **Statement (the physicist's finding of 2026-09-20, WEAK.md 2.4 and
+  PREDICTIONS entry 12, recorded on the model owner's decision of the same
+  day that the engine stands).** Under the Beam Law a measured event's
+  clock is the count of its self-creations: `_frame_all` advances its age
+  at every interval in which it owes nothing, whether or not `_move` steps
+  its body in that interval, so a body thrown at the speed v (Links per
+  interval on an axis: by the step rule one Link per (S x M + p) / p
+  self-creations under the width S, with p its momentum in label units
+  and M its content) ticks at the rate of a body at rest, and its range
+  before a transformation at the key `at` is v x at Links, linear in v.
+  TERMINOLOGY's earlier sentence on the self-creation, "a transfer is not
+  one", read as if the interval of a body's step were skipped, which would
+  give the rate 1 - v, first order in v and anisotropic (the Manhattan sum
+  of the axis speeds; entry 15 above states that reading for a bound
+  group of the earlier law); the engine never did that, and the sentence
+  is corrected (2026-09-20). Nature: a moving clock runs at
+  sqrt(1 - v^2) (the muon at rest 2.197 us and at gamma 29.3 in the CERN
+  storage ring 64.4 us; Rossi and Hall 1941; the transverse Doppler of
+  Ives and Stilwell 1938; GPS). The law has no kinematic rule (POSTULATES
+  4: nothing slows a clock because of motion), so its prediction is
+  stated as it stands, no slowing at any v, a plain disagreement with
+  nature at every v, recorded so that it can fail and not tuned in.
+- **The reading (series J4, defined and not yet run).** Muons (`mu`, a
+  free family of content 207) with `become` at 64 into `e` and the
+  products of the muon's decay declared, one at rest and one thrown at
+  v = 1 / 4 and at 1 / 2 on an axis (the momentum p = S x M x v / (1 - v):
+  69 and 207 in label units at S = 1 for M = 207) and one at 1 / 4 per
+  axis on a diagonal, in an open bar with no crowd (`release` [1, 2^20]);
+  the products' face clicks the DETECTOR reading (the tick and the Node of
+  each click give the tick of the decay and the body's range), the
+  `become` lines the GAMEBOARD reading. Expected on the engine as it is:
+  every muon fires at tick 64, at rest at its Node, at v = 1 / 4 sixteen
+  Links on and at 1 / 2 thirty-two Links on; under the corrected
+  sentence's old reading at 64 / (1 - v), 85 and 128, the ranges 21 and
+  64; under nature's gamma at 66 and 74 (gamma 1.033 and 1.155), the
+  ranges 16.5 and 37. The three readings are told apart by one run.
+- **What would refute it.** A measured trigger tick of a moving muon
+  other than 64, or a rate that depends on the direction of motion (the
+  engine's clock is then not what this entry says). Against nature the
+  entry is not refuted by a run: it is a limit of the law. What the law
+  would need to give nature's rate is a clock that counts the intervals
+  in which the body does not step and weights them by the second order of
+  the speed, a kinematic rule the law does not have and this entry does
+  not propose.
+- **Status.** Open; the model owner's (2026-09-20: the engine stands, the
+  terminology corrected, nature's gamma a limit of the law). Series J4 is
+  the reading to make.

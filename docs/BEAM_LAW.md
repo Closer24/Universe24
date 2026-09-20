@@ -2172,3 +2172,13 @@ implementation's part of the contract. The design above is unchanged.
     electroweak scale and its broken symmetry, the W and Z masses fixing
     the scale, the propagator's rise and V-A; the law's W is a carrier of
     charge and momentum over one Link and nothing else.
+    **(v) The moving body's clock, unchanged** (the physicist's finding,
+    WEAK.md 2.4; the model owner, 2026-09-20: the engine stands). The
+    clock of a measured event ticks at every interval in which it owes
+    nothing, whether or not its body steps in that interval (`_frame_all`
+    before `_move`), so a body in flight fires its `become` at the same
+    tick as one at rest and its range is v x at, linear in v; TERMINOLOGY's
+    sentence on the self-creation ("a transfer is not one"), which read as
+    if a step skipped a tick, is corrected, and nature's gamma is recorded
+    as a limit of the law in HYPOTHESES.md entry 20 (series J4 the reading
+    to make), not tuned in. Nothing of the engine changes.
