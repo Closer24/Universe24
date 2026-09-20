@@ -10,17 +10,25 @@ repository's tables and not runs of the engine.
 
 ## Decided by the owner (2026-09-20)
 
-1. **One manuscript, version 2 of paper 1** ("stay with one new paper only,
-   but one that can be submitted as a new version"): paper 1's arXiv entry
-   replaced, new title and abstract, the testbed's question kept, the four
-   candidates of version 1 kept with their archived numbers (their code was
-   deleted on 2026-09-17; they cannot be rerun), the click model added as
-   the fifth candidate. Its runs are made only after `amplitude-v1` is on
-   `main` and in the register ("run after everything closes with the new
-   implementation"), at N = 64, 1024 and 4096. After `amplitude-v1` the key
-   is removed ("the one click"), so the paper describes one law, not a
-   keyed alternative. The manuscript is `paper/main.tex` edited in place;
-   the new sections are drafted in `click_model/main.tex` and merged there.
+1. **A new paper 3, on the click model only** (the owner, in order: "stay
+   with one new paper", then "a completely new paper", then "paper 3, new;
+   update the plan: only the new engine"). The paper is about the model,
+   the law of the click (Definitions 1 to 3 and the theorems); the engine
+   is not its subject and appears only as the instrument that produced
+   each registered number and in the reproducibility section. One law:
+   every number in the paper is a registered run of the finished
+   implementation of the click after `amplitude-v1` is on `main` ("run
+   after everything closes with the new implementation"), at N = 64, 1024
+   and 4096; after
+   `amplitude-v1` the key is removed ("the one click"), so the paper
+   describes one law and no keyed alternative. Papers 1 and 2 are not
+   changed and not resubmitted; paper 1 is cited in one paragraph as the
+   "before" (the local candidates at S = 2, the shared registry at 2.83,
+   the choosers' run) and none of its tables is reproduced, since its
+   engine was deleted on 2026-09-17. The manuscript is
+   `paper/click_model/main.tex` with its own `figures/`; a new arXiv
+   submission (quant-ph, cross-list physics.comp-ph), a new Zenodo version
+   under the concept DOI, a new tag.
 2. **The claim** ("the amplitude runs, because they unify everything"): on
    a local integer GameBoard whose only one-way step is a click that reads
    the accumulated sum of one record's rows and chooses by the birth phase
@@ -99,21 +107,24 @@ with S(N) tabulated; the statements "S <= 2 sqrt 2 at every N" and
    fill the registered column and the figures (`figures.py` from the runs'
    summaries, as `paper/figures.py`); the number-to-register table beside
    the draft.
-3. Merge the new sections into `paper/main.tex` as version 2: the plain
-   description opens the introduction; the model and theorems; version 1's
-   coupling and Bell sections kept with archived numbers and the fifth
-   row; the causal anatomy's new row; the finite-N comparison; the
-   single-quantum measurements; Part II; what is not claimed;
-   reproducibility; the AI paragraph. "GameBoard" for "lattice".
+3. Complete `paper/click_model/main.tex` as paper 3: abstract (within
+   1920 characters); introduction opening with the plain description and
+   one paragraph on paper 1 as the "before"; the model and theorems (done);
+   the measurements from the register; the finite-N comparison with the
+   Bell experiments; the causal anatomy of the click in paper 1's terms
+   (deterministic, measurement-independent, parameter-dependent, the law
+   from the tables); what is new; what is not claimed; Part II, the
+   hypotheses of the program with their status; reproducibility; the AI
+   paragraph. "GameBoard" throughout.
 4. The hostile referee: the physics-rule reviewer skill reads the draft
    against the register, the design and BEAM_LAW; first questions: the
    windowed which-path case and the rung tie. Findings fixed or answered;
    the report to the owner with the path and the findings.
-5. The owner's review; `arxiv_metadata.md`'s paper 1 entry becomes the
-   version 2 entry; the release tag and Zenodo version (no `v0.3.1` tag
-   exists on GitHub though CITATION names it: to resolve); the arXiv
-   replacement submitted by the owner; venue after arXiv, Foundations of
-   Physics.
+5. The owner's review; `arxiv_metadata.md` gains a third entry (paper 3's
+   title, abstract, categories); the release tag and Zenodo version (no
+   `v0.3.1` tag exists on GitHub though CITATION names it: to resolve);
+   the new arXiv submission by the owner (the same endorsement path as
+   paper 1 if asked again); venue after arXiv, Foundations of Physics.
 
 ## Reproducibility and disclosure, in one paragraph each
 
