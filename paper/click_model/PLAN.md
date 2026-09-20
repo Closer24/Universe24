@@ -563,8 +563,10 @@ journal with an article processing charge.
 3. Write `paper/click_model/main.tex` in the style and macros of
    `paper/main.tex` (article, 11pt, the same packages and hypersetup,
    `thebibliography`) and in the structure of section 12: abstract within
-   arXiv's 1920 characters; introduction; the model (section 3 of this
-   plan as two pages); the theorems with proofs (section 4); the
+   arXiv's 1920 characters; introduction opening with the plain description
+   of section 13; the model (section 3 of this plan as two pages); the
+   theorems with proofs (section 4); principle 9 as a falsifiable limit in
+   the predictions (section 14); the
    measurements (the tables from the register, each row with its entry);
    the comparison with the Bell experiments (the set of admissible N); the
    literature (section 5); what is new; what is not claimed (section 10);
@@ -634,3 +636,95 @@ a hypothesis without a run is written in one sentence with no number.
 Nothing in Part II is cited by Part I, and the abstract names Part II in
 one clause ("the hypotheses of the program are listed with their status
 and claimed nowhere").
+
+## 13. The plain description for the introduction: the GameBoard as a mail board (the owner and the Boss, 2026-09-20)
+
+The introduction opens with the model in plain words, without wave
+vocabulary, and the formal definition of section 3 follows it at once,
+since a referee will not accept the picture in place of a theorem. The
+picture, as the owner and the Boss phrased it, adjusted only where the
+engine's rule differs in a detail (marked):
+
+> The GameBoard is a mail board. Cells (Nodes), each wired to six
+> neighbours; a wire carries one packet one step per tick, and nothing
+> travels farther or faster. A packet is four numbers: how much (the
+> amount), where to (the direction), a rotating counter (the phase, which
+> advances a fixed step each time the packet crosses a wire, and, in the
+> collector's reading, a fixed step per tick of its age), and a birth
+> number. A cell has no memory: what is in it now is exactly the packets in
+> it now. The rules are local and few. Transfer: a packet moves to the
+> neighbour its direction names. Duplication at a splitter: a packet
+> becomes several packets in several directions, each with a declared
+> share, the birth number the same on all, the total of the squares of the
+> shares preserved (the split of section 3.3). Merging: identical packets
+> add; identical packets with opposite counters cancel and leave nothing.
+> Deflection beside a mass: a packet's direction is turned by a table, and
+> the turn can be undone. The collector, the apparatus, keeps per birth
+> number and per cell the running sum of the packets' arrows (the counter
+> read as a direction on a circle, the amount as a length). When every
+> packet of a birth has ended, at a collector, a wall or the edge, the
+> collector lays the cells on a ruler in proportion to the squared lengths
+> of those sums; a secret number born with the birth, which no rule ever
+> read, picks the point on the ruler; the whole birth is recorded at that
+> cell, and the remaining packets of that birth are deleted wherever they
+> are. That deletion is the only action at a distance in the model, and
+> it only deletes. Births happen only at sources, on their own clocks;
+> deaths only at clicks. Everything between a birth and its click can be
+> run backwards.
+
+Then the paper says what the picture is in standard terms and what is
+proved of it: the packet's arrow is an amplitude with an integer phase;
+the duplication is an isometry whose inverse is its transpose (T2); the
+merging is the normal form of the record's module (T1); the ruler with
+the secret number is the Born rule as inverse-transform sampling of a
+uniform hidden variable, exact to 1/N; the deletion is the non-local
+step forced by Bell's theorem, and no-signalling is a theorem (T3). The
+words "wave", "collapse" and "superposition" appear first in the
+literature section, each as another author's name for one of these.
+
+## 14. Principle 9 as a stated, falsifiable limit (for the predictions section)
+
+The paper states the price of the record as a prediction that can fail,
+with its numbers, because a referee will ask "how much".
+
+- **The count.** A record between clicks carries one row per (path,
+  joint label); after n entangling gates the labels are 2^n and the rows
+  n x 2^n per path (`gate.txt`: 2 x 4 = 8 rows for two labels, 20 971 520
+  at n = 20). The lattice does fixed work per row; the number of rows
+  explodes. The host pays the combinations; a Node pays per row it holds.
+- **The register's ceiling, the design's numbers.** The multiplicity m
+  grows per pass of one path by k for an equal k-way split, by c^2 for a
+  Pythagorean pair (a, b, c), by 65536 for a label rotation, and is
+  refused at the split that would exceed 2^62 - 1, naming the Node. Within
+  2^62 a path takes 62 balanced (1, 1) splits, 13 passes of (3, 4, 5), 6
+  of (20, 21, 29), 4 of (119, 120, 169), 9 of the 91-fan, 3 label
+  rotations. Beyond the ceiling a birth is refused: the engine stops
+  rather than rounds, which in the world's terms is a forced click.
+  Grover's six rotations on two labels reach m = 2^192, exact on the
+  host's Python integers and not on any Node: the algorithm runs as a
+  description and not on the lattice as a machine.
+- **The store's ceiling.** Rows per Node are bounded by the world's
+  constants (the directions, the age bound, N, the numbers, the contents)
+  times L x R, L the largest label set (2^n) and R the live records per
+  number; a world whose entangled register exceeds it is refused at load
+  or at the birth that overflows.
+- **The statement, so that it can fail.** If the GameBoard is a finite
+  machine, an entangled register wider than the store's bound or a circuit
+  deeper than the register's exact depth cannot exist, and a quantum
+  computer meets a hard ceiling at a width and depth fixed by N and the
+  store's capacity; if the GameBoard is a description, there is none.
+  Nature shows no ceiling yet (entangled registers of hundreds of qubits
+  are reported), so the model's numbers are stated with what they depend
+  on: the depth per path depends on the register's width (62 bits here)
+  and on which splitters a circuit uses; the width depends on the store's
+  capacity per Node, which is a host constant and not a law; neither
+  depends on N except through the label rotation's factor 65536 (the
+  square of the tables' scale, not of N). The paper states the ceiling as
+  a consequence of a finite machine, gives the numbers above, and says
+  that the one measurement that would decide it, an entangled register
+  that grows without a ceiling, has not reached any number the model
+  fixes, since the model fixes none until the store's capacity is
+  declared a law. The dead row's action on matter (design section 9) is
+  stated beside it as the same principle's other face: a row whose
+  combinations were removed still pushes until its next set, the limit
+  registered.
