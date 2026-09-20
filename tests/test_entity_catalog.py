@@ -33,6 +33,7 @@ from pathlib import Path
 
 import pytest
 
+from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.events import NatureBeamSimulation
 from event_universe.events import world as schema
 from event_universe.events.world import LAW_VALUE
@@ -132,7 +133,7 @@ CATALOG_DOCUMENT = ROOT / "docs" / "ENTITY_CATALOG.md"
 EXAMPLES = ROOT / "examples" / "events"
 KEYS_COLUMN = "Its keys today"
 ROTATE_KEYS = {"setting", "bit", "turn"}
-GATE_KEYS = {"kind", "hold", "parties"}
+GATE_KEYS = {"kind", "hold", "parties", "control"}
 VALUES = {"true", "false"}
 
 
@@ -221,11 +222,13 @@ def test_the_nested_key_sets_are_the_parsers():
     """The nested keys the test spells (`rotate`, `gate`) are the parser's:
     the parser accepts exactly them and refuses one more."""
     assert schema._rotation({"rotate": {"setting": 1, "bit": 0, "turn": 0}}, "t", "rerelease", 64, True)
-    assert schema._gate({"gate": {"kind": "cnot", "hold": True, "parties": 2}}, "t", "rerelease", True)
+    table = ((0, 0, 0), (0, 0, 0), *PORT_HEADINGS)
+    gate = {"kind": "cnot", "hold": True, "parties": 2, "control": [0, 1, 0]}
+    assert schema._gate({"gate": gate}, "t", "rerelease", True, table)
     with pytest.raises(ValueError):
         schema._rotation({"rotate": {"setting": 1, "extra": 0}}, "t", "rerelease", 64, True)
     with pytest.raises(ValueError):
-        schema._gate({"gate": {"kind": "cnot", "extra": 0}}, "t", "rerelease", True)
+        schema._gate({"gate": {**gate, "extra": 0}}, "t", "rerelease", True, table)
 
 
 def test_every_key_the_catalog_names_is_a_key_the_parser_knows():
