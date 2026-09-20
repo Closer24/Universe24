@@ -1190,6 +1190,19 @@ states "exactly" and means integer equality at every tick.
   -1 186 507 968 where it was 1 073 741 824; the sum of the two and the
   reads unchanged. The other eighteen worlds are byte-identical
   ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20).** The free probes of
+  `1b_m1`, `1b_m4` and `1b_m16` make the same 11 steps to the Node beside
+  the source, each one interval later than registered (the ticks 22 to
+  32 in place of 21 to 31: the probe's drive begins at 0 when the first
+  rows arrive), and hand their x component over from tick 33 (168
+  `contact` records in place of 169 from tick 32, the first hand-over
+  larger, -157 823 232 for m = 1 in place of -146 316 992); the probe's
+  momentum 0 at the end and the source's -1 185 431 936 (m = 1),
+  -3 667 985 920 (m = 4), -13 598 201 856 (m = 16) where they were
+  -1 186 507 968, -2 598 548 224, -12 541 676 544; the reads and the sum
+  of the two momenta as before. The eighteen other worlds have no free
+  body and read the same (the record's new fields aside) ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### D, the orbit under the Beam Law, on the plane (2026-09-19)
 
@@ -1443,6 +1456,29 @@ states "exactly" and means integer equality at every tick.
   is gone), C 0.30 over the run, and the probe leaves through face:+x
   at tick 260 instead of 271. The five other worlds are byte-identical
   ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** The S = 1 probes read the same (they take no push; the record's
+  new fields aside).
+  The four others move differently under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age): `s8_r12` closes one turn
+  by the criterion's angle (T 226 in place of the derived 196, the
+  return +7 Links, the mean radius 15.83, C 1.65), turns 1.93 times and
+  leaves through face:+x at tick 571 (registered: one turn in 198, no
+  closing, out at 260); `s8_r24` reverses its angle (-0.11 turns) and
+  leaves through face:+x at tick 495 (0.93 turns, out at 449); `s32_r12`
+  closes two turns (T 474, then 236; the returns +3, -7; the mean radii
+  16.63, 10.96; C 1.29, 1.85) and leaves through face:-y at tick 1568
+  (seven precessing turns, the first in 289, bound for 2891); `s32_r24`
+  closes by the criterion, the return (-1, +1) with the heading kept, T
+  623 against the derived 687, the mean radius 23.63 within 24 +- 1, C
+  1.37, then a second turn in 464 (the return (-14, +1), the mean radius
+  18.49) before leaving through face:+x at tick 1849 (one turn in 829,
+  then fell in, out at 1054); T(24)^2 / T(12)^2 = 1.73 against the
+  expected 4 (was 8.23). The record checks 0 failed. The verdict's clause
+  "no orbit closes by the criterion at any width or radius" no longer
+  holds: the S = 32 probe at r = 24 closes once; the rest of the verdict
+  (the field's burst and the fan's grain turning the circle into a
+  precessing polygon) stands as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### A10, the width of an opening and the spread behind it, under the Beam Law (2026-09-20)
 
@@ -1969,6 +2005,23 @@ states "exactly" and means integer equality at every tick.
   rms of 0.009 to 0.017 (the step rule's grain).
   The surprise is a limit of the reading and an artefact of the world, not
   a finding of the law; the register keeps the verdict above as read.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every source is a lamp whose recoil changes its momentum at
+  every self-creation, so all four worlds move differently under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age),
+  by little: the near fit's H t_0 in the windows [100, 200), [200, 300),
+  [300, 400) and [200, 400) reads 0.877, 0.969, 1.017, 0.996 in both
+  coasting worlds (registered 0.875, 0.949, 1.029, 0.985), 1.144, 1.182,
+  1.305, 1.292 in `pushing_scalar` (1.079, 1.072, 1.292, 1.235) and
+  0.866, 0.932, 1.057, 1.036 in `pushing_age` (0.912, 1.017, 1.120,
+  1.060); the throw's own coasting form against the reading rms 0.0034
+  in z (0.0033) and 1.3 intervals in tau; the detector's own clock over
+  the run 0.8275, 0.9950, 0.2925, 0.9800 self-creations per interval
+  (0.8300, 1.0000, 0.3000, 0.9750). Of the three forms, q = -0.55 is the
+  nearest in 8 of the 12 windows (10 of 12 registered): `pushing_age`
+  now reads q = 0 the nearest in [100, 200) and [200, 300). 309 readings
+  inside and 27 outside (310 and 26); the reading's formula 288 of 288
+  inside 2 %. The verdict and the follow-up stand as read ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### H, Bohr's lines behind the detector (2026-09-20)
 
@@ -2117,6 +2170,38 @@ states "exactly" and means integer equality at every tick.
   of 540, its one closing the same. The verdict stands: no orbit closed
   well enough for the coherence reading. `r6`, `r8`, `r12`, `r15` and
   `r16` are byte-identical ([validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age); the design, the widths and
+  the radii are the assignment's. `r2` closes once (T 262, the mean
+  radius 3.62), turns 1.64 times and leaves through face:-y at tick 410
+  (registered under the contact: two closings, C(2) = 0.60, out at 688);
+  `r4` closes twice (T 459 and 1074, the mean radii 5.21 and 11.62), one
+  return within 0.25 r, C(2) = 1.38 (inside the between radius's bound),
+  out through face:+y at 1871 (one closing, out at 600); `r6` closes
+  three times (597, 1088, 550), C(3) = 0.52, out through face:-y at 2682
+  (no closing, out at 1045); `r8`, the design's closing radius j = 2,
+  closes four times (T 944, 588, 1209, 1281; the mean radii 8.84, 6.50,
+  11.45, 13.15; three returns within 0.25 r) and is on the GameBoard at
+  the end of 4200 intervals, the phase's turn per orbit 0.828, 0.750,
+  0.797 of a circle beyond whole circles against the design's 0, C(4) =
+  1.01 against the expected T / 2 = 2.0 (outside; two closings, C(2) =
+  0.84, out at 1864); `r12` closes five times (1454, 1658, 1416, 1334,
+  1290; the mean radii 12.46, 13.68, 11.97, 11.66, 11.37; r from 9.4 to
+  15.7), every return within 0.25 r, on the GameBoard at the end of 7400,
+  the phase's turn 0.609, 0.250, 0.141, 0.078 against 0.555, C(5) = 0.49
+  (inside, bounded; 0.95 turns and out at 2097); `r15` closes once (T
+  2291) and leaves through face:-x at 3597 (two closings, out at 4683);
+  `r16` turns 0.48 and leaves through face:-x at 1851 (one closing, out
+  at 3568). The ladder takes no ratio (fewer than two closing radii with
+  two turns; was r = 8 / r = 2 = 4.00). 3 readings inside and 1 outside
+  (1 and 2). What changed in the finding: the orbit at r = 8 and r = 12
+  now holds for the run with returns within a quarter radius, so the
+  verdict's "what the law lacked here is a stable closed orbit under
+  whole kicks" is answered by the step rule, not by a smoother field; the
+  coherence reading at the closing radius stays outside (C(4) = 1.01
+  against 2.0, the phase's turn per orbit not 0), so Bohr's lines are
+  still not read behind the detector, neither for nor against ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### I, the nucleus (2026-09-20)
 
@@ -2235,6 +2320,31 @@ states "exactly" and means integer equality at every tick.
   model owner: the scratchpad's `nucleus/nucleus.html` with the frame
   player of `nucleus.gif` (the square dispersing, one frame per 5
   intervals), published by Boss.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** Every world changes under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age), the DETECTOR pushes at
+  tick 20 the same wherever the bodies have not moved: `deuteron_1` 169
+  hand-overs on p from tick 16 and 158 on n from tick 17, the largest
+  4 664 509 209 600 (191 and 148, the largest 7 152 247 454 720), no step,
+  6 of 6 inside; `deuteron_3` the first steps at ticks 33 and 34, out
+  through face:-x at 346 and face:+x at 311 (34; 358 and 285), inside;
+  `deuteron_1_kick` the kick outweighed by tick 5, no step, 168 and 157
+  hand-overs from ticks 19 and 20 (190 from 13 and 147 from 138),
+  inside; `pp_1` no step, 119 hand-overs on p1 from tick 23 and 115 on
+  p2 from tick 24 (171 on p1, none on p2), inside; `pp_1_weak` the first
+  steps at tick 118, out at 364 and 345, 120 strong reads per body (167;
+  379 and 334; 169), inside; `pp_3` the first steps at tick 68 (66), the
+  one reading outside as before; `alpha_square` disperses sooner, p4
+  stepping +x at tick 15, n2 at 22, p1 and n3 at 31, out through face:-y
+  at 125, face:+y and face:+x at 133, face:+x at 177 (57, 63, 70, 84;
+  180 to 538), so at tick 20 the bodies are no longer the design's square
+  and its two readings at that tick (the push per body, the shear) fall
+  outside, the dispersal inside; `alpha_line` holds, no step, 230, 190,
+  140 and 230 hand-overs, the label 0 after each, the largest
+  7 380 392 774 624 (257, 247, 11, 251; 16 500 521 232 560, the toy's
+  number). 27 readings inside and 3 outside (29 and 1). The verdict
+  stands: bound at one Link, free at three, the line rigid and the square
+  sheared ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 ### K, light beside a mass (2026-09-20)
 
@@ -2834,6 +2944,24 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   dense enough stabilises a neutron, bound or not). Nothing was tuned; no
   law changed beyond the one rule added. The page for the model owner:
   the scratchpad's `weak_impl/weak.html`, published by Boss.
+- **Re-read under the step drive (2026-09-20; measured, nothing
+  pinned).** `j3_neutron_free` reads the same (no push; the record's new fields
+  aside). Under the step drive (2026-09-20, BEAM_LAW note 17 as amended: a body's count of Links is the whole part of the distance its momentum has driven, on its own record; a body that receives a momentum begins its drive at 0 instead of stepping off its age)
+  `j3_deuteron`'s neutron fires at tick 572 (577 registered; the pinned
+  574 or up to 3 before it: inside now), the count 128590 at the trigger,
+  the shell's one beta click at 583 with the content 3, the neutron's
+  clock 626 of 700 (620); but the pair does not hold: each body makes 3
+  steps of 33 and 27 attempted (24 and 30 hand-overs; registered 0 of 39
+  and 21, every attempt refused), the GAMEBOARD reading "the pair holds
+  after the transformation" outside. `j3_deuteron_crowd`: no
+  transformation and no beta click, inside, the bodies 2 steps each of
+  35 and 29 attempted. 9 readings inside and 1 outside (10 and 0). The
+  verdict stands on the detector's readings (a step decay, a line, the
+  bound neutron later than the free one); the deuteron's holding at one
+  Link under the drive is series I's question (its deuterons hold; this
+  one, with the neutron's `become` and the shell, does not for 3 steps)
+  ([migration](MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
 
 **The W world, the exchange form at one Link (no key added).**
 
