@@ -2589,10 +2589,13 @@ implementation's part of the contract. The design above is unchanged.
     the K record world's clicks per set within one rung of its offers'
     expectation under uniform u and the click centroid within 0.25 pixels
     of it, `tests/test_amplitude_click.py` (f)) and a record's row pushing
-    matter with its share amount^2 / (m x norm) of the label, the
-    remainder booked on a ledger line (the test: the mass's momentum per
-    record equals the label times the sum of the shares; step 3). Also
-    open:
+    matter with its share amount^2 / m of the quantum's label (the
+    record's norm in m), the integer form label x amount // m, the
+    remainder booked on the books' `remainder` line (built at stage (vii)
+    step 3, MIGRATION (vii-3): the mass's momentum is the sum of the
+    shares of the rows it absorbed, `tests/test_amplitude_click.py` (g);
+    N10's "matter feels every branch" is closed: matter feels each branch
+    by its share). Also open:
     the full register replay and the coverage-measured gate set (the
     trimming pull request), the design's Grover (a world beyond the
     register's ceiling), the design's `split` line of the books, and the

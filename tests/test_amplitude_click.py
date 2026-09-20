@@ -46,7 +46,19 @@ down before the first run:
     of the sum of their cells' widths over N (the ladder's expectation
     under a uniform u), and the click centroid in y is within 0.25 pixels
     of the expectation's; the meeting turned rows (the `turned` line of
-    the light is not zero).
+    the light is not zero);
+(g) step 3, the push by share: on a plane with a lamp on +x, a splitter
+    of the weights [1, 1] on +x and +y at (3, 1) and a mass (a free family
+    of content 4096) at (7, 1), every record's +x row (amount 1, m 2, the
+    label (64, 0, 0)) pushes the mass by its share (32, 0, 0) and the
+    click line carries `push` (64, 0, 0) and `share` (32, 0, 0); the
+    mass's momentum is the sum of the shares of the rows it absorbed; the
+    splitter takes each arriving row's share (m 1: the label) and recoils
+    by the born rows' shares ((32, 32, 0) per split); the books'
+    `remainder` line is the labels less the shares at the absorptions
+    less the born labels less the recoils at the re-creations; a row of
+    no record pushes by its label, so the bar without the key reads as
+    it did.
 """
 
 from __future__ import annotations
@@ -355,3 +367,68 @@ def test_the_k_record_world_clicks_as_its_offers_say_under_uniform_u():
     centroid = sum(on_screen) / len(on_screen)
     assert abs(centroid - expected_y / expected_weight) <= 0.25, (centroid, expected_y / expected_weight)
     assert any(simulation.ledger.turned_momentum[0])
+
+
+def share_world() -> dict[str, object]:
+    """A lamp on +x into a (1, 1) splitter on +x and +y, the +x rows into a
+    mass of a free family at (7, 1), the +y rows out through the face."""
+    return base_world(
+        shape=[9, 3, 1],
+        families=[
+            {"name": "light", "quantum": 1},
+            {"name": "m", "quantum": 0, "charge": 0, "phase": False},
+        ],
+        ticks=60,
+        measured=[
+            {
+                "position": [0, 1, 0],
+                "family": "light",
+                "amount": 1 << 20,
+                "fixed": True,
+                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+            },
+            {
+                "position": [3, 1, 0],
+                "family": "light",
+                "amount": 1,
+                "fixed": True,
+                "table": {"light": {"rule": "rerelease", "weights": [1, 1]}},
+                "directions": [[1, 0, 0], [0, 1, 0]],
+            },
+            {"position": [7, 1, 0], "family": "m", "amount": 4096, "fixed": True},
+        ],
+    )
+
+
+def test_a_record_row_pushes_matter_by_its_share():
+    """(g)."""
+    simulation, lines = run(share_world(), 60)
+    clicks = [line for line in lines if line.get("event") == "click" and line.get("family") == "light"]
+    at_mass = [line for line in clicks if line.get("measured") == 3]
+    at_splitter = [
+        line for line in lines if line.get("event") == "rerelease" and line.get("measured") == 2
+    ]
+    assert len(at_mass) >= 20 and len(at_splitter) >= 20
+    for click in at_mass:
+        assert click["push"] == [64, 0, 0] and click["share"] == [32, 0, 0]
+        assert click["multiplicity"] == 2 and click["amount"] == 1
+    mass = simulation.measured[3]
+    assert mass.momentum == [32 * len(at_mass), 0, 0]
+    splits = [line for line in lines if line.get("event") == "split" and line.get("measured") == 2]
+    splitter = simulation.measured[2]
+    assert splitter.momentum == [64 * len(at_splitter) - 32 * len(splits), -32 * len(splits), 0]
+    books = simulation.books(recount=True)
+    assert books["balanced"]
+    remainder = books["momentum"]["remainder"]  # type: ignore[index]
+    assert remainder == [32 * len(at_mass) - 32 * len(splits), -32 * len(splits), 0]
+    assert books["families"]["light"]["remainder"] == remainder  # type: ignore[index]
+    plain = share_world()
+    plain["amplitude"] = False
+    plain["measured"][1]["table"]["light"] = "rerelease"  # type: ignore[index]
+    unkeyed, plain_lines = run(plain, 60)
+    plain_mass = [
+        line for line in plain_lines if line.get("event") == "click" and line.get("measured") == 3
+    ]
+    assert plain_mass and all("share" not in line and line["push"] == [64, 0, 0] for line in plain_mass)
+    assert unkeyed.measured[3].momentum == [64 * len(plain_mass), 0, 0]
+    assert "remainder" not in unkeyed.books()["momentum"]  # type: ignore[operator]

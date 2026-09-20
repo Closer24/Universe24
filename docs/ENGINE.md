@@ -275,12 +275,27 @@ unit vector of the direction at the scale Q, the flight table's
 what the meetings of the family's units in transit moved the transit
 momentum line by, `weight x (u_d' - u_d)` summed over the turns
 ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 3,
-the meeting under the world key `meeting`; zero without it). For a paid
-family the three lines close over the click, the re-emission and the
-home (measured + transit + escaped constant; a `read` of a paid ray is a
-report of its label, the ray going on), and under the meeting the transit
-line moves by the `turned` line, a report as the free push on a body is
-(measured + transit + escaped - turned constant); for a free family the push is the form of
+the meeting under the world key `meeting`; zero without it), and, since
+stage (vii) step 3 of the amplitude law (the K finding of 2026-09-20),
+the `remainder` line in a recorded world (`Ledger.remainder_momentum`,
+per family and under `momentum.remainder`): a record's row pushes matter
+with its share amount^2 / m of the quantum's unit label (the record's
+norm in m, a record's shares summing to one), the integer form label x
+amount // m floored toward zero (`nature_beam.share_of`), at its
+absorption (the click's push, the entry's momentum; the `share` beside
+the `push` on the click line), at a home, at the push of a `read` and
+at the recoil of a paid re-creation (the born rows' shares, a lamp's
+birth and a split alike), while the transit line carries the rows' whole
+labels; the remainder line takes the labels less the shares at an
+absorption or a home and gives the born labels less the recoil at a
+re-creation, so that measured + transit + escaped + cancelled +
+remainder moves only by the pushes, the turns and the escapes; a row of
+no record pushes by its label as it did. For a paid family the three
+lines close over the click, the re-emission and the home (measured +
+transit + escaped constant; a `read` of a paid ray is a report of its
+label, the ray going on), and under the meeting the transit line moves
+by the `turned` line, a report as the free push on a body is (measured +
+transit + escaped - turned constant); for a free family the push is the form of
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 4
 (gravity and electricity) and its release takes no recoil, so its lines
 are a report and not a balance. Every escaped line is the sum over the
@@ -738,7 +753,8 @@ Under the key the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
-`multiplicity`, `u` and `age` where the row is a record's (`rows` on a group
+`multiplicity`, `u`, `share` (the row's push on matter) and `age` where
+the row is a record's (`rows` on a group
 line, the rows of a record among the group's, absent where none is;
 `window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,
 `multiplicity`, `rebirth`, the entry's phase `u`), `cancel` (per record,

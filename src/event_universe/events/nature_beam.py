@@ -809,6 +809,18 @@ def label_overflow_rows(
     return result
 
 
+def share_of(label: int, amount: int, multiplicity: int) -> int:
+    """A record row's push on matter along one axis (stage (vii) step 3,
+    the K finding of 2026-09-20): its share amount^2 / m of the quantum's
+    unit label (the record's norm is in m: the shares of a record's rows
+    sum to one), `label x amount // m` floored toward zero on the row's
+    label `label` (amount x content x u_d), exact on the host's integers;
+    the rest of the label, label - share, is the books' `remainder`. A
+    row of no record (m 1, the label its own) pushes by its label."""
+    whole = abs(label) * amount // multiplicity
+    return -whole if label < 0 else whole
+
+
 def label_weights(amount: np.ndarray, content: np.ndarray, free: bool) -> np.ndarray:
     """The weight of a row's momentum label: the amount for a free family
     (its unit carries no content; its label is the unit), content x amount
@@ -1644,6 +1656,13 @@ class FamilyPlan:
     t_multiplicity: list[int] = field(default_factory=list)
     h_birth: list[int] = field(default_factory=list)
     t_birth: list[int] = field(default_factory=list)
+    # The shares of the taken rows (their push on matter, `share_of`; the
+    # label itself on a row of no record), the remainder per group (the
+    # labels less the shares of an absorbed group, to the books) and the
+    # remainder per measured event of the home rows.
+    t_share: list[list[int]] = field(default_factory=list)
+    g_remainder: list[list[int]] = field(default_factory=list)
+    h_remainder: dict[int, list[int]] = field(default_factory=dict)
     t_age: list[int] = field(default_factory=list)
     t_arrival: list[int] = field(default_factory=list)
     # The rows that pass a gate: per measured event (k0, k1).
@@ -2437,7 +2456,29 @@ def nature_beam(
                 weights = amount[home] if free else amount[home] * content[home]
                 home_labels = home_unit * weights[:, None]
                 if not free:
-                    taken_in = grouped_sums(home_labels, starts, widest)
+                    # A record's row that came home joins its emitter by its
+                    # share (stage (vii) step 3), the rest to the remainder.
+                    home_record = store.record[at[home]]
+                    home_shares = home_labels.tolist()
+                    for k in np.flatnonzero(home_record != NO_RECORD).tolist():
+                        m = int(store.multiplicity[at[home[k]]])
+                        home_shares[k] = [
+                            share_of(int(v), int(amount[home[k]]), m) for v in home_labels[k].tolist()
+                        ]
+                    taken_in = np.array(
+                        [
+                            [sum(home_shares[k][axis] for k in range(s, e)) for axis in range(3)]
+                            for s, e in zip(starts.tolist(), (starts + sizes).tolist(), strict=True)
+                        ],
+                        dtype=object,
+                    ).reshape(starts.shape[0], DIMENSIONS)
+                    for event, s, e in zip(
+                        ev_h[starts].tolist(), starts.tolist(), (starts + sizes).tolist(), strict=True
+                    ):
+                        plan.h_remainder[event] = [
+                            sum(int(home_labels[k, axis]) - home_shares[k][axis] for k in range(s, e))
+                            for axis in range(3)
+                        ]
                 # The home rows leave the store: their labels leave the
                 # running transit line (a paid family's join the momentum).
                 plan.left_momentum = exact_column_sums(home_labels)
@@ -2730,7 +2771,25 @@ def nature_beam(
                 fail(overflow[0], 4, overflow[1])
             flow = admitted_rows[:, 2 : 2 + DIMENSIONS]
             labels = flow if free else flow * c_t[:, None]
-            plan.g_moment = np.add.reduceat(labels, g_starts, axis=0).tolist()
+            # The push of a record's row on matter is its share of the
+            # quantum's label (stage (vii) step 3, `share_of`); a row of no
+            # record pushes by its label, so the moments are what they were
+            # without a record.
+            record_t = store.record[at[taken]]
+            shares = labels.tolist()
+            for k in np.flatnonzero(record_t != NO_RECORD).tolist():
+                m = int(store.multiplicity[at[taken[k]]])
+                shares[k] = [share_of(int(v), int(a_t[k]), m) for v in labels[k].tolist()]
+            g_ends = (g_starts + g_sizes).tolist()
+            plan.g_moment = [
+                [sum(shares[k][axis] for k in range(s, e)) for axis in range(3)]
+                for s, e in zip(g_starts.tolist(), g_ends, strict=True)
+            ]
+            plan.g_remainder = [
+                [sum(int(labels[k, axis]) - shares[k][axis] for k in range(s, e)) for axis in range(3)]
+                for s, e in zip(g_starts.tolist(), g_ends, strict=True)
+            ]
+            plan.t_share = shares
             carried_t = a_t * c_t
             plan.g_number = num_t[g_starts].tolist()
             plan.g_start = g_starts.tolist()
@@ -2867,6 +2926,14 @@ def nature_beam(
                             bounded(a + b, entry, "momentum")
                             for a, b in zip(entry.momentum, taken_in, strict=True)
                         ]
+                        remainder = plan.h_remainder.get(i)
+                        if remainder is not None:
+                            ledger.remainder_momentum[family] = [
+                                a + b
+                                for a, b in zip(
+                                    ledger.remainder_momentum[family], remainder, strict=True
+                                )
+                            ]
                     if record is not None:
                         record(
                             {
@@ -3001,6 +3068,14 @@ def nature_beam(
                             continue
                         ledger.transit_absorbed[family] += group_total
                         ledger.content_absorbed[family] += group_content
+                        # The labels of an absorbed group beyond the shares
+                        # matter took, to the books' `remainder` line.
+                        ledger.remainder_momentum[family] = [
+                            a + b
+                            for a, b in zip(
+                                ledger.remainder_momentum[family], plan.g_remainder[gi], strict=True
+                            )
+                        ]
                         k0, k1 = plan.g_start[gi], plan.g_end[gi]
                         if rule == "rerelease":
                             pending = entry.pending[family]
@@ -3121,6 +3196,7 @@ def nature_beam(
                                     click_line["branch"] = plan.t_branch[k]
                                     click_line["multiplicity"] = plan.t_multiplicity[k]
                                     click_line["u"] = plan.t_birth[k]
+                                    click_line["share"] = plan.t_share[k]
                                     click_line["age"] = plan.t_age[k]
                                     setting = entry_rotation(
                                         plan, detector_set, entry.label_turns[family], k
@@ -3547,9 +3623,27 @@ def nature_beam(
             )
             born_momentum = exact_column_sums(labels)
             if not free:
+                # The recoil of a paid re-creation is the born rows' shares
+                # (stage (vii) step 3: one quantum's label over a record's
+                # rows), the rest of their labels off the `remainder` line;
+                # the labels of rows of no record whole, as they were.
+                recoil = list(born_momentum)
+                born_records = [k for k, b in enumerate(born) if b[5] != NO_RECORD]
+                if born_records:
+                    recoil = [0, 0, 0]
+                    for k, b in enumerate(born):
+                        for axis in range(3):
+                            label = int(labels[k, axis])
+                            recoil[axis] += share_of(label, b[1], b[7]) if b[5] != NO_RECORD else label
+                    ledger.remainder_momentum[family] = [
+                        a - (whole - taken)
+                        for a, whole, taken in zip(
+                            ledger.remainder_momentum[family], born_momentum, recoil, strict=True
+                        )
+                    ]
                 entry.momentum = [
                     bounded(a - b, entry, "momentum")
-                    for a, b in zip(entry.momentum, born_momentum, strict=True)
+                    for a, b in zip(entry.momentum, recoil, strict=True)
                 ]
             if thrown_mask.any():
                 thrown_momentum = exact_column_sums(labels[thrown_mask])

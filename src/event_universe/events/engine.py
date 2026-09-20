@@ -813,6 +813,9 @@ class NatureBeamSimulation:
             if amplitude:
                 # The labels the cancel removed from the transit momentum line.
                 lines["cancelled"] = list(ledger.cancelled_momentum[index])
+                # The labels of a record's rows beyond the shares matter took
+                # (the push by share, stage (vii) step 3).
+                lines["remainder"] = list(ledger.remainder_momentum[index])
             families[family.name] = lines
         momentum: dict[str, object] = {
             "measured": held_momentum,
@@ -822,6 +825,7 @@ class NatureBeamSimulation:
         }
         if amplitude:
             momentum["cancelled"] = ledger.cancelled_momentum_total()
+            momentum["remainder"] = ledger.remainder_momentum_total()
         return {
             "tick": self.tick,
             "families": families,

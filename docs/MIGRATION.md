@@ -272,6 +272,30 @@ changes; nothing changes without the key):
   step per birth, so u was the ordinal already).
 - Nothing deleted.
 
+## The amplitude law, on 2026-09-20, (vii-3): the push by share, the remainder on the books
+
+Stage (vii), step 3 (the K finding of 2026-09-20, the second of its two
+changes; nothing changes without the key):
+
+- A record's row pushes matter with its share amount^2 / m of the
+  quantum's unit label (the record's norm in m: a record's shares sum to
+  one), the integer form label x amount // m floored toward zero
+  (`nature_beam.share_of`): at its absorption at a measured event (the
+  click's push, the entry's momentum), at a home, at the push of a `read`
+  and at the recoil of a paid re-creation (the born rows' shares: one
+  quantum's label over a record's rows, a lamp's birth and a split
+  alike). Until now every row pushed by its whole label, so a record of
+  k rows gave k labels to matter (the owner's (c), the sum over the
+  branches; note 37 (ix)); a row of no record pushes by its label as it
+  did, and the meeting's turn stays on the transit and `turned` lines.
+- The books' `remainder` line per family and in total, in a recorded
+  world: the labels less the shares at an absorption or a home, less the
+  born labels less the recoil at a re-creation, so that the momentum
+  books close with the transit line carrying the rows' whole labels
+  (`Ledger.remainder_momentum`). The click line of a record carries
+  `share` beside `push`.
+- Nothing deleted.
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
