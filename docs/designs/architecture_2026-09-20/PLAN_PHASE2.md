@@ -242,3 +242,44 @@ estimates, re-measured at commit 0 under the one click.
 - **Not in phase 2**: D3 (`beam`), Q2's decision being the owner's; the
   record-format renames of phase 1's 4.3 (Q6); the unification (3) of the
   three permutations (phase 1's U1, a design note for the physicist).
+
+## 6. What was done (the phase 2 pull request, 2026-09-20, from `main` at e4b649a0)
+
+One pull request of removals and renames, bit-exact on the gate set
+against the baseline of commit 0 (the fast caps, `main` at e4b649a0);
+every deletion in MIGRATION ("The architecture cleanup, phase 2").
+
+- **Done.** D2-2 (`pointer_units`, `POINTER_UNIT`, the test lines); D2-5
+  (the books' flag `recorded`); D2-6 (`DetectorSet.pointer`,
+  `st_pointer`, `pointer_rows`); D2-7 (twenty-four comments and
+  docstrings); D2-8 (`math.isqrt`); D4 (the migration tool, its README
+  row, the refusal naming git); D6 (`Layer.origin`, the alias `Pending`);
+  U6 in part (`AMPLITUDE_SCALE` once, `ROTATION_IDENTITY`); S2-2
+  (`NO_RECORD_COLUMNS`, `_record_load_checks`); S2's ARCHITECTURE rows;
+  S2-1 in TERMINOLOGY, the amplitude README and the catalog's photon row
+  (ENGINE's sentence already said the key is deleted; BEAM_LAW's notes and
+  HYPOTHESES' entries are dated records and stay; HIGHLIGHTS is not the
+  architect's to edit).
+- **Corrected.** D2-1 was overstated: the `Layer | None` of `nature_beam`
+  and `rotate_rows` and their thirteen guards are live, since the engine's
+  inverse pass (`engine.py:408`, `nature_beam(..., inverse=True)`) runs
+  without a layer, the layer never seeing the reversed steps. Done of
+  D2-1: the engine's field typed `Layer` (always built) and `run.py`'s
+  guard. D2-3 was reverted after the test: the raw-document lamp scan's
+  place before `_measured` gives the lamp's refusal precedence over the
+  measured events' (`tests/test_amplitude_record.py` (b) expects "a lamp
+  is refused with N 2" on a world `_measured` would refuse first); the
+  two sites stay, the scan's comment says why.
+- **Not done, with the reason.** D2-4 (`recorded` as a field): not a
+  removal, O(measured) per interval is negligible. D7 (`event_charges`):
+  the import direction (`events/measured` imports `events/world`; a lazy
+  import would hide a cycle from the architecture gate). D5 and D8: the
+  owner's and the test owner's call (Q5); D8 is smaller than phase 1
+  said, since (a) and (c) of `test_nature_beam_worlds.py` build their own
+  small worlds and only (b) (the ten A2 worlds through `bell_chsh`) and
+  (e) (`two_contents.json`) pin a shipped world. The gcd/lcm renames of
+  U6 and the optimizations O1 to O4 and unifications U2, U3, U5 touch the
+  bodies of the functions the fraction-free implementer holds
+  (`by_clock`'s counts, `share_of`, the ladder's cells): after that
+  branch lands. The `expectations.json` move: a data file the generator
+  writes beside its worlds; left.

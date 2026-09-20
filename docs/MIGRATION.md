@@ -6,7 +6,56 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
-## The binding that costs content, on 2026-09-20 (`binding-v1`, no key)
+## The architecture cleanup, phase 2: removals after the one click, on 2026-09-20 (host only, no law change)
+
+The architect's phase 2 ([the plan](designs/architecture_2026-09-20/PLAN_PHASE2.md),
+the Boss's assignment under record 137), bit-exact on the gate set against
+`main` at e4b649a0 (the one click merged). Deleted, each with its reader
+moved or gone:
+
+- `tools/migrate_nature_beam_worlds.py` (242 lines): the rewrite of the
+  first NatureBeam worlds to the form of 2026-09-20; no world declares
+  `"law": "rays"` or a family `kind`. The parser's refusal of `"law":
+  "rays"` still names the tool, in git before e4b649a0. Its row in the
+  README's tool table removed; the catalog README's sentence dated.
+- `nature_beam.pointer_units` and `POINTER_UNIT`: the `wave` threshold on
+  the pointer's square, deleted at the one click; no caller was left. The
+  assertions of `tests/test_nature_beam_detector.py` (i) and (j) on them
+  removed; the one integer kept as `26 x (32 x 256)^2`.
+- `amplitude.isqrt` (Newton's integer square root): `math.isqrt`, the
+  same integers.
+- `Layer.origin` (an identity function with one caller, which now reads
+  the row's record) and the alias `measured.Pending` (no reader).
+- `AMPLITUDE_SCALE` defined once (`events/amplitude`, imported by
+  `events/nature_beam`); `amplitude.IDENTITY` renamed `ROTATION_IDENTITY`
+  (the rotation's 256^2; `nature_beam.IDENTITY` is the 3 x 3 identity).
+- Renamed for what they are: `nature_beam.AMPLITUDE_DEFAULTS` ->
+  `NO_RECORD_COLUMNS`; `world._amplitude_load_checks` ->
+  `_record_load_checks`; `DetectorSet.wave` -> `DetectorSet.pointer`
+  (true for `wave` and `sum`, the readings of the crowd's pointer) with
+  `st_wave` -> `st_pointer` and `wave_rows` -> `pointer_rows` in
+  `nature_beam`; the books' local `amplitude` -> `recorded`. Twenty-four
+  comments and docstrings naming the deleted world key as live now say a
+  record's row, a recorded world or a row of no record.
+- `NatureBeamSimulation.layer` is typed `Layer` (always built);
+  `run.json`'s `world`, `open` and `layer` are written for a recorded
+  world (`world.recorded`), the layer guard being dead. The `layer:
+  Layer | None` of `nature_beam` and `rotate_rows` and their guards stay:
+  the engine's inverse pass (`nature_beam(..., inverse=True)`, the check
+  of the bijective steps) runs without a layer.
+- ARCHITECTURE's dependency table gains the rows `events/amplitude` and
+  `events/meeting` and names them in `events/nature_beam`'s and
+  `events/engine`'s; TERMINOLOGY's record, branch, multiplicity, layer
+  and click's-Node entries, the amplitude README and the catalog's photon
+  row no longer say "under the key".
+- Kept, with the reason in the plan: the raw-document lamp scan at parse
+  (its place gives the lamp's refusal precedence over the measured
+  events'); `world.event_charges` (the import direction: `events/measured`
+  imports `events/world`); the two derivations scripts and the four
+  world-pinning tests (the owner's and the test owner's call, Q5);
+  `amplitude/expectations.json` beside its worlds; the optimizations
+  (O1 to O4) and the unifications (U2, U3, U5) of phase 1, not removals.
+
 
 binding-v1 (2026-09-20): at a contact under `measure` the refused body gives
 its held paid content to the flight on the reversed heading; `contact`

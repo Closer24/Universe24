@@ -187,8 +187,10 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
 | `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
 | `events/measured` | `core/integer`, `core/game_board`, `events/world`; the records the engine keeps beside the rays (`Measured`, `DetectorSet`, `Ledger`, the reduced rational pairs); no law |
-| `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/measured`, `events/world` and numpy; the Beam Law, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
-| `events/engine` | `core/integer`, `core/game_board`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`NatureBeamSimulation`); no output or storage |
+| `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/amplitude`, `events/measured`, `events/meeting`, `events/world` and numpy; the Beam Law, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
+| `events/amplitude` | `core/phase`, `events/measured`; the apparatus's layer of the amplitude law (`Layer`: the records' offers, the ladder, the gathers), host integers, no GameBoard state |
+| `events/meeting` | `core/integer`, `events/world` and numpy; the meeting of a paid unit with the free crowd (`meet`, the arc table), the turn read off the phase register |
+| `events/engine` | `core/integer`, `core/game_board`, `events/amplitude`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`NatureBeamSimulation`); no output or storage |
 | `events/run` | `events/engine`, `events/world`, the package version, `snapshot_writer` and the standard library; the artifacts of a run (the one physical module allowed to write files) |
 | `events/__init__` | `events/world`; `events/engine` lazily (`Measured`, `NatureBeamSimulation`), so importing the package loads no numpy |
 | `json_documents`, `snapshot_writer`, `retention` | Standard library; host modules with no physics |

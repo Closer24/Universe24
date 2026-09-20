@@ -62,8 +62,8 @@ class PendingRow(NamedTuple):
     # The amplitude law's columns the row carries into its re-creation (the
     # record, the branch and the multiplicity of the arriving row; 0, 0, 1
     # for a row of no record) and `split`, whether the re-creation is the
-    # split by the entry's weights (a `rerelease` under the key) or the
-    # apportioning as it was (a home, a product, every row without the key).
+    # split by the entry's weights (a record's row at a `rerelease`) or the
+    # apportioning as it was (a home, a product, every row of no record).
     record: int = 0
     branch: int = 0
     multiplicity: int = 1
@@ -87,9 +87,6 @@ class PendingRow(NamedTuple):
     # rotation, a gate); a product's is its family's, read against the
     # parent's axis at its birth.
     hand: int = NO_HAND
-
-
-Pending = PendingRow
 
 
 def column_charges(
@@ -180,9 +177,10 @@ class DetectorSet:
     nodes: dict[Address3, int] = field(default_factory=dict)
 
     @property
-    def wave(self) -> bool:
-        """The pointer's reading, at either scope: `wave` and, under the
-        amplitude law, `sum` (the set's phase as under `wave`)."""
+    def pointer(self) -> bool:
+        """A reading of the crowd's pointer, at either scope: `wave` and
+        `sum` (the set's phase from the pointer under both; the record per
+        interval under `wave`, the layer's per record under `sum`)."""
         return self.reading in ("wave", SUM_READING)
 
     @property
@@ -528,9 +526,9 @@ class Ledger:
     # The `cancelled` lines (the amplitude law, 2026-09-20; BEAM_LAW note
     # 37): per family the units the merge's cancel removed (two rows of one
     # record in antiphase), the content they carried and their labels, so
-    # that the transit, content and momentum lines close under the key:
+    # that the transit, content and momentum lines close in a recorded world:
     # initial + released = current + escaped + absorbed + cancelled. Zero
-    # without the key (no row carries a record).
+    # in a world without a lamp (no row carries a record).
     cancelled_amount: list[int] = field(default_factory=list)
     cancelled_content: list[int] = field(default_factory=list)
     cancelled_momentum: list[list[int]] = field(default_factory=list)

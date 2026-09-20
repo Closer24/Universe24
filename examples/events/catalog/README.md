@@ -25,8 +25,8 @@ readings, the host's view of the mechanism.
 
 Every family declares its `quantum`, every detector its `reading`, and a
 measured event declares only the table entries that differ from the ones
-its families' keys give (`tools/migrate_nature_beam_worlds.py` rewrites a
-world to this form if the form changes). The worlds declare `"law":
+its families' keys give (the world rewrite of 2026-09-20 put the register in
+this form; its tool is deleted, in git before e4b649a0). The worlds declare `"law":
 "beam"`, the Beam Law (`beam-v1`, the owner's name of 2026-09-20); the
 generator and the test read that value from `world.py`, not from a
 literal.
