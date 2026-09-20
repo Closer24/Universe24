@@ -46,6 +46,30 @@ to the accelerating form is registered with its two causes on the GameBoard
 (the throw's initial distances and the emitters' clocks), not as an
 acceleration.
 
+## A body on a set, the turn by momentum and series H, Bohr's lines behind the detector - 2026-09-20
+
+The worktree of `claude/universe24-new-3ytqde` on three commits after the
+tip `38c9b621` (the body on a set of Nodes with one record, `span`; the
+turn by momentum, `action` and `phase_by_momentum`, `bohr-v1`; series H),
+[RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+source fingerprint `d29df4af8cfd79512d827d32df7b885948b2a90a4865cf1993b01bb74b76095c`.
+Python 3.14.0rc2, numpy 2.5.3, headless, four cores.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_ray_body.py` (a) to (f) | passed: a set of one Node equal to the measured event of the engine before the change record by record and row by row over 30 intervals with rays, collisions and clicks (the reference integers taken on that engine first: 152 clicks, 20 record lines, 5 steps, 5 homes, the record 37348285440); the set of three Nodes reading, clicking, owing and pushing as one, stepping as one, refused at an occupied Node, clicking on the face, wrapping; the books balanced with a set that releases (the shares 8, 4, 4 then 4, 8, 4); the turn's phases 11, 37 and 50, 32, 14, 59, 41 as derived by hand, composed over axes 14 and 18, today's phase without `action`; the rays' rows identical with and without the two keys on a colliding crowd of 324 rays over 40 intervals; every refusal by name and the record |
+| `tests/test_push_width.py` (a), `tests/test_ray_clock.py` (e) | `engine.step_axis` and `engine.count_owed` pinned to the step rule and the owed count, no integer changed |
+| `python tools/check.py --base 38c9b621` after each feature | ruff lint and format, mypy and 335 then 337 tests green |
+| Series H, `examples/events/bohr/` (seven worlds, `tools/run_series.py --jobs 4`, 3000 to 10300 intervals) | every run completed in 19 to 87 s with the books balanced at every tick; `tools/bohr_readings.py`: 0 record checks failed, 1 coherence reading inside and 1 outside, five worlds without a reading (fewer than two closed turns): no orbit closed within r / 4 at any radius; at r = 8 two turns of mean radius 8.11 and 7.95 with T 722 and 736 (838 derived), the returns 5 and 4 Links, the escape at the close pass of the third turn; the phase's turn per orbit 0.234 of a circle against 0 designed; C(2) = 0.84 against the expected 1.0 ([the register](EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20), [the README](../examples/events/bohr/README.md)) |
+| `tests/test_bohr_readings.py` (a) to (c) | the tool's flight time, pointer per turn, coherence and run reading pinned to the engine's `manhattan_steps`, `coherent_pointer` and the runner's record |
+| `python tools/check.py --full` | ruff lint and format, mypy and the whole suite green on the final commit |
+
+The runs establish that the body on a set and the turn by momentum do what
+the notes say on the engine (the turn as pinned, the board unchanged), and
+that on this fan and this width no orbit of the electron closes well enough
+for Bohr's lines to be read behind the detector; they establish no physical
+law, for or against.
+
 ## Charge per unit of content: series 7 equal integer by integer, B1 and B3 corrected - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` on the tip `b0c4a193`, three

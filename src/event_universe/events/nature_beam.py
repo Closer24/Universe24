@@ -1299,9 +1299,14 @@ def nature_beam(
     # meet the table there, not each other).
     entries = [measured[number] for number in sorted(measured)]
     events = len(entries)
+    # Every Node of a body on a set maps to its measured event: the rows at
+    # any of its Nodes are its arrivals, read as one set (the threshold,
+    # the presence, the push summed over the set), and no collision acts at
+    # any of them.
     node_event = np.full(nodes, -1, dtype=np.int64)
     if events:
-        node_event[[stores[0].flat(entry.position) for entry in entries]] = np.arange(events)
+        for which, entry in enumerate(entries):
+            node_event[[stores[0].flat(node) for node in entry.nodes]] = which
     occupied = node_event >= 0
 
     def collide(store: RayStore, backward: bool) -> None:
@@ -2117,6 +2122,32 @@ def nature_beam(
                         ledger.content_released[family] += content
             if not born:
                 continue
+            # A body on a set of Nodes releases at every Node of the set
+            # with whole units only: each born row's amount is apportioned
+            # whole over the body's Nodes in their fixed order, equal
+            # weights, the leftover units to the Nodes counted from `age mod
+            # w` (the tie rule of the re-emission over the directions), so
+            # that the total released is the content's release whatever the
+            # width, no Node is favoured over w self-creations and the books
+            # balance (the shares sum to the amount, every share keeps the
+            # row's content per unit and phase, the labels' sum is the same
+            # recoil). A body of one Node (every measured event until
+            # 2026-09-20) releases every row at its one Node, unchanged.
+            body = entry.nodes
+            if len(body) > 1:
+                ways = len(body)
+                split: list[tuple[int, int, int, int, int]] = []  # (node, direction, amount, ...)
+                for direction, amount, content, phase in born:
+                    shares = apportion_whole(amount, [1] * ways, age % ways)
+                    split.extend(
+                        (store.flat(node), direction, share, content, phase)
+                        for node, share in zip(body, shares, strict=True)
+                        if share
+                    )
+                node_column = np.array([b[0] for b in split], dtype=np.int64)
+                born = [b[1:] for b in split]
+            else:
+                node_column = np.full(len(born), store.flat(entry.position), dtype=np.int64)
             count = len(born)
             direction_column = np.array([b[0] for b in born], dtype=np.int64)
             amount_column = np.array([b[1] for b in born], dtype=np.int64)
@@ -2138,7 +2169,7 @@ def nature_beam(
                 a + b for a, b in zip(ledger.transit_momentum, born_momentum, strict=True)
             ]
             store.append(
-                node=np.full(count, store.flat(entry.position), dtype=np.int64),
+                node=node_column,
                 direction=direction_column,
                 age=np.zeros(count, dtype=np.int64),
                 phase=np.array([b[3] for b in born], dtype=np.int64),

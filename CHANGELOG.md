@@ -21,6 +21,71 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   does not dilute, a source stepping into its own row takes it home) are
   registered there.
 
+### Series H, Bohr's lines behind the detector (2026-09-20)
+
+- The run of the model owner's decision on Bohr ([EXPERIMENTS.md](docs/EXPERIMENTS.md),
+  "H, Bohr's lines behind the detector"; `examples/events/bohr/`,
+  `tools/bohr_readings.py`, `tests/test_bohr_readings.py`): a fixed proton
+  releasing the physicist's fan of 2616 directions, an electron that is a
+  body on three Nodes turning its phase by its momentum, its released rays
+  read at the open faces as the `wave` detectors of what comes out of the
+  atom; the orbit, the phase's turn per orbit and the faces' coherent
+  record per turn and cumulatively, every line labelled DETECTOR or
+  GAMEBOARD. Measured: no orbit closed well enough for the coherence
+  reading (the reference orbit at r = 8 held its mean radius for two
+  eccentric turns and was thrown out at a close pass; C(2) = 0.84 against
+  the expected 1.0), registered as the finding, nothing tuned; the next
+  steps (a smoother field, a tilted orbit, a wider body, the absorption
+  reading with a lamp) are in the register ([validation](docs/VALIDATION.md)).
+
+### The turn by momentum: Bohr as parameters outside the board (2026-09-20)
+
+- The model owner's decision ("On Bohr, go, and put it as parameters
+  outside the board like the age"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
+  [RAY_LAW note 30 (ii)](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the world key `action` (h, an integer from 1, absent by default) and
+  the measured-event key `phase_by_momentum` (false by default): at the
+  Link a body steps on an axis whose momentum component is p, its phase
+  turns by `by_clock(k0, |p| x N, h)`, the difference of two floors of
+  k x |p| x N / h with k0 the count of Links the step rule gives at its
+  age (derived from the age as the owed count is read off the clock; no
+  register, no remainder), so that after k Links at a constant momentum
+  the phase has turned floor(k x |p| x N / h) mod N; the axes compose,
+  x before y before z; the product is bounded at parsing (`ticks x |p|
+  x N`) and before it is formed. A rule of the measured event, the
+  external thing, read from its own record: the rays' flight and
+  collision are untouched (`test_ray_body` (e)), the rays a body releases
+  carry its phase as before, and without `action` every world reads the
+  same integer by integer. The identity `bohr-v1` is carried under
+  `hypotheses` in `run.json` when `action` is declared; the `step` line
+  gains the body's `phase`. Tests: `test_ray_body` (d) to (f)
+  ([expectations](docs/TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum),
+  [migration](docs/MIGRATION.md#the-turn-by-momentum-bohr-as-parameters-outside-the-board-on-2026-09-20-action-phase_by_momentum-bohr-v1)).
+  The run that reads Bohr's lines behind the detector is series H
+  ([EXPERIMENTS.md](docs/EXPERIMENTS.md)).
+
+### A body on a set of Nodes with one record (2026-09-20)
+
+- The model owner's decision on Bohr, the body on a set taken with it as
+  the condition for a closed orbit (the physicist's proposal 1, "the
+  electron of width 3"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
+  [RAY_LAW note 30](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the measured-event key `span` (three odd integers from 1, `[1, 1, 1]`
+  by default) makes a measured event a body on the block of Nodes centred
+  on its `position`, one record on all of them: the threshold, the
+  clock's count and the push read the one reading set summed over its
+  Nodes, the releases are apportioned whole over the set (the leftover to
+  the Nodes from `age mod w`, the total the content's whatever the
+  width), the step moves the whole set as one (refused when a Node of the
+  moved set holds another measured event, the whole body clicking on the
+  face when any Node would leave, every Node wrapping on a periodic axis),
+  no collision acts at any of its Nodes. A set of one Node is the measured
+  event as it was, bit for bit. `engine.step_axis` and `engine.count_owed`
+  hold the step rule of one axis and the owed count once, for the tools.
+  Tests: `test_ray_body` (a) to (c), (f)
+  ([expectations](docs/TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum),
+  [migration](docs/MIGRATION.md#a-body-on-a-set-of-nodes-with-one-record-on-2026-09-20-span)).
+
 ### `wave` is the default reading of a detector (2026-09-20)
 
 - The model owner's decision ("on the board a ray, in the world a

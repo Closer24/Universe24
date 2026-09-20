@@ -49,6 +49,7 @@ from event_universe.events.nature_beam import (
     RayTables,
     Readings,
     Record,
+    bounded,
     exact_column_sums,
     exact_sum,
     nature_beam,
@@ -62,9 +63,39 @@ from event_universe.events.world import (
     RAYS_LAW,
     MeasuredDefinition,
     RayWorld,
+    body_nodes,
 )
 
-__all__ = ["RULES", "Measured", "RaySimulation"]
+__all__ = ["RULES", "Measured", "RaySimulation", "count_owed", "step_axis"]
+
+
+def step_axis(age: int, momentum: int, content: int, width: int) -> int | None:
+    """The step rule of one axis (RAY_LAW section 3 step 5; `_move` calls
+    it): the sign of the Link a free measured event of content M = `content`
+    steps this interval on an axis whose momentum component is p =
+    `momentum`, with `age` its age after the frame's advance and `width`
+    the world's S, when `by_clock(age - 1, |p|, Q x S x M + |p|)` is 1;
+    None when it does not step (a momentum of 0 never steps). The one
+    place the rule lives; the readings tools read it from here."""
+    if momentum == 0:
+        return None
+    magnitude = abs(momentum)
+    reach = LABEL_SCALE * width * content
+    if not by_clock(age - 1, magnitude, reach + magnitude):
+        return None
+    return 1 if momentum > 0 else -1
+
+
+def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
+    """The count a measured event owes after its self-creation (ENGINE,
+    the frame; `_suspend` calls it): what its clock counted (`counted`, the
+    presence or the age moment) times the width n / d of the world's
+    `suspension`, off its clock, `by_clock(age, counted x n, d)` with `age`
+    the age before the self-creation; 0 when the width is 0."""
+    numerator, denominator = suspension
+    if not numerator:
+        return 0
+    return by_clock(age, counted * numerator, denominator)
 
 
 class RaySimulation:
@@ -103,7 +134,10 @@ class RaySimulation:
         for index, definition in enumerate(world.measured):
             entry = self._measured(index + 1, definition)
             self.measured[entry.number] = entry
-            self.at[entry.position] = entry.number
+            # Every Node of a body on a set holds its number (a step onto
+            # any of them is refused; the parser refused a shared Node).
+            for node in entry.nodes:
+                self.at[node] = entry.number
         self.held_initial = [sum(m.held[f] for m in self.measured.values()) for f in range(count)]
         self.transit_initial = [0] * count
         self.content_initial = [0] * count
@@ -175,6 +209,10 @@ class RaySimulation:
         else:
             detector_set = self.detector_sets[detector]
             detector_set.numbers.append(number)
+        # The set of Nodes the measured event is a body on (the parser
+        # refused a body outside the board).
+        nodes = body_nodes(definition.position, definition.span, self.shape, self.world.periodic)
+        assert nodes is not None
         return Measured(
             number,
             definition.position,
@@ -194,6 +232,9 @@ class RaySimulation:
             definition.amount,
             detector,
             detector_set,
+            span=definition.span,
+            nodes=nodes,
+            phase_by_momentum=definition.phase_by_momentum,
             pending=[[] for _ in range(count)],
             measured=[dict.fromkeys(RULES, 0) for _ in range(count)],
             events=[0] * count,
@@ -295,10 +336,9 @@ class RaySimulation:
         selection is `measured.count_component`), times the width n / d, off
         its clock, `by_clock(age, k x n, d)`, written once and paid one per
         interval before the next."""
-        numerator, denominator = self.world.suspension
-        if not numerator:
+        if not self.world.suspension[0]:
             return
-        entry.owed = by_clock(entry.clock_age, entry.counted * numerator, denominator)
+        entry.owed = count_owed(entry.clock_age, entry.counted, self.world.suspension)
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum off the clock, at most one per interval,
@@ -313,7 +353,44 @@ class RaySimulation:
         before the change is the same, `by_clock(age, Q n, Q k) =
         by_clock(age, n, k)`); no remainder is kept, the count is the whole
         part off the clock. A step onto a measured event is refused; an
-        escape is a click on the face; a periodic axis wraps."""
+        escape is a click on the face; a periodic axis wraps.
+
+        A body on a set of Nodes (`span`; the model owner, 2026-09-20)
+        steps as one: its centre moves one Link and its set with it, the
+        step refused when any Node of the moved set holds another measured
+        event, the whole body clicking on the face detector when any of
+        its Nodes would leave the board through an open face, every Node
+        wrapping on a periodic axis.
+
+        The turn by momentum (`phase_by_momentum` with the world's
+        `action`, h; the model owner's decision of 2026-09-20 on Bohr, "put
+        it as parameters outside the board like the age"): a rule of the
+        measured event, the external thing, read from its own record. At
+        the Link the body steps on an axis whose momentum component is p,
+        its phase turns by the difference of two floors,
+
+            floor(k1 x |p| x N / h) - floor(k0 x |p| x N / h),
+
+        with k0 = floor((age - 1) x |p| / (Q S M + |p|)) the count of Links
+        the step rule gives on that axis at the age before this
+        self-creation and k1 = k0 + 1 the count after it (the count is
+        derived from the age by the step rule exactly as the owed count is
+        read off the clock; with a constant momentum k1 is the Links
+        stepped on the axis, so after k Links the phase has turned
+        floor(k x |p| x N / h) mod N in all), that is `by_clock(k0, |p| x
+        N, h)`: nothing is kept at a Node and no remainder register
+        exists, the count and the turn are functions of the record (the
+        age, the momentum). The axes compose: the steps are x before y
+        before z, and the phase's turn is the sum of the three components'
+        turns at the Links stepped on each (a step lost to an earlier
+        axis's step in the same interval turns nothing: no Link was
+        crossed). It changes nothing of the rays' flight or collision; the
+        rays the body releases carry its phase as before (the clock's turn
+        by content over K is added at the self-creation as always, this
+        turn at the step after it); without `action` there is no turn. The
+        product k1 x |p| x N is bounded before it is formed (`bounded`;
+        the parser refused a declared momentum whose product with `ticks`
+        x N could pass the bound)."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
@@ -322,19 +399,25 @@ class RaySimulation:
         width = LABEL_SCALE * self.world.width * content
         for axis in range(3):
             momentum = entry.momentum[axis]
-            if momentum == 0:
+            stepped = step_axis(entry.age, momentum, content, self.world.width)
+            if stepped is None:
                 continue
             magnitude = abs(momentum)
-            if not by_clock(entry.age - 1, magnitude, width + magnitude):
-                continue
-            sign = 1 if momentum > 0 else -1
+            sign = stepped
             entry.steps += 1
             origin = entry.position
             port = 2 * axis + (0 if sign > 0 else 1)
             destination = adjacent_node(origin, port, self.shape, self.world.periodic)
             if destination == origin:
                 return
-            if destination is None:
+            # The moved set: None when the centre or any Node of the body
+            # would leave the board through an open face (the escape).
+            nodes = (
+                None
+                if destination is None
+                else body_nodes(destination, entry.span, self.shape, self.world.periodic)
+            )
+            if destination is None or nodes is None:
                 for index in range(len(self.families)):
                     self.ledger.held_escaped[index] += entry.held[index]
                     self.ledger.transit_absorbed[index] -= entry.pending_amount(index)
@@ -346,7 +429,8 @@ class RaySimulation:
                     int(a) + int(b)
                     for a, b in zip(self.ledger.face_momentum[port], entry.momentum, strict=True)
                 ]
-                del self.at[origin]
+                for node in entry.nodes:
+                    del self.at[node]
                 del self.measured[entry.number]
                 if self.record is not None:
                     self.record(
@@ -370,11 +454,19 @@ class RaySimulation:
                         }
                     )
                 return
-            if destination in self.at:
+            if any(self.at.get(node, entry.number) != entry.number for node in nodes):
                 return
-            del self.at[origin]
+            for node in entry.nodes:
+                del self.at[node]
             entry.position = destination
-            self.at[destination] = entry.number
+            entry.nodes = nodes
+            for node in nodes:
+                self.at[node] = entry.number
+            if entry.phase_by_momentum and self.world.action is not None:
+                links = ((entry.age - 1) * magnitude) // (width + magnitude)
+                bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
+                turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
+                entry.phase = (entry.phase + turn) & self.world.phase_mask
             if self.record is not None:
                 self.record(
                     {
@@ -384,6 +476,7 @@ class RaySimulation:
                         "node": list(origin),
                         "to": list(destination),
                         "momentum": list(entry.momentum),
+                        "phase": entry.phase,
                     }
                 )
             return

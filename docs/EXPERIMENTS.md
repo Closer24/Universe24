@@ -1765,6 +1765,142 @@ states "exactly" and means integer equality at every tick.
   1 + k is the model's); and a step rule whose whole part does not cluster
   under a changing momentum.
 
+### H, Bohr's lines behind the detector (2026-09-20)
+
+- **Confronts.** Whether Bohr's lines come out by themselves behind the
+  detector once a body's phase is tied to its momentum (the model owner,
+  2026-09-20, Highlights 5.4: "Bohr should come out by itself behind the
+  detector; what is missing on the board by the laws?"; the answer: the
+  tie between a body's momentum and its phase that E = h f gives a
+  released ray; "DECIDED: On Bohr, go, and put it as parameters outside
+  the board like the age"): an electron that is a body on a set of three
+  Nodes ([RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (i), the physicist's proposal 1) and turns its phase by its momentum at
+  every Link it steps (note 30 (ii), proposal 5, the world key `action`,
+  the identity `bohr-v1`), about a fixed proton, releasing rays that carry
+  its phase to the open faces of the board, the `wave` detectors that
+  receive what comes out of the atom (proposal 6: the coherent record of
+  those rays over many turns adds in line only for an orbit whose phase
+  closes). The owner's rule of the page: to show atoms no detector is
+  needed; a detector receives their radiation, if it comes out.
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/bohr/README.md#the-derivation-before-the-runs-gameboard-readings-of-the-design)).**
+  Two free families, `p` (content 1836, `charge` [1, 1], fixed at the
+  centre of an open cube of 2 (r + 14) + 1 Nodes a side, releasing one
+  ray per direction of the physicist's shell of 2616 primitive directions
+  with 1016 <= |D|^2 <= 1032 every 10 intervals) and `e` (content 1836,
+  `charge` -15: electricity 15 times gravity), the electron a free body at
+  (c + r, c, c) of `span` [1, 1, 3] with the tangential momentum p of the
+  derivation, `phase_by_momentum` under the action h, releasing one ray
+  per in-plane heading every 10 intervals; `suspension` 0, `width` 45120
+  (v = 0.06 at r = 8), K 2^30, N 64. Derived from the engine's own flight
+  lines (the entries per shell the body's three Nodes receive, E_body(r)):
+  the orbit's p, v, T per radius; the closure 4 p(r) r = j h (the turn by
+  momentum sums |p_axis| over the Links stepped, 4 p r on a circle of the
+  lattice against the circle's 2 pi p r) with h = 16 p(8) so that j = 2 at
+  r = 8: j = 0.946 (r = 2), 1.463 (4), 1.725 (6), 2.000 (8), 2.555 (12),
+  2.873 (15), 3.248 (16); the fan's ring flux falls as about r^-1.83 and
+  is not smooth at r >= 13, so j = 3 falls between the lattice radii 15
+  and 16. Expected: an orbit closed (the return within r / 4 at the
+  closing of the angle, T within 15 %), the phase's turn per orbit whole
+  at a closing radius; the coherence ratio of the faces' records (the
+  cumulative coherent pointer squared over the sum of the per-turn
+  squares, through the engine's `coherent_pointer`) C(T) >= T / 2 after
+  T >= 2 turns at a closing radius (the record growing as T^2) and C(T)
+  < 2 between (bounded); the closing radii in the ratio of j^2; fewer
+  than two closed turns: no coherence reading, the finding is the orbit.
+  Named before the runs as what could break the orbit: the whole-kick
+  lumps every 10 intervals (12 to 204 per orbit), the fan's ring
+  anisotropy, the close pass. Criteria (completed, the books balanced)
+  fail the tool; the readings are registered inside or outside their
+  expectation and never moved.
+- **Features.** A body on a set of Nodes with one record (`span`); the
+  turn by momentum (`action`, `phase_by_momentum`); the charge per unit of
+  content and the push as one product; the free release on a declared fan
+  in space; the face detectors' `wave` records and `click` lines; the
+  `step` line's phase; `suspension` 0.
+- **Two kinds of readings.** DETECTOR: the faces' cumulative records, the
+  clicks of the electron's rays with their phases, the electron's own
+  `read` records (its pushes taken). GAMEBOARD: the orbit from the
+  electron's `step` lines (the turns, T, the return, the mean radius, the
+  escape), the body's phase at each closing, the design's numbers. Bohr's
+  lines are a detector reading; the orbit's r, T and closure describe the
+  mechanism. The owner's standing principle of the same day, "Our laws are
+  on the GameBoard; in the detector one sees other laws" (Highlights 5.4):
+  the turn by momentum is a GameBoard rule, a generic key on the body's
+  phase, and Bohr's rule is a law of the detector's world, so the series
+  compares the faces' records with Bohr's lines and never the turn's form
+  with Bohr's form.
+- **Run.** `examples/events/bohr/` (seven worlds by `make_worlds.py`,
+  `r<r>` for r in 2, 4, 6, 8, 12, 15, 16, 3000 to 10300 intervals each),
+  the model ids `rays-bohr-r<r>-space-v1`; `tools/run_series.py --jobs 4`;
+  `tools/bohr_readings.py` (every line labelled by its kind).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` on the turn-by-momentum commit, source
+  fingerprint `d29df4af8cfd79512d827d32df7b885948b2a90a4865cf1993b01bb74b76095c`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run completed
+  in 19 to 87 s with the books balanced at every tick; 0 record checks
+  failed; of the two coherence readings taken, 1 inside and 1 outside,
+  registered, none moved; five worlds gave no coherence reading (fewer
+  than two closed turns).
+
+  | World | r | j (kind) | Expected | Turns of the angle | Closings: T (derived) | Mean radius | Return (Links) | r min .. max | End | Phase turn per orbit, the fraction (design) | C(2), slope | Verdict |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `r2` | 2 | 0.946 (closing) | C >= T / 2 | 1.47 | 1: 79 (117) | 1.74 | 1.0 | 1.0 .. 16.3 | face:-x at 254 | - | - | no reading: fell to the Node beside the proton, thrown out |
+  | `r4` | 4 | 1.463 (between) | C < 2 | 1.28 | 1: 138 (294) | 2.66 | 2.0 | 1.0 .. 18.4 | face:+y at 540 | - | - | no reading: fell inward, thrown out |
+  | `r6` | 6 | 1.725 (between) | C < 2 | 0.89 | 0 | - | - | 4.5 .. 25.6 | face:+x at 1045 | - | - | no reading: no turn |
+  | `r8` | 8 | 2.000 (closing) | C >= 1.0 | 2.15 | 2: 722, 736 (838) | 8.11, 7.95 | 5.0, 4.0 | 3.0 .. 27.8 | face:+y at 1864 | 0.234 (0.000) | 0.84, 1.66 | outside |
+  | `r12` | 12 | 2.555 (between) | C < 2 | 0.95 | 0 | - | - | 12.0 .. 28.2 | face:+x at 2097 | - | - | no reading: no turn |
+  | `r15` | 15 | 2.873 (between) | C < 2 | 2.88 | 2: 1640, 2291 (2022) | 14.36, 18.67 | 8.1, 12.0 | 1.0 .. 40.3 | face:+x at 4683 | 0.188 (0.873) | 0.52, 2.78 | inside (two eccentric turns only) |
+  | `r16` | 16 | 3.248 (between) | C < 2 | 1.24 | 1: 2917 (2040) | 22.12 | 5.0 | 8.0 .. 31.6 | face:+y at 3568 | - | - | no reading: one wide turn |
+
+  The turns of the angle, the closings, the radii, the returns, the ends
+  and the phase's turn per orbit are GAMEBOARD readings; C and the slope
+  are DETECTOR readings (the four side faces pooled, the per-face values
+  in the tool's output); the ends are the electron's own click on the face.
+  - The orbit (expected closed within r / 4, T within 15 %): measured no
+    orbit closed by the criterion at any radius. At r = 8, the reference,
+    the two turns kept the mean radius (8.11, 7.95 against 8) with T 14 %
+    short (722, 736 against 838, outside), returned 5 and 4 Links off
+    (outside r / 4 = 2) on an eccentric loop from r = 3 to 28, and the
+    close pass of the third turn threw the electron out through face:+y.
+    The other radii fell inward (r = 2, 4, 15: to the Node beside the
+    proton at r = 2 and 15) or swung outward (r = 6, 12, 16) within the
+    first turn or two and escaped. The electron's own reads (DETECTOR):
+    the mean inward push per interval on the board at r = 8 was 40 600 in
+    units of Q per unit of content against the derivation's 39 660 (1.02):
+    the mean flux the body reads is the derived one; the orbit is broken
+    by the lumps (84 per orbit of 4.3 degrees at r = 8) and the close
+    pass, not by the mean push.
+  - The phase's turn per orbit (expected 0 beyond whole circles at r = 8):
+    measured 0.234 of a circle over the one pair of closings, the
+    eccentric loop's sum of |p_axis| over its Links being 12 % more than
+    the circle's 4 p r; at r = 15, 0.188 against the design's 0.873.
+  - The coherent record (expected C(T) >= T / 2 at r = 8): C(2) = 0.84 and
+    the slope 1.66 over the two turns, outside (the per-face C 0.32, 1.52,
+    0.93, 0.82); at r = 15 C(2) = 0.52, inside the bounded bracket, over two
+    turns of different radii, which is not the reading the design meant.
+    No ladder of closing radii was read.
+- **Verdict.** The finding is the orbit, registered and not tuned: with
+  the electron on three Nodes the mean push reads as derived and the
+  reference orbit holds its mean radius for two turns, but no orbit closes
+  well enough for the coherence reading, so Bohr's lines were not read
+  behind the detector in this series, neither for nor against. What the
+  law lacked here is not the turn (it turned as pinned in
+  `tests/test_ray_body.py` (d)) but a stable closed orbit under whole
+  kicks: the next step, for the model owner, is a smoother field (a shell
+  every interval at the same emission, or a larger `width` for more lumps
+  per orbit), the orbit tilted out of the lattice plane (the physicist's
+  1.6 bound turns at one Node), or a body of 27 Nodes (`span` [3, 3, 3]);
+  and the second reading of the owner's page contract, a lamp shooting a
+  beam at the atom (absorption: a paid family's rays aimed at the
+  electron's set, the electron's table entry for that family with a
+  threshold and a phase window as the coherence condition between the
+  beam's phase and the electron's own, a `wave` detector behind the atom,
+  a control without the atom, the fraction taken against the beam's phase
+  rate), is registered as the next step with this design, not run.
+  Nothing was tuned.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the
