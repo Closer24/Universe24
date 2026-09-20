@@ -383,6 +383,109 @@
    ],
    "measured": [],
    "detectors": []
+  },
+  {
+   "name": "hubble_stars",
+   "families": [
+    {
+     "name": "s_px1",
+     "quantum": 1
+    },
+    {
+     "name": "s_mx1",
+     "quantum": 1
+    },
+    {
+     "name": "s_py1",
+     "quantum": 1
+    },
+    {
+     "name": "s_my1",
+     "quantum": 1
+    },
+    {
+     "name": "s_pz1",
+     "quantum": 1
+    },
+    {
+     "name": "s_mz1",
+     "quantum": 1
+    },
+    {
+     "name": "s_px2",
+     "quantum": 1
+    },
+    {
+     "name": "s_mx2",
+     "quantum": 1
+    },
+    {
+     "name": "s_py2",
+     "quantum": 1
+    },
+    {
+     "name": "s_my2",
+     "quantum": 1
+    },
+    {
+     "name": "s_pz2",
+     "quantum": 1
+    },
+    {
+     "name": "s_mz2",
+     "quantum": 1
+    },
+    {
+     "name": "s_px3",
+     "quantum": 1
+    },
+    {
+     "name": "s_mx3",
+     "quantum": 1
+    },
+    {
+     "name": "s_py3",
+     "quantum": 1
+    },
+    {
+     "name": "s_my3",
+     "quantum": 1
+    },
+    {
+     "name": "s_pz3",
+     "quantum": 1
+    },
+    {
+     "name": "s_mz3",
+     "quantum": 1
+    },
+    {
+     "name": "s_px4",
+     "quantum": 1
+    },
+    {
+     "name": "s_mx4",
+     "quantum": 1
+    },
+    {
+     "name": "s_py4",
+     "quantum": 1
+    },
+    {
+     "name": "s_my4",
+     "quantum": 1
+    },
+    {
+     "name": "s_pz4",
+     "quantum": 1
+    },
+    {
+     "name": "s_mz4",
+     "quantum": 1
+    }
+   ],
+   "measured": [],
+   "detectors": []
   }
  ]
 }

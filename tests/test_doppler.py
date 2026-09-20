@@ -670,8 +670,11 @@ def test_a_body_on_a_set_reads_every_group_from_the_one_frame_snapshot():
 
 def test_a_registered_star_world_of_series_g2_runs_under_the_key():
     """(h)."""
+    path = ROOT / "examples/events/hubble_stars/gravity_scalar.json"
+    # The shipped world references the definition `hubble_stars` (record
+    # 113); the loader expands it to its inline form.
     document = json.loads(
-        (ROOT / "examples/events/hubble_stars/gravity_scalar.json").read_text(encoding="utf-8")
+        load_world(path.read_bytes(), base_dir=path.parent, root=path.parents[1]).expanded_source
     )
     assert document["width"] == 1 << 20 and "doppler" not in document
     world = parse_nature_beam_world({**document, "doppler": True, "ticks": 20})
