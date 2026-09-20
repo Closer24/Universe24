@@ -1,5 +1,5 @@
 {
-  "law": "rays",
+  "law": "beam",
   "model_id": "rays-coupling-7-mp-plane-v1",
   "shape": [
     121,
@@ -21,7 +21,18 @@
     {
       "name": "q",
       "quantum": 0,
-      "charge": 0
+      "charge": [
+        -1,
+        2
+      ]
+    },
+    {
+      "name": "p",
+      "quantum": 0,
+      "charge": [
+        2,
+        1
+      ]
     }
   ],
   "measured": [
@@ -34,8 +45,7 @@
       "family": "q",
       "amount": 16777216,
       "phase": 0,
-      "fixed": true,
-      "charge": -8388608
+      "fixed": true
     },
     {
       "position": [
@@ -43,11 +53,10 @@
         60,
         0
       ],
-      "family": "q",
+      "family": "p",
       "amount": 1,
       "phase": 0,
-      "fixed": true,
-      "charge": 2
+      "fixed": true
     }
   ]
 }

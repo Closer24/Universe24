@@ -1,5 +1,5 @@
-"""Domain-neutral integer arithmetic: the working-register bound and the ray
-law's integer primitives; callers own payload bounds and operation costs."""
+"""Domain-neutral integer arithmetic: the working-register bound and the Beam
+Law's integer primitives; callers own payload bounds and operation costs."""
 
 MAX_WORK_INT = (1 << 63) - 1
 
@@ -37,6 +37,22 @@ def integer_root(value: int) -> int:
         if better >= estimate:
             return estimate
         estimate = better
+
+
+def reduced(numerator: int, denominator: int) -> tuple[int, int]:
+    """A rational as the pair (n, d) in lowest terms with d positive."""
+    common = bounded_gcd(abs(numerator), denominator) or 1
+    return numerator // common, denominator // common
+
+
+def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
+    """The exact sum of rationals (n, d), reduced: a report of the books
+    and, since the columns of 2026-09-20, a measured event's charge in a
+    column over the families it holds."""
+    numerator, denominator = 0, 1
+    for n, d in terms:
+        numerator, denominator = reduced(numerator * d + n * denominator, denominator * d)
+    return numerator, denominator
 
 
 def by_clock(age: int, numerator: int, denominator: int) -> int:

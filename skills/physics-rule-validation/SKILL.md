@@ -23,9 +23,23 @@ means incomplete or blocked; do not fill the gap with an assumed pass.
 For physics comparisons, follow the shared
 [physics comparison method](../workflow.md#physics-comparison-method).
 Own the primary physical reference, its regime and uncertainty, and the mapping
-from measured Detector observables to the board. Coordinate invariant/bound proofs
+from measured Detector observables to the GameBoard. Coordinate invariant/bound proofs
 with the [mathematician](../mathematical-validation/SKILL.md); keep supplied
 reference laws, analytic checks and empirical agreement distinct.
+
+## Our laws are on the GameBoard; the detector sees other laws
+
+The model owner, 2026-09-20: "Our laws are on the GameBoard; in the detector
+one sees other laws." The rules under review are the GameBoard's: families
+with their keys (charge and other columns per unit of content, a lifetime,
+the phase per Link, the quantum), the tables from the keys, the flight and
+collision tables, the click. Nature's laws (Newton, Einstein, Bohr, Yukawa's
+range, Hubble, the electroweak scale) are laws of the detector's world: they
+are what detectors read, and the review never asks the GameBoard to carry
+their forms. A change is admissible when it is generic, local, bounded and
+formula-free on the GameBoard; whether nature's laws then appear is decided
+by detector readings under the [experimenter](../experimenter/SKILL.md),
+never by a formula placed on the GameBoard.
 
 ## Always start from event spacetime
 
@@ -93,7 +107,7 @@ including chains with zero net delta. A balanced final component sum does not
 prove each nonlinear rule invariant remained valid. Check that rejected proposals
 leave all actual owners and already received inventory intact.
 
-For the active engine, use [the law of the ray](../../docs/RAY_LAW.md) and
+For the active engine, use [the Beam Law](../../docs/BEAM_LAW.md) and
 [the engine's bookkeeping](../../docs/ENGINE.md) for active contracts (the
 generic disturbance contract, DISTURBANCES.md, was deleted on 2026-09-19). Verify
 whole-record versus extensive transport, exact source accounting, paired

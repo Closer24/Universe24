@@ -1,6 +1,7 @@
 # Architecture and change boundaries
 
-The one engine is the engine of the law of events ([ENGINE.md](ENGINE.md)):
+The one engine is the engine of the Beam Law ([BEAM_LAW.md](BEAM_LAW.md),
+its bookkeeping [ENGINE.md](ENGINE.md)):
 `src/event_universe/events/` on the substrate of `src/event_universe/core/`,
 with the host modules (the runner, the preflight, the workspace, retention,
 the snapshot writer) around them. This document owns the repository policy:
@@ -9,6 +10,25 @@ generated output, the monorepo's single owners, the dependency direction the
 gate enforces, and how a physical feature is added. The boundaries of the
 engines before it, deleted on 2026-09-19, are in git
 ([migration](MIGRATION.md)).
+
+## The API of the GameBoard: an emitter in, a detector out
+
+The model owner, 2026-09-20: "when you intervene in the GameBoard it requires
+a detector on the GameBoard or an emitter; that is the API." Every way the
+world touches the GameBoard is one of its external things, both of them
+measured events with declared widths ([the entity catalog](ENTITY_CATALOG.md)):
+input goes in through an emitter, a measured event that releases events by
+its clock and its table (a lamp, a source, a star, a mirror that re-releases);
+output comes out through a detector, a set of Nodes with one record whose
+clicks are the only reading reality has. The world file's declarations are
+the state at interval 0. Nothing else writes to or reads from the GameBoard
+as physics: a host reading of the dense arrays (`GameBoardDiagnostics`, the
+shell means, the books) is a diagnostic or a picture, labelled a GameBoard
+reading and never registered as a measurement
+([the two kinds of readings](EXPERIMENTS.md)), and no tool, test or agent
+sets an event at a Node during a run. A rule that acts on an event in transit
+(the collision, the generalized collision in design) is a meeting of events
+on the GameBoard, not an intervention.
 
 ## Entity authoring boundary
 
@@ -38,7 +58,7 @@ field equation. Generic arithmetic belongs to its documented reusable owner;
 model/API assembly only composes it. Scheduler indexing and timing arithmetic
 are necessary bookkeeping, not permission to hide physical laws in the scheduler.
 An externally configured equation is still a chosen law, not evidence that it
-emerged from the lattice.
+emerged from the GameBoard.
 
 Keep immutable parsed law definitions outside dynamic node, disturbance,
 pending-proposal and packet payloads. Payloads carry bounded state values and
@@ -137,7 +157,7 @@ table below defines code boundaries. Architecture owns this repository policy.
 | Information | Single owner | Update rule |
 | --- | --- | --- |
 | Executable code and law selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; the world file selects them |
-| The world file, the interval's steps and the record | [The law of the ray](RAY_LAW.md) and [the engine's bookkeeping](ENGINE.md) | Keep the live contract in one document; the engines before it are in git |
+| The world file, the interval's steps and the record | [The Beam Law](BEAM_LAW.md) and [the engine's bookkeeping](ENGINE.md) | Keep the live contract in one document; the engines before it are in git |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
@@ -162,19 +182,23 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the ray law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
-| `core/lattice` | Standard-library types; the board's addresses, the six Port headings in Port order and the bound of a declared charge and quantum |
+| `core/integer` | Standard-library types; owns the working-register bound (`checked_work`) and the Beam Law's integer primitives (`bounded_gcd`, `integer_root`, `by_clock`, `apportion_whole`) |
+| `core/game_board` | `core/integer` (`checked_work`); the GameBoard's addresses, the six Port headings in Port order (`PORT_HEADINGS`, `adjacent_node`) and the bound of a declared charge and quantum (`MAX_VALUE`) |
 | `core/phase` | `core/integer`; the phase circle's cosine and sine tables from fixed-point series, cached per N |
-| `events/mixing` | `core/lattice` and numpy; the Node's computation of the sides over any family's arrays, exact in bounded integers (the square root's float estimate corrected to the exact integer root) |
-| `events/transit` | `core/lattice`, `core/phase`, `events/mixing` and numpy; one family's events in transit and the walk |
-| `events/world` | `core/integer`, `core/lattice`; the world file and its refusals; no execution |
-| `events/engine` | `core/lattice`, `events/transit`, `events/mixing`, `events/world`; the interval, the measured events and the books; no output or storage |
-| `events/run` | The engine, `snapshot_writer` and the standard library; the artifacts of a run |
+| `events/world` | `core/integer`, `core/game_board`; the world file of the Beam Law, its keys, defaults, bounds and refusals (`parse_nature_beam_world`, `NatureBeamWorld`), the constants `Q`, `LABEL_SCALE`, `FACE_NAMES`; no execution |
+| `events/measured` | `core/integer`, `core/game_board`, `events/world`; the records the engine keeps beside the rays (`Measured`, `DetectorSet`, `Ledger`, the reduced rational pairs); no law |
+| `events/nature_beam` | `core/integer`, `core/game_board`, `core/phase`, `events/measured`, `events/world` and numpy; the Beam Law, one function over the whole GameBoard (the flight table, the one reading, the collision table, the push, the detector's record, the releases, the store) |
+| `events/engine` | `core/integer`, `core/game_board`, `events/measured`, `events/nature_beam`, `events/world` and numpy; the interval's frame, the clocks, the steps, the books and the snapshot (`NatureBeamSimulation`); no output or storage |
+| `events/run` | `events/engine`, `events/world`, the package version, `snapshot_writer` and the standard library; the artifacts of a run (the one physical module allowed to write files) |
+| `events/__init__` | `events/world`; `events/engine` lazily (`Measured`, `NatureBeamSimulation`), so importing the package loads no numpy |
 | `json_documents`, `snapshot_writer`, `retention` | Standard library; host modules with no physics |
-| `configuration_validation` | `json_documents`, `events/world`; read-only |
-| `runner` | `json_documents`, `retention`, `events/run`, `events/world` |
-| `ui` | `configuration_validation`, `json_documents`, `retention`; local HTTP and isolated CLI process ownership |
+| `world_loading` | `events/world`, `json_documents`; the entity definitions loader and the portable bundle |
+| `configuration_validation` | `events/world`, `world_loading`; read-only |
+| `runner` | `events/run`, `retention`, `world_loading` |
+| `ui` | `configuration_validation`, `json_documents`, `retention`, `world_loading`; local HTTP and isolated CLI process ownership |
 | `diagnostics/numeric_audit` | Standard library; the static integer audit of `core/` |
+| `tools/` | Readers of the record, loaded by their path and never imported by the package (the architecture review of 2026-09-20: a tool calls the engine's functions, it owns no rule): `coupling_readings` imports `core/integer`, `core/game_board`, `events`, `events/nature_beam`, `events/world`, `json_documents` and numpy; `orbit_readings` `core/integer`, `events`, `events/nature_beam`, `events/world`, `json_documents`; `heisenberg_readings` `core/integer`, `events`, `json_documents`; `redshift_readings` `events`; `migrate_nature_beam_worlds` `events/world`; `bell_chsh`, `run_series` and `check` the standard library; the `derivations_round*` scripts numpy |
+| `tests/` | The package's modules under test, the tools by their path (`importlib`), the gates (`tests/architecture_rules.py`, the repository scanners) the standard library; `tools/check.py` selects a test by its imports and by the files it names |
 
 The gate (`tests/architecture_rules.py`, `tests/test_architecture.py`): `core`
 imports only `core`; `events` imports only `core` and `events`, except

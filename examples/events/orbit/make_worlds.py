@@ -1,10 +1,10 @@
-"""Write the worlds of the orbit series D under the law of the ray, on the
+"""Write the worlds of the orbit series D under the Beam Law, on the
 plane, with the width of the push.
 
 Six worlds of one base (README.md here; the entry "D, the orbit under the
-law of the ray, on the plane (2026-09-19)" in docs/EXPERIMENTS.md): a heavy
+Beam Law, on the plane (2026-09-19)" in docs/EXPERIMENTS.md): a heavy
 fixed source of a phase-less free family at the centre of a 121 x 121 x 1
-board with the z axis periodic (the coupling series' plane), releasing a
+GameBoard with the z axis periodic (the coupling series' plane), releasing a
 ballistic fan of rays on every primitive in-plane direction (a, b, 0) with
 0 < a^2 + b^2 <= P^2 (P = 8: the fan is uniform in angle, unlike the
 primitive vectors of a square), one shell of `directions` rays every
@@ -14,27 +14,33 @@ into the plane is q = directions x RATE units per interval; and a light
 free probe of content 1 at radius r on +x with the tangential momentum
 [0, p, 0] chosen for a circular orbit under the push law as it reads (the
 derivation in README.md, written before the runs). The push a free probe
-takes from an arriving fan ray is its label, -m x amount x D[direction]
-(RAY_LAW section 2; the one label since the night of 2026-09-19), whose
-magnitude is |D| per unit and not 1: a line of direction D crossing the
-probe's ring delivers |D| units of momentum per ray, so the inward label
-flux through a ring is q x L per interval with L the fan's mean |D|
-(`LABEL_MAGNITUDE`, 5.194 for this fan of 120 directions; 1 on the six
-headings of series C). With the push per interval m x q x L x C / (2 pi r)
-toward the source (series C: flow x 2 pi r / q = 1.00 +- 0.10, C = 1
-taken) and the speed p / (S x m + p) per axis, a circular orbit needs
-p^2 / (S m + p) = m q L C / (2 pi), so with n = p / m
+takes from an arriving fan ray is its label, -m x amount x u_d with u_d
+the unit vector of the direction at the flight table's scale Q = 64
+(BEAM_LAW section 2 and note 23; the model owner's decision of 2026-09-19
+on the physics-rule reviewer's verdict), whose magnitude is Q per unit
+within 1.35 % for every direction: a line of any direction crossing the
+probe's ring delivers Q units of momentum per ray, so the inward label
+flux through a ring is Q x q x L per interval with L the fan's mean
+|u_d| / Q (`LABEL_MAGNITUDE`, 1.0000 for this fan of 120 directions,
+0.994 .. 1.009 per direction; exactly 1 on the six headings of series C).
+In units of one free unit's label, Q x m, the push per interval is m x q
+x L x C / (2 pi r) toward the source (series C: flow x 2 pi r / q = 1.00
++- 0.10 with the flow read in units of Q, C = 1 taken) and the speed is
+n / (S + n) per axis with n = p / (Q m) (the step rule `by_clock(age,
+|p|, Q x S x M + |p|)`), so a circular orbit needs n^2 / (S + n) =
+q L C / (2 pi):
 
     n = (A + sqrt(A^2 + 4 S A)) / 2,  A = q L C / (2 pi),
 
 independent of r (a 1 / r force on the plane: the same speed at every
 radius, T proportional to r, k = 2). The worlds: `s<S>_r<r>` for S in 1, 8,
-32 and r in 12, 24, the momentum the nearest whole number to n (the grain
-of the push: whole labels per arriving ray). `suspension` 0: the clock's
-count is not read, the push law alone moves the probe. Until the night of
-2026-09-19 the derivation took L = 1 (the push was the unit Link of a
-ray's last step); the worlds of that first registration (p = 3, 5, 9) are
-in git at the D1 commit.
+32 and r in 12, 24, the declared momentum Q times the nearest whole number
+to n (in label units; the grain of the push: whole labels of Q per
+arriving ray). `suspension` 0: the clock's count is not read, the push law
+alone moves the probe. The first registration (the push the unit Link of a
+ray's last step, L = 1, p = 3, 5, 9) and the second (the label content x
+amount x D, L = 5.194, p = 11, 15, 23) are in git at the D1 and the
+one-form commits.
 
     python examples/events/orbit/make_worlds.py
 """
@@ -43,9 +49,15 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[2] / "src"))
+
+from event_universe.events.nature_beam import unit_label  # noqa: E402
+from event_universe.events.world import LABEL_SCALE  # noqa: E402
+
 SIDE = 121
 SHAPE = [SIDE, SIDE, 1]
 BOUNDARY = {"z": "periodic"}
@@ -57,8 +69,8 @@ SOURCE = 1 << 10
 RELEASE_D = SOURCE * 10
 RATE = SOURCE / RELEASE_D
 FAN_RADIUS = 8
-# Five expected periods of the slowest world (S = 32 at r = 24: 687), 4 s
-# of host time per run at 1 ms per interval.
+# Five expected periods of the slowest world (S = 32 at r = 24: 687), a few
+# seconds of host time per run at about 1 ms per interval.
 TICKS = 4000
 WIDTHS = (1, 8, 32)
 RADII = (12, 24)
@@ -85,15 +97,17 @@ FAN = fan(FAN_RADIUS)
 HEADINGS = {(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0)}
 DECLARED = [v for v in FAN if tuple(v) not in HEADINGS]
 EMISSION = len(FAN) * RATE
-# The mean magnitude of a label of the fan, the mean |D| over its
-# directions: the push a fan ray gives is its label, |D| units of momentum
-# per unit of amount (RAY_LAW section 2 and section 10, note 21).
-LABEL_MAGNITUDE = sum(math.hypot(a, b) for a, b, _ in FAN) / len(FAN)
+# The mean magnitude of a label of the fan in units of Q, the mean |u_d| / Q
+# over its directions: the push a fan ray gives is its label along the unit
+# vector u_d of its direction, Q units of momentum per unit of amount within
+# 1.35 % (BEAM_LAW section 2 and note 23).
+LABEL_MAGNITUDE = sum(math.hypot(*unit_label((a, b, c))) / LABEL_SCALE for a, b, c in FAN) / len(FAN)
 
 
 def orbit_momentum(width: int) -> tuple[float, int]:
-    """The circular-orbit momentum in units of the probe's content, from
-    the derivation of the README: the real root and the nearest whole."""
+    """The circular-orbit momentum in units of one free unit's label (Q times
+    the probe's content), from the derivation of the README: the real root
+    and the nearest whole."""
     a = EMISSION * LABEL_MAGNITUDE * FLOW_CONSTANT / (2 * math.pi)
     n = (a + math.sqrt(a * a + 4 * width * a)) / 2
     return n, max(1, round(n))
@@ -108,7 +122,7 @@ def expected_period(width: int, radius: int) -> float:
 def world(width: int, radius: int) -> Json:
     _, n = orbit_momentum(width)
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-orbit-s{width}-r{radius}-plane-v1",
         "shape": list(SHAPE),
         "boundary": dict(BOUNDARY),
@@ -135,7 +149,8 @@ def world(width: int, radius: int) -> Json:
                 "amount": 1,
                 "phase": 0,
                 "fixed": False,
-                "momentum": [0, n, 0],
+                # In label units: n units of the probe's content, Q each.
+                "momentum": [0, n * LABEL_SCALE, 0],
             },
         ],
     }
@@ -146,12 +161,18 @@ def worlds() -> dict[str, Json]:
 
 
 def main() -> None:
-    print(f"fan: {len(FAN)} directions ({len(DECLARED)} declared), q = {EMISSION:.2f} per interval")
+    print(
+        f"fan: {len(FAN)} directions ({len(DECLARED)} declared), q = {EMISSION:.2f} per interval, "
+        f"L = {LABEL_MAGNITUDE:.4f} (the mean |u_d| / Q)"
+    )
     for width in WIDTHS:
         real, whole = orbit_momentum(width)
         speed = whole / (width + whole)
         periods = ", ".join(f"T({r}) = {expected_period(width, r):.0f}" for r in RADII)
-        print(f"S = {width}: n = {real:.3f} -> p = {whole}, v = {speed:.3f} per axis, {periods}")
+        print(
+            f"S = {width}: n = {real:.3f} -> p = {whole} ({whole * LABEL_SCALE} label units), "
+            f"v = {speed:.3f} per axis, {periods}"
+        )
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
         path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")

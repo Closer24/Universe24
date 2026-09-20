@@ -1,17 +1,21 @@
-"""Write the worlds of the coupling series C under the law of the ray, on
+"""Write the worlds of the coupling series C under the Beam Law, on
 the plane.
 
 One base world, the items' worlds from it (README.md here; the entry "C, the
-couplings under the law of the ray, on the plane (2026-09-19)" in
+couplings under the Beam Law, on the plane (2026-09-19)" in
 docs/EXPERIMENTS.md; the readings under the law of events stay registered
-as history). The series runs on a two-dimensional board by the
+as history). The series runs on a two-dimensional GameBoard by the
 model owner's decision of 2026-09-19 ("cancel the runs; let it run on
-two-dimensional boards"): a board of 121 x 121 x 1 with the z axis declared
+two-dimensional GameBoards"): a GameBoard of 121 x 121 x 1 with the z axis declared
 periodic (`"boundary": {"z": "periodic"}`), so that the two z Ports of every
 Node return to the same Node at the next interval and nothing leaks; the
 centre c = (60, 60, 0), K 2^22, N 64, `release` [1, 128], `suspension` 0
 (1 in world 6 only), the free family `m` (`quantum` 0, the kind following
-from the quantum; charge 0; the family `q` of item 7 carries the charges),
+from the quantum; charge 0; item 7 declares two free families, `q` for the
+source and `p` for the probe, each with its charge per unit of content as a
+pair [n, d], the model owner's decision of 2026-09-20: the source's charge
+2^23 on its content 2^24 is the family charge [1, 2], the probe's 2 on
+content 1 is [2, 1] and on content 4 is [1, 2]),
 the source a fixed measured event of content 2^24
 at c (2^17 rays per heading at every self-creation; the two z headings'
 rays step onto the source's own Node through the stub and come home, to be
@@ -40,10 +44,12 @@ The worlds:
   300-interval run read an escape of 0.89 q over its last window (the
   fixed point not reached), to read how the escape approaches q;
 - item 6, the clock: `6`, the probes of `5p` with `suspension` 1;
-- item 7, the electric reading: `7_<Qq>` with Q in 0, +2^23, -2^23 on the
-  source and q in 0, +2, -2 on the content-1 probe at (72, 60, 0), the pairs
-  00, pp, pm, mp, mm, and `7_pp_m4` the (+, +) pair with a probe of content 4
-  at the same Node.
+- item 7, the electric reading: `7_<Qq>` with the charge Q in 0, +2^23,
+  -2^23 on the source (the family `q`, charge [0, 1], [1, 2] or [-1, 2] per
+  unit of content) and q in 0, +2, -2 on the content-1 probe at (72, 60, 0)
+  (the family `p`, charge [0, 1], [2, 1] or [-2, 1]), the pairs 00, pp, pm,
+  mp, mm, and `7_pp_m4` the (+, +) pair with a probe of content 4 at the
+  same Node (its family charge [1, 2]).
 
 Every world runs 200 intervals but `5` (300) and `5_long` (1000).
 
@@ -53,6 +59,7 @@ Every world runs 200 intervals but `5` (300) and `5_long` (1000).
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -94,22 +101,35 @@ def measured(
     *,
     family: str = "m",
     fixed: bool = True,
-    charge: int | None = None,
     momentum: list[int] | None = None,
 ) -> Json:
     entry: Json = {"position": position, "family": family, "amount": amount, "phase": 0, "fixed": fixed}
-    if charge is not None:
-        entry["charge"] = charge
     if momentum is not None:
         entry["momentum"] = momentum
     return entry
 
 
+def charge_per_unit(charge: int, content: int) -> list[int]:
+    """The family's charge per unit of content as the reduced pair [n, d]
+    of a whole charge on a content."""
+    common = math.gcd(abs(charge), content) or 1
+    return [charge // common, content // common]
+
+
+def family(name: str, charge: list[int] | int = 0) -> Json:
+    return {"name": name, "quantum": 0, "charge": charge}
+
+
 def world(
-    name: str, entries: list[Json], *, ticks: int = TICKS, suspension: int = 0, family: str = "m"
+    name: str,
+    entries: list[Json],
+    *,
+    ticks: int = TICKS,
+    suspension: int = 0,
+    families: list[Json] | None = None,
 ) -> Json:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-coupling-{name.replace('_', '-')}-plane-v1",
         "shape": list(SHAPE),
         "boundary": dict(BOUNDARY),
@@ -118,13 +138,13 @@ def world(
         "N": N,
         "release": RELEASE,
         "suspension": suspension,
-        "families": [{"name": family, "quantum": 0, "charge": 0}],
+        "families": families or [family("m")],
         "measured": entries,
     }
 
 
-def source(*, family: str = "m", charge: int | None = None) -> Json:
-    return measured(list(CENTRE), SOURCE, family=family, charge=charge)
+def source(*, family: str = "m") -> Json:
+    return measured(list(CENTRE), SOURCE, family=family)
 
 
 def far_probes(*, family: str = "m") -> list[Json]:
@@ -155,19 +175,19 @@ def worlds() -> dict[str, Json]:
         big, small = signs[pair[0]] * CHARGE, signs[pair[1]] * PROBE_CHARGE
         found[f"7_{pair}"] = world(
             f"7_{pair}",
-            [
-                source(family="q", charge=big),
-                measured(probe_node, 1, family="q", charge=small),
+            [source(family="q"), measured(probe_node, 1, family="p")],
+            families=[
+                family("q", charge_per_unit(big, SOURCE)),
+                family("p", charge_per_unit(small, 1)),
             ],
-            family="q",
         )
     found["7_pp_m4"] = world(
         "7_pp_m4",
-        [
-            source(family="q", charge=CHARGE),
-            measured(probe_node, 4, family="q", charge=PROBE_CHARGE),
+        [source(family="q"), measured(probe_node, 4, family="p")],
+        families=[
+            family("q", charge_per_unit(CHARGE, SOURCE)),
+            family("p", charge_per_unit(PROBE_CHARGE, 4)),
         ],
-        family="q",
     )
     return found
 

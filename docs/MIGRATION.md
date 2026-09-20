@@ -6,13 +6,760 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: the four unifications of the formulas"; [BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+the places where the code spelled the one moment or the one `by_clock`
+twice are spelled once. Identities: no world file changes and every
+example world replays byte-identical in `events.jsonl` and `state.json`
+except where a section below says.
+
+- **(1) The pointer is the first moment of the one reading over the
+  circle.** `nature_beam.coherent_pointer(amount, phase, starts, cosines,
+  sines)` takes the moment table on the circle's unit vectors
+  `(C[phase], S[phase], 0)` (`nature_beam.circle_vectors`) with the
+  weights `32 x amount` and returns its first moment per contiguous
+  group; the `totals` argument (the exact clicked amount per group, the
+  former gate of the int64 path) is removed from the signature: the
+  callers `tools/buildup_readings.py`, `tools/bohr_readings.py` and
+  `tests/test_bohr_readings.py` drop it. `nature_beam.POINTER_AMOUNT_BOUND`
+  is deleted: the register path of the pointer is the reading's own
+  bound, `nature_beam.reading_fits(amounts, vectors, ages, widest)` (new;
+  the one test `read_arrivals` refuses by and `first_reading_overflow`
+  looks per group by), and beyond it the pointer is the same table in
+  Python integers, `nature_beam.moment_table(v, a, ages, exact=True)`
+  (new keyword; the dtype `object`). `nature_beam.read_groups(vectors,
+  weights, starts, ages, exact)` (new) is the one reading per contiguous
+  group of rows (the taken rows of step 4 and the pointer alike). A world
+  whose detector set clicks a row of an amount between 2^41 and 2^48 in
+  one interval now takes the Python path for that pointer where it took
+  the register (the same integer, slower); no registered world does.
+- **(2) Every age against a key is the one `by_clock`; the turn is the
+  release at the rate [1, K].** The world key `K` keeps its name and
+  accepts, beside the integer K (the content per phase step per
+  self-creation, read as the pair `[1, K]`: every example world, bit for
+  bit), a pair `[n, d]` of phase steps per unit of content per
+  self-creation like `release`; the turn is `by_clock(age, content x n,
+  d)` (`NatureBeamWorld.turn(age, content)`, new; `NatureBeamWorld.turn_rate`,
+  new, the pair), refused at half the circle as before, the parser's
+  static bound `2 x content x n < d x N`. `NatureBeamWorld.K` is the key
+  as declared (`int | tuple[int, int]`; `run.json` carries it as declared,
+  so an integer world's record is unchanged); the frame, the tools of the
+  readings (`tools/lensing_readings.py`, `tools/buildup_readings.py`,
+  `tools/heisenberg_readings.py`, `tools/hubble_readings.py`) and the
+  parser's own bounds read the rate through `turn` and `turn_rate`, not
+  `K`. `nature_beam.by_clock_rows(age, numerator, denominator)` (new) is
+  `by_clock` over rows (the frame's turns in one array; the inline floor
+  difference of `_frame_all` is deleted) and `nature_beam.ages_at_key(age,
+  key)` (new) the rows whose walk brought their age to the key,
+  `by_clock(age - 1, 1, key) = 1`: the lifetime's click (`store.age >=
+  lifetime` deleted) and the world's age bound (`store.age.max() >
+  age_bound` deleted; the key age_bound + 1) read it. Identities on every
+  reachable state (a row never lives past its key); no world file changes.
+- **(3) One set object shared by a body and a detector; one moment table
+  over the set.** The data: `DetectorSet.nodes` (new, `dict[Address3,
+  int]`) maps every Node of the set to the number of the measured event
+  there, a body one event, a declared detector several; `Measured.nodes`
+  is a property read from the body's set (the dataclass field and the
+  `nodes=` argument of `Measured(...)` are removed); the engine's index
+  `NatureBeamSimulation.at` is `dict[Address3, DetectorSet]` (until now
+  `dict[Address3, int]`, the number), with `NatureBeamSimulation.occupant(node)`
+  (new) the number of the measured event whose body holds the Node or
+  None, and `_place(entry, nodes)` (new) moving a body's Nodes in its
+  set's map and in the index (a test that read `simulation.at[node]` as
+  a number reads `simulation.occupant(node)`). A detector stays a
+  detector and a body a body: the rule unification (a detector as one
+  measured event) is not taken. The table: `family_plan` takes one
+  `moment_table` per family over the rows at the set with the two masks
+  (present, admitted); the presence and the age moment are its zeroth
+  and age moments over the present rows (the two `np.add.at` sums are
+  deleted), the record's component and the push's flow its moments over
+  the admitted rows, the flow with the label's weight (the separate
+  `labels = u x weight` product is deleted); `beam`'s pairing enters the
+  table as a split of the paired row into the units that go on (present)
+  and the units that click (admitted). `nature_beam.moments_of_groups(table,
+  starts)` (new) sums a moment table per contiguous group;
+  `read_groups` calls it. No world file changes; every example world
+  replays byte-identical.
+- **(4) The columns floored at the clock age like every other rate.**
+  `push_form` takes the reader's clock age (`Measured.clock_age`, the age
+  before the interval's self-creation) where it took `Measured.age` (the
+  age after the frame's advance), so the columns' `by_clock` is read at
+  the same age as the turn, the release, the owed count and the step
+  ([BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (4); note 20's exception is closed). A world whose product `V x E_c x
+  n_c` is not a multiple of `D_c x d_c` reads the floor's extra unit on
+  other ticks than before, the sum over the ticks unchanged; no world
+  file changes and every example world replays byte-identical. Re-pinned
+  with the new integers written first: `tests/test_columns.py` (b) ((-67,
+  -67, 0) then (-68, -68, 0) at the ticks 1 and 2, and the sign and
+  `extra` cases with them) and (e) (-43, -43, -42, -43 at the ticks 1 to
+  4), `tests/test_nature_beam_push.py` (k) (`by_clock(tick - 1, 1280,
+  25)`); the new test (m).
+
+## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
+
+The model owner's decision of 2026-09-20 ([BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#the-detectors-record)). No world file
+changes: the keys `threshold` and `reading` keep their spelling and their
+defaults (`threshold` 1, `reading` `wave`).
+
+- **Changed, the threshold under `wave`**: a `wave` detector set clicks in
+  an interval when the square of the coherent pointer of its arrivals
+  (every number but each Node's own), read in units of one ray, is at
+  least its `threshold`, and passes otherwise with `pass` records naming
+  `threshold`; the unit is the square of one unit's pointer at phase 0,
+  (32 x 256)^2 = 2^26, and the reading the nearest integer
+  (`nature_beam.pointer_units(X, Y) = (X^2 + Y^2 + 2^25) // 2^26`): one
+  unit at any phase reads 1, a rays in phase a^2 (exactly through a = 11
+  at N = 64), two opposite rays 0. Until now the threshold under both
+  readings was the amount summed over the set, so a pair in antiphase
+  clicked and added 0 to the record; now it passes (whether or not a
+  window is declared) and adds nothing. Under `beam` the threshold is the
+  amount as before. No memory between intervals.
+- **Which registered runs change**: of the 66 example worlds 65 are
+  byte-identical in `events.jsonl` (`two_slits`, `one_slit`, the Bell ten
+  with S = 2 exactly, and `w1_wave`, `w3_wave`, `w9_wave` among them: no
+  set of theirs ever read a pointer below its threshold with an amount
+  at it); `w27_wave` alone changes, 2312 rays passing a screen pixel in
+  antiphase where they clicked with the pointer 0 and going on to other
+  pixels and the faces (38 of 161 pixels' records differ, the screen's
+  clicks 150 187 -> 148 131), and the three worlds of A10 at a low rate
+  (`examples/events/buildup/`, merged after the runs: the clicks in the
+  window 172 753 -> 169 855, 171 871 -> 158 878, 171 742 -> 158 622,
+  every verdict the same), re-registered old against new in
+  [EXPERIMENTS A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
+  and [validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20). A
+  world whose `wave` detector reads several rays of one phase at a
+  threshold above 1 reads their square (a^2) where it read their amount
+  (a): declare the threshold in units of the square (`threshold` 4 for
+  two rays in phase where 2 was meant).
+- **Changed, the escaped momentum per family**: `Ledger.face_momentum`
+  is `dict[port, list[list[int]]]` (per family) and `lifetime_momentum`
+  `list[list[int]]`; `Ledger.escaped_momentum(family)` is the family's
+  own and `escaped_momentum()` the world's total; `face_momentum_total`
+  and `lifetime_momentum_total` the sums. `run.json`'s `escaped` line per
+  family carries the family's own momentum (until now the world's total
+  was written into every line: a reader that summed the lines counted the
+  total once per family); the face and border reports (`detectors` in
+  `run.json`, `face_detectors()`) carry `momentum` per family beside
+  their total. The books' escaped line is the total, unchanged.
+- **The API**: `nature_beam.POINTER_UNIT`, `nature_beam.pointer_units`;
+  `Ledger.escaped_momentum(family=None)`, `face_momentum_total`,
+  `lifetime_momentum_total`.
+
+## The columns of the one coupling, the lifetime, the held content and the contact through the table, on 2026-09-20 (`columns` and `lifetime` per family; `held` per measured event; `columns-v1`; the `contact` record)
+
+The model owner's decision of 2026-09-20 ("one mechanism for all the laws
+on the GameBoard", [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the
+physicist's design of the strong force and the mathematician's verified
+form, "correct and working"; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#the-columns)). No existing world needs
+rewriting: every world of the repository parses to the two built-in
+columns and runs the same integer by integer (the 66 example worlds:
+`events.jsonl` byte-identical, [validation](VALIDATION.md)).
+
+- **Added, per family**: `columns`, an object of column name to
+  `{"value": n or [n, d], "sign": 1 or -1}`. The push is the signed inner
+  product over the columns: per column the whole part off the reader's
+  clock of V x (the reader's charge in the column) x (the arriving
+  family's value), floored on its own. `gravity` is the built-in first
+  column of every family (the value [1, 1], the sign minus: the law's
+  -M_A V_B) and `charge` the built-in second (the sign plus): the family
+  key `charge` stays as the shorthand for the value of the column
+  `charge`, and `"columns": {"charge": {"value": v, "sign": 1}}` is an
+  optional equivalent spelling (the migration tool does not rewrite it).
+  A name's sign is the column's, one per name across the world; a family
+  that does not name a column carries [0, 1] there; a paid family's
+  values must be 0; at most 8 columns in all; the world's column order is
+  gravity, charge, then the names in the order of their first
+  declaration.
+- **Refused, naming the key**: a column named `gravity`; `charge` declared
+  both as the key and under `columns`; `columns.charge` with the sign
+  -1; a `sign` other than 1 or -1 (a boolean included); a value with a
+  denominator of 0 or a part that is not an integer; a column object with
+  other keys or without `sign` or `value`; `columns` that is not an
+  object; one name with two signs on two families; a nonzero value on a
+  paid family; more than 8 columns; and the parser's static budget: a
+  declared reader whose push over a column from the largest release of
+  one self-creation of a free family (over the other events' directions,
+  read over the reader's Nodes) could pass 2^62 - 1, per column and as
+  the sum over the columns. At run time every column's product |V| x
+  |E n| is tested by division before it is formed and refused naming the
+  measured event and the column ("the push of measured event N at [...]
+  exceeds the integer bound ... in the column '...'"), the partial sum
+  after every column naming the push; a reader's charge in a column
+  beyond 2^62 - 1 (rho x M itself) is refused at the frame naming the
+  event and the column (the landed form never formed rho x M alone; a
+  world of such a charge was accepted with gravity alone). The charge
+  column's product is tested on the reduced pair, so a run the landed
+  form refused at |V n_A n_B M_A| may be accepted where the reduced
+  |V E n| is within the bound; every accepted integer is the same.
+- **The record**: `run.json` carries `columns` (the world's, name and
+  sign, in order), per family `columns` (name, value, sign, aligned with
+  the world's) beside `charge`, and `columns-v1` under `hypotheses` when
+  a column beyond `charge` is declared (after `bohr-v1` when both);
+  `state.json` and the measured events' states carry `charges`, the
+  charge in every column by name (a reader of the state sees one more
+  key per measured event). A measured event's `charge` is the `charge`
+  column's pair, the exact rational sum over the families it holds of
+  their charge per unit of content times their content (the physicist's
+  D-1): for an event of one family rho x its content, as it was; for a
+  charged free event that absorbed paid content it is rho times its own
+  family's content, where it read rho times the total (no registered
+  world has such an event).
+- **The API**: `world.Column` (name, value, sign), `FamilyDefinition.columns`
+  and `.values`, `world.built_in_columns`, `NatureBeamWorld.columns`,
+  `.declared_columns` and `.hypotheses`, `world.COLUMNS_RULE`,
+  `world.COLUMN_LIMIT`, `world.event_charges`; `measured.column_charges`,
+  `Measured.charges()`, `.column_names`, `.family_values` and
+  `.frame_charges`; `nature_beam.push_form(free, moment, charges,
+  values, columns, age, entry)` takes the reader's charges per column
+  and the arriving family's values in place of the two pairs and the
+  content (`push_form(free, moment, content, reader, emitter, age,
+  entry)` is gone); `core.integer.reduced` and `rational_sum` (the
+  `measured` module re-exports them).
+- **Added, per family: `lifetime`** (the model owner, 2026-09-20, "the
+  strong force's range is a lifetime, L: the event whose age reaches L
+  makes no next event but an escape click in the ledger, as at an open
+  face"; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (vii); [expectations](TEST_EXPECTATIONS.md#the-lifetime-and-the-held-content)):
+  an integer L from 1, one scalar; absent, the family lives forever, as
+  every family did. A ray of the family whose whole age is at or beyond L
+  at the end of the interval's walk (after that interval's reads, before
+  the merge) clicks on the border `lifetime`, a detector without Nodes
+  listed after the faces: its amount, content and label are booked as an
+  open face books an escape and summed into the escaped lines, one
+  `click` record per row naming the border (`"detector": "lifetime"`,
+  `measured` None, the Node the ray was on). The reach is the flight
+  table's: L = 1 the six neighbours, 2 the face diagonals too, 3 the cube
+  diagonals and the second Link of a heading.
+- **Added, per measured event: `held`** (the physicist's D-1; note 31
+  (viii)): an object of family name to content, an integer from 1 each,
+  the content the event holds of families other than its own beside its
+  `amount`. Its content is the sum, its charge in every column the exact
+  rational sum over what it holds, every free family it holds is
+  released at the world's rate beside its own, and it counts under the
+  owners of every family it holds. The register's proton is
+  `{"family": "p", "amount": 1836, "held": {"nuclear": 1}}`.
+- **Refused, naming the key**: a `lifetime` that is not an integer from 1
+  (0, -1, 1.5, "3"), a list (one integer, a scalar), a lifetime beyond
+  the world's `age_bound`; a declared ray in transit whose `age` is at or
+  beyond its family's lifetime; a detector named `lifetime` (the border's
+  name, as a face's); `held` naming the event's own family or an unknown
+  one, a held content that is not an integer from 1, `held` that is not
+  an object; and the inverse interval on a GameBoard with a family of a
+  lifetime (the border has no inverse, as a face has none), naming the
+  family and its lifetime.
+- **The record**: `run.json`'s `detectors` carry the border after the
+  faces when a family declares a lifetime (`name` "lifetime", `nodes` 0,
+  `threshold` 1, per family `measured`, `clicks`, `content`, `record`,
+  `measured_content` 0, and `momentum`), the `escaped` lines sum the
+  faces and the border, every family carries its `lifetime` (None
+  without one), and `hypotheses` carries `columns-v1` when a lifetime is
+  declared (the range of a column shares the columns' identity; no third
+  identity). `events.jsonl` gains `click` records with `"detector":
+  "lifetime"`. The books gain nothing: the border's lines are inside the
+  escaped lines (`Ledger.escaped_amount`, `escaped_content`,
+  `escaped_momentum` sum the faces and the border; `lifetime_amount`,
+  `lifetime_content`, `lifetime_record`, `lifetime_momentum` are the
+  border's own). No existing world declares a lifetime or `held`: every
+  registered run is unchanged.
+- **The API**: `FamilyDefinition.lifetime`, `NatureBeamWorld.lifetimes`,
+  `world.LIFETIME_NAME`; `MeasuredDefinition.held` (aligned with the
+  families, the own amount under the own family); `NatureBeamSimulation.face_detectors()`
+  ends with the border when a family declares a lifetime.
+- **The contact through the table** (the model owner, 2026-09-20, on the
+  physicist's design of the strong force, section 4.4; [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+  (ix); [expectations](TEST_EXPECTATIONS.md#the-contact-through-the-table)):
+  no key. A body whose step on an axis is refused because the
+  destination holds another measured event has arrived at that occupant,
+  and the occupant's table entry for the body's family decides as it
+  decides for a ray: `measure` hands the body's momentum component on
+  that axis to the occupant (the body's 0, the occupant's raised by it,
+  the sum of the momenta on the measured events unchanged), `rerelease`
+  returns it (the body's component reversed, the occupant's raised by
+  twice it), `pass` and a `read` declared against the keys leave the
+  step refused and the labels as they were (the behaviour until
+  2026-09-20). **Where the entry is the keys' own rule for the body's
+  family, declared or not, the contact is `measure`** (a body arriving at
+  a body is a paid arrival, its momentum its own label, and the keys' rule
+  for a paid arrival is `measure`; `world.CONTACT_DEFAULT`,
+  `MeasuredDefinition.contact` per family: the entry's rule where it
+  differs from `default_rule`, `measure` otherwise, so that an entry equal
+  to the default changes nothing and the migration tool's trimming is
+  safe): a world that wants the accumulation as it was declares `pass`
+  for the arriving body's family on the occupant (or `read` for a paid
+  family), which is the same rule for that family's rays; on a free family
+  `read` is the keys' own and the contact stays the hand-over. A body on a
+  set of Nodes hands
+  the component apportioned whole over the occupants of its destination
+  set by their contents (`core.integer.apportion_whole`); an occupant of
+  content 0 takes nothing.
+- **The record**: `events.jsonl` gains `contact` records (the tick, the
+  body's `number`, its `node` and the destination `to`, the `occupant`,
+  the body's `family`, the occupant's `rule` for it, the `axis`, the
+  signed `component` the occupant gained and the body's `momentum`
+  after), one per occupant that took a hand-over, none under `read` or
+  `pass`; the measured events' states in `run.json` and `state.json`
+  carry `contacts`, the hand-overs taken per family of the arriving body.
+- **Which registered runs change**: of the 66 example worlds 60 are
+  byte-identical in `events.jsonl` (no body of theirs ever stepped onto
+  another); six change from the first refused step of a body on, their
+  numbers registered old against new in [validation](VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20):
+  the coupling `1b_m1`, `1b_m4`, `1b_m16` (the free probe at the Node
+  beside its source from tick 31: until now its momentum grew under every
+  read, -2 260 249 792 on `1b_m1` at tick 200; now every refused step hands
+  the x component to the fixed source, 169 hand-overs, the probe's
+  momentum 0), Bohr `r2` and `r4` (the electron beside the proton: `r2`
+  now turns twice and leaves through face:+x at tick 688 instead of
+  face:-x at tick 254, `r4` leaves at tick 600 instead of 540) and the
+  orbit `s8_r12` (one hand-over at tick 174, the angle no longer closing,
+  out at tick 260 instead of 271). The registered entries of series C, D
+  and H keep the numbers of their date and carry a note. Every world
+  without a body arriving at a body, the Bell, slit, detector, redshift,
+  Hubble and Heisenberg worlds included, reads the same integer by
+  integer.
+- **The API**: `world.CONTACT_DEFAULT`, `MeasuredDefinition.contact`,
+  `Measured.contact` and `.contacts`, `NatureBeamSimulation._contact`.
+
+## The names NatureBeam and GameBoard and the glossary's single names, on 2026-09-20
+
+The model owner's decisions of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector):
+"the ray is to be called NatureBeam in the code everywhere", "DECIDED: the
+name of the board is GameBoard", "there is no ray, there is only an event";
+[Highlights 5.6](HIGHLIGHTS.md#56-the-glossary-of-the-names-and-how-each-is-computed-2026-09-20),
+the 23 redundancies with the one name recommended). A mechanical rename in
+three commits; no rule, integer, record key or artifact changed: the whole
+suite passes with the same test bodies. The ray is the record of an event in
+transit, `NatureBeam` in the code; on the GameBoard there are only events
+([the law of the ray](BEAM_LAW.md)).
+
+- **NatureBeam, the law's things in code**: `RayWorld` -> `NatureBeamWorld`,
+  `RaySimulation` -> `NatureBeamSimulation`, `RayStore` -> `NatureBeamStore`,
+  `RayTables` -> `NatureBeamTables`, `parse_ray_world` ->
+  `parse_nature_beam_world`, `execute_ray_run` -> `execute_nature_beam_run`,
+  `is_ray_world` -> `is_nature_beam_world`, `ray_tables` ->
+  `nature_beam_tables`; the test modules `tests/test_ray_{age, bijection,
+  body, books, clock, collision, detector, flight, label, push, readings,
+  reemission, window, world_parsing, worlds}.py` ->
+  `tests/test_nature_beam_*.py`; `tools/migrate_ray_worlds.py` ->
+  `tools/migrate_nature_beam_worlds.py`; the locals `ray`/`rays` ->
+  `beam`/`beams`, `fan_ray` -> `fan_beam`, `back_ray` -> `back_beam`,
+  `fixed_rays` -> `fixed_beams`, `ray_speed` -> `beam_speed`; the prose
+  "ray world" -> "NatureBeam world". Imports of `RaySimulation`,
+  `RayWorld` and `parse_ray_world` from `event_universe` or
+  `event_universe.events` must use the new names. Unchanged: the refusal
+  tables that name the deleted keys (`ray_interactions`, `ray_delay`,
+  ...), the dated records of deleted tests, and the word "ray" in prose
+  (the owner's reading rule: a ray is the record of an event in transit).
+- **The Beam Law** (the model owner, 2026-09-20, the fourth step): the
+  law itself is renamed from "the law of the ray" to the Beam Law.
+  `docs/RAY_LAW.md` -> [`docs/BEAM_LAW.md`](BEAM_LAW.md) (git mv; its
+  title "The Beam Law"; its section headings and note numbers unchanged,
+  so every `BEAM_LAW.md#...` anchor is the old one; nothing stays at the
+  old path: Highlights, which this rename does not edit, names it in prose
+  and links nothing there); every link and mention "RAY_LAW", "the law
+  of the ray", "the ray law" -> "BEAM_LAW", "the Beam Law" across the
+  documents, skills, README, AGENTS, CONTRIBUTING, examples, tools, tests
+  and docstrings (the quoted record title "DECIDED: the law of the ray"
+  and the history sections of this file and of the changelog keep their
+  wording; the anchors of the retitled headings of TERMINOLOGY,
+  EXPERIMENTS and TEST_EXPECTATIONS follow their new titles). The law's
+  identity: `RAYS_LAW = "rays-v1"` -> `BEAM_LAW = "beam-v1"`
+  (`events.world`, re-exported by `event_universe` and
+  `event_universe.events`; `run.json` and `state.json` record `"law":
+  "beam-v1"`); the world key `"law": "rays"` -> `"law": "beam"`
+  (`LAW_VALUE`), every world file in the repository rewritten by
+  `tools/migrate_nature_beam_worlds.py` (extended: `rays` -> `beam`; the
+  old name, `world.OLD_LAW_VALUE`, is accepted by the tool alone), the
+  parser refusing `"law": "rays"` naming this section (no implicit
+  default; `tests/test_nature_beam_world_parsing.py` (a)), the
+  preflight's kind `rays` -> `beam` (`DOCUMENT_KINDS`, `--kind beam`,
+  `report.kind`); the run records of the registered runs stay as they
+  were: rays-v1 is beam-v1, the same law; the hypothesis identities
+  (`bohr-v1` and the ones in flight) are untouched. The prose word "ray"
+  for the law's event in transit stays allowed as the informal name; the
+  documents' first mentions say "beam (the record of an event in
+  transit)"; no mass replacement of "ray" in prose.
+- **GameBoard**: `src/event_universe/core/lattice.py` ->
+  `src/event_universe/core/game_board.py` (imports of
+  `event_universe.core.lattice` must become
+  `event_universe.core.game_board`; `Address3`, `Heading`, `MAX_VALUE`,
+  `PORT_HEADINGS` and `adjacent_node` unchanged); the `grid` local of
+  `shell_readings` -> `node_offsets`; the test helpers `board(simulation)`
+  -> `game_board(simulation)` and the test names
+  `test_the_board_is_unchanged_*` -> `test_the_game_board_is_unchanged_*`,
+  `*_respect_the_board_symmetries` -> `*_respect_the_game_board_symmetries`;
+  in `tools/derivations_round7.py` `board_hist`, `hist_board`,
+  `board_over_q`, `final_board_over_q`, `board_samples`,
+  `board_over_q_samples`, `on_board` and the result key `"board"` ->
+  `game_board_hist`, `hist_game_board`, `game_board_over_q`,
+  `final_game_board_over_q`, `game_board_samples`,
+  `game_board_over_q_samples`, `on_game_board`, `"game_board"`; the
+  refusals and messages "is outside the board" -> "is outside the
+  GameBoard", "a closed board is refused" -> "a closed GameBoard is
+  refused", "leaves the board through an open face" -> "leaves the
+  GameBoard through an open face", "age_bound is required on a board
+  periodic on every axis" -> "... on a GameBoard periodic ...", "adjacency
+  requires an in-board integer position" -> "adjacency requires an integer
+  position on the GameBoard", "cube_flux supports only the all-open board"
+  -> "... the all-open GameBoard", "(declare a larger age_bound or a
+  smaller board)" -> "(... or a smaller GameBoard)", "the inverse interval
+  is defined on a board without measured events" -> "... on a GameBoard
+  ..." (a reader matching the old text must match the new); the prose
+  "the board", "the game board", "the lattice", "the grid" -> "the
+  GameBoard" in every document, README, skill, example README and
+  docstring, with the two anchors `#per-axis-board-topology-...` ->
+  `#per-axis-gameboard-topology-...` ([ENGINE](ENGINE.md)) and
+  `#13-what-the-lattice-says-...` -> `#13-what-the-gameboard-says-...`
+  ([DERIVATIONS](DERIVATIONS.md)) and the headings "Events board topology"
+  of POSTULATES.md and SIMULATOR_DEFINITIONS.md -> "GameBoard topology";
+  the canonical entry in [TERMINOLOGY](TERMINOLOGY.md) and the rule in
+  AGENTS.md. What stays: a "board" that is not the GameBoard ("on-board
+  information retention"), the drawing's grid spacing, the CSS layout
+  grids, the integer encoding grid, a numerical evaluation grid and a
+  parameter scan grid, `KeyboardInterrupt`, and "cubic lattice of Nodes"
+  inside the definition only. The world key `shape` is unchanged.
+- **The glossary's single names (Highlights 5.6), in code**: (1)
+  `Reading.scalar` -> `Moments.presence`, `Readings.count` ->
+  `GameBoardDiagnostics.arrived`, `NatureBeamSimulation.count` ->
+  `NatureBeamSimulation.arrived`, the key `count` of `shell_readings` ->
+  `arrived`; (2) `Reading.vector` -> `Moments.flow`, the label moment V is
+  "the label flow" (`test_the_expected_push_is_the_engines_label_moment`
+  -> `..._label_flow`); (3) the pointer (X, Y) is "the pointer" where the
+  documents said "the coherent sum" or "the coherent reading" of the
+  detector's record (the owner's "the Node holds no coherent sum" is kept
+  as said); (4) `nature_beam.HERE` -> `NO_ARRIVAL` (the arrival code; the
+  rest directions keep the indices 0 and 1, the reading keeps `here`); (5)
+  the state is `owed` (TERMINOLOGY: "Suspension, owed", "Owed (the
+  count)"); (7) `configuration_validation.KINDS` -> `DOCUMENT_KINDS`; (9)
+  "Interval (tick)" defined once in TERMINOLOGY (`tick` in every key and
+  identifier, "interval" the prose noun); (10) `FlightTable.turns` ->
+  `FlightTable.resolution` (T_d), `Measured.phase_steps` ->
+  `Measured.turned` (the cumulative turn; `NatureBeamWorld.phase_steps` is
+  N and unchanged); (11) `RayWorld.clock` -> `NatureBeamWorld.K` (the
+  parser's parameter too); (12) "Extent (of a detector)" in TERMINOLOGY,
+  the phase window is "the window", the suspension's fraction is "the
+  rate"; (13) "Carried" documented once in TERMINOLOGY as `amount x
+  content` (the column `mass` was already gone with charge per unit of
+  content, 2026-09-20); (14) `Ledger.face_units` -> `Ledger.face_amount`,
+  `Ledger.escaped_units` -> `Ledger.escaped_amount`, "the transit line (in
+  amount)"; (15) `Measured.events` -> `Measured.clicks`; (18)
+  `Measured.measured` -> `Measured.taken` (the tally by rule;
+  `NatureBeamSimulation.measured` and the world's `measured` list
+  unchanged); (19) `measured.RULES` -> `measured.TALLIES`; (20)
+  `nature_beam.Reading` -> `nature_beam.Moments`, `nature_beam.Readings`
+  -> `nature_beam.GameBoardDiagnostics`. Nothing to change for (8)
+  `heading` (used only for the six unit vectors), (21) `push_form` (the
+  function exists since the push as one product; the documents are
+  right), (22) the leftovers (the refusal tables stay, naming the law in
+  the refusal).
+- **Deferred, the keys the register's worlds and fingerprints depend on**
+  (not changed; each a world-file or run-record key, to be migrated with a
+  rewrite of the worlds and a dated note): (1) `reads: "scalar"` ->
+  `"presence"` and `"outside"` -> `"arrived"`; (2) `reads: "vector"` ->
+  `"flow"`; (6) `push` on a `click` line -> `momentum`; (13) the
+  measured-event key `amount` -> `content`; (16) `position` -> `node` in
+  `state.json`, in `run.json` `numbers` and in the world; (17) `run.json`
+  `model` -> `model_id`; (18) the event line's `measured` -> `reader` and
+  `number` -> `emitter`; (20) the record field `reading` -> `component`;
+  (10), (15), (18) the keys `phase_steps`, `events` and `measured` of
+  `Measured.state()` (their attributes are `turned`, `clicks` and
+  `taken`); (23) refusing a detector named as a face (`face:*`) is a
+  behaviour change with a test of its own, not made here.
+
+## The turn by momentum, Bohr as parameters outside the board, on 2026-09-20 (`action`, `phase_by_momentum`; `bohr-v1`)
+
+The model owner's decision of 2026-09-20 ("On Bohr, go, and put it as
+parameters outside the board like the age"; [Highlights 5.4](HIGHLIGHTS.md#54-the-detector);
+[RAY_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
+
+- **Added**: the world key `action` (h, an integer from 1, in the units
+  of the momentum label times Links; absent by default) and the
+  measured-event key `phase_by_momentum` (true; false by default): at the
+  Link a body steps on an axis whose momentum component is p its phase
+  turns by `by_clock(k0, |p| x N, h)`, k0 the count of Links the step
+  rule gives on that axis at its age before the self-creation (the
+  difference of two floors of k x |p| x N / h; no register, no
+  remainder); the axes compose. A rule of the measured event, the
+  external thing (`RaySimulation._move`); the rays' flight and collision
+  are untouched; without `action` nothing turns and every world reads
+  the same integer by integer (`tests/test_ray_body.py` (e)).
+- **Refused, naming the key**: `action` below 1 or not an integer;
+  `phase_by_momentum` without `action`, on a `fixed` measured event, on
+  a family without a phase circle, or not a boolean; a turning body whose
+  `ticks x |p| x N` exceeds 2^62 - 1 for its declared momentum (the
+  count of Links within the run is at most `ticks`); at run time the
+  product (k0 + 1) x |p| x N beyond the bound (`OverflowError` naming the
+  body and "turn by momentum").
+- **The record**: `run.json` carries `action` (h, or None) and
+  `hypotheses` (`["bohr-v1"]` when `action` is declared, the identity of
+  the turn by momentum as a physical hypothesis beside the law, whose
+  identity stays `rays-v1`; `[]` otherwise) and per measured event under
+  `numbers` its `phase_by_momentum`; the `step` line of `events.jsonl`
+  gains `phase`, the measured event's phase after the step (a reader that
+  compared step lines whole sees one more key on every stepping world;
+  the integers are unchanged).
+- **The tools**: `tools/bohr_readings.py` reads series H (the orbit from
+  the step lines, the phase per turn, the coherent record of the face
+  detectors from the click lines through the engine's own
+  `coherent_pointer`); the worlds are `examples/events/bohr/`.
+
+## A body on a set of Nodes with one record, on 2026-09-20 (`span`)
+
+The model owner's decision of 2026-09-20 on Bohr ("go, and put it as
+parameters outside the board like the age"; the body on a set taken with
+it as the condition for a closed orbit, the physicist's proposal 1, "the
+electron of width 3"; [RAY_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
+
+- **Added**: the measured-event key `span`, three odd integers from 1
+  (`[1, 1, 1]` by default): the measured event is a body on the block of
+  Nodes centred on its `position`, one record on all of them; its
+  threshold, its clock's count and its push read the one reading set
+  summed over its Nodes; its releases are apportioned whole over its
+  Nodes; the step moves the whole set as one; no collision acts at any of
+  its Nodes; a detector names it by its `position`. `world.body_nodes`,
+  `Measured.span`, `Measured.nodes`, `RaySimulation.at` over every Node of
+  every body; `engine.step_axis` and `engine.count_owed`, the step rule of
+  one axis and the owed count as public functions the methods call (the
+  readings tools read them; no integer changes).
+- **Refused, naming the key**: a `span` that is not three odd integers
+  from 1 or larger than its axis; a body whose Nodes leave the board on an
+  open axis at the start; two measured events sharing a Node; a detector
+  naming a Node of a body that is not its `position`.
+- **The record**: `run.json` carries `span` per measured event under
+  `numbers` and in the measured events' states, `state.json` the same key
+  (a reader of the state sees one more key per measured event, `[1, 1,
+  1]` on every world that declares none). Every world without the key
+  reads the same integer by integer (`tests/test_ray_body.py` (a): every
+  record, row and state equal with the key absent and with `[1, 1, 1]`
+  declared).
+
+## `wave` is the default reading of a detector, on 2026-09-20
+
+The model owner's decision of 2026-09-20 ("on the board a ray, in the world
+a wave"; [RAY_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+and note 29): `world.DETECTOR_READINGS` is `("wave", "beam")`, so a
+detector without a `reading` key, and every measured event outside a
+declared detector, reads `wave` (the coherent pointer over the set, its
+square the record, the window reading the set's phase); a world that wants
+the pairing rule declares `"reading": "beam"`. A world whose detector
+declared no reading and was met by rays of different phases in one
+interval (a windowed counter, a wall) reads differently: `tests/
+test_ray_readings.py` (d) is re-pinned, `tests/test_ray_collision.py` (d)
+declares `beam`. The Bell worlds are unchanged (one ray per interval per
+counter: S = 2, 326 criteria), the two-slit screens and the Heisenberg
+worlds declare their reading, series C and D have no detector; the
+two-slit wall records the square of what it absorbs.
+
+## Charge per unit of content, on 2026-09-20 (the family's `charge` a pair; no `charge` on a measured event; the record's two columns gone)
+
+The model owner's decision of 2026-09-20 (Highlights 5.4: charge is per
+unit of content of a family, and the push one product;
+[RAY_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+step 4 and note 28; [validation](VALIDATION.md)). What a user of the engine
+must know:
+
+- **The family key `charge` is the charge per unit of content**, rho, an
+  integer c (the pair `[c, 1]`) or a pair `[n, d]` with d from 1, as
+  `suspension` is declared; a denominator of 0 or a part that is not an
+  integer is refused naming the key. A measured event's charge is rho
+  times its content. **The key `charge` on a measured event is refused**
+  naming this entry: a world that gave two events of one family different
+  whole charges on different contents (the series 7 worlds: 2^23 on 2^24
+  and 2 on 1) must split them into two families, one charge per unit of
+  content per family (`examples/events/coupling/make_worlds.py`: `q` the
+  source with `charge` [1, 2], `p` the probe with [2, 1]; [1, 2] on the
+  content-4 probe of `7_pp_m4`). `tools/migrate_ray_worlds.py` moves a
+  per-event `charge` to its family as the reduced pair and refuses a
+  family whose events imply two pairs, naming both events.
+- **The push is one product per arriving free ray**, `push_A = M_A x (rho_A
+  rho_B - 1) x V_B` (`nature_beam.push_form`), the electric part off the
+  reader's clock by the declared pairs, `sign x by_clock(age_A, |V n_A n_B
+  M_A|, d_A d_B)`: equal integer by integer to the earlier `sign x
+  by_clock(age_A, |V q_A q_B|, M_B)` wherever q_A = rho_A M_A and q_B =
+  rho_B M_B were integers, so every registered reading is unchanged
+  (series 7's 181 or 185 `read` records per world, `pushed` and the
+  momenta equal on all six worlds). M_A is the content the frame read at
+  the start of the interval (`Measured.frame_content`; the architect's
+  B3): a click of the interval pushes from the next interval on.
+- **The record's columns**: `NatureBeam`, the store and `state.json` lose
+  `charge` and `mass` (the emitter's charge and content at birth of the
+  night of 2026-09-19); a row of `state.json` is `direction`, `age`,
+  `phase`, `number`, `amount`, `content`; `RayStore.append` takes the
+  seven columns with `arrival`; the merge's identity is the six fields
+  node, direction, age, phase, number, content. A re-emitted free ray
+  keeps its family and takes the re-emitter's number (the orchestrator's
+  D2), so it pushes by its family's rho; the architect's B2 (a division
+  by the re-emitter's held content of another family, 0) cannot arise.
+- **The records**: `run.json`'s `families[].charge` is the pair `[n, d]`;
+  `measured[].charge` in `run.json` and `state.json` is the pair rho x
+  content, reduced (was an integer); the books' `charge` line is the
+  exact rational sum of the measured events' charges as a reduced pair
+  `[n, d]` (was an integer). `Measured.charge` is a property (the pair);
+  `Measured.rho` the family's pair; `MeasuredDefinition` has no `charge`.
+- **Names**: `FACE_NAMES` lives in `events/world.py` (the schema refuses a
+  detector named as a face is); `engine.by_clock` and `engine.FACE_NAMES`
+  re-exports are gone: import `by_clock` from `core.integer` and
+  `FACE_NAMES` from `events.world`.
+- **Tests**: `test_ray_push` (a) to (e), (i) re-fixtured on two free
+  families with the same integers; (k) the re-emitted ray, (l) the
+  equivalence principle for the electric push; `test_ray_world_parsing`
+  (a) the refusals; `test_default_table` (c); `test_ray_bijection` (the
+  rows of seven fields).
+
+## The age of a ray kept whole and read by the measured event, on 2026-09-20
+
+The model owner's "go for it" of 2026-09-19 on the clock beside a mass
+([Highlights 5.4](HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+note 25; [validation](VALIDATION.md)): the clock's count may read the
+amount-weighted age of the rays at its Node, M / r in space, while the
+push keeps the flow, M / r^2.
+
+- **The age is no longer reduced modulo the direction's period.**
+  `RayStore.age` and the `age` of every row in `state.json` are the whole
+  count of intervals since the ray's birth or re-emission; the flight
+  reads `age mod L_d` (`flight.steps[direction, age % period[direction]]`)
+  and the board's step is unchanged. A reader of `state.json` that
+  compared ages modulo the period must compare them whole. The seeding of
+  a declared ray no longer reduces its `age`.
+- **The store's rows.** Rows of different ages no longer merge: the
+  store's bound is `len(D) x age_bound x N x numbers x contents` in place
+  of `sum_d L_d x N x numbers x contents` (the host cost); on the
+  registered worlds the row counts are unchanged in practice.
+- **Added**: the world key `age_bound` (an integer from 1; by default
+  twice `world.flight_bound(shape, D)` on a board with an open axis;
+  required on a board periodic on every axis, refused if absent), recorded
+  in `run.json`; a declared `in_transit[].age` beyond it is refused; a row
+  whose age passes it refuses the run with `OverflowError` naming the key
+  (the world must be small enough or declare its bound). **Worlds periodic
+  on every axis must now declare `age_bound`** (the test worlds of the
+  bijection, the flight, the collision and the push do); every other
+  registered world parses and runs as before.
+- **Added**: the value `age` of a table entry's `reads`; `Reading.age`,
+  `Reading.age_outside`, `Reading.age_here` and the `ages` argument of
+  `read_arrivals` (zero without it; `moment_table`, `reading_of`,
+  `moment_bound`); `measured.count_component`; `Measured.counted` (what
+  the clock counts; `Measured.presence` stays the presence); the constant
+  `Q` of the flight table now lives in `world.py` (`nature_beam.Q` is the
+  same object).
+- **Changed**: `RaySimulation._suspend` owes `by_clock(age, counted x n,
+  d)`; with no entry reading `age` this is the presence, integer by
+  integer, so every world without the key reads the same. The inverse walk
+  of a ray at age 0 is refused (its birth has no inverse).
+## The label along the unit vector of the direction, on 2026-09-19 (the momentum units change by Q = 64)
+
+The model owner's decision of 2026-09-19 (Highlights 5.4, "go for it") on
+the physics-rule reviewer's verdict on the magnitude of a fan ray's label
+([RAY_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+and note 23; [validation](VALIDATION.md)): the momentum label of a unit is
+along the unit vector u_d of its direction at the flight table's scale,
+the integer vector nearest Q D / |D| with Q = 64 (`nature_beam.unit_label`,
+the flight table's `labels`; exactly Q e_d on a heading), in place of the
+integer direction D itself. What a user of the engine must know:
+
+- **The momentum units change by Q.** Every declared `momentum` in a world
+  file and every momentum in `run.json`, `state.json` and `events.jsonl`
+  (`momentum`, `push`, `pushed`, the momentum lines of the books, the
+  face detectors' `momentum`, the `step` records) is now in label units:
+  x 64 for a heading (the label of one unit of amount along +X is
+  (64, 0, 0), of one unit of content 8 along +X (512, 0, 0)) and the
+  unit vector's components for a fan direction (one unit along (7, 5, 0)
+  carries (52, 37, 0), not (7, 5, 0)). A world that declared `momentum`
+  [0, 23, 0] meaning 23 units of momentum now declares [0, 1472, 0]; a
+  reader of the record divides by 64 to recover the old units of a
+  heading. The zeroth moment of the reading (the count, the presence,
+  the threshold, the clock's count), the amounts, the contents, the
+  phases, the record and Gauss's flux off the Port crossings
+  (`per_port`, `cube_flux`) are unchanged.
+- **The step rule carries Q**: `by_clock(age, |p|, Q x S x M + |p|)` in
+  place of `S x M + |p|` (`RaySimulation._move`), so a declared momentum
+  x 64 steps exactly as before (`by_clock(age, Q n, Q k) = by_clock(age,
+  n, k)`); a world whose `momentum` was not rescaled steps 64 times
+  slower.
+- **The bound**: the parser refuses a declared ray, a free release or a
+  lamp's release with `Q x content x amount` beyond 2^62 - 1 (content x
+  amount at most 2^56 - 1 per row), naming the numbers, and
+  `label_weights` refuses the same at every product the law forms (a
+  free family's rows included); on the six headings the bound tightens
+  from 2^62 to 2^56 per row, on the default direction bound it is the
+  same number as before. The reading's second-moment bound, amount x
+  Q^2 x rows, refuses a set of one number above 2^50 units at a measured
+  event's Node (a row of 2^52 at a detector, once a test fixture, is
+  refused; 2^49 is not).
+- **The reading's vector and tensor moments** are taken on u_d (`Readings`,
+  the reading at a measured event, `shell_readings`' flow): a fan's flow
+  reads Q x q direction-blind, a heading's Q x q; a `reads` component
+  `vector` or `tensor` on a record is x 64 and x 4096.
+- **The tools**: `tools/coupling_readings.py` divides the labels by Q
+  where it compares with the emission q or an amount (the registered
+  expectations of RAY_LAW section 8 keep their meaning; every criterion
+  and reading is the same as registered); `tools/orbit_readings.py`
+  reads C against m q L / (2 pi r) with the push in units of Q and L the
+  fan's mean |u_d| / Q (1.0000); `examples/events/orbit/make_worlds.py`
+  derives p in units of one free unit's label (Q x m) and declares
+  `momentum` = p x 64 (192, 320, 576 at S = 1, 8, 32).
+- **Names**: `world.LABEL_SCALE` (= `nature_beam.Q`), `nature_beam.unit_label`,
+  `FlightTable.labels`, `nature_beam.first_moment_overflow`;
+  `momentum_labels` and `RayStore.labels` take the unit-vector table in
+  place of the direction vectors; `first_label_overflow` takes `free`.
+- **Tests**: every momentum integer of the pinned tests is x 64 (the fan
+  fixtures on u_d), the bound-edge worlds of `test_ray_world_parsing`
+  (d) are at 1/64 of their amounts, `test_ray_label.py` is new;
+  [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md) lists every re-pin.
+## The detector as a set with one record, the reading key and the phase returned, on 2026-09-19
+
+The model owner's three decisions of 2026-09-19 ([RAY_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+note 24; [changelog](../CHANGELOG.md)): a detector is a set of Nodes with
+ONE record; after a click the set's phase is returned to its measured
+events; a detector declares its `reading`, `beam` (the default) or `wave`.
+
+- **Removed**: `Measured.record` (the record per Node) and the `record`
+  key of a measured event's state in `run.json` (`measured[]`) and
+  `state.json`; the per-Node threshold field of `Measured` (`threshold`
+  is now a property of the set's).
+- **Added**: `events.measured.DetectorSet` (index, name, reading,
+  threshold, numbers, record per family, phase per family) and
+  `RaySimulation.detector_sets` (the declared detectors first, then a
+  detector of one Node per measured event outside them);
+  `Measured.detector_set`; `DetectorDefinition.reading` and the world key
+  `detectors[].reading` (`world.DETECTOR_READINGS`, refused outside
+  `beam` and `wave`); `nature_beam.pointer_phases` and
+  `POINTER_STEP_BOUND`; `FamilyPlan.count`, `set_phase`, `cancelled`
+  (`pointer` now keyed by the set).
+- **The record's form**: the run's `detectors[]` carry `reading` and per
+  family `phase` beside the one `record`; the `record` line of
+  `events.jsonl` is one per detector set per family per interval, its
+  `node` and `measured` None for a set of several Nodes, with `phase`
+  (the set's) and, under `wave` only, `pointer`; a `pass` line of a
+  paired ray under `beam` carries `cancelled` true and neither `window`
+  nor `threshold`; the `click` line keeps the ray's own `phase`.
+- **Worlds**: a detector that relied on the squared record must declare
+  `"reading": "wave"` (the default `beam` counts and pairs); the
+  two-slit worlds declare their screen as 121 one-Node `wave` detectors
+  `screen_<y>` (one detector of 121 Nodes would read one record with no
+  resolution in y). The Bell worlds need no change: one ray per interval
+  per detector reads the same under `beam`, the `record` lines carrying
+  the count instead of the square. The detector definitions of
+  `examples/events/detector/` read `beam` by default (their registered
+  runs of the square are history). A measured event outside every
+  detector counts (the two-slit wall).
+- **Tests**: `test_ray_detector` (a), (b), (e) declare `wave`; (f), (g),
+  (h) are new; `test_ray_readings` (d) reads the `record` line's phase;
+  `test_ray_worlds` (a) reads the record per pixel from the detector
+  sets.
+
 ## The detector's record exact, never refused, on 2026-09-19 (after the batching)
 
 The night's affordable amount refused `examples/events/two_contents.json`
 at its 20th interval (262144 units on `face:+y` in one interval, above
 261123), a world that had run 200 intervals before the bound; a report
 of the host is exact and is neither refused nor wrapped
-([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
+([RAY_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
 note 19; [validation](VALIDATION.md)).
 
 - **Deleted**: `nature_beam.RECORD_AMOUNT_BOUND`, `check_record_amount`,
@@ -36,7 +783,7 @@ note 19; [validation](VALIDATION.md)).
 
 The physics-rule review of the law of the ray (its findings F1, F2, F3, F7)
 and the model owner's proposal 2 ("2 with the physicist"), implemented on
-the branch `claude/universe24-new-3ytqde` ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+the branch `claude/universe24-new-3ytqde` ([RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 notes 18 to 21). Nothing physical changes on the registered runs (the
 series C, series 7 and Bell records are identical byte for byte,
 [validation](VALIDATION.md)); what changes is where the momentum is read
@@ -96,7 +843,7 @@ the earlier name in its record of the day. Imports of
 
 The model owner's decisions of the night of 2026-09-19 (Highlights 5.4, on
 the mathematician's review of the table of the physical entities: "I
-approve 1 and 3"; [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+approve 1 and 3"; [RAY_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 notes 15 and 16): generic replaces generic, nothing physical changes on the
 six headings.
 
@@ -156,7 +903,7 @@ six headings.
 ## The law of the ray, on 2026-09-19 (`rays-v1`)
 
 The model owner's decision of 2026-09-19 (Highlights 5.4, "DECIDED: the law
-of the ray"; the design [the law of the ray](RAY_LAW.md), published before
+of the ray"; the design [the law of the ray](BEAM_LAW.md), published before
 the engine changed): the Node holds no wave; a unit is a ray with a record
 on the digital line of its momentum at one speed, 1 / sqrt 3; rays that meet
 are permuted by the collision table; the interval is a bijection and the
@@ -260,7 +1007,7 @@ corrections into `claude/universe24-new-3ytqde`); the last commit holding
   the ray record; the coupling tool's 1b merge criteria are the refusal,
   its far-field bounds are readings against RAY_LAW section 8, printed
   inside or outside the expectation and never a failure.
-- **Documents.** ENGINE.md is the bookkeeping around RAY_LAW.md;
+- **Documents.** ENGINE.md is the bookkeeping around BEAM_LAW.md;
   DETECTOR_REQUIREMENTS drops its implementation contract; the registered
   readings of `events-v1` (series C, Bell A2) keep their scope in
   EXPERIMENTS.md and VALIDATION.md and are re-registered under `rays-v1`

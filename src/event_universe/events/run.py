@@ -1,13 +1,13 @@
-"""A run of the law of the ray: the artifacts the runner writes for it.
+"""A run of the Beam Law: the artifacts the runner writes for it.
 
-`execute_ray_run` steps a parsed world and preserves the input
+`execute_nature_beam_run` steps a parsed world and preserves the input
 (`initialization.json`), the events (`events.jsonl`: the measurements per
 measured event, family and number with the push taken, the clicks with their
 phase and content, the detectors' records per interval, the steps, the clicks
 on the open faces), the final state (`state.json`, the measured events, the
 detectors with the face detectors and every Node with rays, written Node by
 Node through `snapshot_writer`) and the record (`run.json`: the law's marker
-`rays-v1`, the world's keys, the books per completed tick with the
+`beam-v1`, the world's keys, the books per completed tick with the
 conservation flag, the per-tick lines of the measured content, the content in
 transit and the momentum, the measured events' final states, the detectors'
 measurements with their records and the face detectors', and the escapes).
@@ -25,13 +25,13 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
-from event_universe.events.engine import RaySimulation
-from event_universe.events.world import RAYS_LAW, RayWorld
+from event_universe.events.engine import NatureBeamSimulation
+from event_universe.events.world import BEAM_LAW, NatureBeamWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
-def execute_ray_run(
-    world: RayWorld,
+def execute_nature_beam_run(
+    world: NatureBeamWorld,
     source: bytes,
     output: Path,
     fingerprint: str,
@@ -59,7 +59,7 @@ def execute_ray_run(
         def record(event: dict[str, object]) -> None:
             stream.write(json.dumps(event) + "\n")
 
-        simulation = RaySimulation(world, observer=record)
+        simulation = NatureBeamSimulation(world, observer=record)
         try:
             for _ in range(count):
                 simulation.step()
@@ -75,7 +75,7 @@ def execute_ray_run(
                 )
                 momentum.append(dict(books["momentum"]))  # type: ignore[call-overload]
                 if not books["balanced"]:
-                    raise ValueError(f"{RAYS_LAW}: the books do not close at tick {simulation.tick}")
+                    raise ValueError(f"{BEAM_LAW}: the books do not close at tick {simulation.tick}")
                 completed += 1
         except Exception as error:  # noqa: BLE001 - recorded, then raised
             failure = error
@@ -86,23 +86,41 @@ def execute_ray_run(
         "package_version": __version__,
         "source_sha256": fingerprint,
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
-        "law": RAYS_LAW,
+        "law": BEAM_LAW,
         "model": world.model_id,
         "shape": list(world.shape),
         "boundary": world.boundary,
-        "K": world.clock,
+        "K": world.K,
         "N": world.phase_steps,
         "release": list(world.release),
         "suspension": list(world.suspension),
         "width": world.width,
+        "age_bound": world.age_bound,
+        # The turn by momentum (the model owner's decision of 2026-09-20 on
+        # Bohr): h when the world declares it, and then the identity of the
+        # hypothesis beside the law, `bohr-v1`; `columns-v1` when the
+        # world declares a column beyond `charge` or a lifetime
+        # (`NatureBeamWorld.hypotheses`).
+        "action": world.action,
+        "hypotheses": world.hypotheses,
+        # The world's columns in order, (name, sign): gravity, charge, the
+        # declared names; every family's `columns` below is aligned with it.
+        "columns": [{"name": name, "sign": sign} for name, sign in world.columns],
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {
                 "name": family.name,
                 "quantum": family.quantum,
-                "charge": family.charge,
+                "charge": list(family.charge),
+                "columns": [
+                    {"name": column.name, "value": list(column.value), "sign": column.sign}
+                    for column in family.columns
+                ],
                 "phase": family.phase,
                 "phase_per_link": family.phase_per_link,
+                # The age at which the family's rays click on the border
+                # `lifetime` (None: the family lives forever).
+                "lifetime": family.lifetime,
             }
             for family in world.families
         ],
@@ -110,6 +128,8 @@ def execute_ray_run(
             str(index + 1): {
                 "position": list(entry.position),
                 "family": world.families[entry.family].name,
+                "span": list(entry.span),
+                "phase_by_momentum": entry.phase_by_momentum,
             }
             for index, entry in enumerate(world.measured)
         },
@@ -129,9 +149,11 @@ def execute_ray_run(
         "escaped": [
             {
                 "family": family.name,
-                "amount": simulation.ledger.escaped_units(index),
+                "amount": simulation.ledger.escaped_amount(index),
                 "content": simulation.ledger.escaped_content(index),
-                "momentum": simulation.ledger.escaped_momentum(),
+                # The family's own escaped momentum (since 2026-09-20; until
+                # then the world's total was written into every line).
+                "momentum": simulation.ledger.escaped_momentum(index),
             }
             for index, family in enumerate(world.families)
         ],

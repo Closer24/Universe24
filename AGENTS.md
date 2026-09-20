@@ -38,6 +38,10 @@ location. `Site` may appear only as an external standard term or as a clearly
 non-physical mathematical/register term whose meaning is distinct from Node.
 New active location identifiers use `node`, `nodes` and `NodeState`.
 
+The physical lattice of Nodes is the **GameBoard**; do not introduce board,
+lattice, grid or another noun for it (`GameBoard` in code, `game_board` in
+module and function names; the model owner, 2026-09-20).
+
 ## Read the contract for the affected scope
 
 | Scope | Authoritative source |

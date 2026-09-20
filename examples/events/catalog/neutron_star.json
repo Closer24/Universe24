@@ -1,0 +1,132 @@
+{
+  "law": "beam",
+  "model_id": "rays-catalog-neutron-star-v1",
+  "shape": [25, 25, 25],
+  "boundary": "open",
+  "ticks": 40,
+  "K": 4194304,
+  "N": 64,
+  "release": [1, 256],
+  "suspension": [1, 4194304],
+  "families": [
+    {
+      "name": "neutron",
+      "quantum": 0,
+      "charge": 0,
+      "phase": false
+    },
+    {
+      "name": "probe",
+      "quantum": 0,
+      "charge": 0,
+      "phase": false
+    }
+  ],
+  "measured": [
+    {
+      "position": [12, 12, 12],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [12, 12, 13],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [12, 13, 12],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [12, 13, 13],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [13, 12, 12],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [13, 12, 13],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [13, 13, 12],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [13, 13, 13],
+      "family": "neutron",
+      "amount": 67108864,
+      "fixed": false
+    },
+    {
+      "position": [20, 12, 12],
+      "family": "probe",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "neutron": "pass"
+      }
+    },
+    {
+      "position": [5, 12, 12],
+      "family": "probe",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "neutron": {
+          "rule": "pass",
+          "reads": "age"
+        }
+      }
+    },
+    {
+      "position": [12, 20, 12],
+      "family": "probe",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "neutron": "pass"
+      }
+    },
+    {
+      "position": [12, 5, 12],
+      "family": "probe",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "neutron": "pass"
+      }
+    },
+    {
+      "position": [12, 12, 20],
+      "family": "probe",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "neutron": "pass"
+      }
+    },
+    {
+      "position": [12, 12, 5],
+      "family": "probe",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "neutron": "pass"
+      }
+    }
+  ]
+}

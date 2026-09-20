@@ -5,16 +5,23 @@ settings are in an entity definitions file, not in the engine; make sure the
 workflow is in the appropriate skill." This is an authoring/loading contract,
 not a new physical model. It supersedes the earlier assumption that inline world
 data alone completed that request. The engine continues to receive the immutable
-ordinary measured events and detectors specified by [the law of the ray](RAY_LAW.md)
+ordinary measured events and detectors specified by [the Beam Law](BEAM_LAW.md)
 and [the engine](ENGINE.md). An external definition file is outside the
-engine; the instantiated detector is physically on the board.
+engine; the instantiated detector is physically on the GameBoard.
+
+This document owns the definitions layer: how a reusable entity is
+authored in a file and placed by a world. What the entities are, every
+entity physics knows as one row of the law's keys with the world that
+places it, and the honest list of what the law cannot yet place, is
+[the catalog of the entities](ENTITY_CATALOG.md) (the model owner's
+decision of 2026-09-20, Highlights 5.4).
 
 ## Ownership and supported composition
 
 `event_universe.world_loading` is the single host owner of strict document
 resolution, entity placement and portable input assembly. It uses
 `json_documents.parse_json_document` for every JSON document, then
-`events.world.parse_ray_world` for the fully expanded world. That engine parser
+`events.world.parse_nature_beam_world` for the fully expanded world. That engine parser
 remains the one owner of physical schema and domain validation. Physical modules
 never open entity files, consult a catalog, branch on an entity name or retain
 instance definitions as evolving memory. The loader executes no Python,
@@ -25,7 +32,7 @@ input bytes. New detector examples keep reusable apparatus definitions in a
 separate file. Existing generic rule names select the already specified local
 laws; family names, geometry, material parameters, directions, coverage and
 thresholds are configuration data. Translation does not prove connectivity or
-create a signal. Placement outside the board is invalid even on a periodic axis:
+create a signal. Placement outside the GameBoard is invalid even on a periodic axis:
 periodicity governs Link transport, not silent initialization wrapping.
 
 The first format supports one explicit definitions file and any finite ordered
@@ -51,16 +58,16 @@ An authored world adds exactly two host-only keys to the ordinary world object:
 }
 ```
 
-The shown fragment is added to a complete world declaring its model, families,
-shape, timing, topology and physical candidate. Both added keys must occur
-together. `entities` is a nonempty array. Each instance has exactly `name`,
+The shown fragment is added to a complete world declaring its law (`"law":
+"beam"`), model identity, families, shape, timing and topology. Both added
+keys must occur together. `entities` is a nonempty array. Each instance has exactly `name`,
 `definition`, `position`; names are nonempty strings and instance names are
 unique. Definition references must exist. Position is an exact three-integer
-in-board origin; booleans are refused. The world may omit `measured` and
+origin on the GameBoard; booleans are refused. The world may omit `measured` and
 `detectors` when supplied entirely by instances; explicit inline arrays remain
 supported and precede instance content. `in_transit` remains world preparation
-data, with its ordinary numerical owner convention; there is no generated
-incoming carrier or implicit owner rewrite.
+data, with its ordinary `number` convention (the measured event whose
+continuation a ray is); placement generates no ray and renumbers nothing.
 
 The definitions document has exactly `format` and `entities`:
 
@@ -79,38 +86,63 @@ The definitions document has exactly `format` and `entities`:
 
 The empty arrays above show the envelope only; an actual definition requires at
 least one measured Event. Each definition has exactly `name`, `measured` and
-`detectors`; names are nonempty and unique. Its measured entries use the existing
-world measured schema, including explicit candidate tables and port maps when
-applicable. `position` is relative to the instance origin. Detector entries use
-the current selected world's detector schema; `positions`, group `positions`
-and group `output` are also relative. All relative coordinates are exact integer
-triples in -4095..4095. Every detector position and output in the definition must
-refer to its own declared measured geometry. Family names refer to the world's
-explicit family declarations; no familiar physical names are built in.
+`detectors`; names are nonempty and unique. Its measured entries use the world's
+measured schema of [the Beam Law](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+(`MEASURED_KEYS`: `position`, `family`, `amount`, `phase`, `momentum`, `fixed`,
+`directions`, `table`, `lamp`), including explicit `table` entries and a `lamp`
+when applicable; a declared `momentum` is in label units, the momentum label of
+a ray being content x amount x u_d with u_d the unit vector of its direction at
+the scale Q = 64 (`nature_beam.unit_label`, exactly Q e_d on a heading). The
+charge is a family key, the charge per unit of content: a definition's measured
+entry names its family and carries the family's charge with its content; it
+declares no charge of its own. `position` is relative to the instance origin.
+Detector entries use the world's detector schema (`DETECTOR_KEYS`: `name`,
+`positions`, `threshold`, `reading`): a detector is a set of Nodes with ONE
+record (`DetectorSet` at run time; a click says "here, in one of these" and not
+which), its `positions` the Nodes of its measured events, relative, its
+`threshold` on the amount arriving over the whole set in one interval and its
+`reading` `wave` (the default: the record the square of the coherent pointer
+over the set) or `beam` (the rays paired by opposite phase over the set, the
+record the plain count). The keys of the deleted reversible detector
+(`groups`, `output`, `port_map`, `capacity`, `reference_phase`) are refused by
+name, and a detector may not take a face detector's name (`face:+x` and the
+five others). All relative coordinates are exact integer triples in
+-4095..4095. Every detector position in the definition must refer to its own
+declared measured geometry. Family names refer to the world's explicit family
+declarations; no familiar physical names are built in. Which keys of this
+schema place a given thing (a lamp, a laser, a mirror, a wall, a slit, a
+screen, a clock, a probe, a star, a planet, a neutron star) is one row of
+[the catalog of the entities](ENTITY_CATALOG.md#the-external-things): a
+definition carries the row's measured entries and detectors, and the world
+that places it declares the row's families and world keys. The catalog's
+own worlds (`examples/events/catalog/`) are plain inline worlds; a
+definition of any placeable row is authored the same way.
 
 Host structural validation covers every definition, including unused ones.
 Physical semantic validation applies when a definition is instantiated into its
 world context: an unused definition is not certified for arbitrary `N`, families
-or dynamics. Unsupported fields, executable extensions and duplicate relative
-measured positions are refused. The host accepts the current union of ordinary
-and candidate measured/detector fields; the selected world parser supplies their
-actual domain, required-field and rule-combination checks.
+or tables. Unsupported fields, executable extensions and duplicate relative
+measured positions are refused. The host accepts the world parser's measured,
+lamp, table-entry and detector keys (`MEASURED_KEYS`, `LAMP_KEYS`,
+`TABLE_ENTRY_KEYS`, `DETECTOR_KEYS`); the world parser supplies their actual
+domain, required-field and rule-combination checks.
 
 Expansion order is inline measured entries, then instances in declaration order,
 then each definition's measured declaration order. This fixes the ordinary
 measured numbers 1, 2, ... without using labels to choose a rule. Detector order
 is similarly inline then instance declaration order. A placed detector name is
 `/INSTANCE/LOCAL`, with each component escaped as JSON Pointer text (`~` becomes
-`~0`, then `/` becomes `~1`); group names remain local to their detector. Thus
+`~0`, then `/` becomes `~1`). Thus
 renaming an instance changes labels only, and names containing `/`, `~`, schema
 keywords or `__proto__` remain ordinary data. Collision with an inline name is
 an error, not a rename. No field is silently overridden.
 
 For every relative coordinate, add the instance origin once, reject an out-of-
-board result and pass the result to the canonical world parser. Overlapping
-instances, repeated detector coverage, invalid output ownership, integer bounds,
-unknown families and unsupported local rules fail before a Simulation or output
-directory is created. All existing candidate capacities remain binding.
+GameBoard result and pass the result to the canonical world parser. Overlapping
+instances, a Node in two detectors, a detector position without a measured
+event, integer bounds, unknown families and unsupported table entries fail
+before a Simulation or output directory is created. The world parser's bounds
+remain binding.
 
 ## Resolution, public API and portable input
 
@@ -135,7 +167,7 @@ class DefinitionSource:
 
 @dataclass(frozen=True)
 class LoadedWorld:
-    world: EventWorld
+    world: NatureBeamWorld
     portable_source: bytes
     expanded_source: bytes
     dependencies: tuple[DefinitionSource, ...]
@@ -214,7 +246,7 @@ before preparing the output directory. For dependency-bearing inputs it writes:
 * `resolved_initialization.json`: the exact expanded engine document.
 
 The existing `initialization_sha256` still hashes the original input.
-`execute_ray_run` (until 2026-09-19 `execute_event_run`) gains the optional keyword-only
+`execute_nature_beam_run` (until 2026-09-19 `execute_event_run`) gains the optional keyword-only
 `initialization_record: dict[str, object] | None = None`, used only to copy
 metadata under `run.json.initialization_resolution`. The runner supplies exactly
 `format: "event-world-bundle-v1"`, `bundle_sha256`, `expanded_sha256`, and
@@ -254,10 +286,10 @@ Before code, the expected host results are fixed:
 
 | Input or operation | Expected result |
 | --- | --- |
-| Definition positions `(0,0,0)`, `(1,0,0)`, `(2,0,0)` placed at `(3,4,0)` on a 9-by-9-by-1 board | Physical positions `(3,4,0)`, `(4,4,0)`, `(5,4,0)`; relative output `(2,0,0)` becomes `(5,4,0)` |
+| Definition positions `(0,0,0)`, `(1,0,0)`, `(2,0,0)` placed at `(3,4,0)` on a 9-by-9-by-1 GameBoard | Physical positions `(3,4,0)`, `(4,4,0)`, `(5,4,0)`; relative output `(2,0,0)` becomes `(5,4,0)` |
 | A second placement at `(3,6,0)`, no inline material | Six measured Events numbered 1..6 in the stated order; two separate detector labels and original thresholds |
 | Rename instance `alice` to `a/b~c` | Same physical payload/routing, detector prefix changes from `/alice/` to `/a~1b~0c/` |
-| Separate files, their portable bundle, and the bundle copied to another directory | Equal EventWorld and expanded SHA-256; same raw definitions SHA-256; no dependency read for a bundle |
+| Separate files, their portable bundle, and the bundle copied to another directory | Equal NatureBeamWorld and expanded SHA-256; same raw definitions SHA-256; no dependency read for a bundle |
 | File edited after a template was prepared | Already prepared bundle/export/Start retains its earlier state; a newly loaded template reflects the new bytes |
 | Missing context/file/name, duplicate keys/names, unexpected dependency, traversal/symlink escape, overlaps or translated coordinate 9 on extent 9 | Concrete refusal before run/output creation; no clipping, fallback or silent redefinition |
 | Plain legacy world | Same parsed world, original portable bytes, no dependency metadata/artifacts |
@@ -266,7 +298,7 @@ Tests isolate resolution, placement, strict failures, provenance and relocation;
 use minimal generic states with independent expectations. A prepared example run
 is dated evidence, not a test that pins example outputs. The loader must also
 preserve the periodic extent-one detector case: replacing inline data with an
-entity reference cannot alter its local law or introduce a second carrier.
+entity reference cannot alter its local law or introduce a second ray.
 
 The schema/authoring developer owns `world_loading.py`, the preflight adapter,
 resolver tests, canonical definitions, example conversion and packaging/data-

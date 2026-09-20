@@ -1,10 +1,10 @@
 """Scratch computations for DERIVATIONS.md round 8 (the law of the shadow).
 
 An iteration of the stated rules on paper, not an engine run: the mixing S = J/3 - I
-(Highlights 5.4 point 24) on a cubic board, a held content that emits q units per interval
+(Highlights 5.4 point 24) on a cubic GameBoard, a held content that emits q units per interval
 (R12) and absorbs and re-releases every unit that reaches its Node (R13, section 46 (viii)),
 in the mean field (complex amplitudes), with the held content moving one Link every k
-intervals along +x. The board's faces carry a sponge (a smooth damping of the amplitudes over
+intervals along +x. The GameBoard's faces carry a sponge (a smooth damping of the amplitudes over
 the outer `sponge` layers) so that what is measured at the source is the source's own near
 field and not the edge's 7 % mirror (section 46 (i)). Subcommands:
 
@@ -94,7 +94,7 @@ def run_selfpush(L, W, k, alpha, period, q, ticks, sponge, measure, theta=0.0):
     for t in range(ticks):
         xs = x0 + (t // k if k else 0)
         if xs >= L - sponge - 2:
-            raise SystemExit("board too short for the run")
+            raise SystemExit("GameBoard too short for the run")
         B, u = mix(A)
         home, mom, ports = absorbed(A, (xs, cy, cy))
         phase = np.exp(2j * np.pi * t / period) if period > 0 else 1.0
@@ -154,7 +154,7 @@ def run_pair(L, W, d, k, alpha, period, q, ticks, sponge, measure, theta=0.0, mo
         xb = xb0 + (t // k if k else 0)
         xa = xb + d
         if xa >= L - sponge - 2:
-            raise SystemExit("board too short for the run")
+            raise SystemExit("GameBoard too short for the run")
         pa, pb = (xa, cy, cy), (xb, cy, cy)
         BA, _ = mix(FA)
         BB, _ = mix(FB)

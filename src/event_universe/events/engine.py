@@ -1,30 +1,37 @@
-"""The frame around the law of the ray (rays-v1): the tick, the measured
+"""The frame around the Beam Law (beam-v1): the tick, the measured
 events' clocks, the books, the record and the snapshot. The law itself is
-the one function `nature_beam` (docs/RAY_LAW.md); this module schedules and
+the one function `nature_beam` (docs/BEAM_LAW.md); this module schedules and
 books, it computes no physics.
 
-The interval (`RaySimulation.step`): the engine sets every measured event's
+The interval (`NatureBeamSimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
-content, K)` phase steps, refused at half the circle), calls `nature_beam`
-once for the whole board (the walk, the readings, the collision, the tables
+content x n, d)` phase steps at the clock's rate `K` = [n, d], an integer K
+being [1, K] (`NatureBeamWorld.turn`, the free release's own form; the four
+unifications (2), 2026-09-20), refused at half the circle), calls `nature_beam`
+once for the whole GameBoard (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
-clock from the presence the law read back (`by_clock(age, k x n, d)` at the
-world's `suspension` `[n, d]`), and steps the free measured events by their
-momentum off the clock (one Link per (S x M + p) / p self-creations on an
-axis whose momentum component is p, M the content and S the world's
-`width`, `by_clock(age, |p|, S x M + |p|)`, 1 by default; at most one Link
-per interval, x before y before z; a step onto a Node that holds a measured
-event is refused; through an open face the step is a click on the face
-detector; on a periodic axis it wraps). The books (`books`): per family the
-measured line, in content,
-initial + measured = current + spent + escaped; the transit line, in units,
+clock from what the law read back for the clock (`by_clock(age, k x n, d)`
+at the world's `suspension` `[n, d]`, k the presence, or the age moment for
+a family whose table entry reads `age`: `measured.count_component`), and
+steps the free measured events by their
+momentum off the clock (one Link per (Q x S x M + p) / p self-creations on
+an axis whose momentum component is p in label units, M the content, S the
+world's `width` and Q = 64 the label's scale, `by_clock(age, |p|, Q x S x M
++ |p|)`: one unit of net flow, the label Q x M, gives the speed 1 / (S + 1)
+for every content, as it did when the label of a heading was the unit; at
+most one Link per interval, x before y before z; a step onto a Node that
+holds a measured event is refused; through an open face the step is a
+click on the face detector; on a periodic axis it wraps). The books
+(`books`): per family the measured line, in content,
+initial + measured = current + spent + escaped; the transit line, in amount,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
 momentum reported on the measured events, in transit (the one label of
-every row, content x amount x D[direction] per ray of a paid family, amount
-x D of a free one) and escaped; every escaped line the sum of the face
+every row, content x amount x u_d per ray of a paid family, amount x u_d of
+a free one, u_d the unit vector of the direction at the scale Q) and
+escaped, all in label units; every escaped line the sum of the face
 detectors' clicks; every sum exact (`exact_sum`), never a wrapped register.
 """
 
@@ -34,43 +41,72 @@ from collections.abc import Iterator
 
 import numpy as np
 
-from event_universe.core.integer import by_clock as _by_clock
-from event_universe.core.lattice import Address3, adjacent_node
-from event_universe.events.measured import FACE_NAMES, RULES, Ledger, Measured
+from event_universe.core.game_board import Address3, adjacent_node
+from event_universe.core.integer import apportion_whole, by_clock
+from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
-    HERE,
+    NO_ARRIVAL,
     ArrivalRows,
-    RayStore,
-    RayTables,
-    Readings,
+    GameBoardDiagnostics,
+    NatureBeamStore,
+    NatureBeamTables,
     Record,
+    bounded,
+    by_clock_rows,
     exact_column_sums,
     exact_sum,
     nature_beam,
-    ray_tables,
+    nature_beam_tables,
 )
 from event_universe.events.world import (
-    HEADING_OFFSET,
+    BEAM_LAW,
+    CONTACT_DEFAULT,
+    DETECTOR_READINGS,
+    FACE_NAMES,
+    LABEL_SCALE,
+    LIFETIME_NAME,
     MOMENTUM_BOUND,
-    RAYS_LAW,
     MeasuredDefinition,
-    RayWorld,
+    NatureBeamWorld,
+    body_nodes,
 )
 
-__all__ = ["FACE_NAMES", "RULES", "Measured", "RaySimulation", "by_clock"]
+__all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
 
 
-def by_clock(age: int, numerator: int, denominator: int) -> int:
-    """The clock's rate (`core.integer.by_clock`): what the whole part of
-    age x numerator / denominator gains at the self-creation from `age` to
-    `age + 1`, no remainder kept anywhere."""
-    return _by_clock(age, numerator, denominator)
+def step_axis(age: int, momentum: int, content: int, width: int) -> int | None:
+    """The step rule of one axis (BEAM_LAW section 3 step 5; `_move` calls
+    it): the sign of the Link a free measured event of content M = `content`
+    steps this interval on an axis whose momentum component is p =
+    `momentum`, with `age` its age after the frame's advance and `width`
+    the world's S, when `by_clock(age - 1, |p|, Q x S x M + |p|)` is 1;
+    None when it does not step (a momentum of 0 never steps). The one
+    place the rule lives; the readings tools read it from here."""
+    if momentum == 0:
+        return None
+    magnitude = abs(momentum)
+    reach = LABEL_SCALE * width * content
+    if not by_clock(age - 1, magnitude, reach + magnitude):
+        return None
+    return 1 if momentum > 0 else -1
 
 
-class RaySimulation:
-    """One world of the law of the ray, stepped interval by interval."""
+def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
+    """The count a measured event owes after its self-creation (ENGINE,
+    the frame; `_suspend` calls it): what its clock counted (`counted`, the
+    presence or the age moment) times the width n / d of the world's
+    `suspension`, off its clock, `by_clock(age, counted x n, d)` with `age`
+    the age before the self-creation; 0 when the width is 0."""
+    numerator, denominator = suspension
+    if not numerator:
+        return 0
+    return by_clock(age, counted * numerator, denominator)
 
-    def __init__(self, world: RayWorld, observer: Record | None = None) -> None:
+
+class NatureBeamSimulation:
+    """One world of the Beam Law, stepped interval by interval."""
+
+    def __init__(self, world: NatureBeamWorld, observer: Record | None = None) -> None:
         self.world = world
         self.record = observer
         self.tick = 0
@@ -78,44 +114,56 @@ class RaySimulation:
         self.families = world.families
         self._phased = [family.phase for family in world.families]
         count = len(world.families)
-        self.tables: RayTables = ray_tables(world)
-        self.stores = [RayStore(world.shape) for _ in world.families]
+        self.tables: NatureBeamTables = nature_beam_tables(world)
+        self.stores = [NatureBeamStore(world.shape) for _ in world.families]
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
+        # The detectors at run time: the declared ones first, in their
+        # order, then a detector of one Node for every measured event
+        # outside them (the model owner, 2026-09-19: a detector is a set
+        # of Nodes with one record).
+        self.detector_sets: list[DetectorSet] = [
+            DetectorSet(
+                index,
+                detector.name,
+                detector.reading,
+                detector.threshold,
+                [],
+                [0] * count,
+                [None] * count,
+            )
+            for index, detector in enumerate(world.detectors)
+        ]
         self.measured: dict[int, Measured] = {}
-        self.at: dict[Address3, int] = {}
+        # The index of the GameBoard's occupied Nodes: every Node of every
+        # body to the set it belongs to (the set maps the Node to its
+        # measured event, `DetectorSet.nodes`; `occupant`): a step onto any
+        # of them is refused (the parser refused a shared Node).
+        self.at: dict[Address3, DetectorSet] = {}
         for index, definition in enumerate(world.measured):
             entry = self._measured(index + 1, definition)
             self.measured[entry.number] = entry
-            self.at[entry.position] = entry.number
         self.held_initial = [sum(m.held[f] for m in self.measured.values()) for f in range(count)]
         self.transit_initial = [0] * count
         self.content_initial = [0] * count
         for item in world.in_transit:
             store = self.stores[item.family]
             # One phase step of content per unit for a paid family; a free
-            # family's quantum is 0 and its rays carry none. A free family's
-            # declared ray carries its emitter's factor from the world file
-            # (the charge and the declared content of the measured event its
-            # number names; 0 and 0 without one).
+            # family's quantum is 0 and its rays carry none (its family's
+            # charge per unit of content is the factor of the electric push;
+            # the record carries nothing of its emitter but its number).
             content = self.families[item.family].quantum
-            charge, mass = 0, 0
-            if self.families[item.family].free and item.number <= len(world.measured):
-                emitter = world.measured[item.number - 1]
-                charge, mass = emitter.charge, emitter.amount
             store.append(
                 node=np.array([store.flat(item.position)]),
                 direction=np.array([item.direction]),
-                age=np.array(
-                    [item.age % int(self.tables.flight.period[max(item.direction, HEADING_OFFSET)])]
-                ),
+                # The age is kept whole on the record (the parser bounds it
+                # by `age_bound`); the flight reads it modulo the period.
+                age=np.array([item.age]),
                 phase=np.array([item.phase]),
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
                 content=np.array([content]),
-                charge=np.array([charge]),
-                mass=np.array([mass]),
-                arrival=np.array([HERE]),
+                arrival=np.array([NO_ARRIVAL]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
@@ -127,13 +175,13 @@ class RaySimulation:
         # The readings of the last interval (diagnostics, decomposed on
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
-        self.readings = Readings(
-            world.shape, self.tables.flight.vectors, [ArrivalRows.empty() for _ in range(count)]
+        self.readings = GameBoardDiagnostics(
+            world.shape, self.tables.flight.labels, [ArrivalRows.empty() for _ in range(count)]
         )
 
     @property
-    def count(self) -> list[np.ndarray]:
-        return self.readings.count
+    def arrived(self) -> list[np.ndarray]:
+        return self.readings.arrived
 
     @property
     def flow(self) -> list[np.ndarray]:
@@ -149,17 +197,39 @@ class RaySimulation:
 
     def _measured(self, number: int, definition: MeasuredDefinition) -> Measured:
         count = len(self.families)
-        held = [0] * count
-        held[definition.family] = definition.amount
+        # What the event holds per family at the start: its amount under its
+        # own family and what `held` declared of the others.
+        held = list(definition.held) + [0] * (count - len(definition.held))
         detector = self.world.detector_of(definition.position)
-        threshold = 1 if detector is None else self.world.detectors[detector].threshold
+        if detector is None:
+            detector_set = DetectorSet(
+                len(self.detector_sets),
+                None,
+                DETECTOR_READINGS[0],
+                1,
+                [number],
+                [0] * count,
+                [None] * count,
+            )
+            self.detector_sets.append(detector_set)
+        else:
+            detector_set = self.detector_sets[detector]
+            detector_set.numbers.append(number)
+        # The set of Nodes the measured event is a body on (the parser
+        # refused a body outside the GameBoard): the set's map takes them in
+        # their fixed order, the engine's index the set.
+        nodes = body_nodes(definition.position, definition.span, self.shape, self.world.periodic)
+        assert nodes is not None
+        for node in nodes:
+            detector_set.nodes[node] = number
+            self.at[node] = detector_set
         return Measured(
             number,
             definition.position,
             definition.family,
             held,
             definition.phase,
-            definition.charge,
+            self.families[definition.family].charge,
             list(definition.momentum),
             definition.fixed,
             definition.directions,
@@ -171,12 +241,35 @@ class RaySimulation:
             None if definition.lamp is None else definition.lamp.window,
             definition.amount,
             detector,
-            threshold,
+            detector_set,
+            span=definition.span,
+            phase_by_momentum=definition.phase_by_momentum,
+            column_names=tuple(name for name, _ in self.world.columns),
+            family_values=tuple(family.values for family in self.families),
             pending=[[] for _ in range(count)],
-            measured=[dict.fromkeys(RULES, 0) for _ in range(count)],
-            events=[0] * count,
-            record=[0] * count,
+            taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
+            clicks=[0] * count,
+            contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
+            contacts=[0] * count,
         )
+
+    def occupant(self, node: Address3) -> int | None:
+        """The number of the measured event whose body holds the Node, None
+        for a Node of free space: the engine's index to the set, the set's
+        map to its event."""
+        detector_set = self.at.get(node)
+        return None if detector_set is None else detector_set.nodes[node]
+
+    def _place(self, entry: Measured, nodes: tuple[Address3, ...]) -> None:
+        """The body's Nodes moved to `nodes` (in their fixed order) in its
+        set's map and in the engine's index; an empty `nodes` removes it."""
+        detector_set = entry.detector_set
+        for node in entry.nodes:
+            del detector_set.nodes[node]
+            del self.at[node]
+        for node in nodes:
+            detector_set.nodes[node] = entry.number
+            self.at[node] = detector_set
 
     # -- the interval ----------------------------------------------------------
 
@@ -198,14 +291,14 @@ class RaySimulation:
             entry = self.measured[number]
             if entry.creating:
                 entry.phase = (entry.phase + entry.turn) & self.world.phase_mask
-                entry.phase_steps += entry.turn
+                entry.turned += entry.turn
                 self._suspend(entry)
         for number in sorted(self.measured):
             if number in self.measured:
                 self._move(self.measured[number])
 
     def inverse_step(self) -> None:
-        """The inverse interval on a board without measured events: the
+        """The inverse interval on a GameBoard without measured events: the
         bijective steps in reverse order with their inverses."""
         self.tick -= 1
         nature_beam(
@@ -220,16 +313,26 @@ class RaySimulation:
         )
 
     def _frame_all(self) -> None:
-        """The clocks' frame, every measured event at once: one that owes a
-        count pays it by one (no self-creation, no release, no turn;
-        `waited` counts the interval); one that owes nothing self-creates:
-        its age advances and its turn is read off its clock, `by_clock(age,
-        content, K)`, the turns of the phased families taken in one array
-        where their products fit the register (row by row otherwise), and
-        refused at half the circle."""
+        """The clocks' frame, every measured event at once: its content is
+        read once into `frame_content` (M_A of the interval's push, BEAM_LAW
+        step 4) and its charge in every column into `frame_charges` (the
+        reader's side of the push over the columns, gravity's the content);
+        one that owes a count pays it by one (no self-creation, no
+        release, no turn; `waited` counts the interval); one that owes
+        nothing self-creates: its age advances and its turn is read off its
+        clock, `by_clock(age, content x n, d)` at the clock's rate [n, d]
+        (`NatureBeamWorld.turn`; `by_clock_rows` over the phased events in
+        one array where their products fit the register, the scalar
+        `turn` row by row otherwise), and refused at half the circle."""
         phased: list[Measured] = []
         for entry in self.measured.values():
             entry.turn = 0
+            # The content and the charges the frame reads, once, for the
+            # turn and for the push of this interval (M_A and the columns'
+            # E_c at the frame: the clicks of the interval join `held`
+            # after it).
+            entry.frame_content = entry.content
+            entry.frame_charges = entry.charges()
             if entry.owed > 0:
                 entry.owed -= 1
                 entry.waited += 1
@@ -242,79 +345,130 @@ class RaySimulation:
                 phased.append(entry)
         if not phased:
             return
-        clock = self.world.clock
+        numerator, denominator = self.world.turn_rate
         ages = [entry.clock_age for entry in phased]
-        contents = [entry.content for entry in phased]
-        if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
-            age_column = np.array(ages, dtype=np.int64)
-            content_column = np.array(contents, dtype=np.int64)
-            turns = (
-                ((age_column + 1) * content_column) // clock - (age_column * content_column) // clock
+        contents = [entry.frame_content for entry in phased]
+        if (max(ages) + 1) * max(contents) * numerator <= MOMENTUM_BOUND:
+            turns = by_clock_rows(
+                np.array(ages, dtype=np.int64),
+                np.array(contents, dtype=np.int64) * numerator,
+                denominator,
             ).tolist()
         else:
-            turns = [by_clock(age, content, clock) for age, content in zip(ages, contents, strict=True)]
+            turns = [self.world.turn(age, content) for age, content in zip(ages, contents, strict=True)]
         for entry, turn in zip(phased, turns, strict=True):
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
-                    f"{RAYS_LAW}: measured event {entry.number} turns its phase by half the circle "
+                    f"{BEAM_LAW}: measured event {entry.number} turns its phase by half the circle "
                     "or more per self-creation (its content has grown past K x N / 2)"
                 )
             entry.turn = turn
 
     def _suspend(self, entry: Measured) -> None:
-        """The count a measured event owes after its self-creation: the
-        presence k at its Node of every number but its own, read back by the
-        law, times the width n / d, off its clock, `by_clock(age, k x n, d)`,
-        written once and paid one per interval before the next."""
-        numerator, denominator = self.world.suspension
-        if not numerator:
+        """The count a measured event owes after its self-creation: what
+        its clock counted at its Node over every number but its own, read
+        back by the law (`Measured.counted`: the presence k, or for a family
+        whose table entry reads `age` the age moment, sum amount x age; the
+        selection is `measured.count_component`), times the width n / d, off
+        its clock, `by_clock(age, k x n, d)`, written once and paid one per
+        interval before the next."""
+        if not self.world.suspension[0]:
             return
-        entry.owed = by_clock(entry.clock_age, entry.presence * numerator, denominator)
+        entry.owed = count_owed(entry.clock_age, entry.counted, self.world.suspension)
 
     def _move(self, entry: Measured) -> None:
         """The step by the momentum off the clock, at most one per interval,
-        when nothing is owed: on an axis whose momentum component is p, one
-        Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M +
-        |p|)` with M the content and S the world's `width` (the model owner's
-        D1 of 2026-09-19; S = 1 is the rule as it was, one Link per (M + p) /
-        p; one unit of net flow gives p = M, so the speed it gives is
-        1 / (S + 1) for every content); no remainder is kept, the count is
-        the whole part off the clock. A step
-        onto a measured event is refused; an escape is a click on the face; a
-        periodic axis wraps."""
+        when nothing is owed: on an axis whose momentum component is p (in
+        label units), one Link per (Q x S x M + p) / p self-creations,
+        `by_clock(age, |p|, Q x S x M + |p|)` with M the content, S the
+        world's `width` (the model owner's D1 of 2026-09-19) and Q = 64 the
+        label's scale (the physics-rule reviewer's correction 2 of the
+        label along the unit vector, 2026-09-19: the width in units of one
+        free unit's label, Q x M, so that one unit of net flow gives the
+        speed 1 / (S + 1) for every content and every step registered
+        before the change is the same, `by_clock(age, Q n, Q k) =
+        by_clock(age, n, k)`); no remainder is kept, the count is the whole
+        part off the clock. A step onto a measured event is refused and is
+        a contact read through the occupant's table (`_contact`); an
+        escape is a click on the face; a periodic axis wraps.
+
+        A body on a set of Nodes (`span`; the model owner, 2026-09-20)
+        steps as one: its centre moves one Link and its set with it, the
+        step refused when any Node of the moved set holds another measured
+        event, the whole body clicking on the face detector when any of
+        its Nodes would leave the GameBoard through an open face, every Node
+        wrapping on a periodic axis.
+
+        The turn by momentum (`phase_by_momentum` with the world's
+        `action`, h; the model owner's decision of 2026-09-20 on Bohr, "put
+        it as parameters outside the GameBoard like the age"): a rule of the
+        measured event, the external thing, read from its own record. At
+        the Link the body steps on an axis whose momentum component is p,
+        its phase turns by the difference of two floors,
+
+            floor(k1 x |p| x N / h) - floor(k0 x |p| x N / h),
+
+        with k0 = floor((age - 1) x |p| / (Q S M + |p|)) the count of Links
+        the step rule gives on that axis at the age before this
+        self-creation and k1 = k0 + 1 the count after it (the count is
+        derived from the age by the step rule exactly as the owed count is
+        read off the clock; with a constant momentum k1 is the Links
+        stepped on the axis, so after k Links the phase has turned
+        floor(k x |p| x N / h) mod N in all), that is `by_clock(k0, |p| x
+        N, h)`: nothing is kept at a Node and no remainder register
+        exists, the count and the turn are functions of the record (the
+        age, the momentum). The axes compose: the steps are x before y
+        before z, and the phase's turn is the sum of the three components'
+        turns at the Links stepped on each (a step lost to an earlier
+        axis's step in the same interval turns nothing: no Link was
+        crossed). It changes nothing of the rays' flight or collision; the
+        rays the body releases carry its phase as before (the clock's turn
+        by content over K is added at the self-creation as always, this
+        turn at the step after it); without `action` there is no turn. The
+        product k1 x |p| x N is bounded before it is formed (`bounded`;
+        the parser refused a declared momentum whose product with `ticks`
+        x N could pass the bound)."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
         if content <= 0:
             return
-        width = self.world.width
+        width = LABEL_SCALE * self.world.width * content
         for axis in range(3):
             momentum = entry.momentum[axis]
-            if momentum == 0:
+            stepped = step_axis(entry.age, momentum, content, self.world.width)
+            if stepped is None:
                 continue
             magnitude = abs(momentum)
-            if not by_clock(entry.age - 1, magnitude, width * content + magnitude):
-                continue
-            sign = 1 if momentum > 0 else -1
+            sign = stepped
             entry.steps += 1
             origin = entry.position
             port = 2 * axis + (0 if sign > 0 else 1)
             destination = adjacent_node(origin, port, self.shape, self.world.periodic)
             if destination == origin:
                 return
-            if destination is None:
+            # The moved set: None when the centre or any Node of the body
+            # would leave the GameBoard through an open face (the escape).
+            nodes = (
+                None
+                if destination is None
+                else body_nodes(destination, entry.span, self.shape, self.world.periodic)
+            )
+            if destination is None or nodes is None:
                 for index in range(len(self.families)):
                     self.ledger.held_escaped[index] += entry.held[index]
                     self.ledger.transit_absorbed[index] -= entry.pending_amount(index)
                     self.ledger.content_absorbed[index] -= entry.pending_content(index)
                     self.ledger.face_measured_content[port][index] += entry.held[index]
-                    self.ledger.face_units[port][index] += entry.pending_amount(index)
+                    self.ledger.face_amount[port][index] += entry.pending_amount(index)
                     self.ledger.face_content[port][index] += entry.pending_content(index)
-                self.ledger.face_momentum[port] = [
+                self.ledger.face_momentum[port][entry.family] = [
                     int(a) + int(b)
-                    for a, b in zip(self.ledger.face_momentum[port], entry.momentum, strict=True)
+                    for a, b in zip(
+                        self.ledger.face_momentum[port][entry.family], entry.momentum, strict=True
+                    )
                 ]
-                del self.at[origin]
+                self._place(entry, ())
                 del self.measured[entry.number]
                 if self.record is not None:
                     self.record(
@@ -338,11 +492,18 @@ class RaySimulation:
                         }
                     )
                 return
-            if destination in self.at:
+            found = {self.occupant(node) for node in nodes}
+            occupants = sorted(number for number in found if number not in (None, entry.number))
+            if occupants:
+                self._contact(entry, axis, origin, destination, occupants)
                 return
-            del self.at[origin]
+            self._place(entry, nodes)
             entry.position = destination
-            self.at[destination] = entry.number
+            if entry.phase_by_momentum and self.world.action is not None:
+                links = ((entry.age - 1) * magnitude) // (width + magnitude)
+                bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
+                turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
+                entry.phase = (entry.phase + turn) & self.world.phase_mask
             if self.record is not None:
                 self.record(
                     {
@@ -352,9 +513,95 @@ class RaySimulation:
                         "node": list(origin),
                         "to": list(destination),
                         "momentum": list(entry.momentum),
+                        "phase": entry.phase,
                     }
                 )
             return
+
+    def _contact(
+        self,
+        entry: Measured,
+        axis: int,
+        origin: Address3,
+        destination: Address3,
+        occupants: list[int],
+    ) -> None:
+        """The contact through the table (the model owner, 2026-09-20, on
+        the physicist's design of the strong force, section 4.4): a body
+        whose step on an axis is refused because the destination holds
+        another measured event has arrived at that occupant, and the
+        occupant's table entry for the body's family decides, as it decides
+        for a ray (`Measured.contact`): `measure` hands the body's momentum
+        component on that axis to the occupant (the body's 0, the
+        occupant's raised by it: what a click takes, kappa = 1, the body's
+        momentum being its own label); `rerelease` returns it (the body's
+        component reversed, the occupant's raised by twice it: what a
+        mirror does); `read` and `pass` leave the step refused and the
+        labels as they are (the rule as it was until 2026-09-20: the two
+        bodies where they were, the component accumulating on the body
+        under every push until the integer bound refuses the run; a world
+        that wants it declares the rule). Where the entry is the keys' own
+        rule for the body's family (declared or not: an entry equal to the
+        default changes nothing) the contact is `measure`: a body arriving
+        at a body is a paid arrival, its momentum its own label, and the
+        keys' rule for a paid arrival is `measure` (`world.CONTACT_DEFAULT`);
+        so `read` on a free family, the keys' own, is the hand-over, and
+        `read` declared on a paid family the accumulation.
+        The sum of the momenta on the measured events is unchanged by a
+        hand-over (a transfer from one line to another; the books'
+        measured momentum line is their sum), each label bounded by what
+        one push accumulates between attempts. A body on a set of Nodes
+        whose destination set holds several occupants hands the component
+        apportioned whole over them by their contents
+        (`apportion_whole`, the units left to the largest remainders, ties
+        from the body's age modulo their count, in number order); an
+        occupant of content 0 takes nothing. One `contact` record per
+        occupant that took a hand-over (the tick, the body's number, its
+        Node and the destination, the occupant, the body's family, the
+        rule, the axis and the signed component the occupant gained); no
+        record under `read` or `pass`. Local (the destination Node is read
+        by the step already; the transfer crosses one Link in one
+        interval, as a ray's step does), fixed work (one entry per
+        occupant of the destination set), the steps the frame's, outside
+        the walk and the collision."""
+        component = entry.momentum[axis]
+        magnitude = abs(component)
+        if magnitude == 0:
+            return
+        sign = 1 if component > 0 else -1
+        contents = [self.measured[number].content for number in occupants]
+        shares = apportion_whole(magnitude, contents, entry.age % len(occupants))
+        family = self.families[entry.family].name
+        for number, share in zip(occupants, shares, strict=True):
+            occupant = self.measured[number]
+            rule = occupant.contact[entry.family]
+            if rule == "measure":
+                handed = sign * share
+            elif rule == "rerelease":
+                handed = 2 * sign * share
+            else:
+                continue
+            if handed == 0:
+                continue
+            occupant.momentum[axis] = bounded(occupant.momentum[axis] + handed, occupant, "momentum")
+            entry.momentum[axis] = bounded(entry.momentum[axis] - handed, entry, "momentum")
+            occupant.contacts[entry.family] += 1
+            if self.record is not None:
+                self.record(
+                    {
+                        "event": "contact",
+                        "tick": self.tick,
+                        "number": entry.number,
+                        "node": list(origin),
+                        "to": list(destination),
+                        "occupant": number,
+                        "family": family,
+                        "rule": rule,
+                        "axis": axis,
+                        "component": handed,
+                        "momentum": list(entry.momentum),
+                    }
+                )
 
     # -- the books -------------------------------------------------------------
 
@@ -362,10 +609,10 @@ class RaySimulation:
         """The current lines counted from the store, a pass over every row:
         the units and the content in transit per family and the momentum in
         transit (the one label of every row, `momentum_labels`: content x
-        amount x D[direction] per ray of a paid family, amount x D of a
-        free one), every sum exact. The check of the running lines of the
-        ledger, on request (`books(recount=True)`; the tests assert it
-        equal at every tick)."""
+        amount x u_d per ray of a paid family, amount x u_d of a free one,
+        u_d the unit vector of the direction at the scale Q), every sum
+        exact. The check of the running lines of the ledger, on request
+        (`books(recount=True)`; the tests assert it equal at every tick)."""
         units: list[int] = []
         content: list[int] = []
         momentum = [0, 0, 0]
@@ -374,7 +621,7 @@ class RaySimulation:
             content.append(int(exact_sum(store.amount * store.content)))
             if store.size:
                 definition = self.families[family]
-                labels = store.labels(np.arange(store.size), self.tables.flight.vectors, definition.free)
+                labels = store.labels(np.arange(store.size), self.tables.flight.labels, definition.free)
                 momentum = [a + b for a, b in zip(momentum, exact_column_sums(labels), strict=True)]
         return {"transit": units, "content": content, "momentum": momentum}
 
@@ -397,15 +644,16 @@ class RaySimulation:
         balanced = True
         ledger = self.ledger
         # One pass over the measured events: what they hold per family,
-        # their momentum and their charge.
+        # their momentum and their charge (rho x content each, the sum an
+        # exact rational reported as the reduced pair [n, d]).
         held_current = [0] * len(self.families)
         held_momentum = [0, 0, 0]
-        charge = 0
+        charges: list[tuple[int, int]] = []
         for entry in self.measured.values():
             for index, held in enumerate(entry.held):
                 held_current[index] += held
             held_momentum = [a + b for a, b in zip(held_momentum, entry.momentum, strict=True)]
-            charge += entry.charge
+            charges.append(entry.charge)
         for index, family in enumerate(self.families):
             measured = {
                 "initial": self.held_initial[index],
@@ -425,10 +673,10 @@ class RaySimulation:
                     if counted is not None
                     else self.transit_initial[index]
                     + ledger.transit_released[index]
-                    - ledger.escaped_units(index)
+                    - ledger.escaped_amount(index)
                     - ledger.transit_absorbed[index]
                 ),
-                "escaped": ledger.escaped_units(index),
+                "escaped": ledger.escaped_amount(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
@@ -466,7 +714,7 @@ class RaySimulation:
                 "transit": counted["momentum"] if counted is not None else self.transit_momentum(),
                 "escaped": ledger.escaped_momentum(),
             },
-            "charge": charge,
+            "charge": list(rational_sum(charges)),
             "balanced": balanced,
         }
 
@@ -474,17 +722,22 @@ class RaySimulation:
         return [self.measured[number].state() for number in sorted(self.measured)]
 
     def detectors(self) -> list[dict[str, object]]:
-        """The measurements per detector: its Nodes, its threshold and per
-        family the amount measured, the clicks and the record; then the face
-        detectors, one per open face of the board (`face_detectors`)."""
+        """The measurements per declared detector: its Nodes, its threshold,
+        its reading and per family the amount measured and the clicks
+        (summed over its Nodes), the set's one `record` (the square of its
+        coherent pointer accumulated under `wave`, the count clicked under
+        `beam`) and the set's `phase` at its last click; then the face
+        detectors, one per open face of the GameBoard (`face_detectors`)."""
         found = []
         for index, detector in enumerate(self.world.detectors):
-            members = [entry for entry in self.measured.values() if entry.detector == index]
+            detector_set = self.detector_sets[index]
+            members = [self.measured[n] for n in detector_set.numbers if n in self.measured]
             families = {
                 family.name: {
-                    "measured": sum(entry.measured[f]["measure"] for entry in members),
-                    "clicks": sum(entry.events[f] for entry in members),
-                    "record": sum(entry.record[f] for entry in members),
+                    "measured": sum(entry.taken[f]["measure"] for entry in members),
+                    "clicks": sum(entry.clicks[f] for entry in members),
+                    "record": detector_set.record[f],
+                    "phase": detector_set.phase[f],
                 }
                 for f, family in enumerate(self.families)
             }
@@ -493,6 +746,7 @@ class RaySimulation:
                     "name": detector.name,
                     "nodes": len(detector.positions),
                     "threshold": detector.threshold,
+                    "reading": detector.reading,
                     "families": families,
                 }
             )
@@ -504,32 +758,56 @@ class RaySimulation:
         the units that clicked there (`measured`, `clicks`), the `content`
         they carried, their `record` (the same square) and the
         `measured_content` of the measured events that stepped off; and the
-        `momentum` that left."""
-        found = []
+        `momentum` that left; then, when a family declares a lifetime, the
+        border `lifetime` with the same fields (no Nodes: the border is
+        wherever an event's age reaches its family's lifetime)."""
+        found: list[dict[str, object]] = []
         ledger = self.ledger
+        if self.world.lifetimes:
+            found.append(
+                {
+                    "name": LIFETIME_NAME,
+                    "nodes": 0,
+                    "threshold": 1,
+                    "families": {
+                        family.name: {
+                            "measured": ledger.lifetime_amount[f],
+                            "clicks": ledger.lifetime_amount[f],
+                            "content": ledger.lifetime_content[f],
+                            "record": ledger.lifetime_record[f],
+                            "measured_content": 0,
+                            "momentum": list(ledger.lifetime_momentum[f]),
+                        }
+                        for f, family in enumerate(self.families)
+                    },
+                    "momentum": ledger.lifetime_momentum_total(),
+                }
+            )
         for port in self.open_faces:
             axis = port >> 1
             nodes = 1
             for other in range(3):
                 if other != axis:
                     nodes *= self.shape[other]
-            found.append(
+            found.insert(
+                len(found) - (1 if self.world.lifetimes else 0),
                 {
                     "name": FACE_NAMES[port],
                     "nodes": nodes,
                     "threshold": 1,
                     "families": {
                         family.name: {
-                            "measured": ledger.face_units[port][f],
-                            "clicks": ledger.face_units[port][f],
+                            "measured": ledger.face_amount[port][f],
+                            "clicks": ledger.face_amount[port][f],
                             "content": ledger.face_content[port][f],
                             "record": ledger.face_record[port][f],
                             "measured_content": ledger.face_measured_content[port][f],
+                            "momentum": list(ledger.face_momentum[port][f]),
                         }
                         for f, family in enumerate(self.families)
                     },
-                    "momentum": list(ledger.face_momentum[port]),
-                }
+                    "momentum": ledger.face_momentum_total(port),
+                },
             )
         return found
 
@@ -537,22 +815,23 @@ class RaySimulation:
         """The shell means at one radius of the last interval's readings: the
         Nodes at Euclidean distance within a half Link of `radius` from the
         centre, their number, the mean count (the amount that arrived per
-        Node), the mean radial flow (amount x arrival heading projected on
-        the radial unit vector, summed per Node) and the mean presence (every
+        Node), the mean radial flow (amount x the arrival's unit vector at
+        the scale Q projected on the radial unit vector, summed per Node: Q
+        per unit of amount moving radially) and the mean presence (every
         ray at the Node)."""
-        grid = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
-        distance = np.sqrt((grid * grid).sum(axis=1))
+        node_offsets = np.indices(self.shape).reshape(3, -1).T - np.array(centre)
+        distance = np.sqrt((node_offsets * node_offsets).sum(axis=1))
         chosen = np.abs(distance - radius) < 0.5
         chosen &= distance > 0
-        positions = grid[chosen]
+        positions = node_offsets[chosen]
         radial = positions / distance[chosen][:, None]
         cells = tuple((positions + np.array(centre)).T)
-        count = self.readings.count[family][cells]
+        arrived = self.readings.arrived[family][cells]
         flow = self.readings.flow[family][cells]
         presence = self.readings.presence[family][cells]
         return {
             "nodes": float(chosen.sum()),
-            "count": float(count.mean()),
+            "arrived": float(arrived.mean()),
             "flow": float((flow * radial).sum(axis=1).mean()),
             "presence": float(presence.mean()),
         }
@@ -565,7 +844,7 @@ class RaySimulation:
         face's Node through its outer Port (moving inward), Gauss's flux, read
         off the Links crossed (`per_port`, a diagnostic of the walk)."""
         if any(self.world.periodic):
-            raise ValueError("cube_flux supports only the all-open board")
+            raise ValueError("cube_flux supports only the all-open GameBoard")
         per_port = self.readings.per_port[family]
         total = 0
         for axis in range(3):
@@ -590,7 +869,7 @@ class RaySimulation:
     def snapshot_stream(self) -> Iterator[tuple[str, object]]:
         """The snapshot as (key, value) pairs, the Nodes with rays as an
         iterator over one entry at a time (`snapshot_writer`)."""
-        yield "law", RAYS_LAW
+        yield "law", BEAM_LAW
         yield "tick", self.tick
         yield "shape", list(self.shape)
         yield "boundary", self.world.boundary
@@ -601,7 +880,7 @@ class RaySimulation:
             [
                 {
                     "family": family.name,
-                    "amount": self.ledger.escaped_units(f),
+                    "amount": self.ledger.escaped_amount(f),
                     "content": self.ledger.escaped_content(f),
                 }
                 for f, family in enumerate(self.families)
@@ -616,6 +895,9 @@ class RaySimulation:
         }
 
     def _node_entries(self) -> Iterator[dict[str, object]]:
+        """The Nodes with rays, each with its rows per family: the one
+        materialization of a ray's record (`NatureBeamStore.rows`, `NatureBeam`),
+        written as `NatureBeam.record` says."""
         nodes = sorted({int(node) for store in self.stores for node in np.unique(store.node)})
         vectors = self.tables.flight.vectors
         for flat in nodes:
@@ -627,22 +909,6 @@ class RaySimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                rays = [
-                    {
-                        "direction": [int(v) for v in vectors[store.direction[i]]],
-                        "age": int(store.age[i]),
-                        "phase": int(store.phase[i]),
-                        "number": int(store.number[i]),
-                        "amount": int(store.amount[i]),
-                        "content": int(store.content[i]),
-                        # The emitter's factor a free family's ray carries.
-                        **(
-                            {"charge": int(store.charge[i]), "mass": int(store.mass[i])}
-                            if family.free
-                            else {}
-                        ),
-                    }
-                    for i in range(lo, hi)
-                ]
-                families.append({"family": family.name, "rays": rays})
+                beams = [beam.record(vectors) for beam in store.rows(lo, hi)]
+                families.append({"family": family.name, "rays": beams})
             yield entry

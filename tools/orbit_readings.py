@@ -1,4 +1,4 @@
-"""The readings of the orbit series D under the law of the ray, on the
+"""The readings of the orbit series D under the Beam Law, on the
 plane, with the width of the push.
 
 Reads the run folders of the worlds of `examples/events/orbit/` (the
@@ -11,16 +11,19 @@ momentum's y component of the initial sign), its period T (that tick), the
 mean radius over the orbit, the drift per orbit (the radius at the closing
 tick less the radius at the previous one), the second and later orbits the
 same way, the mean inward push per interval from the probe's `read`
-records against m x q x L / (2 pi r) (the constant C of the derivation; L
-the mean label magnitude of the source's fan, the mean |D| over its
-directions, since the push of a fan ray is its label, amount x D: RAY_LAW
-section 2 and section 10, note 21; L = 1 on the six headings), the
+records, in label units divided by Q = `LABEL_SCALE` = 64, against
+m x q x L / (2 pi r) (the constant C of the derivation; L the mean label
+magnitude of the source's fan in units of Q, the mean |u_d| / Q over its
+directions with u_d the unit vector of the direction at the scale Q,
+1.0000 for this fan within 1 %: since 2026-09-19 the push of a fan ray is
+its label along u_d, BEAM_LAW section 2 and note 23; the momentum column p
+is in label units, 64 per unit of the probe's content), the
 least and greatest radius, the escape or the refused step if any; and, per
 width, the ratio T(24)^2 / T(12)^2 against (24 / 12)^2 = 4, the plane's
 1 / r force (T proportional to r, k = 2; Kepler's k = 3 would give 8). The
 record checks (completed, the books balanced at every tick) fail the tool;
 the orbit readings are registered inside or outside their expectation
-(docs/EXPERIMENTS.md, "D, the orbit under the law of the ray, on the plane
+(docs/EXPERIMENTS.md, "D, the orbit under the Beam Law, on the plane
 (2026-09-19)") and never moved.
 
     PYTHONPATH=src python tools/orbit_readings.py artifacts/orbit
@@ -33,13 +36,54 @@ import json
 import math
 import sys
 from dataclasses import dataclass, field
+from fractions import Fraction
 from pathlib import Path
 
+from event_universe.core.integer import by_clock
+from event_universe.events import parse_nature_beam_world
+from event_universe.events.nature_beam import flight_table
+from event_universe.events.world import LABEL_SCALE, MeasuredDefinition, NatureBeamWorld
+from event_universe.json_documents import parse_json_document
+
+# Every rule of the engine this tool needs is read off the engine's own
+# functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
+# is a reader of the record, never a second owner of a rule): the release
+# off the clock `core.integer.by_clock` (the primitive the engine's release
+# calls), the fan's labels off the flight table
+# `nature_beam.flight_table`, the scale `world.LABEL_SCALE`, the world's
+# keys and the source's Node through `parse_nature_beam_world`.
 MODEL_PREFIX = "rays-orbit-"
 MODEL_SUFFIX = "-plane-v1"
-CENTRE = (60, 60)
+# The numbers of the source and the probe in the world's declaration order.
+SOURCE = 1
 PROBE = 2
 FULL_TURN = 2 * math.pi
+
+
+def fan_emission(world: NatureBeamWorld, source: MeasuredDefinition) -> float:
+    """The source's mean emission per interval over its fan: per declared
+    direction the engine's release off the clock, `by_clock(age, content x
+    n, d)` at `release` [n, d] (nature_beam, step 5; a free family's
+    release costs nothing, so the content is constant), averaged over one
+    period of d ages, which is content x n / d exactly, times the number of
+    directions."""
+    numerator, denominator = world.release
+    per_direction = Fraction(
+        sum(by_clock(age, source.amount * numerator, denominator) for age in range(denominator)),
+        denominator,
+    )
+    return float(len(source.directions) * per_direction)
+
+
+def fan_label(world: NatureBeamWorld, source: MeasuredDefinition) -> float:
+    """The mean label magnitude of the source's fan in units of Q: the mean
+    |u_d| / Q over its declared directions, u_d the label of one unit
+    along d off the engine's flight table (`FlightTable.labels`, the unit
+    vector of the direction at the scale Q)."""
+    labels = flight_table(world.directions).labels
+    return sum(
+        math.hypot(*(int(v) for v in labels[direction])) / LABEL_SCALE for direction in source.directions
+    ) / len(source.directions)
 
 
 @dataclass
@@ -76,7 +120,8 @@ class Reading:
     radius: int
     momentum: int
     emission: float
-    # The mean label magnitude of the source's fan (the mean |D|).
+    # The mean label magnitude of the source's fan in units of Q (the mean
+    # |u_d| / Q over its directions).
     label: float
     ticks: int
     completed: bool
@@ -98,12 +143,14 @@ class Reading:
 
     @property
     def push_constant(self) -> float:
-        """The mean inward push per interval over the run divided by
-        m q / (2 pi r_mean): the constant C measured."""
+        """The mean inward push per interval over the run (in units of Q)
+        divided by m q L / (2 pi r_mean): the constant C measured."""
         mean_radius = self.orbits[0].mean_radius if self.orbits else self.final_radius
         if not mean_radius or not self.ticks:
             return 0.0
-        return (self.inward_push / self.ticks) / (self.emission * self.label / (FULL_TURN * mean_radius))
+        return (self.inward_push / LABEL_SCALE / self.ticks) / (
+            self.emission * self.label / (FULL_TURN * mean_radius)
+        )
 
 
 def read_run(folder: Path) -> Reading:
@@ -112,18 +159,19 @@ def read_run(folder: Path) -> Reading:
     name = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)]
     width_part, radius_part = name.split("-")
     width, radius = int(width_part[1:]), int(radius_part[1:])
-    world = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
-    source, probe = world["measured"]
-    emission = len(source["directions"]) * int(source["amount"]) / int(world["release"][1])
-    label = sum(math.hypot(*vector[:2]) for vector in source["directions"]) / len(source["directions"])
+    # The world as the engine parses it: the source (number 1) and the probe
+    # (number 2), the source's Node the centre of the orbit.
+    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    source, probe = world.measured[SOURCE - 1], world.measured[PROBE - 1]
+    centre = (source.position[0], source.position[1])
     ticks = int(record["completed_ticks"])
     reading = Reading(
         name=name.replace("-", "_"),
         width=width,
         radius=radius,
-        momentum=int(probe["momentum"][1]),
-        emission=emission,
-        label=label,
+        momentum=probe.momentum[1],
+        emission=fan_emission(world, source),
+        label=fan_label(world, source),
         ticks=ticks,
         completed=record["status"] == "completed",
         balanced=bool(record["conserved_at_every_completed_tick"]),
@@ -145,9 +193,9 @@ def read_run(folder: Path) -> Reading:
                 pushes.append((int(event["tick"]), [int(v) for v in event["push"]]))
             elif event["event"] == "click" and event.get("measured") == PROBE:
                 reading.ended = f"escaped through {event['detector']} at tick {event['tick']}"
-    start = (int(probe["position"][0]), int(probe["position"][1]))
+    start = (probe.position[0], probe.position[1])
     position = start
-    momentum = [int(v) for v in probe["momentum"]]
+    momentum = list(probe.momentum)
     positions: list[tuple[int, int]] = [start]
     momenta: list[list[int]] = [momentum]
     for tick in range(1, ticks + 1):
@@ -157,12 +205,12 @@ def read_run(folder: Path) -> Reading:
         positions.append(position)
         momenta.append(momentum)
     # The angle about the source, unwrapped, and the radius per tick.
-    radii = [math.hypot(x - CENTRE[0], y - CENTRE[1]) for x, y in positions]
+    radii = [math.hypot(x - centre[0], y - centre[1]) for x, y in positions]
     angles = []
     unwrapped = 0.0
-    previous = math.atan2(positions[0][1] - CENTRE[1], positions[0][0] - CENTRE[0])
+    previous = math.atan2(positions[0][1] - centre[1], positions[0][0] - centre[0])
     for x, y in positions:
-        angle = math.atan2(y - CENTRE[1], x - CENTRE[0])
+        angle = math.atan2(y - centre[1], x - centre[0])
         delta = angle - previous
         if delta > math.pi:
             delta -= FULL_TURN
@@ -202,7 +250,7 @@ def read_run(folder: Path) -> Reading:
     closings = [orbit.tick for orbit in reading.orbits]
     for tick, push in pushes:
         x, y = positions[tick - 1]
-        dx, dy = CENTRE[0] - x, CENTRE[1] - y
+        dx, dy = centre[0] - x, centre[1] - y
         norm = math.hypot(dx, dy)
         inward = 0.0 if not norm else (push[0] * dx + push[1] * dy) / norm
         units = abs(push[0]) + abs(push[1])
@@ -218,7 +266,7 @@ def read_run(folder: Path) -> Reading:
     for orbit in reading.orbits:
         expected = reading.emission * reading.label / (FULL_TURN * orbit.mean_radius)
         if expected and orbit.intervals:
-            orbit.constant = (orbit.inward_push / orbit.intervals) / expected
+            orbit.constant = (orbit.inward_push / LABEL_SCALE / orbit.intervals) / expected
     if not reading.ended and reading.least_radius <= 1.0:
         reading.ended = "reached the Node beside the source"
     return reading
@@ -236,8 +284,8 @@ def find_runs(root: Path) -> list[Reading]:
 
 def print_table(readings: list[Reading]) -> None:
     print(
-        "| World | S | r | p | closed | T | mean radius | drift per orbit | turns | "
-        "r min .. max | reads | units | C measured | end |"
+        "| World | S | r | p (label units) | closed | T | mean radius | drift per orbit | turns | "
+        "r min .. max | reads | units (label units) | C measured | end |"
     )
     print("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
     for r in readings:
@@ -256,7 +304,7 @@ def print_table(readings: list[Reading]) -> None:
             f"| `{r.name}` | {r.width} | {r.radius} | {r.momentum} | {closed} | {period} | "
             f"{mean_radius} | {drift} | {r.turns:.2f} | {r.least_radius:.1f} .. "
             f"{r.greatest_radius:.1f} | {r.reads} | {r.units} | {constant:.2f} | "
-            f"{r.ended or 'on the board'} |"
+            f"{r.ended or 'on the GameBoard'} |"
         )
     print()
     for r in readings:

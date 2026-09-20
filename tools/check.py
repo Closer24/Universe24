@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
-    "examples/events/README.md": ("tests/test_ray_worlds.py",),
+    "examples/events/README.md": ("tests/test_nature_beam_worlds.py",),
     "examples/events/detector/entities/detectors.json": (
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",
@@ -166,7 +166,9 @@ def select(changed, sources):
         tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
             tests.add("tests/test_architecture.py")
-        if path.startswith("examples/") or path.startswith("src/event_universe/ui_assets/"):
+        # A world, an asset or a tool is a runtime dependency of the tests
+        # that name its file (a tool is loaded by its path, never imported).
+        if path.startswith(("examples/", "src/event_universe/ui_assets/", "tools/")):
             tests.update(
                 p
                 for p, text in sources.items()

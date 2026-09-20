@@ -35,6 +35,20 @@ GIF or the frames and carries the run's readings beside it: the world, the
 plane shown, the scale of each region, the intervals per frame. A bare GIF is
 never the deliverable. The page is in English, like every artefact.
 
+**Every experiment is made under the experimenter's skill (model owner,
+2026-09-20: "the GameBoard is not measurable by a human").** Boss gives every
+research run to an agent under [experimenter](../experimenter/SKILL.md),
+which measures only behind a detector or at an external thing and labels
+every number a detector reading or a GameBoard reading.
+
+**Every experiment ends in a results page (model owner, 2026-09-20).** Boss
+adds to every experiment's brief the page contract of the
+[simulation runner](../simulation-runner/SKILL.md): the GameBoard drawn with
+an icon for the detector, the star or source, the lamps and the walls so that
+the reader sees exactly what is tested, then "why it was tested" and "the
+conclusion", with the readings between them. Boss publishes the page as an
+artifact and gives the owner its link with the verdict.
+
 - Dispatch an already-authorized task without asking again merely to delegate it.
   Apply the current user/project scope and chosen execution lane to the handoff;
   delegation adds no authority to edit, publish, contact people or merge.
@@ -159,6 +173,7 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
+| A real experiment, measured behind a detector or at an external thing | [experimenter](../experimenter/SKILL.md) |
 | Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
 

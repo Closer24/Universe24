@@ -42,7 +42,7 @@ def test_all_production_modules_respect_dependency_boundaries():
     "module,source",
     [
         ("core.phase", "from ..events import engine"),
-        ("core.lattice", "from event_universe.runner import run_initialization"),
+        ("core.game_board", "from event_universe.runner import run_initialization"),
         ("events.engine", "from event_universe.runner import source_fingerprint"),
         ("events.nature_beam", "from pathlib import Path"),
         ("core.phase", "import json"),
@@ -56,10 +56,10 @@ def test_architecture_gate_rejects_upward_and_output_imports(module, source):
     "module,source",
     [
         ("core.phase", "from event_universe.core.integer import checked_work"),
-        ("events.nature_beam", "from event_universe.core.lattice import Address3"),
+        ("events.nature_beam", "from event_universe.core.game_board import Address3"),
         ("events.engine", "from event_universe.events.nature_beam import nature_beam"),
         ("events.run", "import json\nfrom event_universe.snapshot_writer import write_snapshot"),
-        ("runner", "from event_universe.events.run import execute_ray_run"),
+        ("runner", "from event_universe.events.run import execute_nature_beam_run"),
     ],
 )
 def test_architecture_gate_allows_the_dependency_direction(module, source):

@@ -1,7 +1,7 @@
-"""Scratch computations for DERIVATIONS.md round 7 (a thing emits; the open-board fixed point).
+"""Scratch computations for DERIVATIONS.md round 7 (a thing emits; the open-GameBoard fixed point).
 
 An iteration of the stated rules on paper, not an engine run: the mixing S = J/3 - I of
-Highlights 5.4 point 24 on a cubic board with a thing at the centre that emits q quanta per
+Highlights 5.4 point 24 on a cubic GameBoard with a thing at the centre that emits q quanta per
 interval (R12), absorbs and re-releases what comes home (R13) and an edge through which
 shares escape (R14), in the mean field (complex amplitudes) and in whole quanta (the
 per-Port remainders and the phase circle of N steps). Subcommands:
@@ -141,7 +141,7 @@ def run_meanfield(L, periodic, period, variant, q, ticks):
     snapshots = {}  # period-mean count and J_r, per period index
     escaped_hist = []
     home_hist = []
-    board_hist = []
+    game_board_hist = []
     flux_hist = []
     flat_hist = []
     for t in range(ticks):
@@ -169,11 +169,11 @@ def run_meanfield(L, periodic, period, variant, q, ticks):
         A, esc = walk(B, periodic)
         n, uu, J = readings(A, c)
         Jr, r = radial(J, c, L)
-        board = float(n.sum())
-        flat_hist.append(board - 3.0 * float(np.sum(np.abs(uu) ** 2)))
+        game_board = float(n.sum())
+        flat_hist.append(game_board - 3.0 * float(np.sum(np.abs(uu) ** 2)))
         escaped_hist.append(esc)
         home_hist.append(home)
-        board_hist.append(board)
+        game_board_hist.append(game_board)
         flux_hist.append(fl)
         if acc_n is None:
             acc_n = np.zeros_like(n)
@@ -199,7 +199,7 @@ def run_meanfield(L, periodic, period, variant, q, ticks):
         snapshots=snapshots,
         escaped=escaped_hist,
         home=home_hist,
-        board=board_hist,
+        game_board=game_board_hist,
         flux=flux_hist,
         q=q,
         period=period,
@@ -219,7 +219,7 @@ def report_meanfield(res):
     out["config"] = dict(
         L=L, periodic=res["periodic"], period=res["period"], variant=res["variant"], q=q, ticks=tf
     )
-    out["final_board_over_q"] = res["board"][-1] / q
+    out["final_game_board_over_q"] = res["game_board"][-1] / q
     out["final_escaped_over_q"] = float(np.mean(res["escaped"][-16:])) / q
     out["final_home_over_q"] = float(np.mean(res["home"][-16:])) / q
     cubes = [h for h in (2, 4, 8, 12, 15, 19) if h <= c - 1]
@@ -298,7 +298,7 @@ def report_meanfield(res):
                 ok_from = None
         settle[f"R{R}_J_tol0.05"] = ok_from
     out["settle"] = settle
-    # board total history samples
+    # GameBoard total history samples
     TS = (
         8,
         16,
@@ -321,10 +321,12 @@ def report_meanfield(res):
         2400,
         3000,
     )
-    out["board_over_q_samples"] = {t: res["board"][t - 1] / q for t in TS if t <= len(res["board"])}
+    out["game_board_over_q_samples"] = {
+        t: res["game_board"][t - 1] / q for t in TS if t <= len(res["game_board"])
+    }
     out["flat_over_q_samples"] = {t: res["flat"][t - 1] / q for t in TS if t <= len(res["flat"])}
     out["home_over_q_samples"] = {t: res["home"][t - 1] / q for t in TS if t <= len(res["home"])}
-    # path sums along lines parallel to x at impact parameter b (y = b, z = 0), x over the board
+    # path sums along lines parallel to x at impact parameter b (y = b, z = 0), x over the GameBoard
     S = q * out["flux_over_q_last"][2] if len(out["flux_over_q_last"]) > 2 else q
     paths = {}
     H = c
@@ -417,7 +419,7 @@ def cmd_edge(args):
 
 def cmd_home(args):
     """A pulse released at (d,0,0) (six Ports in one phase, amount 1) with an absorbing Node at the origin
-    (B = 0 there; the arrivals booked). Open board. Fraction absorbed at the origin by tick T."""
+    (B = 0 there; the arrivals booked). Open GameBoard. Fraction absorbed at the origin by tick T."""
     L = args.L
     c = L // 2
     out = {}
@@ -444,7 +446,7 @@ def cmd_home(args):
             out[f"d{d}_{kind}"] = dict(
                 absorbed=absorbed,
                 escaped=esc_total,
-                on_board=float(np.sum(np.abs(A) ** 2)),
+                on_game_board=float(np.sum(np.abs(A) ** 2)),
                 series=series,
                 geometric_1_over_4pid2=1 / (4 * np.pi * d * d),
             )
@@ -458,7 +460,7 @@ def run_integer(L, periodic, period, q, ticks, N=64, m=None, K=None, rerelease=T
     ph = np.zeros((6, L, L, L), dtype=np.int64)
     reg = np.zeros((6, L, L, L), dtype=np.float64)
     two_pi_N = 2 * np.pi / N
-    hist_board, hist_esc, hist_home, hist_flux, hist_reg, hist_flat = [], [], [], [], [], []
+    hist_game_board, hist_esc, hist_home, hist_flux, hist_reg, hist_flat = [], [], [], [], [], []
     per = max(period, 1)
     acc_n = np.zeros((L, L, L))
     acc_J = np.zeros((3, L, L, L))
@@ -540,7 +542,7 @@ def run_integer(L, periodic, period, q, ticks, N=64, m=None, K=None, rerelease=T
             new_amt[p] = ra
             new_ph[p] = rp
         amt, ph = new_amt, new_ph
-        hist_board.append(int(amt.sum()))
+        hist_game_board.append(int(amt.sum()))
         hist_esc.append(esc)
         hist_home.append(home)
         hist_reg.append(float(reg.sum()))
@@ -567,7 +569,7 @@ def run_integer(L, periodic, period, q, ticks, N=64, m=None, K=None, rerelease=T
         c=c,
         r=r,
         snaps=snaps,
-        board=hist_board,
+        game_board=hist_game_board,
         esc=hist_esc,
         home=hist_home,
         q=q,
@@ -612,7 +614,7 @@ def cmd_integer(args):
             window_periods=W,
             variant=args.variant,
         ),
-        board_over_q=res["board"][-1] / q,
+        game_board_over_q=res["game_board"][-1] / q,
         escaped_over_q=float(np.mean(res["esc"][-32:])) / q,
         home_over_q=float(np.mean(res["home"][-32:])) / q,
         seconds=round(time.time() - t0, 1),
@@ -657,7 +659,9 @@ def cmd_integer(args):
         fl[name] = dict(mean=float(np.mean(vals)), std_over_periods=float(np.std(vals)))
     out["period_fluctuation_Jr"] = fl
     TS = (16, 32, 64, 96, 128, 192, 256, 320, 400, 600, 800, 1000, 1200, 1600, 2000)
-    out["board_samples"] = {t: res["board"][t - 1] / q for t in TS if t <= len(res["board"])}
+    out["game_board_samples"] = {
+        t: res["game_board"][t - 1] / q for t in TS if t <= len(res["game_board"])
+    }
     out["flat_samples"] = {t: res["flat"][t - 1] / q for t in TS if t <= len(res["flat"])}
     out["reg_samples"] = {t: res["regs"][t - 1] / q for t in TS if t <= len(res["regs"])}
     # probe J_r per 100-tick window on the axis and the diagonal
@@ -738,7 +742,7 @@ def cmd_walk(args):
 
 
 def cmd_transit(args):
-    """Mean distance to the face of a cube of half-width H over directions, and the mean-field board total."""
+    """Mean distance to the face of a cube of half-width H over directions, and the mean-field GameBoard total."""
     n = 200000
     rng = np.random.default_rng(1)
     v = rng.normal(size=(n, 3))

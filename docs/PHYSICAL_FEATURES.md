@@ -3,7 +3,7 @@
 The goal is a law that can be understood, tested and replaced independently of
 the world using it. The binding sources are the [definitions](../SIMULATOR_DEFINITIONS.md)
 and [architecture](ARCHITECTURE.md). The active schema and the laws a world
-selects are in [the law of the ray](RAY_LAW.md) and [the engine's bookkeeping](ENGINE.md)
+selects are in [the Beam Law](BEAM_LAW.md) and [the engine's bookkeeping](ENGINE.md)
 (the generic disturbance contract, DISTURBANCES.md, was deleted on 2026-09-19);
 candidate identities and physical names belong in the world file. This
 procedure does not change those rules.

@@ -6,7 +6,7 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 # Simulator execution
 
 > **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
-> only and runs a world of the law of the ray headless; `--visualize`,
+> only and runs a world of the Beam Law headless; `--visualize`,
 > `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and
 > `--standing-field` went with the old engine ([migration](../../docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 > Where this Skill names them, read the history.
@@ -31,6 +31,41 @@ the GIF or the frames next to the run's readings (the world, the plane shown,
 the scale of each region, the intervals per frame); a GIF is never delivered
 on its own (model owner, 2026-09-19: "Always put a GIF inside HTML").
 
+**Every experiment delivers its results page (model owner, 2026-09-20).** The
+owner's words: "Add to every experiment that is made that it shows results in
+HTML: the GameBoard with the detector as an icon and the star as an icon on
+the GameBoard, so that one understands exactly what is tested; and it states why
+it was tested and what the conclusion is." So every research run (a series or
+a numbered run in [EXPERIMENTS](../../docs/EXPERIMENTS.md)) delivers, beside
+the register entry, one HTML page in the owner's page style (no document
+skeleton, a `<title>`, colour tokens with dark mode, phone width) that carries,
+in this order: (1) a drawing of the GameBoard of the world with an icon for
+each thing on it: the detector (its set of Nodes), the star or source (a
+measured event, its content), the lamps, the walls, the probes, each with its
+name from the world file and a legend (the owner, the same day: "to show atoms
+I do not need a detector": an atom is drawn as its proton and its electron's
+set on the GameBoard; a detector appears only where the world declares one,
+receiving what comes out of the thing, or a lamp that shoots a beam at it as
+physicists do); (2) "Why it was tested", the question
+in the owner's words and the expectation written before the run; (3) the
+moving picture of the run when there is one, played inside the page with a
+time control (a canvas player over the frames with play and pause, a slider
+over the intervals and the interval shown, the GIF kept as a link; the model
+owner, 2026-09-20: "the page does not run, one cannot see it move by time")
+with the plane shown, the scale of each region and the intervals per frame; (4) the readings, measured against expected, inside or outside the
+brackets, nothing moved; (5) "The conclusion", the verdict in plain words and
+what the law lacked, if anything. The page is written to the scratchpad (not
+the repository) and Boss publishes it as an artifact; the numbers stay in the
+register.
+
+**Two kinds of readings (model owner, 2026-09-20: "in reality there is no
+such thing").** Label every registered number: a detector reading (the record
+of a detector's set or of a measured event in the world; the only kind
+reality has) or a GameBoard reading (the host's view of the GameBoard: positions,
+counts per Node, shell means, the books; a picture or a bookkeeping check,
+never the measurement). A comparison with nature uses detector readings
+only; a readings tool prints which kind each line is.
+
 For authorized physics comparisons, apply the shared
 [physics comparison method](../workflow.md#physics-comparison-method).
 Its standing HTML requirement counts as an explicit visualization request for
@@ -39,7 +74,7 @@ observable/expectation plan without retuning and retain quantitative discrepanci
 alongside the inspected HTML. A visual match is not physical acceptance.
 
 For primary runs, require the explicit world file and read its families,
-measured events, tables and detectors; see [the law of the ray](../../docs/RAY_LAW.md)
+measured events, tables and detectors; see [the Beam Law](../../docs/BEAM_LAW.md)
 and [the engine's bookkeeping](../../docs/ENGINE.md) (the generic disturbance
 contract, DISTURBANCES.md, was deleted on 2026-09-19). Missing input must not
 select an implicit historical universe.

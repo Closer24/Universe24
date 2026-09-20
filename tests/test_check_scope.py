@@ -20,7 +20,7 @@ SPEC.loader.exec_module(CHECK)
 
 def test_the_worlds_readme_selects_the_engine_test():
     selected, _ = CHECK.select(["examples/events/README.md"], {})
-    assert "tests/test_ray_worlds.py" in selected
+    assert "tests/test_nature_beam_worlds.py" in selected
     assert "tests/test_retention.py" not in selected
 
 
@@ -37,6 +37,23 @@ def test_tool_changes_select_the_scope_test(name):
     tests, typed = CHECK.select(["tools/" + name], {})
     assert "tests/test_check_scope.py" in tests
     assert not typed
+
+
+@pytest.mark.parametrize("name", ["coupling_readings.py", "orbit_readings.py", "heisenberg_readings.py"])
+def test_tool_changes_select_the_test_that_loads_the_tool_by_its_path(name):
+    """A readings tool is loaded by its path, never imported: the test that
+    names the file is its consumer, the tests that do not are not."""
+    sources = {
+        "tests/test_names_it.py": f'TOOL = ROOT / "tools" / "{name}"',
+        "tests/test_other.py": "def test_other(): pass",
+    }
+    tests, typed = CHECK.select(["tools/" + name], sources)
+    assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
+    assert "tests/test_check_scope.py" in tests
+    assert not typed
+    root = Path(__file__).resolve().parents[1]
+    consumer = "tests/test_" + name
+    assert (root / consumer).exists() and name in (root / consumer).read_text(encoding="utf-8")
 
 
 def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
@@ -283,4 +300,4 @@ def test_detector_definitions_select_their_explicit_loading_consumers():
         "tests/test_configuration_validation.py",
         "tests/test_entity_loading_consumers.py",
     } <= set(tests)
-    assert "tests/test_ray_flight.py" not in tests
+    assert "tests/test_nature_beam_flight.py" not in tests

@@ -1,22 +1,28 @@
-"""The world of the law of the ray (rays-v1): its keys and their refusals.
+"""The world of the Beam Law (beam-v1): its keys and their refusals.
 
-A world of this law is a JSON object with `"law": "rays"` and nothing of the
+A world of this law is a JSON object with `"law": "beam"` and nothing of the
 earlier engines' schemas (no `contents`, no `initial_shadows`, no
 `wait_per_quantum`, no `dynamics`; none of the old engine's keys): the
-refusal names the key at fault. `"law": "events"` is refused naming the law
-of the ray and docs/MIGRATION.md (the law of events, `events-v1`, was deleted
-on 2026-09-19). What a world declares ([the law of the ray](../../../docs/RAY_LAW.md),
+refusal names the key at fault. `"law": "events"` is refused naming the Beam
+Law and docs/MIGRATION.md (the law of events, `events-v1`, was deleted
+on 2026-09-19). What a world declares ([the Beam Law](../../../docs/BEAM_LAW.md),
 the model owner, 2026-09-19):
 
 - `shape`, three positive extents; `boundary` `"open"` (the default: the edge
   is infinity on every face, what leaves clicks on the face detector) or an
   object with any of the keys `x`, `y`, `z`, each `"open"` or `"periodic"`,
   the missing axes open; `ticks`;
-- `K`, the content per phase step per self-creation, one for the world; `N`,
+- `K`, the clock's rate, one for the world: an integer K, the content per
+  phase step per self-creation, read as the pair `[1, K]`, or (since
+  2026-09-20, the four unifications (2), BEAM_LAW note 33) a pair `[n, d]`
+  of phase steps per unit of content per self-creation like `release`, the
+  turn of a measured event `by_clock(age, content x n, d)`
+  (`NatureBeamWorld.turn`), refused at half the circle; the record carries
+  the key as declared; `N`,
   the steps of the phase circle (64 by default, a power of two from 2 through
   4096); `release` `[n, d]`, the rays a measured event of a free family
   releases per self-creation per declared direction per unit of content,
-  read off its clock; `suspension` `[n, d]`, the fractional width of the
+  read off its clock; `suspension` `[n, d]`, the rate of the
   clock's count: a measured event owes `by_clock(age, presence x n, d)`
   intervals after its self-creation, the presence being the amount of every
   ray at its Node of every number but its own (an integer w is accepted as
@@ -25,7 +31,25 @@ the model owner, 2026-09-19):
   event of content M with the momentum component p on an axis steps one
   Link per (S x M + p) / p self-creations on that axis, an integer from 1
   (the default: the rule as it was, one Link per (M + p) / p); 0 or a
-  negative width is refused;
+  negative width is refused; `age_bound`, the largest age a ray may carry
+  (an integer from 1; the age is the count of intervals since the measured
+  event that created the ray, kept whole on the record since 2026-09-20 so
+  that a measured event may read it; BEAM_LAW section 2): on a GameBoard with an
+  open axis it is by default twice the flight bound, the age at which every
+  straight ray has left a GameBoard of that diameter (`flight_bound`); on a
+  GameBoard periodic on every axis, which no ray leaves, it is required and
+  refused if absent; a declared ray's `age` must not exceed it, and a run
+  in which a ray on the GameBoard carries an age beyond it is refused;
+  `action`, optional: h, the quantum of action of the turn by momentum (an
+  integer from 1, in label units times Links; the model owner's decision
+  of 2026-09-20 on Bohr, "put it as parameters outside the GameBoard like the
+  age"; BEAM_LAW section 10, note 30): a measured event that declares
+  `phase_by_momentum` turns its phase, at every Link it steps on an axis
+  whose momentum component is p, so that after k Links stepped on that
+  axis the phase has turned floor(k x |p| x N / h) mod N steps (the count
+  k derived from its age by the step rule, the turn at one step the
+  difference of two floors, no register anywhere); absent by default, and
+  without it nothing turns by momentum;
 - `directions`, optional: integer vectors beyond the six headings that a
   lamp, a measured event or a ray in transit may name; the world's direction
   table `D` is the two rest vectors (0, 0, 0) ("here a", "here b"), the six
@@ -41,20 +65,68 @@ the model owner, 2026-09-19):
   only by a lamp that spends its content: a release costs the emitter
   quantum x s per unit at a self-creation whose turn is s steps, the unit
   carries that content and the momentum quantum x s along its direction,
-  and a click measures it, E = h f), for a free family the whole `charge`
-  of a measured event of it (0 by default; refused on a paid family),
+  and a click measures it, E = h f), for a free family its `charge`, the
+  charge per unit of content, rho, an integer or a pair `[n, d]` (d from
+  1; an integer c is `[c, 1]`; 0 by default; refused on a paid family; the
+  model owner's decision of 2026-09-20, Highlights 5.4: a measured event's
+  charge is rho times its content, and the electric push is one product
+  per arriving free ray, M_A x (rho_A rho_B - 1) x V_B), and since the
+  same day the columns (the model owner, Highlights 5.4, "one mechanism
+  for all the laws on the GameBoard"; the mathematician's verified form,
+  the identity `columns-v1`): the push is a signed inner product over the
+  columns a family declares per unit of content, `gravity` the built-in
+  first column of every family (the value [1, 1], the sign minus, never
+  declared), `charge` the built-in second column (the sign plus; the
+  family key `charge` is the shorthand for its value) and, per family,
+  `columns`, an object of column name to `{"value": n or [n, d], "sign":
+  1 or -1}` for any further column (a name's sign is the column's, one
+  per name across the world; a family that does not name a column
+  carries [0, 1] there; a paid family's values must be 0; at most
+  `COLUMN_LIMIT` columns in all; the world's column order is gravity,
+  charge, then the names in the order of their first declaration),
+  `lifetime` (L, optional, since 2026-09-20: the model owner's decision
+  on the strong force's range, "the lifetime L, counted on the event's own
+  age"; an integer from 1 through `age_bound`, a scalar: the flight gives
+  every direction one speed, so L intervals of flight are a sphere; an
+  event in transit whose age reaches L at the end of the walk makes no
+  next event but a click on the border `lifetime`, booked exactly as an
+  open face books an escape; absent, the family's events live for ever,
+  as every family did),
   `phase` (true by default; false: the family has no phase circle, its rays
   carry phase 0 and never turn, its measured events never turn, no
   `phase_window` is accepted for it) and `phase_per_link` (an integer
   0 .. N - 1, 0 by default: the phase steps a ray of the family turns at
-  every Link crossed). The key `kind` of the first ray worlds is refused
+  every Link crossed). The key `kind` of the first NatureBeam worlds is refused
   naming this derivation and docs/MIGRATION.md (one canonical form);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
-  below K x N / 2 for a family with a phase circle), and optionally its
-  `phase`, its whole `charge` (the family's by default), its `momentum`
-  (three integers), `fixed` (true: an apparatus held in place, it takes
-  pushes into its momentum and never steps), its `directions` (the
+  below K x N / 2 for a family with a phase circle), optionally `held`
+  (since 2026-09-20, the physicist's design of the strong force: an object
+  of family name to a positive whole content the measured event holds of
+  that family beside its own, so that a nucleon is one measured event
+  holding its charged family and one unit of a strong family; the event's
+  own family may not be named, an unknown family, a content below 1 or
+  not an integer is refused; a free family held is released at the
+  world's rate like its own, a paid one is inert; its charge in every
+  column is the rational sum over what it holds; the phase-turn bound
+  covers the total), and optionally its
+  `phase`, its `momentum` (three integers), `fixed` (true: an apparatus held in place, it takes
+  pushes into its momentum and never steps), its `span` (three odd
+  integers from 1, `[1, 1, 1]` by default: the measured event is a body on
+  the set of `span_x x span_y x span_z` Nodes centred on its `position`,
+  ONE record on all of them, the model owner's principle of 2026-09-19
+  applied to the electron on 2026-09-20, "the electron of width 3", BEAM_LAW
+  section 10, note 30: its clock, its threshold and its push read the one
+  reading set summed over its Nodes, the step moves the whole set as one
+  and is refused onto a Node of another measured event, through an open
+  face the whole body clicks on the face detector, on a periodic axis it
+  wraps, no collision acts at any of its Nodes, its releases are
+  apportioned whole over its Nodes; a span must fit the axis and the body
+  must lie inside the GameBoard on an open axis), `phase_by_momentum` (true:
+  the body turns its phase by its momentum label at every Link it steps,
+  over the world's `action`; false by default; refused without `action`,
+  on a `fixed` measured event, which never steps, and on a family without
+  a phase circle), its `directions` (the
   directions it releases on and re-emits on, as vectors or indices of the
   world's table; the six headings by default), its `table` (family name to
   `read`, `measure`, `rerelease` or `pass`, or to an object `{"rule": ...,
@@ -68,7 +140,7 @@ the model owner, 2026-09-19):
   on, the six headings by default, and optionally its `phase_window`);
   every measured event is given its number at parsing, 1, 2, ... in
   declaration order;
-- `phase_window`, the declared width of a detector and of an emitter: a
+- `phase_window`, the declared window of a detector and of an emitter: a
   setting `s`, an integer from 0 through N - 1, and the half circle centred
   on it (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly
   N / 2 steps; for N = 2 the one step d = 0). On a table entry (any rule but
@@ -77,49 +149,120 @@ the model owner, 2026-09-19):
   self-creations whose clock phase falls in the window;
 - `reads` on a table entry: the component of the Node's one reading that
   the response's record carries, `scalar` (the presence), `outside`, `here`,
-  `vector` (the net flow) or `tensor` (the traceless part); `vector` by
-  default on `read`, `scalar` otherwise. No rule changes with it: every
-  coupling reads the one reading, the moments of the arrivals (`nature_beam.read_arrivals`);
+  `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
+  moment, sum amount x age over the set: a reading aid of the measured
+  event, the external thing, since 2026-09-20; the GameBoard's rules never read
+  the age whole); `vector` by default on `read`, `scalar` otherwise. No
+  rule of the GameBoard changes with it: every coupling reads the one reading,
+  the moments of the arrivals (`nature_beam.read_arrivals`); the one thing
+  the key selects beside the record is what the clock counts
+  (`measured.count_component`): the age moment on an entry that reads
+  `age`, the presence on every other entry;
 - `in_transit`, optional: rays at the start, each with a `position`,
   `family`, `number` (the measured event whose continuation it is),
   `direction` (a vector of the world's table or its index), `amount`,
-  `phase` and optionally `age`, booked as initial content of the transit
-  line; the default is an empty board that the releases fill;
+  `phase` and optionally `age` (0 through `age_bound`), booked as initial
+  content of the transit line; the default is an empty GameBoard that the
+  releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
-  its `positions` (Nodes of measured events, each in at most one detector)
-  and its `threshold` (1 by default): the smallest amount of a family the
-  detector measures at a Node in one interval, summed over every number but
-  the Node's own; a smaller set passes. Every detector writes its `record`,
-  the squared coherent reading of the rays it clicked.
+  its `positions` (the `position` of a measured event each, a body on a
+  set named by its centre, each in at most one detector),
+  its `threshold` (1 by default): the smallest amount of a family arriving
+  at the detector's Nodes in one interval, summed over the whole set and
+  over every number but each Node's own; a smaller set passes; and its
+  `reading`, `"wave"` (the default since 2026-09-20; the model owner: "on
+  the GameBoard a ray, in the world a wave") or `"beam"` (the model owner,
+  2026-09-19): a detector is a set of Nodes with ONE record (a click says
+  "here, in one of these" and not which; the declared width is the
+  position's uncertainty). Under `wave` the record is the square of the
+  coherent pointer of the rays the set clicked in the interval, the
+  window reads the set's phase and the set's phase is returned to its
+  measured events; under `beam` the arriving rays are paired by opposite
+  phase over the set, a paired couple passes on and the rest click, the
+  record is the plain count. A measured event outside every detector is a
+  detector of one Node with the default reading.
 
 Refused, naming the key: `kind` on a family (the quantum decides it),
-`headings` on a lamp (`directions` replaces it),
-`heading` on a ray in transit (`direction` replaces it), `dynamics`,
+`charge` on a measured event (since 2026-09-20 the charge is the family's
+per unit of content, docs/MIGRATION.md), a family `charge` whose
+denominator is 0 or whose parts are not integers, a detector named as a
+face detector is (`face:+x` and the five others), `headings` on a lamp
+(`directions` replaces it),
+`heading` on a ray in transit (`direction` replaces it), a column named
+`gravity` (built in), `charge` declared both as the key and under
+`columns`, a column's `sign` other than 1 or -1, a column value with a
+denominator of 0 or a part that is not an integer, a column object with
+other keys, one name with two signs across the families, a nonzero
+column value on a paid family, more than `COLUMN_LIMIT` columns, a
+declared reader whose push over a column from the largest release of a
+family could pass 2^62 - 1 (the parser's static budget, per reader, per
+family and per column, and the sum over the columns), `dynamics`,
 `max_active_owners`, `port_map`, `output`, `capacity`, `groups`, a direction
 that is not primitive, a component beyond P, a direction the world does not
-declare, a label `P x content x amount` beyond 2^62 - 1 on a declared ray or
-a lamp's release, `phase_per_link` outside 0 .. N - 1.
+declare, a label `Q x content x amount` beyond 2^62 - 1 on a declared ray or
+a lamp's release (Q = `LABEL_SCALE` = 64: the momentum label of a ray is
+along the unit vector of its direction at the flight table's scale, the
+model owner's decision of 2026-09-19 on the physics-rule reviewer's
+verdict, [BEAM_LAW section 2](../../../docs/BEAM_LAW.md), so every declared
+`momentum` and every momentum of the record is in label units, Q per unit
+of amount along a heading), `phase_per_link` outside 0 .. N - 1, `age_bound`
+below 1 or absent on a GameBoard periodic on every axis, a declared `age`
+beyond it, `action` below 1 or not an integer, a `span` that is not three
+odd integers from 1 or larger than its axis, a body whose Nodes leave the
+GameBoard on an open axis, two measured events sharing a Node, a detector
+naming a Node of a body that is not its `position`, `phase_by_momentum`
+without `action`, on a `fixed` measured event or on a family without a
+phase circle, a turning body whose product `ticks x |p| x N` (the
+count of Links stepped within the run is at most `ticks`) exceeds
+2^62 - 1 for a declared momentum component p, a `lifetime` that is not
+one integer from 1 (a list or a per-axis value, 0, a negative number, a
+fraction) or beyond `age_bound`, a declared ray of a family with a
+lifetime at an age at or beyond it, a detector named `lifetime` (the
+border's name), and `held` naming the event's own family, an unknown
+family or a content that is not a positive integer.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-from event_universe.core.integer import bounded_gcd
-from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
+from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
+from event_universe.core.integer import bounded_gcd, by_clock, integer_root, rational_sum
 
-RAYS_LAW = "rays-v1"
-LAW_VALUE = "rays"
+BEAM_LAW = "beam-v1"
+LAW_VALUE = "beam"
+# The law's name before 2026-09-20 (rays-v1 is beam-v1, the same law): a world
+# that still declares it is refused naming the migration, never read as a default.
+OLD_LAW_VALUE = "rays"
 TABLES = ("read", "measure", "rerelease", "pass")
+# The rule of a contact where the world declared none: a body that arrives
+# at a body is a paid arrival (its momentum is its own label, kappa = 1),
+# and the keys' rule for a paid arrival is `measure` (the model owner,
+# 2026-09-20; docs/BEAM_LAW.md note 31 (ix)).
+CONTACT_DEFAULT = "measure"
 # The quantum of a free family: its unit costs nothing and carries no content.
 FREE_QUANTUM = 0
-# The components of the one reading a table entry may select for its record.
-READS = ("scalar", "outside", "here", "vector", "tensor")
+# The components of the one reading a table entry may select for its record;
+# `age` is the age moment, the reading aid of the measured event (the
+# external thing) that also decides what its clock counts.
+AGE_READS = "age"
+READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS)
+# The one scale Q of the law (BEAM_LAW sections 2 and 3): the time resolution
+# of the flight table, where the turn of a direction is T_d = isqrt(3 |v|^2
+# Q^2) and a ray makes S_1 Manhattan steps per T_d / Q intervals in the mean,
+# and the length of the momentum label, `LABEL_SCALE` below.
+Q = 64
 MAX_PHASE_STEPS = 4096
 # The bound of an amount, a content, a clock and a momentum component of this
 # law: the 64-bit work register with a bit to spare for one more sum.
 AMOUNT_BOUND = (1 << 62) - 1
 MOMENTUM_BOUND = (1 << 62) - 1
+# The momentum label's scale is the same Q: the label of a unit is the
+# integer vector nearest Q D / |D| (`nature_beam.unit_label`, exactly Q e_d
+# on a heading), so a label component is within Q x content x amount per
+# row, and the parser's bound is that product (the model owner's decision of
+# 2026-09-19, the physics-rule reviewer's correction 3).
+LABEL_SCALE = Q
 # The direction table: two rest vectors, the six headings, the declared rest.
 REST_DIRECTIONS = 2
 HEADING_OFFSET = REST_DIRECTIONS
@@ -168,6 +311,8 @@ WORLD_KEYS = {
     "release",
     "suspension",
     "width",
+    "age_bound",
+    "action",
     "directions",
     "direction_bound",
     "families",
@@ -175,17 +320,56 @@ WORLD_KEYS = {
     "in_transit",
     "detectors",
 }
-FAMILY_KEYS = {"name", "quantum", "charge", "phase", "phase_per_link"}
-# The key of the first ray worlds that named the kind; the quantum decides it.
+# The identity of the turn by momentum, a physical hypothesis beside the
+# law (the model owner's decision of 2026-09-20 on Bohr): the record carries
+# it when the world declares `action`.
+BOHR_RULE = "bohr-v1"
+# The identity of the one mechanism of the columns (the model owner,
+# 2026-09-20, "one mechanism for all the laws on the GameBoard"; the
+# mathematician's verified form): the record carries it when a world
+# declares a column beyond `charge`. The two built-in columns, gravity
+# and charge, are the law as it was, integer by integer.
+COLUMNS_RULE = "columns-v1"
+# The two built-in columns of every family: the first, gravity, has the
+# value [1, 1] on every unit of content and the sign minus (like contents
+# pull together); the second, charge, the family's `charge` per unit of
+# content and the sign plus (like charges push apart). Neither is declared
+# under `columns`.
+GRAVITY_COLUMN = "gravity"
+CHARGE_COLUMN = "charge"
+GRAVITY_INDEX, CHARGE_INDEX = 0, 1
+COLUMN_SIGNS = (1, -1)
+# A column's declaration on a family: its value per unit of content and
+# the column's sign.
+COLUMN_KEYS = {"value", "sign"}
+# The most columns a world may carry, the built-in two included: the
+# per-group work of the push is then fixed (the mathematician's P2).
+COLUMN_LIMIT = 8
+# The span of a measured event on one Node (the default): a body of one.
+ONE_NODE: tuple[int, int, int] = (1, 1, 1)
+FAMILY_KEYS = {"name", "quantum", "charge", "columns", "lifetime", "phase", "phase_per_link"}
+# The border every event in transit of a family with a lifetime clicks on
+# when its age reaches the lifetime: named like a face detector in the
+# records, the books' escaped lines summing it with the faces'; a declared
+# detector may not take the name.
+LIFETIME_NAME = "lifetime"
+# The key of the first NatureBeam worlds that named the kind; the quantum decides it.
 KIND_KEY = "kind"
+# The key of the NatureBeam worlds before 2026-09-20 that gave a measured event its
+# own whole charge; the charge is the family's per unit of content.
+CHARGE_KEY = "charge"
+# The charge per unit of content of a family with none: 0 as the pair [0, 1].
+NO_CHARGE = (0, 1)
 MEASURED_KEYS = {
     "position",
     "family",
     "amount",
+    "held",
     "phase",
-    "charge",
     "momentum",
     "fixed",
+    "span",
+    "phase_by_momentum",
     "directions",
     "table",
     "lamp",
@@ -195,27 +379,79 @@ LAMP_KEYS = {"rate", "directions", "phase_window"}
 # and the reading's component the record carries.
 TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
-DETECTOR_KEYS = {"name", "positions", "threshold"}
+DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
+# The readings a detector may declare; the first is the default: `wave`
+# since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
+# wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
+DETECTOR_READINGS = ("wave", "beam")
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
-# The board's faces per axis: open (the default) or periodic (the wrap).
+# The face detectors, one per open face of the GameBoard, named by the face in
+# Port order (an open face is a detector, the model owner, 2026-09-19); a
+# declared detector may not take one of these names.
+FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
+# The GameBoard's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
+
+
+@dataclass(frozen=True)
+class Column:
+    """One column of a family (the model owner, 2026-09-20, "one mechanism
+    for all the laws on the GameBoard"): its name, its value per unit of
+    content as the pair (n, d) with d from 1, and the column's sign, +1
+    (like values push apart) or -1 (like values pull together). The columns
+    of every family of a world are aligned by index: the same name at the
+    same index with the same sign, [0, 1] where a family does not name it."""
+
+    name: str
+    value: tuple[int, int]
+    sign: int
+
+
+def built_in_columns(charge: tuple[int, int]) -> tuple[Column, Column]:
+    """The two columns every family carries: gravity, the value (1, 1) on
+    every unit of content with the sign minus, and charge, the family's
+    charge per unit of content with the sign plus (the law as it was:
+    M_A (rho_A rho_B - 1) x V_B is the case of these two columns)."""
+    return Column(GRAVITY_COLUMN, (1, 1), -1), Column(CHARGE_COLUMN, charge, 1)
 
 
 @dataclass(frozen=True)
 class FamilyDefinition:
     """One family of the world: its name, the content of one unit of it per
     phase step of its emitter's turn (`quantum`, h; 0 for a free family,
-    1 or more for a paid one: the kind is derived, never declared), the
-    whole charge of a measured event of it, whether it has a phase circle
-    and the phase steps its rays turn per Link crossed."""
+    1 or more for a paid one: the kind is derived, never declared), its
+    charge per unit of content (`charge`, rho, the pair (n, d) with d from
+    1: a measured event of the family of content M carries the charge
+    rho x M, and its rays push a charged reader by rho; (0, 1) for a paid
+    family, whose rays push by their content), its columns (`columns`:
+    gravity first, charge second, the declared columns after, aligned by
+    index across the families of the world; `charge` stays the value of
+    the second), whether it has a phase circle, the phase steps its rays
+    turn per Link crossed, and its `lifetime` (L, or None for ever: the
+    age at which an event in transit of the family clicks on the border
+    `lifetime` instead of making its next event, the range of the family's
+    force in Links of flight)."""
 
     name: str
     quantum: int
-    charge: int = 0
+    charge: tuple[int, int] = NO_CHARGE
     phase: bool = True
     phase_per_link: int = 0
+    columns: tuple[Column, ...] = ()
+    lifetime: int | None = None
+
+    def __post_init__(self) -> None:
+        # A family made without its columns (the tests' bare definitions,
+        # the migration tool) carries the two built-in ones.
+        if not self.columns:
+            object.__setattr__(self, "columns", built_in_columns(self.charge))
+
+    @property
+    def values(self) -> tuple[tuple[int, int], ...]:
+        """The family's value per column, aligned with the world's columns."""
+        return tuple(column.value for column in self.columns)
 
     @property
     def free(self) -> bool:
@@ -273,16 +509,31 @@ class LampDefinition:
 @dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
-    phase, its whole charge, its momentum, whether it is held in place, the
-    directions it releases and re-emits on, its table per family (in family
-    order) with the phase window and the reading key of each entry, and its
-    lamp."""
+    phase, its momentum, whether it is held in place, the directions it
+    releases and re-emits on, its table per family (in family order) with
+    the phase window and the reading key of each entry, and its lamp. Its
+    charge is its family's charge per unit of content times its content
+    and is not declared. `span` is the set of Nodes it is a body on (three
+    odd extents centred on `position`, (1, 1, 1) for one Node),
+    `phase_by_momentum` whether it turns its phase by its momentum label
+    at every Link it steps (over the world's `action`), and `held` the
+    content it holds per family in family order at the start: its
+    `amount` under its own family and what `held` declared of the others
+    (0 elsewhere). `contact` is the rule per family (in family order) by
+    which this event reads a body of that family whose step onto it is
+    refused (the contact through the table, 2026-09-20): the entry's rule
+    where it differs from the keys' own rule for that family
+    (`default_rule`: `rerelease`, `pass`, `measure` on a free family,
+    `read` on a paid one), and `CONTACT_DEFAULT` (`measure`, the keys' rule
+    for a paid arrival: the body's momentum is its own label) where the
+    entry is the keys' own, declared or not, so that an entry equal to the
+    default changes nothing. The engine reads a missing entry as the
+    default."""
 
     position: Address3
     family: int
     amount: int
     phase: int
-    charge: int
     momentum: Vector
     fixed: bool
     directions: tuple[int, ...]
@@ -290,6 +541,18 @@ class MeasuredDefinition:
     windows: tuple[int | None, ...]
     reads: tuple[str, ...]
     lamp: LampDefinition | None
+    span: tuple[int, int, int] = ONE_NODE
+    phase_by_momentum: bool = False
+    held: tuple[int, ...] = ()
+    contact: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        # A definition made without `held` (the tests' bare definitions)
+        # holds its amount under its own family alone.
+        if not self.held:
+            found = [0] * (self.family + 1)
+            found[self.family] = self.amount
+            object.__setattr__(self, "held", tuple(found))
 
 
 @dataclass(frozen=True)
@@ -309,45 +572,91 @@ class TransitDefinition:
 
 @dataclass(frozen=True)
 class DetectorDefinition:
-    """A named set of measured events and its threshold."""
+    """A named set of measured events, its threshold and its reading
+    (`beam` or `wave`)."""
 
     name: str
     positions: tuple[Address3, ...]
     threshold: int
+    reading: str = DETECTOR_READINGS[0]
 
 
 @dataclass(frozen=True)
-class RayWorld:
-    """A parsed world of the law of the ray. `boundary` is the declared value
+class NatureBeamWorld:
+    """A parsed world of the Beam Law. `boundary` is the declared value
     as the record carries it (the string `"open"` or the object per axis);
     `periodic` says per axis (x, y, z) whether the walk wraps; `directions`
     is the table `D`: the two rest vectors, the six headings and the declared
-    rest."""
+    rest; `action` is h, the quantum of action of the turn by momentum, or
+    None when the world declares none."""
 
     model_id: str
     shape: Address3
     boundary: str | dict[str, str]
     periodic: tuple[bool, bool, bool]
     ticks: int
-    clock: int
+    K: int | tuple[int, int]
+    turn_rate: tuple[int, int]
     phase_steps: int
     release: tuple[int, int]
     suspension: tuple[int, int]
     width: int
+    age_bound: int
     directions: tuple[Vector, ...]
     direction_bound: int
     families: tuple[FamilyDefinition, ...]
     measured: tuple[MeasuredDefinition, ...]
     in_transit: tuple[TransitDefinition, ...]
     detectors: tuple[DetectorDefinition, ...]
+    action: int | None = None
 
     @property
     def phase_mask(self) -> int:
         return self.phase_steps - 1
 
+    def turn(self, age: int, content: int) -> int:
+        """The turn of a measured event's phase at the self-creation from
+        `age`: `by_clock(age, content x n, d)` phase steps at the clock's
+        rate `turn_rate` = (n, d), the free release's own form at the rate
+        [1, K] (the four unifications (2), BEAM_LAW note 33); the frame
+        refuses a turn of half the circle or more."""
+        numerator, denominator = self.turn_rate
+        return by_clock(age, content * numerator, denominator)
+
+    @property
+    def columns(self) -> tuple[tuple[str, int], ...]:
+        """The world's columns in order, (name, sign): gravity, charge, then
+        the declared names; every family's `columns` is aligned with it."""
+        return tuple((column.name, column.sign) for column in self.families[0].columns)
+
+    @property
+    def declared_columns(self) -> tuple[str, ...]:
+        """The names of the columns beyond the two built in."""
+        return tuple(name for name, _ in self.columns[CHARGE_INDEX + 1 :])
+
+    @property
+    def lifetimes(self) -> bool:
+        """Whether any family declares a lifetime (the border `lifetime` is
+        then a detector of the record, and the inverse interval is refused)."""
+        return any(family.lifetime is not None for family in self.families)
+
+    @property
+    def hypotheses(self) -> list[str]:
+        """The identities of the physical hypotheses the world declares
+        beside the law, in a fixed order: `bohr-v1` for the turn by momentum
+        (`action`), `columns-v1` for the one mechanism of the columns (a
+        column beyond `charge`, or a lifetime: a force of nature in this
+        law is a column with a sign and a range)."""
+        found = []
+        if self.action is not None:
+            found.append(BOHR_RULE)
+        if self.declared_columns or self.lifetimes:
+            found.append(COLUMNS_RULE)
+        return found
+
     @property
     def boundary_per_axis(self) -> dict[str, str]:
-        """The board's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
+        """The GameBoard's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
         return {
             axis: BOUNDARIES[1] if wraps else BOUNDARIES[0]
             for axis, wraps in zip(AXES, self.periodic, strict=True)
@@ -363,8 +672,9 @@ class RayWorld:
         for index, entry in enumerate(self.measured):
             number = index + 1
             definition = self.families[family]
+            holds = family < len(entry.held) and entry.held[family] > 0
             if (
-                (entry.family == family and (definition.free or entry.lamp is not None))
+                (holds and (definition.free or (entry.family == family and entry.lamp is not None)))
                 or entry.table[family] == "rerelease"
                 or any(item.number == number and item.family == family for item in self.in_transit)
             ):
@@ -379,33 +689,33 @@ class RayWorld:
         return None
 
 
-def is_ray_world(document: object) -> bool:
-    """Whether a document declares the law of the ray (`"law": "rays"`)."""
+def is_nature_beam_world(document: object) -> bool:
+    """Whether a document declares the Beam Law (`"law": "beam"`)."""
     return isinstance(document, dict) and document.get("law") == LAW_VALUE
 
 
 def _object(value: object, label: str, allowed: set[str], required: set[str]) -> dict[str, object]:
     if not isinstance(value, dict):
-        raise ValueError(f"{RAYS_LAW}: {label} must be a JSON object")
+        raise ValueError(f"{BEAM_LAW}: {label} must be a JSON object")
     retired = [key for key in (*REVERSIBLE_KEYS, "headings", "heading") if key in value]
     if retired:
         raise ValueError(
-            f"{RAYS_LAW}: {label} declares {', '.join(retired)}, a key of the deleted law of "
+            f"{BEAM_LAW}: {label} declares {', '.join(retired)}, a key of the deleted law of "
             "events or its reversible detector (see docs/MIGRATION.md; a lamp and a ray declare "
             "`directions` and `direction`)"
         )
     unknown = set(value) - allowed
     if unknown:
-        raise ValueError(f"{RAYS_LAW}: {label} has unknown keys: {', '.join(sorted(unknown))}")
+        raise ValueError(f"{BEAM_LAW}: {label} has unknown keys: {', '.join(sorted(unknown))}")
     missing = required - set(value)
     if missing:
-        raise ValueError(f"{RAYS_LAW}: {label} lacks keys: {', '.join(sorted(missing))}")
+        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: {', '.join(sorted(missing))}")
     return {str(key): item for key, item in value.items()}
 
 
 def _integer(value: object, label: str, minimum: int, maximum: int = AMOUNT_BOUND) -> int:
     if type(value) is not int or value < minimum or value > maximum:
-        raise ValueError(f"{RAYS_LAW}: {label} must be an integer from {minimum} through {maximum}")
+        raise ValueError(f"{BEAM_LAW}: {label} must be an integer from {minimum} through {maximum}")
     return value
 
 
@@ -414,15 +724,32 @@ def _ratio(value: object, label: str, zero: bool) -> tuple[int, int]:
     if type(value) is int:
         return _integer(value, label, 0 if zero else 1), 1
     if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{RAYS_LAW}: {label} must be an integer or [numerator, denominator]")
+        raise ValueError(f"{BEAM_LAW}: {label} must be an integer or [numerator, denominator]")
     numerator = _integer(value[0], f"{label} numerator", 0 if zero else 1)
     denominator = _integer(value[1], f"{label} denominator", 1)
     return numerator, denominator
 
 
+def _signed_ratio(value: object, label: str) -> tuple[int, int]:
+    """A charge per unit of content n / d as an integer c (the pair (c, 1))
+    or as `[n, d]`, n an integer of either sign and d an integer from 1,
+    each within the bound of a declared charge; a denominator of 0 and a
+    part that is not an integer are refused naming the key."""
+    if type(value) is int:
+        return _integer(value, label, -MAX_VALUE, MAX_VALUE), 1
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} must be an integer or [numerator, denominator], the charge "
+            "per unit of content"
+        )
+    numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, MAX_VALUE)
+    denominator = _integer(value[1], f"{label} denominator", 1, MAX_VALUE)
+    return numerator, denominator
+
+
 def _address(value: object, label: str, shape: Address3) -> Address3:
     if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{RAYS_LAW}: {label} must be three integers")
+        raise ValueError(f"{BEAM_LAW}: {label} must be three integers")
     found = tuple(
         _integer(item, label, 0, extent - 1) for item, extent in zip(value, shape, strict=True)
     )
@@ -432,14 +759,14 @@ def _address(value: object, label: str, shape: Address3) -> Address3:
 def _vector(value: object, label: str, bound: int) -> Vector:
     """A primitive integer vector with every component in -bound .. bound."""
     if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{RAYS_LAW}: {label} must be three integers")
+        raise ValueError(f"{BEAM_LAW}: {label} must be three integers")
     found = tuple(_integer(item, label, -bound, bound) for item in value)
     if found == (0, 0, 0):
         raise ValueError(
-            f"{RAYS_LAW}: {label} must not be the zero vector (the rest slots are the table's)"
+            f"{BEAM_LAW}: {label} must not be the zero vector (the rest slots are the table's)"
         )
     if bounded_gcd(bounded_gcd(found[0], found[1]), found[2]) != 1:
-        raise ValueError(f"{RAYS_LAW}: {label} must be a primitive vector (its components coprime)")
+        raise ValueError(f"{BEAM_LAW}: {label} must be a primitive vector (its components coprime)")
     return found[0], found[1], found[2]
 
 
@@ -447,14 +774,14 @@ def _direction_table(value: object, bound: int) -> tuple[Vector, ...]:
     """The table `D`: the two rest vectors, the six headings, the declared."""
     table: list[Vector] = [(0, 0, 0), (0, 0, 0), *PORT_HEADINGS]
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: directions must be a list of integer vectors")
+        raise ValueError(f"{BEAM_LAW}: directions must be a list of integer vectors")
     for index, item in enumerate(value):
         vector = _vector(item, f"directions[{index}]", bound)
         if vector in table:
-            raise ValueError(f"{RAYS_LAW}: directions[{index}] repeats a direction of the table")
+            raise ValueError(f"{BEAM_LAW}: directions[{index}] repeats a direction of the table")
         table.append(vector)
     if len(table) > MAX_DIRECTIONS:
-        raise ValueError(f"{RAYS_LAW}: the direction table holds at most {MAX_DIRECTIONS} entries")
+        raise ValueError(f"{BEAM_LAW}: the direction table holds at most {MAX_DIRECTIONS} entries")
     return tuple(table)
 
 
@@ -465,33 +792,116 @@ def _direction(value: object, label: str, table: tuple[Vector, ...], *, rest: bo
         index = _integer(value, label, 0, len(table) - 1)
     else:
         if not isinstance(value, list) or len(value) != 3 or any(type(v) is not int for v in value):
-            raise ValueError(f"{RAYS_LAW}: {label} must be a direction vector or an index of the table")
+            raise ValueError(f"{BEAM_LAW}: {label} must be a direction vector or an index of the table")
         vector = (value[0], value[1], value[2])
         if vector not in table:
             raise ValueError(
-                f"{RAYS_LAW}: {label} names a direction the world does not declare {list(vector)} "
+                f"{BEAM_LAW}: {label} names a direction the world does not declare {list(vector)} "
                 "(the six headings or a vector of `directions`)"
             )
         index = table.index(vector)
     if index < REST_DIRECTIONS and not rest:
-        raise ValueError(f"{RAYS_LAW}: {label} must not be a rest direction")
+        raise ValueError(f"{BEAM_LAW}: {label} must not be a rest direction")
     return index
 
 
 def _directions(value: object, label: str, table: tuple[Vector, ...]) -> tuple[int, ...]:
     if not isinstance(value, list) or not value:
-        raise ValueError(f"{RAYS_LAW}: {label} must be a nonempty list of directions")
+        raise ValueError(f"{BEAM_LAW}: {label} must be a nonempty list of directions")
     found = tuple(_direction(item, label, table) for item in value)
     if len(set(found)) != len(found):
-        raise ValueError(f"{RAYS_LAW}: {label} repeats a direction")
+        raise ValueError(f"{BEAM_LAW}: {label} repeats a direction")
     return found
 
 
+def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
+    """The age at which every straight ray has left an open GameBoard of this
+    shape: the longest Manhattan flight on the GameBoard is D = X + Y + Z - 2
+    Links (inside and out), a ray of direction v makes S_1 = |a| + |b| + |c|
+    steps per period of its line and the least tau with m(tau) >= M steps
+    is at most ceil(M x T_d / (S_1 Q)) (BEAM_LAW section 3), so the exiting
+    walk of a ray of direction v is at age at most ceil(ceil(D / S_1) x
+    T_d / Q); the largest over the table's moving directions. A rest
+    direction never moves and a collision or a periodic axis may keep a ray
+    longer: the bound is exact for the straight flight alone."""
+    diameter = shape[0] + shape[1] + shape[2] - 2
+    largest = 1
+    for vector in table:
+        manhattan = sum(abs(component) for component in vector)
+        if manhattan == 0:
+            continue
+        turn = integer_root(3 * sum(component * component for component in vector) * Q * Q)
+        periods = -(-diameter // manhattan)
+        largest = max(largest, -(-(periods * turn) // Q))
+    return largest
+
+
+def body_nodes(
+    position: Address3,
+    span: tuple[int, int, int],
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+) -> tuple[Address3, ...] | None:
+    """The set of Nodes a measured event of `span` is a body on: the block
+    of span_x x span_y x span_z Nodes centred on `position` (each span odd,
+    the offsets -(s - 1) / 2 .. (s - 1) / 2 per axis), in the fixed order
+    of the offsets (x, then y, then z, ascending; the order the releases
+    are apportioned in). On a periodic axis an offset wraps; on an open
+    axis a Node beyond the face means the body has left the GameBoard and the
+    result is None (the whole body clicks on the face detector). A span
+    of (1, 1, 1) is the one Node `position`."""
+    axes: list[list[int]] = []
+    for axis in range(3):
+        half = (span[axis] - 1) // 2
+        coordinates = []
+        for offset in range(-half, half + 1):
+            coordinate = position[axis] + offset
+            if periodic[axis]:
+                coordinate %= shape[axis]
+            elif not 0 <= coordinate < shape[axis]:
+                return None
+            coordinates.append(coordinate)
+        axes.append(coordinates)
+    return tuple((x, y, z) for x in axes[0] for y in axes[1] for z in axes[2])
+
+
+def _span(value: object, label: str, shape: Address3) -> tuple[int, int, int]:
+    """The span of a body: three odd integers from 1, each at most its
+    axis's extent (so that the body's Nodes are distinct)."""
+    if not isinstance(value, list) or len(value) != 3:
+        raise ValueError(f"{BEAM_LAW}: {label} must be three odd integers from 1")
+    found = []
+    for item, extent in zip(value, shape, strict=True):
+        span = _integer(item, label, 1, extent)
+        if span % 2 == 0:
+            raise ValueError(f"{BEAM_LAW}: {label} must be three odd integers from 1 (a centred body)")
+        found.append(span)
+    return found[0], found[1], found[2]
+
+
+def _age_bound(
+    value: object, shape: Address3, periodic: tuple[bool, bool, bool], table: tuple[Vector, ...]
+) -> int:
+    """The largest age a ray may carry: declared, or twice the flight bound
+    on a GameBoard with an open axis (the slack of one collision or one wrap of
+    a periodic axis), required on a GameBoard periodic on every axis, which no
+    ray leaves."""
+    if value is not None:
+        return _integer(value, "age_bound", 1)
+    if all(periodic):
+        raise ValueError(
+            f"{BEAM_LAW}: age_bound is required on a GameBoard periodic on every axis: no ray "
+            "leaves it, so the largest age a ray may carry (the bound of the store) must be "
+            "declared"
+        )
+    return 2 * flight_bound(shape, table)
+
+
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
-    """The board's faces: `"open"` on every face, or an object with any of
+    """The GameBoard's faces: `"open"` on every face, or an object with any of
     the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the missing axes
     open. Returns the value as declared (what the record carries) and, per
-    axis, whether the walk wraps. A closed board and every other word are
+    axis, whether the walk wraps. A closed GameBoard and every other word are
     refused."""
     if value == BOUNDARIES[0]:
         return BOUNDARIES[0], (False, False, False)
@@ -504,46 +914,171 @@ def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bo
         wraps = tuple(declared.get(axis, BOUNDARIES[0]) == BOUNDARIES[1] for axis in AXES)
         return declared, (wraps[0], wraps[1], wraps[2])
     raise ValueError(
-        f"{RAYS_LAW}: the board is open (its edge is infinity) unless an axis is declared "
+        f"{BEAM_LAW}: the GameBoard is open (its edge is infinity) unless an axis is declared "
         'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic"); '
-        "a closed board is refused"
+        "a closed GameBoard is refused"
     )
 
 
-def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
+def _declared_columns(
+    value: object, label: str, charged: bool
+) -> dict[str, tuple[tuple[int, int], int]]:
+    """A family's `columns`: an object of column name to `{"value": n or
+    [n, d], "sign": 1 or -1}`. The built-in `gravity` is refused (one
+    owner); `charge` under `columns` is refused when the family also
+    declares the key `charge` (one owner of a value); a sign other than 1
+    or -1, a value with a denominator of 0 or a part that is not an
+    integer, and an object with other keys are refused naming the key."""
+    if not isinstance(value, dict):
+        raise ValueError(
+            f"{BEAM_LAW}: {label} must be an object of column name to "
+            '{"value": n or [n, d], "sign": 1 or -1}'
+        )
+    found: dict[str, tuple[tuple[int, int], int]] = {}
+    for name, entry in value.items():
+        column = f"{label}[{name!r}]"
+        if name == GRAVITY_COLUMN:
+            raise ValueError(
+                f"{BEAM_LAW}: {column} declares the built-in column {GRAVITY_COLUMN!r} (the value "
+                "[1, 1] on every unit of content of every family with the sign minus; never declared)"
+            )
+        if name == CHARGE_COLUMN and charged:
+            raise ValueError(
+                f"{BEAM_LAW}: {column} and the key `charge` declare the column {CHARGE_COLUMN!r} "
+                "twice on one family (`charge` is the shorthand for `columns.charge`; declare one)"
+            )
+        obj = _object(entry, column, COLUMN_KEYS, COLUMN_KEYS)
+        sign = obj["sign"]
+        if type(sign) is not int or sign not in COLUMN_SIGNS:
+            raise ValueError(
+                f"{BEAM_LAW}: {column}.sign must be 1 (like values push apart) or -1 (like values "
+                "pull together); a column's sign is a key, not a formula"
+            )
+        found[str(name)] = (_signed_ratio(obj["value"], f"{column}.value"), sign)
+    return found
+
+
+def _lifetime(value: object, label: str, age_bound: int) -> int | None:
+    """A family's lifetime: one integer from 1 through the world's
+    `age_bound` (an event at age L is still on the GameBoard when the walk
+    ends, so the store's bound must hold it); a list or a per-axis value is
+    refused (the flight gives every direction one speed, so a scalar L is
+    a sphere and a vector would be a box), as are 0, a negative number and
+    a fraction."""
+    if value is None:
+        return None
+    if isinstance(value, list):
+        raise ValueError(
+            f"{BEAM_LAW}: {label} must be one integer (a scalar): the flight table gives every "
+            "direction one speed, so L intervals of flight reach a sphere; a per-axis lifetime "
+            "is refused"
+        )
+    lifetime = _integer(value, label, 1)
+    if lifetime > age_bound:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} {lifetime} is beyond the world's age_bound {age_bound}: an "
+            "event at the age L is still on the GameBoard at the end of its walk (declare a "
+            "larger age_bound or a shorter lifetime)"
+        )
+    return lifetime
+
+
+def _families(
+    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND
+) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
-        raise ValueError(f"{RAYS_LAW}: families must be a nonempty list")
+        raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
     found: list[FamilyDefinition] = []
+    declared: list[dict[str, tuple[tuple[int, int], int]]] = []
+    # The world's columns beyond the two built in, in the order of their
+    # first declaration, with the sign the first declaration gave; a later
+    # family declaring another sign for the name is refused.
+    names: list[str] = []
+    signs: dict[str, tuple[int, int]] = {}
     for index, entry in enumerate(value):
         if isinstance(entry, dict) and KIND_KEY in entry:
             raise ValueError(
-                f"{RAYS_LAW}: families[{index}] declares {KIND_KEY}, a key removed on 2026-09-19: "
+                f"{BEAM_LAW}: families[{index}] declares {KIND_KEY}, a key removed on 2026-09-19: "
                 "the kind of a family follows from its quantum (0 free, 1 or more paid) and is "
                 "not declared; see docs/MIGRATION.md"
             )
         obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
-            raise ValueError(f"{RAYS_LAW}: families[{index}].name must be a nonempty string")
+            raise ValueError(f"{BEAM_LAW}: families[{index}].name must be a nonempty string")
         if any(item.name == name for item in found):
-            raise ValueError(f"{RAYS_LAW}: two families named {name!r}")
+            raise ValueError(f"{BEAM_LAW}: two families named {name!r}")
         quantum = _integer(obj["quantum"], f"families[{index}].quantum", FREE_QUANTUM, MAX_VALUE)
-        charge = _integer(obj.get("charge", 0), f"families[{index}].charge", -MAX_VALUE, MAX_VALUE)
-        if quantum != FREE_QUANTUM and charge:
-            raise ValueError(f"{RAYS_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
+        columns = _declared_columns(
+            obj.get("columns", {}), f"families[{index}].columns", "charge" in obj
+        )
+        charge_value = columns.pop(CHARGE_COLUMN, None)
+        if charge_value is not None and charge_value[1] != 1:
+            raise ValueError(
+                f"{BEAM_LAW}: families[{index}].columns[{CHARGE_COLUMN!r}].sign must be 1: the "
+                "electric column's sign is plus (like charges push apart)"
+            )
+        charge = (
+            charge_value[0]
+            if charge_value is not None
+            else _signed_ratio(obj.get("charge", 0), f"families[{index}].charge")
+        )
+        if quantum != FREE_QUANTUM and charge[0]:
+            raise ValueError(f"{BEAM_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
+        for column, ((numerator, _), sign) in columns.items():
+            if quantum != FREE_QUANTUM and numerator:
+                raise ValueError(
+                    f"{BEAM_LAW}: a paid family (quantum {quantum}) carries no column value "
+                    f"({name}, the column {column!r}: its rays push by their content)"
+                )
+            if column not in signs:
+                signs[column] = (sign, index)
+                names.append(column)
+            elif signs[column][0] != sign:
+                raise ValueError(
+                    f"{BEAM_LAW}: families[{index}].columns[{column!r}].sign {sign} differs from "
+                    f"the sign {signs[column][0]} families[{signs[column][1]}] declared: a column's "
+                    "sign is the column's, one per name across the world"
+                )
         phase = obj.get("phase", True)
         if type(phase) is not bool:
-            raise ValueError(f"{RAYS_LAW}: families[{index}].phase must be true or false")
+            raise ValueError(f"{BEAM_LAW}: families[{index}].phase must be true or false")
         per_link = _integer(
             obj.get("phase_per_link", 0), f"families[{index}].phase_per_link", 0, phase_steps - 1
         )
         if per_link and not phase:
             raise ValueError(
-                f"{RAYS_LAW}: families[{index}].phase_per_link is refused for a family without a "
+                f"{BEAM_LAW}: families[{index}].phase_per_link is refused for a family without a "
                 "phase circle"
             )
-        found.append(FamilyDefinition(name, quantum, charge, phase, per_link))
-    return tuple(found)
+        lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
+        found.append(FamilyDefinition(name, quantum, charge, phase, per_link, lifetime=lifetime))
+        declared.append(columns)
+    if 2 + len(names) > COLUMN_LIMIT:
+        raise ValueError(
+            f"{BEAM_LAW}: the world declares {len(names)} columns beyond gravity and charge; at most "
+            f"{COLUMN_LIMIT} columns in all (the per-group work of the push is fixed)"
+        )
+    # Every family's columns aligned with the world's: (0, 1) where it
+    # names none.
+    return tuple(
+        FamilyDefinition(
+            family.name,
+            family.quantum,
+            family.charge,
+            family.phase,
+            family.phase_per_link,
+            (
+                *built_in_columns(family.charge),
+                *(
+                    Column(column, columns.get(column, (NO_CHARGE, 0))[0], signs[column][0])
+                    for column in names
+                ),
+            ),
+            family.lifetime,
+        )
+        for family, columns in zip(found, declared, strict=True)
+    )
 
 
 def _window(value: object, label: str, phase_steps: int) -> int:
@@ -555,13 +1090,15 @@ def _label_bound(
     amount: int, content: int, table: tuple[Vector, ...], directions: tuple[int, ...], label: str
 ) -> None:
     """The momentum label of a release or a declared ray, `content x amount x
-    D[direction]`, must fit the bound on every component."""
+    u_d` with u_d the unit vector of the direction at the scale Q (no
+    component beyond Q), must fit the bound on every component: Q x content
+    x amount within 2^62 - 1, that is content x amount below 2^56."""
     for direction in directions:
-        largest = max(abs(component) for component in table[direction])
-        if largest * content * amount > MOMENTUM_BOUND:
+        if LABEL_SCALE * content * amount > MOMENTUM_BOUND:
             raise ValueError(
-                f"{RAYS_LAW}: {label}: the momentum label {largest} x {content} x {amount} along "
-                f"{list(table[direction])} exceeds the integer bound {MOMENTUM_BOUND}"
+                f"{BEAM_LAW}: {label}: the momentum label {LABEL_SCALE} x {content} x {amount} = "
+                f"{LABEL_SCALE * content * amount} along {list(table[direction])} exceeds the "
+                f"integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // LABEL_SCALE})"
             )
 
 
@@ -573,7 +1110,7 @@ def _lamp(
     table: tuple[Vector, ...],
     quantum: int,
     amount: int,
-    clock: int,
+    turn_rate: tuple[int, int],
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -586,13 +1123,14 @@ def _lamp(
     if "phase_window" in obj:
         if not phased:
             raise ValueError(
-                f"{RAYS_LAW}: {label}.phase_window is refused on a lamp of a family without a "
+                f"{BEAM_LAW}: {label}.phase_window is refused on a lamp of a family without a "
                 "phase circle (a window is a width on the circle, and the family has none)"
             )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     # The largest label a release can carry: the rate's numerator units at
-    # the largest turn the content allows (the whole part of amount / K).
-    largest_turn = max(1, amount // clock)
+    # the largest turn the content allows (the whole part of amount x n / d
+    # at the clock's rate [n, d]).
+    largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
     return LampDefinition(rate, directions, window)
 
@@ -617,68 +1155,136 @@ def _table_entry(
     else:
         rule, window = value, None
     if rule not in TABLES:
-        raise ValueError(f"{RAYS_LAW}: {label} must be one of {TABLES}")
+        raise ValueError(f"{BEAM_LAW}: {label} must be one of {TABLES}")
     if window is not None and rule == "pass":
         raise ValueError(
-            f"{RAYS_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
+            f"{BEAM_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
             "response, and pass responds to nothing"
         )
     if window is not None and not phased:
         raise ValueError(
-            f"{RAYS_LAW}: {label}.phase_window is refused for a family without a phase circle: "
+            f"{BEAM_LAW}: {label}.phase_window is refused for a family without a phase circle: "
             "its rays carry no phase to read"
         )
     if reads is None:
         reads = default_reads(str(rule))
     if reads not in READS:
-        raise ValueError(f"{RAYS_LAW}: {label}.reads must be one of {READS}")
+        raise ValueError(f"{BEAM_LAW}: {label}.reads must be one of {READS}")
     return str(rule), window, str(reads)
 
 
 def _measured(
     value: object,
     shape: Address3,
+    periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
-    clock: int,
+    turn_rate: tuple[int, int],
     phase_steps: int,
     release: tuple[int, int],
     table: tuple[Vector, ...],
+    ticks: int,
+    action: int | None,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: measured must be a list")
+        raise ValueError(f"{BEAM_LAW}: measured must be a list")
     names = {family.name: index for index, family in enumerate(families)}
     found: list[MeasuredDefinition] = []
+    # Every Node of every body so far: two measured events never share one.
+    occupied: set[Address3] = set()
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
+        if isinstance(entry, dict) and CHARGE_KEY in entry:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} declares {CHARGE_KEY}, a key removed on 2026-09-20: the "
+                "charge of a measured event is its family's charge per unit of content times "
+                "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
+            )
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
-            raise ValueError(f"{RAYS_LAW}: two measured events at one Node {list(position)}")
+            raise ValueError(f"{BEAM_LAW}: two measured events at one Node {list(position)}")
+        span = _span(obj.get("span", list(ONE_NODE)), f"{label}.span", shape)
+        nodes = body_nodes(position, span, shape, periodic)
+        if nodes is None:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}: a body of span {list(span)} centred on {list(position)} "
+                "leaves the GameBoard through an open face"
+            )
+        shared = [node for node in nodes if node in occupied]
+        if shared:
+            raise ValueError(
+                f"{BEAM_LAW}: two measured events share the Node {list(shared[0])} "
+                f"({label}, a body of span {list(span)})"
+            )
+        occupied.update(nodes)
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
-            raise ValueError(f"{RAYS_LAW}: {label}.family names an unknown family")
+            raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         amount = _integer(obj["amount"], f"{label}.amount", 1)
+        held = [0] * len(families)
+        held[family] = amount
+        declared_held = obj.get("held", {})
+        if not isinstance(declared_held, dict):
+            raise ValueError(f"{BEAM_LAW}: {label}.held must map family names to contents")
+        for key, content in declared_held.items():
+            if key not in names:
+                raise ValueError(f"{BEAM_LAW}: {label}.held names an unknown family {key!r}")
+            if names[key] == family:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.held names the event's own family {key!r}, whose "
+                    "content is `amount`"
+                )
+            held[names[key]] = _integer(content, f"{label}.held[{key!r}]", 1)
         phased = families[family].phase
-        if phased and 2 * amount >= clock * phase_steps:
+        # The turn's static bound: 2 x content x n below d x N at the clock's
+        # rate [n, d] (2 x content below K x N for an integer K), the exact
+        # refusal of a turn at half the circle staying the frame's.
+        if phased and 2 * sum(held) * turn_rate[0] >= turn_rate[1] * phase_steps:
             raise ValueError(
-                f"{RAYS_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
-                "per self-creation below half the circle)"
+                f"{BEAM_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
+                "per self-creation below half the circle; the content held of every family counts; "
+                "at the clock's rate [n, d], 2 x content x n below d x N)"
             )
         # A measured event of a family without a phase circle has phase 0.
         phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
-        charge = _integer(
-            obj.get("charge", families[family].charge), f"{label}.charge", -MAX_VALUE, MAX_VALUE
-        )
-        if not families[family].free and charge:
-            raise ValueError(f"{RAYS_LAW}: {label}: a measured event of a paid family carries no charge")
         momentum_value = obj.get("momentum", [0, 0, 0])
         if not isinstance(momentum_value, list) or len(momentum_value) != 3:
-            raise ValueError(f"{RAYS_LAW}: {label}.momentum must be three integers")
+            raise ValueError(f"{BEAM_LAW}: {label}.momentum must be three integers")
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
         fixed = obj.get("fixed", False)
         if type(fixed) is not bool:
-            raise ValueError(f"{RAYS_LAW}: {label}.fixed must be true or false")
+            raise ValueError(f"{BEAM_LAW}: {label}.fixed must be true or false")
+        turning = obj.get("phase_by_momentum", False)
+        if type(turning) is not bool:
+            raise ValueError(f"{BEAM_LAW}: {label}.phase_by_momentum must be true or false")
+        if turning:
+            if action is None:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.phase_by_momentum needs the world's `action` (the "
+                    "quantum h of the turn by momentum), which the world does not declare"
+                )
+            if fixed:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.phase_by_momentum is refused on a fixed measured "
+                    "event, which never steps a Link"
+                )
+            if not phased:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.phase_by_momentum is refused for a family without a "
+                    "phase circle: there is no phase to turn"
+                )
+            # The bound of the turn: a body steps at most one Link per
+            # interval, so within the run k <= ticks Links on an axis and
+            # the product k x |p| x N of the declared momentum must fit.
+            largest = max(abs(component) for component in momentum)
+            if ticks * largest * phase_steps > MOMENTUM_BOUND:
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}: the turn by momentum forms k x |p| x N up to "
+                    f"{ticks} x {largest} x {phase_steps} = {ticks * largest * phase_steps} "
+                    f"within the run, beyond the integer bound {MOMENTUM_BOUND} (a smaller "
+                    "momentum, N or run)"
+                )
         directions = _directions(
             obj.get("directions", list(range(HEADING_OFFSET, FIXED_DIRECTIONS))),
             f"{label}.directions",
@@ -694,10 +1300,10 @@ def _measured(
             reads.append(component)
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
-            raise ValueError(f"{RAYS_LAW}: {label}.table must map family names to rules")
+            raise ValueError(f"{BEAM_LAW}: {label}.table must map family names to rules")
         for key, entry_value in declared.items():
             if key not in names:
-                raise ValueError(f"{RAYS_LAW}: {label}.table names an unknown family {key!r}")
+                raise ValueError(f"{BEAM_LAW}: {label}.table names an unknown family {key!r}")
             rules[names[key]], windows[names[key]], reads[names[key]] = _table_entry(
                 entry_value,
                 f"{label}.table[{key!r}]",
@@ -705,13 +1311,23 @@ def _measured(
                 families[names[key]].phase,
                 rules[names[key]],
             )
-        if families[family].free:
-            # The label of a free release: amount x D along a heading.
-            _label_bound(amount * release[0] // release[1] or 1, 1, table, directions, label)
+        # The rule of a contact per family: the entry's rule where it
+        # differs from the keys' own rule for the family, `measure` (the
+        # keys' rule for a paid arrival, the body's momentum its own label)
+        # where the entry is the keys' own, declared or not.
+        contact = [
+            rule if rule != default_rule(family) else CONTACT_DEFAULT
+            for rule, family in zip(rules, families, strict=True)
+        ]
+        for held_family, content in enumerate(held):
+            if content and families[held_family].free:
+                # The label of a free release: amount x D along a heading,
+                # of the event's own family and of every free family held.
+                _label_bound(content * release[0] // release[1] or 1, 1, table, directions, label)
         lamp = None
         if "lamp" in obj:
             if families[family].free:
-                raise ValueError(f"{RAYS_LAW}: {label}: a lamp is a measured event of a paid family")
+                raise ValueError(f"{BEAM_LAW}: {label}: a lamp is a measured event of a paid family")
             lamp = _lamp(
                 obj["lamp"],
                 f"{label}.lamp",
@@ -720,7 +1336,7 @@ def _measured(
                 table,
                 families[family].quantum,
                 amount,
-                clock,
+                turn_rate,
             )
         found.append(
             MeasuredDefinition(
@@ -728,7 +1344,6 @@ def _measured(
                 family,
                 amount,
                 phase,
-                charge,
                 (momentum[0], momentum[1], momentum[2]),
                 fixed,
                 directions,
@@ -736,9 +1351,110 @@ def _measured(
                 tuple(windows),
                 tuple(reads),
                 lamp,
+                span,
+                turning,
+                tuple(held),
+                tuple(contact),
             )
         )
     return tuple(found)
+
+
+def event_charges(families: tuple[FamilyDefinition, ...], held: dict[int, int]) -> list[tuple[int, int]]:
+    """A declared measured event's charge in every column from what it
+    holds at the start (family index to content): per column the exact
+    rational sum of the held families' values times their contents, the
+    reduced pair (the parser's copy of the engine's reading of the same,
+    `measured.column_charges`, for the static budget below)."""
+    return [
+        rational_sum(
+            [
+                (families[family].values[column][0] * content, families[family].values[column][1])
+                for family, content in held.items()
+                if content and families[family].values[column][0]
+            ]
+        )
+        for column in range(len(families[0].columns))
+    ]
+
+
+def _column_budget(
+    families: tuple[FamilyDefinition, ...],
+    measured: tuple[MeasuredDefinition, ...],
+    release: tuple[int, int],
+) -> None:
+    """The parser's static budget of the push over the columns (the
+    mathematician's rule P3 of 2026-09-20 in the form the physicist's
+    design states for the load-time check): for every declared measured
+    event A, every free family g and every column c, the product of the
+    reader's charge in the column with the family's value, |E_c n_c|,
+    times the largest label flow per axis A can meet from one number's
+    rays of g in one interval, V_g = Q x w_A x (the largest release of one
+    self-creation of g by any event over its directions), must stay within
+    2^62 - 1 (the run-time rule R1 tested at every push), and the sum over
+    the columns of the whole parts, each at most |E_c n_c| V_g / (D_c d_c)
+    + 1, within the same bound (R2), so that k terms each inside the
+    budget sum inside it in any order. Static and conservative on the
+    declared keys: a declared ray in transit, a merged or re-emitted row
+    and a content grown by clicks are beyond it and are refused at the
+    push they would overflow (`nature_beam.push_form`). Refused naming the
+    measured event, the family, the column and the numbers."""
+    numerator, denominator = release
+    count = len(families)
+    # Per family and per measured event, the largest release of one
+    # self-creation over its directions (a reader never reads its own
+    # rays: the largest over the other events).
+    releases: list[list[int]] = [[0] * len(measured) for _ in range(count)]
+    for index, entry in enumerate(measured):
+        for family, content in _held_of(entry).items():
+            if not families[family].free or not content:
+                continue
+            product = content * numerator
+            per_direction = product // denominator + (1 if product % denominator else 0)
+            releases[family][index] = per_direction * len(entry.directions)
+    columns = families[0].columns
+    for index, entry in enumerate(measured):
+        width = entry.span[0] * entry.span[1] * entry.span[2]
+        charges = event_charges(families, _held_of(entry))
+        for family in range(count):
+            largest = max((r for k, r in enumerate(releases[family]) if k != index), default=0)
+            if not families[family].free or not largest:
+                continue
+            moment = LABEL_SCALE * width * largest
+            total = 0
+            for c, (column, (charge, charge_denominator)) in enumerate(
+                zip(columns, charges, strict=True)
+            ):
+                value, value_denominator = families[family].values[c]
+                if not charge or not value:
+                    continue
+                if abs(value) * moment > MOMENTUM_BOUND or abs(charge) > MOMENTUM_BOUND // (
+                    abs(value) * moment
+                ):
+                    raise ValueError(
+                        f"{BEAM_LAW}: measured[{index}]: the push over the column {column.name!r} "
+                        f"from the rays of the family {families[family].name!r} could reach "
+                        f"|E n| x V = |{charge} x {value}| x {moment} beyond the integer bound "
+                        f"{MOMENTUM_BOUND} (E/D the reader's charge in the column, n/d the family's "
+                        f"value per unit of content, V = {LABEL_SCALE} x {width} x {largest} the "
+                        "largest label flow of one self-creation's release read over the "
+                        "reader's Nodes)"
+                    )
+                total += (
+                    abs(charge) * abs(value) * moment // (charge_denominator * value_denominator) + 1
+                )
+            if total > MOMENTUM_BOUND:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{index}]: the pushes over the {len(columns)} columns from "
+                    f"the rays of the family {families[family].name!r} could sum to {total} beyond "
+                    f"the integer bound {MOMENTUM_BOUND} (each column's whole part within the bound, "
+                    "their sum not)"
+                )
+
+
+def _held_of(entry: MeasuredDefinition) -> dict[int, int]:
+    """The content a declared measured event holds per family at the start."""
+    return {family: content for family, content in enumerate(entry.held) if content}
 
 
 def _in_transit(
@@ -748,9 +1464,10 @@ def _in_transit(
     measured: tuple[MeasuredDefinition, ...],
     phase_steps: int,
     table: tuple[Vector, ...],
+    age_bound: int,
 ) -> tuple[TransitDefinition, ...]:
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: in_transit must be a list")
+        raise ValueError(f"{BEAM_LAW}: in_transit must be a list")
     names = {family.name: index for index, family in enumerate(families)}
     found: list[TransitDefinition] = []
     for index, entry in enumerate(value):
@@ -760,11 +1477,18 @@ def _in_transit(
         )
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
-            raise ValueError(f"{RAYS_LAW}: {label}.family names an unknown family")
+            raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         top = phase_steps - 1 if families[family].phase else 0
         direction = _direction(obj["direction"], f"{label}.direction", table, rest=True)
         amount = _integer(obj["amount"], f"{label}.amount", 1)
+        age = _integer(obj.get("age", 0), f"{label}.age", 0, age_bound)
+        lifetime = families[family].lifetime
+        if lifetime is not None and age >= lifetime:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.age {age} is at or beyond the lifetime {lifetime} of the "
+                f"family {family_name!r}: the event would have clicked on the border already"
+            )
         # A declared ray of a paid family carries one phase step of content
         # per unit, quantum x 1 (no emitter declared its turn); a free one
         # carries none and its label is the amount along the direction.
@@ -777,18 +1501,25 @@ def _in_transit(
                 direction,
                 amount,
                 _integer(obj.get("phase", 0), f"{label}.phase", 0, top),
-                _integer(obj.get("age", 0), f"{label}.age", 0),
+                age,
             )
         )
     return tuple(found)
 
 
 def _detectors(
-    value: object, shape: Address3, measured: tuple[MeasuredDefinition, ...]
+    value: object,
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+    measured: tuple[MeasuredDefinition, ...],
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: detectors must be a list")
+        raise ValueError(f"{BEAM_LAW}: detectors must be a list")
     at = {entry.position for entry in measured}
+    # The other Nodes of the bodies on a set: a body is named by its centre.
+    inside: set[Address3] = set()
+    for entry in measured:
+        inside.update(body_nodes(entry.position, entry.span, shape, periodic) or ())
     taken: set[Address3] = set()
     found: list[DetectorDefinition] = []
     for index, entry in enumerate(value):
@@ -796,49 +1527,77 @@ def _detectors(
         obj = _object(entry, label, DETECTOR_KEYS, {"name", "positions"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
-            raise ValueError(f"{RAYS_LAW}: {label}.name must be a nonempty string")
+            raise ValueError(f"{BEAM_LAW}: {label}.name must be a nonempty string")
         if any(item.name == name for item in found):
-            raise ValueError(f"{RAYS_LAW}: two detectors named {name!r}")
+            raise ValueError(f"{BEAM_LAW}: two detectors named {name!r}")
+        if name in FACE_NAMES:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.name {name!r} is the name of a face detector (an open face "
+                "of the GameBoard is a detector of that name; declare another)"
+            )
+        if name == LIFETIME_NAME:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.name {name!r} is the name of the border every event of a "
+                "family with a lifetime clicks on; declare another"
+            )
         positions_value = obj["positions"]
         if not isinstance(positions_value, list) or not positions_value:
-            raise ValueError(f"{RAYS_LAW}: {label}.positions must be a nonempty list of Nodes")
+            raise ValueError(f"{BEAM_LAW}: {label}.positions must be a nonempty list of Nodes")
         positions = []
         for item in positions_value:
             position = _address(item, f"{label}.positions", shape)
             if position not in at:
+                if position in inside:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {label}.positions names a Node of a body on a set "
+                        f"{list(position)} that is not its position (a body is one record, "
+                        "named by its centre)"
+                    )
                 raise ValueError(
-                    f"{RAYS_LAW}: {label}.positions names a Node without a measured event {list(position)}"
+                    f"{BEAM_LAW}: {label}.positions names a Node without a measured event {list(position)}"
                 )
             if position in taken:
-                raise ValueError(f"{RAYS_LAW}: a Node in two detectors {list(position)}")
+                raise ValueError(f"{BEAM_LAW}: a Node in two detectors {list(position)}")
             taken.add(position)
             positions.append(position)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
-        found.append(DetectorDefinition(name, tuple(positions), threshold))
+        reading = obj.get("reading", DETECTOR_READINGS[0])
+        if reading not in DETECTOR_READINGS:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}, not {reading!r}"
+            )
+        found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
     return tuple(found)
 
 
-def parse_ray_world(document: object) -> RayWorld:
-    """Reject anything but a lawful world of the law of the ray."""
+def parse_nature_beam_world(document: object) -> NatureBeamWorld:
+    """Reject anything but a lawful world of the Beam Law."""
     if not isinstance(document, dict):
-        raise ValueError(f"{RAYS_LAW}: a world is a JSON object")
+        raise ValueError(f"{BEAM_LAW}: a world is a JSON object")
     old = [key for key in OLD_KEYS if key in document]
     if old:
         raise ValueError(
-            f"{RAYS_LAW}: a world of the law of the ray declares none of the earlier engines' "
+            f"{BEAM_LAW}: a world of the Beam Law declares none of the earlier engines' "
             f"keys ({', '.join(old)}); see docs/MIGRATION.md"
         )
     if document.get("law") == "events":
         raise ValueError(
-            f'{RAYS_LAW}: "law": "events" names the law of events (events-v1), deleted on '
-            '2026-09-19; a world of the law of the ray declares "law": "rays" (docs/MIGRATION.md)'
+            f'{BEAM_LAW}: "law": "events" names the law of events (events-v1), deleted on '
+            '2026-09-19; a world of the Beam Law declares "law": "beam" (docs/MIGRATION.md)'
+        )
+    if document.get("law") == OLD_LAW_VALUE:
+        raise ValueError(
+            f'{BEAM_LAW}: "law": "rays" is the Beam Law\'s name before 2026-09-20 (rays-v1 is '
+            'beam-v1, the same law); a world declares "law": "beam": rewrite it with '
+            'tools/migrate_nature_beam_worlds.py (docs/MIGRATION.md, "The names NatureBeam and '
+            "GameBoard and the glossary's single names, on 2026-09-20\")"
         )
     if document.get("law") != LAW_VALUE:
-        raise ValueError(f'{RAYS_LAW}: a world of the law of the ray declares "law": "rays"')
+        raise ValueError(f'{BEAM_LAW}: a world of the Beam Law declares "law": "beam"')
     events = [key for key in EVENTS_KEYS if key in document]
     if events:
         raise ValueError(
-            f"{RAYS_LAW}: a world of the law of the ray declares none of the law of events' keys "
+            f"{BEAM_LAW}: a world of the Beam Law declares none of the law of events' keys "
             f"({', '.join(events)}); see docs/MIGRATION.md"
         )
     obj = _object(
@@ -849,18 +1608,29 @@ def parse_ray_world(document: object) -> RayWorld:
     )
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
-        raise ValueError(f"{RAYS_LAW}: model_id must be a nonempty string")
+        raise ValueError(f"{BEAM_LAW}: model_id must be a nonempty string")
     shape_value = obj["shape"]
     if not isinstance(shape_value, list) or len(shape_value) != 3:
-        raise ValueError(f"{RAYS_LAW}: shape must be three positive extents")
+        raise ValueError(f"{BEAM_LAW}: shape must be three positive extents")
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
     ticks = _integer(obj["ticks"], "ticks", 0)
-    clock = _integer(obj["K"], "K", 1)
+    # The clock's rate: an integer K is the pair [1, K] (one phase step per
+    # K units of content per self-creation), a pair [n, d] is n phase steps
+    # per d units of content per self-creation, like `release`; the record
+    # carries the key as declared.
+    declared_clock = obj["K"]
+    K: int | tuple[int, int]
+    if type(declared_clock) is int:
+        K = _integer(declared_clock, "K", 1)
+        turn_rate = (1, K)
+    else:
+        turn_rate = _ratio(declared_clock, "K", zero=False)
+        K = turn_rate
     phase_steps = _integer(obj.get("N", 64), "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
-        raise ValueError(f"{RAYS_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
+        raise ValueError(f"{BEAM_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
     release = _ratio(obj["release"], "release", zero=True)
     suspension = _ratio(obj.get("suspension", 1), "suspension", zero=True)
     if suspension[0] == 0:
@@ -871,26 +1641,47 @@ def parse_ray_world(document: object) -> RayWorld:
     width = _integer(obj.get("width", 1), "width", 1)
     bound = _integer(obj.get("direction_bound", DEFAULT_DIRECTION_BOUND), "direction_bound", 1, 4096)
     table = _direction_table(obj.get("directions", []), bound)
-    families = _families(obj["families"], phase_steps)
-    measured = _measured(obj["measured"], shape, families, clock, phase_steps, release, table)
-    in_transit = _in_transit(obj.get("in_transit", []), shape, families, measured, phase_steps, table)
-    detectors = _detectors(obj.get("detectors", []), shape, measured)
-    world = RayWorld(
+    age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
+    # The quantum of action of the turn by momentum, h: absent by default
+    # (nothing turns by momentum), an integer from 1 when declared.
+    action = None if "action" not in obj else _integer(obj["action"], "action", 1)
+    families = _families(obj["families"], phase_steps, age_bound)
+    measured = _measured(
+        obj["measured"],
+        shape,
+        periodic,
+        families,
+        turn_rate,
+        phase_steps,
+        release,
+        table,
+        ticks,
+        action,
+    )
+    _column_budget(families, measured, release)
+    in_transit = _in_transit(
+        obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
+    )
+    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
+    world = NatureBeamWorld(
         model_id,
         shape,
         boundary,
         periodic,
         ticks,
-        clock,
+        K,
+        turn_rate,
         phase_steps,
         release,
         suspension,
         width,
+        age_bound,
         table,
         bound,
         families,
         measured,
         in_transit,
         detectors,
+        action,
     )
     return world

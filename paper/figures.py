@@ -28,9 +28,10 @@ def load(path: Path) -> dict:
 
 
 def largest_lattice_level(sweep: dict) -> dict:
-    """The sweep level with the most lattice pairs per correlation."""
+    """The sweep level with the most GameBoard pairs per correlation."""
     return max(
-        (lvl for lvl in sweep["levels"] if lvl["lattice"]), key=lambda lvl: lvl["pairs_per_correlation"]
+        (lvl for lvl in sweep["levels"] if lvl["GameBoard"]),
+        key=lambda lvl: lvl["pairs_per_correlation"],
     )
 
 
@@ -59,7 +60,7 @@ def figure_bell(bell: dict, sweep: dict, output: Path) -> None:
     ax.text(5.4, 2 * math.sqrt(2) + 0.03, "2 sqrt 2", ha="right", fontsize=8, color="gray")
     ax.set_ylabel("CHSH S")
     ax.set_ylim(0, 3.2)
-    ax.set_title("Bell's test on every candidate, one lattice")
+    ax.set_title("Bell's test on every candidate, one GameBoard")
     fig.tight_layout()
     fig.savefig(output / "bell_candidates.pdf")
     plt.close(fig)
@@ -67,11 +68,11 @@ def figure_bell(bell: dict, sweep: dict, output: Path) -> None:
 
 def figure_convergence(sweep: dict, output: Path) -> None:
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    for lattice, style, label in (
-        (True, "o-", "lattice runs, 4 replicas"),
+    for GameBoard, style, label in (
+        (True, "o-", "GameBoard runs, 4 replicas"),
         (False, "s--", "registry alone, 4 replicas"),
     ):
-        rows = [lvl for lvl in sweep["levels"] if lvl["lattice"] == lattice]
+        rows = [lvl for lvl in sweep["levels"] if lvl["GameBoard"] == GameBoard]
         ax.errorbar(
             [lvl["pairs_per_correlation"] for lvl in rows],
             [lvl["S_mean"] for lvl in rows],

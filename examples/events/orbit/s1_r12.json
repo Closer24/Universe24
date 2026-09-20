@@ -1,5 +1,5 @@
 {
-  "law": "rays",
+  "law": "beam",
   "model_id": "rays-orbit-s1-r12-plane-v1",
   "shape": [
     121,
@@ -1234,7 +1234,7 @@
       "fixed": false,
       "momentum": [
         0,
-        11,
+        192,
         0
       ]
     }
