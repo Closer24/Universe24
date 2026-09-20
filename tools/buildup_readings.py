@@ -201,9 +201,7 @@ def read_run(folder: Path, *, window_start: int = DEFAULT_WINDOW_START) -> Readi
                 # Each unit alone: its own amplitude at its phase, squared
                 # (a row of `amount` units is that many units).
                 for amount, phase in rows:
-                    x, yy = coherent_pointer(
-                        np.array([1]), np.array([phase]), FIRST, [1], cosines, sines
-                    )
+                    x, yy = coherent_pointer(np.array([1]), np.array([phase]), FIRST, cosines, sines)
                     pixel.incoherent += amount * (x[0] * x[0] + yy[0] * yy[0])
     assert not pending, "a pixel's clicks without its record line"
     return reading

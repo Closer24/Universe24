@@ -337,11 +337,15 @@ declares the reading `wave` (the default since 2026-09-20; from
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the
   largest C^2 + S^2 is 65897), so each component of the pointer is within
-  32 x 257 x the clicked amount and the int64 register holds it up to the
-  amount (2^62 - 1) // (32 x 257) = 560759486676481
-  (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond); beyond it the
-  pointer is summed in Python integers, and the square and the record are
-  Python integers always. Every case is compared with the Python-int
+  32 x 257 x the clicked amount; since the four unifications (2026-09-20,
+  (j)) the pointer is the first moment of the one reading over the
+  circle, taken in the int64 register where the reading's bound holds for
+  its table (`reading_fits`: 32 x amount x 256^2 x the rows of a group
+  within 2^62 - 1, so one row of an amount below 2^41 and 2^41 - 1 rows
+  of amount 1 fit, 2^41 do not; until then `POINTER_AMOUNT_BOUND` =
+  (2^62 - 1) // (32 x 257) = 560759486676481 on the clicked amount) and in
+  Python integers beyond it (`moment_table(exact=True)`); the square and
+  the record are Python integers always. Every case is compared with the Python-int
   computation X = sum 32 x amount x C[phase], Y = sum 32 x amount x
   S[phase] over the clicked rows of the record through the tables: a row
   of 261123 (the old bound) records 2139119616^2 with the pointer
@@ -420,6 +424,22 @@ declares the reading `wave` (the default since 2026-09-20; from
   two rays in phase at threshold 3 pass (the amount 2 < 3) where `wave`
   clicks them (4 >= 3); no memory between intervals: the two opposite
   rays passing at tick 1 do not add to the next tick's set.
+- (j) the pointer is the first moment of the one reading over the circle
+  (the four unifications, the model owner, 2026-09-20, (1); BEAM_LAW note
+  33; the integers written first): rows of amounts 3, 5, 2 at the phases
+  0, 16, 32 of N = 64 (the entries (256, 0), (0, 256), (-256, 0)) read the
+  pointer (8192, 40960) = 32 x (768 - 512, 1280), equal to
+  `read_arrivals` on the circle's unit vectors (C, S, 0) with the weights
+  32 x amount (its flow; its presence 320 = 32 x 10), the record 8192^2 +
+  40960^2 = 1744830464 = 26 units exactly ((3 - 2)^2 + 5^2), the set's
+  phase 14 (the nearest step to atan 5 = 78.69 degrees, 14 x 5.625 =
+  78.75); two groups (the rows 0 to 1 and 2) read (24576, 40960) and
+  (-16384, 0); one row of 2^42 at phase 5 is beyond the reading's
+  register bound (32 x 2^42 x 256^2 = 2^63), so `read_arrivals` refuses
+  it while the pointer reads 2^47 x (C[5], S[5]) = 2^47 x (226, 121)
+  exactly on its Python path; one row of 2^49 (beyond the former pointer
+  bound 2^48) reads (2^62, 0), one of 2^60 (whose amplitude would not fit
+  the register) (2^73, 0): the record is never refused.
 
 ## The push as one form
 

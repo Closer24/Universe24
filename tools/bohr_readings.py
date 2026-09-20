@@ -297,9 +297,7 @@ def pointer_by_turn(
             continue
         amount = np.array([a for a, _ in rows], dtype=np.int64)
         phase = np.array([p for _, p in rows], dtype=np.int64)
-        x, y = coherent_pointer(
-            amount, phase, np.zeros(1, dtype=np.int64), [int(amount.sum())], cosines, sines
-        )
+        x, y = coherent_pointer(amount, phase, np.zeros(1, dtype=np.int64), cosines, sines)
         found.append((int(x[0]), int(y[0])))
     return found
 

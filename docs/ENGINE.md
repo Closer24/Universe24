@@ -145,10 +145,12 @@ trace, exact integers), and every
 coupling selects its component by the declared key `reads` of its table
 entry (`scalar` by default: the clock's count and the threshold read the
 presence, the push reads the flow, a detector may declare `tensor`); the
-detector's coherent record is the same moments over the clicked rays with
-their amplitudes as weights (32 x amount at cos and sin over 256), the
-scalar squared ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam),
-step 2, and section 10, note 16).
+detector's coherent record is the square of the first moment of the same
+reading over the clicked rays, taken on the circle's unit vectors
+(C[phase], S[phase], 0) with their amplitudes 32 x amount as weights
+(`nature_beam.coherent_pointer` through `read_groups`, the one table;
+[BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam),
+step 2, and section 10, notes 16 and 33).
 
 **The frame** (`NatureBeamSimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
@@ -253,11 +255,12 @@ against 2^62 - 1 (`world.MOMENTUM_BOUND`), and a value beyond it refuses
 the run with `OverflowError` naming the measured event, its Node and the
 quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-beam-law));
 the detector's record is not a quantity of the law but a report of the
-host and is never refused: the coherent pointer (X, Y) is summed in the
-int64 register while the amount a detector set or a face clicks of one
-family in one interval is within `nature_beam.POINTER_AMOUNT_BOUND`
-((2^62 - 1) // (32 x 257) = 560759486676481) and in Python integers
-beyond it (`nature_beam.coherent_pointer`); the square and the cumulative
+host and is never refused: the coherent pointer (X, Y), the first moment
+of the one reading over the circle, is taken in the int64 register where
+the reading's bound holds for its table (`nature_beam.reading_fits`:
+32 x amount x 256^2 x the rows of the group within 2^62 - 1) and in
+Python integers beyond it (`nature_beam.coherent_pointer`,
+`moment_table(exact=True)`); the square and the cumulative
 record (`DetectorSet.record`, `Ledger.face_record`) are exact Python
 integers that can exceed 2^63 in `run.json` and `state.json`, parsed as
 arbitrary-precision integers ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).

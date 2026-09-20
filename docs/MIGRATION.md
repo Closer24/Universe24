@@ -6,6 +6,36 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
+
+The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+"DECIDED: the four unifications of the formulas"; [BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+the places where the code spelled the one moment or the one `by_clock`
+twice are spelled once. Identities: no world file changes and every
+example world replays byte-identical in `events.jsonl` and `state.json`
+except where a section below says.
+
+- **(1) The pointer is the first moment of the one reading over the
+  circle.** `nature_beam.coherent_pointer(amount, phase, starts, cosines,
+  sines)` takes the moment table on the circle's unit vectors
+  `(C[phase], S[phase], 0)` (`nature_beam.circle_vectors`) with the
+  weights `32 x amount` and returns its first moment per contiguous
+  group; the `totals` argument (the exact clicked amount per group, the
+  former gate of the int64 path) is removed from the signature: the
+  callers `tools/buildup_readings.py`, `tools/bohr_readings.py` and
+  `tests/test_bohr_readings.py` drop it. `nature_beam.POINTER_AMOUNT_BOUND`
+  is deleted: the register path of the pointer is the reading's own
+  bound, `nature_beam.reading_fits(amounts, vectors, ages, widest)` (new;
+  the one test `read_arrivals` refuses by and `first_reading_overflow`
+  looks per group by), and beyond it the pointer is the same table in
+  Python integers, `nature_beam.moment_table(v, a, ages, exact=True)`
+  (new keyword; the dtype `object`). `nature_beam.read_groups(vectors,
+  weights, starts, ages, exact)` (new) is the one reading per contiguous
+  group of rows (the taken rows of step 4 and the pointer alike). A world
+  whose detector set clicks a row of an amount between 2^41 and 2^48 in
+  one interval now takes the Python path for that pointer where it took
+  the register (the same integer, slower); no registered world does.
+
 ## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
 
 The model owner's decision of 2026-09-20 ([BEAM_LAW note 32](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);

@@ -349,8 +349,10 @@ order with each step's inverse:
    selects its component by the key
    `reads` (the clock's count and the threshold the scalar, the push the
    vector, a detector may declare the tensor); the detector's record is the
-   same moments over the clicked rays with their amplitudes as weights, the
-   scalar squared. On the six headings the moments are the slot
+   square of the first moment of the same reading over the clicked rays,
+   taken on the circle's unit vectors (C[phase], S[phase], 0) with their
+   amplitudes as weights (the pointer; note 33, the four unifications).
+   On the six headings the moments are the slot
    decomposition of the first implementation exactly; on a fan they are
    the moments of the fan's vectors, no projection onto the Ports.
 3. **The collision.** At every Node of free space, a Node that holds no
@@ -585,9 +587,12 @@ model owner's decision, "on the GameBoard a ray, in the world a wave"; or
 - `wave`: with the rays the set clicks this interval (after the threshold
   and the window; `measure` only), `A_u = 32 x amount_u` (note 3) and the
   1/256 tables `C`, `S` of `core/phase.py`, the coherent pointer over the
-  whole set `(X, Y) = (sum A_u C[phase_u], sum A_u S[phase_u])` and the
-  record `X^2 + Y^2`, an integer added to the detector's one `record`
-  (per detector, cumulative, never per Node). The set's phase is the
+  whole set `(X, Y) = (sum A_u C[phase_u], sum A_u S[phase_u])`, since
+  2026-09-20 the first moment of the one reading taken on the circle's
+  unit vectors `(C[phase], S[phase], 0)` with the amplitudes as the
+  weights (`nature_beam.coherent_pointer` through `read_groups`; note 33),
+  and the record `X^2 + Y^2`, an integer added to the detector's one
+  `record` (per detector, cumulative, never per Node). The set's phase is the
   pointer's nearest step (`nature_beam.pointer_phases`: the step of the
   circle whose table entry is nearest in direction, the least
   `|X S[k] - Y C[k]|` among the k with `X C[k] + Y S[k] > 0`, exact
@@ -657,12 +662,17 @@ the contents, the labels, the pushes), and a report of the host has no
 bound. The amplitude of a row is `32 x amount` (note 3) and every entry
 (C, S) of the 1/256 tables is shorter than 257 for every N (the largest
 C^2 + S^2 is 65897), so each component of the pointer is within
-`32 x 257 x (the amount clicked)`: the pointer is summed in the int64
+`32 x 257 x (the amount clicked)`: the pointer was summed in the int64
 register while the amount a detector Node (or a face) clicks of one
-family in one interval is within `(2^62 - 1) // (32 x 257)` =
-**560759486676481** (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond)
-and in Python integers beyond it (`coherent_pointer`: one comparison of
-the exact clicked amount per group, a few groups per interval); the
+family in one interval was within `(2^62 - 1) // (32 x 257)` =
+560759486676481 (`POINTER_AMOUNT_BOUND`, 2^48 inside, 2^49 beyond; the
+constant is deleted since note 33) and, since the four unifications
+(2026-09-20, note 33), it is the first moment of the one reading over
+the circle, taken in the register where the reading's own bound holds
+for its table (`reading_fits`: 32 x amount x 256^2 x the rows of the
+group within 2^62 - 1, the second moment's bound, which the pointer
+does not read but the one table forms) and in Python integers beyond
+it (`coherent_pointer`, `moment_table(exact=True)`: the same table); the
 square `X^2 + Y^2` and the record that accumulates it are Python
 integers always, per detector per family (`DetectorSet.record`) and
 per face per family (`Ledger.face_record`), held beside the arrays and
@@ -1778,3 +1788,40 @@ implementation's part of the contract. The design above is unchanged.
     their total; the books' escaped line is the total, unchanged. No
     registered integer changes except the per-family `escaped` lines of
     `run.json` in worlds of several families.
+33. **The four unifications of the formulas: every logic once, to the
+    letter** (the model owner, 2026-09-20, Highlights 5.4, "DECIDED: the
+    four unifications of the formulas, after the strong force lands", on
+    the mathematician's report of the same day, `ONE_FORMULA.md`: the law
+    is two formulas and one table composed, every reading a moment
+    `M_k = sum w u^(x)k` of the records at a set and every rate the whole
+    part off an age, `by_clock(a, n, d) = floor((a + 1) n / d) - floor(a n
+    / d)`; the four places where the code spelled one of the two
+    primitives twice are spelled once, each an identity, the full suite
+    and the replay of the register the proof that the law is the same).
+    **(1) The pointer is the first moment of the one reading over the
+    circle** (`tests/test_nature_beam_detector.py` (j)). The coherent
+    pointer `(X, Y)` of a detector set (the window's, the threshold's,
+    the record's and the phase returned: notes 24 and 32), of a face and
+    of the border `lifetime` is `M_1` of the same moment table that reads
+    space (`moment_table`, `read_groups`), taken on the circle's unit
+    vectors `(C[phase], S[phase], 0)` in 256ths (`circle_vectors`) with
+    the amplitudes `32 x amount` as the weights: `X = sum 32 amount
+    C[phase]`, `Y = sum 32 amount S[phase]` integer by integer (the
+    mathematician's moment_checks 1: bit-exact at N = 8, 64, 4096 on 900
+    random sets), the record `|M_1|^2`, the set's phase its nearest step
+    (`pointer_phases`), the `wave` threshold's `pointer_units` the same
+    `M_1`. One call site of the one reading (`coherent_pointer` through
+    `read_groups`); the separate pointer sum (`amplitude x C[phase]`
+    reduced per group) is deleted. The record is never refused: the
+    reading's own bound decides the register (`reading_fits`, the one
+    test `read_arrivals` refuses by and `first_reading_overflow` looks
+    per group by: 32 x amount x 256^2 x the rows of the group within
+    2^62 - 1, the second moment's bound, which the pointer does not read
+    but the one table forms, so one row of an amount below 2^41 fits
+    where the former `POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x 257)
+    let 2^48 in), and beyond it the same table is taken in Python
+    integers (`moment_table(exact=True)`, the dtype `object`), exact: a
+    row of 2^42 that `read_arrivals` refuses reads its pointer, a row of
+    2^49 reads (2^62, 0), a row of 2^60 (2^73, 0). `POINTER_AMOUNT_BOUND`
+    is deleted (MIGRATION). Every world of the register replays
+    byte-identical in `events.jsonl` and `state.json` (VALIDATION).

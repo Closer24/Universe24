@@ -43,9 +43,11 @@ order, each a bijection on the GameBoard's state except the border:
    own, as one set (the threshold on the set), then each ray by its own
    phase (the window), then the rule: `read` (the push, the rays go on),
    `measure` (the click: the content joins, the border; the detector's
-   record is the squared scalar of the same moments taken over the clicked
-   rays with their amplitudes as weights, an exact integer: a report of
-   the host, never refused), `rerelease` (re-emitted at the next self-creation on the
+   record is the square of the first moment of the same reading taken over
+   the clicked rays on the circle's unit vectors (C[phase], S[phase], 0)
+   with their amplitudes as weights, the pointer, an exact integer: a
+   report of the host, never refused; `coherent_pointer`, the four
+   unifications of 2026-09-20), `rerelease` (re-emitted at the next self-creation on the
    declared directions), `pass`; own-number rays are home. The push is ONE
    product per arriving free ray (`push_form`, the model owner's decision
    of 2026-09-20: charge is per unit of content of a family, rho): with
@@ -140,18 +142,19 @@ AMPLITUDE_SCALE = 32
 # (`test_nature_beam_detector` (e) checks it), so one unit's amplitude at a phase
 # is a vector shorter than 32 x 257.
 LONGEST_PHASE_ENTRY = 257
-# The pointer's register bound: a detector's coherent pointer (X, Y) is a
-# sum of vectors of length at most 32 x 257 per unit (the triangle
-# inequality), so each component is within 32 x 257 x the clicked amount
-# and fits the register of the law (2^62 - 1) while the amount a detector
-# Node (or a face) clicks of one family in one interval is within
-# (2^62 - 1) // (32 x 257) = 560759486676481 (2^48 inside, 2^49 beyond).
-# Beyond it the pointer is summed in Python integers; the square X^2 + Y^2
-# and the record that accumulates it are Python integers always. The
-# record is a report of the host, not the law's local work: it is exact
-# and never refused (BEAM_LAW, section 5 and note 19; the former affordable
+# The pointer (X, Y) of a detector set is the first moment of the one
+# reading over the circle (`coherent_pointer`: the moment table on the
+# unit vectors (C[phase], S[phase], 0) with the amplitudes 32 x amount as
+# the weights; the four unifications, the model owner, 2026-09-20). It is
+# taken in the int64 register where the reading's own bound holds for that
+# table (`reading_fits`: the amplitude times 256^2 times the rows of a
+# group within 2^62 - 1, the second moment's bound, which the pointer does
+# not read but the one table forms) and in Python integers otherwise
+# (`moment_table(exact=True)`, the same table); the square X^2 + Y^2 and
+# the record that accumulates it are Python integers always. The record is
+# a report of the host, not the law's local work: it is exact and never
+# refused (BEAM_LAW, section 5 and notes 19 and 33; the former affordable
 # amount 261123 refused a lawful world).
-POINTER_AMOUNT_BOUND = MOMENTUM_BOUND // (AMPLITUDE_SCALE * LONGEST_PHASE_ENTRY)
 ZERO3 = (0, 0, 0)
 
 
@@ -277,12 +280,20 @@ def reading_bound_error(rows: int, per_row: int) -> OverflowError:
     )
 
 
-def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -> np.ndarray:
+def moment_table(
+    v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None, exact: bool = False
+) -> np.ndarray:
     """The per-row table of the moments of `read_arrivals`: the two counts
     (outside, here), the three components of amount x v, the six entries
     of amount x v v^T and the two age moments amount x age (outside, here;
-    zero without `ages`); the caller has checked the bound."""
-    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=np.int64)
+    zero without `ages`); the caller has checked the bound. With `exact`
+    the table is Python integers (the dtype `object`; the one use is the
+    pointer of a detector set, a report of the host that is never refused,
+    where the register would not hold the table): the same table."""
+    dtype = object if exact else np.int64
+    if exact:
+        v, a = v.astype(dtype), a.astype(dtype)
+    table = np.empty((a.shape[0], MOMENT_COLUMNS), dtype=dtype)
     table[:, 0] = a * v.any(axis=1)
     table[:, 1] = a - table[:, 0]
     table[:, 2 : 2 + DIMENSIONS] = v * a[:, None]
@@ -290,7 +301,7 @@ def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -
     if ages is None:
         table[:, AGE_COLUMN:] = 0
     else:
-        weighted = a * np.asarray(ages, dtype=np.int64).reshape(-1)
+        weighted = a * np.asarray(ages).reshape(-1).astype(dtype)
         table[:, AGE_COLUMN] = weighted * v.any(axis=1)
         table[:, AGE_COLUMN + 1] = weighted - table[:, AGE_COLUMN]
     return table
@@ -316,6 +327,33 @@ def moment_bound(amounts: np.ndarray, vectors: np.ndarray, ages: np.ndarray | No
     if ages is not None:
         per_row = max(per_row, int(np.abs(np.asarray(ages)).max(initial=0)))
     return int(np.abs(amounts).max(initial=0)) * per_row
+
+
+def reading_fits(amounts: np.ndarray, vectors: np.ndarray, ages: np.ndarray | None, widest: int) -> bool:
+    """Whether the moment table of `widest` rows of these amounts, vectors
+    and ages fits the register: every entry at most `moment_bound` and
+    every sum over at most `widest` rows, the product tested in Python
+    integers before any product is formed. The one bound of the reading:
+    `read_arrivals` refuses where it fails, `first_reading_overflow` looks
+    per group where it fails, and the pointer takes its exact path there."""
+    return moment_bound(amounts, vectors, ages) * widest <= MOMENTUM_BOUND
+
+
+def read_groups(
+    vectors: np.ndarray,
+    weights: np.ndarray,
+    starts: np.ndarray,
+    ages: np.ndarray | None = None,
+    exact: bool = False,
+) -> Moments:
+    """The one reading per contiguous group of rows (`starts` the first row
+    of each group, the rows of a group adjacent): the moment table summed
+    per group, in the register, the caller having checked the bound
+    (`first_reading_overflow`), or, with `exact`, in Python integers (the
+    pointer of a detector set where the register would not hold its table:
+    a report of the host, never refused)."""
+    table = moment_table(vectors, weights, ages, exact=exact)
+    return reading_of(np.add.reduceat(table, starts, axis=0))
 
 
 def read_arrivals(
@@ -348,10 +386,9 @@ def read_arrivals(
     # Every entry of the table is at most amount x P^2 (or amount x age)
     # and every sum has at most the rows of one key: the bound is checked
     # before a product is formed, so the integers below never wrap.
-    per_row = moment_bound(a, v, ages)
     rows = a.shape[0] if bins is None else int(np.bincount(bins, minlength=1).max(initial=0))
-    if per_row * rows > MOMENTUM_BOUND:
-        raise reading_bound_error(rows, per_row)
+    if not reading_fits(a, v, ages, rows):
+        raise reading_bound_error(rows, moment_bound(a, v, ages))
     table = moment_table(v, a, ages)
     if bins is None:
         sums = table.sum(axis=0)
@@ -700,30 +737,46 @@ def momentum_labels(
     return result
 
 
+def circle_vectors(phase: np.ndarray, cosines: np.ndarray, sines: np.ndarray) -> np.ndarray:
+    """The unit vectors of the circle at the rows' phases, (rows, 3): the
+    table entries (C[phase], S[phase], 0) in 256ths, the vectors the one
+    reading takes the pointer on as it takes the flow on the directions'
+    unit vectors u_d."""
+    return np.stack([cosines[phase], sines[phase], np.zeros(phase.shape[0], dtype=np.int64)], axis=1)
+
+
 def coherent_pointer(
     amount: np.ndarray,
     phase: np.ndarray,
     starts: np.ndarray,
-    totals: list[int],
     cosines: np.ndarray,
     sines: np.ndarray,
 ) -> tuple[list[int], list[int]]:
-    """The coherent pointer (X, Y) of the clicked rows per contiguous group
-    (a detector Node's clicks of one family this interval; a face's):
-    X = sum 32 x amount x C[phase], Y = sum 32 x amount x S[phase], the
-    amplitudes at their phases summed by the 1/256 tables. Summed in the
-    int64 register when every group's clicked amount (`totals`, exact per
-    group) is within `POINTER_AMOUNT_BOUND` (each component is then within
-    32 x 257 x the amount, inside 2^62 - 1), in Python integers otherwise:
-    exact either way, a report never refused. Python integers out."""
-    if max(totals) <= POINTER_AMOUNT_BOUND:
-        amplitude = amount * AMPLITUDE_SCALE
-        x: list[int] = np.add.reduceat(amplitude * cosines[phase], starts).tolist()
-        y: list[int] = np.add.reduceat(amplitude * sines[phase], starts).tolist()
-        return x, y
-    wide = amount.astype(object) * AMPLITUDE_SCALE
-    x = np.add.reduceat(wide * cosines[phase].astype(object), starts).tolist()
-    y = np.add.reduceat(wide * sines[phase].astype(object), starts).tolist()
+    """The coherent pointer (X, Y) of rows per contiguous group (a detector
+    set's arrivals or its clicks of one family this interval; a face's or
+    the border's): the first moment of the one reading over the circle
+    (the four unifications, the model owner, 2026-09-20; BEAM_LAW note
+    33), `read_groups` on the circle's unit vectors (C[phase], S[phase],
+    0) with the amplitudes 32 x amount (`AMPLITUDE_SCALE`) as the weights,
+    so that X = sum 32 x amount x C[phase] and Y = sum 32 x amount x
+    S[phase] integer by integer; the record is |M_1|^2 and the set's phase
+    its nearest step (`pointer_phases`). Taken in the int64 register where
+    the reading's bound holds for the table (`reading_fits`) and in Python
+    integers where the reading would refuse (`exact`): exact either way, a
+    report never refused. Python integers out."""
+    vectors = circle_vectors(phase, cosines, sines)
+    widest = int(group_sizes(starts, amount.shape[0]).max(initial=0))
+    # The amplitude 32 x amount is formed in the register only where it
+    # fits (tested by division) and where the reading's bound then holds.
+    if int(np.abs(amount).max(initial=0)) <= MOMENTUM_BOUND // AMPLITUDE_SCALE:
+        weights = amount * AMPLITUDE_SCALE
+        exact = not reading_fits(weights, vectors, None, widest)
+    else:
+        weights = amount.astype(object) * AMPLITUDE_SCALE
+        exact = True
+    flow = read_groups(vectors, weights, starts, exact=exact).flow
+    x: list[int] = flow[:, 0].tolist()
+    y: list[int] = flow[:, 1].tolist()
     return x, y
 
 
@@ -1106,7 +1159,7 @@ def first_reading_overflow(
         return None
     a = np.abs(amounts)
     counts = np.bincount(group, minlength=groups)
-    if moment_bound(a, vectors, ages) * int(counts.max()) <= MOMENTUM_BOUND:
+    if reading_fits(a, vectors, ages, int(counts.max())):
         return None
     a_max = np.zeros(groups, dtype=np.int64)
     np.maximum.at(a_max, group, a)
@@ -1494,7 +1547,7 @@ def nature_beam(
                 ledger.face_amount[face][family] += total
                 ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
                 face_x, face_y = coherent_pointer(
-                    amounts, store.phase[through], FIRST, [total], tables.cosines, tables.sines
+                    amounts, store.phase[through], FIRST, tables.cosines, tables.sines
                 )
                 ledger.face_record[face][family] += face_x[0] * face_x[0] + face_y[0] * face_y[0]
                 escaped_momentum = exact_column_sums(labels[on_face])
@@ -1705,7 +1758,7 @@ def nature_beam(
             wave_rows = st_wave[st_m]
             if wave_rows.any():
                 px, py = coherent_pointer(
-                    amount[met], phase[met], s_starts, total.tolist(), tables.cosines, tables.sines
+                    amount[met], phase[met], s_starts, tables.cosines, tables.sines
                 )
                 below_wave = np.array(
                     [
@@ -1825,7 +1878,7 @@ def nature_beam(
             overflow = first_reading_overflow(of_row, groups, a_t, v_arrival, age_t)
             if overflow is not None:
                 fail(overflow[0], 2, overflow[1])
-            reading = reading_of(np.add.reduceat(moment_table(v_arrival, a_t, age_t), g_starts, axis=0))
+            reading = read_groups(v_arrival, a_t, g_starts, age_t)
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
             # The push, ONE product per group of arriving rays (`push_form`):
@@ -1881,7 +1934,7 @@ def nature_beam(
                 c_sizes = group_sizes(c_starts, clicked.shape[0])
                 totals_c = grouped_sums(a_t[clicked], c_starts, int(c_sizes.max())).tolist()
                 pointer_x, pointer_y = coherent_pointer(
-                    a_t[clicked], ph_t[clicked], c_starts, totals_c, tables.cosines, tables.sines
+                    a_t[clicked], ph_t[clicked], c_starts, tables.cosines, tables.sines
                 )
                 steps = pointer_phases(pointer_x, pointer_y, tables.cosines, tables.sines)
                 last_phase = ph_t[clicked][(c_starts + c_sizes - 1)].tolist()
@@ -2287,7 +2340,7 @@ def nature_beam(
         ledger.lifetime_amount[family] += total
         ledger.lifetime_content[family] += int(exact_sum(amounts * store.content[gone]))
         border_x, border_y = coherent_pointer(
-            amounts, store.phase[gone], FIRST, [total], tables.cosines, tables.sines
+            amounts, store.phase[gone], FIRST, tables.cosines, tables.sines
         )
         ledger.lifetime_record[family] += border_x[0] * border_x[0] + border_y[0] * border_y[0]
         left = exact_column_sums(labels)
