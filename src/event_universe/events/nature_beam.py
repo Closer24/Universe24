@@ -1798,8 +1798,14 @@ def nature_beam(
                 # units of one ray (`pointer_units`), so that rays which
                 # cancel pass whether or not a window is declared. No memory
                 # between intervals: the pointer is this interval's arrivals.
+                # The pointer gate is the click's (the entries that absorb:
+                # `measure`, `rerelease`); a `read` entry, the push of a
+                # body, keeps the amount gate under both readings, since the
+                # push reads the flow and not the pointer (the closing gate's
+                # finding F1, 2026-09-20; BEAM_LAW note 32).
                 set_threshold = st_threshold[st_m[s_starts]]
                 below_set = np.asarray(total < set_threshold, dtype=bool)
+                absorbs = rule[met] != READ_RULE
                 # The window: under `wave` it reads the set's phase, the
                 # nearest step of the coherent pointer of the arrivals the
                 # threshold admitted (a zero pointer has no phase and is
@@ -1818,11 +1824,12 @@ def nature_beam(
                         ],
                         dtype=bool,
                     )
-                    below_set = np.where(st_wave[st_m[s_starts]], below_wave, below_set)
                     steps = pointer_phases(px, py, tables.cosines, tables.sines)
                     set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
                     read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
                 below = np.repeat(below_set, s_sizes)
+                if wave_rows.any():
+                    below = np.where(wave_rows & absorbs, np.repeat(below_wave, s_sizes), below)
                 inside = (window < 0) | (
                     (read_phase >= 0) & tables.window[(read_phase - window) % modulus]
                 )

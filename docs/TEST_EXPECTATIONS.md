@@ -329,10 +329,20 @@ declares the reading `wave` (the default since 2026-09-20; from
 - (d) an emitter inside a detector reads no threshold: a lamp of light
   (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases one
   unit per heading per interval, its content 18 then 12; a reader of `m`
-  (content 4) at threshold 4 passes 1 ray (the square 1) and reads 2 (the
-  square 4), pushed by -M x 64 x 2 = (-512, 0, 0) (re-pinned on
-  2026-09-20 from 3 passed and 4 read, (-1024, 0, 0); before that from
-  (-16, 0, 0)).
+  (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
+  -M x 64 x 4 = (-1024, 0, 0): a `read` keeps the amount gate under both
+  readings (re-pinned on 2026-09-20 to the pointer gate, 1 passed and 2
+  read, (-512, 0, 0), and pinned back the same day by the closing gate's
+  finding F1, test (k); before that from (-16, 0, 0)).
+- (k) the pointer gate is the click's (the closing gate's finding F1,
+  2026-09-20; BEAM_LAW note 32): two free rays of one number, amount 1
+  each, into a fixed reader of content 5 with the keys' own `read` push it
+  by -5 x 2 x 64 = (-640, 0, 0) in antiphase under the default `wave` set,
+  in antiphase under a declared `beam` set and in phase under `wave`, with
+  no `pass` record and the rays going on (two identical records at one
+  Node one record of amount 2); the amount gate still holds on a `read`
+  (one ray at a threshold of 2 passes); the same rays into a `measure`
+  counter under `wave` pass (test (i)).
 - (e) the record is exact and never refused (BEAM_LAW section 5 and note
   19; the night's bound refused `two_contents`): every entry (C, S) of the
   1/256 tables is shorter than 257 for every N from 2 through 4096 (the

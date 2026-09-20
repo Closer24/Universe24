@@ -582,7 +582,9 @@ pointer of the set's arrivals in units of one ray, the nearest integer to
 (X^2 + Y^2) / 2^26 (`nature_beam.pointer_units`, 2^26 the square of one
 unit's pointer at phase 0: one unit at any phase reads 1, a rays in phase
 a^2, rays that cancel 0, so a pair in antiphase passes whether or not a
-window is declared; no memory between intervals), a set below it passing
+window is declared; no memory between intervals; the pointer gate is the
+click's, the entries that absorb, and a `read` entry keeps the amount gate
+under both readings, note 32), a set below it passing
 at every Node of it with a `pass` record naming `threshold`; then the
 **reading** the detector declares (`reading`: `wave` by default since 2026-09-20, the
 model owner's decision, "on the GameBoard a ray, in the world a wave"; or
@@ -1755,6 +1757,13 @@ implementation's part of the contract. The design above is unchanged.
     exact and never refused; the set clicks when it is at least the
     threshold, and passes otherwise with `pass` records naming
     `threshold` as before, the window and the rule following unchanged.
+    The pointer gate is the click's: it applies to the entries that absorb
+    (`measure`, and `rerelease`, whose re-emission is a click), and a
+    `read` entry, the push of a body, keeps the amount gate under both
+    readings, since the push reads the flow and not the pointer (section
+    3 step 4, note 25: the gravity of two rays does not depend on their
+    relative phase at the reader; the closing gate's finding F1 of
+    2026-09-20, `tests/test_nature_beam_detector.py` (k)).
     Why the nearest integer: the tables' `C^2 + S^2` is 65536 within 361
     for every N through 4096 (within 237 at N = 64), so one unit at any
     phase reads 1 exactly, a rays in phase read a^2 within a^2 x
