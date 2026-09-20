@@ -50,3 +50,17 @@ runs, their outputs beside them). Every number of the paper is a
 registered run of the engine after `amplitude-v1` is on `main` and in the
 [experiments register](../docs/EXPERIMENTS.md); papers 1 and 2 are not
 changed by it.
+
+The figures of the third manuscript are drawn from the runs of series L
+only: run the worlds, summarise them, draw.
+
+```sh
+PYTHONPATH=src python tools/run_series.py --jobs 4 --out runs/L examples/events/amplitude/*.json
+PYTHONPATH=src python paper/click_model/summarize_runs.py runs/L --output paper/click_model/figures/summary.json
+PYTHONPATH=src python paper/click_model/figures.py --summary paper/click_model/figures/summary.json --output paper/click_model/figures
+```
+
+(`expectations.json` is not a world and is skipped by the runner's
+parser; `slits_one` carries no key and is the reading's reference.)
+`paper/click_model/NUMBERS.md` maps every number of the manuscript to its
+source; `figures/summary.json` carries the runs' fingerprint.

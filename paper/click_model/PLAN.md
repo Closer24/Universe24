@@ -100,35 +100,29 @@ with S(N) tabulated; the statements "S <= 2 sqrt 2 at every N" and
 
 ## The work, in order
 
-1. Done: the plan, the checks, the draft of the new sections
-   (`main.tex`: the plain description, the model in two pages, the four
-   theorems with proofs, the measurement table with [design] placeholders,
-   the figure placeholders naming their worlds, the literature with the
-   references verified on 2026-09-20). No LaTeX compiler is installed in
-   this session, so the draft is uncompiled until one is.
-2. On the Boss session's message that `amplitude-v1` and its runs are on
-   `main`: check every landed integer against the design and `checks/`;
-   fill the registered column and the figures (`figures.py` from the runs'
-   summaries, as `paper/figures.py`); the number-to-register table beside
-   the draft.
-3. Complete `paper/click_model/main.tex` as paper 3: abstract (within
-   1920 characters); introduction opening with the plain description and
-   one paragraph on paper 1 as the "before"; the model and theorems (done);
-   the measurements from the register; the finite-N comparison with the
-   Bell experiments; the causal anatomy of the click in paper 1's terms
-   (deterministic, measurement-independent, parameter-dependent, the law
-   from the tables); what is new; what is not claimed; Part II, the
-   hypotheses of the program with their status; reproducibility; the AI
-   paragraph. "GameBoard" throughout.
-4. The hostile referee: the physics-rule reviewer skill reads the draft
-   against the register, the design and BEAM_LAW; first questions: the
-   windowed which-path case and the rung tie. Findings fixed or answered;
-   the report to the owner with the path and the findings.
-5. The owner's review; `arxiv_metadata.md` gains a third entry (paper 3's
-   title, abstract, categories); the release tag and Zenodo version (no
-   `v0.3.1` tag exists on GitHub though CITATION names it: to resolve);
-   the new arXiv submission by the owner (the same endorsement path as
-   paper 1 if asked again); venue after arXiv, Foundations of Physics.
+1. Done: the plan, the checks, the draft's formal part.
+2. Done (2026-09-20, after PR #370 merged at `d2064195`): main merged into
+   this branch; the 46 worlds of series L run again on the merged tree
+   (`tools/run_series.py`, fingerprint `731d0f56c9f9`; the register's
+   `ff5c382d672f`), every run's register replayed equal to its world by
+   `tools/amplitude_path.py --check` (45 of 45 keyed runs), every integer
+   equal to the register's and to the expectations file
+   (`summarize_runs.py` -> `figures/summary.json`); the four figures drawn
+   by `figures.py`; `NUMBERS.md` maps every number of the paper to its
+   source.
+3. Done: `main.tex` completed as paper 3 (the abstract within 1920 characters, the
+   introduction with the plain description and paper 1 as the before, the
+   model, the theorems, the measurements from the register, the finite-N
+   comparison, the causal anatomy, what is new, what is not claimed, the
+   hypotheses of the program, reproducibility, the AI paragraph, the
+   bibliography). Compiled by the owner's local agent before the merge;
+   to be compiled again after these edits (no TeX in this session).
+4. Next: the hostile referee (the physics-rule reviewer skill) on the
+   completed draft; findings fixed or answered; the report to the owner.
+5. The owner's review; `arxiv_metadata.md` gains a third entry; the
+   release tag and Zenodo version (no `v0.3.1` tag exists on GitHub though
+   CITATION names it: to resolve); the new arXiv submission by the owner;
+   venue after arXiv, Foundations of Physics.
 
 ## Reproducibility and disclosure, in one paragraph each
 
