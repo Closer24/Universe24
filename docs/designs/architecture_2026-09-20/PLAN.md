@@ -706,3 +706,149 @@ the runner's sum 277 s -> about 190 s (section 3.3).
   owner's rule of 2026-09-17 says so; the test owner confirms).
 - **Q6. The record-format renames** of 4.3 and the key spellings of 4.2:
   a separate commit with every reader updated, or not now.
+
+---
+
+## 7. The entity audit (the owner's addition through the Boss, 2026-09-20: "make sure that all the known families are in entities with what is needed to define them")
+
+### 7.1 What the definitions layer can hold today
+
+A definition of `event-entities-v1` (`docs/ENTITY_DEFINITIONS.md`,
+`world_loading.py`) carries `measured` and `detectors` only; the families
+are the world's, and a definition "names its family and carries the
+family's charge with its content; it declares no charge of its own". So no
+entity definition in the repository defines a family, and none can: the
+keys the law needs to define a family (`quantum`, `charge`, `columns`,
+`lifetime`, `phase`, `phase_per_link`) have no home in a definition file.
+One definitions file exists, `examples/events/detector/entities/detectors.json`
+(`three_node_detector`, `serpentine_100_detector`, of the family `carrier`),
+referenced by the four detector worlds. Every other series (158 worlds)
+declares its families and its apparatus inline, written by the series'
+`make_worlds.py`: the canonical copy of a family is a Python literal in a
+generator, and a family used by two series is two literals (the table
+below). The loader's structural check already admits every key of the
+amplitude law in a definition's `measured` entries (`LAMP_KEYS` and
+`TABLE_ENTRY_KEYS` are imported from `world.py`: `branches`, `arms`,
+`turns`, `inputs`, `weights`, `turn`, `rotate`, `gate`, and `reading:
+"sum"` in `detectors`), so every apparatus of the transmission world can be
+authored in v1 today; only its families cannot.
+
+### 7.2 The families the registered series declare (every world under `examples/events`, the entity files excluded)
+
+| Family | Defined where | Keys present | Keys the row needs and lacks | Worlds that use it |
+| --- | --- | --- | --- | --- |
+| `light` (the photon) | inline, seven generators; four spellings: `{quantum 1}`; with `phase_per_link` `[8, 1]`, `[16, 1]`, `[8591334592, 2^30]` (the two-slit frequency) | `quantum`; `phase_per_link` where the amplitude worlds need the phase per age | none for the row; under `amplitude-v1` a source's `lamp` carries `branches`, `arms`, `turns` (present in the amplitude worlds only) | root, bell, buildup, catalog, heisenberg, lensing, amplitude |
+| `e` (the electron) | inline, `bohr/make_worlds.py` | `quantum` 0, `charge` -15, `phase` true; the body's `span [1, 1, 3]`, `phase_by_momentum`, `momentum`, the world's `action` | none: the row is complete; one copy, one series | bohr (7 worlds) |
+| `p` (the proton) | inline, four generators, six spellings of `charge`: `[1, 1]` (bohr, the atom's units), `4` (nucleus, weak), `[0, 1]`, `[-2, 1]`, `[2, 1]`, `[1, 2]` (coupling: probes named `p` that are not the proton) | `quantum` 0, `charge`, `phase` false; in the nucleus `held {nuclear: 1}` | no canonical copy: the charge's scale is per series (the catalog says so); the coupling's `p` and `q` are test charges wearing the proton's name | bohr, coupling, nucleus, weak |
+| `n` (the neutron) | inline, nucleus and weak | `quantum` 0, `phase` false; `held {nuclear: 1}`; `become {at, into p, products [beta, nu]}` on the free neutron | none; two identical literals | nucleus, weak |
+| `nuclear` (the strong family, the gluon's place) | inline, nucleus and weak; two values of the strong column (10000, 7000) | `quantum` 0, `columns {strong: {value, sign -1}}`, `lifetime` 3, `phase` false | none; the column's value per series | nucleus, weak |
+| `beta` (the weak's electron, D-1) | inline, weak | `quantum` 1, `charge` -7344 (a whole charge per unit of amount) | none; a second electron beside `e` (a paid family, since it is born by `become`); the two rows say "electron" with different keys | weak |
+| `nu` (the neutrino) | inline, weak | `quantum` 0; windows on the detectors' entries (`phase_window`, `phase_width`) | one family for three flavours (the catalog's gap: no change of family in flight) | weak |
+| `w` (the W) | inline, weak (`w_exchange`) | `quantum` 1, `charge` -7344, `lifetime` 1, `phase` false | none | weak |
+| `d`, `detector`, `counter`, `apparatus`, `screen`, `wall`, `carrier` | inline, six generators and the one definitions file | `{quantum 1}` (`d` with `phase` false): the inert paid material a detector, a wall or a counter is made of | one row, seven names; a canonical `apparatus` family is the definition to add (the names are record keys: renaming moves the digests) | weak, hubble, bell, amplitude, catalog, root, heisenberg, lensing, buildup, detector |
+| `m`, `mass`, `neutron`, `probe`, `s` | inline, seven generators | `{quantum 0, charge 0, phase false}` (coupling's `m` keeps the phase circle: a second spelling) | one row, five names: the free phase-less mass; `probe` is the catalog's probe (content 1) | coupling, lensing, orbit, redshift, root, catalog, hubble, weak |
+| `q` | inline, coupling | `quantum` 0, `charge` `[0, 1]`, `[-1, 2]`, `[1, 2]` | a test charge; not a thing of physics | coupling |
+| `sa`, `sb` (the choosers' families, #363) | inline, bell and amplitude | `quantum` 0 | none: a free family whose rows set a window (`phase_window {reads, offset}`) | bell, amplitude |
+| `mx1` .. `pz4` (24 families) | inline, hubble | `quantum` 0 | one thing (a thrown mass) as 24 families, because the set's `record` is per family and the tool separates the sources by it; the clicks carry `number`, so one family with 24 measured events would do with the tool reading `number` | hubble |
+
+Thirteen rows of physics (photon, electron, proton, neutron, the strong
+family, the weak's electron, the neutrino, the W, the inert material, the
+mass, a test charge, a chooser, a thrown source) are spread over 51 family
+names in the register; none has a definition file; every one is complete
+in the law's keys where it is used.
+
+### 7.3 The catalog's rows against the worlds
+
+| Catalog row | A world places it | The definition to add in phase 2 | The gap (a key the law lacks) |
+| --- | --- | --- | --- |
+| photon | yes (seven series) | `light` | none |
+| electron | yes (bohr `e`; weak `beta`) | `e`, and `beta` named as the electron born by `become` | none |
+| muon, tau | no world | `mu`, `tau`: `quantum` 0, `charge` `[n_e, 207 d_e]`, `[n_e, 3477 d_e]`, `become {at, into e-family, products}` (the keys exist since `weak-v1`) | none for a definition; the decay's products' content the physicist's |
+| the three neutrinos | one family `nu` | `nu` (one) | oscillation (no change of family in flight): the catalog's gap |
+| quarks | none | none | colour (the catalog's gap) |
+| W | `weak/w_exchange` (`w`) | `w` | none |
+| Z | none by the design | none | none by design |
+| gluon | `nuclear`'s rays | `nuclear` | colour |
+| Higgs, graviton | none / the column | none | the catalog's gap / nothing needed |
+| proton, neutron, deuteron, alpha, light nuclei | nucleus, weak, bohr | `p`, `n`, `nuclear`; the composites as apparatus definitions (`deuteron`: two measured entries with `held`; `alpha`: the square) | none |
+| hydrogen | bohr | `hydrogen` (the proton's fan and the electron body) | none |
+| helium, a molecule | none | none until the bound nucleus | the catalog's |
+| the sun, a planet, a neutron star, a lamp, a laser, a mirror, a wall, a slit, a screen, a clock, a probe | catalog and the series | each an apparatus definition in v1 (`measured` + `detectors`) | none |
+| a moon, a white dwarf, a comet, dark matter, a galaxy | none / hubble | `moon`, `white_dwarf`, `dark_matter` as definitions with the catalog's numbers; a comet's tail stays the gap | the comet's tail |
+| a black hole | none | none | the catalog's gap |
+
+### 7.4 The definitions to add in phase 2 (definitions only; no law change)
+
+1. **A home for a family in a definition.** Two forms, the Boss decides:
+   (a) without a loader change, `examples/events/entities/families.json`,
+   one row per physics family in the atom's units (`light`, `e`, `p`,
+   `n`, `nuclear`, `nu`, `w`, `beta`, `apparatus`, `mass`, `probe`) that
+   every `make_worlds.py` reads and copies into its worlds, with a hygiene
+   test that a world's family block equals the file's row by name (the
+   worlds keep carrying the data: the law's parser is unchanged); (b) the
+   host format `event-entities-v2` with an optional `families` list per
+   definition, merged into the world by name and refused on a conflicting
+   key (a change of `world_loading.py` and its contract, host code, no
+   physics). (b) is the real answer to "in entities with what is needed";
+   (a) is the one this pull request can do alone.
+2. **`examples/events/entities/apparatus.json`** (v1, works today): the
+   lamp, the laser (`phase_window`), the mirror (`rerelease` on one
+   direction), the wall, the slit (`rerelease` on a fan), the screen as one
+   set and as pixels, the probe, the clock (a `span` body), the pair
+   source (`lamp {rate [1, 1], directions [two arms], arms 2, branches
+   [[0, 1], [3, 1]]}`), the GHZ source (three arms), the Mach-Zehnder
+   splitter (`rerelease {inputs, weights, turns}`), the label rotation
+   (`rotate {setting, bit, turn}`), the CNOT gate (`gate {kind, hold,
+   parties}`), the counter pair (`+`/`-` sets reading `sum` with
+   `phase_window` s and `turn` t), the chooser (a free family's source and
+   the entry `phase_window {reads, offset}`): every one already declared
+   inline by a registered world, moved to one copy each; the worlds of the
+   catalog, the bell and the amplitude series rewritten by their
+   generators to reference them (the expanded world is byte-identical to
+   the inline one by the loader's contract, so the digests stand).
+3. **The composites as definitions:** `deuteron`, `alpha`, `hydrogen`,
+   `neutron_star`, `sun` (the mass and the lamp), each two to eight
+   measured entries.
+4. **The rows no world places, as definitions with the catalog's
+   numbers:** `mu`, `tau` (with `become` at the clock), `moon`,
+   `white_dwarf`, `dark_matter`; each gets a catalog world when the owner
+   asks, not a registered run.
+5. **Names:** one `apparatus` for the seven inert names and one `mass` for
+   the five free phase-less names is a rename of record keys (the family
+   name is on every line of `events.jsonl`): listed with 4.2, not in the
+   bit-exact commits.
+
+### 7.5 The transmission world (the owner's next experiment: a detector that generates amplitudes on the GameBoard and a detector that receives on the other side, on generic runs)
+
+What the experimenter needs from definitions alone, every key existing in
+the law today:
+
+- **The source that births records with a declared label as its bit:** a
+  measured event of the paid family `light` with `lamp {rate [1, 1],
+  directions [the arm(s)], arms 1 or 2, branches [[bit, 1]]}`: `branches
+  [[1, 1]]` births a record whose one joint label is 1 (the message bit),
+  `[[0, 1]]` the bit 0, `[[0, 1], [3, 1]]` the entangled pair on two arms;
+  `turns` per direction for a reflection's quarter turn; the birth phase u
+  is the lamp's clock (`K`, `phase`), so a `phase_window` on the lamp
+  selects the u range of the births. Under (vi) the record is every
+  lamp's birth (no key); before it, the world declares `amplitude: true`.
+- **The GameBoard:** the world's `shape`, `N` (64 or larger for finer
+  rungs), `K`, `age_bound`; free space between; optionally mirrors
+  (`rerelease` on one direction) and a splitter (`rerelease {inputs,
+  weights, turns}`) on the path.
+- **The receiving detector set reading `sum` with a rotation setting:**
+  measured events of the inert family (`counter`, content 1, `fixed`) with
+  the entry `light: {phase_window: s, turn: t}` (the rotation `U_s` on the
+  label's bit; `turn` the phase on label 1) and `detectors [{name, positions
+  [the set's Nodes], reading: "sum"}]`; two sets, `plus` and `minus`, when
+  the click's channel is the reading (the bell worlds' form), one set when
+  the click's label is (a `read` entry on a `sum` set is the which-path
+  factor). A set of several Nodes is one cell (record 96); the gather line
+  names the set, the channel, the label, u and the weight: the received
+  bit is `chosen[0][2]` of the gather, the record's `u` its key.
+- **The definitions file** of 7.4 (2) carries all of it as `pair_source`,
+  `bit_source`, `mirror`, `splitter`, `counter_pair`, `counter_set`; the
+  world that places them declares the two families (`light`, `counter`)
+  until 7.4 (1) lands, and the tool `tools/amplitude_path.py` replays the
+  received list from `events.jsonl`. No gap: nothing the transmission
+  world needs waits on a law change.
