@@ -396,23 +396,18 @@ default: the design's section 6 stopped at the gate set, MIGRATION
 (vi)); `doppler` (since 2026-09-20, true or false, false by default: the
 reading's weight at the relative speed `doppler-v1`,
 [BEAM_LAW note 38](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
-under it a free measured event in motion on an axis reads the rows that
-arrived at its Node for the push with each direction's flow weighted by
-the relative speed of the row and itself over the row's pace, the pair
-(|N_d D_a - T_d s p_a|, N_d D_a) from the flight table's pace and its
-own record, one floor per (direction, column) on an axis where its
-momentum is nonzero; refused when it is not true or false and, at load,
-when the pair of a free body cannot fit the register against a direction
-of the table on the declared content and momentum, naming the axis, the
-direction, the pace and the largest D admitted (a budget of the pair
-only: the products are tested at the push, where a registered
-moving-body world of large content, every G2 star world among them,
-refuses at its first weighted push, loudly and named; nothing is re-run
-under the key in this change, and a run of such a world needs the grain
-form of FORM.md section 1 as an owner-declared width or a re-scaled
-world); the record carries it and the identity `doppler-v1` under
-`hypotheses` when it is true; absent, and for every body at rest or held
-in place, every world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
+under it a free measured event reads the rows that arrived at its Node
+for the push with each direction's label flow weighted by the flux of
+its rows through the body, the rate at which it and the message meet,
+one scalar per (direction, body), (|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
+G Q |v|^2) with the body's speed quantised to the grain G = 2^12
+(`SPEED_GRAIN`, a constant of the law) from its own record, off the
+reader's clock per component, before the columns; refused when it is not
+true or false; the static budget of the columns takes the weight's
+largest factor on the table under it (no other load-time bound: the
+registered G2 star worlds fit as registered); the record carries it and
+the identity `doppler-v1` under `hypotheses` when it is true; absent, and
+for every body at rest or held in place, every world reads as it did, byte for byte); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`

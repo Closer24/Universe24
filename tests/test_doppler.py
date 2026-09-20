@@ -2,16 +2,19 @@
 docs/BEAM_LAW.md section 3 step 4 and note 38; the model owner's record
 119, "a body TAKES a message at the rate at which it and the message meet";
 the mathematician's admissible form, docs/designs/push_relative_speed/
-FORM.md section 6 on branch `claude/series-m-masses`, record 110). Under
-the world key `doppler` a free measured event reads the rows that ARRIVED
-at its Node for the push with each row of direction d weighted, on every
-axis a where its own momentum p_a is nonzero, by the pair
-(N_d D_a - T_d s p_a, N_d D_a): (N_d, T_d) the direction's pace along the
-axis from the flight table ((32, 55) on a heading), s the sign of u_{d,a},
-D_a = Q S M + |p_a| the step rule's divisor; one floor per (direction,
-column) off the reader's clock. The expected integers of
-docs/TEST_EXPECTATIONS.md ("The reading's weight at the relative speed"),
-written down before the first run:
+FORM.md section 6, record 110, and its grain and flux form, GRAIN.md
+sections 1 and 2 on branch `claude/series-m-masses`, after the physics-rule
+review of e916e115). Under the world key `doppler` a free measured event
+reads the rows that ARRIVED at its Node for the push with each direction's
+label flow V_d weighted by the flux of its rows through the body, one
+scalar per (direction, body), (|G Q |v|^2 - T_d sum_a s_a w_a v_a|,
+G Q |v|^2), with w_a = G |p_a| // D_a the body's speed at the grain G =
+2^12 (`SPEED_GRAIN`), D_a = Q S M + |p_a| the step rule's divisor, v the
+direction's vector and T_d its resolution from the flight table; the
+weighted flow V'_d = sign(V_d) x by_clock(age_A, |V_d| x num_d, G Q |v|^2)
+per component, summed over the directions, then the columns as today. The
+expected integers of docs/TEST_EXPECTATIONS.md ("The reading's weight at
+the relative speed"), written down before the first run:
 
 (a) a fixed body reads byte-identically with and without the key: on the
     bar below with the body held in place (`fixed`), 200 intervals, the
@@ -21,68 +24,83 @@ written down before the first run:
     source at x = 0 releasing one row per interval on +x, the steady beam
     declared in transit (the row of age tau at the Node m(tau)), a free
     body of content 2^20 whose width S and momentum p make its speed
-    |p| / D exact, reading the beam with a third column `probe` that
-    normalises its push to one unit per row read (gravity and charge
-    cancelling exactly, rho 1 on both families): over 200 intervals the
-    body reads 200 rows in every case (the finding: the arrivals do not
-    Doppler) and the push under the key, the sum of the reads' pushes, is
-    at rest 200, receding at 0.30 (S 7, p 3 x 2^26, D 10 x 2^26) 96,
-    receding at 0.45 (S 11, p 9 x 2^26, D 20 x 2^26) 45, approaching at
-    0.30 (S 7, p -3 x 2^26) 303, co-moving at c = 32 / 55 (S 23, p 2^31,
-    D 55 x 2^26) 0, outrunning at 0.75 (S 1, p 3 x 2^26, D 4 x 2^26) 57
-    (taken from behind at |c - v|, the absolute value of the pair, the
-    push keeping the flow's sign), against FORM.md's map 200, 97, 45,
-    303, 0, 58: the two that differ do so by the floor's grain (the
-    exact values 96.875 and 57.8, the map's clock ages from 1 and the
-    engine's from 0); without the key 200 in every case. The bar as the
-    finding posed it, rows of amount 64 on the body of content 2^20, runs
-    without the key and is refused at the first weighted push under it,
-    the gravity column's product |V E n| x |N D - T s p| = 2^32 x
-    155 x 2^26 leaving the register (the mathematician's R1), naming
-    the body, the column and the direction;
+    |p| / D exact, reading the beam with a third column `probe` whose
+    product is exact (the body's value [1, 2^20], the beam's 1, the divisor
+    1: the push IS the weighted flow, in label units, 64 per row): over
+    200 intervals the body reads 200 rows in every case (the finding: the
+    arrivals do not Doppler) and the push under the key, the sum of the
+    reads' pushes, is at rest 12800 (200 rows); receding at 0.30 (S 7, p
+    3 x 2^26, D 10 x 2^26; w 1228, the pair 127064 / 262144) 6204 (96.94
+    rows); receding at 0.45 (S 11, p 9 x 2^26; w 1843, 59414 / 262144)
+    2901 (45.33); approaching at 0.30 (S 7, p -3 x 2^26; 397224 / 262144)
+    19395 (303.05); co-moving at c = 32 / 55 (S 23, p 2^31; w 2383,
+    14 / 262144, below one label unit per row: 0) 0; outrunning at 0.75
+    (S 1, p 3 x 2^26; w 3072, 75776 / 262144, taken from behind at
+    |c - v|) 3700 (57.81), against FORM.md's map 200, 97, 45, 303, 0, 58
+    and its exact rates 96.9, 45.3, 303.1, 0, 57.8: the flux times the
+    arrivals to the label unit (the speed's grain below 1 / G, the flow's
+    floor off the clock); without the key 12800 in every case. The bar as
+    the finding posed it, rows of amount 64, runs under the key (the pair
+    of the first build refused it) and reads receding at 0.30 within a
+    row of the amount-1 line (396673 of 4096 per row: 96.84);
 (c) the third law on two fixed bodies (series C item 2's mirror world of
     `test_columns.py` (b)) unchanged: equal and opposite pushes at every
     tick, the same integers as without the key;
-(d) the refusals: the key that is not true or false, naming it; at load
-    under the key a free body whose pair cannot fit, content 2^40 at width
-    2^10 (D = 2^56, 87 x D beyond 2^62 - 1) and content 1 with the
-    momentum 2^56, refused naming the axis, the direction, the pace and
-    the largest D admitted; the same worlds parse without the key, and a
-    fixed body of that content parses under it (the weight 1);
-(e) the pace table and the pair: (32, 55) on every heading, (16, 39) on
-    (1, 1, 0) along x and y, (128, 247) and (64, 247) on (2, 1, 0), (0, 1)
-    where the direction has no component and on the rest directions; the
-    pair 1 at p = 0, 0 at the direction's own speed, negative beyond it;
-    on a free reader of content 1 with the momentum (32, 0, 0) (D = 96)
-    met by one row on +x and one on (1, 1, 0) in one interval, gravity
-    alone: the x push -(27 + 8) (by_clock(0, 64 x 1312, 3072) and
-    by_clock(0, 45 x 288, 1536), one floor per direction), the y push -45
-    (the reader at rest on y: the group's product as today); the record
+(d) the refusals: the key that is not true or false, naming it; the
+    weighted flow's product |V_d| x num tested by division before it is
+    formed (`weighted_flow` on one label of 64 at the outrunning pair
+    75776 / 262144 gives 18; on a label of 2^50 it is refused naming the
+    body and the direction); the static budget of the
+    columns under the key takes the weight's largest factor on the table
+    (`weighted_flow_factor`: 3 on the headings, 4 with (1, 1, 1));
+(e) the grain and the pair: `quantised_speed` (1365, 1) at p / D = 1 / 3,
+    (1183, 1) at 26 / 90 (the G2 star's 0.28889), (0, 0) at rest, the
+    sign -1 on a negative momentum; `flux_pair` on a heading (|G Q - T_d
+    s w|, G Q): (262144, 262144) at rest, (111994, 262144) at 1 / 3
+    (0.4272), (0, 262144) at w = G x 32 / 55 (2383 gives 14, the grain),
+    exactly 1 for a transverse motion; on (1, 1, 0) at 1 / 3 (311348,
+    524288) = 0.5938 (the flux, GRAIN.md section 2, against the per-axis
+    form's 0.1875), on (1, 2, 0) at the star's speed (1018519, 1310720) =
+    0.7771, on (1, 3, 2) (3180254, 3670016) = 0.8666; the record
     (`run.json` carrying `doppler` and the identity under `hypotheses`);
-    every world of the gate set parsing without the key; `column_term`
-    refusing the denominator D_c d_c x N D by division before it is formed
-    and giving 0 at a weight of numerator 0;
-(f) the implementer's rule on a fan with a column denominator above 1
-    (the reader `a` of charge [1, 3] met by a `b` row of charge 1 on +x
-    and one on (1, 1, 0)): a free reader at rest reads (-73, -30, 0)
-    (gravity -(109, 45), charge by_clock(0, 109, 3) = 36 and by_clock(0,
-    45, 3) = 15) byte-identically with and without the key, the same
-    records, and `push_form` with the terms at rest equals `push_form`
-    without them on that nonzero push; the same reader with the momentum
-    (1, 0, 0) (D = 65, the pairs (2025, 2080) on the heading and (1001,
-    1040) on the diagonal) reads x per direction, gravity -(62 + 43) and
-    charge 20 + 14, the push (-71, -30, 0), y at rest as before;
+    every world of the gate set parsing without the key;
+(f) the fan, pinned as integers over three intervals (a free reader of
+    content 2^20 at (4, 6, 4) of a 9 x 12 x 9 open board, the push the
+    weighted flow as in (b), one row of amount 64 of the direction
+    arriving at each of the ticks 1, 2, 3 from number 2, the reader's
+    clock ages 0, 1, 2, its first step after the third reading at 1 / 3
+    and after the fourth at 26 / 90): on
+    (1, 1, 0) at v = 1 / 3 (p 2^25, D 3 x 2^25) the sum (5130, 5130, 0)
+    of (8640, 8640, 0), 0.594 of the rate on both components; on
+    (1, 2, 0) at v = 26 / 90 (p 26 x 2^20, D 90 x 2^20) (4326, 8504, 0)
+    of (5568, 10944, 0), 0.777; on (1, 3, 2) at the same speed (2828,
+    8485, 5656) of (3264, 9792, 6528), 0.866; on the heading +x at 1 / 3
+    (5249, 0, 0) of (12288, 0, 0), 0.427; on the transverse +y at 1 / 3
+    exactly (0, 12288, 0); the three fan directions arriving together in
+    one interval at 1 / 3 the sum of their weighted flows, (5130 + 4135 +
+    2761, 5130 + 8128 + 8284, 5522) ((1, 2, 0) at 973565 / 1310720 =
+    0.743, (1, 3, 2) at 3104906 / 3670016 = 0.846); the same fan
+    reader at rest with rows of amount 1 byte-identical with and without
+    the key (the same records over the three intervals, the pushes the
+    flows (273, 459, 102), its momentum below D / G = 16384), and with
+    rows of 64 identical for two reads and apart at the third, its
+    momentum then past D / G on y (w_y = 1, the grain: (5821, 9788,
+    2175) against the flow (5824, 9792, 2176));
 (g) a body on a set (`span` [1, 1, 3], content 1, the momentum (32, 0,
-    0), D = 96) met in one interval by one +x row at two of its Nodes
-    from two numbers: two groups, each weighted from the one frame
-    snapshot p = 32, each pushing -27 (by_clock(0, 64 x 1312, 3072); the
+    0), D = 96, w = 1365) met in one interval by one +x row at two of its
+    Nodes from two numbers: two groups, each weighted from the one frame
+    snapshot, each pushing -27 (by_clock(0, 64 x 111994, 262144); the
     live momentum after the first group, 5, would give 56), the momentum
-    after the interval -22; without the key -64 each.
+    after the interval -22; without the key -64 each;
+(h) a registered star world of series G2 (`tests/data/g2_gravity_scalar.
+    json`, the reviewer's copy of `hubble_stars/gravity_scalar.json`: 24
+    stars of content 2^22 + 4096 at width 2^20, rows of amount 64) parses
+    under the key with the identity and runs 20 intervals without a
+    refusal, its books balanced: the stars fit as registered.
 """
 
 from __future__ import annotations
 
-import copy
 import json
 from pathlib import Path
 
@@ -91,33 +109,50 @@ import pytest
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import (
-    DopplerTerms,
-    column_term,
     flight_table,
-    push_form,
-    relative_speed_pair,
+    flux_pair,
+    quantised_speed,
+    unit_label,
+    weighted_flow,
 )
 from event_universe.events.world import (
     COLUMNS_RULE,
     DOPPLER_RULE,
     LABEL_SCALE,
-    MOMENTUM_BOUND,
-    axis_pace,
+    SPEED_GRAIN,
     step_divisor,
+    weighted_flow_factor,
 )
 from event_universe.runner import run_initialization
 from event_universe.world_loading import load_world
 
 Q = LABEL_SCALE
+G = SPEED_GRAIN
 T_HEADING = 110
 PLUS_X = [1, 0, 0]
+PLUS_Y = [0, 1, 0]
 DIAGONAL = [1, 1, 0]
+SLANTED = [1, 2, 0]
+OBLIQUE = [1, 3, 2]
 ROOT = Path(__file__).resolve().parents[1]
+CONTENT = 1 << 20
 
 
 def m_heading(tau: int) -> int:
     """Links made by age tau on a heading, (2 tau Q + T) // (2 T)."""
     return (2 * tau * Q + T_HEADING) // (2 * T_HEADING)
+
+
+def families(probe: bool) -> list[dict[str, object]]:
+    """The beam and the body, rho 1 on both (gravity and charge cancel);
+    with `probe` a third column whose product on the body of content 2^20
+    is exact: the push is the weighted flow itself."""
+    beam: dict[str, object] = {"name": "beam", "quantum": 0, "charge": 1, "phase": False}
+    body: dict[str, object] = {"name": "body", "quantum": 0, "charge": 1, "phase": False}
+    if probe:
+        beam["columns"] = {"probe": {"value": 1, "sign": 1}}
+        body["columns"] = {"probe": {"value": [1, CONTENT], "sign": 1}}
+    return [beam, body]
 
 
 def bar(
@@ -134,9 +169,7 @@ def bar(
 ) -> dict[str, object]:
     """The bar of the finding: the steady beam of the fixed source at x = 0
     (one row per interval on +x, the row of age tau at the Node m(tau)), the
-    body of content 2^20 at `start`. With `probe` the third column makes
-    the push one unit per row read: |V E n| / (D_c d_c) = (64 x amount) x
-    (2^20 / 2^16) / (1024 x amount) = 1."""
+    body of content 2^20 at `start`."""
     rows = []
     tau = 0
     while m_heading(tau) < length:
@@ -152,11 +185,6 @@ def bar(
             }
         )
         tau += 1
-    beam: dict[str, object] = {"name": "beam", "quantum": 0, "charge": 1, "phase": False}
-    body: dict[str, object] = {"name": "body", "quantum": 0, "charge": 1, "phase": False}
-    if probe:
-        beam["columns"] = {"probe": {"value": [1, 1024 * amount], "sign": 1}}
-        body["columns"] = {"probe": {"value": [1, 1 << 16], "sign": 1}}
     return {
         "law": "beam",
         "model_id": "doppler-bar-test",
@@ -169,7 +197,7 @@ def bar(
         "suspension": 0,
         "width": width,
         "doppler": doppler,
-        "families": [beam, body],
+        "families": families(probe),
         "measured": [
             {
                 "position": [0, 0, 0],
@@ -181,7 +209,7 @@ def bar(
             {
                 "position": [start, 0, 0],
                 "family": "body",
-                "amount": 1 << 20,
+                "amount": CONTENT,
                 "momentum": [momentum, 0, 0],
                 "fixed": fixed,
                 "table": {"beam": "read"},
@@ -204,6 +232,18 @@ def reads_of(records: list[dict[str, object]], number: int) -> list[dict[str, ob
     return [r for r in records if r["event"] == "read" and r["measured"] == number]
 
 
+def push_sum(records: list[dict[str, object]], number: int) -> list[int]:
+    reads = reads_of(records, number)
+    return [sum(int(r["push"][axis]) for r in reads) for axis in range(3)]  # type: ignore[index]
+
+
+class _entry:
+    number = 2
+    position = (40, 0, 0)
+    frame_momentum = [0, 0, 0]
+    frame_content = 1
+
+
 # -- (a) ---------------------------------------------------------------------------
 
 
@@ -216,60 +256,49 @@ def test_a_fixed_body_and_a_free_body_at_rest_read_byte_identically():
         assert under[0].books() == without[0].books()
         assert under[0].measured[2].momentum == without[0].measured[2].momentum
         assert under[0].measured[2].pushed == without[0].measured[2].pushed
-    # The fixed body's momentum books the push it takes (its record), a
-    # free body at rest under the cancelled push keeps 0: neither moves.
-    assert run(bar(0, 1, 40, doppler=True, fixed=True))[0].measured[2].pushed == [200, 0, 0]
+    assert run(bar(0, 1, 40, doppler=True, fixed=True))[0].measured[2].pushed == [12800, 0, 0]
     assert run(bar(0, 1, 40, doppler=True, probe=False))[0].measured[2].pushed == [0, 0, 0]
 
 
 # -- (b) ---------------------------------------------------------------------------
 
 BAR = {
-    "at rest": (0, 1, 40, 200),
-    "receding at 0.30": (3 << 26, 7, 40, 96),
-    "receding at 0.45": (9 << 26, 11, 40, 45),
-    "approaching at 0.30": (-(3 << 26), 7, 200, 303),
-    "co-moving at c": (1 << 31, 23, 40, 0),
-    "outrunning at 0.75": (3 << 26, 1, 40, 57),
+    "at rest": (0, 1, 40, 0, 12800),
+    "receding at 0.30": (3 << 26, 7, 40, 1228, 6204),
+    "receding at 0.45": (9 << 26, 11, 40, 1843, 2901),
+    "approaching at 0.30": (-(3 << 26), 7, 200, 1228, 19395),
+    "co-moving at c": (1 << 31, 23, 40, 2383, 0),
+    "outrunning at 0.75": (3 << 26, 1, 40, 3072, 3700),
 }
 
 
 @pytest.mark.parametrize("case", sorted(BAR))
 def test_the_bar_of_the_finding(case):
     """(b)."""
-    momentum, width, start, expected = BAR[case]
-    divisor = step_divisor(momentum, 1 << 20, width)
-    assert divisor == Q * width * (1 << 20) + abs(momentum)
-    # The pair on the heading: 1 at rest, 0 co-moving, |c - v| / c outrunning.
-    numerator, denominator = relative_speed_pair((32, 55), 1, momentum, divisor, _entry(), 2)
-    assert denominator == 32 * divisor and numerator == abs(32 * divisor - 55 * momentum)
+    momentum, width, start, w, expected = BAR[case]
+    divisor = step_divisor(momentum, CONTENT, width)
+    assert divisor == Q * width * CONTENT + abs(momentum)
+    speeds = quantised_speed([momentum, 0, 0], CONTENT, width)
+    assert speeds[0] == (w, (momentum > 0) - (momentum < 0)) and speeds[1:] == ((0, 0), (0, 0))
+    numerator, denominator = flux_pair((1, 0, 0), T_HEADING, speeds)
+    assert (numerator, denominator) == (abs(G * Q - T_HEADING * speeds[0][1] * w), G * Q)
     simulation, records = run(bar(momentum, width, start, doppler=True))
     reads = reads_of(records, 2)
     assert len(reads) == 200 and sum(int(str(r["amount"])) for r in reads) == 200, case
-    assert sum(int(r["push"][0]) for r in reads) == expected, case  # type: ignore[index]
-    assert simulation.measured[2].pushed[0] == expected
+    assert push_sum(records, 2) == [expected, 0, 0], case
+    assert simulation.measured[2].pushed == [expected, 0, 0]
     if momentum:
         assert simulation.measured[2].position[0] != start
-    # Without the key the same bar reads 200 whatever the motion (the finding).
     plain, records = run(bar(momentum, width, start, doppler=False))
-    assert sum(int(r["push"][0]) for r in reads_of(records, 2)) == 200  # type: ignore[index]
-    assert len(reads_of(records, 2)) == 200
+    assert push_sum(records, 2) == [12800, 0, 0] and len(reads_of(records, 2)) == 200
 
 
-def test_the_bar_as_posed_with_rows_of_64_is_refused_at_the_first_weighted_push():
+def test_the_bar_as_posed_with_rows_of_64_runs_under_the_key():
     """(b), the register: rows of amount 64 on the body of content 2^20."""
-    simulation, records = run(bar(3 << 26, 7, 40, doppler=False, amount=64))
+    simulation, records = run(bar(3 << 26, 7, 40, doppler=True, amount=64))
     assert len(reads_of(records, 2)) == 200
-    simulation = NatureBeamSimulation(
-        parse_nature_beam_world(bar(3 << 26, 7, 40, doppler=True, amount=64))
-    )
-    with pytest.raises(OverflowError) as refusal:
-        for _ in range(200):
-            simulation.step()
-    text = str(refusal.value)
-    assert "measured event 2 at [40, 0, 0]" in text and "column 'gravity'" in text
-    assert "against the direction 2 under doppler" in text
-    assert "|V E n| x |N D - T s p| = 4294967296 x 10401873920" in text  # 2^32 x 155 x 2^26
+    assert push_sum(records, 2) == [396673, 0, 0]
+    assert abs(396673 / 4096 - 6204 / 64) < 1
 
 
 # -- (c) ---------------------------------------------------------------------------
@@ -325,223 +354,236 @@ def test_the_third_law_on_two_fixed_bodies_is_unchanged():
 # -- (d) ---------------------------------------------------------------------------
 
 
-def refused(document: dict[str, object], text: str) -> None:
-    with pytest.raises(ValueError, match=text):
-        parse_nature_beam_world(document)
-
-
-def test_the_refusals_at_load():
+def test_the_refusals_and_the_budget():
     """(d)."""
     base = bar(0, 1, 4, doppler=False, length=8)
     for value in (1, "true", None, [True]):
-        refused({**base, "doppler": value}, "doppler must be true or false")
-    heavy = copy.deepcopy(base)
-    heavy["width"] = 1 << 10
-    heavy["measured"][1]["amount"] = 1 << 40  # type: ignore[index]
-    parse_nature_beam_world(heavy)
-    reach = MOMENTUM_BOUND // 87
-    refused(
-        {**heavy, "doppler": True},
-        rf"doppler is refused: measured\[1\] on the axis x against the direction \[1, 0, 0\] of "
-        rf"pace \[32, 55\] needs the relative-speed pair \(N \+ T\) x D = 87 x {1 << 56} beyond "
-        rf"the integer bound {MOMENTUM_BOUND}: D = 64 x 1024 x {1 << 40} \+ 0 .* at most {reach}",
+        with pytest.raises(ValueError, match="doppler must be true or false"):
+            parse_nature_beam_world({**base, "doppler": value})
+    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0)))
+    entry = _entry()
+    entry.frame_momentum = [3 << 26, 0, 0]
+    entry.frame_content = CONTENT
+    assert weighted_flow(table, [2], [[64, 0, 0]], entry, 1, 0) == [18, 0, 0]  # type: ignore[arg-type]
+    with pytest.raises(
+        OverflowError, match=r"weighted flow of measured event 2 .* direction 2 under doppler"
+    ):
+        weighted_flow(table, [2], [[1 << 50, 0, 0]], entry, 1, 0)  # type: ignore[arg-type]
+    headings = (
+        (0, 0, 0),
+        (0, 0, 0),
+        (1, 0, 0),
+        (-1, 0, 0),
+        (0, 1, 0),
+        (0, -1, 0),
+        (0, 0, 1),
+        (0, 0, -1),
     )
-    held = copy.deepcopy(heavy)
-    held["doppler"] = True
-    held["measured"][1]["fixed"] = True  # type: ignore[index]
-    assert parse_nature_beam_world(held).doppler is True
-    fast = copy.deepcopy(base)
-    fast["measured"][1]["amount"] = 1  # type: ignore[index]
-    fast["measured"][1]["momentum"] = [0, 0, -(1 << 56)]  # type: ignore[index]
-    parse_nature_beam_world(fast)
-    refused(
-        {**fast, "doppler": True},
-        rf"measured\[1\] on the axis z against the direction \[0, 0, 1\] .* 87 x {64 + (1 << 56)} .* "
-        rf"D = 64 x 1 x 1 \+ {1 << 56}",
-    )
+    assert weighted_flow_factor(headings) == 3 and weighted_flow_factor(((0, 0, 0),)) == 1
+    assert weighted_flow_factor((*headings, (1, 1, 1))) == 4
+    # The static budget under the key takes the factor: a reader whose
+    # budget fits without the key at 2^61 is refused with it at 3 x 2^61.
+    tight = {
+        **bar(0, 1, 4, doppler=False, length=8, probe=False),
+        "families": [
+            {"name": "beam", "quantum": 0, "charge": 0, "phase": False},
+            {"name": "body", "quantum": 0, "charge": 0, "phase": False},
+        ],
+    }
+    tight["measured"][0]["amount"] = 1 << 25  # type: ignore[index]
+    tight["measured"][1]["amount"] = 1 << 30  # type: ignore[index]
+    tight["measured"][1]["directions"] = [[-1, 0, 0]]  # type: ignore[index]
+    tight["in_transit"] = []
+    parse_nature_beam_world(tight)
+    with pytest.raises(
+        ValueError, match=r"x 3 the largest label flow .* times the largest weight of doppler"
+    ):
+        parse_nature_beam_world({**tight, "doppler": True})
 
 
 # -- (e) ---------------------------------------------------------------------------
 
 
-class _entry:
-    number = 2
-    position = (40, 0, 0)
-
-
-def test_the_pace_table_the_pair_the_fan_and_the_record(tmp_path: Path):
+def test_the_grain_the_pair_and_the_record(tmp_path: Path):
     """(e)."""
-    for heading in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
-        pace = axis_pace(heading)
-        assert pace[[abs(c) for c in heading].index(1)] == (32, 55)
-        assert [p for p in pace if p != (32, 55)] == [(0, 1), (0, 1)]
-    assert axis_pace((0, 0, 0)) == ((0, 1), (0, 1), (0, 1))
-    assert axis_pace((1, 1, 0)) == ((16, 39), (16, 39), (0, 1))
-    assert axis_pace((2, 1, 0)) == ((128, 247), (64, 247), (0, 1))
-    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0), (-1, 0, 0), (2, 1, 0)))
-    assert table.pace.shape == (5, 3, 2)
-    assert table.pace[2].tolist() == [[32, 55], [0, 1], [0, 1]]
-    assert table.pace[4].tolist() == [[128, 247], [64, 247], [0, 1]]
-    # The pair: 1 at rest, 0 at the direction's own speed, negative beyond.
-    assert relative_speed_pair((32, 55), 1, 0, 96, _entry(), 2) == (3072, 3072)
-    assert relative_speed_pair((32, 55), 1, 32, 55, _entry(), 2) == (0, 32 * 55)
-    assert relative_speed_pair((32, 55), 1, 40, 55, _entry(), 2) == (55 * 40 - 32 * 55, 32 * 55)
-    assert relative_speed_pair((32, 55), -1, 40, 55, _entry(), 2) == (32 * 55 + 55 * 40, 32 * 55)
-    with pytest.raises(OverflowError, match=r"\(N \+ T\) x D = 87 x"):
-        relative_speed_pair((32, 55), 1, 0, MOMENTUM_BOUND // 87 + 1, _entry(), 2)
-    # The column term under a weight: the denominator tested by division
-    # before it is formed, the product with the numerator likewise, a
-    # numerator of 0 forming nothing.
-    assert column_term(64, 1, 1, 1, 0, "gravity", _entry(), (1312, 3072), 2) == 27
-    assert column_term(-64, 1, 1, 1, 0, "gravity", _entry(), (1312, 3072), 2) == -27
-    assert column_term(64, 1, 1, 3, 0, "charge", _entry(), (0, 3072), 2) == 0
-    with pytest.raises(OverflowError, match=r"the denominator D_c d_c x N D = 1073741824 x"):
-        column_term(1, 1, 1, 1 << 30, 0, "charge", _entry(), (1, 1 << 40), 2)
-    with pytest.raises(OverflowError, match=r"\|V E n\| x \|N D - T s p\| = 4294967296 x"):
-        column_term(1 << 32, 1, 1, 1, 0, "gravity", _entry(), (1 << 31, 1 << 31), 2)
-    # The fan: one row on +x and one on (1, 1, 0) at the free reader of
-    # content 1 with the momentum (32, 0, 0), D = 96, gravity alone.
-    fan = {
-        "law": "beam",
-        "model_id": "doppler-fan-test",
-        "shape": [5, 5, 1],
-        "boundary": {"z": "periodic"},
-        "ticks": 1,
-        "K": 1 << 20,
-        "N": 64,
-        "release": [0, 1],
-        "suspension": 0,
-        "doppler": True,
-        "directions": [DIAGONAL],
-        "families": [
-            {"name": "a", "quantum": 0, "phase": False},
-            {"name": "b", "quantum": 0, "phase": False},
-        ],
-        "measured": [
-            {"position": [2, 2, 0], "family": "a", "amount": 1, "momentum": [32, 0, 0]},
-            {"position": [0, 4, 0], "family": "b", "amount": 1, "fixed": True},
-        ],
-        "in_transit": [
-            {
-                "position": [1, 2, 0],
-                "family": "b",
-                "number": 2,
-                "direction": PLUS_X,
-                "amount": 1,
-                "phase": 0,
-                "age": 0,
-            },
-            {
-                "position": [2, 1, 0],
-                "family": "b",
-                "number": 2,
-                "direction": DIAGONAL,
-                "amount": 1,
-                "phase": 0,
-                "age": 1,
-            },
-        ],
-    }
-    simulation, records = run(fan)
-    reads = reads_of(records, 1)
-    assert len(reads) == 1 and reads[0]["amount"] == 2
-    x_heading = by_clock(0, 64 * (32 * 96 - 55 * 32), 32 * 96)
-    x_diagonal = by_clock(0, 45 * (16 * 96 - 39 * 32), 16 * 96)
-    assert (x_heading, x_diagonal) == (27, 8)
-    assert reads[0]["push"] == [-(27 + 8), -45, 0]
-    plain, records = run({**fan, "doppler": False})
-    assert reads_of(records, 1)[0]["push"] == [-(64 + 45), -45, 0]
-    held, records = run({**fan, "measured": [{**fan["measured"][0], "fixed": True}, fan["measured"][1]]})  # type: ignore[index, list-item]
-    assert reads_of(records, 1)[0]["push"] == [-(64 + 45), -45, 0]
+    third = quantised_speed([1 << 25, 0, 0], CONTENT, 1)
+    star = quantised_speed([26 << 20, 0, 0], CONTENT, 1)
+    assert third == ((1365, 1), (0, 0), (0, 0)) and star == ((1183, 1), (0, 0), (0, 0))
+    assert quantised_speed([0, -(1 << 25), 0], CONTENT, 1) == ((0, 0), (1365, -1), (0, 0))
+    assert quantised_speed([32, 0, 0], 1, 1) == ((1365, 1), (0, 0), (0, 0))
+    rest = ((0, 0), (0, 0), (0, 0))
+    assert flux_pair((1, 0, 0), T_HEADING, rest) == (262144, 262144)
+    assert flux_pair((1, 0, 0), T_HEADING, third) == (111994, 262144)
+    assert flux_pair((-1, 0, 0), T_HEADING, third) == (262144 + 110 * 1365, 262144)
+    assert flux_pair((0, 1, 0), T_HEADING, third) == (262144, 262144)
+    co_moving = quantised_speed([1 << 31, 0, 0], CONTENT, 23)
+    assert co_moving[0] == (2383, 1) and flux_pair((1, 0, 0), T_HEADING, co_moving) == (14, 262144)
+    assert flux_pair((1, 1, 0), 156, third) == (311348, 524288)
+    assert flux_pair((1, 2, 0), 247, star) == (1018519, 1310720)
+    assert flux_pair((1, 3, 2), 414, star) == (3180254, 3670016)
+    assert abs(311348 / 524288 - 0.5938) < 1e-4 and abs(1018519 / 1310720 - 0.7770) < 1e-4
+    assert abs(3180254 / 3670016 - 0.8665) < 1e-4
+    table = flight_table(((0, 0, 0), (0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 2, 0), (1, 3, 2)))
+    assert table.resolution.tolist() == [1, 1, 110, 156, 247, 414]
     # The record.
+    world = bar(1 << 25, 1, 4, doppler=True, length=8, ticks=1)
     path = tmp_path / "world.json"
-    path.write_text(json.dumps(fan), encoding="utf-8")
+    path.write_text(json.dumps(world), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
-    assert record["doppler"] is True and record["hypotheses"] == [DOPPLER_RULE]
+    assert record["doppler"] is True and record["hypotheses"] == [COLUMNS_RULE, DOPPLER_RULE]
     assert record["status"] == "completed"
     # The gate set declares the key nowhere: every shipped world reads as it did.
     listing = json.loads((ROOT / "examples/events/gate_set.json").read_text(encoding="utf-8"))
     assert len(listing["worlds"]) == 15
     for item in listing["worlds"]:
         path = ROOT / "examples/events" / item["path"]
-        world = load_world(path.read_bytes(), base_dir=path.parent).world
-        assert world.doppler is False and DOPPLER_RULE not in world.hypotheses, item["path"]
+        parsed = load_world(path.read_bytes(), base_dir=path.parent).world
+        assert parsed.doppler is False and DOPPLER_RULE not in parsed.hypotheses, item["path"]
 
 
 # -- (f) ---------------------------------------------------------------------------
 
+READER = (4, 6, 4)
+FAN_TABLE = flight_table(
+    (
+        (0, 0, 0),
+        (0, 0, 0),
+        (1, 0, 0),
+        (-1, 0, 0),
+        (0, 1, 0),
+        (0, -1, 0),
+        (0, 0, 1),
+        (0, 0, -1),
+        (1, 1, 0),
+        (1, 2, 0),
+        (1, 3, 2),
+    )
+)
+FAN_INDEX = {
+    tuple(PLUS_X): 2,
+    tuple(PLUS_Y): 4,
+    tuple(DIAGONAL): 8,
+    tuple(SLANTED): 9,
+    tuple(OBLIQUE): 10,
+}
 
-def charged_fan(momentum: list[int], doppler: bool) -> dict[str, object]:
+
+def placed(direction: list[int], tick: int, amount: int = 64) -> dict[str, object]:
+    """A row of the direction placed on its line so that it
+    steps into the reader's Node at `tick`: the position is the reader
+    less the steps of the flight table from an age whose step at tick - 1
+    is a move."""
+    index = FAN_INDEX[tuple(direction)]
+    period = int(FAN_TABLE.period[index])
+    for age in range(period):
+        steps = [FAN_TABLE.steps[index][(age + k) % period].tolist() for k in range(tick)]
+        if any(steps[-1]):
+            position = [READER[a] - sum(int(s[a]) for s in steps) for a in range(3)]
+            return {
+                "position": position,
+                "family": "beam",
+                "number": 2,
+                "direction": direction,
+                "amount": amount,
+                "phase": 0,
+                "age": age,
+            }
+    raise AssertionError(direction)
+
+
+def fan(
+    momentum: int, directions: list[list[int]], doppler: bool, amount: int = 64
+) -> dict[str, object]:
     return {
         "law": "beam",
-        "model_id": "doppler-charged-fan-test",
-        "shape": [5, 5, 1],
-        "boundary": {"z": "periodic"},
-        "ticks": 1,
+        "model_id": "doppler-fan-test",
+        "shape": [9, 12, 9],
+        "boundary": "open",
+        "ticks": 3,
         "K": 1 << 20,
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
         "doppler": doppler,
-        "directions": [DIAGONAL],
-        "families": [
-            {"name": "a", "quantum": 0, "phase": False, "charge": [1, 3]},
-            {"name": "b", "quantum": 0, "phase": False, "charge": 1},
-        ],
+        "directions": [DIAGONAL, SLANTED, OBLIQUE],
+        "families": families(True),
         "measured": [
-            {"position": [2, 2, 0], "family": "a", "amount": 1, "momentum": momentum},
-            {"position": [0, 4, 0], "family": "b", "amount": 1, "fixed": True},
+            {
+                "position": list(READER),
+                "family": "body",
+                "amount": CONTENT,
+                "momentum": [momentum, 0, 0],
+                "table": {"beam": "read"},
+            },
+            {"position": [0, 0, 0], "family": "beam", "amount": 1, "fixed": True},
         ],
         "in_transit": [
-            {
-                "position": [1, 2, 0],
-                "family": "b",
-                "number": 2,
-                "direction": PLUS_X,
-                "amount": 1,
-                "phase": 0,
-                "age": 0,
-            },
-            {
-                "position": [2, 1, 0],
-                "family": "b",
-                "number": 2,
-                "direction": DIAGONAL,
-                "amount": 1,
-                "phase": 0,
-                "age": 1,
-            },
+            placed(direction, tick, amount) for direction in directions for tick in (1, 2, 3)
         ],
     }
 
 
-def test_the_rule_on_a_fan_with_a_column_denominator_above_one():
+THIRD = 1 << 25
+STAR = 26 << 20
+FAN = {
+    "diagonal at 1/3": (THIRD, DIAGONAL, [5130, 5130, 0], [8640, 8640, 0]),
+    "slanted at the star's speed": (STAR, SLANTED, [4326, 8504, 0], [5568, 10944, 0]),
+    "oblique at the star's speed": (STAR, OBLIQUE, [2828, 8485, 5656], [3264, 9792, 6528]),
+    "heading at 1/3": (THIRD, PLUS_X, [5249, 0, 0], [12288, 0, 0]),
+    "transverse at 1/3": (THIRD, PLUS_Y, [0, 12288, 0], [0, 12288, 0]),
+}
+
+
+@pytest.mark.parametrize("case", sorted(FAN))
+def test_the_fan_over_three_intervals(case):
     """(f)."""
-    at_rest = (-(109 - by_clock(0, 109, 3)), -(45 - by_clock(0, 45, 3)), 0)
-    assert at_rest == (-73, -30, 0)
-    under, records = run(charged_fan([0, 0, 0], True))
-    plain, plain_records = run(charged_fan([0, 0, 0], False))
-    assert records == plain_records and reads_of(records, 1)[0]["push"] == list(at_rest)
-    assert under.measured[1].momentum == plain.measured[1].momentum == list(at_rest)
-    columns = (("gravity", -1), ("charge", 1))
-    charges = [(1, 1), (1, 3)]
-    values = ((1, 1), (1, 1))
-    terms = DopplerTerms(
-        (False, False, False),
-        ((2, (64, 0, 0), ((1, 1), (1, 1), (1, 1))), (8, (45, 45, 0), ((1, 1), (1, 1), (1, 1)))),
+    momentum, direction, expected, flow = FAN[case]
+    assert [64 * c for c in unit_label(tuple(direction))] == [f // 3 for f in flow]  # type: ignore[arg-type]
+    simulation, records = run(fan(momentum, [direction], True))
+    reads = reads_of(records, 1)
+    assert [r["tick"] for r in reads] == [1, 2, 3] and all(r["amount"] == 64 for r in reads)
+    assert push_sum(records, 1) == expected, case
+    # The first step after the third reading: at 1 / 3 the drive fires at
+    # the third self-creation, at 26 / 90 at the fourth.
+    assert simulation.measured[1].position == (READER[0] + (momentum == THIRD), READER[1], READER[2])
+    plain, records = run(fan(momentum, [direction], False))
+    assert push_sum(records, 1) == flow
+
+
+def test_the_fan_directions_together_and_the_fan_reader_at_rest():
+    """(f), the three fan directions in one group, and the reader at rest."""
+    speeds = quantised_speed([THIRD, 0, 0], CONTENT, 1)
+    expected = [0, 0, 0]
+    for direction in (DIAGONAL, SLANTED, OBLIQUE):
+        index = FAN_INDEX[tuple(direction)]
+        numerator, denominator = flux_pair(tuple(direction), int(FAN_TABLE.resolution[index]), speeds)  # type: ignore[arg-type]
+        for axis, component in enumerate(unit_label(tuple(direction))):  # type: ignore[arg-type]
+            expected[axis] += sum(
+                by_clock(age, 64 * component * numerator, denominator) for age in range(3)
+            )
+    simulation, records = run(fan(THIRD, [DIAGONAL, SLANTED, OBLIQUE], True))
+    reads = reads_of(records, 1)
+    assert [r["tick"] for r in reads] == [1, 2, 3] and all(r["amount"] == 192 for r in reads)
+    assert push_sum(records, 1) == expected == [5130 + 4135 + 2761, 5130 + 8128 + 8284, 5522]
+    # The reader at rest, rows of amount 1: the pushes the flows, the unit
+    # labels (45, 45, 0) + (29, 57, 0) + (17, 51, 34) per read, its momentum
+    # after the three reads below D / G = 16384 (it still reads as at rest).
+    under, records = run(fan(0, [DIAGONAL, SLANTED, OBLIQUE], True, amount=1))
+    plain, plain_records = run(fan(0, [DIAGONAL, SLANTED, OBLIQUE], False, amount=1))
+    assert records == plain_records and push_sum(records, 1) == [3 * 91, 3 * 153, 3 * 34]
+    assert under.measured[1].momentum == plain.measured[1].momentum == [273, 459, 102]
+    assert G * max(under.measured[1].momentum) < step_divisor(0, CONTENT, 1)
+    # With rows of amount 64 the third read differs: the momentum after two
+    # reads, (11648, 19584, 4352), passes D / G on y (w_y = 1, the grain).
+    under, records = run(fan(0, [DIAGONAL, SLANTED, OBLIQUE], True))
+    plain, plain_records = run(fan(0, [DIAGONAL, SLANTED, OBLIQUE], False))
+    pushes, plain_pushes = (
+        [r["push"] for r in reads_of(records, 1)],
+        [r["push"] for r in reads_of(plain_records, 1)],
     )
-    assert push_form(True, [109, 45, 0], charges, values, columns, 0, _entry(), terms) == list(at_rest)  # type: ignore[arg-type]
-    assert push_form(True, [109, 45, 0], charges, values, columns, 0, _entry(), None) == list(at_rest)  # type: ignore[arg-type]
-    # Moving on x at p = 1: D = 65, one floor per (direction, column) on x.
-    heading, diagonal = (abs(32 * 65 - 55), 32 * 65), (abs(16 * 65 - 39), 16 * 65)
-    assert (heading, diagonal) == ((2025, 2080), (1001, 1040))
-    gravity = by_clock(0, 64 * 2025, 2080) + by_clock(0, 45 * 1001, 1040)
-    charge = by_clock(0, 64 * 2025, 3 * 2080) + by_clock(0, 45 * 1001, 3 * 1040)
-    assert (gravity, charge) == (62 + 43, 20 + 14)
-    moving, records = run(charged_fan([1, 0, 0], True))
-    assert reads_of(records, 1)[0]["push"] == [-gravity + charge, -30, 0] == [-71, -30, 0]
-    plain, records = run(charged_fan([1, 0, 0], False))
-    assert reads_of(records, 1)[0]["push"] == [-73, -30, 0]
+    assert pushes[:2] == plain_pushes[:2] == [[5824, 9792, 2176]] * 2
+    assert pushes[2] == [5821, 9788, 2175] and plain_pushes[2] == [5824, 9792, 2176]
+    assert quantised_speed([11648, 19584, 4352], CONTENT, 1) == ((0, 1), (1, 1), (0, 1))
 
 
 # -- (g) ---------------------------------------------------------------------------
@@ -602,11 +644,29 @@ def test_a_body_on_a_set_reads_every_group_from_the_one_frame_snapshot():
     simulation, records = run(world(True))
     reads = reads_of(records, 1)
     assert [(r["number"], r["push"]) for r in reads] == [(2, [-27, 0, 0]), (3, [-27, 0, 0])]
-    assert by_clock(0, 64 * abs(32 * 96 - 55 * 32), 32 * 96) == 27
-    # The live momentum after the first group, 5, would have weighted the
-    # second at (32 x 69 - 55 x 5, 32 x 69): 56, not 27.
-    assert by_clock(0, 64 * abs(32 * 69 - 55 * 5), 32 * 69) == 56
+    assert by_clock(0, 64 * 111994, 262144) == 27
+    # The live momentum after the first group, 5 (w = G x 5 // 69 = 296),
+    # would have weighted the second at (262144 - 110 x 296, 262144): 56.
+    assert by_clock(0, 64 * (262144 - 110 * (G * 5 // 69)), 262144) == 56
     assert simulation.measured[1].momentum == [32 - 54, 0, 0]
     assert simulation.measured[1].nodes == ((4, 0, 0), (4, 0, 1), (4, 0, 2))
     plain, records = run(world(False))
     assert [r["push"] for r in reads_of(records, 1)] == [[-64, 0, 0], [-64, 0, 0]]
+
+
+# -- (h) ---------------------------------------------------------------------------
+
+
+def test_a_registered_star_world_of_series_g2_runs_under_the_key():
+    """(h)."""
+    document = json.loads((ROOT / "tests/data/g2_gravity_scalar.json").read_text(encoding="utf-8"))
+    assert document["width"] == 1 << 20 and "doppler" not in document
+    world = parse_nature_beam_world({**document, "doppler": True, "ticks": 20})
+    assert world.doppler is True and DOPPLER_RULE in world.hypotheses
+    stars = [entry for entry in world.measured if not entry.fixed]
+    assert len(stars) == 24 and all(sum(entry.held) == (1 << 22) + 4096 for entry in stars)
+    simulation = NatureBeamSimulation(world)
+    for _ in range(20):
+        simulation.step()
+    assert simulation.books()["balanced"]
+    assert any(entry.pushed != [0, 0, 0] for entry in simulation.measured.values() if not entry.fixed)

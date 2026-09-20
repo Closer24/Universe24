@@ -341,6 +341,14 @@ MOMENTUM_BOUND = (1 << 62) - 1
 # row, and the parser's bound is that product (the model owner's decision of
 # 2026-09-19, the physics-rule reviewer's correction 3).
 LABEL_SCALE = Q
+# The grain of a body's speed, G = 2^12: a constant of the law beside Q
+# (the reading's weight at the relative speed, `doppler-v1`, BEAM_LAW note
+# 38; the mathematician's GRAIN.md section 1). Under the world key `doppler`
+# a free reader's speed on an axis is read once per interval from its own
+# record as w_a = G x |p_a| // D_a, a whole number below G, the remainder
+# (G |p_a|) mod D_a discarded: a declared grain of 1 / G Links per
+# interval, like S and Q, nothing accumulating.
+SPEED_GRAIN = 1 << 12
 # The direction table: two rest vectors, the six headings, the declared rest.
 REST_DIRECTIONS = 2
 HEADING_OFFSET = REST_DIRECTIONS
@@ -424,13 +432,16 @@ AMPLITUDE_LAMP_RATE = (1, 1)
 # the model owner, 2026-09-20, record 119: "a body TAKES a message at the
 # rate at which it and the message meet"; the mathematician's admissible
 # form, docs/designs/push_relative_speed/FORM.md section 6, record 110;
-# docs/BEAM_LAW.md note 38): under the world key `doppler` a free measured
-# event reads the rows that ARRIVED at its Node for the push with each
-# row's contribution weighted by the relative speed of the row's flight and
-# the body along the axis, the pair (|N_d D_a - T_d s p_a|, N_d D_a) per
-# (direction, axis), floored per (direction, column) off the reader's
-# clock. Absent (false by default), and for every body at rest (p = 0, or
-# fixed), the weight is 1 and every world reads as it did, byte for byte.
+# docs/BEAM_LAW.md note 38; the grain and the flux, the mathematician's
+# GRAIN.md): under the world key `doppler` a free measured event reads the
+# rows that ARRIVED at its Node for the push with each direction's label
+# flow weighted by the flux of the rows through the body, the rate at
+# which it and the message meet, the pair (|G Q |D|^2 - T_d sum_a s_a w_a
+# D_a|, G Q |D|^2) per (direction, body) with the body's speed quantised
+# to the grain G (`nature_beam.weighted_flow`), off the reader's clock,
+# before the columns. Absent (false by default), and for every body at
+# rest (p = 0, or fixed), the weight is 1 by an exact division and every
+# world reads as it did, byte for byte.
 DOPPLER_RULE = "doppler-v1"
 DOPPLER_KEY = "doppler"
 
@@ -440,46 +451,30 @@ def step_divisor(momentum: int, content: int, width: int) -> int:
     (BEAM_LAW section 3 step 5 and note 17: one Link per D_a / |p_a|
     self-creations; `engine.step_axis` reads it) and the denominator of
     the body's speed |p_a| / D_a in Links per interval, which the reading's
-    weight at the relative speed reads through the same function (note
-    38): M the content, S the world's `width`, Q the label's scale."""
+    weight at the relative speed quantises through the same function
+    (`nature_beam.quantised_speed`, note 38): M the content, S the world's
+    `width`, Q the label's scale."""
     return LABEL_SCALE * width * content + abs(momentum)
 
 
-def axis_pace(vector: Vector) -> tuple[tuple[int, int], tuple[int, int], tuple[int, int]]:
-    """The pace of a direction along each axis, (N, T), one world constant
-    per direction of the flight table: a ray of direction v = (a, b, c)
-    makes S_1 Q / T_d Manhattan steps per interval, T_d = isqrt(3 |v|^2
-    Q^2), and its line takes |a| of every S_1 of them on x, so it makes
-    |a| Q / T_d Links per interval along x; the pair (|a| Q, T_d) reduced
-    by its gcd ((32, 55) on a heading, the period's Links over the period),
-    (0, 1) on a rest direction and on an axis the direction has no
-    component along."""
-    manhattan = sum(abs(component) for component in vector)
-    if manhattan == 0:
-        return ((0, 1), (0, 1), (0, 1))
-    resolution = integer_root(3 * sum(component * component for component in vector) * Q * Q)
-    found = []
-    for component in vector:
-        if component == 0:
-            found.append((0, 1))
+def weighted_flow_factor(table: tuple[Vector, ...]) -> int:
+    """The largest factor the reading's weight at the relative speed can
+    put on a direction's label flow (`nature_beam.weighted_flow`): the
+    flux pair's numerator is at most G (Q |D|^2 + T_d S_1) against the
+    denominator G Q |D|^2, so the weighted flow is at most (Q |D|^2 + T_d
+    S_1) / (Q |D|^2) times the flow, 2.72 on a heading; the ceiling of the
+    largest over the table's moving directions, 1 on a table of none
+    (the parser's static budget of the columns takes the largest release
+    flow times it under `doppler`)."""
+    factor = 1
+    for vector in table:
+        manhattan = sum(abs(component) for component in vector)
+        if manhattan == 0:
             continue
-        links = abs(component) * Q
-        divisor = bounded_gcd(links, resolution)
-        found.append((links // divisor, resolution // divisor))
-    return (found[0], found[1], found[2])
-
-
-def relative_speed_bound(pace: tuple[int, int], divisor: int) -> int | None:
-    """The bound of the relative-speed pair on one (direction, axis): the
-    numerator |N D_a - T s p_a| is at most (N + T) x D_a, which must fit
-    the integer bound of the law before it is formed (the mathematician's
-    section 1: on a heading 87 D_a, so D_a < 2^62 / 87); returns the
-    largest D_a the pair admits when `divisor` exceeds it, None when the
-    pair fits. The same test at load (`_doppler_load_checks`, on the
-    declared momentum and content) and at every push (`nature_beam.
-    relative_speed_pair`, on the record's)."""
-    reach = MOMENTUM_BOUND // (pace[0] + pace[1])
-    return reach if divisor > reach else None
+        length = sum(component * component for component in vector)
+        resolution = integer_root(3 * length * Q * Q)
+        factor = max(factor, -(-(Q * length + resolution * manhattan) // (Q * length)))
+    return factor
 
 
 # The identity of the turn by momentum, a physical hypothesis beside the
@@ -950,8 +945,8 @@ class NatureBeamWorld:
     amplitude: bool = False
     # The reading's weight at the relative speed (the world key `doppler`,
     # false by default): a free measured event reads the arrivals for the
-    # push weighted by the relative speed of each row's flight and its own
-    # motion (`nature_beam.push_form`; `DOPPLER_RULE`).
+    # push with each direction's flow weighted by the flux of the rows
+    # through it (`nature_beam.weighted_flow`; `DOPPLER_RULE`).
     doppler: bool = False
 
     @property
@@ -2403,6 +2398,7 @@ def _column_budget(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
     release: tuple[int, int],
+    factor: int = 1,
 ) -> None:
     """The parser's static budget of the push over the columns (the
     mathematician's rule P3 of 2026-09-20 in the form the physicist's
@@ -2441,7 +2437,9 @@ def _column_budget(
             largest = max((r for k, r in enumerate(releases[family]) if k != index), default=0)
             if not families[family].free or not largest:
                 continue
-            moment = LABEL_SCALE * width * largest
+            # Under `doppler` the flow a reader meets is weighted by at most
+            # `factor` (`weighted_flow_factor`), the static budget's margin.
+            moment = LABEL_SCALE * width * largest * factor
             total = 0
             for c, (column, (charge, charge_denominator)) in enumerate(
                 zip(columns, charges, strict=True)
@@ -2457,9 +2455,10 @@ def _column_budget(
                         f"from the rays of the family {families[family].name!r} could reach "
                         f"|E n| x V = |{charge} x {value}| x {moment} beyond the integer bound "
                         f"{MOMENTUM_BOUND} (E/D the reader's charge in the column, n/d the family's "
-                        f"value per unit of content, V = {LABEL_SCALE} x {width} x {largest} the "
-                        "largest label flow of one self-creation's release read over the "
-                        "reader's Nodes)"
+                        f"value per unit of content, V = {LABEL_SCALE} x {width} x {largest}"
+                        f"{' x ' + str(factor) if factor > 1 else ''} the largest label flow of one "
+                        "self-creation's release read over the reader's Nodes"
+                        f"{', times the largest weight of doppler' if factor > 1 else ''})"
                     )
                 total += (
                     abs(charge) * abs(value) * moment // (charge_denominator * value_denominator) + 1
@@ -2691,8 +2690,8 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
             f"reflection needs a circle of at least {AMPLITUDE_LEAST_STEPS} steps"
         )
     # The reading's weight at the relative speed: true or false (false by
-    # default); under it the relative-speed pair of every free body must
-    # fit the register on every direction of the table.
+    # default); under it the static budget of the columns takes the
+    # weight's largest factor on the table (`weighted_flow_factor`).
     doppler = obj.get(DOPPLER_KEY, False)
     if type(doppler) is not bool:
         raise ValueError(f"{BEAM_LAW}: {DOPPLER_KEY} must be true or false")
@@ -2725,7 +2724,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         action,
         amplitude,
     )
-    _column_budget(families, measured, release)
+    _column_budget(families, measured, release, weighted_flow_factor(table) if doppler else 1)
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
@@ -2756,44 +2755,4 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     )
     if amplitude:
         _amplitude_load_checks(measured, detectors, families, phase_steps)
-    if doppler:
-        _doppler_load_checks(measured, width, table)
     return world
-
-
-def _doppler_load_checks(
-    measured: tuple[MeasuredDefinition, ...], width: int, table: tuple[Vector, ...]
-) -> None:
-    """The bound of the reading's weight at the relative speed at load
-    (`relative_speed_bound`): for every free measured event (a fixed one
-    reads at the weight 1), on every axis, against every direction of the
-    table with a component along it, (N_d + T_d) x D_a must fit the
-    integer bound with D_a = Q x S x M + |p_a| read from the declared
-    content (the sum over every family held, what `Measured.content`
-    reads) and momentum (the static budget; a push or a click that takes
-    D_a past it is refused at that push naming the same bound). A budget
-    of the pair alone: the products |V E n| x |num| and D_c d_c x N D are
-    tested at the push (`column_term`), where a body of large content
-    refuses loudly and named (note 38)."""
-    for index, entry in enumerate(measured):
-        if entry.fixed:
-            continue
-        # The content the push reads, `Measured.content` = sum(held) over
-        # every family, paid included (the frame's M_A and the step's D).
-        content = sum(_held_of(entry).values())
-        for axis, name in enumerate(AXES):
-            divisor = step_divisor(entry.momentum[axis], content, width)
-            for vector in table:
-                pace = axis_pace(vector)[axis]
-                if not pace[0]:
-                    continue
-                reach = relative_speed_bound(pace, divisor)
-                if reach is not None:
-                    raise ValueError(
-                        f"{BEAM_LAW}: {DOPPLER_KEY} is refused: measured[{index}] on the axis "
-                        f"{name} against the direction {list(vector)} of pace {list(pace)} needs "
-                        f"the relative-speed pair (N + T) x D = {pace[0] + pace[1]} x {divisor} "
-                        f"beyond the integer bound {MOMENTUM_BOUND}: D = {LABEL_SCALE} x {width} "
-                        f"x {content} + {abs(entry.momentum[axis])} (Q x width x content + |p|) "
-                        f"must be at most {reach}"
-                    )
