@@ -151,7 +151,7 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -
     """The (tick, axis) at which a free probe of content m steps by the
     engine's step rule on the record (`NatureBeamSimulation._move`, ENGINE.md;
     since 2026-09-20 the step drive, BEAM_LAW note 17 as amended: on an
-    axis whose momentum component is p the drive gains |p| at every
+    axis whose momentum component is p the signed drive gains p at every
     self-creation and the body steps when it reaches Q x S x m + |p|, the
     engine's own `engine.step_axis` called here): its momentum is the
     cumulative push of its reads (born at rest), at tick t after that

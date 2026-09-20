@@ -132,3 +132,13 @@ the line still holds (230, 190, 140, 230 hand-overs, the largest
 the last body out at 177), so its two readings at tick 20 fall outside
 (the bodies have moved); 27 readings inside and 3 outside (29 and 1). The
 verdict stands. The register entry has every number ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the signed drive (2026-09-20)
+
+Three worlds change under the signed drive (record 126), the others read
+as under the step drive: the square reads the design at tick 20 again
+(the pushes per body and the shear 49 090 283 970 inside; its bodies now
+step first at ticks 81 to 110 and leave between 275 and 339), the line
+holds with 230, 184, 133, 230 hand-overs, the kicked deuteron holds with
+167 and 155; 29 readings inside and 1 outside (`pp_3`'s first step). The
+verdict stands. The register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

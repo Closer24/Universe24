@@ -275,7 +275,7 @@ class Measured:
     steps: int = 0
     # The step drive (2026-09-20; BEAM_LAW note 17 as amended, records 107 and 108):
     # per axis the distance the momentum has driven since the last step, in
-    # label units, `drive_a < Q S M + |p_a|`, one bounded integer on the
+    # label units, signed, `|drive_a| < Q S M + |p_a|`, one bounded integer on the
     # body's own record (as its age is) and nothing at a Node; and per axis
     # the Links stepped, the k0 of the turn by momentum.
     drive: list[int] = field(default_factory=lambda: [0, 0, 0])
@@ -324,6 +324,11 @@ class Measured:
     turn: int = 0
     frame_content: int = 0
     frame_charges: list[Pair] = field(default_factory=list)
+    # The momentum the frame read (the p_a of the reading's weight at the
+    # relative speed under the world key `doppler`, BEAM_LAW note 38): the
+    # body's own record at the start of the interval, so the weight of an
+    # interval's every group is read at one speed, as the charges are.
+    frame_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
     presence: int = 0
     counted: int = 0
 

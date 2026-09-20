@@ -17,7 +17,9 @@ written down before the first run:
     with D = 9216 (content 16, width 8) and for content 1 with width 1 at
     p in {1, 5, 63, 64, 127}, the self-creations at which the drive fires
     are exactly those at which `by_clock(n - 1, |p|, D)` is 1, and the
-    drive after the n-th self-creation is `n |p| mod D`; the shipped
+    drive after the n-th self-creation is `n |p| mod D` with the sign of
+    p (the signed drive of record 126; the primitive at the rate -7
+    against 3 counts -1 at every self-creation); the shipped
     `test_push_width` cases (a) to (c) read the same positions and
     `steps` as before (their own module); on two axes (the physics-rule
     review's counterexample) a body of content 16 with the momentum
@@ -42,7 +44,7 @@ written down before the first run:
     interval from a seeded generator in [-D + 1, D - 1] on every axis
     (content 3, width 4, a 41^3 periodic cube with `age_bound`), over
     10 000 intervals every step moves the body by exactly one Link on one
-    axis, and the drive stays in [0, D_max) on every axis after every
+    axis, and |drive| stays below D_max on every axis after every
     interval, D_max = 2 x Q x S x M - 1 the largest D of the draw (a
     residual earned at a larger momentum fires at the following
     self-creations, one Link each);
@@ -53,13 +55,39 @@ written down before the first run:
 (e) the turn by momentum unchanged at a constant momentum: the phases of
     `test_nature_beam_body` (d) (its own module) and, here, a body of
     content 16 with the momentum 320 and `action` 7 turning by 2925, 2926,
-    2926, 2925, 2926 over its first five Links.
+    2926, 2925, 2926 over its first five Links;
+(f) the signed drive under a reversal (the Boss's diagnosis of the
+    deuteron under a suspension, record 126 of 2026-09-20): a body of
+    content 16 on a bar with width 8 (D = 9216) with the momentum +1024
+    for eight self-creations (its drive 8192, no Link) and -1024 from the
+    ninth: the drive as it was, |p| with the direction from the sign at
+    the fire, stepped -x at the ninth self-creation (8192 + 1024 = 9216);
+    the signed drive counts 8192 - 1024 k and steps -x first at the
+    twenty-fifth self-creation (8192 - 17 x 1024 = -9216), the body at
+    x = 4 until then, its `drive` on the record -9216 + 9216 = 0 after the
+    step; the same body under +1024 for eight and 0 for twenty keeps its
+    drive 8192 and its Node;
+(g) the bound pair under a suspension holds (the Boss's W1: the register's
+    `deuteron_1` under the key `amplitude` with `suspension`
+    [1, 134217728], a paid family `light`, a lamp of that family of
+    content 8388608 at rate [1, 1] on +y beside the proton and a control
+    lamp at (10, 10, 16), each read by a `sum` set of one Node four Links
+    up +y): over 3000 intervals neither nucleon makes a step (every
+    attempted step a hand-over; under the unsigned drive the same world
+    holds for 2092 intervals and the neutron steps to (12, 10, 10) at
+    tick 2093 with a positive momentum, the |p| it had accumulated toward
+    the proton discharged away from it, the physics-rule reviewer's
+    measurement on main), the books balanced at every tick; the hold is
+    the rule's consequence given the pair's symmetry (the pushes exact
+    mirrors, a hand-over zeroing both, the neutron's signed drive never
+    above 0), not a theorem for every pair.
 """
 
 from __future__ import annotations
 
 import json
 import random
+from pathlib import Path
 
 import pytest
 
@@ -68,6 +96,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import step_axis
 from event_universe.events.world import LABEL_SCALE
 from event_universe.runner import run_initialization
+from event_universe.world_loading import load_world
 
 Q = LABEL_SCALE
 
@@ -113,6 +142,7 @@ def test_the_identity_at_a_constant_momentum(momentum, content, width):
     for n in range(1, 4001):
         sign, drive = step_axis(drive, -momentum, content, width)
         assert (sign == -1) == bool(by_clock(n - 1, momentum, reach)), n
+        assert drive == -((n * momentum) % reach), n
     # The count primitive itself (record 108): the same identity, and at a
     # rate beyond the denominator (7 against 3) 2 or 3 per self-creation as
     # by_clock gains them, the drive the remainder.
@@ -127,8 +157,11 @@ def test_the_identity_at_a_constant_momentum(momentum, content, width):
     assert set(gained) == {1} and drive == 30 * 7 - 30 * 3
     with pytest.raises(ValueError, match="positive denominator"):
         by_drive(0, 1, 0)
-    with pytest.raises(ValueError, match="non-negative rate"):
-        by_drive(0, -1, 3)
+    drive, gained = 0, []
+    for _ in range(30):
+        fired, drive = by_drive(drive, -7, 3)
+        gained.append(fired)
+    assert set(gained) == {-1} and drive == -(30 * 7 - 30 * 3)
 
 
 def test_the_identity_on_two_axes():
@@ -170,7 +203,7 @@ def test_the_integrated_distance_under_a_halving_momentum():
         simulation.step()
         assert simulation.books()["balanced"], tick
         positions.append(entry.position[0])
-        assert 0 <= entry.drive[0] < reach + entry.momentum[0], tick
+        assert 0 <= entry.drive[0] < reach + entry.momentum[0], tick  # one sign: never negative
     # The integrated speed: sum over the intervals of |p| / (Q S M + |p|).
     driven = sum(50 * p / (reach + p) for p in momenta)
     links = positions[-1] - 4
@@ -214,7 +247,7 @@ def test_never_two_links_in_one_interval():
             # The drive stays below the largest D of the draw, 2 x reach - 1:
             # a residual earned at a larger momentum fires at the next
             # self-creations, one Link each, never two in one.
-            assert 0 <= entry.drive[axis] < 2 * reach - 1, (tick, axis)
+            assert abs(entry.drive[axis]) < 2 * reach - 1, (tick, axis)
     assert steps == entry.steps > 1000
 
 
@@ -270,3 +303,109 @@ def test_the_turn_by_momentum_is_unchanged_at_a_constant_momentum():
         phase = entry.phase
     assert turns == [t % 64 for t in (2925, 2926, 2926, 2925, 2926)]
     assert entry.axis_steps == [5, 0, 0]
+
+
+# -- (f) ---------------------------------------------------------------------------
+
+
+def test_the_signed_drive_under_a_reversal():
+    """(f)."""
+    reach = Q * 8 * 16 + 1024
+    assert reach == 9216
+    world = bar([mover(16, [1024, 0, 0])], width=8, ticks=30)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
+    entry = simulation.measured[1]
+    positions = []
+    for tick in range(1, 31):
+        entry.momentum = [1024 if tick <= 8 else -1024, 0, 0]
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        positions.append(entry.position[0])
+        if tick <= 8:
+            assert entry.drive[0] == 1024 * tick, tick
+        elif tick < 25:
+            assert entry.drive[0] == 8192 - 1024 * (tick - 8), tick
+        elif tick == 25:
+            assert entry.drive[0] == 0, tick
+    assert positions[:24] == [4] * 24 and positions[24] == 3 and entry.drive[0] == -5 * 1024
+    assert entry.steps == 1 and entry.axis_steps == [1, 0, 0]
+    # The primitive alone: the rule as it was fired at the ninth.
+    drive = 0
+    for _ in range(8):
+        _, drive = by_drive(drive, 1024, reach)
+    assert drive == 8192
+    fired = [by_drive(drive, -1024, reach)[0]]
+    assert fired == [0]
+    # A momentum that stops keeps the drive and the Node.
+    world = bar([mover(16, [1024, 0, 0])], width=8, ticks=28)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
+    entry = simulation.measured[1]
+    for tick in range(1, 29):
+        entry.momentum = [1024 if tick <= 8 else 0, 0, 0]
+        simulation.step()
+    assert entry.position == (4, 0, 0) and entry.drive == [8192, 0, 0]
+
+
+# -- (g) ---------------------------------------------------------------------------
+
+
+def deuteron_under_a_suspension() -> dict[str, object]:
+    """The Boss's W1: the register's deuteron under the record click and a
+    suspension, with a lamp beside the proton and a control lamp, each read
+    by a `sum` set four Links up +y."""
+    root = Path(__file__).resolve().parents[1]
+    path = root / "examples" / "events" / "nucleus" / "deuteron_1.json"
+    # Through the loader: the shipped world takes its families from the
+    # definitions beside its series (2026-09-20); the document below is the
+    # expanded one, its families inline.
+    document = json.loads(load_world(path.read_bytes(), base_dir=path.parent).expanded_source)
+    document["model_id"] = "beam-nucleus-deuteron_1-suspended-test"
+    document["amplitude"] = True
+    document["suspension"] = [1, 134217728]
+    document["families"].append({"name": "light", "quantum": 1})
+    document["families"].append({"name": "counter", "quantum": 1})
+    for measured in document["measured"]:
+        measured.setdefault("table", {})
+        measured["table"]["light"] = "pass"
+        measured["table"]["counter"] = "pass"
+    lamp = {
+        "amount": 8388608,
+        "phase": 0,
+        "fixed": True,
+        "lamp": {"rate": [1, 1], "directions": [[0, 1, 0]], "turns": [8]},
+        "table": {"p": "pass", "n": "pass", "nuclear": "pass", "counter": "pass"},
+    }
+    document["measured"].append({**lamp, "position": [10, 11, 10], "family": "light"})
+    document["measured"].append({**lamp, "position": [10, 10, 16], "family": "light"})
+    counter = {
+        "family": "counter",
+        "amount": 1,
+        "fixed": True,
+        "table": {"light": "measure", "p": "pass", "n": "pass", "nuclear": "pass"},
+    }
+    document["measured"].append({**counter, "position": [10, 15, 10]})
+    document["measured"].append({**counter, "position": [10, 14, 16]})
+    document["detectors"] = [
+        {"name": "beside", "positions": [[10, 15, 10]], "threshold": 1, "reading": "sum"},
+        {"name": "control", "positions": [[10, 14, 16]], "threshold": 1, "reading": "sum"},
+    ]
+    return document
+
+
+def test_the_bound_pair_under_a_suspension_holds():
+    """(g)."""
+    records: list[dict[str, object]] = []
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(deuteron_under_a_suspension()), records.append
+    )
+    proton, neutron = simulation.measured[1], simulation.measured[2]
+    for tick in range(1, 3001):
+        simulation.step()
+        if tick % 250 == 0:
+            assert simulation.books()["balanced"], tick
+        assert proton.position == (10, 10, 10) and neutron.position == (11, 10, 10), tick
+    assert simulation.books()["balanced"]
+    # No Link made: every attempted step a hand-over (`steps` counts the
+    # rule's fires, the `step` records the Links).
+    assert not [r for r in records if r["event"] == "step"]
+    assert len([r for r in records if r["event"] == "contact"]) == proton.steps + neutron.steps > 0

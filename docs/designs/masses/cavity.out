@@ -1,0 +1,22 @@
+--- cavity_unequal: beam-masses-cavity-unequal-v1, 6000 intervals, K 4096, N 64
+DETECTOR  the books balanced at every completed tick: True ; source b4d074f2b762e58d
+DETECTOR  reader 1: 5988 clicks from tick 13 to 6000; content per click (tick, content): [(13, 2), (1510, 3), (3007, 4), (4504, 5), (6000, 5)]
+DETECTOR  reader 1: the partner's turn read off the clicks: first 2, last 5 (E = h f: the content of a unit is h x the emitter's turn at its birth)
+DETECTOR  reader 2: 5988 clicks from tick 13 to 6000; content per click (tick, content): [(13, 8), (1510, 7), (3007, 5), (4504, 6), (6000, 5)]
+DETECTOR  reader 2: the partner's turn read off the clicks: first 8, last 5 (E = h f: the content of a unit is h x the emitter's turn at its birth)
+GAMEBOARD lamp 1 at [2, 0, 0]: held [20806], age 6000, phase 27, measured [{'home': 0, 'read': 0, 'measure': 5988, 'rerelease': 0}]
+GAMEBOARD lamp 2 at [9, 0, 0]: held [20035], age 6000, phase 29, measured [{'home': 0, 'read': 0, 'measure': 5988, 'rerelease': 0}]
+DETECTOR  the books at tick 6000: on the lamps 40841, in transit 119, initial 40960
+GAMEBOARD the two contents [20806, 20035], in transit 119, the sum 40960
+
+--- cavity_equal: beam-masses-cavity-equal-v1, 600 intervals, K 4096, N 64
+DETECTOR  the books balanced at every completed tick: True ; source b4d074f2b762e58d
+DETECTOR  reader 1: 588 clicks from tick 13 to 600; content per click (tick, content): [(13, 5), (160, 5), (307, 5), (454, 5), (600, 5)]
+DETECTOR  reader 1: the partner's turn read off the clicks: first 5, last 5 (E = h f: the content of a unit is h x the emitter's turn at its birth)
+DETECTOR  reader 2: 588 clicks from tick 13 to 600; content per click (tick, content): [(13, 5), (160, 5), (307, 5), (454, 5), (600, 5)]
+DETECTOR  reader 2: the partner's turn read off the clicks: first 5, last 5 (E = h f: the content of a unit is h x the emitter's turn at its birth)
+GAMEBOARD lamp 1 at [2, 0, 0]: held [20420], age 600, phase 60, measured [{'home': 0, 'read': 0, 'measure': 588, 'rerelease': 0}]
+GAMEBOARD lamp 2 at [9, 0, 0]: held [20420], age 600, phase 60, measured [{'home': 0, 'read': 0, 'measure': 588, 'rerelease': 0}]
+DETECTOR  the books at tick 600: on the lamps 40840, in transit 120, initial 40960
+GAMEBOARD the two contents [20420, 20420], in transit 120, the sum 40960
+

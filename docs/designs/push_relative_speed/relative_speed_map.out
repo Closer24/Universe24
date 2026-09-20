@@ -1,0 +1,34 @@
+
+==============================================================================
+A. The dwell on a heading: presence at a fixed Node is d(x) in {1, 2}
+==============================================================================
+d(x) for x = 1 .. 64: 2221221222122122212212221221222122212212221221222122122212212221
+one spatial period of 32 Nodes: 23 Nodes of dwell 2, 9 of dwell 1, the sum 55 = 55 intervals of the flight period
+the identity claimed: 55 arrivals at a Node become 55 x 55 / 32 = 3025/32 row-intervals of presence;
+   at ONE Node over 55 intervals the presence is 55 x d(x) = 55 or 110 row-intervals, never 94.53125
+   over the 32 Nodes of a spatial period (one interval): presence 55 rows; x c = 32 / 55 -> 32 = the 32 arrivals: exact, remainder 0
+   at one Node: presence x c per interval = d(x) x 32 / 55 = 32/55 or 64/55 of the beam's rate: -41.8 % or +16.4 %, a factor, not a remainder
+
+==============================================================================
+B. The bar of the finding, 200 intervals, on a heading (the standalone map)
+==============================================================================
+case                                     law presence proposal   alt cross  expected (c - v)/c x 200
+at rest on a dwell-1 Node (x = 32)       200      200      116   200   200   200.0   (x from 32 to 32)
+at rest on a dwell-2 Node (x = 30)       200      400      232   200   200   200.0   (x from 30 to 30)
+receding at 0.30                         200      346       96    97    97    96.9   (x from 40 to 100)
+receding at 0.45                         200      343       44    45    46    45.3   (x from 40 to 130)
+approaching at 0.30                      200      346      305   303   304   303.1   (x from 120 to 60)
+co-moving at c = 32 / 55                 200      356        0     0     2     0.0   (x from 40 to 156)
+outrunning at 0.75                       200      344       56    58    58    57.8   (x from 40 to 190)
+the law reads the arrivals, 1.000 per interval whatever the motion (the finding, reproduced);
+the proposal at rest reads d(x) x 32 / 55 of the rate, 116 or 232 of 200, by the Node it sits on;
+the alternative (the same pair on the arrivals, normalised to 1 at rest) reads 200 at rest at every Node
+   and the crossing rate when moving; the host's crossing count is the control.
+
+==============================================================================
+C. The gate set's deuteron (weak/j3_deuteron.json): the first read at one Link
+==============================================================================
+directions whose first step is +x: 57; today's push per unit and per column value U(1) = sum u_x = 3008 (the register's 3008)
+the proposal's read per unit: sum dwell_d x c_{d,x} x u_x = 13876185998723134442588/7223394505869769425 = 1921.006; the ratio 0.6386
+the deuteron's registered push 310 967 280 640 would read about 198,593,779,901 per interval (to the floor's grain)
+(the fan's rows are at their first Node for 1 or 2 ages by their own periods; the pair per direction is (a Q, T_d))

@@ -41,7 +41,8 @@ kept, their pins the law of events').
 | `test_nature_beam_reemission.py` | The re-emission on declared directions with the phase and the content kept; the face click; what comes home created again ([below](#the-re-emission)) | `test_border_and_clock_corrections` (b), `test_event_clock` (c) |
 | `test_nature_beam_clock.py` | The clock under the Beam Law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-beam-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder (since the step drive of 2026-09-20 the same integers, the remainder now the drive on the body's record); the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
-| `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108) |
+| `test_step_drive.py` | The step drive (2026-09-20, BEAM_LAW note 17 as amended): the count of Links as the whole part of the distance the momentum has driven, one bounded integer per axis on the body's record: the identity at a constant momentum with `by_clock(n - 1, \|p\|, D)` over 4000 self-creations and twelve momenta; the identity on two axes (the coincident step lost as before); the integrated distance under a halving momentum (38 within 1, 37 to 39, where the rule as it was made 1); never two Links in one interval under a random momentum over 10 000 intervals with the drive in [0, 2 D - 1); the record (`drive`, `axis_steps`, the `step` line) and a declared `drive` refused; the turn by momentum unchanged; the signed drive under a reversal (no Link until the drive cancels and reaches -D) and the bound pair under a suspension holding for 3000 intervals ([below](#the-step-drive)) | new (2026-09-20, series G2's finding, record 107; the owner's decision, record 108); the drive signed the same day (record 126) |
+| `test_doppler.py` | The reading's weight at the relative speed (`doppler-v1`, 2026-09-20, BEAM_LAW note 38; the flux at the grain G = 2^12): a fixed body and a free body at rest reading byte-identically with and without the key over 200 intervals (the same records, the same books); the bar of the finding (a fixed source's steady beam, a free body of content 2^20 at an exact speed, the push the weighted flow in label units) reading 200 rows in every case and taking 12800 at rest, 6204 receding at 0.30, 2901 receding at 0.45, 19395 approaching at 0.30, 0 co-moving at c, 3700 outrunning at 0.75 (the map's rates 96.9, 45.3, 303.1, 0, 57.8 rows to the label unit); the bar with rows of 64 running; the third law on two fixed bodies unchanged; the refusals, the weighted flow's R1 and the budget's factor; the grain, the pair on the headings and the fan (0.5938, 0.7771, 0.8666) and the record; the fan over three intervals (5130 of 8640 on the face diagonal at 1/3; 4326, 8504 on (1, 2, 0) and 2828, 8485, 5656 on (1, 3, 2) at the star's speed; the heading 5249 of 12288; the transverse exact) and the fan reader at rest byte-identical; a body on a set reading two groups from the one frame snapshot; a registered G2 star world running 20 intervals under the key ([below](#the-readings-weight-at-the-relative-speed)) | new (2026-09-20, the model owner's record 119; the mathematician's form, record 110, and GRAIN.md after the physics-rule review) |
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
@@ -1142,7 +1143,8 @@ DESIGN.md test (f) and section 4.4):
   `g` row as +8064 (gravity +320, strong +7744), the push +128 toward the
   other, (Q^2 - G^2 - M^2) x (-64); under the contact and the step drive
   (2026-09-20, [below](#the-step-drive): D = 320 + |p| on the content 5,
-  the drive gaining |p| at every self-creation) the momentum of p1 over
+  the drive gaining p at every self-creation, signed since record 126,
+  one sign here) the momentum of p1 over
   ticks 2 .. 8 reads 128, 256, 0, 0, 128, 0, 128 (the mirror on p2): p1's
   drive 128, 384, 768 >= 704 fires at tick 4 and hands 384; p2's drive
   128, 384, then nothing at tick 4 (its label 0 at its turn), 512 >= 448
@@ -1167,8 +1169,9 @@ DESIGN.md test (f) and section 4.4):
   -7936 is read at ticks 6 and 7 (at tick 6 the drive 7936 is below D =
   8256 and the body stands), and at tick 7 p1 steps to x 1 with (-15872,
   0, 0) and p2 to x 6 with (15872, 0, 0), the drive 23808 - 16192 = 7616
-  on the `step` line (the rule as it was stepped them at tick 6 with
-  7936): the pair separates, no contact.
+  on the `step` line with the momentum's sign, -7616 and +7616 (the
+  signed drive of record 126; the rule as it was stepped them at tick 6
+  with 7936): the pair separates, no contact.
 - (b) the isolated hand-over (`release` [0, 1], no rays): p1 of `p`,
   content 5, momentum (256, 0, 0) at (1, 2, 2) and p2 of `q`, content 5,
   fixed, at (2, 2, 2) on an open 5^3 GameBoard: the step rule fires at
@@ -1229,12 +1232,15 @@ DESIGN.md test (f) and section 4.4):
   at tick 4): a ends at (1, 1, 1) with (-128, 0, 0), b at (3, 1, 1) with
   0, two `contact` records at tick 2. Declared the other way round (b is
   1, a is 2): b steps onto a and hands -192 (b 0, a -128), one `contact`;
-  a then steps to (1, 1, 1) at tick 2 (its drive 64 + 128 >= 192) and to
-  (0, 1, 1) at tick 4, ending with (-128, 0, 0). The sum of the momenta
-  is (-128, 0, 0) and the books balanced in both; the holder and the
-  positions follow the declaration order. The rule as it was (the count
-  off the clock, kept as history): a's free step at tick 3 in the first
-  order, at ticks 2 and 3 in the second.
+  a's drive +64 from its own momentum is cancelled to -64 by the -128 it
+  now holds at tick 2 (the signed drive, record 126), reaches -192 = -D
+  at tick 3, when a steps to (1, 1, 1), and is -128 at tick 4: a ends at
+  (1, 1, 1) with (-128, 0, 0). The sum of the momenta is (-128, 0, 0)
+  and the books balanced in both; the holder and the positions follow
+  the declaration order. History: the unsigned drive (the first form of
+  2026-09-20) stepped a at ticks 2 and 4 in the second order, to (0, 1,
+  1); the rule as it was (the count off the clock) at tick 3 in the first
+  order and at ticks 2 and 3 in the second.
 
 ## The re-emission
 
@@ -1401,10 +1407,14 @@ the model owner on series G2's finding, "1 and 2 are very important for a
 solution and a new run"; record 107 the findings, record 108 the owner's
 decision).
 The count of Links a free measured event has made on an axis is the whole
-part of the distance its momentum has driven: one bounded integer per axis
-on its record, `drive += |p|` at every self-creation in which it may step,
-on every axis, a step and `drive -= D` when `drive >= D`, D = Q x S x M +
-|p|; at most one Link per interval, x before y before z, as before: a
+part of the SIGNED distance its momentum has driven: one bounded integer
+per axis on its record, `drive += p` at every self-creation in which it
+may step, on every axis, a step on the + side and `drive -= D` when
+`drive >= D`, a step on the - side and `drive += D` when `drive <= -D`,
+D = Q x S x M + |p| (the signed drive of record 126, 2026-09-20; the
+first form accumulated |p| and took the direction from the sign at the
+fire, a defect under a reversal); at most one Link per interval, x
+before y before z, as before: a
 later axis whose drive reaches its D in the interval of an earlier axis's
 step loses that Link (its D subtracted, nothing carried, the rule's count
 on the axis, `axis_steps`, raised as the count off the clock was). The
@@ -1415,11 +1425,13 @@ expected integers, written down before the first run:
   8) and p in {1, 5, 63, 64, 127} at content 1 and width 1, the drive
   fires exactly where `by_clock(n - 1, |p|, D)` is 1 and the drive after
   the n-th self-creation is n x |p| mod D; the negative momentum the same
-  with the sign -1; the count primitive `core.integer.by_drive` (record
-  108) the same identity over 400 self-creations, and at the rate 7
-  against 3 a count of 1 at every self-creation with the drive 30 x 4
-  after 30 (the primitive's count is 0 or 1; below the denominator it is
-  `by_clock`'s), a denominator of 0 and a negative rate refused;
+  with the sign -1 and the drive -(n x |p| mod D); the count primitive
+  `core.integer.by_drive` (record 108) the same identity over 400
+  self-creations, at the rate 7 against 3 a count of 1 at every
+  self-creation with the drive 30 x 4 after 30 and at -7 a count of -1
+  with the drive -120 (the primitive's count is -1, 0 or 1; below the
+  denominator it is `by_clock`'s with the sign), a denominator of 0
+  refused;
   `test_push_width` (a) to (c) unchanged. On two axes
   (the physics-rule review's counterexample): content 16, width 1,
   momentum (1024, 320, 0) from (4, 4, 0), D = (2048, 1344): x steps at
@@ -1439,13 +1451,13 @@ expected integers, written down before the first run:
   39, by the drives at the two ends), where the rule as it was made
   floor(400 x 32 / 8224) = 1; no stall longer than 257 intervals
   (ceil(8224 / 32)), the smallest momentum's own period; the drive within
-  [0, D) after every interval.
+  [0, D) after every interval (one sign: the signed drive never negative).
 - (c) never two Links in one interval: content 3, width 4, a 41^3
   periodic cube with `age_bound` 64, the momentum on every axis drawn at
   every interval from `random.Random(20260920)` in [-(D - 1), D - 1] with
   Q x 4 x 3 = 768; over 10 000 intervals every step moves the body by
-  exactly one Link on one axis, `steps` counts them (more than 1000), the
-  drive on every axis within [0, 2 x 768 - 1) after every interval (the
+  exactly one Link on one axis, `steps` counts them (more than 1000),
+  |drive| on every axis below 2 x 768 - 1 after every interval (the
   largest D of the draw: a residual earned at a larger momentum fires at
   the following self-creations, one Link each, never two in one).
 - (d) the record: content 16, width 8, momentum 1024, 27 intervals through
@@ -1458,6 +1470,146 @@ expected integers, written down before the first run:
   320, `action` 7, phase 5: the turns at the first five Links 2925, 2926,
   2926, 2925, 2926 (mod 64) as `test_nature_beam_body` (d) pins, and
   `axis_steps` [5, 0, 0] after 24 intervals.
+- (f) the signed drive under a reversal (record 126): content 16, width 8,
+  D = 9216, the momentum +1024 for eight self-creations (the drive 8192,
+  no Link) and -1024 from the ninth: the first form stepped -x at the
+  ninth (8192 + 1024 = 9216); the signed drive reads 8192 - 1024 k and
+  steps -x first at the twenty-fifth (8192 - 17 x 1024 = -9216), the body
+  at x = 4 until then, its drive 0 after the step and -5120 after 30
+  intervals, `steps` 1, `axis_steps` [1, 0, 0]; the primitive alone at
+  8192 with the rate -1024 counts 0; the same body under +1024 for eight
+  and 0 after keeps its drive 8192 and its Node.
+- (g) the bound pair under a suspension holds (the Boss's W1 of record
+  126): the register's `deuteron_1` under `amplitude` with `suspension`
+  [1, 134217728], a paid family `light` and a lamp of it (content
+  8388608, rate [1, 1], turns [8]) on +y beside the proton at (10, 11,
+  10) and a control lamp at (10, 10, 16), each read by a `sum` set of one
+  `counter` Node four Links up +y: over 3000 intervals no `step` record
+  (the nucleons at (10, 10, 10) and (11, 10, 10) throughout), every
+  attempted step a `contact` (their count the two bodies' `steps`), the
+  books balanced; under the first form the same world holds for 2092
+  intervals and the neutron steps to (12, 10, 10) at tick 2093 with a
+  positive momentum (the physics-rule reviewer's measurement on main:
+  the |p| accumulated toward the proton discharged away from it). The
+  hold is the rule's consequence given the pair's symmetry (mirror
+  pushes, a hand-over zeroing both, the neutron's signed drive never
+  above 0), not a theorem for every pair.
+
+## The reading's weight at the relative speed
+
+`tests/test_doppler.py` (docs/BEAM_LAW.md section 3 step 4 and note 38;
+the model owner's record 119; the mathematician's admissible form, FORM.md
+section 6 of docs/designs/push_relative_speed/ on branch
+`claude/series-m-masses`, record 110, and its grain and flux form GRAIN.md
+after the physics-rule review of the first build; series G2's finding,
+RULES.md section 2, record 107). Under the world key `doppler` a free
+measured event reads the rows that arrived at its Node for the push with
+each direction's label flow V_d weighted by the flux of its rows through
+the body, (|G Q |v|^2 - T_d sum_a s_a w_a v_a|, G Q |v|^2), w_a = G |p_a|
+// D_a the body's speed at the grain G = 2^12, D_a = Q S M + |p_a|, v the
+direction's vector and T_d its resolution; V'_d = sign(V_d) x
+by_clock(age_A, |V_d| x num_d, G Q |v|^2) per component, summed over the
+directions, then the columns as today. The expected integers, written down
+before the first run:
+
+- (a) a fixed body reads byte-identically with and without the key on the
+  bar of (b) over 200 intervals (the same records line by line, the same
+  books, the same momentum and push taken, 12800 label units); a free body
+  at rest whose push the charge column cancels (rho 1 on both families, no
+  third column) the same, its push 0.
+- (b) the bar of the finding: a fixed source at x = 0 on a bar of 400
+  Nodes releasing one row per interval on +x, the steady beam declared in
+  transit (the row of age tau at the Node m(tau) = (2 tau Q + 110) // 220),
+  a free body of content 2^20 with `width` S and momentum p, reading the
+  beam (`read`) with a third column `probe` (the value 1 on the beam, [1,
+  2^20] on the body, the sign plus, the divisor 1) so that each read's push
+  is the weighted flow itself, 64 label units per row: over 200 intervals
+  the body reads 200 rows in every case (the finding) and takes, under the
+  key, at rest (S 1, p 0) 12800; receding at 0.30 (S 7, p 3 x 2^26, D 10 x
+  2^26, w 1228, the pair 127064 / 262144) 6204; receding at 0.45 (S 11, p
+  9 x 2^26, w 1843, 59414 / 262144) 2901; approaching at 0.30 (S 7, p -3 x
+  2^26, from x = 200, 397224 / 262144) 19395; co-moving at c = 32 / 55 (S
+  23, p 2^31, w 2383, 14 / 262144: below one label unit per row) 0;
+  outrunning at 0.75 (S 1, p 3 x 2^26, w 3072, 75776 / 262144, the
+  absolute value) 3700; in rows 200, 96.94, 45.33, 303.05, 0, 57.81
+  against FORM.md's map 200, 97, 45, 303, 0, 58 and its exact rates 96.9,
+  45.3, 303.1, 0, 57.8; without the key 12800 in every case. The bar as
+  posed, rows of amount 64: runs under the key, receding at 0.30 the push
+  396673 (96.84 rows of 4096 units), within a row of the amount-1 line.
+- (c) the third law on two fixed bodies (the mirror world of
+  `test_columns.py` (b), `p` of content 3 and `q` of content 5 with the
+  charge [1, 3] and the strong value [2, 3], `doppler` true): the same
+  records as without the key, equal and opposite pushes at the ticks 6 to
+  12, 960 - by_clock(tick - 1, 320, 3) + by_clock(tick - 1, 1280, 3) on
+  `p`, the push taken opposite; `hypotheses` ["columns-v1", "doppler-v1"].
+- (d) the refusals: `doppler` 1, "true", null or [true] refused "must be
+  true or false"; `weighted_flow` on one +x label of 64 at the outrunning
+  speed 0.75 of a body of content 2^20 at width 1 (w 3072, the pair 75776
+  / 262144) gives 18 (by_clock(0, 64 x 75776, 262144)), on a label of 2^50
+  at the same pair it is refused naming measured event 2, its Node and
+  the direction 2 under doppler;
+  `weighted_flow_factor` 3 on the six headings, 1 on a table of rest
+  directions, 4 with (1, 1, 1); a free reader of content 2^30 releasing on
+  -x met by a fixed source of content 2^25 releasing on +x (charge 0 on
+  both) parses without the key (each budget 2^61) and is refused under it
+  naming "x 3 the largest label flow ... times the largest weight of
+  doppler".
+- (e) `quantised_speed`: (1365, 1) at p 2^25 on a body of content 2^20 at
+  width 1 (v = 1 / 3), (1183, 1) at p 26 x 2^20 (v = 26 / 90 = 0.28889,
+  the G2 star's), (0, 0) at rest, (1365, -1) on -y, (1365, 1) for content 1
+  at p 32; `flux_pair`: on +x (262144, 262144) at rest, (111994, 262144)
+  at 1 / 3, on -x (262144 + 110 x 1365, 262144), on +y at a motion on x
+  (262144, 262144); co-moving (S 23, p 2^31: w 2383) (14, 262144); on
+  (1, 1, 0) (T 156) at 1 / 3 (311348, 524288) = 0.5938; on (1, 2, 0) (T
+  247) at the star's speed (1018519, 1310720) = 0.7771; on (1, 3, 2) (T
+  414) (3180254, 3670016) = 0.8666 (GRAIN.md section 2's flux against the
+  per-axis form's 0.1875, -0.11 and -0.87); the flight table's resolutions
+  110, 156, 247, 414. The record: `run.json` carries `doppler` true and
+  `hypotheses` ["columns-v1", "doppler-v1"] on the bar. The gate set's
+  fifteen worlds parse with `doppler` false and without the identity.
+- (f) the fan over three intervals: a free reader of content 2^20 at
+  (4, 6, 4) of a 9 x 12 x 9 open GameBoard with the three declared directions
+  (1, 1, 0), (1, 2, 0), (1, 3, 2), the push the weighted flow as in (b);
+  one row of amount 64 of the direction placed on the flight table's line
+  to step into the reader's Node at each of the ticks 1, 2, 3 from number
+  2; the reader's clock ages 0, 1, 2, its first step after the third
+  reading (its drive fires at the third self-creation at 1 / 3, so it
+  stands at (5, 6, 4) after the third interval, and at the fourth at 26 /
+  90, still at (4, 6, 4)): on (1, 1, 0) at 1 / 3 (p 2^25) the sum of the
+  pushes (5130, 5130, 0) of the flow (8640, 8640, 0); on (1, 2, 0) at 26 /
+  90 (p 26 x 2^20) (4326, 8504, 0) of (5568, 10944, 0); on (1, 3, 2) at
+  26 / 90 (2828, 8485, 5656) of (3264, 9792, 6528); on +x at 1 / 3 (5249,
+  0, 0) of (12288, 0, 0); on +y at 1 / 3 (0, 12288, 0) exactly; the reader
+  stays at (4, 6, 4) through the third reading; without the key the flow
+  itself. The three fan directions together at 1 / 3, one row of each per
+  interval in one group of number 2 (the reads of amount 192): (5130 +
+  4135 + 2761, 5130 + 8128 + 8284, 5522), each direction's flow at its
+  own pair ((1, 2, 0) at 1 / 3 the pair 973565 / 1310720 = 0.743, (1, 3,
+  2) 3104906 / 3670016 = 0.846). The same fan reader at rest with rows of
+  amount 1: the same records with and without the key over the three
+  intervals, the pushes the flows (273, 459, 102) (the unit labels (45,
+  45, 0), (29, 57, 0), (17, 51, 34) per read), its momentum after them
+  below D / G = 16384 (it still reads as at rest); with rows of 64 the
+  first two reads identical and the third apart, the momentum after two
+  reads (11648, 19584, 4352) past D / G on y (w_y = 1, the grain): (5821,
+  9788, 2175) against the flow (5824, 9792, 2176).
+- (g) a body on a set: `span` [1, 1, 3] at (4, 0, 1) of an 8 x 1 x 3
+  periodic bar, content 1, the momentum (32, 0, 0) (D = 96, w = 1365, the
+  pair 111994 / 262144), met at tick 1 by one +x row of amount 1 at
+  (4, 0, 0) from number 2 and one at (4, 0, 2) from number 3: two `read`
+  lines, each pushing (-27, 0, 0) (by_clock(0, 64 x 111994, 262144); the
+  live momentum after the first group, 5, w 296, would give 56), the
+  momentum after the interval -22, the set (4, 0, 0), (4, 0, 1),
+  (4, 0, 2); without the key -64 each.
+- (h) the registered G2 star world `tests/data/g2_gravity_scalar.json`
+  (the reviewer's copy of `examples/events/hubble_stars/gravity_scalar.json`
+  on `claude/series-g2-stars`: 24 free stars of content 2^22 + 4096 at
+  width 2^20, one detector) parses with `doppler` true and the identity
+  and runs 20 intervals without a refusal, its books balanced and a star
+  pushed. Its table is the eight headings, where the flux equals the
+  heading pair, so (h) is the stars' fit and not the fan's integers,
+  which rest on (f); the copy is temporary, and series G2's merge
+  replaces it by the example's path (one canonical copy per world).
 
 ## The age
 

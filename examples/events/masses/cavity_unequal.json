@@ -1,0 +1,10 @@
+{"law": "beam", "model_id": "beam-masses-cavity-unequal-v1", "shape": [12, 1, 1],
+ "boundary": {"y": "periodic", "z": "periodic"}, "ticks": 6000, "K": 4096, "N": 64,
+ "release": [1, 1], "suspension": 0,
+ "families": [{"name": "light", "quantum": 1}],
+ "measured": [
+  {"position": [2, 0, 0], "family": "light", "amount": 32768, "phase": 0, "fixed": true,
+   "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]}},
+  {"position": [9, 0, 0], "family": "light", "amount": 8192, "phase": 0, "fixed": true,
+   "lamp": {"rate": [1, 1], "directions": [[-1, 0, 0]]}}
+ ]}

@@ -118,12 +118,14 @@ from event_universe.events.world import (
     BECOME_RULE,
     CHARGE_INDEX,
     CONTACT_DEFAULT,
+    DOPPLER_KEY,
     FACE_NAMES,
     FIXED_DIRECTIONS,
     HEADING_OFFSET,
     LIFETIME_NAME,
     MOMENTUM_BOUND,
     REST_DIRECTIONS,
+    SPEED_GRAIN,
     FamilyDefinition,
     Gate,
     NatureBeamWorld,
@@ -134,6 +136,7 @@ from event_universe.events.world import (
     default_reads,
     default_rule,
     default_width,
+    step_divisor,
 )
 
 Record = Callable[[dict[str, object]], None]
@@ -501,7 +504,9 @@ class FlightTable:
     `labels`, the unit vector u_d of each direction at the scale Q
     (`unit_label`; (0, 0, 0) for a rest direction): the momentum label of
     one unit of amount along d, the same length within sqrt 3 / (2 Q) for
-    every direction and exactly Q e_d on a heading."""
+    every direction and exactly Q e_d on a heading. The reading's weight
+    at the relative speed (BEAM_LAW note 38) reads `vectors` and
+    `resolution` alone: a direction's velocity is (Q / T_d) v per axis."""
 
     vectors: np.ndarray
     manhattan: np.ndarray
@@ -1896,6 +1901,138 @@ def column_bound_error(entry: Measured, name: str, moment: int, factor: int) -> 
     )
 
 
+def flux_bound_error(entry: Measured, direction: int, moment: int, factor: int) -> OverflowError:
+    """The refusal of a weighted flow |V_d| x |num_d| that would leave the
+    register, naming the measured event, its Node and the direction (the
+    mathematician's R1 on the reading's weight at the relative speed)."""
+    return OverflowError(
+        f"{BEAM_LAW}: the weighted flow of measured event {entry.number} at {list(entry.position)} "
+        f"exceeds the integer bound {MOMENTUM_BOUND} against the direction {direction} under "
+        f"{DOPPLER_KEY}: |V_d| x |G Q |D|^2 - T_d sum s_a w_a D_a| = {abs(moment)} x {factor}"
+    )
+
+
+def speed_bound_error(entry: Measured, axis: int, momentum: int) -> OverflowError:
+    """The refusal of a speed's register intermediate G x |p_a| that would
+    leave the register, naming the measured event, its Node and the axis
+    (the physics-rule review's S1: tested by division before it is formed,
+    as R1 tests the weighted flow)."""
+    return OverflowError(
+        f"{BEAM_LAW}: the speed of measured event {entry.number} at {list(entry.position)} on "
+        f"axis {axis} under {DOPPLER_KEY} exceeds the integer bound {MOMENTUM_BOUND}: "
+        f"|p_a| = {abs(momentum)} is above {MOMENTUM_BOUND // SPEED_GRAIN} = bound / G"
+    )
+
+
+def quantised_speed(momentum: list[int], content: int, width: int) -> tuple[tuple[int, int], ...]:
+    """A body's speed per axis at the grain G (`world.SPEED_GRAIN`; BEAM_LAW
+    note 38; GRAIN.md section 1), read once per interval from its own
+    record: (w_a, s_a) with w_a = G x |p_a| // D_a, D_a = Q S M + |p_a| the
+    step rule's divisor (`world.step_divisor`), s_a the sign of p_a (0 at
+    rest). w_a is a whole number below G; the remainder (G |p_a|) mod D_a
+    is discarded each interval, a declared grain of 1 / G Links per
+    interval like S and Q: the quantised speed is below |p_a| / D_a by
+    less than 1 / G, nothing accumulates, and a body slower than 1 / G
+    Links per interval on an axis reads there as at rest. The register
+    intermediate G x |p_a| is tested by division before it is formed
+    (`weighted_flow` refuses it naming the body, its Node and the axis,
+    `speed_bound_error`); here it is asserted."""
+    found = []
+    for p in momentum:
+        if p == 0:
+            found.append((0, 0))
+            continue
+        assert abs(p) <= MOMENTUM_BOUND // SPEED_GRAIN, "the caller tests the speed's intermediate"
+        found.append((SPEED_GRAIN * abs(p) // step_divisor(p, content, width), 1 if p > 0 else -1))
+    return tuple(found)
+
+
+def flux_pair(
+    vector: tuple[int, int, int], resolution: int, speeds: tuple[tuple[int, int], ...]
+) -> tuple[int, int]:
+    """The flux of the rows of one direction through a body (GRAIN.md
+    section 2; BEAM_LAW note 38), the rate at which the body and the
+    message meet over the message's own rate, one scalar per (direction,
+    body) as a pair (numerator, denominator): with the direction's
+    velocity (Q / T_d) v per axis (v = (a, b, c) the vector, T_d its
+    resolution from the flight table, |v|^2 its squared length) and the
+    body's quantised speed w_a / G per axis (`quantised_speed`), the
+    factor 1 - (v_body . c_d) / |c_d|^2 in integers,
+
+        (|G Q |v|^2 - T_d x sum_a s_a w_a v_a|, G Q |v|^2),
+
+    the absolute value since the body TAKES the message at the meeting
+    rate, a count: 1 at rest (w = 0, the division exact), less for a body
+    moving with the rows, more for one moving against them, exactly 1 for
+    a transverse motion (the sum is 0; a zero component contributes no
+    term), 0 for a body moving with the rows at their own speed, and
+    |c - v| / c for one outrunning them (taken from behind; the push keeps
+    the flow's sign). On a heading it is (|G Q - T_d s w|, G Q), the pair
+    of FORM.md section 6 at the quantised speed. The numerator is at most
+    G (Q |v|^2 + T_d S_1), 2^33.6 on the widest direction of a table."""
+    length = sum(component * component for component in vector)
+    denominator = SPEED_GRAIN * Q * length
+    met = sum(sign * w * component for (w, sign), component in zip(speeds, vector, strict=True))
+    return abs(denominator - resolution * met), denominator
+
+
+def weighted_flow(
+    flight: FlightTable,
+    arrivals: list[int],
+    labels: list[list[int]],
+    entry: Measured,
+    width: int,
+    age: int,
+) -> list[int]:
+    """One group's label flow under `doppler` (BEAM_LAW note 38): the
+    rows' labels summed per direction present (`arrivals` the direction
+    of each taken row, `labels` its label), each direction's flow V_d
+    weighted by its `flux_pair` off the reader's clock per component,
+
+        V'_d = sign(V_d) x by_clock(age_A, |V_d| x num_d, G Q |v_d|^2),
+
+    and summed over the directions: the flow the columns then read as
+    today (`push_form`, untouched). The body's speed is `quantised_speed`
+    of the momentum and content the frame read (`frame_momentum`,
+    `frame_content`: one speed for every group of the interval whatever
+    the family order), S the world's `width`; the speed's intermediate G
+    x |p_a| is tested by division before it is formed and refused naming
+    the body, its Node and the axis. |V_d| x num_d is tested by
+    division before it is formed and refused naming the body and the
+    direction (R1); a numerator of 0 (a body moving with the rows at
+    their own speed) forms nothing; the sum is bounded per component
+    (R2). At w = 0 on every axis the pair is (G Q |v|^2, G Q |v|^2) and
+    by_clock gives |V_d| exactly: the flow as today, bit for bit."""
+    for axis, momentum in enumerate(entry.frame_momentum):
+        if abs(momentum) > MOMENTUM_BOUND // SPEED_GRAIN:
+            raise speed_bound_error(entry, axis, momentum)
+    speeds = quantised_speed(entry.frame_momentum, entry.frame_content, width)
+    moments: dict[int, list[int]] = {}
+    for direction, label in zip(arrivals, labels, strict=True):
+        found = moments.setdefault(direction, [0, 0, 0])
+        for axis in range(3):
+            found[axis] += label[axis]
+    flow = [0, 0, 0]
+    for direction in sorted(moments):
+        vector = (
+            int(flight.vectors[direction, 0]),
+            int(flight.vectors[direction, 1]),
+            int(flight.vectors[direction, 2]),
+        )
+        numerator, denominator = flux_pair(vector, int(flight.resolution[direction]), speeds)
+        if numerator == 0:
+            continue
+        for axis in range(3):
+            v = moments[direction][axis]
+            if not v:
+                continue
+            if abs(v) > MOMENTUM_BOUND // numerator:
+                raise flux_bound_error(entry, direction, v, numerator)
+            whole = by_clock(age, abs(v) * numerator, denominator)
+            flow[axis] = bounded(flow[axis] + (-whole if v < 0 else whole), entry, "weighted flow")
+    return flow
+
+
 def push_form(
     free: bool,
     moment: list[int],
@@ -1942,7 +2079,14 @@ def push_form(
     mathematician's R1 to R3): each column's product |V| x |E_c n_c| is
     tested by division BEFORE it is formed and refused naming the column;
     the partial sum is bounded after every column (`bounded`); the caller
-    bounds the momentum it joins."""
+    bounds the momentum it joins.
+
+    Under the world key `doppler` (`doppler-v1`, BEAM_LAW note 38) the
+    caller weights the group's flow per direction by the flux of its rows
+    through the reader before this function (`weighted_flow`: the moment
+    it passes is the weighted flow); nothing here changes, and the clock's
+    count, the size and the threshold readings, the emitter's side and a
+    paid family's click are untouched."""
     if not free:
         return [bounded(moment[axis], entry, "push") for axis in range(3)]
     push = [0, 0, 0]
@@ -2899,9 +3043,24 @@ def nature_beam(
                         # the family's value per column; the columns are
                         # floored at the reader's clock age, as every rate of
                         # the law is (the four unifications (4)).
+                        k0, k1 = plan.g_start[gi], plan.g_end[gi]
+                        # Under `doppler` a free body reads the group's
+                        # flow per direction at the flux of its rows
+                        # through it (`weighted_flow`; a fixed body has no
+                        # speed: the weight 1, the flow as it is).
+                        moment = plan.g_moment[gi]
+                        if world.doppler and free and not entry.fixed:
+                            moment = weighted_flow(
+                                flight,
+                                plan.t_arrival[k0:k1],
+                                plan.t_label[k0:k1],
+                                entry,
+                                world.width,
+                                entry.clock_age,
+                            )
                         push = push_form(
                             free,
-                            plan.g_moment[gi],
+                            moment,
                             entry.frame_charges,
                             values_of[family],
                             columns,
@@ -2926,7 +3085,6 @@ def nature_beam(
                             group_total
                         )
                         if rule == "read":
-                            k0, k1 = plan.g_start[gi], plan.g_end[gi]
                             if layer is not None and detector_set.sum:
                                 for k in range(k0, k1):
                                     if plan.t_record[k] != NO_RECORD:
