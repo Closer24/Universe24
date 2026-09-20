@@ -245,3 +245,21 @@ applied to the draft the same day:
   quotient narrowed to one m per set; live units; Figure 3's curve named
   E(d, 0); Hensen "no N at three sigma"; the fair-sampling assumption; W
   defined in Definition 3; the missing v0.3.1 tag already in step 5.
+
+## The information-transfer report (2026-09-20, the owner's request)
+
+`INFORMATION_TRANSFER.md` lists the formulas that follow from "everything
+on the GameBoard is a transfer of information" under the paper's rules,
+each with its label and its real-world reading, and the numbers are in
+`checks/information_transfer.txt`: the L1 causal cone (one Link per
+interval; the front an octahedron, 42 percent slower on the body diagonal),
+the wavelength `N d / n` Links and the bound `a <= lambda_min / 2`, the
+click's precision `1 / (2 N)`, no amplification at a split (Theorem 2 as
+no-cloning), at most `log2 (cells)` bits per click, the joint law of the
+pair from `u`, the distance independence (the far worlds), reversibility
+between clicks with a Landauer reading as a conjecture, and the two-slit
+path difference under the L1 count (constant beyond the slit separation,
+no Young fringes; the register's Pearson 0.368 with the cosine). The
+sharpest open item is the metric: which length a row's phase counts, and how
+the L1 count becomes Euclidean at scale. Sent to the Boss as an issue; the
+half-page for Part I waits on the Boss's answer to its questions 1 and 2.
