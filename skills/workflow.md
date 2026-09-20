@@ -17,6 +17,11 @@ Since 2026-09-17 the Highlights specification is `docs/HIGHLIGHTS.md`, edited
 directly; the Google Doc is not edited or resynced, and the documents that
 restate a Highlights rule are synchronized from that file after each change
 ([Boss project reference](boss-orchestrator/SKILL.md#project-reference)).
+Since 2026-09-20, by the model owner's decision of that day
+([record 87](../docs/LOG_2026-09-20.md#87-decided-the-trimming-pull-request-after-amplitude-v1-lands)),
+Highlights 5.4 holds the decisions only, one line each; every record of a day is
+appended to `docs/LOG_<date>.md` with the next number, and a decision line links to
+its record. A record is written once and linked from everywhere else.
 
 Keep durable procedures in Skills and architectural decisions in their responsible
 documents. Put temporary task state, assignments, blocked checks and next actions
@@ -305,8 +310,10 @@ that day ("we said without 85 worlds"; "put it in the skill"):
   one per table rule, key and family kind, so that every engine code path is
   replayed once; the whole register (109 worlds on 2026-09-20) is replayed
   only under `--full` or on demand. The gate set is listed with what each
-  world covers. Until the coverage-measured gate set exists, the agent
-  chooses it by the rules and keys and lists it in the report.
+  world covers. The gate set is `examples/events/gate_set.json` (section 4 of
+  the trimming plan chose it by measured coverage on 2026-09-20);
+  `tools/run_series.py --list` replays it; a new key or rule adds the world
+  that first uses it to the list, with the line it covers.
 - **Check once at each stage, fully once at the end.** `python tools/check.py`
   scoped per stage; `--full` and the gate-set replay after the first
   behaviour-free commit and at the end, not after every commit.
@@ -326,6 +333,11 @@ that day ("we said without 85 worlds"; "put it in the skill"):
   documents, the design and the commit to start from, and the design's
   evidence is committed under `docs/designs/<key>/` so every session can read
   it.
+- **Write the record once.** The day's findings, readings and the owner's
+  words go to `docs/LOG_<date>.md` as they happen, one record each with the
+  next number; a decision of the owner is one line in Highlights 5.4 linked
+  to its record; a run's entry is written beside its worlds. Nothing is
+  restated in a second document; the reader follows the link.
 
 ## Performance work
 

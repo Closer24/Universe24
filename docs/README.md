@@ -8,7 +8,7 @@ result are different claims. Revision-specific results are not a live status fee
 ## The engine
 
 Since 2026-09-19 there is one engine, the engine of the Beam Law
-(`beam-v1`; the model owner's decision, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
+(`beam-v1`; the model owner's decision, [Highlights 5.4, record 15 of 2026-09-19](LOG_2026-09-19.md#15-decided-the-law-of-the-ray),
 "DECIDED: the law of the ray"); the law of events of the same day is deleted.
 
 | Document | Responsibility |
@@ -27,7 +27,10 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 
 | Document | Responsibility |
 | --- | --- |
-| [Highlights specification](HIGHLIGHTS.md) | The Universe 24 Highlights specification, edited directly by the model owner since 2026-09-17; every decision dated, in the owner's words; nothing deleted |
+| [Highlights specification](HIGHLIGHTS.md) | The Universe 24 Highlights specification, edited directly by the model owner since 2026-09-17; every decision dated, in the owner's words; nothing deleted; the decisions of each day one line each in 5.4, the records in the dated logs |
+| [Highlights log, 2026-09-17 and 2026-09-18](LOG_2026-09-18.md) | The records of the law of the bit and the law of the shadow, moved verbatim from Highlights 5.4; superseded on 2026-09-19, kept as history |
+| [Highlights log, 2026-09-19](LOG_2026-09-19.md) | The records of the law of events and of the law of the ray, moved verbatim from Highlights 5.4; the decisions stand in 5.4 as one line each |
+| [Highlights log, 2026-09-20](LOG_2026-09-20.md) | The records of 2026-09-20 (the four forces, the detector, the experiments, the amplitude), moved verbatim from Highlights 5.4; the decisions stand in 5.4 |
 | [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | What the repository implements of Highlights, section by section, with the tests; not evidence of a physical law |
 | [The design of amplitude-v1](designs/amplitude-v1/DESIGN.md) | The read-only design of 2026-09-20 under the owner's ten principles, every integer from its check outputs beside it (tables, the Mach-Zehnder, Bell at N = 64, 256, 1024, the gate, the two slits); the law itself lives in BEAM_LAW once implemented, this file is the design's evidence |
 | [Derivations of the known laws](DERIVATIONS.md) | The known laws derived on paper from one interval of the engine written as an operator on the GameBoard, rounds 1 to 8 (the law of the shadow in round 8, sections 51 to 56; the law of events and the Beam Law not yet derived) |
