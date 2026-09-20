@@ -6,7 +6,9 @@ books, it computes no physics.
 The interval (`NatureBeamSimulation.step`): the engine sets every measured event's
 clock frame (whether it owes a count and pays one, or self-creates: its age
 advances by one and its turn is read off its clock, s = `by_clock(age,
-content, K)` phase steps, refused at half the circle), calls `nature_beam`
+content x n, d)` phase steps at the clock's rate `K` = [n, d], an integer K
+being [1, K] (`NatureBeamWorld.turn`, the free release's own form; the four
+unifications (2), 2026-09-20), refused at half the circle), calls `nature_beam`
 once for the whole GameBoard (the walk, the readings, the collision, the tables
 and detectors, the releases, the merge), then turns the phase of every
 self-created measured event by its turn, reads the count it owes off its
@@ -50,6 +52,7 @@ from event_universe.events.nature_beam import (
     NatureBeamTables,
     Record,
     bounded,
+    by_clock_rows,
     exact_column_sums,
     exact_sum,
     nature_beam,
@@ -296,9 +299,10 @@ class NatureBeamSimulation:
         one that owes a count pays it by one (no self-creation, no
         release, no turn; `waited` counts the interval); one that owes
         nothing self-creates: its age advances and its turn is read off its
-        clock, `by_clock(age, content, K)`, the turns of the phased families
-        taken in one array where their products fit the register (row by
-        row otherwise), and refused at half the circle."""
+        clock, `by_clock(age, content x n, d)` at the clock's rate [n, d]
+        (`NatureBeamWorld.turn`; `by_clock_rows` over the phased events in
+        one array where their products fit the register, the scalar
+        `turn` row by row otherwise), and refused at half the circle."""
         phased: list[Measured] = []
         for entry in self.measured.values():
             entry.turn = 0
@@ -320,17 +324,17 @@ class NatureBeamSimulation:
                 phased.append(entry)
         if not phased:
             return
-        K = self.world.K
+        numerator, denominator = self.world.turn_rate
         ages = [entry.clock_age for entry in phased]
         contents = [entry.frame_content for entry in phased]
-        if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
-            age_column = np.array(ages, dtype=np.int64)
-            content_column = np.array(contents, dtype=np.int64)
-            turns = (
-                ((age_column + 1) * content_column) // K - (age_column * content_column) // K
+        if (max(ages) + 1) * max(contents) * numerator <= MOMENTUM_BOUND:
+            turns = by_clock_rows(
+                np.array(ages, dtype=np.int64),
+                np.array(contents, dtype=np.int64) * numerator,
+                denominator,
             ).tolist()
         else:
-            turns = [by_clock(age, content, K) for age, content in zip(ages, contents, strict=True)]
+            turns = [self.world.turn(age, content) for age, content in zip(ages, contents, strict=True)]
         for entry, turn in zip(phased, turns, strict=True):
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(

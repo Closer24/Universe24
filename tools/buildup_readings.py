@@ -133,7 +133,7 @@ def read_run(folder: Path, *, window_start: int = DEFAULT_WINDOW_START) -> Readi
     assert lamp.lamp is not None
     # The lamp's turn per self-creation off the engine's clock, and its rate
     # per self-creation on its one direction: the rate of the world.
-    turn = by_clock(0, lamp.amount, world.K)
+    turn = world.turn(0, lamp.amount)
     rate = by_clock(0, lamp.lamp.rate[0], lamp.lamp.rate[1])
     wavelength = (world.phase_steps / turn) / HEISENBERG.SPEED_DIVISOR
     light = world.families[lamp.family].name

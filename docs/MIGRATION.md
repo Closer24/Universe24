@@ -35,6 +35,28 @@ except where a section below says.
   whose detector set clicks a row of an amount between 2^41 and 2^48 in
   one interval now takes the Python path for that pointer where it took
   the register (the same integer, slower); no registered world does.
+- **(2) Every age against a key is the one `by_clock`; the turn is the
+  release at the rate [1, K].** The world key `K` keeps its name and
+  accepts, beside the integer K (the content per phase step per
+  self-creation, read as the pair `[1, K]`: every example world, bit for
+  bit), a pair `[n, d]` of phase steps per unit of content per
+  self-creation like `release`; the turn is `by_clock(age, content x n,
+  d)` (`NatureBeamWorld.turn(age, content)`, new; `NatureBeamWorld.turn_rate`,
+  new, the pair), refused at half the circle as before, the parser's
+  static bound `2 x content x n < d x N`. `NatureBeamWorld.K` is the key
+  as declared (`int | tuple[int, int]`; `run.json` carries it as declared,
+  so an integer world's record is unchanged); the frame, the tools of the
+  readings (`tools/lensing_readings.py`, `tools/buildup_readings.py`,
+  `tools/heisenberg_readings.py`, `tools/hubble_readings.py`) and the
+  parser's own bounds read the rate through `turn` and `turn_rate`, not
+  `K`. `nature_beam.by_clock_rows(age, numerator, denominator)` (new) is
+  `by_clock` over rows (the frame's turns in one array; the inline floor
+  difference of `_frame_all` is deleted) and `nature_beam.ages_at_key(age,
+  key)` (new) the rows whose walk brought their age to the key,
+  `by_clock(age - 1, 1, key) = 1`: the lifetime's click (`store.age >=
+  lifetime` deleted) and the world's age bound (`store.age.max() >
+  age_bound` deleted; the key age_bound + 1) read it. Identities on every
+  reachable state (a row never lives past its key); no world file changes.
 
 ## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
 

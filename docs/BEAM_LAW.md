@@ -1825,3 +1825,31 @@ implementation's part of the contract. The design above is unchanged.
     2^49 reads (2^62, 0), a row of 2^60 (2^73, 0). `POINTER_AMOUNT_BOUND`
     is deleted (MIGRATION). Every world of the register replays
     byte-identical in `events.jsonl` and `state.json` (VALIDATION).
+    **(2) Every age against a key is the one `by_clock`; the turn is the
+    release at the rate [1, K]** (`tests/test_nature_beam_clock.py` (f)).
+    The mathematician found that the turn `s = by_clock(a, M, K)` is the
+    free release `by_clock(a, H n_r, d_r)` at the rate [1, K] (clock_checks
+    8: the phase circle's turn is a release rate of phase per unit of
+    content, E = h f as a rate), and that the lifetime's click, `become
+    at` and the age bound are the same primitive read on an age against
+    a key: `by_clock(a, 1, key) = 1` exactly at the self-creation that
+    takes the age from key - 1 to key (clock_checks 4: first at the age
+    L, then every L). So: the world key `K` is the clock's rate, a pair
+    `[n, d]` of phase steps per unit of content per self-creation like
+    `release`, the integer K read as `[1, K]` (every world file valid and
+    bit-identical; the key keeps the name the owner uses; the record
+    carries it as declared), the turn `by_clock(age, content x n, d)`
+    (`NatureBeamWorld.turn`, `nature_beam.by_clock_rows` over the phased
+    events in one array where the products fit the register), the
+    refusal `2 s >= N` kept and the parser's static bound read at the
+    rate (`2 x content x n < d x N`); the lifetime's click and the
+    world's age bound are `nature_beam.ages_at_key(age, key)`,
+    `by_clock(age - 1, 1, key) = 1` on the age after the walk (the walk
+    that brought the age to the key; a row at age 0 has not walked and
+    is never at the key; a rest row keeps its age and, by the parser's
+    refusal of a declared age at or beyond L and the click at L, never
+    stands at a key), the bound the key `age_bound + 1`: `store.age >=
+    lifetime` and `store.age.max() > age_bound` are deleted, identities on
+    every reachable state. `become at` is not in the code (in flight,
+    WEAK.md) and will read the same call. No registered integer moves:
+    every world of the register replays byte-identical.

@@ -400,6 +400,37 @@ def read_arrivals(
     return reading_of(sums)
 
 
+# -- the clock's primitive over rows ----------------------------------------------
+
+
+def by_clock_rows(age: np.ndarray, numerator: np.ndarray | int, denominator: int) -> np.ndarray:
+    """`core.integer.by_clock` over rows: what the whole part of age x
+    numerator / denominator gains at the self-creation that takes each
+    row's age from `age` to `age + 1`, the first difference of a floor,
+    exact on average with no remainder anywhere; the caller has bounded
+    (age + 1) x numerator to the register. The one primitive of every
+    rate of the law (the turn, the release, the lamp, the owed count, the
+    step, the columns) and, since the four unifications (2026-09-20,
+    BEAM_LAW note 33), of every age read against a key (`ages_at_key`)."""
+    if denominator < 1:
+        raise ValueError("positive denominator required")
+    result: np.ndarray = ((age + 1) * numerator) // denominator - (age * numerator) // denominator
+    return result
+
+
+def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
+    """The rows whose walk this interval brought their age to the key (a
+    family's lifetime L; the world's age bound as the key age_bound + 1):
+    `by_clock(age - 1, 1, key)` = 1, the one primitive read on the age
+    before the walk against the key, exactly as the clock reads a measured
+    event's turn off its age against K (the mathematician's clock_checks
+    4: first at the age L, then every L). A row at age 0 (born this
+    interval, or declared at rest at 0) has not walked and is never at
+    the key."""
+    result: np.ndarray = (age > 0) & (by_clock_rows(age - 1, 1, key) == 1)
+    return result
+
+
 # -- the flight table ------------------------------------------------------------
 
 
@@ -2323,14 +2354,16 @@ def nature_beam(
     # open face books an escape, one `click` record per row naming the
     # border, the border's record the square of the coherent pointer of
     # what clicked, per family; then the rows leave the store. Local (the
-    # row's own age against its family's key), fixed work (one comparison
-    # per row), no draw, no register; the one-way border of the interval
-    # beside the click.
+    # row's own age against its family's key, read by the one primitive:
+    # `ages_at_key`, `by_clock(age - 1, 1, L)` = 1 at the walk that brought
+    # the age to L, as the clock reads the turn; note 33), fixed work (one
+    # comparison per row), no draw, no register; the one-way border of the
+    # interval beside the click.
     for family, store in enumerate(stores):
         lifetime = families[family].lifetime
         if lifetime is None or store.size == 0:
             continue
-        gone = np.flatnonzero(store.age >= lifetime)
+        gone = np.flatnonzero(ages_at_key(store.age, lifetime))
         if gone.shape[0] == 0:
             continue
         definition = families[family]
@@ -2372,10 +2405,12 @@ def nature_beam(
 
     # Merge identical rows; sort by Node. A row whose age passed the
     # world's bound refuses the run: the store's promise of fixed storage
-    # is the bound, and the world must be small enough or declare it.
+    # is the bound, and the world must be small enough or declare it (the
+    # same primitive as the border: the age against the key age_bound + 1,
+    # `ages_at_key`; note 33).
     for store in stores:
         store.merge()
-        if store.size and int(store.age.max()) > world.age_bound:
+        if store.size and ages_at_key(store.age, world.age_bound + 1).any():
             raise OverflowError(
                 f"{BEAM_LAW}: a ray carries the age {int(store.age.max())} beyond the world's "
                 f"age_bound {world.age_bound} (declare a larger age_bound or a smaller GameBoard)"

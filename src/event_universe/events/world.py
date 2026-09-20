@@ -12,7 +12,13 @@ the model owner, 2026-09-19):
   is infinity on every face, what leaves clicks on the face detector) or an
   object with any of the keys `x`, `y`, `z`, each `"open"` or `"periodic"`,
   the missing axes open; `ticks`;
-- `K`, the content per phase step per self-creation, one for the world; `N`,
+- `K`, the clock's rate, one for the world: an integer K, the content per
+  phase step per self-creation, read as the pair `[1, K]`, or (since
+  2026-09-20, the four unifications (2), BEAM_LAW note 33) a pair `[n, d]`
+  of phase steps per unit of content per self-creation like `release`, the
+  turn of a measured event `by_clock(age, content x n, d)`
+  (`NatureBeamWorld.turn`), refused at half the circle; the record carries
+  the key as declared; `N`,
   the steps of the phase circle (64 by default, a power of two from 2 through
   4096); `release` `[n, d]`, the rays a measured event of a free family
   releases per self-creation per declared direction per unit of content,
@@ -221,7 +227,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
-from event_universe.core.integer import bounded_gcd, integer_root, rational_sum
+from event_universe.core.integer import bounded_gcd, by_clock, integer_root, rational_sum
 
 BEAM_LAW = "beam-v1"
 LAW_VALUE = "beam"
@@ -589,7 +595,8 @@ class NatureBeamWorld:
     boundary: str | dict[str, str]
     periodic: tuple[bool, bool, bool]
     ticks: int
-    K: int
+    K: int | tuple[int, int]
+    turn_rate: tuple[int, int]
     phase_steps: int
     release: tuple[int, int]
     suspension: tuple[int, int]
@@ -606,6 +613,15 @@ class NatureBeamWorld:
     @property
     def phase_mask(self) -> int:
         return self.phase_steps - 1
+
+    def turn(self, age: int, content: int) -> int:
+        """The turn of a measured event's phase at the self-creation from
+        `age`: `by_clock(age, content x n, d)` phase steps at the clock's
+        rate `turn_rate` = (n, d), the free release's own form at the rate
+        [1, K] (the four unifications (2), BEAM_LAW note 33); the frame
+        refuses a turn of half the circle or more."""
+        numerator, denominator = self.turn_rate
+        return by_clock(age, content * numerator, denominator)
 
     @property
     def columns(self) -> tuple[tuple[str, int], ...]:
@@ -1094,7 +1110,7 @@ def _lamp(
     table: tuple[Vector, ...],
     quantum: int,
     amount: int,
-    K: int,
+    turn_rate: tuple[int, int],
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -1112,8 +1128,9 @@ def _lamp(
             )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     # The largest label a release can carry: the rate's numerator units at
-    # the largest turn the content allows (the whole part of amount / K).
-    largest_turn = max(1, amount // K)
+    # the largest turn the content allows (the whole part of amount x n / d
+    # at the clock's rate [n, d]).
+    largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
     return LampDefinition(rate, directions, window)
 
@@ -1161,7 +1178,7 @@ def _measured(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
-    K: int,
+    turn_rate: tuple[int, int],
     phase_steps: int,
     release: tuple[int, int],
     table: tuple[Vector, ...],
@@ -1220,10 +1237,14 @@ def _measured(
                 )
             held[names[key]] = _integer(content, f"{label}.held[{key!r}]", 1)
         phased = families[family].phase
-        if phased and 2 * sum(held) >= K * phase_steps:
+        # The turn's static bound: 2 x content x n below d x N at the clock's
+        # rate [n, d] (2 x content below K x N for an integer K), the exact
+        # refusal of a turn at half the circle staying the frame's.
+        if phased and 2 * sum(held) * turn_rate[0] >= turn_rate[1] * phase_steps:
             raise ValueError(
                 f"{BEAM_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
-                "per self-creation below half the circle; the content held of every family counts)"
+                "per self-creation below half the circle; the content held of every family counts; "
+                "at the clock's rate [n, d], 2 x content x n below d x N)"
             )
         # A measured event of a family without a phase circle has phase 0.
         phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
@@ -1315,7 +1336,7 @@ def _measured(
                 table,
                 families[family].quantum,
                 amount,
-                K,
+                turn_rate,
             )
         found.append(
             MeasuredDefinition(
@@ -1595,7 +1616,18 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
     ticks = _integer(obj["ticks"], "ticks", 0)
-    K = _integer(obj["K"], "K", 1)
+    # The clock's rate: an integer K is the pair [1, K] (one phase step per
+    # K units of content per self-creation), a pair [n, d] is n phase steps
+    # per d units of content per self-creation, like `release`; the record
+    # carries the key as declared.
+    declared_clock = obj["K"]
+    K: int | tuple[int, int]
+    if type(declared_clock) is int:
+        K = _integer(declared_clock, "K", 1)
+        turn_rate = (1, K)
+    else:
+        turn_rate = _ratio(declared_clock, "K", zero=False)
+        K = turn_rate
     phase_steps = _integer(obj.get("N", 64), "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"{BEAM_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
@@ -1619,7 +1651,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         shape,
         periodic,
         families,
-        K,
+        turn_rate,
         phase_steps,
         release,
         table,
@@ -1638,6 +1670,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         periodic,
         ticks,
         K,
+        turn_rate,
         phase_steps,
         release,
         suspension,

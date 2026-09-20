@@ -84,7 +84,10 @@ age reaches L makes no next event but an escape click in the ledger, as at
 an open face"). A family that declares a `lifetime` L has a detector
 without Nodes named `lifetime`, listed after the faces: a ray of the family
 whose age reaches L at the end of its walk (after the reads of that
-interval, before the merge) is a `click` on it, recorded like a face click
+interval, before the merge; read by the one primitive, `nature_beam.ages_at_key`,
+`by_clock(age - 1, 1, L)` = 1 at the walk that brought the age to L, as
+the world's `age_bound` is read against the key age_bound + 1 and the
+clock reads the turn; the four unifications (2)) is a `click` on it, recorded like a face click
 (the tick, the Node the ray was on, `measured` None, the family, the
 number, the amount, the phase, the momentum, the content), booked as an
 escape in the ledger's lifetime lines and summed into the escaped lines
@@ -153,7 +156,11 @@ reading over the clicked rays, taken on the circle's unit vectors
 step 2, and section 10, notes 16 and 33).
 
 **The frame** (`NatureBeamSimulation.step`, `engine.py`): for every measured
-event, its clock (its age, the turn `by_clock(age, content, K)`, its
+event, its clock (its age, the turn `by_clock(age, content x n, d)` at the
+clock's rate `K` = [n, d], an integer K being [1, K] (`NatureBeamWorld.turn`;
+the four unifications (2), 2026-09-20: the turn is the free release's own
+form at the rate [1, K], `by_clock_rows` over the phased events in one
+array), its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
@@ -210,7 +217,8 @@ its own, placed in the frame by design ([BEAM_LAW section 9](BEAM_LAW.md#9-imple
 
 Unchanged in form from the law of events (the model owner, 2026-09-19, "I
 approve the proposal"; E = h f): at a self-creation whose turn is
-s = `by_clock(age, content, K)` each unit a lamp releases costs it
+s = `by_clock(age, content x n, d)` at the clock's rate `K` = [n, d] (an
+integer K is [1, K]) each unit a lamp releases costs it
 `quantum` x s content, carries that content per unit and the momentum
 `quantum` x s x u_d along its direction (u_d the unit vector at the scale
 Q = 64), and gives it to the
@@ -284,7 +292,13 @@ set before the frame adds the turn (`step`: the click sets the phase in
 the law, the frame turns it by `turn` after).
 
 **The world** (`events/world.py`; the keys of [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
-`law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K`; `N` (64 by
+`law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K` (the clock's
+rate: an integer K, the content per phase step per self-creation, read as
+the pair `[1, K]`, or since 2026-09-20 a pair `[n, d]` of phase steps per
+unit of content per self-creation like `release`, the turn `by_clock(age,
+content x n, d)`, refused at half the circle, `NatureBeamWorld.turn_rate`;
+the record carries the key as declared; every example world declares the
+integer); `N` (64 by
 default, a power of two from 2 through 4096); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
 `suspension` `[n, d]` (an integer w as `[w, 1]`; 0 or `[0, d]` for none,
@@ -349,7 +363,8 @@ re-emitter, a repeated direction, a momentum label Q x content x amount
 beyond 2^62 - 1 on a declared ray or a lamp's release (content x amount
 below 2^56), `phase_per_link` outside 0 .. N - 1 or on
 a family without a phase circle, a content at or past K x N / 2 of a family
-with a phase, a lamp on a free family, `kind` on a family (pointing to
+with a phase (2 x content x n at or past d x N at the rate [n, d]), a lamp
+on a free family, `kind` on a family (pointing to
 MIGRATION: the quantum decides the kind), a family without `quantum`, a
 negative quantum, a charge on a paid family, `charge` on a measured event
 (pointing to MIGRATION: the charge is the family's per unit of content), a
