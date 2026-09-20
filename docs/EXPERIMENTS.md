@@ -1612,6 +1612,159 @@ states "exactly" and means integer equality at every tick.
   denominator or a smaller q) is the follow-up for the model owner.
   Nothing was tuned.
 
+### G, the Hubble diagram behind the detector (2026-09-20)
+
+- **Confronts.** The model owner's question (2026-09-20, Highlights 5.4,
+  "DECIDED: series G"): "let it check whether what is observed today is
+  also seen in our detector." Sources thrown from a centre with a spread
+  of momenta, each a family of its own releasing rays with its phase; a
+  detector at the centre reads, per source, the redshift (the rate at
+  which the pointer of its record turns against the emitter's own rate)
+  and the distance (the age of the arriving rays, the flight time); the
+  curve of redshift against distance is compared in shape with what is
+  observed today (the linear law near, and far the supernova curve of an
+  accelerating recession, q about -0.55) and with the two curves the law
+  can give, a coasting recession (the Milne form, q = 0) and a
+  decelerating one (the push of the crowd, q > 0). The orchestrator's
+  expectation, flagged before the run: the redshift is the Doppler of the
+  throw and the clocks' rates, the Hubble law comes out by itself, nothing
+  in the law gives an acceleration, and the age clock is the one reading
+  that could bend the curve. A run under the
+  [experimenter skill](../skills/experimenter/SKILL.md): every number
+  labelled a detector reading (the record of the detector's set or of a
+  measured event) or a GameBoard reading (the host's view: a source's
+  position, steps, momentum, the books); the diagram and its fits are
+  detector readings only.
+- **Model prediction, pinned before the runs
+  ([the derivation](../examples/events/hubble/README.md#the-derivation-before-the-runs)).**
+  An open 301^3 cube, twenty-four free sources (a family each) on chains
+  of four along the six axes at r_0 = 3, 5, 7, 9 Links, the speeds v = c x
+  V(axis) x (2 i - 1) / 7 with V = 0.6 .. 0.35 (0.05 c to 0.6 c, c = 32 /
+  55 Links per interval read off the flight table; `width` 2^20, the
+  momenta p = Q S M v / (1 - v)), each releasing one row per self-creation
+  toward the centre with its clock's phase (the turn 1 step per
+  self-creation, K = M) and nothing outward; a detector of one Node at the
+  centre (the paid family `detector`, `wave`, every entry `{"rule":
+  "measure", "reads": "age"}`); six masses inside at one Link releasing
+  outward. Two crowds: coasting (rows of 1, the masses of content 1) and
+  pushing (rows of 16, the masses 64 per self-creation, the net pull on
+  rank i being i x 16 per interval inward); two clocks: the emitters'
+  clocks counting the presence (`suspension` [1, 2^12]) or the age moment
+  ([1, 2^19]); 400 intervals, the record read over [100, 200), [200, 300)
+  and the registered late window [300, 400). Expected: 1 + z = (1 + k)(1 +
+  v / c) within 2 % (k the emitter's clock, v its speed, both from the
+  record); the coasting throw the Milne form z = H tau / (1 - H tau) with
+  H t_0 = 1 within 10 % (t_0 the window's centre) and q = 0 the nearest of
+  the three exact forms at the near fit's H with rms below 0.02 (the
+  initial distances shifting it by r_0 / c in tau); the pushing throw
+  decelerating, H t_0 < 1, q_eff > 0 and the accelerating form the
+  farthest; the bend of the age clock reported, no bracket; what is
+  observed today (q = -0.55 the nearest) expected outside in every run.
+  Criteria (completed, the books balanced) fail the tool; the readings are
+  registered inside or outside and never moved.
+- **Features.** The free release on one heading stamping the clock's
+  phase; the momentum step of a free measured event with the width of the
+  push; the push of a free row on a reader (kappa = -M_A) and a fixed
+  reader's momentum; `wave` on a set of one Node with the age moment on
+  the click record (`reads: "age"`); the clock's count of the presence or
+  the age moment; `pass` on the masses; the face detectors (nothing left).
+- **Run.** `examples/events/hubble/` (four worlds by `make_worlds.py`,
+  `coasting_scalar`, `coasting_age`, `pushing_scalar`, `pushing_age`, the
+  model ids `rays-hubble-<crowd>-<clock>-space-v1`); `tools/run_series.py
+  --jobs 4`; `tools/hubble_readings.py` (the pointer's turn per detector
+  interval by a least-squares slope of the `record` lines' unwrapped
+  phases, the ages off the click records, m(tau) and c off the engine's
+  `flight_table`, the replay for the checks; `tests/test_hubble_readings.py`
+  pins it to the engine on a bar). The first throw of the series, with a
+  row released outward from every source and the detector's event as the
+  mass inside, is in git before the registered worlds; it found that a
+  source stepping into the Node of its own row takes it home and that the
+  detector's clock, reading `age` beside every arrival, paced the mass's
+  release down to 0.29 (the README).
+- **Result (2026-09-20, measured against expected).** The worktree of
+  `claude/universe24-new-3ytqde` at the merge of the charge per unit of
+  content (`b9a0e6c6`), source fingerprint
+  `5a93868357b564b3c0448e04db424eaf3acb1617e1ab1a448a42989e88481776`,
+  Python 3.14.0rc2, numpy 2.5.3, headless, four cores; every run completed
+  in 36 to 37 s with the books balanced at every tick; 0 record checks
+  failed, the reading's formula 288 of 288 inside, 22 pinned readings
+  inside and 26 outside, none moved. The late window, t_0 = 350 (detector
+  readings unless marked; the full table per source in the README):
+
+  | Reading | coasting (scalar = age) | pushing scalar | pushing age | Expected |
+  | --- | --- | --- | --- | --- |
+  | z of the slowest and the fastest source (mz1, px4) | 0.0496, 0.6001 | 0.119, 0.604 | 0.092, 0.619 | v / c 0.05, 0.60 times the clock |
+  | rms of z - v / c declared (GameBoard, the throw) | 0.003 | 0.034 | 0.028 | - |
+  | k of the emitters' clocks (rank 1 .. rank 4) | 0 | 0.02 .. 0.07 / 0.004 .. 0.035 | 0 .. 0.05 / 0 .. 0.05 | small |
+  | (1 + z) / ((1 + k)(1 + v / c)), 24 sources | 0.995 .. 1.005 | 0.994 .. 1.007 | 0.992 .. 1.008 | within 2 %: 72 of 72 inside |
+  | H t_0, the near fit | 1.029 inside (0.875, 0.949 at t_0 = 150, 250) | 1.292 outside | 1.120 outside | coasting 1 +- 10 %, pushing < 1 |
+  | rms far at the near H: q = +0.5 / 0 / -0.55 | 0.153 / 0.066 / 0.021 | 0.432 / 0.223 / 0.142 | 0.219 / 0.106 / 0.052 | coasting q = 0 nearest, < 0.02; pushing -0.55 farthest |
+  | best-H rms: q = +0.5 / 0 / -0.55 | 0.007 / 0.008 / 0.012 | 0.037 / 0.032 / 0.030 | 0.028 / 0.027 / 0.029 | - |
+  | q_eff of the free quadratic | 4.6 | -0.55 outside | 3.7 inside | pushing > 0 |
+  | the momentum left, p(400) / p(0), ranks 1 .. 4 (GameBoard) | 1.03 .. 1.00 | 0.68 .. 0.79, 0.85 .. 0.91, 0.89 .. 0.94, 0.91 .. 0.96 | the same | coasting 1, pushing < 1 |
+  | the Doppler part alone, H t_0 (after the runs, not pinned) | 1.024 | 0.918 | 0.990 | - |
+  | the nearest of the three at the near H | q = -0.55 outside | q = -0.55 outside | q = -0.55 outside | outside in every run |
+
+  - The reading's formula: 288 of 288 inside over the three windows; the
+    coasting worlds read z = v / c declared to 0.003 and tau to 1.3
+    intervals of the throw's own form (r_0 + v t_0) / (c + v); their clocks
+    counted nothing (k = 0), so `coasting_scalar` and `coasting_age` read
+    alike to the last digit.
+  - The linear law: H t_0 = 0.875, 0.949, 1.029 at t_0 = 150, 250, 350
+    (outside, inside, inside): the Hubble time is the age of the throw
+    once the initial distances are small against it.
+  - The coasting form: inside at t_0 = 150 (q = 0 the nearest; its rms
+    0.026 outside), outside at 250 and 350, where q = -0.55 is the nearest
+    (0.018, 0.021 against 0.033, 0.066): every source reads the Milne form
+    shifted by its own r_0 / c, and the far sources' r_0 is three times
+    the near ones', so at the near fit's H the far part lies below the
+    coasting form, the accelerating form's signature. With H free per form
+    the three fit within 0.005 of one another.
+  - The decelerating form: on the GameBoard every pushing source
+    decelerated (p(400) / p(0) from 0.68 at rank 1 to 0.96 at rank 4, the
+    inner ranks losing the larger fraction as derived) and the Doppler
+    part of the reading fell with it (v / c from the record 0.04 .. 0.58);
+    the detector's curve nevertheless read H t_0 > 1 in five of six
+    pushing windows, q_eff > 0 in five of six, and the accelerating form
+    the nearest of the three in all six: outside on every count but
+    q_eff. The cause is the emitters' clocks: the inner ranks sit in the
+    thickest part of the crowd's rays and their clocks run slowest (k up
+    to 0.07 with the scalar clock), which reddens the near part and
+    inflates the near fit's H. The Doppler part alone (the clock removed;
+    printed after the runs) reads H t_0 = 0.80 .. 0.99 in all six windows
+    and q = +0.5 or 0 the nearest in four of them.
+  - The bend of the age clock (reported): zero in the coasting crowd; in
+    the pushing crowd z_age - z_scalar from -0.089 to +0.081 per source,
+    no monotone bend, within the grain of the step rule (about 0.03 in z
+    per hundred-interval window).
+  - What is observed today: the accelerating form q = -0.55 is the nearest
+    of the three at the near fit's H in ten of the twelve windows (all but
+    the coasting first window): outside the expectation in every run but
+    that one.
+  - Host cost: 36 to 37 s per run of 400 intervals (about 6 000 rows in
+    flight, 31 measured events, the 301^3 board's per-interval arrays);
+    the tool with the replay 3 minutes.
+- **Verdict.** The detector reads the linear Hubble law by itself, z =
+  v / c to 0.003 and H t_0 = 1.03 at t_0 = 350 in the coasting throw, the
+  Hubble time the age of the throw. At large distance its curve falls
+  below the coasting form of its own near fit in every run, and of the
+  three forms the one observed today, q = -0.55, is the nearest in ten of
+  twelve windows; but nothing accelerates on the GameBoard (the coasting
+  momenta within 3 %, the pushing momenta down by 4 to 32 %). The
+  resemblance comes from what the detector cannot see: the throw's initial
+  distances in the coasting throw (an exact, parameter-free coasting form
+  fits) and the emitters' clocks in the pushing crowd (the near ones
+  slowest); with H free per form the three forms agree within 0.005 in z,
+  so the shape at this precision does not tell q = +0.5 from 0 from -0.55.
+  The age clock bends nothing beyond the grain. Nothing was tuned. What
+  the law lacked (the README): a straight throw off the axes (the step
+  rule, x before y before z); a three-dimensional gravity of a crowd of
+  points (a beam does not dilute, a fan's lines miss the Nodes off them);
+  a source that releases along its own motion without taking its row home;
+  emitters' clocks that count only their own crowd (the reading's factor
+  1 + k is the model's); and a step rule whose whole part does not cluster
+  under a changing momentum.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the
