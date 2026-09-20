@@ -280,3 +280,17 @@ octahedral front was wrong; the phase's metric is the declared form's).
 The registration (the register's L7 item, the README, a test, the
 changelog) waits on the owner's word for a branch and a pull request, and
 on PR #395's landing for the run on main.
+
+## L7 landed; one fact for Part II (2026-09-20, evening)
+
+The Boss cherry-picked the two registration commits onto main (82cf8cc7,
+049cb233) and merged them as PR #399 at 272b715b; record 144 stands as
+the record. The paper directory stays on this branch for the owner's
+word. For Part II, from the Boss's message and the fraction-free work
+(record 147 on main, record 148 to follow): the count of a clock whose
+rate changes is the whole part of the integral of its rate (the
+accumulator on the record), and the Bell S = 176/64 is independent of
+the tick alignment when read by the birth ordinal; the fraction-free
+unification re-pins the register's ticks once, so the paper's registered
+integers are to be re-checked against the register after it lands
+(`summarize_runs.py` on the re-run, every integer expected equal).
