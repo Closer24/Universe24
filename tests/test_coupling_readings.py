@@ -128,7 +128,7 @@ def test_the_release_per_heading_is_the_engines_clock():
     assert simulation.books()["balanced"]
 
 
-def test_the_expected_push_is_the_engines_label_moment():
+def test_the_expected_push_is_the_engines_label_flow():
     """(d)."""
     assert TOOL.label_push((1, 0, 0), 5, 3) == (-960, 0, 0)
     assert TOOL.label_push((0, -1, 0), 2, 1) == (0, 128, 0)

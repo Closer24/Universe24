@@ -217,7 +217,7 @@ def test_a_set_of_one_node_is_todays_measured_event():
         6,
         [16, 0],
     )
-    assert counter.held == [0, 4] and counter.events == [99, 0]
+    assert counter.held == [0, 4] and counter.clicks == [99, 0]
     assert counter.momentum == [-25344, 0, 0]
     assert counter.detector_set.record == [37348285440, 0] and counter.detector_set.phase == [5, None]
     kinds = {
@@ -257,7 +257,7 @@ def test_a_set_of_one_node_is_todays_measured_event():
         "absorbed": 119,
         "balanced": True,
     }
-    assert {port: units[M] for port, units in simulation.ledger.face_units.items()} == {
+    assert {port: units[M] for port, units in simulation.ledger.face_amount.items()} == {
         0: 0,
         1: 74,
         2: 111,
@@ -321,7 +321,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert {node: simulation.at[node] for node in SET_NODES} == dict.fromkeys(SET_NODES, 1)
     simulation.step()
     assert simulation.books()["balanced"]
-    assert body.events == [3, 0] and body.held == [0, 4] and body.momentum == [-768, 0, 0]
+    assert body.clicks == [3, 0] and body.held == [0, 4] and body.momentum == [-768, 0, 0]
     assert body.presence == 3 and body.counted == 3
     assert body.owed == by_clock(0, 3, 1) == 3
     assert body.detector_set.record == [9 * UNIT_RECORD, 0] and body.phase == 0
@@ -336,7 +336,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert simulation.books()["balanced"]
     assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3), ("pass", 3)]
     body = simulation.measured[1]
-    assert body.events == [0, 0] and body.momentum == [0, 0, 0] and body.detector_set.record == [0, 0]
+    assert body.clicks == [0, 0] and body.momentum == [0, 0, 0] and body.detector_set.record == [0, 0]
     assert simulation.stores[M].size == 2
     # The step moves the whole set; a Node of the moved set held by another
     # measured event refuses it.

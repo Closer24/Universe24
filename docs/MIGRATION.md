@@ -6,6 +6,126 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The names NatureBeam and GameBoard and the glossary's single names, on 2026-09-20
+
+The model owner's decisions of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector):
+"the ray is to be called NatureBeam in the code everywhere", "DECIDED: the
+name of the board is GameBoard", "there is no ray, there is only an event";
+[Highlights 5.6](HIGHLIGHTS.md#56-the-glossary-of-the-names-and-how-each-is-computed-2026-09-20),
+the 23 redundancies with the one name recommended). A mechanical rename in
+three commits; no rule, integer, record key or artifact changed: the whole
+suite passes with the same test bodies. The ray is the record of an event in
+transit, `NatureBeam` in the code; on the GameBoard there are only events
+([the law of the ray](RAY_LAW.md)).
+
+- **NatureBeam, the law's things in code**: `RayWorld` -> `NatureBeamWorld`,
+  `RaySimulation` -> `NatureBeamSimulation`, `RayStore` -> `NatureBeamStore`,
+  `RayTables` -> `NatureBeamTables`, `parse_ray_world` ->
+  `parse_nature_beam_world`, `execute_ray_run` -> `execute_nature_beam_run`,
+  `is_ray_world` -> `is_nature_beam_world`, `ray_tables` ->
+  `nature_beam_tables`; the test modules `tests/test_ray_{age, bijection,
+  body, books, clock, collision, detector, flight, label, push, readings,
+  reemission, window, world_parsing, worlds}.py` ->
+  `tests/test_nature_beam_*.py`; `tools/migrate_ray_worlds.py` ->
+  `tools/migrate_nature_beam_worlds.py`; the locals `ray`/`rays` ->
+  `beam`/`beams`, `fan_ray` -> `fan_beam`, `back_ray` -> `back_beam`,
+  `fixed_rays` -> `fixed_beams`, `ray_speed` -> `beam_speed`; the prose
+  "ray world" -> "NatureBeam world". Imports of `RaySimulation`,
+  `RayWorld` and `parse_ray_world` from `event_universe` or
+  `event_universe.events` must use the new names. Unchanged: `"law":
+  "rays"` and `RAYS_LAW = "rays-v1"` in every world file and run record
+  (the register's fingerprints depend on them), [RAY_LAW.md](RAY_LAW.md)
+  and its title (one line added under it), the refusal tables that name
+  the deleted keys (`ray_interactions`, `ray_delay`, ...), the dated
+  records of deleted tests, and the word "ray" in prose (the owner's
+  reading rule: a ray is the record of an event in transit).
+- **GameBoard**: `src/event_universe/core/lattice.py` ->
+  `src/event_universe/core/game_board.py` (imports of
+  `event_universe.core.lattice` must become
+  `event_universe.core.game_board`; `Address3`, `Heading`, `MAX_VALUE`,
+  `PORT_HEADINGS` and `adjacent_node` unchanged); the `grid` local of
+  `shell_readings` -> `node_offsets`; the test helpers `board(simulation)`
+  -> `game_board(simulation)` and the test names
+  `test_the_board_is_unchanged_*` -> `test_the_game_board_is_unchanged_*`,
+  `*_respect_the_board_symmetries` -> `*_respect_the_game_board_symmetries`;
+  in `tools/derivations_round7.py` `board_hist`, `hist_board`,
+  `board_over_q`, `final_board_over_q`, `board_samples`,
+  `board_over_q_samples`, `on_board` and the result key `"board"` ->
+  `game_board_hist`, `hist_game_board`, `game_board_over_q`,
+  `final_game_board_over_q`, `game_board_samples`,
+  `game_board_over_q_samples`, `on_game_board`, `"game_board"`; the
+  refusals and messages "is outside the board" -> "is outside the
+  GameBoard", "a closed board is refused" -> "a closed GameBoard is
+  refused", "leaves the board through an open face" -> "leaves the
+  GameBoard through an open face", "age_bound is required on a board
+  periodic on every axis" -> "... on a GameBoard periodic ...", "adjacency
+  requires an in-board integer position" -> "adjacency requires an integer
+  position on the GameBoard", "cube_flux supports only the all-open board"
+  -> "... the all-open GameBoard", "(declare a larger age_bound or a
+  smaller board)" -> "(... or a smaller GameBoard)", "the inverse interval
+  is defined on a board without measured events" -> "... on a GameBoard
+  ..." (a reader matching the old text must match the new); the prose
+  "the board", "the game board", "the lattice", "the grid" -> "the
+  GameBoard" in every document, README, skill, example README and
+  docstring, with the two anchors `#per-axis-board-topology-...` ->
+  `#per-axis-gameboard-topology-...` ([ENGINE](ENGINE.md)) and
+  `#13-what-the-lattice-says-...` -> `#13-what-the-gameboard-says-...`
+  ([DERIVATIONS](DERIVATIONS.md)) and the headings "Events board topology"
+  of POSTULATES.md and SIMULATOR_DEFINITIONS.md -> "GameBoard topology";
+  the canonical entry in [TERMINOLOGY](TERMINOLOGY.md) and the rule in
+  AGENTS.md. What stays: a "board" that is not the GameBoard ("on-board
+  information retention"), the drawing's grid spacing, the CSS layout
+  grids, the integer encoding grid, a numerical evaluation grid and a
+  parameter scan grid, `KeyboardInterrupt`, and "cubic lattice of Nodes"
+  inside the definition only. The world key `shape` is unchanged.
+- **The glossary's single names (Highlights 5.6), in code**: (1)
+  `Reading.scalar` -> `Moments.presence`, `Readings.count` ->
+  `GameBoardDiagnostics.arrived`, `NatureBeamSimulation.count` ->
+  `NatureBeamSimulation.arrived`, the key `count` of `shell_readings` ->
+  `arrived`; (2) `Reading.vector` -> `Moments.flow`, the label moment V is
+  "the label flow" (`test_the_expected_push_is_the_engines_label_moment`
+  -> `..._label_flow`); (3) the pointer (X, Y) is "the pointer" where the
+  documents said "the coherent sum" or "the coherent reading" of the
+  detector's record (the owner's "the Node holds no coherent sum" is kept
+  as said); (4) `nature_beam.HERE` -> `NO_ARRIVAL` (the arrival code; the
+  rest directions keep the indices 0 and 1, the reading keeps `here`); (5)
+  the state is `owed` (TERMINOLOGY: "Suspension, owed", "Owed (the
+  count)"); (7) `configuration_validation.KINDS` -> `DOCUMENT_KINDS`; (9)
+  "Interval (tick)" defined once in TERMINOLOGY (`tick` in every key and
+  identifier, "interval" the prose noun); (10) `FlightTable.turns` ->
+  `FlightTable.resolution` (T_d), `Measured.phase_steps` ->
+  `Measured.turned` (the cumulative turn; `NatureBeamWorld.phase_steps` is
+  N and unchanged); (11) `RayWorld.clock` -> `NatureBeamWorld.K` (the
+  parser's parameter too); (12) "Extent (of a detector)" in TERMINOLOGY,
+  the phase window is "the window", the suspension's fraction is "the
+  rate"; (13) "Carried" documented once in TERMINOLOGY as `amount x
+  content` (the column `mass` was already gone with charge per unit of
+  content, 2026-09-20); (14) `Ledger.face_units` -> `Ledger.face_amount`,
+  `Ledger.escaped_units` -> `Ledger.escaped_amount`, "the transit line (in
+  amount)"; (15) `Measured.events` -> `Measured.clicks`; (18)
+  `Measured.measured` -> `Measured.taken` (the tally by rule;
+  `NatureBeamSimulation.measured` and the world's `measured` list
+  unchanged); (19) `measured.RULES` -> `measured.TALLIES`; (20)
+  `nature_beam.Reading` -> `nature_beam.Moments`, `nature_beam.Readings`
+  -> `nature_beam.GameBoardDiagnostics`. Nothing to change for (8)
+  `heading` (used only for the six unit vectors), (21) `push_form` (the
+  function exists since the push as one product; the documents are
+  right), (22) the leftovers (the refusal tables stay, naming the law in
+  the refusal).
+- **Deferred, the keys the register's worlds and fingerprints depend on**
+  (not changed; each a world-file or run-record key, to be migrated with a
+  rewrite of the worlds and a dated note): (1) `reads: "scalar"` ->
+  `"presence"` and `"outside"` -> `"arrived"`; (2) `reads: "vector"` ->
+  `"flow"`; (6) `push` on a `click` line -> `momentum`; (13) the
+  measured-event key `amount` -> `content`; (16) `position` -> `node` in
+  `state.json`, in `run.json` `numbers` and in the world; (17) `run.json`
+  `model` -> `model_id`; (18) the event line's `measured` -> `reader` and
+  `number` -> `emitter`; (20) the record field `reading` -> `component`;
+  (10), (15), (18) the keys `phase_steps`, `events` and `measured` of
+  `Measured.state()` (their attributes are `turned`, `clicks` and
+  `taken`); (23) refusing a detector named as a face (`face:*`) is a
+  behaviour change with a test of its own, not made here.
+
 ## The turn by momentum, Bohr as parameters outside the board, on 2026-09-20 (`action`, `phase_by_momentum`; `bohr-v1`)
 
 The model owner's decision of 2026-09-20 ("On Bohr, go, and put it as

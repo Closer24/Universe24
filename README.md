@@ -10,7 +10,7 @@ every direction; rays that meet at a Node are permuted by the collision
 table; the interval is a bijection and the click its only one-way border; a
 measured event is created here without end, its clock the count of its
 self-creations, and what is seen is measured events through detectors of a
-declared sensitivity, whose record is the squared coherent sum of the rays
+declared sensitivity, whose record is the squared pointer of the rays
 they clicked; nothing is kept at a Node, no register, no remainder, no draw.
 There is one engine, the engine of that law (`rays-v1`, the one function
 `nature_beam`); the engines before it, the law of events of the same day

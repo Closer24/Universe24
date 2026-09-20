@@ -118,7 +118,7 @@ def assert_slot_decomposition(slots: np.ndarray) -> None:
     components = slots @ SLOT_BASIS.T
     reading = read_arrivals(SLOT_VECTORS, slots)
     assert int(reading.outside) == components[0] and int(reading.here) == components[1]
-    assert reading.vector.tolist() == components[2:5].tolist()
+    assert reading.flow.tolist() == components[2:5].tolist()
     tensor = reading.tensor
     assert int(tensor.trace()) == 0 and (tensor == tensor.T).all()
     assert int(tensor[2, 2]) == -components[5] and int(tensor[0, 0] - tensor[1, 1]) == 3 * components[6]
@@ -129,15 +129,15 @@ def test_the_moments_equal_the_slot_decomposition_and_respect_the_game_board_sym
     """(a)."""
     slots = np.array([3, 1, 4, 1, 5, 9, 2], dtype=np.int64)
     reading = read_arrivals(SLOT_VECTORS, slots)
-    assert int(reading.outside) == 23 and int(reading.here) == 2 and int(reading.scalar) == 25
-    assert reading.vector.tolist() == [2, 3, -4]
+    assert int(reading.outside) == 23 and int(reading.here) == 2 and int(reading.presence) == 25
+    assert reading.flow.tolist() == [2, 3, -4]
     assert reading.tensor.tolist() == np.diag([-11, -8, 19]).tolist()
     assert_slot_decomposition(slots)
     amounts = np.random.default_rng(20260919).integers(0, 1000, size=(64, 7), dtype=np.int64)
     for row in amounts:
         assert_slot_decomposition(row)
     fan = read_arrivals(FAN, FAN_AMOUNTS)
-    assert int(fan.outside) == 10 and int(fan.here) == 5 and fan.vector.tolist() == [15, 0, 2]
+    assert int(fan.outside) == 10 and int(fan.here) == 5 and fan.flow.tolist() == [15, 0, 2]
     assert fan.tensor.tolist() == [[44, -3, 18], [-3, -19, 6], [18, 6, -25]]
     assert int(fan.tensor.trace()) == 0
     second = (FAN_AMOUNTS[:, None, None] * FAN[:, :, None] * FAN[:, None, :]).sum(axis=0)
@@ -150,11 +150,11 @@ def test_the_moments_equal_the_slot_decomposition_and_respect_the_game_board_sym
         for matrix in group:
             rotated = read_arrivals(vectors @ matrix.T, weights)
             assert int(rotated.outside) == int(base.outside) and int(rotated.here) == int(base.here)
-            assert rotated.vector.tolist() == (matrix @ base.vector).tolist()
+            assert rotated.flow.tolist() == (matrix @ base.flow).tolist()
             assert rotated.tensor.tolist() == (matrix @ base.tensor @ matrix.T).tolist()
     for heading in HEADINGS:
         one = read_arrivals(heading[None, :], np.array([1]))
-        assert int(one.outside) == 1 and int(one.here) == 0 and one.vector.tolist() == heading.tolist()
+        assert int(one.outside) == 1 and int(one.here) == 0 and one.flow.tolist() == heading.tolist()
         expected = 3 * np.outer(heading, heading) - np.eye(3, dtype=np.int64)
         assert one.tensor.tolist() == expected.tolist()
     keyed = read_arrivals(
@@ -164,7 +164,7 @@ def test_the_moments_equal_the_slot_decomposition_and_respect_the_game_board_sym
         2,
     )
     assert keyed.outside.tolist() == [10, 23] and keyed.here.tolist() == [5, 2]
-    assert keyed.vector.tolist() == [[15, 0, 2], [2, 3, -4]]
+    assert keyed.flow.tolist() == [[15, 0, 2], [2, 3, -4]]
     assert keyed.tensor[0].tolist() == fan.tensor.tolist()
     assert keyed.tensor[1].tolist() == reading.tensor.tolist()
     with pytest.raises(OverflowError, match="moments of a reading"):
@@ -238,7 +238,7 @@ def test_the_push_reads_the_flow_of_every_number_but_the_readers_own():
         simulation.step()
         assert simulation.books()["balanced"], in_transit
         assert reader.pushed == push and reader.momentum == push, in_transit
-        assert reader.measured[0] == {**NO_RESPONSE, "read": read, "home": home}, in_transit
+        assert reader.taken[0] == {**NO_RESPONSE, "read": read, "home": home}, in_transit
         assert reader.held == [4] and reader.pending == [[]] and reader.age == 1, in_transit
         at_node = store.node == store.flat((4, 1, 1))
         # What came home is created again on the reader's one direction, age 0.
@@ -282,7 +282,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     assert entry.threshold == 3
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 3] and entry.held == [4, 3]
+    assert entry.clicks == [0, 3] and entry.held == [4, 3]
     assert entry.momentum == [64, 0, 0] and entry.pushed == [64, 0, 0]
     assert simulation.detectors()[0]["families"]["light"]["clicks"] == 3
     assert simulation.stores[1].size == 0
@@ -301,7 +301,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     entry = simulation.measured[1]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 0] and entry.held == [4, 0] and entry.momentum == [0, 0, 0]
+    assert entry.clicks == [0, 0] and entry.held == [4, 0] and entry.momentum == [0, 0, 0]
     assert simulation.stores[1].size == 1 and int(simulation.stores[1].amount.sum()) == 2
     assert [(r["event"], r["amount"], r["threshold"], r["window"]) for r in records] == [
         ("pass", 2, 3, None)
@@ -320,7 +320,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     assert entry.threshold == 1 and entry.windows == [None, 32]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 0] and entry.held == [4, 0]
+    assert entry.clicks == [0, 0] and entry.held == [4, 0]
     kinds = [(r["event"], r["number"], r.get("phase"), r.get("window")) for r in records]
     assert kinds == [("pass", 2, 0, 32), ("pass", 3, 32, 32)]
     # Declared `beam`, the window reads each ray's own phase: the ray at
@@ -334,7 +334,7 @@ def test_a_detectors_threshold_reads_the_set_and_its_window_the_sets_phase_by_de
     entry = simulation.measured[1]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 1] and entry.held == [4, 1]
+    assert entry.clicks == [0, 1] and entry.held == [4, 1]
     kinds = [(r["event"], r["number"], r.get("phase"), r.get("window")) for r in records]
     assert kinds == [("pass", 2, 0, 32), ("click", 3, 32, None), ("record", 0, 32, None)]
 
@@ -348,11 +348,11 @@ def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
         {"position": [6, 1, 1], "family": "m", "number": 1, "direction": 0, "amount": 2, "phase": 0},
     ]
     simulation = NatureBeamSimulation(parse_nature_beam_world(world([FAMILIES[0]], [], beams)))
-    zero = simulation.count[0], simulation.flow[0], simulation.presence[0], simulation.per_port[0]
+    zero = simulation.arrived[0], simulation.flow[0], simulation.presence[0], simulation.per_port[0]
     assert [a.shape for a in zero] == [(9, 3, 3), (9, 3, 3, 3), (9, 3, 3), (9, 3, 3, 6)]
     assert all(int(np.abs(a).sum()) == 0 for a in zero)
     simulation.step()
-    count, flow = simulation.count[0], simulation.flow[0]
+    count, flow = simulation.arrived[0], simulation.flow[0]
     presence, per_port = simulation.presence[0], simulation.per_port[0]
     assert count[4, 1, 1] == 18 and flow[4, 1, 1].tolist() == [0, 0, 0] and presence[4, 1, 1] == 18
     assert count[2, 1, 1] == 3 and flow[2, 1, 1].tolist() == [0, 192, 0] and presence[2, 1, 1] == 3
@@ -363,7 +363,7 @@ def test_the_dense_readings_on_request_equal_the_arrivals_node_by_node():
     assert per_port[2, 1, 1].tolist() == [0, 0, 3, 0, 0, 0] and int(per_port.sum()) == 21
     empty = NatureBeamSimulation(parse_nature_beam_world(world([FAMILIES[0]], [], [])))
     empty.step()
-    assert int(empty.count[0].sum()) == 0 and int(empty.per_port[0].sum()) == 0
+    assert int(empty.arrived[0].sum()) == 0 and int(empty.per_port[0].sum()) == 0
 
 
 def test_a_fans_flow_reads_q_per_unit_direction_blind():
@@ -397,8 +397,8 @@ def test_a_fans_flow_reads_q_per_unit_direction_blind():
         entry = simulation.measured[1]
         simulation.step()
         assert simulation.books()["balanced"]
-        assert entry.pushed == push and entry.measured[0]["read"] == 10, in_transit
+        assert entry.pushed == push and entry.taken[0]["read"] == 10, in_transit
         assert simulation.flow[0][4, 1, 1].tolist() == [-p for p in push]
-        assert simulation.count[0][4, 1, 1] == 10
+        assert simulation.arrived[0][4, 1, 1] == 10
     fan_label = 5 * np.array([52, 37, 0], dtype=np.int64)
     assert (63 * 5) ** 2 < int(fan_label @ fan_label) < (65 * 5) ** 2

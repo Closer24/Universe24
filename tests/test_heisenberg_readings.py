@@ -120,8 +120,8 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert all(value == 0 for y, value in enumerate(reading.record) if y != 2)
     opening = simulation.measured[2 + 2]
     assert opening.detector == 0
-    assert reading.opening_clicks == opening.measured[light]["rerelease"] > 0
-    assert reading.escaped == simulation.ledger.escaped_units(light) > 0
+    assert reading.opening_clicks == opening.taken[light]["rerelease"] > 0
+    assert reading.escaped == simulation.ledger.escaped_amount(light) > 0
     assert [r.name for r in TOOL.find_runs(tmp_path)] == ["w1_wave"]
     analysis = TOOL.analyse(reading)
     assert analysis["expected_width"] is None and analysis["product"] is None

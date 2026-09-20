@@ -104,7 +104,7 @@ PROBE_CHARGE = 2
 # T_d = isqrt(3 |v|^2 Q^2): the design's 1 / sqrt 3 rounded to the table's
 # integers, 110 / 64 on a heading; until 2026-09-20 the tool printed the
 # unrounded 1 / (1 / sqrt 3)).
-STAY = int(HEADING_TABLE.turns[HEADING_OFFSET]) / (
+STAY = int(HEADING_TABLE.resolution[HEADING_OFFSET]) / (
     int(HEADING_TABLE.manhattan[HEADING_OFFSET]) * FLIGHT_SCALE
 )
 AXES = {
@@ -197,7 +197,7 @@ def front(radius: int) -> tuple[int, int]:
 def label_push(heading: Vector, amount: int, content: int) -> Vector:
     """The push the engine takes on a free reader of content m from `amount`
     units of an uncharged free family's ray arriving on `heading`: minus m
-    times the label moment (RAY_LAW section 3, step 4), the label of one
+    times the label flow (RAY_LAW section 3, step 4), the label of one
     unit being u_d, the unit vector of the direction at the scale Q
     (`unit_label`, exactly Q e_d on a heading): -amount x m x Q along it."""
     return scaled(unit_label(heading), -amount * content)
@@ -702,7 +702,7 @@ def replay_world_5(run: Run, window: int) -> Replay:
         audit_matches = audit_matches and books == audit[tick - 1]
         for r in FAR_RADII:
             node = at("+x", r)
-            count_at[r].append(int(simulation.count[0][node]))
+            count_at[r].append(int(simulation.arrived[0][node]))
             presence_at[r].append(int(simulation.presence[0][node]))
         if tick >= first:
             for r in FAR_RADII:

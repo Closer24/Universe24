@@ -144,10 +144,10 @@ def test_the_window_is_the_centred_half_circle_and_a_ray_outside_it_passes():
     for _ in range(7):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    assert entry.events == [2, 0] and entry.held == [2, 1]
+    assert entry.clicks == [2, 0] and entry.held == [2, 1]
     assert entry.momentum == [128, 0, 0] and entry.pushed == [128, 0, 0]
-    assert entry.measured[LIGHT] == {**NO_RESPONSE, "measure": 2}
-    assert simulation.stores[LIGHT].size == 0 and simulation.ledger.escaped_units(LIGHT) == 2
+    assert entry.taken[LIGHT] == {**NO_RESPONSE, "measure": 2}
+    assert simulation.stores[LIGHT].size == 0 and simulation.ledger.escaped_amount(LIGHT) == 2
     kinds = [
         (r["event"], r["tick"], r.get("detector"), r["phase"]) for r in records if r["event"] != "record"
     ]
@@ -177,9 +177,9 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     for _ in range(83):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    assert near.events == [32, 0] and far.events == [32, 0]
-    assert near.held == [32, 1] and far.held == [32, 1] and simulation.ledger.escaped_units(LIGHT) == 0
-    assert source.age == 83 and source.phase == 19 and source.phase_steps == 83
+    assert near.clicks == [32, 0] and far.clicks == [32, 0]
+    assert near.held == [32, 1] and far.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
+    assert source.age == 83 and source.phase == 19 and source.turned == 83
     assert source.held == [K_B + 2 - 83, 0] and source.momentum == [-5312, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     passes = [r for r in records if r["event"] == "pass"]
@@ -208,7 +208,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
     for tick in range(1, 65):
         simulation.step()
         assert simulation.books()["balanced"], tick
-        assert source.age == tick and source.phase == tick % 64 and source.phase_steps == tick, tick
+        assert source.age == tick and source.phase == tick % 64 and source.turned == tick, tick
         fresh = light.age == 0
         released = (tick - 1) in IN_WINDOW_8
         assert int(fresh.sum()) == int(released), tick
@@ -220,7 +220,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     assert (
-        gate.events == [32, 0] and gate.held == [32, 1] and simulation.ledger.escaped_units(LIGHT) == 0
+        gate.clicks == [32, 0] and gate.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
     )
     clicks = [record for record in records if record["event"] == "click"]
     assert len(clicks) == 32 and sorted(record["phase"] for record in clicks) == IN_WINDOW_8

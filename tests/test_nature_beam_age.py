@@ -233,7 +233,7 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
     amounts = np.array([1, 2, 4], dtype=np.int64)
     ages = np.array([3, 5, 7], dtype=np.int64)
     reading = read_arrivals(vectors, amounts, ages=ages)
-    assert int(reading.age) == 41 and int(reading.scalar) == 7
+    assert int(reading.age) == 41 and int(reading.presence) == 7
     assert int(reading.age_outside) == 41 and int(reading.age_here) == 0
     assert int(reading.component("age")) == 41
     with_here = read_arrivals(
@@ -245,7 +245,7 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
     assert int(with_here.age) == 61 and int(with_here.here) == 2
     for matrix in cube_group():
         rotated = read_arrivals(vectors @ matrix.T, amounts, ages=ages)
-        assert int(rotated.age) == 41 and rotated.vector.tolist() == (matrix @ reading.vector).tolist()
+        assert int(rotated.age) == 41 and rotated.flow.tolist() == (matrix @ reading.flow).tolist()
     keyed = read_arrivals(
         np.concatenate([vectors, vectors]),
         np.concatenate([amounts, amounts * 2]),
@@ -253,7 +253,7 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
         2,
         ages=np.concatenate([ages, ages]),
     )
-    assert keyed.age.tolist() == [82, 41] and keyed.scalar.tolist() == [14, 7]
+    assert keyed.age.tolist() == [82, 41] and keyed.presence.tolist() == [14, 7]
     assert int(read_arrivals(vectors, amounts).age) == 0
     with pytest.raises(OverflowError, match="moments of a reading"):
         read_arrivals(np.array([[1, 0, 0]]), np.array([1 << 40]), ages=np.array([1 << 23]))

@@ -168,7 +168,7 @@ def read_run(folder: Path) -> Reading:
     # content, K)` (the frame, ENGINE.md), at its first self-creation: the
     # lamps' content is 8 K + 1 400 000 and what a run spends never reaches
     # the next step of the clock, so the turn is the same at every age.
-    turn = by_clock(0, lamp.amount, world.clock)
+    turn = by_clock(0, lamp.amount, world.K)
     wavelength = (world.phase_steps / turn) / SPEED_DIVISOR
     # The wall is the row of measured events that re-emit (the opening), the
     # screen the other row of the family `wall`.

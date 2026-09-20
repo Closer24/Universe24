@@ -5,6 +5,27 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The names NatureBeam and GameBoard and the glossary's single names (2026-09-20)
+
+- The model owner's names, a mechanical rename with no behaviour change
+  ([MIGRATION.md](docs/MIGRATION.md), "The names NatureBeam and GameBoard
+  and the glossary's single names"): the law's things are `NatureBeam*`
+  in the code (`NatureBeamWorld`, `NatureBeamSimulation`,
+  `NatureBeamStore`, `NatureBeamTables`, `parse_nature_beam_world`,
+  `execute_nature_beam_run`, `is_nature_beam_world`,
+  `nature_beam_tables`; `tests/test_nature_beam_*.py`;
+  `tools/migrate_nature_beam_worlds.py`); the physical lattice of Nodes
+  is the GameBoard everywhere (`src/event_universe/core/game_board.py`,
+  the canonical entry in [TERMINOLOGY.md](docs/TERMINOLOGY.md), the rule
+  in AGENTS.md, every message and document); and the 23 redundancies of
+  Highlights 5.6 take their single names in the code (`Moments`,
+  `GameBoardDiagnostics`, `presence`, `flow`, `arrived`, `NO_ARRIVAL`,
+  `TALLIES`, `DOCUMENT_KINDS`, `resolution`, `turned`, `K`,
+  `face_amount`, `escaped_amount`, `clicks`, `taken`) with every
+  world-file and run-record key deferred. The law's identity `rays-v1`,
+  every key and every integer are unchanged; 468 tests pass with the
+  same bodies.
+
 ### Series G, the Hubble diagram behind the detector (2026-09-20)
 
 - The four worlds of `examples/events/hubble/` (`make_worlds.py`: a

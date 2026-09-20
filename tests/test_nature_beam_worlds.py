@@ -155,7 +155,7 @@ def screen_readings(openings: tuple[int, ...]) -> tuple[np.ndarray, np.ndarray]:
     for entry in simulation.measured.values():
         if entry.detector is not None:
             record[entry.position[1]] = entry.detector_set.record[0]
-            count[entry.position[1]] = entry.events[0]
+            count[entry.position[1]] = entry.clicks[0]
     reports = simulation.detectors()[:121]
     assert [r["name"] for r in reports] == [f"screen_{y}" for y in range(121)]
     assert sum(r["families"]["light"]["clicks"] for r in reports) == int(count.sum()) > 0
@@ -247,9 +247,12 @@ def test_one_content_streams_outward_with_the_books_closed():
             three = simulation.shell_readings(0, centre, 3)
             four = simulation.shell_readings(0, centre, 4)
             assert (
-                three["count"] * three["nodes"] == emission and four["count"] * four["nodes"] == emission
+                three["arrived"] * three["nodes"] == emission
+                and four["arrived"] * four["nodes"] == emission
             )
-            assert three["presence"] == 2 * three["count"] and four["presence"] == four["count"], tick
+            assert three["presence"] == 2 * three["arrived"] and four["presence"] == four["arrived"], (
+                tick
+            )
 
 
 @pytest.mark.parametrize(

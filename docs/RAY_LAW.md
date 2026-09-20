@@ -102,7 +102,7 @@ here, section 10, note 15; until 2026-09-19 the label was along the
 integer direction D itself and its magnitude grew with |D|, note 21.)
 Since the night of 2026-09-19 the label is the ONE momentum of the law
 (`nature_beam.momentum_labels`; section 10, note 18): what the push reads
-(the label moment, section 3 step 4), what a click moves onto the
+(the label flow, section 3 step 4), what a click moves onto the
 detector, what a face click books, what a re-emitter or a home takes in
 and gives back, what the transit line of the books sums; no momentum is
 read off a Port anywhere.
@@ -338,7 +338,7 @@ order with each step's inverse:
    push is ONE bilinear form** over the arriving rays (the model owner's
    proposal 2, admissible with the reviewer's two corrections; section 10,
    note 20): `push_A = sum over the rays of kappa(A, B) . V_B`, with `V_B`
-   the label moment of the rays, the vector moment of `read_arrivals` with
+   the label flow of the rays, the vector moment of `read_arrivals` with
    the labels as weights (`amount x u_d` for a free family, `content x
    amount x u_d` for a paid one, the unit vectors of section 2), and
    `kappa(A, B)` =
@@ -782,7 +782,7 @@ implementation's part of the contract. The design above is unchanged.
    of amount 1 and one row of amount 2 would record differently), so the
    amplitude of a row is 32 x amount, exact and merge-invariant; one unit
    records 32^2 x 256^2 as the design says, a row of n identical rays
-   n^2 times that (the coherent sum of n equal amplitudes).
+   n^2 times that (the pointer of n equal amplitudes).
 4. **Home keeps the arriving phase and content.** What comes home is
    created again with the phase and the content per unit it arrived with
    (as the re-emission does), not re-stamped by the clock; the books'
@@ -791,7 +791,7 @@ implementation's part of the contract. The design above is unchanged.
    `pass` record** naming `threshold` or `window`; a set at the threshold
    clicks row by row (one `click` record per row, the amount on it) and the
    window reads each row's own phase, no coherent phase of the set (the
-   record is the coherent reading; the window is a gate on the record).
+   record is the pointer's square; the window is a gate on the record).
 6. **The inverse interval exists only without a measured event**: with one
    on the GameBoard `inverse_step` refuses (the click, the release and the home
    are the one-way border and no inverse of them is defined); the
@@ -856,7 +856,7 @@ implementation's part of the contract. The design above is unchanged.
     size)` takes the moments of section 3, step 2, exact integers, with
     the normalisation `tensor = 3 x M2 - tr(M2) I` for the second moment
     `M2 = sum amount x D D^T` (the trace removed times the number of
-    dimensions, so no division); the `Reading` holds the six entries of
+    dimensions, so no division); the `Moments` holds the six entries of
     `M2` and forms the tensor on demand. On the six headings the moments
     equal the slot decomposition exactly (the old `(p_x + p_y - 2 p_z,
     p_x - p_y)` being `-T_zz` and `(T_xx - T_yy) / 3`); under the 48
@@ -1006,7 +1006,7 @@ implementation's part of the contract. The design above is unchanged.
     the records (`FamilyPlan`); the walk already batched the rays and the
     collision the Nodes the same way. (ii) The dense readings of the GameBoard
     (`count`, `flow`, `presence`, `per_port`) are diagnostics, decomposed
-    on request from the rows the walk left (`Readings`, `ArrivalRows`)
+    on request from the rows the walk left (`GameBoardDiagnostics`, `ArrivalRows`)
     over the active Nodes only; the law reads its own local sets at the
     measured events; the keyed reading's bound is checked when the
     diagnostics are read. (iii) The merge orders the rows by one packed
@@ -1086,9 +1086,9 @@ implementation's part of the contract. The design above is unchanged.
     on the six headings it tightens from 2^62 to 2^56 per row; the
     bound-edge tests are re-pinned at 1/64 of their amounts); (4) the
     reading's vector and tensor moments on `u_d` in place of D
-    (`Readings`, the reading at a measured event, step 2), so a fan's
+    (`GameBoardDiagnostics`, the reading at a measured event, step 2), so a fan's
     flow reads Q x q direction-blind; the zeroth moment is unchanged.
-    What else changes: the label moment's bulk bound is the first
+    What else changes: the label flow's bulk bound is the first
     moment's (weight x |u| x rows, `first_moment_overflow`), and the
     reading's second-moment bound, amount x Q^2 x rows, now refuses a row
     above 2^50 at a measured event's Node (the detector test's row of
@@ -1186,7 +1186,7 @@ implementation's part of the contract. The design above is unchanged.
     registered worlds the row counts are unchanged in practice (a beam
     holds at most two rays per Node, of different ages either way) and
     `state.json` now records the whole age. (ii) The one reading
-    `read_arrivals` gains the age moment (`Reading.age_outside`,
+    `read_arrivals` gains the age moment (`Moments.age_outside`,
     `age_here`, `age`; the `ages` argument, zero without it; the bound
     check covers `amount x age`), the value `age` of `reads`, and the
     record of a `read`, `click` or `rerelease` on such an entry carries
@@ -1348,7 +1348,7 @@ implementation's part of the contract. The design above is unchanged.
     summed over its Nodes, per Node ("everything at the Node but the
     reader's own number, including here"): the threshold reads the
     amount arriving over the whole set, the clock's count the presence
-    (or the age moment) over the set, the push the label moment over the
+    (or the age moment) over the set, the push the label flow over the
     set (a ray crossing w Nodes of the body along its line is read w
     times, once at each Node it enters: the body's reading is the sum of
     its Nodes' readings, so its push is about w times one Node's at the

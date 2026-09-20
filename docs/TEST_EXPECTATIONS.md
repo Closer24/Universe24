@@ -400,7 +400,7 @@ section 10 notes 18 to 20 and 28; the model owner's proposal 2 of
 2026-09-19 with the physics-rule reviewer's two corrections, and the
 decision of 2026-09-20 that charge is per unit of content of a family):
 for a free family's rays ONE product, push_A = M_A x (rho_A rho_B - 1) x
-V_B, with V_B the label moment of the arriving rays, M_A the reader's
+V_B, with V_B the label flow of the arriving rays, M_A the reader's
 content as the frame read it and rho_A, rho_B the families' charges per
 unit of content as the pairs [n, d] (the gravity -M_A V_B plus the
 electric part off the reader's clock, sign x by_clock(age_A, |V n_A n_B
@@ -425,7 +425,7 @@ charge 1 the family `p` of charge [1, 5]) and every integer is unchanged.
   interval, one row of amount 4), a probe of content 5 and charge 1 (`p`,
   [1, 5]) at x = 6; on (1, 0, 0) a ray born at tick t is at x = 6 at tick
   t + 10, so the probe reads one row of amount 4 at every tick 11 through
-  30: 20 `read` records, each the label moment V = 4 x 64 = 256 and the
+  30: 20 `read` records, each the label flow V = 4 x 64 = 256 and the
   push -5 V + by_clock(age, 3 V, 4) = -1280 + 192 = (-1088, 0, 0) [was
   (-17, 0, 0)], the same integer as by_clock(age, |256 x 3 x 1 x 5|, 4 x
   5) = by_clock(age, 3840, 20), `pushed` (-21760, 0, 0) [was (-340, 0, 0)]

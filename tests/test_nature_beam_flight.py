@@ -65,7 +65,7 @@ def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_desi
         if s1 == 0:
             assert int(table.period[index]) == 1 and not table.steps[index].any()
             continue
-        assert int(table.turns[index]) >= s1 * Q
+        assert int(table.resolution[index]) >= s1 * Q
         ages = np.arange(2 * int(table.period[index]) + 5)
         direction = np.full(ages.shape, index)
         m = table.manhattan_steps(direction, ages)
@@ -80,7 +80,7 @@ def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_desi
     plus_one = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0), (1, 1, 1), (3, 1, 0)))
     for vector, (t, period) in periods.items():
         index = plus_one.vectors.tolist().index(list(vector))
-        assert (int(plus_one.turns[index]), int(plus_one.period[index])) == (t, period), vector
+        assert (int(plus_one.resolution[index]), int(plus_one.period[index])) == (t, period), vector
     position = np.zeros(3, dtype=np.int64)
     arrivals: dict[int, int] = {}
     for tau in range(20):

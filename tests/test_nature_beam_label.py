@@ -245,7 +245,7 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
             )
         ] == [0, 0, 0], tick
         assert books["momentum"]["transit"] == simulation.books()["momentum"]["transit"], tick
-        reflected = mirror_entry.measured[LIGHT]["rerelease"]
+        reflected = mirror_entry.taken[LIGHT]["rerelease"]
         assert mirror_entry.momentum == (2 * CONTENT * reflected * u_mirror).tolist(), tick
         if store.size:
             labels = store.labels(np.arange(store.size), unit, False)
@@ -257,7 +257,7 @@ def test_every_label_is_content_times_the_unit_vector_and_the_books_close():
     assert at_screen and all(r["amount"] == 1 for r in at_screen)
     assert {tuple(r["push"]) for r in at_screen} == {(192, 0, 0), (192, 18, 0)}
     assert screen_entry.momentum == np.array([r["push"] for r in at_screen]).sum(axis=0).tolist()
-    assert mirror_entry.measured[LIGHT]["rerelease"] >= 2
+    assert mirror_entry.taken[LIGHT]["rerelease"] >= 2
     escaped = [r for r in clicks if r["measured"] is None]
     assert escaped
     total = np.array([r["momentum"] for r in escaped], dtype=np.int64).sum(axis=0)

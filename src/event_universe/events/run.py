@@ -90,7 +90,7 @@ def execute_nature_beam_run(
         "model": world.model_id,
         "shape": list(world.shape),
         "boundary": world.boundary,
-        "K": world.clock,
+        "K": world.K,
         "N": world.phase_steps,
         "release": list(world.release),
         "suspension": list(world.suspension),
@@ -137,7 +137,7 @@ def execute_nature_beam_run(
         "escaped": [
             {
                 "family": family.name,
-                "amount": simulation.ledger.escaped_units(index),
+                "amount": simulation.ledger.escaped_amount(index),
                 "content": simulation.ledger.escaped_content(index),
                 "momentum": simulation.ledger.escaped_momentum(),
             }

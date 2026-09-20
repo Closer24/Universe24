@@ -23,7 +23,7 @@ most one Link per interval, x before y before z; a step onto a Node that
 holds a measured event is refused; through an open face the step is a
 click on the face detector; on a periodic axis it wraps). The books
 (`books`): per family the measured line, in content,
-initial + measured = current + spent + escaped; the transit line, in units,
+initial + measured = current + spent + escaped; the transit line, in amount,
 initial + released = current + escaped + absorbed; the content line, the
 content carried, initial + released = current + escaped + absorbed; the
 momentum reported on the measured events, in transit (the one label of
@@ -41,13 +41,13 @@ import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
 from event_universe.core.integer import by_clock
-from event_universe.events.measured import RULES, DetectorSet, Ledger, Measured, rational_sum
+from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
-    HERE,
+    NO_ARRIVAL,
     ArrivalRows,
+    GameBoardDiagnostics,
     NatureBeamStore,
     NatureBeamTables,
-    Readings,
     Record,
     bounded,
     exact_column_sums,
@@ -66,7 +66,7 @@ from event_universe.events.world import (
     body_nodes,
 )
 
-__all__ = ["RULES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
+__all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
 
 
 def step_axis(age: int, momentum: int, content: int, width: int) -> int | None:
@@ -158,7 +158,7 @@ class NatureBeamSimulation:
                 number=np.array([item.number]),
                 amount=np.array([item.amount]),
                 content=np.array([content]),
-                arrival=np.array([HERE]),
+                arrival=np.array([NO_ARRIVAL]),
             )
             self.transit_initial[item.family] += item.amount
             self.content_initial[item.family] += content * item.amount
@@ -170,13 +170,13 @@ class NatureBeamSimulation:
         # The readings of the last interval (diagnostics, decomposed on
         # request): per family the arrivals per Node, their net flow, the
         # Links crossed per Port and the presence.
-        self.readings = Readings(
+        self.readings = GameBoardDiagnostics(
             world.shape, self.tables.flight.labels, [ArrivalRows.empty() for _ in range(count)]
         )
 
     @property
-    def count(self) -> list[np.ndarray]:
-        return self.readings.count
+    def arrived(self) -> list[np.ndarray]:
+        return self.readings.arrived
 
     @property
     def flow(self) -> list[np.ndarray]:
@@ -236,8 +236,8 @@ class NatureBeamSimulation:
             nodes=nodes,
             phase_by_momentum=definition.phase_by_momentum,
             pending=[[] for _ in range(count)],
-            measured=[dict.fromkeys(RULES, 0) for _ in range(count)],
-            events=[0] * count,
+            taken=[dict.fromkeys(TALLIES, 0) for _ in range(count)],
+            clicks=[0] * count,
         )
 
     # -- the interval ----------------------------------------------------------
@@ -260,7 +260,7 @@ class NatureBeamSimulation:
             entry = self.measured[number]
             if entry.creating:
                 entry.phase = (entry.phase + entry.turn) & self.world.phase_mask
-                entry.phase_steps += entry.turn
+                entry.turned += entry.turn
                 self._suspend(entry)
         for number in sorted(self.measured):
             if number in self.measured:
@@ -309,17 +309,17 @@ class NatureBeamSimulation:
                 phased.append(entry)
         if not phased:
             return
-        clock = self.world.clock
+        K = self.world.K
         ages = [entry.clock_age for entry in phased]
         contents = [entry.frame_content for entry in phased]
         if (max(ages) + 1) * max(contents) <= MOMENTUM_BOUND:
             age_column = np.array(ages, dtype=np.int64)
             content_column = np.array(contents, dtype=np.int64)
             turns = (
-                ((age_column + 1) * content_column) // clock - (age_column * content_column) // clock
+                ((age_column + 1) * content_column) // K - (age_column * content_column) // K
             ).tolist()
         else:
-            turns = [by_clock(age, content, clock) for age, content in zip(ages, contents, strict=True)]
+            turns = [by_clock(age, content, K) for age, content in zip(ages, contents, strict=True)]
         for entry, turn in zip(phased, turns, strict=True):
             if 2 * turn >= self.world.phase_steps:
                 raise ValueError(
@@ -423,7 +423,7 @@ class NatureBeamSimulation:
                     self.ledger.transit_absorbed[index] -= entry.pending_amount(index)
                     self.ledger.content_absorbed[index] -= entry.pending_content(index)
                     self.ledger.face_measured_content[port][index] += entry.held[index]
-                    self.ledger.face_units[port][index] += entry.pending_amount(index)
+                    self.ledger.face_amount[port][index] += entry.pending_amount(index)
                     self.ledger.face_content[port][index] += entry.pending_content(index)
                 self.ledger.face_momentum[port] = [
                     int(a) + int(b)
@@ -551,10 +551,10 @@ class NatureBeamSimulation:
                     if counted is not None
                     else self.transit_initial[index]
                     + ledger.transit_released[index]
-                    - ledger.escaped_units(index)
+                    - ledger.escaped_amount(index)
                     - ledger.transit_absorbed[index]
                 ),
-                "escaped": ledger.escaped_units(index),
+                "escaped": ledger.escaped_amount(index),
                 "absorbed": ledger.transit_absorbed[index],
             }
             in_transit["balanced"] = in_transit["initial"] + in_transit["released"] == (
@@ -612,8 +612,8 @@ class NatureBeamSimulation:
             members = [self.measured[n] for n in detector_set.numbers if n in self.measured]
             families = {
                 family.name: {
-                    "measured": sum(entry.measured[f]["measure"] for entry in members),
-                    "clicks": sum(entry.events[f] for entry in members),
+                    "measured": sum(entry.taken[f]["measure"] for entry in members),
+                    "clicks": sum(entry.clicks[f] for entry in members),
                     "record": detector_set.record[f],
                     "phase": detector_set.phase[f],
                 }
@@ -652,8 +652,8 @@ class NatureBeamSimulation:
                     "threshold": 1,
                     "families": {
                         family.name: {
-                            "measured": ledger.face_units[port][f],
-                            "clicks": ledger.face_units[port][f],
+                            "measured": ledger.face_amount[port][f],
+                            "clicks": ledger.face_amount[port][f],
                             "content": ledger.face_content[port][f],
                             "record": ledger.face_record[port][f],
                             "measured_content": ledger.face_measured_content[port][f],
@@ -680,12 +680,12 @@ class NatureBeamSimulation:
         positions = node_offsets[chosen]
         radial = positions / distance[chosen][:, None]
         cells = tuple((positions + np.array(centre)).T)
-        count = self.readings.count[family][cells]
+        arrived = self.readings.arrived[family][cells]
         flow = self.readings.flow[family][cells]
         presence = self.readings.presence[family][cells]
         return {
             "nodes": float(chosen.sum()),
-            "count": float(count.mean()),
+            "arrived": float(arrived.mean()),
             "flow": float((flow * radial).sum(axis=1).mean()),
             "presence": float(presence.mean()),
         }
@@ -734,7 +734,7 @@ class NatureBeamSimulation:
             [
                 {
                     "family": family.name,
-                    "amount": self.ledger.escaped_units(f),
+                    "amount": self.ledger.escaped_amount(f),
                     "content": self.ledger.escaped_content(f),
                 }
                 for f, family in enumerate(self.families)

@@ -104,7 +104,7 @@ def test_a_small_measured_event_releases_off_its_clock_and_turns_its_phase():
     steps = []
     for _ in range(4):
         simulation.step()
-        steps.append(simulation.measured[1].phase_steps)
+        steps.append(simulation.measured[1].turned)
     assert steps == [1, 3, 4, 6]
 
 
@@ -134,8 +134,8 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     assert simulation.ledger.transit_released[LIGHT] == 18 and entry.held == [0, 82]
     assert simulation.ledger.held_spent[LIGHT] == 18 and entry.momentum == [0, 0, 0]
-    assert entry.phase_steps == 9 and simulation.ledger.content_released[LIGHT] == 18
-    escaped = simulation.ledger.escaped_units(LIGHT)
+    assert entry.turned == 9 and simulation.ledger.content_released[LIGHT] == 18
+    escaped = simulation.ledger.escaped_amount(LIGHT)
     assert int(light.amount.sum()) + escaped == 18 and set(light.content.tolist()) == {1}
 
     clock = 4096
@@ -168,12 +168,12 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         and slow.held == [0, 4 * clock]
         and fast.held == [0, 8 * clock]
     )
-    assert slow.phase_steps == 32 and fast.phase_steps == 64
+    assert slow.turned == 32 and fast.turned == 64
     assert slow.momentum == [-2048, 0, 0] and fast.momentum == [4096, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     assert [r["tick"] for r in clicks] == [6, 6, 7, 7, 8, 8]
     assert sorted(r["content"] for r in clicks) == [4, 4, 4, 8, 8, 8]
-    assert gate.held == [1, 3 * 4 + 3 * 8] and gate.events == [0, 6] and gate.momentum == [-768, 0, 0]
+    assert gate.held == [1, 3 * 4 + 3 * 8] and gate.clicks == [0, 6] and gate.momentum == [-768, 0, 0]
     light = simulation.stores[LIGHT]
     assert int(light.amount.sum()) == 10 and int((light.amount * light.content).sum()) == 5 * 4 + 5 * 8
     # A turn of 0 releases nothing.

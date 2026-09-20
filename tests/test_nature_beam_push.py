@@ -4,7 +4,7 @@ label under the law of the ray (docs/RAY_LAW.md, section 3 step 4, section
 2026-09-19, "2 with the physicist", and of 2026-09-20, charge per unit of
 content, Highlights 5.4): a measured event A of content M_A (as the frame
 read it) takes from a group of rays of a free family B arriving at its
-Node, with V_B their label moment (amount x u_d) and rho_A, rho_B the two
+Node, with V_B their label flow (amount x u_d) and rho_A, rho_B the two
 families' charges per unit of content declared as pairs [n, d],
 
     push_A = M_A x (rho_A rho_B - 1) x V_B
@@ -36,7 +36,7 @@ charge [1, 5]; every pinned integer is unchanged.
     flight table puts a ray born at tick t at x = 6 at tick t + 10 (m(10)
     = 6, m(9) = 5), so the probe reads one row of amount 4 at every tick
     from 11 through 30: 20 `read` records, each with the flow V = 4 and the
-    push -5 V + by_clock(age, 3 V, 4) with the label moment V = 4 x 64 =
+    push -5 V + by_clock(age, 3 V, 4) with the label flow V = 4 x 64 =
     256 (since 2026-09-19 the label is along the unit vector u_d of the
     direction at the flight table's scale Q = 64, the model owner's
     decision on the physics-rule reviewer's verdict, RAY_LAW section 2 and
@@ -504,7 +504,7 @@ def test_a_re_emitted_free_ray_pushes_by_its_familys_charge_per_unit_of_content(
         0,
     ]
     mirror = simulation.measured[2]
-    assert mirror.measured[1]["rerelease"] == 92 and mirror.pushed != [0, 0, 0]
+    assert mirror.taken[1]["rerelease"] == 92 and mirror.pushed != [0, 0, 0]
     assert simulation.measured[2].charge == (4, 5) and simulation.measured[3].charge == (1, 1)
 
 

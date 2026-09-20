@@ -16,7 +16,7 @@ the model owner, 2026-09-19):
   the steps of the phase circle (64 by default, a power of two from 2 through
   4096); `release` `[n, d]`, the rays a measured event of a free family
   releases per self-creation per declared direction per unit of content,
-  read off its clock; `suspension` `[n, d]`, the fractional width of the
+  read off its clock; `suspension` `[n, d]`, the rate of the
   clock's count: a measured event owes `by_clock(age, presence x n, d)`
   intervals after its self-creation, the presence being the amount of every
   ray at its Node of every number but its own (an integer w is accepted as
@@ -104,7 +104,7 @@ the model owner, 2026-09-19):
   on, the six headings by default, and optionally its `phase_window`);
   every measured event is given its number at parsing, 1, 2, ... in
   declaration order;
-- `phase_window`, the declared width of a detector and of an emitter: a
+- `phase_window`, the declared window of a detector and of an emitter: a
   setting `s`, an integer from 0 through N - 1, and the half circle centred
   on it (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly
   N / 2 steps; for N = 2 the one step d = 0). On a table entry (any rule but
@@ -448,7 +448,7 @@ class NatureBeamWorld:
     boundary: str | dict[str, str]
     periodic: tuple[bool, bool, bool]
     ticks: int
-    clock: int
+    K: int
     phase_steps: int
     release: tuple[int, int]
     suspension: tuple[int, int]
@@ -796,7 +796,7 @@ def _lamp(
     table: tuple[Vector, ...],
     quantum: int,
     amount: int,
-    clock: int,
+    K: int,
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -815,7 +815,7 @@ def _lamp(
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount / K).
-    largest_turn = max(1, amount // clock)
+    largest_turn = max(1, amount // K)
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
     return LampDefinition(rate, directions, window)
 
@@ -863,7 +863,7 @@ def _measured(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
-    clock: int,
+    K: int,
     phase_steps: int,
     release: tuple[int, int],
     table: tuple[Vector, ...],
@@ -908,7 +908,7 @@ def _measured(
         family = names[family_name]
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         phased = families[family].phase
-        if phased and 2 * amount >= clock * phase_steps:
+        if phased and 2 * amount >= K * phase_steps:
             raise ValueError(
                 f"{RAYS_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
                 "per self-creation below half the circle)"
@@ -993,7 +993,7 @@ def _measured(
                 table,
                 families[family].quantum,
                 amount,
-                clock,
+                K,
             )
         found.append(
             MeasuredDefinition(
@@ -1155,7 +1155,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
     ticks = _integer(obj["ticks"], "ticks", 0)
-    clock = _integer(obj["K"], "K", 1)
+    K = _integer(obj["K"], "K", 1)
     phase_steps = _integer(obj.get("N", 64), "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
         raise ValueError(f"{RAYS_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
@@ -1179,7 +1179,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         shape,
         periodic,
         families,
-        clock,
+        K,
         phase_steps,
         release,
         table,
@@ -1196,7 +1196,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         boundary,
         periodic,
         ticks,
-        clock,
+        K,
         phase_steps,
         release,
         suspension,

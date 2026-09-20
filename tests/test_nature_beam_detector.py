@@ -206,7 +206,7 @@ def test_two_rays_in_phase_record_four_units_and_in_antiphase_nothing():
         entry = simulation.measured[1]
         simulation.step()
         assert simulation.books()["balanced"]
-        assert entry.events == [0, len(phases)], phases
+        assert entry.clicks == [0, len(phases)], phases
         assert entry.detector_set.record == [0, expected], phases
         assert simulation.detectors()[0]["families"]["light"] == {
             "measured": len(phases),
@@ -239,8 +239,8 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
     assert entry.detector == 0 and entry.threshold == 3
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 0] and entry.held == [4, 0] and entry.momentum == [0, 0, 0]
-    assert entry.measured[LIGHT] == NO_RESPONSE
+    assert entry.clicks == [0, 0] and entry.held == [4, 0] and entry.momentum == [0, 0, 0]
+    assert entry.taken[LIGHT] == NO_RESPONSE
     assert light.size == 1 and int(light.amount[0]) == 2 and int(light.node[0]) == light.flat((4, 1, 1))
     assert [(r["event"], r["amount"], r["threshold"]) for r in records] == [("pass", 2, 3)]
     simulation.step()
@@ -253,8 +253,8 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 3] and entry.held == [4, 3] and entry.momentum == [192, 0, 0]
-    assert entry.pushed == [192, 0, 0] and entry.measured[LIGHT] == {**NO_RESPONSE, "measure": 3}
+    assert entry.clicks == [0, 3] and entry.held == [4, 3] and entry.momentum == [192, 0, 0]
+    assert entry.pushed == [192, 0, 0] and entry.taken[LIGHT] == {**NO_RESPONSE, "measure": 3}
     assert light.size == 0
     assert simulation.detectors()[0]["families"]["light"] == {
         "measured": 3,
@@ -283,9 +283,7 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
     simulation.step()
     assert simulation.books()["balanced"]
     assert (
-        entry.measured[LIGHT] == NO_RESPONSE
-        and entry.pending == [[], []]
-        and entry.momentum == [0, 0, 0]
+        entry.taken[LIGHT] == NO_RESPONSE and entry.pending == [[], []] and entry.momentum == [0, 0, 0]
     )
     assert light.size == 1 and int(light.amount[0]) == 2 and int(light.number[0]) == 2
 
@@ -297,7 +295,7 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
     simulation.step()
     assert simulation.books()["balanced"]
     assert [(r["event"], r["amount"], r["push"]) for r in records] == [("rerelease", 3, [192, 0, 0])]
-    assert entry.measured[LIGHT] == {**NO_RESPONSE, "rerelease": 3} and entry.events == [0, 0]
+    assert entry.taken[LIGHT] == {**NO_RESPONSE, "rerelease": 3} and entry.clicks == [0, 0]
     assert entry.held == [4, 0] and entry.pending == [[], []]
     assert entry.pushed == [192, 0, 0] and entry.momentum == [128, -64, -64]
     assert (
@@ -356,8 +354,8 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
         simulation.step()
         assert simulation.books()["balanced"], amount
         assert entry.momentum == push and entry.pushed == push, amount
-        assert entry.measured[M] == {**NO_RESPONSE, "read": read}, amount
-        assert entry.held == [4, 0] and entry.events == [0, 0], amount
+        assert entry.taken[M] == {**NO_RESPONSE, "read": read}, amount
+        assert entry.held == [4, 0] and entry.clicks == [0, 0], amount
         assert m.size == 1 and int(m.amount[0]) == amount and int(m.number[0]) == 1, amount
         assert simulation.detectors()[0]["families"]["m"] == {
             "measured": 0,
@@ -590,7 +588,7 @@ def test_a_click_returns_the_sets_phase_to_its_measured_events():
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.phase == 41 and entry.events == [0, 1] and entry.held == [0, 24 - 6 + 1]
+    assert entry.phase == 41 and entry.clicks == [0, 1] and entry.held == [0, 24 - 6 + 1]
     fresh = light.age == 0
     assert int(fresh.sum()) == 6 and (light.phase[fresh] == 40).all()
     simulation.step()
@@ -616,7 +614,7 @@ def test_a_click_returns_the_sets_phase_to_its_measured_events():
     )
     simulation.step()
     assert simulation.books()["balanced"]
-    assert simulation.measured[2].measured[M]["read"] == 4 and simulation.measured[2].phase == 0
+    assert simulation.measured[2].taken[M]["read"] == 4 and simulation.measured[2].phase == 0
 
 
 def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
@@ -656,7 +654,7 @@ def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
         "phase": 0,
     }
     assert simulation.detectors()[0]["reading"] == "beam"
-    assert simulation.measured[1].events == [0, 2]
+    assert simulation.measured[1].clicks == [0, 2]
     simulation, records = run([first, arrival(1, number=3, phase=32, direction=[-1, 0, 0])])
     assert [(r["event"], r["number"], r["amount"], r["phase"], r["cancelled"]) for r in records] == [
         ("pass", 2, 1, 0, True),
@@ -664,7 +662,7 @@ def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
     ]
     light = simulation.stores[LIGHT]
     assert (
-        light.size == 2 and light.amount.tolist() == [1, 1] and simulation.measured[1].events == [0, 0]
+        light.size == 2 and light.amount.tolist() == [1, 1] and simulation.measured[1].clicks == [0, 0]
     )
     assert simulation.detectors()[0]["families"]["light"]["record"] == 0
     assert simulation.measured[1].held == [4, 0]
@@ -687,7 +685,7 @@ def test_the_beam_reading_pairs_opposite_rays_and_counts_the_rest():
         ("record", 0),
     ]
     assert records[-1]["record"] == 1 and records[-1]["phase"] == 0
-    assert simulation.measured[1].events == [0, 1] and simulation.stores[LIGHT].size == 2
+    assert simulation.measured[1].clicks == [0, 1] and simulation.stores[LIGHT].size == 2
     rows = [arrival(3, number=2, phase=0), arrival(2, number=3, phase=32, direction=[-1, 0, 0])]
     simulation, records = run(rows)
     assert [(r["event"], r["number"], r.get("amount", r.get("record"))) for r in records] == [

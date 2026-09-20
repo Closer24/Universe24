@@ -14,7 +14,7 @@ from pathlib import Path
 from event_universe.events.world import RAYS_LAW
 from event_universe.world_loading import DocumentSyntaxError, load_world
 
-KINDS = ("rays",)
+DOCUMENT_KINDS = ("rays",)
 
 
 @dataclass(frozen=True)
@@ -51,7 +51,7 @@ def validate_configuration(
     A report contains the first concrete failure, and does not certify a run or
     physical correctness. The only kind is `rays`, a world of the law of the ray.
     """
-    if kind not in (*KINDS, "auto"):
+    if kind not in (*DOCUMENT_KINDS, "auto"):
         issue = ValidationIssue("unsupported_kind", "input", f"unsupported configuration kind: {kind}")
         return ValidationReport(kind, False, {}, (issue,))
     resolved = "rays"
@@ -88,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
     """Read explicit paths and print reports; never create run artifacts."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("paths", nargs="+", type=Path)
-    parser.add_argument("--kind", choices=("auto", *KINDS), default="auto")
+    parser.add_argument("--kind", choices=("auto", *DOCUMENT_KINDS), default="auto")
     parser.add_argument("--json", action="store_true", dest="as_json")
     args = parser.parse_args(argv)
     results: list[dict[str, object]] = []

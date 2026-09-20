@@ -23,7 +23,7 @@ order, each a bijection on the GameBoard's state except the border:
    and 2 of the direction vectors of the arrivals, taken ONCE by
    `read_arrivals` over the one reading set (at the measured events in
    step 4; the dense arrays of the whole GameBoard are the engine's
-   diagnostics, decomposed on request): the count (split outside /
+   diagnostics, decomposed on request): the arrived amount (split outside /
    here, a ray that did not step this interval having the direction
    (0, 0, 0) and entering the zeroth moment alone), the net flow (the
    vector sum of amount x D[direction]), the traceless tensor (three
@@ -49,7 +49,7 @@ order, each a bijection on the GameBoard's state except the border:
    declared directions), `pass`; own-number rays are home. The push is ONE
    product per arriving free ray (`push_form`, the model owner's decision
    of 2026-09-20: charge is per unit of content of a family, rho): with
-   `V_B` the label moment of the rays (the vector moment of
+   `V_B` the label flow of the rays (the vector moment of
    `read_arrivals` with the labels as weights), M_A the reader's content
    as the frame read it and rho_A, rho_B the families' charges per unit
    of content, `push_A = M_A x (rho_A rho_B - 1) x V_B` for a free
@@ -122,7 +122,7 @@ Record = Callable[[dict[str, object]], None]
 # The arrival of a ray that did not step this interval: the first rest
 # direction, whose vector is (0, 0, 0), so "here" enters the zeroth moment
 # of the reading alone.
-HERE = 0
+NO_ARRIVAL = 0
 # The Ports of a Node, the Links a ray may cross into it (a walk diagnostic).
 PORTS = 6
 DIMENSIONS = 3
@@ -202,12 +202,12 @@ MOMENT_COLUMNS = AGE_COLUMN + 2
 
 
 @dataclass(frozen=True)
-class Reading:
+class Moments:
     """The moments of order 0, 1 and 2 of the direction vectors of one
     reading set, weighted by the amounts (the model owner, 2026-09-19): the
     zeroth moment split into `outside` (the rays that arrived, their
     direction nonzero) and `here` (the rays that did not step, their
-    direction zero), `vector` the first moment (the net flow, sum amount x
+    direction zero), `flow` the first moment (the net flow, sum amount x
     D) and `second` the six entries of the second moment (sum amount x
     D_i D_j for xx, yy, zz, xy, xz, yz), whose traceless part is `tensor`
     (3 x the second moment less its trace on the diagonal, a symmetric
@@ -224,13 +224,13 @@ class Reading:
 
     outside: np.ndarray
     here: np.ndarray
-    vector: np.ndarray
+    flow: np.ndarray
     second: np.ndarray
     age_outside: np.ndarray
     age_here: np.ndarray
 
     @property
-    def scalar(self) -> np.ndarray:
+    def presence(self) -> np.ndarray:
         """The presence: everything in the set, outside and here."""
         result: np.ndarray = self.outside + self.here
         return result
@@ -254,13 +254,13 @@ class Reading:
 
     def component(self, key: str) -> np.ndarray:
         if key == "scalar":
-            return self.scalar
+            return self.presence
         if key == "outside":
             return self.outside
         if key == "here":
             return self.here
         if key == "vector":
-            return self.vector
+            return self.flow
         if key == "tensor":
             return self.tensor
         if key == AGE_READS:
@@ -295,9 +295,9 @@ def moment_table(v: np.ndarray, a: np.ndarray, ages: np.ndarray | None = None) -
     return table
 
 
-def reading_of(sums: np.ndarray) -> Reading:
-    """The `Reading` of summed moment-table rows (a leading axis kept)."""
-    return Reading(
+def reading_of(sums: np.ndarray) -> Moments:
+    """The `Moments` of summed moment-table rows (a leading axis kept)."""
+    return Moments(
         sums[..., 0],
         sums[..., 1],
         sums[..., 2 : 2 + DIMENSIONS],
@@ -323,7 +323,7 @@ def read_arrivals(
     keys: np.ndarray | None = None,
     size: int | None = None,
     ages: np.ndarray | None = None,
-) -> Reading:
+) -> Moments:
     """The one reading of a set of rays: `vectors` (rows, 3) the direction
     vector of each ray's arrival (D[direction] for a ray that arrived this
     interval, (0, 0, 0) for one that did not step) and `amounts` (rows,)
@@ -378,7 +378,7 @@ class FlightTable:
 
     vectors: np.ndarray
     manhattan: np.ndarray
-    turns: np.ndarray
+    resolution: np.ndarray
     period: np.ndarray
     lines: np.ndarray
     steps: np.ndarray
@@ -387,7 +387,7 @@ class FlightTable:
     def manhattan_steps(self, direction: np.ndarray, age: np.ndarray) -> np.ndarray:
         """m(tau) = (2 tau S_1 Q + T_d) // (2 T_d): the Manhattan steps made
         by age tau."""
-        s1, t = self.manhattan[direction], self.turns[direction]
+        s1, t = self.manhattan[direction], self.resolution[direction]
         result: np.ndarray = (2 * age * s1 * Q + t) // (2 * t)
         return result
 
@@ -434,7 +434,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     """The flight table of a direction set, computed once at load."""
     count = len(vectors)
     manhattan = np.zeros(count, dtype=np.int64)
-    turns = np.ones(count, dtype=np.int64)
+    resolution = np.ones(count, dtype=np.int64)
     period = np.ones(count, dtype=np.int64)
     lines_list: list[list[tuple[int, int, int]]] = []
     for index, vector in enumerate(vectors):
@@ -444,7 +444,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
             lines_list.append([])
             continue
         t = integer_root(3 * sum(c * c for c in vector) * Q * Q)
-        turns[index] = t
+        resolution[index] = t
         p = t // bounded_gcd(s1 * Q, t)
         per_period = s1 * Q * p // t
         period[index] = p * (s1 // bounded_gcd(per_period, s1))
@@ -459,7 +459,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
     table = FlightTable(
         np.array(vectors, dtype=np.int64).reshape(count, 3),
         manhattan,
-        turns,
+        resolution,
         period,
         lines,
         np.zeros(0),
@@ -478,7 +478,7 @@ def flight_table(vectors: tuple[tuple[int, int, int], ...]) -> FlightTable:
         m1 = table.manhattan_steps(direction, ages + 1)
         moved = m1 > m0
         steps[index, : len(ages)] = np.where(moved[:, None], lines[index, m0 % s1], 0)
-    return FlightTable(table.vectors, manhattan, turns, period, lines, steps, labels)
+    return FlightTable(table.vectors, manhattan, resolution, period, lines, steps, labels)
 
 
 # -- the collision table ---------------------------------------------------------
@@ -772,7 +772,7 @@ class NatureBeamStore:
     since the measured event that created the ray; rows of different ages
     are distinct rows, the host cost of the whole age), `phase`, `number`,
     `amount`, `content` (per unit) and `arrival`, the direction the ray arrived on this interval (its
-    direction at the walk; the reading is of the arrivals) or `HERE` for a
+    direction at the walk; the reading is of the arrivals) or `NO_ARRIVAL` for a
     ray that did not step. Rows sorted by `node` after every interval;
     identical rows merged."""
 
@@ -875,7 +875,7 @@ class NatureBeamStore:
             amount = merged.astype(np.int64)
         self.keep(~same)
         self.amount = amount
-        self.arrival[:] = HERE
+        self.arrival[:] = NO_ARRIVAL
 
     def slice(self, flat: int) -> tuple[int, int]:
         """The contiguous rows of one Node in the sorted store."""
@@ -937,7 +937,7 @@ def bounded(value: int, entry: Measured, quantity: str) -> int:
 @dataclass(frozen=True)
 class ArrivalRows:
     """One family's rows as the walk left them, held for the readings on
-    request: the Node, the direction each row arrived on (`HERE` for a row
+    request: the Node, the direction each row arrived on (`NO_ARRIVAL` for a row
     that did not step), its amount, and the rows that crossed a Link this
     interval with their Port (the walk's diagnostic). Arrays the store
     does not write again (every later step replaces its columns)."""
@@ -955,7 +955,7 @@ class ArrivalRows:
         return cls(none, none, none, none, none, none)
 
 
-class Readings:
+class GameBoardDiagnostics:
     """The interval's readings per family, dense over the GameBoard, decomposed
     on request from the rows of the walk (diagnostics for the engine's
     shell means and flux; the law reads none of them, its own readings
@@ -984,7 +984,7 @@ class Readings:
 
     def _decompose(self) -> tuple[list[np.ndarray], list[np.ndarray], list[np.ndarray]]:
         if self._moments is None:
-            count: list[np.ndarray] = []
+            arrived: list[np.ndarray] = []
             flow: list[np.ndarray] = []
             presence: list[np.ndarray] = []
             for rows in self.rows:
@@ -997,16 +997,16 @@ class Readings:
                         self.vectors[rows.arrival], rows.amount, inverse, active.shape[0]
                     )
                     outside[active] = reading.outside
-                    vector[active] = reading.vector
-                    scalar[active] = reading.scalar
-                count.append(outside.reshape(self.shape))
+                    vector[active] = reading.flow
+                    scalar[active] = reading.presence
+                arrived.append(outside.reshape(self.shape))
                 flow.append(vector.reshape((*self.shape, DIMENSIONS)))
                 presence.append(scalar.reshape(self.shape))
-            self._moments = (count, flow, presence)
+            self._moments = (arrived, flow, presence)
         return self._moments
 
     @property
-    def count(self) -> list[np.ndarray]:
+    def arrived(self) -> list[np.ndarray]:
         return self._decompose()[0]
 
     @property
@@ -1135,7 +1135,7 @@ def first_label_overflow(
 def first_moment_overflow(
     group: np.ndarray, groups: int, weights: np.ndarray, unit: np.ndarray
 ) -> tuple[int, OverflowError] | None:
-    """The bound of a label moment taken per group in bulk: the sum of
+    """The bound of a label flow taken per group in bulk: the sum of
     weight x u_d over a group's rows, each component within the weight
     times the largest component of u_d (Q at most) per row, so the check
     is weight x |u| x rows against the bound (a first moment: no second
@@ -1225,7 +1225,7 @@ def push_form(
     """The push a measured event A takes from one group of arriving rays,
     ONE product per arriving free ray (the model owner's decision of
     2026-09-20, Highlights 5.4: charge is per unit of content of a
-    family): `moment` is V_B, the label moment of the group (Python
+    family): `moment` is V_B, the label flow of the group (Python
     integers, exact), `content` M_A the reader's content as the frame
     read it, `reader` rho_A = (n_A, d_A) and `emitter` rho_B = (n_B, d_B)
     the two families' charges per unit of content, `age` the reader's age
@@ -1268,7 +1268,7 @@ def nature_beam(
     record: Record | None,
     ledger: Ledger,
     inverse: bool = False,
-) -> Readings:
+) -> GameBoardDiagnostics:
     """A Node's whole interval for the rays present, at every Node (the
     module docstring, steps 1 to 6). With `inverse` the bijective steps are
     run in reverse order with their inverses (the collision, then the walk)
@@ -1385,9 +1385,9 @@ def nature_beam(
             store.node = coordinates @ np.array(store.strides, dtype=np.int64)
             store.age = back
             store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
-            store.arrival[:] = HERE
+            store.arrival[:] = NO_ARRIVAL
             store.merge()
-        return Readings(shape, unit, [])
+        return GameBoardDiagnostics(shape, unit, [])
 
     # 1. The walk: departures become arrivals; the escapes click on the faces.
     arrivals: list[ArrivalRows] = []
@@ -1412,7 +1412,7 @@ def nature_beam(
         # face a ray leaves through) and the direction the ray arrived on.
         port = np.full(store.size, -1, dtype=np.int64)
         port[moved] = heading_port(step[moved])
-        arrival = np.where(moved, store.direction, HERE)
+        arrival = np.where(moved, store.direction, NO_ARRIVAL)
         if escaped.any():
             gone = np.flatnonzero(escaped)
             labels = store.labels(gone, unit, definition.free)
@@ -1427,7 +1427,7 @@ def nature_beam(
                 # phases) and its square, exact Python integers (a report,
                 # never refused; the face's record is one sum per face).
                 total = int(exact_sum(amounts))
-                ledger.face_units[face][family] += total
+                ledger.face_amount[face][family] += total
                 ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
                 face_x, face_y = coherent_pointer(
                     amounts, store.phase[through], FIRST, [total], tables.cosines, tables.sines
@@ -1480,8 +1480,8 @@ def nature_beam(
     # 2. The readings: the moments of every Node's arrivals, taken once,
     # where they are read: at the measured events in step 4 (their own
     # local sets) and, for the diagnostics of the whole GameBoard, on request
-    # from the rows of the walk (the active Nodes only; `Readings`).
-    readings = Readings(shape, unit, arrivals)
+    # from the rows of the walk (the active Nodes only; `GameBoardDiagnostics`).
+    readings = GameBoardDiagnostics(shape, unit, arrivals)
 
     # 3. The collision.
     for store in stores:
@@ -1555,7 +1555,7 @@ def nature_beam(
             arrival = store.arrival[at]
             age_at = store.age[at]
             own = number == ev_number[ev]
-            arrived = arrival != HERE
+            arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
             # The presence for the clock: every ray at the Node of another
             # number, rest and moving alike (the scalar of the one reading);
@@ -1748,7 +1748,7 @@ def nature_beam(
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
             # The push, ONE product per group of arriving rays (`push_form`):
-            # the label moment per group, the weights bounded before the
+            # the label flow per group, the weights bounded before the
             # product; the electric factor is the family's charge per unit
             # of content, so no class of rows is kept.
             overflow = first_label_overflow(
@@ -1865,7 +1865,7 @@ def nature_beam(
                     pending = entry.pending[family]
                     for k in range(k0, k1):
                         pending.append((plan.h_amount[k], plan.h_content[k], plan.h_phase[k]))
-                    entry.measured[family]["home"] += total
+                    entry.taken[family]["home"] += total
                     ledger.transit_absorbed[family] += total
                     ledger.content_absorbed[family] += carried
                     if failures:
@@ -1961,7 +1961,7 @@ def nature_beam(
                         group_total = plan.g_total[gi]
                         group_content = plan.g_content[gi]
                         reading_value = reading_values[gi]
-                        entry.measured[family][rule] += group_total
+                        entry.taken[family][rule] += group_total
                         if rule == "read":
                             if record is not None:
                                 record(
@@ -2008,7 +2008,7 @@ def nature_beam(
                         entry.held[family] = bounded(
                             entry.held[family] + group_content, entry, "content"
                         )
-                        entry.events[family] += group_total
+                        entry.clicks[family] += group_total
                         ledger.held_measured[family] += group_content
                         if record is not None:
                             for k in range(k0, k1):
@@ -2176,7 +2176,7 @@ def nature_beam(
                 number=np.full(count, entry.number, dtype=np.int64),
                 amount=amount_column,
                 content=content_column,
-                arrival=np.full(count, HERE, dtype=np.int64),
+                arrival=np.full(count, NO_ARRIVAL, dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
 

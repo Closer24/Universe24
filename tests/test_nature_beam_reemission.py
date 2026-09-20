@@ -269,5 +269,5 @@ def test_what_comes_home_is_created_again_with_its_phase_and_content():
             )
     # Four Links at the flight table's pace: the first arrival at 4 Links is
     # interval 7, then every 7 intervals (55 ages per 32 Links).
-    assert homes[:2] == [7, 14] and entry.measured[LIGHT]["home"] == len(homes)
+    assert homes[:2] == [7, 14] and entry.taken[LIGHT]["home"] == len(homes)
     assert entry.held == [0, 8] and entry.pending == [[], []]
