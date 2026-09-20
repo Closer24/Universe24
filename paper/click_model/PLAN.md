@@ -60,10 +60,19 @@ the powers of two from 512 one sigma above). `checks/which_path_window.py`
 shows that a partial which-path window on one arm gives neither the
 linear nor the quadratic duality relation and makes the absorber's count
 depend on the arm phase and the window's centre, because the window and
-the ladder read the same u: an open problem for the design owner (may a
-phase window act on a branched record?) and the physics-rule reviewer,
-stated in the paper as open and not as a prediction; the design's own
-which-path devices (a `measure` without a window) are untouched.
+the ladder read the same u. The owner's ruling (2026-09-20): no partial
+case is needed. The paper measures only the design's own worlds on the
+finished engine, and a which-path device in this model is a `measure`
+without a window, all or nothing; a windowed entry on an arm is a
+different apparatus and therefore a different world, since placing a
+detector or an emitter on the GameBoard changes the record's offers and
+the ladder's rungs (principle 8: the structure is the program; design test
+8: the same u falls elsewhere when a detector moves), not a weaker
+measurement of the same world. The partial computation stays in `checks/`
+as a note to the design owner only (whether a phase window on a branched
+record is meant to be lawful), out of the paper. Rule for every number:
+the new engine after it is finished, from the register; the checks are
+the plan's evidence and never a substitute for a run.
 
 ## The four theorems, as the draft states them (`main.tex`, section 2)
 
