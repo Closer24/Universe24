@@ -713,23 +713,37 @@ is placed in one of them and keeps its status.
   other combination at once (S from 176/64 to 88/64 in the design's
   which-path check; the two-slit weights become the incoherent sum), and
   there is no partial click: a window admits a record's row or passes it
-  whole, by u. So over births, with a which-path detector that clicks a
-  fraction f of the records, the fringe visibility is 1 - f and the
-  path distinguishability f, a linear duality V + D = 1, where quantum
-  mechanics gives V^2 + D^2 <= 1 for a partial which-way detector
-  (Englert, Phys. Rev. Lett. 77, 2154 (1996); measured by Duerr, Nonn and
-  Rempe, Nature 395, 33 (1998)). This is the coordinator's reading of
-  the design's rules, to be checked against the design and then, after
-  the merge, by one run (a which-path window admitting half the phases
-  on one arm; expected: half the births with no fringe and half with the
-  full one, the crowd's visibility 1/2 and no intermediate contrast per
-  birth), and stated in the paper as a prediction that can fail, with
-  the density of clicks as the one parameter that carries a body from
-  the quantum side to the classical side (principle 8). Whether nature's
-  partial which-way detectors, which give V^2 + D^2 = 1 on pure states,
-  refute the linear relation directly or need the model's detector to be
-  built in the same terms is the first question the physics-rule reviewer
-  is asked in step 4.
+  whole, by u. The coordinator's first reading, a linear duality
+  V + D = 1 against quantum mechanics' V^2 + D^2 <= 1 for a partial
+  which-way detector (Englert, Phys. Rev. Lett. 77, 2154 (1996); Duerr,
+  Nonn and Rempe, Nature 395, 33 (1998)), was checked the same day from
+  the design's formulas (`checks/which_path_window.py`, its output
+  `which_path_window.txt`; a computation, not a run) and is wrong. The
+  two ends hold: no absorber, V = 1; an absorber that always admits
+  (Elitzur-Vaidman), the absorber 32 of 64 at every arm phase and V = 0.
+  A partial absorber, a window admitting a fraction f of the circle on
+  one arm, gives neither relation (f = 1/2: V = 0.60, V + f = 1.10,
+  V^2 + f^2 = 0.61), and something a referee will see first: the
+  absorber's count depends on the arm phase (0 to 32 of 64 over phi at
+  the half circle) and on the window's centre (16, 8, 0, 8, 16 at
+  phi = 16 for s = 0, 8, 16, 24, 32), where Born gives a rate independent
+  of both. The cause is the model's own: the window reads the row's phase
+  u + (path phase) and admits deterministically, and the ladder reads the
+  same u, so two gates on one record are functions of one number and are
+  correlated; "the randomness is the clock of the birth" makes every
+  sequential measurement of a record dependent on the first. The design's
+  own which-path devices avoid it by construction (a `measure` without a
+  window, all or nothing, design 4.4 and test 6), so nothing in the
+  acceptance table is touched; but a windowed entry on a branched record
+  is lawful under the key and gives these counts. For the paper: the
+  boundary is stated as the click, sharp per record and continuous over
+  births by click density (principle 8); the partial which-way case is
+  stated as an open problem of the model, not a prediction, with these
+  numbers, and it is the first question put to the design owner and the
+  physics-rule reviewer (step 4): whether a phase window may act on a
+  branched record at all, or the record needs a second number per gate.
+  The engine run of the same world after the merge decides whether the
+  computation and the engine agree.
 - **Conjectured within the same GameBoard, not consequences of the
   click**: the forces as columns of one coupling, the nucleus, the weak
   force, the meeting and the bending of light, the clock's redshift, the
