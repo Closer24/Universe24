@@ -64,7 +64,7 @@ from event_universe.events.engine import step_axis as rule_step
 from event_universe.events.nature_beam import flight_table, unit_label
 from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
-from event_universe.json_documents import parse_json_document
+from event_universe.world_loading import world_of_run
 
 # Every rule of the engine this tool needs is read off the engine's own
 # functions (the architecture review of 2026-09-20, Highlights 5.4: a tool
@@ -323,9 +323,8 @@ class Run:
 
 def load(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    source = (folder / "initialization.json").read_bytes()
-    world = json.loads(source.decode("utf-8"))
-    parsed = parse_nature_beam_world(parse_json_document(source))
+    world = world_of_run(folder)
+    parsed = parse_nature_beam_world(world)
     with (folder / "events.jsonl").open(encoding="utf-8") as stream:
         events = [json.loads(line) for line in stream if line.strip()]
     model = str(record["model"])

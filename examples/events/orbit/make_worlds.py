@@ -57,6 +57,12 @@ sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.events.nature_beam import unit_label  # noqa: E402
 from event_universe.events.world import LABEL_SCALE  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 SIDE = 121
 SHAPE = [SIDE, SIDE, 1]
@@ -175,6 +181,7 @@ def main() -> None:
         )
     for name, document in worlds().items():
         path = HERE / f"{name}.json"
+        document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
         path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
         print(path.relative_to(HERE.parents[2]))
 

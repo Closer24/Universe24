@@ -196,11 +196,15 @@ def test_the_example_worlds_declare_only_what_differs(path: Path):
     source = path.read_bytes()
     shipped = load_world(source, base_dir=path.parent)
     document = json.loads(source)
+    # The families as the loader expands them: inline or, since 2026-09-20,
+    # from the definitions the world references.
     rules = {
         str(family["name"]): default_rule(FamilyDefinition(str(family["name"]), int(family["quantum"])))
-        for family in document["families"]
+        for family in json.loads(shipped.expanded_source)["families"]
     }
-    explicit = copy.deepcopy(document)
+    # The explicit form is written back as a plain world (the families
+    # inline, as the loader expanded them): a plain world has no source limit.
+    explicit = copy.deepcopy(json.loads(shipped.expanded_source))
     for measured in explicit.get("measured", []):
         table = dict(measured.get("table", {}))
         for name, rule in rules.items():
@@ -209,7 +213,7 @@ def test_the_example_worlds_declare_only_what_differs(path: Path):
             elif isinstance(table[name], dict) and "rule" not in table[name]:
                 table[name] = {"rule": rule, **table[name]}
         measured["table"] = table
-    written_back = load_world(json.dumps(explicit).encode("utf-8"), base_dir=path.parent)
+    written_back = load_world(json.dumps(explicit).encode("utf-8"))
     assert written_back.world == shipped.world
     for measured in document.get("measured", []):
         for name, value in measured.get("table", {}).items():

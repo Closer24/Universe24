@@ -167,7 +167,7 @@ class Workspace:
             try:
                 if path.stat().st_size > MAX_REQUEST:
                     continue
-                loaded = load_world(path.read_bytes(), base_dir=path.parent)
+                loaded = load_world(path.read_bytes(), base_dir=path.parent, root=self.configs)
                 source = loaded.portable_source.decode("utf-8")
                 summary = validate_source(source)
             except ValueError, OSError, RecursionError:

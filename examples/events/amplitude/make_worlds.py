@@ -165,12 +165,17 @@ import copy
 import itertools
 import json
 import math
+import sys
 from collections import OrderedDict
 from fractions import Fraction
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+
+from event_universe.world_loading import load_world  # noqa: E402
+
 N = 64
 QUARTER = N // 4
 HALF = N // 2
@@ -384,10 +389,28 @@ def freed_wall() -> set[tuple[int, int]]:
     return freed - {(WALL_X, y) for y in OPENINGS}
 
 
+def shipped_world(path: Path) -> dict[str, object]:
+    """A shipped world as its engine reads it, its families inline: since
+    2026-09-20 a shipped world may take them from `entities/families.json`
+    beside its series (`bell/read.json` does); the document's keys keep
+    their order, `families` at the place of the reference."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    if "entity_definitions" not in document:
+        return document
+    expanded = json.loads(load_world(path.read_bytes(), base_dir=path.parent).expanded_source)
+    inline: dict[str, object] = {}
+    for key, value in document.items():
+        if key == "entity_definitions":
+            inline["families"] = expanded["families"]
+        elif key != "entities":
+            inline[key] = value
+    return inline
+
+
 def two_slits_geometry() -> dict[str, object]:
     """The shipped two-slit world with the freed band and the lamp's wall
     Nodes at x = 7 (the key and the lamp untouched)."""
-    world = json.loads(TWO_SLITS_SOURCE.read_text(encoding="utf-8"))
+    world = shipped_world(TWO_SLITS_SOURCE)
     world = copy.deepcopy(world)
     freed = freed_wall()
     world["measured"] = [
@@ -621,7 +644,7 @@ def bell(
     (`settings` None) or the fixed labels (a, b); with `read` a which-path
     `read` on Alice's arm before her counter; with `far` Bob's counters
     116 Links farther."""
-    world = json.loads(BELL_SOURCE.read_text(encoding="utf-8"))
+    world = shipped_world(BELL_SOURCE)
     world = copy.deepcopy(world)
     world["model_id"] = f"beam-amplitude-{name}-v1"
     world["amplitude"] = True

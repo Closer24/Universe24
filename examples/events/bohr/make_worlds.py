@@ -82,6 +82,12 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
 from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 K = 1 << 30
 N = 64
@@ -296,6 +302,7 @@ def main() -> None:
     for radius in RADII:
         path = args.out / f"r{radius}.json"
         document = world(directions, width, action, radius, orbits[radius])
+        document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path)
 

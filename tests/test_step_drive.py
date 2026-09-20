@@ -96,6 +96,7 @@ from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import step_axis
 from event_universe.events.world import LABEL_SCALE
 from event_universe.runner import run_initialization
+from event_universe.world_loading import load_world
 
 Q = LABEL_SCALE
 
@@ -353,9 +354,11 @@ def deuteron_under_a_suspension() -> dict[str, object]:
     suspension, with a lamp beside the proton and a control lamp, each read
     by a `sum` set four Links up +y."""
     root = Path(__file__).resolve().parents[1]
-    document = json.loads(
-        (root / "examples" / "events" / "nucleus" / "deuteron_1.json").read_text(encoding="utf-8")
-    )
+    path = root / "examples" / "events" / "nucleus" / "deuteron_1.json"
+    # Through the loader: the shipped world takes its families from the
+    # definitions beside its series (2026-09-20); the document below is the
+    # expanded one, its families inline.
+    document = json.loads(load_world(path.read_bytes(), base_dir=path.parent).expanded_source)
     document["model_id"] = "beam-nucleus-deuteron_1-suspended-test"
     document["amplitude"] = True
     document["suspension"] = [1, 134217728]
