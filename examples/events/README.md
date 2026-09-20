@@ -79,6 +79,34 @@ clocks; the register entry is
 the presence falls as M / r^2 and the age moment as M / r from the same
 rays, their ratio the flight's sqrt 3 / 2.
 
+## The Hubble series
+
+The folder [hubble/](hubble/README.md) holds the four worlds of series G,
+the Hubble diagram behind the detector, written by `hubble/make_worlds.py`:
+an open 301^3 cube, twenty-four free sources (a family each) thrown from
+the centre along the six axes at 0.05 c to 0.6 c (c = 32 / 55 Links per
+interval read off the flight table), each releasing one row per
+self-creation toward the centre with its clock's phase, a detector of one
+Node at the centre reading `wave` with `reads: "age"` (the arrival's age
+on the click record) and six masses inside at one Link (the crowd's mass
+inside every source), in a coasting crowd (rows of one ray, the masses of
+content 1) and a pushing crowd (rows of sixteen, the masses releasing 64
+per self-creation), each with the emitters' clocks counting the presence
+(`scalar`) or the age moment (`age`). `tools/hubble_readings.py` reads,
+per source, the redshift from the rate at which the pointer of the
+detector's record turns against the emitter's declared turn and the
+distance from the ages of the arriving rays, fits the linear law on the
+near part and compares the far part with the coasting (q = 0),
+decelerating (q = +0.5) and accelerating (q = -0.55, what is observed
+today) forms, every line labelled a detector or a GameBoard reading; the
+register entry is
+[G, the Hubble diagram behind the detector (2026-09-20)](../../docs/EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20):
+the linear law comes out by itself (z = v / c to 0.003, H t_0 = 1.03 at
+t_0 = 350) and the far part falls below the coasting form of the near fit
+in every run, the signature of the accelerating form, by the throw's
+initial distances and the emitters' clocks and not by an acceleration
+(on the GameBoard the pushing sources lose 4 to 32 % of their momentum).
+
 ## The Bohr series
 
 The folder [bohr/](bohr/README.md) holds the seven worlds of series H,

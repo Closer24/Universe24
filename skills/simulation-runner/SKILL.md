@@ -48,9 +48,11 @@ set on the GameBoard; a detector appears only where the world declares one,
 receiving what comes out of the thing, or a lamp that shoots a beam at it as
 physicists do); (2) "Why it was tested", the question
 in the owner's words and the expectation written before the run; (3) the
-moving picture of the run when there is one (the GIF inside the page, never
-alone) with the plane shown, the scale of each region and the intervals per
-frame; (4) the readings, measured against expected, inside or outside the
+moving picture of the run when there is one, played inside the page with a
+time control (a canvas player over the frames with play and pause, a slider
+over the intervals and the interval shown, the GIF kept as a link; the model
+owner, 2026-09-20: "the page does not run, one cannot see it move by time")
+with the plane shown, the scale of each region and the intervals per frame; (4) the readings, measured against expected, inside or outside the
 brackets, nothing moved; (5) "The conclusion", the verdict in plain words and
 what the law lacked, if anything. The page is written to the scratchpad (not
 the repository) and Boss publishes it as an artifact; the numbers stay in the
