@@ -82,7 +82,9 @@ replays a rule of the engine, and it prints the kind of every line.
    GameBoard drawn with an icon and the world-file name for each thing on
    it (an atom is its proton and its electron's set; a detector appears
    only where the world declares one), "Why it was tested", the moving
-   picture inside the page, the readings, "The conclusion". Boss publishes
+  picture inside the page with a time control (a frame player with play and
+  pause, a slider over the intervals and the interval shown; the GIF kept as
+  a link), the readings, "The conclusion". Boss publishes
    it.
 
 ## What the experimenter never does
