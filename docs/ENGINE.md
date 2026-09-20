@@ -190,16 +190,31 @@ over the same set, `measured.count_component`, `Measured.counted`;
 [BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25), moves the measured events
 by their momentum (`_move`: on an axis whose momentum component is p in
-label units, one Link per (Q x S x M + p) / p self-creations,
-`by_clock(age, |p|, Q x S x M + |p|)`, M the content, S the world's
-`width`, 1 by default, and Q = 64 the label's scale; the model owner's
-D1 of 2026-09-19 and the label along the unit vector of the same day,
+label units, one Link per (Q x S x M + p) / p self-creations, M the
+content, S the world's `width`, 1 by default, and Q = 64 the label's
+scale; since 2026-09-20 the step drive, [BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+as amended: the body's record carries per axis `drive`, the distance the
+momentum has driven since the last step, `drive += |p|` at every
+self-creation in which it may step and a step when `drive >= Q x S x M +
+|p|`, that much subtracted, so the count of Links is the whole part of
+the driven distance, bit-identical at a constant momentum to
+`by_clock(age, |p|, Q x S x M + |p|)` and never two Links in one
+interval, the count primitive `core.integer.by_drive` (record 108: the
+whole part of an accumulated rate on the reader's record; the clock's
+turn, the owed count, the release and the lamp keep `by_clock`, the same
+count where the rate is constant); the drive of every axis advances at every such self-creation,
+and a later axis whose drive reaches its D in the interval of an earlier
+axis's step loses that Link, its D subtracted, as the frame lost it
+before; the model owner's D1 of 2026-09-19 and the label along the unit
+vector of the same day,
 [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5
 and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
 1 / (S + 1); at most one Link per interval, x before y before z, only in
 an interval where nothing is owed; the rule of one axis is
 `engine.step_axis`, the owed count `engine.count_owed`, each the one place
-its rule lives and what the readings tools read) and books the interval.
+its rule lives and what the readings tools read; `run.json`, `state.json`
+and the `step` line carry `drive` and the state `axis_steps`) and books
+the interval.
 A measured event on a set of Nodes (`span`, [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 `Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
 all of them, and since the four unifications (2026-09-20, (3),
@@ -222,8 +237,11 @@ key `phase_by_momentum`; [BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-n
 the model owner's decision of 2026-09-20 on Bohr, "put it as parameters
 outside the GameBoard like the age") is applied in `_move` at the Link a
 body steps: its phase turns by `by_clock(k0, |p| x N, h)` with k0 the
-count of Links the step rule gives on that axis at its age before the
-self-creation, the difference of two floors of k x |p| x N / h, no
+count of the step rule's fires on that axis before this one (the
+record's `axis_steps`, a lost or refused step counted, since the step
+drive; at a constant momentum the count the step rule gave at its age
+before the self-creation), the
+difference of two floors of k x |p| x N / h, no
 register anywhere; the axes compose; the product is bounded before it is
 formed; without `action` nothing turns. A rule of the measured event, the
 external thing, read from its own record; the rays' flight and collision

@@ -39,9 +39,12 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     occupant's table (`measure` by the keys): on a bar of 3 x 1 x 1 the
     mover's step of interval 2 onto the resident hands it the 1024 (one
     `contact` record, the mover's momentum 0, its step counted), the
-    resident steps to x = 2 in the same interval with the 1024 and leaves
-    through face:+x at interval 4 (the escaped momentum (1024, 0, 0), the
-    measured line 16), the mover at x = 0 with one step for the rest;
+    resident's drive is 1024 at that interval and 2048 = D at the next
+    (the step drive of 2026-09-20), so it steps to x = 2 at interval 3
+    with the 1024 and leaves through face:+x at interval 5 (the escaped
+    momentum (1024, 0, 0), the measured line 16), the mover at x = 0 with
+    one step for the rest (the rule as it was, the count off the clock,
+    stepped the resident in the interval of the hand-over and out at 4);
 (e) the count off the clock: a source of `m` of content k at x = 0 of a
     2 x 1 x 1 bar releasing k rays per direction per self-creation at
     `release` [1, 1] and a probe of `light` (content 1, measuring `m`) at
@@ -252,11 +255,11 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
         first = simulation.measured[1]
         assert first.position == (0, 0, 0) and first.momentum == [1024 if tick < 2 else 0, 0, 0], tick
         assert first.steps == min(tick // 2, 1), tick
-        if tick < 4:
+        if tick < 5:
             second = simulation.measured[2]
-            assert second.position == (1 if tick < 2 else 2, 0, 0), tick
-            assert second.momentum == [0 if tick < 2 else 1024, 0, 0] and second.steps == min(
-                tick // 2, 1
+            assert second.position == (1 if tick < 3 else 2, 0, 0), tick
+            assert second.momentum == [0 if tick < 2 else 1024, 0, 0] and second.steps == (
+                0 if tick < 3 else 1
             )
             assert books["families"]["m"]["measured"]["current"] == 32
             assert books["momentum"]["measured"] == [1024, 0, 0]
@@ -276,8 +279,8 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
             assert books["momentum"]["escaped"] == [1024, 0, 0]
     assert [(r["event"], r["tick"], r["number"]) for r in records] == [
         ("contact", 2, 1),
-        ("step", 2, 2),
-        ("click", 4, 2),
+        ("step", 3, 2),
+        ("click", 5, 2),
     ]
     assert (
         records[0]["component"] == 1024

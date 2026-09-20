@@ -151,3 +151,17 @@ instead of keeping it: `r2` turns 2.07 times with two closings and
 leaves through face:+x at tick 688 (C(2) = 0.60, outside), `r4` leaves
 through face:+y at tick 600; the verdict stands, and the five other
 worlds are byte-identical ([validation](../../../docs/VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
+## Re-read under the step drive (2026-09-20)
+
+Every world moves differently under the step drive (a body's count of
+Links is the whole part of the distance its momentum has driven, on its
+own record): the orbit at r = 8 (the design's j = 2) closes four times
+(T 944, 588, 1209, 1281, three returns within 0.25 r) and is on the
+GameBoard at the end of 4200 intervals, the orbit at r = 12 five times
+(1454 to 1290, every return within 0.25 r) at the end of 7400; the
+coherence at the closing radius C(4) = 1.01 against the expected 2.0 and
+the phase's turn per orbit 0.75 to 0.83 against 0, outside, so Bohr's
+lines are still not read, while the verdict's "what the law lacked here
+is a stable closed orbit" is answered by the step rule. The register
+entry has every world's numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

@@ -3183,6 +3183,9 @@ def nature_beam(
             # multiplicity)
             born: list[BornRow] = []
             if free and entry.held[family] > 0:
+                # The release's rate is the held content, unchanged by a
+                # push: the count off the clock, the same as `by_drive`
+                # where the rate is constant (record 108).
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
                     born.extend(
@@ -3430,6 +3433,9 @@ def nature_beam(
                             ledger.content_released[family] += content
                 else:
                     for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
+                        # The lamp's rate is declared and constant: the
+                        # count off the clock (`by_drive` would count the
+                        # same; record 108).
                         amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
                         if amount:
                             born.append(

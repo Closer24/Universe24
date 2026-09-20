@@ -236,3 +236,15 @@ exchange is complete at the click. The design's sketch of a `become`
 entry on the proton (`into n` with a beta product) is refused by the
 law's balance and balances only with a positive product
 (`tests/test_w_world.py` (c)); the register does not use it.
+
+## Re-read under the step drive (2026-09-20)
+
+`j3_neutron_free` reads the same (no push). Under the step drive (a body's count
+of Links is the whole part of the distance its momentum has driven)
+`j3_deuteron`'s neutron fires at tick 572 (577 registered; the pinned 574
+or up to 3 before it, inside now) and its beta clicks the shell at 583
+with the content 3, but the pair does not hold: each body makes 3 steps
+of 33 and 27 attempted (registered 0, every attempt refused), the
+GAMEBOARD reading "the pair holds" outside; `j3_deuteron_crowd` still
+never fires, its bodies 2 steps each. 9 readings inside and 1 outside (10
+and 0). The register entry has the numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

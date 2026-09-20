@@ -38,6 +38,59 @@ proposal in [entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-e
   chooser's counter of `apparatus.json`). Both formats.
 - Nothing deleted.
 
+## The step drive, on 2026-09-20: the count of Links as the whole part of the driven distance
+
+The model owner's decision of 2026-09-20 on series G2's finding ("1 and 2
+are very important for a solution and a new run"; record 107 the findings,
+record 108 the owner's decision, "yes; let him give a generic solution if
+he can"; change 2 not built as proposed, record 110; the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`);
+[BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
+as amended). The identity `beam-v1` is kept: the rule is the same count
+where the momentum is constant and a repair of it where it changes.
+
+- `core.integer.by_drive(drive, rate, denominator)`, the count primitive
+  (record 108): the whole part of an accumulated rate on the reader's own
+  record, (the count gained, the drive after), `by_clock` where the rate
+  is constant. `engine.step_axis(drive, momentum, content, width)` reads
+  it and returns the sign of the Link stepped (or None) and the drive
+  after it, in place of `step_axis(age, momentum, content, width)`
+  returning the sign: the rule reads the body's record, not its age. The
+  clock's turn, the owed count, the release and the lamp keep `by_clock`
+  (their rate is one no push changes). A readings tool that replayed the
+  rule off the clock (`tools/coupling_readings.py`, `steps_by_rule`) calls
+  the engine's function with a drive.
+- `Measured.drive` and `Measured.axis_steps` (three integers each);
+  `run.json` and `state.json` carry them per measured event; the `step`
+  line carries `drive`. A declared `drive` on a measured event is refused
+  as an unknown key. The turn by momentum reads its k0 off `axis_steps`,
+  the count of the rule's fires on the axis (a lost or refused step
+  counted, as the count off the clock counted it).
+- The drive of every axis advances at every self-creation in which the
+  body may step; the frame's order stands (one Link per interval, x
+  before y before z, a later axis's coincident Link lost), so a body with
+  momentum on two axes steps where it did.
+- Every world whose bodies take no push replays byte-identical in
+  `events.jsonl` (the `step` line's new field aside) and in the positions,
+  momenta and books of `state.json`; the gate set's compare names the
+  worlds that change (the coupling `1b_m16`, Bohr `r2`, the nucleus
+  `alpha_square`, the weak `j3_deuteron`: bodies under a push or a
+  hand-over, each stepping one self-creation later than the count off
+  the clock stepped it). Of the 33 example worlds with a free body, 30
+  change at their registered length (every body under a push, a
+  hand-over or a lamp's recoil): the coupling `1b_m1`, `1b_m4`, `1b_m16`;
+  the orbit `s8_r12`, `s8_r24`, `s32_r12`, `s32_r24`; the Hubble
+  `coasting_scalar`, `coasting_age`, `pushing_scalar`, `pushing_age`;
+  Bohr `r2` to `r16`; the nucleus's eight; the weak `j3_deuteron`,
+  `j3_deuteron_crowd`; the catalog's `sun_planet` and `neutron_star` (no
+  number registered there); `s1_r12`, `s1_r24` and `j3_neutron_free` read
+  the same modulo those fields. Each registered entry (C, D, G, H, I, J in
+  EXPERIMENTS.md and the series READMEs) carries a dated "Re-read under
+  the step drive" line with the new numbers, the old kept as history.
+- Re-registered tests, the old integers kept as history in
+  TEST_EXPECTATIONS.md: `test_contact` (a), (d), (e),
+  `test_nature_beam_clock` (d), `test_paid_charge` (d),
+  `test_nucleus_readings` (bodies pushed or handed a momentum).
+
 ## The amplitude law, on 2026-09-20, (i): the world key `amplitude`, the record on the row and the normal form (`amplitude-v1`)
 
 The model owner's decision of 2026-09-20 (Highlights 5.4, "DECIDED:
