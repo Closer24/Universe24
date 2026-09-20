@@ -130,7 +130,7 @@ marginals, GHZ, the finite-N bound as a theorem), a shorter and safer
 paper that predicts nothing; (B) the recommendation as recorded, which
 this plan cannot support on points (b) and (c) and would not write.
 
-### Decided (the owner, 2026-09-20): the paper is the click model on the `amplitude-v1` runs
+### Decided (the owner, 2026-09-20): the paper is the click model on the `amplitude-v1` runs, as version 2 of paper 1 (section 2)
 
 The owner's answer to the one question, in his words: "I want the amplitude
 runs, because they unify everything." So the paper is the one that needs
@@ -179,9 +179,58 @@ exist, C4 is the paper that can be written today. The structure that
 makes any of these safe is section 12: one claim as the result, everything
 else a hypothesis with its status.
 
-## 2. A new paper 3, not a revision of paper 1
+## 2. One manuscript, submitted as version 2 of paper 1 (the owner's decision, 2026-09-20)
 
-Recommended: a new paper. Reasons. Paper 1 is submitted and its claim is a
+**Decided.** The owner's words: "Run after everything closes with the new
+implementation. Stay with one new paper only, but one that can be
+submitted as a new version." So there is one manuscript, and it is
+paper 1's arXiv entry replaced by a version 2: the same identifier, a new
+title and abstract (arXiv allows both on a replacement), the testbed's
+question kept ("which resource does each candidate need"), the four
+candidates of version 1 kept with their archived numbers (cited to the
+archived code, version 0.3.1 and the concept DOI; they cannot be rerun on
+the current engine, since the registry, the source envelopes and the
+quantum layer were deleted on 2026-09-17, MIGRATION), and the click model
+added as the fifth candidate that answers the question without a
+configured cosine law and without a shared registry: cos^2 from the square
+of the sum, Born from u, the causal anatomy's table gaining a row
+(deterministic, measurement-independent, parameter-dependent, the same
+class as the bonded pair, the law now from the tables and not configured).
+Every run of the fifth candidate is made after `amplitude-v1` is on `main`
+and in the register, at N = 64, 1024 and 4096; nothing of it is run before.
+The manuscript is `paper/main.tex` edited in place on this branch (version
+1 stays in git and on Zenodo), so the arXiv package remains `main.tex` with
+`figures/`; `paper/click_model/` holds the plan, the checks and the
+number-to-register table. Version 2 says "GameBoard" where version 1 said
+"lattice", by the repository's naming rule of 2026-09-20 (the metadata
+already does). Two engines in one paper is the price, and each table
+names its version; the disclaimers of version 1 ("not a derivation of the
+Born rule", "not a local explanation of the Bell value") are rewritten to
+say exactly what changed: Born is now derived from a uniform hidden
+variable on the click's ruler, and the Bell value is still not local, the
+non-local step named. The structure of version 2:
+
+1. Introduction: the plain description (section 13), then the testbed's
+   question and what version 1 found (S = 2 for every local candidate,
+   2.83 only with a shared object).
+2. The model and its inputs (version 1's section, trimmed) and the click
+   model's formal definition (section 3 of this plan).
+3. The theorems (section 4).
+4. The coupling experiments of version 1 (kept, archived numbers).
+5. Bell's test on every candidate, the table gaining the fifth row; the
+   causal anatomy gaining its row; the finite-N value and the comparison
+   with Poh et al. (section 1.2).
+6. The single quantum: the Mach-Zehnder, the two slits one birth at a
+   time, GHZ, which-path, the gate (the register's entries).
+7. What is new, what is not claimed (section 10), the hypotheses of the
+   program with their status (section 12), principle 9 as a limit
+   (section 14).
+8. Reproducibility (section 7), the AI paragraph (section 8), the
+   bibliography (section 5 added to version 1's).
+
+The reasoning that preceded the decision is kept below for the record.
+
+Recommended before the decision: a new paper. Reasons. Paper 1 is submitted and its claim is a
 testbed: the Bell value there lives in a declared shared registry, and its
 "What is not claimed" says in so many words "not a derivation of the Born
 rule" and "not a local explanation of the Bell value". Paper 3 removes the
@@ -560,9 +609,10 @@ journal with an article processing charge.
    runs: read the merged design revisions, the acceptance tests, the
    register entries and VALIDATION; check every landed integer against the
    design's table and this plan's computation; note every departure.
-3. Write `paper/click_model/main.tex` in the style and macros of
-   `paper/main.tex` (article, 11pt, the same packages and hypersetup,
-   `thebibliography`) and in the structure of section 12: abstract within
+3. Write version 2 in `paper/main.tex` in place (the owner's decision,
+   section 2; the file name and macros unchanged: article, 11pt, the same
+   packages and hypersetup, `thebibliography`), in the structure of
+   sections 2 and 12: abstract within
    arXiv's 1920 characters; introduction opening with the plain description
    of section 13; the model (section 3 of this plan as two pages); the
    theorems with proofs (section 4); principle 9 as a falsifiable limit in
@@ -581,9 +631,10 @@ journal with an article processing charge.
    plainly, the comparison with nature's data. Its findings fixed or
    answered in the draft; the report to the owner with the draft's path and
    the findings.
-5. The owner's review; `paper/arxiv_metadata.md` gains paper 3's title,
-   abstract and categories; the release tag and Zenodo version; the arXiv
-   submission by the owner.
+5. The owner's review; `paper/arxiv_metadata.md`'s paper 1 entry becomes
+   the version 2 entry (the new title and abstract, the same categories,
+   the version 1 title kept beside it for the record); the release tag and
+   Zenodo version; the arXiv replacement submitted by the owner.
 
 ## 12. The structure of the paper: one claim as the result, everything else a hypothesis with its status (the owner's instruction of 2026-09-20)
 

@@ -43,6 +43,6 @@ literature, the figures, reproducibility, the disclosure of AI assistance and
 the venue), and `click_model/checks/` the plan's own computations from the
 [amplitude-v1 design](../docs/designs/amplitude-v1/DESIGN.md) with the
 repository's tables (`s_of_n.py`, its output `s_of_n.txt`: the design's Bell
-value at every N), computations and not runs. The draft `click_model/main.tex`
+value at every N), computations and not runs. The draft, version 2 of paper 1 in `main.tex` (the owner's decision, PLAN section 2),
 is written only after `amplitude-v1` and its Bell runs are on `main` and in
 the [experiments register](../docs/EXPERIMENTS.md); it cites nothing else.
