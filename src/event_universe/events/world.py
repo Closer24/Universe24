@@ -1729,18 +1729,26 @@ class Gate:
     """A `rerelease` entry's gate between records (the design's section 10):
     `cnot`, the permutation of the joint labels of the records whose rows
     are pending at the entry, (l_c, l_t) -> (l_c, l_t xor l_c) from the
-    control (the record of the lowest identity, which survives) to every
-    other record's first label bit; the records join into one (the joint
-    labels the product of their label sets, every row replicated over the
-    other records' labels with its multiplicity times the copies). `hold`:
-    the entry holds the rows of a record until the rows of `parties`
-    records are pending and every one of them has all its live units at
-    the entry (a record with rows elsewhere waits); without `hold` the
-    rows of an entry short of that pass as a plain re-emission."""
+    control (the record whose rows arrive on the declared `control`
+    direction, which survives; the review of (v), S1: a circuit does not
+    change with the order of the `measured` list) to every other record's
+    first label bit; the records join into one (the joint labels the
+    product of their label sets, every row replicated over the other
+    records' labels with its multiplicity times the copies, the copies
+    booked on the layer's live count). `hold`: the entry holds the rows
+    pending until rows of `parties` distinct emitters are pending at it
+    (the design's local hold, read from the rows alone; the review's B3);
+    without `hold` the rows of an entry short of that pass as a plain
+    re-emission. A record that reaches a gate with units elsewhere or
+    with an offer already made is refused by the layer (the lazy
+    relabelling of the design's section 10 is not built; the review's
+    B2). `control` is the index of the direction in the world's table,
+    required for two parties or more, none for a gate of one party."""
 
     kind: str = "cnot"
     hold: bool = True
     parties: int = 2
+    control: int | None = None
 
 
 GATE_KINDS = ("cnot",)
@@ -1769,9 +1777,13 @@ def _rotation(
     )
 
 
-def _gate(value: object, label: str, rule: str, amplitude: bool) -> Gate | None:
+def _gate(
+    value: object, label: str, rule: str, amplitude: bool, table: tuple[Vector, ...]
+) -> Gate | None:
     """The entry's `gate` (`Gate`): refused without the key and on a rule
-    other than `rerelease`; None where none is declared."""
+    other than `rerelease`; None where none is declared. `control`, the
+    direction the control's rows arrive on, is required for two parties
+    or more and refused for one (the review of (v), S1)."""
     if not isinstance(value, dict) or "gate" not in value:
         return None
     if not amplitude:
@@ -1781,7 +1793,7 @@ def _gate(value: object, label: str, rule: str, amplitude: bool) -> Gate | None:
         )
     if rule != "rerelease":
         raise ValueError(f"{BEAM_LAW}: {label}.gate belongs to a `rerelease` entry, not to {rule}")
-    obj = _object(value["gate"], f"{label}.gate", {"kind", "hold", "parties"}, {"kind"})
+    obj = _object(value["gate"], f"{label}.gate", {"kind", "hold", "parties", "control"}, {"kind"})
     kind = obj["kind"]
     if kind not in GATE_KINDS:
         raise ValueError(f"{BEAM_LAW}: {label}.gate.kind must be one of {list(GATE_KINDS)}")
@@ -1789,7 +1801,18 @@ def _gate(value: object, label: str, rule: str, amplitude: bool) -> Gate | None:
     if type(hold) is not bool:
         raise ValueError(f"{BEAM_LAW}: {label}.gate.hold must be true or false")
     parties = _integer(obj.get("parties", 2), f"{label}.gate.parties", 1, LABEL_BITS_BOUND)
-    return Gate(str(kind), hold, parties)
+    control: int | None = None
+    if "control" in obj:
+        if parties == 1:
+            raise ValueError(f"{BEAM_LAW}: {label}.gate.control: a gate of one party has no control")
+        control = _direction(obj["control"], f"{label}.gate.control", table)
+    elif parties > 1:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.gate of {parties} parties declares its control: `control`, the "
+            "direction the control record's rows arrive on (a circuit does not depend on the "
+            "order of the measured list)"
+        )
+    return Gate(str(kind), hold, parties, control)
 
 
 def _split_rows(
@@ -2129,7 +2152,7 @@ def _measured(
             )
             label_turns[at] = _label_turn(entry_value, entry_label, rule, phase_steps, amplitude)
             rotations[at] = _rotation(entry_value, entry_label, rule, phase_steps, amplitude)
-            gates[at] = _gate(entry_value, entry_label, rule, amplitude)
+            gates[at] = _gate(entry_value, entry_label, rule, amplitude, table)
             if isinstance(entry_window, WindowReading):
                 # The window read from a reading (issue #363): the named
                 # family must exist, carry a phase circle and differ from

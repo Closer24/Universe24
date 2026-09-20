@@ -367,19 +367,36 @@ class Layer:
         survivor: int,
         others: list[int],
         present: dict[int, set[int]] | None = None,
+        here: dict[int, int] | None = None,
     ) -> tuple[dict[tuple[int, int], list[int]], dict[int, int]]:
         """The gate's join (the design's section 10): the records `others`
-        join the `survivor` (the control, the lowest identity): the joint
-        labels the product of the label sets (the survivor's bits first,
-        then each other's in order), then the CNOT from the control's bit
-        0 to the bit of every other arm (one bit per arm); the arms
-        concatenated, the live units and the ends summed, the others
-        aliased. Returns per (record, label) the joint labels its rows take
-        (one per combination of the other records' labels, permuted) and
-        per record its arm offset. `present` names the labels of every
-        record's rows at the gate (the label sets the product is over);
-        without it the records' label sets serve."""
+        join the `survivor` (the control): the joint labels the product of
+        the label sets (the survivor's bits first, then each other's in
+        order), then the CNOT from the control's bit 0 to the bit of every
+        other arm (one bit per arm); the arms concatenated, the live units
+        and the ends summed, the others aliased. Returns per (record,
+        label) the joint labels its rows take (one per combination of the
+        other records' labels, permuted) and per record its arm offset.
+        `present` names the labels of every record's rows at the gate (the
+        label sets the product is over); without it the records' label
+        sets serve. `here`, the units of every record pending at the gate:
+        a record with units elsewhere or with an offer already made is
+        refused (its rows and offers elsewhere would keep their pre-join
+        labels and drop out of the joint cells; the lazy relabelling of
+        the design's section 10 is not built; the review of (v), B2)."""
         found = [self.records[survivor]] + [self.records[other] for other in others]
+        if here is not None and others:
+            for live in found:
+                elsewhere = live.live - here.get(live.identity, 0)
+                offers = sorted(self.names[s] for (s, _), o in live.offers.items())
+                if elsewhere or offers:
+                    raise ValueError(
+                        f"amplitude-v1: the record {live.identity} reaches the gate with "
+                        f"{elsewhere} of its {live.live} live units elsewhere and offers at "
+                        f"{offers}: a record joins a gate with every unit at it and no offer made "
+                        "(the lazy relabelling of the design's section 10 is not built; BEAM_LAW "
+                        "note 37 (vii))"
+                    )
         sets = [
             sorted(present[live.identity])
             if present and live.identity in present

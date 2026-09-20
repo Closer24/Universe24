@@ -3091,11 +3091,15 @@ and 9).**
   CNOT twice's labels {0, 1} on both arms, GHZ's allowed triples and
   products; the reading tool's replay equals `run.json`'s `world`
   (`tests/test_amplitude_gate.py`). Departures: the gate joins records of
-  distinct lamps (one per lamp, the earliest born) and, with `hold`,
-  records whose live units are all at the gate; a record with rows
-  elsewhere waits (the design's lazy relabelling of rows elsewhere is
-  not built: two sequential gates on an entangled record are one gate of
-  three parties here, or one gate per arm as in `cnot_twice`).
+  distinct lamps (one per lamp, the earliest born), the control the
+  record arriving on the entry's declared `control` direction, and acts
+  when rows of `parties` emitters are pending; a record that reaches a
+  gate with units elsewhere or an offer already made is refused (the
+  design's lazy relabelling of rows elsewhere is not built: two
+  sequential gates on an entangled record are one gate of three parties
+  here, or one gate per arm as in `cnot_twice`). Re-run after the review
+  of (v) (the gate's copies booked on the live count, the control
+  declared, the hold local): every integer above unchanged.
 
 **L6, the pair at N = 1024 and N = 4096 (the owner's paper numbers).**
 
