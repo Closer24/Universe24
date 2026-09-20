@@ -254,6 +254,17 @@ border). The frame computes no physics of the ray; the measured event's
 clock rules (the turn, the owed count, the step rule with the width) are
 its own, placed in the frame by design ([BEAM_LAW section 9](BEAM_LAW.md#9-implementation-plan-one-pr-one-agent-and-risks)).
 
+**Families from a definitions file** (2026-09-20, `event-entities-v2`,
+[entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)):
+a world that places entity definitions may take its `families` from them,
+merged by name into the expanded world before this parser reads it (the
+inline families first, then the instances' in declaration order, a
+differing key refused naming the family and the key); the parser sees one
+ordinary `families` list and applies every rule above to it. The shipped
+definitions are `examples/events/entities/families.json` and
+`apparatus.json`; no registered world references them until the migration
+after stage (vii) of `amplitude-v1`.
+
 ### A release costs the emitter by its phase rate
 
 Unchanged in form from the law of events (the model owner, 2026-09-19, "I
