@@ -49,6 +49,22 @@ prints the counts, E, S and every criterion; the register entry is
 [A2, under the Beam Law (2026-09-19)](../../docs/EXPERIMENTS.md#a2-under-the-beam-law-2026-09-19):
 S = 2 exactly, the model's limit, unchanged from the law of events.
 
+The same folder holds the seven worlds of the run with the choosers on the
+GameBoard (issue #363), written by `bell/make_chooser_worlds.py`: the same
+bar and pair lamp, and four counters whose windows are not written in the
+file but read from the phase of a stream arriving from a third lamp
+(`sa`, at x = 0, Alice's) and a fourth (`sb`, at x = 20, Bob's), the key
+`phase_window` `{"reads": "<family>", "offset": s}`; the streams have odd
+periods (5 and 3) coprime to each other and to the circle, so every
+combination of settings meets every phase of the pair; `read.json` is the
+run, `written_a<a>_b<b>.json`, `fixed.json` and `one_clock.json` its
+three controls. `tools/bell_choosers.py` bins the clicks by the window
+they carry and prints every E, S on the quadruple, the largest S over
+every quadruple that occurred and the marginals; the register entry is
+[A2 with the choosers on the GameBoard (2026-09-20)](../../docs/EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20):
+S = 2 exactly with every E on the triangle, the law found not to
+correlate what never met.
+
 ## The coupling series
 
 The folder [coupling/](coupling/README.md) holds the twenty-one worlds of

@@ -1,0 +1,229 @@
+{
+  "law": "beam",
+  "model_id": "beam-bell-choosers-written-a0-b8-v1",
+  "shape": [
+    21,
+    1,
+    1
+  ],
+  "boundary": "open",
+  "ticks": 141,
+  "K": 15728640,
+  "N": 64,
+  "release": [
+    1,
+    67108864
+  ],
+  "suspension": 0,
+  "families": [
+    {
+      "name": "light",
+      "quantum": 1
+    },
+    {
+      "name": "counter",
+      "quantum": 1
+    },
+    {
+      "name": "sa",
+      "quantum": 0
+    },
+    {
+      "name": "sb",
+      "quantum": 0
+    }
+  ],
+  "measured": [
+    {
+      "position": [
+        10,
+        0,
+        0
+      ],
+      "family": "light",
+      "amount": 15728642,
+      "phase": 0,
+      "fixed": true,
+      "lamp": {
+        "rate": [
+          1,
+          1
+        ],
+        "directions": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ]
+      },
+      "table": {
+        "sa": "pass",
+        "sb": "pass"
+      }
+    },
+    {
+      "position": [
+        7,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "phase_window": 0
+        },
+        "sa": "pass",
+        "sb": "pass"
+      }
+    },
+    {
+      "position": [
+        4,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "phase_window": 32
+        },
+        "sa": "pass",
+        "sb": "pass"
+      }
+    },
+    {
+      "position": [
+        17,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "phase_window": 8
+        },
+        "sa": "pass",
+        "sb": "pass"
+      }
+    },
+    {
+      "position": [
+        18,
+        0,
+        0
+      ],
+      "family": "counter",
+      "amount": 1,
+      "fixed": true,
+      "table": {
+        "light": {
+          "phase_window": 40
+        },
+        "sa": "pass",
+        "sb": "pass"
+      }
+    },
+    {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "family": "sa",
+      "amount": 201326592,
+      "phase": 7,
+      "fixed": true,
+      "directions": [
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "table": {
+        "light": "pass",
+        "sb": "pass"
+      }
+    },
+    {
+      "position": [
+        20,
+        0,
+        0
+      ],
+      "family": "sb",
+      "amount": 335544320,
+      "phase": 40,
+      "fixed": true,
+      "directions": [
+        [
+          -1,
+          0,
+          0
+        ]
+      ],
+      "table": {
+        "light": "pass",
+        "sa": "pass"
+      }
+    }
+  ],
+  "detectors": [
+    {
+      "name": "alice_plus",
+      "positions": [
+        [
+          7,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    },
+    {
+      "name": "alice_minus",
+      "positions": [
+        [
+          4,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    },
+    {
+      "name": "bob_plus",
+      "positions": [
+        [
+          17,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    },
+    {
+      "name": "bob_minus",
+      "positions": [
+        [
+          18,
+          0,
+          0
+        ]
+      ],
+      "threshold": 1
+    }
+  ]
+}
