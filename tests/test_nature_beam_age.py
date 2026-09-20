@@ -1,4 +1,4 @@
-"""The age of a ray kept whole and read by a measured event (docs/RAY_LAW.md,
+"""The age of a ray kept whole and read by a measured event (docs/BEAM_LAW.md,
 section 2 the age and its bound, section 3 steps 2 and 5, section 10 note
 24; the model owner, 2026-09-19, Highlights 5.4, "the clock beside a mass
 ... go for it"): the age is the count of intervals since the measured event
@@ -6,7 +6,7 @@ that created the ray (a birth or a re-emission; a collision keeps it), kept
 whole on the record; the flight reads it modulo the direction's period and
 the collision never reads it; a measured event, the external thing, reads
 it whole as the age moment of the one reading (sum amount x age, `reads:
-"age"`), which its clock counts in place of the presence. The board's step
+"age"`), which its clock counts in place of the presence. The GameBoard's step
 is unchanged by the whole age. The expected integers of
 docs/TEST_EXPECTATIONS.md ("The age"), written down first:
 
@@ -43,18 +43,18 @@ docs/TEST_EXPECTATIONS.md ("The age"), written down first:
     `by_clock(age, 2, 4)`: 1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 10, 10, 11, 12,
     12, 13, 14, 14, 15, 16, 16, 17, 18, 18 (unchanged); the `read` records
     of the age reader carry the reading 5 (the arrival's age moment);
-(d) the parsing: `flight_bound` of an open 11^3 board over the six
+(d) the parsing: `flight_bound` of an open 11^3 GameBoard over the six
     headings is 54 (D = 31 Links, ceil(31 x 110 / 64)) and 111 with the
     direction (1, 0, 64) declared (T 7095, one period, ceil(7095 / 64));
     `age_bound` defaults to twice it (108, 222) and parses as declared
     (100); 0, -1, a string and a fraction are refused naming `age_bound`;
-    a board periodic on every axis without it is refused naming
+    a GameBoard periodic on every axis without it is refused naming
     `age_bound`, and accepted with it; a declared ray's age beyond it is
     refused; the runner's record carries it; a ray on the z stub of an
     open 3 x 1 x 1 bar with z periodic (default 12) is refused with
     `OverflowError` naming `age_bound` at its 13th interval, not before;
-(e) the board is unchanged by the whole age: 324 fixed rays on the
-    periodic 8 x 8 x 4 board (head-on pairs among them) run 40 intervals with the
+(e) the GameBoard is unchanged by the whole age: 324 fixed rays on the
+    periodic 8 x 8 x 4 GameBoard (head-on pairs among them) run 40 intervals with the
     ages whole, and again with every moving ray's age reduced modulo its
     direction's period after each interval from outside the law: the
     Nodes, directions, phases, amounts and contents are identical at every
@@ -69,8 +69,8 @@ import json
 import numpy as np
 import pytest
 
-from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.core.game_board import PORT_HEADINGS
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import by_clock
 from event_universe.events.measured import count_component
 from event_universe.events.nature_beam import Q, read_arrivals
@@ -83,10 +83,10 @@ DIRECTIONS = [*[list(h) for h in PORT_HEADINGS], 0, 1, [1, 1, 0], [2, -1, 1]]
 
 
 def crowd() -> list[dict[str, object]]:
-    """324 fixed rays on the periodic 8 x 8 x 4 board: every heading, both
+    """324 fixed rays on the periodic 8 x 8 x 4 GameBoard: every heading, both
     rest slots, two fan directions, amounts 1 and 2, ages up to 22, and
     twelve head-on pairs that meet at the Node between them."""
-    rays: list[dict[str, object]] = [
+    beams: list[dict[str, object]] = [
         {
             "position": [(k * 5) % 8, (k * 3) % 8, (k * 11) % 4],
             "family": "light",
@@ -99,14 +99,14 @@ def crowd() -> list[dict[str, object]]:
         for k in range(300)
     ]
     for k in range(12):
-        rays.append({**light([1, k % 8, k % 4], PLUS_X, phase=k), "age": 0})
-        rays.append({**light([3, k % 8, k % 4], MINUS_X, phase=32 + k), "age": 0})
-    return rays
+        beams.append({**light([1, k % 8, k % 4], PLUS_X, phase=k), "age": 0})
+        beams.append({**light([3, k % 8, k % 4], MINUS_X, phase=32 + k), "age": 0})
+    return beams
 
 
 def torus() -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-age-test",
         "shape": [8, 8, 4],
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
@@ -125,7 +125,7 @@ def torus() -> dict[str, object]:
 
 def bar(shape: list[int], **keys: object) -> dict[str, object]:
     world: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-age-test",
         "shape": shape,
         "boundary": "open",
@@ -153,7 +153,7 @@ def light(position: list[int], direction: list[int], age: int = 0, phase: int = 
     }
 
 
-def rows_of(simulation: RaySimulation, family: int) -> list[tuple[int, int, int]]:
+def rows_of(simulation: NatureBeamSimulation, family: int) -> list[tuple[int, int, int]]:
     store = simulation.stores[family]
     return sorted(
         (int(store.node[i]), int(store.direction[i]), int(store.age[i])) for i in range(store.size)
@@ -162,7 +162,9 @@ def rows_of(simulation: RaySimulation, family: int) -> list[tuple[int, int, int]
 
 def test_the_age_is_kept_whole_and_a_collision_keeps_it():
     """(a)."""
-    simulation = RaySimulation(parse_ray_world(bar([301, 1, 1], in_transit=[light([0, 0, 0], PLUS_X)])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([301, 1, 1], in_transit=[light([0, 0, 0], PLUS_X)]))
+    )
     for _ in range(200):
         simulation.step()
     store = simulation.stores[1]
@@ -171,8 +173,8 @@ def test_the_age_is_kept_whole_and_a_collision_keeps_it():
     # A head-on pair: the collision parks the pair and keeps the ages.
     pair = [light([3, 0, 0], PLUS_X, age=59), light([5, 0, 0], MINUS_X, age=59, phase=9)]
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(bar([9, 1, 1], in_transit=pair, age_bound=128)), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([9, 1, 1], in_transit=pair, age_bound=128)), records.append
     )
     store = simulation.stores[1]
     node = store.flat((4, 0, 0))
@@ -197,8 +199,8 @@ def test_the_age_is_kept_whole_and_a_collision_keeps_it():
         "directions": [PLUS_X],
     }
     old = light([3, 0, 0], PLUS_X, age=59, phase=20)
-    simulation = RaySimulation(
-        parse_ray_world(bar([9, 1, 1], measured=[lamp, mirror], in_transit=[old], age_bound=128))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([9, 1, 1], measured=[lamp, mirror], in_transit=[old], age_bound=128))
     )
     store = simulation.stores[1]
     simulation.step()
@@ -206,7 +208,9 @@ def test_the_age_is_kept_whole_and_a_collision_keeps_it():
     assert int(store.phase[0]) == 20 and int(store.number[0]) == 2
     # A release is born at age 0.
     source = {"position": [4, 0, 0], "family": "m", "amount": 1, "fixed": True}
-    simulation = RaySimulation(parse_ray_world(bar([9, 1, 1], measured=[source], release=[1, 1])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([9, 1, 1], measured=[source], release=[1, 1]))
+    )
     simulation.step()
     store = simulation.stores[0]
     assert store.size == 6 and (store.age == 0).all()
@@ -229,7 +233,7 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
     amounts = np.array([1, 2, 4], dtype=np.int64)
     ages = np.array([3, 5, 7], dtype=np.int64)
     reading = read_arrivals(vectors, amounts, ages=ages)
-    assert int(reading.age) == 41 and int(reading.scalar) == 7
+    assert int(reading.age) == 41 and int(reading.presence) == 7
     assert int(reading.age_outside) == 41 and int(reading.age_here) == 0
     assert int(reading.component("age")) == 41
     with_here = read_arrivals(
@@ -241,7 +245,7 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
     assert int(with_here.age) == 61 and int(with_here.here) == 2
     for matrix in cube_group():
         rotated = read_arrivals(vectors @ matrix.T, amounts, ages=ages)
-        assert int(rotated.age) == 41 and rotated.vector.tolist() == (matrix @ reading.vector).tolist()
+        assert int(rotated.age) == 41 and rotated.flow.tolist() == (matrix @ reading.flow).tolist()
     keyed = read_arrivals(
         np.concatenate([vectors, vectors]),
         np.concatenate([amounts, amounts * 2]),
@@ -249,7 +253,7 @@ def test_the_age_moment_is_the_amount_weighted_age_and_the_symmetries_fix_it():
         2,
         ages=np.concatenate([ages, ages]),
     )
-    assert keyed.age.tolist() == [82, 41] and keyed.scalar.tolist() == [14, 7]
+    assert keyed.age.tolist() == [82, 41] and keyed.presence.tolist() == [14, 7]
     assert int(read_arrivals(vectors, amounts).age) == 0
     with pytest.raises(OverflowError, match="moments of a reading"):
         read_arrivals(np.array([[1, 0, 0]]), np.array([1 << 40]), ages=np.array([1 << 23]))
@@ -274,7 +278,7 @@ def ages_of_the_reader(
     world: dict[str, object],
 ) -> tuple[list[int], list[tuple[int, int, int]], list[object]]:
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     reader = simulation.measured[2]
     ages, readings = [], []
     for tick in range(1, 25):
@@ -310,30 +314,30 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
     assert flight_bound((11, 11, 11), headings) == 54
     assert flight_bound((11, 11, 11), (*headings, (1, 0, 64))) == 111
     cube = bar([11, 11, 11])
-    assert parse_ray_world(cube).age_bound == 108
-    assert parse_ray_world({**cube, "directions": [[1, 0, 64]]}).age_bound == 222
-    assert parse_ray_world({**cube, "age_bound": 100}).age_bound == 100
+    assert parse_nature_beam_world(cube).age_bound == 108
+    assert parse_nature_beam_world({**cube, "directions": [[1, 0, 64]]}).age_bound == 222
+    assert parse_nature_beam_world({**cube, "age_bound": 100}).age_bound == 100
     for bad in (0, -1, "8", 1.5):
         with pytest.raises(ValueError, match="age_bound"):
-            parse_ray_world({**cube, "age_bound": bad})
+            parse_nature_beam_world({**cube, "age_bound": bad})
     everywhere = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    with pytest.raises(ValueError, match="age_bound is required on a board periodic on every axis"):
-        parse_ray_world({**cube, "boundary": everywhere})
-    assert parse_ray_world({**cube, "boundary": everywhere, "age_bound": 7}).age_bound == 7
+    with pytest.raises(ValueError, match="age_bound is required on a GameBoard periodic on every axis"):
+        parse_nature_beam_world({**cube, "boundary": everywhere})
+    assert parse_nature_beam_world({**cube, "boundary": everywhere, "age_bound": 7}).age_bound == 7
     with pytest.raises(ValueError, match=r"in_transit\[0\].age must be an integer from 0 through 108"):
-        parse_ray_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=109)]})
-    parse_ray_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=108)]})
+        parse_nature_beam_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=109)]})
+    parse_nature_beam_world({**cube, "in_transit": [light([5, 5, 5], PLUS_X, age=108)]})
     world_file = tmp_path / "world.json"
     world_file.write_text(json.dumps({**cube, "ticks": 2}), encoding="utf-8")
     run_initialization(world_file, tmp_path / "run")
     record = json.loads((tmp_path / "run" / "run.json").read_text(encoding="utf-8"))
     assert record["age_bound"] == 108 and record["status"] == "completed"
     # The stub: a ray on +z of a z-periodic bar never leaves; at the bound
-    # the run is refused, nothing on the board changed.
+    # the run is refused, nothing on the GameBoard changed.
     stub = bar([3, 1, 1], boundary={"z": "periodic"}, in_transit=[light([1, 0, 0], [0, 0, 1])])
-    world = parse_ray_world(stub)
+    world = parse_nature_beam_world(stub)
     assert world.age_bound == 12
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     for _ in range(12):
         simulation.step()
     assert int(simulation.stores[1].age[0]) == 12
@@ -341,16 +345,16 @@ def test_the_age_bound_is_derived_declared_or_required(tmp_path):
         simulation.step()
 
 
-def board(simulation: RaySimulation) -> np.ndarray:
+def game_board(simulation: NatureBeamSimulation) -> np.ndarray:
     store = simulation.stores[0]
     rows = np.stack([store.node, store.direction, store.phase, store.amount, store.content], axis=1)
     return rows[np.lexsort(rows.T[::-1])]
 
 
-def test_the_board_is_unchanged_by_the_whole_age():
+def test_the_game_board_is_unchanged_by_the_whole_age():
     """(e)."""
-    whole = RaySimulation(parse_ray_world(torus()))
-    reduced = RaySimulation(parse_ray_world(torus()))
+    whole = NatureBeamSimulation(parse_nature_beam_world(torus()))
+    reduced = NatureBeamSimulation(parse_nature_beam_world(torus()))
     period = reduced.tables.flight.period
     collided = False
     ages_differed = False
@@ -362,7 +366,7 @@ def test_the_board_is_unchanged_by_the_whole_age():
         moving = store.direction >= 2
         store.age = np.where(moving, store.age % period[store.direction], store.age)
         store.merge()
-        assert np.array_equal(board(whole), board(reduced))
+        assert np.array_equal(game_board(whole), game_board(reduced))
         collided = collided or before.shape != whole.stores[0].direction.shape
         collided = collided or (before != whole.stores[0].direction).any()
         ages_differed = ages_differed or int(whole.stores[0].age.sum()) != int(store.age.sum())

@@ -1,11 +1,11 @@
-"""The world of the law of the ray (rays-v1): its keys and their refusals.
+"""The world of the Beam Law (beam-v1): its keys and their refusals.
 
-A world of this law is a JSON object with `"law": "rays"` and nothing of the
+A world of this law is a JSON object with `"law": "beam"` and nothing of the
 earlier engines' schemas (no `contents`, no `initial_shadows`, no
 `wait_per_quantum`, no `dynamics`; none of the old engine's keys): the
-refusal names the key at fault. `"law": "events"` is refused naming the law
-of the ray and docs/MIGRATION.md (the law of events, `events-v1`, was deleted
-on 2026-09-19). What a world declares ([the law of the ray](../../../docs/RAY_LAW.md),
+refusal names the key at fault. `"law": "events"` is refused naming the Beam
+Law and docs/MIGRATION.md (the law of events, `events-v1`, was deleted
+on 2026-09-19). What a world declares ([the Beam Law](../../../docs/BEAM_LAW.md),
 the model owner, 2026-09-19):
 
 - `shape`, three positive extents; `boundary` `"open"` (the default: the edge
@@ -16,7 +16,7 @@ the model owner, 2026-09-19):
   the steps of the phase circle (64 by default, a power of two from 2 through
   4096); `release` `[n, d]`, the rays a measured event of a free family
   releases per self-creation per declared direction per unit of content,
-  read off its clock; `suspension` `[n, d]`, the fractional width of the
+  read off its clock; `suspension` `[n, d]`, the rate of the
   clock's count: a measured event owes `by_clock(age, presence x n, d)`
   intervals after its self-creation, the presence being the amount of every
   ray at its Node of every number but its own (an integer w is accepted as
@@ -28,16 +28,16 @@ the model owner, 2026-09-19):
   negative width is refused; `age_bound`, the largest age a ray may carry
   (an integer from 1; the age is the count of intervals since the measured
   event that created the ray, kept whole on the record since 2026-09-20 so
-  that a measured event may read it; RAY_LAW section 2): on a board with an
+  that a measured event may read it; BEAM_LAW section 2): on a GameBoard with an
   open axis it is by default twice the flight bound, the age at which every
-  straight ray has left a board of that diameter (`flight_bound`); on a
-  board periodic on every axis, which no ray leaves, it is required and
+  straight ray has left a GameBoard of that diameter (`flight_bound`); on a
+  GameBoard periodic on every axis, which no ray leaves, it is required and
   refused if absent; a declared ray's `age` must not exceed it, and a run
-  in which a ray on the board carries an age beyond it is refused;
+  in which a ray on the GameBoard carries an age beyond it is refused;
   `action`, optional: h, the quantum of action of the turn by momentum (an
   integer from 1, in label units times Links; the model owner's decision
-  of 2026-09-20 on Bohr, "put it as parameters outside the board like the
-  age"; RAY_LAW section 10, note 30): a measured event that declares
+  of 2026-09-20 on Bohr, "put it as parameters outside the GameBoard like the
+  age"; BEAM_LAW section 10, note 30): a measured event that declares
   `phase_by_momentum` turns its phase, at every Link it steps on an axis
   whose momentum component is p, so that after k Links stepped on that
   axis the phase has turned floor(k x |p| x N / h) mod N steps (the count
@@ -69,7 +69,7 @@ the model owner, 2026-09-19):
   carry phase 0 and never turn, its measured events never turn, no
   `phase_window` is accepted for it) and `phase_per_link` (an integer
   0 .. N - 1, 0 by default: the phase steps a ray of the family turns at
-  every Link crossed). The key `kind` of the first ray worlds is refused
+  every Link crossed). The key `kind` of the first NatureBeam worlds is refused
   naming this derivation and docs/MIGRATION.md (one canonical form);
 - `measured`: the measured events at the start, one per Node, each with a
   `position`, its `family`, its `amount` (a positive whole number of units,
@@ -79,14 +79,14 @@ the model owner, 2026-09-19):
   integers from 1, `[1, 1, 1]` by default: the measured event is a body on
   the set of `span_x x span_y x span_z` Nodes centred on its `position`,
   ONE record on all of them, the model owner's principle of 2026-09-19
-  applied to the electron on 2026-09-20, "the electron of width 3", RAY_LAW
+  applied to the electron on 2026-09-20, "the electron of width 3", BEAM_LAW
   section 10, note 30: its clock, its threshold and its push read the one
   reading set summed over its Nodes, the step moves the whole set as one
   and is refused onto a Node of another measured event, through an open
   face the whole body clicks on the face detector, on a periodic axis it
   wraps, no collision acts at any of its Nodes, its releases are
   apportioned whole over its Nodes; a span must fit the axis and the body
-  must lie inside the board on an open axis), `phase_by_momentum` (true:
+  must lie inside the GameBoard on an open axis), `phase_by_momentum` (true:
   the body turns its phase by its momentum label at every Link it steps,
   over the world's `action`; false by default; refused without `action`,
   on a `fixed` measured event, which never steps, and on a family without
@@ -104,7 +104,7 @@ the model owner, 2026-09-19):
   on, the six headings by default, and optionally its `phase_window`);
   every measured event is given its number at parsing, 1, 2, ... in
   declaration order;
-- `phase_window`, the declared width of a detector and of an emitter: a
+- `phase_window`, the declared window of a detector and of an emitter: a
   setting `s`, an integer from 0 through N - 1, and the half circle centred
   on it (with d = (phase - s) mod N, d < N / 4 or d >= 3 N / 4: exactly
   N / 2 steps; for N = 2 the one step d = 0). On a table entry (any rule but
@@ -115,9 +115,9 @@ the model owner, 2026-09-19):
   the response's record carries, `scalar` (the presence), `outside`, `here`,
   `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
   moment, sum amount x age over the set: a reading aid of the measured
-  event, the external thing, since 2026-09-20; the board's rules never read
+  event, the external thing, since 2026-09-20; the GameBoard's rules never read
   the age whole); `vector` by default on `read`, `scalar` otherwise. No
-  rule of the board changes with it: every coupling reads the one reading,
+  rule of the GameBoard changes with it: every coupling reads the one reading,
   the moments of the arrivals (`nature_beam.read_arrivals`); the one thing
   the key selects beside the record is what the clock counts
   (`measured.count_component`): the age moment on an entry that reads
@@ -126,7 +126,7 @@ the model owner, 2026-09-19):
   `family`, `number` (the measured event whose continuation it is),
   `direction` (a vector of the world's table or its index), `amount`,
   `phase` and optionally `age` (0 through `age_bound`), booked as initial
-  content of the transit line; the default is an empty board that the
+  content of the transit line; the default is an empty GameBoard that the
   releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
   its `positions` (the `position` of a measured event each, a body on a
@@ -135,7 +135,7 @@ the model owner, 2026-09-19):
   at the detector's Nodes in one interval, summed over the whole set and
   over every number but each Node's own; a smaller set passes; and its
   `reading`, `"wave"` (the default since 2026-09-20; the model owner: "on
-  the board a ray, in the world a wave") or `"beam"` (the model owner,
+  the GameBoard a ray, in the world a wave") or `"beam"` (the model owner,
   2026-09-19): a detector is a set of Nodes with ONE record (a click says
   "here, in one of these" and not which; the declared width is the
   position's uncertainty). Under `wave` the record is the square of the
@@ -159,13 +159,13 @@ declare, a label `Q x content x amount` beyond 2^62 - 1 on a declared ray or
 a lamp's release (Q = `LABEL_SCALE` = 64: the momentum label of a ray is
 along the unit vector of its direction at the flight table's scale, the
 model owner's decision of 2026-09-19 on the physics-rule reviewer's
-verdict, [RAY_LAW section 2](../../../docs/RAY_LAW.md), so every declared
+verdict, [BEAM_LAW section 2](../../../docs/BEAM_LAW.md), so every declared
 `momentum` and every momentum of the record is in label units, Q per unit
 of amount along a heading), `phase_per_link` outside 0 .. N - 1, `age_bound`
-below 1 or absent on a board periodic on every axis, a declared `age`
+below 1 or absent on a GameBoard periodic on every axis, a declared `age`
 beyond it, `action` below 1 or not an integer, a `span` that is not three
 odd integers from 1 or larger than its axis, a body whose Nodes leave the
-board on an open axis, two measured events sharing a Node, a detector
+GameBoard on an open axis, two measured events sharing a Node, a detector
 naming a Node of a body that is not its `position`, `phase_by_momentum`
 without `action`, on a `fixed` measured event or on a family without a
 phase circle, and a turning body whose product `ticks x |p| x N` (the
@@ -177,11 +177,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from event_universe.core.game_board import MAX_VALUE, PORT_HEADINGS, Address3
 from event_universe.core.integer import bounded_gcd, integer_root
-from event_universe.core.lattice import MAX_VALUE, PORT_HEADINGS, Address3
 
-RAYS_LAW = "rays-v1"
-LAW_VALUE = "rays"
+BEAM_LAW = "beam-v1"
+LAW_VALUE = "beam"
+# The law's name before 2026-09-20 (rays-v1 is beam-v1, the same law): a world
+# that still declares it is refused naming the migration, never read as a default.
+OLD_LAW_VALUE = "rays"
 TABLES = ("read", "measure", "rerelease", "pass")
 # The quantum of a free family: its unit costs nothing and carries no content.
 FREE_QUANTUM = 0
@@ -190,7 +193,7 @@ FREE_QUANTUM = 0
 # external thing) that also decides what its clock counts.
 AGE_READS = "age"
 READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS)
-# The one scale Q of the law (RAY_LAW sections 2 and 3): the time resolution
+# The one scale Q of the law (BEAM_LAW sections 2 and 3): the time resolution
 # of the flight table, where the turn of a direction is T_d = isqrt(3 |v|^2
 # Q^2) and a ray makes S_1 Manhattan steps per T_d / Q intervals in the mean,
 # and the length of the momentum label, `LABEL_SCALE` below.
@@ -270,9 +273,9 @@ BOHR_RULE = "bohr-v1"
 # The span of a measured event on one Node (the default): a body of one.
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
 FAMILY_KEYS = {"name", "quantum", "charge", "phase", "phase_per_link"}
-# The key of the first ray worlds that named the kind; the quantum decides it.
+# The key of the first NatureBeam worlds that named the kind; the quantum decides it.
 KIND_KEY = "kind"
-# The key of the ray worlds before 2026-09-20 that gave a measured event its
+# The key of the NatureBeam worlds before 2026-09-20 that gave a measured event its
 # own whole charge; the charge is the family's per unit of content.
 CHARGE_KEY = "charge"
 # The charge per unit of content of a family with none: 0 as the pair [0, 1].
@@ -297,16 +300,16 @@ TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
 DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # The readings a detector may declare; the first is the default: `wave`
-# since 2026-09-20 (the model owner: "on the board a ray, in the world a
+# since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
 DETECTOR_READINGS = ("wave", "beam")
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
-# The face detectors, one per open face of the board, named by the face in
+# The face detectors, one per open face of the GameBoard, named by the face in
 # Port order (an open face is a detector, the model owner, 2026-09-19); a
 # declared detector may not take one of these names.
 FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
-# The board's faces per axis: open (the default) or periodic (the wrap).
+# The GameBoard's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
 
@@ -435,8 +438,8 @@ class DetectorDefinition:
 
 
 @dataclass(frozen=True)
-class RayWorld:
-    """A parsed world of the law of the ray. `boundary` is the declared value
+class NatureBeamWorld:
+    """A parsed world of the Beam Law. `boundary` is the declared value
     as the record carries it (the string `"open"` or the object per axis);
     `periodic` says per axis (x, y, z) whether the walk wraps; `directions`
     is the table `D`: the two rest vectors, the six headings and the declared
@@ -448,7 +451,7 @@ class RayWorld:
     boundary: str | dict[str, str]
     periodic: tuple[bool, bool, bool]
     ticks: int
-    clock: int
+    K: int
     phase_steps: int
     release: tuple[int, int]
     suspension: tuple[int, int]
@@ -468,7 +471,7 @@ class RayWorld:
 
     @property
     def boundary_per_axis(self) -> dict[str, str]:
-        """The board's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
+        """The GameBoard's faces per axis, `x`, `y`, `z` to `open` or `periodic`."""
         return {
             axis: BOUNDARIES[1] if wraps else BOUNDARIES[0]
             for axis, wraps in zip(AXES, self.periodic, strict=True)
@@ -500,33 +503,33 @@ class RayWorld:
         return None
 
 
-def is_ray_world(document: object) -> bool:
-    """Whether a document declares the law of the ray (`"law": "rays"`)."""
+def is_nature_beam_world(document: object) -> bool:
+    """Whether a document declares the Beam Law (`"law": "beam"`)."""
     return isinstance(document, dict) and document.get("law") == LAW_VALUE
 
 
 def _object(value: object, label: str, allowed: set[str], required: set[str]) -> dict[str, object]:
     if not isinstance(value, dict):
-        raise ValueError(f"{RAYS_LAW}: {label} must be a JSON object")
+        raise ValueError(f"{BEAM_LAW}: {label} must be a JSON object")
     retired = [key for key in (*REVERSIBLE_KEYS, "headings", "heading") if key in value]
     if retired:
         raise ValueError(
-            f"{RAYS_LAW}: {label} declares {', '.join(retired)}, a key of the deleted law of "
+            f"{BEAM_LAW}: {label} declares {', '.join(retired)}, a key of the deleted law of "
             "events or its reversible detector (see docs/MIGRATION.md; a lamp and a ray declare "
             "`directions` and `direction`)"
         )
     unknown = set(value) - allowed
     if unknown:
-        raise ValueError(f"{RAYS_LAW}: {label} has unknown keys: {', '.join(sorted(unknown))}")
+        raise ValueError(f"{BEAM_LAW}: {label} has unknown keys: {', '.join(sorted(unknown))}")
     missing = required - set(value)
     if missing:
-        raise ValueError(f"{RAYS_LAW}: {label} lacks keys: {', '.join(sorted(missing))}")
+        raise ValueError(f"{BEAM_LAW}: {label} lacks keys: {', '.join(sorted(missing))}")
     return {str(key): item for key, item in value.items()}
 
 
 def _integer(value: object, label: str, minimum: int, maximum: int = AMOUNT_BOUND) -> int:
     if type(value) is not int or value < minimum or value > maximum:
-        raise ValueError(f"{RAYS_LAW}: {label} must be an integer from {minimum} through {maximum}")
+        raise ValueError(f"{BEAM_LAW}: {label} must be an integer from {minimum} through {maximum}")
     return value
 
 
@@ -535,7 +538,7 @@ def _ratio(value: object, label: str, zero: bool) -> tuple[int, int]:
     if type(value) is int:
         return _integer(value, label, 0 if zero else 1), 1
     if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{RAYS_LAW}: {label} must be an integer or [numerator, denominator]")
+        raise ValueError(f"{BEAM_LAW}: {label} must be an integer or [numerator, denominator]")
     numerator = _integer(value[0], f"{label} numerator", 0 if zero else 1)
     denominator = _integer(value[1], f"{label} denominator", 1)
     return numerator, denominator
@@ -550,7 +553,7 @@ def _signed_ratio(value: object, label: str) -> tuple[int, int]:
         return _integer(value, label, -MAX_VALUE, MAX_VALUE), 1
     if not isinstance(value, list) or len(value) != 2:
         raise ValueError(
-            f"{RAYS_LAW}: {label} must be an integer or [numerator, denominator], the charge "
+            f"{BEAM_LAW}: {label} must be an integer or [numerator, denominator], the charge "
             "per unit of content"
         )
     numerator = _integer(value[0], f"{label} numerator", -MAX_VALUE, MAX_VALUE)
@@ -560,7 +563,7 @@ def _signed_ratio(value: object, label: str) -> tuple[int, int]:
 
 def _address(value: object, label: str, shape: Address3) -> Address3:
     if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{RAYS_LAW}: {label} must be three integers")
+        raise ValueError(f"{BEAM_LAW}: {label} must be three integers")
     found = tuple(
         _integer(item, label, 0, extent - 1) for item, extent in zip(value, shape, strict=True)
     )
@@ -570,14 +573,14 @@ def _address(value: object, label: str, shape: Address3) -> Address3:
 def _vector(value: object, label: str, bound: int) -> Vector:
     """A primitive integer vector with every component in -bound .. bound."""
     if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{RAYS_LAW}: {label} must be three integers")
+        raise ValueError(f"{BEAM_LAW}: {label} must be three integers")
     found = tuple(_integer(item, label, -bound, bound) for item in value)
     if found == (0, 0, 0):
         raise ValueError(
-            f"{RAYS_LAW}: {label} must not be the zero vector (the rest slots are the table's)"
+            f"{BEAM_LAW}: {label} must not be the zero vector (the rest slots are the table's)"
         )
     if bounded_gcd(bounded_gcd(found[0], found[1]), found[2]) != 1:
-        raise ValueError(f"{RAYS_LAW}: {label} must be a primitive vector (its components coprime)")
+        raise ValueError(f"{BEAM_LAW}: {label} must be a primitive vector (its components coprime)")
     return found[0], found[1], found[2]
 
 
@@ -585,14 +588,14 @@ def _direction_table(value: object, bound: int) -> tuple[Vector, ...]:
     """The table `D`: the two rest vectors, the six headings, the declared."""
     table: list[Vector] = [(0, 0, 0), (0, 0, 0), *PORT_HEADINGS]
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: directions must be a list of integer vectors")
+        raise ValueError(f"{BEAM_LAW}: directions must be a list of integer vectors")
     for index, item in enumerate(value):
         vector = _vector(item, f"directions[{index}]", bound)
         if vector in table:
-            raise ValueError(f"{RAYS_LAW}: directions[{index}] repeats a direction of the table")
+            raise ValueError(f"{BEAM_LAW}: directions[{index}] repeats a direction of the table")
         table.append(vector)
     if len(table) > MAX_DIRECTIONS:
-        raise ValueError(f"{RAYS_LAW}: the direction table holds at most {MAX_DIRECTIONS} entries")
+        raise ValueError(f"{BEAM_LAW}: the direction table holds at most {MAX_DIRECTIONS} entries")
     return tuple(table)
 
 
@@ -603,34 +606,34 @@ def _direction(value: object, label: str, table: tuple[Vector, ...], *, rest: bo
         index = _integer(value, label, 0, len(table) - 1)
     else:
         if not isinstance(value, list) or len(value) != 3 or any(type(v) is not int for v in value):
-            raise ValueError(f"{RAYS_LAW}: {label} must be a direction vector or an index of the table")
+            raise ValueError(f"{BEAM_LAW}: {label} must be a direction vector or an index of the table")
         vector = (value[0], value[1], value[2])
         if vector not in table:
             raise ValueError(
-                f"{RAYS_LAW}: {label} names a direction the world does not declare {list(vector)} "
+                f"{BEAM_LAW}: {label} names a direction the world does not declare {list(vector)} "
                 "(the six headings or a vector of `directions`)"
             )
         index = table.index(vector)
     if index < REST_DIRECTIONS and not rest:
-        raise ValueError(f"{RAYS_LAW}: {label} must not be a rest direction")
+        raise ValueError(f"{BEAM_LAW}: {label} must not be a rest direction")
     return index
 
 
 def _directions(value: object, label: str, table: tuple[Vector, ...]) -> tuple[int, ...]:
     if not isinstance(value, list) or not value:
-        raise ValueError(f"{RAYS_LAW}: {label} must be a nonempty list of directions")
+        raise ValueError(f"{BEAM_LAW}: {label} must be a nonempty list of directions")
     found = tuple(_direction(item, label, table) for item in value)
     if len(set(found)) != len(found):
-        raise ValueError(f"{RAYS_LAW}: {label} repeats a direction")
+        raise ValueError(f"{BEAM_LAW}: {label} repeats a direction")
     return found
 
 
 def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
-    """The age at which every straight ray has left an open board of this
-    shape: the longest Manhattan flight on the board is D = X + Y + Z - 2
+    """The age at which every straight ray has left an open GameBoard of this
+    shape: the longest Manhattan flight on the GameBoard is D = X + Y + Z - 2
     Links (inside and out), a ray of direction v makes S_1 = |a| + |b| + |c|
     steps per period of its line and the least tau with m(tau) >= M steps
-    is at most ceil(M x T_d / (S_1 Q)) (RAY_LAW section 3), so the exiting
+    is at most ceil(M x T_d / (S_1 Q)) (BEAM_LAW section 3), so the exiting
     walk of a ray of direction v is at age at most ceil(ceil(D / S_1) x
     T_d / Q); the largest over the table's moving directions. A rest
     direction never moves and a collision or a periodic axis may keep a ray
@@ -658,7 +661,7 @@ def body_nodes(
     the offsets -(s - 1) / 2 .. (s - 1) / 2 per axis), in the fixed order
     of the offsets (x, then y, then z, ascending; the order the releases
     are apportioned in). On a periodic axis an offset wraps; on an open
-    axis a Node beyond the face means the body has left the board and the
+    axis a Node beyond the face means the body has left the GameBoard and the
     result is None (the whole body clicks on the face detector). A span
     of (1, 1, 1) is the one Node `position`."""
     axes: list[list[int]] = []
@@ -680,12 +683,12 @@ def _span(value: object, label: str, shape: Address3) -> tuple[int, int, int]:
     """The span of a body: three odd integers from 1, each at most its
     axis's extent (so that the body's Nodes are distinct)."""
     if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{RAYS_LAW}: {label} must be three odd integers from 1")
+        raise ValueError(f"{BEAM_LAW}: {label} must be three odd integers from 1")
     found = []
     for item, extent in zip(value, shape, strict=True):
         span = _integer(item, label, 1, extent)
         if span % 2 == 0:
-            raise ValueError(f"{RAYS_LAW}: {label} must be three odd integers from 1 (a centred body)")
+            raise ValueError(f"{BEAM_LAW}: {label} must be three odd integers from 1 (a centred body)")
         found.append(span)
     return found[0], found[1], found[2]
 
@@ -694,14 +697,14 @@ def _age_bound(
     value: object, shape: Address3, periodic: tuple[bool, bool, bool], table: tuple[Vector, ...]
 ) -> int:
     """The largest age a ray may carry: declared, or twice the flight bound
-    on a board with an open axis (the slack of one collision or one wrap of
-    a periodic axis), required on a board periodic on every axis, which no
+    on a GameBoard with an open axis (the slack of one collision or one wrap of
+    a periodic axis), required on a GameBoard periodic on every axis, which no
     ray leaves."""
     if value is not None:
         return _integer(value, "age_bound", 1)
     if all(periodic):
         raise ValueError(
-            f"{RAYS_LAW}: age_bound is required on a board periodic on every axis: no ray "
+            f"{BEAM_LAW}: age_bound is required on a GameBoard periodic on every axis: no ray "
             "leaves it, so the largest age a ray may carry (the bound of the store) must be "
             "declared"
         )
@@ -709,10 +712,10 @@ def _age_bound(
 
 
 def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bool]]:
-    """The board's faces: `"open"` on every face, or an object with any of
+    """The GameBoard's faces: `"open"` on every face, or an object with any of
     the keys `x`, `y`, `z`, each `"open"` or `"periodic"`, the missing axes
     open. Returns the value as declared (what the record carries) and, per
-    axis, whether the walk wraps. A closed board and every other word are
+    axis, whether the walk wraps. A closed GameBoard and every other word are
     refused."""
     if value == BOUNDARIES[0]:
         return BOUNDARIES[0], (False, False, False)
@@ -725,42 +728,42 @@ def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bo
         wraps = tuple(declared.get(axis, BOUNDARIES[0]) == BOUNDARIES[1] for axis in AXES)
         return declared, (wraps[0], wraps[1], wraps[2])
     raise ValueError(
-        f"{RAYS_LAW}: the board is open (its edge is infinity) unless an axis is declared "
+        f"{BEAM_LAW}: the GameBoard is open (its edge is infinity) unless an axis is declared "
         'periodic (boundary "open" or an object of "x", "y", "z" to "open" or "periodic"); '
-        "a closed board is refused"
+        "a closed GameBoard is refused"
     )
 
 
 def _families(value: object, phase_steps: int) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
-        raise ValueError(f"{RAYS_LAW}: families must be a nonempty list")
+        raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
     found: list[FamilyDefinition] = []
     for index, entry in enumerate(value):
         if isinstance(entry, dict) and KIND_KEY in entry:
             raise ValueError(
-                f"{RAYS_LAW}: families[{index}] declares {KIND_KEY}, a key removed on 2026-09-19: "
+                f"{BEAM_LAW}: families[{index}] declares {KIND_KEY}, a key removed on 2026-09-19: "
                 "the kind of a family follows from its quantum (0 free, 1 or more paid) and is "
                 "not declared; see docs/MIGRATION.md"
             )
         obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
-            raise ValueError(f"{RAYS_LAW}: families[{index}].name must be a nonempty string")
+            raise ValueError(f"{BEAM_LAW}: families[{index}].name must be a nonempty string")
         if any(item.name == name for item in found):
-            raise ValueError(f"{RAYS_LAW}: two families named {name!r}")
+            raise ValueError(f"{BEAM_LAW}: two families named {name!r}")
         quantum = _integer(obj["quantum"], f"families[{index}].quantum", FREE_QUANTUM, MAX_VALUE)
         charge = _signed_ratio(obj.get("charge", 0), f"families[{index}].charge")
         if quantum != FREE_QUANTUM and charge[0]:
-            raise ValueError(f"{RAYS_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
+            raise ValueError(f"{BEAM_LAW}: a paid family (quantum {quantum}) carries no charge ({name})")
         phase = obj.get("phase", True)
         if type(phase) is not bool:
-            raise ValueError(f"{RAYS_LAW}: families[{index}].phase must be true or false")
+            raise ValueError(f"{BEAM_LAW}: families[{index}].phase must be true or false")
         per_link = _integer(
             obj.get("phase_per_link", 0), f"families[{index}].phase_per_link", 0, phase_steps - 1
         )
         if per_link and not phase:
             raise ValueError(
-                f"{RAYS_LAW}: families[{index}].phase_per_link is refused for a family without a "
+                f"{BEAM_LAW}: families[{index}].phase_per_link is refused for a family without a "
                 "phase circle"
             )
         found.append(FamilyDefinition(name, quantum, charge, phase, per_link))
@@ -782,7 +785,7 @@ def _label_bound(
     for direction in directions:
         if LABEL_SCALE * content * amount > MOMENTUM_BOUND:
             raise ValueError(
-                f"{RAYS_LAW}: {label}: the momentum label {LABEL_SCALE} x {content} x {amount} = "
+                f"{BEAM_LAW}: {label}: the momentum label {LABEL_SCALE} x {content} x {amount} = "
                 f"{LABEL_SCALE * content * amount} along {list(table[direction])} exceeds the "
                 f"integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // LABEL_SCALE})"
             )
@@ -796,7 +799,7 @@ def _lamp(
     table: tuple[Vector, ...],
     quantum: int,
     amount: int,
-    clock: int,
+    K: int,
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
@@ -809,13 +812,13 @@ def _lamp(
     if "phase_window" in obj:
         if not phased:
             raise ValueError(
-                f"{RAYS_LAW}: {label}.phase_window is refused on a lamp of a family without a "
+                f"{BEAM_LAW}: {label}.phase_window is refused on a lamp of a family without a "
                 "phase circle (a window is a width on the circle, and the family has none)"
             )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount / K).
-    largest_turn = max(1, amount // clock)
+    largest_turn = max(1, amount // K)
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
     return LampDefinition(rate, directions, window)
 
@@ -840,21 +843,21 @@ def _table_entry(
     else:
         rule, window = value, None
     if rule not in TABLES:
-        raise ValueError(f"{RAYS_LAW}: {label} must be one of {TABLES}")
+        raise ValueError(f"{BEAM_LAW}: {label} must be one of {TABLES}")
     if window is not None and rule == "pass":
         raise ValueError(
-            f"{RAYS_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
+            f"{BEAM_LAW}: {label}.phase_window is refused on pass: a window is a width of a "
             "response, and pass responds to nothing"
         )
     if window is not None and not phased:
         raise ValueError(
-            f"{RAYS_LAW}: {label}.phase_window is refused for a family without a phase circle: "
+            f"{BEAM_LAW}: {label}.phase_window is refused for a family without a phase circle: "
             "its rays carry no phase to read"
         )
     if reads is None:
         reads = default_reads(str(rule))
     if reads not in READS:
-        raise ValueError(f"{RAYS_LAW}: {label}.reads must be one of {READS}")
+        raise ValueError(f"{BEAM_LAW}: {label}.reads must be one of {READS}")
     return str(rule), window, str(reads)
 
 
@@ -863,7 +866,7 @@ def _measured(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
-    clock: int,
+    K: int,
     phase_steps: int,
     release: tuple[int, int],
     table: tuple[Vector, ...],
@@ -871,7 +874,7 @@ def _measured(
     action: int | None,
 ) -> tuple[MeasuredDefinition, ...]:
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: measured must be a list")
+        raise ValueError(f"{BEAM_LAW}: measured must be a list")
     names = {family.name: index for index, family in enumerate(families)}
     found: list[MeasuredDefinition] = []
     # Every Node of every body so far: two measured events never share one.
@@ -880,65 +883,65 @@ def _measured(
         label = f"measured[{index}]"
         if isinstance(entry, dict) and CHARGE_KEY in entry:
             raise ValueError(
-                f"{RAYS_LAW}: {label} declares {CHARGE_KEY}, a key removed on 2026-09-20: the "
+                f"{BEAM_LAW}: {label} declares {CHARGE_KEY}, a key removed on 2026-09-20: the "
                 "charge of a measured event is its family's charge per unit of content times "
                 "its content (the family's `charge`, an integer or [n, d]); see docs/MIGRATION.md"
             )
         obj = _object(entry, label, MEASURED_KEYS, {"position", "family", "amount"})
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
-            raise ValueError(f"{RAYS_LAW}: two measured events at one Node {list(position)}")
+            raise ValueError(f"{BEAM_LAW}: two measured events at one Node {list(position)}")
         span = _span(obj.get("span", list(ONE_NODE)), f"{label}.span", shape)
         nodes = body_nodes(position, span, shape, periodic)
         if nodes is None:
             raise ValueError(
-                f"{RAYS_LAW}: {label}: a body of span {list(span)} centred on {list(position)} "
-                "leaves the board through an open face"
+                f"{BEAM_LAW}: {label}: a body of span {list(span)} centred on {list(position)} "
+                "leaves the GameBoard through an open face"
             )
         shared = [node for node in nodes if node in occupied]
         if shared:
             raise ValueError(
-                f"{RAYS_LAW}: two measured events share the Node {list(shared[0])} "
+                f"{BEAM_LAW}: two measured events share the Node {list(shared[0])} "
                 f"({label}, a body of span {list(span)})"
             )
         occupied.update(nodes)
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
-            raise ValueError(f"{RAYS_LAW}: {label}.family names an unknown family")
+            raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         amount = _integer(obj["amount"], f"{label}.amount", 1)
         phased = families[family].phase
-        if phased and 2 * amount >= clock * phase_steps:
+        if phased and 2 * amount >= K * phase_steps:
             raise ValueError(
-                f"{RAYS_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
+                f"{BEAM_LAW}: {label}.amount must keep 2 x content below K x N (the phase step "
                 "per self-creation below half the circle)"
             )
         # A measured event of a family without a phase circle has phase 0.
         phase = _integer(obj.get("phase", 0), f"{label}.phase", 0, phase_steps - 1 if phased else 0)
         momentum_value = obj.get("momentum", [0, 0, 0])
         if not isinstance(momentum_value, list) or len(momentum_value) != 3:
-            raise ValueError(f"{RAYS_LAW}: {label}.momentum must be three integers")
+            raise ValueError(f"{BEAM_LAW}: {label}.momentum must be three integers")
         momentum = tuple(_integer(item, f"{label}.momentum", -AMOUNT_BOUND) for item in momentum_value)
         fixed = obj.get("fixed", False)
         if type(fixed) is not bool:
-            raise ValueError(f"{RAYS_LAW}: {label}.fixed must be true or false")
+            raise ValueError(f"{BEAM_LAW}: {label}.fixed must be true or false")
         turning = obj.get("phase_by_momentum", False)
         if type(turning) is not bool:
-            raise ValueError(f"{RAYS_LAW}: {label}.phase_by_momentum must be true or false")
+            raise ValueError(f"{BEAM_LAW}: {label}.phase_by_momentum must be true or false")
         if turning:
             if action is None:
                 raise ValueError(
-                    f"{RAYS_LAW}: {label}.phase_by_momentum needs the world's `action` (the "
+                    f"{BEAM_LAW}: {label}.phase_by_momentum needs the world's `action` (the "
                     "quantum h of the turn by momentum), which the world does not declare"
                 )
             if fixed:
                 raise ValueError(
-                    f"{RAYS_LAW}: {label}.phase_by_momentum is refused on a fixed measured "
+                    f"{BEAM_LAW}: {label}.phase_by_momentum is refused on a fixed measured "
                     "event, which never steps a Link"
                 )
             if not phased:
                 raise ValueError(
-                    f"{RAYS_LAW}: {label}.phase_by_momentum is refused for a family without a "
+                    f"{BEAM_LAW}: {label}.phase_by_momentum is refused for a family without a "
                     "phase circle: there is no phase to turn"
                 )
             # The bound of the turn: a body steps at most one Link per
@@ -947,7 +950,7 @@ def _measured(
             largest = max(abs(component) for component in momentum)
             if ticks * largest * phase_steps > MOMENTUM_BOUND:
                 raise ValueError(
-                    f"{RAYS_LAW}: {label}: the turn by momentum forms k x |p| x N up to "
+                    f"{BEAM_LAW}: {label}: the turn by momentum forms k x |p| x N up to "
                     f"{ticks} x {largest} x {phase_steps} = {ticks * largest * phase_steps} "
                     f"within the run, beyond the integer bound {MOMENTUM_BOUND} (a smaller "
                     "momentum, N or run)"
@@ -967,10 +970,10 @@ def _measured(
             reads.append(component)
         declared = obj.get("table", {})
         if not isinstance(declared, dict):
-            raise ValueError(f"{RAYS_LAW}: {label}.table must map family names to rules")
+            raise ValueError(f"{BEAM_LAW}: {label}.table must map family names to rules")
         for key, entry_value in declared.items():
             if key not in names:
-                raise ValueError(f"{RAYS_LAW}: {label}.table names an unknown family {key!r}")
+                raise ValueError(f"{BEAM_LAW}: {label}.table names an unknown family {key!r}")
             rules[names[key]], windows[names[key]], reads[names[key]] = _table_entry(
                 entry_value,
                 f"{label}.table[{key!r}]",
@@ -984,7 +987,7 @@ def _measured(
         lamp = None
         if "lamp" in obj:
             if families[family].free:
-                raise ValueError(f"{RAYS_LAW}: {label}: a lamp is a measured event of a paid family")
+                raise ValueError(f"{BEAM_LAW}: {label}: a lamp is a measured event of a paid family")
             lamp = _lamp(
                 obj["lamp"],
                 f"{label}.lamp",
@@ -993,7 +996,7 @@ def _measured(
                 table,
                 families[family].quantum,
                 amount,
-                clock,
+                K,
             )
         found.append(
             MeasuredDefinition(
@@ -1025,7 +1028,7 @@ def _in_transit(
     age_bound: int,
 ) -> tuple[TransitDefinition, ...]:
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: in_transit must be a list")
+        raise ValueError(f"{BEAM_LAW}: in_transit must be a list")
     names = {family.name: index for index, family in enumerate(families)}
     found: list[TransitDefinition] = []
     for index, entry in enumerate(value):
@@ -1035,7 +1038,7 @@ def _in_transit(
         )
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
-            raise ValueError(f"{RAYS_LAW}: {label}.family names an unknown family")
+            raise ValueError(f"{BEAM_LAW}: {label}.family names an unknown family")
         family = names[family_name]
         top = phase_steps - 1 if families[family].phase else 0
         direction = _direction(obj["direction"], f"{label}.direction", table, rest=True)
@@ -1065,7 +1068,7 @@ def _detectors(
     measured: tuple[MeasuredDefinition, ...],
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
-        raise ValueError(f"{RAYS_LAW}: detectors must be a list")
+        raise ValueError(f"{BEAM_LAW}: detectors must be a list")
     at = {entry.position for entry in measured}
     # The other Nodes of the bodies on a set: a body is named by its centre.
     inside: set[Address3] = set()
@@ -1078,65 +1081,72 @@ def _detectors(
         obj = _object(entry, label, DETECTOR_KEYS, {"name", "positions"})
         name = obj["name"]
         if not isinstance(name, str) or not name:
-            raise ValueError(f"{RAYS_LAW}: {label}.name must be a nonempty string")
+            raise ValueError(f"{BEAM_LAW}: {label}.name must be a nonempty string")
         if any(item.name == name for item in found):
-            raise ValueError(f"{RAYS_LAW}: two detectors named {name!r}")
+            raise ValueError(f"{BEAM_LAW}: two detectors named {name!r}")
         if name in FACE_NAMES:
             raise ValueError(
-                f"{RAYS_LAW}: {label}.name {name!r} is the name of a face detector (an open face "
-                "of the board is a detector of that name; declare another)"
+                f"{BEAM_LAW}: {label}.name {name!r} is the name of a face detector (an open face "
+                "of the GameBoard is a detector of that name; declare another)"
             )
         positions_value = obj["positions"]
         if not isinstance(positions_value, list) or not positions_value:
-            raise ValueError(f"{RAYS_LAW}: {label}.positions must be a nonempty list of Nodes")
+            raise ValueError(f"{BEAM_LAW}: {label}.positions must be a nonempty list of Nodes")
         positions = []
         for item in positions_value:
             position = _address(item, f"{label}.positions", shape)
             if position not in at:
                 if position in inside:
                     raise ValueError(
-                        f"{RAYS_LAW}: {label}.positions names a Node of a body on a set "
+                        f"{BEAM_LAW}: {label}.positions names a Node of a body on a set "
                         f"{list(position)} that is not its position (a body is one record, "
                         "named by its centre)"
                     )
                 raise ValueError(
-                    f"{RAYS_LAW}: {label}.positions names a Node without a measured event {list(position)}"
+                    f"{BEAM_LAW}: {label}.positions names a Node without a measured event {list(position)}"
                 )
             if position in taken:
-                raise ValueError(f"{RAYS_LAW}: a Node in two detectors {list(position)}")
+                raise ValueError(f"{BEAM_LAW}: a Node in two detectors {list(position)}")
             taken.add(position)
             positions.append(position)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         reading = obj.get("reading", DETECTOR_READINGS[0])
         if reading not in DETECTOR_READINGS:
             raise ValueError(
-                f"{RAYS_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}, not {reading!r}"
+                f"{BEAM_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}, not {reading!r}"
             )
         found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
     return tuple(found)
 
 
-def parse_ray_world(document: object) -> RayWorld:
-    """Reject anything but a lawful world of the law of the ray."""
+def parse_nature_beam_world(document: object) -> NatureBeamWorld:
+    """Reject anything but a lawful world of the Beam Law."""
     if not isinstance(document, dict):
-        raise ValueError(f"{RAYS_LAW}: a world is a JSON object")
+        raise ValueError(f"{BEAM_LAW}: a world is a JSON object")
     old = [key for key in OLD_KEYS if key in document]
     if old:
         raise ValueError(
-            f"{RAYS_LAW}: a world of the law of the ray declares none of the earlier engines' "
+            f"{BEAM_LAW}: a world of the Beam Law declares none of the earlier engines' "
             f"keys ({', '.join(old)}); see docs/MIGRATION.md"
         )
     if document.get("law") == "events":
         raise ValueError(
-            f'{RAYS_LAW}: "law": "events" names the law of events (events-v1), deleted on '
-            '2026-09-19; a world of the law of the ray declares "law": "rays" (docs/MIGRATION.md)'
+            f'{BEAM_LAW}: "law": "events" names the law of events (events-v1), deleted on '
+            '2026-09-19; a world of the Beam Law declares "law": "beam" (docs/MIGRATION.md)'
+        )
+    if document.get("law") == OLD_LAW_VALUE:
+        raise ValueError(
+            f'{BEAM_LAW}: "law": "rays" is the Beam Law\'s name before 2026-09-20 (rays-v1 is '
+            'beam-v1, the same law); a world declares "law": "beam": rewrite it with '
+            'tools/migrate_nature_beam_worlds.py (docs/MIGRATION.md, "The names NatureBeam and '
+            "GameBoard and the glossary's single names, on 2026-09-20\")"
         )
     if document.get("law") != LAW_VALUE:
-        raise ValueError(f'{RAYS_LAW}: a world of the law of the ray declares "law": "rays"')
+        raise ValueError(f'{BEAM_LAW}: a world of the Beam Law declares "law": "beam"')
     events = [key for key in EVENTS_KEYS if key in document]
     if events:
         raise ValueError(
-            f"{RAYS_LAW}: a world of the law of the ray declares none of the law of events' keys "
+            f"{BEAM_LAW}: a world of the Beam Law declares none of the law of events' keys "
             f"({', '.join(events)}); see docs/MIGRATION.md"
         )
     obj = _object(
@@ -1147,18 +1157,18 @@ def parse_ray_world(document: object) -> RayWorld:
     )
     model_id = obj["model_id"]
     if not isinstance(model_id, str) or not model_id:
-        raise ValueError(f"{RAYS_LAW}: model_id must be a nonempty string")
+        raise ValueError(f"{BEAM_LAW}: model_id must be a nonempty string")
     shape_value = obj["shape"]
     if not isinstance(shape_value, list) or len(shape_value) != 3:
-        raise ValueError(f"{RAYS_LAW}: shape must be three positive extents")
+        raise ValueError(f"{BEAM_LAW}: shape must be three positive extents")
     extents = tuple(_integer(item, "shape", 1, 4096) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj.get("boundary", BOUNDARIES[0]))
     ticks = _integer(obj["ticks"], "ticks", 0)
-    clock = _integer(obj["K"], "K", 1)
+    K = _integer(obj["K"], "K", 1)
     phase_steps = _integer(obj.get("N", 64), "N", 2, MAX_PHASE_STEPS)
     if phase_steps & (phase_steps - 1):
-        raise ValueError(f"{RAYS_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
+        raise ValueError(f"{BEAM_LAW}: N must be a power of two from 2 through {MAX_PHASE_STEPS}")
     release = _ratio(obj["release"], "release", zero=True)
     suspension = _ratio(obj.get("suspension", 1), "suspension", zero=True)
     if suspension[0] == 0:
@@ -1179,7 +1189,7 @@ def parse_ray_world(document: object) -> RayWorld:
         shape,
         periodic,
         families,
-        clock,
+        K,
         phase_steps,
         release,
         table,
@@ -1190,13 +1200,13 @@ def parse_ray_world(document: object) -> RayWorld:
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
     detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
-    world = RayWorld(
+    world = NatureBeamWorld(
         model_id,
         shape,
         boundary,
         periodic,
         ticks,
-        clock,
+        K,
         phase_steps,
         release,
         suspension,

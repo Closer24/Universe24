@@ -77,15 +77,15 @@ no result of this repository bears on it.
 
 ## 3. The size and shape of the universe
 
-The lattice is finite and its boundary is configured, open or periodic. The
+The GameBoard is finite and its boundary is configured, open or periodic. The
 closed-universe probes (expansion and redshift (`examples/relativity-probes/`, deleted on 2026-09-17))
-measure what a periodic lattice does to a ray that laps it: a stepwise stretch
+measure what a periodic GameBoard does to a ray that laps it: a stepwise stretch
 within one lap, a delay-growth redshift, and a loss of outward momentum that
 does not depend on radius when one dimension is short. The hypothesis is that
-a closed lattice with one compressed dimension reproduces the transition from
+a closed GameBoard with one compressed dimension reproduces the transition from
 Newtonian pull to a flat curve at a radius set by that dimension. What is
-measured is the loss curve on small lattices; what is open is whether any
-lattice size and any compression give the curve nature shows, and no size of
+measured is the loss curve on small GameBoards; what is open is whether any
+GameBoard size and any compression give the curve nature shows, and no size of
 the universe is identified.
 
 ## 4. What the sequence is
@@ -107,11 +107,11 @@ section 3.18, deleted on that date, and to the bond registry that follows it;
 the text is kept as stated.*
 
 The framework is one setting in which mechanics, radiation, interference,
-quantum contacts and Bell's test run on the same lattice. It is not yet one
+quantum contacts and Bell's test run on the same GameBoard. It is not yet one
 theory: the mixers, the instruments, the phase advance per link, the `|p| / D`
 rule, the cosine table and the singlet law in the bond registry are configured
 data, measured to hold, not derived. The program is to replace each configured
-law by a rule of the lattice and show by a run that the measured tables do not
+law by a rule of the GameBoard and show by a run that the measured tables do not
 change. Each replacement is a hypothesis with its own experiment; the
 "what would make this a physics result" list of the deleted coupling summary
 was its first four entries.
@@ -127,13 +127,13 @@ curve, with nothing added to the law. The hypothesis is that the flat rotation
 curves of galaxies are what a `1/r^2` law looks like when its far field is
 carried in one dimension fewer, so that the radius where a curve flattens
 measures the size of the short closed dimension, and no unseen mass is needed.
-What is measured is the loss curve on lattices up to period 9; what is
+What is measured is the loss curve on GameBoards up to period 9; what is
 pending is the open three-dimensional control with the identical metric, and
 until it lands the probe report itself calls this a candidate, not a result.
-A size sweep of the slab (period 3, 9 and beyond, radii to the lattice edge)
-shows how far the flat part reaches on each lattice; the radius where the
+A size sweep of the slab (period 3, 9 and beyond, radii to the GameBoard edge)
+shows how far the flat part reaches on each GameBoard; the radius where the
 measured curve stops following the hypothesis is the size at which a larger
-lattice is needed, and that number belongs in the report.
+GameBoard is needed, and that number belongs in the report.
 The gathered gravity probe (`examples/gathered-gravity/`, deleted on
 2026-09-17 with claim-gather; its numbers stay in the
 [validation log](VALIDATION.md)) closed
@@ -146,7 +146,7 @@ metric. Pooled over 12 radii (r = 4 to 24, four directions each), the pull on
 a held body falls as r^p with p = -0.97 +/- 0.10 in the closed period-3 slab,
 -2.04 +/- 0.12 in the open cube, and the same -2.04 +/- 0.12 in an open slab of
 depth 3; in the period-9 slab p = -1.47 +/- 0.19 inside the period (8 radii)
-and -0.70 +/- 0.45 outside it (6 radii). The lattice's transition is set by a
+and -0.70 +/- 0.45 outside it (6 radii). The GameBoard's transition is set by a
 length; whether that is what nature's rotation curves show is not decided
 here.
 
@@ -163,7 +163,7 @@ read off the hop schedule and scaling with the emission. A train of moving
 bodies is not usable as light: a Node starts no new cycle until its delayed
 departure has arrived, so bodies stall the clocks of the Nodes they wait at.
 The hop time is a scale factor: with `D = int dt / k` these are the relations
-of a Friedmann universe with `a(t) ~ k(t)`, so a static lattice with the
+of a Friedmann universe with `a(t) ~ k(t)`, so a static GameBoard with the
 matching load history reproduces the Hubble diagram and the time dilation of
 any expanding model, and cannot be told from it by those two tests.
 
@@ -184,9 +184,9 @@ level follows; as an information criterion, a relative likelihood of about
 0.01), and the reading in
 which only the arrival rate is redshifted is behind at every exponent, its
 `n -> infinity` limit included. The Tolman surface-brightness exponent is
-where the lattice and expansion differ, `(1 + z)^-2` against `(1 + z)^-4`,
+where the GameBoard and expansion differ, `(1 + z)^-2` against `(1 + z)^-4`,
 and the raw measured exponents (2.59 and 3.37 in R and I, Lubin and Sandage
-2001, before any luminosity-evolution correction) lie above the lattice's
+2001, before any luminosity-evolution correction) lie above the GameBoard's
 value. The wave's frequency follows the arrival gaps under the default
 phase rule by construction, so it is not an independent measurement of the
 stretch; the rule that clocks keep the bare rate under load is configured,
@@ -200,7 +200,7 @@ the same rule predicts.
 
 **Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
 anomalies study (`examples/research/anomalies/`, deleted on 2026-09-17) reads the
-lattice's Tolman exponent as n = 2.0013 +/- 0.0008 under the per-link phase
+GameBoard's Tolman exponent as n = 2.0013 +/- 0.0008 under the per-link phase
 rule (three loaded rows, stretch 1.18 to 3.68; dilution and angular size
 identical with and without load), against 2.59 +/- 0.17 and 3.37 +/- 0.13 in
 the raw data and 4 for expansion; finds H falling with age in both load
@@ -365,7 +365,7 @@ self-meeting is one more number to fix.
 
 What can be tested, once the ray-event engine runs: one ray with an
 output-clock delay and a charge field, no declared phase rate, on a straight
-line on a small board; measure the phase gained per step as a function of the
+line on a small GameBoard; measure the phase gained per step as a function of the
 delay `k_out`. Three outcomes: a fixed ratio that depends only on the delay
 (the hypothesis lives and the declared rate of 3.3 becomes derivable), a
 ratio that needs tuning per family (the parameter has only moved), or no
@@ -403,10 +403,10 @@ efficiency above the fair-sampling bound and settings chosen at spacelike
 separation) and the three-particle GHZ tests all report violations under
 condition 1. The prediction of line 1 therefore contradicts existing data
 unless the model's coincidence count differs from the experiments' in a way
-the pair test can show. The test (issue #169, feature 4): the pair board with
+the pair test can show. The test (issue #169, feature 4): the pair GameBoard with
 the source as a marked Node, two Detectors at equal distance with settings
 drawn per pair, coincidences counted within a declared window, CHSH computed
-from clicks only; then the same board with one arm delayed by more than the
+from clicks only; then the same GameBoard with one arm delayed by more than the
 round trip. Three outcomes: at most 2 in the symmetric case (the model's
 prediction stands and disagrees with the data; the hypothesis fails as a
 model of entanglement and is kept as the model's stated limit), above 2 in
@@ -548,18 +548,18 @@ catalog lines, the gluon as the quark's field and `gluon_gluon_binding`,
 produce it, in a research run after feature 14 (E7 of the register), and
 lines 1 to 3 above read in that language as the closure of gluon loops.
 
-## 14. The gravitational constant from the lattice, G = ħc/(N m₀)²
+## 14. The gravitational constant from the GameBoard, G = ħc/(N m₀)²
 
 Recorded 2026-09-17 from the model owner's statement of that day; open.
 
-**Statement.** In the ray-event model gravity is bending by delay (Highlights 3.28): the retained content of a Node makes it slow, and the information that it is heavy spreads in ray form. The unit of mass is the rest rate m₀ of the lightest massive family (one phase step per interval), and the largest rest rate the phase can represent is N steps per interval, N being the phase modulus declared by `phase_bits`. The hypothesis is that the effective gravitational coupling measured on the board scales as the inverse square of that ceiling, G_eff ∝ 1/N², so that in physical units G = ħc/(N m₀)², with N m₀ playing the role of the Planck mass. The real N is then of the order of 10²², which the 74-bit phase of the integer width convention can hold.
+**Statement.** In the ray-event model gravity is bending by delay (Highlights 3.28): the retained content of a Node makes it slow, and the information that it is heavy spreads in ray form. The unit of mass is the rest rate m₀ of the lightest massive family (one phase step per interval), and the largest rest rate the phase can represent is N steps per interval, N being the phase modulus declared by `phase_bits`. The hypothesis is that the effective gravitational coupling measured on the GameBoard scales as the inverse square of that ceiling, G_eff ∝ 1/N², so that in physical units G = ħc/(N m₀)², with N m₀ playing the role of the Planck mass. The real N is then of the order of 10²², which the 74-bit phase of the integer width convention can hold.
 
-**Prediction.** Measure G_eff from the bending of a light ray passing an external body (Highlights 3.19, feature 7b, `external-body-v1`; named "fixed body" earlier on 2026-09-17) of declared family and amount, at rest and at its default coupling, absorption into its explicitly accounted sink, its motion caused by fields only and its velocity an exact accumulator that completes no Link at the body's amount, so that against the light ray it stands still (experiment A6 of `docs/EXPERIMENTS.md`) on one small board with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
+**Prediction.** Measure G_eff from the bending of a light ray passing an external body (Highlights 3.19, feature 7b, `external-body-v1`; named "fixed body" earlier on 2026-09-17) of declared family and amount, at rest and at its default coupling, absorption into its explicitly accounted sink, its motion caused by fields only and its velocity an exact accumulator that completes no Link at the body's amount, so that against the light ray it stands still (experiment A6 of `docs/EXPERIMENTS.md`) on one small GameBoard with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
 
-**What would falsify it.** A bending that does not fall as 1/N², or that depends on the board size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the board allows.
+**What would falsify it.** A bending that does not fall as 1/N², or that depends on the GameBoard size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the GameBoard allows.
 
 **Status.** Open. Feature 8 (`ray-binding-v1`, 2026-09-17) ran the owner's
-acceptance criterion as `test_ray_binding.py` on a 21^3 board with a mass of
+acceptance criterion as `test_ray_binding.py` on a 21^3 GameBoard with a mass of
 N / 4 phase steps per interval in place of the external body (an ordinary
 bound group of the held form then; since 2026-09-17, when `loop-binding-v1`
 removed the held form, resident content, a record holding stock of the
@@ -595,7 +595,7 @@ Recorded 2026-09-17 from the model owner's statement of that day ("speed is a cl
 
 **Prediction.** Nature measures the rate √(1 − v²) (the Lorentz factor; the muon lifetime in flight). The model as stated predicts 1 − v for a single hop per k intervals; a group whose rays share the transit between them, or whose delay is per face (the six clocks of 3.28), may give a different curve. The run decides: measure the tick count of a bound group at rest and at v = 1/2, 1/3, 1/4, 1/8 over the same number of intervals and compare the ratio with both 1 − v and √(1 − v²).
 
-**What would falsify it.** A measured rate that follows neither curve, or a rate that depends on the direction of motion relative to the lattice axes beyond the remainder tolerance of Highlights 3.17 (an anisotropy the lattice would then show at the scale of Links). If the model gives 1 − v and nature √(1 − v²), the discrepancy is a real prediction against experiment (the muon lifetime), and the binding rule or the per-face clocks are where the model would have to change, not the engine.
+**What would falsify it.** A measured rate that follows neither curve, or a rate that depends on the direction of motion relative to the GameBoard axes beyond the remainder tolerance of Highlights 3.17 (an anisotropy the GameBoard would then show at the scale of Links). If the model gives 1 − v and nature √(1 − v²), the discrepancy is a real prediction against experiment (the muon lifetime), and the binding rule or the per-face clocks are where the model would have to change, not the engine.
 
 **Status.** Open. Needs feature 8 (binding) on `main`; experiment A14 of `docs/EXPERIMENTS.md`.
 
@@ -617,7 +617,7 @@ N stays an input.
 
 **What confirms it.** One N from two runs: the largest loop-closing content
 at which the spectrum of A10 fits, put into hypothesis 14's formula with the
-measured m₀, returns the measured G within the accuracy the board allows
+measured m₀, returns the measured G within the accuracy the GameBoard allows
 (A11 at the real N); or the resolution the spreading field needs (A1, A6)
 and the lag width found equal at every phase width, one declared width
 serving both.
@@ -653,7 +653,7 @@ every shell), or by nothing, in which case they stay inputs.
 the path count before the run, giving A5's Coulomb exponent and A1's fringes
 at every phase width without a fitted number, and the strength A5 measures,
 in the units of the ladder, agreeing with the measured fine-structure
-constant within the accuracy the board allows.
+constant within the accuracy the GameBoard allows.
 
 **What refutes it.** A5 or A1 passing only with a ratio or a table that the
 symmetry and the path count do not single out, or two ratios fitting equally
@@ -674,7 +674,7 @@ couplings.
   5.4, point 19) with one K for the world, and the wait near a mass reads the
   amplitude of the mass's field at the thing's Node (the direction of the same
   day, derived in DERIVATIONS.md round 6). If K were itself the amplitude of a
-  uniform background of shadows on the whole board, the two would be one
+  uniform background of shadows on the whole GameBoard, the two would be one
   reading: the rest rate would be the content times the background's
   amplitude, and the slowing near a mass the content times the local excess of
   amplitude the mass adds. In the language of physics the uniform background
@@ -685,7 +685,7 @@ couplings.
   shows an unsourced standing profile decays under the mixing (two thirds of a
   lone re-release radiate in twenty intervals), so a uniform background must be
   fed by something, or be the standing part of every thing's field summed over
-  the board (a closed board), which is a claim to derive before anything else.
+  the GameBoard (a closed GameBoard), which is a claim to derive before anything else.
 - **Status.** Open. Not needed for the four gravitational tests (A6 repeated),
   which read the local amplitude with K as a constant. Taken up only if the
   runs under the current reading fail in a way this would cure, or the model

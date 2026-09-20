@@ -2,7 +2,7 @@
 
 `state.json` is the world's snapshot as JSON text, byte for byte
 `json.dumps(world.snapshot(), indent=2)`, written from the engine's
-`snapshot_stream` one entry at a time so that a filled board is never held as
+`snapshot_stream` one entry at a time so that a filled GameBoard is never held as
 one object (the performance review of 2026-09-18, docs/EXPERIMENTS.md).
 Nothing of the physics is read here: the entries are the engine's, this module
 only lays them out as the JSON encoder does.
@@ -19,7 +19,7 @@ INDENT = 2
 
 class SnapshotSource(Protocol):
     """A world whose snapshot streams as (key, value) pairs
-    (`RaySimulation.snapshot_stream`)."""
+    (`NatureBeamSimulation.snapshot_stream`)."""
 
     def snapshot_stream(self) -> Iterator[tuple[str, object]]: ...
 

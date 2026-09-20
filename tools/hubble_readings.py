@@ -1,5 +1,5 @@
 """The readings of series G, the Hubble diagram behind the detector, under
-the law of the ray, in space.
+the Beam Law, in space.
 
 Reads the run folders of the worlds of `examples/events/hubble/` (the
 runner's `run.json`, `initialization.json` and `events.jsonl`, the folders
@@ -20,7 +20,7 @@ Every number is labelled by its kind (the model owner, 2026-09-20): a
 DETECTOR reading is the record of the detector's set or of a measured event
 in the world (clicks, the pointer, phases, the ages of arrivals, an owed
 count; the only kind reality has); a GAMEBOARD reading is the host's view
-of the board (a source's position and steps from the run's record, the
+of the GameBoard (a source's position and steps from the run's record, the
 books, the replay's clocks; exists for us, not in reality). The Hubble
 diagram and its fits are made of detector readings only; a source's speed
 from its `step` records and the replay's counts are the check columns.
@@ -51,8 +51,8 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe.core.lattice import PORT_HEADINGS
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.core.game_board import PORT_HEADINGS
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import flight_table
 from event_universe.events.world import HEADING_OFFSET, Q
 
@@ -126,7 +126,7 @@ class Source:
     # one number met in one interval), amount x age summed over the group.
     clicks: dict[int, list[tuple[int, int, int]]] = field(default_factory=dict)
     steps: list[int] = field(default_factory=list)  # step ticks (GameBoard)
-    left: int | None = None  # the tick it stepped off the board, if it did
+    left: int | None = None  # the tick it stepped off the GameBoard, if it did
 
     def arrivals(self) -> list[tuple[int, int, float, int]]:
         """The arrivals per interval: (tick, the amount clicked, the mean
@@ -268,7 +268,7 @@ def replay(run: Run) -> None:
     """The world replayed through the API: every measured event's (age,
     waited, position, momentum) at every window edge, the host's view of
     the clocks' counts and the steps (GameBoard readings, the check)."""
-    simulation = RaySimulation(parse_ray_world(run.document))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(run.document))
     edges = sorted({edge for window in WINDOWS for edge in window})
     for tick in range(1, min(max(edges), run.ticks) + 1):
         simulation.step()
@@ -627,7 +627,7 @@ def main(argv: list[str] | None = None) -> int:
         print(
             f"{KIND_DETECTOR} {run.name}: c = {run.c:.5f} Links per interval (the flight table), "
             f"rho = {run.rho:g} step per self-creation; the detector's own clock over the run "
-            f"{run.detector_rate:.4f} self-creations per interval; sources that left the board: "
+            f"{run.detector_rate:.4f} self-creations per interval; sources that left the GameBoard: "
             f"{', '.join(left) if left else 'none'}"
         )
     print()

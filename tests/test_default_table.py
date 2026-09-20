@@ -1,4 +1,4 @@
-"""The table generated from the keys (docs/RAY_LAW.md, section 2; the model
+"""The table generated from the keys (docs/BEAM_LAW.md, section 2; the model
 owner, 2026-09-19, Highlights 5.4, "I approve 1 and 3": the tables are
 generated from the keys and a world declares only what differs, `kind`
 derived from `quantum`): `world.default_table` gives every measured event
@@ -12,7 +12,7 @@ table generated from the keys"), written down first:
     generated table is (("read", None, "vector"), ("measure", None,
     "scalar")); a measured event without `table` parses to exactly that,
     and so does one that writes the default out, as strings, as objects
-    with `reads`, or as empty objects: the four `RayWorld`s are equal field
+    with `reads`, or as empty objects: the four `NatureBeamWorld`s are equal field
     by field;
 (b) what differs is kept: a window alone ({"phase_window": 8}) keeps the
     default rule `measure` with the window 8 and the component `scalar`; a
@@ -48,7 +48,7 @@ from event_universe.events.world import (
     default_reads,
     default_rule,
     default_table,
-    parse_ray_world,
+    parse_nature_beam_world,
 )
 from event_universe.world_loading import load_world
 
@@ -62,7 +62,7 @@ def world(families: list[dict[str, object]], table: object = None, **keys: objec
     if table is not None:
         measured["table"] = table
     document: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "default-table-test",
         "shape": [3, 3, 3],
         "boundary": "open",
@@ -81,7 +81,7 @@ def world(families: list[dict[str, object]], table: object = None, **keys: objec
 def entry(
     document: dict[str, object],
 ) -> tuple[tuple[str, ...], tuple[int | None, ...], tuple[str, ...]]:
-    parsed = parse_ray_world(document).measured[0]
+    parsed = parse_nature_beam_world(document).measured[0]
     return parsed.table, parsed.windows, parsed.reads
 
 
@@ -92,7 +92,7 @@ def test_the_default_table_is_generated_from_the_keys_and_explicit_defaults_chan
     assert default_rule(families[0]) == "read" and default_rule(families[1]) == "measure"
     assert default_reads("read") == "vector"
     assert default_reads("measure") == default_reads("rerelease") == default_reads("pass") == "scalar"
-    omitted = parse_ray_world(world(FAMILIES))
+    omitted = parse_nature_beam_world(world(FAMILIES))
     assert omitted.measured[0].table == ("read", "measure")
     assert omitted.measured[0].windows == (None, None) and omitted.measured[0].reads == (
         "vector",
@@ -104,7 +104,7 @@ def test_the_default_table_is_generated_from_the_keys_and_explicit_defaults_chan
         {"m": {}, "light": {}},
         {"light": "measure"},
     ):
-        assert parse_ray_world(world(FAMILIES, table)) == omitted, table
+        assert parse_nature_beam_world(world(FAMILIES, table)) == omitted, table
 
 
 def test_what_differs_from_the_default_is_kept():
@@ -140,7 +140,7 @@ def test_what_differs_from_the_default_is_kept():
 
 def refused(document: dict[str, object], text: str) -> None:
     with pytest.raises(ValueError, match=text):
-        parse_ray_world(document)
+        parse_nature_beam_world(document)
 
 
 def test_the_kind_is_derived_from_the_quantum_and_never_declared():
@@ -149,7 +149,7 @@ def test_the_kind_is_derived_from_the_quantum_and_never_declared():
     assert not FamilyDefinition("light", 1).free and FamilyDefinition("light", 1).unit_label == 1
     paid = FamilyDefinition("light", 1 << 30)
     assert not paid.free and paid.unit_label == 1 << 30
-    parsed = parse_ray_world(world(FAMILIES))
+    parsed = parse_nature_beam_world(world(FAMILIES))
     assert [family.free for family in parsed.families] == [True, False]
     for kind in ("free", "paid", "other"):
         refused(
@@ -162,12 +162,12 @@ def test_the_kind_is_derived_from_the_quantum_and_never_declared():
         world([{"name": "m", "quantum": 2, "charge": 1}]),
         "a paid family \\(quantum 2\\) carries no charge \\(m\\)",
     )
-    charged = parse_ray_world(world([{"name": "m", "quantum": 0, "charge": -3}]))
+    charged = parse_nature_beam_world(world([{"name": "m", "quantum": 0, "charge": -3}]))
     assert charged.families[0].charge == (-3, 1) and not hasattr(charged.measured[0], "charge")
-    halves = parse_ray_world(world([{"name": "m", "quantum": 0, "charge": [1, 2]}]))
+    halves = parse_nature_beam_world(world([{"name": "m", "quantum": 0, "charge": [1, 2]}]))
     assert halves.families[0].charge == (1, 2)
     lamp = {"position": [1, 1, 1], "family": "m", "amount": 4, "fixed": True, "lamp": {"rate": 1}}
-    lit = parse_ray_world({**world([{"name": "m", "quantum": 2}]), "measured": [lamp]})
+    lit = parse_nature_beam_world({**world([{"name": "m", "quantum": 2}]), "measured": [lamp]})
     assert lit.measured[0].lamp is not None and not lit.families[0].free
     refused(
         {**world([{"name": "m", "quantum": 0}]), "measured": [lamp]},

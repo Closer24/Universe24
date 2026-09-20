@@ -1,8 +1,8 @@
 """The Heisenberg readings tool reads the engine's own functions (Highlights
 5.4, the architecture review of 2026-09-20: `tools/heisenberg_readings.py`
 now reads the lamp's turn off `engine.by_clock` and the world's keys through
-`parse_ray_world`; the records are the run's `DetectorSet` records). The
-tool's reading of a run is checked against the engine on a minimal board;
+`parse_nature_beam_world`; the records are the run's `DetectorSet` records). The
+tool's reading of a run is checked against the engine on a minimal GameBoard;
 the expected values of docs/TEST_EXPECTATIONS.md ("The tools read the
 engine"), written down first:
 
@@ -30,8 +30,8 @@ import sys
 from pathlib import Path
 
 from event_universe.core.integer import by_clock
-from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.run import execute_ray_run
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.run import execute_nature_beam_run
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -78,7 +78,7 @@ def opening_world() -> dict[str, object]:
         for y in range(HEIGHT)
     ]
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "rays-heisenberg-w1-wave-v1",
         "shape": [14, HEIGHT, 1],
         "boundary": {"z": "periodic"},
@@ -96,10 +96,10 @@ def opening_world() -> dict[str, object]:
 
 def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     document = opening_world()
-    world = parse_ray_world(document)
+    world = parse_nature_beam_world(document)
     folder = tmp_path / "w1_wave"
     folder.mkdir()
-    execute_ray_run(world, json.dumps(document).encode("utf-8"), folder, "test", TICKS)
+    execute_nature_beam_run(world, json.dumps(document).encode("utf-8"), folder, "test", TICKS)
     reading = TOOL.read_run(folder)
     assert (reading.name, reading.width, reading.reading) == ("w1_wave", 1, "wave")
     assert (reading.wall_x, reading.screen_x, reading.distance, reading.centre) == (4, 12, 8, 2)
@@ -107,7 +107,7 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert reading.wavelength == (64 / 8) / math.sqrt(3)
     assert round(reading.wavelength, 4) == 4.6188
     assert reading.completed and reading.balanced and reading.ticks == TICKS
-    simulation = RaySimulation(world)
+    simulation = NatureBeamSimulation(world)
     for _ in range(TICKS):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -120,8 +120,8 @@ def test_read_run_reads_the_record_and_the_engines_world(tmp_path):
     assert all(value == 0 for y, value in enumerate(reading.record) if y != 2)
     opening = simulation.measured[2 + 2]
     assert opening.detector == 0
-    assert reading.opening_clicks == opening.measured[light]["rerelease"] > 0
-    assert reading.escaped == simulation.ledger.escaped_units(light) > 0
+    assert reading.opening_clicks == opening.taken[light]["rerelease"] > 0
+    assert reading.escaped == simulation.ledger.escaped_amount(light) > 0
     assert [r.name for r in TOOL.find_runs(tmp_path)] == ["w1_wave"]
     analysis = TOOL.analyse(reading)
     assert analysis["expected_width"] is None and analysis["product"] is None

@@ -17,7 +17,7 @@ Before behavior edits, apply [the published-design requirement](../workflow.md#i
 Read [the shared workflow](../workflow.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 
-The active contract is [the law of the ray](../../docs/RAY_LAW.md) with
+The active contract is [the Beam Law](../../docs/BEAM_LAW.md) with
 [the engine's bookkeeping](../../docs/ENGINE.md); the generic disturbance
 contract (DISTURBANCES.md) was deleted on 2026-09-19 and is in git.
 Configure identities and supported laws in JSON; do not add field-name branches

@@ -1,9 +1,9 @@
 # The Heisenberg run A10: the width of an opening and the spread behind it
 
-Eight worlds of the law of the ray written by `make_worlds.py`, the width
+Eight worlds of the Beam Law written by `make_worlds.py`, the width
 w of one opening (1, 3, 9, 27 Nodes) and the detectors' `reading` (`wave`,
 `beam`) the only differences between the files; the register entry is
-[A10, the width of an opening and the spread behind it, under the law of the ray](../../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20)
+[A10, the width of an opening and the spread behind it, under the Beam Law](../../../docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
 and the readings tool `tools/heisenberg_readings.py`. The model owner asked
 for it on 2026-09-19 as the test of the detector's sensitivity ([Highlights
 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector): a detector is a set of
@@ -50,7 +50,7 @@ pixel in the same interval from emitters at the path lengths L1 and L2
 were released 8 (L1 - L2) sqrt 3 / 8 ... more precisely at ticks that
 differ by the difference of their integer flight times, so their phases
 differ by 8 x (that difference) mod 64: the two-slit fringes of
-`test_ray_worlds` (a) at this lambda.
+`test_nature_beam_worlds` (a) at this lambda.
 
 **The coherent record of w emitters one Link apart** (the `wave` reading):
 at the angle theta the w rays that reach one pixel in one interval carry
@@ -158,7 +158,7 @@ What the runs read, line by line:
   `tools/heisenberg_readings.py`: 16 record checks passed, 0 failed.
 
 **Verdict.** The `wave` record narrows with the width of the opening and
-the count does not, as the law of the ray says (the interference is a
+the count does not, as the Beam Law says (the interference is a
 reading of the crowd and lives nowhere else); the product w x FWHM
 reaches the law's constant 0.886 lambda within 22 % at the one width
 where the discrete fan lets the lobe form (w = 27); at the smaller widths

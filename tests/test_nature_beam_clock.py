@@ -1,4 +1,4 @@
-"""The clock of a measured event under the law of the ray (docs/RAY_LAW.md,
+"""The clock of a measured event under the Beam Law (docs/BEAM_LAW.md,
 section 3, step 5, "unchanged in form"; the model owner, 2026-09-19: "every
 clock tick there is self-creation"): the age is the count of self-creations
 and every rate is read off it by whole division (`by_clock`), no remainder
@@ -6,8 +6,8 @@ anywhere; the lamp's release costs it by its phase rate (E = h f); the
 owed count is read off the clock from the presence; the step by the
 momentum; no merge. Re-pinned from `test_event_clock`,
 `test_release_costs_by_phase_rate` and `test_border_and_clock_corrections`
-(a, c) under the ray law. The expected integers of docs/TEST_EXPECTATIONS.md
-("The clock under the ray law"), written down first:
+(a, c) under the Beam Law. The expected integers of docs/TEST_EXPECTATIONS.md
+("The clock under the Beam Law"), written down first:
 
 (a) `by_clock`: at rate 3 / 10 the gains over ages 0 to 9 are 0, 0, 0, 1,
     0, 0, 1, 0, 0, 1; 70 over 30 ages at 7 / 3; `apportion_whole`: 7 over
@@ -27,7 +27,7 @@ momentum; no merge. Re-pinned from `test_event_clock`,
     at tick t first walks at t + 1 and 3 Links take 5 walks): 6 clicks, the
     counter's content 1 + 3 x 4 + 3 x 8 = 37, its momentum (-768, 0, 0)
     (the labels 4 x 64 and 8 x 64 along +X and -X: since 2026-09-19 the
-    label of a unit along a heading is Q e_d, Q = 64, RAY_LAW section 2
+    label of a unit along a heading is Q e_d, Q = 64, BEAM_LAW section 2
     and note 23; A's recoil (-2048, 0, 0), B's (4096, 0, 0)), each click
     record with `content` 4 or 8, 10 rays in flight carrying 60, the books
     balanced; a lamp of turn 0 releases nothing;
@@ -50,7 +50,7 @@ momentum; no merge. Re-pinned from `test_event_clock`,
 from __future__ import annotations
 
 from event_universe.core.integer import apportion_whole, by_clock
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.engine import count_owed
 
 M, LIGHT = 0, 1
@@ -58,7 +58,7 @@ M, LIGHT = 0, 1
 
 def world(measured: list[dict[str, object]], **keys: object) -> dict[str, object]:
     base: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-clock-test",
         "shape": [41, 5, 5],
         "boundary": "open",
@@ -85,8 +85,10 @@ def test_by_clock_and_apportion_whole_are_exact():
 
 def test_a_small_measured_event_releases_off_its_clock_and_turns_its_phase():
     """(b)."""
-    simulation = RaySimulation(
-        parse_ray_world(world([{"position": [20, 2, 2], "family": "m", "amount": 3, "fixed": True}]))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(
+            world([{"position": [20, 2, 2], "family": "m", "amount": 3, "fixed": True}])
+        )
     )
     released = []
     for _ in range(10):
@@ -94,15 +96,15 @@ def test_a_small_measured_event_releases_off_its_clock_and_turns_its_phase():
         assert simulation.books()["balanced"]
         released.append(simulation.ledger.transit_released[M])
     assert released[2] == 0 and released[3] == 6 and released[6] == 12 and released[9] == 18
-    simulation = RaySimulation(
-        parse_ray_world(
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(
             world([{"position": [20, 2, 2], "family": "m", "amount": 3, "fixed": True}], K=2)
         )
     )
     steps = []
     for _ in range(4):
         simulation.step()
-        steps.append(simulation.measured[1].phase_steps)
+        steps.append(simulation.measured[1].turned)
     assert steps == [1, 3, 4, 6]
 
 
@@ -125,15 +127,15 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         "fixed": True,
         "lamp": {"rate": [1, 3]},
     }
-    simulation = RaySimulation(parse_ray_world(world([six], release=[0, 1], K=82)))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world([six], release=[0, 1], K=82)))
     for _ in range(9):
         simulation.step()
         assert simulation.books()["balanced"]
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     assert simulation.ledger.transit_released[LIGHT] == 18 and entry.held == [0, 82]
     assert simulation.ledger.held_spent[LIGHT] == 18 and entry.momentum == [0, 0, 0]
-    assert entry.phase_steps == 9 and simulation.ledger.content_released[LIGHT] == 18
-    escaped = simulation.ledger.escaped_units(LIGHT)
+    assert entry.turned == 9 and simulation.ledger.content_released[LIGHT] == 18
+    escaped = simulation.ledger.escaped_amount(LIGHT)
     assert int(light.amount.sum()) + escaped == 18 and set(light.content.tolist()) == {1}
 
     clock = 4096
@@ -156,7 +158,7 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         detectors=[{"name": "d", "positions": [[3, 0, 0]], "threshold": 1}],
     )
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(pair), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(pair), records.append)
     slow, gate, fast = simulation.measured[1], simulation.measured[2], simulation.measured[3]
     for tick in range(1, 9):
         simulation.step()
@@ -166,17 +168,17 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
         and slow.held == [0, 4 * clock]
         and fast.held == [0, 8 * clock]
     )
-    assert slow.phase_steps == 32 and fast.phase_steps == 64
+    assert slow.turned == 32 and fast.turned == 64
     assert slow.momentum == [-2048, 0, 0] and fast.momentum == [4096, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     assert [r["tick"] for r in clicks] == [6, 6, 7, 7, 8, 8]
     assert sorted(r["content"] for r in clicks) == [4, 4, 4, 8, 8, 8]
-    assert gate.held == [1, 3 * 4 + 3 * 8] and gate.events == [0, 6] and gate.momentum == [-768, 0, 0]
+    assert gate.held == [1, 3 * 4 + 3 * 8] and gate.clicks == [0, 6] and gate.momentum == [-768, 0, 0]
     light = simulation.stores[LIGHT]
     assert int(light.amount.sum()) == 10 and int((light.amount * light.content).sum()) == 5 * 4 + 5 * 8
     # A turn of 0 releases nothing.
-    simulation = RaySimulation(
-        parse_ray_world(world([lamp(0, 4, [1, 0, 0], [1, 1])], shape=[7, 1, 1], release=[0, 1]))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world([lamp(0, 4, [1, 0, 0], [1, 1])], shape=[7, 1, 1], release=[0, 1]))
     )
     for _ in range(5):
         simulation.step()
@@ -186,8 +188,8 @@ def test_a_lamp_releases_off_its_clock_at_the_cost_of_its_turn_and_takes_the_rec
 def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused():
     """(d)."""
     for momentum, ticks, expected_x in ((1024, 6, 4 + 3), (64, 16, 4), (64, 17, 5)):
-        simulation = RaySimulation(
-            parse_ray_world(
+        simulation = NatureBeamSimulation(
+            parse_nature_beam_world(
                 world(
                     [{"position": [4, 2, 2], "family": "m", "amount": 16, "momentum": [momentum, 0, 0]}],
                     release=[0, 1],
@@ -203,8 +205,9 @@ def test_a_measured_event_steps_off_its_clock_and_a_step_onto_another_is_refused
     mover = {"position": [0, 0, 0], "family": "m", "amount": 16, "momentum": [1024, 0, 0]}
     resident = {"position": [1, 0, 0], "family": "m", "amount": 16}
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(world([mover, resident], shape=[3, 1, 1], release=[0, 1], K=16)), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world([mover, resident], shape=[3, 1, 1], release=[0, 1], K=16)),
+        records.append,
     )
     for tick in range(1, 7):
         simulation.step()
@@ -227,8 +230,10 @@ def ages_of_a_probe(presence: int, ticks: int) -> tuple[list[int], int, int]:
         "fixed": True,
         "table": {"m": "measure"},
     }
-    simulation = RaySimulation(
-        parse_ray_world(world([source, probe], shape=[2, 1, 1], release=[1, 1], suspension=[1, 4]))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(
+            world([source, probe], shape=[2, 1, 1], release=[1, 1], suspension=[1, 4])
+        )
     )
     entry = simulation.measured[2]
     ages = []

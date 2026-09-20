@@ -1,8 +1,8 @@
-"""Write the eight worlds of the Heisenberg run A10 under the law of the ray:
+"""Write the eight worlds of the Heisenberg run A10 under the Beam Law:
 the width of an opening and the spread behind it.
 
 One base world (README.md here; the entry "A10, the width of an opening and
-the spread behind it, under the law of the ray" in docs/EXPERIMENTS.md), the
+the spread behind it, under the Beam Law" in docs/EXPERIMENTS.md), the
 width w of the opening and the detectors' `reading` the only differences
 between the files: the plane of the two-slit world stretched to 120 x 161
 x 1 (z periodic), K 2^30, N 64, no suspension. A row of w + 4 lamps of the
@@ -104,7 +104,7 @@ def world(width: int, reading: str) -> dict[str, object]:
             }
         )
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-heisenberg-w{width}-{reading}-v1",
         "shape": list(SHAPE),
         "boundary": {"z": "periodic"},

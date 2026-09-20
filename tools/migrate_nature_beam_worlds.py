@@ -1,4 +1,4 @@
-"""Rewrite ray worlds to the form of 2026-09-20: the kind of a family derived
+"""Rewrite NatureBeam worlds to the form of 2026-09-20: the kind of a family derived
 from its quantum, only the table entries that differ from the default, and
 the charge per unit of content on the family.
 
@@ -25,6 +25,10 @@ prints the rewritten document with `--check`, changing nothing physical:
   string, or the object with the default rule, no window and the default
   `reads`); inside a kept object the default `rule` is dropped; an empty
   `table` is dropped;
+- `"law": "rays"` becomes `"law": "beam"`, the law's name since 2026-09-20
+  (rays-v1 is beam-v1, the same law; docs/MIGRATION.md, "The names
+  NatureBeam and GameBoard and the glossary's single names"); the parser
+  refuses the old name;
 - the file keeps its own style: compact on one line, or indented by two,
   with its trailing newline.
 
@@ -32,7 +36,7 @@ An entity definitions file (`format` `event-entities-v1`) declares no
 families and is left as it is: its tables are the apparatus's, read against
 the families of the world that places it.
 
-    PYTHONPATH=src python tools/migrate_ray_worlds.py examples/events/*.json
+    PYTHONPATH=src python tools/migrate_nature_beam_worlds.py examples/events/*.json
 """
 
 from __future__ import annotations
@@ -47,6 +51,8 @@ from pathlib import Path
 from event_universe.events.world import (
     FREE_QUANTUM,
     KIND_KEY,
+    LAW_VALUE,
+    OLD_LAW_VALUE,
     FamilyDefinition,
     default_reads,
     default_rule,
@@ -148,9 +154,14 @@ def migrate_charges(families: list[Json], measured: list[object]) -> None:
 def migrate_world(document: Json) -> Json:
     """The world with derived kinds, the charge per unit of content on the
     family and only the table entries that differ."""
-    if document.get("law") != "rays":
-        raise ValueError('not a world of the law of the ray (no "law": "rays")')
+    if document.get("law") not in (OLD_LAW_VALUE, LAW_VALUE):
+        raise ValueError(
+            f'not a world of the Beam Law (no "law": "{LAW_VALUE}", nor its name before '
+            f'2026-09-20, "{OLD_LAW_VALUE}")'
+        )
     result = copy.deepcopy(document)
+    # The law's name since 2026-09-20 (the same law: rays-v1 is beam-v1).
+    result["law"] = LAW_VALUE
     families_value = result.get("families")
     if not isinstance(families_value, list):
         raise ValueError("families must be a list")

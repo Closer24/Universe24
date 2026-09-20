@@ -1,4 +1,4 @@
-"""Write the worlds of the redshift series E under the law of the ray, in
+"""Write the worlds of the redshift series E under the Beam Law, in
 space, under the age reading.
 
 Two worlds of one base (README.md here; the entry "E, the clock's redshift
@@ -6,7 +6,7 @@ in space under the age reading (2026-09-20)" in docs/EXPERIMENTS.md): an
 open cube of SIDE^3 Nodes, a fixed phase-less free source of content M at
 the centre releasing one ray per self-creation on every primitive direction
 (a, b, c) with 0 < |a| + |b| + |c| <= FAN_MANHATTAN (the full fan of the
-first Manhattan shells, so that every direction of the lattice within that
+first Manhattan shells, so that every direction of the GameBoard within that
 bound is covered; `release` [1, M] gives `by_clock(age, M, M)` = 1 per
 direction per self-creation, q = len(FAN) units per interval), and clock
 probes: fixed measured events of content 1 that `pass` the rays (no push,
@@ -15,7 +15,7 @@ shells of radius r in RADII (Euclidean distance within a half Link of r)
 at the world's `suspension` [1, d]. In the `scalar` world the probes count
 the presence (the default reading); in the `age` world their table entry
 for `m` reads `age`, so their clocks count the age moment, sum amount x
-age over the rays at the Node (RAY_LAW section 3 step 5 and section 10
+age over the rays at the Node (BEAM_LAW section 3 step 5 and section 10
 note 24; the model owner, 2026-09-19: "the clock beside a mass must read
 M / r"). The probes' own release, one ray per heading at the age M, never
 comes within a run of TICKS intervals.
@@ -123,7 +123,7 @@ def world(name: str) -> Json:
                 }
             )
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-redshift-{name}-space-v1",
         "shape": list(SHAPE),
         "boundary": "open",

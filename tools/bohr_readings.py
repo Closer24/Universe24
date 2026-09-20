@@ -1,17 +1,17 @@
 """The readings of series H, "Bohr's lines behind the detector": an
 electron that is a body on a set of three Nodes, turning its phase by its
 momentum at every Link it steps, about a fixed proton in space, and the
-far faces of the board as the `wave` detectors that receive what it
+far faces of the GameBoard as the `wave` detectors that receive what it
 releases (docs/EXPERIMENTS.md, "H, Bohr's lines behind the detector";
 examples/events/bohr/make_worlds.py; the model owner's decision of
-2026-09-20, "On Bohr, go, and put it as parameters outside the board like
+2026-09-20, "On Bohr, go, and put it as parameters outside the GameBoard like
 the age").
 
 Reads the run folders of the worlds (the runner's `run.json`,
 `initialization.json` and `events.jsonl`, told apart by the `model` of the
 record, `rays-bohr-r<r>-space-v1`) and prints, per world, two kinds of
 number, each line labelled (the model owner, 2026-09-20: "in reality there
-is no such thing" about the host's readings of the board):
+is no such thing" about the host's readings of the GameBoard):
 
 - GAMEBOARD readings, the host's view of the mechanism, which exist for us
   and not in reality: the electron's orbit read from its `step` records
@@ -20,7 +20,7 @@ is no such thing" about the host's readings of the board):
   each closing of the angle and the turn of the phase per orbit against
   the design's 4 p r / h, and the design's own numbers (p, the derived j).
 - DETECTOR readings, the only kind reality has: the coherent record of
-  the electron's rays at the four side faces of the board (the face
+  the electron's rays at the four side faces of the GameBoard (the face
   detectors, `wave`: every `click` line on a face carries the ray's phase
   and amount), taken per turn and cumulatively over the turns through the
   engine's own `coherent_pointer` (the same tables, the same sum): the
@@ -363,7 +363,7 @@ def print_world(reading: Reading) -> list[tuple[str, bool]]:
         f"[{GAMEBOARD}] the orbit: {r.angle_turns:.2f} turns of the angle, {completed} closings, "
         f"{r.closed_turns} of them returning within {RETURN_SHARE:.2f} r of the start; r from "
         f"{r.least_radius:.1f} to {r.greatest_radius:.1f}, z excursion {r.z_excursion}; "
-        f"{r.ended or 'on the board at the end'}"
+        f"{r.ended or 'on the GameBoard at the end'}"
     )
     for turn in r.turns:
         print(
@@ -459,7 +459,7 @@ def main(argv: list[str] | None = None) -> int:
             failed += not ok
     print()
     print(
-        f"every line below is labelled [{GAMEBOARD}] (the host's view of the board: the orbit, the "
+        f"every line below is labelled [{GAMEBOARD}] (the host's view of the GameBoard: the orbit, the "
         f"design; exists for us, not in reality) or [{DETECTOR}] (a detector's record or a measured "
         "event's own: the only kind reality has)"
     )

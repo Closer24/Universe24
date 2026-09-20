@@ -5,6 +5,39 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The names NatureBeam and GameBoard and the glossary's single names (2026-09-20)
+
+- The model owner's names, a mechanical rename with no behaviour change
+  ([MIGRATION.md](docs/MIGRATION.md), "The names NatureBeam and GameBoard
+  and the glossary's single names"): the law's things are `NatureBeam*`
+  in the code (`NatureBeamWorld`, `NatureBeamSimulation`,
+  `NatureBeamStore`, `NatureBeamTables`, `parse_nature_beam_world`,
+  `execute_nature_beam_run`, `is_nature_beam_world`,
+  `nature_beam_tables`; `tests/test_nature_beam_*.py`;
+  `tools/migrate_nature_beam_worlds.py`); the physical lattice of Nodes
+  is the GameBoard everywhere (`src/event_universe/core/game_board.py`,
+  the canonical entry in [TERMINOLOGY.md](docs/TERMINOLOGY.md), the rule
+  in AGENTS.md, every message and document); and the 23 redundancies of
+  Highlights 5.6 take their single names in the code (`Moments`,
+  `GameBoardDiagnostics`, `presence`, `flow`, `arrived`, `NO_ARRIVAL`,
+  `TALLIES`, `DOCUMENT_KINDS`, `resolution`, `turned`, `K`,
+  `face_amount`, `escaped_amount`, `clicks`, `taken`) with every
+  world-file and run-record key deferred. Every integer is unchanged;
+  the tests pass with the same bodies.
+- The Beam Law (the model owner, 2026-09-20): the law itself is renamed
+  from "the law of the ray". `docs/RAY_LAW.md` -> [`docs/BEAM_LAW.md`](docs/BEAM_LAW.md)
+  (the anchors unchanged; nothing stays at the old path); "the law of
+  the ray" -> "the Beam Law" in every live
+  document, skill, README, example, tool, test and docstring; the
+  identity `RAYS_LAW = "rays-v1"` -> `BEAM_LAW = "beam-v1"` and the world
+  key `"law": "rays"` -> `"law": "beam"`, every world file rewritten by
+  `tools/migrate_nature_beam_worlds.py` (extended), the parser refusing
+  the old value naming the migration, the preflight's kind `beam`;
+  `run.json` records `beam-v1`; the registered runs' records stay as
+  they were (rays-v1 is beam-v1, the same law); `bohr-v1` untouched; the
+  prose word "ray" stays the informal name, the documents' first mentions
+  say "beam (the record of an event in transit)".
+
 ### Series G, the Hubble diagram behind the detector (2026-09-20)
 
 - The four worlds of `examples/events/hubble/` (`make_worlds.py`: a
@@ -42,7 +75,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 - The model owner's decision ("On Bohr, go, and put it as parameters
   outside the board like the age"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
-  [RAY_LAW note 30 (ii)](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  [RAY_LAW note 30 (ii)](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the world key `action` (h, an integer from 1, absent by default) and
   the measured-event key `phase_by_momentum` (false by default): at the
   Link a body steps on an axis whose momentum component is p, its phase
@@ -69,7 +102,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 - The model owner's decision on Bohr, the body on a set taken with it as
   the condition for a closed orbit (the physicist's proposal 1, "the
   electron of width 3"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
-  [RAY_LAW note 30](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  [RAY_LAW note 30](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the measured-event key `span` (three odd integers from 1, `[1, 1, 1]`
   by default) makes a measured event a body on the block of Nodes centred
   on its `position`, one record on all of them: the threshold, the
@@ -91,7 +124,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 - The model owner's decision ("on the board a ray, in the world a
   wave"): `world.DETECTOR_READINGS` = ("wave", "beam"); a detector
   without a `reading` and every measured event outside a declared
-  detector read `wave`, `beam` is declared ([RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  detector read `wave`, `beam` is declared ([RAY_LAW section 5](docs/BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
   and note 29; [migration](docs/MIGRATION.md#wave-is-the-default-reading-of-a-detector-on-2026-09-20)).
   Re-pinned: `test_ray_readings` (d) (the window reads the set's phase:
   2 units at phase 0 and 1 at 32 all pass the window 32; the `beam`
@@ -124,7 +157,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   `FACE_NAMES` moves to `events/world.py`; the re-exports
   `engine.by_clock` and `engine.FACE_NAMES` are gone (A11); one
   materialization of a ray's record, `RayStore.rows` and
-  `NatureBeam.record`, writes `state.json` (A3) ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file),
+  `NatureBeam.record`, writes `state.json` (A3) ([RAY_LAW section 2](docs/BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file),
   step 4 and note 28; [migration](docs/MIGRATION.md#charge-per-unit-of-content-on-2026-09-20-the-familys-charge-a-pair-no-charge-on-a-measured-event-the-records-two-columns-gone);
   [expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form): (a) to
   (e), (i) re-fixtured with the same integers, (k) and (l) added).
@@ -137,7 +170,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   The orchestrator's D1: M_A is the content the frame read at the start
   of the interval (`Measured.frame_content`, set once in `_frame_all`
   beside the clock's age and turn) and the push reads it for every
-  family's rays ([RAY_LAW step 4](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  family's rays ([RAY_LAW step 4](docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
   and note 27; [ENGINE](docs/ENGINE.md)). Test: `test_ray_push` (j), the
   architect's probe world in both family orders reads the same integers;
   no registered pin moves ([expectations](docs/TEST_EXPECTATIONS.md#the-push-as-one-form)).
@@ -151,7 +184,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   largest component of the row's u_d within 2^62 - 1
   (`nature_beam.label_overflow_rows`, inside `momentum_labels` and, in
   bulk, `first_label_overflow`), the post-check at the births is deleted
-  and the refusal names the Node and the amount ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+  and the refusal names the Node and the amount ([RAY_LAW section 2](docs/BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
   and note 26). The check is exact per direction: a merged row of weight
   2^56 on (1, 1, 0) is accepted (45 x 2^56 fits) where a heading's is
   refused. Re-pinned: `test_ray_label` (c) (`label_weights` no longer
@@ -161,7 +194,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The age of a ray kept whole and read by the measured event (2026-09-20)
 
 - The model owner's "go for it" on the clock beside a mass (2026-09-19,
-  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector); [RAY_LAW section 10](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 25): the ray's age, the count of intervals since the measured event
   that created it, is kept whole on the record (the flight reads it modulo
   the direction's period, the collision never; the board's step is
@@ -187,8 +220,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   nearest Q D / |D| computed once in the world's direction table by the
   physics-rule reviewer's exact integer rule (`nature_beam.unit_label`,
   the flight table's `labels`), in place of the integer direction D whose
-  length grew with the declaration ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
-  and [note 23](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  length grew with the declaration ([RAY_LAW section 2](docs/BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+  and [note 23](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   the model owner, "go for it", on the reviewer's verdict: the D-label was
   the right direction and the wrong magnitude). Every unit carries one
   length of momentum, Q per unit of weight, for every direction within
@@ -207,7 +240,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   326 criteria) and series D re-derived with L = 1 in label units under
   the Q S M rule and re-run (p = 3, 5, 9 units of the probe's content,
   192, 320, 576 in label units; no orbit closes by the criterion, the
-  S = 32 probes now bound for many turns; [EXPERIMENTS](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19),
+  S = 32 probes now bound for many turns; [EXPERIMENTS](docs/EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19),
   [validation](docs/VALIDATION.md)). Tests: `test_ray_label` (new),
   `test_ray_readings` (f), every momentum pin x 64 (the fan fixtures on
   u_d), the bound-edge worlds at 1/64 of their amounts, the detector's
@@ -219,7 +252,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   wave on it, a screen of one-Node pixels 108 Links behind it, under the
   readings `wave` and `beam`), `tools/heisenberg_readings.py` and the
   register entry
-  [A10](docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-law-of-the-ray-2026-09-20):
+  [A10](docs/EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20):
   the `wave` record narrows with the width and the count does not; the
   product w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not
   read at the smaller widths on the sparse fan; `beam` gives no bound
@@ -252,7 +285,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   unchanged ([validation](docs/VALIDATION.md)). Tests:
   `test_ray_detector` (f), (g), (h) new, (a), (b), (e) under `wave`
   ([expectations](docs/TEST_EXPECTATIONS.md),
-  [RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  [RAY_LAW section 5](docs/BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
   and note 23,
   [migration](docs/MIGRATION.md#the-detector-as-a-set-with-one-record-the-reading-key-and-the-phase-returned-on-2026-09-19)).
 
@@ -264,8 +297,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   which had run 200 intervals before the bound, was refused at its 20th
   interval when its two +y beams of 2^17 left through `face:+y` together
   (262144). The record is a host reading, not the law's local work, so it
-  is now exact and never refused ([RAY_LAW section 5](docs/RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
-  and [note 19](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  is now exact and never refused ([RAY_LAW section 5](docs/BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)
+  and [note 19](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
   the coherent pointer (X, Y) is summed in the int64 register while the
   clicked amount is within `POINTER_AMOUNT_BOUND` = (2^62 - 1) // (32 x
   257) = 560759486676481 and in Python integers beyond it
@@ -285,7 +318,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The host's batching of the law of the ray (2026-09-19)
 
 - Five optimizations of how the host runs the law, none of the law
-  ([RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  ([RAY_LAW section 10](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 22): step 4 taken in bulk across the measured events
   (`FamilyPlan`); the dense readings of the board decomposed on request
   for the active Nodes (`Readings`, `ArrivalRows`); the merge by one
@@ -305,7 +338,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 ### The push as one form, the one label and the affordable amount (2026-09-19, the night)
 
 - The physics-rule review of the law of the ray and the model owner's
-  proposal 2 ([RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  proposal 2 ([RAY_LAW section 10](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   notes 18 to 21). Every momentum the law reads or moves is the one label
   of the rows (`nature_beam.momentum_labels`): the push's moment, the
   click's momentum, the face click's, the recoil, what comes home and the
@@ -330,7 +363,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 - The contributor instructions and the definitions that still sent a reader
   to the deleted generic disturbance contract (docs/DISTURBANCES.md, deleted
   on 2026-09-19) carry the history marker with the date and the pointer to
-  [the law of the ray](docs/RAY_LAW.md) and [the engine](docs/ENGINE.md):
+  [the law of the ray](docs/BEAM_LAW.md) and [the engine](docs/ENGINE.md):
   the four skills and the shared workflow that named DISTURBANCES.md as the
   active contract; SIMULATOR_DEFINITIONS "Active generic disturbance model"
   (now "Historical ... (deleted on 2026-09-19)") and its display section's
@@ -359,7 +392,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 - Two decisions of the model owner on the mathematician's review of the
   table of the physical entities (Highlights 5.4, "I approve 1 and 3";
-  [RAY_LAW section 10](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  [RAY_LAW section 10](docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   notes 15 and 16), generic replacing generic. The table of a measured
   event is generated from the families' keys (`world.default_table`: a
   free family read, a paid one measured, no window) and a world declares
@@ -394,7 +427,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   naming the key; `run.json` records `width`. One unit of net flow gives
   any body p = M, so the speed it gives is 1 / (S + 1) for every content:
   the equivalence principle is kept and a world can declare slow motion
-  ([RAY_LAW section 3](docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  ([RAY_LAW section 3](docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
   step 5 and note 15, [the engine](docs/ENGINE.md),
   [terminology](docs/TERMINOLOGY.md)). Test: `tests/test_push_width.py`
   ([expectations](docs/TEST_EXPECTATIONS.md#the-width-of-the-push)).
@@ -404,7 +437,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
   directions and a free probe of content 1 at r = 12 or 24 with the
   tangential momentum derived for a circular orbit under the measured push
   law, at `width` 1, 8 and 32. Registered in
-  [D, the orbit under the law of the ray, on the plane](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19):
+  [D, the orbit under the law of the ray, on the plane](docs/EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19):
   one orbit closes by the criterion (S = 32, r = 12: 346 intervals against
   343 derived, an eccentric loop), no other closing, the mean push as
   derived (C 1.1), the grain of the push the reason. No test pins the
@@ -414,7 +447,7 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 - The engine of the law of the ray, `rays-v1` (the model owner, 2026-09-19,
   Highlights 5.4, "DECIDED: the law of the ray"; the design
-  [docs/RAY_LAW.md](docs/RAY_LAW.md)): the record `NatureBeam` and the one
+  [docs/BEAM_LAW.md](docs/BEAM_LAW.md)): the record `NatureBeam` and the one
   function `nature_beam` (`src/event_universe/events/nature_beam.py`), a
   Node's whole interval for the rays present; the flight table at
   1 / sqrt 3 on the digital line of every direction (at most one Link per

@@ -1,8 +1,8 @@
-"""The flight of a ray under the law of the ray (docs/RAY_LAW.md, section 3):
+"""The flight of a ray under the Beam Law (docs/BEAM_LAW.md, section 3):
 one speed for every direction, 1 / sqrt 3, on the digital line of its
 momentum, at most one Link per interval, the age whole on the record and
 read modulo the direction's period by the flight; a lone unit is straight
-and unchanged; the board's faces open or
+and unchanged; the GameBoard's faces open or
 periodic (the wrap, the stub of extent 1). The expected integers of
 docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
 
@@ -12,7 +12,7 @@ docs/TEST_EXPECTATIONS.md ("The flight"), written down first:
     never moves; the first arrival of a heading ray at m Links, m = 1..11,
     in the intervals 1, 3, 5, 7, 8, 10, 12, 13, 15, 17, 19;
 (b) the lone unit: every heading and every declared direction of the
-    two-slit example, 150 intervals on a periodic 61^3 board: the ray's
+    two-slit example, 150 intervals on a periodic 61^3 GameBoard: the ray's
     position is the table's digital line, its direction and phase unchanged
     (`phase_per_link` 0), one row at every interval, at most one Link per
     interval; with `phase_per_link` 3 the phase turns 3 per Link crossed;
@@ -39,11 +39,11 @@ import numpy as np
 import pytest
 
 from event_universe.configuration_validation import validate_configuration
-from event_universe.core.lattice import PORT_HEADINGS, adjacent_node
+from event_universe.core.game_board import PORT_HEADINGS, adjacent_node
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import Q, flight_table
-from event_universe.events.run import execute_ray_run
+from event_universe.events.run import execute_nature_beam_run
 
 SLIT_DIRECTIONS = [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]]
 TABLE = (
@@ -65,7 +65,7 @@ def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_desi
         if s1 == 0:
             assert int(table.period[index]) == 1 and not table.steps[index].any()
             continue
-        assert int(table.turns[index]) >= s1 * Q
+        assert int(table.resolution[index]) >= s1 * Q
         ages = np.arange(2 * int(table.period[index]) + 5)
         direction = np.full(ages.shape, index)
         m = table.manhattan_steps(direction, ages)
@@ -80,7 +80,7 @@ def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_desi
     plus_one = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS, (1, 1, 0), (1, 1, 1), (3, 1, 0)))
     for vector, (t, period) in periods.items():
         index = plus_one.vectors.tolist().index(list(vector))
-        assert (int(plus_one.turns[index]), int(plus_one.period[index])) == (t, period), vector
+        assert (int(plus_one.resolution[index]), int(plus_one.period[index])) == (t, period), vector
     position = np.zeros(3, dtype=np.int64)
     arrivals: dict[int, int] = {}
     for tau in range(20):
@@ -91,7 +91,7 @@ def test_the_flight_table_steps_at_most_one_link_and_has_the_periods_of_the_desi
 
 def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-flight-test",
         "shape": [61, 61, 61],
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
@@ -100,7 +100,7 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
         "N": 64,
         "release": [0, 1],
         "suspension": 0,
-        # The age bound a board periodic on every axis must declare.
+        # The age bound a GameBoard periodic on every axis must declare.
         "age_bound": 256,
         "directions": directions,
         "families": [{"name": "light", "quantum": 1, "phase_per_link": per_link}],
@@ -112,7 +112,7 @@ def periodic_cube(directions: list[list[int]], per_link: int = 0) -> dict[str, o
 def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
     """(b)."""
     world = periodic_cube(SLIT_DIRECTIONS)
-    table = flight_table(parse_ray_world(world).directions)
+    table = flight_table(parse_nature_beam_world(world).directions)
     vectors = [list(v) for v in PORT_HEADINGS] + SLIT_DIRECTIONS
     for vector in vectors:
         seeded = {
@@ -128,7 +128,7 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
                 }
             ],
         }
-        simulation = RaySimulation(parse_ray_world(seeded))
+        simulation = NatureBeamSimulation(parse_nature_beam_world(seeded))
         store = simulation.stores[0]
         index = table.vectors.tolist().index(vector)
         expected = np.array([30, 30, 30])
@@ -153,7 +153,7 @@ def test_a_lone_unit_is_straight_on_its_digital_line_and_unchanged():
             }
         ],
     }
-    simulation = RaySimulation(parse_ray_world(turned))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(turned))
     for _ in range(150):
         simulation.step()
     store = simulation.stores[0]
@@ -178,7 +178,7 @@ def bar(
     shape: list[int], boundary: object, in_transit: list[dict[str, object]], measured_at: list[int]
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-flight-test",
         "shape": shape,
         "boundary": boundary,
@@ -210,7 +210,7 @@ STUB = bar([5, 1, 1], {"z": "periodic"}, [unit([2, 0, 0], [0, 0, 1], 5)], [0, 0,
 def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
     """(d) and the refusals."""
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(STUB), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(STUB), records.append)
     store = simulation.stores[0]
     for tick in range(1, 7):
         simulation.step()
@@ -227,7 +227,9 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         "face:-y",
     ]
     records.clear()
-    simulation = RaySimulation(parse_ray_world({**STUB, "boundary": "open"}), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world({**STUB, "boundary": "open"}), records.append
+    )
     simulation.step()
     assert simulation.stores[0].size == 0
     assert records == [
@@ -261,7 +263,7 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         [0, 0, 1],
     )
     records.clear()
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     simulation.step()
     store = simulation.stores[0]
     rows = sorted(
@@ -280,25 +282,25 @@ def test_a_periodic_axis_wraps_and_an_open_face_clicks(tmp_path):
         "balanced": True,
     }
     for refused in ("closed", {"z": "closed"}, {"w": "periodic"}, {"z": 1}, "periodic"):
-        with pytest.raises(ValueError, match="closed board is refused"):
-            parse_ray_world({**STUB, "boundary": refused})
+        with pytest.raises(ValueError, match="closed GameBoard is refused"):
+            parse_nature_beam_world({**STUB, "boundary": refused})
         report = validate_configuration(json.dumps({**STUB, "boundary": refused}))
         assert not report.valid and report.issues[0].code == "validation"
-    parsed = parse_ray_world(STUB)
+    parsed = parse_nature_beam_world(STUB)
     assert parsed.periodic == (False, False, True) and parsed.boundary == {"z": "periodic"}
     report = validate_configuration(json.dumps(STUB))
     assert report.valid and report.summary["boundary"] == {"x": "open", "y": "open", "z": "periodic"}
-    assert report.summary["law"] == "rays-v1" and report.kind == "rays"
+    assert report.summary["law"] == "beam-v1" and report.kind == "beam"
     output = tmp_path / "run"
     output.mkdir()
     record = json.loads(
-        execute_ray_run(parsed, json.dumps(STUB).encode(), output, "test", 3).read_text()
+        execute_nature_beam_run(parsed, json.dumps(STUB).encode(), output, "test", 3).read_text()
     )
     assert record["boundary"] == {"z": "periodic"} and record["status"] == "completed"
-    assert record["law"] == "rays-v1" and record["completed_ticks"] == 3
+    assert record["law"] == "beam-v1" and record["completed_ticks"] == 3
     assert record["escaped"][0]["amount"] == 0
     state = json.loads((output / "state.json").read_text(encoding="utf-8"))
-    assert state["law"] == "rays-v1" and state["boundary"] == {"z": "periodic"} and state["tick"] == 3
+    assert state["law"] == "beam-v1" and state["boundary"] == {"z": "periodic"} and state["tick"] == 3
     assert state["nodes"][0]["families"][0]["rays"][0]["direction"] == [0, 0, 1]
 
 

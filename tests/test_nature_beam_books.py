@@ -1,5 +1,5 @@
-"""The books as running ledger lines under the law of the ray
-(docs/RAY_LAW.md, section 10, note 22; the optimizations of 2026-09-19):
+"""The books as running ledger lines under the Beam Law
+(docs/BEAM_LAW.md, section 10, note 22; the optimizations of 2026-09-19):
 `books()` reports the transit line, the content line and the transit
 momentum from the ledger (what was released less what left: escaped, home,
 absorbed), O(families) and no pass over the store, and `recount()` counts
@@ -9,7 +9,7 @@ that exercises every way a row comes or goes, the running lines equal the
 recount at every one of 40 intervals, `books(recount=True)` equals
 `books()`, and the books balance; on an empty world both are zero.
 
-The world: a 12 x 1 x 3 board with y periodic (the stub: a ray on +-y lands
+The world: a 12 x 1 x 3 GameBoard with y periodic (the stub: a ray on +-y lands
 on its own Node and is home) and every other face open, K 2^20, N 64,
 `release` [1, 4], a fan direction (2, 1, 0) declared; a lamp of the paid
 family `light` (content 2^23, the turn 8) at (1, 0, 1) releasing 3 units
@@ -31,7 +31,7 @@ labels +1 and -1 conserved; the table moves the pair on later).
 
 from __future__ import annotations
 
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 
 LIGHT, M = 0, 1
 TICKS = 40
@@ -39,7 +39,7 @@ TICKS = 40
 
 def world_of_every_way() -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-books-test",
         "shape": [12, 1, 3],
         "boundary": {"y": "periodic"},
@@ -105,7 +105,7 @@ def current_lines(books: dict[str, object]) -> dict[str, list[int]]:
 
 def test_the_running_lines_equal_the_recount_at_every_interval():
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world_of_every_way()), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world_of_every_way()), records.append)
     assert current_lines(simulation.books()) == simulation.recount()
     moved = False
     for tick in range(1, TICKS + 1):
@@ -132,7 +132,7 @@ def test_the_running_lines_equal_the_recount_at_every_interval():
 def test_an_empty_world_counts_zero_both_ways():
     world = world_of_every_way()
     world["measured"], world["in_transit"], world["detectors"] = [], [], []
-    simulation = RaySimulation(parse_ray_world(world))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world))
     simulation.step()
     zero = {"transit": [0, 0], "content": [0, 0], "momentum": [0, 0, 0]}
     assert simulation.recount() == zero == current_lines(simulation.books())
