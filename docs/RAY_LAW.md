@@ -71,25 +71,38 @@ is a bijection since identical units are interchangeable):
 | `family` | the family index (one store per family, so implicit in the store) | |
 
 The momentum vector of a ray is not stored: it is its **label**,
-`content x D[direction]` per unit for a paid family and `amount x
-D[direction]` for a free one (the label of today along the heading, the
-heading now any primitive vector; a free unit carries no content and its
-label is the unit; until the night of 2026-09-19 the free family's
-`quantum` was forced to 1 and multiplied here, section 10, note 15). Since
-the night of 2026-09-19 the label is the ONE momentum of the law
+`content x u_d` per unit for a paid family and `amount x u_d` for a free
+one, with `u_d` the **unit vector of the direction at the flight table's
+scale**: the integer vector nearest `Q D[direction] / |D[direction]|`,
+Q = 64, one world constant per direction computed once in the direction
+table (`nature_beam.unit_label`, the flight table's `labels`) by the exact
+integer rule `k(|a|) = (isqrt((2 Q |a|)^2 // |D|^2) + 1) // 2` per
+component with the sign restored (the model owner's decision of
+2026-09-19 on the physics-rule reviewer's verdict, "go for it"; section
+10, note 23). On a heading `u_d = Q e_d` exactly; on any direction
+`|u_d| = Q` within `sqrt 3 / (2 Q)` = 1.35 % and `u_d` is parallel to D
+within 0.78 degrees; `u_{-D} = -u_D` exactly and `u_{gD} = g u_D` for the
+48 signed axis permutations; no exact tie exists for a direction bound
+below 147. So every unit of a ray carries one momentum of length Q per
+unit of its weight, direction-blind, and every momentum of the record (a
+declared `momentum`, a push, a recoil, the books' lines) is in these
+label units, Q per unit of amount along a heading. (A free unit carries
+no content and its label is the unit along `u_d`; until the night of
+2026-09-19 the free family's `quantum` was forced to 1 and multiplied
+here, section 10, note 15; until 2026-09-19 the label was along the
+integer direction D itself and its magnitude grew with |D|, note 21.)
+Since the night of 2026-09-19 the label is the ONE momentum of the law
 (`nature_beam.momentum_labels`; section 10, note 18): what the push reads
-(the label moment, section 3 step 4), what a click moves onto the detector,
-what a face click books, what a re-emitter or a home takes in and gives
-back, what the transit line of the books sums; no momentum is read off a
-Port anywhere. The magnitude of a label grows with the integer length |D|
-of its direction (equal amounts on (1, 0, 0) and (7, 5, 0) carry the
-momenta 1 and sqrt 74): the law as designed, and an open question for the
-model owner (section 10, note 21).
+(the label moment, section 3 step 4), what a click moves onto the
+detector, what a face click books, what a re-emitter or a home takes in
+and gives back, what the transit line of the books sums; no momentum is
+read off a Port anywhere.
 The bound check `MOMENTUM_BOUND` (2^62 - 1) applies to every component, so
-`P x content x amount` must fit; the parser refuses a world whose declared
-`in_transit`, lamp rate or re-emission could exceed it (risk, section 9),
-and the label's weight is checked again before every product the law
-forms (`label_weights`).
+`Q x content x amount` must fit (content x amount below 2^56 per row); the
+parser refuses a world whose declared `in_transit`, lamp rate or
+re-emission could exceed it, naming the numbers (risk, section 9), and the
+label's weight is checked again before every product the law forms
+(`label_weights`, the same bound).
 
 World-file keys added: `"law": "rays"`; `directions` (optional, at the world:
 a list of integer vectors beyond the six headings that any lamp or re-emitter
@@ -222,7 +235,8 @@ order with each step's inverse:
    the phase turned back. Rest rays (direction 0, 1) stay.
 2. **The readings** (one reading set): presence per number per Node = the
    amount of every ray at the Node, rest and moving alike, and the measured
-   content; flow per number = `sum amount x D[direction]`; both read as the
+   content; flow per number = `sum amount x u_d` (since 2026-09-19 on the
+   unit vectors of section 2, note 23; until then on D); both read as the
    other change specifies. Read-only; no bijection needed. Since the night
    of 2026-09-19 (the model owner: "the one reading function is the
    amount-weighted moments of order 0, 1 and 2 of the direction vectors,
@@ -230,13 +244,16 @@ order with each step's inverse:
    alone"; section 10, note 16) the one function `read_arrivals` takes,
    over the arrivals of the reading set, the moments of their direction
    vectors weighted by their amounts: order 0 the count, split outside (a
-   ray that arrived this interval, its vector `D[direction]` as it arrived,
-   before the collision) and here (a ray that did not step, its vector
-   (0, 0, 0), so it enters the zeroth moment alone); order 1 the net flow
-   `sum amount x D[direction]`; order 2 the traceless tensor `3 x sum
-   amount x D (x) D - tr(sum amount x D (x) D) I`, exact integers (the raw
+   ray that arrived this interval, its vector `u_d` of the direction it
+   arrived on, before the collision) and here (a ray that did not step,
+   its vector (0, 0, 0), so it enters the zeroth moment alone); order 1
+   the net flow `sum amount x u_d`; order 2 the traceless tensor `3 x sum
+   amount x u (x) u - tr(sum amount x u (x) u) I`, exact integers (the raw
    second moment with its trace removed, times the number of dimensions;
-   |D| is not normalised). Every coupling selects its component by the key
+   every `u_d` has the length Q within 1.35 %, so a fan's flow reads Q per
+   unit of amount direction-blind, and on the six headings the moments
+   are Q times, Q^2 times, what they were on D; note 23). Every coupling
+   selects its component by the key
    `reads` (the clock's count and the threshold the scalar, the push the
    vector, a detector may declare the tensor); the detector's record is the
    same moments over the clicked rays with their amplitudes as weights, the
@@ -265,8 +282,9 @@ order with each step's inverse:
    proposal 2, admissible with the reviewer's two corrections; section 10,
    note 20): `push_A = sum over the rays of kappa(A, B) . V_B`, with `V_B`
    the label moment of the rays, the vector moment of `read_arrivals` with
-   the labels as weights (`amount x D[direction]` for a free family,
-   `content x amount x D[direction]` for a paid one), and `kappa(A, B)` =
+   the labels as weights (`amount x u_d` for a free family, `content x
+   amount x u_d` for a paid one, the unit vectors of section 2), and
+   `kappa(A, B)` =
    `-M_A` for a free family's ray (gravity, M_A the reader's content), `+
    q_A x q_B / M_B` for a charged free family's ray (electricity, taken as
    the whole part off the reader's clock, `sign x by_clock(age_A, |V q_A
@@ -284,23 +302,26 @@ order with each step's inverse:
 5. **The self-creations** (unchanged in form): `by_clock` for the turn, the
    release (a free family: `content x release` per declared direction, phase
    the clock's; a lamp: `rate` per direction when s > 0, cost and label
-   `quantum x s` per unit along `D[direction]`, the recoil `-label`), what
+   `quantum x s` per unit along `u_d`, the recoil `-label`), what
    came home or is re-released apportioned whole over the `directions`
    (`apportion_whole`, ties in table order from `age mod len(directions)`),
    the owed count read off the clock. Every new ray: `age` 0, the emitter's
    phase, its number. The step of a measured event by its momentum: as the
    other change leaves it (no merge; refused onto an occupied Node), with
-   the width of the push since 2026-09-19 (the model owner's D1): on an
-   axis whose momentum component is p, a free measured event of content M
-   steps one Link per (S x M + p) / p self-creations, `by_clock(age, |p|,
-   S x M + |p|)`, S the world key `width` (an integer from 1; 1 by default,
-   the rule as it was, one Link per (M + p) / p, so every world without the
-   key reads the same). One unit of net flow gives any body p = M, so the
+   the width of the push since 2026-09-19 (the model owner's D1) and
+   the label's scale since the same day (note 23): on an axis whose
+   momentum component is p (in label units), a free measured event of
+   content M steps one Link per (Q x S x M + p) / p self-creations,
+   `by_clock(age, |p|, Q x S x M + |p|)`, S the world key `width` (an
+   integer from 1; 1 by default), Q = 64 the label's scale (the width in
+   units of one free unit's label, Q x M; the physics-rule reviewer's
+   correction 2). One unit of net flow gives any body p = Q M, so the
    speed it gives is 1 / (S + 1) for every content: the push stays
    proportional to the content (the equivalence principle) and the world
-   chooses how slow its slowest motion is. No remainder is kept; the count
-   is the whole part off the clock (implementation note 15;
-   `tests/test_push_width.py`).
+   chooses how slow its slowest motion is; every step registered before
+   the label's scale is the same step, `by_clock(age, Q n, Q k) =
+   by_clock(age, n, k)`. No remainder is kept; the count is the whole
+   part off the clock (implementation note 15; `tests/test_push_width.py`).
 6. **Merge identical rows; sort by Node.** A bijection (a permutation of rows
    and a sum of interchangeable units).
 
@@ -624,9 +645,12 @@ the plane) and the argument that every ray present at a Node is leaving it
 9. `python tools/check.py --full`; the physics-rule reviewer on the tables
    and the readings; the regression evidence in VALIDATION.md.
 
-Risks. (a) **The momentum bound**: the label `content x amount x D[direction]`
-grows with P; a fan of P = 64 and a content 2^36 exceeds 2^62 at amount
-2^20; the parser refuses at load, and dense lamps must lower P or the rate.
+Risks. (a) **The momentum bound**: the label `content x amount x u_d` has
+a component up to Q = 64 on every direction (since 2026-09-19, note 23;
+until then `content x amount x D`, growing with P), so a content 2^36
+exceeds 2^62 at amount 2^20 on any direction; the parser refuses at
+load, naming the numbers, and dense lamps must lower the content or the
+rate.
 (b) **The direction set size**: a fan of every primitive vector with
 components up to 24 is 720 on the plane and about 10^5 in space; `len(D)`
 is capped at 4096, `L_d` grows as about 222 |v| S_1, so the store's bound
@@ -880,7 +904,7 @@ implementation's part of the contract. The design above is unchanged.
     recoil, the click and the push would then read the same magnitude for
     every direction. Registered in PROJECT_STATUS ("What is open") and in
     the orbit register (EXPERIMENTS.md, D); nothing was changed in the
-    law.
+    law. **Decided on 2026-09-19: the label is along `u_d` (note 23).**
 22. **The host's batching** (the optimizations of 2026-09-19; the model
     owner: "make sure there is optimization in everything"). Five changes
     to how the host runs the law and none to the law: the same integers
@@ -933,7 +957,73 @@ implementation's part of the contract. The design above is unchanged.
     and the measured events met, not of the Nodes, the store's promise of
     section 3 (the plane's 14641 Nodes cost 0.11 us each, the two slits'
     5100 rows 0.69 us each).
-23. **The detector's set, its two readings and the phase returned** (the
+23. **The label along the unit vector of the direction at the flight
+    table's scale** (the model owner's decision of 2026-09-19, Highlights
+    5.4, "go for it", on the physics-rule reviewer's verdict on note 21:
+    the D-label was "the right direction and the wrong magnitude", |p|
+    discontinuous in the direction ((4, 3, 0) and (7, 5, 0), 1.4 degrees
+    apart, carrying 5 and 8.60 at equal amounts) and a fan's push
+    diverging with the grain of its declaration (5.19 x the headings at
+    |D| <= 8, about 10 x at |D| <= 16); `tests/test_ray_label.py`). The
+    label of a unit is `u_d`, the integer vector nearest `Q D / |D|`,
+    Q = 64 (section 2), by the reviewer's exact integer rule `k(|a|) =
+    (isqrt((2 Q |a|)^2 // |D|^2) + 1) // 2` with the sign restored: it
+    equals the float rounding on all 1780418 primitive directions with
+    components in -64 .. 64 (0 mismatches), has no tie for a direction
+    bound below 147 (a half-integer needs |D| a multiple of 256), gives
+    exactly `Q e_d` on the six headings, `u_{-D} = -u_D` and `u_{gD} =
+    g u_D` under the 48 signed axis permutations, and every component
+    within Q. Pinned: (1, 1, 0) -> (45, 45, 0); (1, 1, 1) -> (37, 37,
+    37); (2, 1, 0) -> (57, 29, 0); (3, 1, 0) -> (61, 20, 0); (7, 5, 0) ->
+    (52, 37, 0); (11, 1, 0) -> (64, 6, 0); (1, 2, 3) -> (17, 34, 51);
+    (63, 46, 46) -> (45, 33, 33). Exact under it: every conservation of
+    note 18 (push = label sum, click = label, recoil = -(labels born), the
+    re-emission -(out) + (in), home, face escape, the transit line), the
+    collision (it acts on the eight slot directions only, so the label
+    sum it conserves is Q x content x S, S the heading sum), the bijection
+    of the interval, the books. Approximate, the law's grain: |u_d| = Q
+    within sqrt 3 / (2 Q) = 1.35 % (the worst (63, 46, 46) -> 1.30 %; the
+    orbit fan 0.994 .. 1.009, mean 1.0000) and u_d parallel to D within
+    0.78 degrees, comparable to the flight's own 0.77 % speed anisotropy,
+    both governed by the one Q (a larger Q shrinks both at 1 bit of bound
+    per doubling; the owner's knob, not required). The four corrections
+    of the verdict, all binding and implemented: (1) the rounding rule
+    above, in integers only (`integer_root`); (2) the step rule
+    `by_clock(age, |p|, Q x S x M + |p|)` in `_move` (section 3 step 5:
+    the width in units of one free unit's label, so one unit of net flow
+    gives 1 / (S + 1) and every registered step is bit-identical,
+    `by_clock(age, Q n, Q k) = by_clock(age, n, k)`); (3) the parser's
+    label bound and `label_weights` at `Q x content x amount <= 2^62 - 1`
+    per row, refused loudly with the number (`world.LABEL_SCALE`; the
+    parser's bound on the default P = 64 is the same number as before,
+    on the six headings it tightens from 2^62 to 2^56 per row; the
+    bound-edge tests are re-pinned at 1/64 of their amounts); (4) the
+    reading's vector and tensor moments on `u_d` in place of D
+    (`Readings`, the reading at a measured event, step 2), so a fan's
+    flow reads Q x q direction-blind; the zeroth moment is unchanged.
+    What else changes: the label moment's bulk bound is the first
+    moment's (weight x |u| x rows, `first_moment_overflow`), and the
+    reading's second-moment bound, amount x Q^2 x rows, now refuses a row
+    above 2^50 at a measured event's Node (the detector test's row of
+    2^52 re-pinned at 2^49, still beyond the pointer's register bound).
+    Unchanged: the flight table T_d, the collision table, the clock, the
+    threshold, Gauss's flux off the Port crossings (`per_port`,
+    `cube_flux`, the tool's `square_flux`), the record. Every momentum in
+    a world file (`momentum`) and in `run.json` and `state.json` is in
+    label units, x 64 for a heading; the registered runs: series C reads
+    every push, momentum and book line x 64 exactly (the electric part
+    too, `q_A q_B / M_B` being an integer on every series 7 world and
+    `by_clock(age, 64 n, k) = 64 by_clock(age, n, k)` when k divides n),
+    the tool `tools/coupling_readings.py` dividing the labels by Q where
+    it compares with q or an amount, so every criterion and reading is
+    the same; Bell is unchanged (S = 2, 326 criteria); series D is
+    re-derived with L = 1 in label units under the Q S M rule and re-run
+    (EXPERIMENTS.md, D; `examples/events/orbit/`). A fractional electric
+    coefficient no longer alternates (`test_ray_push` (e): 96 per tick
+    where 2, 1 alternated), the floor resolving 1 / Q per unit. Every
+    pinned test's momentum integer is x 64 (the fan fixtures on u_d;
+    TEST_EXPECTATIONS lists the re-pins; MIGRATION the units).
+24. **The detector's set, its two readings and the phase returned** (the
     model owner, 2026-09-19, three decisions of the same day: the
     detector a set with one record, "the detector must also return to
     the board the information it received", and the key `reading` with

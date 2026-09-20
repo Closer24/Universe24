@@ -161,6 +161,28 @@ failed, exit 0; 19 readings inside the expectation, 9 outside, registered:
   (c) |slope_count - slope_flow| 0.000, |slope_presence - slope_count|
   0.18 outside 0.10; (d) exact.
 
+## Result under the label along the unit vector (2026-09-19)
+
+The label of a unit along a heading is 64 e_d since the model owner's
+decision of 2026-09-19 (the label along the unit vector u_d of the
+direction at the flight table's scale Q = 64,
+[RAY_LAW section 2](../../../docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+and note 23), so every push, momentum and momentum book line of these
+worlds' records is the registered one times 64 exactly (the series 7
+electric part included), while the counts, the presences, the clock and
+Gauss's flux off the Port crossings are unchanged; the tool divides the
+labels by Q where it compares with q or an amount and reads the step
+rule as `by_clock(t - 1, |p|, 64 m + |p|)`. The twenty-one worlds
+(unchanged files) run on the source fingerprint
+`0eaa589ab51cdc0a12a863cd23e535e1e8ac052e8b4f3f8facf30ef05a323c5a`, Python 3.14, headless, 0.3 to 2.5 s per run: 392
+criteria passed, 0 failed, exit 0; 19 readings inside the expectation, 9
+outside, every reading equal to the result above. In label units: item
+1's first read (21, 131072, (-8388608, 0, 0)), `pushed` (-2258636288, 0,
+0) for m = 1; item 2 P_A = (615177292611584, 0, 0), P_B =
+(-615173668732928, 0, 0), the ratio 1.0000 and the sum 5.89e-6 of the
+push; item 7 unlike signs (-4517272576, 0, 0), the content-4 probe
+(-6775908864, 0, 0). The register entry records it.
+
 ## Result under the law of events (2026-09-19, history)
 
 Commit `ddb4470a`, source fingerprint

@@ -20,11 +20,13 @@ measured event `fixed`:
     (d = 47) and x = 2 with 4 (d = 48), reaching x = 6 in intervals 1, 3, 5
     and 7 (the flight table's first arrivals at 1, 2, 3 and 4 Links). d = 15
     and d = 48 click (`click` records at ticks 1 and 7 with `phase` 35 and
-    4, the push (1, 0, 0), `content` 1); d = 16 and d = 47 pass (`pass`
-    records at ticks 3 and 5 with the phase and `window` 20), go on and
-    click on `face:+x` at their next step (ticks 5 and 7). After 7
-    intervals `events` [2, 0], `held` [2, 1], the momentum (2, 0, 0), 2
-    escaped, nothing in the store, the books balanced; `in_window` at
+    4, the push (64, 0, 0), `content` 1; since 2026-09-19 the label of a
+    unit along a heading is Q e_d, Q = 64, RAY_LAW section 2 and note 23);
+    d = 16 and d = 47 pass (`pass` records at ticks 3 and 5 with the phase
+    and `window` 20), go on and click on `face:+x` at their next step
+    (ticks 5 and 7). After 7 intervals `events` [2, 0], `held` [2, 1], the
+    momentum (128, 0, 0), 2 escaped, nothing in the store, the books
+    balanced; `in_window` at
     N = 64 admits d in [0, 16) and [48, 64), at N = 2 the step 0, at N = 4
     the steps 0 and 3 (the window table);
 (b) the complement covers the circle exactly: a bar of 12 x 1 x 1, K 2^14,
@@ -38,12 +40,12 @@ measured event `fixed`:
     releases exactly once; 34 `pass` records at x = 10 (the 32 outside its
     window and the ages 64 and 65, phases 0 and 1, still on their way to
     x = 11) and none at x = 11, nothing escaped; the lamp at age 83, phase
-    19, content K + 2 - 83, momentum (-83, 0, 0);
+    19, content K + 2 - 83, momentum (-5312, 0, 0) (83 labels of 64);
 (c) a lamp with a window: the lamp of (b) with `phase_window` 8 and a plain
     counter at x = 10: at each of the first 64 intervals t its age is t, its
     phase t mod 64, and it released one ray at phase t - 1 when t - 1 is in
     the window (the ages 0..23 and 56..63) and none otherwise: after 64
-    intervals 32 released, content K + 2 - 32, momentum (-32, 0, 0), phase
+    intervals 32 released, content K + 2 - 32, momentum (-2048, 0, 0), phase
     0; after 81 (the age 63 at x = 10) the counter clicked 32 times, once at
     each of those phases, and the lamp released 17 more (the ages 64..80,
     the phases 0..16, all in the window), 49 in all. The
@@ -143,7 +145,7 @@ def test_the_window_is_the_centred_half_circle_and_a_ray_outside_it_passes():
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     assert entry.events == [2, 0] and entry.held == [2, 1]
-    assert entry.momentum == [2, 0, 0] and entry.pushed == [2, 0, 0]
+    assert entry.momentum == [128, 0, 0] and entry.pushed == [128, 0, 0]
     assert entry.measured[LIGHT] == {**NO_RESPONSE, "measure": 2}
     assert simulation.stores[LIGHT].size == 0 and simulation.ledger.escaped_units(LIGHT) == 2
     kinds = [
@@ -158,7 +160,7 @@ def test_the_window_is_the_centred_half_circle_and_a_ray_outside_it_passes():
         ("click", 7, None, 4),
     ]
     clicks = [r for r in records if r["event"] == "click" and r["detector"] is None]
-    assert all(r["push"] == [1, 0, 0] and r["content"] == 1 and r["amount"] == 1 for r in clicks)
+    assert all(r["push"] == [64, 0, 0] and r["content"] == 1 and r["amount"] == 1 for r in clicks)
     passes = [r for r in records if r["event"] == "pass"]
     assert all(r["window"] == 20 and r["node"] == [6, 0, 0] for r in passes)
 
@@ -178,14 +180,14 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     assert near.events == [32, 0] and far.events == [32, 0]
     assert near.held == [32, 1] and far.held == [32, 1] and simulation.ledger.escaped_units(LIGHT) == 0
     assert source.age == 83 and source.phase == 19 and source.phase_steps == 83
-    assert source.held == [K_B + 2 - 83, 0] and source.momentum == [-83, 0, 0]
+    assert source.held == [K_B + 2 - 83, 0] and source.momentum == [-5312, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     passes = [r for r in records if r["event"] == "pass"]
     assert len(clicks) == 64
     assert sorted(r["phase"] for r in clicks) == list(range(64))
     assert sorted(r["phase"] for r in clicks if r["node"] == [10, 0, 0]) == OUT_OF_WINDOW_8
     assert sorted(r["phase"] for r in clicks if r["node"] == [11, 0, 0]) == IN_WINDOW_8
-    assert all(r["amount"] == 1 and r["push"] == [1, 0, 0] and r["content"] == 1 for r in clicks)
+    assert all(r["amount"] == 1 and r["push"] == [64, 0, 0] and r["content"] == 1 for r in clicks)
     assert sorted(r["phase"] for r in passes) == sorted([*IN_WINDOW_8, 0, 1])
     assert all(r["node"] == [10, 0, 0] and r["window"] == 40 for r in passes)
     for record in clicks:
@@ -213,7 +215,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
         if released:
             assert int(light.phase[fresh][0]) == tick - 1 and int(light.direction[fresh][0]) == 2
     assert simulation.ledger.transit_released[LIGHT] == 32 and simulation.ledger.held_spent[LIGHT] == 32
-    assert source.held == [K_B + 2 - 32, 0] and source.momentum == [-32, 0, 0] and source.phase == 0
+    assert source.held == [K_B + 2 - 32, 0] and source.momentum == [-2048, 0, 0] and source.phase == 0
     for _ in range(17):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick

@@ -106,8 +106,13 @@ Refused, naming the key: `kind` on a family (the quantum decides it),
 `heading` on a ray in transit (`direction` replaces it), `dynamics`,
 `max_active_owners`, `port_map`, `output`, `capacity`, `groups`, a direction
 that is not primitive, a component beyond P, a direction the world does not
-declare, a label `P x content x amount` beyond 2^62 - 1 on a declared ray or
-a lamp's release, `phase_per_link` outside 0 .. N - 1.
+declare, a label `Q x content x amount` beyond 2^62 - 1 on a declared ray or
+a lamp's release (Q = `LABEL_SCALE` = 64: the momentum label of a ray is
+along the unit vector of its direction at the flight table's scale, the
+model owner's decision of 2026-09-19 on the physics-rule reviewer's
+verdict, [RAY_LAW section 2](../../../docs/RAY_LAW.md), so every declared
+`momentum` and every momentum of the record is in label units, Q per unit
+of amount along a heading), `phase_per_link` outside 0 .. N - 1.
 """
 
 from __future__ import annotations
@@ -129,6 +134,12 @@ MAX_PHASE_STEPS = 4096
 # law: the 64-bit work register with a bit to spare for one more sum.
 AMOUNT_BOUND = (1 << 62) - 1
 MOMENTUM_BOUND = (1 << 62) - 1
+# The one scale Q of the flight table and of the momentum label: the label
+# of a unit is the integer vector nearest Q D / |D| (`nature_beam.unit_label`,
+# exactly Q e_d on a heading), so a label component is within Q x content
+# x amount per row, and the parser's bound is that product (the model
+# owner's decision of 2026-09-19, the physics-rule reviewer's correction 3).
+LABEL_SCALE = 64
 # The direction table: two rest vectors, the six headings, the declared rest.
 REST_DIRECTIONS = 2
 HEADING_OFFSET = REST_DIRECTIONS
@@ -568,13 +579,15 @@ def _label_bound(
     amount: int, content: int, table: tuple[Vector, ...], directions: tuple[int, ...], label: str
 ) -> None:
     """The momentum label of a release or a declared ray, `content x amount x
-    D[direction]`, must fit the bound on every component."""
+    u_d` with u_d the unit vector of the direction at the scale Q (no
+    component beyond Q), must fit the bound on every component: Q x content
+    x amount within 2^62 - 1, that is content x amount below 2^56."""
     for direction in directions:
-        largest = max(abs(component) for component in table[direction])
-        if largest * content * amount > MOMENTUM_BOUND:
+        if LABEL_SCALE * content * amount > MOMENTUM_BOUND:
             raise ValueError(
-                f"{RAYS_LAW}: {label}: the momentum label {largest} x {content} x {amount} along "
-                f"{list(table[direction])} exceeds the integer bound {MOMENTUM_BOUND}"
+                f"{RAYS_LAW}: {label}: the momentum label {LABEL_SCALE} x {content} x {amount} = "
+                f"{LABEL_SCALE * content * amount} along {list(table[direction])} exceeds the "
+                f"integer bound {MOMENTUM_BOUND} (content x amount at most {MOMENTUM_BOUND // LABEL_SCALE})"
             )
 
 

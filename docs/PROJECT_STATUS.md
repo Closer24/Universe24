@@ -58,18 +58,15 @@ performance: 0.23 to 1.0 us per Node per interval on the registered worlds
   as worlds and tables; whether the six-heading source of the coupling
   series should release on a fan of directions (the design's section 8
   expects the ring means of a fan, 0.31 to 0.33, and the six beams give the
-  lattice ring's count); **the magnitude of a fan ray's label**: the
-  label is content x amount x D with D the integer direction, so equal
-  amounts on (1, 0, 0) and (7, 5, 0) carry the momenta 1 and sqrt 74 and
-  a fan source pushes its mean |D| times harder than six headings
-  ([RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
-  note 21; the orbit series D re-registered the night of 2026-09-19 under
-  the one push form with p re-derived for the fan's mean |D| = 5.19: no
-  orbit closes at any width), and whether the label should be along the
-  unit vector of the direction at the flight table's scale Q = 64 (one
-  table for the flight and the label), which the implementation
-  recommends the owner rule on; after that, whether to pre-fill the field,
-  to widen the push further or to read the count off the clock as well
+  lattice ring's count); the orbit series D after the label along the
+  unit vector (decided on 2026-09-19: the label of a unit is u_d, the
+  integer vector nearest Q D / |D| at Q = 64, every momentum in label
+  units, [RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  note 23; re-run: no orbit closes by the criterion, the S = 32 probe at
+  r = 12 bound for 2891 intervals and seven precessing turns, C 1.3 to
+  1.5 against the ring mean's 1): whether to pre-fill the field, to
+  widen the push further, to read the count off the clock as well, or to
+  release the field continuously rather than in shells
   ([D, the orbit](EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19)).
 - Derived and not solved: no inertia for a co-moving pair at first order in v
   (DERIVATIONS.md section 54); Bell at most 2; a single ray does not

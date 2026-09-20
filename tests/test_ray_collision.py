@@ -31,10 +31,12 @@ docs/TEST_EXPECTATIONS.md ("The collision table"), written down first:
     intervals of its line at that Node and parts at the third interval
     (x = 5 and x = 3 on a 9 x 1 x 1 bar); the same pair at a measured
     event whose table measures `light` in the window 32: the ray at phase
-    32 clicks with its label (-1, 0, 0) (the event's momentum), the ray at
-    phase 0 passes and goes on to x = 5, the transit line is (1, 0, 0) and
-    no ray is stranded at rest; the momentum book closes, measured +
-    transit = (0, 0, 0), the labels' sum before the interval.
+    32 clicks with its label (-64, 0, 0) (the event's momentum; since
+    2026-09-19 the label of a unit along a heading is Q e_d, Q = 64,
+    RAY_LAW section 2 and note 23), the ray at phase 0 passes and goes on
+    to x = 5, the transit line is (64, 0, 0) and no ray is stranded at
+    rest; the momentum book closes, measured + transit = (0, 0, 0), the
+    labels' sum before the interval.
 """
 
 from __future__ import annotations
@@ -226,7 +228,7 @@ def test_no_collision_at_a_node_that_holds_a_measured_event():
     window = {"rule": "measure", "phase_window": 32}
     for table, momentum, transit, rows_after in (
         ({"light": "pass"}, [0, 0, 0], [0, 0, 0], [(2, 5), (3, 3)]),
-        ({"light": window}, [-1, 0, 0], [1, 0, 0], [(2, 5)]),
+        ({"light": window}, [-64, 0, 0], [64, 0, 0], [(2, 5)]),
     ):
         taker = {"position": [4, 0, 0], "family": "m", "amount": 4, "fixed": True, "table": table}
         world = bar([9, 1, 1], {"y": "periodic", "z": "periodic"}, pair)

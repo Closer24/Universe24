@@ -6,10 +6,70 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The label along the unit vector of the direction, on 2026-09-19 (the momentum units change by Q = 64)
+
+The model owner's decision of 2026-09-19 (Highlights 5.4, "go for it") on
+the physics-rule reviewer's verdict on the magnitude of a fan ray's label
+([RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+and note 23; [validation](VALIDATION.md)): the momentum label of a unit is
+along the unit vector u_d of its direction at the flight table's scale,
+the integer vector nearest Q D / |D| with Q = 64 (`nature_beam.unit_label`,
+the flight table's `labels`; exactly Q e_d on a heading), in place of the
+integer direction D itself. What a user of the engine must know:
+
+- **The momentum units change by Q.** Every declared `momentum` in a world
+  file and every momentum in `run.json`, `state.json` and `events.jsonl`
+  (`momentum`, `push`, `pushed`, the momentum lines of the books, the
+  face detectors' `momentum`, the `step` records) is now in label units:
+  x 64 for a heading (the label of one unit of amount along +X is
+  (64, 0, 0), of one unit of content 8 along +X (512, 0, 0)) and the
+  unit vector's components for a fan direction (one unit along (7, 5, 0)
+  carries (52, 37, 0), not (7, 5, 0)). A world that declared `momentum`
+  [0, 23, 0] meaning 23 units of momentum now declares [0, 1472, 0]; a
+  reader of the record divides by 64 to recover the old units of a
+  heading. The zeroth moment of the reading (the count, the presence,
+  the threshold, the clock's count), the amounts, the contents, the
+  phases, the record and Gauss's flux off the Port crossings
+  (`per_port`, `cube_flux`) are unchanged.
+- **The step rule carries Q**: `by_clock(age, |p|, Q x S x M + |p|)` in
+  place of `S x M + |p|` (`RaySimulation._move`), so a declared momentum
+  x 64 steps exactly as before (`by_clock(age, Q n, Q k) = by_clock(age,
+  n, k)`); a world whose `momentum` was not rescaled steps 64 times
+  slower.
+- **The bound**: the parser refuses a declared ray, a free release or a
+  lamp's release with `Q x content x amount` beyond 2^62 - 1 (content x
+  amount at most 2^56 - 1 per row), naming the numbers, and
+  `label_weights` refuses the same at every product the law forms (a
+  free family's rows included); on the six headings the bound tightens
+  from 2^62 to 2^56 per row, on the default direction bound it is the
+  same number as before. The reading's second-moment bound, amount x
+  Q^2 x rows, refuses a set of one number above 2^50 units at a measured
+  event's Node (a row of 2^52 at a detector, once a test fixture, is
+  refused; 2^49 is not).
+- **The reading's vector and tensor moments** are taken on u_d (`Readings`,
+  the reading at a measured event, `shell_readings`' flow): a fan's flow
+  reads Q x q direction-blind, a heading's Q x q; a `reads` component
+  `vector` or `tensor` on a record is x 64 and x 4096.
+- **The tools**: `tools/coupling_readings.py` divides the labels by Q
+  where it compares with the emission q or an amount (the registered
+  expectations of RAY_LAW section 8 keep their meaning; every criterion
+  and reading is the same as registered); `tools/orbit_readings.py`
+  reads C against m q L / (2 pi r) with the push in units of Q and L the
+  fan's mean |u_d| / Q (1.0000); `examples/events/orbit/make_worlds.py`
+  derives p in units of one free unit's label (Q x m) and declares
+  `momentum` = p x 64 (192, 320, 576 at S = 1, 8, 32).
+- **Names**: `world.LABEL_SCALE` (= `nature_beam.Q`), `nature_beam.unit_label`,
+  `FlightTable.labels`, `nature_beam.first_moment_overflow`;
+  `momentum_labels` and `RayStore.labels` take the unit-vector table in
+  place of the direction vectors; `first_label_overflow` takes `free`.
+- **Tests**: every momentum integer of the pinned tests is x 64 (the fan
+  fixtures on u_d), the bound-edge worlds of `test_ray_world_parsing`
+  (d) are at 1/64 of their amounts, `test_ray_label.py` is new;
+  [TEST_EXPECTATIONS](TEST_EXPECTATIONS.md) lists every re-pin.
 ## The detector as a set with one record, the reading key and the phase returned, on 2026-09-19
 
 The model owner's three decisions of 2026-09-19 ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors),
-note 23; [changelog](../CHANGELOG.md)): a detector is a set of Nodes with
+note 24; [changelog](../CHANGELOG.md)): a detector is a set of Nodes with
 ONE record; after a click the set's phase is returned to its measured
 events; a detector declares its `reading`, `beam` (the default) or `wave`.
 

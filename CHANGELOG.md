@@ -5,6 +5,38 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The label along the unit vector of the direction (2026-09-19)
+
+- The momentum label of a ray is along the unit vector u_d of its
+  direction at the flight table's scale Q = 64, the integer vector
+  nearest Q D / |D| computed once in the world's direction table by the
+  physics-rule reviewer's exact integer rule (`nature_beam.unit_label`,
+  the flight table's `labels`), in place of the integer direction D whose
+  length grew with the declaration ([RAY_LAW section 2](docs/RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+  and [note 23](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the model owner, "go for it", on the reviewer's verdict: the D-label was
+  the right direction and the wrong magnitude). Every unit carries one
+  length of momentum, Q per unit of weight, for every direction within
+  1.35 %, exactly Q e_d on a heading; every conservation stays exact.
+  The four corrections of the verdict are implemented: the rounding rule
+  in integers only; the step rule `by_clock(age, |p|, Q x S x M + |p|)`
+  (`_move`, every registered step bit-identical); the parser's and
+  `label_weights`' bound at Q x content x amount <= 2^62 - 1, refused
+  loudly with the number; the reading's vector and tensor moments on u_d
+  (a fan's flow reads Q x q direction-blind). Every momentum of a world
+  file and of the record is now in label units, x 64 for a heading
+  ([migration](docs/MIGRATION.md#the-label-along-the-unit-vector-of-the-direction-on-2026-09-19-the-momentum-units-change-by-q--64)).
+  Re-registered: series C (every push and momentum x 64 exactly, the
+  tool dividing by Q where it compares with q; 392 criteria, 0 failed,
+  19 readings inside and 9 outside as before), Bell (unchanged, S = 2,
+  326 criteria) and series D re-derived with L = 1 in label units under
+  the Q S M rule and re-run (p = 3, 5, 9 units of the probe's content,
+  192, 320, 576 in label units; no orbit closes by the criterion, the
+  S = 32 probes now bound for many turns; [EXPERIMENTS](docs/EXPERIMENTS.md#d-the-orbit-under-the-law-of-the-ray-on-the-plane-2026-09-19),
+  [validation](docs/VALIDATION.md)). Tests: `test_ray_label` (new),
+  `test_ray_readings` (f), every momentum pin x 64 (the fan fixtures on
+  u_d), the bound-edge worlds at 1/64 of their amounts, the detector's
+  beyond-register row 2^52 -> 2^49 ([expectations](docs/TEST_EXPECTATIONS.md)).
 ### The Heisenberg run A10 registered (2026-09-20)
 
 - `examples/events/heisenberg/` (eight worlds by `make_worlds.py`: one

@@ -89,8 +89,13 @@ and (e)).
 index into the world's direction table D), an age (the flight phase, modulo
 the direction's period), a phase (a step of the circle of N), a number (the
 last emitter), an amount (whole units) and a content per unit; its momentum
-is not stored, it is amount x content x D[direction] for a paid family and
-amount x D[direction] for a free one (its unit carries no content). The Node holds nothing
+is not stored, it is amount x content x u_d for a paid family and
+amount x u_d for a free one (its unit carries no content), u_d the unit
+vector of the direction at the flight table's scale Q = 64 (the integer
+vector nearest Q D / |D|, exactly Q e_d on a heading; the model owner's
+decision of 2026-09-19, [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+and note 23), so every momentum of the record is in label units, Q per
+unit of amount along a heading. The Node holds nothing
 between intervals but the rays present at it and the measured event there.
 The law of one interval at one Node is `nature_beam` ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam)):
 the walk by the flight table, the one reading, the collision by the table
@@ -105,8 +110,9 @@ re-emitted) and the merge of identical records. Every piece of logic exists once
 the direction vectors of a Node's arrivals (the model owner, 2026-09-19:
 valid for a fan as for the six headings; a ray that did not step has the
 direction (0, 0, 0) and enters the zeroth moment alone): two scalars
-(outside, here), the net flow (sum amount x D) and the traceless tensor
-(3 x sum amount x D (x) D less its trace, exact integers), and every
+(outside, here), the net flow (sum amount x u_d, on the unit vectors at
+the scale Q) and the traceless tensor (3 x sum amount x u (x) u less its
+trace, exact integers), and every
 coupling selects its component by the declared key `reads` of its table
 entry (`scalar` by default: the clock's count and the threshold read the
 presence, the push reads the flow, a detector may declare `tensor`); the
@@ -125,12 +131,15 @@ interval, a diagnostic of the walk for Gauss's flux); the frame turns the
 phases of the measured events that
 self-created, reads the owed count off the clock from the presence
 (`_suspend`, `by_clock(age, presence x n, d)`), moves the measured events
-by their momentum (`_move`: on an axis whose momentum component is p, one
-Link per (S x M + p) / p self-creations, `by_clock(age, |p|, S x M + |p|)`,
-M the content and S the world's `width`, 1 by default; the model owner's
-D1 of 2026-09-19, [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam)
-step 5 and note 15; at most one Link per interval, x before y before z,
-only in an interval where nothing is owed) and books the interval.
+by their momentum (`_move`: on an axis whose momentum component is p in
+label units, one Link per (Q x S x M + p) / p self-creations,
+`by_clock(age, |p|, Q x S x M + |p|)`, M the content, S the world's
+`width`, 1 by default, and Q = 64 the label's scale; the model owner's
+D1 of 2026-09-19 and the label along the unit vector of the same day,
+[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5
+and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
+1 / (S + 1); at most one Link per interval, x before y before z, only in
+an interval where nothing is owed) and books the interval.
 `inverse_step` runs the
 inverse collision and the inverse walk on a board without a measured event
 (the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
@@ -143,7 +152,8 @@ Unchanged in form from the law of events (the model owner, 2026-09-19, "I
 approve the proposal"; E = h f): at a self-creation whose turn is
 s = `by_clock(age, content, K)` each unit a lamp releases costs it
 `quantum` x s content, carries that content per unit and the momentum
-`quantum` x s x D[direction] along its direction, and gives it to the
+`quantum` x s x u_d along its direction (u_d the unit vector at the scale
+Q = 64), and gives it to the
 measured event that measures it; a turn of 0 releases nothing; a free
 family's release costs nothing and its rays carry no content. The recoil of
 a release is the negative of the momentum released, summed over the
@@ -165,9 +175,10 @@ came home is on the absorbed line until it leaves again); the content line
 the same identity; and the momentum lines: the measured line the sum of
 the pushes taken, the labels of what clicked or came home and the recoils,
 the transit line the sum over the store of the one label of every row
-(`nature_beam.momentum_labels`: amount x content x D[direction] for a paid
-family, amount x D[direction] for a free family, whose unit carries no
-content), the escaped line the faces' sums. For a paid family the three
+(`nature_beam.momentum_labels`: amount x content x u_d for a paid family,
+amount x u_d for a free family, whose unit carries no content; u_d the
+unit vector of the direction at the scale Q, the flight table's
+`labels`), the escaped line the faces' sums, every line in label units. For a paid family the three
 lines close over the click, the re-emission and the home (measured +
 transit + escaped constant; a `read` of a paid ray is a report of its
 label, the ray going on); for a free family the push is the form of
@@ -240,8 +251,9 @@ a ray, the earlier engines' keys (`contents`, `initial_shadows`,
 `wait_per_quantum`, `schema_version`, `dense_field`), `phase_turn` as an
 unknown key, a closed board, a non-primitive direction, a component beyond
 P, a direction the world does not declare, a rest direction on a lamp or a
-re-emitter, a repeated direction, a momentum label beyond 2^62 - 1 on a
-declared ray or a lamp's release, `phase_per_link` outside 0 .. N - 1 or on
+re-emitter, a repeated direction, a momentum label Q x content x amount
+beyond 2^62 - 1 on a declared ray or a lamp's release (content x amount
+below 2^56), `phase_per_link` outside 0 .. N - 1 or on
 a family without a phase circle, a content at or past K x N / 2 of a family
 with a phase, a lamp on a free family, `kind` on a family (pointing to
 MIGRATION: the quantum decides the kind), a family without `quantum`, a

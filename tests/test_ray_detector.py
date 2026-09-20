@@ -28,19 +28,22 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     threshold 3 (from `test_detector_sensitivity` (a), re-pinned): 2 rays of
     another number pass with a `pass` record (`threshold` 3), no click, no
     push, the rays going on whole; 3 rays are measured: 3 clicks, `held`
-    [4, 3], the momentum (3, 0, 0), nothing left in the store, the report 3
-    measured, 3 clicks, the record (3 x 32)^2 x 256^2 = 9 x 32^2 x 256^2
+    [4, 3], the momentum (192, 0, 0) (three labels of 64 along +X: since
+    2026-09-19 the label of a unit along a heading is Q e_d, Q = 64,
+    RAY_LAW section 2 and note 23), nothing left in the store, the report
+    3 measured, 3 clicks, the record (3 x 32)^2 x 256^2 = 9 x 32^2 x 256^2
     (a row of three identical rays is one coherent amplitude);
 (c) a re-emitter at threshold 3 (from (b) there): 2 rays pass; 3 rays are
-    taken (re-released 3, no click, the push (3, 0, 0), the recoil at the
-    re-emission -(1, 1, 1) leaving the momentum (2, -1, -1)) and created again at the
-    same interval's self-creation, one per declared direction (+X, +Y, +Z),
-    with the re-emitter's number, the arriving phase 20, content 1, age 0;
+    taken (re-released 3, no click, the push (192, 0, 0), the recoil at
+    the re-emission -(64, 64, 64) leaving the momentum (128, -64, -64))
+    and created again at the same interval's self-creation, one per
+    declared direction (+X, +Y, +Z), with the re-emitter's number, the
+    arriving phase 20, content 1, age 0;
 (d) an emitter inside a detector reads no threshold: a lamp of light
     (content 24, K 24, rate [1, 1]) in a detector of threshold 5 releases
     one unit per heading per interval, its content 18 then 12; a reader of
     `m` (content 4) at threshold 4 passes 3 rays and reads 4, pushed by
-    -M c = (-16, 0, 0);
+    -M x 64 c = (-1024, 0, 0);
 (e) the record is exact and never refused (2026-09-19, after the night's
     bound refused `two_contents`): every entry (C, S) of the 1/256 tables
     is shorter than 257 for every N from 2 through 4096 (the largest
@@ -58,8 +61,11 @@ detector's record"), written down first. K 2^20, `suspension` 0, `release`
     `two_contents` sends to a face) records 2^62 exactly, one past the
     law's bound 2^62 - 1; two rows of 130561 and 130563 (two numbers, +X
     and -X, a quarter turn apart) record (2^13 x 130561)^2 + (2^13 x
-    130563)^2; a row of 2^52 (the reviewer's silent int64 wrap, once
-    refused) records 2^130 with the pointer (2^65, 0); two rows of 2^18
+    130563)^2; a row of 2^49 (beyond the pointer's register bound, as the
+    reviewer's silent int64 wrap at 2^52 was; since the label along the
+    unit vector, 2026-09-19, a row above 2^50 is refused by the reading's
+    second-moment bound, amount x 64^2 x rows, before any record) records
+    2^124 with the pointer (2^62, 0); two rows of 2^18
     clicking in the intervals 1 and 3 accumulate 2^63, beyond int64, in
     the detector's record and the report, round-tripped through JSON; a
     ray of 2^18 stepping off the open face +x records 2^62 on `face:+x`;
@@ -247,8 +253,8 @@ def test_a_receiver_measures_only_a_set_at_its_threshold_and_a_smaller_one_passe
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert entry.events == [0, 3] and entry.held == [4, 3] and entry.momentum == [3, 0, 0]
-    assert entry.pushed == [3, 0, 0] and entry.measured[LIGHT] == {**NO_RESPONSE, "measure": 3}
+    assert entry.events == [0, 3] and entry.held == [4, 3] and entry.momentum == [192, 0, 0]
+    assert entry.pushed == [192, 0, 0] and entry.measured[LIGHT] == {**NO_RESPONSE, "measure": 3}
     assert light.size == 0
     assert simulation.detectors()[0]["families"]["light"] == {
         "measured": 3,
@@ -288,10 +294,10 @@ def test_a_re_emitter_takes_only_a_set_at_its_threshold_and_creates_it_again_as_
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     simulation.step()
     assert simulation.books()["balanced"]
-    assert [(r["event"], r["amount"], r["push"]) for r in records] == [("rerelease", 3, [3, 0, 0])]
+    assert [(r["event"], r["amount"], r["push"]) for r in records] == [("rerelease", 3, [192, 0, 0])]
     assert entry.measured[LIGHT] == {**NO_RESPONSE, "rerelease": 3} and entry.events == [0, 0]
     assert entry.held == [4, 0] and entry.pending == [[], []]
-    assert entry.pushed == [3, 0, 0] and entry.momentum == [2, -1, -1]
+    assert entry.pushed == [192, 0, 0] and entry.momentum == [128, -64, -64]
     assert (
         simulation.ledger.transit_absorbed[LIGHT] == 3 and simulation.ledger.transit_released[LIGHT] == 3
     )
@@ -340,7 +346,7 @@ def test_a_release_reads_no_threshold_and_a_reading_is_gated_like_a_measurement(
 
     source = {"position": [0, 1, 1], "family": "m", "amount": 16, "fixed": True}
     reader = {"position": NODE, "family": "m", "amount": 4, "fixed": True, "table": {"m": "read"}}
-    for amount, push, read in ((3, [0, 0, 0], 0), (4, [-16, 0, 0], 4)):
+    for amount, push, read in ((3, [0, 0, 0], 0), (4, [-1024, 0, 0], 4)):
         simulation = RaySimulation(
             parse_ray_world(world([source, reader], [arrival(amount, family="m", number=1)], 4))
         )
@@ -373,7 +379,7 @@ def test_the_record_is_exact_and_never_refused():
         cosines, sines = phase_cosines(1 << k), phase_sines(1 << k)
         assert max(c * c + s * s for c, s in zip(cosines, sines, strict=True)) < 257 * 257
     assert POINTER_AMOUNT_BOUND == MOMENTUM_BOUND // (32 * 257) == 560759486676481
-    assert (1 << 48) < POINTER_AMOUNT_BOUND < (1 << 49) < (1 << 52)
+    assert (1 << 48) < POINTER_AMOUNT_BOUND < (1 << 49)
     cosines, sines = phase_cosines(64), phase_sines(64)
 
     def expected(records: list[dict[str, object]], detector: str) -> tuple[int, int, int]:
@@ -397,7 +403,7 @@ def test_the_record_is_exact_and_never_refused():
             (8192 * 130561, 8192 * 130563),
             8192**2 * (130561**2 + 130563**2),
         ),
-        ([arrival(1 << 52)], (1 << 65, 0), 1 << 130),
+        ([arrival(1 << 49)], (1 << 62, 0), 1 << 124),
     ):
         records: list[dict[str, object]] = []
         simulation = RaySimulation(
@@ -416,7 +422,7 @@ def test_the_record_is_exact_and_never_refused():
         assert report == {"measured": amount, "clicks": amount, "record": square}, rays
         assert phase == (0 if len(rays) == 1 else 8), rays
         assert json.loads(json.dumps(report))["record"] == square, rays
-    assert 2139119616**2 < MOMENTUM_BOUND < (1 << 62) < (1 << 63) < (1 << 130)
+    assert 2139119616**2 < MOMENTUM_BOUND < (1 << 62) < (1 << 63) < (1 << 124)
     # The accumulation: two rows of 2^18, one Link and two Links before the
     # detector (the intervals 1 and 3), record 2^63 in total, beyond int64.
     later = {**arrival(1 << 18, number=3), "position": [NODE[0] - 2, 1, 1]}

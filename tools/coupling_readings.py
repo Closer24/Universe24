@@ -17,9 +17,18 @@ re-emits them over the six headings and the net emission into the plane is
 q = 6 x 2^17 per interval at the fixed point. Under the law of the ray
 (docs/RAY_LAW.md, section 8) a free source's rays are six beams on the six
 headings, a ballistic stream at 1 / sqrt 3: the items read the identities of
-a stream of rays. 1 the equivalence (the push of a probe of content m is m
-times the push of content 1, record by record; a free probe's steps are the
-same for every m and its step onto the source is refused, no merge); 2 the
+a stream of rays. Since 2026-09-19 the momentum label of a unit along a
+heading is Q e_d with Q = `LABEL_SCALE` = 64 (the label along the unit
+vector of the direction at the flight table's scale, RAY_LAW section 2 and
+note 23), so every push, momentum and flow of the record is in label units:
+where the tool compares a push or a flow with the emission q (a count of
+units) or with an amount it divides the label by Q, and the registered
+expectations of RAY_LAW section 8 keep their meaning (flow x 2 pi r / q
+= 1, the push -amount x m per unit); Gauss's flux is read off the Port
+crossings and is untouched. 1 the equivalence (the push of a probe of
+content m is m times the push of content 1, record by record; a free
+probe's steps are the same for every m and its step onto the source is
+refused, no merge); 2 the
 third law (the pushes of A on B and of B on A equal and opposite at every
 tick: each reads the other's lone beam, exact); 3 superposition (exact,
 rays of different numbers never interact); 4 retardation (the first read at
@@ -51,6 +60,7 @@ import numpy as np
 from event_universe.core.integer import by_clock
 from event_universe.events import RaySimulation, parse_ray_world
 from event_universe.events.nature_beam import flight_table
+from event_universe.events.world import LABEL_SCALE
 from event_universe.json_documents import parse_json_document
 
 MODEL_PREFIX = "rays-coupling-"
@@ -116,8 +126,9 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int) -> list[tuple[int
     """The (tick, axis) at which a free probe of content m steps by the rule
     of the engine's step on the record: its momentum is the cumulative push
     of its reads (born at rest), at tick t after that tick's read the first
-    axis with by_clock(t - 1, |p|, m + |p|) = 1 steps; at most one per
-    interval, wherever it lands (a refused step counts)."""
+    axis with by_clock(t - 1, |p|, Q x m + |p|) = 1 steps (the momentum in
+    label units, `width` 1); at most one per interval, wherever it lands (a
+    refused step counts)."""
     momentum = [0, 0, 0]
     fired: list[tuple[int, int]] = []
     for tick in range(first, last + 1):
@@ -125,7 +136,7 @@ def steps_by_rule(reads: Reads, m: int, first: int, last: int) -> list[tuple[int
             momentum = list(added((momentum[0], momentum[1], momentum[2]), reads[tick][1]))
         for axis in range(3):
             magnitude = abs(momentum[axis])
-            if magnitude and by_clock(tick - 1, magnitude, m + magnitude):
+            if magnitude and by_clock(tick - 1, magnitude, LABEL_SCALE * m + magnitude):
                 fired.append((tick, axis))
                 break
     return fired
@@ -320,9 +331,9 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
         first_tick = min(reads)
         first = (first_tick, reads[first_tick][0], reads[first_tick][1])
         checks.equal(
-            f"1a_m{m}: the first read is (tick, amount, -amount x m on +x) with 1a_m1's tick and amount",
+            f"1a_m{m}: the first read is (tick, amount, -amount x m x Q on +x) with 1a_m1's tick and amount",
             first,
-            (base_tick, base[base_tick][0], (-base[base_tick][0] * m, 0, 0)),
+            (base_tick, base[base_tick][0], (-base[base_tick][0] * m * LABEL_SCALE, 0, 0)),
         )
         checks.equal(
             f"1a_m{m}: the same ticks and amounts as 1a_m1",
@@ -337,10 +348,10 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
         base_probe = runs["1a_m1"].measured(2)
         assert base_probe is not None
         checks.equal(f"1a_m{m}: pushed = m x pushed_1", pushed, scaled(vector(base_probe["pushed"]), m))
-        axial = sum(1 for a, p in reads.values() if p == (-a * m, 0, 0))
+        axial = sum(1 for a, p in reads.values() if p == (-a * m * LABEL_SCALE, 0, 0))
         lines.append(
             f"1a_m{m} | {m} | {len(reads)} | {first} | {pushed} | {'yes' if identity else 'NO'} "
-            f"(push = (-amount x m, 0, 0) exactly at {axial} of {len(reads)} records)"
+            f"(push = (-amount x m x Q, 0, 0) exactly at {axial} of {len(reads)} records)"
         )
     lines.append("")
     lines.append(
@@ -409,7 +420,7 @@ def item_1(runs: dict[str, Run], checks: Checks) -> list[str]:
     lines.append("")
     lines.append(
         f"the first read at tick {base_tick} with amount {base[base_tick][0]} (the front of the flight table); the "
-        f"first step at tick {first_step} (the rule off the clock: by_clock(t - 1, |p|, m + |p|) on the cumulative push); "
+        f"first step at tick {first_step} (the rule off the clock: by_clock(t - 1, |p|, Q m + |p|) on the cumulative push in label units); "
         "the steps onto the source refused, the probe beside it (no merge since 2026-09-19)"
     )
     return lines
@@ -550,9 +561,9 @@ def item_4(runs: dict[str, Run], checks: Checks) -> list[str]:
         heading = AXES[axis]
         expected = front(r)
         checks.equal(
-            f"{name}: the first read of the probe at r = {r} on {axis} pushes -amount x m along the axis",
+            f"{name}: the first read of the probe at r = {r} on {axis} pushes -amount x m x Q along the axis",
             found[2],
-            scaled(heading, -found[1] * int(probe["content"])),
+            scaled(heading, -found[1] * int(probe["content"]) * LABEL_SCALE),
         )
         checks.equal(
             f"{name}: the first read of the probe at r = {r} on {axis} is the flight table's front, whole",
@@ -671,17 +682,19 @@ def item_5(
     )
     first, last = replay.window
     lines = [
-        f"item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q})"
+        f"item 5, the far field (world {label}, the source alone, the ring means over ticks {first}-{last}; q = {Q}; the flow in label units divided by Q_label = {LABEL_SCALE})"
         + ("" if pinned else " (supplementary, not pinned)"),
         "",
     ]
-    lines.append("r | Nodes | count x r / q | presence x r / q | flow x 2 pi r / q | presence / count")
+    lines.append(
+        "r | Nodes | count x r / q | presence x r / q | flow / Q_label x 2 pi r / q | presence / count"
+    )
     lines.append(" | ".join("---" for _ in range(6)))
     scaled_readings: dict[str, list[float]] = {"count": [], "presence": [], "flow": [], "ratio": []}
     for r in FAR_RADII:
         count = replay.ring["count"][r] * r / Q
         presence = replay.ring["presence"][r] * r / Q
-        flow = replay.ring["flow"][r] * 2 * math.pi * r / Q
+        flow = replay.ring["flow"][r] / LABEL_SCALE * 2 * math.pi * r / Q
         ratio = replay.ring["presence"][r] / replay.ring["count"][r] if replay.ring["count"][r] else 0.0
         for key, value in (("count", count), ("presence", presence), ("flow", flow), ("ratio", ratio)):
             scaled_readings[key].append(value)
@@ -764,7 +777,7 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
         "",
     ]
     lines.append(
-        "r | Node | reads | amount read = replay count at every tick | -push_x x 2 pi r / (m q) | count x r / q | presence (replay) | push per interval"
+        "r | Node | reads | amount read = replay count at every tick | -push_x / Q_label x 2 pi r / (m q) | count x r / q | presence (replay) | push per interval (label units)"
     )
     lines.append(" | ".join("---" for _ in range(8)))
     for k, r in enumerate(FAR_RADII):
@@ -782,7 +795,7 @@ def axis_probes(run: Run, replay: Replay, checks: Checks, label: str) -> list[st
         push = run.window_push(reads, first, last)
         count = sum(reads[t][0] for t in reads if first <= t <= last) / FAR_WINDOW
         presence = sum(replay.presence_at[r][first - 1 : last]) / FAR_WINDOW
-        axial = -push[0] / FAR_WINDOW * 2 * math.pi * r / (m * Q)
+        axial = -push[0] / LABEL_SCALE / FAR_WINDOW * 2 * math.pi * r / (m * Q)
         lines.append(
             f"{r} | {at('+x', r)} | {len(reads)} | {'yes' if same else 'NO'} | {axial:.4f} "
             f"| {count * r / Q:.4f} | {presence:.1f} | {tuple(v / FAR_WINDOW for v in push)}"
