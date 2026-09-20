@@ -39,6 +39,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | [Hypotheses under test](HYPOTHESES.md) | The questions the framework raises, numbered, kept apart from measured results |
 | [Problem solving](PROBLEM_SOLVING.md) | How the project advanced: one line per problem, its solution and who solved it |
 | [Validation evidence](VALIDATION.md) | Dated, source-identified check results of the past; not timeless certification |
+| [The architecture cleanup plan of 2026-09-20](designs/architecture_2026-09-20/PLAN.md) | The architect's read-only pass before the cleanup pull request: every module's responsibility, what the one click leaves dead, the duplicated logic against the design's unifications, the stale names, the measured profile of the gate set with its bit-exact optimizations, the schema's overlaps and the order of the commits; its evidence beside it, [the gate set's baseline digests and seconds](designs/architecture_2026-09-20/gate_base_summary.md) and the profile |
 
 ## Operation and change procedure
 

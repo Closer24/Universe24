@@ -746,11 +746,19 @@ def hadamard(position: list[int], direction: list[int]) -> dict[str, object]:
 
 
 def cnot_gate(
-    position: list[int], inputs: list[list[int]], outputs: list[list[int]], parties: int
+    position: list[int],
+    inputs: list[list[int]],
+    outputs: list[list[int]],
+    parties: int,
+    control: list[int] | None = None,
 ) -> dict[str, object]:
     """A re-emitter with the CNOT gate, each arrival re-emitted on its own
-    output (the mirror per input)."""
+    output (the mirror per input); `control` the direction the control's
+    rows arrive on (required for two parties or more)."""
     ways = len(outputs)
+    gate: dict[str, object] = {"kind": "cnot", "hold": True, "parties": parties}
+    if control is not None:
+        gate["control"] = control
     return {
         "position": position,
         "family": "light",
@@ -761,7 +769,7 @@ def cnot_gate(
                 "rule": "rerelease",
                 "inputs": inputs,
                 "weights": [[1 if j == k else 0 for j in range(ways)] for k in range(ways)],
-                "gate": {"kind": "cnot", "hold": True, "parties": parties},
+                "gate": gate,
             }
         },
         "directions": outputs,
@@ -811,7 +819,7 @@ def cnot_pair(name: str, a: int, b: int) -> dict[str, object]:
     measured = [
         lamp([2, 5, 0], PLUS_X),
         hadamard([4, 5, 0], PLUS_X),
-        cnot_gate([8, 5, 0], [PLUS_X, MINUS_X], [PLUS_Y, MINUS_Y], 2),
+        cnot_gate([8, 5, 0], [PLUS_X, MINUS_X], [PLUS_Y, MINUS_Y], 2, PLUS_X),
         lamp([14, 5, 0], MINUS_X),
         counter([8, 8, 0], a),
         counter([8, 2, 0], (-b) % N),
@@ -834,7 +842,7 @@ def cnot_twice(name: str) -> dict[str, object]:
     measured = [
         lamp([2, 5, 0], PLUS_X),
         hadamard([4, 5, 0], PLUS_X),
-        cnot_gate([8, 5, 0], [PLUS_X, PLUS_Y], [PLUS_X, PLUS_Y], 2),
+        cnot_gate([8, 5, 0], [PLUS_X, PLUS_Y], [PLUS_X, PLUS_Y], 2, PLUS_X),
         lamp([8, 1, 0], PLUS_Y),
         cnot_gate([11, 5, 0], [PLUS_X], [PLUS_Y], 1),
         cnot_gate([8, 8, 0], [PLUS_Y], [PLUS_Y], 1),
@@ -857,7 +865,7 @@ def cnot_ghz(name: str, basis: str) -> dict[str, object]:
     measured = [
         lamp([5, 1, 0], PLUS_Y),
         hadamard([5, 2, 0], PLUS_Y),
-        cnot_gate([5, 5, 0], [PLUS_Y, MINUS_X, PLUS_X], [PLUS_Y, PLUS_Z, MINUS_Z], 3),
+        cnot_gate([5, 5, 0], [PLUS_Y, MINUS_X, PLUS_X], [PLUS_Y, PLUS_Z, MINUS_Z], 3, PLUS_Y),
         lamp([9, 5, 0], MINUS_X),
         lamp([1, 5, 0], PLUS_X),
     ]

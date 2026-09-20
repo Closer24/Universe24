@@ -45,7 +45,24 @@ gate"), written down before the first run:
     reading's, E x 4096 = 2900 where the exact cosine gives 2896.3: the
     tables' rounding (entries in 1/256) exceeds 1/N at this N, so the
     design's bound |E - cos| <= 1/N is pinned as the design's value and
-    marked failing; S = 11584/4096 = 2.828125, below 2 sqrt 2.
+    marked failing; S = 11584/4096 = 2.828125, below 2 sqrt 2;
+(i) the review of (v), B1: the units the gate's copies add are booked on
+    the layer's live count (the `gate` line's `added`, 1 on `cnot_pair_0_8`:
+    the target's row of amount 1 into two), so every gathered record of
+    the world ends at live 0, none at -1;
+(j) the review's B2: a record that reaches a gate with an offer already
+    made or with units elsewhere is refused naming the record, the units
+    and the sets (`cnot_pair_0_8` with the control's path split (1, 1) at
+    (6, 5) between the Hadamard and the gate, the second output into an
+    absorber reading `sum`: the lazy relabelling of the design's section
+    10 is not built);
+(k) the review's S1 and B3: the control is the record whose rows arrive
+    on the entry's declared `control` direction, read from the rows
+    pending alone: `cnot_pair_0_8` with its `measured` list reversed gives
+    the same multiset of outcomes over the run (E x 64 = 44 either way);
+(l) the refusals of the control: a gate of two parties without `control`;
+    a gate of one party with one; a control direction no record arrives
+    on (refused at the gate naming the count of control records).
 """
 
 from __future__ import annotations
@@ -232,6 +249,87 @@ def test_the_register_ceiling_of_the_rotations():
         ValueError, match=r"reaches 18446744073709551616 at measured\[4\] at \[8, 0, 0\]"
     ):
         parse_nature_beam_world(GENERATOR.gate_worlds()["rotations_4"])
+
+
+def test_the_copies_of_the_gate_are_booked_on_the_live_count():
+    """(i)."""
+    simulation, lines = run(GENERATOR.gate_worlds()["cnot_pair_0_8"])
+    assert simulation.layer is not None
+    gathered = [live for live in simulation.layer.records.values() if live.gathered]
+    assert len(gathered) >= N and all(live.live == 0 for live in gathered)
+    gates = [line for line in lines if line.get("event") == "gate"]
+    assert gates and all(line["added"] == 1 for line in gates)
+
+
+def prior_offer_world() -> dict[str, object]:
+    """The review's B2 world: the control's path split (1, 1) between the
+    Hadamard and the gate, one output into an absorber reading `sum`."""
+    world = GENERATOR.cnot_pair("prior", 0, 8)
+    measured = world["measured"]
+    assert isinstance(measured, list)
+    measured.insert(
+        2,
+        {
+            "position": [6, 5, 0],
+            "family": "light",
+            "amount": 1,
+            "fixed": True,
+            "table": {"light": {"rule": "rerelease", "inputs": [[1, 0, 0]], "weights": [[1, 1]]}},
+            "directions": [[1, 0, 0], [0, -1, 0]],
+        },
+    )
+    measured.append({"position": [6, 3, 0], "family": "counter", "amount": 1, "fixed": True})
+    detectors = world["detectors"]
+    assert isinstance(detectors, list)
+    detectors.append({"name": "absorber", "positions": [[6, 3, 0]], "reading": "sum"})
+    return world
+
+
+def test_a_record_with_an_offer_or_units_elsewhere_is_refused_at_the_gate():
+    """(j)."""
+    simulation = NatureBeamSimulation(parse_nature_beam_world(prior_offer_world()))
+    with pytest.raises(ValueError, match=r"record 4294967297 reaches the gate with .* elsewhere"):
+        for _ in range(40):
+            simulation.step()
+    assert simulation.tick < 40
+
+
+def test_the_control_is_the_declared_arrival_and_not_the_declaration_order():
+    """(k)."""
+    world = GENERATOR.cnot_pair("order", 0, 8)
+    reversed_world = dict(world)
+    measured = world["measured"]
+    assert isinstance(measured, list)
+    reversed_world["measured"] = list(reversed(measured))
+    outcomes = []
+    for candidate in (world, reversed_world):
+        simulation, _ = run(candidate)
+        assert simulation.layer is not None
+        outcomes.append(Counter(outcome(g) for g in simulation.layer.gathers))
+    assert outcomes[0] == outcomes[1] and correlation(dict(outcomes[0])) > 0
+
+
+def test_the_refusals_of_the_control():
+    """(l)."""
+    world = GENERATOR.cnot_pair("control", 0, 8)
+    measured = world["measured"]
+    assert isinstance(measured, list)
+    gate = measured[2]["table"]["light"]["gate"]  # type: ignore[index]
+    assert gate["control"] == [1, 0, 0]
+    without = json.loads(json.dumps(world))
+    del without["measured"][2]["table"]["light"]["gate"]["control"]
+    with pytest.raises(ValueError, match=r"gate of 2 parties declares its control"):
+        parse_nature_beam_world(without)
+    one = json.loads(json.dumps(world))
+    one["measured"][2]["table"]["light"]["gate"]["parties"] = 1
+    with pytest.raises(ValueError, match=r"a gate of one party has no control"):
+        parse_nature_beam_world(one)
+    nobody = json.loads(json.dumps(world))
+    nobody["measured"][2]["table"]["light"]["gate"]["control"] = [0, 1, 0]
+    simulation = NatureBeamSimulation(parse_nature_beam_world(nobody))
+    with pytest.raises(ValueError, match=r"finds 0 records arriving on its control direction"):
+        for _ in range(40):
+            simulation.step()
 
 
 def test_the_refusals_of_the_gate_keys():
