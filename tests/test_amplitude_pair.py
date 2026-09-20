@@ -1,6 +1,6 @@
 """The pair, the which-path world, no maintenance and GHZ under the
 amplitude law (`amplitude-v1`, the model owner, 2026-09-20; the design,
-scratchpad/amplitude/DESIGN.md section 4 and its `bell.py`;
+docs/designs/amplitude-v1/DESIGN.md section 4 and its `bell.py`;
 docs/BEAM_LAW.md note 37), on the worlds of series L3 and L4
 (`examples/events/amplitude/make_worlds.py`, `expectations.json` under
 `pair` and `ghz`, the design's reading written before the runs). The

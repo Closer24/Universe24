@@ -2898,7 +2898,7 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   ladder of the record's offers, normalised by their sum with the rungs
   at the nearest integer ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
   the physicist's and the mathematician's design,
-  scratchpad/amplitude/DESIGN.md, every integer from its check scripts).
+  docs/designs/amplitude-v1/DESIGN.md, every integer from its check scripts).
   The acceptance tests of the design, written before any run: the
   Mach-Zehnder interferometer always at one port (test 1), Elitzur-Vaidman
   (3), determinism (8), the two slits at a low rate (2), the register's
@@ -2940,9 +2940,11 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   `tests/test_amplitude_record.py`, `tests/test_amplitude_split.py`.
 - **Run (2026-09-20, the ten worlds of `examples/events/amplitude/`, 80
   intervals each, `tools/run_series.py --jobs 3`, the source fingerprint
-  `a7b924b3297a`, every run completed and conserved at every tick, 0.2 s
-  each; the readings by `tools/amplitude_path.py --check`, whose replay
-  equals `run.json`'s `world` on every run; DETECTOR unless said).** The
+  `ff5c382d672f` (the stage (v) source; `a7b924b3297a` at stage (iii),
+  the same integers), every run completed and conserved at every tick,
+  0.2 s each; the readings by `tools/amplitude_path.py --check`, whose
+  replay equals `run.json`'s `world` on every run; DETECTOR unless
+  said).** The
   gathers over the 64 births of the ticks 1 .. 64 (the design's table
   reproduced on every world):
 
@@ -2986,31 +2988,35 @@ section 3.4; the acceptance tests 1, 3 and 8).**
   `sum`, the wall freed within 6 of each opening (every fan row leaves
   the plane) and the lamp's three rows that miss the openings absorbed at
   (7, 58), (7, 60), (7, 62) (a fan row and a lamp row at one set would
-  carry the multiplicities 455 and 5, refused). The reading: 80 sets with
-  rows (3 wall Nodes, 75 pixels, the faces +y and -y), the total
-  4689423/3727360 = 1.258 of the birth norm (the cross terms of paths
-  meeting: 27 pixels receive two paths; the faces, one set each, add
-  their 37 rows coherently), the shares wall 0.477, screen 0.221, faces
-  0.302; the clicks over the 64 births by the ladder: wall 31 (10, 10,
-  11), screen 14 (one each at y = 19, 33, 39, 46, 54, 59, 60, 61, 64,
-  71, 80, 86, 98, 119), faces 19 (9, 10); Pearson of the record's screen
-  weights 0.744 with the incoherent sum, 0.368 with the Euclidean
-  two-source cosine (the design's shipped-geometry 0.753 and 0.381), the
-  screen-alone histogram 0.931 with the weights (0.963). The design's
-  "wall 3/5, screen 2/5" does not hold in this geometry: the freed fans
-  reach the open faces in y, a third destination, and each face as one
-  set sums its rows coherently.
-- **Run (2026-09-20, `slits_low`, 230 intervals, 2.8 s, the fingerprint
-  `a7b924b3297a`, completed and conserved; `slits_one` 220 intervals
+  carry the multiplicities 455 and 5, refused). The reading, coherent
+  within one Node and incoherent across the Nodes of a set (the decision
+  of 2026-09-20 on the owner's point 5; a face of 24 Nodes hit is one
+  cell of the sum of its Nodes' squares): 80 sets with rows (3 wall Nodes,
+  75 pixels, the faces +y and -y), the total 847181/745472 = 1.136 of the
+  birth norm (the wall's rows 3/5, the fans 2/5, the cross terms of paths
+  meeting at one Node: 27 pixels receive two paths), the shares wall
+  0.528, screen 0.244, faces 0.228; the clicks over the 64 births by the
+  ladder: wall 34 (11, 12, 11), screen 15 (one each at y = 11, 29, 36, 43,
+  50, 56, 59, 60, 70, 77, 82, 90, 107 and two at 61), faces 15 (8, 7);
+  Pearson of the record's screen weights 0.744 with the incoherent sum,
+  0.368 with the Euclidean two-source cosine (the design's
+  shipped-geometry 0.753 and 0.381), the screen-alone histogram 0.931
+  with the weights (0.963). The design's "wall 3/5, screen 2/5" is not
+  this geometry's reading: the freed fans reach the open faces in y, a
+  third destination. (Before the per-Node decision the faces summed their
+  rows coherently, the total 1.258 and the shares 0.477 / 0.221 / 0.302,
+  the clicks 31 / 14 / 19: dated history of the same day.)
+- **Run (2026-09-20, `slits_low`, 230 intervals, 2.4 s, the fingerprint
+  `ff5c382d672f`, completed and conserved; `slits_one` 220 intervals
   without the key, 0.7 s).** DETECTOR: 64 gathers of the 64 births by
   tick 213 (the births go on: 230 records, 81 gathered, 149 open at the
   end); the first record's cells are the reading's 80 sets with the
-  reading's rungs, its weight and total the reading's exactly; the
-  clicks per set equal the reading's on 78 of 80 sets (wall 31, faces
-  19, screen 14) and the click of screen_98 lands on screen_100: the
-  weights depend on u through the tables' rounding (7 distinct cell
-  lists over the 64 births, 36 with u = 0's), moving that rung by one;
-  the reading tool's replay equals `run.json`'s `world`.
+  reading's rungs, its weight and total the reading's exactly, its click
+  at the wall Node (7, 58, 0) with the content 1; the clicks per set equal
+  the reading's on every one of the 80 sets (wall 34, screen 15, faces
+  15; a face's click at a Node of its edge); 3 distinct cell lists over
+  the 64 births, 32 with u = 0's (the tables' rounding by u, no rung
+  moved); the reading tool's replay equals `run.json`'s `world`.
 
 **L3, the pair with the choosers, the CHSH labels, the which-path world
 and no maintenance (the design's section 4; the acceptance tests 4, 6
@@ -3032,7 +3038,8 @@ and 9).**
   E x 64 = 44, -44, 0, 0, S = 88/64. Bob's counters 116 Links farther:
   E(16, 24) x 64 = 44 (44 with the read: 0).
 - **Run (2026-09-20, `examples/events/amplitude/bell_*`, `path_*`, the
-  fingerprint `ccb244fc112f`, every run completed and conserved, 0.2 s
+  fingerprint `ff5c382d672f` (`ccb244fc112f` at stage (iv), the same
+  integers), every run completed and conserved, 0.2 s
   each, `bell_choosers` 1000 intervals 3.3 s; the reading tool's replay
   equals `run.json`'s `world` on every run; DETECTOR).** Every integer
   above reproduced: the CHSH cells and E, S = 176/64, the marginals 32/64
@@ -3053,9 +3060,60 @@ and 9).**
   weight exactly 0 (39588699237876835586664300544 on the allowed, in
   1/256^12); YYY allows all eight, 8 each.
 - **Run (2026-09-20, `ghz_xxx` .. `ghz_yyy`, 80 intervals, the
-  fingerprint `ccb244fc112f`, completed and conserved, 0.2 s each;
+  fingerprint `ff5c382d672f`, completed and conserved, 0.2 s each;
   DETECTOR).** Every triple and count as pinned; the register's replay
   equals `run.json`'s `world`.
+
+**L5, the gate between records (the design's section 10).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `gate`, the design's `gate.py` on the host's joint state).** The
+  Hadamard on the lattice (a `rerelease` with `rotate` at the setting
+  N/4) turns |0> into {00: +, 10: -} (the amounts 181 of the 128 tables,
+  the phases u and u + 32, the multiplicity 65536); the CNOT at a gate
+  with the target's |0> gives {00: +, 11: -}, the pair; with Bob's window
+  at -b the CHSH labels give E x 64 = 44, -44, 44, 44, S = 176/64 (as
+  4.3); CNOT twice is the identity; GHZ by one gate of three parties
+  gives {000, 111} and the products -1 (XXX), +1 (XYY, YXY, YYX), this
+  convention's H; the register's ceiling: three label rotations on a
+  path (m = 2^48) fit, four (2^64) do not, Grover's six (2^96) are not a
+  world of the lattice, as the design's section 10 states (exact on the
+  host's integers, not on a Node); after n gates a record has at most
+  n x 2^n rows (the pair 4, GHZ 6).
+- **Run (2026-09-20, `cnot_pair_<a>_<b>`, `cnot_twice`, `cnot_ghz_*`,
+  `rotations_3`, the fingerprint `ff5c382d672f`, completed and
+  conserved, 0.3 s each; `rotations_4` refused at load).** Every integer
+  above reproduced on the lattice: the Hadamard's rows, the gate's rows
+  (the `gate` lines: the survivor, the joined record, the labels
+  [[0, 1], [3, 1]], 4 rows; GHZ [[0, 1], [7, 1]], 6 rows), S = 176/64,
+  CNOT twice's labels {0, 1} on both arms, GHZ's allowed triples and
+  products; the reading tool's replay equals `run.json`'s `world`
+  (`tests/test_amplitude_gate.py`). Departures: the gate joins records of
+  distinct lamps (one per lamp, the earliest born) and, with `hold`,
+  records whose live units are all at the gate; a record with rows
+  elsewhere waits (the design's lazy relabelling of rows elsewhere is
+  not built: two sequential gates on an entangled record are one gate of
+  three parties here, or one gate per arm as in `cnot_twice`).
+
+**L6, the pair at N = 1024 and N = 4096 (the owner's paper numbers).**
+
+- **Model prediction, pinned before the runs (`expectations.json` under
+  `pair_n`).** The registered A2 board at the CHSH labels 0, N/8, N/4,
+  3N/8, one birth per u: S = 2896/1024 = 2.828125 at N = 1024 (the
+  design's), E x 1024 = 724, -724, 724, 724, |E - cos| <= 1/N on every
+  pair; S = 11584/4096 = 2.828125 at N = 4096, E x 4096 = 2900, -2900,
+  2892, 2892 against the cosine's 2896.3: the tables' entries in 1/256
+  round E by 0.0009, beyond 1/4096 = 0.00024, so the design's bound
+  |E - cos| <= 1/N holds at N = 64 and 1024 and fails at 4096 (S stays
+  below 2 sqrt 2 = 2.828427). At N = 4096 the half-angle tables of 2N do
+  not exist: an even setting reads the 4096 table at s / 2.
+- **Run (2026-09-20, `bell_n1024_*` 1044 intervals 1.9 s each,
+  `bell_n4096_*` 4116 intervals 8.4 s each, the fingerprint
+  `ff5c382d672f`, completed and conserved; DETECTOR).** Every count the
+  reading's; S = 176/64, 2896/1024, 11584/4096 (2.75, 2.828125,
+  2.828125); the births counted by the record's ordinal (a lamp's clock
+  skips a step as the births spend its content: 4096 births take 4099
+  intervals); the reading tool's replay equals `run.json`'s `world`.
 
 ### A3. Bell test in phase form, delayed geometry
 

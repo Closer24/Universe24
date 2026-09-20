@@ -101,7 +101,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS, Address3
 from event_universe.core.integer import apportion_whole, bounded_gcd, by_clock, integer_root
 from event_universe.core.phase import PHASE_COSINE_SCALE, phase_cosines, phase_sines
-from event_universe.events.amplitude import Layer, branch_of
+from event_universe.events.amplitude import Layer, arm_of, branch_of, half_angle, label_of
 from event_universe.events.measured import (
     DetectorSet,
     Ledger,
@@ -125,8 +125,10 @@ from event_universe.events.world import (
     MOMENTUM_BOUND,
     REST_DIRECTIONS,
     FamilyDefinition,
+    Gate,
     NatureBeamWorld,
     Q,
+    Rotation,
     Transformation,
     Vector,
     default_reads,
@@ -1664,6 +1666,174 @@ class FamilyPlan:
     left_momentum: list[int] = field(default_factory=lambda: [0, 0, 0])
 
 
+def gate_ready(layer: Layer, pending: list[PendingRow], gate: Gate) -> list[int] | None:
+    """The records a gate acts on: the distinct records (through the
+    layer's aliases) of the rows pending, at least `parties` of them, each
+    with all its live units pending here; None while the gate must wait."""
+    units: dict[int, int] = {}
+    for row in pending:
+        if row.record == NO_RECORD:
+            continue
+        found = layer.resolve(row.record)
+        if found is None:
+            continue
+        units[found.identity] = units.get(found.identity, 0) + row.amount
+    if gate.hold:
+        units = {
+            identity: here for identity, here in units.items() if layer.records[identity].live == here
+        }
+    # One record per emitter (the lamp of its identity's number), the
+    # earliest born of each: a lamp's records never join each other, and
+    # the control is the record of the lowest identity.
+    by_emitter: dict[int, int] = {}
+    for identity in sorted(units):
+        by_emitter.setdefault(identity >> 32, identity)
+    if len(by_emitter) < gate.parties:
+        return None
+    return sorted(by_emitter.values())[: gate.parties]
+
+
+def apply_gate(
+    layer: Layer,
+    tick: int,
+    entry: Measured,
+    family_name: str,
+    pending: list[PendingRow],
+    records: list[int],
+    record: Record | None,
+) -> tuple[list[PendingRow], list[PendingRow]]:
+    """The CNOT on the pending rows of the records: the layer joins them
+    into the lowest (the control), every row replicated over the other
+    records' labels with its multiplicity times the copies, relabelled by
+    the joint label after the permutation, on the survivor's identity.
+    Returns the rows to re-emit and the rows of other records, kept."""
+    survivor, others = records[0], records[1:]
+    present: dict[int, set[int]] = {}
+    for row in pending:
+        live = layer.resolve(row.record) if row.record != NO_RECORD else None
+        if live is not None and live.identity in records:
+            present.setdefault(live.identity, set()).add(label_of(row.branch))
+    label_map, arm_offsets = layer.join(tick, survivor, others, present)
+    found: list[PendingRow] = []
+    kept: list[PendingRow] = []
+    for row in pending:
+        live = layer.resolve(row.record) if row.record != NO_RECORD else None
+        if live is None:
+            found.append(row)
+            continue
+        if live.identity != survivor:
+            kept.append(row)
+            continue
+        origin = layer.origin(row.record)
+        joints = label_map[(origin, label_of(row.branch))]
+        copies = len(joints)
+        if row.multiplicity > MOMENTUM_BOUND // copies:
+            raise OverflowError(
+                f"{BEAM_LAW}: the multiplicity {row.multiplicity} x {copies} of the gate at measured "
+                f"event {entry.number} at {list(entry.position)} exceeds the integer bound "
+                f"{MOMENTUM_BOUND}"
+            )
+        arm = arm_of(row.branch) + arm_offsets[origin]
+        for joint in joints:
+            found.append(
+                row._replace(
+                    record=survivor,
+                    branch=branch_of(arm, joint),
+                    multiplicity=row.multiplicity * copies,
+                )
+            )
+    if record is not None:
+        joined = layer.records[survivor]
+        record(
+            {
+                "event": "gate",
+                "tick": tick,
+                "node": list(entry.position),
+                "measured": entry.number,
+                "family": family_name,
+                "kind": "cnot",
+                "survivor": survivor,
+                "joined": list(others),
+                "present": [[identity, sorted(labels)] for identity, labels in sorted(present.items())],
+                "labels": [[label, weight] for label, weight in sorted(joined.labels.items())],
+                "arms": joined.arms,
+                "rows": len(found),
+            }
+        )
+    return found, kept
+
+
+def rotate_rows(
+    pending: list[PendingRow],
+    rotation: Rotation,
+    modulus: int,
+    entry: Measured,
+    layer: Layer | None,
+    record: Record | None,
+    tick: int,
+) -> list[PendingRow]:
+    """The rotation of one label bit on the rows pending (the design's 2.2):
+    per row two rows on the bit cleared and set, the amounts w C' and w S'
+    of the half-angle tables at the setting, the multiplicity m x 65536,
+    the phases as the matrix's signs and the turn say."""
+    c, s = half_angle(rotation.setting, modulus)
+    scale = PHASE_COSINE_SCALE * PHASE_COSINE_SCALE
+    found: list[PendingRow] = []
+    # Per row of a record the units before and after (the layer's live
+    # count follows the amounts: w becomes w C' + w S').
+    turned: list[list[int]] = []
+    for row in pending:
+        if row.record == NO_RECORD:
+            found.append(row)
+            continue
+        if row.multiplicity > MOMENTUM_BOUND // scale or row.amount > AMOUNT_BOUND // PHASE_COSINE_SCALE:
+            raise OverflowError(
+                f"{BEAM_LAW}: the multiplicity {row.multiplicity} x {scale} of the rotation at "
+                f"measured event {entry.number} at {list(entry.position)} exceeds the integer "
+                f"bound {MOMENTUM_BOUND}"
+            )
+        arm, label = arm_of(row.branch), label_of(row.branch)
+        mask = 1 << rotation.bit
+        clear, set_ = label & ~mask, label | mask
+        if label & mask:
+            born = [(clear, s, rotation.turn), (set_, c, rotation.turn)]
+        else:
+            born = [(clear, c, 0), (set_, s, modulus // 2)]
+        units = 0
+        for joint, amplitude, turn in born:
+            if amplitude:
+                units += row.amount * amplitude
+                found.append(
+                    row._replace(
+                        amount=row.amount * amplitude,
+                        phase=(row.phase + turn) % modulus,
+                        branch=branch_of(arm, joint),
+                        multiplicity=row.multiplicity * scale,
+                    )
+                )
+        turned.append([row.record, row.amount, units])
+        if layer is not None:
+            layer.split(row.record, row.amount, units)
+    if layer is not None:
+        for identity in sorted({row.record for row in pending if row.record != NO_RECORD}):
+            layer.rotate(identity, rotation.bit)
+    if record is not None and turned:
+        record(
+            {
+                "event": "rotate",
+                "tick": tick,
+                "node": list(entry.position),
+                "measured": entry.number,
+                "setting": rotation.setting,
+                "bit": rotation.bit,
+                "turn": rotation.turn,
+                "rows": len(found),
+                "records": turned,
+            }
+        )
+    return found
+
+
 def entry_rotation(
     plan: FamilyPlan, detector_set: DetectorSet, turn: int, k: int
 ) -> tuple[int, int] | None:
@@ -1992,7 +2162,8 @@ def nature_beam(
                     a - b for a, b in zip(ledger.transit_momentum, escaped_momentum, strict=True)
                 ]
             if layer is not None:
-                for row_index in gone.tolist():
+                gone_x, gone_y, gone_z = store.coordinates(store.node[gone])
+                for k, row_index in enumerate(gone.tolist()):
                     if store.record[row_index] != NO_RECORD:
                         layer.end(
                             tick,
@@ -2002,6 +2173,9 @@ def nature_beam(
                             int(store.multiplicity[row_index]),
                             int(store.amount[row_index]),
                             int(store.phase[row_index]),
+                            node=(int(gone_x[k]), int(gone_y[k]), int(gone_z[k])),
+                            content=int(store.amount[row_index] * store.content[row_index]),
+                            momentum=[int(v) for v in labels[k]],
                         )
             if record is not None:
                 for k, index in enumerate(gone):
@@ -2162,6 +2336,7 @@ def nature_beam(
             direction = store.direction[at]
             arrival = store.arrival[at]
             age_at = store.age[at]
+            record_at = store.record[at]
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
@@ -2295,7 +2470,10 @@ def nature_beam(
                         # (the offer and the ladder are per record, never
                         # the crowd's pointer); the amount gate stays, its
                         # default 1 admitting every row.
-                        gated &= (rule[met] != RERELEASE_RULE) & ~st_sum[st_m]
+                        # A free family's rows (no record) keep the unkeyed
+                        # gates (the design's section 6).
+                        recorded = record_at[met] != NO_RECORD
+                        gated &= ~((rule[met] == RERELEASE_RULE) & recorded) & ~st_sum[st_m]
                     below = np.where(gated, np.repeat(below_wave, s_sizes), below)
                 # A window read from a reading: the centre is the setting of
                 # the row's set off the named family plus the offset; a set
@@ -2321,7 +2499,9 @@ def nature_beam(
                 # setting carried on the row (`t_window`); a split takes no
                 # window either (a split is not a click).
                 if world.amplitude:
-                    inside |= st_sum[st_m] | (rule[met] == RERELEASE_RULE)
+                    inside |= st_sum[st_m] | (
+                        (rule[met] == RERELEASE_RULE) & (record_at[met] != NO_RECORD)
+                    )
                 inside &= ~unset
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
@@ -2777,7 +2957,7 @@ def nature_beam(
                                         record=plan.t_record[k],
                                         branch=plan.t_branch[k],
                                         multiplicity=plan.t_multiplicity[k],
-                                        split=world.amplitude,
+                                        split=world.amplitude and plan.t_record[k] != NO_RECORD,
                                         arrival=plan.t_arrival[k],
                                         offered=detector_set.sum,
                                     )
@@ -2801,6 +2981,9 @@ def nature_beam(
                                             rotation=entry_rotation(
                                                 plan, detector_set, entry.label_turns[family], k
                                             ),
+                                            node=(node[0], node[1], node[2]),
+                                            content=plan.t_carried[k],
+                                            momentum=list(plan.t_label[k]),
                                         )
                             if record is not None:
                                 group_line: dict[str, object] = {
@@ -2849,6 +3032,9 @@ def nature_beam(
                                         rotation=entry_rotation(
                                             plan, detector_set, entry.label_turns[family], k
                                         ),
+                                        node=(node[0], node[1], node[2]),
+                                        content=plan.t_carried[k],
+                                        momentum=list(plan.t_label[k]),
                                     )
                         if record is not None:
                             for k in range(k0, k1):
@@ -2987,7 +3173,31 @@ def nature_beam(
             if entry.pending[family]:
                 ways = len(entry.directions)
                 reborn = NO_RECORD
-                for row in entry.pending[family]:
+                pending_rows = entry.pending[family]
+                held_back: list[PendingRow] = []
+                gate = entry.gates[family] if entry.gates else None
+                if gate is not None and world.amplitude and layer is not None:
+                    # The gate between records (the design's section 10):
+                    # act when the rows of `parties` records are pending
+                    # with all their live units; hold otherwise, or pass
+                    # them as a plain re-emission without `hold`.
+                    ready = gate_ready(layer, pending_rows, gate)
+                    if ready is None and gate.hold:
+                        continue
+                    if ready is not None:
+                        pending_rows, kept = apply_gate(
+                            layer, tick, entry, definition.name, pending_rows, ready, record
+                        )
+                        if kept:
+                            # The rows of records the gate did not take
+                            # wait for their partners.
+                            held_back = kept
+                rotation = entry.rotations[family] if entry.rotations else None
+                if rotation is not None and world.amplitude:
+                    pending_rows = rotate_rows(
+                        pending_rows, rotation, modulus, entry, layer, record, tick
+                    )
+                for row in pending_rows:
                     if row.split:
                         # The split (the amplitude law, BEAM_LAW note 37): the
                         # rows (w a_i, m x A, p + t_i) on the directions, A =
@@ -3056,7 +3266,13 @@ def nature_beam(
                         born_units = row.amount * sum(weights)
                         if layer is not None and row_record != NO_RECORD:
                             if row.rebirth:
-                                layer.birth(tick, row_record, family, entry.phase, {0: 1}, 1, born_units)
+                                # What follows a click is ONE new record with
+                                # all its re-created rows: one birth per
+                                # rebirth (with 0 units), every row's units
+                                # added by its split.
+                                if layer.resolve(row_record) is None:
+                                    layer.birth(tick, row_record, family, entry.phase, {0: 1}, 1, 0)
+                                layer.split(row_record, 0, born_units)
                             else:
                                 layer.split(row_record, 0 if row.offered else row.amount, born_units)
                         if record is not None and world.amplitude:
@@ -3093,7 +3309,7 @@ def nature_beam(
                                 )
                             )
                             ledger.content_released[family] += share * row.content
-                entry.pending[family] = []
+                entry.pending[family] = held_back
             if (
                 entry.lamp_rate is not None
                 and family == entry.family
@@ -3351,7 +3567,8 @@ def nature_beam(
         ]
         ledger.transit_momentum = [a - b for a, b in zip(ledger.transit_momentum, left, strict=True)]
         if layer is not None:
-            for row_index in gone.tolist():
+            gone_x, gone_y, gone_z = store.coordinates(store.node[gone])
+            for k, row_index in enumerate(gone.tolist()):
                 if store.record[row_index] != NO_RECORD:
                     layer.end(
                         tick,
@@ -3361,6 +3578,9 @@ def nature_beam(
                         int(store.multiplicity[row_index]),
                         int(store.amount[row_index]),
                         int(store.phase[row_index]),
+                        node=(int(gone_x[k]), int(gone_y[k]), int(gone_z[k])),
+                        content=int(store.amount[row_index] * store.content[row_index]),
+                        momentum=[int(v) for v in labels[k]],
                     )
         if record is not None:
             x, y, z = store.coordinates(store.node[gone])

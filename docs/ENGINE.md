@@ -35,7 +35,7 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`,
 `tests/test_meeting.py`, `tests/test_amplitude_record.py`,
 `tests/test_amplitude_split.py`, `tests/test_amplitude_layer.py`,
-`tests/test_amplitude_pair.py`
+`tests/test_amplitude_pair.py`, `tests/test_amplitude_gate.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -485,18 +485,51 @@ birth naming the lamp; refused without the key); a table entry's `turn`
 phase step on the label-1 column of the rotation a `sum` set reads at
 its window's setting s, `U_s = [[C'[s], S'[s] v(t)], [-S'[s], C'[s]
 v(t)]]` on the half-angle tables of 2N (the channels + and -; the design's
-2.2 and 4.1), the setting declared or read from a reading;
+2.2 and 4.1), the setting declared or read from a reading (at N = 4096 the
+tables of 2N do not exist and an even setting reads the 4096 table at
+s / 2, an odd one refused); a `rerelease` entry's `rotate` `{setting,
+bit, turn}` (under `amplitude`), the rotation of one label bit on the
+lattice (the design's 2.2): every row of a record at the entry becomes two
+rows on the bit cleared and set, the amounts w C'[s] and w S'[s] of the
+half-angle tables, the multiplicity m x 65536, the phases as the matrix's
+signs say (from a clear bit the set bit takes a half turn; from a set bit
+both take the turn t), not a click; a `rerelease` entry's `gate` `{kind:
+"cnot", hold, parties}` (under `amplitude`, the design's section 10): the
+rows of `parties` records of distinct lamps pending at the entry (with
+`hold`, true by default, held until every one of them has all its live
+units there; without it the rows present) join into the record of the
+lowest identity, the joint labels the product of their label sets (the
+control's bits first, one bit per arm) permuted by the CNOT from the
+control's bit 0 to the bit of every other arm, every row replicated over
+the other records' labels with its multiplicity times the copies, the
+others' identities aliased in the layer and their rows elsewhere read as
+the survivor's; the `gate` and `rotate` record lines; the multiplicity a
+row can reach through every re-emitter of the world (the splits' norms,
+65536 per rotation, 2^parties per gate) is bounded at load by 2^62 - 1
+(the register's ceiling: three label rotations on a path fit, Grover's
+six do not); a `phase_window` on a `rerelease` entry whose Node reads no
+`sum` set is dead under the key (a split takes no gate) and refused at
+load; a free family's rows (no record) keep the unkeyed apportioning and
+gates at every entry;
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
 default, `reading` `wave` by default (since 2026-09-20) or `beam`, or
-under `amplitude` `sum`, the one pointer's reading at the record's scope
+under `amplitude` `sum`, the one pointer's reading at the record's scope;
+a detector's name may not use the layer's reserved prefix `measured:`
+nor a face's or the border's name
 (the owner's unification (4), `DetectorSet.scope`: `crowd` under `wave`,
 the interval's arrivals of every number with the pointer gate and the
 record per interval; `record` under `sum`, one record's rows over its
 lifetime, no pointer gate, a window the rotation's setting and not a
 gate, the record the square of the record's pointer per label added at
-the record's completion), refused without the key). Refused, naming the key and the law: `"law": "events"` (pointing
+the record at its completion; interference is coherent within one Node
+only: a set of several Nodes, a face included, offers one cell whose
+weight is the sum over its Nodes of the per-Node squares, and the click
+lands at the Node of the set that u's position within the cell selects by
+the same rungs over the Nodes, `c_j = (2 W D_j + T) // (2 T)` with W the
+cell's width, D_j the cumulative Node weight and T the cell's weight; the
+decision of 2026-09-20 on the owner's point 5), refused without the key). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,
@@ -668,9 +701,15 @@ direction and content per unit: `amount`, `content`), the `record` line
 of a `sum` set at a gather (`scope` `record`, `of` the record, `arm`,
 `label`, `pointer`, the square `record`, `multiplicity`) and `gather`
 (the world's row: `tick`, `arrived`, `family`, `record`, `u`, `born`,
-`chosen` [set, arm, channel], `windows` [set, setting, turn] of the
-rotated sets among the chosen, `weight` and `total` as pairs in the unit
-2^58 (`unit`), `T`, `before`, `after`, `cells` with the rungs); `run.json`
+`chosen` [set, arm, channel], `node` (the Node of every chosen end),
+`windows` [set, setting, turn] of the rotated sets among the chosen,
+`content` and `momentum` (what the chosen rows brought and gave at their
+Nodes: the books' line of the click), `weight` and `total` as pairs in
+the unit 2^58 (`unit`), `T`, `before`, `after`, `cells` with the rungs),
+`gate` (`survivor`, `joined`, `present` per record, `labels`, `arms`,
+`rows`) and `rotate` (`setting`, `bit`, `turn`, `rows`, `records` with
+the units before and after); what follows a click at a chosen `sum`
+re-emitter is one new record of all its re-created rows; `run.json`
 gains `world` (the gathers), `open` (the records not gathered, with their
 offers) and `layer` (the sets in order, the unit, the counts). A gather
 is taken after step 4 (before the self-creations) and after the merge.

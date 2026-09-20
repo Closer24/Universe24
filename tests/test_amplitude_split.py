@@ -1,6 +1,6 @@
 """The split, the birth of a record and the phase per interval of age under
 the amplitude law (`amplitude-v1`, the model owner, 2026-09-20; the design,
-scratchpad/amplitude/DESIGN.md sections 2.1, 2.3, 3.1 and 3.4; the owner's
+docs/designs/amplitude-v1/DESIGN.md sections 2.1, 2.3, 3.1 and 3.4; the owner's
 unifications (1) and (2); docs/BEAM_LAW.md note 37), on the Mach-Zehnder
 world of series L (`examples/events/amplitude/make_worlds.py`, the one
 builder). The expected integers of docs/TEST_EXPECTATIONS.md ("The

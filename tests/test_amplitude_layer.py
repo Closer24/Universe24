@@ -1,5 +1,5 @@
 """The layer of the amplitude law (`amplitude-v1`, the model owner,
-2026-09-20; the design, scratchpad/amplitude/DESIGN.md sections 3, 5 and 7;
+2026-09-20; the design, docs/designs/amplitude-v1/DESIGN.md sections 3, 5 and 7;
 docs/BEAM_LAW.md note 37): the reading `sum` at the record's scope, the
 offers, the ladder at the record's completion normalised by its total with
 the rungs at the nearest integer, and the gathers (the world's list of
@@ -35,17 +35,20 @@ layer"), written down before the first run:
     one birth (the design's `slits_read.py`, `expectations.json` under
     `two_slits`, written before the run): the first record's cells are the
     80 sets of the reading in the layer's order with the reading's rungs;
-    its chosen cell's weight equals the reading's fraction; every one of
-    the 64 births gathers by tick 213; the clicks per set over the 64
-    births equal the reading's on 78 of the 80 sets, the wall's three
-    Nodes 10, 10 and 11, the faces 9 and 10, twelve pixels one each; on the
-    pair screen_98 / screen_100 the measured click lands on screen_100
-    where the reading says screen_98: the tables' rounding (C^2 + S^2
-    within 361 of 65536) makes the weights depend on u by parts in 10^3
-    (36 of the 64 records share the record u = 0's cells, 7 distinct cell
-    lists) and moves that rung by one for the u that falls there; the
-    reading's u-invariance is pinned as the design's value and marked
-    failing on that pair;
+    its chosen cell's weight and its total equal the reading's fractions
+    (the total 847181/745472: the wall's three rows 3/5, the fans 2/5 and
+    the cross terms of paths meeting at one Node; a face of 24 Nodes hit
+    sums its Nodes' squares, coherent within a Node and incoherent across
+    Nodes, the decision of 2026-09-20 on the owner's point 5); every one
+    of the 64 births gathers by tick 213; the clicks per set over the 64
+    births equal the reading's on every one of the 80 sets: the wall's
+    three Nodes 11, 12 and 11 (34, the share 0.528), fourteen pixels
+    (15, 0.244; screen_61 twice), the faces 8 and 7 (15, 0.228); the
+    tables' rounding (C^2 + S^2 within 361 of 65536) makes the weights
+    depend on u by parts in 10^3 (32 of the 64 records share the record
+    u = 0's cells, 3 distinct cell lists) without moving a rung here;
+    the design's "wall 3/5, screen 2/5" is not this geometry's reading:
+    the freed fans reach the open faces in y;
 (e) the design's test 7, the gate set: the seventeen registered worlds
     listed in GATE_SET parse without the key (`amplitude` false, no
     `amplitude-v1` identity), the byte-identity of their replays being the
@@ -65,7 +68,27 @@ layer"), written down before the first run:
     2^32 + 1 of two rows (content 2);
 (j) the `record` lines a `sum` set writes at a gather carry the reading's
     scope `record`, the pointer per label and the square added to the
-    set's record.
+    set's record;
+(k) the review's B1, one birth per rebirth: a lamp into a `sum`
+    re-emitter of two directions (the detector `gate`) and two absorbers:
+    every record gathers at the re-emitter (its one offer), and what the
+    re-emitter re-creates is ONE new record of two rows (two `split` lines
+    with `rebirth`, one `birth` in the layer), which gathers once with the
+    cells a and b, the rungs 32 and 64, 64 such gathers;
+(l) the review's B2, a free family's rows keep the unkeyed path: a source
+    of a free family of amount 3 into a `rerelease` on two directions comes
+    out 1 + 2 (the apportioning) with the key as without it, the rows and
+    the `rerelease` lines the same;
+(m) the review's S3 and S5, refused at load: a `phase_window` on a
+    `rerelease` entry whose Node reads no `sum` set under the key (dead: a
+    split takes no gate), and a detector named `measured:3` (the layer's
+    reserved prefix);
+(n) the record's total re-pinned at the tables (the reviewer): on the
+    (20, 21) worlds the total of the record u is
+    (1681 q[u + 16] + q[u + 32]) / (1682 x 65536) with q[p] = C[p]^2 +
+    S[p]^2, exactly, for every u; the gather of `mz_equal`'s first record
+    carries the content 41 and the momentum [2624, 0, 0] of its click
+    (the review's S1).
 """
 
 from __future__ import annotations
@@ -80,6 +103,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from event_universe.core.phase import phase_cosines, phase_sines
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.amplitude import UNIT
 from event_universe.events.nature_beam import NatureBeamStore
@@ -194,17 +218,20 @@ def test_the_mach_zehnder_and_elitzur_vaidman_worlds_click_as_the_design_says():
     assert [cell[0][0][0] for cell in first["cells"]] == ["D1", "D2"]  # type: ignore[index]
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="the design's bound 0.0019 on a record's total holds for u = 0 alone: the tables' "
-    "rounding depends on u, the 64 births read 8 totals within 237/65536 of 1",
-)
-def test_every_total_is_within_the_design_bound():
-    """(a), the design's value pinned."""
+def test_every_total_is_the_tables_formula():
+    """(n): the design's bound 0.0019 held for u = 0 alone; the total is
+    the tables' formula (the reviewer), pinned exactly for every u."""
+    cosines, sines = phase_cosines(N), phase_sines(N)
+    q = [cosines[p] ** 2 + sines[p] ** 2 for p in range(N)]
     gathers = births(run_world(GENERATOR.mach_zehnder("mz_equal")))
     for gather in gathers:
+        u = int(gather["u"])  # type: ignore[call-overload]
         total = Fraction(int(gather["total"][0]), int(gather["total"][1]) * UNIT)  # type: ignore[index]
-        assert abs(total - 1) <= DESIGN_TOTAL_BOUND, float(total)
+        assert total == Fraction(1681 * q[(u + 16) % N] + q[(u + 32) % N], 1682 * 65536), u
+        assert abs(total - 1) <= MEASURED_TOTAL_BOUND
+    first = gathers[0]
+    assert first["content"] == 41 and first["momentum"] == [2624, 0, 0]
+    assert first["node"] == [[4, 3, 0]]
 
 
 def test_the_same_world_twice_gives_the_same_list_and_a_moved_rung_moves_u():
@@ -272,6 +299,9 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
     names = [cell[0][0][0] for cell in first["cells"]]  # type: ignore[index]
     assert len(names) == reading["sets"] == 80
     assert names == [name for name in simulation.layer.names if name in reading["weights"]]  # type: ignore[union-attr]
+    # A click of a face lands at one of its Nodes, chosen within the cell.
+    faces = [g for g in gathers if str(g["chosen"][0][0]).startswith("face:")]  # type: ignore[index]
+    assert len(faces) == 15 and all(abs(g["node"][0][1] - 60) >= 60 for g in faces)  # type: ignore[index]
     cumulative, rungs = 0, []
     for name in names:
         cumulative += reading["clicks"].get(name, 0)
@@ -283,29 +313,14 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
     assert weight == Fraction(reading["weights"][chosen])
     total = Fraction(int(first["total"][0]), int(first["total"][1]) * UNIT)  # type: ignore[index]
     assert total == Fraction(reading["total"])
-    assert reading["clicks_by_kind"] == {"wall": 31, "screen": 14, "faces": 19}
-    found = clicks(gathers)
-    expected = dict(reading["clicks"])
-    moved = {"screen_98": 1, "screen_100": 0}
-    assert {k: v for k, v in found.items() if k not in moved} == {
-        k: v for k, v in expected.items() if k not in moved
-    }
-    assert {k: found.get(k, 0) for k in moved} == {"screen_98": 0, "screen_100": 1}
-    assert {k: expected.get(k, 0) for k in moved} == moved
+    assert reading["clicks_by_kind"] == {"wall": 34, "screen": 15, "faces": 15}
+    assert reading["face_nodes"] == {"face:+y": 24, "face:-y": 24}
+    assert total == Fraction(847181, 745472)
+    assert clicks(gathers) == reading["clicks"]
+    assert first["node"] == [[7, 58, 0]] and first["content"] == 1
     distinct = {json.dumps(g["cells"]) for g in gathers}
-    assert len(distinct) == 7
-    assert sum(1 for g in gathers if g["cells"] == first["cells"]) == 36
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="the design's u-invariance of the weights: the tables' rounding moves one rung "
-    "(screen_98 to screen_100) for one of the 64 births",
-)
-def test_the_two_slits_histogram_equals_the_reading_on_every_set():
-    """(d), the design's value pinned."""
-    gathers = births(run_world(GENERATOR.two_slits_low()))
-    assert clicks(gathers) == EXPECTATIONS["two_slits"]["clicks"]
+    assert len(distinct) == 3
+    assert sum(1 for g in gathers if g["cells"] == first["cells"]) == 32
 
 
 def test_the_gate_set_parses_without_the_key():
@@ -421,3 +436,126 @@ def test_a_sum_set_records_the_square_at_the_record_scope():
     assert first["record"] == x * x + y * y and first["multiplicity"] == 1682
     assert simulation.detector_sets[0].scope == "record"
     assert simulation.detector_sets[2].scope == "crowd"
+
+
+def rebirth_world() -> dict[str, object]:
+    """A lamp into a `sum` re-emitter of two directions and two absorbers."""
+    return {
+        "law": "beam",
+        "model_id": "amplitude-rebirth",
+        "shape": [5, 3, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": 80,
+        "K": 1 << 20,
+        "N": N,
+        "release": [0, 1],
+        "suspension": 0,
+        "amplitude": True,
+        "families": [{"name": "light", "quantum": 1}],
+        "measured": [
+            {
+                "position": [0, 0, 0],
+                "family": "light",
+                "amount": 1 << 20,
+                "fixed": True,
+                "lamp": {"rate": [1, 1], "directions": [[1, 0, 0]]},
+            },
+            {
+                "position": [2, 0, 0],
+                "family": "light",
+                "amount": 1,
+                "fixed": True,
+                "table": {"light": "rerelease"},
+                "directions": [[1, 0, 0], [0, 1, 0]],
+            },
+            {"position": [4, 0, 0], "family": "light", "amount": 1, "fixed": True},
+            {"position": [2, 2, 0], "family": "light", "amount": 1, "fixed": True},
+        ],
+        "detectors": [
+            {"name": "gate", "positions": [[2, 0, 0]], "reading": "sum"},
+            {"name": "a", "positions": [[4, 0, 0]], "reading": "sum"},
+            {"name": "b", "positions": [[2, 2, 0]], "reading": "sum"},
+        ],
+    }
+
+
+def test_a_rebirth_is_one_record_of_all_its_rows():
+    """(k)."""
+    simulation, lines = observed(rebirth_world())
+    assert simulation.layer is not None
+    gathers = simulation.layer.gathers
+    at_gate = [g for g in gathers if g["chosen"] == [["gate", 0, "0"]]]
+    reborn = [g for g in gathers if g["record"] >> 32 == 2]
+    assert len(at_gate) >= BIRTHS and len(reborn) >= BIRTHS
+    for gather in reborn[:BIRTHS]:
+        assert [cell[1] for cell in gather["cells"]] == [32, 64]  # type: ignore[index]
+        assert [cell[0][0][0] for cell in gather["cells"]] == ["a", "b"]  # type: ignore[index]
+        assert gather["chosen"] == [["a", 0, "0"]] and gather["u"] == 0
+    splits = [line for line in lines if line.get("event") == "split" and line.get("rebirth")]
+    assert len(splits) >= BIRTHS
+    first = reborn[0]["record"]
+    assert [line["born"] for line in splits if line["record"] == first] == [2]
+    assert simulation.layer.born >= 2 * BIRTHS
+
+
+def free_crowd_world(amplitude: bool) -> dict[str, object]:
+    """A source of a free family into a `rerelease` on two directions."""
+    return {
+        "law": "beam",
+        "model_id": "amplitude-free-crowd",
+        "shape": [5, 3, 1],
+        "boundary": {"z": "periodic"},
+        "ticks": 12,
+        "K": 1 << 20,
+        "N": N,
+        "release": [1, 1],
+        "suspension": 0,
+        "amplitude": amplitude,
+        "families": [{"name": "wind", "quantum": 0}, {"name": "light", "quantum": 1}],
+        "measured": [
+            {
+                "position": [0, 0, 0],
+                "family": "wind",
+                "amount": 3,
+                "fixed": True,
+                "directions": [[1, 0, 0]],
+            },
+            {
+                "position": [2, 0, 0],
+                "family": "light",
+                "amount": 1,
+                "fixed": True,
+                "table": {"wind": "rerelease"},
+                "directions": [[1, 0, 0], [0, 1, 0]],
+            },
+        ],
+    }
+
+
+def test_a_free_crowd_keeps_the_unkeyed_apportioning():
+    """(l)."""
+    found = {}
+    for keyed in (False, True):
+        simulation, lines = observed(free_crowd_world(keyed))
+        rows = sorted((r.node, r.direction, r.amount, r.phase) for r in simulation.stores[0].rows())
+        released = [(line["tick"], line["amount"]) for line in lines if line.get("event") == "rerelease"]
+        found[keyed] = (rows, released)
+    assert found[False] == found[True]
+    assert found[True][1]
+    assert {1, 2} <= {r[2] for r in found[True][0]}
+
+
+def test_a_dead_window_and_a_reserved_name_are_refused():
+    """(m)."""
+    world = GENERATOR.mach_zehnder("dead")
+    measured = world["measured"]
+    assert isinstance(measured, list)
+    measured[1]["table"]["light"] = {"rule": "rerelease", "phase_window": 3}
+    with pytest.raises(ValueError, match=r"phase_window is dead under amplitude"):
+        parse_nature_beam_world(world)
+    world = GENERATOR.mach_zehnder("reserved")
+    detectors = world["detectors"]
+    assert isinstance(detectors, list)
+    detectors[0]["name"] = "measured:3"
+    with pytest.raises(ValueError, match=r"name 'measured:3' is reserved"):
+        parse_nature_beam_world(world)

@@ -69,6 +69,7 @@ kept, their pins the law of events').
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the lattice with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
+| `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the lattice (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding ([below](#the-amplitude-law-the-gate)) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -286,7 +287,7 @@ sort likewise; the empty store merges to the empty store.
 
 `tests/test_amplitude_record.py` (docs/BEAM_LAW.md note 37; the model
 owner, 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
-design, scratchpad/amplitude/DESIGN.md, sections 1 and 2.3). A 5 x 5
+design, docs/designs/amplitude-v1/DESIGN.md, sections 1 and 2.3). A 5 x 5
 plane, K 16, N 64, `release` [0, 1], `suspension` 0, a lamp of `light` of
 content 16 releasing one row per self-creation on +x and +y at the turn 1
 (eight births of two quanta; since the review's S4 a lamp must pay one
@@ -386,13 +387,14 @@ expected integers, written down before the first run:
   `sum` port on any of the ten worlds;
 - (d) test 2 on `slits_low`: the first record's cells are the reading's 80
   sets in the layer's order with the reading's rungs, its chosen cell
-  (`measured:223`) has the reading's weight and its `total` the reading's
-  4689423/3727360; the 64 births gather by tick 213; the clicks per set
-  equal the reading's on 78 of 80 sets (the wall 10, 10, 11; the faces 9,
-  10; twelve pixels one each) and the click of screen_98 lands on
-  screen_100 (7 distinct cell lists, 36 records with u = 0's: the tables'
-  rounding moves one rung for one u; the reading's u-invariance pinned
-  marked failing);
+  (`measured:223`, the Node (7, 58, 0), the content 1) has the reading's
+  weight and its `total` the reading's 847181/745472 (a face of 24 Nodes
+  hit sums its Nodes' squares: coherent within a Node, incoherent across
+  Nodes); the 64 births gather by tick 213; the clicks per set equal the
+  reading's on every one of the 80 sets: the wall 11, 12, 11 (34), fourteen
+  pixels (15, screen_61 twice), the faces 8, 7 (15, each click at a Node
+  of the face's edge); 3 distinct cell lists, 32 records with u = 0's (the
+  tables' rounding by u, no rung moved);
 - (e) test 7: the seventeen worlds of the gate set parse without the key,
   `amplitude` false and no `amplitude-v1` identity;
 - (f) test 10: `tools/amplitude_path.replay` on 30-interval runs of
@@ -409,7 +411,71 @@ expected integers, written down before the first run:
 - (j) the `record` line of a `sum` set at a gather carries `scope`
   `record`, `of` the record, the pointer whose square is the record and
   the multiplicity 1682; `DetectorSet.scope` is `record` for D1 and
-  `crowd` for the splitter's set.
+  `crowd` for the splitter's set;
+- (k) the review's B1: a lamp into a `sum` re-emitter of two directions
+  (`gate`) and two absorbers a, b: every record gathers at the re-emitter
+  (its one offer) and what it re-creates is one new record of two rows
+  (one `split` line with `rebirth`, born 2; one birth in the layer) that
+  gathers once with the cells a, b and the rungs 32, 64, chosen a (u 0);
+- (l) the review's B2: a free family's source of amount 3 into a
+  `rerelease` on two directions comes out 1 + 2 with the key as without
+  it, the rows and the `rerelease` lines the same;
+- (m) the review's S3 and S5: a `phase_window` on a `rerelease` entry
+  whose Node reads no `sum` set is refused at load under the key ("dead"),
+  as is a detector named `measured:3` (reserved);
+- (n) the record's total re-pinned at the tables (the reviewer): on
+  `mz_equal` the total of the record u is (1681 q[u + 16] + q[u + 32]) /
+  (1682 x 65536), q[p] = C[p]^2 + S[p]^2, exactly for every u (the 8
+  values within 237/65536 of 1; the design's 0.0019 held for u = 0
+  alone); its first gather carries the content 41, the momentum [2624,
+  0, 0] and the Node (4, 3, 0) of its click.
+
+## The amplitude law: the gate
+
+`tests/test_amplitude_gate.py` (docs/BEAM_LAW.md note 37; the design,
+section 10 and `gate.py`, section 4.3 and `bell.py`), on the worlds of
+series L5 and L6 (`examples/events/amplitude/make_worlds.py`,
+`expectations.json` under `gate` and `pair_n`, written before the runs).
+The expected integers, written down before the first run:
+
+- (a) on `cnot_pair_0_8` the Hadamard re-emitter turns the control's row
+  into two rows on the label bit 0, the amounts 181 (C'[16] of the 128
+  tables) at the phases u and u + 32, the multiplicity 65536 (the
+  `rotate` line: 2 rows, the record's units 1 to 362); at the gate the
+  control (2^32 + 1, the survivor) joins the target (the lamp of number
+  4): the `gate` line names them, the labels [[0, 1], [3, 1]], 2 arms, 4
+  rows; the rows after: on +y the labels 0 (181 at u) and 3 (181 at
+  u + 32) at m 65536, on -y the labels 0 and 3 of amount 1 at m 2, the
+  design's |00> - |11>;
+- (b) the pair by the gate at the CHSH labels with Bob at -b: the cells'
+  counts the reading's, E x 64 = 44, -44, 44, 44, S = 176/64, Alice's
+  marginal 32/64;
+- (c) `cnot_twice`: three `gate` lines for the record, the second and
+  third (one per arm, at (11, 5) and (8, 8), no record joined) with the
+  labels [[0, 1], [1, 1]]; the rows after on +y: the labels 0 and 1 at
+  181 (phases u, u + 32; m 65536) and at 1 (m 2), H|0> x |0> again; 64
+  gathers at the absorbers;
+- (d) `cnot_ghz_*`: XXX allows ++-, +-+, -++, --- (the product -1, this
+  convention's H) and XYY, YXY, YYX allow +++, +--, -+-, --+ (+1), 16
+  births each; the `gate` line's labels [[0, 1], [7, 1]], 3 arms, 6 rows
+  (at most 3 x 2^3 after 3 records; the pair's 4 at most 2 x 2^2);
+- (e) `rotations_3` runs (the clicked rows' multiplicity 2^48, 64 gathers);
+  `rotations_4` is refused at load, the multiplicity through its
+  re-emitters 2^64 beyond 2^62 - 1, naming the fourth rotation's Node
+  (8, 0, 0); Grover's six rotations are not a world of the lattice;
+- (f) the refusals: `rotate` and `gate` without the key and on `measure`;
+  a gate kind other than `cnot`; `hold` not a boolean; `parties` 0; a
+  rotation's bit beyond 31; `half_angle(1, 4096)` refused, `half_angle(512,
+  4096)` the 4096 table's entry at 256, `half_angle(16, 64)` (181, 181);
+- (g) `bell_n1024_*` (one birth per u, the births counted by the record's
+  ordinal: a lamp's clock skips a step as the births spend its content):
+  the counts the reading's, E x 1024 = 724, -724, 724, 724, S = 2896/1024
+  (the design's), |E - cos| <= 1/N on every pair;
+- (h) `bell_n4096_0_512`: the counts the reading's, E x 4096 = 2900 (the
+  four pairs 2900, -2900, 2892, 2892), S = 11584/4096 = 2.828125 below
+  2 sqrt 2; the design's bound |E - cos| <= 1/N fails at this N (the
+  tables' entries in 1/256 round E by 0.0009 against 1/4096 = 0.00024),
+  pinned as the design's value marked failing.
 
 ## The amplitude law: the pair
 

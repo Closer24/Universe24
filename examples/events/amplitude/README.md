@@ -4,7 +4,7 @@ The worlds of series L, written by `make_worlds.py`; the register entry is
 [L, the amplitude law (2026-09-20)](../../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
 The decision, in the model owner's words (Highlights 5.4, 2026-09-20):
 "go for it with the four recommendations and the unifications"; the design
-is the physicist's and the mathematician's `scratchpad/amplitude/DESIGN.md`,
+is the physicist's and the mathematician's `docs/designs/amplitude-v1/DESIGN.md`,
 every integer below from its check scripts (`mz.py`, `mz.txt`), written
 before any run. Under the world key `amplitude` the lattice is unchanged
 (the flight, the collision, the meeting, the books over every row), the
@@ -93,9 +93,10 @@ declared as rays of amount 91 (one row per direction at each opening's
 re-emission, m = 5 x 91 = 455), the screen reading the age; the generator
 runs it in-process and reads it by the design's `slits_read.py` into
 `expectations.json` under `two_slits` before the run of `slits_low`: the
-weights per set, the ladder's clicks over the 64 births, the shares, the
-pixels and the correlations (the register's L2 entry has the numbers and
-the run).
+weights per set (coherent within a Node, incoherent across the Nodes of a
+set: a face is one cell of the sum of its Nodes' squares), the ladder's
+clicks over the 64 births, the shares, the pixels and the correlations
+(the register's L2 entry has the numbers and the run).
 
 ## L3: the pair, the which-path world and no maintenance
 
@@ -124,3 +125,25 @@ A plane of 7 x 7, the lamp at (3, 3) on three arms (+x, -x, +y;
 (3, 6) with the setting 16 and the turn 0 (X) or 16 (Y): `ghz_xxx`,
 `ghz_xyy`, `ghz_yxy`, `ghz_yyx`, `ghz_yyy`, 80 intervals; the
 expectations under `ghz`.
+
+## L5: the gate between records
+
+`cnot_pair_<a>_<b>` (a plane of 16 x 11: the control's lamp at (2, 5)
+through the Hadamard at (4, 5), a `rerelease` whose `rotate` turns the
+label bit 0 by N/4, into the gate at (8, 5), a `rerelease` with `gate`
+{cnot, hold, 2 parties} sending the control on +y to Alice at (8, 8) and
+the target, born at (14, 5), on -y to Bob at (8, 2), his window -b);
+`cnot_twice` (the gate's outputs into one gate per arm, the identity);
+`cnot_ghz_<basis>` (three lamps into one gate of three parties on a board
+of 11 x 11 x 3); `rotations_3` and `rotations_4` (three, then four, label
+rotations in series: the register's ceiling, the fourth refused at load).
+The expectations under `gate` are the design's `gate.py`; the register's
+L5 entry has the numbers and the runs.
+
+## L6: the pair at N = 1024 and 4096
+
+`bell_n1024_<a>_<b>` and `bell_n4096_<a>_<b>` at the CHSH labels 0, N/8,
+N/4, 3N/8 on the A2 board, N + 20 intervals, one birth per u: S as the
+integer ratio at each N against the design's 2896/1024 and the bound
+|E - cos| <= 1/N (`expectations.json` under `pair_n`; the register's L6
+entry).

@@ -16,8 +16,9 @@ the sets, the faces and the border (the record, branch, multiplicity,
 amount, phase and, at a rotated set, the window and turn), the `read` and
 `rerelease` lines at `sum` sets (the rows taken: record, branch,
 multiplicity, amount, phase, arrival), the `split` lines (the units
-absorbed and born, the rebirth flag and the entry's phase), the `cancel`
-lines and the `gather` lines the layer wrote. The layer is built as the
+absorbed and born, the rebirth flag and the entry's phase), the `gate`
+lines (the survivor and the records joined), the `rotate` lines, the
+`cancel` lines and the `gather` lines the layer wrote. The layer is built as the
 engine built it (`NatureBeamSimulation(world).layer`, no interval run) so
 that its sets carry the run's names and order; the completions are taken
 at the two points of the interval where the engine takes them (after the
@@ -103,12 +104,13 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
             if line_tick != tick:
                 tick = line_tick
                 completed_before_creations = False
-            if event in ("split", "birth") and not completed_before_creations:
+            if event in ("split", "birth", "gather") and not completed_before_creations:
                 # The engine completes the records after the clicks of
                 # step 4 and before the self-creations (a chosen re-emitter
-                # then re-creates a new record).
+                # then re-creates a new record), and again after the merge:
+                # a `gather` line marks either completion.
                 complete()
-                completed_before_creations = True
+                completed_before_creations = event != "gather"
             if event == "birth":
                 labels = {int(label): int(weight) for label, weight in line["labels"]}
                 layer.birth(
@@ -126,6 +128,7 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                     rotation = None
                     if "turn" in line:
                         rotation = (int(line["window"]), int(line["turn"]))
+                    node = line["node"]
                     layer.end(
                         tick,
                         set_index_of(layer, by_number, line),
@@ -135,6 +138,9 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                         int(line["amount"]),
                         int(line["phase"]),
                         rotation=rotation,
+                        node=(int(node[0]), int(node[1]), int(node[2])),
+                        content=int(line["content"]),
+                        momentum=[int(v) for v in line.get("momentum", line.get("push", []))],
                     )
             elif event in ("read", "rerelease"):
                 set_index = set_index_of(layer, by_number, line)
@@ -142,6 +148,7 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                     rotation = None
                     if "turn" in line:
                         rotation = (int(line["window"]), int(line["turn"]))
+                    node = line["node"]
                     for record, branch, multiplicity, amount, phase, _ in line.get("rows", []):
                         if record:
                             layer.end(
@@ -154,6 +161,7 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                                 int(phase),
                                 absorbed=event == "rerelease",
                                 rotation=rotation,
+                                node=(int(node[0]), int(node[1]), int(node[2])),
                             )
             elif event == "split":
                 record = int(line["record"])
@@ -161,18 +169,39 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
                 if not quiet:
                     print(GAMEBOARD, json.dumps(line))
                 if line.get("rebirth"):
-                    layer.birth(
-                        tick,
-                        record,
-                        family_index[str(line["family"])],
-                        int(line["u"]),
-                        {0: 1},
-                        1,
-                        int(line["born"]),
-                    )
+                    # One birth per rebirth, every row's units by its split.
+                    if layer.resolve(record) is None:
+                        layer.birth(
+                            tick, record, family_index[str(line["family"])], int(line["u"]), {0: 1}, 1, 0
+                        )
+                    layer.split(record, 0, int(line["born"]))
                 else:
                     absorbed = 0 if is_sum(layer, set_index) else int(line["absorbed"])
                     layer.split(record, absorbed, int(line["born"]))
+            elif event == "gate":
+                # The gate's join: the records named join the survivor (the
+                # rows' relabelling is the lattice's; the layer's labels,
+                # arms and live count follow).
+                if not quiet:
+                    print(GAMEBOARD, json.dumps(line))
+                layer.join(
+                    tick,
+                    int(line["survivor"]),
+                    [int(other) for other in line["joined"]],
+                    {
+                        int(identity): {int(label) for label in labels}
+                        for identity, labels in line["present"]
+                    },
+                )
+            elif event == "rotate":
+                # The rotation's amounts: w becomes w C' + w S' per row, the
+                # live count following.
+                if not quiet:
+                    print(GAMEBOARD, json.dumps(line))
+                for record, absorbed, born in line.get("records", []):
+                    layer.split(int(record), int(absorbed), int(born))
+                for record in sorted({int(item[0]) for item in line.get("records", [])}):
+                    layer.rotate(record, int(line["bit"]))
             elif event == "cancel":
                 if not quiet:
                     print(GAMEBOARD, json.dumps(line))

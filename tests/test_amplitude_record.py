@@ -1,6 +1,6 @@
 """The amplitude law's key and the record on the row (`amplitude-v1`, the
 model owner, 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is
-built"; the design, scratchpad/amplitude/DESIGN.md sections 1 and 2.3;
+built"; the design, docs/designs/amplitude-v1/DESIGN.md sections 1 and 2.3;
 docs/BEAM_LAW.md note 37): the world key `amplitude`, the three columns
 `record`, `branch` and `multiplicity` of the store, and the merge's normal
 form (the cancel of antiphase rows of one record). The expected integers of

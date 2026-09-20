@@ -303,7 +303,9 @@ and Elitzur-Vaidman's absorber on one arm; L2, the two slits at a low
 rate (the shipped two-slit world under the key with the wall freed beside
 the openings, and its one-birth reference); L3, the pair on the A2 world
 with the choosers, at the CHSH labels, with a which-path read and with
-Bob's counters far; L4, GHZ. The register entry is
+Bob's counters far; L4, GHZ; L5, the gate between records (the CNOT
+pair, CNOT twice, GHZ by one gate, the register's ceiling); L6, the pair
+at N = 1024 and 4096. The register entry is
 [L, the amplitude law (2026-09-20)](../../docs/EXPERIMENTS.md#l-the-amplitude-law-2026-09-20).
 
 ## The entity catalog

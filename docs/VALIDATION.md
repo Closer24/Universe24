@@ -11,6 +11,75 @@ change is checked against the tests selected by the import graph; the whole
 suite runs together only when the shared core changes, and then once, in
 parallel. Entries below keep the scope they had when recorded.
 
+## The amplitude law: the gate set of seventeen worlds replayed without the key after commit (i) and at stage (v) - 2026-09-20
+
+`amplitude-v1` (the branch `amplitude-impl`, commits (i) `ca2e5fad`, (ii)
+`9ca0600c`, (iii) `578742e3`, (iv) `f3d4ad54` and (v)) adds the world key
+`amplitude`; every world without it must read as it did, byte for byte
+([MIGRATION](MIGRATION.md), the design's section 6). The owner's change of
+2026-09-20 to the design's test 7 replaces the replay of every registered
+world by a gate set of one world per table rule, key and family kind, so
+that every engine path runs once (the full register replay and the
+coverage-measured gate set belong to a later trimming pull request). The
+gate set (the scratchpad tools `replay.py` and `compare.py`: every world
+run with the base tree `7f986124` and with the branch, `events.jsonl` and
+`state.json` digested, `run.json` compared with its volatile fields
+removed), what each world covers:
+
+| world | covers |
+| --- | --- |
+| `two_slits` | `rerelease` on 91 directions, a lamp, the `wave` reading, z periodic |
+| `bell/read` | the read form of `phase_window`, `pass`, a free and a paid family |
+| `bell/a0_b8` | `measure` under `phase_window` (the chooser), a lamp |
+| `weak/j2_filter` | `phase_width` on `measure` |
+| `weak/w_exchange` | `become`, `lifetime`, a charged paid family |
+| `weak/j3_neutron_free` | `columns`, `lifetime`, `become`, the `beam` reading |
+| `nucleus/deuteron_1` | `columns` and `lifetime` on free families |
+| `lensing/mass_meeting` | `meeting`, `read`, `measure` |
+| `bohr/r2` | `action` (the turn by momentum) |
+| `hubble/coasting_age` | `read`, `measure`, `pass` with `reads` |
+| `coupling/7_pp` | free families alone, z periodic |
+| `catalog/lamp_mirror_screen` | `rerelease` with `phase_window`, a lamp |
+| `catalog/sun_planet` | `rerelease` with a free crowd |
+| `heisenberg/w3_beam` | the `beam` reading on a `rerelease` world |
+| `one_content` | one free family, open faces |
+| `redshift/age` | `pass` with `reads` on a free family |
+| `detector/periodic_z_node` | `in_transit`, a paid family, z periodic |
+
+After commit (i) and at stage (v) (the working tree that (v) commits, the
+engine with the layer, the split, the gate and the review's fixes), the
+seventeen replays give `events.jsonl` and `state.json` identical to the
+base tree's, and `run.json` differs by the key `amplitude` false added and
+nothing else (`run_json_diff.py`: `/amplitude (added)` on every world).
+The digests at stage (v) (the first 16 hexadecimal digits of the sha256):
+
+| world | events.jsonl | state.json |
+| --- | --- | --- |
+| `two_slits` | `7b1135dc8480a022` | `bb1b1ffde3a9f8a3` |
+| `read` | `1ec4bbab4473d4f5` | `2ab033bb2a9a23a3` |
+| `a0_b8` | `601a3937eb4e59f6` | `9608515fa4d8705f` |
+| `j2_filter` | `1c92c9c3817755e7` | `709d6c476ac6dab9` |
+| `w_exchange` | `80ebe74909824bad` | `c1514fd62be5fe9c` |
+| `j3_neutron_free` | `ca857e2846aa5b86` | `5777301aacbd71e1` |
+| `deuteron_1` | `5a8be8d83e20abe1` | `bfbaec73edb1bf1f` |
+| `mass_meeting` | `c307b0721938e66a` | `fee84f9d69b12795` |
+| `r2` | `6b39d6192485557b` | `958fcc9dc314e073` |
+| `coasting_age` | `6d33d3ac82b6bea9` | `71b6cb3cba97e561` |
+| `7_pp` | `da177386799d3861` | `ceb7df3e3d69b9cf` |
+| `lamp_mirror_screen` | `e6ca788d38ca28b9` | `4ad0e0bde47ebf16` |
+| `sun_planet` | `9eb5b1953114c8a8` | `3cecc7c2a1361553` |
+| `w3_beam` | `800eaa869e738837` | `29a06f0c188ea4bd` |
+| `one_content` | `a8b1f8191dd478a4` | `861f21006fe5f65e` |
+| `age` | `39a304861b12c02b` | `4542d6a424ca4419` |
+| `periodic_z_node` | `ec81debeb25e6df5` | `e7b814baedb8d3fe` |
+
+The physics reviewer of commits (i) and (ii) replayed `two_slits`,
+`bell/read` and `two_contents` independently with the same digests
+(`7b1135dc...`, `1ec4bbab...`, `951a50a7...`). The keyed worlds of series L
+are the register's ([EXPERIMENTS](EXPERIMENTS.md), "L, the amplitude
+law"); `tests/test_amplitude_layer.py` (e) checks that every gate-set
+world parses without the key.
+
 ## The weak force in the world's terms: the 85 example worlds replayed after each commit, series J - 2026-09-20
 
 The worktree of `claude/universe24-new-3ytqde` from its tip `6a596b34`

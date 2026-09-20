@@ -1,7 +1,7 @@
 """Write the worlds of series L, the amplitude law (`amplitude-v1`; the
 model owner, 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is
 built"; the physicist's and the mathematician's design,
-scratchpad/amplitude/DESIGN.md, sections 3.4, 7 and 14), and the
+docs/designs/amplitude-v1/DESIGN.md, sections 3.4, 7 and 14), and the
 expectations pinned before the runs (`expectations.json`, every integer
 the design's, from its check scripts `mz.py` and `slits_read.py`).
 
@@ -89,7 +89,9 @@ is the row as it stepped out, before that interval's turn), the
 weight of a set |sum 32 v(p)|^2 / m in the unit (32 x 256)^2, the ladder
 over the sets in the layer's order with the rungs at the nearest integer,
 and the clicks per set over the 64 births u = 0 .. 63 read off the ladder
-(every u falls in one cell); beside them the pixels with rows, the pixels
+(every u falls in one cell; a set of several Nodes, a face, offers the
+sum over its Nodes of the per-Node squares, coherent within a Node and
+incoherent across Nodes); beside them the pixels with rows, the pixels
 where two paths meet and the Pearson correlations the design registered
 for the shipped geometry (0.753 with the incoherent sum, 0.38 with the
 Euclidean two-source cosine, 0.963 of the 64-birth histogram with the
@@ -127,6 +129,31 @@ square; the cells in the order of the arms (++, +-, -+, --), the rungs at
 the nearest integer, the counts over the 64 births; a `read` on an arm
 makes the labels its channels, the joint a product per label. Nothing of
 the engine's layer enters the reading.
+
+L5, the gate between records (the design's section 10): `cnot_pair_<a>_<b>`
+(a plane of 16 x 11: the control's lamp at (2, 5) on +x through the
+Hadamard at (4, 5), a `rerelease` whose `rotate` turns the label bit 0 by
+the setting N/4, into the gate at (8, 5), a `rerelease` with `gate` {cnot,
+hold, 2 parties} whose `inputs` send the control on +y to Alice at (8, 8)
+and the target, born at (14, 5) on -x, on -y to Bob at (8, 2); Bob's
+window the label -b, since CNOT on H|0> x |0> is |00> - |11> in this
+convention); `cnot_twice` (the gate's two outputs on +x into a second gate
+of one party at (11, 5): the identity); `cnot_ghz_<basis>` (three lamps
+into one gate of three parties at (5, 5, 0) on a board of 11 x 11 x 3
+with z periodic, the counters at (5, 8, 0), (5, 5, 1), (5, 5, 2) with
+the settings X and Y); `rotations_3` and `rotations_4` (one record through
+three, then four, label rotations in series: the multiplicity 65536 per
+rotation, the fourth beyond 2^62 - 1, the register's ceiling). The
+expectations (`expectations.json` under `gate`) are the design's `gate.py`
+on the host's joint state. Grover's six rotations exceed the register on
+the lattice (m = 2^96), as the design's section 10 states: not a world.
+L6, the pair at N = 1024 and N = 4096 (`bell_n1024_<a>_<b>`,
+`bell_n4096_<a>_<b>` at the CHSH labels 0, N/8, N/4, 3N/8; N + 20
+intervals, one birth per u): S as the integer ratio at each N against the
+design's 2896/1024, and the bound |E - cos| <= 1/N (`expectations.json`
+under `pair_n`). At N = 4096 the half-angle tables of 2N do not exist
+(the tables end at 4096 steps): the entry at an even setting s is the
+4096 table's at s / 2, the same rounding of the same angle.
 
     python examples/events/amplitude/make_worlds.py [--out DIR]
 """
@@ -189,6 +216,17 @@ LONG_TICKS = 300
 PATH_NODE = 9
 GHZ_SETTING = QUARTER
 GHZ_BASES = ("XXX", "XYY", "YXY", "YYX", "YYY")
+# L5 and L6.
+PLUS_Z = [0, 0, 1]
+MINUS_Z = [0, 0, -1]
+MINUS_Y = [0, -1, 0]
+GATE_TICKS = 90
+GATE_BASES = ("XXX", "XYY", "YXY", "YYX")
+ROTATIONS_WITHIN_BOUND = 3
+# A world refused at load is built by the tests and not written as a file.
+UNSHIPPED = {"rotations_4"}
+PAIR_N = (1024, 4096)
+MAX_TABLE = 4096
 PLUS_X = [1, 0, 0]
 PLUS_Y = [0, 1, 0]
 PYTHAGOREAN_29 = (20, 21)
@@ -416,9 +454,9 @@ def pearson(a: list[float], b: list[float]) -> float:
     return sum((x - ma) * (y - mb) for x, y in zip(a, b, strict=True)) / (sa * sb)
 
 
-def ladder(weights: dict[str, Fraction], order: list[str]) -> dict[str, int]:
-    """The clicks per set over u = 0 .. N - 1: the rungs
-    b_k = (2 N C_k + Total) // (2 Total) at the nearest integer over the
+def ladder(weights: dict[str, Fraction], order: list[str], n: int = N) -> dict[str, int]:
+    """The clicks per set over u = 0 .. n - 1: the rungs
+    b_k = (2 n C_k + Total) // (2 Total) at the nearest integer over the
     sets in the layer's order, each set's count the rungs' difference."""
     total = sum(weights[k] for k in order)
     cumulative = Fraction(0)
@@ -426,11 +464,11 @@ def ladder(weights: dict[str, Fraction], order: list[str]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for name in order:
         cumulative += weights[name]
-        rung = int((2 * N * cumulative + total) // (2 * total))
+        rung = int((2 * n * cumulative + total) // (2 * total))
         if rung > previous:
             counts[name] = rung - previous
         previous = rung
-    assert previous == N
+    assert previous == n
     return counts
 
 
@@ -458,17 +496,24 @@ def two_slits_reading() -> dict[str, object]:
     re_emitted = {
         int(line["measured"]): int(line["tick"]) for line in lines if line.get("event") == "rerelease"
     }
+    # The rows per set and per Node of the set: coherent within a Node,
+    # incoherent across the Nodes of one set (the decision of 2026-09-20
+    # on the owner's point 5).
     rows: dict[str, list[tuple[int, int, int]]] = OrderedDict()
+    at_node: dict[str, dict[tuple[int, ...], list[tuple[int, int, int]]]] = OrderedDict()
     for line in lines:
         if line.get("event") != "click":
             continue
         detector = line["detector"]
         name = str(detector) if detector is not None else f"measured:{line['measured']}"
         tick, phase = int(line["tick"]), int(line["phase"])
+        node = tuple(int(v) for v in line["node"])
         if int(line["number"]) == 1:
             # A lamp row: the amount 91 stands for one unit at m = 5, its
             # age its flight from the birth at tick 0.
-            rows.setdefault(name, []).append((1, LAMP_ROWS, (phase + turn(tick, tick)) % N))
+            row = (1, LAMP_ROWS, (phase + turn(tick, tick)) % N)
+            rows.setdefault(name, []).append(row)
+            at_node.setdefault(name, {}).setdefault(node, []).append(row)
         else:
             # A fan row: its flight is the lamp row's to the opening (the
             # re-emission tick, from the birth at tick 0) and its own since.
@@ -479,18 +524,21 @@ def two_slits_reading() -> dict[str, object]:
                 # turn of that interval (the engine's walk: the escaped rows
                 # leave, the rows that stay turn).
                 age, tick = age - 1, tick - 1
-            rows.setdefault(name, []).append(
-                (1, LAMP_ROWS * FAN_WAYS, (phase + turn(opened, opened) + turn(age, tick)) % N)
-            )
+            row = (1, LAMP_ROWS * FAN_WAYS, (phase + turn(opened, opened) + turn(age, tick)) % N)
+            rows.setdefault(name, []).append(row)
+            at_node.setdefault(name, {}).setdefault(node, []).append(row)
     weights: dict[str, Fraction] = {}
     incoherent: dict[str, Fraction] = {}
     for name, found in rows.items():
         multiplicities = {m for _, m, _ in found}
         assert len(multiplicities) == 1, (name, multiplicities)
         m = multiplicities.pop()
-        x = sum(32 * w * cosines[p] for w, _, p in found)
-        y = sum(32 * w * sines[p] for w, _, p in found)
-        weights[name] = Fraction(x * x + y * y, m * DESIGN_UNIT)
+        square = 0
+        for node_rows in at_node[name].values():
+            x = sum(32 * w * cosines[p] for w, _, p in node_rows)
+            y = sum(32 * w * sines[p] for w, _, p in node_rows)
+            square += x * x + y * y
+        weights[name] = Fraction(square, m * DESIGN_UNIT)
         incoherent[name] = Fraction(
             sum((32 * w) ** 2 * (cosines[p] ** 2 + sines[p] ** 2) for w, _, p in found),
             m * DESIGN_UNIT,
@@ -541,6 +589,7 @@ def two_slits_reading() -> dict[str, object]:
         "screen_alone": screen_alone,
         "pixels_with_rows": len(pixels),
         "two_path_pixels": sum(1 for name in screen if len(rows[name]) >= 2),
+        "face_nodes": {name: len(at_node[name]) for name in cells if name.startswith("face:")},
         "pearson": {
             "weight_incoherent": round(pearson(weight_line, incoherent_line), 3),
             "weight_cosine": round(pearson(weight_line, cosine_line), 3),
@@ -667,6 +716,202 @@ def ghz(name: str, basis: str) -> dict[str, object]:
     }
 
 
+# The clock of the gate worlds: a rotation scales a row's amount by 256
+# (181 at the setting N/4), so a counter holding three rotations' rows
+# holds 181^3 x 2 content; the clock's bound 2 x content < K x N asks
+# for a K of 2^50 (the lamp's content K, one phase step per interval).
+GATE_CLOCK = 1 << 50
+
+
+def lamp(position: list[int], direction: list[int]) -> dict[str, object]:
+    return {
+        "position": position,
+        "family": "light",
+        "amount": GATE_CLOCK,
+        "fixed": True,
+        "lamp": {"rate": [1, 1], "directions": [direction]},
+    }
+
+
+def hadamard(position: list[int], direction: list[int]) -> dict[str, object]:
+    """A re-emitter on one direction rotating the label bit 0 by N/4."""
+    return {
+        "position": position,
+        "family": "light",
+        "amount": 1,
+        "fixed": True,
+        "table": {"light": {"rule": "rerelease", "rotate": {"setting": QUARTER}}},
+        "directions": [direction],
+    }
+
+
+def cnot_gate(
+    position: list[int], inputs: list[list[int]], outputs: list[list[int]], parties: int
+) -> dict[str, object]:
+    """A re-emitter with the CNOT gate, each arrival re-emitted on its own
+    output (the mirror per input)."""
+    ways = len(outputs)
+    return {
+        "position": position,
+        "family": "light",
+        "amount": 1,
+        "fixed": True,
+        "table": {
+            "light": {
+                "rule": "rerelease",
+                "inputs": inputs,
+                "weights": [[1 if j == k else 0 for j in range(ways)] for k in range(ways)],
+                "gate": {"kind": "cnot", "hold": True, "parties": parties},
+            }
+        },
+        "directions": outputs,
+    }
+
+
+def counter(position: list[int], setting: int, turn: int = 0) -> dict[str, object]:
+    entry: dict[str, object] = {"phase_window": setting}
+    if turn:
+        entry["turn"] = turn
+    return {
+        "position": position,
+        "family": "counter",
+        "amount": 1,
+        "fixed": True,
+        "table": {"light": entry},
+    }
+
+
+def gate_world(
+    name: str,
+    shape: list[int],
+    measured: list[dict[str, object]],
+    detectors: list[dict[str, object]],
+    ticks: int = GATE_TICKS,
+) -> dict[str, object]:
+    return {
+        "law": "beam",
+        "model_id": f"beam-amplitude-{name}-v1",
+        "shape": shape,
+        "boundary": {"z": "periodic"},
+        "ticks": ticks,
+        "K": GATE_CLOCK,
+        "N": N,
+        "release": [0, 1],
+        "suspension": 0,
+        "amplitude": True,
+        "families": [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}],
+        "measured": measured,
+        "detectors": detectors,
+    }
+
+
+def cnot_pair(name: str, a: int, b: int) -> dict[str, object]:
+    """The pair made by the gate: H on the control, CNOT with the target,
+    Alice at a and Bob at -b."""
+    measured = [
+        lamp([2, 5, 0], PLUS_X),
+        hadamard([4, 5, 0], PLUS_X),
+        cnot_gate([8, 5, 0], [PLUS_X, MINUS_X], [PLUS_Y, MINUS_Y], 2),
+        lamp([14, 5, 0], MINUS_X),
+        counter([8, 8, 0], a),
+        counter([8, 2, 0], (-b) % N),
+    ]
+    detectors = [
+        {"name": "alice", "positions": [[8, 8, 0]], "reading": "sum"},
+        {"name": "bob", "positions": [[8, 2, 0]], "reading": "sum"},
+    ]
+    return gate_world(name, [16, 11, 1], measured, detectors)
+
+
+def cnot_twice(name: str) -> dict[str, object]:
+    """The second CNOT by one gate per arm (a permutation of the joint
+    label is one relabelling, whichever arm's rows a gate sees; a gate of
+    one party without `hold` acts on the rows present): the identity; then
+    an absorber per arm. The target's lamp at (8, 1) on +y into the gate
+    at (8, 5); the gate's outputs the control on +x to the gate at (11, 5)
+    and the target on +y to the gate at (8, 8); their outputs +y to the
+    absorbers at (11, 8) and (8, 10)."""
+    measured = [
+        lamp([2, 5, 0], PLUS_X),
+        hadamard([4, 5, 0], PLUS_X),
+        cnot_gate([8, 5, 0], [PLUS_X, PLUS_Y], [PLUS_X, PLUS_Y], 2),
+        lamp([8, 1, 0], PLUS_Y),
+        cnot_gate([11, 5, 0], [PLUS_X], [PLUS_Y], 1),
+        cnot_gate([8, 8, 0], [PLUS_Y], [PLUS_Y], 1),
+        {"position": [11, 8, 0], "family": "counter", "amount": 1, "fixed": True},
+        {"position": [8, 10, 0], "family": "counter", "amount": 1, "fixed": True},
+    ]
+    for index in (4, 5):
+        measured[index]["table"]["light"]["gate"]["hold"] = False  # type: ignore[index]
+    detectors = [
+        {"name": "end_a", "positions": [[11, 8, 0]], "reading": "sum"},
+        {"name": "end_b", "positions": [[8, 10, 0]], "reading": "sum"},
+    ]
+    return gate_world(name, [16, 11, 1], measured, detectors)
+
+
+def cnot_ghz(name: str, basis: str) -> dict[str, object]:
+    """GHZ by one gate of three parties: H on the control, CNOT to both
+    targets, the counters' settings per letter."""
+    positions = [[5, 8, 0], [5, 5, 1], [5, 5, 2]]
+    measured = [
+        lamp([5, 1, 0], PLUS_Y),
+        hadamard([5, 2, 0], PLUS_Y),
+        cnot_gate([5, 5, 0], [PLUS_Y, MINUS_X, PLUS_X], [PLUS_Y, PLUS_Z, MINUS_Z], 3),
+        lamp([9, 5, 0], MINUS_X),
+        lamp([1, 5, 0], PLUS_X),
+    ]
+    detectors: list[dict[str, object]] = []
+    for position, letter, label in zip(positions, basis, "abc", strict=True):
+        measured.append(counter(position, GHZ_SETTING, QUARTER if letter == "Y" else 0))
+        detectors.append({"name": label, "positions": [position], "reading": "sum"})
+    return gate_world(name, [11, 11, 3], measured, detectors)
+
+
+def rotations(name: str, count: int) -> dict[str, object]:
+    """One record through `count` label rotations in series on a bar, then
+    an absorber reading `sum`."""
+    measured = [lamp([0, 0, 0], PLUS_X)]
+    for k in range(count):
+        measured.append(hadamard([2 + 2 * k, 0, 0], PLUS_X))
+    end = 2 + 2 * count
+    measured.append({"position": [end, 0, 0], "family": "counter", "amount": 1, "fixed": True})
+    detectors = [{"name": "end", "positions": [[end, 0, 0]], "reading": "sum"}]
+    return gate_world(name, [end + 1, 1, 1], measured, detectors, ticks=110)
+
+
+def gate_worlds() -> dict[str, dict[str, object]]:
+    found: dict[str, dict[str, object]] = {}
+    for a, b in CHSH:
+        found[f"cnot_pair_{a}_{b}"] = cnot_pair(f"cnot_pair_{a}_{b}", a, b)
+    found["cnot_twice"] = cnot_twice("cnot_twice")
+    for basis in GATE_BASES:
+        found[f"cnot_ghz_{basis.lower()}"] = cnot_ghz(f"cnot_ghz_{basis.lower()}", basis)
+    found["rotations_3"] = rotations("rotations_3", ROTATIONS_WITHIN_BOUND)
+    found["rotations_4"] = rotations("rotations_4", ROTATIONS_WITHIN_BOUND + 1)
+    return found
+
+
+def bell_n(name: str, n: int, a: int, b: int) -> dict[str, object]:
+    """The pair at the CHSH labels at N = n on the A2 board, one birth per u."""
+    world = bell(name, (a, b))
+    world["N"] = n
+    world["ticks"] = n + 20
+    return world
+
+
+def chsh_labels(n: int) -> tuple[tuple[int, int], ...]:
+    return ((0, n // 8), (0, 3 * n // 8), (n // 4, n // 8), (n // 4, 3 * n // 8))
+
+
+def pair_n_worlds() -> dict[str, dict[str, object]]:
+    found: dict[str, dict[str, object]] = {}
+    for n in PAIR_N:
+        for a, b in chsh_labels(n):
+            found[f"bell_n{n}_{a}_{b}"] = bell_n(f"bell_n{n}_{a}_{b}", n, a, b)
+    return found
+
+
 def pair_worlds() -> dict[str, dict[str, object]]:
     found = {"bell_choosers": bell("bell_choosers")}
     for a, b in CHSH:
@@ -683,6 +928,8 @@ def worlds() -> dict[str, dict[str, object]]:
     found = mach_zehnder_worlds()
     found.update(two_slits_worlds())
     found.update(pair_worlds())
+    found.update(gate_worlds())
+    found.update(pair_n_worlds())
     return found
 
 
@@ -694,14 +941,26 @@ def cmul(a: Complex, b: Complex) -> Complex:
     return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
 
 
-def rotation(setting: int, turn: int = 0) -> dict[tuple[str, int], Complex]:
+def half_angle(setting: int, n: int) -> Complex:
+    """C'[s], S'[s] of the half-angle tables of 2n; at 2n beyond the tables'
+    4096 steps the 4096 table at s / 2 (an even s)."""
+    from event_universe.core.phase import phase_cosines, phase_sines
+
+    size = min(2 * n, MAX_TABLE)
+    factor = 2 * n // size
+    index = setting % (2 * n)
+    assert index % factor == 0, (setting, n)
+    index //= factor
+    return phase_cosines(size)[index], phase_sines(size)[index]
+
+
+def rotation(setting: int, turn: int = 0, n: int = N) -> dict[tuple[str, int], Complex]:
     """U_s on the half-angle tables of 2N: the entry per (channel, label
     bit), complex integers in 1/256^2, the turn on the label 1 column."""
     from event_universe.core.phase import phase_cosines, phase_sines
 
-    c = phase_cosines(2 * N)[setting % (2 * N)]
-    s = phase_sines(2 * N)[setting % (2 * N)]
-    circle: Complex = (phase_cosines(N)[turn % N], phase_sines(N)[turn % N])
+    c, s = half_angle(setting, n)
+    circle: Complex = (phase_cosines(n)[turn % n], phase_sines(n)[turn % n])
     return {
         ("+", 0): (c * 256, 0),
         ("+", 1): cmul((s, 0), circle),
@@ -710,10 +969,12 @@ def rotation(setting: int, turn: int = 0) -> dict[tuple[str, int], Complex]:
     }
 
 
-def joint(settings: list[tuple[int, int]], labels: list[tuple[int, int]]) -> dict[tuple[str, ...], int]:
+def joint(
+    settings: list[tuple[int, int]], labels: list[tuple[int, int]], n: int = N
+) -> dict[tuple[str, ...], int]:
     """The weight per outcome tuple: the square of the sum over the joint
     labels (with their weights) of the products of the arms' entries."""
-    tables = [rotation(s, t) for s, t in settings]
+    tables = [rotation(s, t, n) for s, t in settings]
     found: dict[tuple[str, ...], int] = {}
     for outcome in itertools.product("+-", repeat=len(settings)):
         total: Complex = (0, 0)
@@ -726,18 +987,20 @@ def joint(settings: list[tuple[int, int]], labels: list[tuple[int, int]]) -> dic
     return found
 
 
-def counts_of(weights: dict[tuple[str, ...], int], order: list[tuple[str, ...]]) -> dict[str, int]:
-    """The clicks per outcome over u = 0 .. N - 1 by the ladder."""
+def counts_of(
+    weights: dict[tuple[str, ...], int], order: list[tuple[str, ...]], n: int = N
+) -> dict[str, int]:
+    """The clicks per outcome over u = 0 .. n - 1 by the ladder."""
     fractions = {"".join(k): Fraction(v) for k, v in weights.items()}
-    return ladder(fractions, ["".join(k) for k in order])
+    return ladder(fractions, ["".join(k) for k in order], n)
 
 
 def outcomes(arms: int) -> list[tuple[str, ...]]:
     return list(itertools.product("+-", repeat=arms))
 
 
-def pair_counts(a: int, b: int) -> dict[str, int]:
-    return counts_of(joint([(a, 0), (b, 0)], [(0, 1), (3, 1)]), outcomes(2))
+def pair_counts(a: int, b: int, n: int = N) -> dict[str, int]:
+    return counts_of(joint([(a, 0), (b, 0)], [(0, 1), (3, 1)], n), outcomes(2), n)
 
 
 def correlation(counts: dict[str, int]) -> int:
@@ -797,6 +1060,111 @@ def pair_expectations() -> dict[str, object]:
     }
 
 
+# The design's reading of the gate (`gate.py`): the record's joint state on
+# the host, labels as tuples of bits with complex amplitudes.
+State = dict[tuple[int, ...], Complex]
+
+
+def rotate_state(state: State, qubit: int, setting: int, turn: int = 0) -> State:
+    table = rotation(setting, turn)
+    out: State = {}
+    for label, amplitude in state.items():
+        for channel, bit in (("+", 0), ("-", 1)):
+            new = label[:qubit] + (bit,) + label[qubit + 1 :]
+            entry = table[(channel, label[qubit])]
+            product = cmul(entry, amplitude)
+            found = out.get(new, (0, 0))
+            out[new] = (found[0] + product[0], found[1] + product[1])
+    return {k: v for k, v in out.items() if v != (0, 0)}
+
+
+def cnot_state(state: State, targets: tuple[int, ...]) -> State:
+    out: State = {}
+    for label, amplitude in state.items():
+        new = list(label)
+        for target in targets:
+            new[target] ^= label[0]
+        key = tuple(new)
+        found = out.get(key, (0, 0))
+        out[key] = (found[0] + amplitude[0], found[1] + amplitude[1])
+    return out
+
+
+def state_counts(state: State, order: list[tuple[int, ...]]) -> dict[str, int]:
+    weights = {k: v[0] * v[0] + v[1] * v[1] for k, v in state.items()}
+    return ladder(
+        {"".join("+-"[bit] for bit in k): Fraction(weights.get(k, 0)) for k in order},
+        ["".join("+-"[bit] for bit in k) for k in order],
+    )
+
+
+def gate_expectations() -> dict[str, object]:
+    unit: Complex = (256 * 256, 0)
+    plus = rotate_state({(0, 0): unit}, 0, QUARTER)
+    pair = cnot_state(plus, (1,))
+    order2 = [(0, 0), (0, 1), (1, 0), (1, 1)]
+    chsh_rows: dict[str, object] = {}
+    correlations: dict[tuple[int, int], int] = {}
+    for a, b in CHSH:
+        measured = rotate_state(rotate_state(pair, 0, a), 1, (-b) % N)
+        counts = state_counts(measured, order2)
+        chsh_rows[f"{a}_{b}"] = {"counts": counts, "E": correlation(counts)}
+        correlations[(a, b)] = correlation(counts)
+    ghz_state = cnot_state(rotate_state({(0, 0, 0): unit}, 0, QUARTER), (1, 2))
+    order3 = list(itertools.product((0, 1), repeat=3))
+    ghz: dict[str, object] = {}
+    for basis in GATE_BASES:
+        measured = ghz_state
+        for qubit, letter in enumerate(basis):
+            measured = rotate_state(measured, qubit, GHZ_SETTING, QUARTER if letter == "Y" else 0)
+        counts = state_counts(measured, order3)
+        allowed = sorted(k for k, v in counts.items() if v)
+        ghz[basis.lower()] = {
+            "allowed": allowed,
+            "counts": {k: v for k, v in counts.items() if v},
+            "products": sorted({1 if k.count("-") % 2 == 0 else -1 for k in allowed}),
+        }
+    return {
+        "reference": "the design's gate.py",
+        "hadamard": {"".join(map(str, k)): list(v) for k, v in plus.items()},
+        "pair": {"".join(map(str, k)): list(v) for k, v in pair.items()},
+        "twice": cnot_state(pair, (1,)) == plus,
+        "chsh": chsh_rows,
+        "chsh_S": chsh(correlations),
+        "ghz": ghz,
+        "rotations_within_bound": ROTATIONS_WITHIN_BOUND,
+        "rows_bound": "n x 2^n rows per record after n gates",
+    }
+
+
+def pair_n_expectations() -> dict[str, object]:
+    found: dict[str, object] = {}
+    for n in PAIR_N:
+        labels = chsh_labels(n)
+        rows: dict[str, object] = {}
+        correlations: dict[tuple[int, int], int] = {}
+        for a, b in labels:
+            counts = pair_counts(a, b, n)
+            e = correlation(counts)
+            correlations[(a, b)] = e
+            cosine = math.cos(2 * math.pi * (a - b) / n)
+            rows[f"{a}_{b}"] = {
+                "counts": counts,
+                "E": e,
+                "cosine": round(cosine, 6),
+                "within_1_over_N": abs(e / n - cosine) <= 1 / n,
+            }
+        s = (
+            correlations[labels[0]]
+            - correlations[labels[1]]
+            + correlations[labels[2]]
+            + correlations[labels[3]]
+        )
+        found[str(n)] = {"labels": [list(pair) for pair in labels], "pairs": rows, "S": s}
+    found["design_S_1024"] = 2896
+    return found
+
+
 def ghz_expectations() -> dict[str, object]:
     found: dict[str, object] = {}
     for basis in GHZ_BASES:
@@ -822,6 +1190,8 @@ def expectations() -> dict[str, object]:
         "two_slits": two_slits_reading(),
         "pair": pair_expectations(),
         "ghz": ghz_expectations(),
+        "gate": gate_expectations(),
+        "pair_n": pair_n_expectations(),
     }
 
 
@@ -831,6 +1201,8 @@ def main() -> None:
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     for name, world in worlds().items():
+        if name in UNSHIPPED:
+            continue
         path = args.out / f"{name}.json"
         path.write_text(json.dumps(world) + "\n", encoding="utf-8")
         print(

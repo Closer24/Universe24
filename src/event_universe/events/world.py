@@ -402,7 +402,7 @@ WORLD_KEYS = {
 }
 # The identity of the amplitude law (`amplitude-v1`; the model owner,
 # 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
-# physicist's and the mathematician's design, scratchpad/amplitude/DESIGN.md;
+# physicist's and the mathematician's design, docs/designs/amplitude-v1/DESIGN.md;
 # docs/BEAM_LAW.md note 37): under the world key `amplitude` an event in
 # transit is a record with rows (the store's columns `record`, `branch` and
 # `multiplicity`), a re-emission may split a row by integer weights, rows of
@@ -499,6 +499,8 @@ TABLE_ENTRY_KEYS = {
     "inputs",
     "weights",
     "turn",
+    "rotate",
+    "gate",
     "turns",
 }
 # The split (the amplitude law, 2026-09-20, the owner's unification (2):
@@ -539,6 +541,10 @@ REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase"
 # Port order (an open face is a detector, the model owner, 2026-09-19); a
 # declared detector may not take one of these names.
 FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
+# The layer's name of a measured event's set outside every declared
+# detector, `measured:<number>`; a declared detector's name may not use
+# the prefix, so that no name collides.
+RESERVED_SET_PREFIX = "measured:"
 # The GameBoard's faces per axis: open (the default) or periodic (the wrap).
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
@@ -785,12 +791,20 @@ class MeasuredDefinition:
     # The turn of each entry's rotation on a `sum` set (`turn`, the label
     # click; 0 where none is declared), per family.
     label_turns: tuple[int, ...] = ()
+    # The label rotation and the gate of a `rerelease` entry per family
+    # (`Rotation`, `Gate`; None where none is declared).
+    rotations: tuple[Rotation | None, ...] = ()
+    gates: tuple[Gate | None, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.splits:
             object.__setattr__(self, "splits", (None,) * len(self.table))
         if not self.label_turns:
             object.__setattr__(self, "label_turns", (0,) * len(self.table))
+        if not self.rotations:
+            object.__setattr__(self, "rotations", (None,) * len(self.table))
+        if not self.gates:
+            object.__setattr__(self, "gates", (None,) * len(self.table))
         # A definition made without `held` (the tests' bare definitions)
         # holds its amount under its own family alone, and without
         # `widths` or `transforms` declares none.
@@ -1694,6 +1708,90 @@ class Split:
         return self.weights[k], self.turns[k]
 
 
+@dataclass(frozen=True)
+class Rotation:
+    """A `rerelease` entry's rotation of one label bit on the lattice (the
+    design's 2.2, a single-label gate): the rows of every record at the
+    entry, per label, become two rows on the label's bit `bit` cleared and
+    set, `(w C'[s], m 65536, p)` and `(w S'[s], m 65536, p + t)` from a
+    clear bit, `(w S'[s], m 65536, p + N/2)` and `(w C'[s], m 65536,
+    p + t)` from a set bit, on the half-angle tables of 2N (the setting s,
+    the turn t on the set bit): U_s = [[C', S' v(t)], [-S', C' v(t)]].
+    Not a click: invertible on the tables, the rows kept."""
+
+    setting: int
+    bit: int = 0
+    turn: int = 0
+
+
+@dataclass(frozen=True)
+class Gate:
+    """A `rerelease` entry's gate between records (the design's section 10):
+    `cnot`, the permutation of the joint labels of the records whose rows
+    are pending at the entry, (l_c, l_t) -> (l_c, l_t xor l_c) from the
+    control (the record of the lowest identity, which survives) to every
+    other record's first label bit; the records join into one (the joint
+    labels the product of their label sets, every row replicated over the
+    other records' labels with its multiplicity times the copies). `hold`:
+    the entry holds the rows of a record until the rows of `parties`
+    records are pending and every one of them has all its live units at
+    the entry (a record with rows elsewhere waits); without `hold` the
+    rows of an entry short of that pass as a plain re-emission."""
+
+    kind: str = "cnot"
+    hold: bool = True
+    parties: int = 2
+
+
+GATE_KINDS = ("cnot",)
+LABEL_BITS_BOUND = 32
+
+
+def _rotation(
+    value: object, label: str, rule: str, phase_steps: int, amplitude: bool
+) -> Rotation | None:
+    """The entry's `rotate` (`Rotation`): refused without the key and on a
+    rule other than `rerelease`; None where none is declared."""
+    if not isinstance(value, dict) or "rotate" not in value:
+        return None
+    if not amplitude:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.rotate is the amplitude law's rotation of a label bit and "
+            f"needs the world key {AMPLITUDE_KEY}"
+        )
+    if rule != "rerelease":
+        raise ValueError(f"{BEAM_LAW}: {label}.rotate belongs to a `rerelease` entry, not to {rule}")
+    obj = _object(value["rotate"], f"{label}.rotate", {"setting", "bit", "turn"}, {"setting"})
+    return Rotation(
+        _integer(obj["setting"], f"{label}.rotate.setting", 0, 2 * phase_steps - 1),
+        _integer(obj.get("bit", 0), f"{label}.rotate.bit", 0, LABEL_BITS_BOUND - 1),
+        _integer(obj.get("turn", 0), f"{label}.rotate.turn", 0, phase_steps - 1),
+    )
+
+
+def _gate(value: object, label: str, rule: str, amplitude: bool) -> Gate | None:
+    """The entry's `gate` (`Gate`): refused without the key and on a rule
+    other than `rerelease`; None where none is declared."""
+    if not isinstance(value, dict) or "gate" not in value:
+        return None
+    if not amplitude:
+        raise ValueError(
+            f"{BEAM_LAW}: {label}.gate is the amplitude law's gate between records and needs "
+            f"the world key {AMPLITUDE_KEY}"
+        )
+    if rule != "rerelease":
+        raise ValueError(f"{BEAM_LAW}: {label}.gate belongs to a `rerelease` entry, not to {rule}")
+    obj = _object(value["gate"], f"{label}.gate", {"kind", "hold", "parties"}, {"kind"})
+    kind = obj["kind"]
+    if kind not in GATE_KINDS:
+        raise ValueError(f"{BEAM_LAW}: {label}.gate.kind must be one of {list(GATE_KINDS)}")
+    hold = obj.get("hold", True)
+    if type(hold) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {label}.gate.hold must be true or false")
+    parties = _integer(obj.get("parties", 2), f"{label}.gate.parties", 1, LABEL_BITS_BOUND)
+    return Gate(str(kind), hold, parties)
+
+
 def _split_rows(
     value: object, label: str, ways: int, rows: int | None, least: int, top: int
 ) -> tuple[tuple[int, ...], ...]:
@@ -1991,6 +2089,8 @@ def _measured(
         window_reads: list[tuple[int, int] | None] = [None] * len(families)
         splits: list[Split | None] = [None] * len(families)
         label_turns: list[int] = [0] * len(families)
+        rotations: list[Rotation | None] = [None] * len(families)
+        gates: list[Gate | None] = [None] * len(families)
         for rule, window, component in default_table(families):
             rules.append(rule)
             windows.append(window)
@@ -2028,6 +2128,8 @@ def _measured(
                 table,
             )
             label_turns[at] = _label_turn(entry_value, entry_label, rule, phase_steps, amplitude)
+            rotations[at] = _rotation(entry_value, entry_label, rule, phase_steps, amplitude)
+            gates[at] = _gate(entry_value, entry_label, rule, amplitude)
             if isinstance(entry_window, WindowReading):
                 # The window read from a reading (issue #363): the named
                 # family must exist, carry a phase circle and differ from
@@ -2123,9 +2225,66 @@ def _measured(
                 tuple(window_reads),
                 tuple(splits),
                 tuple(label_turns),
+                tuple(rotations),
+                tuple(gates),
             )
         )
     return tuple(found)
+
+
+def _amplitude_load_checks(
+    measured: tuple[MeasuredDefinition, ...],
+    detectors: tuple[DetectorDefinition, ...],
+    families: tuple[FamilyDefinition, ...],
+    phase_steps: int,
+) -> None:
+    """The world's checks under the key that need the measured events and
+    the detectors together: a `phase_window` on a `rerelease` entry whose
+    Node reads no `sum` set is dead (a split takes no gate; a `sum`
+    re-emitter's window is its rotation's setting) and refused; the
+    multiplicity a row can reach through every re-emitter of the world
+    (each split's norm, each rotation's 65536, each gate's parties as the
+    copies) is bounded by 2^62 - 1 in the product, refused at load before
+    any row is formed (a sufficient bound: a path meets every re-emitter
+    at most once; the run refuses a longer one at the split)."""
+    sum_nodes = {
+        position
+        for detector in detectors
+        if detector.reading == SUM_READING
+        for position in detector.positions
+    }
+    product = 1
+    for index, entry in enumerate(measured):
+        for at, rule in enumerate(entry.table):
+            if rule != "rerelease":
+                continue
+            window_declared = entry.windows[at] is not None or (
+                entry.window_reads and entry.window_reads[at] is not None
+            )
+            if window_declared and entry.position not in sum_nodes:
+                raise ValueError(
+                    f"{BEAM_LAW}: measured[{index}].table[{families[at].name!r}].phase_window is "
+                    f"dead under {AMPLITUDE_KEY}: a split takes no gate, and the Node "
+                    f"{list(entry.position)} reads no `sum` set whose window would be the "
+                    "rotation's setting"
+                )
+            split = entry.splits[at] if entry.splits else None
+            if split is not None:
+                product *= max(sum(a * a for a in row) for row in split.weights)
+            elif families[at].quantum:
+                product *= max(1, len(entry.directions))
+            if entry.rotations and entry.rotations[at] is not None:
+                product *= 256 * 256
+            gate = entry.gates[at] if entry.gates else None
+            if gate is not None:
+                product *= 1 << gate.parties
+            if product > MOMENTUM_BOUND:
+                raise ValueError(
+                    f"{BEAM_LAW}: the multiplicity through the re-emitters of the world reaches "
+                    f"{product} at measured[{index}] at {list(entry.position)}, beyond the integer "
+                    f"bound {MOMENTUM_BOUND} (the register's ceiling: fewer splits, rotations "
+                    "or gates on a path)"
+                )
 
 
 def event_charges(families: tuple[FamilyDefinition, ...], held: dict[int, int]) -> list[tuple[int, int]]:
@@ -2330,6 +2489,12 @@ def _detectors(
             taken.add(position)
             positions.append(position)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
+        if name.startswith(RESERVED_SET_PREFIX) or name in FACE_NAMES or name == LIFETIME_NAME:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.name {name!r} is reserved: the layer names the measured "
+                f"events outside every detector `{RESERVED_SET_PREFIX}<number>`, the faces and "
+                "the border by their own names"
+            )
         reading = obj.get("reading", DETECTOR_READINGS[0])
         if reading == SUM_READING and not amplitude:
             raise ValueError(
@@ -2488,4 +2653,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
         meeting=meeting,
         amplitude=amplitude,
     )
+    if amplitude:
+        _amplitude_load_checks(measured, detectors, families, phase_steps)
     return world

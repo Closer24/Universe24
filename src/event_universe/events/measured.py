@@ -16,6 +16,8 @@ from event_universe.events.world import (
     CHARGE_INDEX,
     MOMENTUM_BOUND,
     SUM_READING,
+    Gate,
+    Rotation,
     Split,
     Transformation,
 )
@@ -298,8 +300,11 @@ class Measured:
     lamp_arms: int = 1
     births: int = 0
     # The turn of each entry's rotation on a `sum` set (the label click's
-    # `turn` key, 0 by default), per family.
+    # `turn` key, 0 by default), per family; the label rotation and the
+    # gate of a `rerelease` entry per family (`world.Rotation`, `world.Gate`).
     label_turns: list[int] = field(default_factory=list)
+    rotations: list[Rotation | None] = field(default_factory=list)
+    gates: list[Gate | None] = field(default_factory=list)
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once

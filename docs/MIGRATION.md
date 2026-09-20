@@ -11,7 +11,7 @@ python -m pip install -e '.[render,dev]'
 The model owner's decision of 2026-09-20 (Highlights 5.4, "DECIDED:
 `amplitude-v1` is built, with the four recommendations and the four
 unifications"), on the physicist's and the mathematician's design
-(scratchpad/amplitude/DESIGN.md); [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
+(docs/designs/amplitude-v1/DESIGN.md); [BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation).
 The first commit, no behaviour change without the key:
 
 - The world key `amplitude` (true or false, false by default; the identity
@@ -122,6 +122,37 @@ without the key:
   its channels, the joint a product per label (`Offer.read`).
 - Series L gains L3 (`bell_choosers`, `bell_<a>_<b>`, `path_<a>_<b>`,
   `bell_16_24_far`, `path_16_24_far`) and L4 (`ghz_<basis>`).
+- Nothing deleted.
+
+## The amplitude law, on 2026-09-20, (v): the gate, the label rotation and the review of (iii)
+
+The fifth commit of `amplitude-v1` (the design's section 10; the review
+of (iii)); no change without the key:
+
+- A `rerelease` entry declares `rotate` (the rotation of one label bit on
+  the lattice, `world.Rotation`) and `gate` (the CNOT between the records
+  of distinct lamps pending at the entry, `world.Gate`; the layer's
+  `join`, the identities aliased); the `gate` and `rotate` lines. The
+  register's ceiling is checked at load: the multiplicity through every
+  re-emitter of the world within 2^62 - 1 (S6).
+- Interference is coherent within one Node only (the decision on the
+  owner's point 5): the layer's offers are per Node, a set's cell weight
+  the sum over its Nodes of the per-Node squares, the click's Node chosen
+  by the rungs over the Nodes; the gather names the Node, the content and
+  the momentum of the chosen rows (S1). The two-slit expectations are
+  re-pinned (wall 34, screen 15, faces 15 of the 64 births).
+- One birth per rebirth at a chosen `sum` re-emitter, every re-created
+  row's units by its split (B1); a free family's rows keep the unkeyed
+  apportioning and gates at every entry (B2); a `phase_window` on a
+  `rerelease` whose Node reads no `sum` set is refused at load (S3); a
+  detector's name may not use the layer's prefix `measured:` (S5); the
+  reading tool completes on the `gather` lines (S2); the design is cited
+  at `docs/designs/amplitude-v1/DESIGN.md` (S4).
+- The half-angle tables at N = 4096: an even setting reads the 4096 table
+  at s / 2 (`amplitude.half_angle`), an odd one is refused.
+- Series L gains L5 (`cnot_pair_<a>_<b>`, `cnot_twice`, `cnot_ghz_<basis>`,
+  `rotations_3`, `rotations_4`) and L6 (`bell_n1024_<a>_<b>`,
+  `bell_n4096_<a>_<b>`).
 - Nothing deleted.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)

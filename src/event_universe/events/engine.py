@@ -301,6 +301,8 @@ class NatureBeamSimulation:
             lamp_branches=((0, 1),) if definition.lamp is None else definition.lamp.branches,
             lamp_arms=1 if definition.lamp is None else definition.lamp.arms,
             label_turns=list(definition.label_turns) + [0] * (count - len(definition.label_turns)),
+            rotations=list(definition.rotations) + [None] * (count - len(definition.rotations)),
+            gates=list(definition.gates) + [None] * (count - len(definition.gates)),
         )
 
     def occupant(self, node: Address3) -> int | None:
