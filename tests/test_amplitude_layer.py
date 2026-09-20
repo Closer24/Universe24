@@ -490,7 +490,11 @@ def test_a_rebirth_is_one_record_of_all_its_rows():
     for gather in reborn[:BIRTHS]:
         assert [cell[1] for cell in gather["cells"]] == [32, 64]  # type: ignore[index]
         assert [cell[0][0][0] for cell in gather["cells"]] == ["a", "b"]  # type: ignore[index]
-        assert gather["chosen"] == [["a", 0, "0"]] and gather["u"] == 0
+        # The rebirth's u is the re-emitter's count of births (stage (vii),
+        # step 2): uniform over the rebirths, half to a and half to b.
+        assert gather["chosen"] == [["a" if gather["u"] < 32 else "b", 0, "0"]]  # type: ignore[operator]
+    assert sorted(g["u"] for g in reborn[:BIRTHS]) == list(range(BIRTHS))
+    assert Counter(str(g["chosen"][0][0]) for g in reborn[:BIRTHS]) == {"a": 32, "b": 32}  # type: ignore[index]
     splits = [line for line in lines if line.get("event") == "split" and line.get("rebirth")]
     assert len(splits) >= BIRTHS
     first = reborn[0]["record"]

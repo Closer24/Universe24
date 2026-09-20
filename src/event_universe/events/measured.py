@@ -78,6 +78,9 @@ class PendingRow(NamedTuple):
     arrival: int = 0
     offered: bool = False
     rebirth: bool = False
+    # The birth phase u of the row's record (stage (vii)), carried into
+    # its re-creation; 0 for a row of no record.
+    birth: int = 0
 
 
 Pending = PendingRow

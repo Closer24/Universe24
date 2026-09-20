@@ -487,8 +487,11 @@ many as the lamp can pay whole; stage (vii); until then the rate [1, 1]
 alone), each one row of amount 1 per direction with the multiplicity the
 directions' count, the record's identity the lamp's number x 2^32 + the
 birth's ordinal at the lamp, `nature_beam.record_identity`, the birth
-phase of the j-th record of a self-creation the clock's phase advanced by
-j strides (the design's 2.1, the extension); and `branches`, the joint labels
+phase u the lamp's count of births less one, mod N (the record's own
+field on its rows, the column `birth`, uniform over births whatever the
+lamp's turn; a rebirth's u the re-emitter's own count; the K finding of
+2026-09-20, stage (vii) step 2), the born rows' phase u plus the
+direction's turn; and `branches`, the joint labels
 of the birth with their integer weights (`[[label, weight], ...]`, the
 labels distinct and below 2^arms, the bit k of a label its value on arm
 k; [[0, 1]] by default) and `arms`, the count of directions that are
@@ -712,9 +715,18 @@ nothing of the emitter but the number: the columns `charge` and `mass` of
 the night of 2026-09-19 are gone since 2026-09-20, the factor of the
 electric push being the family's charge per unit of content,
 [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
-and note 28; a row of a record also its `record`, `branch` and
-`multiplicity`, written on the rows of a record alone: a row of no record
-carries none, with the key or without it). In a recorded world (the key
+and note 28; a row of a record also its `record`, `branch`,
+`multiplicity` and `u`, written on the rows of a record alone: a row of
+no record carries none, with the key or without it). The birth phase u
+is the record's own field beside the running phase (the K finding of
+2026-09-20; stage (vii) step 2): every rule of the GameBoard that reads
+a record row's phase reads the path phase, phase - u (the meeting's
+register, the crowd's pointer of a `wave` set and its window, a window
+read from a reading, the `beam` pairing, the phase a set returns, the
+faces' and the border's pointers), a row of no record reading its phase
+itself; the layer's offers read the running phase (a common rotation of
+a record's rows, the rotation at a `sum` set's window acting on the
+labels) and u enters at the click alone, the ladder. In a recorded world (the key
 and a lamp) the books gain the `cancelled` lines (per family the units the merge's
 cancel removed on the transit line, the content carried on the content
 line and their labels beside the `turned` line, and the world's total
@@ -726,7 +738,7 @@ Under the key the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
-`multiplicity` and `age` where the row is a record's (`rows` on a group
+`multiplicity`, `u` and `age` where the row is a record's (`rows` on a group
 line, the rows of a record among the group's, absent where none is;
 `window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,
 `multiplicity`, `rebirth`, the entry's phase `u`), `cancel` (per record,

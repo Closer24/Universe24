@@ -245,6 +245,33 @@ with it.
   byte-identical without the key as before.
 - Nothing deleted.
 
+## The amplitude law, on 2026-09-20, (vii-2): u the record's own field, unread by the GameBoard
+
+Stage (vii), step 2 (the K finding of 2026-09-20, the first of its two
+changes; nothing changes without the key):
+
+- The row's column `birth`: the birth phase u of the row's record, the
+  lamp's count of births less one, mod N (the record's ordinal at its
+  lamp; a rebirth's u the re-emitter's own count), carried through every
+  re-creation, split, rotation and gate copy; 0 on a row of no record;
+  `u` on the rows of `state.json` and on the `click` lines of a record.
+  Until now u was the lamp's clock phase at the birth, so a lamp whose
+  clock turns 8 steps per interval gave u on 8 rungs and a rebirth's u
+  was always the re-emitter's phase (the layer's test (k) re-pinned: the
+  rebirths now go a 32, b 32 where every one went to a).
+- Every rule of the GameBoard that reads a record row's phase reads the
+  path phase, phase - u: the meeting's register (the wraps counted on
+  the path, the running phase restored after), the crowd's pointer of a
+  `wave` set and its window, a window read from a reading, the `beam`
+  pairing, the phase a set returns, the faces' and the border's
+  pointers. The layer's offers read the running phase as designed and u
+  enters at the click alone. A row of no record reads its phase itself:
+  nothing registered changes.
+- The Mach-Zehnder, Elitzur-Vaidman, two-slit, pair, GHZ, gate and
+  N = 1024 / 4096 integers are unchanged (the lamps of series L turn one
+  step per birth, so u was the ordinal already).
+- Nothing deleted.
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

@@ -209,6 +209,13 @@ class NatureBeam:
     record: int = 0
     branch: int = 0
     multiplicity: int = 1
+    # The birth phase u of the row's record (stage (vii), the K finding of
+    # 2026-09-20): the record's own field beside the running phase, the
+    # lamp's count of births mod N at the birth, uniform over births
+    # whatever the lamp's turn; every rule of the GameBoard that reads a
+    # record row's phase reads the path phase, phase - u, and the click
+    # alone reads u (the ladder). 0 on a row of no record.
+    birth: int = 0
 
     def record_line(self, vectors: np.ndarray) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
@@ -226,6 +233,7 @@ class NatureBeam:
             line["record"] = self.record
             line["branch"] = self.branch
             line["multiplicity"] = self.multiplicity
+            line["u"] = self.birth
         return line
 
 
@@ -714,6 +722,7 @@ FIELDS = (
     "record",
     "branch",
     "multiplicity",
+    "birth",
 )
 # The fields that make two rows identical (the amount is what the merge
 # adds); since `amplitude-v1` the record, the branch and the multiplicity
@@ -734,7 +743,7 @@ IDENTITY_FIELDS = (
 NO_RECORD = 0
 NO_BRANCH = 0
 ONE_PATH = 1
-AMPLITUDE_DEFAULTS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH}
+AMPLITUDE_DEFAULTS = {"record": NO_RECORD, "branch": NO_BRANCH, "multiplicity": ONE_PATH, "birth": 0}
 # The place of `phase` in the identity fields: the merge under the key
 # reads it modulo the half circle with a sign (the cancel).
 PHASE_FIELD = IDENTITY_FIELDS.index("phase")
@@ -972,6 +981,7 @@ def setting_steps(
     set_count: int,
     cosines: np.ndarray,
     sines: np.ndarray,
+    modulus: int,
 ) -> list[int | None]:
     """The setting a detector set reads off one family's rows present at
     it this interval (a window read from a reading, `phase_window`
@@ -997,7 +1007,10 @@ def setting_steps(
     order = np.argsort(sets, kind="stable")
     at, sets = at[order], sets[order]
     starts = group_starts(sets)
-    x, y = coherent_pointer(store.amount[at], store.phase[at], starts, cosines, sines)
+    # The path phase of a record's row (stage (vii)), the phase itself of
+    # a row of no record.
+    path = (store.phase[at] - store.birth[at]) % modulus
+    x, y = coherent_pointer(store.amount[at], path, starts, cosines, sines)
     for set_index, step in zip(sets[starts].tolist(), pointer_phases(x, y, cosines, sines), strict=True):
         steps[set_index] = step
     return steps
@@ -1029,6 +1042,7 @@ class NatureBeamStore:
         self.record: np.ndarray
         self.branch: np.ndarray
         self.multiplicity: np.ndarray
+        self.birth: np.ndarray
 
     @property
     def size(self) -> int:
@@ -1217,6 +1231,7 @@ class NatureBeamStore:
                 int(self.record[i]),
                 int(self.branch[i]),
                 int(self.multiplicity[i]),
+                int(self.birth[i]),
             )
             for k, i in enumerate(range(lo, stop))
         ]
@@ -1466,7 +1481,7 @@ FIRST = np.zeros(1, dtype=np.int64)
 NEW_RUN = np.ones(1, dtype=bool)
 # A row born at a self-creation, before it is placed: (direction, amount,
 # content per unit, phase, thrown, record, branch, multiplicity).
-BornRow = tuple[int, int, int, int, bool, int, int, int]
+BornRow = tuple[int, int, int, int, bool, int, int, int, int]
 # The record's identity (the amplitude law): the emitter's number x 2^32 +
 # the birth's ordinal at the emitter, below 2^62 (the number below 2^30 and
 # the ordinal below 2^32).
@@ -1627,6 +1642,8 @@ class FamilyPlan:
     t_record: list[int] = field(default_factory=list)
     t_branch: list[int] = field(default_factory=list)
     t_multiplicity: list[int] = field(default_factory=list)
+    h_birth: list[int] = field(default_factory=list)
+    t_birth: list[int] = field(default_factory=list)
     t_age: list[int] = field(default_factory=list)
     t_arrival: list[int] = field(default_factory=list)
     # The rows that pass a gate: per measured event (k0, k1).
@@ -2172,7 +2189,11 @@ def nature_beam(
                 ledger.face_amount[face][family] += total
                 ledger.face_content[face][family] += int(exact_sum(amounts * store.content[through]))
                 face_x, face_y = coherent_pointer(
-                    amounts, store.phase[through], FIRST, tables.cosines, tables.sines
+                    amounts,
+                    (store.phase[through] - store.birth[through]) % modulus,
+                    FIRST,
+                    tables.cosines,
+                    tables.sines,
                 )
                 ledger.face_record[face][family] += face_x[0] * face_x[0] + face_y[0] * face_y[0]
                 escaped_momentum = exact_column_sums(labels[on_face])
@@ -2218,6 +2239,7 @@ def nature_beam(
                         face_line["record"] = int(store.record[index])
                         face_line["branch"] = int(store.branch[index])
                         face_line["multiplicity"] = int(store.multiplicity[index])
+                        face_line["u"] = int(store.birth[index])
                     record(face_line)
         store.node = coordinates @ np.array(store.strides, dtype=np.int64)
         crossed = moved & ~escaped
@@ -2319,7 +2341,14 @@ def nature_beam(
         settings = np.full((count, set_count), -1, dtype=np.int64)
         for named in np.unique(ev_read_family[ev_read_family >= 0]).tolist():
             steps_of = setting_steps(
-                stores[named], node_event, ev_number, ev_set, set_count, tables.cosines, tables.sines
+                stores[named],
+                node_event,
+                ev_number,
+                ev_set,
+                set_count,
+                tables.cosines,
+                tables.sines,
+                modulus,
             )
             for set_index, step in enumerate(steps_of):
                 if step is not None:
@@ -2355,6 +2384,11 @@ def nature_beam(
             amount = store.amount[at]
             content = store.content[at]
             phase = store.phase[at]
+            # The path phase (stage (vii)): what every rule of the GameBoard
+            # reads of a record row's phase, the running phase less the
+            # record's birth phase u (0 on a row of no record: the phase
+            # itself). The re-creation carries the running phase.
+            path = (phase - store.birth[at]) % modulus
             direction = store.direction[at]
             arrival = store.arrival[at]
             age_at = store.age[at]
@@ -2419,6 +2453,7 @@ def nature_beam(
                 plan.h_record = store.record[at[home]].tolist()
                 plan.h_branch = store.branch[at[home]].tolist()
                 plan.h_multiplicity = store.multiplicity[at[home]].tolist()
+                plan.h_birth = store.birth[at[home]].tolist()
                 plan.events.update(h_events)
 
             def admit() -> (
@@ -2464,11 +2499,11 @@ def nature_beam(
                 # by default): the one floor `window_admits`.
                 window = ev_window[ev_m, family]
                 width_m = ev_width[ev_m, family]
-                read_phase = phase[met].copy()
+                read_phase = path[met].copy()
                 wave_rows = st_wave[st_m]
                 if wave_rows.any():
                     px, py = coherent_pointer(
-                        amount[met], phase[met], s_starts, tables.cosines, tables.sines
+                        amount[met], path[met], s_starts, tables.cosines, tables.sines
                     )
                     below_wave = np.array(
                         [
@@ -2571,7 +2606,7 @@ def nature_beam(
                         rows = pairing[sets_p == set_index]
                         if rows.shape[0] < 2:
                             continue
-                        phases = phase[taken[rows]].tolist()
+                        phases = path[taken[rows]].tolist()
                         left = a_t[rows].tolist()
                         arcs = ev_window[ev[taken[rows]], family].tolist()
                         arc_widths = ev_width[ev[taken[rows]], family].tolist()
@@ -2663,7 +2698,7 @@ def nature_beam(
                 first = int(e_starts[int(np.searchsorted(e_starts, group, side="right")) - 1])
                 failures[(int(g_ev[group]), family, 1, group - first, stage)] = error
 
-            c_t, ph_t = content[taken], phase[taken]
+            c_t, ph_t, path_t = content[taken], phase[taken], path[taken]
             age_t = age_at[taken]
             v_arrival = unit[arrival[taken]]
             # The admitted rows of the one table (their arrival's unit vector
@@ -2710,6 +2745,7 @@ def nature_beam(
             plan.t_record = store.record[at[taken]].tolist()
             plan.t_branch = store.branch[at[taken]].tolist()
             plan.t_multiplicity = store.multiplicity[at[taken]].tolist()
+            plan.t_birth = store.birth[at[taken]].tolist()
             plan.t_age = age_t.tolist()
             plan.t_arrival = arrival[taken].tolist()
             e_ends = np.append(e_starts[1:], groups)
@@ -2739,10 +2775,10 @@ def nature_beam(
                 c_sizes = group_sizes(c_starts, clicked.shape[0])
                 totals_c = grouped_sums(a_t[clicked], c_starts, int(c_sizes.max())).tolist()
                 pointer_x, pointer_y = coherent_pointer(
-                    a_t[clicked], ph_t[clicked], c_starts, tables.cosines, tables.sines
+                    a_t[clicked], path_t[clicked], c_starts, tables.cosines, tables.sines
                 )
                 steps = pointer_phases(pointer_x, pointer_y, tables.cosines, tables.sines)
-                last_phase = ph_t[clicked][(c_starts + c_sizes - 1)].tolist()
+                last_phase = path_t[clicked][(c_starts + c_sizes - 1)].tolist()
                 for k, set_index in enumerate(st_c[c_starts].tolist()):
                     if st_wave[set_index]:
                         plan.pointer[set_index] = (pointer_x[k], pointer_y[k])
@@ -2818,6 +2854,7 @@ def nature_beam(
                                 record=plan.h_record[k],
                                 branch=plan.h_branch[k],
                                 multiplicity=plan.h_multiplicity[k],
+                                birth=plan.h_birth[k],
                             )
                         )
                     entry.taken[family]["home"] += total
@@ -2983,6 +3020,7 @@ def nature_beam(
                                         split=world.amplitude and plan.t_record[k] != NO_RECORD,
                                         arrival=plan.t_arrival[k],
                                         offered=detector_set.sum,
+                                        birth=plan.t_birth[k],
                                     )
                                 )
                             if layer is not None:
@@ -3082,6 +3120,7 @@ def nature_beam(
                                     click_line["record"] = plan.t_record[k]
                                     click_line["branch"] = plan.t_branch[k]
                                     click_line["multiplicity"] = plan.t_multiplicity[k]
+                                    click_line["u"] = plan.t_birth[k]
                                     click_line["age"] = plan.t_age[k]
                                     setting = entry_rotation(
                                         plan, detector_set, entry.label_turns[family], k
@@ -3191,7 +3230,7 @@ def nature_beam(
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
                     born.extend(
-                        (direction, amount, 0, entry.phase, False, NO_RECORD, NO_BRANCH, ONE_PATH)
+                        (direction, amount, 0, entry.phase, False, NO_RECORD, NO_BRANCH, ONE_PATH, 0)
                         for direction in entry.directions
                     )
             if entry.pending[family]:
@@ -3239,11 +3278,14 @@ def nature_beam(
                             row.branch,
                             row.multiplicity,
                         )
+                        row_birth = row.birth
                         if row.rebirth:
                             if reborn == NO_RECORD:
                                 entry.births += 1
                                 reborn = record_identity(entry.number, entry.births)
+                                reborn_birth = (entry.births - 1) % modulus
                             row_record, row_branch, row_multiplicity = reborn, NO_BRANCH, 1
+                            row_birth = reborn_birth
                         table_split = entry.splits[family]
                         if table_split is None:
                             weights, turns = (1,) * ways, (0,) * ways
@@ -3285,6 +3327,7 @@ def nature_beam(
                                     row_record,
                                     row_branch,
                                     row_multiplicity * norm,
+                                    row_birth,
                                 )
                             )
                             ledger.content_released[family] += row.amount * weight * row.content
@@ -3296,7 +3339,7 @@ def nature_beam(
                                 # rebirth (with 0 units), every row's units
                                 # added by its split.
                                 if layer.resolve(row_record) is None:
-                                    layer.birth(tick, row_record, family, entry.phase, {0: 1}, 1, 0)
+                                    layer.birth(tick, row_record, family, row_birth, {0: 1}, 1, 0)
                                 layer.split(row_record, 0, born_units)
                             else:
                                 layer.split(row_record, 0 if row.offered else row.amount, born_units)
@@ -3314,7 +3357,7 @@ def nature_beam(
                                     "born": born_units,
                                     "multiplicity": row_multiplicity * norm,
                                     "rebirth": row.rebirth,
-                                    "u": entry.phase,
+                                    "u": row_birth,
                                 }
                             )
                         continue
@@ -3331,6 +3374,7 @@ def nature_beam(
                                     row.record,
                                     row.branch,
                                     row.multiplicity,
+                                    row.birth,
                                 )
                             )
                             ledger.content_released[family] += share * row.content
@@ -3390,10 +3434,13 @@ def nature_beam(
                             f"{AMPLITUDE_KEY}"
                         )
                     count = min(count, entry.held[family] // (cost * quanta))
-                    for j in range(count):
+                    for _ in range(count):
                         entry.births += 1
                         record_id = record_identity(entry.number, entry.births)
-                        u = (entry.phase + j * turn) % modulus
+                        # The birth phase: the lamp's count of births mod N
+                        # (the record's own field, unread by the GameBoard),
+                        # uniform over births whatever the lamp's turn.
+                        u = (entry.births - 1) % modulus
                         if layer is not None:
                             layer.birth(tick, record_id, family, u, dict(branches), arms, quanta)
                         if record is not None:
@@ -3427,6 +3474,7 @@ def nature_beam(
                                         record_id,
                                         branch_of(lamp_arm, joint),
                                         paths * norm,
+                                        u,
                                     )
                                 )
                                 content = cost * weight
@@ -3447,6 +3495,7 @@ def nature_beam(
                                     NO_RECORD,
                                     NO_BRANCH,
                                     ONE_PATH,
+                                    0,
                                 )
                             )
                             content = cost * amount
@@ -3530,6 +3579,7 @@ def nature_beam(
                 record=np.array([b[5] for b in born], dtype=np.int64),
                 branch=np.array([b[6] for b in born], dtype=np.int64),
                 multiplicity=np.array([b[7] for b in born], dtype=np.int64),
+                birth=np.array([b[8] for b in born], dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
         # The `become` record, at the products' birth: the trigger and its
@@ -3583,7 +3633,11 @@ def nature_beam(
         ledger.lifetime_amount[family] += total
         ledger.lifetime_content[family] += int(exact_sum(amounts * store.content[gone]))
         border_x, border_y = coherent_pointer(
-            amounts, store.phase[gone], FIRST, tables.cosines, tables.sines
+            amounts,
+            (store.phase[gone] - store.birth[gone]) % modulus,
+            FIRST,
+            tables.cosines,
+            tables.sines,
         )
         ledger.lifetime_record[family] += border_x[0] * border_x[0] + border_y[0] * border_y[0]
         left = exact_column_sums(labels)
@@ -3627,6 +3681,7 @@ def nature_beam(
                     border_line["record"] = int(store.record[index])
                     border_line["branch"] = int(store.branch[index])
                     border_line["multiplicity"] = int(store.multiplicity[index])
+                    border_line["u"] = int(store.birth[index])
                 record(border_line)
         keep_alive = np.ones(store.size, dtype=bool)
         keep_alive[gone] = False

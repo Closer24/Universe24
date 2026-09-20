@@ -70,7 +70,7 @@ kept, their pins the law of events').
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
-| `test_amplitude_click.py` | The one click's prerequisites under the key (stage (vii), step 1): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads the same with the key and without it at its cap ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6) |
+| `test_amplitude_click.py` | The one click's prerequisites under the key (stage (vii), step 1): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads the same with the key and without it at its cap; step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers) ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -417,7 +417,10 @@ expected integers, written down before the first run:
   (`gate`) and two absorbers a, b: every record gathers at the re-emitter
   (its one offer) and what it re-creates is one new record of two rows
   (one `split` line with `rebirth`, born 2; one birth in the layer) that
-  gathers once with the cells a, b and the rungs 32, 64, chosen a (u 0);
+  gathers once with the cells a, b and the rungs 32, 64, chosen a for
+  u below 32 and b above (the rebirth's u the re-emitter's count of
+  births, 0 .. 63 over the first 64 rebirths: a 32, b 32; until stage
+  (vii) step 2 every rebirth had the re-emitter's phase 0 and went to a);
 - (l) the review's B2: a free family's source of amount 3 into a
   `rerelease` on two directions comes out 1 + 2 with the key as without
   it, the rows and the `rerelease` lines the same;
@@ -439,9 +442,10 @@ written down before the first run:
 
 - (a) a lamp at the rate [3, 1] on two directions (K 2^20, content 2^20:
   the stride 1) births three records per self-creation: the ordinals 1,
-  2, 3 at tick 1 with u = 0, 1, 2 and 4, 5, 6 at tick 2 with u = 1, 2, 3,
-  each two rows of amount 1 with the multiplicity 2, six births counted
-  at the lamp; the rate [2, 1] parses under the key;
+  2, 3 at tick 1 and 4, 5, 6 at tick 2 with u = 0 .. 5 (the ordinal less
+  one, the rows' column `birth`), each two rows of amount 1 with the
+  multiplicity 2, six births counted at the lamp; the rate [2, 1] parses
+  under the key;
 - (b) `common_denominator(2, 8)` = (2, 1, 8), (8, 2) = (1, 2, 8), (9, 36)
   = (2, 1, 36), (1682, 1682 x 25) = (5, 1, 1682 x 25), and (2, 4) none;
   two paths of one record, one through a re-emitter of weight [1] (m 2,
@@ -463,7 +467,19 @@ written down before the first run:
   `weak/j2_ladder`, `weak/j3_deuteron_crowd`, `nucleus/alpha_square`,
   `hubble/pushing_age`, `coupling/1b_m16`), run at its `cap` with the key
   and without it: `events.jsonl` and `state.json` equal byte for byte,
-  the books (`audit`) equal, `run.json`'s `amplitude` false and true.
+  the books (`audit`) equal, `run.json`'s `amplitude` false and true;
+- (e) step 2: a bar of 12 Nodes with a lamp at the stride 1 and a counter
+  whose `measure` entry has the window 0 of width 8: no `pass` line at
+  the counter over 80 intervals and at least 60 clicks, every click's `u`
+  its record's ordinal less one and its `phase` equal to `u` (the path
+  phase 0), the rows' `birth` the same; the bar without the key passes
+  rows (the lamp's clock phase outside the window) and writes no `u`;
+- (f) step 2, the K record world (`lensing/mass_meeting` under the key,
+  every pixel `sum`, the lamp's `turns` 0, 300 intervals): the 64
+  records of the ordinals 129 .. 192 carry u = 0 .. 63 once each; per
+  set their clicks are within one rung of the sum of their cells' widths
+  over N; the click centroid in y is within 0.25 pixels of the
+  expectation's; the light's `turned` line is not zero.
 
 ## The amplitude law: the gate
 

@@ -356,7 +356,11 @@ def meet(
             )
         if denominator > 1:
             norm //= denominator
-        phase = store.phase[rows]
+        # The register reads the path phase of a record's row (stage (vii),
+        # the K finding: the birth phase u is the record's own field, unread
+        # by the GameBoard), the phase itself of a row of no record.
+        birth = store.birth[rows]
+        phase = (store.phase[rows] - birth) % modulus
         if inverse:
             k, phase_after = register_inverse(phase, norm, modulus)
         else:
@@ -392,7 +396,7 @@ def meet(
                 a + b for a, b in zip(ledger.turned_momentum[family], delta, strict=True)
             ]
             store.direction[chosen] = turned
-        store.phase[rows] = phase_after
+        store.phase[rows] = (phase_after + birth) % modulus
 
 
 __all__ = [

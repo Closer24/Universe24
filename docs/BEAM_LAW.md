@@ -2582,15 +2582,17 @@ implementation's part of the contract. The design above is unchanged.
     beside a mass moved to smaller y against the control's in every world,
     -2.115, -5.208 and -4.432 pixels at the three (M, b) against the
     crowd's -2.021, -4.345 and -2.465, and the 464 records that reached
-    the mass were absorbed whole by it; two changes are the next item, not
-    landed here (more than an hour together): u as the record's own field
-    on the row beside the running phase (u = the lamp's clock count mod N,
-    the GameBoard's rules reading the path phase, phase - u, the click
-    reading u; the test: the K record world's click centroid equals its
-    offers' expectation under uniform u within one rung) and a record's
-    row pushing matter with its share amount^2 / (m x norm) of the label,
-    the remainder booked on a ledger line (the test: the mass's momentum
-    per record equals the label times the sum of the shares). Also open:
+    the mass were absorbed whole by it; two changes: u as the record's
+    own field on the row beside the running phase (u = the lamp's count of
+    births mod N, the GameBoard's rules reading the path phase, phase - u,
+    the click reading u; built at stage (vii) step 2, MIGRATION (vii-2):
+    the K record world's clicks per set within one rung of its offers'
+    expectation under uniform u and the click centroid within 0.25 pixels
+    of it, `tests/test_amplitude_click.py` (f)) and a record's row pushing
+    matter with its share amount^2 / (m x norm) of the label, the
+    remainder booked on a ledger line (the test: the mass's momentum per
+    record equals the label times the sum of the shares; step 3). Also
+    open:
     the full register replay and the coverage-measured gate set (the
     trimming pull request), the design's Grover (a world beyond the
     register's ceiling), the design's `split` line of the books, and the

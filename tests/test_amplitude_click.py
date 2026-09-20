@@ -7,9 +7,9 @@ down before the first run:
 (a) a lamp's rate under the record form: a lamp at the rate [3, 1] on two
     directions births three records per self-creation (the design's
     extension of 2.1), the ordinals 1, 2, 3 at tick 1 and 4, 5, 6 at
-    tick 2, the birth phase of the j-th record of a self-creation the
-    clock's phase advanced by j strides (u = 0, 1, 2 then 1, 2, 3 at the
-    stride 1), each record two rows of amount 1 with the multiplicity 2;
+    tick 2, the birth phase u the lamp's count of births less one, mod N
+    (u = 0 .. 5, the record's own field on its rows, the column `birth`;
+    step 2), each record two rows of amount 1 with the multiplicity 2;
     the rate [2, 1] parses under the key (it was refused);
 (b) a set's offer of several multiplicities of one record: two paths of
     one record, one through a re-emitter of weight [1] (m 2, amount 1) and
@@ -30,7 +30,23 @@ down before the first run:
     with the key and without it, gives the same `events.jsonl`, the same
     `state.json` and the same books (`audit` of `run.json`), byte for
     byte; the byte-identity without the key against the base tree is the
-    replay's (docs/VALIDATION.md).
+    replay's (docs/VALIDATION.md);
+(e) step 2, u the record's own field: on a bar with a lamp at the stride
+    1 (K 2^20, content 2^20) and a counter whose `measure` entry has the
+    window 0 of width 8, every record's row clicks (the window reads the
+    path phase, 0 on every row: no `pass` line over 80 intervals, 60 or
+    more clicks, every click line's `u` its record's ordinal less one and
+    its `phase` equal to `u`), while the same bar without the key passes
+    most rows (the lamp's clock phase, 0 .. 63, outside the window); the
+    rows' column `birth` is the record's u;
+(f) step 2, the K record world (the registered `lensing/mass_meeting`
+    under the key, every pixel reading `sum`, the lamp's `turns` 0, 300
+    intervals): the 64 records of the ordinals 129 .. 192 carry u = 0 ..
+    63 once each; per set, the count of their clicks is within one rung
+    of the sum of their cells' widths over N (the ladder's expectation
+    under a uniform u), and the click centroid in y is within 0.25 pixels
+    of the expectation's; the meeting turned rows (the `turned` line of
+    the light is not zero).
 """
 
 from __future__ import annotations
@@ -101,11 +117,14 @@ def test_a_lamp_births_as_many_records_as_its_rate_says():
         (1, 1, 0, 2, 2),
         (1, 2, 1, 2, 2),
         (1, 3, 2, 2, 2),
-        (2, 4, 1, 2, 2),
-        (2, 5, 2, 2, 2),
-        (2, 6, 3, 2, 2),
+        (2, 4, 3, 2, 2),
+        (2, 5, 4, 2, 2),
+        (2, 6, 5, 2, 2),
     ]
-    assert [simulation.layer.records[FIRST - 1 + k].u for k in range(1, 7)] == [0, 1, 2, 1, 2, 3]
+    assert [simulation.layer.records[FIRST - 1 + k].u for k in range(1, 7)] == [0, 1, 2, 3, 4, 5]
+    assert sorted((r.record - (1 << 32), r.birth) for r in simulation.stores[0].rows()) == sorted(
+        [(k, k - 1) for k in range(1, 7) for _ in range(2)]
+    )
     rows = sorted((r.record - (1 << 32), r.amount, r.multiplicity) for r in simulation.stores[0].rows())
     assert rows == sorted([(k, 1, 2) for k in range(1, 7) for _ in range(2)])
     assert simulation.measured[1].births == 6
@@ -239,3 +258,100 @@ def test_a_gate_world_without_a_lamp_reads_the_same_with_the_key(tmp_path: Path,
     keyed_record = json.loads((keyed_out / "run.json").read_text(encoding="utf-8"))
     assert plain_record["audit"] == keyed_record["audit"]
     assert plain_record["amplitude"] is False and keyed_record["amplitude"] is True
+
+
+def window_bar(amplitude: bool) -> dict[str, object]:
+    return base_world(
+        shape=[12, 1, 1],
+        boundary={"y": "periodic", "z": "periodic"},
+        ticks=80,
+        amplitude=amplitude,
+        measured=[
+            lamp([[1, 0, 0]], [1, 1]),
+            {
+                "position": [10, 0, 0],
+                "family": "counter",
+                "amount": 1,
+                "fixed": True,
+                "table": {"light": {"rule": "measure", "phase_window": 0, "phase_width": 8}},
+            },
+        ],
+    )
+
+
+def test_the_window_reads_the_path_phase_of_a_record():
+    """(e)."""
+    simulation, lines = run(window_bar(True), 80)
+    at_counter = [line for line in lines if line.get("measured") == 2 and line.get("family") == "light"]
+    clicks = [line for line in at_counter if line["event"] == "click"]
+    assert not [line for line in at_counter if line["event"] == "pass"]
+    assert len(clicks) >= 60
+    for click in clicks:
+        ordinal = int(click["record"]) - (1 << 32)
+        assert click["u"] == (ordinal - 1) % N == click["phase"]
+    rows = simulation.stores[0].rows()
+    assert rows and all(r.birth == ((r.record - (1 << 32)) - 1) % N for r in rows)
+    _, plain_lines = run(window_bar(False), 80)
+    plain = [line for line in plain_lines if line.get("measured") == 2 and line.get("family") == "light"]
+    assert [line for line in plain if line["event"] == "pass"]
+    assert all("u" not in line for line in plain)
+
+
+def k_record_world() -> dict[str, object]:
+    """The registered `lensing/mass_meeting` under the key: every pixel
+    reading `sum`, the lamp's `turns` 0 (scratchpad k_record's
+    `make_record_worlds.py`, the K finding of 2026-09-20)."""
+    world = json.loads(
+        (ROOT / "examples" / "events" / "lensing" / "mass_meeting.json").read_text("utf-8")
+    )
+    world["model_id"] = "beam-lensing-mass-meeting-record-test"
+    world["amplitude"] = True
+    world["ticks"] = 300
+    for event in world["measured"]:
+        if "lamp" in event:
+            assert event["lamp"]["rate"] == [1, 1]
+            event["lamp"]["turns"] = [0] * len(event["lamp"]["directions"])
+    for detector in world["detectors"]:
+        assert detector["reading"] == "wave"
+        detector["reading"] = "sum"
+    return world
+
+
+def test_the_k_record_world_clicks_as_its_offers_say_under_uniform_u():
+    """(f)."""
+    simulation, _ = run(k_record_world(), 300)
+    assert simulation.layer is not None
+    first, last = 129, 192
+    chosen = [
+        live for live in simulation.layer.records.values() if first <= live.identity - (1 << 32) <= last
+    ]
+    assert len(chosen) == N and all(live.gathered and live.gather is not None for live in chosen)
+    assert sorted(live.u for live in chosen) == list(range(N))
+    clicks: dict[str, int] = {}
+    expected: dict[str, float] = {}
+    for live in chosen:
+        gather = live.gather
+        assert gather is not None and gather["chosen"] is not None
+        clicks[str(gather["chosen"][0][0])] = clicks.get(str(gather["chosen"][0][0]), 0) + 1  # type: ignore[index]
+        previous = 0
+        for factors, rung in gather["cells"]:  # type: ignore[union-attr]
+            name = str(factors[0][0])
+            expected[name] = expected.get(name, 0.0) + (int(rung) - previous) / N
+            previous = int(rung)
+    assert sum(clicks.values()) == N and abs(sum(expected.values()) - N) < 1e-9
+    deviation = max(abs(clicks.get(name, 0) - expected[name]) for name in expected)
+    assert deviation <= 1.0, (deviation, clicks, expected)
+
+    def pixel_y(name: str) -> int | None:
+        return int(name.split("_")[1]) if name.startswith("screen_") else None
+
+    click_y = [pixel_y(name) for name, count in clicks.items() for _ in range(count)]
+    on_screen = [y for y in click_y if y is not None]
+    expected_y = sum(
+        pixel_y(name) * weight for name, weight in expected.items() if pixel_y(name) is not None
+    )  # type: ignore[operator]
+    expected_weight = sum(weight for name, weight in expected.items() if pixel_y(name) is not None)
+    assert on_screen and expected_weight > 0
+    centroid = sum(on_screen) / len(on_screen)
+    assert abs(centroid - expected_y / expected_weight) <= 0.25, (centroid, expected_y / expected_weight)
+    assert any(simulation.ledger.turned_momentum[0])
