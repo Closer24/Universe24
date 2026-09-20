@@ -105,8 +105,8 @@ integer by integer at 600 intervals ((29634, 11209) both):
 
 | Start | After 6000 intervals (the map; the engine at 6000 the same, `cavity.out`) | Read |
 | --- | --- | --- |
-| (32768, 8192) | (20806, 20035), the sum on the lamps 40841 + 24 in transit = 40865 at every tick, the books balanced | the difference relaxes as (1 - 2 / K) per interval, time constant K / 2 = 2048 |
-| (20480, 20480) | (20420, 20420) from the flight time on (the engine at 600: the same) | a fixed point: sixty units in transit, twelve intervals x five each way |
+| (32768, 8192) | (20806, 20035), on the lamps 40841 + 119 in transit = 40960, the books balanced at every tick | the difference relaxes as (1 - 2 / K) per interval, time constant K / 2 = 2048 |
+| (20480, 20480) | (20420, 20420) from the flight time on (the engine at 600: the same) | a fixed point: 120 units of content in transit, twelve intervals x five each way |
 | every total T tried (2, 64, 4096, 8192, 40960, 65536, 2^18, 2^20 + 6) | the equal split of T is fixed (less the transit) | one fixed point per total, every integer total within the bounds |
 
 So the set of fixed points of the exchange is a **continuum**: one per
