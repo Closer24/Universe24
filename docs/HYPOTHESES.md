@@ -444,6 +444,29 @@ The three outcomes above reduce to two: at most 2 in the symmetric geometry
 somewhere, to be understood before anything else). A2 runs after features
 15 to 17.
 
+The verdict in one sentence (2026-09-20, the audit of issues #359 and #361
+on the Beam Law, A2 registered): the model predicts S = 2; the loophole-free
+experiments measured 2.4 to 2.7; the model fails here, by choice, for
+locality. A narrow phase window with `pass` reaches S = 4 on the counted
+coincidences at 72 % single-side efficiency while S over all pairs stays
+below 2, which reproduces the experiments before 2015 and is refuted by the
+loophole-free ones: the detection loophole, measured, not a reproduction of
+Bell. The shared number of postulate 22 is not restored to reach 2.83; the
+model declared that mechanism non-local, and restoring it for the number
+would be tuning to the result.
+
+The single-click counts, stated so that it can fail (the same audit; the
+owner's decision of 2026-09-20 on issue #359: no memory at the detector):
+the Beam Law says interference is a reading of the events that reach one
+detector set in one interval, so with one event per interval per Node the
+counts are additive and no fringe builds up one click at a time; the
+single-photon and single-electron experiments (Tonomura 1989 and every one
+since) build the fringes one particle at a time. The model predicts additive
+single-click counts and is falsified there unless A10 at a low rate
+(registered as the law's own prediction, measured on the branch) shows
+otherwise; the owner refused the detector memory that would reproduce the
+counts by a mechanism nature's detectors do not have.
+
 ## 12. One mass ladder, and the composite spectrum from binding
 
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.4) a rest mass
