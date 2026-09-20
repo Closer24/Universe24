@@ -342,14 +342,6 @@ def test_the_refusals_of_the_gate_keys():
         measured[1]["table"]["light"] = {"rule": "rerelease", **keys}
         return world
 
-    plain = entry(rotate={"setting": 16})
-    plain["amplitude"] = False
-    with pytest.raises(ValueError, match=r"\.rotate is the amplitude law's rotation"):
-        parse_nature_beam_world(plain)
-    plain = entry(gate={"kind": "cnot"})
-    plain["amplitude"] = False
-    with pytest.raises(ValueError, match=r"\.gate is the amplitude law's gate"):
-        parse_nature_beam_world(plain)
     with pytest.raises(ValueError, match=r"\.rotate belongs to a `rerelease` entry, not to measure"):
         parse_nature_beam_world(entry(rule="measure", rotate={"setting": 16}))
     with pytest.raises(ValueError, match=r"\.gate belongs to a `rerelease` entry, not to measure"):

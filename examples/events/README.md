@@ -290,7 +290,8 @@ which then has a neutron's charge and content.
 ## The amplitude series
 
 The folder [amplitude/](amplitude/README.md) holds the worlds of series L,
-the amplitude law (`amplitude-v1`, the world key `amplitude`,
+the amplitude law (`amplitude-v1`, the record form of every lamp since
+stage (vii) step 4, the world key `amplitude` deleted,
 [BEAM_LAW note 37](../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 written by `amplitude/make_worlds.py` with `expectations.json` pinned
 before the runs: L1, the Mach-Zehnder interferometer of the design's

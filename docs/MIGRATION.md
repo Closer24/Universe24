@@ -296,6 +296,86 @@ changes; nothing changes without the key):
   `share` beside `push`.
 - Nothing deleted.
 
+## The amplitude law, on 2026-09-20, (vii-4): the one click, the record form the law
+
+Stage (vii), step 4 (the design's section 6; the model owner's order
+after the landing, under the stop rule of stage (vi)): the record form is
+the only form. Deleted, each with its consequence:
+
+- The world key `amplitude` and its parsing: a world that declares it
+  (true or false) is refused naming this entry; remove the key. The
+  parser's refusals "needs the world key `amplitude`" of the pair form of
+  `phase_per_link`, a lamp's `turns`, `arms` and `branches`, a table
+  entry's `turn`, `rotate`, `gate`, `weights`, `turns` and `inputs`, and
+  the reading `sum`: every one of them is accepted on any world.
+- The crowd form of a lamp (its rate's units per direction as rows of no
+  record): every lamp births records (the rate's count of records per
+  self-creation, (vii-1)), so every world with a lamp is a recorded world
+  (`NatureBeamWorld.recorded`), its rows read by the ladder, the identity
+  `amplitude-v1` under `hypotheses` (`run.json`'s key `amplitude` is
+  gone). A lamp is refused with N below 4 (a record's circle holds the
+  quarter turn of a reflection); the refusal of the key with N below 4
+  is gone with the key.
+- The crowd's `wave` threshold on the square of the coherent pointer
+  (issue #359 step A, BEAM_LAW note 32): the threshold is the amount
+  summed over the set under both readings; the crowd's pointer gives the
+  set's phase (the window under `wave`) and its record, not a gate. Rays
+  that cancel at a `wave` set no longer pass by the gate; a record's rows
+  in antiphase cancel at the merge before any set reads them.
+- The load-time ceiling of the multiplicity (the review's S6) multiplies
+  the declared `weights`, `rotate` and `gate` factors alone; a plain
+  `rerelease` (the equal split by the directions' count) is bounded by
+  the split's own check when the multiplicity is formed, since a path's
+  count of re-emissions is not known at load (the check now runs on
+  every world with a lamp).
+- The apparatus's layer exists on every world (`NatureBeamSimulation.layer`),
+  the merge is always the normal form, `tools/amplitude_path.py` replays
+  any run with a lamp; the design's test 7 is the pinned digests of the
+  gate set's lamp-free worlds (`tests/test_amplitude_click.py` (d)).
+- The 46 shipped worlds of series L no longer carry the key (regenerated
+  by `examples/events/amplitude/make_worlds.py`, the expectations
+  unchanged).
+
+## The amplitude law, on 2026-09-20, (vii-4): the one click, the record form the law
+
+Stage (vii), step 4 (the design's section 6; the model owner's order
+after the landing, under the stop rule of stage (vi)): the record form is
+the only form. Deleted, each with its consequence:
+
+- The world key `amplitude` and its parsing: a world that declares it
+  (true or false) is refused naming this entry; remove the key. The
+  parser's refusals "needs the world key `amplitude`" of the pair form of
+  `phase_per_link`, a lamp's `turns`, `arms` and `branches`, a table
+  entry's `turn`, `rotate`, `gate`, `weights`, `turns` and `inputs`, and
+  the reading `sum`: every one of them is accepted on any world.
+- The crowd form of a lamp (its rate's units per direction as rows of no
+  record): every lamp births records (the rate's count of records per
+  self-creation, (vii-1)), so every world with a lamp is a recorded world
+  (`NatureBeamWorld.recorded`), its rows read by the ladder, the identity
+  `amplitude-v1` under `hypotheses` (`run.json`'s key `amplitude` is
+  gone). A lamp is refused with N below 4 (a record's circle holds the
+  quarter turn of a reflection); the refusal of the key with N below 4
+  is gone with the key.
+- The crowd's `wave` threshold on the square of the coherent pointer
+  (issue #359 step A, BEAM_LAW note 32): the threshold is the amount
+  summed over the set under both readings; the crowd's pointer gives the
+  set's phase (the window under `wave`) and its record, not a gate. Rays
+  that cancel at a `wave` set no longer pass by the gate; a record's rows
+  in antiphase cancel at the merge before any set reads them.
+- The load-time ceiling of the multiplicity (the review's S6) multiplies
+  the declared `weights`, `rotate` and `gate` factors alone; a plain
+  `rerelease` (the equal split by the directions' count) is bounded by
+  the split's own check when the multiplicity is formed, since a path's
+  count of re-emissions is not known at load (the check now runs on
+  every world with a lamp).
+- The apparatus's layer exists on every world (`NatureBeamSimulation.layer`),
+  the merge is always the normal form, `tools/amplitude_path.py` replays
+  any run with a lamp; the design's test 7 is the pinned digests of the
+  gate set's lamp-free worlds (`tests/test_amplitude_click.py` (d)).
+- The 46 shipped worlds of series L no longer carry the key (regenerated
+  by `examples/events/amplitude/make_worlds.py`, the expectations
+  unchanged).
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

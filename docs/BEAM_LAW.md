@@ -2600,3 +2600,16 @@ implementation's part of the contract. The design above is unchanged.
     trimming pull request), the design's Grover (a world beyond the
     register's ceiling), the design's `split` line of the books, and the
     design's bounds at N = 64 and 4096 as stated above.
+    **(x) The one click, landed** (stage (vii) step 4, MIGRATION (vii-4);
+    the design's section 6). The record form is the law: the world key
+    `amplitude` is deleted (a world that declares it is refused), every
+    lamp births records, the crowd's `wave` threshold on the pointer's
+    square is deleted (the amount summed over the set under both
+    readings; the pointer gives the set's phase and its record), the
+    layer is on every world and the identity `amplitude-v1` is under
+    `hypotheses` when a lamp is declared. A world without a lamp reads as
+    it did before the law (the gate set's lamp-free worlds pinned by their
+    digests); every world with a lamp is re-read: its rows are records,
+    read by the ladder, and its clicks are the records' (the register's
+    re-run worlds, EXPERIMENTS, marked "re-run under the one click; the
+    verdict to be re-read", the old numbers kept as dated history).

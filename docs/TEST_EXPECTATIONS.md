@@ -65,12 +65,12 @@ kept, their pins the law of events').
 | `test_bohr_readings.py` | The series H tool reads the engine (the experimenter's rule, 2026-09-20): the flight time from the centre's plane to a face off `FlightTable.manhattan_steps` (5 Links at the age 8, 6 at 10, 1 at 1), the pointer per turn and the coherence ratio off `nature_beam.coherent_pointer` with the circle's tables ((16384, 0) and (-8192, 0) for two units at phase 0 and one at 32, C = 0.2; 1.8 with the third at 0; the slope of [1, 4, 9] is 2), and `read_run` on a run written by the runner (a proton of `p` at (5, 5, 1) of an 11 x 11 x 3 GameBoard on the four in-plane headings, an electron of `e` of span [1, 1, 3] at (8, 5, 1) with the momentum [0, 320, 0], `pass` for `p`, `action` 65536, 20 intervals: the radius 3, j = 0.05859375, the flights 8, the clicks per face equal to the record's, no read, the steps' phases 5, 5, 5, 6 at the ticks 5, 9, 13, 17, the first -x click at tick 16); the expected integers are in the module's docstring |
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
-| `test_amplitude_record.py` | The amplitude law's key and the record on the row (`amplitude-v1`): the world key `amplitude`, its default, its identity and its refusals; the three columns `record`, `branch` and `multiplicity` at their defaults on every row without the key and the merge's packed key unchanged by them; the merge's normal form under the key, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
+| `test_amplitude_record.py` | The record on the row (`amplitude-v1`): the world key `amplitude` deleted and refused, the identity `amplitude-v1` on a world with a lamp alone; the four columns `record`, `branch`, `multiplicity` and `birth` at their defaults on every row of no record and the merge's packed key unchanged by them; the merge's normal form, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
 | `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the GameBoard with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
-| `test_amplitude_click.py` | The one click's prerequisites under the key (stage (vii), step 1): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads the same with the key and without it at its cap; step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
+| `test_amplitude_click.py` | The one click (stage (vii)): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads as it did before the law at its cap (its pinned digests); step 2: u the record's own field (a narrow window admits every record's row, the K record world's clicks within one rung of its offers); step 3: the push by share (the mass's momentum the sum of the shares, the remainder line, the unkeyed bar as it was) ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6; the K finding) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -295,12 +295,13 @@ content 16 releasing one row per self-creation on +x and +y at the turn 1
 quantum per direction at a birth), and a detector of one Node. The
 expected integers, written down before the first run:
 
-- (a) the key: absent it is false, `hypotheses` is empty and `run.json`
-  carries `amplitude` false; declared true, `hypotheses` is
-  ["amplitude-v1"]; refused naming the key: a value that is not true or
-  false, N below 4 under the key (the quarter turn of a reflection), a
-  lamp's `rate` other than [1, 1] under the key; N 4 with a lamp of
-  content 1 at [1, 1] is accepted;
+- (a) the key is deleted (stage (vii) step 4): a world with a lamp is
+  recorded and `hypotheses` is ["amplitude-v1"], `run.json` carries no
+  `amplitude`; the same world without its lamp is not recorded and
+  `hypotheses` is empty; `amplitude` declared true or false is refused
+  naming MIGRATION; a lamp with N 2 is refused (a record's circle holds
+  the quarter turn), the world without the lamp at N 2 parses; N 4 with a
+  lamp of content 1 at [1, 1] is accepted; a lamp's rate [2, 1] parses;
 - (b) the columns: after 5 intervals every row of the store carries record
   0, branch 0 and multiplicity 1; `state.json`'s rows carry none of the
   three keys without the world key and all three under it; the packed
@@ -314,8 +315,8 @@ expected integers, written down before the first run:
   (2, the larger side's phase); rows of no record at 9 and 41 stay two
   rows, as do two rows of one record a quarter turn apart and two of one
   record at one phase with the multiplicities 2 and 4; two of one record
-  at one phase merge to amount 2; without the key (modulus 0) the
-  antiphase pair stays; the units cancelled are returned per (record,
+  at one phase merge to amount 2; with the modulus 0 (a store of no
+  record) the antiphase pair stays; the units cancelled are returned per (record,
   direction, content per unit), {(7, 2, 1): 4, (8, 2, 1): 2, (9, 2, 1): 2}
   (the review's S3: the content carried is units x content, no division).
 
@@ -334,8 +335,7 @@ integers, written down before the first run:
 - (a) the birth: at tick 1 the record 2^32 + 1 of two rows at (0, 0),
   (+x, age 0, phase 0, amount 1, content 1, branch 0, multiplicity 2) and
   (+y, phase 16); at tick 2 the record 2^32 + 2 with the phases 1 and 17;
-  the lamp's `births` 2; without the key (the lamp's `turns` dropped) rows
-  of record 0, multiplicity 1 and phase 0 on both directions;
+  the lamp's `births` 2;
 - (b) the split on the (20, 21) splitter: at tick 11 the record's rows at
   (3, 3) are (+x, age 0, phase 16, amount 41, multiplicity 1682) and (+y,
   phase 32, amount 1, 1682): the reflected 21 and the transmitted 20 merge
@@ -351,11 +351,10 @@ integers, written down before the first run:
   pair per interval of age; not one number on the flight table); a rest
   row turns nothing; `run.json` carries the pair; 5 forward and 5 inverse
   intervals on a periodic bar return the row bit-exact; the pair refused
-  without the key and on a family without a phase circle;
-- (d) the refusals of the split: `weights` without the key, on `measure`,
+  on a family without a phase circle;
+- (d) the refusals of the split: `weights` on `measure`,
   on a free family's entry, of a wrong length, all zero, a turn beyond
-  N - 1, `inputs` naming an undeclared direction, a lamp's `turns` without
-  the key; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
+  N - 1, `inputs` naming an undeclared direction; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
   refuses the run naming the Node (3, 3).
 
 ## The amplitude law: the layer
@@ -396,8 +395,8 @@ expected integers, written down before the first run:
   pixels (15, screen_61 twice), the faces 8, 7 (15, each click at a Node
   of the face's edge); 3 distinct cell lists, 32 records with u = 0's (the
   tables' rounding by u, no rung moved);
-- (e) test 7: the seventeen worlds of the gate set parse without the key,
-  `amplitude` false and no `amplitude-v1` identity;
+- (e) test 7: the seventeen worlds of the gate set parse with the key
+  deleted, the identity `amplitude-v1` on the lamp worlds alone;
 - (f) test 10: `tools/amplitude_path.replay` on 30-interval runs of
   `mz_equal` and `ev_29` returns `run.json`'s `world`, at least 18
   gathers, the open count of `run.json`'s `layer`;
@@ -425,7 +424,7 @@ expected integers, written down before the first run:
   `rerelease` on two directions comes out 1 + 2 with the key as without
   it, the rows and the `rerelease` lines the same;
 - (m) the review's S3 and S5: a `phase_window` on a `rerelease` entry
-  whose Node reads no `sum` set is refused at load under the key ("dead"),
+  whose Node reads no `sum` set is refused at load ("dead"),
   as is a detector named `measured:3` (reserved);
 - (n) the record's total re-pinned at the tables (the reviewer): on
   `mz_equal` the total of the record u is (1681 q[u + 16] + q[u + 32]) /
@@ -444,8 +443,7 @@ written down before the first run:
   the stride 1) births three records per self-creation: the ordinals 1,
   2, 3 at tick 1 and 4, 5, 6 at tick 2 with u = 0 .. 5 (the ordinal less
   one, the rows' column `birth`), each two rows of amount 1 with the
-  multiplicity 2, six births counted at the lamp; the rate [2, 1] parses
-  under the key;
+  multiplicity 2, six births counted at the lamp;
 - (b) `common_denominator(2, 8)` = (2, 1, 8), (8, 2) = (1, 2, 8), (9, 36)
   = (2, 1, 36), (1682, 1682 x 25) = (5, 1, 1682 x 25), and (2, 4) none;
   two paths of one record, one through a re-emitter of weight [1] (m 2,
@@ -467,14 +465,19 @@ written down before the first run:
   `weak/j2_ladder`, `weak/j3_deuteron_crowd`, `nucleus/alpha_square`,
   `hubble/pushing_age`, `coupling/1b_m16`), run at its `cap` with the key
   and without it: `events.jsonl` and `state.json` equal byte for byte,
-  the books (`audit`) equal, `run.json`'s `amplitude` false and true;
+  the books (`audit`) equal, `run.json`'s `amplitude` false and true
+  (step 1); since step 4 (the key deleted) the run at the cap gives the
+  base tree's `state.json`, books and `events.jsonl`, pinned by their
+  sha256 (the trimming's fast pass of 2026-09-20: `weak/j3_deuteron`
+  b9e0613b21af..., 431cc87afa9f..., 15450ef9d5d0...; `bohr/r2`
+  3d6b27e299af..., 51c74ad753d8..., f5dfd739878e...; the six others in
+  the module);
 - (e) step 2: a bar of 12 Nodes with a lamp at the stride 1 and a counter
   whose `measure` entry has the window 0 of width 8: no `pass` line at
   the counter over 80 intervals and at least 60 clicks, every click's `u`
   its record's ordinal less one and its `phase` equal to `u` (the path
-  phase 0), the rows' `birth` the same; the bar without the key passes
-  rows (the lamp's clock phase outside the window) and writes no `u`;
-- (f) step 2, the K record world (`lensing/mass_meeting` under the key,
+  phase 0), the rows' `birth` the same;
+- (f) step 2, the K record world (`lensing/mass_meeting` with
   every pixel `sum`, the lamp's `turns` 0, 300 intervals): the 64
   records of the ordinals 129 .. 192 carry u = 0 .. 63 once each; per
   set their clicks are within one rung of the sum of their cells' widths
@@ -488,8 +491,7 @@ written down before the first run:
   m 2); the mass's momentum [32 x clicks, 0, 0]; the splitter's
   [64 x re-releases - 32 x splits, -32 x splits, 0]; the books balanced,
   the `remainder` line [32 x clicks - 32 x splits, -32 x splits, 0] for
-  the world and for the light; without the key the mass takes
-  [64 x clicks, 0, 0], no `share` and no `remainder`.
+  the world and for the light.
 
 ## The amplitude law: the gate
 
@@ -524,7 +526,7 @@ The expected integers, written down before the first run:
   `rotations_4` is refused at load, the multiplicity through its
   re-emitters 2^64 beyond 2^62 - 1, naming the fourth rotation's Node
   (8, 0, 0); Grover's six rotations are not a world of the GameBoard;
-- (f) the refusals: `rotate` and `gate` without the key and on `measure`;
+- (f) the refusals: `rotate` and `gate` on `measure`;
   a gate kind other than `cnot`; `hold` not a boolean; `parties` 0; a
   rotation's bit beyond 31; `half_angle(1, 4096)` refused, `half_angle(512,
   4096)` the 4096 table's entry at 256, `half_angle(16, 64)` (181, 181);
@@ -589,7 +591,7 @@ The expected integers, written down before the first run:
   product +1) and XYY, YXY, YYX allow ++-, +-+, -++, --- (the product
   -1), 16 births each, eight cells per record; YYY allows all eight, 8
   each;
-- (g) the refusals: `branches`, `arms` and `turn` without the key; `arms`
+- (g) the refusals: `arms`
   beyond the directions or not dividing them; a label at or above 2^arms;
   a label twice; a weight 0; `turn` on `pass` and beyond N - 1; a `turn`
   of 16 parsed into `label_turns`.

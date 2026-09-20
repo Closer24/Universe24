@@ -105,9 +105,6 @@ def execute_nature_beam_run(
         # The meeting (2026-09-20): the world key as declared, false by
         # default; `meeting-v1` under `hypotheses` when it is true.
         "meeting": world.meeting,
-        # The amplitude law (2026-09-20): the world key as declared, false by
-        # default; `amplitude-v1` under `hypotheses` when it is true.
-        "amplitude": world.amplitude,
         "hypotheses": world.hypotheses,
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
@@ -182,7 +179,7 @@ def execute_nature_beam_run(
         ],
         "display": "none",
     }
-    if simulation.layer is not None:
+    if simulation.layer is not None and world.recorded:
         # The amplitude law's world: the list of gathers (the clicks of the
         # world), the records open at the end and the layer's line.
         metadata["world"] = list(simulation.layer.gathers)

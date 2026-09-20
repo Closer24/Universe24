@@ -323,14 +323,14 @@ def test_the_two_slits_at_a_low_rate_against_the_reading_of_one_birth():
     assert sum(1 for g in gathers if g["cells"] == first["cells"]) == 32
 
 
-def test_the_gate_set_parses_without_the_key():
+def test_the_gate_set_parses_with_the_key_deleted():
     """(e)."""
     assert len(GATE_SET) == 17
     for name in GATE_SET:
         path = ROOT / "examples" / "events" / name
         world = load_world(path.read_bytes(), base_dir=path.parent).world
-        assert world.amplitude is False, name
-        assert AMPLITUDE_RULE not in world.hypotheses, name
+        assert world.recorded is any(entry.lamp is not None for entry in world.measured), name
+        assert (AMPLITUDE_RULE in world.hypotheses) is world.recorded, name
 
 
 def test_the_register_replays_through_the_reading_tool(tmp_path: Path):
@@ -402,7 +402,6 @@ def test_a_lamp_short_of_one_quantum_per_direction_is_refused():
             "N": N,
             "release": [0, 1],
             "suspension": 0,
-            "amplitude": True,
             "families": [{"name": "light", "quantum": 1}],
             "measured": [
                 {
@@ -450,7 +449,6 @@ def rebirth_world() -> dict[str, object]:
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "amplitude": True,
         "families": [{"name": "light", "quantum": 1}],
         "measured": [
             {
@@ -502,7 +500,7 @@ def test_a_rebirth_is_one_record_of_all_its_rows():
     assert simulation.layer.born >= 2 * BIRTHS
 
 
-def free_crowd_world(amplitude: bool) -> dict[str, object]:
+def free_crowd_world() -> dict[str, object]:
     """A source of a free family into a `rerelease` on two directions."""
     return {
         "law": "beam",
@@ -514,7 +512,6 @@ def free_crowd_world(amplitude: bool) -> dict[str, object]:
         "N": N,
         "release": [1, 1],
         "suspension": 0,
-        "amplitude": amplitude,
         "families": [{"name": "wind", "quantum": 0}, {"name": "light", "quantum": 1}],
         "measured": [
             {
@@ -538,15 +535,13 @@ def free_crowd_world(amplitude: bool) -> dict[str, object]:
 
 def test_a_free_crowd_keeps_the_unkeyed_apportioning():
     """(l)."""
-    found = {}
-    for keyed in (False, True):
-        simulation, lines = observed(free_crowd_world(keyed))
-        rows = sorted((r.node, r.direction, r.amount, r.phase) for r in simulation.stores[0].rows())
-        released = [(line["tick"], line["amount"]) for line in lines if line.get("event") == "rerelease"]
-        found[keyed] = (rows, released)
-    assert found[False] == found[True]
-    assert found[True][1]
-    assert {1, 2} <= {r[2] for r in found[True][0]}
+    simulation, lines = observed(free_crowd_world())
+    rows = sorted((r.node, r.direction, r.amount, r.phase) for r in simulation.stores[0].rows())
+    released = [(line["tick"], line["amount"]) for line in lines if line.get("event") == "rerelease"]
+    assert released
+    assert {1, 2} <= {r[2] for r in rows}
+    assert all(r.record == 0 and r.multiplicity == 1 for r in simulation.stores[0].rows())
+    assert all("record" not in line for line in lines if line.get("event") == "rerelease")
 
 
 def test_a_dead_window_and_a_reserved_name_are_refused():
@@ -555,7 +550,7 @@ def test_a_dead_window_and_a_reserved_name_are_refused():
     measured = world["measured"]
     assert isinstance(measured, list)
     measured[1]["table"]["light"] = {"rule": "rerelease", "phase_window": 3}
-    with pytest.raises(ValueError, match=r"phase_window is dead under amplitude"):
+    with pytest.raises(ValueError, match=r"phase_window is dead: a split takes no gate"):
         parse_nature_beam_world(world)
     world = GENERATOR.mach_zehnder("reserved")
     detectors = world["detectors"]

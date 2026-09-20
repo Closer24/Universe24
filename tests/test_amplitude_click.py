@@ -25,12 +25,11 @@ down before the first run:
     `record`, `branch` and `multiplicity` on the lamp's rows alone, and
     the `click` lines at the counter carry them (and `age`) for the lamp's
     rows alone;
-(d) the design's test 7 restated: every world of the gate set
-    (`examples/events/gate_set.json`) without a lamp, run at its `cap`
-    with the key and without it, gives the same `events.jsonl`, the same
-    `state.json` and the same books (`audit` of `run.json`), byte for
-    byte; the byte-identity without the key against the base tree is the
-    replay's (docs/VALIDATION.md);
+(d) the design's test 7 restated (step 4, the key deleted): every world
+    of the gate set (`examples/events/gate_set.json`) without a lamp, run
+    at its `cap`, gives the `state.json`, the books (`audit` of
+    `run.json`) and the `events.jsonl` of the base tree before the law,
+    pinned by their sha256 (the trimming's fast pass on 2026-09-20);
 (e) step 2, u the record's own field: on a bar with a lamp at the stride
     1 (K 2^20, content 2^20) and a counter whose `measure` entry has the
     window 0 of width 8, every record's row clicks (the window reads the
@@ -63,6 +62,7 @@ down before the first run:
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -90,7 +90,6 @@ def base_world(**overrides: object) -> dict[str, object]:
         "N": N,
         "release": [0, 1],
         "suspension": 0,
-        "amplitude": True,
         "families": [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}],
         "measured": [],
         "detectors": [],
@@ -237,6 +236,64 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
     assert all(k in ((False,) * 4, (True,) * 4) for k in keyed)
 
 
+# The gate set's worlds without a lamp at their caps: the digests (sha256)
+# of `state.json`, of the books (`audit` of `run.json` as `json.dumps`
+# writes it) and of `events.jsonl` on the base tree before the amplitude
+# law's one click (the trimming's fast pass, `tools/run_series.py --list
+# --fast`, 2026-09-20): the design's test 7 as a pin, since the key that
+# switched the law off is deleted.
+PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
+    "weak/j3_deuteron.json": (
+        700,
+        "b9e0613b21af1d6f42f0f71232260df7e33848bdab8f12cc04663bd4ab9c779b",
+        "431cc87afa9f51cadc83d9780dc8f54cfa3e2fe4bb1d780fcd78f55aec25efbd",
+        "15450ef9d5d01cca58f534db8a8fc6dd04f198ef76818f2bb909dc743d422d86",
+    ),
+    "bohr/r2.json": (
+        689,
+        "3d6b27e299af838e88cf412a03d9eadee011e0faca9e5596340e6b02f2509e9f",
+        "51c74ad753d82819bccc8ea827af99e6c4b6413b6f9acfb14bc6b3f2692b3633",
+        "f5dfd739878ed8062e4ec135605220cdb2331c27243d571cc9045611adfafbbc",
+    ),
+    "detector/grouped_12_nodes.json": (
+        2,
+        "9ec38452fa1649afd1f2d23191132d74081783b7460cc7828fb9d3b563f6c6a8",
+        "975863cdb72c13719aa21397c178434501fd81de11cda2ab6037ea959e9cc9f8",
+        "4b4994530f291bb5dbe986b532ffd3c9f8e8bcd585ca986ee4369e768ff749f9",
+    ),
+    "weak/j2_ladder.json": (
+        1,
+        "b3b414d22b76af4884afb998762dbfee23f3c08e8a22eec1ccf4c9f60cc14e86",
+        "9f16ab276ee061317098eaef3abe18df5a4979b173596e750a63bf46883f3137",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ),
+    "weak/j3_deuteron_crowd.json": (
+        1,
+        "ea8c90547d0427a7bd85f8e8a87b13854d1f5aae44e716b2cccbe80f90c44fb3",
+        "9a55af2c075019704c10922fd5dce8397b1d77fe63ce7ab3e570c2f8a9b6b72e",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ),
+    "nucleus/alpha_square.json": (
+        180,
+        "04cc376523187d529f7046d16ece4a0c0304e9f9222b79b1b8d7ba2d9e172531",
+        "4522791a6a86620a5d218fbbf2006566958040a4b9ceb35cd15b3a5bbe4b2c56",
+        "6e075ef3a8c8975fb9fe1dabfe812028f2e15c736df0954687d3e7e8cd9e6c05",
+    ),
+    "hubble/pushing_age.json": (
+        1,
+        "acd5488d08a941575421416d7d69d85af4d7437498720b89e32d33d163863f7d",
+        "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ),
+    "coupling/1b_m16.json": (
+        25,
+        "8c4d5bae1803c67da1ef2c2407a8f5a9ed6326d42248b06ccc0cf3d9aa457e5d",
+        "ce2fa6a3edd9dfd615c9ea9f455803640cb34daca4f740f1eb8fd386371838c8",
+        "c6279fb0594940bac041ae565e34879a0a6095c593394eb7ec003750ad2eb1af",
+    ),
+}
+
+
 def gate_worlds_without_a_lamp() -> list[tuple[str, int]]:
     document = json.loads(GATE_SET.read_text(encoding="utf-8"))
     found = []
@@ -249,35 +306,28 @@ def gate_worlds_without_a_lamp() -> list[tuple[str, int]]:
 
 
 @pytest.mark.parametrize(("path", "cap"), gate_worlds_without_a_lamp())
-def test_a_gate_world_without_a_lamp_reads_the_same_with_the_key(tmp_path: Path, path: str, cap: int):
+def test_a_gate_world_without_a_lamp_reads_as_it_did_before_the_law(tmp_path: Path, path: str, cap: int):
     """(d)."""
     source = (GATE_SET.parent / path).read_bytes()
-    document = json.loads(source)
-    assert "amplitude" not in document
-    keyed = json.dumps({**document, "amplitude": True}).encode("utf-8")
-    outputs = []
-    for name, text in (("plain", source), ("keyed", keyed)):
-        loaded = load_world(text, base_dir=(GATE_SET.parent / path).parent)
-        assert loaded.world.recorded is False
-        out = tmp_path / name
-        out.mkdir()
-        execute_nature_beam_run(loaded.world, text, out, "test", cap)
-        outputs.append(out)
-    plain, keyed_out = outputs
-    for name in ("events.jsonl", "state.json"):
-        assert (plain / name).read_bytes() == (keyed_out / name).read_bytes(), name
-    plain_record = json.loads((plain / "run.json").read_text(encoding="utf-8"))
-    keyed_record = json.loads((keyed_out / "run.json").read_text(encoding="utf-8"))
-    assert plain_record["audit"] == keyed_record["audit"]
-    assert plain_record["amplitude"] is False and keyed_record["amplitude"] is True
+    loaded = load_world(source, base_dir=(GATE_SET.parent / path).parent)
+    assert loaded.world.recorded is False and "amplitude" not in json.loads(source)
+    out = tmp_path / "run"
+    out.mkdir()
+    execute_nature_beam_run(loaded.world, source, out, "test", cap)
+    record = json.loads((out / "run.json").read_text(encoding="utf-8"))
+    assert "amplitude" not in record and "amplitude-v1" not in record["hypotheses"]
+    pinned_cap, state, audit, events = PINNED_DIGESTS[path]
+    assert cap == pinned_cap
+    assert hashlib.sha256((out / "state.json").read_bytes()).hexdigest() == state
+    assert hashlib.sha256(json.dumps(record["audit"]).encode("utf-8")).hexdigest() == audit
+    assert hashlib.sha256((out / "events.jsonl").read_bytes()).hexdigest() == events
 
 
-def window_bar(amplitude: bool) -> dict[str, object]:
+def window_bar() -> dict[str, object]:
     return base_world(
         shape=[12, 1, 1],
         boundary={"y": "periodic", "z": "periodic"},
         ticks=80,
-        amplitude=amplitude,
         measured=[
             lamp([[1, 0, 0]], [1, 1]),
             {
@@ -293,7 +343,7 @@ def window_bar(amplitude: bool) -> dict[str, object]:
 
 def test_the_window_reads_the_path_phase_of_a_record():
     """(e)."""
-    simulation, lines = run(window_bar(True), 80)
+    simulation, lines = run(window_bar(), 80)
     at_counter = [line for line in lines if line.get("measured") == 2 and line.get("family") == "light"]
     clicks = [line for line in at_counter if line["event"] == "click"]
     assert not [line for line in at_counter if line["event"] == "pass"]
@@ -303,10 +353,6 @@ def test_the_window_reads_the_path_phase_of_a_record():
         assert click["u"] == (ordinal - 1) % N == click["phase"]
     rows = simulation.stores[0].rows()
     assert rows and all(r.birth == ((r.record - (1 << 32)) - 1) % N for r in rows)
-    _, plain_lines = run(window_bar(False), 80)
-    plain = [line for line in plain_lines if line.get("measured") == 2 and line.get("family") == "light"]
-    assert [line for line in plain if line["event"] == "pass"]
-    assert all("u" not in line for line in plain)
 
 
 def k_record_world() -> dict[str, object]:
@@ -317,7 +363,6 @@ def k_record_world() -> dict[str, object]:
         (ROOT / "examples" / "events" / "lensing" / "mass_meeting.json").read_text("utf-8")
     )
     world["model_id"] = "beam-lensing-mass-meeting-record-test"
-    world["amplitude"] = True
     world["ticks"] = 300
     for event in world["measured"]:
         if "lamp" in event:
@@ -422,13 +467,3 @@ def test_a_record_row_pushes_matter_by_its_share():
     remainder = books["momentum"]["remainder"]  # type: ignore[index]
     assert remainder == [32 * len(at_mass) - 32 * len(splits), -32 * len(splits), 0]
     assert books["families"]["light"]["remainder"] == remainder  # type: ignore[index]
-    plain = share_world()
-    plain["amplitude"] = False
-    plain["measured"][1]["table"]["light"] = "rerelease"  # type: ignore[index]
-    unkeyed, plain_lines = run(plain, 60)
-    plain_mass = [
-        line for line in plain_lines if line.get("event") == "click" and line.get("measured") == 3
-    ]
-    assert plain_mass and all("share" not in line and line["push"] == [64, 0, 0] for line in plain_mass)
-    assert unkeyed.measured[3].momentum == [64 * len(plain_mass), 0, 0]
-    assert "remainder" not in unkeyed.books()["momentum"]  # type: ignore[operator]

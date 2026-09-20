@@ -113,7 +113,6 @@ from event_universe.events.meeting import ArcTable, arc_table, meet
 from event_universe.events.world import (
     AGE_READS,
     AMOUNT_BOUND,
-    AMPLITUDE_KEY,
     BEAM_LAW,
     BECOME_RULE,
     CHARGE_INDEX,
@@ -2518,20 +2517,14 @@ def nature_beam(
                 s_starts = group_starts(st_m)
                 s_sizes = group_sizes(s_starts, met.shape[0])
                 total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
-                # The threshold: under `beam` on the amount summed over the
-                # set; under `wave` (since 2026-09-20, issue #359 step A) on
-                # the square of the coherent pointer of the set's arrivals in
-                # units of one ray (`pointer_units`), so that rays which
-                # cancel pass whether or not a window is declared. No memory
-                # between intervals: the pointer is this interval's arrivals.
-                # The pointer gate is the click's (the entries that absorb:
-                # `measure`, `rerelease`); a `read` entry, the push of a
-                # body, keeps the amount gate under both readings, since the
-                # push reads the flow and not the pointer (the closing gate's
-                # finding F1, 2026-09-20; BEAM_LAW note 32).
+                # The threshold: the amount summed over the set under both
+                # readings (the pointer's square as a gate under `wave`,
+                # issue #359 step A, is deleted at stage (vii) step 4, the
+                # one click: a record's click is its ladder's, and the
+                # crowd's pointer gives the set's phase and its record, not
+                # a gate). No memory between intervals.
                 set_threshold = st_threshold[st_m[s_starts]]
                 below_set = np.asarray(total < set_threshold, dtype=bool)
-                absorbs = rule[met] != READ_RULE
                 # The window: under `wave` it reads the set's phase, the
                 # nearest step of the coherent pointer of the arrivals the
                 # threshold admitted (a zero pointer has no phase and is
@@ -2546,33 +2539,10 @@ def nature_beam(
                     px, py = coherent_pointer(
                         amount[met], path[met], s_starts, tables.cosines, tables.sines
                     )
-                    below_wave = np.array(
-                        [
-                            pointer_units(x, y) < t
-                            for x, y, t in zip(px, py, set_threshold.tolist(), strict=True)
-                        ],
-                        dtype=bool,
-                    )
                     steps = pointer_phases(px, py, tables.cosines, tables.sines)
                     set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
                     read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
                 below = np.repeat(below_set, s_sizes)
-                if wave_rows.any():
-                    gated = wave_rows & absorbs
-                    if world.amplitude:
-                        # A split is not a click (the decision of 2026-09-20
-                        # on the design's 2.1 and 3.1, BEAM_LAW note 37):
-                        # under the key a `rerelease` entry takes every
-                        # arriving row of its family on its own, with no
-                        # pointer gate, and a `sum` set takes none either
-                        # (the offer and the ladder are per record, never
-                        # the crowd's pointer); the amount gate stays, its
-                        # default 1 admitting every row.
-                        # A free family's rows (no record) keep the unkeyed
-                        # gates (the design's section 6).
-                        recorded = record_at[met] != NO_RECORD
-                        gated &= ~((rule[met] == RERELEASE_RULE) & recorded) & ~st_sum[st_m]
-                    below = np.where(gated, np.repeat(below_wave, s_sizes), below)
                 # A window read from a reading: the centre is the setting of
                 # the row's set off the named family plus the offset; a set
                 # without a setting (-2 on the row) admits nothing, and the
@@ -2596,10 +2566,7 @@ def nature_beam(
                 # setting and gates nothing: every row is admitted, the
                 # setting carried on the row (`t_window`); a split takes no
                 # window either (a split is not a click).
-                if world.amplitude:
-                    inside |= st_sum[st_m] | (
-                        (rule[met] == RERELEASE_RULE) & (record_at[met] != NO_RECORD)
-                    )
+                inside |= st_sum[st_m] | ((rule[met] == RERELEASE_RULE) & (record_at[met] != NO_RECORD))
                 inside &= ~unset
                 passing = below | ~inside
                 p = np.flatnonzero(passing)
@@ -2723,8 +2690,7 @@ def nature_beam(
                 return plan
             taken, a_t, cancelled = taken_all[survivors], a_t_all[survivors], cancelled_all[survivors]
             rule_t, st_t = admitted[3][survivors], admitted[4][survivors]
-            if world.amplitude or (ev_read_family[:, family] >= 0).any():
-                plan.t_window = admitted[5][survivors].tolist()
+            plan.t_window = admitted[5][survivors].tolist()
             ev_t, num_t = ev[taken], number[taken]
             new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
             g_starts = np.flatnonzero(new)
@@ -3092,7 +3058,7 @@ def nature_beam(
                                         record=plan.t_record[k],
                                         branch=plan.t_branch[k],
                                         multiplicity=plan.t_multiplicity[k],
-                                        split=world.amplitude and plan.t_record[k] != NO_RECORD,
+                                        split=plan.t_record[k] != NO_RECORD,
                                         arrival=plan.t_arrival[k],
                                         offered=detector_set.sum,
                                         birth=plan.t_birth[k],
@@ -3315,7 +3281,7 @@ def nature_beam(
                 pending_rows = entry.pending[family]
                 held_back: list[PendingRow] = []
                 gate = entry.gates[family] if entry.gates else None
-                if gate is not None and world.amplitude and layer is not None:
+                if gate is not None and layer is not None:
                     # The gate between records (the design's section 10):
                     # act when rows of `parties` distinct emitters are
                     # pending here (read from the rows alone); hold
@@ -3333,7 +3299,7 @@ def nature_beam(
                             # wait for their partners.
                             held_back = kept
                 rotation = entry.rotations[family] if entry.rotations else None
-                if rotation is not None and world.amplitude:
+                if rotation is not None:
                     pending_rows = rotate_rows(
                         pending_rows, rotation, modulus, entry, layer, record, tick
                     )
@@ -3419,7 +3385,7 @@ def nature_beam(
                                 layer.split(row_record, 0, born_units)
                             else:
                                 layer.split(row_record, 0 if row.offered else row.amount, born_units)
-                        if record is not None and world.amplitude:
+                        if record is not None:
                             record(
                                 {
                                     "event": "split",
@@ -3483,7 +3449,7 @@ def nature_beam(
                 # (the design's 2.1, the extension; stage (vii)).
                 ways = len(entry.lamp_directions)
                 lamp_turns = entry.lamp_turns or (0,) * ways
-                if world.amplitude and entry.held[family] // cost >= 1:
+                if entry.held[family] // cost >= 1:
                     # The pair (the design's section 4): the joint labels
                     # with their weights (`branches`, [[0, 1]] by default)
                     # on `arms` separate quanta, the directions shared
@@ -3506,8 +3472,7 @@ def nature_beam(
                             f"{BEAM_LAW}: the lamp of measured event {entry.number} at "
                             f"{list(entry.position)} holds {entry.held[family]} of "
                             f"{definition.name}, short of {per_direction} quanta ({cost} each) on "
-                            f"each of its {ways} directions for the birth of a record under "
-                            f"{AMPLITUDE_KEY}"
+                            f"each of its {ways} directions for the birth of a record"
                         )
                     count = min(count, entry.held[family] // (cost * quanta))
                     for _ in range(count):
@@ -3557,27 +3522,6 @@ def nature_beam(
                                 entry.held[family] -= content
                                 ledger.held_spent[family] += content
                                 ledger.content_released[family] += content
-                else:
-                    for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
-                        amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
-                        if amount:
-                            born.append(
-                                (
-                                    direction,
-                                    amount,
-                                    cost,
-                                    (entry.phase + lamp_turn) % modulus,
-                                    False,
-                                    NO_RECORD,
-                                    NO_BRANCH,
-                                    ONE_PATH,
-                                    0,
-                                )
-                            )
-                            content = cost * amount
-                            entry.held[family] -= content
-                            ledger.held_spent[family] += content
-                            ledger.content_released[family] += content
             if not born:
                 continue
             # A body on a set of Nodes releases at every Node of the set
@@ -3791,7 +3735,7 @@ def nature_beam(
         # cancel (BEAM_LAW note 37): what it removed leaves the transit
         # lines on the ledger's `cancelled` lines (the units, the content
         # carried and the labels of the units removed, per family).
-        removed = store.merge(modulus if world.amplitude else 0)
+        removed = store.merge(modulus)
         if removed:
             free = free_of[family]
             for (cancelled_record, direction, per_unit), amount in removed.items():

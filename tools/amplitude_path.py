@@ -79,8 +79,6 @@ def replay(run: Path, quiet: bool = True) -> tuple[Layer, list[dict[str, Any]]]:
     """Replay the run's register through a fresh layer; returns the layer
     and the gathers it wrote."""
     world = parse_nature_beam_world(json.loads((run / "initialization.json").read_text("utf-8")))
-    if not world.amplitude:
-        raise SystemExit(f"{run}: the world does not declare the key `amplitude`")
     simulation = NatureBeamSimulation(world)
     layer = simulation.layer
     assert layer is not None
