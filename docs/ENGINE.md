@@ -150,7 +150,16 @@ D1 of 2026-09-19 and the label along the unit vector of the same day,
 [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5
 and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
 1 / (S + 1); at most one Link per interval, x before y before z, only in
-an interval where nothing is owed) and books the interval.
+an interval where nothing is owed; the rule of one axis is
+`engine.step_axis`, the owed count `engine.count_owed`, each the one place
+its rule lives and what the readings tools read) and books the interval.
+A measured event on a set of Nodes (`span`, [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+`Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
+all of them: `RaySimulation.at` holds every Node of every body, the step
+moves the whole set as one (refused when a Node of the moved set holds
+another measured event; the whole body clicks on the face when any of its
+Nodes would leave; every Node wraps on a periodic axis), and `nature_beam`
+reads its arrivals over the set and apportions its releases over it.
 `inverse_step` runs the
 inverse collision and the inverse walk on a board without a measured event
 (the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
@@ -248,7 +257,9 @@ the six headings in Port order and these, in that order); `families`
 kind is derived, never declared), `charge` (a free family only: the
 charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
 `phase` true by default, `phase_per_link` 0 .. N - 1); `measured`
-(`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `directions` (the
+(`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`
+(three odd integers from 1, `[1, 1, 1]` by default: a body on the set of
+Nodes centred on `position`, one record on all of them), `directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
 `rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "reads":
@@ -289,7 +300,11 @@ denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-
 a `width` below 1 or not an integer ([the width of the push](TEST_EXPECTATIONS.md#the-width-of-the-push)),
 an `age_bound` below 1 or absent on a board periodic on every axis, a
 declared ray's `age` beyond it, and at run time a ray on the board whose
-age passes it ([the age](TEST_EXPECTATIONS.md#the-age)).
+age passes it ([the age](TEST_EXPECTATIONS.md#the-age)), a `span` that is
+not three odd integers from 1 or larger than its axis, a body whose Nodes
+leave the board on an open axis, two measured events sharing a Node, a
+detector naming a Node of a body that is not its `position`
+([a body on a set](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 `event_universe.configuration_validation` reports a world of the law as
 kind `rays`.
 
@@ -297,7 +312,9 @@ kind `rays`.
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,
 `charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
-`numbers`, the books per completed tick (`audit`, the `charge` line the
+`numbers` (per measured event its `position`, `family` and `span`; the
+measured events' states carry `span` too, as `state.json` does),
+the books per completed tick (`audit`, the `charge` line the
 exact rational sum of the measured events' charges as a reduced pair) with
 `conserved_at_every_completed_tick`, the measured events' final states
 (`measured`: position, held per family, content, phase, charge (the pair

@@ -38,6 +38,7 @@ kept, their pins the law of events').
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_ray_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the board unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
+| `test_ray_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr: proposal 1, the electron of width 3) |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
@@ -697,6 +698,94 @@ of the presence; the board's step is unchanged by the whole age.
   outside the law: the sorted (Node, direction, phase, amount, content)
   rows are identical at every interval, the ages' sums differ, and the
   collision moved rays on the way.
+
+## A body on a set and the turn by momentum
+
+`tests/test_ray_body.py` (docs/RAY_LAW.md, section 3 step 5 and section 10
+note 30; the model owner, 2026-09-20, "On Bohr, go, and put it as
+parameters outside the board like the age"): a measured event that
+declares `span` is a body on the set of Nodes centred on its position,
+one record on all of them; its threshold, its clock's count and its push
+read the one reading set summed over its Nodes, its releases are
+apportioned whole over them, the step moves the whole set, no collision
+acts at any of its Nodes. Every rule is on the measured-event side; the
+rays' flight and collision are untouched. K 2^20, N 64, `suspension` 0
+and `release` [0, 1] unless said, the families `m` (free) and `light`
+(paid). The expected integers, written down before the first run:
+
+- (a) a set of one Node is the measured event as it was, bit for bit: a
+  free body of `m` (content 16, momentum [256, 0, 0], phase 5) at
+  (3, 1, 1) of an open 12 x 3 x 3 board at `release` [1, 4] (4 rays per
+  heading per self-creation), a fixed counter of `light` at (9, 1, 1)
+  measuring `m` in the `wave` detector `d`, a head-on pair of number 2
+  on +-y at x = 6 (the phases 3 and 40) that parks at (6, 1, 1) at the
+  first interval and leaves on +-z; 30 intervals, the integers of the
+  engine of 2026-09-20 before the change: the body's x per interval 3
+  (4 times), 4 (5), 5 (5), 6 (5), 7 (5), 8 (6); the body at (8, 1, 1),
+  age 30, phase 5, 6 steps, held [16, 0]; the counter held [0, 4], 99
+  units clicked, momentum (-25344, 0, 0), the record 37348285440 at the
+  phase 5; 152 clicks, 20 record lines, 5 steps and 5 homes (the body
+  stepping onto its own +x ray in the same interval); 28, 28, 27, 27 and
+  18 clicks on face:-z, face:+z, face:-y, face:+y and face:-x, 24 clicks
+  and 20 record lines at `d`; the pair's clicks at tick 6 on face:-z
+  (phase 40) and face:+z (phase 3); 25 rows of 101 units in the store;
+  the transit line 2 + 740 = 101 + 522 + 119 with 74, 111, 111, 113,
+  113 units through the faces -x, +y, -y, +z, -z; every record, every
+  row and both states equal with `span` [1, 1, 1] declared.
+- (b) a set of three Nodes: a fixed body of `light` (content 4) at
+  (4, 0, 1) of an open 9 x 1 x 3 bar with `span` [1, 1, 3] (the Nodes
+  (4, 0, 0), (4, 0, 1), (4, 0, 2), all held by number 1 in `at`)
+  measuring `m` in the `wave` detector `d` of threshold 3 at
+  `suspension` [1, 1]: three rays of `m` (number 2, amount 1, phase 0)
+  arriving in one interval, one at each Node, are one set: 3 clicks (the
+  events [3, 0], held [0, 4]: a free ray carries no content), the push
+  (-768, 0, 0) = -4 x 3 x 64, one `record` line naming `d` with the
+  record (3 x 32)^2 x 256^2 = 9 x 67108864 and every click line's `node`
+  the body's position (4, 0, 1), the presence 3, the count 3, the owed
+  count `by_clock(0, 3, 1)` = 3, the set's phase 0 returned; two rays at
+  two of the Nodes pass with `threshold` 3, no click, no push, the two
+  rows still in the store. The step: a free body of `m` (content 16,
+  momentum [1024, 0, 0]) of span [1, 1, 3] at (2, 0, 1) of an open
+  6 x 1 x 3 bar steps at the ages 2, 4, 6 with all three Nodes (x per
+  interval 2, 3, 3, 4, 4, 5, 5; `at` holds its three Nodes and nothing
+  else); with a fixed anchor at (5, 0, 0), a Node of the moved set at
+  the age 6, the step is refused: x per interval 2, 3, 3, 4, 4, 4, three
+  steps counted, `at` of four Nodes; without it the step of the age 8
+  leaves the board and the whole body clicks on face:+x (three `step`
+  lines with the phase 0 before it, one click line with node (5, 0, 1),
+  measured 1, amount 16; no measured event and no Node in `at` after;
+  the measured line's escaped 16); with x periodic the body wraps to
+  (0, 0, 1) with the Nodes (0, 0, 0), (0, 0, 1), (0, 0, 2); `body_nodes`
+  of (2, 0, 0) with span (1, 1, 3) on a 6 x 1 x 3 bar with z periodic is
+  ((2, 0, 2), (2, 0, 0), (2, 0, 1)) in that order, None with z open, and
+  ((2, 0, 1),) for the span (1, 1, 1).
+- (c) the books balance with a set that releases: a free body of `m`
+  (content 16) of span [1, 1, 3] at (3, 1, 2) of an open 7 x 3 x 5 board
+  at `release` [1, 4] on the four headings +-X, +-Y (no ray of its own
+  enters its set): 4 units per heading per self-creation apportioned
+  whole over the three Nodes, [2, 1, 1] at the age 0 (the leftover to
+  the Node `age mod 3`), [1, 2, 1] at the age 1, [1, 1, 2] at the age 2:
+  the rows born at the first interval sum to 8, 4, 4 units at (3, 1, 1),
+  (3, 1, 2), (3, 1, 3), 16 released in 12 rows, at the second 4, 8, 4
+  (32 released); the books balance at every one of 20 intervals and
+  equal their recount; the body's momentum stays 0 (a free release takes
+  no recoil). A lamp of `light` (content 24, K 24, rate [1, 1]) on +Y of
+  span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 board releases its one unit
+  per self-creation at the Nodes x = 0, 1, 2 in turn (the ages 0, 1, 2):
+  after 3 intervals the rows (0, 1, 0) age 2 phase 0, (1, 1, 0) age 1
+  phase 1, (2, 0, 0) age 0 phase 2 (content 1 each), held [0, 21], the
+  recoil (0, -192, 0), the transit momentum (0, 192, 0), the books
+  balanced.
+- (f) the refusals, naming the key: `span` "3" and [2, 1, 1] ("three odd
+  integers"), [0, 1, 1] ("from 1 through 12"), [1, 5, 1] on an axis of 3
+  ("from 1 through 3"), a body of span [3, 1, 1] at x = 0 of an open axis
+  ("leaves the board"), two bodies of span [3, 1, 1] at x = 4 and 6
+  ("share the Node [5, 1, 1]"), a detector naming (5, 1, 1) of a fixed
+  body of span [3, 1, 1] at (4, 1, 1) ("a Node of a body on a set ... not
+  its position"); accepted: `span` [3, 1, 1] at x = 0 of a periodic axis
+  (the body wraps), `span` absent parsing to (1, 1, 1); the record:
+  `run.json` carries per measured event under `numbers` its `span`
+  ([1, 3, 1]) and in the measured events' states, `state.json` the same.
 
 ## The phase window under the ray law
 

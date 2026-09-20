@@ -6,6 +6,37 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A body on a set of Nodes with one record, on 2026-09-20 (`span`)
+
+The model owner's decision of 2026-09-20 on Bohr ("go, and put it as
+parameters outside the board like the age"; the body on a set taken with
+it as the condition for a closed orbit, the physicist's proposal 1, "the
+electron of width 3"; [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[expectations](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
+
+- **Added**: the measured-event key `span`, three odd integers from 1
+  (`[1, 1, 1]` by default): the measured event is a body on the block of
+  Nodes centred on its `position`, one record on all of them; its
+  threshold, its clock's count and its push read the one reading set
+  summed over its Nodes; its releases are apportioned whole over its
+  Nodes; the step moves the whole set as one; no collision acts at any of
+  its Nodes; a detector names it by its `position`. `world.body_nodes`,
+  `Measured.span`, `Measured.nodes`, `RaySimulation.at` over every Node of
+  every body; `engine.step_axis` and `engine.count_owed`, the step rule of
+  one axis and the owed count as public functions the methods call (the
+  readings tools read them; no integer changes).
+- **Refused, naming the key**: a `span` that is not three odd integers
+  from 1 or larger than its axis; a body whose Nodes leave the board on an
+  open axis at the start; two measured events sharing a Node; a detector
+  naming a Node of a body that is not its `position`.
+- **The record**: `run.json` carries `span` per measured event under
+  `numbers` and in the measured events' states, `state.json` the same key
+  (a reader of the state sees one more key per measured event, `[1, 1,
+  1]` on every world that declares none). Every world without the key
+  reads the same integer by integer (`tests/test_ray_body.py` (a): every
+  record, row and state equal with the key absent and with `[1, 1, 1]`
+  declared).
+
 ## `wave` is the default reading of a detector, on 2026-09-20
 
 The model owner's decision of 2026-09-20 ("on the board a ray, in the world

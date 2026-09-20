@@ -114,6 +114,12 @@ class Measured:
     declared_content: int
     detector: int | None
     detector_set: DetectorSet
+    # A body on a set of Nodes (the model owner, 2026-09-20, "the electron
+    # of width 3"): `span` the three odd extents of the block centred on
+    # `position`, `nodes` the set itself (the engine keeps it as the body
+    # steps), (1, 1, 1) and the one Node for a measured event of one Node.
+    span: tuple[int, int, int] = (1, 1, 1)
+    nodes: tuple[Address3, ...] = ()
     age: int = 0
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
@@ -170,6 +176,7 @@ class Measured:
             "charge": list(self.charge),
             "momentum": list(self.momentum),
             "fixed": self.fixed,
+            "span": list(self.span),
             "windows": list(self.windows),
             "detector": self.detector,
             "age": self.age,

@@ -145,7 +145,12 @@ age at which every straight ray has left a board of that diameter,
 ray leaves; a declared ray's `age` is refused beyond it and a run in which
 a ray on the board carries an age beyond it is refused), and the value
 `age` of a table entry's `reads` (the age moment; the clock of that entry
-counts it in place of the presence). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
+counts it in place of the presence). Added on 2026-09-20 (note 30): per
+measured event `span` (three odd integers from 1, `[1, 1, 1]` by default:
+the measured event is a body on the set of span_x x span_y x span_z Nodes
+centred on its `position`, one record on all of them; the model owner's
+principle of the detector as a set applied to the electron, "the electron
+of width 3"). Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
 `rerelease`, `pass` and `phase_window`), `in_transit` (gains `direction`,
 a vector, in place of `heading`; the six headings accepted as vectors),
@@ -363,8 +368,13 @@ order with each step's inverse:
    the presence, or on a table entry that reads `age` the age moment
    `sum amount x age` of that family (note 25: the clock beside a mass
    then reads M / r in space, the push keeping M / r^2). Every new ray:
-   `age` 0, the emitter's phase, its number. The step of a measured event by its momentum: as the
-   other change leaves it (no merge; refused onto an occupied Node), with
+   `age` 0, the emitter's phase, its number. A measured event on a set of
+   Nodes (`span`, note 30) releases at every Node of its set with whole
+   units only: each row born is apportioned whole over the set in its
+   fixed order, the leftover to the Nodes counted from `age mod w`, so
+   the total released is the content's whatever the width. The step of a measured event by its momentum: as the
+   other change leaves it (no merge; refused onto an occupied Node; a
+   body on a set steps as one, note 30), with
    the width of the push since 2026-09-19 (the model owner's D1) and
    the label's scale since the same day (note 23): on an axis whose
    momentum component is p (in label units), a free measured event of
@@ -1295,3 +1305,70 @@ implementation's part of the contract. The design above is unchanged.
     ray at phase p reads p, every click and pass identical, S = 2 exactly,
     `tools/bell_chsh.py` 326 criteria passed), the two-slit screens and
     the Heisenberg worlds (declared), series C and D (no detector).
+30. **A body on a set of Nodes with one record, and the turn by momentum:
+    Bohr as parameters outside the board** (the model owner, 2026-09-20,
+    Highlights 5.4: the physicist's report on hydrogen, the seven
+    proposals, and "DECIDED (the owner): On Bohr, go, and put it as
+    parameters outside the board like the age"; the placement rule: the
+    turn is a declared parameter of the measured event, the external
+    thing, read by it from its own record with no memory at a Node; the
+    rays' flight and collision are untouched; a world without the keys
+    reads the same integer by integer; `tests/test_ray_body.py` (a) to
+    (f)). Two features on the measured-event side, nothing on the board.
+    **(i) The body on a set** (proposal 1, "the electron of width 3"; the
+    physicist measured 0 to 8 rays per shell around a mean of 4 at one
+    Node of a 2616-direction fan, the grain that broke the orbit). A
+    measured event declares `span`, three odd integers from 1 (`[1, 1,
+    1]` by default): it is a body on the block of span_x x span_y x
+    span_z Nodes centred on its `position` (`world.body_nodes`, the
+    offsets ascending x, then y, then z: the fixed order of the set), ONE
+    record on all of them (age, phase, momentum, content, amount, owed
+    count) exactly as a detector is a set with one record (note 24). The
+    form chosen: a centre with a span, not a list of positions, so that
+    `position` keeps its meaning (the reported place, what a detector
+    names, what the step moves) and the set is one key of three
+    integers; a list would have needed a second reference Node and would
+    have allowed shapes no orbit needs. What the set does: every Node of
+    the body maps to it (`node_event` in step 4), so the rows at any of
+    its Nodes are its arrivals and the one reading set of RAY_LAW is
+    summed over its Nodes, per Node ("everything at the Node but the
+    reader's own number, including here"): the threshold reads the
+    amount arriving over the whole set, the clock's count the presence
+    (or the age moment) over the set, the push the label moment over the
+    set (a ray crossing w Nodes of the body along its line is read w
+    times, once at each Node it enters: the body's reading is the sum of
+    its Nodes' readings, so its push is about w times one Node's at the
+    same content, a declared width like the detector's, which the orbit
+    derivation of series H takes into account); the click's content and
+    momentum join the one record; the `click`, `read`, `pass` and
+    `record` lines name the body's `position` as their `node` ("here, in
+    one of these"); no collision acts at any Node of the set (note 18
+    applies to every Node); own-number rays arriving at any Node of the
+    set are home. The release: each row born at a self-creation (a free
+    release, a lamp's, what came home or is re-released) is apportioned
+    whole over the body's Nodes in their fixed order with equal weights,
+    the leftover units to the Nodes counted from `age mod w`
+    (`apportion_whole`, the tie rule of the re-emission over the
+    directions): the total released is the content's release whatever
+    the width (the flux of a body of content M is M's, the equivalence
+    kept), no Node is favoured over w self-creations, and the books
+    balance (the shares sum to the amount, every share keeps the row's
+    content per unit and phase, the labels' sum is the same recoil); the
+    rule chosen over "the full amount at every Node", which would have
+    made a body of w Nodes emit w times its content's flux. The step
+    (`_move`): the centre steps one Link by the step rule and the set
+    moves with it, refused when any Node of the moved set holds another
+    measured event (the body's own Nodes overlap the moved set and do
+    not refuse it), the whole body clicking on the face detector when
+    any of its Nodes would leave the board through an open face, every
+    Node wrapping on a periodic axis; the inverse interval is refused
+    with a measured event on the board as before (note 6). Parsing: a
+    span must be odd (a centred body), at most its axis's extent, the
+    body inside the board on an open axis at the start, two measured
+    events never share a Node, and a detector names a body by its
+    `position` (a Node of the body that is not its centre is refused by
+    name). A set of one Node is bit-identical to the measured event of
+    2026-09-19: the same rows, records and books on the world of test (a)
+    with the key absent and with `[1, 1, 1]` declared. `run.json` carries
+    `span` per measured event under `numbers` and in the measured
+    events' states, `state.json` the same key.

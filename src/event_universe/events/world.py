@@ -65,7 +65,18 @@ the model owner, 2026-09-19):
   `position`, its `family`, its `amount` (a positive whole number of units,
   below K x N / 2 for a family with a phase circle), and optionally its
   `phase`, its `momentum` (three integers), `fixed` (true: an apparatus held in place, it takes
-  pushes into its momentum and never steps), its `directions` (the
+  pushes into its momentum and never steps), its `span` (three odd
+  integers from 1, `[1, 1, 1]` by default: the measured event is a body on
+  the set of `span_x x span_y x span_z` Nodes centred on its `position`,
+  ONE record on all of them, the model owner's principle of 2026-09-19
+  applied to the electron on 2026-09-20, "the electron of width 3", RAY_LAW
+  section 10, note 30: its clock, its threshold and its push read the one
+  reading set summed over its Nodes, the step moves the whole set as one
+  and is refused onto a Node of another measured event, through an open
+  face the whole body clicks on the face detector, on a periodic axis it
+  wraps, no collision acts at any of its Nodes, its releases are
+  apportioned whole over its Nodes; a span must fit the axis and the body
+  must lie inside the board on an open axis), its `directions` (the
   directions it releases on and re-emits on, as vectors or indices of the
   world's table; the six headings by default), its `table` (family name to
   `read`, `measure`, `rerelease` or `pass`, or to an object `{"rule": ...,
@@ -104,7 +115,8 @@ the model owner, 2026-09-19):
   content of the transit line; the default is an empty board that the
   releases fill;
 - `detectors`, optional: named sets of measured events, each with a `name`,
-  its `positions` (Nodes of measured events, each in at most one detector),
+  its `positions` (the `position` of a measured event each, a body on a
+  set named by its centre, each in at most one detector),
   its `threshold` (1 by default): the smallest amount of a family arriving
   at the detector's Nodes in one interval, summed over the whole set and
   over every number but each Node's own; a smaller set passes; and its
@@ -137,7 +149,10 @@ verdict, [RAY_LAW section 2](../../../docs/RAY_LAW.md), so every declared
 `momentum` and every momentum of the record is in label units, Q per unit
 of amount along a heading), `phase_per_link` outside 0 .. N - 1, `age_bound`
 below 1 or absent on a board periodic on every axis, a declared `age`
-beyond it.
+beyond it, a `span` that is not three odd integers from 1 or larger than
+its axis, a body whose Nodes leave the board on an open axis, two measured
+events sharing a Node, a detector naming a Node of a body that is not its
+`position`.
 """
 
 from __future__ import annotations
@@ -229,6 +244,8 @@ WORLD_KEYS = {
     "in_transit",
     "detectors",
 }
+# The span of a measured event on one Node (the default): a body of one.
+ONE_NODE: tuple[int, int, int] = (1, 1, 1)
 FAMILY_KEYS = {"name", "quantum", "charge", "phase", "phase_per_link"}
 # The key of the first ray worlds that named the kind; the quantum decides it.
 KIND_KEY = "kind"
@@ -244,6 +261,7 @@ MEASURED_KEYS = {
     "phase",
     "momentum",
     "fixed",
+    "span",
     "directions",
     "table",
     "lamp",
@@ -346,7 +364,8 @@ class MeasuredDefinition:
     releases and re-emits on, its table per family (in family order) with
     the phase window and the reading key of each entry, and its lamp. Its
     charge is its family's charge per unit of content times its content
-    and is not declared."""
+    and is not declared. `span` is the set of Nodes it is a body on (three
+    odd extents centred on `position`, (1, 1, 1) for one Node)."""
 
     position: Address3
     family: int
@@ -359,6 +378,7 @@ class MeasuredDefinition:
     windows: tuple[int | None, ...]
     reads: tuple[str, ...]
     lamp: LampDefinition | None
+    span: tuple[int, int, int] = ONE_NODE
 
 
 @dataclass(frozen=True)
@@ -598,6 +618,49 @@ def flight_bound(shape: Address3, table: tuple[Vector, ...]) -> int:
     return largest
 
 
+def body_nodes(
+    position: Address3,
+    span: tuple[int, int, int],
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+) -> tuple[Address3, ...] | None:
+    """The set of Nodes a measured event of `span` is a body on: the block
+    of span_x x span_y x span_z Nodes centred on `position` (each span odd,
+    the offsets -(s - 1) / 2 .. (s - 1) / 2 per axis), in the fixed order
+    of the offsets (x, then y, then z, ascending; the order the releases
+    are apportioned in). On a periodic axis an offset wraps; on an open
+    axis a Node beyond the face means the body has left the board and the
+    result is None (the whole body clicks on the face detector). A span
+    of (1, 1, 1) is the one Node `position`."""
+    axes: list[list[int]] = []
+    for axis in range(3):
+        half = (span[axis] - 1) // 2
+        coordinates = []
+        for offset in range(-half, half + 1):
+            coordinate = position[axis] + offset
+            if periodic[axis]:
+                coordinate %= shape[axis]
+            elif not 0 <= coordinate < shape[axis]:
+                return None
+            coordinates.append(coordinate)
+        axes.append(coordinates)
+    return tuple((x, y, z) for x in axes[0] for y in axes[1] for z in axes[2])
+
+
+def _span(value: object, label: str, shape: Address3) -> tuple[int, int, int]:
+    """The span of a body: three odd integers from 1, each at most its
+    axis's extent (so that the body's Nodes are distinct)."""
+    if not isinstance(value, list) or len(value) != 3:
+        raise ValueError(f"{RAYS_LAW}: {label} must be three odd integers from 1")
+    found = []
+    for item, extent in zip(value, shape, strict=True):
+        span = _integer(item, label, 1, extent)
+        if span % 2 == 0:
+            raise ValueError(f"{RAYS_LAW}: {label} must be three odd integers from 1 (a centred body)")
+        found.append(span)
+    return found[0], found[1], found[2]
+
+
 def _age_bound(
     value: object, shape: Address3, periodic: tuple[bool, bool, bool], table: tuple[Vector, ...]
 ) -> int:
@@ -769,6 +832,7 @@ def _table_entry(
 def _measured(
     value: object,
     shape: Address3,
+    periodic: tuple[bool, bool, bool],
     families: tuple[FamilyDefinition, ...],
     clock: int,
     phase_steps: int,
@@ -779,6 +843,8 @@ def _measured(
         raise ValueError(f"{RAYS_LAW}: measured must be a list")
     names = {family.name: index for index, family in enumerate(families)}
     found: list[MeasuredDefinition] = []
+    # Every Node of every body so far: two measured events never share one.
+    occupied: set[Address3] = set()
     for index, entry in enumerate(value):
         label = f"measured[{index}]"
         if isinstance(entry, dict) and CHARGE_KEY in entry:
@@ -791,6 +857,20 @@ def _measured(
         position = _address(obj["position"], f"{label}.position", shape)
         if any(item.position == position for item in found):
             raise ValueError(f"{RAYS_LAW}: two measured events at one Node {list(position)}")
+        span = _span(obj.get("span", list(ONE_NODE)), f"{label}.span", shape)
+        nodes = body_nodes(position, span, shape, periodic)
+        if nodes is None:
+            raise ValueError(
+                f"{RAYS_LAW}: {label}: a body of span {list(span)} centred on {list(position)} "
+                "leaves the board through an open face"
+            )
+        shared = [node for node in nodes if node in occupied]
+        if shared:
+            raise ValueError(
+                f"{RAYS_LAW}: two measured events share the Node {list(shared[0])} "
+                f"({label}, a body of span {list(span)})"
+            )
+        occupied.update(nodes)
         family_name = obj["family"]
         if not isinstance(family_name, str) or family_name not in names:
             raise ValueError(f"{RAYS_LAW}: {label}.family names an unknown family")
@@ -867,6 +947,7 @@ def _measured(
                 tuple(windows),
                 tuple(reads),
                 lamp,
+                span,
             )
         )
     return tuple(found)
@@ -916,11 +997,18 @@ def _in_transit(
 
 
 def _detectors(
-    value: object, shape: Address3, measured: tuple[MeasuredDefinition, ...]
+    value: object,
+    shape: Address3,
+    periodic: tuple[bool, bool, bool],
+    measured: tuple[MeasuredDefinition, ...],
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{RAYS_LAW}: detectors must be a list")
     at = {entry.position for entry in measured}
+    # The other Nodes of the bodies on a set: a body is named by its centre.
+    inside: set[Address3] = set()
+    for entry in measured:
+        inside.update(body_nodes(entry.position, entry.span, shape, periodic) or ())
     taken: set[Address3] = set()
     found: list[DetectorDefinition] = []
     for index, entry in enumerate(value):
@@ -943,6 +1031,12 @@ def _detectors(
         for item in positions_value:
             position = _address(item, f"{label}.positions", shape)
             if position not in at:
+                if position in inside:
+                    raise ValueError(
+                        f"{RAYS_LAW}: {label}.positions names a Node of a body on a set "
+                        f"{list(position)} that is not its position (a body is one record, "
+                        "named by its centre)"
+                    )
                 raise ValueError(
                     f"{RAYS_LAW}: {label}.positions names a Node without a measured event {list(position)}"
                 )
@@ -1015,11 +1109,11 @@ def parse_ray_world(document: object) -> RayWorld:
     table = _direction_table(obj.get("directions", []), bound)
     age_bound = _age_bound(obj.get("age_bound"), shape, periodic, table)
     families = _families(obj["families"], phase_steps)
-    measured = _measured(obj["measured"], shape, families, clock, phase_steps, release, table)
+    measured = _measured(obj["measured"], shape, periodic, families, clock, phase_steps, release, table)
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(obj.get("detectors", []), shape, measured)
+    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
     world = RayWorld(
         model_id,
         shape,

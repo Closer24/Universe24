@@ -111,6 +111,7 @@ def execute_ray_run(
             str(index + 1): {
                 "position": list(entry.position),
                 "family": world.families[entry.family].name,
+                "span": list(entry.span),
             }
             for index, entry in enumerate(world.measured)
         },

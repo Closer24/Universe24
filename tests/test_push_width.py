@@ -49,6 +49,7 @@ import json
 import pytest
 
 from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events.engine import step_axis
 from event_universe.runner import run_initialization
 
 REST = 0  # The first rest direction of the table ("here a").
@@ -94,6 +95,11 @@ def positions(world: dict[str, object], ticks: int) -> tuple[list[int], list[int
 
 def test_width_one_is_the_rule_as_it_was():
     """(a)."""
+    # The rule of one axis, the one place it lives (`engine.step_axis`):
+    # the sign of the Link stepped at this age, or None.
+    assert [step_axis(age, 1024, 16, 1) for age in range(1, 7)] == [None, 1, None, 1, None, 1]
+    assert step_axis(16, -64, 16, 1) is None and step_axis(17, -64, 16, 1) == -1
+    assert step_axis(9, 1024, 16, 8) == 1 and step_axis(5, 0, 16, 1) is None
     expected = [4, 5, 5, 6, 6, 7]
     assert positions(bar([mover(16, 1024)]), 6) == (expected, [0, 1, 1, 2, 2, 3])
     assert positions(bar([mover(16, 1024)], width=1), 6) == (expected, [0, 1, 1, 2, 2, 3])

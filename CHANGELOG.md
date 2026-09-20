@@ -5,6 +5,28 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### A body on a set of Nodes with one record (2026-09-20)
+
+- The model owner's decision on Bohr, the body on a set taken with it as
+  the condition for a closed orbit (the physicist's proposal 1, "the
+  electron of width 3"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
+  [RAY_LAW note 30](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the measured-event key `span` (three odd integers from 1, `[1, 1, 1]`
+  by default) makes a measured event a body on the block of Nodes centred
+  on its `position`, one record on all of them: the threshold, the
+  clock's count and the push read the one reading set summed over its
+  Nodes, the releases are apportioned whole over the set (the leftover to
+  the Nodes from `age mod w`, the total the content's whatever the
+  width), the step moves the whole set as one (refused when a Node of the
+  moved set holds another measured event, the whole body clicking on the
+  face when any Node would leave, every Node wrapping on a periodic axis),
+  no collision acts at any of its Nodes. A set of one Node is the measured
+  event as it was, bit for bit. `engine.step_axis` and `engine.count_owed`
+  hold the step rule of one axis and the owed count once, for the tools.
+  Tests: `test_ray_body` (a) to (c), (f)
+  ([expectations](docs/TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum),
+  [migration](docs/MIGRATION.md#a-body-on-a-set-of-nodes-with-one-record-on-2026-09-20-span)).
+
 ### `wave` is the default reading of a detector (2026-09-20)
 
 - The model owner's decision ("on the board a ray, in the world a
