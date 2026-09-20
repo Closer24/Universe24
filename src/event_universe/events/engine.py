@@ -106,13 +106,17 @@ def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int 
     one Link each). A momentum of 0 never steps and leaves the drive as it
     is. The count primitive is `core.integer.by_drive` (the model owner's
     record 108: the whole part of an accumulated rate on the reader's own
-    record, `by_clock` where the rate is constant); the one place the
-    step rule lives, the readings tools read it from here. The divisor D
-    is `world.step_divisor`, which the reading's weight at the relative
-    speed reads too (note 38)."""
+    record, `by_clock` where the rate is constant), with `at_most` 1: the
+    step's own rule of one Link per interval, the residual of a larger
+    momentum kept in the drive (the primitive's default since the
+    fraction-free primitive of 2026-09-20 is the whole part, which no
+    step may take: a body crosses one Link per interval); the one place
+    the step rule lives, the readings tools read it from here. The
+    divisor D is `world.step_divisor`, which the reading's weight at the
+    relative speed reads too (note 38)."""
     if momentum == 0:
         return None, drive
-    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width))
+    fired, drive = by_drive(drive, momentum, step_divisor(momentum, content, width), at_most=1)
     return (fired or None), drive
 
 

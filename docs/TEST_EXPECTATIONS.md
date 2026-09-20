@@ -61,7 +61,7 @@ kept, their pins the law of events').
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
 | `test_entity_catalog.py` | The worlds of the entity catalog (`examples/events/catalog/`; the model owner's decision of 2026-09-20): each is the one its generator writes, parses through the canonical loader with `quantum` on every family and `reading` on every detector, runs its 20 to 50 intervals with the books balanced at every interval, and its readings exist (a record per declared detector, a clock's identity age + waited = the intervals on every probe); since 2026-09-20 the catalog against the parser (every key a row names is the parser's) and the register against the catalog (every declared family named); no number of a world pinned ([below](#the-entity-catalog)) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
-| `test_integer_arithmetic.py` | The shared bounded integer primitives |
+| `test_integer_arithmetic.py` | The shared bounded integer primitives; since 2026-09-20 the fraction-free primitive `by_drive` (the whole part by default, the step's cap `at_most`) ([below](#shared-integer-arithmetic)) |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
 | `test_check_scope.py` | The affected-check's selection |
 | `test_coupling_readings.py`, `test_orbit_readings.py`, `test_heisenberg_readings.py`, `test_hubble_readings.py` | The tools read the engine (the architecture review of 2026-09-20; the experimenter skill): each reading of `tools/coupling_readings.py`, `tools/orbit_readings.py`, `tools/heisenberg_readings.py` and `tools/hubble_readings.py` equals the engine's own function on a minimal GameBoard (the front off `manhattan_steps`, the step rule and the release off `by_clock`, the push off `unit_label`, the fan's labels off `flight_table`, the detector records off `DetectorSet`, the declared charge per unit of content; the Hubble tool's c = 32 / 55 and m(age) off `flight_table`, its `record` lines and click ages off the run of a bar of 61 x 1 x 1, its z within the digital step's grain of 1 + v / c); the expected integers are in each module's docstring |
@@ -2783,7 +2783,22 @@ input; a negative value, a float and an overflow are refused); the bounded gcd
 (`bounded_gcd`: 12 and 18 give 6, 0 and 5 give 5, 5 and 0 give 5, -4 and 6
 give 2, 0 and 0 give 0, 2^63 - 1 and 1 give 1; an overflow and a boolean are
 refused). `by_clock` and `apportion_whole` are pinned where the clock uses
-them (`test_nature_beam_clock`, `test_nature_beam_readings`). The component arithmetic of the
+them (`test_nature_beam_clock`, `test_nature_beam_readings`).
+
+The fraction-free primitive (2026-09-20; the mathematician's
+`docs/designs/fraction_free/FORM.md` section 1; `by_drive` takes the whole
+part by default, the step's cap `at_most` 1 is `engine.step_axis`'s): (a)
+the identity at a constant rate over 10^4 self-creations on seven rates from
+1 / 3 to a star's 9 736 000 000 000 / 290 000 000 000 000, from an empty
+accumulator `by_drive` gains `by_clock(k - 1, n, d)` at the k-th
+self-creation and holds `(k n) mod d` after it; at 7 over 3 the counts 2, 2,
+3, 2, 2, 3, ... (70 over thirty, the accumulator 0 after), with `at_most` 1
+one per self-creation and 120 kept after thirty, and the signed rate -7 the
+same with the sign; (b) under 10^4 random rates below the denominator (3,
+1000, 2^20) an unsigned accumulator stays in [0, d) and a signed one in
+(-d, d), with the cap and without, the count in {-1, 0, 1}; a denominator
+below 1 is refused. The step (`test_step_drive` (a)) pins the same primitive
+through `step_axis` with the cap. The component arithmetic of the
 deleted engines (signed and ceiling division, ordered sums, component addition
 and subtraction, dot and cross products, reduced ratios) was deleted with its
 pins on 2026-09-19

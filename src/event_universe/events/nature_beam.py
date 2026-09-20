@@ -514,10 +514,15 @@ def ages_at_key(age: np.ndarray, key: int) -> np.ndarray:
     `by_clock(age - 1, 1, key)` = 1, the one primitive read on the age
     before the walk against the key, exactly as the clock reads a measured
     event's turn off its age against K (the mathematician's clock_checks
-    4: first at the age L, then every L). A row at age 0 (born this
-    interval, or declared at rest at 0) has not walked and is never at
-    the key."""
-    result: np.ndarray = (age > 0) & (by_clock_rows(age - 1, 1, key) == 1)
+    4: first at the age L, then every L); since the fraction-free
+    primitive (2026-09-20, the mathematician's
+    docs/designs/fraction_free/FORM.md section 4: the age against a key
+    is a comparison, no rate and no accumulator) spelled as the
+    comparison it is, `age mod key = 0`, the same rows (`by_clock(age -
+    1, 1, key)` is 1 exactly when the key divides the age). A row at age 0
+    (born this interval, or declared at rest at 0) has not walked and is
+    never at the key."""
+    result: np.ndarray = (age > 0) & (age % key == 0)
     return result
 
 

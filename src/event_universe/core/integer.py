@@ -58,43 +58,57 @@ def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
 def by_clock(age: int, numerator: int, denominator: int) -> int:
     """What the whole part of age x numerator / denominator gains at the
     self-creation that takes the age from `age` to `age + 1`: a rate read
-    off a clock, exact on average, with no remainder kept anywhere. Where
-    the rate is constant this is `by_drive` (below) with the remainder on
-    the reader's record; the clock's turn, the release, the lamp and the
-    owed count read a rate no push changes and keep this form."""
+    off a clock, the first difference of a floor, exact on average, with no
+    remainder kept anywhere. The clock's turn, the release, the lamp, the
+    owed count and the columns read this form; the step reads `by_drive`
+    (below), the accumulator on the reader's record, of which this is the
+    constant-rate identity: from an empty accumulator at age 0, `by_drive`
+    gains `by_clock(k - 1, n, d)` at the k-th self-creation and holds
+    `(k n) mod d` after it while the rate is constant
+    (`tests/test_integer_arithmetic.py`, the fraction-free primitive)."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
 
 
-def by_drive(drive: int, rate: int, denominator: int) -> tuple[int, int]:
-    """The whole part of an accumulated SIGNED rate on the reader's own
-    record (the model owner's decision of 2026-09-20, record 108: one count
-    primitive for a rate that may change; signed since record 126, the
-    same day: a rate that reverses discharges what it had accumulated
-    before it counts the other way): `drive` gains `rate` at this
-    self-creation, and the count gains +1 when the drive reaches
-    `denominator` and -1 when it reaches `-denominator`, that much
-    subtracted with the count's sign. Returns (the count gained, -1, 0 or
-    +1, and the drive after). With a constant rate of one sign the count
-    fires exactly where `by_clock(n - 1, |rate|, denominator)` is 1 over
-    the self-creations n, with the rate's sign, and the drive is `sign x
-    (n x |rate| mod denominator)`, the remainder `by_clock` keeps nowhere;
-    the count gained is one at most whenever `|rate| < denominator`, and
-    |drive| stays below `denominator` from then on (a drive earned at a
-    larger rate fires one at each following self-creation until it
-    does). With a rate that changes sign the drive is the signed sum of
-    the rates since the last count, so a reversal first cancels the
-    distance driven the other way and counts nothing until the sum
-    reaches the denominator on the new side."""
+def by_drive(drive: int, rate: int, denominator: int, at_most: int = 0) -> tuple[int, int]:
+    """The count primitive on an accumulator of the reader's own record
+    (the model owner's record 108 of 2026-09-20, "a generic solution if he
+    can": one primitive every count against a rate could use; the step
+    drive of the same day, signed since record 126; its whole-part form
+    the fraction-free primitive of the mathematician's
+    docs/designs/fraction_free/FORM.md, the same day): the accumulator
+    `drive` gains `rate` at this self-creation, the count is the whole
+    part the accumulator then holds in units of `denominator`, that much
+    is subtracted, and the remainder stays in the accumulator, bounded
+    below the denominator, its one owner. Returns (the count gained, the
+    accumulator after). A signed rate (the step: `rate` the momentum
+    component) counts with its sign, -1 when the accumulator reaches
+    -denominator: the accumulator is then the signed sum of the rates
+    since the last count, so a rate that reverses first cancels what it
+    had accumulated the other way and counts nothing until the sum reaches
+    the denominator on the new side; an unsigned rate keeps the
+    accumulator in [0, denominator). `at_most`, when positive, caps the
+    count gained at one self-creation and keeps the rest in the
+    accumulator: the step's rule (`engine.step_axis` passes 1: one Link
+    per interval, a drive earned at a larger momentum fires one at each
+    following self-creation until it is spent); 0, the default, takes the
+    whole part. With a constant rate of one sign from an empty accumulator
+    the count fires exactly where `by_clock(n - 1, |rate|, denominator)`
+    does over the self-creations n, with the rate's sign, and the
+    accumulator is `sign x (n x |rate| mod denominator)`, the remainder
+    `by_clock` keeps nowhere; where the rate changes the count is the
+    whole part of the sum of the rates, exact over any period, which
+    `by_clock` at the current rate is not (FORM.md section 1)."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     drive += rate
-    if drive >= denominator:
-        return 1, drive - denominator
-    if drive <= -denominator:
-        return -1, drive + denominator
-    return 0, drive
+    count = abs(drive) // denominator
+    if at_most and count > at_most:
+        count = at_most
+    if drive < 0:
+        count = -count
+    return count, drive - count * denominator
 
 
 def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:
