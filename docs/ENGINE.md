@@ -509,11 +509,15 @@ lists of one row per input: a beam splitter transmits and reflects by the
 side a row comes from), a row arriving on a direction the `inputs` do not
 name refusing the run naming the Node; an arriving row (w, m, p) is
 re-emitted as the rows (w a_i, m x A, p + t_i) on the directions, A = sum
-a_i^2, every weight 1 where none is declared (the equal split; without
-the key the apportioning as it was), the multiplicity bounded before it
-is formed and refused naming the Node; refused on a rule
+a_i^2, every weight 1 where none is declared (the equal split; a row of
+no record apportioned as it was), the multiplicity bounded before it
+is formed and refused naming the Node (the load-time ceiling multiplies
+the declared `weights`, `rotate` and `gate` factors alone and no longer
+a plain `rerelease`'s, since a path's count of re-emissions is not known
+at load: a bound moved from load to run, so a world may run before the
+split's own check refuses it); refused on a rule
 other than `rerelease` and on a free family's entry; a split is not a
-click: under the key a `rerelease` entry takes every arriving row of its
+click: a `rerelease` entry takes every arriving row of its
 family on its own, with no pointer gate and no window, the amount gate
 alone, whose default 1 admits every row (the decision of 2026-09-20 on
 the design's 2.1 and 3.1); the units it absorbs stay live in the layer
@@ -579,9 +583,9 @@ row can reach through every re-emitter of the world (the splits' norms,
 65536 per rotation, 2^parties per gate) is bounded at load by 2^62 - 1
 (the register's ceiling: three label rotations on a path fit, Grover's
 six do not); a `phase_window` on a `rerelease` entry whose Node reads no
-`sum` set is dead under the key (a split takes no gate) and refused at
-load; a free family's rows (no record) keep the unkeyed apportioning and
-gates at every entry;
+`sum` set is dead (a split takes no gate) and refused at
+load; a free family's rows (no record) keep the apportioning and
+gates of a row of no record at every entry;
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
@@ -684,15 +688,14 @@ D beyond the rest vectors and the headings; per family its `quantum`,
 `phase_by_momentum` and, since 2026-09-20, `become`, the clock trigger as
 declared, by names, or None; the measured events' states carry `span` too, as
 `state.json` does), `action` (h, or None), `meeting` (the key as declared,
-false by default), `amplitude` (the key as declared, false by default;
-since 2026-09-20), `hypotheses` (`bohr-v1` when `action` is
+false by default), `hypotheses` (`bohr-v1` when `action` is
 declared, the identity of the turn by momentum beside the law;
 `columns-v1` when a column beyond `charge` or a lifetime is declared,
 the identity of the one mechanism of the columns and their range;
 `weak-v1` when a measured event declares `become` or a table entry's rule
 is `become`, the identity of the transformation; `meeting-v1` when
-`meeting` is true, after it; `amplitude-v1` when `amplitude` is true,
-last; `[]`
+`meeting` is true, after it; `amplitude-v1` when a lamp is declared (a
+recorded world), last; `[]`
 without any), `columns` (the
 world's, name and sign, in order: gravity, charge, the declared names)
 and per family `columns` (name, value, sign, aligned with the world's),
@@ -803,6 +806,13 @@ re-emitter is one new record of all its re-created rows; `run.json`
 gains `world` (the gathers), `open` (the records not gathered, with their
 offers) and `layer` (the sets in order, the unit, the counts). A gather
 is taken after step 4 (before the self-creations) and after the merge.
+The layer's table holds a record until its completion and no longer: at
+the gather the record leaves the table with its offers (its identity kept
+for the lazy deletion of its rows, which resolve to nothing at their next
+set; a gathered record reaching a gate is refused by name), and a
+completion visits only the records whose live count reached 0, so the
+host's work and memory per interval follow the open records, not every
+record born.
 `tools/amplitude_path.py` replays a run's register through the layer and
 checks it against `world`. `tools/run_series.py` runs these worlds as any.
 

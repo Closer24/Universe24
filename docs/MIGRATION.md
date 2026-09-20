@@ -460,7 +460,15 @@ of `heisenberg/w27_beam` (47 per interval on 27 opening Nodes) run at
 seconds per interval where the crowd form ran in milliseconds, the
 layer's offers being kept per record until its completion; on a host of
 16 GB the run was killed at 7.1 GB after 68 minutes at interval 211 of
-350 (the gate set's world is not re-run to its length).
+350 (the gate set's world is not re-run to its length). After the gate
+review of the one click the layer's table releases a record at its
+completion (its offers with it, the identity kept for the lazy deletion
+of its rows; a completion visits the records whose live count reached 0
+alone; every reading byte-identical on the gate set at its caps and on
+the K worlds): the layer holds no offer open on this world and the cost
+is the GameBoard's rows, which do not merge across records (1457 records
+born per interval, 1.8 million rows and 2.75 s per interval at interval
+40; 3.3 GB at 20 minutes, interval 136).
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

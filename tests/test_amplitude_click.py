@@ -69,7 +69,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
-from event_universe.events.amplitude import UNIT, common_denominator
+from event_universe.events.amplitude import UNIT, Layer, LiveRecord, common_denominator
 from event_universe.events.run import execute_nature_beam_run
 from event_universe.world_loading import load_world
 
@@ -114,6 +114,21 @@ def run(world: dict[str, object], ticks: int) -> tuple[NatureBeamSimulation, lis
     for _ in range(ticks):
         simulation.step()
     return simulation, lines
+
+
+def completions(layer: Layer) -> list[LiveRecord]:
+    """Keep the records a layer completes (they leave its table at the
+    completion, their offers with them)."""
+    kept: list[LiveRecord] = []
+    original = layer.complete
+
+    def complete(tick: int) -> list[LiveRecord]:
+        written = original(tick)
+        kept.extend(written)
+        return written
+
+    layer.complete = complete  # type: ignore[method-assign]
+    return kept
 
 
 def test_a_lamp_births_as_many_records_as_its_rate_says():
@@ -180,9 +195,12 @@ def test_an_offer_of_two_multiplicities_takes_the_common_denominator():
     assert common_denominator(9, 36) == (2, 1, 36)
     assert common_denominator(2, 4) == (0, 0, 0)
     assert common_denominator(1682, 1682 * 25) == (5, 1, 1682 * 25)
-    simulation, _ = run(meeting_world([2], [[1, 0, 0]]), 30)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(meeting_world([2], [[1, 0, 0]])))
     assert simulation.layer is not None
-    first = simulation.layer.records[FIRST]
+    kept = completions(simulation.layer)
+    for _ in range(30):
+        simulation.step()
+    (first,) = [live for live in kept if live.identity == FIRST]
     assert first.gathered and first.gather is not None
     (offer,) = first.offers.values()
     assert offer.multiplicity == 8 and offer.units == 3
@@ -380,15 +398,16 @@ def test_the_k_record_world_clicks_as_its_offers_say_under_uniform_u():
     assert simulation.layer is not None
     first, last = 129, 192
     chosen = [
-        live for live in simulation.layer.records.values() if first <= live.identity - (1 << 32) <= last
+        gather
+        for gather in simulation.layer.gathers
+        if first <= int(gather["record"]) - (1 << 32) <= last  # type: ignore[call-overload]
     ]
-    assert len(chosen) == N and all(live.gathered and live.gather is not None for live in chosen)
-    assert sorted(live.u for live in chosen) == list(range(N))
+    assert len(chosen) == N
+    assert sorted(int(gather["u"]) for gather in chosen) == list(range(N))  # type: ignore[call-overload]
     clicks: dict[str, int] = {}
     expected: dict[str, float] = {}
-    for live in chosen:
-        gather = live.gather
-        assert gather is not None and gather["chosen"] is not None
+    for gather in chosen:
+        assert gather["chosen"] is not None
         clicks[str(gather["chosen"][0][0])] = clicks.get(str(gather["chosen"][0][0]), 0) + 1  # type: ignore[index]
         previous = 0
         for factors, rung in gather["cells"]:  # type: ignore[union-attr]
@@ -467,3 +486,34 @@ def test_a_record_row_pushes_matter_by_its_share():
     remainder = books["momentum"]["remainder"]  # type: ignore[index]
     assert remainder == [32 * len(at_mass) - 32 * len(splits), -32 * len(splits), 0]
     assert books["families"]["light"]["remainder"] == remainder  # type: ignore[index]
+
+
+def test_a_completed_record_holds_no_offers():
+    """(h)."""
+    simulation = NatureBeamSimulation(parse_nature_beam_world(share_world()))
+    assert simulation.layer is not None
+    layer = simulation.layer
+    kept = completions(layer)
+    for _ in range(60):
+        simulation.step()
+    report = layer.report()
+    assert kept and len(kept) == report["gathered"] == len(layer.gathered) == layer.completed
+    assert report["open"] == len(layer.records)
+    # Every completed record left the table with its offers; the table
+    # holds live records alone, none gathered.
+    assert all(live.identity not in layer.records and live.identity in layer.gathered for live in kept)
+    assert all(live.offers and live.gather is not None for live in kept)
+    assert all(not live.gathered for live in layer.records.values())
+    assert all(gather["record"] in layer.gathered for gather in layer.gathers)
+    # A row of a gathered record reaching a set later is dropped: nothing to
+    # resolve, no offer, no change of the table.
+    first = kept[0]
+    before = (dict(layer.records), len(layer.gathers), layer.completed)
+    assert layer.resolve(first.identity) is None
+    layer.end(61, 0, first.identity, 0, 1, 1, 0, node=(7, 1, 0))
+    layer.split(first.identity, 1, 2)
+    layer.cancel(first.identity, 1)
+    assert (dict(layer.records), len(layer.gathers), layer.completed) == before
+    assert layer.complete(61) == []
+    with pytest.raises(ValueError, match="reaches a gate after its gather"):
+        layer.join(61, first.identity, [])

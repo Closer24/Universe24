@@ -415,10 +415,24 @@ states "exactly" and means integer equality at every tick.
   with the Euclidean cosine 0.80 at the period 16, 0.12 at 8 and 0.35 at
   4 (`tests/test_nature_beam_worlds.py` (a); the crowd form read 0.85 or
   more at 8 and below 0.5 at 4 and 16); the count per pixel is the rows'
-  (91 per record). The digests of `two_slits` changed (events, state);
-  the numbers above are the crowd form's, kept as history. The record
-  form's own two-slit reading is series L2 (`slits_low`, the design's
-  frequency as the pair form of `phase_per_link`).
+  (91 per record). That correlation reads the rows' `wave` record per
+  pixel, the GameBoard's absorptions, not the record's click: the record
+  form's reading of this world is its gathers (the ladder's cell per
+  record), read on the same world (2026-09-20, after the gate review of
+  the one click): 64 records per interval, one per u, 381 gathered per u
+  over the 500 intervals (24384 of 32000, 7616 open at the end), and the
+  ladder lands the records of five u alone on the screen, 381 each at
+  y = 22, 48, 60, 69 and 87 with both openings, of three u with one
+  opening alone (y = 12, 50, 72 for the opening at 55; y = 22, 60, 82 for
+  65; every other u at the wall or the faces), so no pixel receives
+  gathers under both single openings, the record's visibility per pixel
+  is not formed and no correlation at 16, 8 or 4 exists for the gathers
+  of this world: the record-form verdict on the two slits is to be read
+  from the gathers by the physicist. The digests of `two_slits` changed
+  (events, state); the numbers above are the crowd form's, kept as
+  history. The record form's own two-slit reading is series L2
+  (`slits_low`, the design's frequency as the pair form of
+  `phase_per_link`).
 
 ### A2. Bell test in phase form, symmetric geometry
 
@@ -1708,11 +1722,19 @@ states "exactly" and means integer equality at every tick.
   digests changed (events, state). The host cost of the record form on a
   crowd world: `w27_beam` did not complete on the host (16 GB, four
   cores): killed at 7.1 GB of memory after 68 minutes at interval 211 of
-  350, the layer keeping every record's offers until its completion (47
+  350, the layer keeping every record's offers for the whole run (47
   records per interval on 27 opening Nodes, seconds per interval) where
-  the crowd form ran 350 intervals in 61 s; the readings of the width
-  against the lobe are not re-read here. The numbers above are the crowd
-  form's, kept as history.
+  the crowd form ran 350 intervals in 61 s. With the layer releasing a
+  record's offers at its completion (the gate review of the one click,
+  2026-09-20; every reading byte-identical) the memory is the rows' and
+  the time is not the layer's: stopped by a guard at 20 minutes at
+  interval 136 with the peak 3.3 GB, the layer holding no offer open (the
+  offers are made at the ends), the GameBoard holding the rows of 1457
+  records born per interval (the lamp's 47 per self-creation over its
+  Nodes) that do not merge across records, 1.8 million rows and 2.75 s
+  per interval at interval 40. The readings of the width against the lobe
+  are not re-read here. The numbers above are the crowd form's, kept as
+  history.
 
 - **Verdict.** The `wave` record narrows with the width of the opening
   and the count does not, as the law says; the product w x FWHM reaches
@@ -3651,10 +3673,11 @@ L6 unchanged (S = 176/64, 2896/1024, 11584/4096; the worlds regenerated
 without the key). The gate set against main after the one click: the
 eight worlds without a lamp byte-identical, the seven with a lamp changed
 by the record form (the dated lines above). The host cost of a high-rate
-lamp under the record form (`w27_beam`, killed at 7.1 GB after 68
-minutes at interval 211 of 350) is an open item, with the design's items
-not built: unification (3), Grover, two sequential gates on an entangled
-record, the full register replay.
+lamp under the record form (`w27_beam`: killed at 7.1 GB after 68
+minutes at interval 211 of 350; with the layer releasing gathered
+records' offers, 3.3 GB and interval 136 at 20 minutes) is an open item,
+with the design's items not built: unification (3), Grover, two
+sequential gates on an entangled record, the full register replay.
 
 ### A3. Bell test in phase form, delayed geometry
 

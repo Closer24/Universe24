@@ -330,6 +330,12 @@ class Layer:
         self.cosines = phase_cosines(phase_steps)
         self.sines = phase_sines(phase_steps)
         self.records: dict[int, LiveRecord] = {}
+        # The identities gathered (their table entries and offers released at
+        # the completion; `resolve` finds nothing, the lazy deletion of their
+        # rows) and the identities whose live count reached 0 since the last
+        # completion (the only records a completion visits).
+        self.gathered: set[int] = set()
+        self.zero: set[int] = set()
         self.aliases: dict[int, int] = {}
         self.gathers: list[dict[str, object]] = []
         self.born = 0
@@ -364,6 +370,8 @@ class Layer:
         found = LiveRecord(identity, family, u, tick, norm, dict(labels), arms, [norm] * arms, units)
         self.records[identity] = found
         self.born += 1
+        if units <= 0:
+            self.zero.add(identity)
         return found
 
     def split(self, identity: int, absorbed: int, born: int) -> None:
@@ -372,12 +380,16 @@ class Layer:
         found = self.resolve(identity)
         if found is not None:
             found.live += born - absorbed
+            if found.live <= 0:
+                self.zero.add(found.identity)
 
     def cancel(self, identity: int, amount: int) -> None:
         """The merge's cancel: the units removed end without an offer."""
         found = self.resolve(identity)
         if found is not None:
             found.live -= amount
+            if found.live <= 0:
+                self.zero.add(found.identity)
 
     def rotate(self, identity: int, bit: int) -> None:
         """A GameBoard rotation of a label bit: the record's label set doubles
@@ -416,6 +428,12 @@ class Layer:
         refused (its rows and offers elsewhere would keep their pre-join
         labels and drop out of the joint cells; the lazy relabelling of
         the design's section 10 is not built; the review of (v), B2)."""
+        for identity in (survivor, *others):
+            if identity in self.gathered:
+                raise ValueError(
+                    f"amplitude-v1: the record {identity} reaches a gate after its gather: a "
+                    "gathered record's rows are dropped at their next set, not joined"
+                )
         found = [self.records[survivor]] + [self.records[other] for other in others]
         if here is not None and others:
             for live in found:
@@ -479,6 +497,9 @@ class Layer:
                 head.offers[(set_index, arm + bits[k])] = offer
             self.aliases[live.identity] = survivor
             del self.records[live.identity]
+            self.zero.discard(live.identity)
+        if head.live <= 0:
+            self.zero.add(head.identity)
         return label_map, arm_offsets
 
     def end(
@@ -501,7 +522,8 @@ class Layer:
         there and went on (a which-path factor): the offer at (set, arm)
         accumulates their pointer and the residual per channel at their
         Node, with the content and the momentum they brought. A gathered
-        record's rows are dropped (the lazy deletion, section 9)."""
+        record's rows are dropped (the lazy deletion, section 9: the record
+        left the table at its completion and `resolve` finds nothing)."""
         found = self.resolve(identity)
         if found is None:
             return
@@ -509,8 +531,8 @@ class Layer:
             found.live -= amount
             found.ends += amount
             found.last_end = tick
-        if found.gathered:
-            return
+        if found.live <= 0:
+            self.zero.add(found.identity)
         arm, label = arm_of(branch), label_of(branch)
         offer = found.offer(set_index, arm, not absorbed)
         offer.last_tick = tick
@@ -652,11 +674,16 @@ class Layer:
         ladder over its cells, the cell of u, the Node tuple within it, the
         gather (the world's row); a record whose offers weigh nothing
         gathers nowhere (`chosen` None). Returns the records gathered this
-        call."""
+        call; each leaves the table (its offers are the gather's, the
+        identity kept in `gathered`), so the host holds a record's offers
+        until its completion and no longer."""
         written: list[LiveRecord] = []
-        for identity in sorted(self.records):
-            found = self.records[identity]
-            if found.gathered or found.live > 0 or not found.offers:
+        for identity in sorted(self.zero):
+            found = self.records.get(identity)
+            if found is None or found.live > 0:
+                self.zero.discard(identity)
+                continue
+            if not found.offers:
                 continue
             found.gathered = True
             self.completed += 1
@@ -734,6 +761,9 @@ class Layer:
             found.gather = gather
             self.gathers.append(gather)
             written.append(found)
+            del self.records[identity]
+            self.gathered.add(identity)
+            self.zero.discard(identity)
         return written
 
     def open_records(self) -> list[dict[str, object]]:
@@ -741,8 +771,6 @@ class Layer:
         found = []
         for identity in sorted(self.records):
             entry = self.records[identity]
-            if entry.gathered:
-                continue
             found.append(
                 {
                     "record": identity,
@@ -776,5 +804,5 @@ class Layer:
             "unit": UNIT,
             "born": self.born,
             "gathered": self.completed,
-            "open": len(self.records) - self.completed,
+            "open": len(self.records),
         }

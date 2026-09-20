@@ -194,7 +194,10 @@ def test_the_two_slits_fringe_in_the_record_and_not_in_the_count():
     # fringe reads the per-Link turn without the crowd form's emission lag
     # (the lamp's clock turn per interval) and its period doubles: the
     # correlation 0.80 at 16, 0.12 at 8, 0.35 at 4 (until that step 0.85 or
-    # more at 8 and below 0.5 at 4 and 16).
+    # more at 8 and below 0.5 at 4 and 16). This reads the rows' `wave`
+    # record per pixel (the GameBoard's absorptions); the record's own
+    # reading is its gathers, which the ladder lands on five pixels of the
+    # screen (the register's A1 line), not a fringe this test reads.
     assert correlations[16] > 0.75, correlations
     assert abs(correlations[8]) < 0.5 and abs(correlations[4]) < 0.5, correlations
 
