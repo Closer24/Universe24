@@ -68,7 +68,7 @@ written down before the first run:
     step; the same body under +1024 for eight and 0 for twenty keeps its
     drive 8192 and its Node;
 (g) the bound pair under a suspension holds (the Boss's W1: the register's
-    `deuteron_1` under the key `amplitude` with `suspension`
+    `deuteron_1` under the record form (its lamps birth records) with `suspension`
     [1, 134217728], a paid family `light`, a lamp of that family of
     content 8388608 at rate [1, 1] on +y beside the proton and a control
     lamp at (10, 10, 16), each read by a `sum` set of one Node four Links
@@ -357,7 +357,9 @@ def deuteron_under_a_suspension() -> dict[str, object]:
         (root / "examples" / "events" / "nucleus" / "deuteron_1.json").read_text(encoding="utf-8")
     )
     document["model_id"] = "beam-nucleus-deuteron_1-suspended-test"
-    document["amplitude"] = True
+    # The world key `amplitude` is deleted (the amplitude law (vii-4), the
+    # one click): the lamps below birth records by the record form as the
+    # key made them do.
     document["suspension"] = [1, 134217728]
     document["families"].append({"name": "light", "quantum": 1})
     document["families"].append({"name": "counter", "quantum": 1})

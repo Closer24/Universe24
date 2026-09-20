@@ -239,21 +239,21 @@ def test_the_columns_are_written_only_where_a_record_is(tmp_path: Path):
 # The gate set's worlds without a lamp at their caps: the digests (sha256)
 # of `state.json`, of the books (`audit` of `run.json` as `json.dumps`
 # writes it) and of `events.jsonl` on the base tree before the amplitude
-# law's one click (main at f3a41f28, after the step drive; the fast pass,
+# law's one click (main at d768f831, after the signed drive; the fast pass,
 # `tools/run_series.py --list --fast`, 2026-09-20): the design's test 7 as
 # a pin, since the key that switched the law off is deleted.
 PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
     "weak/j3_deuteron.json": (
         700,
-        "79b4e955647191454088fa44fd1f116a7ee9ed9a8a4096c73c939a17540befb6",
-        "2ad78c13e1ede96ced625cc15c72afbd9813b44e47a3a9bb3d86635f77c5ad05",
-        "4e6e27f945f26d4965ad4031dbbe32cd8a53c540a598bcf36cc8859bb5750226",
+        "d4485137fd018bba9ec01ce2e7a0552d45ecf963f9a5b81fe93da023657e0e6c",
+        "431cc87afa9f51cadc83d9780dc8f54cfa3e2fe4bb1d780fcd78f55aec25efbd",
+        "23196889fbed5e62a0a371153640e2338bafbadee22dc691b02b59c771ec6215",
     ),
     "bohr/r2.json": (
         689,
-        "52937bc183e2e6e02cee72cb414824d41eef6051c2492524ba3a78fd60e50c11",
-        "2b86684288cd408176d3221e8f6cb4402ee49f0529a49c3ff450e94f0cecf90f",
-        "a9563aac3bc72d238299f583e8b28f287d665fea92abb589182dddf7772e1696",
+        "4984c753c907ae8e5fbf4a9021863a7c043f58807e3e5500364d0ef0813f2a05",
+        "d830bd8e0e27193fc91810374e8e55298673007da97e3d717d05044c866cd05d",
+        "35f5c6c3503e315de6885dfe4a1c5618d57069a1c43c0de11e19a8c54d4ed812",
     ),
     "detector/grouped_12_nodes.json": (
         2,
@@ -275,21 +275,21 @@ PINNED_DIGESTS: dict[str, tuple[int, str, str, str]] = {
     ),
     "nucleus/alpha_square.json": (
         180,
-        "6d04e7517fe49cb982a05e8b8fe7570cd29e3a2a4bf04277f15ebd570c046e92",
-        "c90bd2fb227e2b6880ca6b1f987016fda8b44e07fe6a88fcd33d2e31b129cb75",
-        "076bf515f38e9ccabe619822e08c189c958ecdbe6b14f9f7318b2c96e04ce42c",
+        "3ce19b7007280c3402a8e19b842102792cf064e6549184f98be739c26a90d632",
+        "15fceb127a2f1cb60a8d618d81536e752a38ea3e8d42bb1497c999b2bc3a7eac",
+        "ea432ba27eaca89281ccbd8a86ed7b679ffa621116c18369bc2e128ec14c0f4b",
     ),
     "hubble/pushing_age.json": (
         1,
-        "e34318a94dced4b41466bb8a5a75d6e95be063c92ef25ca5d4f01e16416afcb1",
+        "a546fae445725d72bbf00eb0ed42a0cb9cdc400630ac4f54161c64ee40a1281d",
         "7e219a1d03c8caddc617ccf2a69b34543912c3e09646cec7ae7a8d1fc454dc71",
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ),
     "coupling/1b_m16.json": (
         25,
-        "f313b83859f2333bbff0e7504927ea392d4346bd1c92bbf41c900aff1f868941",
+        "c93d7d7fb73e5e287f9a8a384936ee70b1f6fd421658f7f65826624d100d1d98",
         "8830f84aef5dcd112c58e0aa304b174c8734b493a3ff9f09f7951098b05b0493",
-        "0afe7c1e3df4ebb5349c0f40ba8572bfa3866960b06aca48f299a7fb39744189",
+        "20aa2b23913e97ffa3aa13205a7d606962f4f4d8db313f5ebf72180c3fe9498a",
     ),
 }
 

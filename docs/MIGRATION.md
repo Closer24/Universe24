@@ -458,7 +458,9 @@ of a lamp's crowd multiply by the directions' count and the click's
 momentum is the row's share. A high-rate lamp is a host cost: the records
 of `heisenberg/w27_beam` (47 per interval on 27 opening Nodes) run at
 seconds per interval where the crowd form ran in milliseconds, the
-layer's offers being kept per record until its completion.
+layer's offers being kept per record until its completion; on a host of
+16 GB the run was killed at 7.1 GB after 68 minutes at interval 211 of
+350 (the gate set's world is not re-run to its length).
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
