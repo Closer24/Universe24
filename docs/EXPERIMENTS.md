@@ -1651,6 +1651,33 @@ states "exactly" and means integer equality at every tick.
   a rate of one ray on the whole screen per interval. The page of the
   run is in the session's scratchpad, not published.
 
+- **Re-read under the `wave` threshold on the pointer's square
+  (2026-09-20, issue #359 step A; after the merge of the strong force's
+  commits).** All three worlds change: a pair of rays that meets a pixel
+  in antiphase within one interval passes (the pointer 0 below the
+  threshold 1) where it clicked with the record 0, and goes on; the
+  clicks in the window fall (172 753 -> 169 855, 171 871 -> 158 878,
+  171 742 -> 158 622), the cells with 2+ rays fall (the share 1.000,
+  0.433 -> 0.395, 0.066 -> 0.026), the record's FWHM, the product w x
+  FWHM and R / I at the peak are unchanged at every rate, and the count's
+  FWHM at the rates 8 and 1 reads 0.617 and 0.600 where it read 0.904
+  (the pairs that passed were the comb's own). Every verdict stands: the
+  narrowing 0.292 (was 0.307, >= 0.2: inside) at the rate 47, 0.050
+  (reported) at 8, -0.005 (was -0.017, 0 +- 0.02: inside) at 1, R / I at
+  the record's peak 1.200 at y = 58 (outside) at 1; 0 record checks
+  failed, 2 readings inside and 1 outside as before, none moved; source
+  fingerprint `0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`
+  ([validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)):
+
+  | World | clicks in the window | rays per pixel per interval | cells with a click | cells with 2+ rays (share) | clicks in such cells (share) | record FWHM (count FWHM) | w x record FWHM | record rms (count rms) | narrowing (expected) | R / I at the record's peak | R / I at y = 80 | R / I over the window |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | `w27_rate47` old | 172753 | 6.665 | 25921 | 25921 (1.000) | 172753 (1.000) | 0.184 (0.904) | 4.98 | 0.236 (0.341) | 0.307 (>= 0.2: inside) | 5.498 at y = 80 | 5.498 | 0.034 .. 5.498 |
+  | `w27_rate47` new | 169855 | 6.553 | 25277 | 25277 (1.000) | 169855 (1.000) | 0.184 (0.904) | 4.98 | 0.237 (0.335) | 0.292 (inside) | 5.498 at y = 80 | 5.498 | 0.073 .. 5.498 |
+  | `w27_rate8` old | 171871 | 1.134 | 106737 | 46174 (0.433) | 111308 (0.648) | 0.075 (0.904) | 2.02 | 0.324 (0.341) | 0.052 (reported) | 2.862 at y = 80 | 2.862 | 0.393 .. 2.862 |
+  | `w27_rate8` new | 158878 | 1.049 | 99446 | 39263 (0.395) | 98695 (0.621) | 0.075 (0.617) | 2.02 | 0.326 (0.343) | 0.050 (reported) | 2.862 at y = 80 | 2.862 | 0.616 .. 2.862 |
+  | `w27_rate1` old | 171742 | 0.142 | 161182 | 10560 (0.066) | 21120 (0.123) | 0.278 (0.904) | 7.51 | 0.347 (0.341) | -0.017 (0 +- 0.02: inside) | 1.200 at y = 58 (1 +- 0.02: outside) | 0.843 | 0.429 .. 1.200 |
+  | `w27_rate1` new | 158622 | 0.131 | 154622 | 4000 (0.026) | 8000 (0.050) | 0.278 (0.600) | 7.51 | 0.347 (0.345) | -0.005 (inside) | 1.200 at y = 58 (outside) | 0.843 | 0.764 .. 1.333 |
+
 ### E, the clock's redshift in space under the age reading (2026-09-20)
 
 - **Confronts.** Whether a clock beside a mass in space slows as M / r

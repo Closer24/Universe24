@@ -118,6 +118,21 @@ and the worlds' [README](../examples/events/buildup/README.md).
 | `tests/test_buildup_readings.py` | passed: on a 14 x 5 plane at the rates 2 and 1 the tool's pixels equal the engine's detector sets, R / I = 2 exactly with every cell a coincidence and 1 exactly with none, the wavelength (64 / 8) / sqrt 3 |
 | `python tools/check.py` (the scoped selection) | ruff lint and format, mypy and the selected tests green; the language, hygiene and navigation gates green |
 
+Re-run under the `wave` threshold on the pointer's square after the
+merge of the strong force's commits (source fingerprint
+`0b39130239c775492fe336818039801e572af6bb0128b9f8be41bcd031163228`,
+[the entry above](#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20)):
+the three worlds change (an antiphase pair at a pixel passes where it
+clicked with the record 0 and goes on), the clicks in the window 172 753
+-> 169 855, 171 871 -> 158 878 and 171 742 -> 158 622, the cells with 2+
+rays 25 921 -> 25 277, 46 174 -> 39 263 and 10 560 -> 4000, the record's
+FWHM, the product and R / I at the peak unchanged, the narrowing 0.292,
+0.050 and -0.005 (were 0.307, 0.052, -0.017), every verdict the same (2
+inside, 1 outside), 0 record checks failed; the rows old against new are
+in [EXPERIMENTS, A10 at a low rate](EXPERIMENTS.md#a10-at-a-low-rate-the-single-click-build-up-2026-09-20).
+Series K's four worlds (`examples/events/lensing/`) are unchanged under
+it, reading by reading (16 inside, 0 outside).
+
 The runs establish what this engine's screen reads at a low rate (the
 lobe of the coherent record vanishes as the coincidences within one
 interval do); they establish no physical law. The physicist's entry 5 is

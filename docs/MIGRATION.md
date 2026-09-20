@@ -33,7 +33,10 @@ defaults (`threshold` 1, `reading` `wave`).
   at it); `w27_wave` alone changes, 2312 rays passing a screen pixel in
   antiphase where they clicked with the pointer 0 and going on to other
   pixels and the faces (38 of 161 pixels' records differ, the screen's
-  clicks 150 187 -> 148 131), re-registered old against new in
+  clicks 150 187 -> 148 131), and the three worlds of A10 at a low rate
+  (`examples/events/buildup/`, merged after the runs: the clicks in the
+  window 172 753 -> 169 855, 171 871 -> 158 878, 171 742 -> 158 622,
+  every verdict the same), re-registered old against new in
   [EXPERIMENTS A10](EXPERIMENTS.md#a10-the-width-of-an-opening-and-the-spread-behind-it-under-the-beam-law-2026-09-20)
   and [validation](VALIDATION.md#the-wave-threshold-on-the-pointers-square-the-66-example-worlds-compared-a10-and-bell-re-read---2026-09-20). A
   world whose `wave` detector reads several rays of one phase at a
