@@ -6,6 +6,38 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
+
+The model owner's decision of 2026-09-20 (record 113 of
+[the log](LOG_2026-09-20.md): one canonical definition per family,
+referenced by the worlds instead of copying `families`; the architect's
+proposal in [entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)):
+
+- A definitions document may declare `"format": "event-entities-v2"`; a
+  definition of that format may carry `families`, a list in the world's
+  family schema (`FAMILY_KEYS`), merged into the expanded world by name:
+  the inline families first, then each instance's in declaration order; a
+  name already present is kept when every key agrees and refused when one
+  differs, naming the family and the key. A definition of a family alone
+  (an empty `measured`) is admitted in the second format.
+- `event-entities-v1` is unchanged: `families` on a definition is refused
+  as an unsupported key, `measured` must hold an Event, and a world placing
+  a first-format definition expands to the same bytes as before (the gate
+  set replayed byte-identical, [validation](VALIDATION.md)).
+- Shipped: `examples/events/entities/families.json` (every family the
+  registered worlds declare, once, in the catalog's canonical form) and
+  `examples/events/entities/apparatus.json` (the external things and the
+  sources of `amplitude-v1` with the material family each is made of),
+  written by `make_definitions.py` beside them. No world references them
+  yet: the migration of the worlds per series follows stage (vii) of
+  `amplitude-v1` (the owner's order in record 113).
+- The loader's structural check of a definition's table entry no longer
+  requires `rule` in an object entry: the world parser has taken a window
+  alone (`{"phase_window": ...}`) since `amplitude-v1`, the rule being the
+  family's default, and a definition may now say what a world says (the
+  chooser's counter of `apparatus.json`). Both formats.
+- Nothing deleted.
+
 ## The amplitude law, on 2026-09-20, (i): the world key `amplitude`, the record on the row and the normal form (`amplitude-v1`)
 
 The model owner's decision of 2026-09-20 (Highlights 5.4, "DECIDED:
