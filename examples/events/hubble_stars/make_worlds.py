@@ -73,6 +73,7 @@ not dilute), so the presence is nearly uniform over the stars and the age
 moment grows with the star's distance from the others.
 
     python examples/events/hubble_stars/make_worlds.py            # the worlds and expectations.json
+    python examples/events/hubble_stars/make_worlds.py --record   # also record/<world>.json under the key `amplitude`
     python examples/events/hubble_stars/make_worlds.py --after    # derivation_after_the_runs.json only
 """
 
@@ -192,7 +193,12 @@ def stars(mass: int) -> list[Json]:
     return found
 
 
-def world(crowd: str, clock: str) -> Json:
+def world(crowd: str, clock: str, record: bool = False) -> Json:
+    """One world; with `record` the same world under the key `amplitude`
+    (the record click of amplitude-v1, docs/designs/hubble_stars/DESIGN.md
+    section 2.4): every unit of a star's light is born as one record of
+    one row, the detector reads `sum` (the record's scope) and every
+    reading is taken from the gather lines, one click per record."""
     mass, mass_rule = CROWDS[crowd]
     content = mass + LIGHT
     thrown = stars(mass)
@@ -233,9 +239,9 @@ def world(crowd: str, clock: str) -> Json:
                 "table": table,
             }
         )
-    return {
+    document: Json = {
         "law": LAW_VALUE,
-        "model_id": f"rays-hubble-stars-{crowd}-{clock}-space-v1",
+        "model_id": f"rays-hubble-stars-{'record-' if record else ''}{crowd}-{clock}-space-v1",
         "shape": list(SHAPE),
         "boundary": "open",
         "ticks": TICKS,
@@ -247,13 +253,26 @@ def world(crowd: str, clock: str) -> Json:
         "families": families,
         "measured": measured,
         "detectors": [
-            {"name": "centre", "positions": [list(CENTRE)], "threshold": 1, "reading": "wave"}
+            {
+                "name": "centre",
+                "positions": [list(CENTRE)],
+                "threshold": 1,
+                "reading": "sum" if record else "wave",
+            }
         ],
     }
+    if record:
+        document["amplitude"] = True
+    return document
 
 
 def worlds() -> dict[str, Json]:
     return {f"{crowd}_{clock}": world(crowd, clock) for crowd in CROWDS for clock in CLOCKS}
+
+
+def record_worlds() -> dict[str, Json]:
+    """The same nine worlds under the record click, written to `record/`."""
+    return {f"{crowd}_{clock}": world(crowd, clock, record=True) for crowd in CROWDS for clock in CLOCKS}
 
 
 # -- The derivation before the runs -------------------------------------------
@@ -566,6 +585,15 @@ def main() -> None:
         path = HERE / f"{name}.json"
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path.relative_to(ROOT))
+    if "--record" in sys.argv[1:]:
+        # The record-click worlds (the key `amplitude`) are written on
+        # request and not shipped until the key lands on main: the base
+        # engine refuses the key, and every shipped world must parse there.
+        (HERE / "record").mkdir(exist_ok=True)
+        for name, document in record_worlds().items():
+            path = HERE / "record" / f"{name}.json"
+            path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
+            print(path.relative_to(ROOT))
     expected = expectations()
     (HERE / "expectations.json").write_text(json.dumps(expected, indent=1) + "\n", encoding="utf-8")
     print((HERE / "expectations.json").relative_to(ROOT))

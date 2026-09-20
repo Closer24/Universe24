@@ -234,6 +234,7 @@ class Fit:
 class Run:
     crowd: str
     clock: str
+    under_record: bool
     ticks: int
     completed: bool
     balanced: bool
@@ -249,7 +250,7 @@ class Run:
 
     @property
     def name(self) -> str:
-        return f"{self.crowd}_{self.clock}"
+        return f"{'record/' if self.under_record else ''}{self.crowd}_{self.clock}"
 
 
 def axis_of(momentum: list[int]) -> tuple[int, int]:
@@ -262,7 +263,12 @@ def read_run(folder: Path) -> Run:
     record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
     document = json.loads((folder / "initialization.json").read_text(encoding="utf-8"))
     model = str(record["model"])
-    crowd, clock = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].split("-")
+    parts = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)].split("-")
+    # Under the record click (the world key `amplitude`, the model id
+    # `rays-hubble-stars-record-<crowd>-<clock>-space-v1`) the `record`
+    # lines are per record and the reading comes from the gather lines.
+    under_record = parts[0] == "record"
+    crowd, clock = parts[-2], parts[-1]
     table = flight_table(tuple(tuple(v) for v in record["directions"]))
     heading = np.array([HEADING_OFFSET])
     period = int(table.period[HEADING_OFFSET])
@@ -292,7 +298,12 @@ def read_run(folder: Path) -> Run:
         for line in stream:
             event = json.loads(line)
             kind = event["event"]
-            if kind == "record" and event["detector"] == DETECTOR:
+            if kind == "gather" and under_record and event["family"] in stars:
+                # One gather per record, the world's row: the record's birth
+                # phase u (the star's clock at the birth) and the interval
+                # it arrived, the pointer's turn read off the world's list.
+                stars[event["family"]].turns.append((int(event["arrived"]), int(event["u"])))
+            elif kind == "record" and not under_record and event["detector"] == DETECTOR:
                 if event["phase"] is not None and event["family"] in stars:
                     stars[event["family"]].turns.append((int(event["tick"]), int(event["phase"])))
             elif kind == "click" and event["detector"] == DETECTOR and event["family"] in stars:
@@ -323,6 +334,7 @@ def read_run(folder: Path) -> Run:
     return Run(
         crowd=crowd,
         clock=clock,
+        under_record=under_record,
         ticks=int(record["completed_ticks"]),
         completed=record["status"] == "completed",
         balanced=bool(record["conserved_at_every_completed_tick"]),
@@ -543,7 +555,7 @@ def find_runs(root: Path) -> list[Run]:
             found.append(read_run(path.parent))
     order = {"coasting": 0, "gravity": 1, "double": 2}
     clocks = {"none": 0, "scalar": 1, "age": 2}
-    return sorted(found, key=lambda r: (order.get(r.crowd, 9), clocks.get(r.clock, 9)))
+    return sorted(found, key=lambda r: (r.under_record, order.get(r.crowd, 9), clocks.get(r.clock, 9)))
 
 
 def load_expectations(path: Path) -> dict[str, object]:
@@ -686,29 +698,30 @@ def judge_fit(
 
 def print_bends(runs: list[Run], window: tuple[int, int]) -> None:
     by_name = {r.name: r for r in runs}
-    for crowd in ("coasting", "gravity", "double"):
-        scalar, age = by_name.get(f"{crowd}_scalar"), by_name.get(f"{crowd}_age")
-        if scalar is None or age is None:
-            continue
-        fs, fa = scalar.fits.get(window), age.fits.get(window)
-        if fs is None or fa is None:
-            continue
-        print(
-            f"{KIND_DETECTOR} the bend of the age clock, the {crowd} crowd, the window "
-            f"[{window[0]}, {window[1]}): z_age - z_scalar per star (reported, no bracket); "
-            f"q of the free fit {fs.q_fit:+.3f} (scalar) against {fa.q_fit:+.3f} (age)"
-        )
-        print("| star | tau (scalar) | z scalar | z age | z age - z scalar | k scalar | k age |")
-        print("| --- | --- | --- | --- | --- | --- | --- |")
-        age_points = {p.name: p for p in fa.points}
-        for p in fs.points:
-            a = age_points.get(p.name)
-            if a is None:
+    for prefix in ("", "record/"):
+        for crowd in ("coasting", "gravity", "double"):
+            scalar, age = by_name.get(f"{prefix}{crowd}_scalar"), by_name.get(f"{prefix}{crowd}_age")
+            if scalar is None or age is None:
+                continue
+            fs, fa = scalar.fits.get(window), age.fits.get(window)
+            if fs is None or fa is None:
                 continue
             print(
-                f"| {p.name} | {p.tau:.1f} | {p.z:.4f} | {a.z:.4f} | {a.z - p.z:+.4f} | {p.k:.4f} | {a.k:.4f} |"
+                f"{KIND_DETECTOR} the bend of the age clock, `{prefix}{crowd}`, the window "
+                f"[{window[0]}, {window[1]}): z_age - z_scalar per star (reported, no bracket); "
+                f"q of the free fit {fs.q_fit:+.3f} (scalar) against {fa.q_fit:+.3f} (age)"
             )
-        print()
+            print("| star | tau (scalar) | z scalar | z age | z age - z scalar | k scalar | k age |")
+            print("| --- | --- | --- | --- | --- | --- | --- |")
+            age_points = {p.name: p for p in fa.points}
+            for p in fs.points:
+                a = age_points.get(p.name)
+                if a is None:
+                    continue
+                print(
+                    f"| {p.name} | {p.tau:.1f} | {p.z:.4f} | {a.z:.4f} | {a.z - p.z:+.4f} | {p.k:.4f} | {a.k:.4f} |"
+                )
+            print()
 
 
 def write_png(runs: list[Run], directory: Path, throw_age: float | None) -> None:
@@ -869,26 +882,29 @@ def main(argv: list[str] | None = None) -> int:
         print_bends(runs, window)
     ordering = expected.get("ordering")
     if isinstance(ordering, dict):
-        for clock in ("none", "scalar", "age"):
+        for under_record, clock in [(u, c) for u in (False, True) for c in ("none", "scalar", "age")]:
             by_crowd = {
                 run.crowd: run.fits[REGISTERED_WINDOW].q_fit
                 for run in runs
-                if run.clock == clock and REGISTERED_WINDOW in run.fits
+                if run.clock == clock
+                and run.under_record == under_record
+                and REGISTERED_WINDOW in run.fits
             }
             crowds = [c for c in ordering["crowds"] if c in by_crowd]
             if len(crowds) < 2:
                 continue
             gaps = [by_crowd[b] - by_crowd[a] for a, b in zip(crowds, crowds[1:], strict=False)]
             ok = all(gap > float(ordering["minimum_gap"]) for gap in gaps)
+            tag = f"{'record/' if under_record else ''}{clock} clocks"
             criteria.append(
                 (
-                    f"{clock} clocks: q in the order {' < '.join(crowds)} with every gap above "
+                    f"{tag}: q in the order {' < '.join(crowds)} with every gap above "
                     f"{float(ordering['minimum_gap']):.2f}",
                     ok,
                 )
             )
             print(
-                f"{KIND_DETECTOR} the {clock} clocks, the window [{REGISTERED_WINDOW[0]}, {REGISTERED_WINDOW[1]}): "
+                f"{KIND_DETECTOR} the {tag}, the window [{REGISTERED_WINDOW[0]}, {REGISTERED_WINDOW[1]}): "
                 + ", ".join(f"q_{c} = {by_crowd[c]:+.3f}" for c in crowds)
                 + f"; the gaps {', '.join(f'{g:+.3f}' for g in gaps)}: {verdict(ok)}"
             )
@@ -902,6 +918,7 @@ def main(argv: list[str] | None = None) -> int:
                     "name": run.name,
                     "crowd": run.crowd,
                     "clock": run.clock,
+                    "under_record": run.under_record,
                     "completed": run.completed,
                     "balanced": run.balanced,
                     "elapsed": run.elapsed,

@@ -416,6 +416,59 @@ the expectation in those four.
   rows in flight on 301^3); the tool 15 s; the nine runs 5 minutes on three
   cores.
 
+## The re-run under the record click (the owner's rule: through the click and the quantum)
+
+The physicist's design, written after the first registration above and
+before this re-run, is
+[docs/designs/hubble_stars/DESIGN.md](../../../docs/designs/hubble_stars/DESIGN.md)
+(its section 2.4 binds the reading). The nine worlds were written again by
+`make_worlds.py --record` under the world key `amplitude` (`record/<world>.json`,
+the detector reading `sum`, the model ids `rays-hubble-stars-record-<crowd>-<clock>-space-v1`;
+not shipped until the key lands on main, since the base engine refuses it)
+and run on the branch `claude/amplitude-impl` at commit `62369cb8` with its
+`src` on `PYTHONPATH`:
+
+```bash
+PYTHONPATH=src python examples/events/hubble_stars/make_worlds.py --record
+PYTHONPATH=<the branch's src> python tools/run_series.py --jobs 3 --out artifacts/hubble_stars_record examples/events/hubble_stars/record/*.json
+PYTHONPATH=<the branch's src> python tools/hubble_stars_readings.py artifacts
+```
+
+Under the key every unit of a star's light is born as one record of one row
+(the lamp's rate [1, 1]), the detector at the centre reads the record's
+scope, and the tool takes every number from the `gather` lines, one click
+per record (the record's birth phase `u` and the interval it `arrived`; the
+click's `age`); the branch's own `tools/amplitude_path.py --check` replays
+each run's register to its world's list (checked on `coasting_none`,
+`gravity_none`, `double_age`: 7178, 6906 and 6879 gathers, all at `centre`,
+the replay equal to `run.json`'s world). The worlds declare no `meeting`,
+so the branch's limit on the shared birth phase (record 97) does not touch
+them. Every run completed in 38 to 44 s with the books balanced, the
+identity `amplitude-v1` on the record.
+
+| World | q from the `record` lines (the first registration) | q from the `gather` lines (the record click) | H (t_0 + T_0) | rms in z | largest difference in z per star between the two readings | gathers per interval per star, mean |
+| --- | --- | --- | --- | --- | --- | --- |
+| `coasting_none` | -0.108 | -0.108 | 1.026 | 0.0019 | 0 | 0.794 |
+| `coasting_scalar` | -0.105 | -0.105 | 1.070 | 0.0213 | 0 | 0.785 |
+| `coasting_age` | -0.092 | -0.092 | 1.048 | 0.0136 | 0 | 0.788 |
+| `gravity_none` | -0.760 | -0.760 | 1.034 | 0.0479 | 0 | 0.812 |
+| `gravity_scalar` | -0.220 | -0.220 | 0.956 | 0.0417 | 0 | 0.812 |
+| `gravity_age` | +1.192 | +1.192 | 0.818 | 0.0291 | 0 | 0.815 |
+| `double_none` | +1.500 | +1.500 | 0.664 | 0.0839 | 0 | 0.864 |
+| `double_scalar` | +0.539 | +0.539 | 0.813 | 0.0992 | 0 | 0.837 |
+| `double_age` | -0.108 | -0.108 | 1.072 | 0.1525 | 0 | 0.814 |
+
+The world's list of clicks is the first registration's click by click (the
+clicks at the centre and the stars' steps compared line by line on
+`coasting_none` and `coasting_scalar`: 7178 and 7126 clicks, equal), so
+every reading agrees to the last digit: the reading's formula 648 of 648,
+the luminosity 631 of 648, 34 pinned readings inside and 29 outside, the
+same ones. The lattice is unchanged under the key and a record of one row
+cancels with nothing; the record click adds to this series the one thing
+the owner asked for, that its numbers are the world's rows and nothing
+else. When the one click lands on main the `record/` worlds become the
+shipped ones and the numbers are compared again.
+
 ## Verdict
 
 The detector reads, of stars thrown from one point without gravity, the
@@ -496,7 +549,10 @@ the 29 readings outside are registered as read.
   under the three clocks (outside), rms 0.03 to 0.05; the double crowd:
   momenta down by 27 to 99 %, q +1.50, +0.54, -0.11 (one inside); the
   ordering outside under every clock; q = -0.55 the nearest of the three
-  in three worlds (outside).
+  in three worlds (outside). Re-run under the record click (`amplitude-v1`,
+  the branch `claude/amplitude-impl` at `62369cb8`, every number from the
+  gather lines): the same list of clicks and the same readings to the last
+  digit; the physicist's design `docs/designs/hubble_stars/DESIGN.md`.
 - **Verdict.** The kinematics of the law give the coasting universe exactly
   from one point (Milne, q = 0 to the grain); the law's gravity decelerates
   every star's momentum and pushes none outward, so nothing in the law

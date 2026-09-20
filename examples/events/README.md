@@ -276,7 +276,11 @@ form to the grain (q = -0.11, H (t_0 + T_0) = 1.03), every star's momentum
 decelerates under the law's gravity and none accelerates, and the detector
 cannot read that deceleration as a q because the step rule stalls and
 bursts under a changing momentum (the README's findings for the law, among
-them that a body's own motion does not Doppler what it reads).
+them that a body's own motion does not Doppler what it reads). The
+physicist's design is `docs/designs/hubble_stars/DESIGN.md`; the same
+worlds under the record click (`make_worlds.py --record`, the key
+`amplitude`, the branch `claude/amplitude-impl`) read the same list of
+clicks and the same numbers to the last digit.
 
 ## The weak-force series
 
