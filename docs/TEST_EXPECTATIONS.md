@@ -32,6 +32,7 @@ kept, their pins the law of events').
 | `test_nature_beam_push.py` | The push as one bilinear form over the arriving rays' labels, the emitter's factor on the record, and the one momentum label the click, the re-emission, the home and the transit line move ([below](#the-push-as-one-form)) | new (2026-09-19, the night: the physics-rule review's F1 and the model owner's proposal 2) |
 | `test_columns.py` | The one coupling as a signed inner product over the columns: the two built-in columns equal to the landed form integer by integer and refusal by refusal on a grid, at the register's scale and on the replay of the series 7 worlds' `read` records; a third column with the sign minus giving the design's integers and the sign as a key; the refusals and the alignment; the bounds at parsing and at the push; every column floored on its own ([below](#the-columns)) | new (2026-09-20, the model owner's "one mechanism for all the laws on the GameBoard"; the mathematician's verified form) |
 | `test_lifetime.py` | The lifetime of a family and the held content: the click on the border `lifetime` booked as a face books an escape (the record 2^26, the ledger lines, the run's record), a ray read at the age L and then booked, the reach of L = 1, 2, 3 on the flight table (the six neighbours, the face diagonals, the cube diagonals and two Links), the inverse refused, the refusals; a measured event holding content of two families (the charges as rational sums, the push, the release of both, the record) and the register's proton ([below](#the-lifetime-and-the-held-content)) | new (2026-09-20, the model owner's "the strong force's range is a lifetime, L"; the physicist's D-1) |
+| `test_binding.py` | The binding that costs content (`binding-v1`): the give at the first hand-over of a contact under `measure` (the pair of the six headings with `bond` 2 on the mover: one row of amount 2, content 1 on -x, the recoil +128, the border click three ticks later with content 2, the books exact at every tick, `given` 2 then 0), the remainder (`bond` 3 at the quantum 2: one unit given, 1 kept), the give taken by a body on its line (`measured` +2, no border click; `pass` lets it on), a body that carries nothing (the contact records of `test_contact.py` without `given`, a paid body's own content never given), the fact of the run (a body that takes a declared paid row gives it at its next contact, `given` and `binding-v1` from that give on) ([below](#the-binding-that-costs-content)) | new (2026-09-20, the model owner's records 115 and 137 on the physicist's design; (f) after the physics-rule review) |
 | `test_contact.py` | The contact through the table: the design's pair on the six headings (+128 per interval; under the step drive the labels 128, 256, 0, 0, 128, 0, 128 and the hand-overs 384, -128, 256, -256, 128, ..., the sum 0, no step; at three Links the pair separates at tick 7), the isolated hand-over under `measure`, `rerelease`, `read` and `pass` and the derived default, the apportioning over the occupants of a body's set, the register's proton and neutron over 1000 intervals (998 hand-overs from tick 3, the first 621 934 561 280, the rest 310 967 280 640, the labels 0), the frame's order as a declared tie ([below](#the-contact-through-the-table)) | new (2026-09-20, the model owner on the physicist's design, section 4.4); (a), (d), (e) re-registered on 2026-09-20 under the step drive, the old integers kept as history |
 | `test_nucleus_readings.py` | The nucleus readings tool (series I) reads the runner's record: on the design's pair on the six headings, run through the runner, the pushes per body (128, 0, 0) from the `p` rows' -7936 and the `g` rows' +8064, the hand-overs 384 at tick 4, -128 at 5, 256 at 7, -256 at 9 and 128 at 10 under the step drive (256, 128, 640 by p1 alone as the rule was), the border `lifetime` clicking 12 rows per interval from tick 4, no step, the separation 1.00, pinned to the events file | new (2026-09-20, series I); re-registered on 2026-09-20 under the step drive |
 | `test_nature_beam_label.py` | The label along the unit vector of the direction at the flight table's scale: the table u_d by the exact integer rule (the pinned vectors, the length within 1.35 % of Q, antisymmetry, equivariance under the 48, no tie, the float agreement over every primitive direction within the bound), every label content x u_d with the recoil, the transit line and the books closing through clicks, a mirror and the open faces, the bound at Q x content x amount ([below](#the-label-along-the-unit-vector)) | new (2026-09-19, the model owner's decision on the physics-rule reviewer's verdict; every momentum pin of the suite re-pinned x 64, listed in its section) |
@@ -1242,6 +1243,86 @@ DESIGN.md test (f) and section 4.4):
   2026-09-20) stepped a at ticks 2 and 4 in the second order, to (0, 1,
   1); the rule as it was (the count off the clock) at tick 3 in the first
   order and at ticks 2 and 3 in the second.
+
+## The binding that costs content
+
+`tests/test_binding.py` (docs/BEAM_LAW.md, section 10 note 40; the model
+owner's records 115 and 137 of 2026-09-20 on the physicist's design
+`docs/designs/binding_v1/DESIGN.md`, candidate A): at a contact under
+`measure` the refused body gives the paid content it carries (`held` of a
+paid family other than its own) to the flight, per such family with the
+quantum h `held // h` units of content h as one row on the heading opposite
+to the refused step, the recoil on the giver, `held mod h` kept; the rows
+then have the law's fates. K 2^20, N 64, `suspension` 0, `width` 1, every
+family without a phase circle. The expected integers, written down before
+the first run (the design's section 5, tests (a) to (d)):
+
+- (a) the pair on the six headings of `test_contact.py` (a) with the paid
+  family `bond` (quantum 1, lifetime 3) held 2 by the mover p1 (its content
+  7 = 4 `p` + 1 `g` + 2 `bond`): from tick 2 p1 reads p2's `p` row as
+  -7424 and its `g` row as +8192 (its gravity charge 7), the push 768; p2
+  reads -7936 and +8064 as before (p1's rows carry no `bond`). p1's drive
+  768, then 2304 >= D = 448 + 1536 at tick 3: refused, it hands 1536 and
+  gives its 2 units as one row of amount 2, content 1, on -x (direction
+  index 3) at (3, 4, 4), the label (-128, 0, 0), the recoil +128 (p1's
+  momentum (128, 0, 0) after the contact), its held (4, 1, 0), the
+  record's `given` 2; the row clicks on the border `lifetime` at tick 6 at
+  (1, 4, 4) with amount 2, content 2 and momentum (-128, 0, 0); p1's
+  second contact at tick 4 hands 256 with `given` 0; the `bond` books at
+  every tick (measured initial 2 = current + spent 2; the content released
+  2 in transit until tick 6, escaped after; the row's label on the transit
+  line until the border books it); `binding-v1` under the hypotheses after
+  `columns-v1`. The toy's pair separates under the 1536 handed to p2 (a
+  step at tick 4): the rule's claim is the give, the recoil, the click and
+  the books, not the toy's binding;
+- (b) the remainder: p1 of `p` (content 5, momentum (256, 0, 0)) at
+  (3, 3, 3) holding `bond` 3 at the quantum 2, a fixed occupant at
+  (4, 3, 3) on an open 7^3 GameBoard, `release` [0, 1]: the step fires at
+  tick 3 and is refused; p1 hands 256, gives 3 // 2 = 1 unit of content 2
+  (the row amount 1, content 2, label (-128, 0, 0)), keeps 3 mod 2 = 1
+  (`held` (5, 0, 0, 1)), takes the recoil (128, 0, 0), `given` 2; the
+  border click at tick 6 at (1, 3, 3) with amount 1, content 2; the second
+  contact at tick 7 (the drive 64, 192, 320, 448, 576 >= D = 384 + 128)
+  hands 128 with `given` 0; the books: measured initial 3 = current 1 +
+  spent 2, transit released 1 = escaped 1, content released 2 = escaped 2,
+  the momentum lines summing to (256, 0, 0) at every tick. Edge: `bond` 1
+  at the quantum 2 gives nothing, `given` 0, no row;
+- (c) the take: (b) at the quantum 1 with `bond` 2 and a third fixed body
+  of `q` (content 5) at (2, 3, 3) on the line behind p1: the row given on
+  -x arrives at (2, 3, 3) at age 1 (tick 4) and the third body's entry for
+  `bond`, `measure` by the keys, takes it: one `click` record at tick 4
+  (measured 3, family `bond`, number 1, amount 2, content 2, the push
+  (-128, 0, 0)), the third body's held (0, 5, 0, 2), its clicks (0, 0, 0,
+  2), its momentum (-128, 0, 0), the `bond` books measured +2 (initial 2 +
+  measured 2 = current 2 + spent 2), transit released 2 = absorbed 2, no
+  border click over seven intervals; with `pass` declared on the third
+  body for `bond` the row goes on and clicks on the border at tick 6 at
+  (1, 3, 3) with content 2, the third body untouched;
+- (d) a body that carries no paid content: the worlds of `test_contact.py`
+  (a) to (e) write their `contact` records without the `given` key and
+  equal to the ones pinned there (the isolated hand-over's record byte for
+  byte), `binding-v1` absent from their hypotheses, no paid row in any
+  store; a body of the paid family `h` (its own content 5, nothing
+  carried) hands 256 and gives nothing, its momentum (0, 0, 0) after and
+  its held unchanged;
+- (e) the register's gate set replays byte-identical: a research replay,
+  recorded once in [VALIDATION](VALIDATION.md), never a test;
+- (f) the fact of the run (the physics-rule review's should-fix): a body of
+  `p` (content 5, momentum (-256, 0, 0)) at (3, 3, 3), a fixed occupant of
+  `q` at (2, 3, 3), no body holding a paid family at load (`binding` false,
+  the hypotheses `columns-v1` alone) and a declared `bond` row of amount 2
+  in transit at (4, 3, 3) on -x, age 0: at tick 1 the row reaches the body
+  at age 1 and is taken under the keys (held `bond` 2, the label -128
+  taken: momentum (-384, 0, 0)); the step fires at tick 3 (the drive -384,
+  -768, -1152 beyond D = 448 + 384), refused: the body hands -384 and gives
+  the 2 units it took on +x (the recoil -128: momentum (-128, 0, 0)), the
+  engine raises the fact at that give, the record carries `given` 2, the
+  border click at tick 6 at (5, 3, 3) with content 2 and momentum (128, 0,
+  0), the next contact at tick 4 (the drive -320 left after the fire, then
+  -448 = -D at the content 5) with `given` 0; the simulation's
+  `hypotheses` gain `binding-v1` and the runner's `run.json` carries it,
+  its `contact` records `given` 2 then 0; the momentum lines sum to
+  (-384, 0, 0), the declared row's label and the body's, at every tick.
 
 ## The re-emission
 

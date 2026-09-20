@@ -112,7 +112,10 @@ def execute_nature_beam_run(
         # key as declared, false by default; `doppler-v1` under `hypotheses`
         # when it is true.
         "doppler": world.doppler,
-        "hypotheses": world.hypotheses,
+        # The binding that costs content (2026-09-20): `binding-v1` under
+        # `hypotheses` when a measured event holds a paid family at load or
+        # gave one during the run (no key; `NatureBeamSimulation.hypotheses`).
+        "hypotheses": simulation.hypotheses,
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
         "columns": [{"name": name, "sign": sign} for name, sign in world.columns],
