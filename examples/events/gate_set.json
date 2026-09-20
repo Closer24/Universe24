@@ -91,6 +91,12 @@
    "ticks": 50,
    "cap": 12,
    "covers": "a body stepping under width with a declared momentum"
+  },
+  {
+   "path": "hand/wu.json",
+   "ticks": 40,
+   "cap": 23,
+   "covers": "hand on a family (hand-v1), axis and the right-hand rule in become, the parity filter and the pass by hand, hand on the click, become and face lines, left/right in the books"
   }
  ]
 }
