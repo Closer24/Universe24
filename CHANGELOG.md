@@ -5,6 +5,32 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The turn by momentum: Bohr as parameters outside the board (2026-09-20)
+
+- The model owner's decision ("On Bohr, go, and put it as parameters
+  outside the board like the age"; [Highlights 5.4](docs/HIGHLIGHTS.md#54-the-detector);
+  [RAY_LAW note 30 (ii)](docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation)):
+  the world key `action` (h, an integer from 1, absent by default) and
+  the measured-event key `phase_by_momentum` (false by default): at the
+  Link a body steps on an axis whose momentum component is p, its phase
+  turns by `by_clock(k0, |p| x N, h)`, the difference of two floors of
+  k x |p| x N / h with k0 the count of Links the step rule gives at its
+  age (derived from the age as the owed count is read off the clock; no
+  register, no remainder), so that after k Links at a constant momentum
+  the phase has turned floor(k x |p| x N / h) mod N; the axes compose,
+  x before y before z; the product is bounded at parsing (`ticks x |p|
+  x N`) and before it is formed. A rule of the measured event, the
+  external thing, read from its own record: the rays' flight and
+  collision are untouched (`test_ray_body` (e)), the rays a body releases
+  carry its phase as before, and without `action` every world reads the
+  same integer by integer. The identity `bohr-v1` is carried under
+  `hypotheses` in `run.json` when `action` is declared; the `step` line
+  gains the body's `phase`. Tests: `test_ray_body` (d) to (f)
+  ([expectations](docs/TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum),
+  [migration](docs/MIGRATION.md#the-turn-by-momentum-bohr-as-parameters-outside-the-board-on-2026-09-20-action-phase_by_momentum-bohr-v1)).
+  The run that reads Bohr's lines behind the detector is series H
+  ([EXPERIMENTS.md](docs/EXPERIMENTS.md)).
+
 ### A body on a set of Nodes with one record (2026-09-20)
 
 - The model owner's decision on Bohr, the body on a set taken with it as

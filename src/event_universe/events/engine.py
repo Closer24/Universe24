@@ -49,6 +49,7 @@ from event_universe.events.nature_beam import (
     RayTables,
     Readings,
     Record,
+    bounded,
     exact_column_sums,
     exact_sum,
     nature_beam,
@@ -233,6 +234,7 @@ class RaySimulation:
             detector_set,
             span=definition.span,
             nodes=nodes,
+            phase_by_momentum=definition.phase_by_momentum,
             pending=[[] for _ in range(count)],
             measured=[dict.fromkeys(RULES, 0) for _ in range(count)],
             events=[0] * count,
@@ -358,17 +360,49 @@ class RaySimulation:
         step refused when any Node of the moved set holds another measured
         event, the whole body clicking on the face detector when any of
         its Nodes would leave the board through an open face, every Node
-        wrapping on a periodic axis."""
+        wrapping on a periodic axis.
+
+        The turn by momentum (`phase_by_momentum` with the world's
+        `action`, h; the model owner's decision of 2026-09-20 on Bohr, "put
+        it as parameters outside the board like the age"): a rule of the
+        measured event, the external thing, read from its own record. At
+        the Link the body steps on an axis whose momentum component is p,
+        its phase turns by the difference of two floors,
+
+            floor(k1 x |p| x N / h) - floor(k0 x |p| x N / h),
+
+        with k0 = floor((age - 1) x |p| / (Q S M + |p|)) the count of Links
+        the step rule gives on that axis at the age before this
+        self-creation and k1 = k0 + 1 the count after it (the count is
+        derived from the age by the step rule exactly as the owed count is
+        read off the clock; with a constant momentum k1 is the Links
+        stepped on the axis, so after k Links the phase has turned
+        floor(k x |p| x N / h) mod N in all), that is `by_clock(k0, |p| x
+        N, h)`: nothing is kept at a Node and no remainder register
+        exists, the count and the turn are functions of the record (the
+        age, the momentum). The axes compose: the steps are x before y
+        before z, and the phase's turn is the sum of the three components'
+        turns at the Links stepped on each (a step lost to an earlier
+        axis's step in the same interval turns nothing: no Link was
+        crossed). It changes nothing of the rays' flight or collision; the
+        rays the body releases carry its phase as before (the clock's turn
+        by content over K is added at the self-creation as always, this
+        turn at the step after it); without `action` there is no turn. The
+        product k1 x |p| x N is bounded before it is formed (`bounded`;
+        the parser refused a declared momentum whose product with `ticks`
+        x N could pass the bound)."""
         if entry.fixed or entry.owed > 0:
             return
         content = entry.content
         if content <= 0:
             return
+        width = LABEL_SCALE * self.world.width * content
         for axis in range(3):
             momentum = entry.momentum[axis]
             stepped = step_axis(entry.age, momentum, content, self.world.width)
             if stepped is None:
                 continue
+            magnitude = abs(momentum)
             sign = stepped
             entry.steps += 1
             origin = entry.position
@@ -428,6 +462,11 @@ class RaySimulation:
             entry.nodes = nodes
             for node in nodes:
                 self.at[node] = entry.number
+            if entry.phase_by_momentum and self.world.action is not None:
+                links = ((entry.age - 1) * magnitude) // (width + magnitude)
+                bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
+                turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
+                entry.phase = (entry.phase + turn) & self.world.phase_mask
             if self.record is not None:
                 self.record(
                     {
@@ -437,6 +476,7 @@ class RaySimulation:
                         "node": list(origin),
                         "to": list(destination),
                         "momentum": list(entry.momentum),
+                        "phase": entry.phase,
                     }
                 )
             return

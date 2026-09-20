@@ -1,14 +1,17 @@
-"""A body on a set of Nodes with one record (docs/RAY_LAW.md, section 10,
-note 30; the model owner, 2026-09-20: the electron of width 3, taken with
-the decision on Bohr, "go, and put it as parameters outside the board like
-the age"). A measured event declares `span`, three odd extents centred on
-its position: its clock, its threshold and its push read the one reading
-set summed over its Nodes, its releases are apportioned whole over them,
-the step moves the whole set, no collision acts at any of its Nodes. Every
-rule is on the measured-event side, the external thing; the rays' flight
-and collision are untouched. The expected integers of
-docs/TEST_EXPECTATIONS.md ("A body on a set and the turn by momentum"),
-written down first:
+"""A body on a set of Nodes with one record, and the turn by momentum
+(docs/RAY_LAW.md, section 10, note 30; the model owner, 2026-09-20: the
+electron of width 3, and "on Bohr, go, and put it as parameters outside
+the board like the age"). A measured event declares `span`, three odd
+extents centred on its position: its clock, its threshold and its push read
+the one reading set summed over its Nodes, its releases are apportioned
+whole over them, the step moves the whole set, no collision acts at any of
+its Nodes. A measured event that declares `phase_by_momentum` in a world
+with `action` (h) turns its phase at every Link it steps on an axis whose
+momentum component is p by the difference of two floors of k x |p| x N / h,
+k the count of Links the step rule gives at its age. Every rule is on the
+measured-event side, the external thing; the rays' flight and collision are
+untouched. The expected integers of docs/TEST_EXPECTATIONS.md ("A body on a
+set and the turn by momentum"), written down first:
 
 (a) a set of one Node is today's measured event bit for bit: a free body
     of `m` (content 16, momentum [256, 0, 0], phase 5) at (3, 1, 1) of an
@@ -60,24 +63,56 @@ written down first:
     turn (the ages 0, 1, 2): after 3 intervals the rows (0, 1, 0) age 2
     phase 0, (1, 1, 0) age 1 phase 1, (2, 0, 0) age 0 phase 2, held
     [0, 21], the recoil (0, -192, 0), the transit momentum (0, 192, 0);
-(f) the refusals, naming the key: `span` "3", [2, 1, 1], [0, 1, 1],
-    [5, 1, 1] on an axis of 3, a body leaving the board on an open axis,
-    two bodies sharing a Node, a detector naming a Node of a body that is
-    not its position; accepted: `span` [3, 1, 1] at x = 0 of a periodic
-    axis; the record carries per measured event its `span`, the state
-    the same.
+(d) the turn: a free body of `m` (content 16, phase 5, K 2^20: the
+    clock's turn 0) of momentum [1024, 0, 0] at x = 20 of an open
+    40 x 1 x 1 bar steps at the ages 2, 4, 6, ... (k = age // 2): with
+    `action` 65536 (|p| N / h = 1 per Link) its phase after 12 intervals
+    is 5 + 6 = 11 and the rays born at tick 3 carry 6, those born at
+    tick 2 carry 5 (`release` [1, 16] on -X, away from the body's path);
+    with `action` 4096 (16 per Link) 5 + 96 mod 64 =
+    37; with momentum [320, 0, 0] and `action` 7 (a remainder each step:
+    the steps at the intervals 5, 9, 13, 17, 21, the floors of k x 20480
+    / 7 = 2925, 5851, 8777, 11702, 14628) the phase after the intervals
+    5, 9, 13, 17, 21, 24 is 50, 32, 14, 59, 41, 41; composed over axes,
+    momentum [1024, 320, 0] with `action` 65536 on a 40 x 40 x 1 board
+    (the x steps at the even ages, the y steps at 5, 9, 13, 17, 21: no
+    step lost): the y turns floor(0.3125 k) - floor(0.3125 (k - 1)) = 0,
+    0, 0, 1, 0, so the phase after 17 intervals is 5 + 8 + 1 = 14 and
+    after 24 it is 5 + 12 + 1 = 18; the same worlds without `action` keep
+    the phase 5 throughout;
+(e) the board is unchanged by the two keys: 324 fixed rays of `light` on
+    the periodic 8 x 8 x 4 board of `test_ray_age` (e) (number 1, an
+    anchor of `light` at (7, 7, 3) their home) with a free body of `m`
+    (content 16, momentum [1024, 320, 0], span [1, 1, 3], `pass` for
+    `light`, no release) run 40 intervals with `action` 7 and
+    `phase_by_momentum` and again without them: the rays' sorted (Node,
+    direction, phase, amount, content) rows are identical at every
+    interval, the body's Nodes and steps are identical, its phase differs,
+    the collision moved rays on the way and the body read rays;
+(f) the refusals, naming the key: `action` 0, -1, "8", 1.5;
+    `phase_by_momentum` without `action`, on a fixed measured event, on a
+    family without a phase circle, not a boolean; `span` "3", [2, 1, 1],
+    [0, 1, 1], [5, 1, 1] on an axis of 3, a body leaving the board on an
+    open axis, two bodies sharing a Node, a detector naming a Node of a
+    body that is not its position; the turn's bound: `ticks` 2^40 with
+    the momentum 2^20 and N 64; accepted: `span` [3, 1, 1] at x = 0 of a
+    periodic axis; the record carries `action`, `hypotheses` ["bohr-v1"]
+    and per measured event `span` and `phase_by_momentum`, `action` None
+    and `hypotheses` [] without the key, the state `span`.
 """
 
 from __future__ import annotations
 
 import json
 
+import numpy as np
 import pytest
 
 from event_universe.core.integer import by_clock
 from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.world import body_nodes
+from event_universe.events.world import BOHR_RULE, body_nodes
 from event_universe.runner import run_initialization
+from tests.test_ray_age import crowd
 
 M, LIGHT = 0, 1
 UNIT_RECORD = 32 * 32 * 256 * 256
@@ -322,6 +357,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
         simulation.step()
         xs.append(body.position[0])
     assert xs == [2, 3, 3, 4, 4, 5, 5] and [r["event"] for r in records] == ["step"] * 3
+    assert [r["phase"] for r in records] == [0, 0, 0]
     simulation.step()
     assert simulation.measured == {} and simulation.at == {}
     clicks = [r for r in records if r["event"] == "click"]
@@ -406,6 +442,128 @@ def test_the_books_balance_with_a_set_that_releases():
     assert simulation.transit_momentum() == [0, 192, 0]
 
 
+# -- (d) ---------------------------------------------------------------------------
+
+
+def turning_world(momentum: list[int], action: int | None, **keys: object) -> dict[str, object]:
+    body = {
+        "position": [20, 0, 0],
+        "family": "m",
+        "amount": 16,
+        "phase": 5,
+        "momentum": momentum,
+        "directions": [[-1, 0, 0]],
+        "phase_by_momentum": action is not None,
+    }
+    document = world(measured=[body], ticks=24, **{"shape": [40, 1, 1], **keys})
+    if action is not None:
+        document["action"] = action
+    return document
+
+
+def phases(document: dict[str, object], ticks: int) -> tuple[list[int], list[int], RaySimulation]:
+    simulation = RaySimulation(parse_ray_world(document))
+    entry = simulation.measured[1]
+    found, xs = [], []
+    for tick in range(1, ticks + 1):
+        simulation.step()
+        assert simulation.books()["balanced"], tick
+        found.append(entry.phase)
+        xs.append(entry.position[0])
+    return found, xs, simulation
+
+
+def test_a_body_turns_its_phase_by_its_momentum_at_every_link_it_steps():
+    """(d)."""
+    assert [by_clock(k, 320 * 64, 7) for k in range(5)] == [2925, 2926, 2926, 2925, 2926]
+    assert [(k * 20480) // 7 for k in range(1, 6)] == [2925, 5851, 8777, 11702, 14628]
+    # One step of the circle per Link: k = age // 2.
+    turned, xs, simulation = phases(turning_world([1024, 0, 0], 65536, release=[1, 16]), 12)
+    assert xs == [20 + (tick // 2) for tick in range(1, 13)] and xs[-1] == 26
+    assert turned == [5 + (tick // 2) for tick in range(1, 13)] and turned[-1] == 11
+    store = simulation.stores[M]
+    born_at = {2: 5, 3: 6}
+    for tick, phase in born_at.items():
+        age = 12 - tick
+        assert set(store.phase[store.age == age].tolist()) == {phase}, tick
+    # Sixteen steps per Link.
+    turned, _, _ = phases(turning_world([1024, 0, 0], 4096), 12)
+    assert turned[-1] == (5 + 6 * 16) % 64 == 37
+    # A remainder each step: the steps at 5, 9, 13, 17, 21.
+    turned, xs, _ = phases(turning_world([320, 0, 0], 7), 24)
+    assert [xs[t - 1] for t in (4, 5, 9, 13, 17, 21, 24)] == [20, 21, 22, 23, 24, 25, 25]
+    assert [turned[t - 1] for t in (4, 5, 9, 13, 17, 21, 24)] == [5, 50, 32, 14, 59, 41, 41]
+    assert turned[-1] == (5 + 14628) % 64
+    # The axes compose: x steps at the even ages, y at 5, 9, 13, 17, 21.
+    document = turning_world([1024, 320, 0], 65536, shape=[40, 40, 1])
+    document["measured"][0]["position"] = [4, 4, 0]  # type: ignore[index]
+    turned, _, simulation = phases(document, 24)
+    assert simulation.measured[1].position == (16, 9, 0)
+    assert turned[16] == 14 and turned[23] == 18
+    # Without `action` the phase is today's: the clock's turn alone, 0.
+    for momentum in ([1024, 0, 0], [320, 0, 0]):
+        turned, _, _ = phases(turning_world(momentum, None), 24)
+        assert turned == [5] * 24
+
+
+# -- (e) ---------------------------------------------------------------------------
+
+
+def torus(turning: bool) -> dict[str, object]:
+    anchor = {"position": [7, 7, 3], "family": "light", "amount": 1, "fixed": True}
+    body = {
+        "position": [0, 0, 0],
+        "family": "m",
+        "amount": 16,
+        "phase": 5,
+        "momentum": [1024, 320, 0],
+        "span": [1, 1, 3],
+        "table": {"light": "pass"},
+        "phase_by_momentum": turning,
+    }
+    document = world(
+        shape=[8, 8, 4],
+        boundary={"x": "periodic", "y": "periodic", "z": "periodic"},
+        ticks=40,
+        age_bound=128,
+        directions=[[1, 1, 0], [2, -1, 1]],
+        families=[{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1, "phase_per_link": 5}],
+        measured=[anchor, body],
+        in_transit=crowd(),
+    )
+    if turning:
+        document["action"] = 7
+    return document
+
+
+def board(simulation: RaySimulation) -> np.ndarray:
+    store = simulation.stores[LIGHT]
+    found = np.stack([store.node, store.direction, store.phase, store.amount, store.content], axis=1)
+    return found[np.lexsort(found.T[::-1])]
+
+
+def test_the_board_is_unchanged_by_the_two_keys():
+    """(e)."""
+    with_keys = RaySimulation(parse_ray_world(torus(True)))
+    without = RaySimulation(parse_ray_world(torus(False)))
+    collided = False
+    phases_differed = False
+    read = 0
+    for _ in range(40):
+        before = with_keys.stores[LIGHT].direction.copy()
+        with_keys.step()
+        without.step()
+        assert np.array_equal(board(with_keys), board(without))
+        turning, plain = with_keys.measured[2], without.measured[2]
+        assert turning.nodes == plain.nodes and turning.steps == plain.steps
+        collided = collided or before.shape != with_keys.stores[LIGHT].direction.shape
+        collided = collided or bool((before != with_keys.stores[LIGHT].direction).any())
+        phases_differed = phases_differed or turning.phase != plain.phase
+        read += turning.presence
+    assert collided and phases_differed and read > 0 and turning.steps > 0
+    assert plain.phase == 5
+
+
 # -- (f) ---------------------------------------------------------------------------
 
 
@@ -418,6 +576,25 @@ def test_the_refusals_and_the_record(tmp_path):
     """(f)."""
     mover = {"position": [4, 1, 1], "family": "m", "amount": 16, "momentum": [1024, 0, 0]}
     base = world(measured=[mover])
+    for bad in (0, -1, "8", 1.5):
+        refused({**base, "action": bad}, "action must be an integer from 1")
+    refused(
+        world(measured=[{**mover, "phase_by_momentum": True}]),
+        "phase_by_momentum needs the world's `action`",
+    )
+    refused(
+        world(action=64, measured=[{**mover, "phase_by_momentum": True, "fixed": True}]),
+        "refused on a fixed measured event",
+    )
+    refused(
+        world(
+            action=64,
+            families=[{"name": "m", "quantum": 0, "phase": False}, FAMILIES[1]],
+            measured=[{**mover, "phase_by_momentum": True}],
+        ),
+        "without a phase circle",
+    )
+    refused(world(action=64, measured=[{**mover, "phase_by_momentum": 1}]), "must be true or false")
     refused(world(measured=[{**mover, "span": "3"}]), "three odd integers")
     refused(
         world(measured=[{**mover, "span": [2, 1, 1]}]), "three odd integers from 1 \\(a centred body\\)"
@@ -438,21 +615,45 @@ def test_the_refusals_and_the_record(tmp_path):
         ),
         "a Node of a body on a set .* not its position",
     )
+    refused(
+        world(
+            action=64,
+            ticks=1 << 40,
+            measured=[{**mover, "momentum": [1 << 20, 0, 0], "phase_by_momentum": True}],
+        ),
+        "turn by momentum forms k x \\|p\\| x N up to .* beyond the integer bound",
+    )
     parsed = parse_ray_world(
         world(boundary={"x": "periodic"}, measured=[{**mover, "position": [0, 1, 1], "span": [3, 1, 1]}])
     )
-    assert parsed.measured[0].span == (3, 1, 1)
+    assert parsed.measured[0].span == (3, 1, 1) and parsed.action is None
     assert parse_ray_world(base).measured[0].span == (1, 1, 1)
+    assert not parse_ray_world(base).measured[0].phase_by_momentum
     # The record.
-    wide = world(ticks=2, measured=[{**mover, "span": [1, 3, 1]}])
+    turning = world(
+        action=64, ticks=2, measured=[{**mover, "span": [1, 3, 1], "phase_by_momentum": True}]
+    )
     path = tmp_path / "world.json"
-    path.write_text(json.dumps(wide), encoding="utf-8")
+    path.write_text(json.dumps(turning), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
-    assert record["status"] == "completed"
-    assert record["numbers"]["1"] == {"position": [4, 1, 1], "family": "m", "span": [1, 3, 1]}
+    assert (
+        record["action"] == 64
+        and record["hypotheses"] == [BOHR_RULE]
+        and record["status"] == "completed"
+    )
+    assert record["numbers"]["1"] == {
+        "position": [4, 1, 1],
+        "family": "m",
+        "span": [1, 3, 1],
+        "phase_by_momentum": True,
+    }
     assert record["measured"][0]["span"] == [1, 3, 1]
     state = json.loads((tmp_path / "run" / "state.json").read_text(encoding="utf-8"))
     assert state["measured"][0]["span"] == [1, 3, 1]
     path.write_text(json.dumps({**base, "ticks": 2}), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "plain").read_text(encoding="utf-8"))
-    assert record["numbers"]["1"]["span"] == [1, 1, 1]
+    assert record["action"] is None and record["hypotheses"] == []
+    assert (
+        record["numbers"]["1"]["span"] == [1, 1, 1]
+        and record["numbers"]["1"]["phase_by_momentum"] is False
+    )

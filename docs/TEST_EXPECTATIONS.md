@@ -38,7 +38,7 @@ kept, their pins the law of events').
 | `test_ray_clock.py` | The clock under the ray law: `by_clock` and `apportion_whole`; the release, the phase, the lamp's cost and recoil, the step and the refused step, the count off the clock ([below](#the-clock-under-the-ray-law)) | `test_event_clock` (a, b, d), `test_release_costs_by_phase_rate` (a to c), `test_border_and_clock_corrections` (a, c), `test_event_suspension` (b, c) |
 | `test_push_width.py` | The width of the push: the world key `width` S in the step rule, one Link per (S x M + p) / p self-creations; S = 1 the rule as it was; the step off the clock with no remainder; the key's default and refusals ([below](#the-width-of-the-push)) | new (2026-09-19, the model owner's D1) |
 | `test_ray_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the board unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
-| `test_ray_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr: proposal 1, the electron of width 3) |
+| `test_ray_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the board unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the board like the age") |
 | `test_ray_window.py` | The phase window under the ray law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-ray-law)) | `test_phase_window` (a to c) |
 | `test_ray_world_parsing.py` | The world file of the ray law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-ray-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_ray_worlds.py` | The worlds of the ray law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-ray-law)) | `test_event_worlds` (a, d) |
@@ -708,10 +708,14 @@ declares `span` is a body on the set of Nodes centred on its position,
 one record on all of them; its threshold, its clock's count and its push
 read the one reading set summed over its Nodes, its releases are
 apportioned whole over them, the step moves the whole set, no collision
-acts at any of its Nodes. Every rule is on the measured-event side; the
-rays' flight and collision are untouched. K 2^20, N 64, `suspension` 0
-and `release` [0, 1] unless said, the families `m` (free) and `light`
-(paid). The expected integers, written down before the first run:
+acts at any of its Nodes. A measured event that declares
+`phase_by_momentum` in a world with `action` (h) turns its phase at every
+Link it steps on an axis whose momentum component is p by the difference
+of two floors of k x |p| x N / h, k the count of Links the step rule gives
+at its age. Every rule is on the measured-event side; the rays' flight
+and collision are untouched. K 2^20, N 64, `suspension` 0 and `release`
+[0, 1] unless said, the families `m` (free) and `light` (paid). The
+expected integers, written down before the first run:
 
 - (a) a set of one Node is the measured event as it was, bit for bit: a
   free body of `m` (content 16, momentum [256, 0, 0], phase 5) at
@@ -776,16 +780,57 @@ and `release` [0, 1] unless said, the families `m` (free) and `light`
   phase 1, (2, 0, 0) age 0 phase 2 (content 1 each), held [0, 21], the
   recoil (0, -192, 0), the transit momentum (0, 192, 0), the books
   balanced.
-- (f) the refusals, naming the key: `span` "3" and [2, 1, 1] ("three odd
-  integers"), [0, 1, 1] ("from 1 through 12"), [1, 5, 1] on an axis of 3
-  ("from 1 through 3"), a body of span [3, 1, 1] at x = 0 of an open axis
-  ("leaves the board"), two bodies of span [3, 1, 1] at x = 4 and 6
-  ("share the Node [5, 1, 1]"), a detector naming (5, 1, 1) of a fixed
-  body of span [3, 1, 1] at (4, 1, 1) ("a Node of a body on a set ... not
-  its position"); accepted: `span` [3, 1, 1] at x = 0 of a periodic axis
-  (the body wraps), `span` absent parsing to (1, 1, 1); the record:
-  `run.json` carries per measured event under `numbers` its `span`
-  ([1, 3, 1]) and in the measured events' states, `state.json` the same.
+- (d) the turn: a free body of `m` (content 16, phase 5, K 2^20: the
+  clock's turn 0) with the momentum [1024, 0, 0] at x = 20 of an open
+  40 x 1 x 1 bar steps at the ages 2, 4, 6, ... (k = age // 2, x = 20 +
+  k): with `action` 65536 (|p| N / h = 1 per Link) its phase after the
+  intervals 1 to 12 is 5 + tick // 2, 11 after 12, and at `release`
+  [1, 16] on -X (away from its path) the rays born at tick 3 carry the
+  phase 6 and those born at tick 2 the phase 5 (the release of an interval
+  carries the phase before its step); with `action` 4096 (16 per Link)
+  the phase after 12 intervals is (5 + 96) mod 64 = 37; with the momentum
+  [320, 0, 0] and `action` 7 (`by_clock(k, 20480, 7)` = 2925, 2926, 2926,
+  2925, 2926 for k = 0 .. 4: a remainder each step; the steps at the
+  intervals 5, 9, 13, 17, 21, x = 21 .. 25) the phase after the intervals
+  4, 5, 9, 13, 17, 21, 24 is 5, 50, 32, 14, 59, 41, 41 (the floors 2925,
+  5851, 8777, 11702, 14628 of k x 20480 / 7 added to 5, mod 64);
+  composed over axes, the momentum [1024, 320, 0] with `action` 65536
+  from (4, 4, 0) on a 40 x 40 x 1 board (the x steps at the even ages,
+  the y steps at 5, 9, 13, 17, 21, no step lost, the body at (16, 9, 0)
+  after 24): the y turns floor(0.3125 k) - floor(0.3125 (k - 1)) = 0, 0,
+  0, 1, 0, so the phase after 17 intervals is 5 + 8 + 1 = 14 and after
+  24 it is 5 + 12 + 1 = 18; the same worlds without `action` keep the
+  phase 5 at every interval.
+- (e) the board is unchanged by the two keys: the 324 fixed rays of
+  `light` of `test_ray_age` (e) on the periodic 8 x 8 x 4 board (number
+  1, an anchor of `light` at (7, 7, 3) their home) with a free body of
+  `m` (content 16, phase 5, momentum [1024, 320, 0], span [1, 1, 3] at
+  (0, 0, 0), `pass` for `light`, no release) run 40 intervals with
+  `action` 7 and `phase_by_momentum` and again without them: the rays'
+  sorted (Node, direction, phase, amount, content) rows are identical at
+  every interval, the body's Nodes and steps are identical, its phase
+  differs (and is 5 without the keys), the collision moved rays on the
+  way and the body's presence read rays.
+- (f) the refusals, naming the key: `action` 0, -1, "8" and 1.5 ("action
+  must be an integer from 1"); `phase_by_momentum` without `action`
+  ("needs the world's `action`"), on a fixed measured event ("refused on
+  a fixed measured event"), on a family without a phase circle ("without
+  a phase circle"), 1 ("must be true or false"); `span` "3" and [2, 1, 1]
+  ("three odd integers"), [0, 1, 1] ("from 1 through 12"), [1, 5, 1] on
+  an axis of 3 ("from 1 through 3"), a body of span [3, 1, 1] at x = 0 of
+  an open axis ("leaves the board"), two bodies of span [3, 1, 1] at
+  x = 4 and 6 ("share the Node [5, 1, 1]"), a detector naming (5, 1, 1)
+  of a fixed body of span [3, 1, 1] at (4, 1, 1) ("a Node of a body on a
+  set ... not its position"); the turn's bound: `ticks` 2^40 with the
+  momentum 2^20 and N 64 (2^66, "beyond the integer bound"); accepted:
+  `span` [3, 1, 1] at x = 0 of a periodic axis (the body wraps), `span`
+  absent parsing to (1, 1, 1) and `phase_by_momentum` absent to false,
+  `action` absent to None; the record: `run.json` of a turning world
+  carries `action` 64, `hypotheses` ["bohr-v1"] and per measured event
+  under `numbers` its `span` ([1, 3, 1]) and `phase_by_momentum` (true),
+  the measured events' states and `state.json` the `span`; without the
+  key `action` None, `hypotheses` [], `span` [1, 1, 1] and
+  `phase_by_momentum` false.
 
 ## The phase window under the ray law
 

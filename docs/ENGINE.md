@@ -160,6 +160,17 @@ moves the whole set as one (refused when a Node of the moved set holds
 another measured event; the whole body clicks on the face when any of its
 Nodes would leave; every Node wraps on a periodic axis), and `nature_beam`
 reads its arrivals over the set and apportions its releases over it.
+The turn by momentum (the world key `action`, h, and the measured-event
+key `phase_by_momentum`; [RAY_LAW note 30 (ii)](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+the model owner's decision of 2026-09-20 on Bohr, "put it as parameters
+outside the board like the age") is applied in `_move` at the Link a
+body steps: its phase turns by `by_clock(k0, |p| x N, h)` with k0 the
+count of Links the step rule gives on that axis at its age before the
+self-creation, the difference of two floors of k x |p| x N / h, no
+register anywhere; the axes compose; the product is bounded before it is
+formed; without `action` nothing turns. A rule of the measured event, the
+external thing, read from its own record; the rays' flight and collision
+are untouched.
 `inverse_step` runs the
 inverse collision and the inverse walk on a board without a measured event
 (the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
@@ -246,7 +257,9 @@ default, a power of two from 2 through 4096); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
 `suspension` `[n, d]` (an integer w as `[w, 1]`; 0 or `[0, d]` for none,
 recorded as `[0, 1]`); `width` (S, the width of the push, an integer from
-1; 1 by default, the step rule as it was); `age_bound` (the largest age a
+1; 1 by default, the step rule as it was); `action` (h, the quantum of
+action of the turn by momentum, an integer from 1; absent by default:
+nothing turns by momentum); `age_bound` (the largest age a
 ray may carry, an integer from 1; twice the flight bound by default on a
 board with an open axis, required on a board periodic on every axis; a run
 in which a ray on the board carries an age beyond it is refused); `directions` (the declared primitive vectors beyond
@@ -259,7 +272,10 @@ charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
 `phase` true by default, `phase_per_link` 0 .. N - 1); `measured`
 (`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`
 (three odd integers from 1, `[1, 1, 1]` by default: a body on the set of
-Nodes centred on `position`, one record on all of them), `directions` (the
+Nodes centred on `position`, one record on all of them),
+`phase_by_momentum` (true: the body turns its phase by its momentum label
+at every Link it steps, over the world's `action`; false by default),
+`directions` (the
 directions it releases and re-emits on, by vector or by index into D; the
 six headings by default), `table` family name to `read` | `measure` |
 `rerelease` | `pass` or to `{"rule": ..., "phase_window": s, "reads":
@@ -303,8 +319,11 @@ declared ray's `age` beyond it, and at run time a ray on the board whose
 age passes it ([the age](TEST_EXPECTATIONS.md#the-age)), a `span` that is
 not three odd integers from 1 or larger than its axis, a body whose Nodes
 leave the board on an open axis, two measured events sharing a Node, a
-detector naming a Node of a body that is not its `position`
-([a body on a set](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
+detector naming a Node of a body that is not its `position`, an `action`
+below 1 or not an integer, `phase_by_momentum` without `action`, on a
+`fixed` measured event or on a family without a phase circle, and a
+turning body whose `ticks x |p| x N` exceeds 2^62 - 1 for its declared
+momentum ([a body on a set and the turn](TEST_EXPECTATIONS.md#a-body-on-a-set-and-the-turn-by-momentum)).
 `event_universe.configuration_validation` reports a world of the law as
 kind `rays`.
 
@@ -312,8 +331,11 @@ kind `rays`.
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,
 `charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
-`numbers` (per measured event its `position`, `family` and `span`; the
-measured events' states carry `span` too, as `state.json` does),
+`numbers` (per measured event its `position`, `family`, `span` and
+`phase_by_momentum`; the measured events' states carry `span` too, as
+`state.json` does), `action` (h, or None) and `hypotheses` (`["bohr-v1"]`
+when `action` is declared, the identity of the turn by momentum beside
+the law, else `[]`),
 the books per completed tick (`audit`, the `charge` line the
 exact rational sum of the measured events' charges as a reduced pair) with
 `conserved_at_every_completed_tick`, the measured events' final states
@@ -333,7 +355,10 @@ that stepped off, the `record` and the `momentum` that left) and the
 record per event: `home`, `read`, `click`, `rerelease` (per number and
 tick, with the amount, the phase, the push and the content), `pass` (a ray
 below the threshold, with `threshold`, or outside the window, with
-`window`, or paired under `beam`, with `cancelled` true), `step`, and per
+`window`, or paired under `beam`, with `cancelled` true), `step` (the
+measured event's number, its Node before and after, its momentum and,
+since 2026-09-20, its `phase` after the step: what the turn by momentum
+turned it to, the phase it had otherwise), and per
 interval per detector set and family a `record` line with the set's
 `record` (under `wave` the square with the `pointer` (X, Y); under `beam`
 the count), the set's `phase` and, for a set of one Node, its `node` and

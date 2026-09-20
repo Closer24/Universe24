@@ -26,7 +26,7 @@ from pathlib import Path
 
 from event_universe import __version__
 from event_universe.events.engine import RaySimulation
-from event_universe.events.world import RAYS_LAW, RayWorld
+from event_universe.events.world import BOHR_RULE, RAYS_LAW, RayWorld
 from event_universe.snapshot_writer import write_snapshot
 
 
@@ -96,6 +96,11 @@ def execute_ray_run(
         "suspension": list(world.suspension),
         "width": world.width,
         "age_bound": world.age_bound,
+        # The turn by momentum (the model owner's decision of 2026-09-20 on
+        # Bohr): h when the world declares it, and then the identity of the
+        # hypothesis beside the law, `bohr-v1`.
+        "action": world.action,
+        "hypotheses": [] if world.action is None else [BOHR_RULE],
         "directions": [list(vector) for vector in world.directions],
         "families": [
             {
@@ -112,6 +117,7 @@ def execute_ray_run(
                 "position": list(entry.position),
                 "family": world.families[entry.family].name,
                 "span": list(entry.span),
+                "phase_by_momentum": entry.phase_by_momentum,
             }
             for index, entry in enumerate(world.measured)
         },
