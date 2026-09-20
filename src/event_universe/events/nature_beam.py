@@ -210,9 +210,10 @@ class NatureBeam:
     branch: int = 0
     multiplicity: int = 1
 
-    def record_line(self, vectors: np.ndarray, amplitude: bool = False) -> dict[str, object]:
+    def record_line(self, vectors: np.ndarray) -> dict[str, object]:
         """The row as `state.json` writes it, the direction as its vector;
-        under the amplitude key with its three columns."""
+        a row of a record with its three columns, a row of no record
+        without them (every row without the key)."""
         line: dict[str, object] = {
             "direction": [int(v) for v in vectors[self.direction]],
             "age": self.age,
@@ -221,7 +222,7 @@ class NatureBeam:
             "amount": self.amount,
             "content": self.content,
         }
-        if amplitude:
+        if self.record != NO_RECORD:
             line["record"] = self.record
             line["branch"] = self.branch
             line["multiplicity"] = self.multiplicity
@@ -1868,8 +1869,9 @@ def entry_rotation(
 
 
 def taken_rows(plan: FamilyPlan, k0: int, k1: int) -> list[list[int]]:
-    """The taken rows' record, branch, multiplicity, amount, phase and
-    arrival, for the group lines under the amplitude key."""
+    """The taken rows of a record: their record, branch, multiplicity,
+    amount, phase and arrival, for the group lines (empty where no row of
+    the group carries a record, and the key is then not written)."""
     return [
         [
             plan.t_record[k],
@@ -1880,6 +1882,7 @@ def taken_rows(plan: FamilyPlan, k0: int, k1: int) -> list[list[int]]:
             plan.t_arrival[k],
         ]
         for k in range(k0, k1)
+        if plan.t_record[k] != NO_RECORD
     ]
 
 
@@ -2211,7 +2214,7 @@ def nature_beam(
                         "momentum": [int(v) for v in labels[k]],
                         "content": int(store.amount[index] * store.content[index]),
                     }
-                    if world.amplitude:
+                    if store.record[index] != NO_RECORD:
                         face_line["record"] = int(store.record[index])
                         face_line["branch"] = int(store.branch[index])
                         face_line["multiplicity"] = int(store.multiplicity[index])
@@ -2954,8 +2957,9 @@ def nature_beam(
                                     "content": group_content,
                                     "reading": reading_value,
                                 }
-                                if world.amplitude:
-                                    read_line["rows"] = taken_rows(plan, k0, k1)
+                                recorded_rows = taken_rows(plan, k0, k1)
+                                if recorded_rows:
+                                    read_line["rows"] = recorded_rows
                                 record(read_line)
                             continue
                         ledger.transit_absorbed[family] += group_total
@@ -3018,8 +3022,9 @@ def nature_beam(
                                     "content": group_content,
                                     "reading": reading_value,
                                 }
-                                if world.amplitude:
-                                    group_line["rows"] = taken_rows(plan, k0, k1)
+                                recorded_rows = taken_rows(plan, k0, k1)
+                                if recorded_rows:
+                                    group_line["rows"] = recorded_rows
                                     # A rotated `sum` re-emitter: the setting
                                     # and the turn of its rows (one per group:
                                     # the set's setting), as on a click.
@@ -3073,7 +3078,7 @@ def nature_beam(
                                 }
                                 if window_read is not None:
                                     click_line["window"] = plan.t_window[k]
-                                if world.amplitude:
+                                if plan.t_record[k] != NO_RECORD:
                                     click_line["record"] = plan.t_record[k]
                                     click_line["branch"] = plan.t_branch[k]
                                     click_line["multiplicity"] = plan.t_multiplicity[k]
@@ -3347,12 +3352,15 @@ def nature_beam(
             ):
                 rate_n, rate_d = entry.lamp_rate
                 cost = definition.quantum * turn
-                # Under the amplitude law a lamp's release is the birth of one
-                # record: k rows of amount 1 on its k directions with the
-                # multiplicity k, the record's identity the lamp's number x
-                # 2^32 + the birth's ordinal at the lamp (the parser admits
-                # the rate [1, 1] alone under the key).
-                record_id = NO_RECORD
+                # Under the amplitude law a lamp's release is the birth of
+                # records: per self-creation as many records as the rate
+                # says units per direction (`by_clock(age, n, d)`, the
+                # crowd form's count), each k rows of amount 1 on its k
+                # directions with the multiplicity k, the record's identity
+                # the lamp's number x 2^32 + the birth's ordinal at the
+                # lamp, the birth phase of the j-th record of a
+                # self-creation the clock's phase advanced by j strides
+                # (the design's 2.1, the extension; stage (vii)).
                 ways = len(entry.lamp_directions)
                 lamp_turns = entry.lamp_turns or (0,) * ways
                 if world.amplitude and entry.held[family] // cost >= 1:
@@ -3368,7 +3376,9 @@ def nature_beam(
                     paths = ways // arms
                     norm = sum(weight * weight for _, weight in branches)
                     per_direction = sum(weight for _, weight in branches)
-                    if entry.held[family] // cost < ways * per_direction:
+                    quanta = ways * per_direction
+                    count = by_clock(age, rate_n, rate_d)
+                    if count and entry.held[family] // cost < quanta:
                         # The birth is every label's weight on every
                         # direction: a lamp that cannot pay it would birth a
                         # record of a norm below its own, refused.
@@ -3379,55 +3389,50 @@ def nature_beam(
                             f"each of its {ways} directions for the birth of a record under "
                             f"{AMPLITUDE_KEY}"
                         )
-                    entry.births += 1
-                    record_id = record_identity(entry.number, entry.births)
-                    if layer is not None:
-                        layer.birth(
-                            tick,
-                            record_id,
-                            family,
-                            entry.phase,
-                            dict(branches),
-                            arms,
-                            ways * per_direction,
-                        )
-                    if record is not None:
-                        record(
-                            {
-                                "event": "birth",
-                                "tick": tick,
-                                "node": list(entry.position),
-                                "measured": entry.number,
-                                "family": definition.name,
-                                "record": record_id,
-                                "u": entry.phase,
-                                "labels": [list(pair) for pair in branches],
-                                "arms": arms,
-                                "units": ways * per_direction,
-                                "multiplicity": paths * norm,
-                            }
-                        )
-                    for way, (direction, lamp_turn) in enumerate(
-                        zip(entry.lamp_directions, lamp_turns, strict=True)
-                    ):
-                        lamp_arm = way // paths
-                        for joint, weight in branches:
-                            born.append(
-                                (
-                                    direction,
-                                    weight,
-                                    cost,
-                                    (entry.phase + lamp_turn) % modulus,
-                                    False,
-                                    record_id,
-                                    branch_of(lamp_arm, joint),
-                                    paths * norm,
-                                )
+                    count = min(count, entry.held[family] // (cost * quanta))
+                    for j in range(count):
+                        entry.births += 1
+                        record_id = record_identity(entry.number, entry.births)
+                        u = (entry.phase + j * turn) % modulus
+                        if layer is not None:
+                            layer.birth(tick, record_id, family, u, dict(branches), arms, quanta)
+                        if record is not None:
+                            record(
+                                {
+                                    "event": "birth",
+                                    "tick": tick,
+                                    "node": list(entry.position),
+                                    "measured": entry.number,
+                                    "family": definition.name,
+                                    "record": record_id,
+                                    "u": u,
+                                    "labels": [list(pair) for pair in branches],
+                                    "arms": arms,
+                                    "units": quanta,
+                                    "multiplicity": paths * norm,
+                                }
                             )
-                            content = cost * weight
-                            entry.held[family] -= content
-                            ledger.held_spent[family] += content
-                            ledger.content_released[family] += content
+                        for way, (direction, lamp_turn) in enumerate(
+                            zip(entry.lamp_directions, lamp_turns, strict=True)
+                        ):
+                            lamp_arm = way // paths
+                            for joint, weight in branches:
+                                born.append(
+                                    (
+                                        direction,
+                                        weight,
+                                        cost,
+                                        (u + lamp_turn) % modulus,
+                                        False,
+                                        record_id,
+                                        branch_of(lamp_arm, joint),
+                                        paths * norm,
+                                    )
+                                )
+                                content = cost * weight
+                                entry.held[family] -= content
+                                ledger.held_spent[family] += content
+                                ledger.content_released[family] += content
                 else:
                     for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
                         amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
@@ -3618,7 +3623,7 @@ def nature_beam(
                     "momentum": [int(v) for v in labels[k]],
                     "content": int(store.amount[index] * store.content[index]),
                 }
-                if world.amplitude:
+                if store.record[index] != NO_RECORD:
                     border_line["record"] = int(store.record[index])
                     border_line["branch"] = int(store.branch[index])
                     border_line["multiplicity"] = int(store.multiplicity[index])

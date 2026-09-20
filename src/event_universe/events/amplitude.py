@@ -151,6 +151,37 @@ def lcm(a: int, b: int) -> int:
     return a * b // gcd(a, b) if a and b else max(a, b)
 
 
+def isqrt(value: int) -> int:
+    """The integer square root of a nonnegative Python integer (Newton on
+    the host's integers, exact)."""
+    if value < 2:
+        return value
+    x = 1 << ((value.bit_length() + 1) // 2)
+    while True:
+        y = (x + value // x) // 2
+        if y >= x:
+            return x
+        x = y
+
+
+def common_denominator(held: int, arriving: int) -> tuple[int, int, int]:
+    """Two multiplicities of one record at one offer (the design's 2.5;
+    stage (vii)): the offer's pointers are amplitudes over the square root
+    of its multiplicity, so rows of the multiplicities D and m add exactly
+    when D / m is the square of a rational, a / b in lowest terms with a
+    and b squares: the held pointers scaled by sqrt(b), the arriving row
+    by sqrt(a), the common denominator D x b = m x a. Returns (the scale
+    of the held pointers, the scale of the arriving row, the common
+    denominator); None where the ratio is not a square (the caller
+    refuses: the integer form has no cross term over sqrt(D m))."""
+    common = gcd(held, arriving)
+    a, b = held // common, arriving // common
+    root_a, root_b = isqrt(a), isqrt(b)
+    if root_a * root_a != a or root_b * root_b != b:
+        return (0, 0, 0)
+    return root_b, root_a, held * b
+
+
 def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
     """The ladder (the design's section 3.3): the cells' weights as pairs
     (numerator, multiplicity), the cumulative C_k over the common
@@ -204,7 +235,8 @@ class Offer:
     True, a which-path factor). `pointers` the accumulated pointer per
     (Node, label) (Python integers); `residuals` per channel the complex
     residual per (Node, label) after the set's reading; `multiplicity` the
-    rows' m at the set (the rows of one offer share it, refused otherwise);
+    rows' m at the set (the common denominator of the rows' multiplicities,
+    which differ by square factors or are refused, `common_denominator`);
     `rotated` whether the set rotated the labels (the channels + and -),
     else the channels are the labels; `setting` the rotation's (setting,
     turn); per Node the units, the content and the momentum the rows
@@ -487,14 +519,32 @@ class Layer:
             offer.residuals.setdefault(label, {})[(NO_NODE, label)] = (IDENTITY, 0)
             return
         at = NO_NODE if node is None else node
+        scale = 1
         if offer.multiplicity is None:
             offer.multiplicity = multiplicity
         elif offer.multiplicity != multiplicity:
-            raise ValueError(
-                f"amplitude-v1: the rows of the record {identity} at the set "
-                f"{self.names[set_index]} carry the multiplicities {offer.multiplicity} and "
-                f"{multiplicity}: one multiplicity per offer (the design's section 3.1)"
-            )
+            # Several multiplicities of one record at one offer (stage
+            # (vii)): the common denominator where the ratio is a square,
+            # the held pointers and residuals rescaled; refused otherwise.
+            held_scale, scale, common = common_denominator(offer.multiplicity, multiplicity)
+            if not common:
+                raise ValueError(
+                    f"amplitude-v1: the rows of the record {identity} at the set "
+                    f"{self.names[set_index]} carry the multiplicities {offer.multiplicity} and "
+                    f"{multiplicity}, whose ratio is not a square: two paths of one record add "
+                    "exactly at a set only when their multiplicities differ by a square factor "
+                    "(the integer form has no cross term over the square root of their "
+                    "product; the design's section 2.5)"
+                )
+            if held_scale != 1:
+                offer.pointers = {
+                    key: (x * held_scale, y * held_scale) for key, (x, y) in offer.pointers.items()
+                }
+                offer.residuals = {
+                    channel: {key: (x * held_scale, y * held_scale) for key, (x, y) in entries.items()}
+                    for channel, entries in offer.residuals.items()
+                }
+            offer.multiplicity = common
         offer.units += amount
         offer.units_at[at] = offer.units_at.get(at, 0) + amount
         offer.content[at] = offer.content.get(at, 0) + content
@@ -502,7 +552,7 @@ class Layer:
             held = offer.momentum.setdefault(at, [0] * len(momentum))
             for axis, value in enumerate(momentum):
                 held[axis] += value
-        weight = AMPLITUDE_SCALE * amount
+        weight = AMPLITUDE_SCALE * amount * scale
         pointer: Complex = (weight * self.cosines[phase], weight * self.sines[phase])
         key = (at, label)
         offer.pointers[key] = cadd(offer.pointers.get(key, (0, 0)), pointer)

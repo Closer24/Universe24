@@ -70,6 +70,7 @@ kept, their pins the law of events').
 | `test_amplitude_layer.py` | The layer: the reading `sum` at the record's scope, the offers, the ladder at completion and the gathers, on series L: the ten Mach-Zehnder and Elitzur-Vaidman worlds click as the design's table over the 64 births (tests 1, 3), the same list twice and the moved rung (8), a split takes no click gate (the review's B1), the two slits at a low rate against the generator's reading of one birth (2: 78 of 80 sets exact, one rung moved by the tables' rounding), the gate set parses without the key (7), the reading tool's replay equals `run.json`'s `world` (10), the pair form bounded at the parse (S1), the cancel booked per content (S3), a lamp short of one quantum per direction refused (S4), the `record` line's scope ([below](#the-amplitude-law-the-layer)) | new (2026-09-20; the design's sections 3, 5 and 7; the decision on the split's gate) |
 | `test_amplitude_pair.py` | The pair, the which-path world, no maintenance and GHZ: a lamp's `branches` and `arms` (the birth of four rows on two arms with the labels 0 and 3), the CHSH labels (E x 64 = 44, -44, 44, 44; S = 176/64; the marginals 32/64), the choosers (the 15 setting pairs' E; S = 156/64 on the registered quadruple), the which-path `read` (E = 44, -44, 0, 0; S = 88/64), Bob's counters 116 Links farther (E unchanged), GHZ's allowed triples and products, the refusals ([below](#the-amplitude-law-the-pair)) | new (2026-09-20; the design's section 4 and its `bell.py`) |
 | `test_amplitude_gate.py` | The gate between records and the pair at N = 1024 and 4096: the Hadamard and the CNOT on the GameBoard (|00> - |11>), the pair by the gate at the CHSH labels (S = 176/64), CNOT twice the identity, GHZ by one gate of three parties, the register's ceiling (three rotations run, four refused at load), the refusals, S = 2896/1024 with |E - cos| <= 1/N, S = 11584/4096 with the bound failing at the tables' rounding; the review of (v): the gate's copies booked on the live count (every gathered record at live 0), a record with an offer or units elsewhere refused at the gate, the control by its declared arrival direction (the `measured` list reversed gives the same outcomes), the control's refusals ([below](#the-amplitude-law-the-gate)) | new (2026-09-20; the design's section 10 and its `gate.py`; the owner's paper numbers; the review of (v)) |
+| `test_amplitude_click.py` | The one click's prerequisites under the key (stage (vii), step 1): a lamp's rate births as many records as it says with the ordinals and the birth phases in order, two multiplicities of one record at one offer take the common denominator or are refused, the columns are written only where a record is, and every gate-set world without a lamp reads the same with the key and without it at its cap ([below](#the-amplitude-law-the-one-click)) | new (2026-09-20; the design's sections 2.1, 2.5 and 6) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -429,6 +430,40 @@ expected integers, written down before the first run:
   values within 237/65536 of 1; the design's 0.0019 held for u = 0
   alone); its first gather carries the content 41, the momentum [2624,
   0, 0] and the Node (4, 3, 0) of its click.
+
+## The amplitude law: the one click
+
+`tests/test_amplitude_click.py` (docs/BEAM_LAW.md note 37; the design,
+sections 2.1, 2.5 and 6; MIGRATION (vii-1)). The expected integers,
+written down before the first run:
+
+- (a) a lamp at the rate [3, 1] on two directions (K 2^20, content 2^20:
+  the stride 1) births three records per self-creation: the ordinals 1,
+  2, 3 at tick 1 with u = 0, 1, 2 and 4, 5, 6 at tick 2 with u = 1, 2, 3,
+  each two rows of amount 1 with the multiplicity 2, six births counted
+  at the lamp; the rate [2, 1] parses under the key;
+- (b) `common_denominator(2, 8)` = (2, 1, 8), (8, 2) = (1, 2, 8), (9, 36)
+  = (2, 1, 36), (1682, 1682 x 25) = (5, 1, 1682 x 25), and (2, 4) none;
+  two paths of one record, one through a re-emitter of weight [1] (m 2,
+  amount 1) and one through a re-emitter of weight [2] (m 8, amount 2),
+  both five Links, meet in phase at one `sum` set: the offer's
+  multiplicity 8, its units 3, the record's one cell the set with the
+  rung 64, its total and weight 2 x 2^58 (the two paths add: a re-meeting
+  is not unitary, the design's 2.5); with the second re-emitter of
+  weights [1, 1] on two directions (m 4 against 2) the run is refused:
+  "record 4294967297 at the set end carry the multiplicities 2 and 4";
+- (c) a keyed bar of 6 Nodes with a lamp on +x, a declared row of light
+  of no record at x = 3 and a counter at x = 5: after one interval
+  `state.json` holds one row with the three columns and one without;
+  over 16 intervals the counter's `click` lines carry `record`, `branch`,
+  `multiplicity` and `age` all together or not at all, and both kinds
+  occur;
+- (d) every world of `examples/events/gate_set.json` without a lamp
+  (`weak/j3_deuteron`, `bohr/r2`, `detector/grouped_12_nodes`,
+  `weak/j2_ladder`, `weak/j3_deuteron_crowd`, `nucleus/alpha_square`,
+  `hubble/pushing_age`, `coupling/1b_m16`), run at its `cap` with the key
+  and without it: `events.jsonl` and `state.json` equal byte for byte,
+  the books (`audit`) equal, `run.json`'s `amplitude` false and true.
 
 ## The amplitude law: the gate
 

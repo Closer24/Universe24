@@ -415,10 +415,6 @@ AMPLITUDE_KEY = "amplitude"
 # The circle must hold the quarter turn of a reflection under the key
 # (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
 AMPLITUDE_LEAST_STEPS = 4
-# The one lamp rate the key admits in this version: one record per
-# self-creation (a rate of r units per direction would make r identical
-# paths with one birth phase; the design, section 2.1).
-AMPLITUDE_LAMP_RATE = (1, 1)
 # The identity of the turn by momentum, a physical hypothesis beside the
 # law (the model owner's decision of 2026-09-20 on Bohr): the record carries
 # it when the world declares `action`.
@@ -885,6 +881,15 @@ class NatureBeamWorld:
     # merge, and the apparatus's layer reads the records' offers
     # (`events/amplitude.py`; `AMPLITUDE_RULE`).
     amplitude: bool = False
+
+    @property
+    def recorded(self) -> bool:
+        """Whether a row of this world can carry a record: the key and a lamp
+        (a record is born by a lamp, a rebirth follows a lamp's record). The
+        record's columns and the books' `cancelled` lines are written in a
+        recorded world alone, so that a world without a lamp reads the same
+        with the key and without it (the design's test 7)."""
+        return self.amplitude and any(entry.lamp is not None for entry in self.measured)
 
     @property
     def phase_mask(self) -> int:
@@ -1472,12 +1477,6 @@ def _lamp(
 ) -> LampDefinition:
     obj = _object(value, label, LAMP_KEYS, {"rate"})
     rate = _ratio(obj["rate"], f"{label}.rate", zero=True)
-    if amplitude and rate != AMPLITUDE_LAMP_RATE:
-        raise ValueError(
-            f"{BEAM_LAW}: {label}.rate {list(rate)} is refused under {AMPLITUDE_KEY}: a lamp "
-            f"births one record per self-creation, the rate {list(AMPLITUDE_LAMP_RATE)} (r units "
-            "per direction would be r identical paths with one birth phase)"
-        )
     directions = _directions(
         obj.get("directions", list(range(HEADING_OFFSET, FIXED_DIRECTIONS))),
         f"{label}.directions",

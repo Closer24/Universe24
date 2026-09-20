@@ -213,7 +213,37 @@ as r births), a set's offer of several multiplicities of one record, the
 columns written only where a record is, and the design's test 7 restated
 as identity on the worlds without a lamp. Until then the key `amplitude`
 stays as (i) declared it, false by default, and the crowd's `wave`
-threshold stays; nothing deleted, nothing added.
+threshold stays; nothing deleted, nothing added. Stage (vii) builds the
+four, below.
+
+## The amplitude law, on 2026-09-20, (vii-1): the one click's prerequisites under the key
+
+Stage (vii), step 1 (the model owner's order after the landing): nothing
+changes without the key, and a world without a lamp now reads the same
+with it.
+
+- A lamp's `rate` [n, d] is accepted under the key: a self-creation
+  births as many records as the rate says units per direction
+  (`by_clock(age, n, d)`), as many as the lamp can pay whole, each with
+  its own ordinal, the birth phase of the j-th record of a self-creation
+  the clock's phase advanced by j strides (the design's 2.1, the
+  extension). Until now the rate [1, 1] alone was accepted.
+- Rows of one record at one offer with multiplicities that differ by a
+  square factor add at the common denominator (the held pointers
+  rescaled by the root of the ratio, `amplitude.common_denominator`); a
+  ratio that is not a square is refused naming the record, the set and
+  the two multiplicities (the integer form has no cross term over the
+  square root of their product). Until now two multiplicities at one
+  offer were refused.
+- The columns `record`, `branch` and `multiplicity` (and `age` on a
+  click line, `rows` on a group line) are written on the rows of a
+  record alone, in `events.jsonl` and in `state.json`; the books'
+  `cancelled` lines are written in a recorded world alone (the key and a
+  lamp, `NatureBeamWorld.recorded`). A world without a lamp reads the
+  same with the key and without it (`tests/test_amplitude_click.py` (d)
+  on the gate set's lamp-free worlds at their caps); the gate set is
+  byte-identical without the key as before.
+- Nothing deleted.
 
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 

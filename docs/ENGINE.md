@@ -358,13 +358,15 @@ under it every row of the store carries a `record`, a `branch` and a
 without the key), the merge is the normal form that cancels antiphase rows
 of one record (`NatureBeamStore.merge` with the circle's N; what it removed
 on the ledger's `cancelled` lines), and the further keys of the law are
-accepted; refused with N below 4 (the quarter turn of a reflection), with
-a lamp's `rate` other than [1, 1] and when it is not true or false; the
-record carries it and the identity `amplitude-v1` under `hypotheses` when
-it is true; absent, no row carries a record and every world reads as it
-did, byte for byte; the key stays and the record form is not the
-default: the design's section 6 stopped at the gate set, MIGRATION
-(vi)); `directions` (the declared primitive vectors beyond
+accepted; refused with N below 4 (the quarter turn of a reflection) and
+when it is not true or false; the record carries it and the identity
+`amplitude-v1` under `hypotheses` when it is true; absent, no row carries
+a record and every world reads as it did, byte for byte, and so does a
+world without a lamp with the key (the record's columns and the books'
+`cancelled` lines are written in a recorded world alone, the key and a
+lamp, `NatureBeamWorld.recorded`; stage (vii)); the key stays and the
+record form is not the default: the design's section 6 stopped at the
+gate set, MIGRATION (vi)); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -478,11 +480,15 @@ columns and its multiplicity kept, apportioned whole as a row of no
 record is, no split at the home); `lamp` `{rate: [n, d],
 directions, phase_window, phase_width}` on a measured event of a paid
 family, its window a number; under `amplitude` also `turns`, a phase step
-per direction the born row carries beyond the clock's phase, and the rate
-[1, 1] alone: a self-creation with a release births one record of one row
-of amount 1 per direction with the multiplicity the directions' count,
-the record's identity the lamp's number x 2^32 + the birth's ordinal at
-the lamp, `nature_beam.record_identity`; and `branches`, the joint labels
+per direction the born row carries beyond the clock's phase; a
+self-creation with a release births as many records as the rate says
+units per direction (`by_clock(age, n, d)`, the crowd form's count, as
+many as the lamp can pay whole; stage (vii); until then the rate [1, 1]
+alone), each one row of amount 1 per direction with the multiplicity the
+directions' count, the record's identity the lamp's number x 2^32 + the
+birth's ordinal at the lamp, `nature_beam.record_identity`, the birth
+phase of the j-th record of a self-creation the clock's phase advanced by
+j strides (the design's 2.1, the extension); and `branches`, the joint labels
 of the birth with their integer weights (`[[label, weight], ...]`, the
 labels distinct and below 2^arms, the bit k of a label its value on arm
 k; [[0, 1]] by default) and `arms`, the count of directions that are
@@ -533,7 +539,12 @@ gates at every entry;
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
 default, `reading` `wave` by default (since 2026-09-20) or `beam`, or
-under `amplitude` `sum`, the one pointer's reading at the record's scope;
+under `amplitude` `sum`, the one pointer's reading at the record's scope
+(rows of one record at one offer with multiplicities that differ by a
+square factor add at the common denominator, the held pointers rescaled,
+`amplitude.common_denominator`; a ratio that is not a square is refused
+naming the record and the set, the integer form having no cross term
+over its square root; stage (vii), the design's 2.5);
 a detector's name may not use the layer's reserved prefix `measured:`
 nor a face's or the border's name
 (the owner's unification (4), `DetectorSet.scope`: `crowd` under `wave`,
@@ -701,9 +712,10 @@ nothing of the emitter but the number: the columns `charge` and `mass` of
 the night of 2026-09-19 are gone since 2026-09-20, the factor of the
 electric push being the family's charge per unit of content,
 [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
-and note 28; under the world key `amplitude` also the row's `record`,
-`branch` and `multiplicity`, written only under the key). Under the key
-the books gain the `cancelled` lines (per family the units the merge's
+and note 28; a row of a record also its `record`, `branch` and
+`multiplicity`, written on the rows of a record alone: a row of no record
+carries none, with the key or without it). In a recorded world (the key
+and a lamp) the books gain the `cancelled` lines (per family the units the merge's
 cancel removed on the transit line, the content carried on the content
 line and their labels beside the `turned` line, and the world's total
 under `momentum.cancelled`): initial + released = current + escaped +
@@ -714,8 +726,9 @@ Under the key the record gains the lines of the layer
 (`events/amplitude.py`, the design's sections 3 and 5): `birth` (a lamp's
 record: `record`, `u`, `labels`, `arms`, `units`, `multiplicity`), the
 `click`, `read` and `rerelease` lines carry the rows' `record`, `branch`,
-`multiplicity` and `age` (`rows` on a group line; `window` and `turn` at
-a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,
+`multiplicity` and `age` where the row is a record's (`rows` on a group
+line, the rows of a record among the group's, absent where none is;
+`window` and `turn` at a rotated `sum` set), `split` (per re-created row: `absorbed`, `born`,
 `multiplicity`, `rebirth`, the entry's phase `u`), `cancel` (per record,
 direction and content per unit: `amount`, `content`), the `record` line
 of a `sum` set at a gather (`scope` `record`, `of` the record, `arm`,

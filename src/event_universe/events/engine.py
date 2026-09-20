@@ -705,7 +705,10 @@ class NatureBeamSimulation:
         families: dict[str, object] = {}
         balanced = True
         ledger = self.ledger
-        amplitude = self.world.amplitude
+        # The `cancelled` lines are written in a recorded world alone (the
+        # key and a lamp): a world without a lamp reads the same with the
+        # key and without it.
+        amplitude = self.world.recorded
         # One pass over the measured events: what they hold per family,
         # their momentum and their charge (rho x content of the free
         # families and, since 2026-09-20 (D-1), the paid families' whole
@@ -1018,6 +1021,6 @@ class NatureBeamSimulation:
                 lo, hi = store.slice(flat)
                 if hi == lo:
                     continue
-                beams = [beam.record_line(vectors, self.world.amplitude) for beam in store.rows(lo, hi)]
+                beams = [beam.record_line(vectors) for beam in store.rows(lo, hi)]
                 families.append({"family": family.name, "rays": beams})
             yield entry

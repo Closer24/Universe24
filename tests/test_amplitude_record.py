@@ -10,9 +10,10 @@ before the first run:
 (a) the key: absent it is false, `hypotheses` is empty and `run.json`
     carries `amplitude` false; declared true it is true and `hypotheses` is
     ["amplitude-v1"]; refused naming the key: a value that is not true or
-    false, N below 4 under the key (the quarter turn of a reflection), a
-    lamp's `rate` other than [1, 1] under the key (one record per
-    self-creation); a world with N 4 and a lamp at [1, 1] is accepted;
+    false, N below 4 under the key (the quarter turn of a reflection); a
+    world with N 4 and a lamp at [1, 1] is accepted, and since stage (vii)
+    a lamp's `rate` other than [1, 1] too (as many records per
+    self-creation as the rate says; `tests/test_amplitude_click.py`);
 (b) the columns: every row of a world without the key carries record 0,
     branch 0 and multiplicity 1 (the store's columns after 5 intervals of a
     lamp of the design's Mach-Zehnder kind), `state.json`'s rows carry no
@@ -103,8 +104,8 @@ def test_the_key_its_default_its_identity_and_its_refusals(tmp_path: Path):
     measured = rate_world["measured"]
     assert isinstance(measured, list)
     measured[0] = {**measured[0], "lamp": {"rate": [2, 1], "directions": [[1, 0, 0]]}}
-    with pytest.raises(ValueError, match=r"rate \[2, 1\] is refused under amplitude"):
-        parse_nature_beam_world(rate_world)
+    rated = parse_nature_beam_world(rate_world).measured[0].lamp
+    assert rated is not None and rated.rate == (2, 1)
     small = lamp_world(amplitude=True, N=4)
     measured = small["measured"]
     assert isinstance(measured, list)

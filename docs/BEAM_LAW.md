@@ -2560,7 +2560,17 @@ implementation's part of the contract. The design above is unchanged.
     click needs the lamp's rate under the record form, a set's offer of
     several multiplicities of one record, the columns written only where
     a record is, and the design's test 7 restated as identity on the
-    worlds without a lamp; none is a half hour, none is done here.
+    worlds without a lamp; none is a half hour, none was done at (vi).
+    Stage (vii), step 1 (MIGRATION (vii-1); `tests/test_amplitude_click.py`)
+    builds the four under the key: a lamp's rate births as many records
+    as it says units per direction, each with its own ordinal and the
+    birth phase advanced by the clock's stride; two multiplicities of one
+    record at one offer add at the common denominator where their ratio
+    is a square (the held pointers rescaled by its root) and are refused
+    otherwise (the integer form has no cross term over the square root of
+    their product: a limit of the law, recorded); the columns and the
+    `cancelled` lines are written only where a record is; the gate set's
+    lamp-free worlds read the same with the key and without it.
     **(ix) What is not done, and next.** Unification (3), one permutation
     component for the collision, the meeting and the gate, is refused with
     the reason: the collision permutes directions by the six-heading table,
