@@ -2860,12 +2860,31 @@ implementation's part of the contract. The design above is unchanged.
     label on the transit line, the border's `lifetime_momentum` at the
     click; no remainder (`held mod h` stays held, nothing is rounded). The
     `contact` record gains `given` beside `component` (the content given at
-    that hand-over, 0 on a later one), written only in a world where a
-    body holds a paid family; `run.json` carries `binding-v1` under
-    `hypotheses` when a measured event holds a paid family other than its
-    own at load (the parser knows it). **The identity:** every world
-    without a body that holds a paid family reads as it did, byte for byte
-    (no registered world holds one: the gate set replays identical,
+    that hand-over, summed over the paid families the body carried, 0 on
+    a later one; the books keep the split per family, and a world that
+    holds two paid families would want it per family: none does), written
+    from the moment the run holds the fact; `run.json` carries `binding-v1`
+    under `hypotheses` from the same fact. **The fact of the run** (the
+    physics-rule review's should-fix, 2026-09-20): the parser knows what is
+    held at load (`NatureBeamWorld.binding`: a measured event holds a paid
+    family other than its own), but the rule fires on the run-time `held`:
+    a body of a free family that TAKES a paid row under the keys' `measure`
+    (fate (c)) carries it from then on and gives it at its next contact. So
+    the engine holds the fact (`NatureBeamSimulation.binding`), true at
+    load when a body holds a paid family and raised at the first give
+    otherwise; from then on every `contact` record carries `given` and the
+    run's record the identity (`NatureBeamSimulation.hypotheses`, what
+    `run.json` writes); `tests/test_binding.py` (f): a declared `bond` row
+    taken at tick 1 by a body that held none, given at its contact at tick
+    3, the record with `given` 2, the border click at tick 6, `binding-v1`
+    in `run.json`. Two more readings of the design, stated: a body on a set
+    of Nodes gives its row at its centre Node, whole, on the one heading
+    (not apportioned over its Nodes as a lamp's release is; the momentum
+    share rule over several occupants untouched); an occupant whose share
+    of the component is 0 takes no hand-over and triggers no give. **The
+    identity:** every world without a body that holds a paid family at
+    load or takes one during the run reads as it did, byte for byte (no
+    registered world does either: the gate set replays identical,
     VALIDATION); `beam-v1` is unchanged without such a body. **Locality
     and integers:** the contact reads the destination Node's occupant as
     the step already does (one Link); the give reads the giver's own held
@@ -2889,8 +2908,17 @@ implementation's part of the contract. The design above is unchanged.
     second value; "every family paid" (the design's section 7) does not
     give the defect and costs two rules, recorded as a direction. The
     register's pp threshold G = 7111 becomes 7112 once both protons have
-    given (a prediction, marginal and exact). Not checked on the engine
-    before the run: the exact tick of the first contact (about 16 from
-    the drive's arithmetic), the alpha line's inner gives; the give over
-    several occupants of a body's set is whole, on the one heading (the
-    momentum share rule untouched).
+    given (a prediction, marginal and exact; not run in series N, unread).
+    **One design pin read outside** (series N, the review's finding): the
+    design's "momentum: measured + transit + escaped = 0" (DESIGN section
+    2) reads +270 720 on x in B1 from tick 16 on, and nonzero in B3 from
+    tick 16. The cause is not the give: before it, p reads n's 1838 free
+    units with its gravity charge 1837 while n reads p's 1835 with 1840, a
+    gap of 6 x 3008 = 18 048 per interval over the 15 pushes of ticks 2 to
+    16 = 270 720 exactly, the third-law gap of record 126 made visible by a
+    held paid family that counts in M_A (note 31 (viii)) but is never
+    released; after both gave the two pushes are equal (310 945 171 840)
+    and the gap stops. A property of held paid content that predates the
+    give; the give removes it. Not checked on the engine before the run:
+    the exact tick of the first contact (about 16 from the drive's
+    arithmetic, met exactly), the alpha line's inner gives.

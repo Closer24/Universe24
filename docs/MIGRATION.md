@@ -18,10 +18,15 @@ records 115 and 137 of [the log](LOG_2026-09-20.md), the physicist's design
 `engine._give`, `world.BINDING_RULE` and `NatureBeamWorld.binding`,
 `tests/test_binding.py`; the worlds of series N under
 `examples/events/binding/` ([the register](EXPERIMENTS.md#n-the-binding-that-costs-content-2026-09-20)).
-The `given` key is written on `contact` records only in a world where a
-body holds a paid family other than its own (the parser's `binding`), so
-every other world's `events.jsonl` is unchanged; a paid body's own content
-is never given.
+The `given` key is written on `contact` records from the moment the run
+holds the fact (`NatureBeamSimulation.binding`: at load when a body holds a
+paid family other than its own, the parser's `binding`; else from the first
+give on), and `run.json`'s `hypotheses` carries `binding-v1` from the same
+fact (`NatureBeamSimulation.hypotheses`): a body that takes paid content
+under the keys' `measure` gives it at its next contact, and the record and
+the identity follow that run-time fact. Every world in which no body holds
+or takes paid content is unchanged; a paid body's own content is never
+given.
 
 ## The reading's weight at the relative speed, on 2026-09-20 (`doppler-v1`, a world key, absent by default)
 

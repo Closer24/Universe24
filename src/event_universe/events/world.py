@@ -1030,7 +1030,10 @@ class NatureBeamWorld:
         than its own at the start (`held`): the content a body carries,
         which the binding that costs content (`binding-v1`) gives to the
         flight at the body's contact under `measure`. A lamp's own paid
-        content is not carried content and never counts."""
+        content is not carried content and never counts. What is held at
+        load only: a body that takes paid content during the run gives it
+        at its next contact, and the engine raises the fact then
+        (`NatureBeamSimulation.binding`, `hypotheses`)."""
         return any(
             content > 0 and not self.families[family].free and family != entry.family
             for entry in self.measured

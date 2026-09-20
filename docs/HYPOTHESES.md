@@ -1002,5 +1002,9 @@ couplings.
   I7's 2993. Against nature: the alpha's 2.0 x is the law's limit,
   registered and not tuned.
 - **Status.** Built on 2026-09-20 (`binding-v1`, the register byte-identical
-  where no body holds a paid family); series N run and registered with its
-  readings inside or outside each pin.
+  where no body holds a paid family); series N run and registered: every
+  pin of the design's run table inside; the design's momentum identity
+  (measured + transit + escaped = 0) outside by +270 720 on x in the
+  deuteron, the third-law gap of record 126 made visible by held paid
+  content before the give (the review's finding, reported, not moved); the
+  pp threshold not run.

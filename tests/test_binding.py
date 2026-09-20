@@ -75,13 +75,29 @@ family without a phase circle:
     paid family `h` (its own content 5, nothing carried) hands 256 and
     gives nothing, its momentum (0, 0, 0) after and its held unchanged;
 (e) the register's gate set replays byte-identical (docs/VALIDATION.md, the
-    digests): not a test here (a research replay, recorded once).
+    digests): not a test here (a research replay, recorded once);
+(f) the fact of the run (the physics-rule review's should-fix): a body of
+    `p` (content 5, momentum (-256, 0, 0)) at (3, 3, 3) with a fixed
+    occupant of `q` at (2, 3, 3), no body holding a paid family at load
+    (`binding` false, the hypotheses `columns-v1` alone), and a declared
+    `bond` row of amount 2 in transit at (4, 3, 3) on -x, age 0: at tick 1
+    the row reaches the body at age 1 and is TAKEN under the keys (held
+    `bond` 2, the label -128 taken: momentum (-384, 0, 0)); the body's step
+    fires at tick 3 (the drive -384, -768, -1152 beyond D = 448 + 384),
+    refused: it hands -384 and GIVES the 2 units it took on +x (the recoil
+    -128: momentum (-128, 0, 0)), the engine raises the fact at that give,
+    the record carries `given` 2, the border click at tick 6 at (5, 3, 3)
+    with content 2 and momentum (128, 0, 0), the next contact at tick 4
+    (the drive -320 left after the fire, then -448 = -D at the content 5)
+    with `given` 0; the simulation's
+    `hypotheses` gain `binding-v1` and the runner's `run.json` carries it.
 """
 
 from __future__ import annotations
 
 import copy
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -90,6 +106,7 @@ import numpy as np
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.nature_beam import exact_column_sums
 from event_universe.events.world import BINDING_RULE, COLUMNS_RULE
+from event_universe.runner import run_initialization
 
 
 def load_script(name: str, path: Path):
@@ -110,8 +127,9 @@ isolated, order_world, pair_world, wide = (
 )
 
 BOND = {"name": "bond", "quantum": 1, "phase": False, "lifetime": 3}
-# The direction index of the heading -x in the table (the two rest slots,
-# then the six headings in Port order).
+# The direction indices of the headings +x and -x in the table (the two rest
+# slots, then the six headings in Port order).
+PLUS_X = 2
 MINUS_X = 3
 
 
@@ -366,3 +384,84 @@ def test_a_body_without_paid_content_contacts_as_before():
         and simulation.measured[2].momentum == [256, 0, 0]
     )
     assert [(r["family"], r["component"]) for r in contacts(records)] == [("h", 256)]
+
+
+# -- (f) ---------------------------------------------------------------------------
+
+
+def taking_world() -> dict[str, object]:
+    """No body holds a paid family at load; a declared `bond` row reaches
+    the free body at tick 1 and is taken."""
+    document = line_world(1, 1)
+    body, occupant = document["measured"]
+    del body["held"]
+    body["momentum"] = [-256, 0, 0]
+    occupant["position"] = [2, 3, 3]
+    document["in_transit"] = [
+        {
+            "position": [4, 3, 3],
+            "family": "bond",
+            "number": 2,
+            "direction": MINUS_X,
+            "amount": 2,
+            "phase": 0,
+            "age": 0,
+        }
+    ]
+    return document
+
+
+def test_a_body_that_takes_paid_content_gives_it_at_its_next_contact(tmp_path):
+    """(f)."""
+    world = parse_nature_beam_world(taking_world())
+    assert world.binding is False and world.hypotheses == [COLUMNS_RULE]
+    records: list[dict[str, object]] = []
+    simulation = NatureBeamSimulation(world, records.append)
+    body = simulation.measured[1]
+    assert simulation.binding is False and simulation.hypotheses == [COLUMNS_RULE]
+    for tick in range(1, 8):
+        simulation.step()
+        assert simulation.books(recount=True)["balanced"], tick
+        assert momentum_sum(simulation) == [-256 - 128, 0, 0], tick
+        if tick == 1:
+            assert body.held == [5, 0, 0, 2] and body.momentum == [-384, 0, 0]
+            assert simulation.binding is False
+        if tick == 3:
+            assert body.held == [5, 0, 0, 0] and body.momentum == [-128, 0, 0]
+            assert simulation.binding is True
+            assert simulation.hypotheses == [COLUMNS_RULE, BINDING_RULE]
+    assert [(r["tick"], r["component"], r["given"], r["momentum"]) for r in contacts(records)] == [
+        (3, -384, 2, [-128, 0, 0]),
+        (4, -128, 0, [0, 0, 0]),
+    ]
+    taken = [r for r in clicks(records, "bond") if r["measured"] == 1]
+    assert [(r["tick"], r["node"], r["content"], r["push"]) for r in taken] == [
+        (1, [3, 3, 3], 2, [-128, 0, 0])
+    ]
+    assert [
+        (r["tick"], r["node"], r["detector"], r["amount"], r["content"], r["momentum"])
+        for r in clicks(records, "bond")
+        if r["measured"] is None
+    ] == [(6, [5, 3, 3], "lifetime", 2, 2, [128, 0, 0])]
+    bond = simulation.books(recount=True)["families"]["bond"]
+    assert (bond["measured"]["measured"], bond["measured"]["spent"], bond["measured"]["current"]) == (
+        2,
+        2,
+        0,
+    )
+    assert (bond["transit"]["initial"], bond["transit"]["absorbed"], bond["transit"]["released"]) == (
+        2,
+        2,
+        2,
+    )
+    assert bond["transit"]["escaped"] == 2
+    # The runner's record carries the identity from the fact of the run.
+    path = tmp_path / "world.json"
+    path.write_text(json.dumps(taking_world()), encoding="utf-8")
+    record = json.loads(run_initialization(path, tmp_path / "run").read_text(encoding="utf-8"))
+    assert record["status"] == "completed" and record["hypotheses"] == [COLUMNS_RULE, BINDING_RULE]
+    lines = [
+        json.loads(line)
+        for line in (tmp_path / "run" / "events.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    assert [r["given"] for r in lines if r["event"] == "contact"] == [2, 0]

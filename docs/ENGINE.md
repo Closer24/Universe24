@@ -428,9 +428,11 @@ the identity `doppler-v1` under `hypotheses` when it is true; absent, and
 for every body at rest or held in place, every world reads as it did, byte for byte); the binding that costs content, `binding-v1`
 (since 2026-09-20, [BEAM_LAW note 40](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)),
 has no key: the record carries its identity under `hypotheses` when a
-measured event holds a paid family other than its own (`held`), the
-content a body carries and gives at its contact; without such a body every
-world reads as it did, byte for byte; `directions` (the declared primitive vectors beyond
+measured event holds a paid family other than its own at load (`held`) or
+took one during the run and gave it (the fact of the run,
+`NatureBeamSimulation.binding` and `hypotheses`), the content a body carries
+and gives at its contact; without such a body every world reads as it did,
+byte for byte; `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
@@ -747,10 +749,11 @@ since 2026-09-20, its `phase` after the step: what the turn by momentum
 turned it to, the phase it had otherwise), `contact` (since 2026-09-20:
 the body's `number`, its `node` and the destination `to`, the `occupant`,
 the body's `family`, the occupant's `rule` for it, the `axis` and the
-signed `component` the occupant gained, since 2026-09-20 in a world where a
-body holds a paid family `given`, the content the body gave to the flight
-at this hand-over (`binding-v1`; 0 on a later hand-over), and the body's
-`momentum` after; one per occupant that took a hand-over), `become` (since 2026-09-20, one
+signed `component` the occupant gained, since 2026-09-20 from the moment
+the run holds a body with paid content (at load, or from the first give
+on) `given`, the content the body gave to the flight at this hand-over
+(`binding-v1`; 0 on a later hand-over), and the body's `momentum` after;
+one per occupant that took a hand-over), `become` (since 2026-09-20, one
 per transformation at its products' birth: the `tick`, `node` and
 `measured`, the `trigger` "clock" or "click" and `triggered` the tick of
 the trigger, `from` and `into` the families, `products` as [family,

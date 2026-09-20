@@ -3602,8 +3602,10 @@ sequential gates on an entangled record, the full register replay.
   [VALIDATION](VALIDATION.md#series-n-the-binding-that-costs-content-three-runs-and-the-gate-set-replayed---2026-09-20);
   the readings beside the pins in
   [the worlds' README](../examples/events/binding/README.md#what-was-measured-2026-09-20)).**
-  Every reading inside its pin. B1: the first contact of both bodies at
-  tick 16 with `given` 2 each and 0 on the 346 later contacts; two `bond`
+  Every reading of DESIGN section 4's table inside its pin; one pin of
+  DESIGN section 2 outside (the momentum sum, below). B1: the first contact
+  of both bodies at tick 16 with `given` 2 each and 0 on the 346 later
+  contacts; two `bond`
   clicks on the border at tick 19, at (8, 10, 10) with momentum
   (-128, 0, 0) and (13, 10, 10) with (128, 0, 0), amount 2 and content 2
   each, none after; the escaped content 4 (0.109 % of 3677); the push on p
@@ -3618,6 +3620,18 @@ sequential gates on an entangled record, the full register replay.
   as in series I in kind (p4 +y first at tick 81, then n2 89, p1 95, n3
   111; out through the faces at 308 to 344) at other ticks than series I's
   (the gives and the contents after them move the pushes and the drive).
+  OUTSIDE (the physics-rule review's finding): the design's "momentum:
+  measured + transit + escaped = 0" reads +18 048 on x per interval in B1
+  from tick 2, 270 720 at tick 16 and constant to 3000; in B3 nonzero from
+  tick 16 and growing with the dispersal. The cause is not the give: p
+  reads n's 1838 free units with its gravity charge 1837 while n reads p's
+  1835 with 1840, 6 x 3008 per interval over the 15 pushes of ticks 2 to
+  16 = 270 720 exactly, the third-law gap of record 126 made visible by
+  held paid content that counts in M_A (note 31 (viii)) but is never
+  released; after both gave the pushes are equal and the gap stops. A
+  property of held paid content that predates the branch, reported and not
+  moved. Not run: the design's pp threshold (7111 to 7112 after both gives)
+  has no world in series N and stays a prediction, unread.
   One correction before the registration: the first build gave on the
   heading opposite to the momentum's sign; the reading of B1 showed n's
   row given toward p (its momentum +270 720 after p's hand-over, its step

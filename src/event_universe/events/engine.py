@@ -65,6 +65,7 @@ from event_universe.events.nature_beam import (
 )
 from event_universe.events.world import (
     BEAM_LAW,
+    BINDING_RULE,
     CONTACT_DEFAULT,
     DETECTOR_READINGS,
     FACE_NAMES,
@@ -151,6 +152,13 @@ class NatureBeamSimulation:
             if sum(abs(component) for component in vector) == 1:
                 axis = max(range(3), key=lambda a: abs(vector[a]))
                 self.headings[(axis, 1 if vector[axis] > 0 else -1)] = index
+        # The binding that costs content as a fact of the run: true at load
+        # when a body holds a paid family (`world.binding`), and raised at
+        # the first give otherwise (a body of a free family that took paid
+        # content under `measure` gives it at its next contact); from then
+        # on every `contact` record carries `given` and the run's record the
+        # identity `binding-v1` (`hypotheses`).
+        self.binding = world.binding
         self.open_faces = tuple(port for port in range(6) if not world.periodic[port >> 1])
         self.ledger = Ledger(count, self.open_faces)
         # The detectors at run time: the declared ones first, in their
@@ -695,10 +703,11 @@ class NatureBeamSimulation:
         axis: under the signed drive of record 126 the momentum's sign can
         differ from the step's at a reversal, and the heading is the step's);
         a body that carries none gives nothing and the contact is the
-        hand-over alone, bit for bit. The `contact` record
-        then carries `given` (the content given at this hand-over, 0 on a
-        later one) in a world where a body holds a paid family
-        (`world.binding`); elsewhere the record is as it was."""
+        hand-over alone, bit for bit. The `contact` record then carries
+        `given` (the content given at this hand-over, 0 on a later one)
+        from the moment the run holds the fact (`binding`: at load when a
+        body holds a paid family, else from the first give on); before it
+        the record is as it was."""
         component = entry.momentum[axis]
         magnitude = abs(component)
         if magnitude == 0:
@@ -739,7 +748,7 @@ class NatureBeamSimulation:
                     "axis": axis,
                     "component": handed,
                 }
-                if self.world.binding:
+                if self.binding:
                     line["given"] = given
                 line["momentum"] = list(entry.momentum)
                 self.record(line)
@@ -812,7 +821,20 @@ class NatureBeamSimulation:
                 multiplicity=np.array([ONE_PATH], dtype=np.int64),
             )
             given += content
+        if given:
+            self.binding = True
         return given
+
+    @property
+    def hypotheses(self) -> list[str]:
+        """The identities of the physical hypotheses the run carries: the
+        world's at load (`NatureBeamWorld.hypotheses`) and `binding-v1` once
+        a body gave paid content it took during the run (`binding`, the
+        run-time fact; the parser knows only what is held at load)."""
+        found = list(self.world.hypotheses)
+        if self.binding and BINDING_RULE not in found:
+            found.append(BINDING_RULE)
+        return found
 
     # -- the books -------------------------------------------------------------
 
