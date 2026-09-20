@@ -56,7 +56,7 @@ kept, their pins the law of events').
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
 | `test_configuration_validation.py` | The read-only preflight of a world file: the report, the refusals named by the parser, the command line |
 | `test_entity_definitions.py`, `test_entity_loading_consumers.py` | The entity definitions loader and its consumers (the placement, the bundles, the refusals at runtime) |
-| `test_entity_catalog.py` | The worlds of the entity catalog (`examples/events/catalog/`; the model owner's decision of 2026-09-20): each is the one its generator writes, parses through the canonical loader with `quantum` on every family and `reading` on every detector, runs its 20 to 50 intervals with the books balanced at every interval, and its readings exist (a record per declared detector, a clock's identity age + waited = the intervals on every probe); no number of a world pinned ([below](#the-entity-catalog)) |
+| `test_entity_catalog.py` | The worlds of the entity catalog (`examples/events/catalog/`; the model owner's decision of 2026-09-20): each is the one its generator writes, parses through the canonical loader with `quantum` on every family and `reading` on every detector, runs its 20 to 50 intervals with the books balanced at every interval, and its readings exist (a record per declared detector, a clock's identity age + waited = the intervals on every probe); since 2026-09-20 the catalog against the parser (every key a row names is the parser's) and the register against the catalog (every declared family named); no number of a world pinned ([below](#the-entity-catalog)) |
 | `test_json_documents.py` | The strict decoder shared by world files and the workspace's fragments |
 | `test_integer_arithmetic.py` | The shared bounded integer primitives |
 | `test_retention.py` | Generated-output ownership, lifetime and cleanup |
@@ -2148,6 +2148,22 @@ is, the expectations written down first:
   star and the clock near the mass declare them) ends with its clock's
   identity, age + waited equal to the intervals run, its owed count a
   non-negative integer.
+- (d) the catalog against the parser (2026-09-20): every key a row names in
+  an "Its keys today" cell (a backticked identifier, the identifier before
+  a colon, the string keys of a backticked JSON object) is a key or a value
+  word of `world.py` (`WORLD_KEYS`, `FAMILY_KEYS`, `MEASURED_KEYS`,
+  `LAMP_KEYS`, `TABLE_ENTRY_KEYS`, `TRANSIT_KEYS`, `DETECTOR_KEYS`,
+  `COLUMN_KEYS`, `BECOME_KEYS`, `WINDOW_READING_KEYS`, the nested keys of
+  `rotate` and `gate`, `TABLES`, `READS`, the readings, the faces, the
+  border, the boundaries, the gate kinds) or a family or column name a
+  registered world declares (the keys of a table object are family names);
+  the nested key sets the test spells are checked against the parser (it
+  accepts exactly them and refuses one more); at least thirty cells read;
+- (e) the register against the catalog: every family name a world under
+  `examples/events/` declares (at least twenty names) is named in
+  `docs/ENTITY_CATALOG.md` in backticks, in a row or in the family-name
+  table, so that a new family cannot enter the register without a row or
+  a gap row.
 
 ## Generated-output lifetime
 
