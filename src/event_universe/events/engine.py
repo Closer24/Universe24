@@ -42,7 +42,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from event_universe.core.game_board import Address3, adjacent_node
-from event_universe.core.integer import apportion_whole, by_clock
+from event_universe.core.integer import apportion_whole, by_clock, by_drive
 from event_universe.events.amplitude import Layer
 from event_universe.events.measured import TALLIES, DetectorSet, Ledger, Measured, rational_sum
 from event_universe.events.nature_beam import (
@@ -79,21 +79,34 @@ from event_universe.events.world import (
 __all__ = ["TALLIES", "Measured", "NatureBeamSimulation", "count_owed", "step_axis"]
 
 
-def step_axis(age: int, momentum: int, content: int, width: int) -> int | None:
-    """The step rule of one axis (BEAM_LAW section 3 step 5; `_move` calls
-    it): the sign of the Link a free measured event of content M = `content`
-    steps this interval on an axis whose momentum component is p =
-    `momentum`, with `age` its age after the frame's advance and `width`
-    the world's S, when `by_clock(age - 1, |p|, Q x S x M + |p|)` is 1;
-    None when it does not step (a momentum of 0 never steps). The one
-    place the rule lives; the readings tools read it from here."""
+def step_axis(drive: int, momentum: int, content: int, width: int) -> tuple[int | None, int]:
+    """The step rule of one axis (BEAM_LAW section 3 step 5 and note 17 as
+    amended on 2026-09-20, the step drive; `_move` calls it): the sign of
+    the Link a free measured event of content M = `content` steps this
+    self-creation on an axis whose momentum component is p = `momentum`,
+    and the drive after it. The drive is the distance the momentum has
+    driven since the last step, in label units, on the body's own record:
+    `drive + |p|` is compared with D = Q x S x M + |p|, S the world's
+    `width`; at or beyond D the body steps one Link and D is subtracted,
+    otherwise it waits. With a constant momentum the step fires exactly
+    when `floor(n |p| / D)` increments over the self-creations n, the rule
+    as it was (`by_clock(age - 1, |p|, D)`: the drive is the remainder of
+    that division); under a changing momentum the Links made follow the
+    momentum's history, never two in one self-creation (one D is
+    subtracted per self-creation; a residual earned at a larger momentum
+    fires at the following self-creations, one Link each). A momentum of 0
+    never steps and leaves the drive as it is. The count primitive is
+    `core.integer.by_drive` (the model owner's record 108: the whole part
+    of an accumulated rate on the reader's own record, `by_clock` where
+    the rate is constant); the one place the step rule lives, the
+    readings tools read it from here."""
     if momentum == 0:
-        return None
+        return None, drive
     magnitude = abs(momentum)
-    reach = LABEL_SCALE * width * content
-    if not by_clock(age - 1, magnitude, reach + magnitude):
-        return None
-    return 1 if momentum > 0 else -1
+    fired, drive = by_drive(drive, magnitude, LABEL_SCALE * width * content + magnitude)
+    if not fired:
+        return None, drive
+    return (1 if momentum > 0 else -1), drive
 
 
 def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
@@ -101,7 +114,10 @@ def count_owed(age: int, counted: int, suspension: tuple[int, int]) -> int:
     the frame; `_suspend` calls it): what its clock counted (`counted`, the
     presence or the age moment) times the width n / d of the world's
     `suspension`, off its clock, `by_clock(age, counted x n, d)` with `age`
-    the age before the self-creation; 0 when the width is 0."""
+    the age before the self-creation; 0 when the width is 0. The same
+    count as `by_drive` where the rate is constant (record 108): the owed
+    count reads a rate no push changes and keeps the clock's form, as the
+    release and the lamp do."""
     numerator, denominator = suspension
     if not numerator:
         return 0
@@ -430,18 +446,25 @@ class NatureBeamSimulation:
         entry.owed = count_owed(entry.clock_age, entry.counted, self.world.suspension)
 
     def _move(self, entry: Measured) -> None:
-        """The step by the momentum off the clock, at most one per interval,
-        when nothing is owed: on an axis whose momentum component is p (in
-        label units), one Link per (Q x S x M + p) / p self-creations,
-        `by_clock(age, |p|, Q x S x M + |p|)` with M the content, S the
-        world's `width` (the model owner's D1 of 2026-09-19) and Q = 64 the
+        """The step by the momentum, at most one per interval, when nothing
+        is owed: on an axis whose momentum component is p (in label units),
+        one Link per (Q x S x M + p) / p self-creations, since 2026-09-20 by
+        the step drive (`step_axis`, BEAM_LAW note 17 as amended: the
+        body's record carries per axis the distance the momentum has
+        driven since its last step, and at a constant momentum the same
+        self-creations as `by_clock(age, |p|, Q x S x M + |p|)`), with M
+        the content, S the world's `width` (the model owner's D1 of
+        2026-09-19) and Q = 64 the
         label's scale (the physics-rule reviewer's correction 2 of the
         label along the unit vector, 2026-09-19: the width in units of one
         free unit's label, Q x M, so that one unit of net flow gives the
         speed 1 / (S + 1) for every content and every step registered
         before the change is the same, `by_clock(age, Q n, Q k) =
-        by_clock(age, n, k)`); no remainder is kept, the count is the whole
-        part off the clock. A step onto a measured event is refused and is
+        by_clock(age, n, k)`); the drive of every axis advances at every
+        self-creation in which the body may step, the first axis whose
+        rule fires makes the step, and a later axis's coincident fire is
+        lost, its D subtracted, nothing carried (the frame's rule as it
+        was). A step onto a measured event is refused and is
         a contact read through the occupant's table (`_contact`); an
         escape is a click on the face; a periodic axis wraps.
 
@@ -461,11 +484,12 @@ class NatureBeamSimulation:
 
             floor(k1 x |p| x N / h) - floor(k0 x |p| x N / h),
 
-        with k0 = floor((age - 1) x |p| / (Q S M + |p|)) the count of Links
-        the step rule gives on that axis at the age before this
-        self-creation and k1 = k0 + 1 the count after it (the count is
-        derived from the age by the step rule exactly as the owed count is
-        read off the clock; with a constant momentum k1 is the Links
+        with k0 the count of the step rule's fires on that axis before this
+        one (the record's `axis_steps` less one, a lost or refused step
+        counted; at a constant momentum floor((age - 1) x |p| / (Q S M +
+        |p|)), the count the rule gave at the age before this
+        self-creation) and k1 = k0 + 1 the count after it (with a constant
+        momentum k1 is the Links
         stepped on the axis, so after k Links the phase has turned
         floor(k x |p| x N / h) mod N in all), that is `by_clock(k0, |p| x
         N, h)`: nothing is kept at a Node and no remainder register
@@ -486,99 +510,114 @@ class NatureBeamSimulation:
         content = entry.content
         if content <= 0:
             return
-        width = LABEL_SCALE * self.world.width * content
+        # The drive of every axis advances at this self-creation; the first
+        # axis whose rule fires makes the step, and a fire on a later axis
+        # in the same self-creation is lost (its D subtracted, no Link
+        # crossed, the rule's count `axis_steps` raised): the frame's rule
+        # as it was, one Link per interval, x before y before z.
+        fired: tuple[int, int, int] | None = None
         for axis in range(3):
             momentum = entry.momentum[axis]
-            stepped = step_axis(entry.age, momentum, content, self.world.width)
+            stepped, entry.drive[axis] = step_axis(
+                entry.drive[axis], momentum, content, self.world.width
+            )
             if stepped is None:
                 continue
-            magnitude = abs(momentum)
-            sign = stepped
-            entry.steps += 1
-            origin = entry.position
-            port = 2 * axis + (0 if sign > 0 else 1)
-            destination = adjacent_node(origin, port, self.shape, self.world.periodic)
-            if destination == origin:
-                return
-            # The moved set: None when the centre or any Node of the body
-            # would leave the GameBoard through an open face (the escape).
-            nodes = (
-                None
-                if destination is None
-                else body_nodes(destination, entry.span, self.shape, self.world.periodic)
-            )
-            if destination is None or nodes is None:
-                for index in range(len(self.families)):
-                    self.ledger.held_escaped[index] += entry.held[index]
-                    self.ledger.units_escaped[index] += entry.clicks[index]
-                    # What waits to be created again leaves with the body:
-                    # the home and re-released rows off the absorbed line,
-                    # the products of a transformation (never absorbed) on
-                    # the released line, all of them on the face.
-                    thrown_amount = entry.pending_thrown_amount(index)
-                    thrown_content = entry.pending_thrown_content(index)
-                    self.ledger.transit_absorbed[index] -= entry.pending_amount(index) - thrown_amount
-                    self.ledger.transit_released[index] += thrown_amount
-                    self.ledger.content_absorbed[index] -= entry.pending_content(index) - thrown_content
-                    self.ledger.content_released[index] += thrown_content
-                    self.ledger.face_measured_content[port][index] += entry.held[index]
-                    self.ledger.face_amount[port][index] += entry.pending_amount(index)
-                    self.ledger.face_content[port][index] += entry.pending_content(index)
-                self.ledger.face_momentum[port][entry.family] = [
-                    int(a) + int(b)
-                    for a, b in zip(
-                        self.ledger.face_momentum[port][entry.family], entry.momentum, strict=True
-                    )
-                ]
-                self._place(entry, ())
-                del self.measured[entry.number]
-                if self.record is not None:
-                    self.record(
-                        {
-                            "event": "click",
-                            "tick": self.tick,
-                            "node": list(origin),
-                            "measured": entry.number,
-                            "detector": FACE_NAMES[port],
-                            "family": self.families[entry.family].name,
-                            "number": entry.number,
-                            "amount": content,
-                            "phase": entry.phase,
-                            "momentum": list(entry.momentum),
-                            "content": content,
-                            "held": list(entry.held),
-                            "home": [entry.pending_amount(f) for f in range(len(self.families))],
-                            "home_content": [
-                                entry.pending_content(f) for f in range(len(self.families))
-                            ],
-                        }
-                    )
-                return
-            found = {self.occupant(node) for node in nodes}
-            occupants = sorted(number for number in found if number not in (None, entry.number))
-            if occupants:
-                self._contact(entry, axis, origin, destination, occupants)
-                return
-            self._place(entry, nodes)
-            entry.position = destination
-            if entry.phase_by_momentum and self.world.action is not None:
-                links = ((entry.age - 1) * magnitude) // (width + magnitude)
-                bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
-                turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
-                entry.phase = (entry.phase + turn) & self.world.phase_mask
+            entry.axis_steps[axis] += 1
+            if fired is None:
+                fired = (axis, momentum, stepped)
+        if fired is None:
+            return
+        axis, momentum, sign = fired
+        magnitude = abs(momentum)
+        entry.steps += 1
+        origin = entry.position
+        port = 2 * axis + (0 if sign > 0 else 1)
+        destination = adjacent_node(origin, port, self.shape, self.world.periodic)
+        if destination == origin:
+            return
+        # The moved set: None when the centre or any Node of the body
+        # would leave the GameBoard through an open face (the escape).
+        nodes = (
+            None
+            if destination is None
+            else body_nodes(destination, entry.span, self.shape, self.world.periodic)
+        )
+        if destination is None or nodes is None:
+            for index in range(len(self.families)):
+                self.ledger.held_escaped[index] += entry.held[index]
+                self.ledger.units_escaped[index] += entry.clicks[index]
+                # What waits to be created again leaves with the body:
+                # the home and re-released rows off the absorbed line,
+                # the products of a transformation (never absorbed) on
+                # the released line, all of them on the face.
+                thrown_amount = entry.pending_thrown_amount(index)
+                thrown_content = entry.pending_thrown_content(index)
+                self.ledger.transit_absorbed[index] -= entry.pending_amount(index) - thrown_amount
+                self.ledger.transit_released[index] += thrown_amount
+                self.ledger.content_absorbed[index] -= entry.pending_content(index) - thrown_content
+                self.ledger.content_released[index] += thrown_content
+                self.ledger.face_measured_content[port][index] += entry.held[index]
+                self.ledger.face_amount[port][index] += entry.pending_amount(index)
+                self.ledger.face_content[port][index] += entry.pending_content(index)
+            self.ledger.face_momentum[port][entry.family] = [
+                int(a) + int(b)
+                for a, b in zip(
+                    self.ledger.face_momentum[port][entry.family], entry.momentum, strict=True
+                )
+            ]
+            self._place(entry, ())
+            del self.measured[entry.number]
             if self.record is not None:
                 self.record(
                     {
-                        "event": "step",
+                        "event": "click",
                         "tick": self.tick,
-                        "number": entry.number,
                         "node": list(origin),
-                        "to": list(destination),
-                        "momentum": list(entry.momentum),
+                        "measured": entry.number,
+                        "detector": FACE_NAMES[port],
+                        "family": self.families[entry.family].name,
+                        "number": entry.number,
+                        "amount": content,
                         "phase": entry.phase,
+                        "momentum": list(entry.momentum),
+                        "content": content,
+                        "held": list(entry.held),
+                        "home": [entry.pending_amount(f) for f in range(len(self.families))],
+                        "home_content": [entry.pending_content(f) for f in range(len(self.families))],
                     }
                 )
             return
+        found = {self.occupant(node) for node in nodes}
+        occupants = sorted(number for number in found if number not in (None, entry.number))
+        if occupants:
+            self._contact(entry, axis, origin, destination, occupants)
+            return
+        self._place(entry, nodes)
+        entry.position = destination
+        if entry.phase_by_momentum and self.world.action is not None:
+            # k0, the Links stepped on this axis before this one: the
+            # step rule's count, read off the body's record since the
+            # step drive (the same count as the floor at a constant
+            # momentum).
+            links = entry.axis_steps[axis] - 1
+            bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
+            turn = by_clock(links, magnitude * self.world.phase_steps, self.world.action)
+            entry.phase = (entry.phase + turn) & self.world.phase_mask
+        if self.record is not None:
+            self.record(
+                {
+                    "event": "step",
+                    "tick": self.tick,
+                    "number": entry.number,
+                    "node": list(origin),
+                    "to": list(destination),
+                    "momentum": list(entry.momentum),
+                    "phase": entry.phase,
+                    "drive": list(entry.drive),
+                }
+            )
+        return
 
     def _contact(
         self,

@@ -58,10 +58,35 @@ def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
 def by_clock(age: int, numerator: int, denominator: int) -> int:
     """What the whole part of age x numerator / denominator gains at the
     self-creation that takes the age from `age` to `age + 1`: a rate read
-    off a clock, exact on average, with no remainder kept anywhere."""
+    off a clock, exact on average, with no remainder kept anywhere. Where
+    the rate is constant this is `by_drive` (below) with the remainder on
+    the reader's record; the clock's turn, the release, the lamp and the
+    owed count read a rate no push changes and keep this form."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
+
+
+def by_drive(drive: int, rate: int, denominator: int) -> tuple[int, int]:
+    """The whole part of an accumulated rate on the reader's own record
+    (the model owner's decision of 2026-09-20, record 108: one count
+    primitive for a rate that may change): `drive` gains `rate` at this
+    self-creation, and the count gains 1 when it reaches `denominator`,
+    which is then subtracted. Returns (the count gained, the drive after).
+    With a constant rate the count fires exactly where `by_clock(n - 1,
+    rate, denominator)` is 1 over the self-creations n and the drive is `n
+    x rate mod denominator`, the remainder `by_clock` keeps nowhere; the
+    count gained is 0 or 1 whenever `rate < denominator`, and the drive
+    stays below `denominator` from then on (a drive earned at a larger
+    rate fires one at each following self-creation until it does)."""
+    if denominator < 1:
+        raise ValueError("positive denominator required")
+    if rate < 0:
+        raise ValueError("non-negative rate required")
+    drive += rate
+    if drive < denominator:
+        return 0, drive
+    return 1, drive - denominator
 
 
 def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:
