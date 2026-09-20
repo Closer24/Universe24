@@ -98,6 +98,12 @@ sys.path.insert(0, str(HERE.parents[2] / "src"))
 from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import flight_table  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, Q  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 SIDE = 301
 SHAPE = [SIDE, SIDE, SIDE]
@@ -273,7 +279,10 @@ def main() -> None:
     for crowd in CROWDS:
         for clock in CLOCKS:
             path = HERE / f"{crowd}_{clock}.json"
-            path.write_text(json.dumps(world(crowd, clock)) + "\n", encoding="utf-8")
+            document = families_by_definition(
+                world(crowd, clock), FAMILY_DEFINITIONS, DEFINITIONS_SOURCE
+            )
+            path.write_text(json.dumps(document) + "\n", encoding="utf-8")
             print(path.relative_to(HERE.parents[2]))
 
 

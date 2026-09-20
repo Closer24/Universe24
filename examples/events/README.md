@@ -31,6 +31,12 @@ emitter by its phase rate (E = h f) and a click measures that content.
 | `two_slits.json` | A lamp of the paid family `light` (`quantum` 1; K 2^30, turn 8, 64 rays per self-creation on five directions toward the wall), a wall at x = 8 of the paid family `wall` measuring light (the rule the keys give; no table declared) with two openings at y = 55 and 65 that declare `rerelease` on a fan of 91 primitive directions, a screen at x = 52 of measured events declared as 121 one-Node detectors `screen_<y>` (the screen's pixels) under the reading `wave` (since 2026-09-19 a detector is a set with one record: one detector of 121 Nodes would read one record with no resolution in y); 60 x 121 x 1 with z periodic, no suspension; 500 intervals | The screen's plain count is additive to the unit (no interference in the count); its squared record fringes at lambda = period / sqrt 3, the interference term correlating with the two-source cosine above 0.85 (`tests/test_nature_beam_worlds.py` (a)) |
 | `one_slit.json` | The same with one opening | The control: the record without the two-source term |
 
+The four are written by `make_worlds.py` beside them; since 2026-09-20
+`one_content`, `two_contents` and `one_slit` take their families from
+`entities/families.json` (the world's `entity_definitions` and `entities`
+in place of `families`), `two_slits` inline until stage (vii) of
+`amplitude-v1` lands.
+
 Run one:
 
 ```bash

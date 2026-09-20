@@ -118,6 +118,12 @@ import numpy as np  # noqa: E402
 
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world  # noqa: E402
 from event_universe.events.nature_beam import flight_table  # noqa: E402
+from event_universe.world_loading import families_by_definition  # noqa: E402
+
+# The shipped definitions the world's families come from where they equal
+# them (the model owner's decision of 2026-09-20, record 113).
+FAMILY_DEFINITIONS = "../entities/families.json"
+DEFINITIONS_SOURCE = (HERE.parent / "entities" / "families.json").read_bytes()
 
 N = 64
 K = 1 << 20
@@ -574,6 +580,7 @@ def main() -> None:
     worlds = {**j2_worlds(), **j1_worlds(), **j3_worlds(), **w_worlds()}
     for name, document in worlds.items():
         path = args.out / f"{name}.json"
+        document = families_by_definition(document, FAMILY_DEFINITIONS, DEFINITIONS_SOURCE)
         path.write_text(json.dumps(document, separators=(",", ":")) + "\n", encoding="utf-8")
         print(path)
     if not args.no_expect:

@@ -262,8 +262,11 @@ inline families first, then the instances' in declaration order, a
 differing key refused naming the family and the key); the parser sees one
 ordinary `families` list and applies every rule above to it. The shipped
 definitions are `examples/events/entities/families.json` and
-`apparatus.json`; no registered world references them until the migration
-after stage (vii) of `amplitude-v1`.
+`apparatus.json`; since 2026-09-20 the registered worlds of every series
+but the ones stage (vii) of `amplitude-v1` re-pins reference
+`families.json` (`../entities/families.json`, a climb of one level the
+loader admits), their generators writing the reference in place of the
+families it defines.
 
 ### A release costs the emitter by its phase rate
 

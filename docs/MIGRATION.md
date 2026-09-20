@@ -6,6 +6,36 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The worlds reference the family definitions, on 2026-09-20 (host only, no law change)
+
+The second pull request of the model owner's decision of 2026-09-20
+(record 113 of [the log](LOG_2026-09-20.md); the built form in
+[entity definitions](ENTITY_DEFINITIONS.md#families-in-definitions-event-entities-v2-2026-09-20)):
+
+- `entity_definitions` may climb by leading `..` components; the loader
+  confines the resolved file to `root` when the caller gives one
+  (`load_world(source, base_dir=, root=)`; the workspace passes its
+  configurations directory), else to `base_dir` as before, or to its parent
+  for a reference climbing by one `..`; a longer climb is refused without a
+  root. A world in its own directory, without a climb, loads as before;
+  the runner and the validator are untouched.
+- `families_by_definition(document, reference, definitions_source)`, the
+  authoring helper of the generators: the tail of a world's inline families
+  that the definitions tile becomes instances, the head stays inline, the
+  expansion is the inline world in order.
+- The shipped worlds of every series but the ones stage (vii) of
+  `amplitude-v1` re-pins reference `../entities/families.json` (the list in
+  the entity definitions document); `examples/events/make_worlds.py` writes
+  the four root worlds; `hubble/make_worlds.py` writes its files as shipped
+  (the default separators); `families.json` lists the 24 thrown sources in
+  the Hubble worlds' order. Every migrated world's `events.jsonl`,
+  `state.json` and books are identical to the inline world's; `run.json`
+  gains `initialization_resolution`.
+- The catalog's rows name the definition of each entity; the register's
+  family names are read from the loaded worlds
+  (`tests/test_entity_catalog.py`, `tests/test_entity_definitions.py`).
+- Nothing deleted.
+
 ## Families in entity definitions, on 2026-09-20 (`event-entities-v2`; host only, no law change)
 
 The model owner's decision of 2026-09-20 (record 113 of

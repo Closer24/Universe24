@@ -75,10 +75,13 @@ def families() -> dict[str, object]:
         family_definition("choosers", [{"name": "sa", "quantum": 0}, {"name": "sb", "quantum": 0}]),
         family_definition(
             "thrown_sources",
+            # In the order the Hubble worlds declare them (one instance of
+            # this definition is the tail of their `families`): per axis,
+            # the four thrown toward +axis, then the four toward -axis.
             [
                 {"name": f"{kind}{axis}{index}", "quantum": 0}
-                for kind in ("m", "p")
                 for axis in ("x", "y", "z")
+                for kind in ("p", "m")
                 for index in (1, 2, 3, 4)
             ],
         ),
