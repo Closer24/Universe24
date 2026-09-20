@@ -273,7 +273,7 @@ class Measured:
     waited: int = 0
     turned: int = 0
     steps: int = 0
-    # The step drive (2026-09-20; BEAM_LAW note 17 as amended, record 107):
+    # The step drive (2026-09-20; BEAM_LAW note 17 as amended, records 107 and 108):
     # per axis the distance the momentum has driven since the last step, in
     # label units, `drive_a < Q S M + |p_a|`, one bounded integer on the
     # body's own record (as its age is) and nothing at a Node; and per axis

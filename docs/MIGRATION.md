@@ -9,8 +9,9 @@ python -m pip install -e '.[render,dev]'
 ## The step drive, on 2026-09-20: the count of Links as the whole part of the driven distance
 
 The model owner's decision of 2026-09-20 on series G2's finding ("1 and 2
-are very important for a solution and a new run"; record 107, the Boss's
-record of the decision; the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`);
+are very important for a solution and a new run"; record 107 the findings,
+record 108 the owner's decision, "yes; let him give a generic solution if
+he can"; change 2 not built as proposed, record 110; the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`);
 [BEAM_LAW note 17](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)
 as amended). The identity `beam-v1` is kept: the rule is the same count
 where the momentum is constant and a repair of it where it changes.

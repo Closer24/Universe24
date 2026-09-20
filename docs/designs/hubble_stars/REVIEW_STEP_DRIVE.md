@@ -247,8 +247,9 @@ the review above is kept as written.
   begins at 0); the register pair hands 998 times from tick 3, the first
   hand-over two intervals' pushes.
 - Finding 3: the design is cited by name and branch (RULES.md section 1 on
-  `claude/series-g2-stars`), not linked; record 107 is named as the Boss's
-  record of the decision, written at the landing.
+  `claude/series-g2-stars`), not linked; records 107 (the findings) and
+  108 (the owner's decision) are on main since 9d1d011 and 6e5ec2b and are
+  cited by number.
 - Finding 4: BEAM_LAW section 3 step 5, the `_move` docstring, the
   TEST_EXPECTATIONS row (38 within 1; [0, 2 D - 1)) and MIGRATION.md's
   list of changed gate worlds (`1b_m16`, `r2`, `alpha_square`,

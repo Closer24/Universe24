@@ -1050,9 +1050,11 @@ implementation's part of the contract. The design above is unchanged.
     `width`. The parser refuses 0, a negative width, a string and a
     fraction naming the key (`tests/test_push_width.py`; the experiment
     that uses it is series D in EXPERIMENTS.md). **Amended on 2026-09-20,
-    the step drive (superseded for the moving body only, record 107, the
-    Boss's record of the decision; the model owner on series G2's finding,
-    "1 and 2 are very important for a solution and a new run";
+    the step drive (superseded for the moving body only: record 107, the
+    findings, and record 108, the model owner's decision, "yes; let him
+    give a generic solution if he can"; the owner on series G2's finding,
+    "1 and 2 are very important for a solution and a new run"; change 2,
+    the push at the relative speed, not built as proposed, record 110;
     the physicist's design RULES.md section 1 (docs/designs/hubble_stars/ on branch `claude/series-g2-stars`); `tests/test_step_drive.py`).**
     Read at the current momentum, the whole part `floor(age |p| / D)`
     stalled a body for tens of intervals under a falling momentum and then
