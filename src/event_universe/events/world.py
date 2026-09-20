@@ -146,7 +146,19 @@ the model owner, 2026-09-19):
   N / 2 steps; for N = 2 the one step d = 0). On a table entry (any rule but
   `pass`) the response is made only to a ray whose own phase falls in the
   window; a ray outside it passes. On a lamp, a release only at the
-  self-creations whose clock phase falls in the window;
+  self-creations whose clock phase falls in the window. On a table entry
+  the centre may instead be read from a reading (issue #363, 2026-09-20:
+  the settings of a Bell run decided by GameBoard events): `{"reads":
+  "<family>", "offset": s}` sets the centre to the phase of the coherent
+  pointer (`nature_beam.coherent_pointer`, the first moment over the
+  circle) of the named family's rows present at the set in the interval
+  (the one reading set: every row at the set but the reader's own number)
+  plus the offset s in phase steps (0 by default); the width is the law's.
+  With no row of the named family at the set (or a zero pointer) the entry
+  passes, the `pass` record naming `window` None and `reads`; every `click`
+  of such an entry carries the `window` used. Refused: an unknown family,
+  a family without a phase circle, the entry's own family, the form on
+  `pass` (as any window on `pass`) and on a lamp;
 - `reads` on a table entry: the component of the Node's one reading that
   the response's record carries, `scalar` (the presence), `outside`, `here`,
   `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
@@ -378,6 +390,9 @@ LAMP_KEYS = {"rate", "directions", "phase_window"}
 # A table entry's object form: the rule, a window on any rule but `pass`,
 # and the reading's component the record carries.
 TABLE_ENTRY_KEYS = {"rule", "phase_window", "reads"}
+# A window read from a reading (issue #363, 2026-09-20): the family whose
+# rows at the set give the centre, and the offset added to it.
+WINDOW_READING_KEYS = {"reads", "offset"}
 TRANSIT_KEYS = {"position", "family", "number", "direction", "amount", "phase", "age"}
 DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # The readings a detector may declare; the first is the default: `wave`
@@ -507,6 +522,18 @@ class LampDefinition:
 
 
 @dataclass(frozen=True)
+class WindowReading:
+    """A table entry's window read from a reading, as declared: the name
+    of the family whose rows present at the set give the centre (the phase
+    of their coherent pointer) and the offset added to it in phase steps
+    (issue #363, 2026-09-20). The parser resolves the name to the family's
+    index in `MeasuredDefinition.window_reads`."""
+
+    family: str
+    offset: int
+
+
+@dataclass(frozen=True)
 class MeasuredDefinition:
     """One measured event as declared: its Node, its family, its amount, its
     phase, its momentum, whether it is held in place, the directions it
@@ -528,7 +555,10 @@ class MeasuredDefinition:
     for a paid arrival: the body's momentum is its own label) where the
     entry is the keys' own, declared or not, so that an entry equal to the
     default changes nothing. The engine reads a missing entry as the
-    default."""
+    default. `window_reads` is, per family in family order, the window
+    read from a reading (issue #363): the index of the family whose rows
+    at the set give the centre and the offset, or None for a declared or
+    absent centre (`windows` then holds the number, or None)."""
 
     position: Address3
     family: int
@@ -545,6 +575,7 @@ class MeasuredDefinition:
     phase_by_momentum: bool = False
     held: tuple[int, ...] = ()
     contact: tuple[str, ...] = ()
+    window_reads: tuple[tuple[int, int] | None, ...] = ()
 
     def __post_init__(self) -> None:
         # A definition made without `held` (the tests' bare definitions)
@@ -553,6 +584,9 @@ class MeasuredDefinition:
             found = [0] * (self.family + 1)
             found[self.family] = self.amount
             object.__setattr__(self, "held", tuple(found))
+        # A definition made without `window_reads` reads no window.
+        if not self.window_reads:
+            object.__setattr__(self, "window_reads", (None,) * len(self.table))
 
 
 @dataclass(frozen=True)
@@ -1135,21 +1169,36 @@ def _lamp(
     return LampDefinition(rate, directions, window)
 
 
+def _window_reading(value: object, label: str, phase_steps: int) -> WindowReading:
+    """A window read from a reading, `{"reads": "<family>", "offset": s}`
+    (issue #363): the family's name (resolved and refused by `_measured`,
+    which knows the families) and the offset, a step of the circle, 0 by
+    default."""
+    obj = _object(value, label, WINDOW_READING_KEYS, {"reads"})
+    family = obj["reads"]
+    if not isinstance(family, str) or not family:
+        raise ValueError(f"{BEAM_LAW}: {label}.reads must name a family")
+    return WindowReading(family, _window(obj.get("offset", 0), f"{label}.offset", phase_steps))
+
+
 def _table_entry(
     value: object, label: str, phase_steps: int, phased: bool, default: str
-) -> tuple[str, int | None, str]:
+) -> tuple[str, int | WindowReading | None, str]:
     """One table entry: a rule string, or `{"rule": ..., "phase_window": s,
     "reads": key}` (the rule the family's default when the object omits it,
     so a window alone is a lawful entry; a window refused on `pass`, which
     responds to nothing, and for a family without a phase circle, whose
     rays carry no phase; the reading's component `vector` by default on
-    `read`, `scalar` otherwise)."""
+    `read`, `scalar` otherwise). The window is a number, or a
+    `WindowReading` where the entry reads its centre from a reading."""
     reads: object = None
     if isinstance(value, dict):
         obj = _object(value, label, TABLE_ENTRY_KEYS, set())
         rule = obj.get("rule", default)
-        window = None
-        if "phase_window" in obj:
+        window: int | WindowReading | None = None
+        if isinstance(obj.get("phase_window"), dict):
+            window = _window_reading(obj["phase_window"], f"{label}.phase_window", phase_steps)
+        elif "phase_window" in obj:
             window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
         reads = obj.get("reads")
     else:
@@ -1294,6 +1343,7 @@ def _measured(
         rules: list[str] = []
         windows: list[int | None] = []
         reads: list[str] = []
+        window_reads: list[tuple[int, int] | None] = [None] * len(families)
         for rule, window, component in default_table(families):
             rules.append(rule)
             windows.append(window)
@@ -1304,13 +1354,33 @@ def _measured(
         for key, entry_value in declared.items():
             if key not in names:
                 raise ValueError(f"{BEAM_LAW}: {label}.table names an unknown family {key!r}")
-            rules[names[key]], windows[names[key]], reads[names[key]] = _table_entry(
-                entry_value,
-                f"{label}.table[{key!r}]",
-                phase_steps,
-                families[names[key]].phase,
-                rules[names[key]],
+            entry_label = f"{label}.table[{key!r}]"
+            rule, entry_window, component = _table_entry(
+                entry_value, entry_label, phase_steps, families[names[key]].phase, rules[names[key]]
             )
+            if isinstance(entry_window, WindowReading):
+                # The window read from a reading (issue #363): the named
+                # family must exist, carry a phase circle and differ from
+                # the entry's own family (its rows are what the window gates).
+                if entry_window.family not in names:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {entry_label}.phase_window.reads names an unknown family "
+                        f"{entry_window.family!r}"
+                    )
+                if not families[names[entry_window.family]].phase:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {entry_label}.phase_window.reads names the family "
+                        f"{entry_window.family!r}, which has no phase circle: its rows carry no "
+                        "phase to read a centre from"
+                    )
+                if entry_window.family == key:
+                    raise ValueError(
+                        f"{BEAM_LAW}: {entry_label}.phase_window.reads names the entry's own family "
+                        f"{key!r}: the window gates those rows and cannot be read from them"
+                    )
+                window_reads[names[key]] = (names[entry_window.family], entry_window.offset)
+            rules[names[key]], reads[names[key]] = rule, component
+            windows[names[key]] = entry_window if isinstance(entry_window, int) else None
         # The rule of a contact per family: the entry's rule where it
         # differs from the keys' own rule for the family, `measure` (the
         # keys' rule for a paid arrival, the body's momentum its own label)
@@ -1355,6 +1425,7 @@ def _measured(
                 turning,
                 tuple(held),
                 tuple(contact),
+                tuple(window_reads),
             )
         )
     return tuple(found)

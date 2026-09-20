@@ -251,6 +251,8 @@ class NatureBeamSimulation:
             clicks=[0] * count,
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
             contacts=[0] * count,
+            window_reads=tuple(definition.window_reads)
+            + (None,) * (count - len(definition.window_reads)),
         )
 
     def occupant(self, node: Address3) -> int | None:

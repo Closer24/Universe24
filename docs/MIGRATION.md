@@ -6,6 +6,42 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A table entry's window read from a reading, on 2026-09-20 (`phase_window` as `{"reads": ..., "offset": ...}`; issue #363)
+
+An additive key of the world file ([BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+[ENGINE, the world](ENGINE.md#the-beam-law-beam-v1);
+[expectations](TEST_EXPECTATIONS.md#a-window-read-from-a-reading)): a
+measured event's table entry may declare `"phase_window": {"reads":
+"<family>", "offset": s}` in place of the number. The centre of the window
+is then the phase of the coherent pointer of the named family's rows
+present at the set in the interval (every row at the set but the reader's
+own number) plus the offset in phase steps (0 by default); the width is
+the law's. With no such row at the set, or a zero pointer, the entry
+passes with a `pass` record naming `window` None and `reads`; every
+`click` of such an entry carries the `window` used. Refused naming the
+key: an unknown family, a family without a phase circle, the entry's own
+family, the form on `pass` or on a lamp, an `offset` outside 0 .. N - 1,
+an object with other keys or without `reads`.
+
+- **No world file changes**: the number form and the string form of a
+  table entry mean what they meant; a lamp's window stays a number. Every
+  world without the key replays byte-identical in `events.jsonl`,
+  `state.json` and `run.json` (21 example worlds compared,
+  [validation](VALIDATION.md)).
+- **The API**: `world.WindowReading` (the declared form, resolved by the
+  parser), `MeasuredDefinition.window_reads` and `Measured.window_reads`
+  (per family the `(family index, offset)` read, or None; a definition
+  made without the field reads no window), `nature_beam.setting_steps`
+  (per detector set the nearest step of the pointer of a family's rows
+  present at it, None without one), `FamilyPlan.t_window` (the window
+  used per taken row of such an entry). `_table_entry` returns the window
+  as `int | WindowReading | None`.
+- **The record**: the `pass` line of such an entry carries `reads`; its
+  `click` line carries `window`. Other lines are unchanged.
+- **The run**: `examples/events/bell/make_chooser_worlds.py`,
+  `tools/bell_choosers.py`, `tests/test_bell_choosers.py`, the entry
+  [A2 with the choosers on the GameBoard](EXPERIMENTS.md#a2-with-the-choosers-on-the-gameboard-2026-09-20).
+
 ## The four unifications of the formulas, on 2026-09-20 (the pointer as the first moment; `by_clock` on every age against a key; one moment table over one set; the columns at the clock age)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

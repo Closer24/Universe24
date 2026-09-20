@@ -44,6 +44,8 @@ kept, their pins the law of events').
 | `test_nature_beam_age.py` | The age of a ray kept whole and read by a measured event: the age whole through the flight, a collision, a re-emission and a birth; the age moment of the one reading and its symmetries; the clock counting it on an entry that reads `age`; the world key `age_bound`, its default, its refusals and the run-time refusal; the GameBoard unchanged by the whole age ([below](#the-age)) | new (2026-09-20, the model owner's "go for it" on the clock beside a mass) |
 | `test_nature_beam_body.py` | A body on a set of Nodes with one record (`span`): a set of one Node bit-identical to the measured event as it was; the reading, the threshold, the clock's count and the push summed over the set; the step of the whole set, the refusal and the click on a face; the releases apportioned over the set with the books balanced; and the turn by momentum (`action`, `phase_by_momentum`): the phase after k Links floor(k x \|p\| x N / h) mod N for three (p, h, N) including a remainder each step, composed over axes, today's phase without `action`; the GameBoard unchanged by the two keys; the refusals and the record ([below](#a-body-on-a-set-and-the-turn-by-momentum)) | new (2026-09-20, the model owner's decision on Bohr, "put it as parameters outside the GameBoard like the age") |
 | `test_nature_beam_window.py` | The phase window under the Beam Law: the centred half circle on a table entry and on a lamp, the complement covering the circle, the refusals ([below](#the-phase-window-under-the-beam-law)) | `test_phase_window` (a to c) |
+| `test_nature_beam_window_reads.py` | A table entry's window read from a reading (`phase_window` `{"reads": ..., "offset": ...}`): the centre the setting ray's phase plus the offset, a ray inside clicking with the `window` on its record and a ray outside passing with `window` and `reads`; the edge case of no setting ray (a `pass` naming `window` None) and of an antiphase pair; the parsing and the refusals ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
+| `test_bell_choosers.py` | The reader of the Bell run with the choosers on the GameBoard (`tools/bell_choosers.py`) reads the engine on a minimal case run through the runner: the offsets off `FlightTable.manhattan_steps`, one bin at fixed settings with E the triangle exactly, the written windows reading the same and merging, the CHSH sums on synthetic bins ([below](#a-window-read-from-a-reading)) | new (2026-09-20, issue #363) |
 | `test_nature_beam_world_parsing.py` | The world file of the Beam Law: the refusals by name, the direction table, the runner's record, the integer bounds of the measured line ([below](#the-world-file-of-the-beam-law)) | `test_event_worlds` (e), `test_integer_bounds_of_measured_and_emission` (a) |
 | `test_nature_beam_worlds.py` | The worlds of the Beam Law: the two slits fringing in the record and not in the count, the Bell worlds, one content streaming with the books closed, the example worlds parsing, `two_contents` not refused with its face records exact ([below](#the-worlds-of-the-beam-law)) | `test_event_worlds` (a, d) |
 | `test_nature_beam_books.py` | The books as running ledger lines: the transit, content and momentum lines of `books()` equal the recount over the store at every interval of a world that exercises every way a row comes or goes; an empty world ([below](#the-books)) | new (2026-09-19, the optimizations) |
@@ -1286,6 +1288,61 @@ flight table: a ray released at tick t first walks at t + 1; 10 Links take
   `reads` key outside the reading's components; an object entry without
   `rule` takes the family's default rule (since the night of 2026-09-19: a
   window alone on a paid family measures in the window 8).
+
+## A window read from a reading
+
+`tests/test_nature_beam_window_reads.py` (issue #363, 2026-09-20;
+[BEAM_LAW note 34](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation)).
+A bar of 7 x 1 x 1, N 64, K 2^20, `suspension` 0, `release` [0, 1], the
+families `light` (paid), `counter` (paid) and `s` (free, the setting),
+every measured event `fixed`; a counter at x = 3 measuring `light` through
+`{"reads": "s", "offset": 4}` and passing `s`; a measured event of `s` at
+x = 6 (the number the setting rays carry; it passes `light`) and one of
+`light` at x = 0 (the number the pair rays carry).
+
+- (a) the centre is the setting ray's phase plus the offset: a ray of `s`
+  (number 3, phase 20) and a ray of `light` (number 1, phase 30) both at
+  x = 2 on +X reach x = 3 in the first interval; the centre is 24 and
+  d = 6 is inside, so the light ray clicks at tick 1 with `window` 24 on
+  its click record, `held` [1, 1, 0], the push (64, 0, 0); a second light
+  ray of phase 45 (d = 21, outside) at x = 2 with the age 1 arrives at
+  tick 2, the setting ray still present (its second interval at x = 3: the
+  presence counts it), and passes with `window` 24 and `reads` "s", no
+  `threshold` key; the setting ray meets `pass` with no record and goes on
+  (the store holds it, the counter measured none of `s`); the numeric
+  window 24 on the same world gives the same click and pass, without
+  `window` on the click and without `reads` on the pass, the same `held`.
+- (b) no setting ray present: a light ray of phase 24 alone at x = 2
+  passes at tick 1 with `window` None and `reads` "s", no `threshold`
+  key, no click, and clicks on `face:+x` at tick 8 (five Links, m(8) = 5);
+  two setting rays in antiphase (20 and 52) arriving with the light ray at
+  tick 1 give a zero pointer, no centre, and the light ray passes the same
+  way.
+- (c) the parsing: on the `light` entry `windows` None and `window_reads`
+  (2, 4) (the family `s` at index 2, the offset 4; the other entries None),
+  the offset 0 by default, a numeric window leaving `window_reads` None;
+  refused naming the key: `reads` naming an unknown family, the entry's
+  own family (`light`) or a family without a phase circle, the form on
+  `pass`, an `offset` of 64 at N = 64, an object with the key `width`, an
+  object without `reads`, and the form on a lamp (`lamp.phase_window must
+  be an integer`).
+
+`tests/test_bell_choosers.py` (the reader of the run, the experimenter's
+rule): the design of `examples/events/bell/make_chooser_worlds.py`
+(`base`) with the two setting streams at fixed phases (the lamps' contents
+3 and 5 at `release` [1, 1], the turn 0: every `sa` row carries 20 and
+every `sb` row 44; the offsets 0 and 32) run through the runner for the
+warm-up 7 plus 64 pairs: (a) the offsets read off the record (tick - phase
+mod N, one value per counter) equal 1 + the flight age at which the pair
+ray reaches each counter off `FlightTable.manhattan_steps`, 6, 11, 13, 14;
+(b) one bin (20, 44) of 64 pairs, the counts 8, 24, 24, 8, E = -1/2 the
+triangle's 1 - 4 x 24 / 64, both marginals 1/2, 0 criteria failed; (c)
+the windows written in the file (20, 52, 44, 12) read the same bin and
+counts, the two runs merged one bin of 128 with E -1/2, the command line
+on both exit 0; (d) on synthetic bins whose E are the triangle's for 0/25
+and 8/29, `chsh_sum` 2 (None with a bin missing), `best_quadruple` 2 on
+that quadruple with the triangle 2, `signed_sums` the minus sign on each
+term in turn, `in_window` the engine's half circle.
 
 ## The world file of the Beam Law
 
