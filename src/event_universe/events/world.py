@@ -485,11 +485,31 @@ MEASURED_KEYS = {
     "lamp",
     "become",
 }
-LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width"}
+LAMP_KEYS = {"rate", "directions", "phase_window", "phase_width", "turns"}
 # A table entry's object form: the rule, a window on any rule but `pass`
 # with its width, the reading's component the record carries and, on a
 # `become` entry, the transformation's `into` and `products`.
-TABLE_ENTRY_KEYS = {"rule", "phase_window", "phase_width", "reads", "into", "products"}
+TABLE_ENTRY_KEYS = {
+    "rule",
+    "phase_window",
+    "phase_width",
+    "reads",
+    "into",
+    "products",
+    "inputs",
+    "weights",
+    "turns",
+}
+# The split (the amplitude law, 2026-09-20, the owner's unification (2):
+# the split is `rerelease` with a vector of integer weights and the
+# multiplicity, one rule): on a `rerelease` entry under the key, `weights`
+# (one integer from 0 per declared direction of the measured event, at
+# least one positive) and `turns` (a phase step per direction, 0 by
+# default): an arriving row (w, m, p) is re-emitted as the rows (w a_i,
+# m x A, p + t_i) with A = sum a_i^2; without `weights` every weight is 1,
+# the equal k-way split. Refused without the key, on a rule other than
+# `rerelease` and on a free family's entry (free families never branch).
+SPLIT_KEYS = ("inputs", "weights", "turns")
 TRANSFORM_KEYS = {"into", "products"}
 # The clock trigger's keys (the measured event's `become`): the age `at`
 # which it fires, the family it becomes, its products and the `crowd` gate.
@@ -506,6 +526,12 @@ DETECTOR_KEYS = {"name", "positions", "threshold", "reading"}
 # since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
 # wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
 DETECTOR_READINGS = ("wave", "beam")
+# The third reading, under the amplitude key alone (the design, section
+# 0): the set reads the sum of the rows of one record and one label that
+# arrived at its Nodes, squared, accumulated over the record's lifetime;
+# the crowd's pointer threshold is its gate as under `wave`, and a window
+# on its entry is the rotation of the record's labels, not a gate.
+SUM_READING = "sum"
 # The keys of the deleted `reversible-detector-v1`, refused by name.
 REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
 # The face detectors, one per open face of the GameBoard, named by the face in
@@ -566,6 +592,18 @@ class FamilyDefinition:
     phase_per_link: int = 0
     columns: tuple[Column, ...] = ()
     lifetime: int | None = None
+    # The pair form of `phase_per_link` (the amplitude law, 2026-09-20, the
+    # owner's unification (1): the design's frequency is `phase_per_link`
+    # with a rational pair [n, d]): the phase steps a row of the family
+    # turns per interval of its age, `by_clock(age, n, d)` at every walk
+    # that advances its age, carried through a re-emission; None without.
+    # The integer form turns per Link crossed, as it did.
+    phase_per_age: tuple[int, int] | None = None
+
+    @property
+    def declared_phase_per_link(self) -> int | list[int]:
+        """The key as the record carries it: the integer, or the pair."""
+        return list(self.phase_per_age) if self.phase_per_age is not None else self.phase_per_link
 
     def __post_init__(self) -> None:
         # A family made without its columns (the tests' bare definitions,
@@ -662,6 +700,10 @@ class LampDefinition:
     # The window's width in steps (`phase_width`), None for the default
     # N / 2, the half circle.
     width: int | None = None
+    # The phase step each direction's row is born with beyond the clock's
+    # phase (`turns`, the amplitude law: the reflection's quarter turn at
+    # the source's splitter), 0 each by default.
+    turns: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -727,8 +769,14 @@ class MeasuredDefinition:
     become: Transformation | None = None
     transforms: tuple[Transformation | None, ...] = ()
     window_reads: tuple[tuple[int, int] | None, ...] = ()
+    # The split per family (the amplitude law, `Split`): None where the
+    # entry declares none (an equal split under the key, the apportioning
+    # without it).
+    splits: tuple[Split | None, ...] = ()
 
     def __post_init__(self) -> None:
+        if not self.splits:
+            object.__setattr__(self, "splits", (None,) * len(self.table))
         # A definition made without `held` (the tests' bare definitions)
         # holds its amount under its own family alone, and without
         # `widths` or `transforms` declares none.
@@ -1206,7 +1254,7 @@ def _lifetime(value: object, label: str, age_bound: int) -> int | None:
 
 
 def _families(
-    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND
+    value: object, phase_steps: int, age_bound: int = AMOUNT_BOUND, amplitude: bool = False
 ) -> tuple[FamilyDefinition, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{BEAM_LAW}: families must be a nonempty list")
@@ -1269,16 +1317,30 @@ def _families(
         phase = obj.get("phase", True)
         if type(phase) is not bool:
             raise ValueError(f"{BEAM_LAW}: families[{index}].phase must be true or false")
-        per_link = _integer(
-            obj.get("phase_per_link", 0), f"families[{index}].phase_per_link", 0, phase_steps - 1
-        )
-        if per_link and not phase:
-            raise ValueError(
-                f"{BEAM_LAW}: families[{index}].phase_per_link is refused for a family without a "
-                "phase circle"
-            )
+        turn_key = f"families[{index}].phase_per_link"
+        declared_turn = obj.get("phase_per_link", 0)
+        per_age: tuple[int, int] | None = None
+        if isinstance(declared_turn, list):
+            # The pair form: the phase per interval of age (the amplitude
+            # law's frequency), refused without the key.
+            if not amplitude:
+                raise ValueError(
+                    f"{BEAM_LAW}: {turn_key} as a pair [n, d] is the phase per interval of age of "
+                    f"the amplitude law and needs the world key {AMPLITUDE_KEY} (an integer turns "
+                    "per Link crossed)"
+                )
+            per_age = _ratio(declared_turn, turn_key, zero=True)
+            per_link = 0
+        else:
+            per_link = _integer(declared_turn, turn_key, 0, phase_steps - 1)
+        if (per_link or per_age is not None) and not phase:
+            raise ValueError(f"{BEAM_LAW}: {turn_key} is refused for a family without a phase circle")
         lifetime = _lifetime(obj.get("lifetime"), f"families[{index}].lifetime", age_bound)
-        found.append(FamilyDefinition(name, quantum, charge, phase, per_link, lifetime=lifetime))
+        found.append(
+            FamilyDefinition(
+                name, quantum, charge, phase, per_link, lifetime=lifetime, phase_per_age=per_age
+            )
+        )
         declared.append(columns)
     if 2 + len(names) > COLUMN_LIMIT:
         raise ValueError(
@@ -1302,6 +1364,7 @@ def _families(
                 ),
             ),
             family.lifetime,
+            family.phase_per_age,
         )
         for family, columns in zip(found, declared, strict=True)
     )
@@ -1394,12 +1457,20 @@ def _lamp(
             )
         window = _window(obj["phase_window"], f"{label}.phase_window", phase_steps)
     width = _width(obj, label, phase_steps, phased, "measure")
+    turns = (0,) * len(directions)
+    if "turns" in obj:
+        if not amplitude:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.turns is the amplitude law's phase step per direction of a "
+                f"birth and needs the world key {AMPLITUDE_KEY}"
+            )
+        turns = _split_rows(obj["turns"], f"{label}.turns", len(directions), None, 0, phase_steps - 1)[0]
     # The largest label a release can carry: the rate's numerator units at
     # the largest turn the content allows (the whole part of amount x n / d
     # at the clock's rate [n, d]).
     largest_turn = max(1, amount * turn_rate[0] // turn_rate[1])
     _label_bound(max(1, rate[0]), quantum * largest_turn, table, directions, f"{label} (the release)")
-    return LampDefinition(rate, directions, window, width)
+    return LampDefinition(rate, directions, window, width, turns)
 
 
 def _products(
@@ -1506,6 +1577,105 @@ def _transformation(
             f"{list(before)} on {families[family].name!r} (charge conservation is a refusal at load)"
         )
     return Transformation(into, products, at, crowd)
+
+
+@dataclass(frozen=True)
+class Split:
+    """The split of a `rerelease` entry as declared (the amplitude law, the
+    owner's unification (2): the split is `rerelease` with a vector of
+    integer weights and the multiplicity, one rule): per row of the table
+    one weight per declared direction of the measured event (`weights`,
+    integers from 0, at least one positive per row) and one phase step
+    per direction (`turns`, 0 by default); `inputs`, when declared, the
+    arrival directions that select the row (a beam splitter transmits and
+    reflects by the side the row comes from; the design's Mach-Zehnder,
+    section 3.4), and None for one row on every arrival (a mirror, an
+    opening's fan)."""
+
+    weights: tuple[tuple[int, ...], ...]
+    turns: tuple[tuple[int, ...], ...]
+    inputs: tuple[int, ...] | None = None
+
+    def row(self, arrival: int) -> tuple[tuple[int, ...], tuple[int, ...]] | None:
+        """The weights and turns for a row that arrived on `arrival`; None
+        where the entry declares inputs and the arrival is not among them."""
+        if self.inputs is None:
+            return self.weights[0], self.turns[0]
+        if arrival not in self.inputs:
+            return None
+        k = self.inputs.index(arrival)
+        return self.weights[k], self.turns[k]
+
+
+def _split_rows(
+    value: object, label: str, ways: int, rows: int | None, least: int, top: int
+) -> tuple[tuple[int, ...], ...]:
+    """Lists of `ways` integers in `least` .. `top`: one list where `rows`
+    is None (no `inputs` declared), a list of `rows` lists otherwise (one
+    per declared input)."""
+    listed = value if rows is not None else [value]
+    count = 1 if rows is None else rows
+    if not isinstance(listed, list) or len(listed) != count:
+        raise ValueError(f"{BEAM_LAW}: {label} must list one row per declared input ({count})")
+    found = []
+    for k, row in enumerate(listed):
+        if not isinstance(row, list) or len(row) != ways:
+            raise ValueError(
+                f"{BEAM_LAW}: {label} must list one integer per declared direction ({ways})"
+                + (f" in row {k}" if rows is not None else "")
+            )
+        found.append(tuple(_integer(item, label, least, top) for item in row))
+    return tuple(found)
+
+
+def _split(
+    value: object,
+    label: str,
+    rule: str,
+    ways: int,
+    phase_steps: int,
+    free: bool,
+    amplitude: bool,
+    table: tuple[Vector, ...],
+) -> Split | None:
+    """The split of a table entry (`Split`): refused without the key, on a
+    rule other than `rerelease` and on a free family's entry; None where
+    the entry declares none of its keys."""
+    if not isinstance(value, dict) or not any(key in value for key in SPLIT_KEYS):
+        return None
+    named = ", ".join(key for key in SPLIT_KEYS if key in value)
+    if not amplitude:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares {named}, the split of the amplitude law, which needs "
+            f"the world key {AMPLITUDE_KEY}"
+        )
+    if rule != "rerelease":
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares {named} on the rule {rule!r}: the split is a "
+            "`rerelease` with weights (one rule)"
+        )
+    if free:
+        raise ValueError(
+            f"{BEAM_LAW}: {label} declares {named} on a free family's entry: free families never branch"
+        )
+    inputs: tuple[int, ...] | None = None
+    if "inputs" in value:
+        inputs = _directions(value["inputs"], f"{label}.inputs", table)
+    rows = None if inputs is None else len(inputs)
+    if "weights" in value:
+        weights = _split_rows(value["weights"], f"{label}.weights", ways, rows, 0, AMOUNT_BOUND)
+        for row in weights:
+            if not any(row):
+                raise ValueError(
+                    f"{BEAM_LAW}: {label}.weights must have at least one positive weight per row"
+                )
+    else:
+        weights = ((1,) * ways,) * (rows or 1)
+    if "turns" in value:
+        turns = _split_rows(value["turns"], f"{label}.turns", ways, rows, 0, phase_steps - 1)
+    else:
+        turns = ((0,) * ways,) * (rows or 1)
+    return Split(weights, turns, inputs)
 
 
 def _window_reading(value: object, label: str, phase_steps: int) -> WindowReading:
@@ -1732,6 +1902,7 @@ def _measured(
         widths: list[int | None] = []
         transforms: list[Transformation | None] = []
         window_reads: list[tuple[int, int] | None] = [None] * len(families)
+        splits: list[Split | None] = [None] * len(families)
         for rule, window, component in default_table(families):
             rules.append(rule)
             windows.append(window)
@@ -1757,6 +1928,16 @@ def _measured(
                 amount,
                 table,
                 directions,
+            )
+            splits[at] = _split(
+                entry_value,
+                entry_label,
+                rule,
+                len(directions),
+                phase_steps,
+                families[at].free,
+                amplitude,
+                table,
             )
             if isinstance(entry_window, WindowReading):
                 # The window read from a reading (issue #363): the named
@@ -1851,6 +2032,7 @@ def _measured(
                 become,
                 tuple(transforms),
                 tuple(window_reads),
+                tuple(splits),
             )
         )
     return tuple(found)
@@ -2008,6 +2190,7 @@ def _detectors(
     shape: Address3,
     periodic: tuple[bool, bool, bool],
     measured: tuple[MeasuredDefinition, ...],
+    amplitude: bool = False,
 ) -> tuple[DetectorDefinition, ...]:
     if not isinstance(value, list):
         raise ValueError(f"{BEAM_LAW}: detectors must be a list")
@@ -2058,9 +2241,16 @@ def _detectors(
             positions.append(position)
         threshold = _integer(obj.get("threshold", 1), f"{label}.threshold", 1)
         reading = obj.get("reading", DETECTOR_READINGS[0])
-        if reading not in DETECTOR_READINGS:
+        if reading == SUM_READING and not amplitude:
             raise ValueError(
-                f"{BEAM_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}, not {reading!r}"
+                f"{BEAM_LAW}: {label}.reading {SUM_READING!r} is the amplitude law's reading of one "
+                f"record's rows and needs the world key {AMPLITUDE_KEY}"
+            )
+        if reading not in DETECTOR_READINGS and reading != SUM_READING:
+            raise ValueError(
+                f"{BEAM_LAW}: {label}.reading must be one of {list(DETECTOR_READINGS)}"
+                f"{' or ' + repr(SUM_READING) + ' under ' + AMPLITUDE_KEY if amplitude else ''}, "
+                f"not {reading!r}"
             )
         found.append(DetectorDefinition(name, tuple(positions), threshold, str(reading)))
     return tuple(found)
@@ -2141,7 +2331,17 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     # The quantum of action of the turn by momentum, h: absent by default
     # (nothing turns by momentum), an integer from 1 when declared.
     action = None if "action" not in obj else _integer(obj["action"], "action", 1)
-    families = _families(obj["families"], phase_steps, age_bound)
+    # The amplitude law: true or false (false by default); under it the
+    # circle must hold the quarter turn of a reflection.
+    amplitude = obj.get(AMPLITUDE_KEY, False)
+    if type(amplitude) is not bool:
+        raise ValueError(f"{BEAM_LAW}: {AMPLITUDE_KEY} must be true or false")
+    if amplitude and phase_steps < AMPLITUDE_LEAST_STEPS:
+        raise ValueError(
+            f"{BEAM_LAW}: {AMPLITUDE_KEY} is refused with N {phase_steps}: the quarter turn of a "
+            f"reflection needs a circle of at least {AMPLITUDE_LEAST_STEPS} steps"
+        )
+    families = _families(obj["families"], phase_steps, age_bound, amplitude)
     # The meeting: true or false (false by default); under it a paid family
     # without a phase circle is refused, the phase being the register the
     # meeting reads the crowd into (there is no other on the record).
@@ -2157,16 +2357,6 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
                     "crowd met is added to the phase, one grain step per wrap of the circle), and "
                     "a phase-less family has no register to read the crowd into"
                 )
-    # The amplitude law: true or false (false by default); under it the
-    # circle must hold the quarter turn of a reflection.
-    amplitude = obj.get(AMPLITUDE_KEY, False)
-    if type(amplitude) is not bool:
-        raise ValueError(f"{BEAM_LAW}: {AMPLITUDE_KEY} must be true or false")
-    if amplitude and phase_steps < AMPLITUDE_LEAST_STEPS:
-        raise ValueError(
-            f"{BEAM_LAW}: {AMPLITUDE_KEY} is refused with N {phase_steps}: the quarter turn of a "
-            f"reflection needs a circle of at least {AMPLITUDE_LEAST_STEPS} steps"
-        )
     measured = _measured(
         obj["measured"],
         shape,
@@ -2184,7 +2374,7 @@ def parse_nature_beam_world(document: object) -> NatureBeamWorld:
     in_transit = _in_transit(
         obj.get("in_transit", []), shape, families, measured, phase_steps, table, age_bound
     )
-    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured)
+    detectors = _detectors(obj.get("detectors", []), shape, periodic, measured, amplitude)
     world = NatureBeamWorld(
         model_id,
         shape,

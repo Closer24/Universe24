@@ -33,7 +33,8 @@ the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
 `tests/test_nature_beam_window.py`, `tests/test_window_width.py`, `tests/test_nature_beam_window_reads.py`,
 `tests/test_nature_beam_world_parsing.py`,
 `tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`,
-`tests/test_meeting.py`, `tests/test_amplitude_record.py`
+`tests/test_meeting.py`, `tests/test_amplitude_record.py`,
+`tests/test_amplitude_split.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
@@ -382,7 +383,15 @@ one scalar; absent, forever: a ray of the family whose age reaches L at
 the end of its walk clicks on the border `lifetime`, booked as a face
 books an escape; refused beyond `age_bound`; the record carries
 `columns-v1` when a lifetime is declared),
-`phase` true by default, `phase_per_link` 0 .. N - 1); `measured`
+`phase` true by default, `phase_per_link` 0 .. N - 1, or under `amplitude`
+a pair `[n, d]`, the phase per interval of age (the design's frequency,
+the owner's unification (1): a row of the family turns `by_clock(age, n,
+d)` at every walk that advances its age, carried through a re-emission,
+so that two paths of one record read their difference in intervals at the
+click; the integer form turns per Link crossed as it did, and on the
+flight table the two are not the same number: a heading crosses 32 Links
+in 55 intervals; refused without the key and on a family without a phase
+circle; the record carries the key as declared)); `measured`
 (`position`, `family`, `amount`, `phase`, `momentum`, `fixed`, `span`
 (three odd integers from 1, `[1, 1, 1]` by default: a body on the set of
 Nodes centred on `position`, one record on all of them),
@@ -433,13 +442,34 @@ with no such row at the set, or a zero pointer, the entry passes with a
 `pass` record naming `window` None and `reads`; every `click` of such an
 entry carries the `window` used (`MeasuredDefinition.window_reads`,
 `Measured.window_reads`: per family the (family, offset) read, None for a
-number or none); `lamp` `{rate: [n, d],
+number or none); since 2026-09-20 under `amplitude` a `rerelease` entry
+may declare the split (`world.Split`, the owner's unification (2): the
+split is `rerelease` with a vector of integer weights and the
+multiplicity, one rule): `weights`, one integer from 0 per declared
+direction of the measured event (at least one positive), `turns`, one
+phase step per direction (0 by default), and `inputs`, arrival directions
+that select the row of weights and turns (`weights` and `turns` then
+lists of one row per input: a beam splitter transmits and reflects by the
+side a row comes from), a row arriving on a direction the `inputs` do not
+name refusing the run naming the Node; an arriving row (w, m, p) is
+re-emitted as the rows (w a_i, m x A, p + t_i) on the directions, A = sum
+a_i^2, every weight 1 where none is declared (the equal split; without
+the key the apportioning as it was), the multiplicity bounded before it
+is formed and refused naming the Node; refused without the key, on a rule
+other than `rerelease` and on a free family's entry); `lamp` `{rate: [n, d],
 directions, phase_window, phase_width}` on a measured event of a paid
-family, its window a number);
+family, its window a number; under `amplitude` also `turns`, a phase step
+per direction the born row carries beyond the clock's phase, and the rate
+[1, 1] alone: a self-creation with a release births one record of one row
+of amount 1 per direction with the multiplicity the directions' count,
+the record's identity the lamp's number x 2^32 + the birth's ordinal at
+the lamp, `nature_beam.record_identity`);
 `in_transit` (`position`, `family`, `number`,
 `direction` (a vector of D, or a rest index 0 or 1), `amount`, `phase`,
 optional `age`); `detectors` (`name`, `positions`, `threshold` 1 by
-default, `reading` `wave` by default (since 2026-09-20) or `beam`). Refused, naming the key and the law: `"law": "events"` (pointing
+default, `reading` `wave` by default (since 2026-09-20) or `beam`, or
+under `amplitude` `sum`, the reading of one record's rows, refused
+without the key). Refused, naming the key and the law: `"law": "events"` (pointing
 to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,

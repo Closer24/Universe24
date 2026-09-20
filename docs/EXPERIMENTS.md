@@ -2887,6 +2887,64 @@ neutron (the transformation `become`, the identity `weak-v1`).**
   limits, nothing tuned. The page for the model owner: the scratchpad's
   `weak_impl/weak.html`, published by Boss.
 
+### L, the amplitude law (2026-09-20)
+
+- **Confronts.** The model owner's decision of 2026-09-20 (Highlights 5.4,
+  "DECIDED: `amplitude-v1` is built, with the four recommendations and the
+  four unifications"; the ten principles, the corrected sentence "the
+  world is the list of clicks"): under the world key `amplitude` the
+  lattice computes every path of a record, locally and exactly, and the
+  world's list of clicks is read from it by the birth phase u on the
+  ladder of the record's offers, normalised by their sum with the rungs
+  at the nearest integer ([BEAM_LAW note 37](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+  the physicist's and the mathematician's design,
+  scratchpad/amplitude/DESIGN.md, every integer from its check scripts).
+  The acceptance tests of the design, written before any run: the
+  Mach-Zehnder interferometer always at one port (test 1), Elitzur-Vaidman
+  (3), determinism (8), the two slits at a low rate (2), the register's
+  replay (10), and, in the second half, the pair with the choosers (4),
+  GHZ (5), the which-path world (6), no maintenance (9) and the gate. Not
+  claimed: that quantum mechanics is solved; claimed, once the runs pass:
+  that the engine's own tables give Born, interference, Bell with exact
+  marginals and S below Tsirelson at finite N, GHZ, which-path, CNOT and
+  Grover, with the named departures and the open items.
+
+**L1, the Mach-Zehnder interferometer and Elitzur-Vaidman (the design's
+section 3.4; the acceptance tests 1, 3 and 8).**
+
+- **Model prediction, pinned before the runs
+  ([the expectations](../examples/events/amplitude/README.md#l1-the-mach-zehnder-interferometer-and-elitzur-vaidman),
+  `examples/events/amplitude/expectations.json`, written by the
+  generator from the design's `mz.txt`).** A plane of 5 x 5, K 2^20, N 64,
+  75 intervals; the source at (0, 0) births one record per self-creation
+  on two arms (the birth phase u = t - 1 at tick t: 64 births span the
+  circle and complete by tick 75), mirrors at (3, 0) and (0, 3), the
+  splitter at (3, 3) with its split table selected by the arrival
+  ((20, 21): transmitted 20, reflected 21 with the quarter turn), D1 at
+  (4, 3) and D2 at (3, 4) reading `sum`. Expected over the 64 births
+  (DETECTOR, the gathers): `mz_equal` D1 64 and D2 0 (the offers
+  1681/1682 and 1/1682); `mz_half` 0 and 64; `mz_quarter` 32 and 32;
+  `mz_balanced` ((1, 1)) 64 and 0 with D2's rows cancelled on the lattice
+  (GAMEBOARD); `mz_345` ((3, 4)) 63 and 1, the same u = 63 falling in D2
+  where the rung moved; the unequal arms (arm 2 two intervals longer) at
+  `phase_per_link` 0: 64 and 0, at [8, 1]: 32 and 32, at [16, 1]: 0 and
+  64; Elitzur-Vaidman `ev_29` (arm 2 absorbed at (0, 3)): absorber 32,
+  D1 17, D2 15 (D2 the dark port of the unblocked device, 15/64 against
+  the ideal 16); `ev_169` ((119, 120)): 32, 16, 16; one gather per
+  completed record, the same list on a second run of the same world
+  (determinism), the record's `total` within 0.0019 of 1 on the (20, 21)
+  worlds (the tables' rounding).
+- **Features.** The world key `amplitude`, the split (`rerelease` with
+  `weights`, `turns` and `inputs`), the normal form's cancel, the pair
+  form of `phase_per_link`, the reading `sum`, the layer and its ladder;
+  `tests/test_amplitude_record.py`, `tests/test_amplitude_split.py`.
+- **Run.** Planned: `examples/events/amplitude/` (the ten `mz_*` and
+  `ev_*` worlds written by `make_worlds.py`, the model ids
+  `beam-amplitude-<name>-v1`), `tools/run_series.py --jobs 3`, 75
+  intervals each; the readings by `tools/amplitude_path.py` (every line
+  labelled DETECTOR or GAMEBOARD), recorded here with the fingerprint
+  when the layer lands.
+
 ### A3. Bell test in phase form, delayed geometry
 
 - **Confronts.** The same CHSH data as A2 and the quantum value at the

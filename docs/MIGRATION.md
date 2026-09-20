@@ -33,6 +33,38 @@ The first commit, no behaviour change without the key:
   `events.jsonl` and `state.json` without the key; `run.json` gains
   `amplitude` false ([validation](VALIDATION.md)).
 
+## The amplitude law, on 2026-09-20, (ii): the split, the birth of a record and the phase per interval of age
+
+The second commit of `amplitude-v1` (the design's sections 2.1, 2.3 and
+3.1; the owner's unifications (1) and (2)); no change without the key:
+
+- The split is `rerelease` with weights (`world.Split`, one rule): a
+  `rerelease` entry may declare `weights`, `turns` and `inputs` (the rows
+  of weights selected by the arrival direction; the design's single
+  vector cannot make a beam splitter, whose transmitted and reflected
+  weights depend on the side a row comes from, so the table gained its
+  `inputs`); under the key every re-emitted row (w, m, p) becomes the rows
+  (w a_i, m x A, p + t_i), the equal split where nothing is declared; the
+  apportioning as it was without the key. `PendingRow` carries `record`,
+  `branch`, `multiplicity`, `split` and `arrival`; `FamilyPlan` the taken
+  rows' columns.
+- The birth of a record: a lamp under the key (the rate [1, 1] alone)
+  births one record per self-creation with a release, one row of amount 1
+  per direction with the multiplicity the directions' count, the identity
+  the lamp's number x 2^32 + the birth's ordinal (`Measured.births`,
+  `nature_beam.record_identity`); a lamp may declare `turns` per direction.
+- The phase per interval of age: `phase_per_link` accepts the pair
+  `[n, d]` under the key (`FamilyDefinition.phase_per_age`; the record
+  carries the key as declared, `declared_phase_per_link`): the row turns
+  `by_clock(age, n, d)` at every walk that advances its age, in the
+  inverse walk back; the integer form is per Link crossed as it was. The
+  two forms are not one number on the flight table (the design's
+  premise "one Link per interval" does not hold on it), which the report
+  to the owner names.
+- The reading `sum` is accepted on a detector under the key (its record
+  the layer's, the next commit).
+- Nothing deleted. The gate set replays byte-identical without the key.
+
 ## The weak force, on 2026-09-20, (iv): the W world (no key added)
 
 The model owner's decision of 2026-09-20 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),

@@ -66,6 +66,7 @@ kept, their pins the law of events').
 | `test_architecture.py`, `test_locality.py` | The dependency direction (`core` imports only `core`, the engine imports no host module, no physical module imports output or storage), the integer audit of `core/`, and LOCALITY-1 documented without an exception |
 | `test_meeting.py` | The meeting: the arc permutation of the direction table (a permutation for 1034 targets on K's table, the rest fixed, the chain from +x, the k-fold shift), the phase register (61, 62, 63, 0, 1, 2 with the turn at the fourth; the inverse), the sign of the turn and the `turned` line, the crowd and the record untouched, the bijection with the meeting (50 forward, 50 inverse) and the refusals ([below](#the-meeting)) | new (2026-09-20, the model owner's "DECIDED: the meeting, M-R"; the physicist's and the mathematician's design) |
 | `test_amplitude_record.py` | The amplitude law's key and the record on the row (`amplitude-v1`): the world key `amplitude`, its default, its identity and its refusals; the three columns `record`, `branch` and `multiplicity` at their defaults on every row without the key and the merge's packed key unchanged by them; the merge's normal form under the key, antiphase rows of one record cancelling and every other pair staying ([below](#the-amplitude-law-the-record)) | new (2026-09-20, the model owner's "DECIDED: `amplitude-v1` is built"; the design's sections 1 and 2.3) |
+| `test_amplitude_split.py` | The split, the birth of a record and the phase per interval of age: a lamp's birth of one record of k rows with the multiplicity k and the identity number x 2^32 + ordinal; the (20, 21) splitter's rows (41 in phase toward D1, 1 in antiphase toward D2, the multiplicity 1682) and the balanced split's cancel on the lattice with the `cancelled` lines; the pair form of `phase_per_link` (40 at [8, 1], 26 at [16, 3], 24 at the integer 8 after 5 intervals; the inverse bit-exact); the refusals ([below](#the-amplitude-law-the-split)) | new (2026-09-20; the design's sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)) |
 | `test_repository_language.py`, `test_repository_hygiene.py`, `test_repository_navigation.py` | The repository gates: English, one canonical copy, navigable links |
 
 ## The one reading
@@ -312,6 +313,45 @@ first run:
   antiphase pair stays; the units cancelled are returned per (record,
   direction) with the content carried, {(7, 2): (4, 4), (8, 2): (2, 2),
   (9, 2): (2, 2)}.
+
+## The amplitude law: the split
+
+`tests/test_amplitude_split.py` (docs/BEAM_LAW.md note 37; the design,
+sections 2.1, 2.3, 3.1 and 3.4; the owner's unifications (1) and (2)),
+on the Mach-Zehnder world of series L built by
+`examples/events/amplitude/make_worlds.py` (a 5 x 5 plane, K 2^20, N 64,
+the source of content 2^20 releasing one record per self-creation on +x
+and +y with the turn 16 on +y, mirrors at (3, 0) and (0, 3), the splitter
+at (3, 3) with the inputs +y and +x and the weight rows [b, a], [a, b] with
+the turns [16, 0], [0, 16], D1 at (4, 3) and D2 at (3, 4)). The expected
+integers, written down before the first run:
+
+- (a) the birth: at tick 1 the record 2^32 + 1 of two rows at (0, 0),
+  (+x, age 0, phase 0, amount 1, content 1, branch 0, multiplicity 2) and
+  (+y, phase 16); at tick 2 the record 2^32 + 2 with the phases 1 and 17;
+  the lamp's `births` 2; without the key (the lamp's `turns` dropped) rows
+  of record 0, multiplicity 1 and phase 0 on both directions;
+- (b) the split on the (20, 21) splitter: at tick 11 the record's rows at
+  (3, 3) are (+x, age 0, phase 16, amount 41, multiplicity 1682) and (+y,
+  phase 32, amount 1, 1682): the reflected 21 and the transmitted 20 merge
+  in phase toward D1 and cancel to 1 toward D2 (the design's offers
+  1681/1682 and 1/1682); the `cancelled` lines 40 units, 40 content, the
+  labels (0, 2560, 0); the balanced (1, 1) split leaves (+x, 16, amount 2,
+  multiplicity 4) alone with 2 units cancelled, the books balanced at
+  every tick and the row's multiplicity in `state.json`; a row arriving on
+  a side the `inputs` do not name refuses the run naming the Node;
+- (c) the phase per interval of age on a 9 x 1 x 1 bar with a declared
+  ray on +x: after 5 intervals the phase 40 at [8, 1], 26 at [16, 3] and
+  24 at the integer 8 (3 Links crossed: the integer turns per Link, the
+  pair per interval of age; not one number on the flight table); a rest
+  row turns nothing; `run.json` carries the pair; 5 forward and 5 inverse
+  intervals on a periodic bar return the row bit-exact; the pair refused
+  without the key and on a family without a phase circle;
+- (d) the refusals of the split: `weights` without the key, on `measure`,
+  on a free family's entry, of a wrong length, all zero, a turn beyond
+  N - 1, `inputs` naming an undeclared direction, a lamp's `turns` without
+  the key; a pending row of multiplicity 2^61 split by (20, 21) (A = 841)
+  refuses the run naming the Node (3, 3).
 
 ## The meeting
 

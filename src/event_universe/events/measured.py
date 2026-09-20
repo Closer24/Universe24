@@ -15,6 +15,8 @@ from event_universe.events.world import (
     BEAM_LAW,
     CHARGE_INDEX,
     MOMENTUM_BOUND,
+    SUM_READING,
+    Split,
     Transformation,
 )
 
@@ -54,6 +56,18 @@ class PendingRow(NamedTuple):
     phase: int
     first: int = 0
     thrown: bool = False
+    # The amplitude law's columns the row carries into its re-creation (the
+    # record, the branch and the multiplicity of the arriving row; 0, 0, 1
+    # for a row of no record) and `split`, whether the re-creation is the
+    # split by the entry's weights (a `rerelease` under the key) or the
+    # apportioning as it was (a home, a product, every row without the key).
+    record: int = 0
+    branch: int = 0
+    multiplicity: int = 1
+    split: bool = False
+    # The direction the row arrived on (the split's table selects its row
+    # of weights by it).
+    arrival: int = 0
 
 
 Pending = PendingRow
@@ -148,7 +162,14 @@ class DetectorSet:
 
     @property
     def wave(self) -> bool:
-        return self.reading == "wave"
+        """The pointer's readings: `wave` and, under the amplitude law,
+        `sum` (the crowd's pointer gate and the set's phase as under
+        `wave`; the record the layer's, `sum`)."""
+        return self.reading in ("wave", SUM_READING)
+
+    @property
+    def sum(self) -> bool:
+        return self.reading == SUM_READING
 
 
 @dataclass
@@ -245,6 +266,14 @@ class Measured:
     # the (family, offset) whose rows at the set give the entry's centre,
     # None where the centre is declared or absent (`windows`).
     window_reads: tuple[tuple[int, int] | None, ...] = ()
+    # The split (the amplitude law): per family the entry's `Split` (the
+    # weight rows over the event's directions by the arrival), None where
+    # none is declared; the lamp's `turns` per direction; `births` the
+    # records this event has born (the ordinal of the next record's
+    # identity, the event's number x 2^32 + the ordinal).
+    splits: list[Split | None] = field(default_factory=list)
+    lamp_turns: tuple[int, ...] = ()
+    births: int = 0
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
     # content the frame read (`frame_content`, M_A of the push: taken once

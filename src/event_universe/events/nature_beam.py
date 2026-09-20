@@ -105,6 +105,7 @@ from event_universe.events.measured import Ledger, Measured, PendingRow, count_c
 from event_universe.events.meeting import ArcTable, arc_table, meet
 from event_universe.events.world import (
     AGE_READS,
+    AMOUNT_BOUND,
     BEAM_LAW,
     BECOME_RULE,
     CHARGE_INDEX,
@@ -1160,27 +1161,27 @@ class NatureBeamStore:
         if modulus:
             # The cancel: the signed sum's magnitude stays, at the phase of
             # the larger side (the half-circle phase of the group, plus the
-            # half circle when the far side was larger); an empty group
-            # leaves, its units booked per (record, direction).
+            # half circle when the far side was larger, which a lone row on
+            # the far half is); an empty group leaves, its units booked per
+            # (record, direction).
+            half = modulus // 2
             cancelled = whole - np.abs(amount)
-            if cancelled.any():
-                half = modulus // 2
-                for k in np.flatnonzero(cancelled > 0).tolist():
-                    slot = (int(self.record[k]), int(self.direction[k]))
-                    found = removed.get(slot, (0, 0))
-                    removed[slot] = (
-                        found[0] + int(cancelled[k]),
-                        found[1] + int(cancelled[k]) * int(self.content[k]),
-                    )
-                recorded = self.record != NO_RECORD
-                base = np.where(recorded, self.phase % half, self.phase)
-                self.phase = np.where(recorded & (amount < 0), base + half, base)
-                self.amount = np.abs(amount)
-                self.arrival[:] = NO_ARRIVAL
-                alive = self.amount > 0
-                if not alive.all():
-                    self.keep(alive)
-                return removed
+            for k in np.flatnonzero(cancelled > 0).tolist():
+                slot = (int(self.record[k]), int(self.direction[k]))
+                found = removed.get(slot, (0, 0))
+                removed[slot] = (
+                    found[0] + int(cancelled[k]),
+                    found[1] + int(cancelled[k]) * int(self.content[k]),
+                )
+            recorded = self.record != NO_RECORD
+            base = np.where(recorded, self.phase % half, self.phase)
+            self.phase = np.where(recorded & (amount < 0), base + half, base)
+            self.amount = np.abs(amount)
+            self.arrival[:] = NO_ARRIVAL
+            alive = self.amount > 0
+            if not alive.all():
+                self.keep(alive)
+            return removed
         self.amount = amount
         self.arrival[:] = NO_ARRIVAL
         return removed
@@ -1454,6 +1455,27 @@ def transform(
 
 FIRST = np.zeros(1, dtype=np.int64)
 NEW_RUN = np.ones(1, dtype=bool)
+# A row born at a self-creation, before it is placed: (direction, amount,
+# content per unit, phase, thrown, record, branch, multiplicity).
+BornRow = tuple[int, int, int, int, bool, int, int, int]
+# The record's identity (the amplitude law): the emitter's number x 2^32 +
+# the birth's ordinal at the emitter, below 2^62 (the number below 2^30 and
+# the ordinal below 2^32).
+RECORD_SHIFT = 32
+RECORD_BOUND = (1 << 62) - 1
+
+
+def record_identity(number: int, ordinal: int) -> int:
+    """The identity of a record born by a measured event: its number x 2^32
+    + the ordinal of the birth at it (from 1), refused beyond the bound
+    naming the emitter."""
+    identity = (number << RECORD_SHIFT) + ordinal
+    if ordinal >= (1 << RECORD_SHIFT) or identity > RECORD_BOUND:
+        raise OverflowError(
+            f"{BEAM_LAW}: the record identity of measured event {number} at its birth {ordinal} "
+            f"exceeds the integer bound {RECORD_BOUND}"
+        )
+    return identity
 
 
 def group_starts(keys: np.ndarray) -> np.ndarray:
@@ -1588,6 +1610,16 @@ class FamilyPlan:
     h_amount: list[int] = field(default_factory=list)
     h_content: list[int] = field(default_factory=list)
     h_phase: list[int] = field(default_factory=list)
+    # The amplitude law's columns of the home rows and of the taken rows,
+    # carried into their re-creation and onto the click lines under the key.
+    h_record: list[int] = field(default_factory=list)
+    h_branch: list[int] = field(default_factory=list)
+    h_multiplicity: list[int] = field(default_factory=list)
+    t_record: list[int] = field(default_factory=list)
+    t_branch: list[int] = field(default_factory=list)
+    t_multiplicity: list[int] = field(default_factory=list)
+    t_age: list[int] = field(default_factory=list)
+    t_arrival: list[int] = field(default_factory=list)
     # The rows that pass a gate: per measured event (k0, k1).
     passes: dict[int, tuple[int, int]] = field(default_factory=dict)
     p_number: list[int] = field(default_factory=list)
@@ -1856,7 +1888,11 @@ def nature_beam(
                     )
             store.node = coordinates @ np.array(store.strides, dtype=np.int64)
             store.age = back
-            store.phase = (store.phase - families[family].phase_per_link * moved) % modulus
+            turned = families[family].phase_per_link * moved
+            per_age = families[family].phase_per_age
+            if per_age is not None:
+                turned = turned + np.where(resting, 0, by_clock_rows(back, per_age[0], per_age[1]))
+            store.phase = (store.phase - turned) % modulus
             store.arrival[:] = NO_ARRIVAL
             store.merge()
         return GameBoardDiagnostics(shape, unit, [])
@@ -1938,8 +1974,16 @@ def nature_beam(
         # alphabet, whose line it resumes when a collision moves it); a
         # moving ray's age advances by one, whole.
         resting = store.direction < REST_DIRECTIONS
+        # The phase per Link crossed (the integer `phase_per_link`) and,
+        # under the amplitude law, the phase per interval of age (the pair
+        # form: `by_clock(age, n, d)` at every walk that advances the age,
+        # the one primitive of every rate, carried through a re-emission).
+        turned = definition.phase_per_link * moved
+        if definition.phase_per_age is not None:
+            rate_n, rate_d = definition.phase_per_age
+            turned = turned + np.where(resting, 0, by_clock_rows(store.age, rate_n, rate_d))
         store.age = np.where(resting, store.age, store.age + 1)
-        store.phase = (store.phase + definition.phase_per_link * moved) % modulus
+        store.phase = (store.phase + turned) % modulus
         store.arrival = arrival
         if escaped.any():
             store.keep(~escaped)
@@ -2116,6 +2160,9 @@ def nature_beam(
                 plan.h_amount = amount[home].tolist()
                 plan.h_content = content[home].tolist()
                 plan.h_phase = phase[home].tolist()
+                plan.h_record = store.record[at[home]].tolist()
+                plan.h_branch = store.branch[at[home]].tolist()
+                plan.h_multiplicity = store.multiplicity[at[home]].tolist()
                 plan.events.update(h_events)
 
             def admit() -> (
@@ -2382,6 +2429,11 @@ def nature_beam(
             plan.t_phase = ph_t.tolist()
             plan.t_carried = carried_t.tolist()
             plan.t_label = labels.tolist()
+            plan.t_record = store.record[at[taken]].tolist()
+            plan.t_branch = store.branch[at[taken]].tolist()
+            plan.t_multiplicity = store.multiplicity[at[taken]].tolist()
+            plan.t_age = age_t.tolist()
+            plan.t_arrival = arrival[taken].tolist()
             e_ends = np.append(e_starts[1:], groups)
             g_events = g_ev[e_starts].tolist()
             e_lo, e_hi = e_starts.tolist(), e_ends.tolist()
@@ -2480,7 +2532,16 @@ def nature_beam(
                     k0, k1, total, carried, taken_in = home_plan
                     pending = entry.pending[family]
                     for k in range(k0, k1):
-                        pending.append(PendingRow(plan.h_amount[k], plan.h_content[k], plan.h_phase[k]))
+                        pending.append(
+                            PendingRow(
+                                plan.h_amount[k],
+                                plan.h_content[k],
+                                plan.h_phase[k],
+                                record=plan.h_record[k],
+                                branch=plan.h_branch[k],
+                                multiplicity=plan.h_multiplicity[k],
+                            )
+                        )
                     entry.taken[family]["home"] += total
                     ledger.transit_absorbed[family] += total
                     ledger.content_absorbed[family] += carried
@@ -2612,8 +2673,21 @@ def nature_beam(
                         if rule == "rerelease":
                             pending = entry.pending[family]
                             for k in range(k0, k1):
+                                # Under the amplitude law the re-emission is
+                                # the split by the entry's weights (an equal
+                                # split where none is declared); the row's
+                                # record, branch and multiplicity go with it.
                                 pending.append(
-                                    PendingRow(plan.t_amount[k], plan.t_content[k], plan.t_phase[k])
+                                    PendingRow(
+                                        plan.t_amount[k],
+                                        plan.t_content[k],
+                                        plan.t_phase[k],
+                                        record=plan.t_record[k],
+                                        branch=plan.t_branch[k],
+                                        multiplicity=plan.t_multiplicity[k],
+                                        split=world.amplitude,
+                                        arrival=plan.t_arrival[k],
+                                    )
                                 )
                             if record is not None:
                                 record(
@@ -2745,21 +2819,86 @@ def nature_beam(
         for family, store in enumerate(stores):
             definition = families[family]
             free = free_of[family]
-            # (direction, amount, content, phase, thrown)
-            born: list[tuple[int, int, int, int, bool]] = []
+            # (direction, amount, content, phase, thrown, record, branch,
+            # multiplicity)
+            born: list[BornRow] = []
             if free and entry.held[family] > 0:
                 amount = by_clock(age, entry.held[family] * numerator, denominator_release)
                 if amount:
                     born.extend(
-                        (direction, amount, 0, entry.phase, False) for direction in entry.directions
+                        (direction, amount, 0, entry.phase, False, NO_RECORD, NO_BRANCH, ONE_PATH)
+                        for direction in entry.directions
                     )
             if entry.pending[family]:
                 ways = len(entry.directions)
                 for row in entry.pending[family]:
+                    if row.split:
+                        # The split (the amplitude law, BEAM_LAW note 37): the
+                        # rows (w a_i, m x A, p + t_i) on the directions, A =
+                        # sum a_i^2, the norm w^2 / m exact for any integer
+                        # weights; every weight 1 where none is declared;
+                        # the multiplicity bounded before it is formed and
+                        # refused naming the Node.
+                        table_split = entry.splits[family]
+                        if table_split is None:
+                            weights, turns = (1,) * ways, (0,) * ways
+                        else:
+                            chosen = table_split.row(row.arrival)
+                            if chosen is None:
+                                raise ValueError(
+                                    f"{BEAM_LAW}: a row arrived at the splitter of measured event "
+                                    f"{entry.number} at {list(entry.position)} on the direction "
+                                    f"{[int(v) for v in flight.vectors[row.arrival]]}, which its "
+                                    "`inputs` do not name"
+                                )
+                            weights, turns = chosen
+                        norm = sum(a * a for a in weights)
+                        if row.multiplicity > MOMENTUM_BOUND // norm:
+                            raise OverflowError(
+                                f"{BEAM_LAW}: the multiplicity {row.multiplicity} x {norm} of a "
+                                f"split at measured event {entry.number} at {list(entry.position)} "
+                                f"exceeds the integer bound {MOMENTUM_BOUND}"
+                            )
+                        for direction, weight, turn_i in zip(
+                            entry.directions, weights, turns, strict=True
+                        ):
+                            if not weight:
+                                continue
+                            if row.amount > AMOUNT_BOUND // weight:
+                                raise OverflowError(
+                                    f"{BEAM_LAW}: the amount {row.amount} x {weight} of a split at "
+                                    f"measured event {entry.number} at {list(entry.position)} "
+                                    f"exceeds the integer bound {AMOUNT_BOUND}"
+                                )
+                            born.append(
+                                (
+                                    direction,
+                                    row.amount * weight,
+                                    row.content,
+                                    (row.phase + turn_i) % modulus,
+                                    False,
+                                    row.record,
+                                    row.branch,
+                                    row.multiplicity * norm,
+                                )
+                            )
+                            ledger.content_released[family] += row.amount * weight * row.content
+                        continue
                     shares = apportion_whole(row.amount, [1] * ways, (age + row.first) % ways)
                     for direction, share in zip(entry.directions, shares, strict=True):
                         if share:
-                            born.append((direction, share, row.content, row.phase, row.thrown))
+                            born.append(
+                                (
+                                    direction,
+                                    share,
+                                    row.content,
+                                    row.phase,
+                                    row.thrown,
+                                    row.record,
+                                    row.branch,
+                                    row.multiplicity,
+                                )
+                            )
                             ledger.content_released[family] += share * row.content
                 entry.pending[family] = []
             if (
@@ -2779,10 +2918,32 @@ def nature_beam(
             ):
                 rate_n, rate_d = entry.lamp_rate
                 cost = definition.quantum * turn
-                for direction in entry.lamp_directions:
+                # Under the amplitude law a lamp's release is the birth of one
+                # record: k rows of amount 1 on its k directions with the
+                # multiplicity k, the record's identity the lamp's number x
+                # 2^32 + the birth's ordinal at the lamp (the parser admits
+                # the rate [1, 1] alone under the key).
+                record_id = NO_RECORD
+                ways = len(entry.lamp_directions)
+                if world.amplitude and entry.held[family] // cost >= 1:
+                    entry.births += 1
+                    record_id = record_identity(entry.number, entry.births)
+                lamp_turns = entry.lamp_turns or (0,) * ways
+                for direction, lamp_turn in zip(entry.lamp_directions, lamp_turns, strict=True):
                     amount = min(by_clock(age, rate_n, rate_d), entry.held[family] // cost)
                     if amount:
-                        born.append((direction, amount, cost, entry.phase, False))
+                        born.append(
+                            (
+                                direction,
+                                amount,
+                                cost,
+                                (entry.phase + lamp_turn) % modulus,
+                                False,
+                                record_id,
+                                NO_BRANCH,
+                                ways if record_id else ONE_PATH,
+                            )
+                        )
                         content = cost * amount
                         entry.held[family] -= content
                         ledger.held_spent[family] += content
@@ -2803,17 +2964,16 @@ def nature_beam(
             body = entry.nodes
             if len(body) > 1:
                 ways = len(body)
-                # (node, direction, amount, content, phase, thrown)
-                split: list[tuple[int, int, int, int, int, bool]] = []
-                for direction, amount, content, phase, thrown in born:
-                    shares = apportion_whole(amount, [1] * ways, age % ways)
-                    split.extend(
-                        (store.flat(node), direction, share, content, phase, thrown)
+                placed: list[tuple[int, BornRow]] = []
+                for row_born in born:
+                    shares = apportion_whole(row_born[1], [1] * ways, age % ways)
+                    placed.extend(
+                        (store.flat(node), (row_born[0], share, *row_born[2:]))
                         for node, share in zip(body, shares, strict=True)
                         if share
                     )
-                node_column = np.array([b[0] for b in split], dtype=np.int64)
-                born = [b[1:] for b in split]
+                node_column = np.array([b[0] for b in placed], dtype=np.int64)
+                born = [b[1] for b in placed]
             else:
                 node_column = np.full(len(born), store.flat(entry.position), dtype=np.int64)
             count = len(born)
@@ -2862,9 +3022,9 @@ def nature_beam(
                 amount=amount_column,
                 content=content_column,
                 arrival=np.full(count, NO_ARRIVAL, dtype=np.int64),
-                record=np.full(count, NO_RECORD, dtype=np.int64),
-                branch=np.full(count, NO_BRANCH, dtype=np.int64),
-                multiplicity=np.full(count, ONE_PATH, dtype=np.int64),
+                record=np.array([b[5] for b in born], dtype=np.int64),
+                branch=np.array([b[6] for b in born], dtype=np.int64),
+                multiplicity=np.array([b[7] for b in born], dtype=np.int64),
             )
             ledger.transit_released[family] += int(exact_sum(amount_column))
         # The `become` record, at the products' birth: the trigger and its

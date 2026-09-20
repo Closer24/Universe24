@@ -123,7 +123,9 @@ def execute_nature_beam_run(
                     for column in family.columns
                 ],
                 "phase": family.phase,
-                "phase_per_link": family.phase_per_link,
+                # The integer as declared, or since the amplitude law the pair
+                # [n, d] (the phase per interval of age).
+                "phase_per_link": family.declared_phase_per_link,
                 # The age at which the family's rays click on the border
                 # `lifetime` (None: the family lives forever).
                 "lifetime": family.lifetime,
