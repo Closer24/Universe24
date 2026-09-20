@@ -53,7 +53,7 @@ the suite: such a comparison is a research run, made once and recorded with a
 fingerprint and a date in [validation evidence](../../docs/VALIDATION.md). A
 physical milestone that several rules produce together is one fingerprinted,
 dated run of the engine, not a suite. A test exercises one generic rule in
-isolation on a minimal board, with its expected integers written down before
+isolation on a minimal GameBoard, with its expected integers written down before
 the first run.
 
 For physical-path audits, apply the

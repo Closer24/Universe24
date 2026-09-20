@@ -1,5 +1,5 @@
 """Write the four worlds of series G, the Hubble diagram behind the detector,
-under the law of the ray, in space.
+under the Beam Law, in space.
 
 The model owner's question (2026-09-20, Highlights 5.4, "DECIDED: series G"):
 "let it check whether what is observed today is also seen in our detector."
@@ -13,7 +13,7 @@ axes: on every axis a chain of CHAIN sources of ranks i = 1 .. CHAIN at the
 initial distances r_0 = 1 + SPACING x i, the faster the farther (no source
 ever overtakes another: a step onto an occupied Node would be refused). A
 source is a free measured event of content M with the momentum p along its
-axis; it steps one Link per (Q S M + p) / p self-creations (RAY_LAW section
+axis; it steps one Link per (Q S M + p) / p self-creations (BEAM_LAW section
 3 step 5, Q = 64, S the world's `width`), so its speed is v = p / (Q S M +
 p) Links per interval, and p is chosen for the speed ladder v = c x V(axis)
 x (2 i - 1) / (2 CHAIN - 1) with V from 0.35 to 0.6: the twenty-four speeds
@@ -60,7 +60,7 @@ Two crowds. (i) The coasting throw: the sources of content M = 64 (F = 1:
 one ray per self-creation), the masses of content 1 (one ray per 64
 self-creations, a residual). The push a passing row gives a reader is one
 own-label unit per unit of amount (Delta n = amount in units of Q M_A,
-RAY_LAW section 3 step 4, the equivalence principle, so the speed changes
+BEAM_LAW section 3 step 4, the equivalence principle, so the speed changes
 by (1 - v)^2 x amount / S per row whatever the reader's content), and with
 S = 2^20 the light crowd's rows move a source's speed by at most 3 x 400 x
 (1 - v)^2 / 2^20 < 0.0011 over the run (outward, on rank 1): the throw
@@ -95,7 +95,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2] / "src"))
 
-from event_universe.core.lattice import PORT_HEADINGS  # noqa: E402
+from event_universe.core.game_board import PORT_HEADINGS  # noqa: E402
 from event_universe.events.nature_beam import flight_table  # noqa: E402
 from event_universe.events.world import HEADING_OFFSET, Q  # noqa: E402
 
@@ -131,7 +131,7 @@ CROWDS = {"coasting": 1, "pushing": FACTOR}
 Json = dict[str, object]
 
 
-def ray_speed() -> float:
+def beam_speed() -> float:
     """The ray's speed on a heading, read off the flight table: the Links
     made in one period of the heading's digital line over the period."""
     table = flight_table(((0, 0, 0), (0, 0, 0), *PORT_HEADINGS))
@@ -140,7 +140,7 @@ def ray_speed() -> float:
     return int(table.manhattan_steps(heading, np.array([period]))[0]) / period
 
 
-C = ray_speed()
+C = beam_speed()
 
 
 def momentum(fraction: float, content: int) -> int:
@@ -231,7 +231,7 @@ def world(crowd: str, clock: str) -> Json:
             source["table"] = {other: entry("read") for other in ["mass", *names] if other != name}
         measured.append(source)
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-hubble-{crowd}-{clock}-space-v1",
         "shape": list(SHAPE),
         "boundary": "open",

@@ -1,6 +1,6 @@
 """Static layer checks used by the suite; these do not execute inspected code.
 
-The layers: `core` holds the law-free substrate (bounded integers, the board's
+The layers: `core` holds the law-free substrate (bounded integers, the GameBoard's
 addresses and headings, the phase tables) and imports nothing but `core`;
 `events` is the engine and may import `core`; the host modules (the runner,
 the workspace, retention, the snapshot writer) may import both. No physical

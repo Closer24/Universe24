@@ -1,4 +1,4 @@
-# Series G: the Hubble diagram behind the detector, under the law of the ray, in space
+# Series G: the Hubble diagram behind the detector, under the Beam Law, in space
 
 Four worlds of one base, written by `make_worlds.py`; the register entry is
 [G, the Hubble diagram behind the detector (2026-09-20)](../../../docs/EXPERIMENTS.md#g-the-hubble-diagram-behind-the-detector-2026-09-20)
@@ -20,7 +20,7 @@ never a test; the design, the derivation and the expectations below were
 written before the runs; a reading outside its expectation is reported with
 its numbers, never moved. Every number is labelled a **detector reading**
 (the record of the detector's set or of a measured event: the only kind
-reality has) or a **GameBoard reading** (the host's view of the board: a
+reality has) or a **GameBoard reading** (the host's view of the GameBoard: a
 source's position, its steps, its momentum, the books; the picture and the
 checks, never the measurement).
 
@@ -36,7 +36,7 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
   faster the farther, so that no source overtakes another (a step onto an
   occupied Node is refused and its momentum is kept, [Highlights 5.4](../../../docs/HIGHLIGHTS.md#54-the-detector),
   the contact defect). A source of content M with the momentum p along its
-  axis steps one Link per (Q S M + p) / p self-creations ([RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  axis steps one Link per (Q S M + p) / p self-creations ([BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
   step 5, Q = 64): its speed is v = p / (Q S M + p) Links per interval.
   The speed ladder: v = c x V(axis) x (2 i - 1) / 7 with V = 0.6, 0.55,
   0.5, 0.45, 0.4, 0.35 on +x, -x, +y, -y, +z, -z, twenty-four speeds from
@@ -48,7 +48,7 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
   M, 64)` = M / 64 per direction per self-creation): the carrier of the
   phase.
 - **The phase.** A free family's release stamps the clock's phase on every
-  ray born ([RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+  ray born ([BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
   step 5), and with `phase_per_link` 0 the phase is not turned in flight:
   the ray carries the emitter's phase at birth to the detector, and the
   click record shows it (the choice: free families, matter; a paid family
@@ -84,7 +84,7 @@ An open cube of 301^3 Nodes, the centre c = (150, 150, 150), `"law":
 
 The push a passing row gives a reader is one own-label unit per unit of
 amount whatever the reader's content (kappa = -M_A, the equivalence
-principle: `Delta n = amount` in units of Q M_A, [RAY_LAW section 3](../../../docs/RAY_LAW.md#3-the-nodes-interval-nature_beam)
+principle: `Delta n = amount` in units of Q M_A, [BEAM_LAW section 3](../../../docs/BEAM_LAW.md#3-the-nodes-interval-nature_beam)
 step 4), and the speed changes by (1 - v)^2 x amount / S per row. What
 "light" and "heavy" mean here is therefore the number of rays a source
 releases, M / 64 per row, at the one width S = 2^20.
@@ -152,7 +152,7 @@ intervals, so the reading
 
 k the clock's owed count per self-creation (the emitter's rate 1 / (1 + k))
 and v the source's speed at emission: the acoustic Doppler of a source
-receding through the board at v from a detector at rest in it, times the
+receding through the GameBoard at v from a detector at rest in it, times the
 emitter's clock. There is no time dilation in the law (a clock's rate does
 not depend on its motion) and no cosmological stretch (a ray's phase per
 Link is fixed): the redshift is the Doppler of the throw and the clocks'
@@ -271,14 +271,14 @@ and the Doppler part of the reading alone (the emitter's clock removed),
 both printed after the runs and not pinned; `--png DIR` writes the
 diagrams with matplotlib (the repository gets the numbers).
 `tests/test_hubble_readings.py` pins the tool to the engine on a bar of
-61 Nodes. The runs take about 40 s each (the 301^3 board's per-interval
+61 Nodes. The runs take about 40 s each (the 301^3 GameBoard's per-interval
 host cost, not the rays: about 6 000 rows in flight).
 
 ## What the law lacks for this experiment (found while designing it)
 
 - A throw off the axes is not straight: a measured event steps one axis
   per interval, x before y before z, and a step that coincides with an
-  earlier axis's step is lost ([RAY_LAW section 10](../../../docs/RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+  earlier axis's step is lost ([BEAM_LAW section 10](../../../docs/BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
   note 17), so a diagonal momentum moves along x alone when its components
   are equal; the sources are thrown along the six axes only.
 - A crowd of point sources has no three-dimensional gravity to read: a
@@ -421,7 +421,7 @@ nothing: k = 0 at every source). The fits per window (detector readings):
   throw by the throw's initial distances and in the pushing throw by the
   crowd's clocks, while on the GameBoard nothing accelerates.
 - Host cost: 36 to 37 s per run of 400 intervals (about 6 000 rows in
-  flight, 31 measured events; the 301^3 board's per-interval arrays); the
+  flight, 31 measured events; the 301^3 GameBoard's per-interval arrays); the
   tool with the replay 3 minutes.
 
 ## Verdict

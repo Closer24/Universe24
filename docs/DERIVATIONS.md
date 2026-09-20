@@ -12,7 +12,7 @@ the mean-field computations already recorded ([A5s](EXPERIMENTS.md#a5s-coulombs-
 [E11](EXPERIMENTS.md#e11-the-fields-books-the-profile-of-a-point-source-shell-by-shell-and-the-momentum-between-release-and-meeting))
 are cited only at the end of each section as checks, never as a starting
 point. The method is the one the model owner set: one interval of the
-engine written as an operator on the lattice, its exact identities, its
+engine written as an operator on the GameBoard, its exact identities, its
 Fourier symbol, its continuum limit, and the place where integer rounding
 enters. The small arithmetic checks were made in Python (sympy, mpmath,
 numpy) on the formulas of this document alone, seconds each; they are not
@@ -25,12 +25,12 @@ follows from the rules in the stated limit, exactly or up to a constant that
 is named. **Different law**: the rules give a definite law of another form,
 stated, with the run that would show the difference. **Not reached**: the
 rules as declared do not determine the quantity, and what would is stated
-plainly. **New** marks a formula the lattice gives that has no counterpart in
-known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts); round 6 (sections 39 to 44: the model owner's direction of 2026-09-18, the wait reads the amplitude, the coupling derived against the four gravitational tests, and whether any local reading falls as 1/r without the root, verified) is summarized in [section 43](#43-round-6-the-sizes-for-a6-the-separating-observable-and-the-verdicts); round 7 (sections 45 to 50: the model owner's decision of the evening of 2026-09-18, a thing emits and the stream leaves at the edge of an open board, derived as the fixed point of the emitting thing, its transient, its integer form and the tests, with the scratch script committed as `tools/derivations_round7.py`) is summarized in [section 50](#50-round-7-the-verdicts-and-the-run-plan); round 8 (sections 51 to 56: the model owner's decision of the same evening, the law of the shadow, only shadows and events, written as points in the mathematician's draft and derived on the fixed point of round 7, with the scratch script committed as `tools/derivations_round8.py`) is summarized in [section 56](#56-round-8-the-verdicts-the-smallest-engine-and-the-first-three-worlds).
+plainly. **New** marks a formula the GameBoard gives that has no counterpart in
+known physics. The summary table is [section 15](#15-the-verdicts-in-one-table-round-1-see-section-21-for-round-2); round 2 (sections 17 to 21, the model owner's points 16 to 21 of 2026-09-18) is summarized in [section 21](#21-round-2-the-verdicts-that-change-and-those-that-stand); round 3 (sections 22 to 25: Boss's vectorial steering rule and phase-reading push of 2026-09-18, verified, and the wait of point 23, PR #278) is summarized in [section 25](#25-round-3-the-verdicts); round 4 (sections 26 to 33: the model owner's point 24 of 2026-09-18, the Node mixes the six, derived as an operator and verified) is summarized in [section 33](#33-round-4-the-verdicts); round 5 (sections 34 to 38: the model owner's question of 2026-09-18, does the shadow pay the wait, the three options derived side by side against the gravitational tests, verified) is summarized in [section 38](#38-round-5-the-verdicts); round 6 (sections 39 to 44: the model owner's direction of 2026-09-18, the wait reads the amplitude, the coupling derived against the four gravitational tests, and whether any local reading falls as 1/r without the root, verified) is summarized in [section 43](#43-round-6-the-sizes-for-a6-the-separating-observable-and-the-verdicts); round 7 (sections 45 to 50: the model owner's decision of the evening of 2026-09-18, a thing emits and the stream leaves at the edge of an open GameBoard, derived as the fixed point of the emitting thing, its transient, its integer form and the tests, with the scratch script committed as `tools/derivations_round7.py`) is summarized in [section 50](#50-round-7-the-verdicts-and-the-run-plan); round 8 (sections 51 to 56: the model owner's decision of the same evening, the law of the shadow, only shadows and events, written as points in the mathematician's draft and derived on the fixed point of round 7, with the scratch script committed as `tools/derivations_round8.py`) is summarized in [section 56](#56-round-8-the-verdicts-the-smallest-engine-and-the-first-three-worlds).
 
 ## 0. Units, notation and the operator
 
-**Lattice units.** The Link ℓ (the distance between neighbouring Nodes), the
+**GameBoard units.** The Link ℓ (the distance between neighbouring Nodes), the
 interval δt (one tick), the quantum (one unit of amount; m₀ for a family of
 rest rate 1, hypothesis 12). Everything moves one Link per interval
 (Highlights 3.28, "there is no other speed in the engine"), so c = 1 Link
@@ -79,7 +79,7 @@ used anywhere below.
   heading per interval on six headings, ρ = n/d its declared release ratio.
   The standing reading (Highlights 5.4, "A thing does not emit"): the
   shadows of a thing are a standing set of declared total X, given with the
-  board as a declared profile or as the mean field's steady state, rounded to
+  GameBoard as a declared profile or as the mean field's steady state, rounded to
   whole quanta with the fractions in the registers; a shadow that comes home
   leaves again.
 - **R4, the push** (Highlights 5.4, the law of the bit, point 3;
@@ -130,7 +130,7 @@ bounded remainder per Node, which is what the dense-mode runs read
 a part in a thousand at r = 12, 16, 20; E11: a part in a thousand through
 k = 16). What rounding changes qualitatively, the granularity of the far
 field, is derived in [section 11](#11-gravity-on-a-quantum) and
-[section 13](#13-what-the-lattice-says-that-the-textbooks-do-not).
+[section 13](#13-what-the-gameboard-says-that-the-textbooks-do-not).
 
 ## 1. Exact identities of the operator: continuity, Gauss's law, J = (11/8)·Φ
 
@@ -152,7 +152,7 @@ counts the in-flight quanta plus the registers' content (the ledger's
 "the booking"), and the identity holds in integers because
 Σ_{h'} ⌊A·W/S⌋ + Σ_{h'} (A·W mod S)/S = A.
 
-**Gauss's law on the lattice.** Sum the identity over any set V of Nodes
+**Gauss's law on the GameBoard.** Sum the identity over any set V of Nodes
 that contains the source Node. Interior Links cancel in pairs (Φ on a Link
 is counted once from each end with opposite signs); what remains is the
 source's release less what it absorbs (its own shadows coming home, R5),
@@ -204,13 +204,13 @@ and the outflow through the cube of half-width r equal to S to 10⁻⁷ at
 r = 2 to 64; E11's steady flux is the same number through every one of 22
 shells, L1 and Euclidean alike, to one part in 10⁸.
 
-**Verdict.** Gauss's law in flux form: **reached exactly** on the lattice,
+**Verdict.** Gauss's law in flux form: **reached exactly** on the GameBoard,
 as an identity. J = (11/8)Φ: **new** (the factor is the table's; it is 2 for
 a memoryless walk and 1 + 5/11 = 16/11 over 2 here).
 
 ## 2. The Fourier symbol: diffusion, D = 4/9, and the cubic anisotropy
 
-**Rules used.** R1, R2. The board is periodic or large (Highlights 3.1); the
+**Rules used.** R1, R2. The GameBoard is periodic or large (Highlights 3.1); the
 source is left out here and put back in section 5.
 
 **The symbol.** Writing R1 and R2 together, a(x, h', t + 1) = Σ_h T(h', h)
@@ -251,7 +251,7 @@ forward share on a line (the beam, ⌊6/11⌋ of it per Link), 1/ln(11/6) = 1.65
 Links: beyond a few Links only the diffusive mode survives.
 
 **The anisotropy at order k⁴.** O_h has two quartic invariants, (k²)² and
-Σkᵢ⁴; the coefficient of Σkᵢ⁴ is the lattice's first departure from
+Σkᵢ⁴; the coefficient of Σkᵢ⁴ is the GameBoard's first departure from
 rotational symmetry, a = −58/81 (the simple walk has −1/72). In real space
 the density mode obeys
 
@@ -432,7 +432,7 @@ diffusive age at r (median 2.47 r²), not r/c. The run: E11 (a) under the
 law of the bit, reading the tick at which A's register moves against the
 push tick.
 
-## 5. Gauss's law, the inverse square, Coulomb's law and the lattice anisotropy
+## 5. Gauss's law, the inverse square, Coulomb's law and the GameBoard anisotropy
 
 **Rules used.** R1, R2, R3 (both readings, named), R4, R5, and the
 identities of sections 1 and 2.
@@ -473,7 +473,7 @@ standing reading of R3 the flux S_eff through a shell is not fixed by X
 alone: a diffusive profile has the residence time Σ_x n(x)/S_eff ≈ R²/(2D)
 in a box of radius R, so a standing set of total X carries the flux
 S_eff = 2DX/R² = (8/9)X/R², which depends on the extent of the declared
-profile; and on a closed board a standing set that meets nothing spreads to
+profile; and on a closed GameBoard a standing set that meets nothing spreads to
 a uniform density, whose J is zero. What the force constant is under the
 standing reading is therefore the flux its declared profile carries, which
 the profile must state; every formula below is written in S_eff.
@@ -518,7 +518,7 @@ amount" for the shadow set (Highlights 5.4) is the one under which the
 strength is independent of content, that is, under which charge is not
 mass.
 
-**The lattice anisotropy.** Two terms make the field at a Node depend on the
+**The GameBoard anisotropy.** Two terms make the field at a Node depend on the
 direction to the source. (i) The beam: the share of a release that has never
 scattered walks the axis line at one Link per interval and falls as
 X_h (6/11)^{r−1} (R1's forward weight, one Link per interval by R2), an
@@ -612,7 +612,7 @@ t₉₀ = r² / (4 D z₉₀²) = 1.925 r²  intervals      (t₅₀ = 0.475 r²
 ```
 
 ∝ r², the retardation of a diffusing field, against r/c = r for a wave. The
-lattice approaches this from below because the first quanta arrive by the
+GameBoard approaches this from below because the first quanta arrive by the
 beam at t = r and the walk is ballistic for its first 1.3 Links.
 
 **What a phase-steered split would need.** The open item of Highlights 3.5
@@ -796,7 +796,7 @@ differences after L. The clock of the group is the period of its loop
 
 **A moving loop, from step counting alone.** A loop moving at v = 1/k Links
 per interval along +x is a pattern that repeats after P intervals shifted
-by Pv Links (an integer). Every ray takes exactly one lattice step per
+by Pv Links (an integer). Every ray takes exactly one GameBoard step per
 interval (R2), so over one period a ray takes P steps, of which
 n₊ₓ − n₋ₓ = Pv are the net drift and the rest, P − Pv at least (more if it
 ever steps −x), are the steps of its internal circuit. If the moving orbit's
@@ -815,7 +815,7 @@ costing two) or, conceivably, fewer. With L_int = P₀ the rate is 1 − v,
 hypothesis 15's curve.
 
 **Against the Lorentz factor.** Nature's rate is √(1 − v²) =
-(1 − v)·√((1 + v)/(1 − v)). To match it the lattice would need
+(1 − v)·√((1 + v)/(1 − v)). To match it the GameBoard would need
 L_int(v) = P₀ √((1 − v)/(1 + v)) = 2.31, 2.83, 3.10, 3.53 steps at
 v = 1/2, 1/3, 1/4, 1/8 for P₀ = 4: not integers, and smaller than the
 rest circuit. So no orbit with an integer internal circuit gives the
@@ -823,11 +823,11 @@ Lorentz factor exactly at these v; the model's own law is P₀(1 − v)/L_int(v)
 with an integer L_int(v) ≥ some minimum, a staircase in v.
 
 **The preferred frame.** v is counted in Links per interval against the
-lattice, and the step count is absolute: a loop at rest on the lattice is
+GameBoard, and the step count is absolute: a loop at rest on the GameBoard is
 distinguishable from one that moves, the slowing is not reciprocal (the
 moving loop sees the resting one's clock fast), and the drift cost is
 |v|₁ = |vₓ| + |vᵧ| + |v_z|, not the Euclidean speed: a loop moving along a
-(110) diagonal at Euclidean speed u pays 1 − √2·u. The lattice frame is a
+(110) diagonal at Euclidean speed u pays 1 − √2·u. The GameBoard frame is a
 preferred frame in the plain sense, and Lorentz invariance is not a symmetry
 of the rules (section 14).
 
@@ -848,7 +848,7 @@ as the unit of mass), hypothesis 14 (G = ħc/(N m₀)²), the A6 status text,
 Highlights 3.28 and 5.5. These are declared identifications, not Node rules;
 this section derives their consequences only.
 
-**Two choices of m₀.** In lattice units c = 1 (Link per interval) and
+**Two choices of m₀.** In GameBoard units c = 1 (Link per interval) and
 δt = 1.
 
 - m₀ = h/(N δt c²) (one step of the N-circle per interval). Then the unit of
@@ -952,7 +952,7 @@ an external body against unit-ray matter, G_L/2; and the equivalence
 principle (the acceleration of B independent of M_B) holds iff g_B is the
 same for all matter, which the rules do not fix (an external body has
 g = 1/M, the E5 ring 4 receiver Nodes for content 8, unit rays at distinct
-Nodes 1). The escape velocity in lattice units,
+Nodes 1). The escape velocity in GameBoard units,
 
 ```text
 v_esc = √( (G_L (g_A + g_B) M_A) / r )     Links per interval,   valid where v_esc < 1,
@@ -1009,7 +1009,7 @@ that gives one radius,
 R_c = 11 S_eff / (32π p) = G_L M / (2 p)       (the photon circle; 3GM/c² in general relativity),
 ```
 
-a DDA staircase of a circle, which exists on the lattice only if
+a DDA staircase of a circle, which exists on the GameBoard only if
 R_c ≥ 1 Link, that is M ≥ 2p/G_L (6.1·10⁴ quanta for p = 1 at ρ = 2⁻¹⁵), and
 whose pushes must be integers, one quantum per interval at R_c = 1. For a
 slow thing (v = p/M < 1, R6) the circle is Kepler's, v² = G_N M/R, at any R.
@@ -1125,7 +1125,7 @@ is open. This is a derivation A10 would confirm by counting the same sets
 on the same tables; the statement is exact, not sampled, for the Port form
 and for the quadrature of the Born form, and enumerated for the rest.
 
-## 13. What the lattice says that the textbooks do not
+## 13. What the GameBoard says that the textbooks do not
 
 Each item is a formula derived above, with its limit and the run that would
 test it; each is marked new: not in known physics.
@@ -1161,12 +1161,12 @@ test it; each is marked new: not in known physics.
    (α ∝ 1/p, chromatic bending); testable by A6 at amounts 2¹⁷ and 2¹⁹.
 6. **The clock of a moving loop.** Rate ≤ (1 − |v|₁)·P₀/L_int(v), the drift
    factor derived, direction-dependent through the L1 norm, in the
-   lattice's frame; a staircase in v with integer L_int; not the Lorentz
+   GameBoard's frame; a staircase in v with integer L_int; not the Lorentz
    factor for any integer L_int at v = 1/2, 1/3, 1/4, 1/8 (section 9). New:
    A14 once a moving loop exists.
 7. **The force is a sum of the two shadow fluxes.** F ∝ (N_B S_A + N_A S_B)
    = (g_A + g_B) M_A M_B ρ(1 − f) (section 5), so the model's "charge" in
-   lattice units is the flux S_eff = 6ρM(1 − f) (emitting reading) or the
+   GameBoard units is the flux S_eff = 6ρM(1 − f) (emitting reading) or the
    flux of the declared profile (standing reading), the receiver counts by
    Nodes, and the constant of the force is 11/(32π) per unit flux; two
    bodies of unequal release repel with a force proportional to their sum.
@@ -1196,7 +1196,7 @@ test it; each is marked new: not in known physics.
   is a thing, not a field. A phase-steered split would need a conjugate pair
   on the unit circle at k → 0 and a phase gradient along the path, which a
   rate-0 family with a constant emitter clock does not carry.
-- **Lorentz invariance**: the lattice frame is preferred (section 9), the
+- **Lorentz invariance**: the GameBoard frame is preferred (section 9), the
   speed of a thing is fixed at one Link per interval in the L1 norm
   (section 3), momentum is capped rather than γ-scaled, the energy of motion
   is absent (section 7), and no orbit with an integer circuit gives the
@@ -1229,7 +1229,7 @@ test it; each is marked new: not in known physics.
 
 | Law | Verdict | Constant or form derived | Run that decides |
 | --- | --- | --- | --- |
-| Gauss's law (flux) | reached exactly (lattice identity) | S_eff through every closed surface | E11 (done: same S through 22 shells) |
+| Gauss's law (flux) | reached exactly (GameBoard identity) | S_eff through every closed surface | E11 (done: same S through 22 shells) |
 | Inverse square | reached at r ≫ 2 Links | J = 11 S_eff/(32π r²), n = 9 S_eff/(16π r) | A5s Run 2 (done to r = 20, the approach) |
 | Coulomb's sign | reached | σ = sign(q_A q_B) | A5s (done) |
 | Coulomb's product law | different law: F ∝ (g_A + g_B) M_A M_B | 33ρ(1 − f)/(16π) per unit g | A5s with unequal releases |
@@ -1244,7 +1244,7 @@ test it; each is marked new: not in known physics.
 | Einstein's 4GM/(c²b) | not reached (no delay gradient) | needs a wait rule | — |
 | Achromatic bending | different law: α ∝ 1/p | — | A6 at 2¹⁷, 2¹⁹ |
 | Time dilation √(1 − v²) | not reached; bound rate ≤ (1 − v)P₀/L_int | drift factor 1 − v | A14 (needs a moving loop) |
-| Preferred frame | different law (lattice frame, L1 speed) | — | a diagonal pass timed |
+| Preferred frame | different law (GameBoard frame, L1 speed) | — | a diagonal pass timed |
 | G's value | not reached (input ρ) | G_eff N constant for m₀ = h/(Nδtc²), N² for ħ/(δtc²); engine: neither | A6 (done), A11 |
 | Two-body problem, escape velocity | reached (Newton) with G_N = (G_L/2)(g_A + g_B) | v_esc = √(G_L(g_A + g_B)M/r) | A7 |
 | Gravitational time dilation | not reached (zero) | w = 11/9 would give GR's form | — |
@@ -1260,7 +1260,7 @@ All numbers used as checks come from the dated entries of
 `e11_field_books/profile.py`), read after the derivations were made:
 
 - A5s, computed after the run: J = 11/8 Φ at every Node; the outflow equal
-  to S to 10⁻⁷; D = 4/9; the density the lattice Green's function scaled by
+  to S to 10⁻⁷; D = 4/9; the density the GameBoard Green's function scaled by
   3/8; t₉₀/r² → 1.53 at r = 32 against 1.93; the axis and diagonal residues
   of the current; S = 20 132 with 4444 of 24 576 returning.
 - A5s Run 2: the engine's push equal to the mean field to 0.08, 0.13 and
@@ -1331,7 +1331,7 @@ since its release. Since a shadow's phase is its owner's at release and
 does not advance (R7′), a share of age s at tick t carries φ = φ₀ + ρ(t − s)
 with ρ = M/K the owner's rate; so at a Node **the phase difference between
 two shares of one owner is ρ times their age difference (exact)**, and on
-the lattice every step changes |x|₁ by ±1, so s ≡ |x|₁ − |x₀|₁ (mod 2): ages
+the GameBoard every step changes |x|₁ by ±1, so s ≡ |x|₁ − |x₀|₁ (mod 2): ages
 at one Node differ by even numbers, δ ∈ {0, 2ρ, 4ρ, …} turns.
 
 **Exact facts, before any completion.** (E1) Continuity and Gauss's law of
@@ -1591,9 +1591,9 @@ F_B = −G M_A M_B / r² r̂_AB,   G = ζ κ ξ /(2π) = k_C,   a_B = −G M_A /
 **the equivalence principle exact** (round 1's g = N/M is gone: the reading
 is per thing times its content). G and k_C are one number: the ratio of
 the electric to the gravitational push between two things is q_A q_B/(M_A
-M_B) in lattice units, exactly; for two electrons to have nature's
+M_B) in GameBoard units, exactly; for two electrons to have nature's
 4.17·10⁴² the electron's content must be M_e = |q_e|·2.04·10²¹ quanta (6.1·10²¹
-at q = 3 in thirds of e). **New**, testable by A5s and A7 on one board with
+at q = 3 in thirds of e). **New**, testable by A5s and A7 on one GameBoard with
 the same two bodies (the ratio of the registers is q²/M², no fit).
 
 **Light bending.** A thing of content p at speed 1 (R6′: every thing)
@@ -1642,9 +1642,9 @@ on the circle R_c, and the slow motion of matter is a loop's drift, open
 6. **Fringes of shadows at λ/2 in the strip between the slits**,
    independent of L and d, against λL/d; **no fringes for one thing at a
    time** (section 17). Run: A1.
-7. **k_C = G in lattice units**: F_e/F_g = q_A q_B/(M_A M_B); the electron's
+7. **k_C = G in GameBoard units**: F_e/F_g = q_A q_B/(M_A M_B); the electron's
    content follows from nature's ratio (section 19). Run: A5s and A7 on
-   one board.
+   one GameBoard.
 8. **Bending GM/(c²b) on the pass plus a late return**, achromatic (section
    19). Run: A6 at two amounts, the register read during and after.
 9. **E = hν with h = K as an identity**, and the ladder's one new integer
@@ -1683,7 +1683,7 @@ Round 3 (2026-09-18, after PR #277) verifies two rules Boss proposed to the
 model owner, A (this section) and B (section 23), and derives the wait of
 Highlights 5.4 point 23 (section 24, PR #278). As before: no engine run, no
 edit to the engine; the arithmetic is a mean-field iteration of the stated
-rule on a board of 45³ or 61³ Nodes (seconds), cited as a check of the
+rule on a GameBoard of 45³ or 61³ Nodes (seconds), cited as a check of the
 derivation and never as its source.
 
 **The rule, A (R8v).** At a Node, all shares of one owner that arrive on
@@ -1705,7 +1705,7 @@ phase per Node and heading).
 **Assumptions and limit.** One owner (R8v combines shares of one owner
 only, as R8; shares of different owners cross). The mean field of the
 integer rule (a register never destroys a share; every statement holds for
-the integers up to one quantum per Node, heading and register). The board
+the integers up to one quantum per Node, heading and register). The GameBoard
 large. Every statement marked **(exact)** holds for both readings and
 without any completion.
 
@@ -2181,7 +2181,7 @@ the push's direction, moves at
 v(r) = 1 − w n(r) = 1 − (9 w / 11) · G M / r   Links per interval    (0 at r_h),
 ```
 
-a thing falling in slows and stops at r_h in the lattice frame, the
+a thing falling in slows and stops at r_h in the GameBoard frame, the
 frozen-star form of the Schwarzschild coordinate speed 1 − 2GM/r (with
 w = 22/9 the two are equal, and then the clock is off by 2). Its momentum
 still integrates the push exactly, dp/dt = F (section 3): a thing pushed
@@ -2207,7 +2207,7 @@ front 3 to 4). Shapiro: half of GR's at the w that fixes the clock:
 **different law**. The slowing of a free thing in a field and the shearing
 of a loop: **new**. The runs: A6 repeated with the wait, reading the
 register (unchanged to O((GM/b)²)) and the arrival tick; not with A6's
-source, whose S_eff = 40 262 puts every Node of its board inside
+source, whose S_eff = 40 262 puts every Node of its GameBoard inside
 r_h = 7208 Links at w = 1 (the light thing never steps: the first thing the
 repeated run shows), but with S_eff = 10 (G_L M = 33 S_eff/(48π) = 2.19,
 n(8) = 0.22): the register turns by one quantum in about a quarter of the
@@ -2274,7 +2274,7 @@ besides: R2, R3 (standing reading), R4′, R5, R6′, R7′, R9.
 **Assumptions and limit.** One owner (the mixing is per owner; shadows of
 different owners cross). The mean field of the integer rule is the linear
 map on amplitudes (below); section 30 says where the integers break it. The
-board large.
+GameBoard large.
 
 **(i) The matrix.** S = 2P − I with P = J/6 the projector on the uniform
 vector: S is real, symmetric, S² = I, so S is orthogonal (unitary on
@@ -2314,7 +2314,7 @@ u(x, t + 1) + u(x, t − 1) = (1/3) Σ_p u(x + e_p, t),        i.e.
 u(t + 1) − 2u(t) + u(t − 1) = (1/3) Δ_lattice u(t),
 ```
 
-  the lattice wave equation of the transmission-line matrix (Johns and
+  the GameBoard wave equation of the transmission-line matrix (Johns and
   Beurle 1971), exact at every Node and tick, for the real and the
   imaginary part alike. The amounts are the six |A_p|², not u², and are
   recovered from u by the two relations above.
@@ -2356,7 +2356,7 @@ amounts passing through, nothing destroyed" is this identity. Expanding,
 so the phase speed is (1/√3)(1 − k²(K₄/24 + 1/90)) with K₄ = Σk̂ᵢ⁴ − 3/5:
 (1/√3)(1 − k²/36) on an axis, (1/√3)(1 − k²/144) on (110), and exactly
 1/√3 at every k on (111), where cos ω = cos(k/√3). On an axis ω rises to
-arccos(1/3) = 1.231 at k = π with v_g = 0 there: a stop band, the lattice
+arccos(1/3) = 1.231 at k = π with v_g = 0 there: a stop band, the GameBoard
 carries no axis wave shorter than two Links. Over the whole zone
 |v_g|² = Σsin²kᵢ/(9 − (Σcos kᵢ)²) ≤ 1/3 (by Σcos²kᵢ ≥ (Σcos kᵢ)²/3), with
 equality only for k ∥ (111): **no signal of the mixed field outruns 1/√3 in
@@ -2372,7 +2372,7 @@ digits (1.72648 at k = 2π/32 on the axis, (1, 1, 1) exactly at k ∥ (111)).
 The maximum of |v_g| on a 121³ grid of the zone: 0.57735 = 1/√3. The lone
 share: (0.1111, 0.4444, 0.1111 ×4) and J out = −1/3.
 
-**Verdict.** Unitarity and continuity: **reached exactly**. The lattice
+**Verdict.** Unitarity and continuity: **reached exactly**. The GameBoard
 wave equation of TLM with cos ω = (1/3)Σcos kᵢ: **reached exactly**, for the
 amplitude's common part u. J = n·v_g and Φ = J for a wave: **new** (the push
 is the energy flux; ζ = 1). A conservation law for the signed flux:
@@ -2501,7 +2501,7 @@ wavenumber k₀ = √3 ω₀(1 + ω₀²(K₄(r̂)/8 + 1/30)), that is of wavele
 ```
 
 with the amount n(r) = 3|u|² ∝ 1/r² and the push J = n v_g ∝ 1/r² outward
-at every angle. The lattice's first-order anisotropy, from the stationary
+at every angle. The GameBoard's first-order anisotropy, from the stationary
 phase on the dispersion surface (|G|² ∝ 1/(|∇_k D|² 𝒦 r²), 𝒦 the Gaussian
 curvature of cos ω₀ = (1/3)Σcos kᵢ, computed with Δ_S K₄ = −20 K₄):
 
@@ -2522,7 +2522,7 @@ for a clocked thing**, with a fixed angular modulation of relative size
 *A finite standing set.* Under the standing reading a clocked thing's set of
 total X is the wave above cut at the radius R its profile declares, and it
 flows out at S = X/(√3 R) per interval for √3 R intervals and is gone
-unless the board returns it: like section 5's, the force constant is the
+unless the GameBoard returns it: like section 5's, the force constant is the
 profile's flux and must be declared with the profile (κ = 1/(√3 R) in
 section 19's notation); unlike section 5's, what is not returned leaves
 at 1/√3 instead of spreading to a uniform density.
@@ -2538,7 +2538,7 @@ at r = 8, 12, 16, 20; (110) 0.916, 0.915, 0.916, 0.914; (111) 0.928, 0.929,
 current by the forward difference of the outward amount, ∝ 2/r, so J's
 flux converges to Gauss's as 1/r). The ratio axis/(111) at r = 16 to 20 is
 0.90 to 0.86 against the first-order 0.884/1.077 = 0.82. The steady state
-by the lattice resolvent (256³ FFT of 1/(2cos ω₀ − (2/3)Σcos kᵢ + iη)) at
+by the GameBoard resolvent (256³ FFT of 1/(2cos ω₀ − (2/3)Σcos kᵢ + iη)) at
 period 32 (ω₀ = 0.196, λ_w = 18.5): r²n relative to the directional mean at
 r = 24, 36, 48, 60 is 0.962, 0.954, 0.948, 0.959 on the axis, 1.007 to
 1.014 on (110), 1.022 to 1.041 on (111), constant in r, against the
@@ -2573,15 +2573,15 @@ L1 path takes √3 r on (111), the same as the wave). The retardation of
 the force is √3 r, the delay of light r to √3 r. Every free thing moves
 at speed 1 > 1/√3: **every thing outruns its own field**, and the field
 of a moving thing is a Mach cone behind it of half-angle arcsin(1/√3) =
-35.3° (in the continuum limit; on the lattice the cone is dressed by the
+35.3° (in the continuum limit; on the GameBoard the cone is dressed by the
 front's anisotropy), not the contracted Coulomb field of a moving charge.
 A pushed shadow returning on the trace at one Link per interval (section
 32) arrives before the field change that follows it.
 
 **Is there an identification that makes the two speeds equal?** No, on
-three counts. (a) The lattice unit: things and shadows walk the same
+three counts. (a) The GameBoard unit: things and shadows walk the same
 Links in the same intervals, and c_w = 1/√3 is a number of the mesh, the
-TLM speed 1/√d for six Ports, not of any unit; a two-dimensional board
+TLM speed 1/√d for six Ports, not of any unit; a two-dimensional GameBoard
 would give 1/√2 and a line 1. (b) N: the phase circle enters only the
 rounding of the phase (section 30), not the linear map; the dispersion
 relation has no N in it. (c) The wait of point 23: it slows things and
@@ -2628,12 +2628,12 @@ push**, of the optical spacing λ_w L/d everywhere on the screen, against
 of a field (point 6), so the fringes of shadows are read only as pushes;
 a thing meets its own shadows as home (E5) and one thing at a time shows
 no self-interference, as in sections 17 and 22, so the fringes of things
-scale with the coincidence rate, unchanged (A1). (In the exact lattice
+scale with the coincidence rate, unchanged (A1). (In the exact GameBoard
 form n is Σ_p|A_p|² of the six Port amplitudes, which for two crossing
 plane waves of headings k₁, k₂ is n₁ + n₂ + 2Re Σ_p A_{1p}A*_{2p}, a cross
 term whose weight against 2√(n₁n₂) is the overlap of the two Port vectors,
 1 at small angle and cos-like at large angle: the fringe depth on the
-lattice is that overlap, 1 at k₁ = k₂ and (1 + cos θ)/2 at long wavelength
+GameBoard is that overlap, 1 at k₁ = k₂ and (1 + cos θ)/2 at long wavelength
 for waves at angle θ, derived from section 26's A_p; at the two-slit
 angles d/L ≪ 1 it is 1.)
 
@@ -2643,7 +2643,7 @@ rule B_p = A_p at the wall Node in place of u − A_p: reflection coefficient
 +1 on the amplitude. In front of it the incident and the returned waves
 form a standing wave of the common part, u = 2ū cos(k₀x + θ) e^{−iω₀t} for
 normal incidence, of period λ_w/2 = π/k₀ in the amounts. Two things
-distinguish the lattice from a scalar field. First, the net flow is zero
+distinguish the GameBoard from a scalar field. First, the net flow is zero
 but the push is not: the Link current Φ (what continuity conserves)
 vanishes in the time mean at every Link, while J at a Node, which is what
 a thing reads, differs from Φ by the forward difference of the outward
@@ -2664,7 +2664,7 @@ flat, modulated at depth k₀²/6 only (0.08 at λ_w = 9.2, 0.007 at
 two waves pass through each other almost uniformly while the push
 alternates. **Reached** (a standing wave of period λ_w/2, zero net flow);
 **new** (the push oscillates at (k₀/3) n and the amount at k₀²/6: the
-lattice's Port structure, which no scalar field has).
+GameBoard's Port structure, which no scalar field has).
 
 **Check.** *Two slits* (R10 iterated on 97 × 97 × 17 with a plane source
 at x = 6 of period 16, a returning wall at x = 30 with two slit lines
@@ -2824,7 +2824,7 @@ cos(2πM_B s/K)/s² appears only under R4″, which point 24 does not adopt.
 the angular numbers of section 27's check; the algebra of section 19.
 
 **Verdict.** Coulomb's product law and Newton's, with k_C = G: **reached**
-(ζ = 1), **modified** by a fixed lattice anisotropy of first order
+(ζ = 1), **modified** by a fixed GameBoard anisotropy of first order
 (15/8)(2πM/K)²K₄(r̂), a retardation √3 r, and the requirement of a clock on
 the source and of 256 quanta per Node at the receiver.
 
@@ -2969,7 +2969,7 @@ in one interval, since nothing else is a rule of this model.
   clock is content/K); it touches only clocks, not motion, since a thing
   cannot move faster than one Link per interval. The lawful "opposite" is
   therefore III-2 for the shadow and III-4 for the thing; III-1 and III-3
-  are not rules of this lattice.
+  are not rules of this GameBoard.
 
 **What every option reads: the reading rate under R10.** The wait, in
 every option, counts quanta at a Node per interval. Under R10 the field of
@@ -3184,7 +3184,7 @@ slab of 80 Nodes in which a static random fraction f of the Nodes applies
 the modified rule, six masks, k_in fitted on the phase of the +x-moving
 Port amplitude's time-harmonic component over the slab interior). II-b
 with a first-in-first-out hold of w = 1 at the masked Nodes: k_in/k₀ =
-2.102 at f = 1, exactly the lattice dispersion's arccos(3cos 2ω − 2)/k₀ =
+2.102 at f = 1, exactly the GameBoard dispersion's arccos(3cos 2ω − 2)/k₀ =
 2.102 (every Node delayed is the same operator with time doubled); at the
 masked fractions 0.485, 0.217, 0.090, 0.042: 1.538 ± 0.067, 1.240 ± 0.039,
 1.100 ± 0.042, 1.045 ± 0.038 against 1 + f = 1.485, 1.217, 1.090, 1.042
@@ -3234,11 +3234,11 @@ options differ only in the third.
   n_A(1 + w n_M) but a held share is read once, at its arrival, and in a
   steady state the arrivals per interval equal the departures
   (continuity), so J_A(B) is unchanged. The force between two things at
-  rest is the same at every r from the mass, in lattice time, in every
+  rest is the same at every r from the mass, in GameBoard time, in every
   option. **Reached** (the product law, its constant and its independence
   of the place).
 - *The clocks*: each thing's rate is ρ(1 − w n_M(r)) (section 35 (i)), so
-  the same force per lattice interval is, per tick of the local clock,
+  the same force per GameBoard interval is, per tick of the local clock,
   F/(1 − w n_M) = F [1 + (√3 w/2) GM/r²]. Physics says the local force is
   unchanged in the freely falling frame and the coordinate force carries
   the metric's √g₀₀ ≈ 1 − GM/r; here the coordinate force is unchanged and
@@ -3321,7 +3321,7 @@ amplitude 0.993 for II-b, 1.000 for III-2; the scattering at random
 masks); section 26's identities for the switched maps (Π is orthogonal
 and 1ᵀΠ = 1ᵀ, so ΣB = ΣA under both S and Π); section 31's algebra.
 
-**Verdict.** Coulomb near a mass: **reached** in lattice time in every
+**Verdict.** Coulomb near a mass: **reached** in GameBoard time in every
 option (no potential in the amounts to change it); **different law** in
 local time by the clock's 1/r² factor. The far field of a thing near a
 mass: **1/r² kept** in every option, the wavelength longer by 1 + w n_M,
@@ -3358,7 +3358,7 @@ divergence-free directed Link currents (A_p(x) = −A_{−p}(x + e_p), zero
 Node sum: two bands); on either, every Node sends every arrival back
 (B_p = −A_p) and the amounts never change. A profile with the amount
 f(x) per Link on the −1 band (the checkerboard (−1)^{|x|₁} σ_i √f on the
-Link (x, x + e_i)) has, exactly on the lattice differences,
+Link (x, x + e_i)) has, exactly on the GameBoard differences,
 
 ```text
 n(x) = Σ_p f(x + e_p/2) ≈ 6 f(x),       J(x) = −Σ_i [f(x + e_i/2) − f(x − e_i/2)] e_i ≈ −∇f:
@@ -3402,7 +3402,7 @@ b_c = G M = S/(2π)   (capture, section 19),      r_h = 0.93 √(w G M) = 0.37 �
 
 so r_h < b_c whenever GM > 0.87 w: for every mass that bends light by a
 measurable angle the horizon sits inside the capture radius and no ray
-that passes ever sees it. A6's board (65 × 65 × 9, b = 4 to 16) is
+that passes ever sees it. A6's GameBoard (65 × 65 × 9, b = 4 to 16) is
 outside both for S < 25 (GM < 4 = the smallest b). At S = 10 (GM = 1.59):
 b_c = 1.6, r_h = 1.2 (w = 1) and 1.3 (w = 11/9); the image α = GM/b =
 0.199 rad at b = 8 and 0.099 at 16 (a register turn of 5·10⁴ quanta at
@@ -3437,7 +3437,7 @@ there, section 27 (iii): t₉₀ = √3 r + 1 to 2), the mass M beside the
 line at impact parameter b = 8, S = 40 (GM = 6.4: b_c = 6.4 < 8,
 r_h = 2.4), a ring at r = 8 from M, in the dense layer; A displaced by
 one Link at t₀. Read: (a) the tick B's register first moves, against the
-same board without M: I, II-a, III-4: unchanged (√3 r_AB + 1 to 2);
+same GameBoard without M: I, II-a, III-4: unchanged (√3 r_AB + 1 to 2);
 II-b: later by 4.71 w GM/b = 3.8 w ticks; III-2: earlier by 1.6 w ticks;
 (b) the tick A's register takes the recoil of B's push: II-a: later than
 (a)'s mirror by w per quantum read at B; (c) the ring's period: 1 +
@@ -3453,11 +3453,11 @@ pass) separates the three: the image is GM/b in every option.
 amount f = 1/max(r, 2) per Link, tapered smoothly to zero between r = 12
 and 18 so that no sponge touches it). At t = 0: n = 1.0000, 0.6000, 0.4286
 at r = 6, 10, 14 against 6/r; J_r = +0.02797, +0.01003, +0.00511 against
-the lattice differences 1/5.5 − 1/6.5 = 0.02797, 0.01003, 0.00511 (exact).
+the GameBoard differences 1/5.5 − 1/6.5 = 0.02797, 0.01003, 0.00511 (exact).
 The amount within r ≤ 10 relative to t = 0: 0.998, 0.993, 0.964, 0.834,
 0.404, 0.362, 0.366, 0.332, 0.319 at t = 1, 2, 5, 10, 20, 40, 80, 160,
 400; within r ≤ 6: 0.994, 0.981, 0.904, 0.706, 0.413, 0.443, 0.380,
-0.353, 0.343; on the board 0.513 at t = 400 (the rest left through the
+0.353, 0.343; on the GameBoard 0.513 at t = 400 (the rest left through the
 sponge): a third stands, two thirds radiate by t = 20. J_r at r = 6 while
 it radiates: +0.048, +0.070, +0.139, +0.111, +0.124 at t = 1, 2, 5, 10, 20
 (the leaving waves carry J = n v_g, forty times the profile's own), then
@@ -3495,7 +3495,7 @@ cannot coexist at w ≥ 1/256 (r_h = 16 √w r_wave).
 | Shapiro delay of light | (9w/11)GM ln(4x_Ax_B/b²), half of GR at w = 11/9 | **different law**: 2.72 w GM/b, no logarithm; Δt = 2.72 w α for every pass | the same | the same | III-2 the same; III-4 0 | A6 arrival tick |
 | Shapiro delay of the field | — | 0 (beyond √3 r) | 0; the recoil late by w per quantum at the thing | **+4.71 w GM/b** | III-2 **−1.99 w GM/b**; III-4 0 | the one run of section 37 |
 | The index of the vacuum for fields | — | 1 | 1 | **1 + w n_M** (measured 1 + f w, exact at f = 1) | III-2 **1 − 0.42 w n_M** (measured); III-4 1 | — |
-| Coulomb near a mass | reached (ζ = 1) | **reached** in lattice time; ×1/(1 − wn_M) in local time | the same | the same; the force lags by the field's delay | III-2 the same, leads; III-4 the inverse clock factor | A5s beside a body |
+| Coulomb near a mass | reached (ζ = 1) | **reached** in GameBoard time; ×1/(1 − wn_M) in local time | the same | the same; the force lags by the field's delay | III-2 the same, leads; III-4 the inverse clock factor | A5s beside a body |
 | Far field of a thing near a mass | 1/r², fixed anisotropy | **1/r² kept**; λ_w longer by 1 + wn_M | the same | the same, a converging lens, a pile-up no thing reads | III-2 a diverging lens; III-4 λ_w shorter | E11 beside a body |
 | The books (point 7) | exact | **exact**; the counter on the thing | **exact**; a counter on the parked shadow | **exact**; a delay line per Node, a reading by a shadow (points 9, 16, 21 amended) | III-2 **exact**, a declared switch; III-4 exact in the books, against points 11 and 19; III-1 not a rule, III-3 unlawful | E11 (a) |
 | Newton's third law | exact, delayed \|x\|₁ | **exact**, through the field at 1/√3; light's recoil goes to the mark | exact, + w per quantum | exact, + 4.71 w GM/b near masses | III-2 exact, early | E11 (a) with a moved pusher |
@@ -3674,7 +3674,7 @@ U(k) at three random k): the eigenvectors of eigenvalue +1 and −1 have
 |Σ_p A_p|² = 3n of a wave); a lone share of amount 1 on 61³: the amount
 within r ≤ 3 is 0.966, 0.748, 0.669, 0.664 at t = 4, 8, 16, 60 (→ 2/3)
 while max|u| there falls 9.9·10⁻², 4.0·10⁻², 1.0·10⁻², 1.2·10⁻³ and
-3Σ_x|u|² over the board is 0.3333 at every tick. *The thing's Node* (81³,
+3Σ_x|u|² over the GameBoard is 0.3333 at every tick. *The thing's Node* (81³,
 period 16, a returning Node at (12, 0, 0), (7, 7, 7), (16, 0, 0)): |u| at
 the Node 1.000 of the free run's, n 0.652, 0.654, 0.667; the six neighbours'
 |u| 1.02 to 1.16, n 0.81 to 1.14; on the axis between source and mirror n
@@ -3734,13 +3734,13 @@ count's: the clock slower on the body diagonals of the mass than on its
 axes at the same r, by (3/4)ω₀²(2/5 + 4/15) = 0.5 ω₀² relative.
 
 **The second order.** Two readings, as in section 24. Queued (the thing
-reads in every lattice interval, waiting or not): it owes w|u| per interval
+reads in every GameBoard interval, waiting or not): it owes w|u| per interval
 and ticks (1 − w|u|)T times in T intervals, exactly 1 − x, x = w|u|, frozen
 at x = 1. Strict (a waiting thing reads nothing): it owes w|u| per tick, so
 T = T_tick(1 + x) and the rate is 1/(1 + x) = 1 − x + x², never frozen. GR
 needs, at second order, a coefficient that depends on the radial coordinate:
 √(1 − 2x) = 1 − x − x²/2 in the Schwarzschild r, (1 − x/2)/(1 + x/2) =
-1 − x + x²/2 in the isotropic r, the flat coordinate grid the lattice has
+1 − x + x²/2 in the isotropic r, the flat coordinates the GameBoard has
 (up to the conformal factor). The two readings straddle the isotropic value
 (0 and +1 against +½) and neither is either: **different law at second
 order**, of size x² = (GM/r)² at the GR w, 1 to 3 % of the period for a ring
@@ -3804,7 +3804,7 @@ queued reading: a thing that reads the push in every interval it stays takes
 α_image(1 + 0.79 GM/b) at the GR w. A quarter of Einstein's 4GM/(c²b) in
 every reading. If a lawful reading were to bring the time half to the path,
 it would have to enter the momentum, the only thing that turns a path: per
-interval, M_thing times the lattice gradient of the wait's potential across
+interval, M_thing times the GameBoard gradient of the wait's potential across
 the thing's Node, w(|u|(x + e_i) − |u|(x − e_i))/2 on each axis toward the
 larger amplitude, a second push of size w M_thing · 0.5373 √(GM)/r² toward
 M, an inverse square of strength w c₁ G M M_thing/r², Newton's own at the GR
@@ -3900,12 +3900,12 @@ computation is the things' content); `node_mixing` and the dense layer's
 `_mix` as they stand (node-mixing-v1), `pushed_ray` (clock-readings-v1).
 
 **(v) Coulomb's law between two things at rest near a mass.** A and B at
-separation s, both at r from a mass M. In lattice time nothing changes: the
+separation s, both at r from a mass M. In GameBoard time nothing changes: the
 push B takes from A reads A's amount, whose flux S_A is declared and
 conserved through every shell (section 26 (ii)), and R11 touches no shadow;
 the force is k_C q_A q_B/s² at every r from M, **reached** as in section 36.
 In local time each thing's clock runs at 1 − w|u_M|(r), so the same
-momentum per lattice interval is, per tick of the local clock,
+momentum per GameBoard interval is, per tick of the local clock,
 
 ```text
 F_local = F / (1 − w|u_M|) = F [1 + w c₁ G M / r] = F [1 + G M / r]   at w = 1.861 √(G m),
@@ -3913,7 +3913,7 @@ F_local = F / (1 − w|u_M|) = F [1 + w c₁ G M / r] = F [1 + G M / r]   at w =
 
 the potential's form, where section 36 had the acceleration's. Physics has
 the locally measured force unchanged (the freely falling frame is flat) and
-the coordinate force carrying √g₀₀ ≈ 1 − GM/r; here the lattice force is
+the coordinate force carrying √g₀₀ ≈ 1 − GM/r; here the GameBoard force is
 the flat one and the local force is larger by 1/√g₀₀ at first order:
 **different law** in the local measure, by GR's factor in the inverse
 place. A second-order companion: A's wave has the frequency of A's slowed
@@ -3970,7 +3970,7 @@ it to whole units of 32; it reads 3|u| where this document reads |u|, and
 multiplies by the content (section 39). Its `owed` is in units of 1/d of an
 interval and the whole units of amplitude are floored per interval, not
 accumulated: below one unit of 3|u|, that is |u| < 1/3 (r > 3w · 0.2143 √S,
-every r of A6's board), the engine's amplitude wait is zero, where the
+every r of A6's GameBoard), the engine's amplitude wait is zero, where the
 register rule stated above accumulates the fraction and waits per whole
 unit in the mean; the far-field law of this round is read in the engine
 only with that accumulation (a remainder on the counter, as the push has
@@ -3981,7 +3981,7 @@ read on 2026-09-18 (the coherent sum formed before the outputs; the root of
 amount × 32²; the `owed` counter in units of 1/d); the exactness is by
 construction (the counter changes no ray).
 
-**Verdict.** Coulomb near a mass: **reached** in lattice time in every
+**Verdict.** Coulomb near a mass: **reached** in GameBoard time in every
 reading; **different law** in local time, by 1 + GM/r at the GR w (the
 potential's form now). The far field of a thing near a mass: **1/r² kept**,
 a slower clock and a longer wavelength, no lens. The books: **exact**, one
@@ -4013,7 +4013,7 @@ hides its horizon inside its capture radius, and at the GR w the two
 coincide. In whole quanta (section 39 (iv)): r_wave = 0.023 √S (256 quanta
 per Node) or 0.046 √S (64), so the window r_h < r < r_wave in which a thing
 moves inside a whole-quanta wave exists only for w < 0.11 (or 0.22); on
-A6's board (S = 10 to 100, r_wave = 0.07 to 0.23 Links) there is no wave in
+A6's GameBoard (S = 10 to 100, r_wave = 0.07 to 0.23 Links) there is no wave in
 whole quanta at any Node, and the amplitude the integer Node forms is at
 most a third of the count everywhere. A whole-quanta wave at r = 8 needs
 n(8) ≥ 256, S ≥ 1.2·10⁵. The sizes at S = 10, 25, 40, 100 (GM = 1.6, 4.0,
@@ -4062,7 +4062,7 @@ the count; R11 the amplitude):
 | The field's front through a mass's field | 0 | 0 | — |
 | Shapiro delay of light | 2.72w GM/b, no logarithm | **reached** in the logarithm: wc₁GM ln(4x_Ax_B/b²), **half** of GR's coefficient at the GR w; the delay grows with the path | A6 arrival tick, X = 28 and 96 |
 | Shapiro delay of the field | 0 | 0 | — |
-| Coulomb near a mass | reached; ×1/(1 − wn) in local time | **reached** in lattice time; ×(1 + GM/r) in local time at the GR w | A5s beside a body |
+| Coulomb near a mass | reached; ×1/(1 − wn) in local time | **reached** in GameBoard time; ×(1 + GM/r) in local time at the GR w | A5s beside a body |
 | Far field of a thing near a mass | 1/r² kept; λ_w longer by 1 + wn | **1/r² kept**; λ_w longer by 1 + w\|u\|; no lens | E11 beside a body |
 | The books (point 7) | exact; the counter on the thing | **exact**; the counter on the thing reads \|3u\| at scale 8192, one root per thing per group per interval on a sum the Node forms (wait-reads-v1 does; it floors per interval and carries the content, section 42) | E11 (a) |
 | Newton's third law | exact, through the field | **exact**, unaffected (the wait delays the step, never the reply) | E11 (a) |
@@ -4230,17 +4230,17 @@ and not cheaper (the root returns at the wait's reading and at every
 merge); the amount-basic rule with the root toward the mixing is the
 minimum that keeps the books exact.
 
-## 45. Round 7: a thing emits; what a finite amount given once cannot do, on any board
+## 45. Round 7: a thing emits; what a finite amount given once cannot do, on any GameBoard
 
 Round 7 (2026-09-18, the evening, after PR #313) derives the model owner's
 decision of the same evening (Highlights 5.4, "A thing emits; nothing is
-given with the board", branch docs/a-thing-emits, PR #319, its two
+given with the GameBoard", branch docs/a-thing-emits, PR #319, its two
 commits): a thing releases shadows every interval in proportion to its
 content, a shadow is never made to disappear, and the stream leaves the
-world at the edge of an open board, which stands for infinity. What the
+world at the edge of an open GameBoard, which stands for infinity. What the
 round establishes on paper: why the field of a thing at rest could not be
-a stock of shadows given with the board (this section), what the fixed
-point of the emitting thing on the open board is and when it is reached
+a stock of shadows given with the GameBoard (this section), what the fixed
+point of the emitting thing on the open GameBoard is and when it is reached
 (section 46), what the whole quanta do to it (section 47), what the tests
 of rounds 4 to 6 become under it (section 48), what the emission does to
 the rest of the law (section 49), and the run plan (section 50). As
@@ -4277,7 +4277,7 @@ interval, since nothing else is a rule of this model:
   46 (viii) assesses; it is the one under which the flux of the field
   equals the emission, and the round adopts it below.
 - **R14, the edge.** A share sent through a Port that has no Node beyond
-  it leaves the board and is booked on the shadows' line as escaped;
+  it leaves the GameBoard and is booked on the shadows' line as escaped;
   nothing ever arrives through such a Port. The edge Node mixes as every
   other Node, with that Port's arrival zero.
 
@@ -4285,14 +4285,14 @@ interval, since nothing else is a rule of this model:
 amplitudes; the integer form is section 47). One owner. A thing at rest,
 its Node absorbing and re-releasing by R13; a probe, where one is read,
 returns every share of another owner through the Port it came in (point
-3). The board a cube of half-width H (33³: H = 16; 41³: H = 20), the thing
+3). The GameBoard a cube of half-width H (33³: H = 16; 41³: H = 20), the thing
 at its centre.
 
 **(i) Theorem 1: a finite amount given once holds no static flux, on any
-board.** Let the shadows' total amount be X at t = 0 with no emission
+GameBoard.** Let the shadows' total amount be X at t = 0 with no emission
 (R12 off), let every Node conserve amount (the unitarity of S, section 26
 (ii); the integer rule's registers, section 30; a thing's Node returning
-or re-releasing what reaches it; a mark returning), and let the board be
+or re-releasing what reaches it; a mark returning), and let the GameBoard be
 closed. For any set Ω of Nodes write n_Ω(t) for the amount resident in Ω
 and Φ_∂Ω(t) for the net Link current leaving Ω through its boundary Links
 in interval t. Continuity (section 26 (ii)) is n_Ω(t + 1) − n_Ω(t) =
@@ -4315,13 +4315,13 @@ zero time-mean in any bounded state. A static 1/r² push at every angle is
 a steady flux S = 4πr²J through every shell; by (a) and (b) S = 0 for a
 static state and S ≤ X/T for any state. **A force that is a count needs a
 stream; a stream needs a source and a sink; a stock of shadows conserved
-on a closed board is neither. Exact.** On an open board the same X passes
+on a closed GameBoard is neither. Exact.** On an open GameBoard the same X passes
 and escapes (the A6 lane): the flux is transient and its time-mean is
 again at most X/T. Nothing in the size of X, the profile it is written in,
 the phase it carries or the length of the run changes this.
 
 What Theorem 1 does not forbid, and what E11 measured, is the shape of the
-long-time state on the closed board: the amount spreads over the V Nodes
+long-time state on the closed GameBoard: the amount spreads over the V Nodes
 toward X/V per Node with circulating trains on top, and the push at any
 Node is the trains', of zero mean and large swing. E11 (`standing_closed`,
 33³, X = 37 748 736, V = 35 937, X/V = 1050 per Node): no fixed point and
@@ -4340,14 +4340,14 @@ mirror piling the passing train at itself, as E11's reading says, and no
 potential. Every one of these numbers is what (a) and (b) say a conserved
 stock does, and none is the field of a thing at rest.
 
-**(ii) Theorem 2: a closed board with emission and no sink has no fixed
+**(ii) Theorem 2: a closed GameBoard with emission and no sink has no fixed
 point, and buries the law it carries.** With R12 on and no edge the total
 is X(t) = X(0) + q t exactly (the iteration: 400.00 q at t = 400). For Ω
 enclosing the thing the mean flux through ∂Ω over T intervals is q −
 (n_Ω(T) − n_Ω(0))/T; if the added amount spreads uniformly (the ergodic
 limit of Theorem 1's state) n_Ω grows as q t |Ω|/V, and the mean flux
 tends to q (1 − |Ω|/V): **the 1/r² net flux of the emission survives on a
-closed board, in the long time mean, for r ≪ L.** But three things bury
+closed GameBoard, in the long time mean, for r ≪ L.** But three things bury
 it. The count per Node grows as q t/V (22 quanta per Node per interval at
 q = 786 432 on 33³) and overtakes the direct field's count at r = 12
 (803, section 46) at t ≈ 37; the push a thing reads is the signed sum of
@@ -4357,18 +4357,18 @@ circulating trains' (E11: ±10⁴ per interval at a count of 3000). Measured
 last sixteen ticks): the flux through the cube of half-width 8 is 0.38 q
 against the ergodic 0.86 q and through half-width 12 it is −0.26 q
 against 0.57 q, the trains swinging every window by ±0.5 q; the push at r
-= 8 on the axis is 49 against the open board's 1105, at r = 12 it is 2928
+= 8 on the axis is 49 against the open GameBoard's 1105, at r = 12 it is 2928
 against 267, at (7, 7, 7) it is −1560 against +517; the count at r = 12 is
 32 447 against 451. The integer rule adds its own noise on a count that
 never stops growing, and a bounded integer per lane (point 25) overflows
-in finite time: 2^31 quanta on the board after 2730 intervals at this q.
+in finite time: 2^31 quanta on the GameBoard after 2730 intervals at this q.
 **No fixed point, no cycle, no bounded orbit, and no reading of 1/r²
-within the noise: closed boards are out under emission by this theorem,
+within the noise: closed GameBoards are out under emission by this theorem,
 not by preference.**
 
 **(iii) What "the standing set a formula can give" (points 11, 13) can and
 cannot mean.** It can mean the fixed point of R12 with R14 on an open
-board: a stream in balance, in which the amount on the board is the
+GameBoard: a stream in balance, in which the amount on the GameBoard is the
 emission times the transit and the flux through every shell is the
 emission; a formula gives it (the resolvent of the one-step map with the
 escaping edge at the source's frequency, or the iteration of section 46
@@ -4376,11 +4376,11 @@ run once), and the prefill may write it at tick 0 (section 49). It can
 also mean the flat-band content the switch-on leaves beside the thing
 (2.2 q at period 16, section 46 (iv)), which stands, has u = 0 (section
 39 (ii)) and carries no flux. It cannot mean a stock of X shadows
-circulating on a closed board (Theorem 1), a stock passing an open board
+circulating on a closed GameBoard (Theorem 1), a stock passing an open GameBoard
 (the A6 lane), or a standing 1/r profile (section 37). The phrase "the
 size of the shadow set" of the superseded paragraph has no referent left:
-what a thing has is a rate, ρ, and what is on the board is what the rate
-and the board's transit make of it.
+what a thing has is a rate, ρ, and what is on the GameBoard is what the rate
+and the GameBoard's transit make of it.
 
 **Check.** Theorem 1 is two lines of algebra on the continuity identity
 of section 26 (ii), which the iteration satisfies to 10⁻¹⁴ (section 26's
@@ -4389,15 +4389,15 @@ are the `meanfield --periodic` run of the committed script (33³, period
 16, `recycle`, 400 ticks, 1.9 s).
 
 **Verdict.** A static 1/r² push from a finite conserved amount: **not
-reached on any board, exactly** (the time-mean flux through every shell
-is at most X/T, and zero for a fixed point or a cycle). A closed board
+reached on any GameBoard, exactly** (the time-mean flux through every shell
+is at most X/T, and zero for a fixed point or a cycle). A closed GameBoard
 with emission: **no fixed point** (the total grows as q t; the 1/r² net
 flux survives in the ergodic mean and is buried under a count growing as
 q t/V and the trains' ±0.5 q swings; the integers overflow). The standing
-set a formula can give: **the open-board fixed point of the stream**, and
+set a formula can give: **the open-GameBoard fixed point of the stream**, and
 nothing given once.
 
-## 46. Round 7: the fixed point of an emitting thing on the open board
+## 46. Round 7: the fixed point of an emitting thing on the open GameBoard
 
 **Rules used.** R12, R13, R14, R10, R2, R11, sections 26, 27, 29, 39.
 
@@ -4418,7 +4418,7 @@ and more at shorter wavelength and grazing incidence. Measured (a slab of
 at x = 63, the +x and −x waves fitted on u(x) over x = 8 to 60): R = 0.268
 at period 64 (fit residual 0.1 %), 0.273 at period 32, 0.299 at period 16.
 The edge is therefore not infinity for the amplitude; it is infinity for
-the amount, since what it reflects crosses the board and meets an edge
+the amount, since what it reflects crosses the GameBoard and meets an edge
 again (0.07 per encounter): at the fixed point the escape per interval is
 the emission exactly (measured 1.000 q). What the 7 % does to the field
 inside is (iii).
@@ -4459,7 +4459,7 @@ its push subtracts), the push's mean excess of 3 to 5 % the boundary term
 of section 26 (ii) (J against Φ, ∝ 2/r). The log-log slope of the shell
 means over r = 6 to 16 is −2.00 ± 0.03 for J and for n, and −1.00 ± 0.03
 for |u|: **1/r in amplitude and 1/r² in count and push, reached at the
-fixed point of the open board, with the flux equal to the emission.**
+fixed point of the open GameBoard, with the flux equal to the emission.**
 
 Per Node the field is modulated, and the modulation is derived, not
 noise. Two terms. The fixed anisotropy (15/8) ω₀² K₄(r̂) of section 27 (v):
@@ -4494,11 +4494,11 @@ direction reads at the mean-field fixed point −2.76 (axis), −2.43 (110)
 and −1.82 (111) at period 16, −2.41, −2.23, −2.02 at period 32: **the
 per-direction three-probe fit reads the edge's ripple, not the law; the
 law is read in the shell mean** (or along one line at every radius, or on
-a board whose edge is matched, section 49). The wave fraction 3|u|²/n is
+a GameBoard whose edge is matched, section 49). The wave fraction 3|u|²/n is
 0.87 to 1.19 at r ≤ 9 and 0.54 to 1.08 at r = 12 to 13: the count is the
 square of the amplitude on average over a shell and not at every Node,
 the ripple falling on |u| and on n differently (section 29). In the far
-field of an unbounded board it would be exact.
+field of an unbounded GameBoard it would be exact.
 
 **(iv) What the thing radiates, what comes home, and the standing set.**
 A single Node emitting into the mesh radiates poorly at long wavelength.
@@ -4519,7 +4519,7 @@ what comes home is released again, the thing's Node sends q/ε per
 interval and the far flux is exactly q whatever the clock: the home line
 carries h = q (1 − ε)/ε = 2.20, 9.60, 36.0 q per interval at periods 16,
 32, 64 (measured 2.202, 9.598, 36.02), the flat-band content beside the
-thing is 2.16, 9.8, 38 q, and the amount on the board at the fixed point
+thing is 2.16, 9.8, 38 q, and the amount on the GameBoard at the fixed point
 is
 
 ```text
@@ -4529,14 +4529,14 @@ N* = 42.8 q (33³, period 16),   62.8 q (33³, 32),   146 q (33³, 64);     51.5
 of which the wave in transit is about 2.11 H q (the mean distance from
 the centre to a face of the cube over directions is 1.221 H, at the speed
 1/√3: 34 q for H = 16, 42 q for H = 20), the rest the near field within a
-wavelength of the thing and the reflected part. **The amount on the board
+wavelength of the thing and the reflected part. **The amount on the GameBoard
 is bounded by the emission times the transit, plus a standing set beside
 the thing that grows with the period of its clock.**
 
 **(v) A clockless thing has a flux and no potential.** E11's body (content
 2²⁸ at K = 1 with N = 64: 2²⁸ ≡ 0 mod 64) releases one phase. Under R13 its
 fixed point is reached only after about 2700 intervals, with 802 q on the
-board (255 q standing, the rest a near field with the axis 12 times the
+GameBoard (255 q standing, the rest a near field with the axis 12 times the
 diagonal at r = 4: J_r 4πr²/q = 12.4 on the axis and 0.89 on (111) at r ≈
 4, 2.1 and 0.97 at r ≈ 8.5, the shell means 1.0 to 1.1 from r = 10 on);
 the flux is q through every shell (0.975 at t = 3000, still rising), the
@@ -4549,7 +4549,7 @@ period 16) or K = 2²⁷ (period 32).
 
 **(vi) The transient.** The first tick after which every later
 period-mean within radius R stays within the tolerance of the final
-state (33³, period 16, recycle, from an empty board):
+state (33³, period 16, recycle, from an empty GameBoard):
 
 ```text
                               R = 4     R = 8     R = 12    R = 16 (41³)
@@ -4562,12 +4562,12 @@ flux through every cube within 1 %:  128 (33³), 128 (41³);  within 2 % at h �
 count 1 % at 224 for every R, push 5 % at 288 to 384). Against √3 H = 28
 (33³) and 35 (41³): the flux through the inner shells is the emission
 within 2 % by about 2√3 H, the owner's "about L√3", and the amount on the
-board is within 1 % of N* at t ≈ 128 (period 16) and 192 (period 32); the
+GameBoard is within 1 % of N* at t ≈ 128 (period 16) and 192 (period 32); the
 per-Node count and push settle only after the edge's reflection has
-crossed the board twice (4√3 H = 110) with the dispersive tails of
+crossed the GameBoard twice (4√3 H = 110) with the dispersive tails of
 section 27 (iii) and the source's feedback on top, at 7 to 10 √3 H. **A
 run that reads the fixed point per Node needs about 300 intervals on 33³
-and on 41³ from an empty board; one that reads the flux, about 60.**
+and on 41³ from an empty GameBoard; one that reads the flux, about 60.**
 
 **(vii) The books at the fixed point.** Per interval: released q + h,
 absorbed at home h, escaped q (measured 3.20, 2.20, 1.000 q at period
@@ -4599,7 +4599,7 @@ paper and not checked by iteration: a uniform decay commutes with the
 linear map, so the damped field is the undamped one times (1 − 1/λ)^{t/2}
 in amplitude along the flight, the far field of a clocked thing is |u| ∝
 e^{−√3 r/(2λ)}/r and n ∝ e^{−√3 r/λ}/r², the reach λ/√3 in the count and
-2λ/√3 in the amplitude, the amount on any board q λ exactly, and a
+2λ/√3 in the amplitude, the amount on any GameBoard q λ exactly, and a
 clockless thing acquires a far field of a different law (the k = 0 mode
 driven against the damping, n ∝ 1/r⁴, J ∝ 1/r³ inside the reach). None of
 it is pursued.
@@ -4612,7 +4612,7 @@ equals the emission) holds to 10⁻³ at the fixed point in every recycle
 run; the coefficients 0.2143, 0.1378 and 1 are section 27 (v)'s with S =
 q.
 
-**Verdict.** The fixed point on the open board: **reached** (unique for
+**Verdict.** The fixed point on the open GameBoard: **reached** (unique for
 the wave part; the flux through every shell equals the emission; 1/r in
 amplitude and 1/r² in count and push in the shell means to ±3 %). The
 edge as infinity: **different law** (a mirror for 7 % of the amount, R =
@@ -4622,7 +4622,7 @@ three-probe fit per direction reads −1.8 to −2.8). Home: **R13, absorbed
 and released again with the thing**, the only reading with a fixed point
 and the flux equal to the emission. A clockless thing: **no potential**
 (u constant) and a 2700-interval transient. The transient: **about 2√3 H
-for the flux, 7 to 10 √3 H per Node.** The amount on the board: **bounded**,
+for the flux, 7 to 10 √3 H per Node.** The amount on the GameBoard: **bounded**,
 42.8 q on 33³ and 51.5 q on 41³ at period 16.
 
 ## 47. Round 7: the fixed point in whole quanta
@@ -4657,7 +4657,7 @@ Node have fractions at every Port), the registers of 36 000 Nodes and
 the phase circle make the period astronomical, and what can be asked is
 whether the orbit is bounded and stationary in the reading's windows.
 
-**(ii) The lattice near the source: stationary in the wave, drifting in
+**(ii) The GameBoard near the source: stationary in the wave, drifting in
 the standing content, and the drift is the phase circle's.** The integer
 form of the section 46 fixed point (33³, open, period 16, q = 786 432,
 R13, N = 64, 1600 intervals): the flux through the cubes of half-width 2
@@ -4665,7 +4665,7 @@ to 15 is 0.999, 0.997, 0.993, 0.990, 0.989 q in the last window; the
 push at r = 4, 8, 12 on the axis in 96-interval windows has the standard
 deviation over windows 4.6, 3.6, 4.6 % of its mean; the shell means at t
 = 400 are n r²/q = 0.17, J_r 4πr²/q = 1.00 to 1.14, |u| r/√q = 0.19 to
-0.22 at r = 4 to 14. But the amount on the board does not stop: 42.3 q at
+0.22 at r = 4 to 14. But the amount on the GameBoard does not stop: 42.3 q at
 t = 64, 49.9 at 400, 67.9 at 1600, while the registers hold a constant
 0.14 q; the excess is standing content (the flat-band amount, total −
 3Σ|u|², which the engine can form from the sums it already has):
@@ -4715,13 +4715,13 @@ arrive. So below one quantum per Port per interval the field neither
 propagates as a wave (section 30) nor as a diffusion: it parks, and flows
 only as the parked residue primes each Node's registers, the amount
 parked within radius r being of order 4πr³ × (2 to 5) quanta. Measured on
-the open 33³ board at period 16, R13, 1600 intervals:
+the open 33³ GameBoard at period 16, R13, 1600 intervals:
 
 ```text
 q per interval        256                                        64
 escape at t = 1600    0.78 q                                     0.12 q
 flux through cubes    1.00, 0.99, 0.97, 0.84, 0.79 q (h = 2..15)  1.03, 1.00, 0.91, 0.64, 0.21 q
-amount on the board   686 q and rising                           565 q and rising
+amount on the GameBoard   686 q and rising                           565 q and rising
 count n r²/q          1.3, 2.9, 5.8 on the axis at r = 4, 8, 12   3.6, 3.3, 2.4          (the wave: 0.147)
 push J_r 4πr²/q       −0.36, −2.4, +4.6 (axis); 2.6, 5.4, −1.0 (110); 3.5, 10.2, 2.6 (111)      4.2, 0.5, 3.8; −3.3, 5.2, 2.6; 3.5, 2.1, 2.6
 ```
@@ -4737,14 +4737,14 @@ Node in three, its size off by factors of ten, the count ten to forty
 times the wave's and falling as 1/r^0.7, Gauss's flux through a closed
 shell equal to the emission only after the residue within it is primed
 (about r³ intervals at q = 256, the outer shells not yet at 1600), and
-the amount on the board growing without bound at 0.3 to 0.4 q per
+the amount on the GameBoard growing without bound at 0.3 to 0.4 q per
 interval. The law needs the wave, n ≥ 256 quanta per Node at the reading
 radius (section 30): q ≥ 1740 r², that is 2.8·10⁴, 1.1·10⁵, 2.5·10⁵,
 4.5·10⁵, 7.0·10⁵ for r = 4, 8, 12, 16, 20; the flux law in the shell mean
 holds within 10 to 15 % down to q ≈ 4·10³.
 
 **(iv) ρ for the confrontation runs.** Four constraints. The wave at the
-farthest reading radius, q ≥ 1740 r². The amount on the board, N* = 42.8
+farthest reading radius, q ≥ 1740 r². The amount on the GameBoard, N* = 42.8
 q (33³, period 16), 62.8 q (33³, 32), 51.5 q (41³, 16), 65.7 q (41³, 32)
 plus the residue, within the engine's 4·10⁷: q ≤ 9.3, 6.4, 7.8, 6.1 ·10⁵.
 The source's clock, m/K ≢ 0 mod N. And the emission a power of two per
@@ -4763,7 +4763,7 @@ slower settling (224 to 384 intervals) and a larger standing set (N* =
 62.8 q, so `release` [1, 4096] on 33³: 2.5·10⁷, n(12) = 401, n(16) = 226).
 
 **Check.** The chain is arithmetic (the stream 2, 3, 2, 3 and its mean
-2.5 checked by the script's emission loop); the lattice numbers are the
+2.5 checked by the script's emission loop); the GameBoard numbers are the
 committed script's `integer` runs (33³ at N = 64, 256, 1024 and at q =
 3 145 728; 25³ at q = 64 to 32 768; 33³ at q = 64 and 256; 11 to 45 s
 each) and its `walk` run; the thresholds are section 30's 256 quanta per
@@ -4794,13 +4794,13 @@ interval M_B J_A = M_B ρ M_A/(4πr²) (1 + δ), δ the per-Node modulation of
 section 46 (iii), so
 
 ```text
-G = ρ /(4π)   in lattice units,      S = 4π G M,      b_c = G M = S/(4π),      r_h = w · 0.2143 √S = w · 0.760 √(G M)   (the amplitude's horizon, section 43),
+G = ρ /(4π)   in GameBoard units,      S = 4π G M,      b_c = G M = S/(4π),      r_h = w · 0.2143 √S = w · 0.760 √(G M)   (the amplitude's horizon, section 43),
 ```
 
 against S = 2πGM in rounds 5 and 6, which counted the recoil half of
 rounds 2 to 4 (the return walking home whole). Under point 3 as amended
 and R14 the return is a field and the fraction of it that ever reaches its
-owner on the open board is f_home = 0.68, 0.16, 0.08 % at r = 4, 8, 12 for
+owner on the open GameBoard is f_home = 0.68, 0.16, 0.08 % at r = 4, 8, 12 for
 a six-fold return and 0.15, 0.025, 0.013 % for a lone share turned back
 (measured by the `home` subcommand on 41³, 300 intervals; about 1.3/(4πr²)
 of the return; the rest escapes); so G = (ρ/4π)(1 + f_home) with f_home
@@ -4818,7 +4818,7 @@ modulation δ (the anisotropy (15/8)ω₀²K₄, −12 % on an axis at period 16
 and the edge's ripple ±2R r/(2H − r), ±8, 18, 32 % at r = 4, 8, 12 on
 33³), and by the requirement of a clock on the source (a clockless thing
 has a flux but a 2700-interval transient and a 12-fold anisotropic near
-field). **Needs a run**: A5s repeated on the open board, the push on B in
+field). **Needs a run**: A5s repeated on the open GameBoard, the push on B in
 windows against M_B ρ M_A/(4πd²) (1 + δ) with δ from section 46's table,
 and the shell mean where the runner can read it.
 
@@ -4832,9 +4832,9 @@ product law pp : pq : qq = 1 : 1/2 : 1/4 at one d.
 B's field pushes A by M_A ρ M_B/(4πr²)(1 + δ_A): with one ρ for the world
 the two are equal and opposite in the mean field up to δ_B − δ_A, the
 difference of the two Nodes' modulations, which is zero for a pair placed
-symmetrically about the board's centre and up to ±2R r/(2H − r) each
+symmetrically about the GameBoard's centre and up to ±2R r/(2H − r) each
 otherwise (±30 % at r ≈ 12 on 33³); the recoils add f_home < 1 % and then
-leave the board with their momentum (a line in the books: the momentum
+leave the GameBoard with their momentum (a line in the books: the momentum
 that escaped). In whole quanta the two fields are two orbits whose window
 means differ by the rounding (4 % per 96-interval window at N = 64, below
 1 % at N = 256). **Changed**: from "exact through the return" (section
@@ -4892,7 +4892,7 @@ frozen probe, **unchanged**.
 
 | Test | Under the fixed point of section 46 | Changed by | Run |
 | --- | --- | --- | --- |
-| Newton, the product law and the equivalence | **unchanged in form**, G = ρ/(4π) | the recoil half lost (G halves at fixed ρ); δ per Node (anisotropy −12 % axis at period 16; ripple ±2R r/(2H − r)); a clock required on the source | A5s repeated, open board |
+| Newton, the product law and the equivalence | **unchanged in form**, G = ρ/(4π) | the recoil half lost (G halves at fixed ρ); δ per Node (anisotropy −12 % axis at period 16; ripple ±2R r/(2H − r)); a clock required on the source | A5s repeated, open GameBoard |
 | Coulomb, k_C = G, the sign, ζ = 1 | **unchanged** | — (ζ = 1 in the shell mean, the ripple per Node) | A5s with the charge reading |
 | The third law | **changed**: the symmetry of the two direct pushes; exact in the mean field for one ρ and a symmetric pair | δ_B − δ_A up to ±30 % at r ≈ 12 on 33³ for an asymmetric pair; the recoil f_home < 1 % escapes; 4 % per window at N = 64 (< 1 % at 256) | A5s: the push on A against the push on B; the escaped momentum line |
 | The clock and the redshift (R11) | **unchanged in form**; w_GR = 1.316 √(Gm) | S = 4πGM (√2 in the coefficient); the ripple ±R r/(2H − r) in \|u\| | three rings, formula layer |
@@ -4927,18 +4927,18 @@ registers, bounded (0.14 to 0.27 q on 33³ and 41³, section 47 (ii)). At
 the fixed point released − home = escaped: **the emission line and the
 escape line are equal, the home line closes on itself, and the things'
 line is exact and untouched** (R12 costs a thing nothing; a shadow is
-never destroyed; what leaves the board is the only loss, as point 22
+never destroyed; what leaves the GameBoard is the only loss, as point 22
 says). Two lines the books need that they do not have: the standing
 content, total − 3Σ_x|u|², which the engine can form from the sums the
 mixing already makes and which section 47 (ii) shows growing at N = 64;
 and the momentum that escaped, since a return carries the push inverted
-and leaves the board with it (section 48 (iii)): things + in flight +
+and leaves the GameBoard with it (section 48 (iii)): things + in flight +
 escaped = 0 at every interval is the closed form of the third law under
 R14, and the replay check of E11 and A5s must add the escaped line.
 
 **(ii) The prefill as the fixed point at tick 0.** What to write: per
 Node and Port the amount and the phase of the mean-field fixed point of
-section 46 for the world's q, period and board (the iteration of the
+section 46 for the world's q, period and GameBoard (the iteration of the
 linear map with R12 to R14 for 4√3 H intervals, things held, which the
 dense layer can run once before tick 0 as the fill; or the resolvent of
 the one-step map at the source's frequency), rounded to whole quanta per
@@ -4960,7 +4960,7 @@ the test that the prefill is the fixed point and not a profile.
 from nothing given: the flux at r is within 2 % of the law after √3 r +
 about 30 intervals (the source's feedback loop and the dispersive tail),
 the per-Node count and push after 7 to 10 √3 H (section 46 (vi)), the
-amount on the board rises to N* within about 130 intervals at period 16,
+amount on the GameBoard rises to N* within about 130 intervals at period 16,
 and nothing is orphaned. Its field reaches an observer at r after √3 r,
 its light after r to √3 r (section 28), unchanged.
 
@@ -5024,12 +5024,12 @@ escaping share with the coefficient −R, an engine feature and a declared
 thing at the edge); (3) the prefill's form, the fill by iteration or the
 resolvent, or none for the first run; (4) whether the escaped momentum
 line closes the third law's books or whether the owner wants the recoil
-kept on the board. Forced by the derivation: R13 (the only reading of
+kept on the GameBoard. Forced by the derivation: R13 (the only reading of
 home with a fixed point and the flux equal to the emission), a clock on
 the source (m/K ≢ 0 mod N), the shell mean as the reading of the law,
 the emission at no cost to the thing, the mark's counter as the new
 source of what it absorbed, G = ρ/(4π), and the confrontation runs on
-open boards of 300 intervals or more before the reading.
+open GameBoards of 300 intervals or more before the reading.
 
 **Check.** The drain time is the transient of section 46 (vi) read
 backward; the boosted field is the wave equation's, section 26 (ii); the
@@ -5047,14 +5047,14 @@ of a slow accelerated thing **needs a run**.
 
 | Claim | Round 7 | Established or needs a run |
 | --- | --- | --- |
-| A finite amount given once holds a static 1/r² push | **not reached on any board, exactly** (Theorem 1: the time-mean flux through every shell ≤ X/T, zero for a fixed point or a cycle); E11's flat count, ±10⁴ push and 36 to 66 sign changes are the theorem's state | established |
-| A closed board with emission and no sink | **no fixed point** (the total grows as q t; the 1/r² net flux survives in the ergodic mean and is buried; the integers overflow) | established; closed boards are out |
-| The open-board fixed point of a clocked thing | **reached**: the flux through every shell = the emission (1.000 q); \|u\| = 0.2143 √q/r, n = 0.1378 q/r² (+2 to 10 % from the edge), J_r = q/(4πr²), in the shell means to ±3 %, slope −2.00 ± 0.03 | established (mean field); E11 repeated confirms |
+| A finite amount given once holds a static 1/r² push | **not reached on any GameBoard, exactly** (Theorem 1: the time-mean flux through every shell ≤ X/T, zero for a fixed point or a cycle); E11's flat count, ±10⁴ push and 36 to 66 sign changes are the theorem's state | established |
+| A closed GameBoard with emission and no sink | **no fixed point** (the total grows as q t; the 1/r² net flux survives in the ergodic mean and is buried; the integers overflow) | established; closed GameBoards are out |
+| The open-GameBoard fixed point of a clocked thing | **reached**: the flux through every shell = the emission (1.000 q); \|u\| = 0.2143 √q/r, n = 0.1378 q/r² (+2 to 10 % from the edge), J_r = q/(4πr²), in the shell means to ±3 %, slope −2.00 ± 0.03 | established (mean field); E11 repeated confirms |
 | The edge as infinity | **a mirror for 7 %** (R = 0.268 in amplitude, exact at long wavelength); the field rippled per Node by ±2R r/(2H − r); a three-probe fit per direction reads −1.8 to −2.8 | established; the matched edge is a decision |
 | Home | **R13**: absorbed and released again with the thing, six-fold, at its phase; absorb-only gives G ∝ ε(ω₀) = 0.31, 0.09, 0.03 at periods 16, 32, 64; the mirror re-release has no fixed point; the soft source conserves no amount | established |
-| A clockless thing | a flux and **no potential** (u constant), a 2700-interval transient, 800 q on the board | established; the source must have a clock |
+| A clockless thing | a flux and **no potential** (u constant), a 2700-interval transient, 800 q on the GameBoard | established; the source must have a clock |
 | The transient | the flux within 2 % by 2√3 H (the owner's L√3); the per-Node count within 1 % by 7√3 H and the push within 5 % by 8 to 10 √3 H: about 300 intervals on 33³ and 41³ | established |
-| The amount on the board | **bounded**: 42.8 q (33³), 51.5 q (41³) at period 16; 62.8, 65.7 q at period 32; the wave in transit 2.11 H q | established |
+| The amount on the GameBoard | **bounded**: 42.8 q (33³), 51.5 q (41³) at period 16; 62.8, 65.7 q at period 32; the wave in transit 2.11 H q | established |
 | The integer fixed point | **a cycle in one dimension**; in three, **stationary in the window means at N ≥ 256** (0.4 to 0.8 % per window, the mean field's per-Node values to three digits) and **drifting at N = 64** (standing content +1.7 to 2.3 % of q per interval, the count +15 to 20 % after 400 intervals, the per-Node push ±30 %) | established; N is a decision |
 | Sources of 256 and 64 quanta | **no 1/r² at any r ≥ 4 for any ρ ≤ 1** (a parked haze, the sign wrong at one Node in three, the count 10 to 40 times the wave's); the wave needs q ≥ 1740 r² | established |
 | ρ for the runs | **3/2048** per interval per quantum (`release` [1, 2048]), period 16, open 33³ and 41³; no λ | chosen |
@@ -5073,7 +5073,7 @@ prefill for the first run and the prefill as a second run against it.
 
 1. **E11 repeated with emission** (33³ and 41³, the body alone, then the
    nine probe worlds). Read per interval: the released, home and escaped
-   lines; the amount on the board; the standing content total − 3Σ|u|²;
+   lines; the amount on the GameBoard; the standing content total − 3Σ|u|²;
    the flux through the cubes of half-width 4, 8, 12; the shell means of
    n, J_r and |u| at r = 4 to 16 (to 20 on 41³); E11's nine Nodes; the
    wave fraction. **The fixed point is reached** when the flux through
@@ -5107,9 +5107,9 @@ prefill for the first run and the prefill as a second run against it.
 
 **λ and ρ.** No λ: a shadow is never made to disappear. ρ = 3/2048 per
 interval per quantum of content for the confrontation runs, one rate for
-the world, G = ρ/(4π) = 2.33·10⁻⁴ in lattice units; a smaller ρ by a
+the world, G = ρ/(4π) = 2.33·10⁻⁴ in GameBoard units; a smaller ρ by a
 power of two at the same period trades the wave's margin at r = 16 for
-headroom on the board, a longer period trades anisotropy for a larger
+headroom on the GameBoard, a longer period trades anisotropy for a larger
 standing set and a slower settling.
 
 Open after this round, one line each: the growth of the standing content
@@ -5308,13 +5308,13 @@ mark. *The engine has*: the mark with its resident thing and its
 retirement of the mark's exception). *New*: nothing but the absence of the
 return.
 
-**S7. The open edge.** The board's edge is infinity: a share sent through
+**S7. The open edge.** The GameBoard's edge is infinity: a share sent through
 a Port with no Node beyond escapes and is booked (R14); it reflects 7 % of
 the amount as a mirror does (section 46 (i)), which the reading of the
 law in shell means tolerates and a matched edge would remove (section 49
 (vii)). No world of a confrontation is closed (Theorem 2, section 45).
 *The engine has*: the open boundary of the dense layer. *New*: the closed
-board and the prefill as a stock are retired; the prefill survives only
+GameBoard and the prefill as a stock are retired; the prefill survives only
 as the fixed point written at tick 0 (section 49 (ii)).
 
 **S8. The books.** Per family and per interval: held (the contents),
@@ -5343,14 +5343,14 @@ section 55 (ix).
 (a shadow turned back at a meeting, its −Δp and its momentum arrays); the
 trace and the step count; home as a rule (it is R13's re-release of one
 number among all); the walk back of a missed thing; the draw and the
-ticket seed; the per-family phase width; the closed board and the prefill
+ticket seed; the per-family phase width; the closed GameBoard and the prefill
 as a stock; "a thing has one path" (nothing has a path: a held content is
 at one Node and steps, a quantum in flight is everywhere its amplitude
 is). Kept from the law of the bit: the mixing (24), the lanes (25), the
 remainder rule (22), the readings (16, 18), charge per thing (16 as
 amended), the clock as content over K (19), the wait reading the size
 (23 as amended), the step by the accumulator (21, read as section 53), the
-label as coherence, the emission (R12), the open board (R14), the mark's
+label as coherence, the emission (R12), the open GameBoard (R14), the mark's
 counter as content.
 
 | What the engine has today | Under the law of the shadow |
@@ -5384,7 +5384,7 @@ section 51; the fixed point of section 46 ((iv), (v), (vii)), the integer
 form of section 47 ((i), (iii)); point 16 as amended, point 25 (the lanes).
 
 **(i) The balance, and why home must be a no-op for the amount.** At the
-fixed point of the open board a held content of content M releases q + h
+fixed point of the open GameBoard a held content of content M releases q + h
 units per interval, absorbs h at its own Node and the edge takes q, with
 q = ρM the emission and h = q (1 − ε)/ε the home amount, ε(ω′) the
 fraction of what the Node sends that never comes back (section 46 (iv):
@@ -5403,7 +5403,7 @@ destroyed:                          M constant, but the flux is ε q (section 46
                                     disappears, which the owner forbids.                                                   out.
 ```
 
-So a held content at rest on the open board neither evaporates (no unit
+So a held content at rest on the open GameBoard neither evaporates (no unit
 of a free family ever leaves M: R12 costs nothing) nor grows (no unit of
 a free family ever enters M: every one is re-released), **exactly, in
 integers, at every interval**, and the only reading of home that gives
@@ -5425,7 +5425,7 @@ with no light table is constant for ever. **Reached exactly.**
 **(ii) The near field must stay below the family's quantum: a bound on ρ.**
 Under S2.7 a share of amount at least q_F arriving on one lane is held as
 content (that is how a stepping content is held at its neighbour with no
-bit to say so). The largest share on any lane of the board is the
+bit to say so). The largest share on any lane of the GameBoard is the
 holder's own release through one Port, (q + h)/6 = ρM/(6ε); for it to
 stay below q_F = M (the holder's own quantum, the smallest it can be),
 
@@ -5463,13 +5463,13 @@ of section 27 (v) at
 
 If a matter shadow rotated at its holder's own rate (the message's
 content over K), ω′ = 0 for every held content: a flux with no
-potential, u constant, a 2700-interval transient and 800 q on the board
+potential, u constant, a 2700-interval transient and 800 q on the GameBoard
 (section 46 (v)), and nothing for the wait to read near any mass: out.
 If it rotates by one unit's amount over K (light's rule read for a unit)
 or not at all (round 7, the engine's shadows), ω′ = (M − 1)/K or M/K and
 the field is section 27 (v)'s. For light, the lamp's stamping rate M_L/K
-and the quantum's rotation q_γ/K give ω′ = (M_L − q_γ)/K on the board, while
-the frequency read at any Node in the lattice frame is the lamp's M_L/K
+and the quantum's rotation q_γ/K give ω′ = (M_L − q_γ)/K on the GameBoard, while
+the frequency read at any Node in the GameBoard frame is the lamp's M_L/K
 (the field is linear and time-invariant); Planck's relation is section
 18's beat, unchanged. **Flagged for the owner**: a matter shadow's
 rotation in flight must not be its holder's clock; the derivation below
@@ -5496,7 +5496,7 @@ any ρ ≤ 1. What this means:
   it is noise. The E8 and A8 worlds of an electron of 32 and a proton of
   64 cannot confront Coulomb under this law.
 - *Nature's electron is not a sparse source in these units.* The
-  electric-to-gravitational ratio in lattice units is Q_AQ_B/(ε_g M_AM_B)
+  electric-to-gravitational ratio in GameBoard units is Q_AQ_B/(ε_g M_AM_B)
   (section 55 (x)); at ε_g = 1 nature's 4.2·10⁴² for two electrons puts the
   electron's charge at 2·10²¹ times its content in units, and at any ε_g
   the unit of amount is set by G through ρ. The content of a thing in
@@ -5505,7 +5505,7 @@ any ρ ≤ 1. What this means:
   the radii of interest: M ≥ 1740 r²/ρ.
 - *For a run the content must be raised, not ρ*: a wave at r = 8 needs
   q ≥ 1.1·10⁵, that is M ≥ 7.6·10⁷ at ρ = 3/2048 or M ≥ 1.1·10⁵ at ρ = 1
-  (the bound of (ii) allows ρ = 1 at period 16), and the board holds 42.8 q
+  (the bound of (ii) allows ρ = 1 at period 16), and the GameBoard holds 42.8 q
   = 4.7·10⁶ units at the fixed point in either case. The proton of 2²⁸ of
   E11 and A5s is a wave source to r = 21 at ρ = 3/2048; the electron of
   a run must be of the same order to have a field at all.
@@ -5595,10 +5595,10 @@ keeps pace with it on (111) (the Mach cone of section 28 for held
 content, 35° behind it); under T2 it is slower than its field in every
 direction, by 0.87 on an axis and 0.50 on (111), and the field's front,
 sharp on (111) and smeared on the axes (section 27 (iii)), always
-precedes it. The lattice gives no timing under which the two speeds
+precedes it. The GameBoard gives no timing under which the two speeds
 coincide: matter's bound is an L1 bound (one lane, one Link, one
 interval) and the field's is Euclidean and isotropic at long wavelength;
-"light and matter share one c" is not available on this lattice exactly,
+"light and matter share one c" is not available on this GameBoard exactly,
 and T2 is the reading under which nothing outruns the field. **T2 is the
 reading taken below and flagged for the owner**: an event takes the
 interval; the mixing takes none.
@@ -5613,7 +5613,7 @@ v_i = min(p_i / M, 1/2)   (T2;  1 under T1),      p unbounded, v bounded:
 ```
 
 a kinematics in which the momentum grows without bound while the speed
-saturates at the lattice's c_m = 1/2, against nature's v = p/√(p² + M²)
+saturates at the GameBoard's c_m = 1/2, against nature's v = p/√(p² + M²)
 with c: **different law** in the form of the saturation, the same in its
 existence. A content falling from rest at infinity has v² = 2GM_A/r
 (dp/dt = F and v = p/M, section 11 (b)), so it reaches the cap at
@@ -5685,7 +5685,7 @@ m / (v q)    —        2.14     1.66     0.32      1.88
 A moving holder takes a net forward momentum from its own field of about
 2 q v per interval at small v, eight times more from behind than from
 ahead at v = 1/4, and sinks less of its field the faster it moves (h
-falls from 2.12 q to 0.17 q). The mechanism is the lattice's and not the
+falls from 2.12 q to 0.17 q). The mechanism is the GameBoard's and not the
 continuum's radiation reaction: at every step the holder lands on the
 Node its own forward share of the previous interval has just reached and
 takes it whole ((q + h)/6 with the heading of the motion), and it
@@ -5744,7 +5744,7 @@ what a table keeps (light at a screen) is sunk.
 
 The same pair in uniform motion, both holders moving +x one Link every k
 intervals, the free field of each read at the other (the pass), the
-release isotropic in the lattice frame:
+release isotropic in the GameBoard frame:
 
 ```text
 period   d     v       m_A / J     m_B / J     (m_A + m_B) / J     (m_A + m_B) / (v J)      d / λ_w
@@ -5767,7 +5767,7 @@ period   d     v       m_A / J     m_B / J     (m_A + m_B) / J     (m_A + m_B) /
 8       20     1/16    +0.438      −0.600      −0.163              −2.6                     4.33
 ```
 
-With the release isotropic in the lattice frame the pair takes a net
+With the release isotropic in the GameBoard frame the pair takes a net
 momentum against its motion: B, behind, runs into A's wave and reads more
 of it than A, which B's wave must chase, reads of B's: at d = 8 and v =
 1/16 the two pushes differ by 21 % and the sum is −3.3 v J at period 16,
@@ -5780,13 +5780,13 @@ nature's numbers (the internal acceleration of a hydrogen atom 10²² m/s²,
 v/c_w of a thermal atom 10⁻⁵) it would be 10¹⁷ m/s². The size is not a
 constant of the law: it falls with the separation in wavelengths, from
 −5.4 v J at d/λ_w = 0.43 to −0.7 at 1.3 at period 16, and does not go to zero beyond it: −1.1, −0.9, +1.9 v J at d/λ_w = 1.7, 2.2, 2.6 at period 16, and −5.0, −1.6, −4.3, −2.6 v J at d/λ_w = 1.7 to 4.3 at period 8 (λ_w = 4.6), of order v J with a sign that changes with d.
-It is the lattice's, not the continuum's: a monopole of the scalar wave
-equation has no direction, so a source isotropic in the lattice frame is
+It is the GameBoard's, not the continuum's: a monopole of the scalar wave
+equation has no direction, so a source isotropic in the GameBoard frame is
 isotropic in every frame and the boosted field of section 26 (ii) gives a
 co-moving pair no net push at any v below 1/√3; what breaks it here is
 the source that sits k intervals at a Node and jumps (a dipole wobble of
 half a Link at the step frequency v), the six-Port structure of the
-release and the lattice's dispersion, and it is largest where the pair
+release and the GameBoard's dispersion, and it is largest where the pair
 sits inside a wavelength. A per-Port weighting of the release by the
 holder's momentum, 1 + α v e_p·x̂, is not a fix and has no continuum
 counterpart: at d = 8, v = 1/16 the sum runs −4.9, −4.1, −3.3, −2.5 v J at
@@ -5824,8 +5824,8 @@ first law reached** with the own number sunk for the amount alone
 **lost**), the pass reads **1/r²** (**reached**; S2.3 amended). A
 co-moving pair: **no inertia at first order in v inside a wavelength of
 each other** (the pair pushes itself at 3 to 11 v times its internal
-acceleration at d ≈ λ_w, a lattice effect of the stepping source, no
-weighting of the release curing it); **not restored in the far field measured** (of order v J, of either sign, out to d = 4.3 λ_w); **needs the owner**: a release in the holder's own frame is no fix, and a lattice with a preferred frame for composite matter is what the law gives as written. The third law in
+acceleration at d ≈ λ_w, a GameBoard effect of the stepping source, no
+weighting of the release curing it); **not restored in the far field measured** (of order v J, of either sign, out to d = 4.3 λ_w); **needs the owner**: a release in the holder's own frame is no fix, and a GameBoard with a preferred frame for composite matter is what the law gives as written. The third law in
 motion: **to the remainder of the table**, no ledger.
 
 ## 55. Round 8: the tests, one by one, under the law of the shadow
@@ -5864,7 +5864,7 @@ in section 46 (iii)) and the flux law within 10 % beyond. Sunk instead
 (every unit absorbed and released again as the holder's, as the draft
 first read the owner's "absorbed"), the same holder takes 0.86, 0.41,
 0.30, 0.19, 0.13 q/(4πd²): a point sink in a wave takes the gradient of
-the intensity, ∝ 1/d³, and Newton is lost. A5s repeated on the open board
+the intensity, ∝ 1/d³, and Newton is lost. A5s repeated on the open GameBoard
 reads the pass; the sum law A5s found (the push proportional to the
 other's set alone) was the engine's reading before charge-per-thing-v1
 (PR #322) and is not the law's.
@@ -5947,7 +5947,7 @@ has the size |u_M| is held w|u_M| intervals, the fraction on the Node's
 counter for the family and one whole interval when it reaches one, which
 is section 35's option II-b with the amplitude in place of the count.
 Its check stands: a first-in-first-out hold of w at a fraction f of the
-Nodes gives k_in/k₀ = 1 + f w to first order and exactly the lattice
+Nodes gives k_in/k₀ = 1 + f w to first order and exactly the GameBoard
 dispersion with time doubled at f = 1, so the wave's index is
 
 ```text
@@ -6101,7 +6101,7 @@ the electron is Q²/M_p (the charge reading) against ε_g M_e (the mass
 reading), so the electric-to-gravitational ratio is
 
 ```text
-F_e / F_g = Q_A Q_B / (ε_g M_A M_B)     in lattice units, with ε_g = 1 as the readings stand (section 19: k_C = G);
+F_e / F_g = Q_A Q_B / (ε_g M_A M_B)     in GameBoard units, with ε_g = 1 as the readings stand (section 19: k_C = G);
 ```
 
 and an orbit that reads the proton's field as a wave takes at least
@@ -6119,7 +6119,7 @@ the message by"), G = ε_g ρ/(4π), k_C = ρ/(4π), and ε_g M_A M_B = 4.4·10�
 Q_A Q_B for the electron and the proton of nature; section 19's "k_C = G,
 new, testable" is then **out**, G/k_C being a constant of the coupling
 table like the sign. A world for the run at ε_g = 0 (or 2⁻³⁰): ρ = 1,
-M_p = 2¹⁷ (q_p = 1.3·10⁵, the wave to r = 8.7, N* = 5.6·10⁶ on the board),
+M_p = 2¹⁷ (q_p = 1.3·10⁵, the wave to r = 8.7, N* = 5.6·10⁶ on the GameBoard),
 Q = 4, M_e = 64 (p must be a whole number and v = p/M ≤ 1/2, so a slow
 electron needs M_e ≫ 1), r = 8: v = 0.089, p = 6, the period 565
 intervals, one whole unit of push every 29 intervals, n(8) = 282 units
@@ -6187,8 +6187,8 @@ table**.
 | Beyond the cap; in a potential | **different law**: p unbounded, v saturated at 1/2; v = (p/M)(1 − w\|u\|), **reached** in form (section 53 (iv), (v)) | derived |
 | Inertia of one held content | **none** if its own number pushes it: a drag or a runaway of 2.1 v ρM (ρQ²/M) per interval, no emission weighting cancelling it at every v; **reached** with the own number sunk for the amount alone (section 54 (i)) | derived; the rule forced |
 | A holder in a wave | the sink reads **1/r³** (the gradient of the intensity); the pass reads **1/r²** (section 54 (ii)) | derived; S2.3 amended |
-| Inertia of a co-moving pair | **none at first order in v** with the release isotropic in the lattice frame: the pair pushes itself at 3.3 v times its internal acceleration at d = 8, v = 1/16; of order v J of either sign out to d = 4.3 λ_w in the far field measured; no weighting of the release cures it (section 54 (ii)) | the owner: the release in the holder's frame, or a preferred frame for composite matter |
-| Newton and Coulomb | **reached** in form, G = ε_g ρ/(4π), k_C = ρ/(4π), ζ = 1, the holder reading the free flux (1.40, 1.08, 0.98, 0.92, 1.02 of q/(4πd²) at d = 4 to 20) (section 55 (i)) | A5s repeated, open board (world 2) |
+| Inertia of a co-moving pair | **none at first order in v** with the release isotropic in the GameBoard frame: the pair pushes itself at 3.3 v times its internal acceleration at d = 8, v = 1/16; of order v J of either sign out to d = 4.3 λ_w in the far field measured; no weighting of the release cures it (section 54 (ii)) | the owner: the release in the holder's frame, or a preferred frame for composite matter |
+| Newton and Coulomb | **reached** in form, G = ε_g ρ/(4π), k_C = ρ/(4π), ζ = 1, the holder reading the free flux (1.40, 1.08, 0.98, 0.92, 1.02 of q/(4πd²) at d = 4 to 20) (section 55 (i)) | A5s repeated, open GameBoard (world 2) |
 | The third law | **reached** at rest by symmetry (0.3 to 1.9 %); in motion **to the order the release allows**; no ledger of field momentum (sections 54 (iii), 55 (ii)) | world 2 in motion |
 | The clock and the redshift | **reached** in form, 1 − w · 0.760 √(GM)/r, GR at w = 1.316 √(G q_F); the emission slowed with the clock (**new**) (section 55 (iii)) | the three rings, formula layer |
 | The mass a clock reads | **linear in M** with one number per family quantum, read as the size times √(M_A/q_F) (section 55 (iv)) | the owner: the numbers of a merged content; the ladder for one w |
@@ -6237,11 +6237,11 @@ interval t, at every Node x, for every family F:
 ```
 
 What is not in it, by design: a bit, a return, a trace, a home rule, a
-momentum on any share but the step's, a closed board, a stock given with
-the board (the prefill, if used, is the fixed point of section 46 written
+momentum on any share but the step's, a closed GameBoard, a stock given with
+the GameBoard (the prefill, if used, is the fixed point of section 46 written
 at tick 0 and booked as released before tick 0, section 49 (ii)), a draw.
 What is declared per world: ρ, K, N, w (and ε_g, the light tables, the
-click tables, q_F per family), the board and its held contents at tick 0.
+click tables, q_F per family), the GameBoard and its held contents at tick 0.
 What the engine already has of it: 1 and 2 (node-mixing-v1,
 node-is-ports-v1, lanes-v1, dense-field-v1), the record's momentum and
 accumulators (external-body-v1), the counter and its table
@@ -6300,7 +6300,7 @@ reading over 300 to 400, the shell means beside the per-Node values.
    depth ≈ 1 for equal slits, section 29), the variance of the counts per
    mark against their mean (below 1 here, equal to the mean in nature),
    the one-slit control flat; then the same with the lamp burning one
-   quantum every 50 intervals (one at a time on the board): the same
+   quantum every 50 intervals (one at a time on the GameBoard): the same
    pattern per unit of absorbed amount (section 55 (vi)). What decides
    against: no modulation of depth above 0.5 at the optical spacing with
    the control flat, or the counts' variance above their mean.

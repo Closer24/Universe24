@@ -1,15 +1,16 @@
 # The engine
 
-The one engine of Universe24 is the engine of the law of the ray (`rays-v1`;
+The one engine of Universe24 is the engine of the Beam Law (`beam-v1`;
 [Highlights 5.4](HIGHLIGHTS.md#54-the-detector), "DECIDED: the law of the
 ray", the model owner, 2026-09-19). Its design and implementation contract is
-[the law of the ray](RAY_LAW.md): the ray's record `NatureBeam`, the one
+[the Beam Law](BEAM_LAW.md): the beam (the record of an event in transit;
+"ray" is its informal name) `NatureBeam`, the one
 function `nature_beam`, the flight table at 1 / sqrt 3, the eight-slot
 collision table and its inverse, the detector's squared record, the
 re-emission, the deletions and the expectations. This document is the
-bookkeeping around that law as implemented: the code, the board, the frame of
+bookkeeping around that law as implemented: the code, the GameBoard, the frame of
 an interval, the books, the world file's refusals, the record and the
-preflight. It repeats no rule of the law; where the two would overlap, RAY_LAW
+preflight. It repeats no rule of the law; where the two would overlap, BEAM_LAW
 is the owner. The engines before it (the law of events, `events-v1`, of the
 evening of 2026-09-19; the law of the shadow; the law of the bit) are in git
 ([migration](MIGRATION.md#the-law-of-the-ray-on-2026-09-19-rays-v1)).
@@ -18,38 +19,38 @@ The code: `src/event_universe/events/` (`world.py` the world file and its
 refusals, `measured.py` the measured event's record and the ledger,
 `nature_beam.py` the law (the record, the one reading `read_arrivals`, the
 flight table, the collision table, the store of records per family and the
-function `nature_beam`), `engine.py` the frame (`RaySimulation`: the clocks,
+function `nature_beam`), `engine.py` the frame (`NatureBeamSimulation`: the clocks,
 the owed count, the steps, the books, the readings, the snapshot), `run.py`
 the artifacts of a run) on `src/event_universe/core/` (`integer.py`,
-`lattice.py`, `phase.py`). The tests: `tests/test_ray_readings.py`,
-`tests/test_ray_flight.py`, `tests/test_ray_collision.py`,
-`tests/test_ray_bijection.py`, `tests/test_ray_detector.py`,
-`tests/test_ray_reemission.py`, `tests/test_ray_clock.py`,
-`tests/test_ray_window.py`, `tests/test_ray_world_parsing.py`,
-`tests/test_ray_worlds.py`, `tests/test_ray_push.py`, `tests/test_ray_age.py`
+`game_board.py`, `phase.py`). The tests: `tests/test_nature_beam_readings.py`,
+`tests/test_nature_beam_flight.py`, `tests/test_nature_beam_collision.py`,
+`tests/test_nature_beam_bijection.py`, `tests/test_nature_beam_detector.py`,
+`tests/test_nature_beam_reemission.py`, `tests/test_nature_beam_clock.py`,
+`tests/test_nature_beam_window.py`, `tests/test_nature_beam_world_parsing.py`,
+`tests/test_nature_beam_worlds.py`, `tests/test_nature_beam_push.py`, `tests/test_nature_beam_age.py`
 ([expectations](TEST_EXPECTATIONS.md)). The
 worlds: [examples/events/](../examples/events/README.md).
 
-## Per-axis board topology (2026-09-19 implementation amendment)
+## Per-axis GameBoard topology (2026-09-19 implementation amendment)
 
 The owner approved periodic axes as an experiment parameter in
-[Highlights 5.4](HIGHLIGHTS.md#54-the-detector). The board is open on every
-face by default (`boundary` `"open"`: the edge is infinity; a closed board is
+[Highlights 5.4](HIGHLIGHTS.md#54-the-detector). The GameBoard is open on every
+face by default (`boundary` `"open"`: the edge is infinity; a closed GameBoard is
 refused), and an axis may be declared periodic (`boundary` an object with any
 of `x`, `y`, `z` set to `"open"` or `"periodic"`, the missing axes open, for
 example `{"z": "periodic"}`). The declared graph changes; no local law does.
 
-**One Link.** `core.lattice.adjacent_node(shape, periodic, node, port)` is
+**One Link.** `core.game_board.adjacent_node(shape, periodic, node, port)` is
 the one provider of adjacency: for a Port, add its signed unit heading on
 its axis; an in-range target is the ordinary neighbour; a coordinate that
 exits a periodic axis wraps to 0 after the positive face or to `extent - 1`
 after the negative face; `None` only for a transfer through an open outer
 face. It neither reads state nor advances time. The flight table decides
-when a ray crosses a Link (at most one per interval; RAY_LAW section 3) and
+when a ray crosses a Link (at most one per interval; BEAM_LAW section 3) and
 `adjacent_node` says where the Link leads; the ray crosses it whole, its
 record unchanged, so with an extent of 1 a ray on a periodic axis lands on
 its own Node at every interval the table moves it (the one-interval stub
-of a two-dimensional board with `{"z": "periodic"}`). A measured event's
+of a two-dimensional GameBoard with `{"z": "periodic"}`). A measured event's
 step by its momentum uses the same provider and wraps the same way; with
 an extent of 1 it lands on its own Node, no move, the step counted. A
 wrapped or plain target that holds another measured event refuses the step
@@ -63,27 +64,27 @@ through an open face, a ray in the walk or a measured event's step, is a
 click and counted in the run's detector record with the face's squared
 record of what left; the books' escaped lines are the faces' sums. Nothing
 physical changes at the face: the amount, the content and the momentum
-leave the board as before. A periodic axis has no faces.
+leave the GameBoard as before. A periodic axis has no faces.
 
 ### Diagnostic scope and acceptance
 
 `cube_flux(family, centre, half)` sums the amount of the rays that cross
 the six faces of the cube of the given half-width around the centre on an
-all-open board, read off the Links crossed per Port (`per_port`, a
+all-open GameBoard, read off the Links crossed per Port (`per_port`, a
 diagnostic of the walk, not the reading's moments), read-only; on a world
 with any periodic axis it raises `ValueError` (a periodic seam is not a
 face). `shell_readings` gives the shell means of the count (the amount that
 arrived, the zeroth moment outside), the presence (every ray at the Node)
 and the radial flow (the first moment), read-only.
 `tools/coupling_readings.py` sums the four in-plane faces itself on the
-plane. A thin periodic board is a
+plane. A thin periodic GameBoard is a
 compact graph with return Links; it establishes no equivalence with
 unbounded three-dimensional space and requires its own experiment
 configuration. The independent expectations of the topology are pinned in
-[test expectations](TEST_EXPECTATIONS.md#the-flight) (`test_ray_flight` (d)
+[test expectations](TEST_EXPECTATIONS.md#the-flight) (`test_nature_beam_flight` (d)
 and (e)).
 
-## The law of the ray (`rays-v1`)
+## The Beam Law (`beam-v1`)
 
 **One thing.** A ray, with a place (a Node) and a record: a direction (an
 index into the world's direction table D), an age (the count of intervals
@@ -95,11 +96,11 @@ is not stored, it is amount x content x u_d for a paid family and
 amount x u_d for a free one (its unit carries no content), u_d the unit
 vector of the direction at the flight table's scale Q = 64 (the integer
 vector nearest Q D / |D|, exactly Q e_d on a heading; the model owner's
-decision of 2026-09-19, [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+decision of 2026-09-19, [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 23), so every momentum of the record is in label units, Q per
 unit of amount along a heading. The Node holds nothing
 between intervals but the rays present at it and the measured event there.
-The law of one interval at one Node is `nature_beam` ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam)):
+The law of one interval at one Node is `nature_beam` ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam)):
 the walk by the flight table, the one reading, the collision by the table
 (at the Nodes of free space: none at a Node that holds a measured event),
 the measured event's table (`read`, `measure`, `rerelease`, `pass`, each
@@ -122,15 +123,15 @@ entry (`scalar` by default: the clock's count and the threshold read the
 presence, the push reads the flow, a detector may declare `tensor`); the
 detector's coherent record is the same moments over the clicked rays with
 their amplitudes as weights (32 x amount at cos and sin over 256), the
-scalar squared ([RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam),
+scalar squared ([BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam),
 step 2, and section 10, note 16).
 
-**The frame** (`RaySimulation.step`, `engine.py`): for every measured
+**The frame** (`NatureBeamSimulation.step`, `engine.py`): for every measured
 event, its clock (its age, the turn `by_clock(age, content, K)`, its
 release rate, its lamp's rate and window, its owed count) and its content
 (`frame_content`, read once before the law: M_A of the interval's push,
 the same whatever the order in which the families' clicks join `held`
-within the interval; [RAY_LAW note 27](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+within the interval; [BEAM_LAW note 27](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
 are read and handed to `nature_beam` with the stores; `nature_beam` returns the readings
 (the count, the flow and the presence per Node, dense arrays read-only, and
 `per_port`, the amount that crossed into each Node through each Port this
@@ -140,30 +141,30 @@ self-created, reads the owed count off the clock from what the clock
 counted (`_suspend`, `by_clock(age, k x n, d)`, k the presence, or for a
 family whose table entry reads `age` the age moment `sum amount x age`
 over the same set, `measured.count_component`, `Measured.counted`;
-[RAY_LAW section 10](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
+[BEAM_LAW section 10](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation),
 note 25), moves the measured events
 by their momentum (`_move`: on an axis whose momentum component is p in
 label units, one Link per (Q x S x M + p) / p self-creations,
 `by_clock(age, |p|, Q x S x M + |p|)`, M the content, S the world's
 `width`, 1 by default, and Q = 64 the label's scale; the model owner's
 D1 of 2026-09-19 and the label along the unit vector of the same day,
-[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 5
+[BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 5
 and notes 15 and 23; one unit of net flow, the label Q M, gives the speed
 1 / (S + 1); at most one Link per interval, x before y before z, only in
 an interval where nothing is owed; the rule of one axis is
 `engine.step_axis`, the owed count `engine.count_owed`, each the one place
 its rule lives and what the readings tools read) and books the interval.
-A measured event on a set of Nodes (`span`, [RAY_LAW note 30](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+A measured event on a set of Nodes (`span`, [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 `Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
-all of them: `RaySimulation.at` holds every Node of every body, the step
+all of them: `NatureBeamSimulation.at` holds every Node of every body, the step
 moves the whole set as one (refused when a Node of the moved set holds
 another measured event; the whole body clicks on the face when any of its
 Nodes would leave; every Node wraps on a periodic axis), and `nature_beam`
 reads its arrivals over the set and apportions its releases over it.
 The turn by momentum (the world key `action`, h, and the measured-event
-key `phase_by_momentum`; [RAY_LAW note 30 (ii)](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
+key `phase_by_momentum`; [BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 the model owner's decision of 2026-09-20 on Bohr, "put it as parameters
-outside the board like the age") is applied in `_move` at the Link a
+outside the GameBoard like the age") is applied in `_move` at the Link a
 body steps: its phase turns by `by_clock(k0, |p| x N, h)` with k0 the
 count of Links the step rule gives on that axis at its age before the
 self-creation, the difference of two floors of k x |p| x N / h, no
@@ -172,12 +173,12 @@ formed; without `action` nothing turns. A rule of the measured event, the
 external thing, read from its own record; the rays' flight and collision
 are untouched.
 `inverse_step` runs the
-inverse collision and the inverse walk on a board without a measured event
-(the bijection of [RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam);
-with a measured event on the board it refuses: the click is the one-way
+inverse collision and the inverse walk on a GameBoard without a measured event
+(the bijection of [BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam);
+with a measured event on the GameBoard it refuses: the click is the one-way
 border). The frame computes no physics of the ray; the measured event's
 clock rules (the turn, the owed count, the step rule with the width) are
-its own, placed in the frame by design ([RAY_LAW section 9](RAY_LAW.md#9-implementation-plan-one-pr-one-agent-and-risks)).
+its own, placed in the frame by design ([BEAM_LAW section 9](BEAM_LAW.md#9-implementation-plan-one-pr-one-agent-and-risks)).
 
 ### A release costs the emitter by its phase rate
 
@@ -196,10 +197,10 @@ the arriving phase and content, apportioned whole (`apportion_whole`, the
 leftover to the direction `age mod n` on); a `rerelease` entry does the
 same with another number's rays, stamped with the re-emitter's number.
 
-**The books** (`RaySimulation.books`, the runner's `audit` per tick), exact
+**The books** (`NatureBeamSimulation.books`, the runner's `audit` per tick), exact
 at every interval: per family the measured line, in content, initial +
 measured (the clicks' content) = current + spent (the lamps' cost) +
-escaped (measured events off the board); the transit line, in amount,
+escaped (measured events off the GameBoard); the transit line, in amount,
 initial (the declared `in_transit`) + released (the releases, the lamps,
 what came home or was re-released and left again) = current (the rays in
 the store) + escaped + absorbed (home, the clicks, the re-releases; what
@@ -215,7 +216,7 @@ unit vector of the direction at the scale Q, the flight table's
 lines close over the click, the re-emission and the home (measured +
 transit + escaped constant; a `read` of a paid ray is a report of its
 label, the ray going on); for a free family the push is the form of
-[RAY_LAW section 3](RAY_LAW.md#3-the-nodes-interval-nature_beam) step 4
+[BEAM_LAW section 3](BEAM_LAW.md#3-the-nodes-interval-nature_beam) step 4
 (gravity and electricity) and its release takes no recoil, so its lines
 are a report and not a balance. Every escaped line is the sum over the
 open faces of the face detectors' clicks (`face_detectors`). Every sum of
@@ -226,7 +227,7 @@ measured event's momentum after a push or a recoil, the push taken, its
 content after a click and what waits to be created again are checked
 against 2^62 - 1 (`world.MOMENTUM_BOUND`), and a value beyond it refuses
 the run with `OverflowError` naming the measured event, its Node and the
-quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law));
+quantity ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-beam-law));
 the detector's record is not a quantity of the law but a report of the
 host and is never refused: the coherent pointer (X, Y) is summed in the
 int64 register while the amount a detector set or a face clicks of one
@@ -235,9 +236,9 @@ family in one interval is within `nature_beam.POINTER_AMOUNT_BOUND`
 beyond it (`nature_beam.coherent_pointer`); the square and the cumulative
 record (`DetectorSet.record`, `Ledger.face_record`) are exact Python
 integers that can exceed 2^63 in `run.json` and `state.json`, parsed as
-arbitrary-precision integers ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+arbitrary-precision integers ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 **The detector is a set of Nodes with one record** (the model owner,
-2026-09-19): `RaySimulation.detector_sets` holds one `DetectorSet` per
+2026-09-19): `NatureBeamSimulation.detector_sets` holds one `DetectorSet` per
 declared detector (its name, its `reading`, its threshold, its measured
 events, its record per family and its phase at the last click) and one
 per measured event outside every declared detector (a detector of one
@@ -246,12 +247,12 @@ Node with the default reading); every measured event points to its set
 threshold, the window under `wave`, the pointer, the record and the
 pairing under `beam` are taken over the set by `nature_beam` step 4; the
 click's content, momentum and re-emission stay at the Node the ray
-reached ([RAY_LAW section 5](RAY_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
+reached ([BEAM_LAW section 5](BEAM_LAW.md#5-the-detectors-record-the-re-emission-the-face-detectors)).
 After a click the set's phase is written on every measured event of the
 set before the frame adds the turn (`step`: the click sets the phase in
 the law, the frame turns it by `turn` after).
 
-**The world** (`events/world.py`; the keys of [RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
+**The world** (`events/world.py`; the keys of [BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)).
 `law` "rays"; `model_id`; `shape`; `boundary`; `ticks`; `K`; `N` (64 by
 default, a power of two from 2 through 4096); `release` `[n, d]` per
 direction per self-creation per unit of content of a free family;
@@ -261,15 +262,15 @@ recorded as `[0, 1]`); `width` (S, the width of the push, an integer from
 action of the turn by momentum, an integer from 1; absent by default:
 nothing turns by momentum); `age_bound` (the largest age a
 ray may carry, an integer from 1; twice the flight bound by default on a
-board with an open axis, required on a board periodic on every axis; a run
-in which a ray on the board carries an age beyond it is refused); `directions` (the declared primitive vectors beyond
+GameBoard with an open axis, required on a GameBoard periodic on every axis; a run
+in which a ray on the GameBoard carries an age beyond it is refused); `directions` (the declared primitive vectors beyond
 the six headings, each with components in -P .. P, P = `direction_bound`,
 64 by default, at most 4096 entries; the table D is the two rest vectors,
 the six headings in Port order and these, in that order); `families`
 (`name`, `quantum` (required; 0 a free family, 1 or more a paid one: the
 kind is derived, never declared), `charge` (a free family only: the
 charge per unit of content, an integer or `[n, d]`, since 2026-09-20),
-`columns` (since 2026-09-20, [RAY_LAW note 31](RAY_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
+`columns` (since 2026-09-20, [BEAM_LAW note 31](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation):
 an object of column name to `{"value": n or [n, d], "sign": 1 or -1}`,
 the further columns of the one coupling; `gravity` built in with the
 value [1, 1] and the sign minus, `charge` built in with the sign plus
@@ -302,7 +303,7 @@ to MIGRATION), `dynamics`, `max_active_owners`, `port_map`, `output`,
 `capacity`, `groups`, `reference_phase`, `headings` on a lamp, `heading` on
 a ray, the earlier engines' keys (`contents`, `initial_shadows`,
 `wait_per_quantum`, `schema_version`, `dense_field`), `phase_turn` as an
-unknown key, a closed board, a non-primitive direction, a component beyond
+unknown key, a closed GameBoard, a non-primitive direction, a component beyond
 P, a direction the world does not declare, a rest direction on a lamp or a
 re-emitter, a repeated direction, a momentum label Q x content x amount
 beyond 2^62 - 1 on a declared ray or a lamp's release (content x amount
@@ -327,13 +328,13 @@ two detectors, a `phase_window` outside 0 .. N - 1 or on `pass` or for a
 family without a phase circle, a table entry object with an unknown key (one
 without `rule` takes the family's default rule), a `reads` outside the
 reading's components, a detector `reading` outside `beam` and `wave`, a `suspension`
-denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-ray-law)),
+denominator of 0 ([expectations](TEST_EXPECTATIONS.md#the-world-file-of-the-beam-law)),
 a `width` below 1 or not an integer ([the width of the push](TEST_EXPECTATIONS.md#the-width-of-the-push)),
-an `age_bound` below 1 or absent on a board periodic on every axis, a
-declared ray's `age` beyond it, and at run time a ray on the board whose
+an `age_bound` below 1 or absent on a GameBoard periodic on every axis, a
+declared ray's `age` beyond it, and at run time a ray on the GameBoard whose
 age passes it ([the age](TEST_EXPECTATIONS.md#the-age)), a `span` that is
 not three odd integers from 1 or larger than its axis, a body whose Nodes
-leave the board on an open axis, two measured events sharing a Node, a
+leave the GameBoard on an open axis, two measured events sharing a Node, a
 detector naming a Node of a body that is not its `position`, an `action`
 below 1 or not an integer, `phase_by_momentum` without `action`, on a
 `fixed` measured event or on a family without a phase circle, and a
@@ -342,7 +343,7 @@ momentum ([a body on a set and the turn](TEST_EXPECTATIONS.md#a-body-on-a-set-an
 `event_universe.configuration_validation` reports a world of the law as
 kind `rays`.
 
-**The record.** `run.json` carries `law` "rays-v1", the world's keys
+**The record.** `run.json` carries `law` "beam-v1", the world's keys
 (`boundary` as declared; `suspension` as `[n, d]`; `width`; `age_bound`; `directions`, the table
 D beyond the rest vectors and the headings; per family its `quantum`,
 `charge` (the pair `[n, d]`), `phase` and `phase_per_link`, no `kind`),
@@ -384,19 +385,19 @@ the count), the set's `phase` and, for a set of one Node, its `node` and
 `measured` (None for a set of several Nodes: the click says "here, in one
 of these"); a `click` on a face detector names the face, `measured` None
 for a ray or the number of the measured event that stepped off. `state.json`, through
-`snapshot_writer.write_snapshot`, carries `"law": "rays-v1"`, the
+`snapshot_writer.write_snapshot`, carries `"law": "beam-v1"`, the
 `boundary`, the measured events, the detectors and every Node with rays
 (its rows: direction, age, phase, number, amount, content per family, and
 nothing of the emitter but the number: the columns `charge` and `mass` of
 the night of 2026-09-19 are gone since 2026-09-20, the factor of the
 electric push being the family's charge per unit of content,
-[RAY_LAW section 2](RAY_LAW.md#2-the-record-of-a-ray-and-the-world-file)
+[BEAM_LAW section 2](BEAM_LAW.md#2-the-record-of-a-ray-and-the-world-file)
 and note 28).
 `tools/run_series.py` runs these worlds as any.
 
 ## The law of events (`events-v1`)
 
-Deleted on 2026-09-19 with the law of the ray (the model owner's rule, one
+Deleted on 2026-09-19 with the Beam Law (the model owner's rule, one
 engine). Its contract, the sides computed from the coherent sum, the
 per-Port scatter, the suspension of transit bundles and the phase-less
 family's diagonal weights, is in git at any commit before the deletion

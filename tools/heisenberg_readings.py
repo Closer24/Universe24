@@ -1,4 +1,4 @@
-"""The readings of the Heisenberg run A10 under the law of the ray: the
+"""The readings of the Heisenberg run A10 under the Beam Law: the
 width of an opening and the spread behind it.
 
 Reads the run folders of the worlds of `examples/events/heisenberg/` (the
@@ -21,7 +21,7 @@ wavelength lambda = c x period (0.886 lambda for w >= lambda, the width of
 sinc^2; README.md there). The record checks (completed, the books balanced
 at every tick) fail the tool; the readings are registered inside or
 outside their expectation (docs/EXPERIMENTS.md, "A10, the width of an
-opening and the spread behind it, under the law of the ray") and never
+opening and the spread behind it, under the Beam Law") and never
 moved.
 
     PYTHONPATH=src python tools/heisenberg_readings.py artifacts/heisenberg
@@ -37,7 +37,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from event_universe.core.integer import by_clock
-from event_universe.events import parse_ray_world
+from event_universe.events import parse_nature_beam_world
 from event_universe.json_documents import parse_json_document
 
 # Every rule of the engine this tool needs is read off the engine's own
@@ -45,13 +45,13 @@ from event_universe.json_documents import parse_json_document
 # is a reader of the record, never a second owner of a rule): the lamp's
 # turn off the clock `core.integer.by_clock` (the primitive the engine's
 # frame calls), the world's keys through
-# `parse_ray_world`; the records are the run's (`run.json`, the
+# `parse_nature_beam_world`; the records are the run's (`run.json`, the
 # `DetectorSet` record per screen pixel).
 MODEL_PREFIX = "rays-heisenberg-"
 MODEL_SUFFIX = "-v1"
 SMOOTH = 5
 SINC_HALF = 1.39156  # the x at which (sin x / x)^2 = 1/2
-# The speed of the law's design, 1 / sqrt 3 Links per interval (RAY_LAW
+# The speed of the law's design, 1 / sqrt 3 Links per interval (BEAM_LAW
 # section 3): the wavelength of the derivation, lambda = c x period, is at
 # this nominal c; the flight table rounds T_d = isqrt(3 |v|^2 Q^2) to an
 # integer per direction, differently on each direction of the fan.
@@ -162,13 +162,13 @@ def read_run(folder: Path) -> Reading:
     name = model[len(MODEL_PREFIX) : -len(MODEL_SUFFIX)]
     width_part, reading = name.split("-")
     # The world as the engine parses it (the keys with their defaults).
-    world = parse_ray_world(parse_json_document((folder / "initialization.json").read_bytes()))
+    world = parse_nature_beam_world(parse_json_document((folder / "initialization.json").read_bytes()))
     lamp = next(m for m in world.measured if m.lamp is not None)
     # The lamp's turn per self-creation off the engine's clock, `by_clock(age,
     # content, K)` (the frame, ENGINE.md), at its first self-creation: the
     # lamps' content is 8 K + 1 400 000 and what a run spends never reaches
     # the next step of the clock, so the turn is the same at every age.
-    turn = by_clock(0, lamp.amount, world.clock)
+    turn = by_clock(0, lamp.amount, world.K)
     wavelength = (world.phase_steps / turn) / SPEED_DIVISOR
     # The wall is the row of measured events that re-emit (the opening), the
     # screen the other row of the family `wall`.

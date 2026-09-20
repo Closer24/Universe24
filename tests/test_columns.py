@@ -3,7 +3,7 @@ Law, docs/BEAM_LAW.md, section 3 step 4 and the implementation note on the
 columns; the model owner, 2026-09-20, "one mechanism for all the laws on
 the GameBoard"; the mathematician's verified form, scratchpad/columns/
 COLUMNS.md, "correct and working"): the push a measured event A takes from
-a group of a free family B's rays with the label moment V is, per axis,
+a group of a free family B's rays with the label flow V is, per axis,
 
     push = sum over the columns c of
            epsilon_c x sign(V n_A^c n_B^c) x by_clock(age_A, |V n_A^c n_B^c M_A|, d_A^c d_B^c),
@@ -107,7 +107,7 @@ from types import SimpleNamespace
 import pytest
 
 from event_universe.core.integer import by_clock
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.measured import column_charges
 from event_universe.events.nature_beam import push_form
 from event_universe.events.world import COLUMNS_RULE, MOMENTUM_BOUND, Column
@@ -243,10 +243,10 @@ def test_the_series_7_read_records_replay_under_the_landed_form():
     compared = equal = 0
     for path in sorted((ROOT / "examples" / "events" / "coupling").glob("7_*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
-        world = parse_ray_world(document)
+        world = parse_nature_beam_world(document)
         assert world.suspension[0] == 0 and world.declared_columns == ()
         records: list[dict[str, object]] = []
-        simulation = RaySimulation(world, records.append)
+        simulation = NatureBeamSimulation(world, records.append)
         for _ in range(world.ticks):
             simulation.step()
         family_of = {family.name: family for family in world.families}
@@ -308,7 +308,7 @@ def world(
     **keys: object,
 ) -> dict[str, object]:
     document: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "columns-test",
         "shape": [5, 5, 1],
         "boundary": {"z": "periodic"},
@@ -345,7 +345,7 @@ def ray(
 
 def pushes(document: dict[str, object]) -> list[tuple[int, list[int]]]:
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(document), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     for _ in range(int(str(document["ticks"]))):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -375,7 +375,7 @@ def test_a_third_column_with_the_sign_minus_gives_the_designs_integers():
             (1, plus)
         ]
     assert pushes(world("d", 1, [ray([1, 2, 0], "b", PLUS_X)], ticks=1)) == [(1, [-64, 0, 0])]
-    simulation = RaySimulation(parse_ray_world(world("c", 6, [])))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world("c", 6, [])))
     assert simulation.measured[1].charges() == [(6, 1), (6, 1), (8, 1)]
     assert simulation.measured[1].state()["charges"] == {
         "gravity": [6, 1],
@@ -388,7 +388,7 @@ def test_a_third_column_with_the_sign_minus_gives_the_designs_integers():
 def test_two_bodies_at_mirror_nodes_read_equal_and_opposite_pushes(tmp_path):
     """(b), the symmetric form and the record."""
     document = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "columns-mirror-test",
         "shape": [4, 1, 1],
         "boundary": {"y": "periodic", "z": "periodic"},
@@ -407,7 +407,7 @@ def test_two_bodies_at_mirror_nodes_read_equal_and_opposite_pushes(tmp_path):
         ],
     }
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(document), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
     for _ in range(12):
         simulation.step()
         assert simulation.books()["balanced"]
@@ -439,7 +439,7 @@ def test_two_bodies_at_mirror_nodes_read_equal_and_opposite_pushes(tmp_path):
     path.write_text(json.dumps(plain), encoding="utf-8")
     record = json.loads(run_initialization(path, tmp_path / "plain").read_text(encoding="utf-8"))
     assert record["hypotheses"] == [] and len(record["columns"]) == 2
-    both = parse_ray_world({**document, "action": 64})
+    both = parse_nature_beam_world({**document, "action": 64})
     assert both.hypotheses == ["bohr-v1", COLUMNS_RULE]
 
 
@@ -448,7 +448,7 @@ def test_two_bodies_at_mirror_nodes_read_equal_and_opposite_pushes(tmp_path):
 
 def refused(document: dict[str, object], text: str) -> None:
     with pytest.raises(ValueError, match=text):
-        parse_ray_world(document)
+        parse_nature_beam_world(document)
 
 
 def test_the_refusals_and_the_alignment():
@@ -470,7 +470,7 @@ def test_the_refusals_and_the_alignment():
         with_families(family("a", None, {"charge": {"value": 1, "sign": -1}})),
         "columns\\['charge'\\].sign must be 1",
     )
-    shorthand = parse_ray_world(
+    shorthand = parse_nature_beam_world(
         with_families(family("a", None, {"charge": {"value": [3, 4], "sign": 1}}))
     )
     assert shorthand.families[0].charge == (3, 4) and shorthand.columns == (GRAVITY, CHARGE)
@@ -479,7 +479,7 @@ def test_the_refusals_and_the_alignment():
         with_families(paid),
         "a paid family \\(quantum 1\\) carries no column value \\(light, the column 's'",
     )
-    zero = parse_ray_world(with_families({**paid, "columns": {"s": strong(0)}}))
+    zero = parse_nature_beam_world(with_families({**paid, "columns": {"s": strong(0)}}))
     assert zero.families[0].values == ((1, 1), (0, 1), (0, 1))
     refused(
         with_families(family("a", 0, {"s": strong(1, -1)}), family("e", 0, {"s": strong(1, 1)})),
@@ -502,7 +502,7 @@ def test_the_refusals_and_the_alignment():
     )
     # The alignment: a family without a column carries [0, 1] there; the
     # order is gravity, charge, then the names as first declared.
-    parsed = parse_ray_world(
+    parsed = parse_nature_beam_world(
         with_families(
             family("a", 0, {"s": strong(1), "t": {"value": [2, 5], "sign": 1}}),
             family("e", 0, {"t": strong([1, 7], 1)}),
@@ -573,7 +573,7 @@ def test_the_bounds_at_parsing_and_at_the_push():
         f"the pushes over the 3 columns from the rays of the family 'b' could sum to {(1 << 62) + 2}",
     )
     apart = {**together, "families": [family("a", 0, {"strong": strong(1)}), family("b")]}
-    assert parse_ray_world(apart).declared_columns == ("strong",)
+    assert parse_nature_beam_world(apart).declared_columns == ("strong",)
     columns = (GRAVITY, CHARGE, ("strong", -1))
     with pytest.raises(
         OverflowError, match="the push of measured event 1 at \\[2, 2, 0\\] .* in the column 'strong'"

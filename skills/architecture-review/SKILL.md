@@ -12,7 +12,7 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
-For the active API, read [the law of the ray](../../docs/RAY_LAW.md) and
+For the active API, read [the Beam Law](../../docs/BEAM_LAW.md) and
 [the engine's bookkeeping](../../docs/ENGINE.md); the generic disturbance
 contract (DISTURBANCES.md) was deleted on 2026-09-19.
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
@@ -90,6 +90,6 @@ For external entity definitions, trace [the canonical loading boundary](../../do
 from reusable data and placement to the immutable expanded world. Verify that all
 entry points use that provider, portable inputs retain exact dependencies after
 relocation, and names affect labels rather than physical rules. File ownership
-outside the engine never supplies off-board physical memory. Review both source
+outside the engine never supplies physical memory from outside the GameBoard. Review both source
 and installed example paths and keep authoring limits distinct from physical
 capacities.

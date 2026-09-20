@@ -19,7 +19,7 @@ WORLDS = sorted(
 @pytest.mark.parametrize("path", WORLDS, ids=[path.stem for path in WORLDS])
 def test_every_shipped_world_is_valid_and_summarized(path):
     report = validate_configuration(path.read_bytes(), base_dir=path.parent)
-    assert report.valid and report.kind == "rays" and not report.issues, report
+    assert report.valid and report.kind == "beam" and not report.issues, report
     document = json.loads(path.read_text(encoding="utf-8"))
     assert report.summary["model"] == document["model_id"]
     assert report.summary["shape"] == tuple(document["shape"])
@@ -35,10 +35,10 @@ def test_the_refusal_names_the_key_and_creates_nothing(tmp_path):
         assert not report.valid and key in report.issues[0].message
         assert report.issues[0].code == "validation"
     report = validate_configuration(json.dumps({k: v for k, v in world.items() if k != "law"}))
-    assert not report.valid and '"law": "rays"' in report.issues[0].message
-    report = validate_configuration('{"law": "rays", "law": "rays"}')
+    assert not report.valid and '"law": "beam"' in report.issues[0].message
+    report = validate_configuration('{"law": "beam", "law": "beam"}')
     assert report.issues[0].code == "syntax" and "duplicate JSON key" in report.issues[0].message
-    report = validate_configuration("{", kind="rays")
+    report = validate_configuration("{", kind="beam")
     assert report.issues[0].code == "syntax" and report.issues[0].line == 1
     report = validate_configuration("{}", kind="catalog")
     assert report.issues[0].code == "unsupported_kind"
@@ -47,7 +47,7 @@ def test_the_refusal_names_the_key_and_creates_nothing(tmp_path):
 
 def test_the_command_line_reports_and_never_writes(tmp_path, capsys):
     bad = tmp_path / "bad.json"
-    bad.write_text('{"law": "rays"}', encoding="utf-8")
+    bad.write_text('{"law": "beam"}', encoding="utf-8")
     assert main([str(WORLDS[0])]) == 0
     assert capsys.readouterr().out.startswith("VALID ")
     assert main([str(bad), "--json"]) == 1

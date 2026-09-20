@@ -20,7 +20,7 @@ Check whether a proposed macroscopic or continuum conclusion follows from the
 actual discrete assumptions. Separate proof from finite numerical evidence and
 from empirical agreement. A configured matrix identity is not a measured physical
 law. Assess representational errors without discarding core remainders or silently
-changing a fundamental lattice, tick, coupling or user-defined postulate.
+changing the GameBoard's Link, the tick, a coupling or user-defined postulate.
 
 Return the argument, assumptions, validity limits, independent expected values
 and concrete counterexamples or unresolved obligations. Work with the physicist

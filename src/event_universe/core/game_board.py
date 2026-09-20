@@ -1,8 +1,9 @@
-"""The board: addresses, the six Port headings in Port order, and the bound of
+"""The GameBoard: addresses, the six Port headings in Port order, and the bound of
 a declared charge and quantum.
 
-The board is the cubic lattice of Highlights 3.1: a Node is addressed by three
-integers, and its six Ports face the unit-axial headings in the fixed order
+The GameBoard is the cubic lattice of Nodes of Highlights 3.1 (the canonical
+name, docs/TERMINOLOGY.md): a Node is addressed by three integers, and its
+six Ports face the unit-axial headings in the fixed order
 [+X, -X, +Y, -Y, +Z, -Z]. `MAX_VALUE` is the bound of a family's charge and
 quantum and of a measured event's charge as the world file declares them
 (2^30 - 1): a value above it is refused, never wrapped.
@@ -52,7 +53,7 @@ def adjacent_node(
         if type(extent) is not int or not 1 <= extent <= 4096:
             raise ValueError("adjacency requires integer extents in 1 through 4096")
         if type(coordinate) is not int or not 0 <= coordinate < extent:
-            raise ValueError("adjacency requires an in-board integer position")
+            raise ValueError("adjacency requires an integer position on the GameBoard")
         if type(wraps) is not bool:
             raise ValueError("adjacency requires one boolean periodic flag per axis")
     axis = port // 2

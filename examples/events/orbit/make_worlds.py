@@ -1,10 +1,10 @@
-"""Write the worlds of the orbit series D under the law of the ray, on the
+"""Write the worlds of the orbit series D under the Beam Law, on the
 plane, with the width of the push.
 
 Six worlds of one base (README.md here; the entry "D, the orbit under the
-law of the ray, on the plane (2026-09-19)" in docs/EXPERIMENTS.md): a heavy
+Beam Law, on the plane (2026-09-19)" in docs/EXPERIMENTS.md): a heavy
 fixed source of a phase-less free family at the centre of a 121 x 121 x 1
-board with the z axis periodic (the coupling series' plane), releasing a
+GameBoard with the z axis periodic (the coupling series' plane), releasing a
 ballistic fan of rays on every primitive in-plane direction (a, b, 0) with
 0 < a^2 + b^2 <= P^2 (P = 8: the fan is uniform in angle, unlike the
 primitive vectors of a square), one shell of `directions` rays every
@@ -16,7 +16,7 @@ free probe of content 1 at radius r on +x with the tangential momentum
 derivation in README.md, written before the runs). The push a free probe
 takes from an arriving fan ray is its label, -m x amount x u_d with u_d
 the unit vector of the direction at the flight table's scale Q = 64
-(RAY_LAW section 2 and note 23; the model owner's decision of 2026-09-19
+(BEAM_LAW section 2 and note 23; the model owner's decision of 2026-09-19
 on the physics-rule reviewer's verdict), whose magnitude is Q per unit
 within 1.35 % for every direction: a line of any direction crossing the
 probe's ring delivers Q units of momentum per ray, so the inward label
@@ -100,7 +100,7 @@ EMISSION = len(FAN) * RATE
 # The mean magnitude of a label of the fan in units of Q, the mean |u_d| / Q
 # over its directions: the push a fan ray gives is its label along the unit
 # vector u_d of its direction, Q units of momentum per unit of amount within
-# 1.35 % (RAY_LAW section 2 and note 23).
+# 1.35 % (BEAM_LAW section 2 and note 23).
 LABEL_MAGNITUDE = sum(math.hypot(*unit_label((a, b, c))) / LABEL_SCALE for a, b, c in FAN) / len(FAN)
 
 
@@ -122,7 +122,7 @@ def expected_period(width: int, radius: int) -> float:
 def world(width: int, radius: int) -> Json:
     _, n = orbit_momentum(width)
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": f"rays-orbit-s{width}-r{radius}-plane-v1",
         "shape": list(SHAPE),
         "boundary": dict(BOUNDARY),

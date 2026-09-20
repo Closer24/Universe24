@@ -1,5 +1,5 @@
-"""Domain-neutral integer arithmetic: the working-register bound and the ray
-law's integer primitives; callers own payload bounds and operation costs."""
+"""Domain-neutral integer arithmetic: the working-register bound and the Beam
+Law's integer primitives; callers own payload bounds and operation costs."""
 
 MAX_WORK_INT = (1 << 63) - 1
 

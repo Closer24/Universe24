@@ -1,5 +1,5 @@
 """The records the engine keeps beside the rays: a measured event and the
-ledger. Records only, no law: the law of the ray is `nature_beam`, the frame
+ledger. Records only, no law: the Beam Law is `nature_beam`, the frame
 around it (the clocks, the steps, the books' identities) is `engine.py`.
 """
 
@@ -7,12 +7,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from event_universe.core.game_board import Address3
 from event_universe.core.integer import rational_sum, reduced
-from event_universe.core.lattice import Address3
-from event_universe.events.world import AGE_READS, CHARGE_INDEX, MOMENTUM_BOUND, RAYS_LAW
+from event_universe.events.world import AGE_READS, BEAM_LAW, CHARGE_INDEX, MOMENTUM_BOUND
 
 __all__ = [
-    "RULES",
+    "TALLIES",
     "DetectorSet",
     "Ledger",
     "Measured",
@@ -21,7 +21,7 @@ __all__ = [
     "rational_sum",
     "reduced",
 ]
-RULES = ("home", "read", "measure", "rerelease")
+TALLIES = ("home", "read", "measure", "rerelease")
 # The component of the one reading a measured event's clock counts by
 # default: the presence, the scalar over every ray at its Node of another
 # number.
@@ -52,7 +52,7 @@ def column_charges(
                 continue
             if abs(numerator) > MOMENTUM_BOUND // content:
                 raise OverflowError(
-                    f"{RAYS_LAW}: the charge of measured event {number} at {list(position)} in "
+                    f"{BEAM_LAW}: the charge of measured event {number} at {list(position)} in "
                     f"column {column} ({numerator} per unit on the content {content}) exceeds the "
                     f"integer bound {MOMENTUM_BOUND}"
                 )
@@ -61,7 +61,7 @@ def column_charges(
             charges.append(rational_sum(terms))
         except OverflowError as error:
             raise OverflowError(
-                f"{RAYS_LAW}: the charge of measured event {number} at {list(position)} in column "
+                f"{BEAM_LAW}: the charge of measured event {number} at {list(position)} in column "
                 f"{column} (the sum over the families held) exceeds the work register"
             ) from error
     return charges
@@ -74,9 +74,9 @@ def count_component(reads: str) -> str:
     on an entry that reads `age`, the presence (`scalar`) on every other
     entry, whose key names only what its record carries. A reading aid of
     the measured event, the external thing (the model owner, 2026-09-19,
-    "it must be checked in the detector and not on the board"): it only
+    "it must be checked in the detector and not on the GameBoard"): it only
     helps the detector's computation of its count and changes nothing of
-    the board; the board's rules (the flight, the collision) never read the
+    the GameBoard; the GameBoard's rules (the flight, the collision) never read the
     age whole."""
     return AGE_READS if reads == AGE_READS else PRESENCE_READS
 
@@ -168,10 +168,10 @@ class Measured:
     owed: int = 0
     pending: list[list[Pending]] = field(default_factory=list)
     waited: int = 0
-    phase_steps: int = 0
+    turned: int = 0
     steps: int = 0
-    measured: list[dict[str, int]] = field(default_factory=list)
-    events: list[int] = field(default_factory=list)
+    taken: list[dict[str, int]] = field(default_factory=list)
+    clicks: list[int] = field(default_factory=list)
     pushed: list[int] = field(default_factory=lambda: [0, 0, 0])
     # The interval's frame, set by the engine: whether this interval is a
     # self-creation, the age before it, the turn read off the clock and the
@@ -250,10 +250,10 @@ class Measured:
             "home": [self.pending_amount(f) for f in range(len(self.held))],
             "home_content": [self.pending_content(f) for f in range(len(self.held))],
             "waited": self.waited,
-            "phase_steps": self.phase_steps,
+            "phase_steps": self.turned,
             "steps": self.steps,
-            "measured": [dict(entry) for entry in self.measured],
-            "events": list(self.events),
+            "measured": [dict(entry) for entry in self.taken],
+            "events": list(self.clicks),
             "pushed": list(self.pushed),
         }
 
@@ -261,7 +261,7 @@ class Measured:
 @dataclass
 class Ledger:
     """The cumulative books of a run, per family: the measured line (in
-    content), the transit line (in units), the content line (the content
+    content), the transit line (in amount), the content line (the content
     carried) and the momentum escaped; the face detectors' tallies per open
     face and family (the escaped lines are their sums); and the running
     transit line of the momentum, `transit_momentum`, the one label of
@@ -280,7 +280,7 @@ class Ledger:
     transit_absorbed: list[int] = field(default_factory=list)
     content_released: list[int] = field(default_factory=list)
     content_absorbed: list[int] = field(default_factory=list)
-    face_units: dict[int, list[int]] = field(default_factory=dict)
+    face_amount: dict[int, list[int]] = field(default_factory=dict)
     face_content: dict[int, list[int]] = field(default_factory=dict)
     face_measured_content: dict[int, list[int]] = field(default_factory=dict)
     face_record: dict[int, list[int]] = field(default_factory=dict)
@@ -299,14 +299,14 @@ class Ledger:
         ):
             setattr(self, name, [0] * count)
         for port in self.open_faces:
-            self.face_units[port] = [0] * count
+            self.face_amount[port] = [0] * count
             self.face_content[port] = [0] * count
             self.face_measured_content[port] = [0] * count
             self.face_record[port] = [0] * count
             self.face_momentum[port] = [0, 0, 0]
 
-    def escaped_units(self, family: int) -> int:
-        return sum(self.face_units[port][family] for port in self.open_faces)
+    def escaped_amount(self, family: int) -> int:
+        return sum(self.face_amount[port][family] for port in self.open_faces)
 
     def escaped_content(self, family: int) -> int:
         return sum(self.face_content[port][family] for port in self.open_faces)

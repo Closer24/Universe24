@@ -1,5 +1,5 @@
-"""The re-emission and the face detectors under the law of the ray
-(docs/RAY_LAW.md, section 5): a `rerelease` Node re-emits each arriving
+"""The re-emission and the face detectors under the Beam Law
+(docs/BEAM_LAW.md, section 5): a `rerelease` Node re-emits each arriving
 record at its next self-creation on its declared directions, its amount
 apportioned whole over them, each part keeping the arriving phase and its
 content per unit, stamped with the re-emitter's number, age 0, the recoil
@@ -9,7 +9,7 @@ down first. K 2^20, `suspension` 0, `release` [0, 1], the families `m`
 (free) and `light` (paid):
 
 Since 2026-09-19 the label is along the unit vector u_d of the direction at
-the scale Q = 64 (RAY_LAW section 2 and note 23): u_(1, 0, 0) = (64, 0, 0),
+the scale Q = 64 (BEAM_LAW section 2 and note 23): u_(1, 0, 0) = (64, 0, 0),
 u_(1, 1, 0) = (45, 45, 0), u_(2, 1, 0) = (57, 29, 0), and every momentum
 below is in label units.
 
@@ -24,7 +24,7 @@ below is in label units.
     to the direction `age mod 3` = 0, the first), the push (256, 0, 0), the
     recoil (-230, -74, 0), the momentum (26, -74, 0);
 (b) the face click: a ray of amount 1, phase 5, content 1 at (2, 0, 0) on
-    +X of a 3 x 1 x 1 bar steps off the board at the first interval: one
+    +X of a 3 x 1 x 1 bar steps off the GameBoard at the first interval: one
     `click` on `face:+x` (tick 1, Node (2, 0, 0), `measured` None, number
     1, amount 1, phase 5, momentum (64, 0, 0), content 1), the escaped
     amount 1, the face's record 32^2 x (C[5]^2 + S[5]^2), the books'
@@ -44,7 +44,7 @@ below is in label units.
 from __future__ import annotations
 
 from event_universe.core.phase import phase_cosines, phase_sines
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.world import FACE_NAMES
 
 M, LIGHT = 0, 1
@@ -61,7 +61,7 @@ def bar(
     directions: list[list[int]] | None = None,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-reemission-test",
         "shape": shape,
         "boundary": boundary,
@@ -90,7 +90,7 @@ def test_a_rerelease_node_re_emits_on_its_directions_keeping_phase_and_content()
     }
     source = {"position": [0, 1, 1], "family": "light", "amount": 4, "fixed": True}
     for amount, shares in ((3, [1, 1, 1]), (4, [2, 1, 1])):
-        ray = {
+        beam = {
             "position": [3, 1, 1],
             "family": "light",
             "number": 2,
@@ -98,8 +98,8 @@ def test_a_rerelease_node_re_emits_on_its_directions_keeping_phase_and_content()
             "amount": amount,
             "phase": 20,
         }
-        world = bar([9, 3, 3], [emitter, source], in_transit=[ray], directions=[[1, 1, 0], [2, 1, 0]])
-        simulation = RaySimulation(parse_ray_world(world))
+        world = bar([9, 3, 3], [emitter, source], in_transit=[beam], directions=[[1, 1, 0], [2, 1, 0]])
+        simulation = NatureBeamSimulation(parse_nature_beam_world(world))
         entry, light = simulation.measured[1], simulation.stores[LIGHT]
         simulation.step()
         books = simulation.books()
@@ -155,8 +155,8 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
         "phase": 5,
     }
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(bar([3, 1, 1], [owner], in_transit=[unit])), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([3, 1, 1], [owner], in_transit=[unit])), records.append
     )
     simulation.step()
     assert simulation.books()["balanced"] and simulation.stores[LIGHT].size == 0
@@ -193,8 +193,8 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
     assert books["families"]["light"]["content"]["escaped"] == 1
     assert books["momentum"]["escaped"] == [64, 0, 0]
     records.clear()
-    simulation = RaySimulation(
-        parse_ray_world(bar([3, 1, 1], [owner], in_transit=[unit], boundary={"x": "periodic"})),
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([3, 1, 1], [owner], in_transit=[unit], boundary={"x": "periodic"})),
         records.append,
     )
     simulation.step()
@@ -203,7 +203,9 @@ def test_an_escape_through_an_open_face_is_a_click_on_the_face_detector():
     assert [face["name"] for face in simulation.face_detectors()] == list(FACE_NAMES[2:])
     mover = {"position": [2, 0, 0], "family": "m", "amount": 16, "momentum": [1024, 0, 0]}
     records.clear()
-    simulation = RaySimulation(parse_ray_world(bar([3, 1, 1], [mover], clock=16)), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(bar([3, 1, 1], [mover], clock=16)), records.append
+    )
     simulation.step()
     assert records == [] and simulation.measured[1].position == (2, 0, 0)
     simulation.step()
@@ -243,7 +245,7 @@ def test_what_comes_home_is_created_again_with_its_phase_and_content():
         "directions": [[1, 0, 0]],
         "lamp": {"rate": [0, 1], "directions": [[1, 0, 0]]},
     }
-    ray = {
+    beam = {
         "position": [0, 0, 0],
         "family": "light",
         "number": 1,
@@ -251,9 +253,9 @@ def test_what_comes_home_is_created_again_with_its_phase_and_content():
         "amount": 1,
         "phase": 7,
     }
-    world = bar([4, 1, 1], [lamp], in_transit=[ray], boundary={"x": "periodic"})
+    world = bar([4, 1, 1], [lamp], in_transit=[beam], boundary={"x": "periodic"})
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(world), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(world), records.append)
     entry, light = simulation.measured[1], simulation.stores[LIGHT]
     homes = []
     for tick in range(1, 21):
@@ -267,5 +269,5 @@ def test_what_comes_home_is_created_again_with_its_phase_and_content():
             )
     # Four Links at the flight table's pace: the first arrival at 4 Links is
     # interval 7, then every 7 intervals (55 ages per 32 Links).
-    assert homes[:2] == [7, 14] and entry.measured[LIGHT]["home"] == len(homes)
+    assert homes[:2] == [7, 14] and entry.taken[LIGHT]["home"] == len(homes)
     assert entry.held == [0, 8] and entry.pending == [[], []]

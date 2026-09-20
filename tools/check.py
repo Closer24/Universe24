@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 # Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
-    "examples/events/README.md": ("tests/test_ray_worlds.py",),
+    "examples/events/README.md": ("tests/test_nature_beam_worlds.py",),
     "examples/events/detector/entities/detectors.json": (
         "tests/test_entity_definitions.py",
         "tests/test_configuration_validation.py",

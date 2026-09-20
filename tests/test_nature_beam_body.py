@@ -1,7 +1,7 @@
 """A body on a set of Nodes with one record, and the turn by momentum
-(docs/RAY_LAW.md, section 10, note 30; the model owner, 2026-09-20: the
+(docs/BEAM_LAW.md, section 10, note 30; the model owner, 2026-09-20: the
 electron of width 3, and "on Bohr, go, and put it as parameters outside
-the board like the age"). A measured event declares `span`, three odd
+the GameBoard like the age"). A measured event declares `span`, three odd
 extents centred on its position: its clock, its threshold and its push read
 the one reading set summed over its Nodes, its releases are apportioned
 whole over them, the step moves the whole set, no collision acts at any of
@@ -15,7 +15,7 @@ set and the turn by momentum"), written down first:
 
 (a) a set of one Node is today's measured event bit for bit: a free body
     of `m` (content 16, momentum [256, 0, 0], phase 5) at (3, 1, 1) of an
-    open 12 x 3 x 3 board at `release` [1, 4] (4 rays per heading per
+    open 12 x 3 x 3 GameBoard at `release` [1, 4] (4 rays per heading per
     self-creation), a fixed counter of `light` at (9, 1, 1) measuring `m`
     in the `wave` detector `d`, a head-on pair of number 2 on +-y at x = 6
     that parks at (6, 1, 1) at the first interval and leaves on +-z; 30
@@ -42,7 +42,7 @@ set and the turn by momentum"), written down first:
     three Nodes (x per interval 2, 3, 3, 4, 4, 5, 5); with a fixed anchor
     at (5, 0, 0), a Node of the moved set at the age 6, the step is
     refused and the body stays at (4, 0, 1) with 3 steps counted; without
-    it the step of the age 8 leaves the board and the whole body clicks
+    it the step of the age 8 leaves the GameBoard and the whole body clicks
     on face:+x (one click, node (5, 0, 1), amount 16, the measured line's
     escaped 16, no measured event left); with x periodic it wraps to
     (0, 0, 1) with the Nodes (0, 0, 0), (0, 0, 1), (0, 0, 2); on a bar
@@ -50,7 +50,7 @@ set and the turn by momentum"), written down first:
     (2, 0, 0), (2, 0, 1) in that order;
 (c) the books balance with a set that releases: a free body of `m`
     (content 16) of span [1, 1, 3] at (3, 1, 2) of an open 7 x 3 x 5
-    board at `release` [1, 4] on the four headings +-X, +-Y (so that no
+    GameBoard at `release` [1, 4] on the four headings +-X, +-Y (so that no
     ray of its own enters its set): 4 units per heading per self-creation
     apportioned whole over the three Nodes, [2, 1, 1] at the age 0
     (the leftover to the Node `age mod 3`), [1, 2, 1] at the age 1,
@@ -58,7 +58,7 @@ set and the turn by momentum"), written down first:
     8, 4, 4 units at (3, 1, 1), (3, 1, 2), (3, 1, 3), 16 in all, at the
     second 4, 8, 4; the books balance at every one of 20 intervals and
     equal their recount; a lamp of `light` (content 24, K 24, rate
-    [1, 1]) on +Y of span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 board
+    [1, 1]) on +Y of span [3, 1, 1] at (1, 0, 0) of a 3 x 6 x 1 GameBoard
     releases its one unit per self-creation at the Nodes x = 0, 1, 2 in
     turn (the ages 0, 1, 2): after 3 intervals the rows (0, 1, 0) age 2
     phase 0, (1, 1, 0) age 1 phase 1, (2, 0, 0) age 0 phase 2, held
@@ -74,14 +74,14 @@ set and the turn by momentum"), written down first:
     the steps at the intervals 5, 9, 13, 17, 21, the floors of k x 20480
     / 7 = 2925, 5851, 8777, 11702, 14628) the phase after the intervals
     5, 9, 13, 17, 21, 24 is 50, 32, 14, 59, 41, 41; composed over axes,
-    momentum [1024, 320, 0] with `action` 65536 on a 40 x 40 x 1 board
+    momentum [1024, 320, 0] with `action` 65536 on a 40 x 40 x 1 GameBoard
     (the x steps at the even ages, the y steps at 5, 9, 13, 17, 21: no
     step lost): the y turns floor(0.3125 k) - floor(0.3125 (k - 1)) = 0,
     0, 0, 1, 0, so the phase after 17 intervals is 5 + 8 + 1 = 14 and
     after 24 it is 5 + 12 + 1 = 18; the same worlds without `action` keep
     the phase 5 throughout;
-(e) the board is unchanged by the two keys: 324 fixed rays of `light` on
-    the periodic 8 x 8 x 4 board of `test_ray_age` (e) (number 1, an
+(e) the GameBoard is unchanged by the two keys: 324 fixed rays of `light` on
+    the periodic 8 x 8 x 4 GameBoard of `test_nature_beam_age` (e) (number 1, an
     anchor of `light` at (7, 7, 3) their home) with a free body of `m`
     (content 16, momentum [1024, 320, 0], span [1, 1, 3], `pass` for
     `light`, no release) run 40 intervals with `action` 7 and
@@ -92,7 +92,7 @@ set and the turn by momentum"), written down first:
 (f) the refusals, naming the key: `action` 0, -1, "8", 1.5;
     `phase_by_momentum` without `action`, on a fixed measured event, on a
     family without a phase circle, not a boolean; `span` "3", [2, 1, 1],
-    [0, 1, 1], [5, 1, 1] on an axis of 3, a body leaving the board on an
+    [0, 1, 1], [5, 1, 1] on an axis of 3, a body leaving the GameBoard on an
     open axis, two bodies sharing a Node, a detector naming a Node of a
     body that is not its position; the turn's bound: `ticks` 2^40 with
     the momentum 2^20 and N 64; accepted: `span` [3, 1, 1] at x = 0 of a
@@ -109,10 +109,10 @@ import numpy as np
 import pytest
 
 from event_universe.core.integer import by_clock
-from event_universe.events import RaySimulation, parse_ray_world
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
 from event_universe.events.world import BOHR_RULE, body_nodes
 from event_universe.runner import run_initialization
-from tests.test_ray_age import crowd
+from tests.test_nature_beam_age import crowd
 
 M, LIGHT = 0, 1
 UNIT_RECORD = 32 * 32 * 256 * 256
@@ -121,7 +121,7 @@ FAMILIES = [{"name": "m", "quantum": 0}, {"name": "light", "quantum": 1}]
 
 def world(**keys: object) -> dict[str, object]:
     base: dict[str, object] = {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-body-test",
         "shape": [12, 3, 3],
         "boundary": "open",
@@ -137,7 +137,7 @@ def world(**keys: object) -> dict[str, object]:
     return base
 
 
-def ray(position: list[int], direction: list[int], number: int, phase: int = 0) -> dict[str, object]:
+def beam(position: list[int], direction: list[int], number: int, phase: int = 0) -> dict[str, object]:
     return {
         "position": position,
         "family": "m",
@@ -148,7 +148,7 @@ def ray(position: list[int], direction: list[int], number: int, phase: int = 0) 
     }
 
 
-def rows(simulation: RaySimulation, family: int) -> list[tuple[int, ...]]:
+def rows(simulation: NatureBeamSimulation, family: int) -> list[tuple[int, ...]]:
     store = simulation.stores[family]
     return sorted(
         zip(
@@ -179,7 +179,7 @@ COUNTER = {
     "fixed": True,
     "table": {"m": "measure"},
 }
-PAIR = [ray([6, 0, 1], [0, 1, 0], 2, phase=3), ray([6, 2, 1], [0, -1, 0], 2, phase=40)]
+PAIR = [beam([6, 0, 1], [0, 1, 0], 2, phase=3), beam([6, 2, 1], [0, -1, 0], 2, phase=40)]
 
 
 def one_node_world(body: dict[str, object]) -> dict[str, object]:
@@ -191,9 +191,11 @@ def one_node_world(body: dict[str, object]) -> dict[str, object]:
     )
 
 
-def run_one_node(body: dict[str, object]) -> tuple[RaySimulation, list[dict[str, object]], list[int]]:
+def run_one_node(
+    body: dict[str, object],
+) -> tuple[NatureBeamSimulation, list[dict[str, object]], list[int]]:
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(one_node_world(body)), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(one_node_world(body)), records.append)
     xs = []
     for tick in range(1, 31):
         simulation.step()
@@ -215,7 +217,7 @@ def test_a_set_of_one_node_is_todays_measured_event():
         6,
         [16, 0],
     )
-    assert counter.held == [0, 4] and counter.events == [99, 0]
+    assert counter.held == [0, 4] and counter.clicks == [99, 0]
     assert counter.momentum == [-25344, 0, 0]
     assert counter.detector_set.record == [37348285440, 0] and counter.detector_set.phase == [5, None]
     kinds = {
@@ -255,7 +257,7 @@ def test_a_set_of_one_node_is_todays_measured_event():
         "absorbed": 119,
         "balanced": True,
     }
-    assert {port: units[M] for port, units in simulation.ledger.face_units.items()} == {
+    assert {port: units[M] for port, units in simulation.ledger.face_amount.items()} == {
         0: 0,
         1: 74,
         2: 111,
@@ -277,7 +279,7 @@ def test_a_set_of_one_node_is_todays_measured_event():
 SET_NODES = ((4, 0, 0), (4, 0, 1), (4, 0, 2))
 
 
-def set_world(rays: list[dict[str, object]], suspension: object = 0) -> dict[str, object]:
+def set_world(beams: list[dict[str, object]], suspension: object = 0) -> dict[str, object]:
     counter = {
         "position": [4, 0, 1],
         "family": "light",
@@ -291,7 +293,7 @@ def set_world(rays: list[dict[str, object]], suspension: object = 0) -> dict[str
         shape=[9, 1, 3],
         suspension=suspension,
         measured=[counter, source],
-        in_transit=rays,
+        in_transit=beams,
         detectors=[{"name": "d", "positions": [[4, 0, 1]], "threshold": 3, "reading": "wave"}],
     )
 
@@ -309,15 +311,17 @@ def mover_world(measured: list[dict[str, object]], **keys: object) -> dict[str, 
 
 def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     """(b)."""
-    three = [ray([3, 0, z], [1, 0, 0], 2) for z in range(3)]
+    three = [beam([3, 0, z], [1, 0, 0], 2) for z in range(3)]
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parse_ray_world(set_world(three, suspension=[1, 1])), records.append)
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(set_world(three, suspension=[1, 1])), records.append
+    )
     body = simulation.measured[1]
     assert body.span == (1, 1, 3) and body.nodes == SET_NODES
     assert {node: simulation.at[node] for node in SET_NODES} == dict.fromkeys(SET_NODES, 1)
     simulation.step()
     assert simulation.books()["balanced"]
-    assert body.events == [3, 0] and body.held == [0, 4] and body.momentum == [-768, 0, 0]
+    assert body.clicks == [3, 0] and body.held == [0, 4] and body.momentum == [-768, 0, 0]
     assert body.presence == 3 and body.counted == 3
     assert body.owed == by_clock(0, 3, 1) == 3
     assert body.detector_set.record == [9 * UNIT_RECORD, 0] and body.phase == 0
@@ -327,17 +331,17 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert simulation.stores[M].size == 0
     # A smaller set passes: the threshold reads the sum over the set.
     records.clear()
-    simulation = RaySimulation(parse_ray_world(set_world(three[:2])), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three[:2])), records.append)
     simulation.step()
     assert simulation.books()["balanced"]
     assert [(r["event"], r["threshold"]) for r in records] == [("pass", 3), ("pass", 3)]
     body = simulation.measured[1]
-    assert body.events == [0, 0] and body.momentum == [0, 0, 0] and body.detector_set.record == [0, 0]
+    assert body.clicks == [0, 0] and body.momentum == [0, 0, 0] and body.detector_set.record == [0, 0]
     assert simulation.stores[M].size == 2
     # The step moves the whole set; a Node of the moved set held by another
     # measured event refuses it.
     anchor = {"position": [5, 0, 0], "family": "m", "amount": 1, "fixed": True}
-    simulation = RaySimulation(parse_ray_world(mover_world([anchor])))
+    simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([anchor])))
     body = simulation.measured[1]
     xs = []
     for tick in range(1, 7):
@@ -350,7 +354,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     assert len(simulation.at) == 4
     # Without the anchor the whole body clicks on the face at the age 8.
     records.clear()
-    simulation = RaySimulation(parse_ray_world(mover_world([])), records.append)
+    simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([])), records.append)
     body = simulation.measured[1]
     xs = []
     for _ in range(7):
@@ -367,7 +371,9 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     books = simulation.books()
     assert books["balanced"] and books["families"]["m"]["measured"]["escaped"] == 16
     # On a periodic axis the set wraps.
-    simulation = RaySimulation(parse_ray_world(mover_world([], boundary={"x": "periodic"})))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(mover_world([], boundary={"x": "periodic"}))
+    )
     for _ in range(8):
         simulation.step()
     body = simulation.measured[1]
@@ -385,7 +391,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
 # -- (c) ---------------------------------------------------------------------------
 
 
-def born_by_node(simulation: RaySimulation, family: int) -> dict[int, int]:
+def born_by_node(simulation: NatureBeamSimulation, family: int) -> dict[int, int]:
     store = simulation.stores[family]
     fresh = store.age == 0
     found: dict[int, int] = {}
@@ -403,7 +409,9 @@ def test_the_books_balance_with_a_set_that_releases():
         "span": [1, 1, 3],
         "directions": [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]],
     }
-    simulation = RaySimulation(parse_ray_world(world(shape=[7, 3, 5], release=[1, 4], measured=[body])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world(shape=[7, 3, 5], release=[1, 4], measured=[body]))
+    )
     store = simulation.stores[M]
     nodes = [store.flat((3, 1, z)) for z in (1, 2, 3)]
     for tick in range(1, 21):
@@ -427,7 +435,9 @@ def test_the_books_balance_with_a_set_that_releases():
         "span": [3, 1, 1],
         "lamp": {"rate": [1, 1], "directions": [[0, 1, 0]]},
     }
-    simulation = RaySimulation(parse_ray_world(world(shape=[3, 6, 1], K=24, measured=[lamp])))
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world(shape=[3, 6, 1], K=24, measured=[lamp]))
+    )
     store = simulation.stores[LIGHT]
     for tick in range(1, 4):
         simulation.step()
@@ -461,8 +471,8 @@ def turning_world(momentum: list[int], action: int | None, **keys: object) -> di
     return document
 
 
-def phases(document: dict[str, object], ticks: int) -> tuple[list[int], list[int], RaySimulation]:
-    simulation = RaySimulation(parse_ray_world(document))
+def phases(document: dict[str, object], ticks: int) -> tuple[list[int], list[int], NatureBeamSimulation]:
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document))
     entry = simulation.measured[1]
     found, xs = [], []
     for tick in range(1, ticks + 1):
@@ -536,16 +546,16 @@ def torus(turning: bool) -> dict[str, object]:
     return document
 
 
-def board(simulation: RaySimulation) -> np.ndarray:
+def game_board(simulation: NatureBeamSimulation) -> np.ndarray:
     store = simulation.stores[LIGHT]
     found = np.stack([store.node, store.direction, store.phase, store.amount, store.content], axis=1)
     return found[np.lexsort(found.T[::-1])]
 
 
-def test_the_board_is_unchanged_by_the_two_keys():
+def test_the_game_board_is_unchanged_by_the_two_keys():
     """(e)."""
-    with_keys = RaySimulation(parse_ray_world(torus(True)))
-    without = RaySimulation(parse_ray_world(torus(False)))
+    with_keys = NatureBeamSimulation(parse_nature_beam_world(torus(True)))
+    without = NatureBeamSimulation(parse_nature_beam_world(torus(False)))
     collided = False
     phases_differed = False
     read = 0
@@ -553,7 +563,7 @@ def test_the_board_is_unchanged_by_the_two_keys():
         before = with_keys.stores[LIGHT].direction.copy()
         with_keys.step()
         without.step()
-        assert np.array_equal(board(with_keys), board(without))
+        assert np.array_equal(game_board(with_keys), game_board(without))
         turning, plain = with_keys.measured[2], without.measured[2]
         assert turning.nodes == plain.nodes and turning.steps == plain.steps
         collided = collided or before.shape != with_keys.stores[LIGHT].direction.shape
@@ -569,7 +579,7 @@ def test_the_board_is_unchanged_by_the_two_keys():
 
 def refused(document: dict[str, object], text: str) -> None:
     with pytest.raises(ValueError, match=text):
-        parse_ray_world(document)
+        parse_nature_beam_world(document)
 
 
 def test_the_refusals_and_the_record(tmp_path):
@@ -601,7 +611,9 @@ def test_the_refusals_and_the_record(tmp_path):
     )
     refused(world(measured=[{**mover, "span": [0, 1, 1]}]), "from 1 through 12")
     refused(world(measured=[{**mover, "span": [1, 5, 1]}]), "from 1 through 3")
-    refused(world(measured=[{**mover, "position": [0, 1, 1], "span": [3, 1, 1]}]), "leaves the board")
+    refused(
+        world(measured=[{**mover, "position": [0, 1, 1], "span": [3, 1, 1]}]), "leaves the GameBoard"
+    )
     refused(
         world(
             measured=[{**mover, "span": [3, 1, 1]}, {**mover, "position": [6, 1, 1], "span": [3, 1, 1]}]
@@ -623,12 +635,12 @@ def test_the_refusals_and_the_record(tmp_path):
         ),
         "turn by momentum forms k x \\|p\\| x N up to .* beyond the integer bound",
     )
-    parsed = parse_ray_world(
+    parsed = parse_nature_beam_world(
         world(boundary={"x": "periodic"}, measured=[{**mover, "position": [0, 1, 1], "span": [3, 1, 1]}])
     )
     assert parsed.measured[0].span == (3, 1, 1) and parsed.action is None
-    assert parse_ray_world(base).measured[0].span == (1, 1, 1)
-    assert not parse_ray_world(base).measured[0].phase_by_momentum
+    assert parse_nature_beam_world(base).measured[0].span == (1, 1, 1)
+    assert not parse_nature_beam_world(base).measured[0].phase_by_momentum
     # The record.
     turning = world(
         action=64, ticks=2, measured=[{**mover, "span": [1, 3, 1], "phase_by_momentum": True}]

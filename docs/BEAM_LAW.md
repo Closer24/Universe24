@@ -1,6 +1,12 @@
-# The law of the ray (`rays-v1`)
+# The Beam Law (`beam-v1`)
 
-The published design and implementation contract of the law of the ray, the
+The beam is the record of an event in transit, `NatureBeam` in the code; on
+the GameBoard there are only events; until 2026-09-20 this law was called the
+law of the ray, and "ray" stays its informal name in prose (the model owner,
+2026-09-20, [Highlights 5.4](HIGHLIGHTS.md#54-the-detector); the identity
+`beam-v1` is `rays-v1`, the same law, [migration](MIGRATION.md#the-names-naturebeam-and-gameboard-and-the-glossarys-single-names-on-2026-09-20)).
+
+The published design and implementation contract of the Beam Law, the
 model owner's decision of 2026-09-19 ([Highlights 5.4](HIGHLIGHTS.md#54-the-detector),
 "DECIDED: the law of the ray"): the Node holds no wave. No coherent sum, no
 shares, no placement, no tie order, no scatter. A unit is a ray with a record
@@ -31,12 +37,12 @@ Highlights 5.4, and applies to nothing else.
 
 ## 1. Identity
 
-- **Model identity** `rays-v1`. A world selects it with `"law": "rays"`; the
-  record (`run.json`) carries `"law": "rays-v1"`. `configuration_validation`
+- **Model identity** `beam-v1`. A world selects it with `"law": "beam"`; the
+  record (`run.json`) carries `"law": "beam-v1"`. `configuration_validation`
   reports the kind `rays`.
 - **`events-v1` is deleted** (the owner's rule, one engine). `"law": "events"`
-  is refused naming the law of the ray and pointing to MIGRATION. The engine
-  package `src/event_universe/events/` keeps its name (the board's things are
+  is refused naming the Beam Law and pointing to MIGRATION. The engine
+  package `src/event_universe/events/` keeps its name (the GameBoard's things are
   still events: a ray is an event in transit); `mixing.py` and `reversible.py`
   go, `transit.py` is replaced, `engine.py` and `world.py` are rewritten in
   place. Tests and examples that go: section 6.
@@ -53,7 +59,7 @@ Highlights 5.4, and applies to nothing else.
 
 ## 2. The record of a ray and the world file
 
-`NatureBeam` (one record; the board's state is a multiset of them; identical
+`NatureBeam` (one record; the GameBoard's state is a multiset of them; identical
 records at one Node are one record with the amounts and contents added, which
 is a bijection since identical units are interchangeable):
 
@@ -98,7 +104,7 @@ here, section 10, note 15; until 2026-09-19 the label was along the
 integer direction D itself and its magnitude grew with |D|, note 21.)
 Since the night of 2026-09-19 the label is the ONE momentum of the law
 (`nature_beam.momentum_labels`; section 10, note 18): what the push reads
-(the label moment, section 3 step 4), what a click moves onto the
+(the label flow, section 3 step 4), what a click moves onto the
 detector, what a face click books, what a re-emitter or a home takes in
 and gives back, what the transit line of the books sums; no momentum is
 read off a Port anywhere.
@@ -114,7 +120,7 @@ merged row can outgrow the parser's bound, and until then the born
 labels' product was checked after it was formed, so a wrap inside the
 bound passed silently); the refusal names the Node and the amount.
 
-World-file keys added: `"law": "rays"`; per family `charge`, since
+World-file keys added: `"law": "beam"`; per family `charge`, since
 2026-09-20 the charge per unit of content rho, an integer c (the pair
 `[c, 1]`) or a pair `[n, d]` with d from 1 (a measured event's charge is
 rho times its content, a report; refused on a paid family unless 0, and
@@ -153,11 +159,11 @@ family, h >= 1 a paid one, and the refusal names the derivation and
 MIGRATION. Added on 2026-09-19 after the implementation: `width` (S, an integer from 1, 1 by default: the width of the push, the
 step rule of section 3 step 5). Added on 2026-09-20 (note 25): `age_bound`
 (an integer from 1: the largest age a ray may carry, the bound of the
-store; on a board with an open axis twice the flight bound by default, the
-age at which every straight ray has left a board of that diameter,
-`world.flight_bound`; required on a board periodic on every axis, which no
+store; on a GameBoard with an open axis twice the flight bound by default, the
+age at which every straight ray has left a GameBoard of that diameter,
+`world.flight_bound`; required on a GameBoard periodic on every axis, which no
 ray leaves; a declared ray's `age` is refused beyond it and a run in which
-a ray on the board carries an age beyond it is refused), and the value
+a ray on the GameBoard carries an age beyond it is refused), and the value
 `age` of a table entry's `reads` (the age moment; the clock of that entry
 counts it in place of the presence). Added on 2026-09-20 (note 30): per
 measured event `span` (three odd integers from 1, `[1, 1, 1]` by default:
@@ -169,7 +175,7 @@ times Links, absent by default: the quantum of action of the turn by
 momentum) and per measured event `phase_by_momentum` (true: the body
 turns its phase by its momentum label at every Link it steps, over h;
 false by default; the model owner's decision on Bohr, "put it as
-parameters outside the board like the age"; the record carries the
+parameters outside the GameBoard like the age"; the record carries the
 identity `bohr-v1` under `hypotheses` when `action` is declared).
 Unchanged: `shape`, `boundary`, `ticks`, `K`, `N`, `release`,
 `suspension`, `families`, `measured` (`table` with `read`, `measure`,
@@ -191,11 +197,11 @@ alone (`{"light": {"phase_window": 32}}`) is a lawful entry. An entry equal
 to the default is accepted and changes nothing (the mathematician measured
 that in every world of the repository no declared rule differed from the
 key's; the forty declared entries were windows). The shipped worlds declare
-only what differs (`tools/migrate_ray_worlds.py` rewrote them; the Bell and
+only what differs (`tools/migrate_nature_beam_worlds.py` rewrote them; the Bell and
 coupling generators emit the trimmed form).
 
 ```json
-{"law": "rays", "model_id": "two-slits-rays", "shape": [60, 121, 1],
+{"law": "beam", "model_id": "two-slits-rays", "shape": [60, 121, 1],
  "boundary": {"z": "periodic"}, "ticks": 500, "K": 1024, "N": 64,
  "release": [1, 128], "suspension": 0,
  "directions": [[1, 1, 0], [1, -1, 0], [2, 1, 0], [2, -1, 0], [3, 1, 0], [3, -1, 0]],
@@ -220,11 +226,11 @@ Module `src/event_universe/events/nature_beam.py`: the dataclass `NatureBeam`,
 the one function
 
 ```
-nature_beam(store: RayStore, world: RayWorld, tables: RayTables, measured: dict,
+nature_beam(store: NatureBeamStore, world: NatureBeamWorld, tables: NatureBeamTables, measured: dict,
            tick: int, record: Record, inverse: bool = False) -> Books
 ```
 
-and nothing else with law in it. `RayTables` holds the two pure tables,
+and nothing else with law in it. `NatureBeamTables` holds the two pure tables,
 computed once at load from the world's direction set and N: the flight table
 and the collision table (section 4). `engine.py` keeps the interval's frame
 (the tick, the books, the record, the measured events' clocks by `by_clock`,
@@ -259,12 +265,12 @@ integer table), `position(tau) = (m // S_1) v + line_d[0 .. m mod S_1]`. Since
 is 0 or 1: **at most one Link per interval in every direction, Euclidean
 speed exactly 1 / sqrt 3 for every direction** (600 intervals put a ray at
 distance^2 within 1.5 % of 600^2 / 3 for all 1730 primitive directions with
-components up to 6; `scratchpad architect/ray_tables.py`). Why 1 / sqrt 3 and
-not 1 / sqrt 2 on the plane: the flight table is a law of the ray, not of the
-board; 1 / sqrt 3 is the largest speed at which no integer direction in
+components up to 6; `scratchpad architect/nature_beam_tables.py`). Why 1 / sqrt 3 and
+not 1 / sqrt 2 on the plane: the flight table is a Beam Law, not of the
+GameBoard; 1 / sqrt 3 is the largest speed at which no integer direction in
 space ever crosses two Links in one interval ((1, 1, 1) is the bound), and a
 plane world (extent 1 on z) uses the same table, so a wavelength is `period x
-c` on every board. The step of the interval is `step_d(tau) = line_d[m(tau)
+c` on every GameBoard. The step of the interval is `step_d(tau) = line_d[m(tau)
 mod S_1]` if `m(tau + 1) > m(tau)`, else no move; the inverse is `tau - 1`
 then the same step subtracted: bit-exact. The flight reads the age modulo
 `L_d`, the least period of the pair `(tau mod T_d / gcd(S_1 Q, T_d), m(tau)
@@ -276,7 +282,7 @@ injective, a bijection onto its image; the store's bound is the world's
 `age_bound`, note 25); until then it was reduced modulo `L_d`. A rest
 direction has S_1 = 0 and never moves.
 
-**The interval**, in this order, each step a bijection on the board's state
+**The interval**, in this order, each step a bijection on the GameBoard's state
 except where marked as the border; the inverse runs the steps in reverse
 order with each step's inverse:
 
@@ -310,9 +316,9 @@ order with each step's inverse:
    |D| is not normalised); and, since 2026-09-20 (note 25), the **age
    moment**, `sum amount x age` over the set, split outside and here the
    same way: a first moment in the age, the reading aid of the measured
-   event, the external thing, which alone reads the age whole (the board's
+   event, the external thing, which alone reads the age whole (the GameBoard's
    rules, the flight and the collision, never read it whole; the component
-   changes nothing on the board). Every coupling selects its component by
+   changes nothing on the GameBoard). Every coupling selects its component by
    the key `reads` (the threshold the scalar, the push the vector, a
    detector may declare the tensor; the clock's count the scalar, or on a
    table entry that reads `age` the age moment, `measured.count_component`);
@@ -348,7 +354,7 @@ order with each step's inverse:
    push is ONE signed inner product over the columns** (since 2026-09-20,
    the model owner's "one mechanism for all the laws on the GameBoard"
    and the mathematician's verified form; note 31; `nature_beam.push_form`):
-   for a group of a free family B's rays with the label moment `V_B`, per
+   for a group of a free family B's rays with the label flow `V_B`, per
    axis, `push_A = sum over the columns c of epsilon_c x sign(V E_c n_c) x
    by_clock(age_A, |V x E_c x n_c|, D_c x d_c)`, with `(E_c, D_c)` the
    reader's charge in the column c as the frame read it (the exact
@@ -366,7 +372,7 @@ order with each step's inverse:
    form** over the arriving rays (the model owner's proposal 2, admissible
    with the reviewer's two corrections; section 10, note 20): `push_A =
    sum over the rays of kappa(A, B) . V_B`, with `V_B`
-   the label moment of the rays, the vector moment of `read_arrivals` with
+   the label flow of the rays, the vector moment of `read_arrivals` with
    the labels as weights (`amount x u_d` for a free family, `content x
    amount x u_d` for a paid one, the unit vectors of section 2), and
    `kappa(A, B)` =
@@ -453,7 +459,7 @@ slots. What this implies: an outgoing crowd of a lamp or an opening on fan
 directions never collides (rays2: 0 collisions in 500 intervals), so fringes
 and the far field of a source are ballistic and exact; collisions act on the
 six-heading gas (a free family's release on the six headings, matter's field
-returning on a periodic board, head-on beams) and there they are the only
+returning on a periodic GameBoard, head-on beams) and there they are the only
 spreading (the mathematician's T3).
 
 **Slot state.** Each slot is empty (0), single (exactly one unit: one row of
@@ -472,8 +478,8 @@ a fixed order: number, then content ascending) are conserved by construction;
 the class is recomputable from the output, so `INV[FWD[s]] = s` for all 3^8 =
 6561 slot states (checked: 5440 classes, 2132 moving states; on the 256
 binary states 202 move, as rays2 found). The table is generated and checked
-at load from this rule (`ray_tables.py` is the reference; the implementation
-ports `collision_table()` and `class_key()` into `RayTables`).
+at load from this rule (`nature_beam_tables.py` is the reference; the implementation
+ports `collision_table()` and `class_key()` into `NatureBeamTables`).
 
 **The 20 orbits.** The six-heading occupation patterns with a "here" flag fall
 into 20 orbits under the 48 signed axis permutations (10 x 2; no handedness:
@@ -521,7 +527,7 @@ static field (its second-order tensor is isotropic; the mathematician, 3.5).
 2026-09-19, Highlights 5.4: "a detector measuring three Nodes sees one
 electron that can be on any of the three"; a click says "here, in one of
 these" and not which; the declared width of the set is the position's
-uncertainty, and the reading, not the board, is what is uncertain).
+uncertainty, and the reading, not the GameBoard, is what is uncertain).
 Per interval and per family, a detector's set (its declared `positions`;
 a measured event outside every declared detector is a detector of one
 Node with the default reading) reads the arrivals of every number but
@@ -529,7 +535,7 @@ each Node's own at all its Nodes as one set: the **threshold** on the
 amount summed over the whole set (a smaller set passes at every Node of
 it with a `pass` record naming `threshold`), then the **reading** the
 detector declares (`reading`: `wave` by default since 2026-09-20, the
-model owner's decision, "on the board a ray, in the world a wave"; or
+model owner's decision, "on the GameBoard a ray, in the world a wave"; or
 `beam`, declared; section 10, notes 24 and 29):
 
 - `wave`: with the rays the set clicks this interval (after the threshold
@@ -544,8 +550,8 @@ model owner's decision, "on the board a ray, in the world a wave"; or
   integers; a zero pointer has no phase). The **window** of a Node's
   entry reads the set's phase (the pointer of the arrivals the threshold
   admitted), not each ray's own: the set is admitted or passes as one.
-  After a click the set's phase is **returned to the board** (the model
-  owner: "the detector must also return to the board the information it
+  After a click the set's phase is **returned to the GameBoard** (the model
+  owner: "the detector must also return to the GameBoard the information it
   received"): every measured event of the set takes it as its own phase,
   so what it emits afterwards, a lamp's release or a re-emission, carries
   the phase it received, as the content and the momentum already return
@@ -650,7 +656,7 @@ are moved, not copied (the prototype's copying was a lamp of unbounded
 content and is not the law).
 
 **The face detectors.** An open face is a detector (the other change): a ray
-whose step leaves the board clicks there, its amount, label and content
+whose step leaves the GameBoard clicks there, its amount, label and content
 booked as escaped, its phase on the click record; the face's record is the
 same square. A periodic axis has no face.
 
@@ -670,19 +676,19 @@ the coherent phase read in `_meet`, `EMISSION_CELL_BOUND` and
 Tests deleted with them: `test_node_mixing.py`, `test_node_mixing_numbers.py`,
 `test_event_transit.py` (replaced), `test_event_suspension.py` (the transit
 suspension parts; the measured event's clock parts move to
-`test_ray_clock.py`), `test_phaseless_family.py` (the diagonal weights; the
-free push by the flow moves to `test_ray_readings.py`),
+`test_nature_beam_clock.py`), `test_phaseless_family.py` (the diagonal weights; the
+free push by the flow moves to `test_nature_beam_readings.py`),
 `test_reversible_detector.py`, `test_reversible_detector_world.py`, the
 mixing refusals of `test_integer_bounds_of_measured_and_emission.py`.
-Examples: `examples/events/*.json` rewritten as ray worlds (`one_content`
+Examples: `examples/events/*.json` rewritten as NatureBeam worlds (`one_content`
 and `two_contents` release on the six headings; `two_slits` and `one_slit`
-as section 2; the `bell/` and `coupling/` generators re-emit `"law": "rays"`).
+as section 2; the `bell/` and `coupling/` generators re-emit `"law": "beam"`).
 
 Documents: ENGINE.md is replaced by this document (the per-axis topology and
 the record sections move here, shortened; the wave's paragraphs go to
 MIGRATION); TERMINOLOGY gains ray, direction, rest slot, collision, record,
 and marks event in transit as "a ray"; EXPERIMENTS re-registers series C and
-Bell A2 under `rays-v1` (section 8) and keeps the `events-v1` readings as
+Bell A2 under `beam-v1` (section 8) and keeps the `events-v1` readings as
 history; TEST_EXPECTATIONS lists the new modules (section 7);
 HIGHLIGHTS_IMPLEMENTATION rewrites the 5.4 rows; MIGRATION gains "The law of
 the ray, on 2026-09-19 (`rays-v1`)" naming every deletion; CHANGELOG one
@@ -697,20 +703,20 @@ the first run (TEST_EXPECTATIONS owns them).
 
 | Module | Case | Expected |
 | --- | --- | --- |
-| `test_ray_flight.py` | the lone unit, every heading, every declared direction of the example, 150 intervals | straight on its digital line, direction and phase unchanged (`phase_per_link` 0), one Link at most per interval |
+| `test_nature_beam_flight.py` | the lone unit, every heading, every declared direction of the example, 150 intervals | straight on its digital line, direction and phase unchanged (`phase_per_link` 0), one Link at most per interval |
 | | flight isotropy: 1000 intervals on (1,0,0), (1,1,0), (1,1,1), (3,1,0), (5,2,1) | Euclidean distance^2 within 2 % of 1000^2 / 3 for every direction; equal flight time to equal Euclidean distance within one interval |
 | | the flight table | `T_d >= S_1 Q`; `m(tau + 1) - m(tau)` in {0, 1}; `L_d` periods as listed in section 3 |
-| `test_ray_collision.py` | the table | 6561 states; `INV[FWD[s]] = s`; the class invariant; the 20 orbits with the sizes of section 4; a crowd slot never changes |
+| `test_nature_beam_collision.py` | the table | 6561 states; `INV[FWD[s]] = s`; the class invariant; the 20 orbits with the sizes of section 4; a crowd slot never changes |
 | | conservation | for every moving state the amount and the heading sum are equal before and after |
-| `test_ray_bijection.py` | periodic 8 x 8 x 4, 300 records incl. head-on pairs and rest units, 50 forward then 50 inverse intervals, no measured event | the sorted store bit-exact; the state differs at the turning point |
-| `test_ray_detector.py` | two rays of amount 1 in phase, then in antiphase, arriving in one interval at a detector of threshold 1 | record 4 x 32^2 x 256^2, then 0; the amount 2 and two clicks both times |
+| `test_nature_beam_bijection.py` | periodic 8 x 8 x 4, 300 records incl. head-on pairs and rest units, 50 forward then 50 inverse intervals, no measured event | the sorted store bit-exact; the state differs at the turning point |
+| `test_nature_beam_detector.py` | two rays of amount 1 in phase, then in antiphase, arriving in one interval at a detector of threshold 1 | record 4 x 32^2 x 256^2, then 0; the amount 2 and two clicks both times |
 | | the threshold under the one reading set | a bundle of 1 at threshold 2 passes with a `pass` record; rest units count |
-| `test_ray_reemission.py` | one ray of amount 3 into a `rerelease` Node with three directions | three rays of amount 1, the arriving phase, age 0, the re-emitter's number; recoil = label in - labels out; books closed |
+| `test_nature_beam_reemission.py` | one ray of amount 3 into a `rerelease` Node with three directions | three rays of amount 1, the arriving phase, age 0, the re-emitter's number; recoil = label in - labels out; books closed |
 | | the face click | a ray stepping off an open face: one click on the face detector, escaped amount 1, the record its square |
-| `test_ray_clock.py` | a lamp of turn s on two directions | cost and label `quantum x s` per unit along each direction; the owed count off the clock unchanged (reference) |
-| `test_ray_worlds.py` | the two slits of section 2 on 60 x 121 x 1, 500 intervals | the interference term V(y) of the screen's record correlates with the two-source Euclidean cosine at lambda = c x period above 0.9 (rays measured 0.969); the plain count additive to the unit |
-| | Bell | the ten A2 worlds under `"law": "rays"`: S = 2 exactly, no-signalling exact |
-| `test_ray_world_parsing.py` | refusals | `"law": "events"`, `dynamics`, `headings`, a non-primitive direction, a component beyond P, a label beyond 2^62 - 1, `phase_per_link` outside 0 .. N - 1, each named |
+| `test_nature_beam_clock.py` | a lamp of turn s on two directions | cost and label `quantum x s` per unit along each direction; the owed count off the clock unchanged (reference) |
+| `test_nature_beam_worlds.py` | the two slits of section 2 on 60 x 121 x 1, 500 intervals | the interference term V(y) of the screen's record correlates with the two-source Euclidean cosine at lambda = c x period above 0.9 (rays measured 0.969); the plain count additive to the unit |
+| | Bell | the ten A2 worlds under `"law": "beam"`: S = 2 exactly, no-signalling exact |
+| `test_nature_beam_world_parsing.py` | refusals | `"law": "events"`, `dynamics`, `headings`, a non-primitive direction, a component beyond P, a label beyond 2^62 - 1, `phase_per_link` outside 0 .. N - 1, each named |
 
 ## 8. Independent expectations for the re-registered readings
 
@@ -718,7 +724,7 @@ Pinned before implementation, from the prototypes (rays and rays2 measured on
 the plane) and the argument that every ray present at a Node is leaving it
 (presence = |flow|):
 
-| Reading | Under `events-v1` (registered) | Under `rays-v1` (expected) |
+| Reading | Under `events-v1` (registered) | Under `beam-v1` (expected) |
 | --- | --- | --- |
 | Series C item 5, plane: count x r / q | 0.33 constant (coherent) | constant within 10 % for r >= 8 (rays: 0.31 to 0.33 on a fan; on the six headings a ring mean over mostly empty Nodes, 0.15 to 0.19) |
 | flow x 2 pi r / q | about 1 | 1.00 +- 0.10 (Gauss exact for a ballistic stream); `cube_flux` within 2 % of q |
@@ -735,10 +741,10 @@ the plane) and the argument that every ray present at a Node is leaving it
 1. `docs/`: this document is the contract; MIGRATION, CHANGELOG entries first
    (architecture owner).
 2. `core/integer.py`: `integer_root` moved from mixing (core owner).
-3. `events/nature_beam.py` (new; engine owner): `NatureBeam`, `RayStore`,
-   `RayTables` (`flight_table(directions)`, `collision_table()`, both pure,
+3. `events/nature_beam.py` (new; engine owner): `NatureBeam`, `NatureBeamStore`,
+   `NatureBeamTables` (`flight_table(directions)`, `collision_table()`, both pure,
    generated and checked at load), `nature_beam(...)` with `inverse`.
-4. `events/world.py` (schema owner): `"law": "rays"`, `directions`,
+4. `events/world.py` (schema owner): `"law": "beam"`, `directions`,
    `phase_per_link`, the measured event's `directions`, the direction and
    label bounds, the refusals; `dynamics` and the reversible validation
    deleted.
@@ -770,7 +776,7 @@ is capped at 4096, `L_d` grows as about 222 |v| S_1, so the store's bound
 is large though fixed; worlds should declare only the directions they use.
 (c) **Performance**: today 3.6 us per Node per interval on dense arrays; the
 store costs per row (0.1 us in flight, about 1 us with a Python collision
-loop in rays2), so a board with one ray per Node breaks even and a dense
+loop in rays2), so a GameBoard with one ray per Node breaks even and a dense
 gas of the six headings with `sum L_d x N` rows per Node is slower; the
 collision must be vectorized (segment ids, a `bincount` per Node, one table
 read on the 3^8 code, `np.put` of the new directions) to reach the budget.
@@ -810,7 +816,7 @@ implementation's part of the contract. The design above is unchanged.
    of amount 1 and one row of amount 2 would record differently), so the
    amplitude of a row is 32 x amount, exact and merge-invariant; one unit
    records 32^2 x 256^2 as the design says, a row of n identical rays
-   n^2 times that (the coherent sum of n equal amplitudes).
+   n^2 times that (the pointer of n equal amplitudes).
 4. **Home keeps the arriving phase and content.** What comes home is
    created again with the phase and the content per unit it arrived with
    (as the re-emission does), not re-stamped by the clock; the books'
@@ -819,11 +825,11 @@ implementation's part of the contract. The design above is unchanged.
    `pass` record** naming `threshold` or `window`; a set at the threshold
    clicks row by row (one `click` record per row, the amount on it) and the
    window reads each row's own phase, no coherent phase of the set (the
-   record is the coherent reading; the window is a gate on the record).
+   record is the pointer's square; the window is a gate on the record).
 6. **The inverse interval exists only without a measured event**: with one
-   on the board `inverse_step` refuses (the click, the release and the home
+   on the GameBoard `inverse_step` refuses (the click, the release and the home
    are the one-way border and no inverse of them is defined); the
-   bijection test runs on a board of rays alone.
+   bijection test runs on a GameBoard of rays alone.
 7. **The two-slit example uses a dense fan.** A fan of five directions
    gives ballistic spots on the screen, not fringes; the example and the
    world test re-emit at the openings on the 91 primitive directions
@@ -851,7 +857,7 @@ implementation's part of the contract. The design above is unchanged.
     `two_slits.json` uses K 2^30 and a content of 8 K + 1 400 000 (a turn
     of 8, the phases stamped a mod 64). The parser refuses a content at or
     past K x N / 2 as before.
-12. **A ray may be declared on a board without a measured event** (the
+12. **A ray may be declared on a GameBoard without a measured event** (the
     in_transit `number` bound is max(1, the number of measured events)),
     so the bijection and the collision tests run on rays alone.
 13. **Every ray steps at its first interval**: the flight table's first
@@ -860,7 +866,7 @@ implementation's part of the contract. The design above is unchanged.
     released at tick t first walks at t + 1.
 14. **The registered readings** (section 8) are marked measured against
     expected in EXPERIMENTS.md; the far-field ring means of a six-heading
-    source follow the lattice ring's Node count (the rings at r = 16 and
+    source follow the GameBoard ring's Node count (the rings at r = 16 and
     r = 20 both hold 112 Nodes) and fall outside the ±10 % expectation,
     registered and not moved; the fan the expectation was pinned on is the
     owner's decision to run.
@@ -876,20 +882,20 @@ implementation's part of the contract. The design above is unchanged.
     necessities" is recorded, not acted on). `quantum` is required: a
     default would be an implicit kind. The record (`run.json`) carries
     `quantum` per family and no `kind`. Every example world parses to the
-    same `RayWorld` as before the change (checked structure by structure
+    same `NatureBeamWorld` as before the change (checked structure by structure
     over the 39 worlds), and the Bell and coupling runs are unchanged
     record by record (VALIDATION.md).
 16. **The moments replace the slots** (the same decision; `tests/
-    test_ray_readings.py` (a)). `read_arrivals(vectors, amounts, keys,
+    test_nature_beam_readings.py` (a)). `read_arrivals(vectors, amounts, keys,
     size)` takes the moments of section 3, step 2, exact integers, with
     the normalisation `tensor = 3 x M2 - tr(M2) I` for the second moment
     `M2 = sum amount x D D^T` (the trace removed times the number of
-    dimensions, so no division); the `Reading` holds the six entries of
+    dimensions, so no division); the `Moments` holds the six entries of
     `M2` and forms the tensor on demand. On the six headings the moments
     equal the slot decomposition exactly (the old `(p_x + p_y - 2 p_z,
     p_x - p_y)` being `-T_zz` and `(T_xx - T_yy) / 3`); under the 48
     signed axis permutations the scalars are fixed, the vector rotates and
-    the tensor is conjugated. What this changes on the board: only the
+    the tensor is conjugated. What this changes on the GameBoard: only the
     reading of a fan ray at a measured event, whose push is now its label
     `content x amount x D` (the recoil its emitter took) and not the unit
     Link of its last step, so the momentum a wall takes from a fan closes
@@ -915,8 +921,8 @@ implementation's part of the contract. The design above is unchanged.
     that uses it is series D in EXPERIMENTS.md).
 18. **The one label; no collision at a measured event's Node** (the
     physics-rule reviewer's F1, blocking, and the model owner's decision on
-    its case (c), the night of 2026-09-19; `tests/test_ray_push.py` (h),
-    `tests/test_ray_collision.py` (d)). Until this note the push read the
+    its case (c), the night of 2026-09-19; `tests/test_nature_beam_push.py` (h),
+    `tests/test_nature_beam_collision.py` (d)). Until this note the push read the
     rows' arrival (the moments change) while the click's momentum, the
     recoil and the transit line read the rows' direction, which the
     collision could have turned at the detector's Node, and a head-on pair
@@ -940,11 +946,11 @@ implementation's part of the contract. The design above is unchanged.
     and the home (until this note a home leaked the label out). The
     reviewer's F3 dissolves: the threshold reads the arrivals (section 5).
     The bijection of the interval is unchanged (the inverse skips the same
-    Nodes; `tests/test_ray_bijection.py` passes as before) and the
+    Nodes; `tests/test_nature_beam_bijection.py` passes as before) and the
     registered runs are unchanged record by record (no collision acts in
     them and their arrivals are their directions; VALIDATION.md).
 19. **The record exact, never refused** (the reviewer's F2, corrected
-    twice; `tests/test_ray_detector.py` (e), `tests/test_ray_worlds.py`
+    twice; `tests/test_nature_beam_detector.py` (e), `tests/test_nature_beam_worlds.py`
     (e)). The finding: the record's amplitude products were unchecked
     int64 (an amount of 2^52 recorded 0 silently) and the design's bound
     `256 x 32 x isqrt(sum amount)` was stale (the amplitude is linear,
@@ -953,7 +959,7 @@ implementation's part of the contract. The design above is unchanged.
     `RECORD_AMOUNT_BOUND` = isqrt(2^62 - 1) // (32 x 257) = 261123 of one
     family in one interval; the same night `examples/events/two_contents.json`
     (two fixed contents of 2^24 at `release` [1, 128] on an open 21^3
-    board), which had run 200 intervals before the bound, was refused at
+    GameBoard), which had run 200 intervals before the bound, was refused at
     its 20th interval when the two +y beams of 2^17 left through
     `face:+y` together (262144). A refusal was the wrong correction for a
     report: the record is a host reading, not the law's local work, so
@@ -974,7 +980,7 @@ implementation's part of the contract. The design above is unchanged.
     its 200 intervals with the books closed (VALIDATION.md).
 20. **The push as one bilinear form; the emitter's factor on the record**
     (the model owner's proposal 2, "2 with the physicist"; the reviewer's
-    verdict "admissible with two corrections"; `tests/test_ray_push.py` (a)
+    verdict "admissible with two corrections"; `tests/test_nature_beam_push.py` (a)
     to (g)). (The two columns of this note are deleted since 2026-09-20,
     the factor being the family's charge per unit of content: note 28.) `push_form` computes `push_A = sum kappa(A, B) . V_B` (step
     4) in one place; the three-branch `push_of` and the lookup of the
@@ -1032,9 +1038,9 @@ implementation's part of the contract. The design above is unchanged.
     condition, the same refusal at the same point of the interval), the
     records and the side effects then applied per group in the order of
     the records (`FamilyPlan`); the walk already batched the rays and the
-    collision the Nodes the same way. (ii) The dense readings of the board
+    collision the Nodes the same way. (ii) The dense readings of the GameBoard
     (`count`, `flow`, `presence`, `per_port`) are diagnostics, decomposed
-    on request from the rows the walk left (`Readings`, `ArrivalRows`)
+    on request from the rows the walk left (`GameBoardDiagnostics`, `ArrivalRows`)
     over the active Nodes only; the law reads its own local sets at the
     measured events; the keyed reading's bound is checked when the
     diagnostics are read. (iii) The merge orders the rows by one packed
@@ -1046,8 +1052,8 @@ implementation's part of the contract. The design above is unchanged.
     rows are born and leave (`Ledger.transit_momentum`; the collision
     conserves it, its class fixing the vector sum of the singles, and the
     merge conserves it), the transit and content `current` are what was
-    released less what left; `RaySimulation.recount()` counts the three
-    lines from the rows on request and `tests/test_ray_books.py` asserts
+    released less what left; `NatureBeamSimulation.recount()` counts the three
+    lines from the rows on request and `tests/test_nature_beam_books.py` asserts
     the running lines equal the recount at every interval; the per-tick
     `balanced` of `run.json` now checks the ledger's own consistency, the
     recount the store. The collision table is generated once per process
@@ -1079,7 +1085,7 @@ implementation's part of the contract. The design above is unchanged.
     discontinuous in the direction ((4, 3, 0) and (7, 5, 0), 1.4 degrees
     apart, carrying 5 and 8.60 at equal amounts) and a fan's push
     diverging with the grain of its declaration (5.19 x the headings at
-    |D| <= 8, about 10 x at |D| <= 16); `tests/test_ray_label.py`). The
+    |D| <= 8, about 10 x at |D| <= 16); `tests/test_nature_beam_label.py`). The
     label of a unit is `u_d`, the integer vector nearest `Q D / |D|`,
     Q = 64 (section 2), by the reviewer's exact integer rule `k(|a|) =
     (isqrt((2 Q |a|)^2 // |D|^2) + 1) // 2` with the sign restored: it
@@ -1114,9 +1120,9 @@ implementation's part of the contract. The design above is unchanged.
     on the six headings it tightens from 2^62 to 2^56 per row; the
     bound-edge tests are re-pinned at 1/64 of their amounts); (4) the
     reading's vector and tensor moments on `u_d` in place of D
-    (`Readings`, the reading at a measured event, step 2), so a fan's
+    (`GameBoardDiagnostics`, the reading at a measured event, step 2), so a fan's
     flow reads Q x q direction-blind; the zeroth moment is unchanged.
-    What else changes: the label moment's bulk bound is the first
+    What else changes: the label flow's bulk bound is the first
     moment's (weight x |u| x rows, `first_moment_overflow`), and the
     reading's second-moment bound, amount x Q^2 x rows, now refuses a row
     above 2^50 at a measured event's Node (the detector test's row of
@@ -1134,16 +1140,16 @@ implementation's part of the contract. The design above is unchanged.
     the same; Bell is unchanged (S = 2, 326 criteria); series D is
     re-derived with L = 1 in label units under the Q S M rule and re-run
     (EXPERIMENTS.md, D; `examples/events/orbit/`). A fractional electric
-    coefficient no longer alternates (`test_ray_push` (e): 96 per tick
+    coefficient no longer alternates (`test_nature_beam_push` (e): 96 per tick
     where 2, 1 alternated), the floor resolving 1 / Q per unit. Every
     pinned test's momentum integer is x 64 (the fan fixtures on u_d;
     TEST_EXPECTATIONS lists the re-pins; MIGRATION the units).
 24. **The detector's set, its two readings and the phase returned** (the
     model owner, 2026-09-19, three decisions of the same day: the
     detector a set with one record, "the detector must also return to
-    the board the information it received", and the key `reading` with
+    the GameBoard the information it received", and the key `reading` with
     `beam` the default and `wave` the imported law; section 5;
-    `tests/test_ray_detector.py` (f), (g), (h)). The decisions the
+    `tests/test_nature_beam_detector.py` (f), (g), (h)). The decisions the
     implementation took: (i) the set's phase is `pointer_phases`, the
     step whose table entry is nearest in direction to the pointer, exact
     integers (in the int64 register while every component is within
@@ -1188,39 +1194,39 @@ implementation's part of the contract. The design above is unchanged.
 
 25. **The age whole, read by the measured event; the clock beside a mass**
     (the model owner, 2026-09-19, Highlights 5.4, "the clock beside a mass
-    ... Go for it", implemented 2026-09-20; `tests/test_ray_age.py` (a) to
+    ... Go for it", implemented 2026-09-20; `tests/test_nature_beam_age.py` (a) to
     (e); the placement by the owner's instruction: "the age reading must
-    live in an external place in the code, outside the board's law"). The
+    live in an external place in the code, outside the GameBoard's law"). The
     accepted price of section 8 (the clock's count reads the presence, M /
     r^2 in space, not Einstein's M / r) is paid by a reading, not by a rule
-    of the board: the ray's age, the count of intervals since the measured
+    of the GameBoard: the ray's age, the count of intervals since the measured
     event that created it (a birth or a re-emission; a collision is a
     permutation and cannot reset it), is on the record and travels with
     it, so a clock reading the amount-weighted age of its arrivals reads
     (M / r^2) x r = M / r while the push keeps reading the flow, M / r^2:
     Einstein's pair from two readings of the same rays, no estimator,
     fixed work, additive over sources. What changed: (i) the store keeps
-    the age WHOLE (`RayStore.age`, the walk advances it by one; a rest ray
+    the age WHOLE (`NatureBeamStore.age`, the walk advances it by one; a rest ray
     keeps it; a re-emission and a birth start at 0); the flight reads it
     modulo the direction's period, `flight.steps[direction, age mod L_d]`,
-    and the collision never reads it, so the board's step is unchanged by
+    and the collision never reads it, so the GameBoard's step is unchanged by
     the whole age (test (e): the same run with the ages reduced from
     outside the law after every interval gives the same Nodes, directions,
     phases, amounts and contents at every interval; the bijection echo of
-    `test_ray_bijection` passes as before, its all-periodic world
+    `test_nature_beam_bijection` passes as before, its all-periodic world
     declaring `age_bound`). The host cost: rows of different ages no
     longer merge, so the store's bound is `len(D) x age_bound x N x
     numbers x contents` in place of `sum_d L_d x ...` (section 3); on the
     registered worlds the row counts are unchanged in practice (a beam
     holds at most two rays per Node, of different ages either way) and
     `state.json` now records the whole age. (ii) The one reading
-    `read_arrivals` gains the age moment (`Reading.age_outside`,
+    `read_arrivals` gains the age moment (`Moments.age_outside`,
     `age_here`, `age`; the `ages` argument, zero without it; the bound
     check covers `amount x age`), the value `age` of `reads`, and the
     record of a `read`, `click` or `rerelease` on such an entry carries
     it. The age is read whole only by a measured event, the external
     thing; this component is a reading aid of the detector and changes
-    nothing on the board. (iii) What the clock counts is selected on the
+    nothing on the GameBoard. (iii) What the clock counts is selected on the
     measured-event side, `measured.count_component(reads)`: the age moment
     on an entry that reads `age`, the presence on every other entry (the
     default: every world without the key reads the same, integer by
@@ -1235,17 +1241,17 @@ implementation's part of the contract. The design above is unchanged.
     detector's area being changed concurrently); and the refusal, chosen:
     a row whose age passes `age_bound` refuses the run at the end of the
     interval with `OverflowError` naming the key, as every other bound of
-    the law does, nothing on the board changed, so the bijection holds
+    the law does, nothing on the GameBoard changed, so the bijection holds
     exactly up to the refusal and the world must be small enough or
-    declare its bound. The default on a board with an open axis is twice
+    declare its bound. The default on a GameBoard with an open axis is twice
     the flight bound, `world.flight_bound(shape, D)` = the largest over the
     moving directions of `ceil(ceil(D_M / S_1) x T_d / Q)` with `D_M = X +
-    Y + Z - 2` the longest Manhattan flight on the board (inside and out;
+    Y + Z - 2` the longest Manhattan flight on the GameBoard (inside and out;
     the least tau with m(tau) >= M is at most ceil(M T_d / (S_1 Q))): the
-    age at which every straight ray has left the board, doubled as the
+    age at which every straight ray has left the GameBoard, doubled as the
     slack of one collision or one wrap of a periodic axis (a head-on pair
     parked at rest keeps its age and flies again; a ray along a periodic
-    axis never leaves). On a board periodic on every axis no ray leaves,
+    axis never leaves). On a GameBoard periodic on every axis no ray leaves,
     so the key is required and refused if absent (the bijection, flight,
     collision and push tests' periodic cubes declare it). The parser
     refuses a declared `age` beyond the bound; `run.json` records the key.
@@ -1259,7 +1265,7 @@ implementation's part of the contract. The design above is unchanged.
     the owner, not implemented: a ray sent back toward its source could
     count its age down and be measured where it reaches zero.
 26. **The label's product checked before it is formed** (the architect's
-    B1, blocking, 2026-09-20; `tests/test_ray_label.py` (c), (d)). Until
+    B1, blocking, 2026-09-20; `tests/test_nature_beam_label.py` (c), (d)). Until
     this note `momentum_labels` bounded the weight at `Q x weight` and
     the births' labels were checked after the int64 product; the
     architect's probe (a heading row of amount 2^58 re-emitted on
@@ -1278,7 +1284,7 @@ implementation's part of the contract. The design above is unchanged.
     a free release) is unchanged and conservative; what it does not
     reach, a merged row, is refused at the next label formed of it.
 27. **M_A is the content the frame read** (the architect's B3, blocking;
-    the orchestrator's D1, 2026-09-20; `tests/test_ray_push.py` (j)).
+    the orchestrator's D1, 2026-09-20; `tests/test_nature_beam_push.py` (j)).
     Until this note the push read `Measured.content` inside the
     per-family loop of step 4, after the clicks of the families before
     it in family order had joined `held`, so the world file's family
@@ -1296,8 +1302,8 @@ implementation's part of the contract. The design above is unchanged.
 28. **Charge per unit of content; the push one product; the record's two
     columns deleted** (the model owner's decision of 2026-09-20,
     Highlights 5.4; it resolves the architect's B2 by dissolving its
-    divisor; `tests/test_ray_push.py` (a) to (e), (i), (k), (l),
-    `tests/test_ray_world_parsing.py`). The family key `charge` is the
+    divisor; `tests/test_nature_beam_push.py` (a) to (e), (i), (k), (l),
+    `tests/test_nature_beam_world_parsing.py`). The family key `charge` is the
     charge per unit of content, rho, declared as an integer or a pair
     `[n, d]` as `suspension` is (an integer c is `[c, 1]`; d = 0 and a
     part that is not an integer are refused; a paid family's rho must be
@@ -1318,7 +1324,7 @@ implementation's part of the contract. The design above is unchanged.
     two free families with their pairs (`q` the source, `p` the probe:
     2^23 on 2^24 is [1, 2], 2 on 1 is [2, 1], 2 on 4 is [1, 2];
     `examples/events/coupling/make_worlds.py`), since one charge per unit
-    of content is one family; `tools/migrate_ray_worlds.py` moves a
+    of content is one family; `tools/migrate_nature_beam_worlds.py` moves a
     per-event charge to its family as the reduced pair and refuses a
     family whose events imply two. A re-emitted free ray is its family's
     ray (the orchestrator's D2: it takes the re-emitter's number and
@@ -1328,7 +1334,7 @@ implementation's part of the contract. The design above is unchanged.
     content as the gravity is, the equivalence principle for the electric
     push, pinned in (l).
 29. **`wave` is the default reading** (the model owner's decision of
-    2026-09-20, Highlights 5.4, "on the board a ray, in the world a
+    2026-09-20, Highlights 5.4, "on the GameBoard a ray, in the world a
     wave"; `world.DETECTOR_READINGS` = ("wave", "beam")). A detector that
     declares no `reading`, and a measured event outside every declared
     detector (a detector of one Node), reads `wave`: the coherent pointer
@@ -1337,9 +1343,9 @@ implementation's part of the contract. The design above is unchanged.
     (note 24 (v) and (vi) describe it as the default of 2026-09-19).
     What moves: a windowed detector met by rays of different phases in
     one interval reads the pointer's phase, not each ray's own
-    (`tests/test_ray_readings.py` (d): 2 units at phase 0 and 1 at phase
+    (`tests/test_nature_beam_readings.py` (d): 2 units at phase 0 and 1 at phase
     32 point to 0, outside the window 32, and all pass, where `beam`
-    clicked the one at 32; `tests/test_ray_collision.py` (d) declares
+    clicked the one at 32; `tests/test_nature_beam_collision.py` (d) declares
     `beam` on its windowed taker to keep the case of note 18, a zero
     pointer having no phase); the wall of the two-slit worlds records the
     square of what it absorbs (its record is read by nothing). Unchanged:
@@ -1348,15 +1354,15 @@ implementation's part of the contract. The design above is unchanged.
     `tools/bell_chsh.py` 326 criteria passed), the two-slit screens and
     the Heisenberg worlds (declared), series C and D (no detector).
 30. **A body on a set of Nodes with one record, and the turn by momentum:
-    Bohr as parameters outside the board** (the model owner, 2026-09-20,
+    Bohr as parameters outside the GameBoard** (the model owner, 2026-09-20,
     Highlights 5.4: the physicist's report on hydrogen, the seven
     proposals, and "DECIDED (the owner): On Bohr, go, and put it as
-    parameters outside the board like the age"; the placement rule: the
+    parameters outside the GameBoard like the age"; the placement rule: the
     turn is a declared parameter of the measured event, the external
     thing, read by it from its own record with no memory at a Node; the
     rays' flight and collision are untouched; a world without the keys
-    reads the same integer by integer; `tests/test_ray_body.py` (a) to
-    (f)). Two features on the measured-event side, nothing on the board.
+    reads the same integer by integer; `tests/test_nature_beam_body.py` (a) to
+    (f)). Two features on the measured-event side, nothing on the GameBoard.
     **(i) The body on a set** (proposal 1, "the electron of width 3"; the
     physicist measured 0 to 8 rays per shell around a mean of 4 at one
     Node of a 2616-direction fan, the grain that broke the orbit). A
@@ -1372,11 +1378,11 @@ implementation's part of the contract. The design above is unchanged.
     integers; a list would have needed a second reference Node and would
     have allowed shapes no orbit needs. What the set does: every Node of
     the body maps to it (`node_event` in step 4), so the rows at any of
-    its Nodes are its arrivals and the one reading set of RAY_LAW is
+    its Nodes are its arrivals and the one reading set of BEAM_LAW is
     summed over its Nodes, per Node ("everything at the Node but the
     reader's own number, including here"): the threshold reads the
     amount arriving over the whole set, the clock's count the presence
-    (or the age moment) over the set, the push the label moment over the
+    (or the age moment) over the set, the push the label flow over the
     set (a ray crossing w Nodes of the body along its line is read w
     times, once at each Node it enters: the body's reading is the sum of
     its Nodes' readings, so its push is about w times one Node's at the
@@ -1402,11 +1408,11 @@ implementation's part of the contract. The design above is unchanged.
     moves with it, refused when any Node of the moved set holds another
     measured event (the body's own Nodes overlap the moved set and do
     not refuse it), the whole body clicking on the face detector when
-    any of its Nodes would leave the board through an open face, every
+    any of its Nodes would leave the GameBoard through an open face, every
     Node wrapping on a periodic axis; the inverse interval is refused
-    with a measured event on the board as before (note 6). Parsing: a
+    with a measured event on the GameBoard as before (note 6). Parsing: a
     span must be odd (a centred body), at most its axis's extent, the
-    body inside the board on an open axis at the start, two measured
+    body inside the GameBoard on an open axis at the start, two measured
     events never share a Node, and a detector names a body by its
     `position` (a Node of the body that is not its centre is refused by
     name). A set of one Node is bit-identical to the measured event of
@@ -1449,7 +1455,7 @@ implementation's part of the contract. The design above is unchanged.
     the path (a push between two steps) the count k0 is the rule's
     count at the current age and momentum, not a history: the
     placement rule reads the record, not the past. Placed, as the owner
-    said, outside the board like the age: a rule of the measured event,
+    said, outside the GameBoard like the age: a rule of the measured event,
     the external thing, read from its own record (its momentum label,
     its age); it changes nothing of the rays' flight or collision (test
     (e): the rays' rows identical with and without the two keys on a
@@ -1467,17 +1473,17 @@ implementation's part of the contract. The design above is unchanged.
     `OverflowError` naming the body and "turn by momentum"), which covers
     a momentum grown by the pushes and a run longer than declared. The
     identity: the turn is a new physical hypothesis beside the law, not
-    a rule of the board, so the law keeps `rays-v1` and `run.json`
+    a rule of the GameBoard, so the law keeps `beam-v1` and `run.json`
     carries `action` and, when it is declared, `"hypotheses":
     ["bohr-v1"]` (`world.BOHR_RULE`); the `step` line of `events.jsonl`
     gains the body's `phase` after the step (the readings tool of series
     H reads it). What the closure means in the law's terms: the turn per
     orbit is (N / h) x the sum over the Links stepped of |p_axis|, which
-    for a circle of radius r stepped on the lattice is 4 p r (the
+    for a circle of radius r stepped on the GameBoard is 4 p r (the
     Manhattan weighting of the path: 4 r against the circle's 2 pi r),
     so the phase closes when 4 p r = j h, j whole, and with p
     proportional to 1 / sqrt(r) under a 1 / r^2 push the closing radii
-    are proportional to j^2, Bohr's ladder in the lattice's metric
+    are proportional to j^2, Bohr's ladder in the GameBoard's metric
     (series H, EXPERIMENTS.md).
 
 31. **The columns: the one coupling as a signed inner product** (the model
@@ -1525,7 +1531,7 @@ implementation's part of the contract. The design above is unchanged.
     parser's static budget (`world._column_budget`, the mathematician's
     P3 in the form the physicist's design states): for every declared
     reader, every free family and every column, |E n| times the largest
-    label moment one self-creation's release of the family can put at
+    label flow one self-creation's release of the family can put at
     the reader (Q x the reader's Nodes x the largest release over the
     other events' directions) within 2^62 - 1, and the sum over the
     columns of the whole parts within it; a declared ray in transit, a

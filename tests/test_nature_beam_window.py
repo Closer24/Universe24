@@ -1,4 +1,4 @@
-"""The phase window under the law of the ray (docs/RAY_LAW.md, section 3,
+"""The phase window under the Beam Law (docs/BEAM_LAW.md, section 3,
 step 4; the model owner, 2026-09-19: "Approve the phase window as a declared
 width of a detector, and of the emitter too"): one generic key,
 `phase_window`, a setting s on the circle of N steps and the half circle
@@ -10,7 +10,7 @@ clock phase falls in it, the clock and the phase turning either way.
 Re-pinned from `test_phase_window` under the flight table (a ray released
 at tick t first walks at t + 1; 10 Links take 17 walks, 11 Links 19). The
 expected integers of docs/TEST_EXPECTATIONS.md ("The phase window under the
-ray law"), written down first. Bars of 1 x 1 in y and z, N 64, `suspension`
+Beam Law"), written down first. Bars of 1 x 1 in y and z, N 64, `suspension`
 0, `release` [0, 1], the families `light` (paid) and `counter` (paid), every
 measured event `fixed`:
 
@@ -21,7 +21,7 @@ measured event `fixed`:
     and 7 (the flight table's first arrivals at 1, 2, 3 and 4 Links). d = 15
     and d = 48 click (`click` records at ticks 1 and 7 with `phase` 35 and
     4, the push (64, 0, 0), `content` 1; since 2026-09-19 the label of a
-    unit along a heading is Q e_d, Q = 64, RAY_LAW section 2 and note 23);
+    unit along a heading is Q e_d, Q = 64, BEAM_LAW section 2 and note 23);
     d = 16 and d = 47 pass (`pass` records at ticks 3 and 5 with the phase
     and `window` 20), go on and click on `face:+x` at their next step
     (ticks 5 and 7). After 7 intervals `events` [2, 0], `held` [2, 1], the
@@ -60,8 +60,8 @@ from __future__ import annotations
 
 import pytest
 
-from event_universe.events import RaySimulation, parse_ray_world
-from event_universe.events.nature_beam import ray_tables
+from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.nature_beam import nature_beam_tables
 
 LIGHT, COUNTER = 0, 1
 FAMILIES = [{"name": "light", "quantum": 1}, {"name": "counter", "quantum": 1}]
@@ -80,7 +80,7 @@ def world(
     in_transit: list[dict[str, object]] | None = None,
 ) -> dict[str, object]:
     return {
-        "law": "rays",
+        "law": "beam",
         "model_id": "ray-window-test",
         "shape": shape,
         "boundary": "open",
@@ -110,7 +110,7 @@ def lamp(**keys: object) -> dict[str, object]:
     }
 
 
-def ray(x: int, phase: int) -> dict[str, object]:
+def beam(x: int, phase: int) -> dict[str, object]:
     return {
         "position": [x, 0, 0],
         "family": "light",
@@ -124,30 +124,30 @@ def ray(x: int, phase: int) -> dict[str, object]:
 def test_the_window_is_the_centred_half_circle_and_a_ray_outside_it_passes():
     """(a)."""
     for modulus, admitted in ((64, [*range(16), *range(48, 64)]), (2, [0]), (4, [0, 3])):
-        tables = ray_tables(
-            parse_ray_world(
+        tables = nature_beam_tables(
+            parse_nature_beam_world(
                 world([7, 1, 1], [counter(6, {"light": "measure"})], 1 << 20) | {"N": modulus}
             )
         )
         assert [d for d in range(modulus) if tables.window[d]] == admitted
     source = {"position": [0, 0, 0], "family": "light", "amount": 8, "fixed": True}
     gate = counter(6, {"light": {"rule": "measure", "phase_window": 20}})
-    rays = [ray(5, 35), ray(4, 36), ray(3, 3), ray(2, 4)]
-    parsed = parse_ray_world(world([7, 1, 1], [source, gate], 1 << 20, rays))
+    beams = [beam(5, 35), beam(4, 36), beam(3, 3), beam(2, 4)]
+    parsed = parse_nature_beam_world(world([7, 1, 1], [source, gate], 1 << 20, beams))
     assert parsed.measured[1].table == ("measure", "measure") and parsed.measured[1].windows == (
         20,
         None,
     )
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parsed, records.append)
+    simulation = NatureBeamSimulation(parsed, records.append)
     entry = simulation.measured[2]
     for _ in range(7):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    assert entry.events == [2, 0] and entry.held == [2, 1]
+    assert entry.clicks == [2, 0] and entry.held == [2, 1]
     assert entry.momentum == [128, 0, 0] and entry.pushed == [128, 0, 0]
-    assert entry.measured[LIGHT] == {**NO_RESPONSE, "measure": 2}
-    assert simulation.stores[LIGHT].size == 0 and simulation.ledger.escaped_units(LIGHT) == 2
+    assert entry.taken[LIGHT] == {**NO_RESPONSE, "measure": 2}
+    assert simulation.stores[LIGHT].size == 0 and simulation.ledger.escaped_amount(LIGHT) == 2
     kinds = [
         (r["event"], r["tick"], r.get("detector"), r["phase"]) for r in records if r["event"] != "record"
     ]
@@ -170,16 +170,16 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
     gate = counter(10, {"light": {"rule": "measure", "phase_window": 8 + 32}})
     complement = counter(11, {"light": {"rule": "measure", "phase_window": 8}})
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(
-        parse_ray_world(world([12, 1, 1], [lamp(), gate, complement], K_B)), records.append
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(world([12, 1, 1], [lamp(), gate, complement], K_B)), records.append
     )
     source, near, far = simulation.measured[1], simulation.measured[2], simulation.measured[3]
     for _ in range(83):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    assert near.events == [32, 0] and far.events == [32, 0]
-    assert near.held == [32, 1] and far.held == [32, 1] and simulation.ledger.escaped_units(LIGHT) == 0
-    assert source.age == 83 and source.phase == 19 and source.phase_steps == 83
+    assert near.clicks == [32, 0] and far.clicks == [32, 0]
+    assert near.held == [32, 1] and far.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
+    assert source.age == 83 and source.phase == 19 and source.turned == 83
     assert source.held == [K_B + 2 - 83, 0] and source.momentum == [-5312, 0, 0]
     clicks = [r for r in records if r["event"] == "click"]
     passes = [r for r in records if r["event"] == "pass"]
@@ -197,18 +197,18 @@ def test_a_window_and_its_complement_cover_the_circle_exactly():
 
 def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
     """(c)."""
-    parsed = parse_ray_world(
+    parsed = parse_nature_beam_world(
         world([12, 1, 1], [lamp(phase_window=8), counter(10, {"light": "measure"})], K_B)
     )
     assert parsed.measured[0].lamp is not None and parsed.measured[0].lamp.window == 8
     records: list[dict[str, object]] = []
-    simulation = RaySimulation(parsed, records.append)
+    simulation = NatureBeamSimulation(parsed, records.append)
     source, gate, light = simulation.measured[1], simulation.measured[2], simulation.stores[LIGHT]
     assert source.lamp_window == 8
     for tick in range(1, 65):
         simulation.step()
         assert simulation.books()["balanced"], tick
-        assert source.age == tick and source.phase == tick % 64 and source.phase_steps == tick, tick
+        assert source.age == tick and source.phase == tick % 64 and source.turned == tick, tick
         fresh = light.age == 0
         released = (tick - 1) in IN_WINDOW_8
         assert int(fresh.sum()) == int(released), tick
@@ -220,7 +220,7 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     assert (
-        gate.events == [32, 0] and gate.held == [32, 1] and simulation.ledger.escaped_units(LIGHT) == 0
+        gate.clicks == [32, 0] and gate.held == [32, 1] and simulation.ledger.escaped_amount(LIGHT) == 0
     )
     clicks = [record for record in records if record["event"] == "click"]
     assert len(clicks) == 32 and sorted(record["phase"] for record in clicks) == IN_WINDOW_8
@@ -231,29 +231,31 @@ def test_a_lamp_with_a_window_releases_in_it_and_its_clock_turns_regardless():
     with pytest.raises(
         ValueError, match=r"table\['light'\]\.phase_window must be an integer from 0 through 63"
     ):
-        parse_ray_world(
+        parse_nature_beam_world(
             {
                 **base,
                 "measured": [lamp(), counter(10, {"light": {"rule": "measure", "phase_window": 64}})],
             }
         )
     with pytest.raises(ValueError, match=r"table\['light'\]\.phase_window is refused on pass"):
-        parse_ray_world(
+        parse_nature_beam_world(
             {**base, "measured": [lamp(), counter(10, {"light": {"rule": "pass", "phase_window": 8}})]}
         )
     # A window alone is a lawful entry: the rule is the family's default
     # (`measure` for a paid family; the table generated from the keys).
-    windowed = parse_ray_world(
+    windowed = parse_nature_beam_world(
         {**base, "measured": [lamp(), counter(10, {"light": {"phase_window": 8}})]}
     )
     assert windowed.measured[1].table[0] == "measure" and windowed.measured[1].windows[0] == 8
     with pytest.raises(ValueError, match=r"table\['light'\] has unknown keys: width"):
-        parse_ray_world(
+        parse_nature_beam_world(
             {**base, "measured": [lamp(), counter(10, {"light": {"rule": "measure", "width": 8}})]}
         )
     with pytest.raises(ValueError, match=r"lamp\.phase_window must be an integer from 0 through 63"):
-        parse_ray_world({**base, "measured": [lamp(phase_window=-1), counter(10, {"light": "measure"})]})
+        parse_nature_beam_world(
+            {**base, "measured": [lamp(phase_window=-1), counter(10, {"light": "measure"})]}
+        )
     with pytest.raises(ValueError, match=r"table\['light'\]\.reads must be one of"):
-        parse_ray_world(
+        parse_nature_beam_world(
             {**base, "measured": [lamp(), counter(10, {"light": {"rule": "measure", "reads": "wave"}})]}
         )

@@ -6,7 +6,7 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 # Simulator execution
 
 > **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
-> only and runs a world of the law of the ray headless; `--visualize`,
+> only and runs a world of the Beam Law headless; `--visualize`,
 > `--frame-stride`, `--observer`, `--node-workers`, `--dense-field` and
 > `--standing-field` went with the old engine ([migration](../../docs/MIGRATION.md#one-engine-on-2026-09-19-the-old-engine-deleted)).
 > Where this Skill names them, read the history.
@@ -34,7 +34,7 @@ on its own (model owner, 2026-09-19: "Always put a GIF inside HTML").
 **Every experiment delivers its results page (model owner, 2026-09-20).** The
 owner's words: "Add to every experiment that is made that it shows results in
 HTML: the GameBoard with the detector as an icon and the star as an icon on
-the board, so that one understands exactly what is tested; and it states why
+the GameBoard, so that one understands exactly what is tested; and it states why
 it was tested and what the conclusion is." So every research run (a series or
 a numbered run in [EXPERIMENTS](../../docs/EXPERIMENTS.md)) delivers, beside
 the register entry, one HTML page in the owner's page style (no document
@@ -61,7 +61,7 @@ register.
 **Two kinds of readings (model owner, 2026-09-20: "in reality there is no
 such thing").** Label every registered number: a detector reading (the record
 of a detector's set or of a measured event in the world; the only kind
-reality has) or a GameBoard reading (the host's view of the board: positions,
+reality has) or a GameBoard reading (the host's view of the GameBoard: positions,
 counts per Node, shell means, the books; a picture or a bookkeeping check,
 never the measurement). A comparison with nature uses detector readings
 only; a readings tool prints which kind each line is.
@@ -74,7 +74,7 @@ observable/expectation plan without retuning and retain quantitative discrepanci
 alongside the inspected HTML. A visual match is not physical acceptance.
 
 For primary runs, require the explicit world file and read its families,
-measured events, tables and detectors; see [the law of the ray](../../docs/RAY_LAW.md)
+measured events, tables and detectors; see [the Beam Law](../../docs/BEAM_LAW.md)
 and [the engine's bookkeeping](../../docs/ENGINE.md) (the generic disturbance
 contract, DISTURBANCES.md, was deleted on 2026-09-19). Missing input must not
 select an implicit historical universe.
