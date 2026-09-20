@@ -17,7 +17,7 @@ Since 2026-09-19 there is one engine, the engine of the Beam Law
 | [The engine](ENGINE.md) | The bookkeeping around the law as implemented: the GameBoard and its topology, the frame of an interval, the books, the world file's refusals, the record and the preflight |
 | [Entity definitions](ENTITY_DEFINITIONS.md) | Reusable external apparatus data, placement, canonical loading, portable inputs and provenance |
 | [Physical detector](DETECTOR_REQUIREMENTS.md) | Generic sensitivity requirements, the quantum goals and the unresolved scope; the reversible detector contract of 2026-09-19 absorbed into the Beam Law and deleted |
-| [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control under the Beam Law; the Bell worlds, the coupling, orbit, redshift, Hubble and Bohr series and the detector definitions: what each reads |
+| [The worlds](../examples/events/README.md) | One content, two contents, two slits with a detector and the one-slit control under the Beam Law; the Bell worlds, the coupling, orbit, redshift, Hubble, Bohr and light-beside-a-mass series, the Heisenberg run, and the detector definitions: what each reads |
 | [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Port, Link, Event and LocalRule vocabulary, the terms of the Beam Law (ray, direction, flight table, rest slot, collision, the one reading, record, re-emission), the terms kept from the law of events and the historical terms of the laws before it |
 | [Architecture](ARCHITECTURE.md) | Module ownership, the integer contract, the dependency direction and the gates |
 | [Migration](MIGRATION.md) | Every deletion and rename, dated; the Beam Law of 2026-09-19 first |

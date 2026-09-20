@@ -161,6 +161,27 @@ the `wave` record narrows with w and the count does not; the product
 w x FWHM reaches 0.886 lambda within 22 % at w = 27 and is not read at
 the smaller widths on the sparse fan.
 
+## The light-beside-a-mass series
+
+The folder [lensing/](lensing/README.md) holds the four worlds of series
+K, written by `lensing/make_worlds.py`: an open 57 x 41 x 41 box, a lamp
+of the paid family `light` sending a narrow beam (five directions within
+5 degrees of the heading) past a fixed mass of the free phase-less
+family `m` at the centre (series E's fan of 290 directions, one or two
+rays per direction per interval) at the impact distance b = 6 or 3,
+toward a screen of 1681 one-Node `wave` pixels with the age moment on the
+click record, and a control without the mass. `tools/lensing_readings.py`
+reads the deflection of the arrival's centroid, its width, the mean age
+of the arrivals (the delay), the count and the phase rate against the
+control (DETECTOR) and replays the world for the beam's rows, the rays a
+collision would have turned and the Nodes shared with the crowd
+(GAMEBOARD); the register entry is
+[K, light beside a mass (2026-09-20)](../../docs/EXPERIMENTS.md#k-light-beside-a-mass-2026-09-20):
+the deflection 0.000 pixel and the delay 0.00 interval at a crowd where
+nature would capture the beam, the derivation of the physicist's entry 2
+held: light is neither bent nor delayed in this law, a plain
+disagreement with nature, registered and not tuned.
+
 ## The detector definitions
 
 The folder [detector/](detector/README.md) holds four worlds that place
