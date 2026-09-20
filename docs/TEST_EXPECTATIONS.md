@@ -1168,6 +1168,33 @@ expected integers, written down before the first run:
   the measured events' states and `state.json` the `span`; without the
   key `action` None, `hypotheses` [], `span` [1, 1, 1] and
   `phase_by_momentum` false.
+- (g) one set object shared by a body and a detector, and one moment table
+  over the set (the four unifications, the model owner, 2026-09-20, (3),
+  the data only; BEAM_LAW note 33; the integers written first): the body
+  of (b) is a set with one measured event, its `DetectorSet.nodes` the
+  map of its three Nodes to its number 1 and `Measured.nodes` the three in
+  the fixed order, the source outside every detector a set of one Node
+  mapped to 2, the engine's index mapping every Node to its set
+  (`occupant` 1 at (4, 0, 2), None at (5, 0, 0)), two sets in all; two
+  such bodies at (4, 0, 1) and (6, 0, 1) declared in one detector `d` are
+  one set of six Nodes mapped to 1 and 2, each body's `nodes` its own
+  three: three rays of `m` (number 3, phase 0) arriving at (4, 0, 0),
+  (6, 0, 1) and (6, 0, 2) read the threshold 3 over the set (the pointer
+  9 units) and click 1 at the first body and 2 at the second, the
+  presence 1 and 2, the pushes (-256, 0, 0) and (-512, 0, 0), one `record`
+  line naming `d` with the record 9 x 32^2 x 256^2 and no Node; the step
+  of the body of (b) moves its Nodes in the set's map and in the index
+  (x = 3 after two intervals, the three Nodes there), its escape empties
+  both; the presence over a body without arrivals 0; the one table with
+  the two masks: a reader of `m` (content 4) reading a row of 3 units of
+  a paid family of quantum 2 (content 2 per unit) on +x reads the flow 192
+  (3 x 64, the amount's weight) and the push (384, 0, 0) (3 x 2 x 64, the
+  label's weight), the content 6; under `beam` at threshold 1 and
+  `suspension` [1, 1] the rows of 3 (phase 0) and 2 (phase 32) at two
+  Nodes of the body pair 2 units and click 1: the presence and the count
+  5 (the units that go on are present), the owed count `by_clock(0, 5,
+  1)` = 5, the events [1, 0], the momentum (-256, 0, 0), the record 1, the
+  store's rows 2 and 2.
 
 ## The phase window under the Beam Law
 

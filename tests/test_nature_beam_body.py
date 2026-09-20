@@ -101,7 +101,34 @@ set and the turn by momentum"), written down first:
     the momentum 2^20 and N 64; accepted: `span` [3, 1, 1] at x = 0 of a
     periodic axis; the record carries `action`, `hypotheses` ["bohr-v1"]
     and per measured event `span` and `phase_by_momentum`, `action` None
-    and `hypotheses` [] without the key, the state `span`.
+    and `hypotheses` [] without the key, the state `span`;
+(g) one set object shared by a body and a detector, and one moment table
+    over the set (the four unifications, the model owner, 2026-09-20, (3),
+    the data only; BEAM_LAW note 33; the integers written first): the body
+    of (b) is a set with one measured event, its `DetectorSet.nodes` the
+    map of its three Nodes to its number 1 and `Measured.nodes` the three
+    in the fixed order, the source outside every detector a set of one
+    Node mapped to 2, the engine's index mapping every Node to its set
+    (`occupant` 1 at (4, 0, 2), None at (5, 0, 0)), two sets in all; two
+    such bodies at (4, 0, 1) and (6, 0, 1) declared in one detector `d`
+    are one set of six Nodes mapped to 1 and 2, each body's `nodes` its
+    own three: three rays of `m` (number 3, phase 0) arriving at (4, 0,
+    0), (6, 0, 1) and (6, 0, 2) read the threshold 3 over the set (the
+    pointer 9 units) and click 1 at the first body and 2 at the second,
+    the presence 1 and 2, the pushes (-256, 0, 0) and (-512, 0, 0), one
+    `record` line naming `d` with the record 9 x 32^2 x 256^2 and no
+    Node; the step of the body of (b) moves its Nodes in the set's map
+    and in the index (x = 3 after two intervals, the three Nodes there),
+    its escape empties both; the presence over a body without arrivals
+    0; the one table with the two masks: a reader of `m` (content 4)
+    reading a row of 3 units of a paid family of quantum 2 (content 2 per
+    unit) on +x reads the flow 192 (3 x 64, the amount's weight) and the
+    push (384, 0, 0) (3 x 2 x 64, the label's weight), the content 6;
+    under `beam` at threshold 1 and `suspension` [1, 1] the rows of 3
+    (phase 0) and 2 (phase 32) at two Nodes of the body pair 2 units and
+    click 1: the presence and the count 5 (the units that go on are
+    present), the owed count `by_clock(0, 5, 1)` = 5, the events [1, 0],
+    the momentum (-256, 0, 0), the record 1, the store's rows 2 and 2.
 """
 
 from __future__ import annotations
@@ -327,7 +354,7 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
     )
     body = simulation.measured[1]
     assert body.span == (1, 1, 3) and body.nodes == SET_NODES
-    assert {node: simulation.at[node] for node in SET_NODES} == dict.fromkeys(SET_NODES, 1)
+    assert {node: simulation.occupant(node) for node in SET_NODES} == dict.fromkeys(SET_NODES, 1)
     simulation.step()
     assert simulation.books()["balanced"]
     assert body.clicks == [3, 0] and body.held == [0, 4] and body.momentum == [-768, 0, 0]
@@ -359,8 +386,8 @@ def test_a_body_on_three_nodes_reads_steps_and_clicks_as_one():
         assert simulation.books()["balanced"], tick
         xs.append(body.position[0])
         assert body.nodes == tuple((body.position[0], 0, z) for z in range(3)), tick
-        assert all(simulation.at[node] == 1 for node in body.nodes), tick
-    assert xs == [2, 3, 3, 4, 4, 4] and body.steps == 3 and simulation.at[(5, 0, 0)] == 2
+        assert all(simulation.occupant(node) == 1 for node in body.nodes), tick
+    assert xs == [2, 3, 3, 4, 4, 4] and body.steps == 3 and simulation.occupant((5, 0, 0)) == 2
     assert len(simulation.at) == 4
     # The refused step is a contact: the body's x component handed to the anchor.
     assert body.momentum == [0, 0, 0] and simulation.measured[2].momentum == [1024, 0, 0]
@@ -682,3 +709,121 @@ def test_the_refusals_and_the_record(tmp_path):
         record["numbers"]["1"]["span"] == [1, 1, 1]
         and record["numbers"]["1"]["phase_by_momentum"] is False
     )
+
+
+def test_one_set_object_shared_by_a_body_and_a_detector_and_one_table_over_it():
+    """(g)."""
+    three = [beam([3, 0, z], [1, 0, 0], 2) for z in range(3)]
+    simulation = NatureBeamSimulation(parse_nature_beam_world(set_world(three)))
+    body, source = simulation.measured[1], simulation.measured[2]
+    assert body.detector_set.nodes == dict.fromkeys(SET_NODES, 1) and body.nodes == SET_NODES
+    assert body.detector_set.name == "d" and body.detector_set.numbers == [1]
+    assert source.detector_set.nodes == {(8, 0, 1): 2} and source.nodes == ((8, 0, 1),)
+    assert (
+        simulation.at[(4, 0, 1)] is body.detector_set and simulation.at[(8, 0, 1)] is source.detector_set
+    )
+    assert simulation.occupant((4, 0, 2)) == 1 and simulation.occupant((5, 0, 0)) is None
+    assert len(simulation.detector_sets) == 2 and len(simulation.at) == 4
+    # Several measured events in one set: two bodies of three Nodes each.
+    document = set_world(
+        [beam([3, 0, 0], [1, 0, 0], 3), beam([5, 0, 1], [1, 0, 0], 3), beam([5, 0, 2], [1, 0, 0], 3)]
+    )
+    measured = document["measured"]
+    assert isinstance(measured, list)
+    second = {**measured[0], "position": [6, 0, 1]}
+    measured.insert(1, second)
+    detectors = document["detectors"]
+    assert isinstance(detectors, list)
+    detectors[0]["positions"] = [[4, 0, 1], [6, 0, 1]]
+    records: list[dict[str, object]] = []
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    first, second_body = simulation.measured[1], simulation.measured[2]
+    assert first.detector_set is second_body.detector_set
+    assert first.detector_set.nodes == {
+        **dict.fromkeys(SET_NODES, 1),
+        (6, 0, 0): 2,
+        (6, 0, 1): 2,
+        (6, 0, 2): 2,
+    }
+    assert second_body.nodes == ((6, 0, 0), (6, 0, 1), (6, 0, 2))
+    simulation.step()
+    assert simulation.books()["balanced"]
+    assert (first.clicks, second_body.clicks) == ([1, 0], [2, 0])
+    assert (first.presence, second_body.presence) == (1, 2)
+    assert (first.momentum, second_body.momentum) == ([-256, 0, 0], [-512, 0, 0])
+    lines = [r for r in records if r["event"] == "record"]
+    assert len(lines) == 1 and lines[0]["detector"] == "d" and lines[0]["record"] == 9 * UNIT_RECORD
+    assert lines[0]["node"] is None and lines[0]["measured"] is None
+    # The step moves the body's Nodes in the set's map and in the index;
+    # the escape empties both; a body without arrivals reads the presence 0.
+    simulation = NatureBeamSimulation(parse_nature_beam_world(mover_world([])))
+    body = simulation.measured[1]
+    simulation.step()
+    assert body.presence == 0 and body.counted == 0
+    simulation.step()
+    assert body.position == (3, 0, 1)
+    assert body.detector_set.nodes == {(3, 0, 0): 1, (3, 0, 1): 1, (3, 0, 2): 1}
+    assert set(simulation.at) == set(body.nodes) and body.nodes == ((3, 0, 0), (3, 0, 1), (3, 0, 2))
+    for _ in range(6):
+        simulation.step()
+    assert simulation.measured == {} and simulation.at == {} and body.detector_set.nodes == {}
+    # The one table with the two masks: the reading with the amount's
+    # weight, the push with the label's weight (content x amount for a
+    # paid family).
+    reader = {
+        "position": [4, 0, 1],
+        "family": "m",
+        "amount": 4,
+        "fixed": True,
+        "table": {"light": "read"},
+    }
+    lamp_side = {"position": [8, 0, 1], "family": "light", "amount": 4, "fixed": True}
+    row = {
+        "position": [3, 0, 1],
+        "family": "light",
+        "number": 2,
+        "direction": [1, 0, 0],
+        "amount": 3,
+        "phase": 0,
+    }
+    records = []
+    simulation = NatureBeamSimulation(
+        parse_nature_beam_world(
+            world(
+                shape=[9, 1, 3],
+                families=[{"name": "m", "quantum": 0}, {"name": "light", "quantum": 2}],
+                measured=[reader, lamp_side],
+                in_transit=[row],
+            )
+        ),
+        records.append,
+    )
+    simulation.step()
+    assert simulation.books()["balanced"]
+    reads = [r for r in records if r["event"] == "read"]
+    assert len(reads) == 1 and reads[0]["amount"] == 3 and reads[0]["content"] == 6
+    assert reads[0]["push"] == [384, 0, 0] and reads[0]["reading"] == [192, 0, 0]
+    assert simulation.measured[1].momentum == [384, 0, 0] and simulation.measured[1].presence == 3
+    # `beam`'s pairing splits a row: the units that go on are present for
+    # the clock, the units that click are the admitted rows.
+    document = set_world(
+        [
+            {**beam([3, 0, 0], [1, 0, 0], 2), "amount": 3},
+            {**beam([3, 0, 2], [1, 0, 0], 2, phase=32), "amount": 2},
+        ],
+        suspension=[1, 1],
+    )
+    detectors = document["detectors"]
+    assert isinstance(detectors, list)
+    detectors[0].update({"reading": "beam", "threshold": 1})
+    records = []
+    simulation = NatureBeamSimulation(parse_nature_beam_world(document), records.append)
+    body = simulation.measured[1]
+    simulation.step()
+    assert simulation.books()["balanced"]
+    assert (body.presence, body.counted, body.owed) == (5, 5, by_clock(0, 5, 1))
+    assert body.clicks == [1, 0] and body.momentum == [-256, 0, 0]
+    assert body.detector_set.record == [1, 0] and body.detector_set.phase == [0, None]
+    assert [r["amount"] for r in records if r["event"] == "click"] == [1]
+    assert [r["amount"] for r in records if r.get("cancelled")] == [2, 2]
+    assert sorted(simulation.stores[M].amount.tolist()) == [2, 2]

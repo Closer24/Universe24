@@ -98,7 +98,15 @@ class DetectorSet:
     is never refused and may pass 2^63 (its readers in `run.json` and
     `state.json` parse it as an arbitrary-precision integer); `phase` per
     family the set's phase at its last click (None before one), the phase
-    its measured events took."""
+    its measured events took; `nodes` the set's Nodes, each mapped to the
+    number of the measured event there (the four unifications, the model
+    owner, 2026-09-20, (3): one set object shared by a body and a
+    detector, the data only: a body on a set of Nodes is a set with one
+    measured event, a detector a set with several, each with one record,
+    one phase and the map of its Nodes to its measured events, the one
+    reading summed over the set in both; the engine keeps the map as a
+    body steps, inserting a body's Nodes in their fixed order, x, then
+    y, then z ascending, so `Measured.nodes` reads them from it)."""
 
     index: int
     name: str | None
@@ -107,6 +115,7 @@ class DetectorSet:
     numbers: list[int] = field(default_factory=list)
     record: list[int] = field(default_factory=list)
     phase: list[int | None] = field(default_factory=list)
+    nodes: dict[Address3, int] = field(default_factory=dict)
 
     @property
     def wave(self) -> bool:
@@ -151,13 +160,13 @@ class Measured:
     detector_set: DetectorSet
     # A body on a set of Nodes (the model owner, 2026-09-20, "the electron
     # of width 3"): `span` the three odd extents of the block centred on
-    # `position`, `nodes` the set itself (the engine keeps it as the body
-    # steps), (1, 1, 1) and the one Node for a measured event of one Node;
+    # `position`, (1, 1, 1) for a measured event of one Node; the set
+    # itself is the body's `detector_set` (`nodes` reads the body's Nodes
+    # from its map; the engine keeps the map as the body steps);
     # `phase_by_momentum` whether the body turns its phase by its momentum
     # label at every Link it steps, over the world's `action` (the turn by
     # momentum, a rule of the measured event, the external thing).
     span: tuple[int, int, int] = (1, 1, 1)
-    nodes: tuple[Address3, ...] = ()
     phase_by_momentum: bool = False
     # The world's columns (their names, gravity first, charge second) and
     # every family's aligned values per unit of content, (n, d) per column:
@@ -199,6 +208,15 @@ class Measured:
     @property
     def content(self) -> int:
         return sum(self.held)
+
+    @property
+    def nodes(self) -> tuple[Address3, ...]:
+        """The set of Nodes the measured event is a body on, in the fixed
+        order of the set (x, then y, then z ascending: the order the
+        releases are apportioned in), read from its detector set's map
+        (the one set object of a body and a detector, the four
+        unifications (3))."""
+        return tuple(node for node, number in self.detector_set.nodes.items() if number == self.number)
 
     def charges(self) -> list[Pair]:
         """The event's charge in every column of the world, from what it

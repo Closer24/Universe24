@@ -57,6 +57,31 @@ except where a section below says.
   lifetime` deleted) and the world's age bound (`store.age.max() >
   age_bound` deleted; the key age_bound + 1) read it. Identities on every
   reachable state (a row never lives past its key); no world file changes.
+- **(3) One set object shared by a body and a detector; one moment table
+  over the set.** The data: `DetectorSet.nodes` (new, `dict[Address3,
+  int]`) maps every Node of the set to the number of the measured event
+  there, a body one event, a declared detector several; `Measured.nodes`
+  is a property read from the body's set (the dataclass field and the
+  `nodes=` argument of `Measured(...)` are removed); the engine's index
+  `NatureBeamSimulation.at` is `dict[Address3, DetectorSet]` (until now
+  `dict[Address3, int]`, the number), with `NatureBeamSimulation.occupant(node)`
+  (new) the number of the measured event whose body holds the Node or
+  None, and `_place(entry, nodes)` (new) moving a body's Nodes in its
+  set's map and in the index (a test that read `simulation.at[node]` as
+  a number reads `simulation.occupant(node)`). A detector stays a
+  detector and a body a body: the rule unification (a detector as one
+  measured event) is not taken. The table: `family_plan` takes one
+  `moment_table` per family over the rows at the set with the two masks
+  (present, admitted); the presence and the age moment are its zeroth
+  and age moments over the present rows (the two `np.add.at` sums are
+  deleted), the record's component and the push's flow its moments over
+  the admitted rows, the flow with the label's weight (the separate
+  `labels = u x weight` product is deleted); `beam`'s pairing enters the
+  table as a split of the paired row into the units that go on (present)
+  and the units that click (admitted). `nature_beam.moments_of_groups(table,
+  starts)` (new) sums a moment table per contiguous group;
+  `read_groups` calls it. No world file changes; every example world
+  replays byte-identical.
 
 ## The `wave` threshold on the pointer's square and the escaped momentum per family, on 2026-09-20 (issues #359 step A, #360, #361)
 

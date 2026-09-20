@@ -352,7 +352,12 @@ def read_groups(
     (`first_reading_overflow`), or, with `exact`, in Python integers (the
     pointer of a detector set where the register would not hold its table:
     a report of the host, never refused)."""
-    table = moment_table(vectors, weights, ages, exact=exact)
+    return moments_of_groups(moment_table(vectors, weights, ages, exact=exact), starts)
+
+
+def moments_of_groups(table: np.ndarray, starts: np.ndarray) -> Moments:
+    """The `Moments` of a moment table summed per contiguous group of its
+    rows (`starts` the first row of each group)."""
     return reading_of(np.add.reduceat(table, starts, axis=0))
 
 
@@ -1440,14 +1445,17 @@ def nature_beam(
     # meet the table there, not each other).
     entries = [measured[number] for number in sorted(measured)]
     events = len(entries)
-    # Every Node of a body on a set maps to its measured event: the rows at
-    # any of its Nodes are its arrivals, read as one set (the threshold,
-    # the presence, the push summed over the set), and no collision acts at
-    # any of them.
+    # Every Node of every set maps to its measured event (`DetectorSet.nodes`,
+    # the one set object of a body and a detector): the rows at any Node of
+    # a body are its arrivals, read as one set (the threshold over the
+    # detector set, the presence and the push over the body), and no
+    # collision acts at any of them.
     node_event = np.full(nodes, -1, dtype=np.int64)
     if events:
-        for which, entry in enumerate(entries):
-            node_event[[stores[0].flat(node) for node in entry.nodes]] = which
+        which_of = {entry.number: which for which, entry in enumerate(entries)}
+        for detector_set in {entry.detector_set.index: entry.detector_set for entry in entries}.values():
+            for member_node, number in detector_set.nodes.items():
+                node_event[stores[0].flat(member_node)] = which_of[number]
     occupied = node_event >= 0
 
     def collide(store: NatureBeamStore, backward: bool) -> None:
@@ -1706,19 +1714,21 @@ def nature_beam(
             own = number == ev_number[ev]
             arrived = arrival != NO_ARRIVAL
             plan = FamilyPlan()
-            # The presence for the clock: every ray at the Node of another
-            # number, rest and moving alike (the scalar of the one reading);
-            # and the age moment of the same set (sum amount x age), what
-            # the clock counts on a table entry that reads `age`.
+            # The rows of the one reading over the set: every row at the set
+            # of another number, rest and moving alike, on the unit vector of
+            # its arrival (a row that did not step on the zero vector; at a
+            # measured event's Node the arrival is the direction, no
+            # collision acting there), the amounts as the weights and the
+            # ages among them; the bound of the table checked in bulk here,
+            # the table itself taken once below with the admitted rows.
             others = np.flatnonzero(~own)
+            v_others = unit[arrival[others]]
             if others.shape[0]:
                 overflow = first_reading_overflow(
-                    ev[others], events, amount[others], unit[arrival[others]], age_at[others]
+                    ev[others], events, amount[others], v_others, age_at[others]
                 )
                 if overflow is not None:
                     failures[(overflow[0], family, 0, 0, 0)] = overflow[1]
-                np.add.at(presence[family], ev[others], amount[others])
-                np.add.at(age_moment[family], ev[others], amount[others] * age_at[others])
             # Home: the own number's arrivals, taken to be created again; a
             # paid family's labels join the momentum (the units are moved,
             # not copied: the recoil at the re-creation gives them back).
@@ -1759,131 +1769,172 @@ def nature_beam(
                 plan.h_content = content[home].tolist()
                 plan.h_phase = phase[home].tolist()
                 plan.events.update(h_events)
-            # Met: the arrivals of every other number at a table that is not
-            # `pass`, ordered by detector set (then measured event, then
-            # row): the threshold on the amount summed over the set.
-            rule = ev_rule[ev, family]
-            met = np.flatnonzero(~own & arrived & (rule != PASS_RULE))
-            if met.shape[0] == 0:
-                return plan
-            met = met[np.argsort(ev_set[ev[met]], kind="stable")]
-            ev_m = ev[met]
-            st_m = ev_set[ev_m]
-            s_starts = group_starts(st_m)
-            s_sizes = group_sizes(s_starts, met.shape[0])
-            total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
-            # The threshold: under `beam` on the amount summed over the set;
-            # under `wave` (since 2026-09-20, issue #359 step A) on the
-            # square of the coherent pointer of the set's arrivals in units
-            # of one ray (`pointer_units`), so that rays which cancel pass
-            # whether or not a window is declared. No memory between
-            # intervals: the pointer is this interval's arrivals.
-            set_threshold = st_threshold[st_m[s_starts]]
-            below_set = np.asarray(total < set_threshold, dtype=bool)
-            # The window: under `wave` it reads the set's phase, the nearest
-            # step of the coherent pointer of the arrivals the threshold
-            # admitted (a zero pointer has no phase and is outside every
-            # window); under `beam` each ray's own phase.
-            window = ev_window[ev_m, family]
-            read_phase = phase[met].copy()
-            wave_rows = st_wave[st_m]
-            if wave_rows.any():
-                px, py = coherent_pointer(
-                    amount[met], phase[met], s_starts, tables.cosines, tables.sines
-                )
-                below_wave = np.array(
-                    [
-                        pointer_units(x, y) < t
-                        for x, y, t in zip(px, py, set_threshold.tolist(), strict=True)
-                    ],
-                    dtype=bool,
-                )
-                below_set = np.where(st_wave[st_m[s_starts]], below_wave, below_set)
-                steps = pointer_phases(px, py, tables.cosines, tables.sines)
-                set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
-                read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
-            below = np.repeat(below_set, s_sizes)
-            inside = (window < 0) | ((read_phase >= 0) & tables.window[(read_phase - window) % modulus])
-            passing = below | ~inside
-            p = np.flatnonzero(passing)
-            if p.shape[0]:
-                ev_p = ev_m[p]
-                p_starts = group_starts(ev_p)
-                p_ends = np.append(p_starts[1:], p.shape[0])
-                p_events = ev_p[p_starts].tolist()
-                p_lo, p_hi = p_starts.tolist(), p_ends.tolist()
-                for k, event in enumerate(p_events):
-                    plan.passes[event] = (p_lo[k], p_hi[k])
-                plan.p_number = number[met[p]].tolist()
-                plan.p_amount = amount[met[p]].tolist()
-                plan.p_phase = phase[met[p]].tolist()
-                plan.p_below = below[p].tolist()
-                plan.p_window = window[p].tolist()
-                plan.events.update(p_events)
-            taken = met[~passing]
-            if taken.shape[0] == 0:
-                return plan
-            # The taken rows grouped by (measured event, number), the rows
-            # of a group in row order.
-            taken = taken[np.lexsort((number[taken], ev[taken]))]
-            a_t = amount[taken].copy()
-            rule_t = ev_rule[ev[taken], family]
-            st_t = ev_set[ev[taken]]
-            # The `beam` reading (the model owner, 2026-09-19, "only
-            # events"): over a beam set, the rays that would click are
-            # paired by opposite phase, greedily in the order of the rows
-            # (measured event, number, row), a row pairing its units with
-            # the first later rows of the set whose phase is opposite (with
-            # a window on the row's Node, within the half circle centred
-            # on the opposite phase; without one, exactly opposite); a
-            # paired couple passes on whole, the rest of a row clicks.
-            cancelled = np.zeros(taken.shape[0], dtype=np.int64)
-            pairing = np.flatnonzero((rule_t == MEASURE_RULE) & ~st_wave[st_t])
-            if pairing.shape[0] >= 2:
-                sets_p = st_t[pairing]
-                for set_index in np.unique(sets_p).tolist():
-                    rows = pairing[sets_p == set_index]
-                    if rows.shape[0] < 2:
-                        continue
-                    phases = phase[taken[rows]].tolist()
-                    left = a_t[rows].tolist()
-                    arcs = ev_window[ev[taken[rows]], family].tolist()
-                    for i, phase_i in enumerate(phases):
-                        if left[i] == 0:
-                            continue
-                        for j in range(i + 1, len(phases)):
-                            if left[j] == 0:
-                                continue
-                            d = (phases[j] - phase_i - half) % modulus
-                            if not (d == 0 if arcs[i] < 0 else bool(tables.window[d])):
-                                continue
-                            part = min(left[i], left[j])
-                            left[i] -= part
-                            left[j] -= part
-                            cancelled[rows[i]] += part
-                            cancelled[rows[j]] += part
-                            if left[i] == 0:
-                                break
-                    a_t[rows] = left
-            if cancelled.any():
-                c_rows = np.flatnonzero(cancelled > 0)
-                for k in c_rows.tolist():
-                    plan.cancelled.setdefault(int(ev[taken[k]]), []).append(
-                        (int(number[taken[k]]), int(cancelled[k]), int(phase[taken[k]]))
+
+            def admit() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray] | None:
+                """The rows the threshold, the window and the rule admit,
+                grouped by (measured event, number): the rows, the amounts
+                that click (after `beam`'s pairing), the units the pairing
+                keeps, the rules and the sets; None when nothing is met."""
+                # Met: the arrivals of every other number at a table that is
+                # not `pass`, ordered by detector set (then measured event,
+                # then row): the threshold on the amount summed over the set.
+                rule = ev_rule[ev, family]
+                met = np.flatnonzero(~own & arrived & (rule != PASS_RULE))
+                if met.shape[0] == 0:
+                    return None
+                met = met[np.argsort(ev_set[ev[met]], kind="stable")]
+                ev_m = ev[met]
+                st_m = ev_set[ev_m]
+                s_starts = group_starts(st_m)
+                s_sizes = group_sizes(s_starts, met.shape[0])
+                total = grouped_sums(amount[met], s_starts, int(s_sizes.max()))
+                # The threshold: under `beam` on the amount summed over the
+                # set; under `wave` (since 2026-09-20, issue #359 step A) on
+                # the square of the coherent pointer of the set's arrivals in
+                # units of one ray (`pointer_units`), so that rays which
+                # cancel pass whether or not a window is declared. No memory
+                # between intervals: the pointer is this interval's arrivals.
+                set_threshold = st_threshold[st_m[s_starts]]
+                below_set = np.asarray(total < set_threshold, dtype=bool)
+                # The window: under `wave` it reads the set's phase, the
+                # nearest step of the coherent pointer of the arrivals the
+                # threshold admitted (a zero pointer has no phase and is
+                # outside every window); under `beam` each ray's own phase.
+                window = ev_window[ev_m, family]
+                read_phase = phase[met].copy()
+                wave_rows = st_wave[st_m]
+                if wave_rows.any():
+                    px, py = coherent_pointer(
+                        amount[met], phase[met], s_starts, tables.cosines, tables.sines
                     )
-                # The paired units go on: the row keeps them and stays.
-                store.amount[at[taken[c_rows]]] = cancelled[c_rows]
-                plan.events.update(ev[taken[c_rows]].tolist())
-                survivors = a_t > 0
-                taken, a_t, rule_t, st_t = (
-                    taken[survivors],
-                    a_t[survivors],
-                    rule_t[survivors],
-                    st_t[survivors],
+                    below_wave = np.array(
+                        [
+                            pointer_units(x, y) < t
+                            for x, y, t in zip(px, py, set_threshold.tolist(), strict=True)
+                        ],
+                        dtype=bool,
+                    )
+                    below_set = np.where(st_wave[st_m[s_starts]], below_wave, below_set)
+                    steps = pointer_phases(px, py, tables.cosines, tables.sines)
+                    set_step = np.array([-1 if s is None else s for s in steps], dtype=np.int64)
+                    read_phase = np.where(wave_rows, np.repeat(set_step, s_sizes), read_phase)
+                below = np.repeat(below_set, s_sizes)
+                inside = (window < 0) | (
+                    (read_phase >= 0) & tables.window[(read_phase - window) % modulus]
                 )
-                cancelled = cancelled[survivors]
+                passing = below | ~inside
+                p = np.flatnonzero(passing)
+                if p.shape[0]:
+                    ev_p = ev_m[p]
+                    p_starts = group_starts(ev_p)
+                    p_ends = np.append(p_starts[1:], p.shape[0])
+                    p_events = ev_p[p_starts].tolist()
+                    p_lo, p_hi = p_starts.tolist(), p_ends.tolist()
+                    for k, event in enumerate(p_events):
+                        plan.passes[event] = (p_lo[k], p_hi[k])
+                    plan.p_number = number[met[p]].tolist()
+                    plan.p_amount = amount[met[p]].tolist()
+                    plan.p_phase = phase[met[p]].tolist()
+                    plan.p_below = below[p].tolist()
+                    plan.p_window = window[p].tolist()
+                    plan.events.update(p_events)
+                taken = met[~passing]
                 if taken.shape[0] == 0:
-                    return plan
+                    return None
+                # The taken rows grouped by (measured event, number), the
+                # rows of a group in row order.
+                taken = taken[np.lexsort((number[taken], ev[taken]))]
+                a_t = amount[taken].copy()
+                rule_t = ev_rule[ev[taken], family]
+                st_t = ev_set[ev[taken]]
+                # The `beam` reading (the model owner, 2026-09-19, "only
+                # events"): over a beam set, the rays that would click are
+                # paired by opposite phase, greedily in the order of the rows
+                # (measured event, number, row), a row pairing its units with
+                # the first later rows of the set whose phase is opposite
+                # (with a window on the row's Node, within the half circle
+                # centred on the opposite phase; without one, exactly
+                # opposite); a paired couple passes on whole, the rest of a
+                # row clicks.
+                cancelled = np.zeros(taken.shape[0], dtype=np.int64)
+                pairing = np.flatnonzero((rule_t == MEASURE_RULE) & ~st_wave[st_t])
+                if pairing.shape[0] >= 2:
+                    sets_p = st_t[pairing]
+                    for set_index in np.unique(sets_p).tolist():
+                        rows = pairing[sets_p == set_index]
+                        if rows.shape[0] < 2:
+                            continue
+                        phases = phase[taken[rows]].tolist()
+                        left = a_t[rows].tolist()
+                        arcs = ev_window[ev[taken[rows]], family].tolist()
+                        for i, phase_i in enumerate(phases):
+                            if left[i] == 0:
+                                continue
+                            for j in range(i + 1, len(phases)):
+                                if left[j] == 0:
+                                    continue
+                                d = (phases[j] - phase_i - half) % modulus
+                                if not (d == 0 if arcs[i] < 0 else bool(tables.window[d])):
+                                    continue
+                                part = min(left[i], left[j])
+                                left[i] -= part
+                                left[j] -= part
+                                cancelled[rows[i]] += part
+                                cancelled[rows[j]] += part
+                                if left[i] == 0:
+                                    break
+                        a_t[rows] = left
+                if cancelled.any():
+                    c_rows = np.flatnonzero(cancelled > 0)
+                    for k in c_rows.tolist():
+                        plan.cancelled.setdefault(int(ev[taken[k]]), []).append(
+                            (int(number[taken[k]]), int(cancelled[k]), int(phase[taken[k]]))
+                        )
+                    # The paired units go on: the row keeps them and stays.
+                    store.amount[at[taken[c_rows]]] = cancelled[c_rows]
+                    plan.events.update(ev[taken[c_rows]].tolist())
+                return taken, a_t, cancelled, rule_t, st_t
+
+            admitted = admit()
+            # The one reading over the set: ONE moment table with the two
+            # masks (the four unifications, the model owner, 2026-09-20, (3);
+            # note 33). The present rows: every row of another number at
+            # the set at its amount, the admitted rows at the amount that
+            # clicks (`beam`'s pairing having split a row into the units
+            # that go on, a row of their own in the table, present and not
+            # admitted, and the units that click). The presence and the age
+            # moment, what the clock counts, are the zeroth moment and the
+            # age moment over the present rows per measured event; the
+            # record's component and the flow the push reads are the
+            # moments over the admitted rows per (measured event, number).
+            position = np.full(at.shape[0], -1, dtype=np.int64)
+            position[others] = np.arange(others.shape[0], dtype=np.int64)
+            present_weight = amount[others].copy()
+            rows_v, rows_w, rows_age, rows_ev = v_others, present_weight, age_at[others], ev[others]
+            if admitted is not None:
+                taken_all, a_t_all, cancelled_all = admitted[0], admitted[1], admitted[2]
+                present_weight[position[taken_all]] = a_t_all
+                parts = np.flatnonzero(cancelled_all > 0)
+                if parts.shape[0]:
+                    split = taken_all[parts]
+                    rows_v = np.concatenate((v_others, unit[arrival[split]]))
+                    rows_w = np.concatenate((present_weight, cancelled_all[parts]))
+                    rows_age = np.concatenate((age_at[others], age_at[split]))
+                    rows_ev = np.concatenate((ev[others], ev[split]))
+            if rows_w.shape[0] == 0:
+                return plan
+            table = moment_table(rows_v, rows_w, rows_age)
+            np.add.at(presence[family], rows_ev, table[:, 0] + table[:, 1])
+            np.add.at(age_moment[family], rows_ev, table[:, AGE_COLUMN] + table[:, AGE_COLUMN + 1])
+            if admitted is None:
+                return plan
+            # The rows that click after the pairing (every taken row without
+            # a pairing), in their group order.
+            survivors = a_t_all > 0
+            if not survivors.any():
+                return plan
+            taken, a_t, cancelled = taken_all[survivors], a_t_all[survivors], cancelled_all[survivors]
+            rule_t, st_t = admitted[3][survivors], admitted[4][survivors]
             ev_t, num_t = ev[taken], number[taken]
             new = np.concatenate((NEW_RUN, (ev_t[1:] != ev_t[:-1]) | (num_t[1:] != num_t[:-1])))
             g_starts = np.flatnonzero(new)
@@ -1901,31 +1952,35 @@ def nature_beam(
             c_t, ph_t = content[taken], phase[taken]
             age_t = age_at[taken]
             v_arrival = unit[arrival[taken]]
-            v_direction = unit[direction[taken]]
-            # The reading's component on the record: the moments of the
-            # arrivals' unit vectors weighted by the amounts (no collision
-            # at this Node: the arrival is the direction), the age moment
-            # among them (the measured event reads the age whole).
+            # The admitted rows of the one table (their arrival's unit vector
+            # weighted by the amount that clicks, the age moment among them;
+            # the measured event reads the age whole), summed per group: the
+            # reading's component on the record.
             overflow = first_reading_overflow(of_row, groups, a_t, v_arrival, age_t)
             if overflow is not None:
                 fail(overflow[0], 2, overflow[1])
-            reading = read_groups(v_arrival, a_t, g_starts, age_t)
+            admitted_rows = table[position[taken]]
+            reading = moments_of_groups(admitted_rows, g_starts)
             for key in {entries[e].reads[family] for e in set(g_ev.tolist())}:
                 plan.readings[key] = reading.component(key).tolist()
             # The push, ONE product per group of arriving rays (`push_form`):
-            # the label flow per group, the weights bounded before the
-            # product; the electric factor is the family's charge per unit
-            # of content, so no class of rows is kept.
+            # the label flow per group is the first moment of the same rows
+            # with the label's weight, the amount for a free family (the
+            # table's own flow) and content x amount for a paid one (the
+            # flow times the content per unit), the weights bounded before
+            # the product; the electric factor is the family's charge per
+            # unit of content, so no class of rows is kept.
             overflow = first_label_overflow(
-                of_row, a_t, c_t, free, v_direction, lambda i: entries[int(ev_t[i])].position
+                of_row, a_t, c_t, free, v_arrival, lambda i: entries[int(ev_t[i])].position
             )
             if overflow is not None:
                 fail(overflow[0], 3, overflow[1])
             weights = a_t if free else a_t * c_t
-            overflow = first_moment_overflow(of_row, groups, weights, v_direction)
+            overflow = first_moment_overflow(of_row, groups, weights, v_arrival)
             if overflow is not None:
                 fail(overflow[0], 4, overflow[1])
-            labels = v_direction * weights[:, None]
+            flow = admitted_rows[:, 2 : 2 + DIMENSIONS]
+            labels = flow if free else flow * c_t[:, None]
             plan.g_moment = np.add.reduceat(labels, g_starts, axis=0).tolist()
             carried_t = a_t * c_t
             plan.g_number = num_t[g_starts].tolist()

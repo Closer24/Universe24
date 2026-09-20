@@ -1853,3 +1853,40 @@ implementation's part of the contract. The design above is unchanged.
     every reachable state. `become at` is not in the code (in flight,
     WEAK.md) and will read the same call. No registered integer moves:
     every world of the register replays byte-identical.
+    **(3) One moment table over one set object shared by a body and a
+    detector, the data only** (`tests/test_nature_beam_body.py` (g)). The
+    data: a body on a set of Nodes (note 30) and a detector set (note 24)
+    are one object, `DetectorSet`: its Nodes mapped to the measured event
+    at each (`DetectorSet.nodes`, a body one event, a declared detector
+    several), one record and one phase per family, the one reading summed
+    over the set in both; `Measured.nodes` reads a body's Nodes from its
+    set's map (in the fixed order x, then y, then z, the engine inserting
+    them so as a body steps or leaves, `NatureBeamSimulation._place`), and
+    the engine's index `NatureBeamSimulation.at` maps every occupied Node
+    to its set (`occupant` to the event's number; the reading's
+    `node_event` is built from the sets). A detector stays a detector
+    and a body a body: the rule unification (a detector as one measured
+    event, its content, momentum and re-emission joining one record) is
+    NOT taken, by the owner's decision, since it would re-register A10's
+    openings and the two-slit walls. The table: step 4 takes ONE moment
+    table per family over the rows at the set (`moment_table` on the
+    arrivals' unit vectors, a row that did not step on the zero vector,
+    the amounts as the weights and the ages among them) with the two
+    masks the mathematician named, present and admitted: the present
+    rows are every row of another number at the set, rest and moving,
+    and the presence (what the clock counts) is their zeroth moment per
+    measured event and the age moment their age moment (the two
+    `np.add.at` sums of `family_plan` are deleted); the admitted rows are
+    the rows the threshold, the window and the rule admit, and the
+    record's component and the push's flow are their moments per
+    (measured event, number), the flow with the label's weight (the
+    table's own flow for a free family, the flow times the content per
+    unit for a paid one; the separate `labels = u x weight` product is
+    deleted). The one case where the two masks are not nested: `beam`'s
+    pairing (note 24 (v)) splits a row into the units that go on and the
+    units that click; the table takes the units that go on as a row of
+    their own, present and not admitted, and the units that click as the
+    admitted row, so the presence counts the whole row (5 for the rows of
+    3 and 2 that pair 2 in test (g)) as it did and the push and the record
+    read the clicked units as they did. Bit-exact: every world of the
+    register replays byte-identical in `events.jsonl` and `state.json`.

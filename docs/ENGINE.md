@@ -189,11 +189,21 @@ an interval where nothing is owed; the rule of one axis is
 its rule lives and what the readings tools read) and books the interval.
 A measured event on a set of Nodes (`span`, [BEAM_LAW note 30](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 `Measured.span`, `Measured.nodes`, `world.body_nodes`) is one record on
-all of them: `NatureBeamSimulation.at` holds every Node of every body, the step
+all of them, and since the four unifications (2026-09-20, (3),
+[BEAM_LAW note 33](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation))
+its set is the one set object a detector is too: `DetectorSet.nodes` maps
+every Node of the set to the measured event there (a body one event, a
+declared detector several), `Measured.nodes` reads a body's Nodes from its
+set, `NatureBeamSimulation.at` maps every occupied Node to its set
+(`occupant` to the event's number) and `_place` moves a body's Nodes in
+both as it steps; the step
 moves the whole set as one (refused when a Node of the moved set holds
 another measured event; the whole body clicks on the face when any of its
 Nodes would leave; every Node wraps on a periodic axis), and `nature_beam`
-reads its arrivals over the set and apportions its releases over it.
+reads its arrivals over the set (one moment table per family over the
+rows at the set, the presence and the age moment its zeroth and age
+moments over the present rows, the record's component and the push's flow
+its moments over the admitted rows) and apportions its releases over it.
 The turn by momentum (the world key `action`, h, and the measured-event
 key `phase_by_momentum`; [BEAM_LAW note 30 (ii)](BEAM_LAW.md#10-implementation-notes-2026-09-19-the-implementation);
 the model owner's decision of 2026-09-20 on Bohr, "put it as parameters

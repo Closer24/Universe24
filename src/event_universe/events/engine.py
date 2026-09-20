@@ -135,14 +135,14 @@ class NatureBeamSimulation:
             for index, detector in enumerate(world.detectors)
         ]
         self.measured: dict[int, Measured] = {}
-        self.at: dict[Address3, int] = {}
+        # The index of the GameBoard's occupied Nodes: every Node of every
+        # body to the set it belongs to (the set maps the Node to its
+        # measured event, `DetectorSet.nodes`; `occupant`): a step onto any
+        # of them is refused (the parser refused a shared Node).
+        self.at: dict[Address3, DetectorSet] = {}
         for index, definition in enumerate(world.measured):
             entry = self._measured(index + 1, definition)
             self.measured[entry.number] = entry
-            # Every Node of a body on a set holds its number (a step onto
-            # any of them is refused; the parser refused a shared Node).
-            for node in entry.nodes:
-                self.at[node] = entry.number
         self.held_initial = [sum(m.held[f] for m in self.measured.values()) for f in range(count)]
         self.transit_initial = [0] * count
         self.content_initial = [0] * count
@@ -216,9 +216,13 @@ class NatureBeamSimulation:
             detector_set = self.detector_sets[detector]
             detector_set.numbers.append(number)
         # The set of Nodes the measured event is a body on (the parser
-        # refused a body outside the GameBoard).
+        # refused a body outside the GameBoard): the set's map takes them in
+        # their fixed order, the engine's index the set.
         nodes = body_nodes(definition.position, definition.span, self.shape, self.world.periodic)
         assert nodes is not None
+        for node in nodes:
+            detector_set.nodes[node] = number
+            self.at[node] = detector_set
         return Measured(
             number,
             definition.position,
@@ -239,7 +243,6 @@ class NatureBeamSimulation:
             detector,
             detector_set,
             span=definition.span,
-            nodes=nodes,
             phase_by_momentum=definition.phase_by_momentum,
             column_names=tuple(name for name, _ in self.world.columns),
             family_values=tuple(family.values for family in self.families),
@@ -249,6 +252,24 @@ class NatureBeamSimulation:
             contact=tuple(definition.contact) + (CONTACT_DEFAULT,) * (count - len(definition.contact)),
             contacts=[0] * count,
         )
+
+    def occupant(self, node: Address3) -> int | None:
+        """The number of the measured event whose body holds the Node, None
+        for a Node of free space: the engine's index to the set, the set's
+        map to its event."""
+        detector_set = self.at.get(node)
+        return None if detector_set is None else detector_set.nodes[node]
+
+    def _place(self, entry: Measured, nodes: tuple[Address3, ...]) -> None:
+        """The body's Nodes moved to `nodes` (in their fixed order) in its
+        set's map and in the engine's index; an empty `nodes` removes it."""
+        detector_set = entry.detector_set
+        for node in entry.nodes:
+            del detector_set.nodes[node]
+            del self.at[node]
+        for node in nodes:
+            detector_set.nodes[node] = entry.number
+            self.at[node] = detector_set
 
     # -- the interval ----------------------------------------------------------
 
@@ -447,8 +468,7 @@ class NatureBeamSimulation:
                         self.ledger.face_momentum[port][entry.family], entry.momentum, strict=True
                     )
                 ]
-                for node in entry.nodes:
-                    del self.at[node]
+                self._place(entry, ())
                 del self.measured[entry.number]
                 if self.record is not None:
                     self.record(
@@ -472,18 +492,13 @@ class NatureBeamSimulation:
                         }
                     )
                 return
-            occupants = sorted(
-                {self.at[node] for node in nodes if self.at.get(node, entry.number) != entry.number}
-            )
+            found = {self.occupant(node) for node in nodes}
+            occupants = sorted(number for number in found if number not in (None, entry.number))
             if occupants:
                 self._contact(entry, axis, origin, destination, occupants)
                 return
-            for node in entry.nodes:
-                del self.at[node]
+            self._place(entry, nodes)
             entry.position = destination
-            entry.nodes = nodes
-            for node in nodes:
-                self.at[node] = entry.number
             if entry.phase_by_momentum and self.world.action is not None:
                 links = ((entry.age - 1) * magnitude) // (width + magnitude)
                 bounded((links + 1) * magnitude * self.world.phase_steps, entry, "turn by momentum")
