@@ -232,7 +232,9 @@ def read_run(folder: Path) -> Reading:
             elif kind == "become":
                 by_number[int(event["measured"])].become = event
             elif kind == "step":
-                by_number[int(event["measured"])].steps += 1
+                # The `step` line names the body by `number` (no world of the
+                # series stepped a body until the step drive of 2026-09-20).
+                by_number[int(event["number"])].steps += 1
             elif kind == "click":
                 if event.get("measured") is not None:
                     thing = by_number[int(event["measured"])]

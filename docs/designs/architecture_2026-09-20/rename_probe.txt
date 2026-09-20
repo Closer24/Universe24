@@ -1,0 +1,24 @@
+# The rename probe of 2026-09-20 (rename_probe.py): every family, detector and column of a world renamed to keyword-like tokens (measure, __proto__, rule, wave, sum, 0, face:+x, read, constructor, ...), both worlds run, the records compared with the names mapped back. The union tree (1427af80 + 62369cb8).
+
+bell/a0_b0.json events identical state identical run.json identical 714 lines, 160 ticks, families 2, detectors 4
+bell/fixed.json events identical state identical run.json identical 917 lines, 148 ticks, families 4, detectors 4
+catalog/lamp_mirror_screen.json events identical state identical run.json identical 140 lines, 50 ticks, families 2, detectors 19
+catalog/sun_planet.json events identical state identical run.json identical 320 lines, 50 ticks, families 3, detectors 1
+catalog/neutron_star.json (30 ticks) events identical state identical run.json identical 961 lines, families 2
+catalog/clock_near_mass.json (30 ticks) events identical state identical run.json identical 810 lines, families 2
+coupling/1b_m16.json events identical state identical run.json identical 4940 lines, 200 ticks, families 1, detectors 0
+weak/j2_ladder.json (300 ticks) events identical state identical run.json identical 8268 lines, families 2
+weak/j3_deuteron.json (120 ticks) events identical state identical run.json identical 110976 lines, families 6, detectors 1
+weak/w_exchange.json (200 ticks) events identical state identical run.json identical, families 3
+lensing/heavy_meeting.json (60 ticks) events identical state identical run.json identical 3814 lines, families 3, detectors 1681
+nucleus/alpha_square.json (400 ticks) events identical state identical run.json identical 687943 lines, families 3
+bohr/r2.json (300 ticks) events identical state identical run.json identical 68388 lines, families 2
+hubble/pushing_age.json (40 ticks) events identical state identical run.json identical 2943 lines, families 26, detectors 1
+heisenberg/w1_beam.json (120 ticks) events identical state identical run.json identical 990 lines, families 2, detectors 162
+amplitude/mz_balanced.json events identical state identical run.json identical 937 lines, 80 ticks, families 1, detectors 2
+amplitude/mz_unequal_f8.json events identical state identical run.json identical 1445 lines, 80 ticks, families 1, detectors 2
+amplitude/bell_0_8.json events identical state identical run.json identical 706 lines, 80 ticks, families 4, detectors 4
+amplitude/cnot_ghz_xxx.json events identical state identical run.json identical 2487 lines, 90 ticks, families 2, detectors 3
+amplitude/rotations_3.json events identical state identical run.json identical 2160 lines, 110 ticks, families 2, detectors 1
+amplitude/slits_low.json (120 ticks) events identical state identical run.json identical 3596 lines, families 2, detectors 121
+amplitude/bell_choosers.json events identical state identical run.json identical 11848 lines, 1000 ticks, families 4, detectors 4

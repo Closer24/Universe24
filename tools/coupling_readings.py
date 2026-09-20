@@ -60,6 +60,7 @@ import numpy as np
 from event_universe.core.game_board import PORT_HEADINGS
 from event_universe.core.integer import by_clock
 from event_universe.events import NatureBeamSimulation, parse_nature_beam_world
+from event_universe.events.engine import step_axis as rule_step
 from event_universe.events.nature_beam import flight_table, unit_label
 from event_universe.events.world import BEAM_LAW, HEADING_OFFSET, LABEL_SCALE, NatureBeamWorld
 from event_universe.events.world import Q as FLIGHT_SCALE
@@ -148,24 +149,31 @@ def step_axis(event: Record) -> int:
 
 def steps_by_rule(reads: Reads, m: int, first: int, last: int, width: int = 1) -> list[tuple[int, int]]:
     """The (tick, axis) at which a free probe of content m steps by the
-    engine's step rule on the record (`NatureBeamSimulation._move`, ENGINE.md: one
-    Link per (Q x S x M + p) / p self-creations on an axis whose momentum
-    component is p, off the clock): its momentum is the cumulative push of
-    its reads (born at rest), at tick t after that tick's read the first
-    axis with the engine's clock `by_clock(t - 1, |p|, Q x S x m + |p|)`
-    = 1 steps (the momentum in label units, Q = `LABEL_SCALE`, S the
-    world's `width`); at most one per interval, x before y before z,
-    wherever it lands (a refused step counts)."""
+    engine's step rule on the record (`NatureBeamSimulation._move`, ENGINE.md;
+    since 2026-09-20 the step drive, BEAM_LAW note 17 as amended: on an
+    axis whose momentum component is p the signed drive gains p at every
+    self-creation and the body steps when it reaches Q x S x m + |p|, the
+    engine's own `engine.step_axis` called here): its momentum is the
+    cumulative push of its reads (born at rest), at tick t after that
+    tick's read the first axis whose rule fires steps (the momentum in
+    label units, Q = `LABEL_SCALE`, S the world's `width`); at most one per
+    interval, x before y before z, wherever it lands (a refused step
+    counts); the drive of every axis advances at every interval as the
+    engine's does, and a fire on a later axis in the interval of an
+    earlier axis's step is lost, as the frame loses it."""
     momentum = [0, 0, 0]
+    drive = [0, 0, 0]
     fired: list[tuple[int, int]] = []
     for tick in range(first, last + 1):
         if tick in reads:
             momentum = list(added((momentum[0], momentum[1], momentum[2]), reads[tick][1]))
+        stepped = None
         for axis in range(3):
-            magnitude = abs(momentum[axis])
-            if magnitude and by_clock(tick - 1, magnitude, LABEL_SCALE * width * m + magnitude):
-                fired.append((tick, axis))
-                break
+            sign, drive[axis] = rule_step(drive[axis], momentum[axis], m, width)
+            if sign is not None and stepped is None:
+                stepped = axis
+        if stepped is not None:
+            fired.append((tick, stepped))
     return fired
 
 

@@ -135,6 +135,7 @@ records are a few hundred megabytes per world.
 
 ## What was measured (2026-09-20)
 
+(superseded for the pushed worlds by the re-read below, 2026-09-20)
 No orbit closed well enough for the coherence reading and the finding is
 registered as such: every electron was bound for one to three turns and
 then thrown out at a close pass; at r = 8 (the reference, j = 2) the two
@@ -151,3 +152,32 @@ instead of keeping it: `r2` turns 2.07 times with two closings and
 leaves through face:+x at tick 688 (C(2) = 0.60, outside), `r4` leaves
 through face:+y at tick 600; the verdict stands, and the five other
 worlds are byte-identical ([validation](../../../docs/VALIDATION.md#the-columns-the-lifetime-the-held-content-and-the-contact-through-the-table-the-66-example-worlds-compared---2026-09-20)).
+
+## Re-read under the step drive (2026-09-20)
+
+Every world moves differently under the step drive (a body's count of
+Links is the whole part of the distance its momentum has driven, on its
+own record): the orbit at r = 8 (the design's j = 2) closes four times
+(T 944, 588, 1209, 1281, three returns within 0.25 r) and is on the
+GameBoard at the end of 4200 intervals, the orbit at r = 12 five times
+(1454 to 1290, every return within 0.25 r) at the end of 7400; the
+coherence at the closing radius C(4) = 1.01 against the expected 2.0 and
+the phase's turn per orbit 0.75 to 0.83 against 0, outside, so Bohr's
+lines are still not read, while the verdict's "what the law lacked here
+is a stable closed orbit" is answered by the step rule. The register
+entry has every world's numbers ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).
+
+## Re-read under the signed drive (2026-09-20)
+
+Every world moves differently under the signed drive (record 126: the
+drive is the signed distance the momentum has driven; on an orbit each
+component turns through zero every turn, and the unsigned form's
+discharge of the accumulated |p| as a Link the other way was a kick
+toward the proton at every sign change): the stable orbits at r = 8 and
+r = 12 of the step-drive re-read do not appear; r = 8 closes the angle
+twice (T 1292, 2016; the phase's turn per orbit 0.969 against 0; C(2) =
+0.99 against 1.0, outside) and leaves at 3869, r = 12 leaves at 2059
+without closing, r = 15 closes once with the return within r / 4. Bohr's
+lines are still not read; the registered verdict's "what the law lacked
+is a stable closed orbit under whole kicks" stands again. The register
+entry has every world's numbers and the verdict re-read ([migration](../../../docs/MIGRATION.md#the-step-drive-on-2026-09-20-the-count-of-links-as-the-whole-part-of-the-driven-distance)).

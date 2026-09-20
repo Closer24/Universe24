@@ -5,6 +5,32 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## Unreleased
 
+### The verdicts of series D and H re-read under the step drive (2026-09-20)
+
+- The physics-rule reviewer's re-read of the two registered verdict
+  clauses the step drive overturned, added to the register as the next
+  bullet of each series (nothing re-run, nothing tuned): series D's "no
+  orbit closes by the criterion at any width or radius" is superseded
+  (the S = 32 probe at r = 24 closes by the criterion, T 623 against the
+  derived 687, the mean radius 23.63, C 1.37) and series H's "what the
+  law lacked here is not the turn but a stable closed orbit under whole
+  kicks" is superseded (`r8` closes four times and stays on the
+  GameBoard, the phase's turn per orbit 0.75 to 0.83 against 0 and C(4)
+  = 1.01 against 2.0: the orbit closes and is not quantised); the summary
+  lines of PROJECT_STATUS, ENTITY_CATALOG and the examples READMEs
+  replaced, the registered numbers kept as history
+  ([D](docs/EXPERIMENTS.md#d-the-orbit-under-the-beam-law-on-the-plane-2026-09-19),
+  [H](docs/EXPERIMENTS.md#h-bohrs-lines-behind-the-detector-2026-09-20)).
+
+### The phase circle's bound raised to 65536 steps (2026-09-20)
+
+- The model owner's instruction ("raise the bound"): the pair of
+  `amplitude-v1` rotates its labels through the half-angle tables at 2N, so
+  `core.phase.MAX_PHASE_STEPS` is 65536 (was 4096) and the world parser
+  imports the one bound; N = 65536 is accepted with its tables (0.2 s once,
+  every entry within 256), 131072 refused; the same change as commit
+  7c147e9f of the paper's branch, applied here by hand.
+
 ### The `wave` threshold on the pointer's square; the escaped momentum per family (2026-09-20)
 
 - The model owner's decision (issue #359 step A;

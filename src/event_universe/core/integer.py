@@ -58,10 +58,43 @@ def rational_sum(terms: list[tuple[int, int]]) -> tuple[int, int]:
 def by_clock(age: int, numerator: int, denominator: int) -> int:
     """What the whole part of age x numerator / denominator gains at the
     self-creation that takes the age from `age` to `age + 1`: a rate read
-    off a clock, exact on average, with no remainder kept anywhere."""
+    off a clock, exact on average, with no remainder kept anywhere. Where
+    the rate is constant this is `by_drive` (below) with the remainder on
+    the reader's record; the clock's turn, the release, the lamp and the
+    owed count read a rate no push changes and keep this form."""
     if denominator < 1:
         raise ValueError("positive denominator required")
     return ((age + 1) * numerator) // denominator - (age * numerator) // denominator
+
+
+def by_drive(drive: int, rate: int, denominator: int) -> tuple[int, int]:
+    """The whole part of an accumulated SIGNED rate on the reader's own
+    record (the model owner's decision of 2026-09-20, record 108: one count
+    primitive for a rate that may change; signed since record 126, the
+    same day: a rate that reverses discharges what it had accumulated
+    before it counts the other way): `drive` gains `rate` at this
+    self-creation, and the count gains +1 when the drive reaches
+    `denominator` and -1 when it reaches `-denominator`, that much
+    subtracted with the count's sign. Returns (the count gained, -1, 0 or
+    +1, and the drive after). With a constant rate of one sign the count
+    fires exactly where `by_clock(n - 1, |rate|, denominator)` is 1 over
+    the self-creations n, with the rate's sign, and the drive is `sign x
+    (n x |rate| mod denominator)`, the remainder `by_clock` keeps nowhere;
+    the count gained is one at most whenever `|rate| < denominator`, and
+    |drive| stays below `denominator` from then on (a drive earned at a
+    larger rate fires one at each following self-creation until it
+    does). With a rate that changes sign the drive is the signed sum of
+    the rates since the last count, so a reversal first cancels the
+    distance driven the other way and counts nothing until the sum
+    reaches the denominator on the new side."""
+    if denominator < 1:
+        raise ValueError("positive denominator required")
+    drive += rate
+    if drive >= denominator:
+        return 1, drive - denominator
+    if drive <= -denominator:
+        return -1, drive + denominator
+    return 0, drive
 
 
 def apportion_whole(total: int, weights: list[int], first: int) -> list[int]:

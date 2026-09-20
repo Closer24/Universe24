@@ -105,6 +105,9 @@ def execute_nature_beam_run(
         # The meeting (2026-09-20): the world key as declared, false by
         # default; `meeting-v1` under `hypotheses` when it is true.
         "meeting": world.meeting,
+        # The amplitude law (2026-09-20): the world key as declared, false by
+        # default; `amplitude-v1` under `hypotheses` when it is true.
+        "amplitude": world.amplitude,
         "hypotheses": world.hypotheses,
         # The world's columns in order, (name, sign): gravity, charge, the
         # declared names; every family's `columns` below is aligned with it.
@@ -120,7 +123,9 @@ def execute_nature_beam_run(
                     for column in family.columns
                 ],
                 "phase": family.phase,
-                "phase_per_link": family.phase_per_link,
+                # The integer as declared, or since the amplitude law the pair
+                # [n, d] (the phase per interval of age).
+                "phase_per_link": family.declared_phase_per_link,
                 # The age at which the family's rays click on the border
                 # `lifetime` (None: the family lives forever).
                 "lifetime": family.lifetime,
@@ -177,6 +182,12 @@ def execute_nature_beam_run(
         ],
         "display": "none",
     }
+    if simulation.layer is not None:
+        # The amplitude law's world: the list of gathers (the clicks of the
+        # world), the records open at the end and the layer's line.
+        metadata["world"] = list(simulation.layer.gathers)
+        metadata["open"] = simulation.layer.open_records()
+        metadata["layer"] = simulation.layer.report()
     if initialization_metadata is not None:
         metadata["initialization_resolution"] = initialization_metadata
     path = output / "run.json"

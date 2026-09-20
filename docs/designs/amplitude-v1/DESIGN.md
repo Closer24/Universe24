@@ -663,6 +663,13 @@ removes no combination: not a click. Rows whose combination reaches zero
 weight by a merge that cancels are deleted on the lattice by the normal
 form (2.3); a row of amount 0 never exists.
 
+Implemented (the review of (v), 2026-09-20): `control` is the direction
+the control's rows arrive on, required for two parties or more (S1); the
+hold is read from the rows pending alone, the layer's live count left to
+the completion (B3); the units the copies add are booked on the live count
+(B1); a record that reaches a gate with units elsewhere or with an offer
+already made is refused, the lazy relabelling above not built (B2).
+
 The single-label gates the engine has, named for a circuit: `split` with
 `(1, 1)` and the turn N/4 on the second output is the Hadamard on a PATH
 qubit (the two directions the labels); `rotate {setting: N/4}` is the
