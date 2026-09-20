@@ -249,6 +249,35 @@ light bent toward the mass with the sign of gravity, the M / b form and
 the grain of the fan (-1.8 to -4.4 pixels; the lens crossing 71 Links
 past the mass), not delayed in time, the mass measuring the light turned
 into it; registered, 14 readings inside and 9 outside, not tuned.
+## The Hubble series with stars
+
+The folder [hubble_stars/](hubble_stars/README.md) holds the nine worlds of
+series G2, the Hubble diagram with stars behind the detector, written by
+`hubble_stars/make_worlds.py` with their expectations
+(`hubble_stars/expectations.json`, written before the runs) for the model
+owner's question of 2026-09-20, whether dark energy is needed: twenty-four
+stars of the catalog's kind, each ONE measured event that holds a mass
+(`held`, the universal gravity column) and is a lamp (its light released on
+its clock at the cost E = h f), thrown from the centre of an open 301^3
+cube along the six axes with a Hubble-flow initial condition (the speed
+proportional to the distance, as if from one point 90 intervals before the
+run), the model's own gravity between them (the mass rows on the axes, the
+push through the detector to the opposite chain), a detector of one Node at
+the centre reading `wave` with `reads: "age"`; three crowds (the coupling
+off, on, doubled) and three clocks (none, the presence, the age moment).
+`tools/hubble_stars_readings.py` reads, per star, the redshift from the
+pointer's turn, the distance from the arrivals' ages and the luminosity from
+the click rate, fits the deceleration q with H free (the power-law family
+and the three exact forms), validates the criterion on the exact coasting
+form first, and labels every line a detector or a GameBoard reading; the
+register entry is drafted in the folder's README and not registered until
+the model owner says so: the clock-free coasting control reads the Milne
+form to the grain (q = -0.11, H (t_0 + T_0) = 1.03), every star's momentum
+decelerates under the law's gravity and none accelerates, and the detector
+cannot read that deceleration as a q because the step rule stalls and
+bursts under a changing momentum (the README's findings for the law, among
+them that a body's own motion does not Doppler what it reads).
+
 ## The weak-force series
 
 The folder [weak/](weak/README.md) holds the worlds of series J, the weak
