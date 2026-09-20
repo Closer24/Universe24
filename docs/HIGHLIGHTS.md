@@ -378,6 +378,7 @@ The law in force is the Beam Law, `beam-v1`, decided on 2026-09-19 (the law of t
 - **Interference is coherent within one Node only** (the orchestrator's decision from the owner's point 5, open to the owner's reversal): a set of several Nodes, a face included, is one cell whose weight is the sum over its Nodes; what follows a click starts as one new record; the split applies only to rows that carry a record — [record 96](LOG_2026-09-20.md#96-the-gate-on-amplitude-v1-iii-two-blocking-findings-one-decision).
 - **Proposed, the owner's decision pending: u is the record's own field, unread by the lattice** (the meeting reads the path phase, phase minus u; u = the clock's count mod N), and a row pushes matter with its share of the record's label — [record 97](LOG_2026-09-20.md#97-k-under-the-record-click-the-offers-are-the-crowd-the-click-reads-the-shared-phase).
 - **The trimming, part 1, landed** (the logs, this section, the rule, the gate set) — [record 98](LOG_2026-09-20.md#98-the-trimming-part-1-landed).
+- **Series G2, the Hubble diagram with stars, on a separate machine, the physicist first** ("send it to the physicist"): does the model need dark energy, q from the detector's reading, nothing registered until the owner says so — [record 99](LOG_2026-09-20.md#99-series-g2-the-hubble-diagram-with-stars-does-the-model-need-dark-energy-a-separate-machine-the-physicist-first).
 
 ### Decisions of 2026-09-19
 
